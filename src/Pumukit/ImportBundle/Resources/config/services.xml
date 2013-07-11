@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:monolog="http://symfony.com/schema/dic/monolog"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="pumukit_import.logger" class="Symfony\Bridge\Monolog\Logger">
+            <argument>pumukit_import.logger</argument>
+            <call method="pushHandler">
+                <argument type="service" id="pumukit_import.logger_handler" />
+            </call>
+        </service>
+
+        <service id="pumukit_import.logger_handler" class="Monolog\Handler\StreamHandler">
+            <argument>%kernel.logs_dir%/import_log.log</argument>
+   <!--         <call method="setFormatter">
+                <argument id="pumukit_import.logger.formatter" />
+            </call>
+        -->
+        </service>
+
+<!--
+    http://gitnacho.github.com/symfony-docs-es/cookbook/logging/monolog.html
+    http://stackoverflow.com/questions/11520298/symfony2-use-processors-while-logging-in-different-files
+    http://symfony.com/doc/current/cookbook/logging/monolog.html
+
+        <service id="pumukit_import.logger.formatter" class="Monolog\Formatter\LineFormatter">
+            <argument>"[%%datetime%%] %%message%%\n"</argument>
+        </service>
+-->
+
+    </services>
+    
+</container>
