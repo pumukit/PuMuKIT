@@ -34,8 +34,8 @@
                 <directory>../src/*/*Bundle/Tests</directory>
                 <directory>../src/*/Bundle/*Bundle/Resources</directory>
                 <directory>../src/*/Bundle/*Bundle/Tests</directory>
-<!-- ImportBundle is not unit tested -->
-                <directory>../src/Pumukit/ImportBundle</directory>
+                <!-- ImportBundle is not unit tested -->
+                <!--<directory>../src/Pumukit/ImportBundle</directory>-->
             </exclude>
         </whitelist>
     </filter>

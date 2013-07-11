@@ -18,13 +18,13 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
         $this->vid_no_audio = realpath('/var/test video') . DIRECTORY_SEPARATOR . 'SCREEN.avi';
     }
 
-	/**
+    /**
      * @expectedException BadMethodCallException
      */
-	public function testGetDurationFileNotExists(){
-		$is = new InspectionMediainfoService(); 
-		$is->getDuration("http://trololo.com");	
-	}
+    public function testGetDurationFileNotExists(){
+      $is = new InspectionMediainfoService(); 
+      $is->getDuration("http://trololo.com");	
+    }
     
     /**
      * @expectedException InvalidArgumentException
@@ -38,30 +38,30 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testGetDuration()
     {
-		$file1 = $this->resources_dir . "AUDIO.mp3";
-        $file2 = $this->resources_dir . "CAMERA.mp4";
-		$is   = new InspectionMediainfoService (); //logger missing, it is not initialized here.
-		$this->assertEquals(2,$is->getDuration($file1));
-        $this->assertEquals(2,$is->getDuration($file2));
+      $file1 = $this->resources_dir . "AUDIO.mp3";
+      $file2 = $this->resources_dir . "CAMERA.mp4";
+      $is   = new InspectionMediainfoService (); //logger missing, it is not initialized here.
+      $this->assertEquals(2,$is->getDuration($file1));
+      $this->assertEquals(2,$is->getDuration($file2));
     }
 
     /**
      * @expectedException BadMethodCallException
      */
     public function testAutocompleteTrackWithoutPath(){
-        $empty_track = new Track();
-        $is          = new InspectionMediainfoService(); 
-        $is->autocompleteTrack($empty_track);
+      $empty_track = new Track();
+      $is          = new InspectionMediainfoService(); 
+      $is->autocompleteTrack($empty_track);
     }
 
     /**
      * @expectedException InvalidArgumentException
      */
     public function testAutocompleteTrackFileWithoutMultimediaContent(){
-        $wrong_track = new Track();
-        $is          = new InspectionMediainfoService(); 
-        $wrong_track->setPath($this->wrong_file2);
-        $is->autocompleteTrack($wrong_track); 
+      $wrong_track = new Track();
+      $is          = new InspectionMediainfoService(); 
+      $wrong_track->setPath($this->wrong_file2);
+      $is->autocompleteTrack($wrong_track); 
     }
 
     public function testAutocompleteTrackOnlyAudio(){
