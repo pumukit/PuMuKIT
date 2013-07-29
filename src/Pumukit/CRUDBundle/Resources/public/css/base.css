@@ -1,0 +1,16 @@
+/* 
+    Document   : base
+    Created on : 29-jul-2013, 15:06:10
+    Author     : Sammy Guergachi <sguergachi at gmail.com>
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+  display: block;
+}
+
+body { 
+  background: red;
+  color: red;
+}
