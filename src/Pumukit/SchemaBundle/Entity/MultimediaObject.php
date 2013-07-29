@@ -172,6 +172,9 @@ class MultimediaObject
         $this->people_in_multimedia_object = new ArrayCollection();
     }
 
+    public function __toString() {
+      return $this->title;
+    }
     /**
      * Get id
      *
