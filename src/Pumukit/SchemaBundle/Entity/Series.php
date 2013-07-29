@@ -373,6 +373,12 @@ class Series
     {
         return $this->line2;
     }
+    
+    
+    public function __toString()
+    {
+        return $this->getTitle();
+    }
 
     /**
      * Contains multimediaobject with tags

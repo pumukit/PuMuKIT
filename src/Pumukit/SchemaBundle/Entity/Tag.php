@@ -285,4 +285,171 @@ class Tag implements Node
     {
         return $this->getTitle();
     }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Tag
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    
+        return $this;
+    }
+
+    /**
+     * Set lft
+     *
+     * @param integer $lft
+     * @return Tag
+     */
+    public function setLft($lft)
+    {
+        $this->lft = $lft;
+    
+        return $this;
+    }
+
+    /**
+     * Get lft
+     *
+     * @return integer 
+     */
+    public function getLft()
+    {
+        return $this->lft;
+    }
+
+    /**
+     * Set rgt
+     *
+     * @param integer $rgt
+     * @return Tag
+     */
+    public function setRgt($rgt)
+    {
+        $this->rgt = $rgt;
+    
+        return $this;
+    }
+
+    /**
+     * Get rgt
+     *
+     * @return integer 
+     */
+    public function getRgt()
+    {
+        return $this->rgt;
+    }
+
+    /**
+     * Set root
+     *
+     * @param integer $root
+     * @return Tag
+     */
+    public function setRoot($root)
+    {
+        $this->root = $root;
+    
+        return $this;
+    }
+
+    /**
+     * Set level
+     *
+     * @param integer $level
+     * @return Tag
+     */
+    public function setLevel($level)
+    {
+        $this->level = $level;
+    
+        return $this;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return Tag
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+    
+        return $this;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param \DateTime $updated
+     * @return Tag
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+    
+        return $this;
+    }
+
+    /**
+     * Add multimedia_objects
+     *
+     * @param \Pumukit\SchemaBundle\Entity\MultimediaObject $multimediaObjects
+     * @return Tag
+     */
+    public function addMultimediaObject(\Pumukit\SchemaBundle\Entity\MultimediaObject $multimediaObjects)
+    {
+        $this->multimedia_objects[] = $multimediaObjects;
+    
+        return $this;
+    }
+
+    /**
+     * Remove multimedia_objects
+     *
+     * @param \Pumukit\SchemaBundle\Entity\MultimediaObject $multimediaObjects
+     */
+    public function removeMultimediaObject(\Pumukit\SchemaBundle\Entity\MultimediaObject $multimediaObjects)
+    {
+        $this->multimedia_objects->removeElement($multimediaObjects);
+    }
+
+    /**
+     * Get multimedia_objects
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMultimediaObjects()
+    {
+        return $this->multimedia_objects;
+    }
+
+    /**
+     * Add children
+     *
+     * @param \Pumukit\SchemaBundle\Entity\Tag $children
+     * @return Tag
+     */
+    public function addChildren(\Pumukit\SchemaBundle\Entity\Tag $children)
+    {
+        $this->children[] = $children;
+    
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param \Pumukit\SchemaBundle\Entity\Tag $children
+     */
+    public function removeChildren(\Pumukit\SchemaBundle\Entity\Tag $children)
+    {
+        $this->children->removeElement($children);
+    }
 }

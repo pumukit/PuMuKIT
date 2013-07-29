@@ -9,11 +9,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/hello/{name}")
-     * @Template()
+     * @Route("/hola/{name}")
+     * @Template("PumukitSchemaBundle:Default:index.html.twig")
      */
     public function indexAction($name)
     {
         return array('name' => $name);
+    }
+    /**
+     * @Route("/")
+     * @Template("PumukitSchemaBundle:Default:index.html.twig")
+     */
+    public function holaAnonimoAction()
+    {
+        return array('name' => "anonimo");
     }
 }

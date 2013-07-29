@@ -302,7 +302,7 @@ class Element
      *
      * @param string $mime_type
      */
-    public function setMimetype($mime_type)
+    public function setMimeType($mime_type)
     {
         $this->mime_type = $mime_type;
     }
@@ -312,7 +312,7 @@ class Element
      *
      * @return string 
      */
-    public function getMimetype()
+    public function getMimeType()
     {
         return $this->mime_type;
     }
@@ -397,4 +397,6 @@ class Element
     {
         return $this->description;
     }
+
+
 }

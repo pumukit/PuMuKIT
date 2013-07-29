@@ -320,4 +320,44 @@ class Person
     {
         return $this->bio;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->people_in_multimedia_object = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add people_in_multimedia_object
+     *
+     * @param \Pumukit\SchemaBundle\Entity\PersonInMultimediaObject $peopleInMultimediaObject
+     * @return Person
+     */
+    public function addPeopleInMultimediaObject(\Pumukit\SchemaBundle\Entity\PersonInMultimediaObject $peopleInMultimediaObject)
+    {
+        $this->people_in_multimedia_object[] = $peopleInMultimediaObject;
+    
+        return $this;
+    }
+
+    /**
+     * Remove people_in_multimedia_object
+     *
+     * @param \Pumukit\SchemaBundle\Entity\PersonInMultimediaObject $peopleInMultimediaObject
+     */
+    public function removePeopleInMultimediaObject(\Pumukit\SchemaBundle\Entity\PersonInMultimediaObject $peopleInMultimediaObject)
+    {
+        $this->people_in_multimedia_object->removeElement($peopleInMultimediaObject);
+    }
+
+    /**
+     * Get people_in_multimedia_object
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPeopleInMultimediaObject()
+    {
+        return $this->people_in_multimedia_object;
+    }
 }

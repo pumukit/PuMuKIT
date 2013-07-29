@@ -60,7 +60,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
     
     public function testDefaultState()
     {
-	    $mm = new MultimediaObject();
+        $mm = new MultimediaObject();
         $this->assertEquals(MultimediaObject::STATUS_NEW, $mm->getStatus());
     }
 

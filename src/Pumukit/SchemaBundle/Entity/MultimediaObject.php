@@ -153,6 +153,8 @@ class MultimediaObject
      * @ORM\OneToMany(targetEntity="PersonInMultimediaObject", mappedBy="multimedia_object", cascade={"all"})
      */
     private $people_in_multimedia_object;
+    
+
 
     /**
      * @Gedmo\Locale
@@ -1268,4 +1270,27 @@ class MultimediaObject
     }
 
 // TO DO: revisar funciones de manejo de arraycollections, igual me acortan alguna de las mías.
+
+    /**
+     * Add people_in_multimedia_object
+     *
+     * @param \Pumukit\SchemaBundle\Entity\PersonInMultimediaObject $peopleInMultimediaObject
+     * @return MultimediaObject
+     */
+    public function addPeopleInMultimediaObject(\Pumukit\SchemaBundle\Entity\PersonInMultimediaObject $peopleInMultimediaObject)
+    {
+        $this->people_in_multimedia_object[] = $peopleInMultimediaObject;
+    
+        return $this;
+    }
+
+    /**
+     * Remove people_in_multimedia_object
+     *
+     * @param \Pumukit\SchemaBundle\Entity\PersonInMultimediaObject $peopleInMultimediaObject
+     */
+    public function removePeopleInMultimediaObject(\Pumukit\SchemaBundle\Entity\PersonInMultimediaObject $peopleInMultimediaObject)
+    {
+        $this->people_in_multimedia_object->removeElement($peopleInMultimediaObject);
+    }
 }

@@ -28,7 +28,7 @@ abstract class CommonCreateFunctions extends WebTestCase
         $serie->setDescription($description);
         $serie->setPublicDate($test_date);
 
-        em->persist($serie);
+        $em->persist($serie);
 
         return $serie;
     }
@@ -41,7 +41,7 @@ abstract class CommonCreateFunctions extends WebTestCase
         $series_type->setName($name);
         $series_type->setDescription($description);
 
-        em->persist($series_type);
+        $em->persist($series_type);
 
         return $series_type;
     }

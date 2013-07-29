@@ -179,4 +179,27 @@ class SeriesType
         return $this->series;
     }    
 
+
+    /**
+     * Add series
+     *
+     * @param \Pumukit\SchemaBundle\Entity\Series $series
+     * @return SeriesType
+     */
+    public function addSerie(\Pumukit\SchemaBundle\Entity\Series $series)
+    {
+        $this->series[] = $series;
+    
+        return $this;
+    }
+
+    /**
+     * Remove series
+     *
+     * @param \Pumukit\SchemaBundle\Entity\Series $series
+     */
+    public function removeSerie(\Pumukit\SchemaBundle\Entity\Series $series)
+    {
+        $this->series->removeElement($series);
+    }
 }
