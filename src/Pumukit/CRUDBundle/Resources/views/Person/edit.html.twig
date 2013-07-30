@@ -1,6 +1,8 @@
 {% extends 'PumukitCRUDBundle::base.html.twig' %}
 
 {% block body -%}
+{% form_theme form 'PumukitCRUDBundle:Form:fields.html.twig' %}
+
     <h1>Person edit</h1>
 
     <form action="{{ path('person_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>

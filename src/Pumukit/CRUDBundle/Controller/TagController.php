@@ -13,7 +13,7 @@ use Pumukit\SchemaBundle\Form\TagType;
 /**
  * Tag controller.
  *
- * @Route("/tag")
+ * @Route("/tag", defaults={"menu" = "tag"})
  */
 class TagController extends Controller
 {

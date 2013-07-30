@@ -1,20 +1,35 @@
 {% extends 'PumukitCRUDBundle::base.html.twig' %}
 
 {% block body -%}
+{% form_theme form 'PumukitCRUDBundle:Form:fields.html.twig' %}
+
+<div class="container-fluid">
     <h1>Person creation</h1>
 
-    <form action="{{ path('person_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
+    <form  action="{{ path('person_create') }}" method="post" {{ form_enctype(form) }}>
+
+        {# form_widget(form) #}
+        {# form_start(form) #}  
+          
+          {{ form_errors(form) }}
+          <div class="form-control">
+            {{ form(form) }}
+          </div>
+          
+          
+        
+      
         <p>
             <button type="submit">Create</button>
         </p>
     </form>
 
-        <ul class="record_actions">
+  <ul class="record_actions list-unstyled list-inline">
     <li>
         <a href="{{ path('person') }}">
-            Back to the list
+          <button>Back to the list</button>
         </a>
     </li>
-</ul>
+  </ul>
+</div>
 {% endblock %}

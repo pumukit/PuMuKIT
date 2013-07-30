@@ -13,7 +13,7 @@ use Pumukit\SchemaBundle\Form\PersonType;
 /**
  * Person controller.
  *
- * @Route("/person")
+ * @Route("/person", defaults={"menu" = "person"})
  */
 class PersonController extends Controller
 {
