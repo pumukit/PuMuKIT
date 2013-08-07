@@ -25,6 +25,10 @@ framework:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
+    form:
+        resources:
+            - 'PumukitCRUDBundle:Form:fields.html.twig'
+
 
 # Assetic Configuration
 assetic:
@@ -77,3 +81,5 @@ swiftmailer:
     username:  %mailer_user%
     password:  %mailer_password%
     spool:     { type: memory }
+
+

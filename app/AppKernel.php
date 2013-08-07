@@ -19,6 +19,9 @@ class AppKernel extends Kernel
             new Pumukit\SchemaBundle\PumukitSchemaBundle(),
             new Pumukit\ImportBundle\PumukitImportBundle(),
             new Pumukit\InspectionBundle\PumukitInspectionBundle(),
+            new Pumukit\CRUDBundle\PumukitCRUDBundle(),
+            new Acme\TaskBundle\AcmeTaskBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -1,0 +1,15 @@
+acme_task:
+    resource: "@AcmeTaskBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pumukit_schema:
+    resource: "@PumukitSchemaBundle/Controller/"
+    type:     annotation
+    prefix:   /schema/
+
+
+pumukit_crud:
+    resource: "@PumukitCRUDBundle/Controller/"
+    type:     annotation
+    prefix:   /admin/crud/
