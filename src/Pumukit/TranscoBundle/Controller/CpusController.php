@@ -8,18 +8,15 @@
 
 namespace Pumukit\TranscoBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Controller\FOSRestController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Pumukit\TranscoBundle\Entity\Cpu;
 
 
-class CpusController extends Controller {
+class CpusController extends FOSRestController {
 
     /**
-     * @return array
-     * @View
      * @ApiDoc(
      *     resource=true,
      *     section="PumukitTranscoBundle",
@@ -30,14 +27,14 @@ class CpusController extends Controller {
     {
         $cpus = $this->getDoctrine()->getRepository('PumukitTranscoBundle:Cpu')->findAll();
         
+	$view = $this->view($cpus, 200)
+	  ->setTemplate("PumukitTranscoBundle:Cpus:index.html.twig")
+	  ->setTemplateVar('cpus');
 
-        return array('cpus' => $cpus);
+	return $this->handleView($view);
     }
     
     /**
-     * @param Cpu $cpu
-     * @return array
-     * @View
      * @ParamConverter("cpu", class="PumukitTranscoBundle:Cpu")
      * @ApiDoc(
      *     section="PumukitTranscoBundle",
@@ -46,7 +43,11 @@ class CpusController extends Controller {
      */
     public function getCpuAction(Cpu $cpu)
     {
-        return array('cpu' => $cpu);
+	$view = $this->view($cpu, 200)
+	  ->setTemplate("PumukitTranscoBundle:Cpus:show.html.twig")
+	  ->setTemplateVar('cpu');
+
+	return $this->handleView($view);
     }
     
 }

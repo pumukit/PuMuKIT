@@ -84,16 +84,9 @@ swiftmailer:
 
 # REST
 
-sensio_framework_extra:
-    view:   { annotations: false }
-    router: { annotations: true }
-    
-
 fos_rest:
     format_listener:
         prefer_extension: true
-    view:
-        view_response_listener: true
 
 nelmio_api_doc:
     name:                 Pumukit2 API documentation
