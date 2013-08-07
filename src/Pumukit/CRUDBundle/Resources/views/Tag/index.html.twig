@@ -2,9 +2,11 @@
 {% extends 'PumukitCRUDBundle::base.html.twig' %}
 
 {% block body -%}
-    <h1>Tag list</h1>
-
-    <table class="records_list">
+<div class="container">
+    <div class="page-header">
+        <h1>Tag list</h1>
+    </div>  
+    <table class="table span10  records_list table-striped">
         <thead>
             <tr>
                 <th>Id</th>
@@ -13,10 +15,6 @@
                 <th>Slug</th>
                 <th>Cod</th>
                 <th>Metatag</th>
-                <th>Lft</th>
-                <th>Rgt</th>
-                <th>Root</th>
-                <th>Level</th>
                 <th>Created</th>
                 <th>Updated</th>
                 <th>Actions</th>
@@ -31,19 +29,15 @@
                 <td>{{ entity.slug }}</td>
                 <td>{{ entity.cod }}</td>
                 <td>{{ entity.metatag }}</td>
-                <td>{{ entity.lft }}</td>
-                <td>{{ entity.rgt }}</td>
-                <td>{{ entity.root }}</td>
-                <td>{{ entity.level }}</td>
                 <td>{% if entity.created %}{{ entity.created|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if entity.updated %}{{ entity.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>
-                <ul>
+                <ul class="list-inline">
                     <li>
-                        <a href="{{ path('tag_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('tag_show', { 'id': entity.id }) }}"><button class="btn btn-info">show</button></a>
                     </li>
                     <li>
-                        <a href="{{ path('tag_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('tag_edit', { 'id': entity.id }) }}"><button class="btn btn">edit</button></a>
                     </li>
                 </ul>
                 </td>
@@ -52,11 +46,12 @@
         </tbody>
     </table>
 
-        <ul>
+        <ul class="list-unstyled list-inline">
         <li>
             <a href="{{ path('tag_new') }}">
-                Create a new entry
+                <button class="btn btn-default">Create a new entry</button>
             </a>
         </li>
     </ul>
-    {% endblock %}
+</div>
+{% endblock %}

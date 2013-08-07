@@ -1,6 +1,78 @@
+{# Input #}
 {% block form_widget_simple %}
 {% spaceless %}
     {% set type = type|default('text') %}
-    <input class="caca" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+    {% if type == "hidden" %}
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} />
+    {% else %}
+    <div class="col-lg-11 {% if errors|length > 0 %}col-offset-1{% endif %}">
+        <input class="form-control" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} />
+    </div>
+    {% endif %}
 {% endspaceless %}
 {% endblock form_widget_simple %}
+
+{# Label #}
+{% block form_label %}
+{% spaceless %}
+    {% if label is not sameas(false) %}
+        {% if not compound %}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {% endif %}
+        {% if required %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {% endif %}
+        {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' col-lg-1 control-label')|trim}) %}
+        {% if label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
+    {% endif %}
+{% endspaceless %}
+{% endblock form_label %}
+{% block button_label %}{% endblock %}
+
+{# Textarea #}        
+{% block textarea_widget %}
+{% spaceless %}
+    <div class="col-lg-11 {% if errors|length > 0 %}col-offset-1{% endif %}">
+        <textarea class="form-control" {{ block('widget_attributes') }}>{{ value }}</textarea>
+    </div>
+{% endspaceless %}
+{% endblock textarea_widget %}
+        
+        
+{# Row #}
+{% block form_row %}
+{% spaceless %}
+    <div class="form_row form-group {% if errors|length > 0 %}has-error{% endif %}">
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+    </div>
+{% endspaceless %}
+{% endblock form_row %}
+
+{# Error #}        
+{% block form_errors %}
+{% spaceless %}
+    {% if errors|length > 0 %}
+    <div class="col-lg-10">
+        <ul class="text-danger">
+            {% for error in errors %}
+                <li>{{ error.message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+{% endspaceless %}
+{% endblock form_errors %}
+
+{# checkbox #}        
+{% block checkbox_widget %}
+{% spaceless %}
+    <div class="col-lg-10">
+        <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+    </div>
+{% endspaceless %}
+{% endblock checkbox_widget %}

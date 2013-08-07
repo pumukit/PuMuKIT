@@ -4,6 +4,8 @@ namespace Pumukit\SchemaBundle\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Pumukit\SchemaBundle\Entity\Person
@@ -33,6 +35,9 @@ class Person
      * @var string $password
      *
      * @ORM\Column(name="password", type="string", length=100, nullable=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(min = "3")
+     * 
      */
     private $password;
 
@@ -40,6 +45,7 @@ class Person
      * @var string $email
      *
      * @ORM\Column(name="email", type="string", length=30, nullable=true)
+     * @Assert\Email()
      */
     private $email;
 
@@ -54,6 +60,7 @@ class Person
      * @var string $web
      *
      * @ORM\Column(name="web", type="string", length=150, nullable=true)
+     * @Assert\Url()
      */
     private $web;
 

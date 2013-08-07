@@ -4,34 +4,24 @@
         <meta charset="UTF-8" />
         <title>{% block title %}Pumukit2!{% endblock %}</title>
         {% block stylesheets %}
-          <link href="{{ asset('bundles/pumukitcrud/css/base.css') }}" rel="stylesheet" type="text/css" />
           <link href="{{ asset('bundles/pumukitcrud/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
-
+          <link href="{{ asset('bundles/pumukitcrud/css/bootstrap-glyphicons.css') }}" rel="stylesheet" type="text/css" />
+          <link href="{{ asset('bundles/pumukitcrud/css/base.css') }}" rel="stylesheet" type="text/css" />
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
         <div class="container-fluid">
-          <div class="navbar">
-            <a class="navbar-brand" href="#">Pumukit2</a>
-            <ul class="nav navbar-nav">
-              <li {% if app.request.attributes.get('menu') == 'person' %} 
-                     class="active" 
-                  {% endif %}>
-                <a href="{{ path('person') }}">Person</a>
-              </li>
-              <li {% if app.request.attributes.get('menu') == 'tag' %} 
-                     class="active" 
-                  {% endif %}>
-                <a href="{{ path('tag') }}">Tag</a>
-              </li>
-            </ul>
-          </div>
+          {{ include('PumukitCRUDBundle::menu.html.twig') }}
+        </div>
            
-          <div class="row-fluid">
+          <div class="row-fluid" id="body-wrapper">
             {% block body %}{% endblock %}
           </div>
         </div>
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+            <script src="{{ asset('bundles/pumukitcrud/js/jquery-2.0.3.js') }}" type="text/javascript"></script>
+            <script src="{{ asset('bundles/pumukitcrud/js/bootstrap.js') }}" type="text/javascript"></script>
+        {% endblock %}
     </body>
 </html>

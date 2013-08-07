@@ -6,21 +6,26 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+use Symfony\Component\Validator\Constraints\Length;
+
 class PersonType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('login')
-            ->add('password')
+            ->add('password', 'repeated', array(
+               'first_name'  => 'password',
+               'second_name' => 'confirm',
+               'type'        => 'password'))
             ->add('email')
+             ->add('honorific')
             ->add('name')
             ->add('web')
             ->add('phone')
-            ->add('honorific')
             ->add('firm')
             ->add('post')
-            ->add('bio')
+            ->add('bio', 'textarea')
         ;
     }
 

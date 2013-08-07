@@ -1,60 +1,38 @@
-{% extends '::base.html.twig' %}
+{% extends 'PumukitCRUDBundle::base.html.twig' %}
 
 {% block body -%}
-    <h1>Tag</h1>
+<div class="container">
+    <div class="page-header">
+        <h1>Tag</h1>
+    </div>
+    <dl class="dl-horizontal">
+        {#% for key, value in entity %} 
+            <dt>{{ key }}</dt>
+            <dl>{{ value }}</dl>
+        {% endfor %#}
+    </dl>
+    
+    <dl class="dl-horizontal">
+        <dt>Id</dt>
+        <dd>{{ entity.id }}</dd>
+        <dt>Title</dt>
+        <dd>{{ entity.title }}</dd>
+        <dt>Description</dt>
+        <dd>{{ entity.description }}</dd>
+        <dt>Slug</dt>
+        <dd>{{ entity.slug }}</dd>
+        <dt>Cod</dt>
+        <dd>{{ entity.cod }}</dd>
+        <dt>Metatag</dt>
+        <dd>{{ entity.metatag }}</dd>
+ 
+        <dt>Created</dt>
+        <dd>{{ entity.created|date('Y-m-d H:i:s') }}</dd>
+        <dt>Updated</dt>
+        <dd>{{ entity.updated|date('Y-m-d H:i:s') }}</dd>
+    </dl>
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ entity.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ entity.description }}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ entity.slug }}</td>
-            </tr>
-            <tr>
-                <th>Cod</th>
-                <td>{{ entity.cod }}</td>
-            </tr>
-            <tr>
-                <th>Metatag</th>
-                <td>{{ entity.metatag }}</td>
-            </tr>
-            <tr>
-                <th>Lft</th>
-                <td>{{ entity.lft }}</td>
-            </tr>
-            <tr>
-                <th>Rgt</th>
-                <td>{{ entity.rgt }}</td>
-            </tr>
-            <tr>
-                <th>Root</th>
-                <td>{{ entity.root }}</td>
-            </tr>
-            <tr>
-                <th>Level</th>
-                <td>{{ entity.level }}</td>
-            </tr>
-            <tr>
-                <th>Created</th>
-                <td>{{ entity.created|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Updated</th>
-                <td>{{ entity.updated|date('Y-m-d H:i:s') }}</td>
-            </tr>
-        </tbody>
-    </table>
+
 
         <ul class="record_actions">
     <li>
@@ -75,4 +53,5 @@
         </form>
     </li>
 </ul>
+</div>    
 {% endblock %}
