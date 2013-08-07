@@ -2,29 +2,34 @@
 
 namespace Pumukit\TranscoBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
+
 /**
  * Pumukit\TranscoBundle\Entity\Cpu
  *
- * @orm:Table(name="cpu")
- * @orm:Entity
+ * @ORM\Table(name="cpu")
+ * @ORM\Entity
  */
 class Cpu
 {
     /**
      * @var integer $id
      *
-     * @orm:Column(name="id", type="integer")
-     * @orm:Id
-     * @orm:GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string $IP
      *
-     * @orm:Column(name="IP", type="string", length=15, unique=true, nullable=false)
-     * @assert:NotNull
-     * @assert:Ip
+     * @ORM\Column(name="IP", type="string", length=15, unique=true, nullable=false)
+     * @Assert\NotNull
+     * @Assert\Ip
      */
     //FIXME Validar que no sea nulo
     //DISCASSME
@@ -33,9 +38,9 @@ class Cpu
     /**
      * @var string $endpoint
      *
-     * @orm:Column(name="endpoint", type="string", length=150, nullable=false)
-     * @assert:NotNull
-     * @assert:Url
+     * @ORM\Column(name="endpoint", type="string", length=150, nullable=false)
+     * @Assert\NotNull
+     * @Assert\Url
      */
     //FIXME
     private $endpoint = null;
@@ -43,8 +48,8 @@ class Cpu
     /**
      * @var string $so_type
      *
-     * @orm:Column(name="so_type", type="string", length=15, nullable=false)
-     * @assert:Choice(choices={"Linux"="Linux", "Windows"="Windows"}, message="Solo se sorta Linux o Windows")
+     * @ORM\Column(name="so_type", type="string", length=15, nullable=false)
+     * @Assert\Choice(choices={"Linux"="Linux", "Windows"="Windows"}, message="Solo se sorta Linux o Windows")
      */
     //DISCUSSME Esto es un enum.
     private $so_type = null;
@@ -52,51 +57,51 @@ class Cpu
     /**
      * @var integer $max_jobs
      *
-     * @orm:Column(name="max_jobs", type="integer", nullable=false)
-     * @assert:Min(limit=0, message="Tiene que ser mayor que cero")
+     * @ORM\Column(name="max_jobs", type="integer", nullable=false)
+     * @Assert\Length(min=0)
      */
     private $max_jobs = 0;
 
     /**
      * @var integer $num_jobs
      *
-     * @orm:Column(name="num_jobs", type="integer", nullable=false)
-     * @assert:Min(0)
+     * @ORM\Column(name="num_jobs", type="integer", nullable=false)
+     * @Assert\Length(min=0)
      */
     private $num_jobs = 0;
 
     /**
      * @var string $login
      *
-     * @orm:Column(name="login", type="string", length=100, nullable=true)
+     * @ORM\Column(name="login", type="string", length=100, nullable=true)
      */
     private $login = null;
 
     /**
      * @var string $passwd
      *
-     * @orm:Column(name="passwd", type="string", length=8, nullable=true)
+     * @ORM\Column(name="passwd", type="string", length=8, nullable=true)
      */
     private $passwd = null;
 
     /**
      * @var string $description
      *
-     * @orm:Column(name="description", type="string", length=255, nullable=true)
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
      */
     private $description;
 
     /**
      * @var ArrayCollection $video_profiles
      *
-     * @orm:ManyToMany(targetEntity="VideoProfile", mappedBy="cpus")
+     * @ORM\ManyToMany(targetEntity="VideoProfile", mappedBy="cpus")
       */
     private $video_profiles;
 
     /**
      * @var ArrayCollection $jobs
      *
-     * @orm:OneToMany(targetEntity="Job", mappedBy="cpu")
+     * @ORM\OneToMany(targetEntity="Job", mappedBy="cpu")
      */
     private $jobs;
 

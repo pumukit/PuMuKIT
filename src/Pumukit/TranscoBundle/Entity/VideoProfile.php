@@ -2,11 +2,13 @@
 
 namespace Pumukit\TranscoBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Pumukit\TranscoBundle\Entity\VideoProfile
  *
- * @orm:Table(name="video_profile")
- * @orm:Entity
+ * @ORM\Table(name="video_profile")
+ * @ORM\Entity
  */
 //FIXME behavior sortable, hideable
 class VideoProfile
@@ -14,177 +16,177 @@ class VideoProfile
     /**
      * @var integer $id
      *
-     * @orm:Column(name="id", type="integer")
-     * @orm:Id
-     * @orm:GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string $name
      *
-     * @orm:Column(name="name", type="string", length=25, nullable=false)
+     * @ORM\Column(name="name", type="string", length=25, nullable=false)
      */
     private $name;
 
     /**
      * @var string $exec_template
      *
-     * @orm:Column(name="exec_template", type="string", length=255, nullable="false")
+     * @ORM\Column(name="exec_template", type="string", length=255, nullable=false)
      */
     private $exec_template;
 
     /**
      * @var boolean $wizard
      *
-     * @orm:Column(name="wizard", type="boolean", nullable="false")
+     * @ORM\Column(name="wizard", type="boolean", nullable=false)
      */
     private $wizard;
 
     /**
      * @var boolean $file_master
      *
-     * @orm:Column(name="file_master", type="boolean")
+     * @ORM\Column(name="file_master", type="boolean")
      */
     private $file_master;
 
     /**
      * @var boolean $file_hide
      *
-     * @orm:Column(name="file_hide", type="boolean")
+     * @ORM\Column(name="file_hide", type="boolean")
      */
     private $file_hide;
 
     /**
      * @var string $file_cfg
      *
-     * @orm:Column(name="file_cfg", type="string", length=150)
+     * @ORM\Column(name="file_cfg", type="string", length=150)
      */
     private $file_cfg;
 
     /**
      * @var integer $streamserver_id
      *
-     * @orm:Column(name="streamserver_id", type="integer")
+     * @ORM\Column(name="streamserver_id", type="integer")
      */
     private $streamserver_id;
 
     /**
      * @var string $prescript
      *
-     * @orm:Column(name="prescript", type="string", length=255)
+     * @ORM\Column(name="prescript", type="string", length=255)
      */
     private $prescript;
 
     /**
      * @var string $prescript_type
      *
-     * @orm:Column(name="prescript_type", type="string", length=5)
+     * @ORM\Column(name="prescript_type", type="string", length=5)
      */
     private $prescript_type;
 
     /**
      * @var string $mime_type
      *
-     * @orm:Column(name="mime_type", type="string", length=35)
+     * @ORM\Column(name="mime_type", type="string", length=35)
      */
     private $mime_type;
 
     /**
      * @var string $extension
      *
-     * @orm:Column(name="extension", type="string", length=5)
+     * @ORM\Column(name="extension", type="string", length=5)
      */
     private $extension;
 
     /**
      * @var string $format
      *
-     * @orm:Column(name="format", type="string", length=35)
+     * @ORM\Column(name="format", type="string", length=35)
      */
     private $format;
 
     /**
      * @var string $video_codec
      *
-     * @orm:Column(name="video_codec", type="string", length=35)
+     * @ORM\Column(name="video_codec", type="string", length=35)
      */
     private $video_codec;
 
     /**
      * @var string $audio_codec
      *
-     * @orm:Column(name="audio_codec", type="string", length=35)
+     * @ORM\Column(name="audio_codec", type="string", length=35)
      */
     private $audio_codec;
 
     /**
      * @var integer $frame_width
      *
-     * @orm:Column(name="frame_width", type="integer")
+     * @ORM\Column(name="frame_width", type="integer")
      */
     private $frame_width;
 
     /**
      * @var integer $frame_height
      *
-     * @orm:Column(name="frame_height", type="integer")
+     * @ORM\Column(name="frame_height", type="integer")
      */
     private $frame_height;
 
     /**
      * @var integer $frame_rate
      *
-     * @orm:Column(name="frame_rate", type="integer")
+     * @ORM\Column(name="frame_rate", type="integer")
      */
     private $frame_rate;
 
     /**
      * @var string $video_bit_rate
      *
-     * @orm:Column(name="video_bit_rate", type="string", length=50)
+     * @ORM\Column(name="video_bit_rate", type="string", length=50)
      */
     private $video_bit_rate;
 
     /**
      * @var string $audio_bit_rate
      *
-     * @orm:Column(name="audio_bit_rate", type="string", length=50)
+     * @ORM\Column(name="audio_bit_rate", type="string", length=50)
      */
     private $audio_bit_rate;
 
     /**
      * @var integer $audio_channels
      *
-     * @orm:Column(name="audio_channels", type="integer")
+     * @ORM\Column(name="audio_channels", type="integer")
      */
     private $audio_channels;
 
     /**
      * @var boolean $only_audio
      *
-     * @orm:Column(name="only_audio", type="boolean")
+     * @ORM\Column(name="only_audio", type="boolean")
      */
     private $only_audio;
 
     /**
      * @var integer $rel_size_duration
      *
-     * @orm:Column(name="rel_size_duration", type="integer")
+     * @ORM\Column(name="rel_size_duration", type="integer")
      */
     private $rel_size_duration;
 
     /**
      * @var string $link
      *
-     * @orm:Column(name="link", type="string", length=100)
+     * @ORM\Column(name="link", type="string", length=100)
      */
     private $link;
 
     /**
      * @var string $description
      *
-     * @orm:Column(name="description", type="string", length=200)
+     * @ORM\Column(name="description", type="string", length=200)
      */
     private $description;
 
@@ -192,10 +194,10 @@ class VideoProfile
     /**
      * @var ArrayCollection $cpus
      *
-     * @orm:ManyToMany(targetEntity="Cpu", inversedBy="video_profiles")
-     * @orm:JoinTable(name="video_profile_cpu",
-     *      joinColumns={@orm:JoinColumn(name="video_profile_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@orm:JoinColumn(name="cpu_id", referencedColumnName="id")}
+     * @ORM\ManyToMany(targetEntity="Cpu", inversedBy="video_profiles")
+     * @ORM\JoinTable(name="video_profile_cpu",
+     *      joinColumns={@ORM\JoinColumn(name="video_profile_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="cpu_id", referencedColumnName="id")}
      *      )
      */
     private $cpus;
@@ -204,7 +206,7 @@ class VideoProfile
     /**
      * @var ArrayCollection $jobs
      *
-     * @orm:OneToMany(targetEntity="Job", mappedBy="video_profile")
+     * @ORM\OneToMany(targetEntity="Job", mappedBy="video_profile")
      */
     private $jobs;
 

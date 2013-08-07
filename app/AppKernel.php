@@ -16,12 +16,13 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
             new Pumukit\SchemaBundle\PumukitSchemaBundle(),
             new Pumukit\ImportBundle\PumukitImportBundle(),
             new Pumukit\InspectionBundle\PumukitInspectionBundle(),
             new Pumukit\CRUDBundle\PumukitCRUDBundle(),
-            new Acme\TaskBundle\AcmeTaskBundle(),
-            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Pumukit\TranscoBundle\PumukitTranscoBundle(),
         );
 

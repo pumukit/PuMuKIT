@@ -3,26 +3,7 @@
 {% block content %}
 
 
-<form action="#" method="post" class="pumukit_form">
-    {{ form_errors(form) }}
-
-    <div class="">
-    {% for field in form %}
-        {% if not field.ishidden %}
-        <div class="symfony-form-row">
-            <div class="symfony-form-errors">
-              {{ form_errors(field) }}
-            </div>
-            {{ form_label(field) }}
-            {{ form_field(field) }}
-        </div>
-        {% endif %}
-    {% endfor %}
-    </div>
-
-    {{ form_hidden(form) }}
-    <input type="submit" value="Send!" />
-</form>
+{{ form(form) }}
 
 {% endblock %}
 

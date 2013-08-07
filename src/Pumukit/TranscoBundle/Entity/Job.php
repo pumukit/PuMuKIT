@@ -2,139 +2,141 @@
 
 namespace Pumukit\TranscoBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Pumukit\TranscoBundle\Entity\Job
  *
- * @orm:Table(name="job")
- * @orm:Entity
+ * @ORM\Table(name="job")
+ * @ORM\Entity
  */
 class Job
 {
     /**
      * @var integer $id
      *
-     * @orm:Column(name="id", type="integer")
-     * @orm:Id
-     * @orm:GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string $name
      *
-     * @orm:Column(name="name", type="string", length=150)
+     * @ORM\Column(name="name", type="string", length=150)
      */
     private $name;
 
     /**
      * @var string $exec
      *
-     * @orm:Column(name="exec", type="string", length=255)
+     * @ORM\Column(name="exec", type="string", length=255)
      */
     private $exec;
 
     /**
      * @var integer $mm_obj_id
      *
-     * @orm:Column(name="mm_obj_id", type="integer")
+     * @ORM\Column(name="mm_obj_id", type="integer")
      */
     private $mm_obj_id;
 
     /**
      * @var string $language
      *
-     * @orm:Column(name="language", type="string", length=2)
+     * @ORM\Column(name="language", type="string", length=2)
      */
     private $language;
 
     /**
      * @var integer $status_id
      *
-     * @orm:Column(name="status_id", type="integer")
+     * @ORM\Column(name="status_id", type="integer")
      */
     private $status_id;
 
     /**
      * @var integer $priority
      *
-     * @orm:Column(name="priority", type="integer")
+     * @ORM\Column(name="priority", type="integer")
      */
     private $priority;
 
     /**
      * @var datetime $time_ini
      *
-     * @orm:Column(name="time_ini", type="datetime")
+     * @ORM\Column(name="time_ini", type="datetime")
      */
     private $time_ini;
 
     /**
      * @var datetime $time_start
      *
-     * @orm:Column(name="time_start", type="datetime")
+     * @ORM\Column(name="time_start", type="datetime")
      */
     private $time_start;
 
     /**
      * @var datetime $time_end
      *
-     * @orm:Column(name="time_end", type="datetime")
+     * @ORM\Column(name="time_end", type="datetime")
      */
     private $time_end;
 
     /**
      * @var string $path_ini
      *
-     * @orm:Column(name="path_ini", type="string", length=250)
+     * @ORM\Column(name="path_ini", type="string", length=250)
      */
     private $path_ini;
 
     /**
      * @var string $path_end
      *
-     * @orm:Column(name="path_end", type="string", length=250)
+     * @ORM\Column(name="path_end", type="string", length=250)
      */
     private $path_end;
 
     /**
      * @var integer $duration
      *
-     * @orm:Column(name="duration", type="integer")
+     * @ORM\Column(name="duration", type="integer")
      */
     private $duration;
 
     /**
      * @var integer $size
      *
-     * @orm:Column(name="size", type="integer")
+     * @ORM\Column(name="size", type="integer")
      */
     private $size;
 
     /**
      * @var string $email
      *
-     * @orm:Column(name="email", type="string", length=30)
+     * @ORM\Column(name="email", type="string", length=30)
      */
     private $email;
 
     /**
      * @var integer $pid
      *
-     * @orm:Column(name="pid", type="integer")
+     * @ORM\Column(name="pid", type="integer")
      */
     private $pid;
 
     /**
      * @var string $postexec
      *
-     * @orm:Column(name="postexec", type="string", length=250)
+     * @ORM\Column(name="postexec", type="string", length=250)
      */
     private $postexec;
 
     /**
      * @var string $description
      *
-     * @orm:Column(name="description", type="string", length=200)
+     * @ORM\Column(name="description", type="string", length=200)
      */
     private $description;
 
@@ -142,7 +144,7 @@ class Job
     /**
      * @var VideoProfile $video_profile
      *
-     * @orm:ManyToOne(targetEntity="VideoProfile", inversedBy="jobs")
+     * @ORM\ManyToOne(targetEntity="VideoProfile", inversedBy="jobs")
      */
     private $video_profile;
 
@@ -150,7 +152,7 @@ class Job
     /**
      * @var Cpu $cpu
      *
-     * @orm:ManyToOne(targetEntity="Cpu", inversedBy="jobs")
+     * @ORM\ManyToOne(targetEntity="Cpu", inversedBy="jobs")
      */
     private $cpu;
 

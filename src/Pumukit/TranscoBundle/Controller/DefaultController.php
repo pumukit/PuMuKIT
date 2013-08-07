@@ -1,27 +1,34 @@
 <?php
 
 namespace Pumukit\TranscoBundle\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-use Pumukit\TranscoBundle\Form\CpuForm;
+use Pumukit\TranscoBundle\Form\CpuType;
 use Pumukit\TranscoBundle\Entity\Cpu;
 
 class DefaultController extends Controller
 {
     /**
-     *  @Route("/") 
+     * @Route("/") 
+     * @Template("PumukitTranscoBundle:Default:index.html.twig")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-
+         
+      $cpu = new Cpu();  
+      $form = $this->createForm(new CpuType(), $cpu); 
+      $form->bind($request);
+      
+      /*
       $form = CpuForm::create($this->get('form.context'), 'cpu');
       $cpu = new Cpu();
 
       $form->bind($this->get('request'), $cpu);
-
+*/
       if ($form->isValid()) {
 	echo "valido " . $cpu->getIP();
 	exit;
@@ -29,6 +36,6 @@ class DefaultController extends Controller
       }
       
 
-      return $this->render('PumukitTranscoBundle:Default:index.html.twig', array('form' => $form));
+      return array('form' => $form);
     }
 }
