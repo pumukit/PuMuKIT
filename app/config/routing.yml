@@ -1,3 +1,8 @@
+pumukit_transco:
+    resource: "@PumukitTranscoBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 acme_task:
     resource: "@AcmeTaskBundle/Controller/"
     type:     annotation

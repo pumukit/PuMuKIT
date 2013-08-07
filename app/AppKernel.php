@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new Pumukit\CRUDBundle\PumukitCRUDBundle(),
             new Acme\TaskBundle\AcmeTaskBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new Pumukit\TranscoBundle\PumukitTranscoBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
