@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new FOS\RestBundle\FOSRestBundle(),
+	    new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new Pumukit\SchemaBundle\PumukitSchemaBundle(),
             new Pumukit\ImportBundle\PumukitImportBundle(),
             new Pumukit\InspectionBundle\PumukitInspectionBundle(),

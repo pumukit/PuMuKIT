@@ -94,3 +94,6 @@ fos_rest:
         prefer_extension: true
     view:
         view_response_listener: true
+
+nelmio_api_doc:
+    name:                 Pumukit2 API documentation

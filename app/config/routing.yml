@@ -17,3 +17,7 @@ pumukit_crud:
     resource: "@PumukitCRUDBundle/Controller/"
     type:     annotation
     prefix:   /admin/crud/
+
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /admin/api/doc
