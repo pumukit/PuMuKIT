@@ -54,6 +54,12 @@
                 </ul>
                 </td>
             </tr>
+        {% else %}
+            <tr class="tr-person">
+                <td class="col-lg-1" colspan="5">
+                  No person in the system.
+                </td>
+            </tr>
         {% endfor %}
         </tbody>
     </table>
