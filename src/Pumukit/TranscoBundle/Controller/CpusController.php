@@ -13,23 +13,25 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\Controller\Annotations\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
+
 class CpusController extends Controller {
 
     /**
      * @return array
-     * @View()
+     * @View
      */
     public function getCpusAction()
     {
         $cpus = $this->getDoctrine()->getRepository('PumukitTranscoBundle:Cpu')->findAll();
         
+
         return array('cpus' => $cpus);
     }
     
     /**
      * @param Cpu $cpu
      * @return array
-     * @View()
+     * @View
      * @ParamConverter("cpu", class="PumukitTranscoBundle:Cpu")
      */
     public function getCpuAction(Cpu $cpu)

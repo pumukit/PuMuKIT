@@ -19,8 +19,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "gedmo/doctrine-extensions": "dev-master",
         "knplabs/knp-paginator-bundle": "dev-master",
-        "jms/serializer-bundle": "@stable",
-        "friendsofsymfony/rest-bundle": "@stable"
+        "jms/serializer-bundle": "0.12.*@dev",
+        "friendsofsymfony/rest-bundle": "0.12.*"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*@dev"
