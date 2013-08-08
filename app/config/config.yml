@@ -87,6 +87,8 @@ swiftmailer:
 fos_rest:
     format_listener:
         prefer_extension: true
+    routing_loader:
+        default_format: json
 
 nelmio_api_doc:
     name:                 Pumukit2 API documentation

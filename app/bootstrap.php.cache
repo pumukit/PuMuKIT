@@ -392,6 +392,8 @@ const HEADER_CLIENT_HOST ='client_host';
 const HEADER_CLIENT_PROTO ='client_proto';
 const HEADER_CLIENT_PORT ='client_port';
 protected static $trustedProxies = array();
+protected static $trustedHostPatterns = array();
+protected static $trustedHosts = array();
 protected static $trustedHeaders = array(
 self::HEADER_CLIENT_IP =>'X_FORWARDED_FOR',
 self::HEADER_CLIENT_HOST =>'X_FORWARDED_HOST',
@@ -592,6 +594,17 @@ self::$trustedProxies = $proxies;
 public static function getTrustedProxies()
 {
 return self::$trustedProxies;
+}
+public static function setTrustedHosts(array $hostPatterns)
+{
+self::$trustedHostPatterns = array_map(function ($hostPattern) {
+return sprintf('{%s}i', str_replace('}','\\}', $hostPattern));
+}, $hostPatterns);
+self::$trustedHosts = array();
+}
+public static function getTrustedHosts()
+{
+return self::$trustedHostPatterns;
 }
 public static function setTrustedHeaderName($key, $value)
 {
@@ -795,6 +808,18 @@ $host = $this->server->get('SERVER_ADDR','');
 $host = strtolower(preg_replace('/:\d+$/','', trim($host)));
 if ($host && !preg_match('/^\[?(?:[a-zA-Z0-9-:\]_]+\.?)+$/', $host)) {
 throw new \UnexpectedValueException('Invalid Host');
+}
+if (count(self::$trustedHostPatterns) > 0) {
+if (in_array($host, self::$trustedHosts)) {
+return $host;
+}
+foreach (self::$trustedHostPatterns as $pattern) {
+if (preg_match($pattern, $host)) {
+self::$trustedHosts[] = $host;
+return $host;
+}
+}
+throw new \UnexpectedValueException('Untrusted Host');
 }
 return $host;
 }
@@ -1859,6 +1884,12 @@ $this->services[$id] = $service;
 if (method_exists($this, $method ='synchronize'.strtr($id, array('_'=>'','.'=>'_')).'Service')) {
 $this->$method();
 }
+if (self::SCOPE_CONTAINER !== $scope && null === $service) {
+unset($this->scopedServices[$scope][$id]);
+}
+if (null === $service) {
+unset($this->services[$id]);
+}
 }
 public function has($id)
 {
@@ -2011,7 +2042,7 @@ return isset($this->scopedServices[$name]);
 }
 public static function camelize($id)
 {
-return preg_replace_callback('/(^|_|\.)+(.)/', function ($match) { return ('.'=== $match[1] ?'_':'').strtoupper($match[2]); }, $id);
+return strtr(ucwords(strtr($id, array('_'=>' ','.'=>'_ '))), array(' '=>''));
 }
 public static function underscore($id)
 {
@@ -2103,11 +2134,11 @@ protected $name;
 protected $startTime;
 protected $classes;
 protected $loadClassCache;
-const VERSION ='2.3.2';
-const VERSION_ID ='20302';
+const VERSION ='2.3.3';
+const VERSION_ID ='20303';
 const MAJOR_VERSION ='2';
 const MINOR_VERSION ='3';
-const RELEASE_VERSION ='2';
+const RELEASE_VERSION ='3';
 const EXTRA_VERSION ='';
 public function __construct($environment, $debug)
 {
@@ -2851,7 +2882,6 @@ return (string) $var;
 namespace Symfony\Component\HttpKernel\DependencyInjection
 {
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;

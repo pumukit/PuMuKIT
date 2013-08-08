@@ -29,7 +29,8 @@ class CpuType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Pumukit\TranscoBundle\Entity\Cpu'
+            'data_class' => 'Pumukit\TranscoBundle\Entity\Cpu',
+            'csrf_protection' => false,
         ));
     }
     

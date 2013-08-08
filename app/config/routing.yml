@@ -1,11 +1,6 @@
-pumukit_transco:
-    resource: "@PumukitTranscoBundle/Controller/"
-    type:     annotation
-    prefix:   /admin/transco
-    
 pumukit_transco_api_cpus:
     type: rest
-    resource: Pumukit\TranscoBundle\Controller\CpusController
+    resource: Pumukit\TranscoBundle\Controller\CpuController
     prefix:   /admin/transco/api/
 
 pumukit_schema:

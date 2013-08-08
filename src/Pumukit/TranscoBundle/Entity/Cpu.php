@@ -4,7 +4,7 @@ namespace Pumukit\TranscoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use JMS\Serializer\Annotation as Serializer;
 
 
 /**
@@ -30,6 +30,7 @@ class Cpu
      * @ORM\Column(name="IP", type="string", length=15, unique=true, nullable=false)
      * @Assert\NotNull
      * @Assert\Ip
+     * @Serializer\SerializedName("ip")
      */
     //FIXME Validar que no sea nulo
     //DISCASSME
@@ -58,7 +59,6 @@ class Cpu
      * @var integer $max_jobs
      *
      * @ORM\Column(name="max_jobs", type="integer", nullable=false)
-     * @Assert\Length(min=0)
      */
     private $max_jobs = 0;
 
@@ -66,7 +66,6 @@ class Cpu
      * @var integer $num_jobs
      *
      * @ORM\Column(name="num_jobs", type="integer", nullable=false)
-     * @Assert\Length(min=0)
      */
     private $num_jobs = 0;
 
