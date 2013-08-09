@@ -15,7 +15,7 @@ use Pumukit\TranscoBundle\Entity\Cpu;
 use Pumukit\TranscoBundle\Form\CpuType;
 
 
-class CpuController extends FOSRestController {
+class CpuAPIController extends FOSRestController {
 
     /**
      * @ApiDoc(
@@ -139,5 +139,3 @@ class CpuController extends FOSRestController {
 
     }
 }
-
-?>
