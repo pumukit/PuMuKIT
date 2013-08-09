@@ -7,8 +7,10 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        <h1>Pumukit2</h1>
+        <div class="container-fluid">
+        
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
+        </div>
     </body>
 </html>

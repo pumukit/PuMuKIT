@@ -1,7 +1,12 @@
 pumukit_transco_api_cpus:
     type: rest
-    resource: Pumukit\TranscoBundle\Controller\CpuController
+    resource: Pumukit\TranscoBundle\Controller\CpuAPIController
     prefix:   /admin/transco/api/
+    
+pumukit_transco_cpus:
+    resource: "@PumukitTranscoBundle/Controller/"
+    type:     annotation
+    prefix:   /admin/transco/
 
 pumukit_schema:
     resource: "@PumukitSchemaBundle/Controller/"
