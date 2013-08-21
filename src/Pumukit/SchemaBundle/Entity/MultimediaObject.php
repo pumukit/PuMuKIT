@@ -3,16 +3,18 @@
 namespace Pumukit\SchemaBundle\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Translatable\Translatable;
 use Doctrine\ORM\Mapping as ORM;
-use \Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Pumukit\SchemaBundle\Entity\MultimediaObject
  *
  * @ORM\Table(name="multimedia_object")
  * @ORM\Entity(repositoryClass="Pumukit\SchemaBundle\Entity\MultimediaObjectRepository")
+ * @Gedmo\TranslationEntity(class="Pumukit\SchemaBundle\Entity\Translation\MultimediaObjectTranslation")
  */
-class MultimediaObject
+class MultimediaObject  implements Translatable
 {
     const STATUS_NORMAL    = 0; 
     const STATUS_BLOQ      = 1;
@@ -162,7 +164,32 @@ class MultimediaObject
      * this is not a mapped field of entity metadata, just a simple property
      */
     private $locale;
+    
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
+    }
 
+    
+    /**
+     * @ORM\OneToMany(
+     *   targetEntity="Pumukit\SchemaBundle\Entity\Translation\MultimediaObjectTranslation",
+     *   mappedBy="object",
+     *   cascade={"persist", "remove"}
+     * )
+     */
+    private $translations;
+    public function getTranslations(){ return $this->translations; }
+    public function addTranslation($t){
+        if (!$this->translations->contains($t)) {
+            $this->translations[] = $t;
+            $t->setObject($this);
+        }
+    }
+    public function removeTranslation($t){
+        
+    }
+    
     public function __construct()
     {
         $this->tracks                      = new ArrayCollection();
@@ -1296,4 +1323,6 @@ class MultimediaObject
     {
         $this->people_in_multimedia_object->removeElement($peopleInMultimediaObject);
     }
+    
+
 }

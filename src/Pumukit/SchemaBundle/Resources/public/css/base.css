@@ -1,0 +1,83 @@
+/* 
+    Document   : base
+    Created on : 29-jul-2013, 15:06:10
+    Author     : Sammy Guergachi <sguergachi at gmail.com>
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+
+body { 
+  background: white;
+  color: #333;
+}
+
+#body-wrapper {
+    margin: 0 25px;
+}
+
+.page-header {
+    margin: 10px 0; 
+}
+.pumukit-color {
+    background-color: #ed6d00;
+}
+
+.air-right {
+    margin-right: 15px;
+}
+
+
+table .delete-btn-icon {
+    background-color: transparent !important;
+    
+}
+
+table .delete-btn-icon:hover, table .delete-btn-icon:focus {
+    background-color: transparent !important;
+    color: #c9302c;
+}
+
+.table tbody > tr  > td {
+    border: none;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    vertical-align: middle;
+}
+.table thead > tr  > th {
+    border-bottom:  1px solid #dddddd;
+}
+
+.table tbody ul {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.table .navbar-btn {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.table .btn {
+    padding: 4px 8px;
+}
+
+#nav #logo {
+    margin: 0;
+    padding: 0;    
+}
+
+#nav ul li a{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+.form-group {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+#btn_submit {
+    margin-top: 12px;
+}
