@@ -17,11 +17,15 @@
         "sensio/framework-extra-bundle": "2.3.*",
         "sensio/generator-bundle": "2.3.*",
         "incenteev/composer-parameter-handler": "~2.0",
-        "gedmo/doctrine-extensions": "dev-master",
         "knplabs/knp-paginator-bundle": "dev-master",
         "jms/serializer-bundle": "0.12.*@dev",
         "friendsofsymfony/rest-bundle": "0.12.*",
-	"nelmio/api-doc-bundle": "dev-master"
+	"nelmio/api-doc-bundle": "dev-master",
+
+        "gedmo/doctrine-extensions": "dev-master",
+        "stof/doctrine-extensions-bundle": "dev-master",
+
+	"a2lix/translation-form-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [
