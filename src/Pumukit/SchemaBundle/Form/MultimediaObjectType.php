@@ -11,11 +11,11 @@ class MultimediaObjectType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-                   ->add('translations', 'a2lix_translations_gedmo', array(
-                'label' => 'Traducciones',
-                 'translatable_class' => "Pumukit\SchemaBundle\Entity\MultimediaObject",
+            ->add('translations', 'a2lix_translations_gedmo', array(
+                'label' => false,
+                'translatable_class' => "Pumukit\SchemaBundle\Entity\MultimediaObject",
                 'locales' => array('gl', 'es'),   // [optional|required - depends on the presence in config.yml] See above
-                'required' => false,                     // [optional] Overrides default_required if need
+                'required' => false,              // [optional] Overrides default_required if need
             ))
             ->add('rank')
             ->add('status')

@@ -1,8 +1,4 @@
 {% block a2lix_translations_widget %}
-
-
-
-    
     {% set languages = [] %} 
     {% set llaves = [] %}
     {% for child in form %}
@@ -14,21 +10,16 @@
         {% set languages = languages |merge([child.vars.name]) %}
     {% endfor %}
     
-            
-    
     {% set longitud = llaves|length %}
     {% for key in llaves %}
         
         {% for lang in languages %}
             <div class="form_row form-group ">
-                <label for="pumukit_schemabundle_multimediaobjecttype_description" class="col-lg-1 control-label">{{ key }}</label>
+                <label class="col-lg-1 control-label">{{ key }} {{ lang }}</label>
                 {{ form_widget(form[lang][key]) }}
             </div>
         {% endfor %}
-       
     {% endfor %}
-
-
 {% endblock %}
 
 
