@@ -6,9 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class MultimediaObjectControllerTest extends WebTestCase
 {
-    /*
+
     public function testCompleteScenario()
     {
+        $this->markTestSkipped('must be revisited.');
+
         // Create a new client to browse the application
         $client = static::createClient();
 
@@ -51,5 +53,4 @@ class MultimediaObjectControllerTest extends WebTestCase
         $this->assertNotRegExp('/Foo/', $client->getResponse()->getContent());
     }
 
-    */
 }
