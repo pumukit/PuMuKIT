@@ -32,7 +32,7 @@
 {% endblock form_label %}
 {% block button_label %}{% endblock %}
 
-{# Textarea #}        
+{# Textarea #}
 {% block textarea_widget %}
 {% spaceless %}
     <div class="col-lg-11 {% if errors|length > 0 %}col-offset-1{% endif %}">
@@ -40,8 +40,8 @@
     </div>
 {% endspaceless %}
 {% endblock textarea_widget %}
-        
-        
+
+
 {# Row #}
 {% block form_row %}
 {% spaceless %}
@@ -53,7 +53,7 @@
 {% endspaceless %}
 {% endblock form_row %}
 
-{# Error #}        
+{# Error #}
 {% block form_errors %}
 {% spaceless %}
     {% if errors|length > 0 %}
@@ -68,7 +68,7 @@
 {% endspaceless %}
 {% endblock form_errors %}
 
-{# checkbox #}        
+{# checkbox #}
 {% block checkbox_widget %}
 {% spaceless %}
     <div class="col-lg-10">

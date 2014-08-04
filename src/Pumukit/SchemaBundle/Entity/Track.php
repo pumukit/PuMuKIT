@@ -82,7 +82,6 @@ class Track extends Element
      */
     private $height;
 
-
     /**
      * Set language
      *
@@ -96,7 +95,7 @@ class Track extends Element
     /**
      * Get language
      *
-     * @return string 
+     * @return string
      */
     public function getLanguage()
     {
@@ -116,7 +115,7 @@ class Track extends Element
     /**
      * Get acodec
      *
-     * @return string 
+     * @return string
      */
     public function getAcodec()
     {
@@ -136,7 +135,7 @@ class Track extends Element
     /**
      * Get vcodec
      *
-     * @return string 
+     * @return string
      */
     public function getVcodec()
     {
@@ -156,7 +155,7 @@ class Track extends Element
     /**
      * Get bitrate
      *
-     * @return integer 
+     * @return integer
      */
     public function getBitrate()
     {
@@ -176,7 +175,7 @@ class Track extends Element
     /**
      * Get framerate
      *
-     * @return integer 
+     * @return integer
      */
     public function getFramerate()
     {
@@ -196,7 +195,7 @@ class Track extends Element
     /**
      * Get only_audio
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getOnlyAudio()
     {
@@ -216,7 +215,7 @@ class Track extends Element
     /**
      * Get channels
      *
-     * @return integer 
+     * @return integer
      */
     public function getChannels()
     {
@@ -236,7 +235,7 @@ class Track extends Element
     /**
      * Get duration
      *
-     * @return integer 
+     * @return integer
      */
     public function getDuration()
     {
@@ -256,7 +255,7 @@ class Track extends Element
     /**
      * Get width
      *
-     * @return integer 
+     * @return integer
      */
     public function getWidth()
     {
@@ -276,7 +275,7 @@ class Track extends Element
     /**
      * Get height
      *
-     * @return integer 
+     * @return integer
      */
     public function getHeight()
     {

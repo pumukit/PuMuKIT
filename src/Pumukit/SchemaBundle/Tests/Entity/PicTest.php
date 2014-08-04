@@ -22,8 +22,8 @@ class PicTest extends \PHPUnit_Framework_TestCase
         $size   = 3456;
         $width  = 800;
         $height = 600;
-        $hide   = TRUE; // Change assertTrue accordingly.
-        
+        $hide   = true; // Change assertTrue accordingly.
+
         $pic    = new pic();
         $pic->setMultimediaObject($mm);
         $pic->setSeries($serie);
@@ -37,7 +37,6 @@ class PicTest extends \PHPUnit_Framework_TestCase
         $pic->setWidth($width);
         $pic->setHeight($height);
         $pic->setHide($hide);
-
 
         $this->assertEquals($mm, $pic->getMultimediaObject());
         $this->assertEquals($serie, $pic->getSeries());
@@ -53,7 +52,6 @@ class PicTest extends \PHPUnit_Framework_TestCase
 
     }
 
-
     public function testTagCollection()
     {
         $pic = new pic();
@@ -62,7 +60,7 @@ class PicTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($pic->containsTag('t'));
         $pic->removeTag('t');
         $this->assertFalse($pic->containsTag('t'));
-        
+
         //Repeat Tag
         $this->assertFalse($pic->containsTag('t'));
         $pic->addTag('t');
@@ -72,7 +70,6 @@ class PicTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($pic->containsTag('t'));
         $this->assertFalse($pic->removeTag('t'));
 
-        
         //containsAllTag and containsAnyTag
         $pic->addTag('t1');
         $pic->addTag('t2');
@@ -86,7 +83,6 @@ class PicTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($pic->containsAllTags(array('t0', 't1', 't2', 't3')));
     }
 
-
     public function testRef()
     {
         $t1 = new pic();
@@ -94,7 +90,7 @@ class PicTest extends \PHPUnit_Framework_TestCase
 
         $t2->setRef($t1);
         $this->assertEquals(null, $t1->getRef());
-        $this->assertEquals($t1, $t2->getRef());	
+        $this->assertEquals($t1, $t2->getRef());
     }
 
 }

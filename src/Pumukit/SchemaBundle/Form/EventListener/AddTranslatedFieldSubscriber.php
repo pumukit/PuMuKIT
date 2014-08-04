@@ -15,7 +15,7 @@ class AddTranslatedFieldSubscriber implements EventSubscriberInterface
     private $options;
     private $container;
 
-    public function __construct(FormFactoryInterface $factory, ContainerInterface $container, Array $options)
+    public function __construct(FormFactoryInterface $factory, ContainerInterface $container, array $options)
     {
         $this->factory = $factory;
         $this->options = $options;
@@ -42,23 +42,17 @@ class AddTranslatedFieldSubscriber implements EventSubscriberInterface
         $collection = array();
         $availableTranslations = array();
 
-        foreach($data as $Translation)
-        {
-            if(strtolower($Translation->getField()) == strtolower($this->options['field']))
-            {
+        foreach ($data as $Translation) {
+            if (strtolower($Translation->getField()) == strtolower($this->options['field'])) {
                 $availableTranslations[ strtolower($Translation->getLocale()) ] = $Translation;
             }
         }
 
-        foreach($this->getFieldNames() as $locale => $fieldName)
-        {
-            if(isset($availableTranslations[ strtolower($locale) ]))
-            {
+        foreach ($this->getFieldNames() as $locale => $fieldName) {
+            if (isset($availableTranslations[ strtolower($locale) ])) {
                 $Translation = $availableTranslations[ strtolower($locale) ];
-            }
-            else
-            {
-                $Translation = $this->createPersonalTranslation($locale, $this->options['field'], NULL);
+            } else {
+                $Translation = $this->createPersonalTranslation($locale, $this->options['field'], null);
             }
 
             $collection[] = array(
@@ -77,8 +71,7 @@ class AddTranslatedFieldSubscriber implements EventSubscriberInterface
         // '<locale>' => '<field>|<locale>'
         $collection = array();
 
-        foreach($this->options['locales'] as $locale)
-        {
+        foreach ($this->options['locales'] as $locale) {
             $collection[ $locale ] = $this->options['field'] ."|". $locale;
         }
 
@@ -106,8 +99,7 @@ class AddTranslatedFieldSubscriber implements EventSubscriberInterface
 
         $validator = $this->container->get('validator');
 
-        foreach($this->getFieldNames() as $locale => $fieldName)
-        {
+        foreach ($this->getFieldNames() as $locale => $fieldName) {
             $content = $form->get($fieldName)->getData();
 
             if(
@@ -115,16 +107,12 @@ class AddTranslatedFieldSubscriber implements EventSubscriberInterface
                 in_array($locale, $this->options['required_locale']))
             {
                 $form->addError(new FormError(sprintf("Field '%s' for locale '%s' cannot be blank", $this->options['field'], $locale)));
-            }
-            else
-            {
+            } else {
                 $Translation = $this->createPersonalTranslation($locale, $fieldName, $content);
                 $errors = $validator->validate($Translation, array(sprintf("%s:%s", $this->options['field'], $locale)));
 
-                if(count($errors) > 0)
-                {
-                    foreach($errors as $error)
-                    {
+                if (count($errors) > 0) {
+                    foreach ($errors as $error) {
                         $form->addError(new FormError($error->getMessage()));
                     }
                 }
@@ -140,8 +128,7 @@ class AddTranslatedFieldSubscriber implements EventSubscriberInterface
 
        $entity = $form->getParent()->getData();
 
-       foreach($this->bindTranslations($data) as $binded)
-       {
+       foreach ($this->bindTranslations($data) as $binded) {
            $content = $form->get($binded['fieldName'])->getData();
            $Translation = $binded['translation'];
 
@@ -149,8 +136,7 @@ class AddTranslatedFieldSubscriber implements EventSubscriberInterface
            $Translation->setContent($content);
 
            //test if its new
-           if($Translation->getId())
-           {
+           if ($Translation->getId()) {
                //Delete the Personal Translation if its empty
                if(
                    NULL === $content &&
@@ -159,19 +145,15 @@ class AddTranslatedFieldSubscriber implements EventSubscriberInterface
                {
                    $data->removeElement($Translation);
 
-                   if($this->options['entity_manager_removal'])
-                   {
+                   if ($this->options['entity_manager_removal']) {
                        $this->container->get('doctrine.orm.entity_manager')->remove($Translation);
                    }
                }
-           }
-           elseif(NULL !== $content)
-           {
+           } elseif (NULL !== $content) {
                //add it to entity
                $entity->addTranslation($Translation);
 
-               if(! $data->contains($Translation))
-               {
+               if (! $data->contains($Translation)) {
                    $data->add($Translation);
                }
            }
@@ -189,13 +171,11 @@ class AddTranslatedFieldSubscriber implements EventSubscriberInterface
         // setData is called with an actual Entity object in it (whether new,
         // or fetched with Doctrine). This if statement let's us skip right
         // over the null condition.
-        if (null === $data)
-        {
+        if (null === $data) {
             return;
         }
 
-        foreach($this->bindTranslations($data) as $binded)
-        {
+        foreach ($this->bindTranslations($data) as $binded) {
             $form->add($this->factory->createNamed(
                 $this->options['widget'],
                 $binded['fieldName'],

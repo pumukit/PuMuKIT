@@ -6,12 +6,12 @@
         <h1>Tag</h1>
     </div>
     <dl class="dl-horizontal">
-        {#% for key, value in entity %} 
+        {#% for key, value in entity %}
             <dt>{{ key }}</dt>
             <dl>{{ value }}</dl>
         {% endfor %#}
     </dl>
-    
+
     <dl class="dl-horizontal">
         <dt>Id</dt>
         <dd>{{ entity.id }}</dd>
@@ -25,7 +25,7 @@
         <dd>{{ entity.cod }}</dd>
         <dt>Metatag</dt>
         <dd>{{ entity.metatag }}</dd>
- 
+
         <dt>Created</dt>
         <dd>{{ entity.created|date('Y-m-d H:i:s') }}</dd>
         <dt>Updated</dt>
@@ -53,5 +53,5 @@
         </form>
     </li>
 </ul>
-</div>    
+</div>
 {% endblock %}

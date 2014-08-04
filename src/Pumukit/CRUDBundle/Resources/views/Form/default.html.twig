@@ -1,5 +1,5 @@
 {% block a2lix_translations_widget %}
-    {% set languages = [] %} 
+    {% set languages = [] %}
     {% set llaves = [] %}
     {% for child in form %}
         {% if loop.first %}
@@ -9,10 +9,10 @@
         {% endif %}
         {% set languages = languages |merge([child.vars.name]) %}
     {% endfor %}
-    
+
     {% set longitud = llaves|length %}
     {% for key in llaves %}
-        
+
         {% for lang in languages %}
             <div class="form_row form-group ">
                 <label class="col-lg-1 control-label">{{ key }} {{ lang }}</label>

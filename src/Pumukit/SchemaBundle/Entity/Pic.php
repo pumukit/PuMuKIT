@@ -65,7 +65,7 @@ class Pic extends Element
     /**
      * Get width
      *
-     * @return integer 
+     * @return integer
      */
     public function getWidth()
     {
@@ -85,7 +85,7 @@ class Pic extends Element
     /**
      * Get height
      *
-     * @return integer 
+     * @return integer
      */
     public function getHeight()
     {

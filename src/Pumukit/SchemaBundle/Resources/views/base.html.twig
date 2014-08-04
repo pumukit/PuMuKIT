@@ -14,11 +14,11 @@
         <div class="container-fluid">
           {{ include('PumukitSchemaBundle::menu.html.twig') }}
         </div>
-           
+
           <div class="row-fluid" id="body-wrapper">
             {% block body %}{% endblock %}
           </div>
-        
+
         {% block javascripts %}
             <script src="{{ asset('bundles/pumukitschema/js/jquery-2.0.3.js') }}" type="text/javascript"></script>
             <script src="{{ asset('bundles/pumukitschema/js/bootstrap.js') }}" type="text/javascript"></script>

@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as Serializer;
 
-
 /**
  * Pumukit\TranscoBundle\Entity\Cpu
  *
@@ -104,13 +103,12 @@ class Cpu
      */
     private $jobs;
 
-
     public function __construct()
     {
       $this->video_profiles = new \Doctrine\Common\Collections\ArrayCollection();
       $this->jobs = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
@@ -321,14 +319,13 @@ class Cpu
         return $this->jobs;
     }
 
-
     /**
      * FIXME see Doctrine ArrayAccess.
      */
-    public function set($key, $value){
+    public function set($key, $value)
+    {
       $this->$key = $value;
     }
-
 
     public function __toString()
     {

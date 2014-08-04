@@ -140,7 +140,6 @@ class Job
      */
     private $description;
 
-
     /**
      * @var VideoProfile $video_profile
      *
@@ -148,15 +147,12 @@ class Job
      */
     private $video_profile;
 
-
     /**
      * @var Cpu $cpu
      *
      * @ORM\ManyToOne(targetEntity="Cpu", inversedBy="jobs")
      */
     private $cpu;
-
-
 
     /**
      * Get id

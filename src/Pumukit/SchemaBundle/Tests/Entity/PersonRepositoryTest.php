@@ -22,11 +22,10 @@ class PersonRepositoryTest extends WebTestCase
         $this->repo = $this->em
             ->getRepository('PumukitSchemaBundle:Person');
 
-       
         //DELETE DATABASE
         $this->em->createQuery("DELETE PumukitSchemaBundle:Person p")->getResult();
     }
-    
+
     public function testRepository()
     {/*
         $login     = "login";
@@ -38,8 +37,6 @@ class PersonRepositoryTest extends WebTestCase
         $honorific = 'honorific';
         $firm      = 'firm';
         $post      = 'post';
-        
-
 
         $user = new Person();
         $user->setLogin($login);
@@ -50,7 +47,7 @@ class PersonRepositoryTest extends WebTestCase
         $this->em->persist($user);
         $this->em->flush();
 
-        // This should pass to check the unrequired fields    
+        // This should pass to check the unrequired fields
         $this->assertEquals(1, count($this->repo->findAll()));
         */
     }

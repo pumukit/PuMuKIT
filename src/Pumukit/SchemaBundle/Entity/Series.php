@@ -5,7 +5,6 @@ namespace Pumukit\SchemaBundle\Entity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
  * Pumukit\SchemaBundle\Entity\Series
  *
@@ -106,7 +105,6 @@ class Series
      */
     private $line2;
 
-
     /**
      * @Gedmo\Locale
      * Used locale to override Translation listener`s locale
@@ -121,7 +119,7 @@ class Series
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -157,8 +155,7 @@ class Series
     {
         $this->multimedia_objects[] = $multimedia_object;
         $multimedia_object->setSeries($this);
-        
-        
+
         $multimedia_object->setRank(count($this->multimedia_objects));
     }
 
@@ -194,7 +191,6 @@ class Series
         return $this->multimedia_objects;
     }
 
-
     /**
      * Set public_date
      *
@@ -208,7 +204,7 @@ class Series
     /**
      * Get public_date
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getPublicDate()
     {
@@ -228,7 +224,7 @@ class Series
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -248,7 +244,7 @@ class Series
     /**
      * Get subtitle
      *
-     * @return string 
+     * @return string
      */
     public function getSubtitle()
     {
@@ -268,7 +264,7 @@ class Series
     /**
      * Get description
      *
-     * @return text 
+     * @return text
      */
     public function getDescription()
     {
@@ -288,7 +284,7 @@ class Series
     /**
      * Get header
      *
-     * @return text 
+     * @return text
      */
     public function getHeader()
     {
@@ -308,7 +304,7 @@ class Series
     /**
      * Get footer
      *
-     * @return text 
+     * @return text
      */
     public function getFooter()
     {
@@ -328,7 +324,7 @@ class Series
     /**
      * Get copyright
      *
-     * @return string 
+     * @return string
      */
     public function getCopyright()
     {
@@ -348,7 +344,7 @@ class Series
     /**
      * Get keyword
      *
-     * @return string 
+     * @return string
      */
     public function getKeyword()
     {
@@ -368,14 +364,13 @@ class Series
     /**
      * Get line2
      *
-     * @return string 
+     * @return string
      */
     public function getLine2()
     {
         return $this->line2;
     }
-    
-    
+
     public function __toString()
     {
         return $this->getTitle();
@@ -384,149 +379,155 @@ class Series
     /**
      * Contains multimediaobject with tags
      *
-     * @param Tag $tag
+     * @param  Tag     $tag
      * @return boolean
      */
     public function containsMultimediaObjectWithTag(Tag $tag)
     {
-        foreach ($this->multimedia_objects as $mmo){
+        foreach ($this->multimedia_objects as $mmo) {
             if ($mmo->containsTag($tag)) {
                 return TRUE;
             }
         }
+
         return FALSE;
     }
-    
+
     /**
      * Get multimediaobjects with a tag
      *
-     * @param Tag $tag 
+     * @param  Tag             $tag
      * @return ArrayCollection
      */
     public function getMultimediaObjectsByTag(Tag $tag)
     {
         $r = array();
-         
-        foreach($this->multimedia_objects as $mmo) {
+
+        foreach ($this->multimedia_objects as $mmo) {
             if ($mmo->containsTag($tag)) {
                  $r[] = $mmo;
             }
         }
+
         return $r;
     }
 
     /**
      * Get one multimedia object with tag
      *
-     * @param Tag $tag 
+     * @param  Tag              $tag
      * @return MultimediaObject
      */
     public function getMultimediaObjectByTag(Tag $tag)
     {
-        foreach($this->multimedia_objects as $mmo) {
-            //if ($mmo->tags->contains($tag)){
+        foreach ($this->multimedia_objects as $mmo) {
+            //if ($mmo->tags->contains($tag)) {
             //FIXME no pasa el test phpunit cuando se llama desde seriestest
             if ($mmo->containsTag($tag)) {
-
                 return $mmo;
             }
         }
+
         return null;
     }
 
     /**
      * Get multimediaobjects with all tags
      *
-     * @param array $tags 
-     * @return ArrayCollection 
+     * @param  array           $tags
+     * @return ArrayCollection
      */
     public function getMultimediaObjectsWithAllTags(array $tags)
     {
         $r = array();
 
-        foreach($this->multimedia_objects as $mmo) {
+        foreach ($this->multimedia_objects as $mmo) {
             if ($mmo->containsAllTags($tags)) {
                 $r[] = $mmo;
             }
         }
+
         return $r;
     }
 
     /**
      * Get multimediaobject with all tags
      *
-     * @param array $tags 
+     * @param  array             $tags
      * @return multimedia_object
      */
     public function getMultimediaObjectWithAllTags(array $tags)
     {
-        foreach($this->multimedia_objects as $mmo) {
+        foreach ($this->multimedia_objects as $mmo) {
             if ($mmo->containsAllTags($tags)) {
                 return $mmo;
             }
         }
+
         return null;
     }
 
     /**
      * Get multimediaobjects with any tag
      *
-     * @param array $tags 
+     * @param  array           $tags
      * @return ArrayCollection
      */
     public function getMultimediaObjectsWithAnyTag(array $tags)
     {
         $r = array();
 
-        foreach($this->multimedia_objects as $mmo) {
+        foreach ($this->multimedia_objects as $mmo) {
             if ($mmo->containsAnyTag($tags)) {
                 $r[] = $mmo;
             }
         }
+
         return $r;
     }
 
     /**
      * Get multimediaobject with any tag
      *
-     * @param array $tags 
+     * @param  array            $tags
      * @return MultimediaObject
      */
     public function getMultimediaObjectWithAnyTag(array $tags)
     {
-        foreach($this->multimedia_objects as $mmo) {
+        foreach ($this->multimedia_objects as $mmo) {
             if ($mmo->containsAnyTag($tags)) {
                 return $mmo;
             }
         }
+
         return null;
     }
 
     /**
      * Get tracks ...
      *
-     * @param array $any_tags
-     * @param array $all_tags
-     * @param array $not_any_tags
-     * @param array $not_all_tags
+     * @param  array           $any_tags
+     * @param  array           $all_tags
+     * @param  array           $not_any_tags
+     * @param  array           $not_all_tags
      * @return ArrayCollection
      */
     public function getFilteredMultimediaObjectsByTags(
-        array $any_tags     = array(), 
-        array $all_tags     = array(), 
-        array $not_any_tags = array(), 
+        array $any_tags     = array(),
+        array $all_tags     = array(),
+        array $not_any_tags = array(),
         array $not_all_tags = array())
     {
         $r = array();
 
-        foreach($this->multimedia_objects as $mmo) {
+        foreach ($this->multimedia_objects as $mmo) {
             if($any_tags && !$mmo->containsAnyTag($any_tags))
                 continue;
-            if($all_tags && !$mmo->containsAllTags($all_tags)) 
+            if($all_tags && !$mmo->containsAllTags($all_tags))
                 continue;
-            if($not_any_tags && $mmo->containsAnyTag($not_any_tags)) 
+            if($not_any_tags && $mmo->containsAnyTag($not_any_tags))
                 continue;
-            if($not_all_tags && $mmo->containsAllTags($not_all_tags)) 
+            if($not_all_tags && $mmo->containsAllTags($not_all_tags))
                 continue;
 
              $r[] = $mmo;

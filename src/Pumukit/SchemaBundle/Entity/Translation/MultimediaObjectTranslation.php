@@ -2,7 +2,6 @@
 
 namespace Pumukit\SchemaBundle\Entity\Translation;
 
-
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Translatable\Entity\MappedSuperclass\AbstractPersonalTranslation;
 
@@ -14,8 +13,8 @@ use Gedmo\Translatable\Entity\MappedSuperclass\AbstractPersonalTranslation;
  *     })}
  * )
  */
-class MultimediaObjectTranslation extends AbstractPersonalTranslation{
-
+class MultimediaObjectTranslation extends AbstractPersonalTranslation
+{
     /**
      * Convinient constructor
      *
@@ -23,7 +22,8 @@ class MultimediaObjectTranslation extends AbstractPersonalTranslation{
      * @param string $field
      * @param string $value
      */
-    public function __construct($locale=null, $field=null, $value=null){
+    public function __construct($locale=null, $field=null, $value=null)
+    {
         $this->setLocale($locale);
         $this->setField($field);
         $this->setContent($value);

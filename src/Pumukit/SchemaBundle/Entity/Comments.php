@@ -42,12 +42,11 @@ class Comments
      * @ORM\ManyToOne(targetEntity="Pumukit\SchemaBundle\Entity\MultimediaObject")
      */
     private $multimedia_object_id;
-    
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -57,20 +56,20 @@ class Comments
     /**
      * Set date
      *
-     * @param \DateTime $date
+     * @param  \DateTime $date
      * @return Comments
      */
     public function setDate($date)
     {
         $this->date = $date;
-    
+
         return $this;
     }
 
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -80,45 +79,43 @@ class Comments
     /**
      * Set text
      *
-     * @param string $text
+     * @param  string   $text
      * @return Comments
      */
     public function setText($text)
     {
         $this->text = $text;
-    
+
         return $this;
     }
 
     /**
      * Get text
      *
-     * @return string 
+     * @return string
      */
     public function getText()
     {
         return $this->text;
     }
 
-
-
     /**
      * Set multimedia_object_id
      *
-     * @param integer $multimediaObjectId
+     * @param  integer  $multimediaObjectId
      * @return Comments
      */
     public function setMultimediaObjectId($multimediaObjectId)
     {
         $this->multimedia_object_id = $multimediaObjectId;
-    
+
         return $this;
     }
 
     /**
      * Get multimedia_object_id
      *
-     * @return integer 
+     * @return integer
      */
     public function getMultimediaObjectId()
     {

@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PersonInMultimediaObject
 {
-	/**
+    /**
      * @var MultimediaObject $multimedia_object
      *
 	 * @ORM\Id
@@ -21,15 +21,15 @@ class PersonInMultimediaObject
      * @ORM\JoinColumn(name="multimedia_object_id", referencedColumnName="id")
      */
     private $multimedia_object;
-     
+
      /**
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Person", inversedBy="id", cascade={"all"})
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      */
     private $person;
- 	
- 	/**
+
+    /**
  	 * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Role", inversedBy="id", cascade={"all"})
      * @ORM\JoinColumn(name="role_id", referencedColumnName="id")
@@ -42,7 +42,6 @@ class PersonInMultimediaObject
      * @ORM\Column(name="rank", type="integer")
      */
     private $rank;
-
 
     /**
      * Set multimedia_object
@@ -117,7 +116,7 @@ class PersonInMultimediaObject
     /**
      * Get rank
      *
-     * @return integer 
+     * @return integer
      */
     public function getRank()
     {

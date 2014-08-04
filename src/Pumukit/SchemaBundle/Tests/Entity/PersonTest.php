@@ -6,7 +6,7 @@ use Pumukit\SchemaBundle\Entity\Person;
 class PersonTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetterAndSetter()
-    {        
+    {
         $login     = 'login';
         $password    = 'password';
         $email     = 'email@email.com';

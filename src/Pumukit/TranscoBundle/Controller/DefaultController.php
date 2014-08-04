@@ -13,16 +13,16 @@ use Pumukit\TranscoBundle\Entity\Cpu;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/") 
+     * @Route("/")
      * @Template("PumukitTranscoBundle:Default:index.html.twig")
      */
     public function indexAction(Request $request)
     {
-         
-      $cpu = new Cpu();  
-      $form = $this->createForm(new CpuType(), $cpu); 
+
+      $cpu = new Cpu();
+      $form = $this->createForm(new CpuType(), $cpu);
       $form->bind($request);
-      
+
       /*
       $form = CpuForm::create($this->get('form.context'), 'cpu');
       $cpu = new Cpu();
@@ -30,11 +30,10 @@ class DefaultController extends Controller
       $form->bind($this->get('request'), $cpu);
 */
       if ($form->isValid()) {
-	echo "valido " . $cpu->getIP();
-	exit;
-	//$->send();
+    echo "valido " . $cpu->getIP();
+    exit;
+    //$->send();
       }
-      
 
       return array('form' => $form);
     }

@@ -5,11 +5,10 @@ namespace Pumukit\SchemaBundle\Entity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
  * Pumukit\SchemaBundle\Entity\Element
  *
- * @ORM\MappedSuperclass 
+ * @ORM\MappedSuperclass
  */
 class Element
 {
@@ -98,7 +97,6 @@ class Element
      */
     private $description;
 
-
     public function __construct()
     {
         $this->tags = array();
@@ -107,7 +105,7 @@ class Element
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -167,7 +165,7 @@ class Element
     /**
      * Get tags
      *
-     * @return array 
+     * @return array
      */
     public function getTags()
     {
@@ -177,18 +175,19 @@ class Element
     /**
      * Add tag
      *
-     * @param string $tag 
+     * @param string $tag
      */
     public function addTag($tag)
     {
         $this->tags[] = $tag;
+
         return $this->tags = array_unique($this->tags);
     }
 
     /**
      * Remove tag
      *
-     * @param string $tag 
+     * @param  string  $tag
      * @return boolean TRUE if this pic contained the specified tag, FALSE otherwise.
      */
     public function removeTag($tag)
@@ -207,7 +206,7 @@ class Element
     /**
      * Contains tag
      *
-     * @param string $tag 
+     * @param  string  $tag
      * @return boolean TRUE if this pic contained the specified tag, FALSE otherwise.
      */
     public function containsTag($tag)
@@ -218,7 +217,7 @@ class Element
     /**
      * Contains all tags
      *
-     * @param array $tags 
+     * @param  array   $tags
      * @return boolean TRUE if this pic contained all tags, FALSE otherwise.
      */
     public function containsAllTags(array $tags)
@@ -229,12 +228,12 @@ class Element
     /**
      * Contains any tags
      *
-     * @param array $tags 
+     * @param  array   $tags
      * @return boolean TRUE if this pic contained any tag of the list, FALSE otherwise.
      */
     public function containsAnyTag(array $tags)
     {
-    	return count(array_intersect($tags, $this->tags)) != 0;
+        return count(array_intersect($tags, $this->tags)) != 0;
     }
 
     /**
@@ -250,7 +249,7 @@ class Element
     /**
      * Get url
      *
-     * @return string 
+     * @return string
      */
     public function getUrl()
     {
@@ -270,7 +269,7 @@ class Element
     /**
      * Get path
      *
-     * @return string 
+     * @return string
      */
     public function getPath()
     {
@@ -290,7 +289,7 @@ class Element
     /**
      * Get format
      *
-     * @return string 
+     * @return string
      */
     public function getFormat()
     {
@@ -310,13 +309,12 @@ class Element
     /**
      * Get mime_type
      *
-     * @return string 
+     * @return string
      */
     public function getMimeType()
     {
         return $this->mime_type;
     }
-
 
     /**
      * Set rank
@@ -331,7 +329,7 @@ class Element
     /**
      * Get rank
      *
-     * @return integer 
+     * @return integer
      */
     public function getRank()
     {
@@ -351,7 +349,7 @@ class Element
     /**
      * Get size
      *
-     * @return integer 
+     * @return integer
      */
     public function getSize()
     {
@@ -371,7 +369,7 @@ class Element
     /**
      * Get hide
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getHide()
     {
@@ -391,12 +389,11 @@ class Element
     /**
      * Get description
      *
-     * @return text 
+     * @return text
      */
     public function getDescription()
     {
         return $this->description;
     }
-
 
 }

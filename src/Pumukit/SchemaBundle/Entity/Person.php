@@ -6,7 +6,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 /**
  * Pumukit\SchemaBundle\Entity\Person
  *
@@ -37,7 +36,7 @@ class Person
      * @ORM\Column(name="password", type="string", length=100, nullable=true)
      * @Assert\NotBlank()
      * @Assert\Length(min = "3")
-     * 
+     *
      */
     private $password;
 
@@ -117,11 +116,10 @@ class Person
      */
     private $locale;
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -141,7 +139,7 @@ class Person
     /**
      * Get login
      *
-     * @return string 
+     * @return string
      */
     public function getLogin()
     {
@@ -161,7 +159,7 @@ class Person
     /**
      * Get password
      *
-     * @return string 
+     * @return string
      */
     public function getPassword()
     {
@@ -181,7 +179,7 @@ class Person
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -201,7 +199,7 @@ class Person
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -221,7 +219,7 @@ class Person
     /**
      * Get web
      *
-     * @return string 
+     * @return string
      */
     public function getWeb()
     {
@@ -241,7 +239,7 @@ class Person
     /**
      * Get phone
      *
-     * @return string 
+     * @return string
      */
     public function getPhone()
     {
@@ -261,7 +259,7 @@ class Person
     /**
      * Get honorific
      *
-     * @return string 
+     * @return string
      */
     public function getHonorific()
     {
@@ -281,7 +279,7 @@ class Person
     /**
      * Get firm
      *
-     * @return string 
+     * @return string
      */
     public function getFirm()
     {
@@ -301,7 +299,7 @@ class Person
     /**
      * Get post
      *
-     * @return string 
+     * @return string
      */
     public function getPost()
     {
@@ -321,7 +319,7 @@ class Person
     /**
      * Get bio
      *
-     * @return string 
+     * @return string
      */
     public function getBio()
     {
@@ -334,17 +332,17 @@ class Person
     {
         $this->people_in_multimedia_object = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add people_in_multimedia_object
      *
-     * @param \Pumukit\SchemaBundle\Entity\PersonInMultimediaObject $peopleInMultimediaObject
+     * @param  \Pumukit\SchemaBundle\Entity\PersonInMultimediaObject $peopleInMultimediaObject
      * @return Person
      */
     public function addPeopleInMultimediaObject(\Pumukit\SchemaBundle\Entity\PersonInMultimediaObject $peopleInMultimediaObject)
     {
         $this->people_in_multimedia_object[] = $peopleInMultimediaObject;
-    
+
         return $this;
     }
 
@@ -361,7 +359,7 @@ class Person
     /**
      * Get people_in_multimedia_object
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPeopleInMultimediaObject()
     {

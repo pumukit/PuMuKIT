@@ -14,9 +14,6 @@ use Pumukit\SchemaBundle\Entity\Person;
 use Pumukit\SchemaBundle\Entity\Role;
 use Pumukit\SchemaBundle\Entity\PersonInMultimediaObject;
 
-use Pumukit\SchemaBundle\Tests\Entity\CommonCreateFunctions;
-
-
 class MultimediaObjectRepositoryTest extends WebTestCase
 {
 
@@ -32,7 +29,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
             ->get('doctrine.orm.entity_manager');
         $this->repo = $this->em
             ->getRepository('PumukitSchemaBundle:MultimediaObject');
-       
+
         //DELETE DATABASE - pimo has to be deleted before mm
         $this->em->createQuery("DELETE PumukitSchemaBundle:PersonInMultimediaObject pimo")->getResult();
         $this->em->createQuery("DELETE PumukitSchemaBundle:MultimediaObject mm")->getResult();
@@ -42,17 +39,16 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->em->createQuery("DELETE PumukitSchemaBundle:SeriesType st")->getResult();
 
     }
-    
+
     public function testRepositoryEmpty()
     {
         $this->assertEquals(0, count($this->repo->findAll()));
     }
 
     // Review MultimediaObject->addPersonWithRole
-    // Review CommonCreateFunctions - em->persist throws error    
+    // Review CommonCreateFunctions - em->persist throws error
     public function testCreateMultimediaObjectAndFindByCriteria()
     {
-        
 
         $series_type   = $this->createSeriesType("Medieval Fantasy Sitcom");
         //$series_type = CommonCreateFunctions::createSeriesType($this->em, "prueba");
@@ -64,7 +60,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $role_lord     = $this->createRole("Lord");
         $role_ranger   = $this->createRole("First Ranger");
         $role_hand     = $this->createRole("Hand of the King");
-        
+
         $series_type->addSeries($series_main);
         $mm1=$this->createMultimediaObjectAssignedToSeries ('MmObject 1', $series_main);
         $mm2=$this->createMultimediaObjectAssignedToSeries ('MmObject 2', $series_wall);
@@ -74,7 +70,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->em->persist($mm1);
         $this->em->persist($mm2);
         $this->em->persist($mm3);
-        $this->em->persist($mm4);        
+        $this->em->persist($mm4);
         $this->em->flush(); // It is needed to flush multimedia objects before pimo's
 
         $this->addPersonWithRoleInMultimediaObject ($person_ned, $role_lord, $mm1);
@@ -84,16 +80,16 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->addPersonWithRoleInMultimediaObject ($person_ned, $role_hand, $mm4);
         $this->em->flush();
         // DB setup END.
-        
+
         // Test find by person (and role)
-        $this->assertEquals(3,count($this->repo->findByPersonAndRole($person_ned)));        
+        $this->assertEquals(3,count($this->repo->findByPersonAndRole($person_ned)));
         $this->assertEquals(2,count($this->repo->findByPersonAndRole($person_ned,$role_lord)));
         $this->assertEquals(0,count($this->repo->findByPersonAndRole($person_ned,$role_ranger)));
         $this->assertEquals(1,count($this->repo->findByPersonAndRole($person_ned,$role_hand)));
 
         // Test find by series
         $this->assertEquals(3,count($this->repo->findBySeries($series_main)));
-        $this->assertEquals(1,count($this->repo->findBySeries($series_wall)));       
+        $this->assertEquals(1,count($this->repo->findBySeries($series_wall)));
         $this->assertEquals(0,count($this->repo->findBySeries($series_lhazar)));
         $this->assertEquals(2,count($this->repo->findBySeries($series_main, 2)));
         // exit("\n Intentando salir del test phpunit con un exit\n");
@@ -103,7 +99,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
     public function testFindBySeries()
     {
         $this->assertEquals(0, count($this->repo->findAll()));
-        //$this->assertEquals(4,count($this->repo->findBySeries($series_main)));        
+        //$this->assertEquals(4,count($this->repo->findBySeries($series_main)));
 
     }
 
@@ -116,7 +112,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $phone     = '+34986123456';
         $honorific = 'honorific';
         $firm      = 'firm';
-        $post      = 'post';    
+        $post      = 'post';
 
         $user = new Person();
         $user->setLogin($name);
@@ -137,8 +133,8 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $xml     = '<xml la lala la lala la lala laaaa/>';
         $display = true;
         $text    = 'Tú tenías mucha razón, ¡no te hice caaaasooo! Hoy he de
-         reconocer, ¡delante de un vaaasooo! Hoy me pesa la cabezaaaa, 
-         ¡qué pesaaaaaar! ¡Te juro que nesesiiiiiitoooooo 
+         reconocer, ¡delante de un vaaasooo! Hoy me pesa la cabezaaaa,
+         ¡qué pesaaaaaar! ¡Te juro que nesesiiiiiitoooooo
          reeeeee-greeeeee-saaaaaaar...!';
         $pimo    = new PersonInMultimediaObject();
 
@@ -149,7 +145,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         // $rol->setDisplay($display); // true by default
         $rol->setName($name);
         $rol->setText($text);
-        
+
         $this->em->persist($rol);
 
         return $rol;
@@ -161,13 +157,13 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $record_date = new \DateTime();
         $public_date = new \DateTime();
         $subtitle    = 'Subtitle';
-        $description = "Description"; 
+        $description = "Description";
         $duration    = 123;
 
         // $tag1      = new Tag();
         // $track1    = new Track();
         // $pic1      = new Pic();
-        // $material1 = new Material();   
+        // $material1 = new Material();
 
         $mm = new MultimediaObject();
         $series->addMultimediaObject($mm);
@@ -209,7 +205,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         return $serie;
     }
-    
+
     private function createSeriesType($name)
     {
         $description = 'description';
@@ -222,19 +218,18 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         return $series_type;
     }
-    
 
     // This function was used to assure that pimo objects would persist.
     public function addPersonWithRoleInMultimediaObject(
                     Person $person, Role $role, MultimediaObject $mm)
-    {        
-        if (!$mm->containsPersonWithRole($person, $role)){            
-            $pimo = new PersonInMultimediaObject();    
+    {
+        if (!$mm->containsPersonWithRole($person, $role)) {
+            $pimo = new PersonInMultimediaObject();
             $pimo->setPerson( $person );
             $pimo->setRole( $role );
             $pimo->setMultimediaObject( $mm );
             $pimo->setRank(count($mm->getPeopleInMultimediaObject()));
-            $mm->addPersonInMultimediaObject($pimo); 
+            $mm->addPersonInMultimediaObject($pimo);
             $this->em->persist($pimo);
         }
     }

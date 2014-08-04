@@ -2,43 +2,43 @@
                 <div class="container-fluid" id="nav">
                     <a class="navbar-brand" href="#" id="logo"><img src="{{ asset('bundles/pumukitcrud/images/pumukit-logo2.png') }}" /></a>
                     <ul class="nav navbar-nav" >
-                      <li {% if app.request.attributes.get('menu') == 'person' %} 
-                             class="active" 
+                      <li {% if app.request.attributes.get('menu') == 'person' %}
+                             class="active"
                           {% endif %}>
                         <a href="{{ path('person') }}">Person</a>
                       </li>
-                      <li {% if app.request.attributes.get('menu') == 'tag' %} 
-                             class="active" 
+                      <li {% if app.request.attributes.get('menu') == 'tag' %}
+                             class="active"
                           {% endif %}>
                         <a href="{{ path('tag') }}">Tag</a>
                       </li>
-                      <li {% if app.request.attributes.get('menu') == 'dashboard' %} 
-                             class="active" 
+                      <li {% if app.request.attributes.get('menu') == 'dashboard' %}
+                             class="active"
                           {% endif %}>
                         <a href="{{ path('tag') }}">Dashboard</a>
                       </li>
-                      <li {% if app.request.attributes.get('menu') == 'multimedia' %} 
-                             class="active" 
+                      <li {% if app.request.attributes.get('menu') == 'multimedia' %}
+                             class="active"
                           {% endif %}>
                         <a href="{{ path('tag') }}">Series multimedia</a>
                       </li>
-                      
-              
+
+
                       <li class="dropdown {% if app.request.attributes.get('menu') == 'webtv' %} active {% endif %}">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Diseño portal WebTV<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                           <li><a href="#">Diseño</a></li>
                           <li><a href="#">Plantillas</a></li>
                           <li><a href="#">File manager</a></li>
-                        </ul>   
+                        </ul>
                       </li>
-                      
+
                       <li class="dropdown {% if app.request.attributes.get('menu') == 'directos' %} active {% endif %}">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Directos<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                           <li><a href="#">Canales en directo</a></li>
                           <li><a href="#">Anuncios de directos</a></li>
-                        </ul>   
+                        </ul>
                       </li>
                       <li class="dropdown {% if app.request.attributes.get('menu') == 'transcodificacion' %} active {% endif %}">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Transcodificación<b class="caret"></b></a>
@@ -46,14 +46,14 @@
                           <li><a href="#">Perfiles de transcodificacion</a></li>
                           <li><a href="#">Lista de tareas</a></li>
                           <li><a href="#">Transcodificadores</a></li>
-                        </ul>   
+                        </ul>
                       </li>
                       <li class="dropdown {% if app.request.attributes.get('menu') == 'distribucion' %} active {% endif %}">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Distribución<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                           <li><a href="#">Perfiles de difusión</a></li>
                           <li><a href="#">Servidores de distribución</a></li>
-                        </ul>   
+                        </ul>
                       </li>
                       <li class="dropdown {% if app.request.attributes.get('menu') == 'tablas' %} active {% endif %}">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tablas<b class="caret"></b></a>
@@ -65,25 +65,25 @@
                           <li><a href="#">Tipos de series</a></li>
                           <li><a href="#">Idiomas</a></li>
                           <li><a href="#">Roles</a></li>
-                        </ul>   
+                        </ul>
                       </li>
 
                       <li class="dropdown {% if app.request.attributes.get('menu') == 'administracion' %} active {% endif %}">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administración<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                           <li><a href="#">Usuarios admin</a></li>
-                        </ul>   
+                        </ul>
                       </li>
                       <li class="dropdown {% if app.request.attributes.get('menu') == 'ingestador' %} active {% endif %}">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Ingestador<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                           <li><a href="#">Ingestador Matterhorn</a></li>
-                        </ul>   
+                        </ul>
                       </li>
                     </ul>
-                    
+
                     <ul class="nav navbar-nav pull-right">
-              
+
                       <li class="dropdown {% if app.request.attributes.get('menu') == 'user' %} active {% endif %}">
                           <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user">&nbsp; TestUser (admin)</span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -92,7 +92,7 @@
                           <li><a href="#">Something else here</a></li>
                           <li class="divider"></li>
                           <li><a href="#">Logout</a></li>
-                        </ul>   
+                        </ul>
                       </li>
                     </ul>
                 </div>

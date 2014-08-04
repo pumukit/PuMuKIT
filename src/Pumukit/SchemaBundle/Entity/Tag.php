@@ -7,7 +7,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 // Review /vendor/gedmo/doctrine-extensions/lib/Gedmo/Tree/Entity/Repository/NestedTreeRepository.php
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
  * Pumukit\SchemaBundle\Entity\Tag
  * @Gedmo\Tree(type="nested")
@@ -34,7 +33,6 @@ class Tag implements Node
      */
     private $multimedia_objects;
 
-
     /**
      * @var string $title
      * @Gedmo\Translatable
@@ -53,7 +51,7 @@ class Tag implements Node
 
     /**
      * @var string $slug
-     * 
+     *
      * @ORM\Column(name="slug", type="string", length=255, nullable=true)
      * REVISAR
      */
@@ -61,17 +59,17 @@ class Tag implements Node
 
     /**
      * @var string $cod
-     * 
+     *
      * @ORM\Column(name="cod", type="string", length=255, nullable=true)
      */
     private $cod = 0;
 
     /**
      * @var boolean $metatag
-     * 
+     *
      * @ORM\Column(name="metatag", type="boolean", nullable=true)
      */
-    private $metatag = false;    
+    private $metatag = false;
 
     /**
      * @Gedmo\Locale
@@ -122,7 +120,7 @@ class Tag implements Node
     private $children;
 
     /**
-     * @var datetime $created 
+     * @var datetime $created
      * review property: Timestampable(on="create")
      * @ORM\Column(name="created", type="datetime", nullable=true)
      */
@@ -135,8 +133,6 @@ class Tag implements Node
      */
     private $updated;
 
-
-
     public function __construct($title = null)
     {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
@@ -145,11 +141,10 @@ class Tag implements Node
         }
     }
 
-    
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -169,7 +164,7 @@ class Tag implements Node
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -196,7 +191,7 @@ class Tag implements Node
     /**
      * Get cod
      *
-     * @return string 
+     * @return string
      */
     public function getCod()
     {
@@ -216,7 +211,7 @@ class Tag implements Node
     /**
      * Get metatag
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getMetatag()
     {
@@ -233,7 +228,7 @@ class Tag implements Node
         return $this->description;
     }
 
-    public function setParent( Tag $parent)
+    public function setParent(Tag $parent)
     {
         $this->parent = $parent;
     }
@@ -290,33 +285,33 @@ class Tag implements Node
     /**
      * Set slug
      *
-     * @param string $slug
+     * @param  string $slug
      * @return Tag
      */
     public function setSlug($slug)
     {
         $this->slug = $slug;
-    
+
         return $this;
     }
 
     /**
      * Set lft
      *
-     * @param integer $lft
+     * @param  integer $lft
      * @return Tag
      */
     public function setLft($lft)
     {
         $this->lft = $lft;
-    
+
         return $this;
     }
 
     /**
      * Get lft
      *
-     * @return integer 
+     * @return integer
      */
     public function getLft()
     {
@@ -326,20 +321,20 @@ class Tag implements Node
     /**
      * Set rgt
      *
-     * @param integer $rgt
+     * @param  integer $rgt
      * @return Tag
      */
     public function setRgt($rgt)
     {
         $this->rgt = $rgt;
-    
+
         return $this;
     }
 
     /**
      * Get rgt
      *
-     * @return integer 
+     * @return integer
      */
     public function getRgt()
     {
@@ -349,65 +344,65 @@ class Tag implements Node
     /**
      * Set root
      *
-     * @param integer $root
+     * @param  integer $root
      * @return Tag
      */
     public function setRoot($root)
     {
         $this->root = $root;
-    
+
         return $this;
     }
 
     /**
      * Set level
      *
-     * @param integer $level
+     * @param  integer $level
      * @return Tag
      */
     public function setLevel($level)
     {
         $this->level = $level;
-    
+
         return $this;
     }
 
     /**
      * Set created
      *
-     * @param \DateTime $created
+     * @param  \DateTime $created
      * @return Tag
      */
     public function setCreated($created)
     {
         $this->created = $created;
-    
+
         return $this;
     }
 
     /**
      * Set updated
      *
-     * @param \DateTime $updated
+     * @param  \DateTime $updated
      * @return Tag
      */
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-    
+
         return $this;
     }
 
     /**
      * Add multimedia_objects
      *
-     * @param \Pumukit\SchemaBundle\Entity\MultimediaObject $multimediaObjects
+     * @param  \Pumukit\SchemaBundle\Entity\MultimediaObject $multimediaObjects
      * @return Tag
      */
     public function addMultimediaObject(\Pumukit\SchemaBundle\Entity\MultimediaObject $multimediaObjects)
     {
         $this->multimedia_objects[] = $multimediaObjects;
-    
+
         return $this;
     }
 
@@ -424,7 +419,7 @@ class Tag implements Node
     /**
      * Get multimedia_objects
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMultimediaObjects()
     {
@@ -434,13 +429,13 @@ class Tag implements Node
     /**
      * Add children
      *
-     * @param \Pumukit\SchemaBundle\Entity\Tag $children
+     * @param  \Pumukit\SchemaBundle\Entity\Tag $children
      * @return Tag
      */
     public function addChildren(\Pumukit\SchemaBundle\Entity\Tag $children)
     {
         $this->children[] = $children;
-    
+
         return $this;
     }
 

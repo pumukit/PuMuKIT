@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class DefaultController extends Controller
 {
-  
+
     /**
      * @Route("/hello/{name}")
      * @Template("PumukitCRUDBundle:Default:index.html.twig")
@@ -24,8 +24,9 @@ class DefaultController extends Controller
     public function sumAction($a, $b /*, \Symfony\Component\HttpFoundation\Request $req*/)
     {
         //var_dump($req->getPara()); exit;
-      
+
         $sum = $a + $b;
+
         return array('sum' => $sum);
     }
 }

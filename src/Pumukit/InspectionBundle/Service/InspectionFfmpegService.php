@@ -7,13 +7,13 @@ use Symfony\Component\HttpKernel\Log\LoggerInterface;
 class InspectionFfmpegService implements InspectionServiceInterface
 {
 
-	private $logger;
+    private $logger;
 
-	public function __construct(LoggerInterface $logger = null)
+    public function __construct(LoggerInterface $logger = null)
     {
-		if (!class_exists('ffmpeg_movie')){
-			throw new \LogicException("ffmpeg_movie is not loaded");
-		}
+        if (!class_exists('ffmpeg_movie')) {
+            throw new \LogicException("ffmpeg_movie is not loaded");
+        }
         $this->logger = $logger;
     }
 
@@ -23,73 +23,71 @@ class InspectionFfmpegService implements InspectionServiceInterface
      * @param $file
      * @return integer $duration file duration in s rounded up.
      */
-	public function getDuration($file) 
-	{
-		if (!file_exists($file)){	
-			throw new \BadMethodCallException("The file " . $file . " does not exist");
-		}
+    public function getDuration($file)
+    {
+        if (!file_exists($file)) {
+            throw new \BadMethodCallException("The file " . $file . " does not exist");
+        }
 
+        $movie = new \ffmpeg_movie( $file, false );
+        $finfo = new \finfo();
 
-		$movie = new \ffmpeg_movie( $file, false );
-		$finfo = new \finfo;
-	
-		
-		if ( !$this->fileHasMediaContent( $finfo, $file) ){
-			throw new \InvalidArgumentException("This file has no video nor audio tracks");
-		}
+        if ( !$this->fileHasMediaContent( $finfo, $file) ) {
+            throw new \InvalidArgumentException("This file has no video nor audio tracks");
+        }
 
-		return ceil( $movie->getDuration() );
-	}
-	
-	/**
+        return ceil( $movie->getDuration() );
+    }
+
+    /**
      * Completes track information from a given path using ffmpeg.
      * @param Track $track
      */
-	public function autocompleteTrack(Track $track)
-	{
+    public function autocompleteTrack(Track $track)
+    {
 
-		if (!$track->getPath()){	
-			throw new \BadMethodCallException('Input track has no path defined');
-		}
-		$file = $track->getPath();
-		$movie = new \ffmpeg_movie($file, false);
-		$finfo = new \finfo;
-		
-		if ( !$this->fileHasMediaContent( $finfo, $file ) ){
-			throw new \InvalidArgumentException("This file has no video nor audio tracks");
-		}
+        if (!$track->getPath()) {
+            throw new \BadMethodCallException('Input track has no path defined');
+        }
+        $file = $track->getPath();
+        $movie = new \ffmpeg_movie($file, false);
+        $finfo = new \finfo();
 
-		$only_audio = true;
-		
-		// General
-		$track->setMimetype( $finfo->file ( $file, FILEINFO_MIME_TYPE ) );
-		$track->setBitrate( $movie->getBitRate() );
-		$track->setDuration( ceil( $movie->getDuration() ) );
-		$track->setSize( filesize($file) );
+        if ( !$this->fileHasMediaContent( $finfo, $file ) ) {
+            throw new \InvalidArgumentException("This file has no video nor audio tracks");
+        }
 
-		if ( $movie->hasVideo() ){
-			$only_audio = false;
-			$track->setVcodec( $movie->getVideoCodec() );
-			$track->setFramerate( $movie->getFrameRate() );
-			$track->setWidth( $movie->getFrameWidth() );
-			$track->setHeight( $movie->getFrameHeight() );
-		}
+        $only_audio = true;
 
-		if ($movie->hasAudio()){
-			$track->setAcodec( $movie->getAudioCodec() );
-			$track->setChannels ($movie->getAudioChannels() );
-		}
+        // General
+        $track->setMimetype( $finfo->file ( $file, FILEINFO_MIME_TYPE ) );
+        $track->setBitrate( $movie->getBitRate() );
+        $track->setDuration( ceil( $movie->getDuration() ) );
+        $track->setSize( filesize($file) );
 
-		$track->setOnlyAudio($only_audio);
-	}
+        if ( $movie->hasVideo() ) {
+            $only_audio = false;
+            $track->setVcodec( $movie->getVideoCodec() );
+            $track->setFramerate( $movie->getFrameRate() );
+            $track->setWidth( $movie->getFrameWidth() );
+            $track->setHeight( $movie->getFrameHeight() );
+        }
 
-	private function fileHasMediaContent( $finfo, $file){
-		$mime = substr( $finfo->file ( $file, FILEINFO_MIME_TYPE ), 0, 5);
-		if ($mime == "audio" || $mime == "video"){
-			
-			return true;
-		}
+        if ($movie->hasAudio()) {
+            $track->setAcodec( $movie->getAudioCodec() );
+            $track->setChannels ($movie->getAudioChannels() );
+        }
 
-		return false;
-	}
+        $track->setOnlyAudio($only_audio);
+    }
+
+    private function fileHasMediaContent($finfo, $file)
+    {
+        $mime = substr( $finfo->file ( $file, FILEINFO_MIME_TYPE ), 0, 5);
+        if ($mime == "audio" || $mime == "video") {
+            return true;
+        }
+
+        return false;
+    }
 }

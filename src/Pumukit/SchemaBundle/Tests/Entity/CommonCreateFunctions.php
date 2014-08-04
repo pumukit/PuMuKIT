@@ -3,20 +3,12 @@ namespace Pumukit\SchemaBundle\Tests\Entity;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-use Pumukit\SchemaBundle\Entity\MultimediaObject;
 use Pumukit\SchemaBundle\Entity\Series;
 use Pumukit\SchemaBundle\Entity\SeriesType;
-use Pumukit\SchemaBundle\Entity\Track;
-use Pumukit\SchemaBundle\Entity\Pic;
-use Pumukit\SchemaBundle\Entity\Material;
-use Pumukit\SchemaBundle\Entity\Tag;
-use Pumukit\SchemaBundle\Entity\Person;
-use Pumukit\SchemaBundle\Entity\Role;
-use Pumukit\SchemaBundle\Entity\PersonInMultimediaObject;
 
 abstract class CommonCreateFunctions extends WebTestCase
 {
-	 public static function createSeries($em, $title)
+     public static function createSeries($em, $title)
     {
         $subtitle    = 'subtitle';
         $description = 'description';

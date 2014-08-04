@@ -8,7 +8,7 @@ class DefaultControllerTest extends WebTestCase
 {
     public function testIndex()
     {
-	$this->markTestSkipped('must be revisited.');        
+    $this->markTestSkipped('must be revisited.');
 
         $client = static::createClient();
 

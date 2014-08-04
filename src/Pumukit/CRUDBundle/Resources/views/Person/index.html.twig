@@ -12,9 +12,9 @@
                 <a href="{{ path('person_new') }}"><span class="glyphicon glyphicon-plus">&nbsp;New</span></a>
             </li>
         </ul>
-        
+
     </div>
-    
+
     <table class="table span10 table-hover records_list table-striped">
         <thead>
             <tr>
@@ -26,7 +26,7 @@
             </tr>
         </thead>
         <tbody>
-        
+
         {% for entity in pagination %}
             <tr class="tr-person">
                 <td><a href="{{ path('person_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
@@ -42,14 +42,14 @@
                         <a href="{{ path('person_edit_new', { 'id': entity.id }) }}"><button class="btn navbar-btn glyphicon glyphicon-edit"></button></a>
                     </li>
                     <li>
-                        
+
                         <form class="form-inline" action="{{ path('person_delete', { 'id': entity.id }) }}" method="post">
                             <input type="hidden" name="_method" value="DELETE" />
                             {{ form_widget( delete_forms[ entity.id ] ) }}
                             <button type="submit" class=" btn navbar-btn text-danger glyphicon glyphicon-trash"></button>
-                        </form> 
-                        
-                        
+                        </form>
+
+
                     </li>
                 </ul>
                 </td>
@@ -63,13 +63,13 @@
         {% endfor %}
         </tbody>
     </table>
-    
+
     <div class="navigation">
       {{ knp_pagination_render(pagination) }}
     </div>
-              
-              
-            
+
+
+
 
     </ul>
 </div>

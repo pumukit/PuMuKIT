@@ -21,13 +21,12 @@ class TrackTest extends \PHPUnit_Framework_TestCase
         $vcodec     = 'mpeg4-HP';
         $bitrate    = 10000;
         $framerate  = 25;
-        $only_audio = FALSE;
+        $only_audio = false;
         $rank       = 123;
         $duration   = 66666;
         $width      = 1920;
         $height     = 1080;
-        $hide       = FALSE;
-
+        $hide       = false;
 
         $track    = new Track();
         $track->setMultimediaObject($mm);
@@ -48,7 +47,6 @@ class TrackTest extends \PHPUnit_Framework_TestCase
         $track->setHeight($height);
         $track->setHide($hide);
 
-        
         $this->assertEquals($mm, $track->getMultimediaObject());
         $this->assertEquals($tags, $track->getTags());
         $this->assertEquals($language, $track->getLanguage());
@@ -71,12 +69,11 @@ class TrackTest extends \PHPUnit_Framework_TestCase
     public function testMaxSize()
     {
         $size      = 5368709120; // 5GB, integer types in 32 bits machines only admit 2GB
-        
+
         $track    = new Track();
         $track->setSize($size);
         $this->assertEquals($size,$track->getSize());
     }
-
 
     public function testTagCollection()
     {
@@ -86,7 +83,7 @@ class TrackTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($track->containsTag('t'));
         $track->removeTag('t');
         $this->assertFalse($track->containsTag('t'));
-        
+
         //Repeat Tag
         $this->assertFalse($track->containsTag('t'));
         $track->addTag('t');
@@ -95,7 +92,7 @@ class TrackTest extends \PHPUnit_Framework_TestCase
         $track->removeTag('t');
         $this->assertFalse($track->containsTag('t'));
         $this->assertFalse($track->removeTag('t'));
-        
+
         //containsAllTag and containsAnyTag
         $track->addTag('t1');
         $track->addTag('t2');
@@ -109,7 +106,6 @@ class TrackTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($track->containsAllTags(array('t0', 't1', 't2', 't3')));
     }
 
-
     public function testRef()
     {
         $t1 = new Track();
@@ -117,7 +113,7 @@ class TrackTest extends \PHPUnit_Framework_TestCase
 
         $t2->setRef($t1);
         $this->assertEquals(null, $t1->getRef());
-        $this->assertEquals($t1, $t2->getRef());	
+        $this->assertEquals($t1, $t2->getRef());
     }
 
 }

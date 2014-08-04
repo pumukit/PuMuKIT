@@ -29,7 +29,6 @@ class PersonController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        
         $dql   = "SELECT a FROM PumukitSchemaBundle:Person a";
         $query = $em->createQuery($dql);
 
@@ -39,13 +38,13 @@ class PersonController extends Controller
             $this->get('request')->query->get('page', 1)/*page number*/,
             10/*limit per page*/
         );
-        
+
         $delete_forms = array();
-        
-        foreach( $pagination as $entity ) {
+
+        foreach ($pagination as $entity) {
             $delete_forms[ $entity->getId() ] = $this->createDeleteForm($entity->getId())->createView();
         }
-        
+
         return array(
             'delete_forms' => $delete_forms,
             'pagination' => $pagination

@@ -81,11 +81,10 @@ class Role
      */
     private $locale;
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -105,7 +104,7 @@ class Role
     /**
      * Get cod
      *
-     * @return string 
+     * @return string
      */
     public function getCod()
     {
@@ -125,7 +124,7 @@ class Role
     /**
      * Get rank
      *
-     * @return integer 
+     * @return integer
      */
     public function getRank()
     {
@@ -145,7 +144,7 @@ class Role
     /**
      * Get xml
      *
-     * @return string 
+     * @return string
      */
     public function getXml()
     {
@@ -165,7 +164,7 @@ class Role
     /**
      * Get display
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDisplay()
     {
@@ -185,7 +184,7 @@ class Role
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -205,7 +204,7 @@ class Role
     /**
      * Get text
      *
-     * @return string 
+     * @return string
      */
     public function getText()
     {
@@ -218,17 +217,17 @@ class Role
     {
         $this->people_in_multimedia_object = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add people_in_multimedia_object
      *
-     * @param \Pumukit\SchemaBundle\Entity\PersonInMultimediaObject $peopleInMultimediaObject
+     * @param  \Pumukit\SchemaBundle\Entity\PersonInMultimediaObject $peopleInMultimediaObject
      * @return Role
      */
     public function addPeopleInMultimediaObject(\Pumukit\SchemaBundle\Entity\PersonInMultimediaObject $peopleInMultimediaObject)
     {
         $this->people_in_multimedia_object[] = $peopleInMultimediaObject;
-    
+
         return $this;
     }
 
@@ -245,7 +244,7 @@ class Role
     /**
      * Get people_in_multimedia_object
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPeopleInMultimediaObject()
     {

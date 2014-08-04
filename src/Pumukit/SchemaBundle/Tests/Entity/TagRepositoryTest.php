@@ -20,7 +20,7 @@ class TagRepositoryTest extends WebTestCase
             ->get('doctrine.orm.entity_manager');
         $this->repo = $this->em
             ->getRepository('PumukitSchemaBundle:Tag');
-       
+
         //DELETE DATABASE TABLES
         $this->em->createQuery("DELETE PumukitSchemaBundle:Tag t")->getResult();
         $this->em->createQuery('DELETE Gedmo\Translatable\Entity\Translation et')->getResult();
@@ -57,7 +57,7 @@ class TagRepositoryTest extends WebTestCase
         $this->em->flush();
     }
 
-    public function testCreateMultipleTranslationsWithOneFlush ()
+    public function testCreateMultipleTranslationsWithOneFlush()
     {
         $title_uvigo    = 'Uvigo';
         $title_uvigo_gl = 'Galego Uvigo_gl';
@@ -82,7 +82,6 @@ class TagRepositoryTest extends WebTestCase
         $cvigo->setTitle($title_cvigo);
         $cvigo->setDescription($desc_cvigo);
         $cvigo->setParent($uvigo);
-   
 
         $this->trepo = $this->em->getRepository('Gedmo\Translatable\Entity\Translation');
 
@@ -94,7 +93,7 @@ class TagRepositoryTest extends WebTestCase
         $this->trepo->translate($cvigo, 'title', $locale_en, $desc_cvigo_en);
         $this->trepo->translate($cvigo, 'description', $locale_gl, $desc_cvigo_gl);
         $this->trepo->translate($cvigo, 'description', $locale_en, $desc_cvigo_en);
-        
+
         $this->em->persist($uvigo);
         $this->em->persist($cvigo);
         $this->em->flush();
@@ -103,7 +102,7 @@ class TagRepositoryTest extends WebTestCase
         $found_uvigo=$this->repo->findOneByTitle($title_uvigo);
         $this->assertEquals($title_uvigo, $found_uvigo->getTitle());
         $this->assertEquals($desc_uvigo, $found_uvigo->getDescription());
-        
+
         $found_cvigo=$this->repo->findOneByDescription($desc_cvigo);
         $this->assertEquals($desc_cvigo, $found_cvigo->getDescription());
 

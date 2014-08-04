@@ -7,7 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Entity\Role;
 use Pumukit\SchemaBundle\Entity\PersonInMultimediaObject;
 
-
 class RoleRepositoryTest extends WebTestCase
 {
 
@@ -24,11 +23,10 @@ class RoleRepositoryTest extends WebTestCase
         $this->repo = $this->em
             ->getRepository('PumukitSchemaBundle:Role');
 
-       
         //DELETE DATABASE
         $this->em->createQuery("DELETE PumukitSchemaBundle:Role r")->getResult();
     }
-    
+
     public function testRepository()
     {
         /*
@@ -38,8 +36,8 @@ class RoleRepositoryTest extends WebTestCase
         $display = true;
         $name    = 'rol1';
         $text    = 'Tú tenías mucha razón, ¡no te hice caaaasooo! Hoy he de
-         reconocer, ¡delante de un vaaasooo! Hoy me pesa la cabezaaaa, 
-         ¡qué pesaaaaaar! ¡Te juro que nesesiiiiiitoooooo 
+         reconocer, ¡delante de un vaaasooo! Hoy me pesa la cabezaaaa,
+         ¡qué pesaaaaaar! ¡Te juro que nesesiiiiiitoooooo
          reeeeee-greeeeee-saaaaaaar...!';
         $pimo    = new PersonInMultimediaObject();
 
@@ -50,11 +48,11 @@ class RoleRepositoryTest extends WebTestCase
         // $rol->setDisplay($display); // true by default
         $rol->setName($name);
         $rol->setText($text);
-        
+
         $this->em->persist($rol);
         $this->em->flush();
 
-        // This should pass to check the unrequired fields    
+        // This should pass to check the unrequired fields
         $this->assertEquals(1, count($this->repo->findAll()));
         */
     }

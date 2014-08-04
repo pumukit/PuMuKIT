@@ -48,7 +48,7 @@ class SeriesType
     /**
      * @var ArrayCollection $series
      *
-     * @ORM\OneToMany(targetEntity="Series",  mappedBy="series_type", cascade={"remove"}) 
+     * @ORM\OneToMany(targetEntity="Series",  mappedBy="series_type", cascade={"remove"})
      */
     private $series;
 
@@ -67,7 +67,7 @@ class SeriesType
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -87,7 +87,7 @@ class SeriesType
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -107,7 +107,7 @@ class SeriesType
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -127,7 +127,7 @@ class SeriesType
     /**
      * Get cod
      *
-     * @return string 
+     * @return string
      */
     public function getCod()
     {
@@ -177,19 +177,18 @@ class SeriesType
     public function getSeries()
     {
         return $this->series;
-    }    
-
+    }
 
     /**
      * Add series
      *
-     * @param \Pumukit\SchemaBundle\Entity\Series $series
+     * @param  \Pumukit\SchemaBundle\Entity\Series $series
      * @return SeriesType
      */
     public function addSerie(\Pumukit\SchemaBundle\Entity\Series $series)
     {
         $this->series[] = $series;
-    
+
         return $this;
     }
 

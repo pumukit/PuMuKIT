@@ -10,8 +10,8 @@
     <form   class="form-horizontal" action="{{ path('person_create') }}" method="post" {{ form_enctype(form) }}>
 
         {# form_widget(form) #}
-        {# form_start(form) #}  
-          
+        {# form_start(form) #}
+
         {{ form_errors(form) }}
 
         {{ form_widget(form) }}
@@ -24,6 +24,6 @@
             <li class="pull-left">
                 <a href="{{ path('person') }}">&larr; Back to the list</a>
             </li>
-        </ul>     
+        </ul>
 </div>
 {% endblock %}

@@ -25,7 +25,7 @@ class CpuType extends AbstractType
               ->add('passwd')
           ;
     }
-    
+
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
@@ -33,7 +33,7 @@ class CpuType extends AbstractType
             'csrf_protection' => false,
         ));
     }
-    
+
     public function getName()
     {
         return 'pumukit_transcobundle_cputype';

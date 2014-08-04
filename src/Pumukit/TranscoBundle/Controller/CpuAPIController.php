@@ -14,9 +14,8 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Pumukit\TranscoBundle\Entity\Cpu;
 use Pumukit\TranscoBundle\Form\CpuType;
 
-
-class CpuAPIController extends FOSRestController {
-
+class CpuAPIController extends FOSRestController
+{
     /**
      * @ApiDoc(
      *     resource=true,
@@ -27,14 +26,14 @@ class CpuAPIController extends FOSRestController {
     public function getCpusAction()
     {
         $cpus = $this->getDoctrine()->getRepository('PumukitTranscoBundle:Cpu')->findAll();
-        
-	$view = $this->view($cpus, 200)
-	  ->setTemplate("PumukitTranscoBundle:Cpus:index.html.twig")
-	  ->setTemplateVar('cpus');
 
-	return $this->handleView($view);
+    $view = $this->view($cpus, 200)
+      ->setTemplate("PumukitTranscoBundle:Cpus:index.html.twig")
+      ->setTemplateVar('cpus');
+
+    return $this->handleView($view);
     }
-    
+
     /**
      * @ParamConverter("cpu", class="PumukitTranscoBundle:Cpu")
      * @ApiDoc(
@@ -44,14 +43,13 @@ class CpuAPIController extends FOSRestController {
      */
     public function getCpuAction(Cpu $cpu)
     {
-	$view = $this->view($cpu, 200)
-	  ->setTemplate("PumukitTranscoBundle:Cpus:show.html.twig")
-	  ->setTemplateVar('cpu');
+    $view = $this->view($cpu, 200)
+      ->setTemplate("PumukitTranscoBundle:Cpus:show.html.twig")
+      ->setTemplateVar('cpu');
 
-	return $this->handleView($view);
+    return $this->handleView($view);
     }
-    
-   
+
     /**
      * @ApiDoc(
      *     section="PumukitTranscoBundle",
@@ -62,27 +60,26 @@ class CpuAPIController extends FOSRestController {
     public function postCpusAction()
     {
         $em = $this->getDoctrine()->getManager();
-                
+
         $entity = new Cpu();
         $form   = $this->createForm(new CpuType(), $entity);
         $form->bind($this->getRequest());
-        
+
          if ($form->isValid()) {
             $em->persist($entity);
             $em->flush();
-            
+
             $view = $this->redirectView(
                     $this->generateUrl('get_cpu', array('cpu' => $entity->getId(), '_format' => 'json'), true),
                     201);
-         } else{
-	  $view = $this->view($form, 400)
-	      ->setTemplate("PumukitTranscoBundle:Cpus:index.html.twig");
+         } else {
+      $view = $this->view($form, 400)
+          ->setTemplate("PumukitTranscoBundle:Cpus:index.html.twig");
          }
 
-	return $this->handleView($view);
+    return $this->handleView($view);
     }
-    
-    
+
     /**
      * @ApiDoc(
      *     section="PumukitTranscoBundle",
@@ -93,26 +90,26 @@ class CpuAPIController extends FOSRestController {
     public function putCpuAction(Cpu $cpu)
     {
        $em = $this->getDoctrine()->getManager();
-                
+
        $form   = $this->createForm(new CpuType(), $cpu);
        $form->bind($this->getRequest());
-        
+
          if ($form->isValid()) {
             $em->persist($cpu);
             $em->flush();
-            
+
             $view = $this->redirectView(
                     $this->generateUrl('get_cpu', array('cpu' => $cpu->getId(), '_format' => 'json'), true),
                     201);
-         } else{
-	  $view = $this->view($form, 400)
-	      ->setTemplate("PumukitTranscoBundle:Cpus:index.html.twig");
+         } else {
+      $view = $this->view($form, 400)
+          ->setTemplate("PumukitTranscoBundle:Cpus:index.html.twig");
          }
 
-	return $this->handleView($view);
+    return $this->handleView($view);
 
     }
-    
+
     /**
      * @ApiDoc(
      *     section="PumukitTranscoBundle",
@@ -123,19 +120,19 @@ class CpuAPIController extends FOSRestController {
     public function deleteCpuAction(Cpu $cpu)
     {
         $em = $this->getDoctrine()->getManager();
-       
+
         if (!$cpu) {
             throw $this->createNotFoundException('Unable to find Person entity.');
         }
 
         $em->remove($cpu);
         $em->flush();
-        
+
         $view = $this->redirectView(
             $this->generateUrl('get_cpus', array('_format' => 'json'), true),
             204);
 
-      	return $this->handleView($view);
+          return $this->handleView($view);
 
     }
 }

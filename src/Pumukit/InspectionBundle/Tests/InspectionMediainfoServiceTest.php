@@ -11,31 +11,34 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
     private $wrong_file2;
     private $vid_no_audio;
 
-    public function setUp(){
+    public function setUp()
+    {
         $this->resources_dir = realpath(__DIR__.'/../Resources') . DIRECTORY_SEPARATOR;
         $this->wrong_file1   = $this->resources_dir . "textfile.txt";
         $this->wrong_file2   = $this->resources_dir . "zerosizefile.txt";
         $this->vid_no_audio = realpath('/var/test video') . DIRECTORY_SEPARATOR . 'SCREEN.avi';
 
-	if (true) {
-	  $this->markTestSkipped('The ffmpeg extension is not available.');
-	}
+    if (true) {
+      $this->markTestSkipped('The ffmpeg extension is not available.');
+    }
     }
 
     /**
      * @expectedException BadMethodCallException
      */
-    public function testGetDurationFileNotExists(){
-      $is = new InspectionMediainfoService(); 
-      $is->getDuration("http://trololo.com");	
+    public function testGetDurationFileNotExists()
+    {
+      $is = new InspectionMediainfoService();
+      $is->getDuration("http://trololo.com");
     }
-    
+
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testGetDurationFileWithoutMultimediaContent(){
-        $is   = new InspectionMediainfoService(); 
-        $is->getDuration($this->wrong_file1); 
+    public function testGetDurationFileWithoutMultimediaContent()
+    {
+        $is   = new InspectionMediainfoService();
+        $is->getDuration($this->wrong_file1);
     }
 
     public function testGetDuration()
@@ -50,23 +53,26 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException BadMethodCallException
      */
-    public function testAutocompleteTrackWithoutPath(){
+    public function testAutocompleteTrackWithoutPath()
+    {
       $empty_track = new Track();
-      $is          = new InspectionMediainfoService(); 
+      $is          = new InspectionMediainfoService();
       $is->autocompleteTrack($empty_track);
     }
 
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testAutocompleteTrackFileWithoutMultimediaContent(){
+    public function testAutocompleteTrackFileWithoutMultimediaContent()
+    {
       $wrong_track = new Track();
-      $is          = new InspectionMediainfoService(); 
+      $is          = new InspectionMediainfoService();
       $wrong_track->setPath($this->wrong_file2);
-      $is->autocompleteTrack($wrong_track); 
+      $is->autocompleteTrack($wrong_track);
     }
 
-    public function testAutocompleteTrackOnlyAudio(){
+    public function testAutocompleteTrackOnlyAudio()
+    {
         $file  = $this->resources_dir . "AUDIO.mp3";
         $track = new Track();
         $is    = new InspectionMediainfoService();
@@ -74,18 +80,17 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
         $is->autocompleteTrack($track);
 
         $mime_type = 'audio/mpeg';
-        $bitrate   = '128813';      
+        $bitrate   = '128813';
         $duration  = '2';
         $size      = '16437';
         $acodec    = 'MPEG Audio'; // ffmpeg= 'mp3'
 
-        
         // Test no video properties are set
         $this->assertEmpty($track->getVcodec());
         $this->assertEmpty($track->getFramerate());
         $this->assertEmpty($track->getWidth());
         $this->assertEmpty($track->getHeight());
-        
+
         // Test general and audio properties
         $this->assertEquals( $mime_type, $track->getMimetype() );
         $this->assertEquals( $acodec, $track->getAcodec() );
@@ -95,7 +100,8 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue( $track->getOnlyAudio() );
     }
 
-    public function testAutocompleteTrackOnlyVideo(){
+    public function testAutocompleteTrackOnlyVideo()
+    {
         $file = $this->vid_no_audio;
 
         $track = new Track();
@@ -104,20 +110,20 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
         $is->autocompleteTrack($track);
 
         $mime_type = 'video/vnd.avi'; // ffmpeg = 'video/x-msvideo'
-        $bitrate   = '600205';      
+        $bitrate   = '600205';
         $duration  = '10037';
         $size      = '753029604';
-        
+
         $vcodec    = 'MPEG-4 Visual'; // ffmpeg = 'mpeg4'
-        $framerate = '25.000'; // Also works with $framerate = '25';  
+        $framerate = '25.000'; // Also works with $framerate = '25';
         $width     = '800';
         $height    = '600';
-       
+
         // Test general properties
         $this->assertEquals( $mime_type, $track->getMimetype() );
         $this->assertEquals( $bitrate, $track->getBitrate() );
         $this->assertEquals( $duration, $track->getDuration() );
-        $this->assertEquals( $size, $track->getSize() );    
+        $this->assertEquals( $size, $track->getSize() );
 
         // Test video properties
         $this->assertEquals( $vcodec, $track->getVcodec());
@@ -129,8 +135,8 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse( $track->getOnlyAudio() );
     }
 
-    public function testAutocompleteTrackWithAudioAndVideo(){
-
+    public function testAutocompleteTrackWithAudioAndVideo()
+    {
         $file1  = $this->resources_dir . "CAMERA.mp4";
         $file2  = $this->resources_dir . "SCREEN.mp4";
         $track1 = new Track();
@@ -142,22 +148,22 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
         $is->autocompleteTrack($track2);
 
         $mime_type1 = 'video/mp4';
-        $bitrate1   = '4323478';      
+        $bitrate1   = '4323478';
         $duration1  = '2';
         $size1      = '551784';
-        
+
         $vcodec1    = 'AVC';
-        $framerate1 = '25.000'; // Also works with $framerate = '25';  
+        $framerate1 = '25.000'; // Also works with $framerate = '25';
         $width1     = '960';
         $height1    = '720';
 
         $acodec1     = 'AAC';
-       
+
         // Test general properties
         $this->assertEquals( $mime_type1, $track1->getMimetype() );
         $this->assertEquals( $bitrate1, $track1->getBitrate() );
         $this->assertEquals( $duration1, $track1->getDuration() );
-        $this->assertEquals( $size1, $track1->getSize() );    
+        $this->assertEquals( $size1, $track1->getSize() );
 
         // Test video properties
         $this->assertEquals( $vcodec1, $track1->getVcodec());
@@ -169,24 +175,23 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse( $track1->getOnlyAudio() );
         $this->assertEquals( $acodec1, $track1->getAcodec());
 
-
         $mime_type2 = 'video/mp4';
-        $bitrate2   = '847600';      
+        $bitrate2   = '847600';
         $duration2  = '2';
         $size2      = '116545';
-        
+
         $vcodec2    = 'AVC';
-        $framerate2 = '9.091'; // Also works with $framerate = '25';  
+        $framerate2 = '9.091'; // Also works with $framerate = '25';
         $width2     = '1200';
         $height2    = '900';
 
         $acodec2     = 'AAC';
-       
+
         // Test general properties
         $this->assertEquals( $mime_type2, $track2->getMimetype() );
         $this->assertEquals( $bitrate2, $track2->getBitrate() );
         $this->assertEquals( $duration2, $track2->getDuration() );
-        $this->assertEquals( $size2, $track2->getSize() );    
+        $this->assertEquals( $size2, $track2->getSize() );
 
         // Test video properties
         $this->assertEquals( $vcodec2, $track2->getVcodec());
@@ -197,6 +202,5 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
         // Test audio properties
         $this->assertFalse( $track2->getOnlyAudio() );
         $this->assertEquals( $acodec2, $track2->getAcodec());
-    }  
+    }
 }
-        

@@ -31,7 +31,7 @@ class MultimediaObjectType extends AbstractType
         /*
             ->add('title', 'translatable_field', array(
                 'field'          => 'title',
-                'property_path'  => 'translations'  
+                'property_path'  => 'translations'
             ))
         ;*/
     }

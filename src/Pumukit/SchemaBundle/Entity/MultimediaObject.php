@@ -16,7 +16,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class MultimediaObject  implements Translatable
 {
-    const STATUS_NORMAL    = 0; 
+    const STATUS_NORMAL    = 0;
     const STATUS_BLOQ      = 1;
     const STATUS_HIDE      = 2;
     const STATUS_NEW       = -1;
@@ -55,14 +55,14 @@ class MultimediaObject  implements Translatable
     /**
      * @var ArrayCollection $pics
      *
-     * @ORM\OneToMany(targetEntity="Pic", mappedBy="multimedia_object", cascade={"remove"}) 
+     * @ORM\OneToMany(targetEntity="Pic", mappedBy="multimedia_object", cascade={"remove"})
      */
     private $pics;
 
     /**
      * @var ArrayCollection $materials
      *
-     * @ORM\OneToMany(targetEntity="Material", mappedBy="multimedia_object", cascade={"remove"}) 
+     * @ORM\OneToMany(targetEntity="Material", mappedBy="multimedia_object", cascade={"remove"})
      */
     private $materials;
 
@@ -155,8 +155,6 @@ class MultimediaObject  implements Translatable
      * @ORM\OneToMany(targetEntity="PersonInMultimediaObject", mappedBy="multimedia_object", cascade={"all"})
      */
     private $people_in_multimedia_object;
-    
-
 
     /**
      * @Gedmo\Locale
@@ -164,13 +162,12 @@ class MultimediaObject  implements Translatable
      * this is not a mapped field of entity metadata, just a simple property
      */
     private $locale;
-    
+
     public function setTranslatableLocale($locale)
     {
         $this->locale = $locale;
     }
 
-    
     /**
      * @ORM\OneToMany(
      *   targetEntity="Pumukit\SchemaBundle\Entity\Translation\MultimediaObjectTranslation",
@@ -179,17 +176,18 @@ class MultimediaObject  implements Translatable
      * )
      */
     private $translations;
-    public function getTranslations(){ return $this->translations; }
-    public function addTranslation($t){
+    public function getTranslations() { return $this->translations; }
+    public function addTranslation($t)
+    {
         if (!$this->translations->contains($t)) {
             $this->translations[] = $t;
             $t->setObject($this);
         }
     }
-    public function removeTranslation($t){
-        
+    public function removeTranslation($t)
+    {
     }
-    
+
     public function __construct()
     {
         $this->tracks                      = new ArrayCollection();
@@ -199,13 +197,14 @@ class MultimediaObject  implements Translatable
         $this->people_in_multimedia_object = new ArrayCollection();
     }
 
-    public function __toString() {
+    public function __toString()
+    {
       return $this->title;
     }
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -246,7 +245,7 @@ class MultimediaObject  implements Translatable
     /**
      * Get tags
      *
-     * @return array 
+     * @return array
      */
     public function getTags()
     {
@@ -256,27 +255,25 @@ class MultimediaObject  implements Translatable
     /**
      * Add tag
      * The original string tag logic used array_unique to avoid tag duplication.
-     * @param Tag $tag 
+     * @param Tag $tag
      */
     public function addTag(Tag $tag)
     {
         if (!($this->containsTag($tag))) {
             $this->tags[] = $tag;
-        }      
+        }
     }
-
 
     /**
      * Remove tag
      * The original string tag logic used array_search to seek the tag element in array.
      * This function uses doctrine2 arrayCollection contains function instead.
-     * @param Tag $tag 
+     * @param  Tag     $tag
      * @return boolean TRUE if this multimedia_object contained the specified tag, FALSE otherwise.
      */
     public function removeTag(Tag $tag)
     {
-        if ($this->tags->contains($tag)) { 
-            
+        if ($this->tags->contains($tag)) {
             return $this->tags->removeElement($tag);
         }
 
@@ -287,7 +284,7 @@ class MultimediaObject  implements Translatable
      * Contains tag
      * The original string tag logic used in_array to check it.
      * This function uses doctrine2 arrayCollection contains function instead.
-     * @param Tag $tag 
+     * @param  Tag     $tag
      * @return boolean TRUE if this multimedia_object contained the specified tag, FALSE otherwise.
      */
     public function containsTag(Tag $tag)
@@ -299,17 +296,17 @@ class MultimediaObject  implements Translatable
      * Contains all tags
      * The original string tag logic used array_intersect and count to check it.
      * This function uses doctrine2 arrayCollection contains function instead.
-     * @param array $tags 
+     * @param  array   $tags
      * @return boolean TRUE if this multimedia_object contained all tags, FALSE otherwise.
      */
     public function containsAllTags(array $tags)
     {
-        foreach ($tags as $tag){
+        foreach ($tags as $tag) {
             if (!($this->tags->contains($tag))) {
-
                 return false;
             }
         }
+
         return true;
     }
 
@@ -317,14 +314,13 @@ class MultimediaObject  implements Translatable
      * Contains any tags
      * The original string tag logic used array_intersect and count to check it.
      * This function uses doctrine2 arrayCollection contains function instead.
-     * @param array $tags 
+     * @param  array   $tags
      * @return boolean TRUE if this multimedia_object contained any tag of the list, FALSE otherwise.
      */
     public function containsAnyTag(array $tags)
     {
-        foreach ($tags as $tag){
+        foreach ($tags as $tag) {
             if ($this->tags->contains($tag)) {
-                
                 return true;
             }
         }
@@ -343,11 +339,11 @@ class MultimediaObject  implements Translatable
     {
         $this->tracks[] = $track;
         $track->setMultimediaObject($this);
-        
-        if($track->getDuration() > $this->getDuration()) {
+
+        if ($track->getDuration() > $this->getDuration()) {
             $this->setDuration($track->getDuration());
         }
-        
+
         $track->setRank(count($this->tracks));
     }
 
@@ -386,137 +382,143 @@ class MultimediaObject  implements Translatable
     /**
      * Get tracks ...
      *
-     * @param string $tag 
+     * @param  string          $tag
      * @return ArrayCollection
-     * TODO
+     *                             TODO
      */
     public function getTracksByTag($tag)
     {
         $r = array();
-         
-        foreach($this->tracks as $track) {
+
+        foreach ($this->tracks as $track) {
             if ($track->containsTag($tag)) {
                  $r[] = $track;
             }
         }
+
         return $r;
     }
 
     /**
      * Get track ...
      *
-     * @param string $tag 
+     * @param  string $tag
      * @return Track
-     * TODO
+     *                    TODO
      */
     public function getTrackByTag($tag)
     {
-        foreach($this->tracks as $track) {
+        foreach ($this->tracks as $track) {
             if ($track->containsTag($tag)) {
                 return $track;
             }
         }
+
         return null;
     }
 
     /**
      * Get tracks ...
      *
-     * @param array $tags 
+     * @param  array           $tags
      * @return ArrayCollection
-     * TODO
+     *                              TODO
      */
     public function getTracksWithAllTags(array $tags)
     {
         $r = array();
 
-        foreach($this->tracks as $track) {
+        foreach ($this->tracks as $track) {
             if ($track->containsAllTags($tags)) {
                 $r[] = $track;
             }
         }
+
         return $r;
     }
 
     /**
      * Get tracks ...
      *
-     * @param array $tags 
+     * @param  array $tags
      * @return Track
-     * TODO
+     *                    TODO
      */
     public function getTrackWithAllTags(array $tags)
     {
-        foreach($this->tracks as $track) {
+        foreach ($this->tracks as $track) {
             if ($track->containsAllTags($tags)) {
                 return $track;
             }
         }
+
         return null;
     }
 
     /**
      * Get tracks ...
      *
-     * @param array $tags 
+     * @param  array           $tags
      * @return ArrayCollection
-     * TODO
+     *                              TODO
      */
     public function getTracksWithAnyTag(array $tags)
     {
         $r = array();
 
-        foreach($this->tracks as $track) {
+        foreach ($this->tracks as $track) {
             if ($track->containsAnyTag($tags)) {
                 $r[] = $track;
             }
         }
+
         return $r;
     }
 
     /**
      * Get track ...
      *
-     * @param array $tags 
+     * @param  array $tags
      * @return Track
-     * TODO
+     *                    TODO
      */
     public function getTrackWithAnyTag(array $tags)
     {
-        foreach($this->tracks as $track) {
+        foreach ($this->tracks as $track) {
             if ($track->containsAnyTag($tags)) {
                 return $track;
             }
         }
+
         return null;
     }
 
     /**
      * Get tracks ...
      *
-     * @param array $any_tags
-     * @param array $all_tags
-     * @param array $not_any_tags
-     * @param array $not_all_tags
+     * @param  array           $any_tags
+     * @param  array           $all_tags
+     * @param  array           $not_any_tags
+     * @param  array           $not_all_tags
      * @return ArrayCollection
-     * TODO
+     *                                      TODO
      */
     public function getFilteredTracksByTags(
-        array $any_tags     = array(), 
-        array $all_tags     = array(), 
-        array $not_any_tags = array(), 
+        array $any_tags     = array(),
+        array $all_tags     = array(),
+        array $not_any_tags = array(),
         array $not_all_tags = array())
     {
         $r = array();
 
-        foreach($this->tracks as $track) {
+        foreach ($this->tracks as $track) {
             if($any_tags && !$track->containsAnyTag($any_tags))
                 continue;
-            if($all_tags && !$track->containsAllTags($all_tags)) 
+            if($all_tags && !$track->containsAllTags($all_tags))
                 continue;
-            if($not_any_tags && $track->containsAnyTag($not_any_tags)) 
+            if($not_any_tags && $track->containsAnyTag($not_any_tags))
                 continue;
-            if($not_all_tags && $track->containsAllTags($not_all_tags)) 
+            if($not_all_tags && $track->containsAllTags($not_all_tags))
                 continue;
 
              $r[] = $track;
@@ -535,7 +537,7 @@ class MultimediaObject  implements Translatable
     public function addPic(Pic $pic)
     {
         $this->pics[] = $pic;
-        $pic->setMultimediaObject($this);       
+        $pic->setMultimediaObject($this);
         $pic->setRank(count($this->pics));
     }
 
@@ -574,137 +576,143 @@ class MultimediaObject  implements Translatable
     /**
      * Get pics ...
      *
-     * @param string $tag 
+     * @param  string          $tag
      * @return ArrayCollection
-     * TODO
+     *                             TODO
      */
     public function getPicsByTag($tag)
     {
         $r = array();
-         
-        foreach($this->pics as $pic) {
+
+        foreach ($this->pics as $pic) {
             if ($pic->containsTag($tag)) {
                  $r[] = $pic;
             }
         }
+
         return $r;
     }
 
     /**
      * Get pic ...
      *
-     * @param string $tag 
+     * @param  string $tag
      * @return Pic
-     * TODO
+     *                    TODO
      */
     public function getPicByTag($tag)
     {
-        foreach($this->pics as $pic) {
+        foreach ($this->pics as $pic) {
             if ($pic->containsTag($tag)) {
                 return $pic;
             }
         }
+
         return null;
     }
 
     /**
      * Get pics ...
      *
-     * @param array $tags 
+     * @param  array           $tags
      * @return ArrayCollection
-     * TODO
+     *                              TODO
      */
     public function getPicsWithAllTags(array $tags)
     {
         $r = array();
 
-        foreach($this->pics as $pic) {
+        foreach ($this->pics as $pic) {
             if ($pic->containsAllTags($tags)) {
                 $r[] = $pic;
             }
         }
+
         return $r;
     }
 
     /**
      * Get pics ...
      *
-     * @param array $tags 
+     * @param  array $tags
      * @return Pic
-     * TODO
+     *                    TODO
      */
     public function getPicWithAllTags(array $tags)
     {
-        foreach($this->pics as $pic) {
+        foreach ($this->pics as $pic) {
             if ($pic->containsAllTags($tags)) {
                 return $pic;
             }
         }
+
         return null;
     }
 
     /**
      * Get pics ...
      *
-     * @param array $tags 
+     * @param  array           $tags
      * @return ArrayCollection
-     * TODO
+     *                              TODO
      */
     public function getPicsWithAnyTag(array $tags)
     {
         $r = array();
 
-        foreach($this->pics as $pic) {
+        foreach ($this->pics as $pic) {
             if ($pic->containsAnyTag($tags)) {
                 $r[] = $pic;
             }
         }
+
         return $r;
     }
 
     /**
      * Get pic ...
      *
-     * @param array $tags 
+     * @param  array $tags
      * @return Pic
-     * TODO
+     *                    TODO
      */
     public function getPicWithAnyTag(array $tags)
     {
-        foreach($this->pics as $pic) {
+        foreach ($this->pics as $pic) {
             if ($pic->containsAnyTag($tags)) {
                 return $pic;
             }
         }
+
         return null;
     }
 
     /**
      * Get pics ...
      *
-     * @param array $any_tags
-     * @param array $all_tags
-     * @param array $not_any_tags
-     * @param array $not_all_tags
+     * @param  array           $any_tags
+     * @param  array           $all_tags
+     * @param  array           $not_any_tags
+     * @param  array           $not_all_tags
      * @return ArrayCollection
-     * TODO
+     *                                      TODO
      */
     public function getFilteredPicsByTags(
-        array $any_tags     = array(), 
-        array $all_tags     = array(), 
-        array $not_any_tags = array(), 
+        array $any_tags     = array(),
+        array $all_tags     = array(),
+        array $not_any_tags = array(),
         array $not_all_tags = array())
     {
         $r = array();
 
-        foreach($this->pics as $pic) {
+        foreach ($this->pics as $pic) {
             if($any_tags && !$pic->containsAnyTag($any_tags))
                 continue;
-            if($all_tags && !$pic->containsAllTags($all_tags)) 
+            if($all_tags && !$pic->containsAllTags($all_tags))
                 continue;
-            if($not_any_tags && $pic->containsAnyTag($not_any_tags)) 
+            if($not_any_tags && $pic->containsAnyTag($not_any_tags))
                 continue;
-            if($not_all_tags && $pic->containsAllTags($not_all_tags)) 
+            if($not_all_tags && $pic->containsAllTags($not_all_tags))
                 continue;
 
              $r[] = $pic;
@@ -762,137 +770,143 @@ class MultimediaObject  implements Translatable
     /**
      * Get materials ...
      *
-     * @param string $tag 
+     * @param  string          $tag
      * @return ArrayCollection
-     * TODO
+     *                             TODO
      */
     public function getMaterialsByTag($tag)
     {
         $r = array();
-         
-        foreach($this->materials as $material) {
+
+        foreach ($this->materials as $material) {
             if ($material->containsTag($tag)) {
                  $r[] = $material;
             }
         }
+
         return $r;
     }
 
     /**
      * Get material ...
      *
-     * @param string $tag 
+     * @param  string   $tag
      * @return Material
-     * TODO
+     *                      TODO
      */
     public function getMaterialByTag($tag)
     {
-        foreach($this->materials as $material) {
+        foreach ($this->materials as $material) {
             if ($material->containsTag($tag)) {
                 return $material;
             }
         }
+
         return null;
     }
 
     /**
      * Get materials ...
      *
-     * @param array $tags 
+     * @param  array           $tags
      * @return ArrayCollection
-     * TODO
+     *                              TODO
      */
     public function getMaterialsWithAllTags(array $tags)
     {
         $r = array();
 
-        foreach($this->materials as $material) {
+        foreach ($this->materials as $material) {
             if ($material->containsAllTags($tags)) {
                 $r[] = $material;
             }
         }
+
         return $r;
     }
 
     /**
      * Get materials ...
      *
-     * @param array $tags 
+     * @param  array    $tags
      * @return Material
-     * TODO
+     *                       TODO
      */
     public function getMaterialWithAllTags(array $tags)
     {
-        foreach($this->materials as $material) {
+        foreach ($this->materials as $material) {
             if ($material->containsAllTags($tags)) {
                 return $material;
             }
         }
+
         return null;
     }
 
     /**
      * Get materials ...
      *
-     * @param array $tags 
+     * @param  array           $tags
      * @return ArrayCollection
-     * TODO
+     *                              TODO
      */
     public function getMaterialsWithAnyTag(array $tags)
     {
         $r = array();
 
-        foreach($this->materials as $material) {
+        foreach ($this->materials as $material) {
             if ($material->containsAnyTag($tags)) {
                 $r[] = $material;
             }
         }
+
         return $r;
     }
 
     /**
      * Get material ...
      *
-     * @param array $tags 
+     * @param  array    $tags
      * @return Material
-     * TODO
+     *                       TODO
      */
     public function getMaterialWithAnyTag(array $tags)
     {
-        foreach($this->materials as $material) {
+        foreach ($this->materials as $material) {
             if ($material->containsAnyTag($tags)) {
                 return $material;
             }
         }
+
         return null;
     }
 
     /**
      * Get materials ...
      *
-     * @param array $any_tags
-     * @param array $all_tags
-     * @param array $not_any_tags
-     * @param array $not_all_tags
+     * @param  array           $any_tags
+     * @param  array           $all_tags
+     * @param  array           $not_any_tags
+     * @param  array           $not_all_tags
      * @return ArrayCollection
-     * TODO
+     *                                      TODO
      */
     public function getFilteredMaterialsByTags(
-        array $any_tags     = array(), 
-        array $all_tags     = array(), 
-        array $not_any_tags = array(), 
+        array $any_tags     = array(),
+        array $all_tags     = array(),
+        array $not_any_tags = array(),
         array $not_all_tags = array())
     {
         $r = array();
 
-        foreach($this->materials as $material) {
+        foreach ($this->materials as $material) {
             if($any_tags && !$material->containsAnyTag($any_tags))
                 continue;
-            if($all_tags && !$material->containsAllTags($all_tags)) 
+            if($all_tags && !$material->containsAllTags($all_tags))
                 continue;
-            if($not_any_tags && $material->containsAnyTag($not_any_tags)) 
+            if($not_any_tags && $material->containsAnyTag($not_any_tags))
                 continue;
-            if($not_all_tags && $material->containsAllTags($not_all_tags)) 
+            if($not_all_tags && $material->containsAllTags($not_all_tags))
                 continue;
 
              $r[] = $material;
@@ -916,7 +930,7 @@ class MultimediaObject  implements Translatable
     /**
      * Get rank
      *
-     * @return integer 
+     * @return integer
      */
     public function getRank()
     {
@@ -936,7 +950,7 @@ class MultimediaObject  implements Translatable
     /**
      * Get status
      *
-     * @return integer 
+     * @return integer
      */
     public function getStatus()
     {
@@ -956,7 +970,7 @@ class MultimediaObject  implements Translatable
     /**
      * Get record_date
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getRecordDate()
     {
@@ -976,7 +990,7 @@ class MultimediaObject  implements Translatable
     /**
      * Get public_date
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getPublicDate()
     {
@@ -996,7 +1010,7 @@ class MultimediaObject  implements Translatable
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -1016,7 +1030,7 @@ class MultimediaObject  implements Translatable
     /**
      * Get subtitle
      *
-     * @return string 
+     * @return string
      */
     public function getSubtitle()
     {
@@ -1036,7 +1050,7 @@ class MultimediaObject  implements Translatable
     /**
      * Get description
      *
-     * @return text 
+     * @return text
      */
     public function getDescription()
     {
@@ -1056,7 +1070,7 @@ class MultimediaObject  implements Translatable
     /**
      * Get line2
      *
-     * @return string 
+     * @return string
      */
     public function getLine2()
     {
@@ -1076,7 +1090,7 @@ class MultimediaObject  implements Translatable
     /**
      * Get copyright
      *
-     * @return string 
+     * @return string
      */
     public function getCopyright()
     {
@@ -1096,7 +1110,7 @@ class MultimediaObject  implements Translatable
     /**
      * Get keyword
      *
-     * @return string 
+     * @return string
      */
     public function getKeyword()
     {
@@ -1116,7 +1130,7 @@ class MultimediaObject  implements Translatable
     /**
      * Get duration
      *
-     * @return integer 
+     * @return integer
      */
     public function getDuration()
     {
@@ -1124,7 +1138,7 @@ class MultimediaObject  implements Translatable
     }
 // End of basic setter & getters
 
-// Start people_in_multimedia_object section.  
+// Start people_in_multimedia_object section.
 
 // Caution: these are objects, not strings; ArrayCollection instead of plain php arrays...
 // Note: As this is an auxiliary table, these functions will be scarcely used.
@@ -1145,7 +1159,7 @@ class MultimediaObject  implements Translatable
     /**
      * Get people_in_multimedia_object
      *
-     * @return array 
+     * @return array
      */
     public function getPeopleInMultimediaObject()
     {
@@ -1154,8 +1168,8 @@ class MultimediaObject  implements Translatable
 
     /**
      * Add person_in_multimedia_object.
-     * 
-     * @param PersonInMultimediaObject $pimo 
+     *
+     * @param PersonInMultimediaObject $pimo
      */
     public function addPersonInMultimediaObject(PersonInMultimediaObject $pimo)
     {
@@ -1165,21 +1179,19 @@ class MultimediaObject  implements Translatable
             $pimo->setMultimediaObject($this);
             $pimo->setRank(count($this->people_in_multimedia_object));
             $this->people_in_multimedia_object[] = $pimo;
-           
-        }      
-    }
 
+        }
+    }
 
     /**
      * Remove person_in_multimedia_object
-     * 
-     * @param PersonInMultimediaObject $pimo 
-     * @return boolean TRUE if this multimedia_object contained the specified person_in_multimedia_object, FALSE otherwise.
+     *
+     * @param  PersonInMultimediaObject $pimo
+     * @return boolean                  TRUE if this multimedia_object contained the specified person_in_multimedia_object, FALSE otherwise.
      */
     public function removePersonInMultimediaObject(PersonInMultimediaObject $pimo)
     {
-        if ($this->people_in_multimedia_object->contains($pimo)) { 
-            
+        if ($this->people_in_multimedia_object->contains($pimo)) {
             return $this->people_in_multimedia_object->removeElement($pimo);
         }
 
@@ -1191,15 +1203,15 @@ class MultimediaObject  implements Translatable
      * Caution: if input $pimo has no rank set, it will return false.
      *          Use containsPersonWithRole instead.
      *
-     * @param PersonInMultimediaObject $$pimo 
-     * @return boolean TRUE if this multimedia_object contained the specified person_in_multimedia_object, FALSE otherwise.
+     * @param  PersonInMultimediaObject $$pimo
+     * @return boolean                  TRUE if this multimedia_object contained the specified person_in_multimedia_object, FALSE otherwise.
      */
     public function containsPersonInMultimediaObject(PersonInMultimediaObject $pimo)
     {
         return $this->people_in_multimedia_object->contains($pimo);
     }
 
-// End of people_in_multimedia_object section 
+// End of people_in_multimedia_object section
 
 // THE CHICHA STARTS HERE!!!
 
@@ -1209,21 +1221,20 @@ class MultimediaObject  implements Translatable
      * Also checks for the required role if it is included in the call.
      *
      * @param Person $person
-     * @param Role $role
+     * @param Role   $role
      *
      * @return boolean
      */
     public function containsPersonWithRole(Person $person, Role $role = null)
     {
-        foreach($this->people_in_multimedia_object as $pimo){ 
-            if ($pimo->getPerson($person) === $person){
-                if (($role == null) || $role === $pimo->getRole($role)){
-                    
-                    return true;    
-                }                         
+        foreach ($this->people_in_multimedia_object as $pimo) {
+            if ($pimo->getPerson($person) === $person) {
+                if (($role == null) || $role === $pimo->getRole($role)) {
+                    return true;
+                }
             }
         }
-        
+
         return false;
     }
 
@@ -1237,64 +1248,63 @@ class MultimediaObject  implements Translatable
     {
         $r = array();
 
-        foreach($this->people_in_multimedia_object as $pimo){
-            if ( $pimo->getRole()->getDisplay() == true){
-                if ( $role == null || ($pimo->getRole() === $role)){
+        foreach ($this->people_in_multimedia_object as $pimo) {
+            if ( $pimo->getRole()->getDisplay() == true) {
+                if ( $role == null || ($pimo->getRole() === $role)) {
                     $r[] = $pimo;
                 }
-            }                
+            }
         }
-        usort($r, function($a, $b) {            
+        usort($r, function ($a, $b) {
             if ($a->getRank() > $b->getRank()) {
                 return 1;
             }
-        }); 
+        });
 
         return $r;
     }
 
     /**
-    * Adds a new PersonInMultimediaObject to the existing people_in_multimedia_object 
+    * Adds a new PersonInMultimediaObject to the existing people_in_multimedia_object
     * (ArrayCollection) with the given person and role
-    * 
+    *
     *
     * @param Person $person
     * @param Role $role
     */
     public function addPersonWithRole(Person $person, Role $role)
     {
-        if (!$this->containsPersonWithRole($person, $role)){            
-            $pimo = new PersonInMultimediaObject();    
-                        
+        if (!$this->containsPersonWithRole($person, $role)) {
+            $pimo = new PersonInMultimediaObject();
+
             $pimo->setMultimediaObject( $this );
             $pimo->setPerson( $person );
-            $pimo->setRole( $role );             
+            $pimo->setRole( $role );
             $pimo->setRank(count($this->people_in_multimedia_object));
             $this->people_in_multimedia_object[] = $pimo;
         }
     }
 
     // Igual sirve removePersonInMultimediaObject(PersonInMultimediaObject $pimo)
-    
+
     /**
      * Removes a person with a given role
      *
      * FIXME: check if it this function is really useful.
      *
-     * @param Person $person
-     * @param Role $role
+     * @param  Person  $person
+     * @param  Role    $role
      * @return boolean TRUE if this multimedia_object contained the specified person and role, FALSE otherwise.
      */
     public function removePersonWithRole(Person $person, Role $role)
     {
-        foreach($this->people_in_multimedia_object as $pimo){ 
-            if ($pimo->getPerson($person) === $person){
-                if (($role == null) || $role === $pimo->getRole($role)){
-
-                    return $this->people_in_multimedia_object->removeElement($pimo);                   
-                }                         
+        foreach ($this->people_in_multimedia_object as $pimo) {
+            if ($pimo->getPerson($person) === $person) {
+                if (($role == null) || $role === $pimo->getRole($role)) {
+                    return $this->people_in_multimedia_object->removeElement($pimo);
+                }
             }
-        }     
+        }
 
         return false;
     }
@@ -1304,13 +1314,13 @@ class MultimediaObject  implements Translatable
     /**
      * Add people_in_multimedia_object
      *
-     * @param \Pumukit\SchemaBundle\Entity\PersonInMultimediaObject $peopleInMultimediaObject
+     * @param  \Pumukit\SchemaBundle\Entity\PersonInMultimediaObject $peopleInMultimediaObject
      * @return MultimediaObject
      */
     public function addPeopleInMultimediaObject(\Pumukit\SchemaBundle\Entity\PersonInMultimediaObject $peopleInMultimediaObject)
     {
         $this->people_in_multimedia_object[] = $peopleInMultimediaObject;
-    
+
         return $this;
     }
 
@@ -1323,6 +1333,5 @@ class MultimediaObject  implements Translatable
     {
         $this->people_in_multimedia_object->removeElement($peopleInMultimediaObject);
     }
-    
 
 }

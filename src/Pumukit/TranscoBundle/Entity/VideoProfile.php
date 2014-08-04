@@ -190,7 +190,6 @@ class VideoProfile
      */
     private $description;
 
-
     /**
      * @var ArrayCollection $cpus
      *
@@ -202,7 +201,6 @@ class VideoProfile
      */
     private $cpus;
 
-
     /**
      * @var ArrayCollection $jobs
      *
@@ -210,13 +208,12 @@ class VideoProfile
      */
     private $jobs;
 
-
     public function __construct()
     {
         $this->cpus = new \Doctrine\Common\Collections\ArrayCollection();
-	$this->jobs = new \Doctrine\Common\Collections\ArrayCollection();
+    $this->jobs = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *

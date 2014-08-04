@@ -4,10 +4,7 @@ namespace Pumukit\SchemaBundle\Tests\Entity;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-use Pumukit\SchemaBundle\Entity\MultimediaObject;
-use Pumukit\SchemaBundle\Entity\Person;
 use Pumukit\SchemaBundle\Entity\PersonInMultimediaObject;
-
 
 class PersonInMultimediaObjectRepositoryTest extends WebTestCase
 {
@@ -25,13 +22,12 @@ class PersonInMultimediaObjectRepositoryTest extends WebTestCase
         $this->repo = $this->em
             ->getRepository('PumukitSchemaBundle:PersonInMultimediaObject');
 
-       
         //DELETE DATABASE
         $this->em->createQuery("DELETE PumukitSchemaBundle:PersonInMultimediaObject pimo")->getResult();
     }
-    
+
     public function testRepository()
     {
-        
+
     }
 }

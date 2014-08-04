@@ -10,10 +10,10 @@ use Pumukit\SchemaBundle\Entity\Tag;
 
 class SeriesRepositoryTest extends WebTestCase
 {
-	private $em;
-	private $repo;
+    private $em;
+    private $repo;
 
-	public function setUp()
+    public function setUp()
     {
         //INIT TEST SUITE
         $kernel = static::createKernel();
@@ -22,7 +22,7 @@ class SeriesRepositoryTest extends WebTestCase
             ->get('doctrine.orm.entity_manager');
         $this->repo = $this->em
             ->getRepository('PumukitSchemaBundle:Series');
-       
+
         //DELETE DATABASE - pimo has to be deleted before mm
         $this->em->createQuery("DELETE PumukitSchemaBundle:PersonInMultimediaObject pimo")->getResult();
         $this->em->createQuery("DELETE PumukitSchemaBundle:MultimediaObject mm")->getResult();
@@ -44,7 +44,7 @@ class SeriesRepositoryTest extends WebTestCase
     {
         // Only one SeriesType at the moment.
         $series_type   = $this->createSeriesType("Medieval Fantasy Sitcom");
-        
+
         $series_main   = $this->createSeries("Stark's growing pains");
         $series_white  = $this->createSeries("White Walkers adventures");
         $series_wall   = $this->createSeries("The Wall");
@@ -61,7 +61,7 @@ class SeriesRepositoryTest extends WebTestCase
         $this->em->persist($series_lhazar);
 
         $tag_root = new Tag("Game of Matterhorns");
-        
+
         $tag_r_metatag = new Tag("Regions metatag");
         $tag_r_wall    = new Tag("The Wall region");
         $tag_r_north   = new Tag("The North region");
@@ -71,7 +71,7 @@ class SeriesRepositoryTest extends WebTestCase
         $tag_r_wall->setParent($tag_r_metatag);
         $tag_r_north->setParent($tag_r_metatag);
         $tag_r_essos->setParent($tag_r_metatag);
-        
+
         $tag_h_metatag  = new Tag("Great Houses metatag");
         $tag_h_stark    = new Tag("Stark House");
         $tag_h_night    = new Tag("Night's Watch House");
@@ -107,12 +107,12 @@ class SeriesRepositoryTest extends WebTestCase
         $this->em->persist($tag_g_defence);
         $this->em->persist($tag_g_raven);
         $this->em->persist($tag_g_unused);
-     
+
         $mm1=$this->createMultimediaObjectAssignedToSeries ('MmObject 1', $series_main);
         $mm2=$this->createMultimediaObjectAssignedToSeries ('MmObject 2', $series_main);
-        
+
         $mm3=$this->createMultimediaObjectAssignedToSeries ('MmObject 3', $series_white);
-        $mm4=$this->createMultimediaObjectAssignedToSeries ('MmObject 4', $series_white);        
+        $mm4=$this->createMultimediaObjectAssignedToSeries ('MmObject 4', $series_white);
 
         $mm5=$this->createMultimediaObjectAssignedToSeries ('MmObject 5', $series_wall);
         $mm6=$this->createMultimediaObjectAssignedToSeries ('MmObject 6', $series_wall);
@@ -120,7 +120,7 @@ class SeriesRepositoryTest extends WebTestCase
         $mm7=$this->createMultimediaObjectAssignedToSeries ('MmObject 7', $series_lhazar);
         $mm8=$this->createMultimediaObjectAssignedToSeries ('MmObject 8', $series_lhazar);
 
-        $mm1->setTags(array($tag_r_wall, $tag_r_north, $tag_r_essos, 
+        $mm1->setTags(array($tag_r_wall, $tag_r_north, $tag_r_essos,
                             $tag_h_stark, $tag_h_night, $tag_h_khalasar,
                             $tag_g_defence, $tag_g_raven));
 
@@ -136,7 +136,7 @@ class SeriesRepositoryTest extends WebTestCase
 
         $mm7->setTags(array($tag_r_essos, $tag_h_khalasar, $tag_g_raven));
         $mm8->setTags(array($tag_r_essos, $tag_h_khalasar));
-        
+
         $this->em->persist($mm1);
         $this->em->persist($mm2);
         $this->em->persist($mm3);
@@ -144,16 +144,16 @@ class SeriesRepositoryTest extends WebTestCase
         $this->em->persist($mm5);
         $this->em->persist($mm6);
         $this->em->persist($mm7);
-        $this->em->persist($mm8);      
+        $this->em->persist($mm8);
 
         $this->em->flush();
 
-        $this->assertEquals(0, count($this->repo->findByTag($tag_g_unused)));              
-        
+        $this->assertEquals(0, count($this->repo->findByTag($tag_g_unused)));
+
         // findOneByTag uses query->getSingleResult and throws an exception
         // if no result is found. See "Manual de Symfony2, Release 2.0.1" p.124
-        try{
-            $testNoResultException = $this->repo->findOneByTag($tag_g_unused);        
+        try {
+            $testNoResultException = $this->repo->findOneByTag($tag_g_unused);
         } catch (\Doctrine\ORM\NoResultException $e) {
             $testNoResultException = true;
         }
@@ -171,7 +171,7 @@ class SeriesRepositoryTest extends WebTestCase
         $this->assertEquals(2, count($this->repo->findByTag($tag_h_khalasar)));
         $this->assertEquals(2, count($this->repo->findByTag($tag_g_defence)));
         $this->assertEquals(3, count($this->repo->findByTag($tag_g_raven)));
-        
+
         // Test findWithAnyTag
         $this->assertEquals (2,count($this->repo->findWithAnyTag(array($tag_g_defence))));
         $this->assertEquals (3,count($this->repo->findWithAnyTag(array(
@@ -187,7 +187,7 @@ class SeriesRepositoryTest extends WebTestCase
         $this->assertEquals (0, count($this->repo->findWithAllTags(array(
                 $tag_r_essos, $tag_h_khalasar, $tag_g_raven, $tag_g_unused))));
         $this->assertEquals (1,count($this->repo->findWithAllTags(array(
-                $tag_r_north, $tag_r_wall, $tag_r_essos, 
+                $tag_r_north, $tag_r_wall, $tag_r_essos,
                 $tag_h_stark, $tag_h_night, $tag_h_khalasar,
                 $tag_g_defence, $tag_g_raven))));
         $this->assertEquals (2,count($this->repo->findWithAllTags(array(
@@ -197,18 +197,18 @@ class SeriesRepositoryTest extends WebTestCase
         $this->assertEquals ($series_main, $this->repo->findOneWithAllTags(array(
                 $tag_g_defence, $tag_g_raven)));
 
-        try{
+        try {
             $testNoResultException = $this->repo->findOneWithAllTags(array(
-                $tag_g_unused));        
+                $tag_g_unused));
         } catch (\Doctrine\ORM\NoResultException $e) {
             $testNoResultException = true;
         }
         $this->assertTrue($testNoResultException);
         unset ($testNoResultException);
-         
-        // Test findOneWithoutTag      
+
+        // Test findOneWithoutTag
         $this->assertEquals (1, count($this->repo->findOneWithoutTag($tag_g_raven)));
-        
+
         // Test findWithoutTag
         $prueba = $this->repo->findWithoutTag($tag_g_raven);
         $this->assertEquals (1, count($prueba));
@@ -223,7 +223,7 @@ class SeriesRepositoryTest extends WebTestCase
 
         // Test findWithoutSomeTags
         $prueba = $this->repo->findWithoutSomeTags(array($tag_g_raven, $tag_g_unused));
-        $this->assertEquals ($series_white, $prueba[0]);      
+        $this->assertEquals ($series_white, $prueba[0]);
         $this->assertEquals (1, count($prueba));
         unset($prueba);
         $prueba2 = $this->repo->findWithoutSomeTags(array($tag_r_essos, $tag_h_khalasar));
@@ -240,7 +240,6 @@ class SeriesRepositoryTest extends WebTestCase
         $this->assertTrue (in_array($series_lhazar, $prueba2));
         unset($prueba2);
 
-        
 }
 
     private function createSeriesType($name)
@@ -273,14 +272,13 @@ class SeriesRepositoryTest extends WebTestCase
         return $serie;
     }
 
-
     private function createMultimediaObjectAssignedToSeries($title, Series $series)
     {
         $status      = MultimediaObject::STATUS_NORMAL;
         $record_date = new \DateTime();
         $public_date = new \DateTime();
         $subtitle    = 'Subtitle';
-        $description = "Description"; 
+        $description = "Description";
         $duration    = 123;
 
         $mm = new MultimediaObject();
