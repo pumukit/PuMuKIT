@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Comments
  *
- * @ORM\Table()
+ * @ORM\Table(name="comments")
  * @ORM\Entity(repositoryClass="Pumukit\SchemaBundle\Entity\CommentsRepository")
  */
 class Comments
