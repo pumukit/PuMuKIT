@@ -23,6 +23,8 @@ class AppKernel extends Kernel
             //new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 	    new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             //new A2lix\TranslationFormBundle\A2lixTranslationFormBundle(),
+	    new FOS\UserBundle\FOSUserBundle(),
+
             new Pumukit\SchemaBundle\PumukitSchemaBundle(),
             new Pumukit\ImportBundle\PumukitImportBundle(),
             new Pumukit\InspectionBundle\PumukitInspectionBundle(),

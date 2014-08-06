@@ -19,12 +19,14 @@
         "sensio/framework-extra-bundle": "~3.0",
         "incenteev/composer-parameter-handler": "~2.0",
 
+        "gedmo/doctrine-extensions": "2.3.*",
+
         "knplabs/knp-paginator-bundle": "2.4.*",
         "jms/serializer-bundle": "0.12.*",
         "friendsofsymfony/rest-bundle": "1.4.1",
 	"nelmio/api-doc-bundle": "2.7.*",
 
-        "gedmo/doctrine-extensions": "2.3.*"
+	"friendsofsymfony/user-bundle": "~1.3"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

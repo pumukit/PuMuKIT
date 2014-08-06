@@ -2,6 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Entity;
 
+use FOS\UserBundle\Entity\User as BaseUser;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -12,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="person")
  * @ORM\Entity(repositoryClass="Pumukit\SchemaBundle\Entity\PersonRepository")
  */
-class Person
+class Person extends BaseUser
 {
     /**
      * @var integer $id
@@ -21,39 +22,14 @@ class Person
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
-
-    /**
-     * @var string $login
-     *
-     * @ORM\Column(name="login", type="string", length=100, nullable=true)
-     */
-    private $login;
-
-    /**
-     * @var string $password
-     *
-     * @ORM\Column(name="password", type="string", length=100, nullable=true)
-     * @Assert\NotBlank()
-     * @Assert\Length(min = "3")
-     *
-     */
-    private $password;
-
-    /**
-     * @var string $email
-     *
-     * @ORM\Column(name="email", type="string", length=30, nullable=true)
-     * @Assert\Email()
-     */
-    private $email;
+    protected $id;
 
     /**
      * @var string $name
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string $web
@@ -61,14 +37,14 @@ class Person
      * @ORM\Column(name="web", type="string", length=150, nullable=true)
      * @Assert\Url()
      */
-    private $web;
+    protected $web;
 
     /**
      * @var string $phone
      *
      * @ORM\Column(name="phone", type="string", length=30, nullable=true)
      */
-    private $phone;
+    protected $phone;
 
     /**
      * @var string $honorific
@@ -76,7 +52,7 @@ class Person
      * @Gedmo\Translatable
      * @ORM\Column(name="honorific", type="string", length=20, nullable=true)
      */
-    private $honorific;
+    protected $honorific;
 
     /**
      * @var string $firm
@@ -84,7 +60,7 @@ class Person
      * @Gedmo\Translatable
      * @ORM\Column(name="firm", type="string", length=255, nullable=true)
      */
-    private $firm;
+    protected $firm;
 
     /**
      * @var string $post
@@ -92,7 +68,7 @@ class Person
      * @Gedmo\Translatable
      * @ORM\Column(name="post", type="string", length=255, nullable=true)
      */
-    private $post;
+    protected $post;
 
     /**
      * @var string $bio
@@ -100,21 +76,21 @@ class Person
      * @Gedmo\Translatable
      * @ORM\Column(name="bio", type="string", length=255, nullable=true)
      */
-    private $bio;
+    protected $bio;
 
     /**
      * @var ArrayCollection $person_in_multimedia_object
      *
      * @ORM\OneToMany(targetEntity="PersonInMultimediaObject", mappedBy="person", cascade={"remove"})
      */
-    private $people_in_multimedia_object;
+    protected $people_in_multimedia_object;
 
     /**
      * @Gedmo\Locale
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property
      */
-    private $locale;
+    protected $locale;
 
     /**
      * Get id
@@ -144,46 +120,6 @@ class Person
     public function getLogin()
     {
         return $this->login;
-    }
-
-    /**
-     * Set password
-     *
-     * @param string $password
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-    }
-
-    /**
-     * Get password
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
     }
 
     /**
@@ -331,6 +267,7 @@ class Person
     public function __construct()
     {
         $this->people_in_multimedia_object = new \Doctrine\Common\Collections\ArrayCollection();
+	parent::__construct();
     }
 
     /**

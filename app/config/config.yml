@@ -5,7 +5,7 @@ imports:
 
 framework:
     #esi:             ~
-    #translator:      { fallback: "%locale%" }
+    translator:      { fallback: "%locale%" }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -96,3 +96,9 @@ nelmio_api_doc:
 #a2lix_translation_form:
 #    locales: %locales%
 #    templating: 'PumukitCRUDBundle:Form:default.html.twig'
+
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: Pumukit\SchemaBundle\Entity\Person
