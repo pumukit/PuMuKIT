@@ -107,7 +107,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
     {
         // login attribute is unique
         $password  = '123<>U45;';
-        $email     = "login@pr.es";
+        $email     = $name . "@pr.es";
         $web       = 'http://www.url.com';
         $phone     = '+34986123456';
         $honorific = 'honorific';
@@ -115,7 +115,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $post      = 'post';
 
         $user = new Person();
-        $user->setLogin($name);
+        $user->setUsername($name);
         $user->setPassword($password);
         $user->setName($name);
         $user->setEmail($email);
