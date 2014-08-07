@@ -31,7 +31,7 @@ twig:
     strict_variables: "%kernel.debug%"
     form:
         resources:
-            - 'PumukitCRUDBundle:Form:fields.html.twig'
+            - 'PumukitAdminBundle:Form:fields.html.twig'
 
 # Assetic Configuration
 assetic:
