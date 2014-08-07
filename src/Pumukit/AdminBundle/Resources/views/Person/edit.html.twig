@@ -1,0 +1,19 @@
+{% extends 'PumukitAdminBundle::base.html.twig' %}
+
+{% block title -%}
+Person edit
+{% endblock %}
+
+
+{% block body -%}
+    {{ form(edit_form) }}
+
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('admin_person') }}">
+                Back to the list
+            </a>
+        </li>
+        <li>{{ form(delete_form) }}</li>
+    </ul>
+{% endblock %}
