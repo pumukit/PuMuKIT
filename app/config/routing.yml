@@ -1,3 +1,8 @@
+pumukit_admin:
+    resource: "@PumukitAdminBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 pumukit_transco_api_cpus:
     type: rest
     resource: Pumukit\TranscoBundle\Controller\CpuAPIController
