@@ -1,8 +1,11 @@
 {% extends 'PumukitAdminBundle::base.html.twig' %}
 
-{% block body -%}
-    <h1>Person creation</h1>
+{% block title -%}
+Person creation
+{% endblock %}
 
+
+{% block body -%}
     {{ form(form) }}
 
         <ul class="record_actions">
