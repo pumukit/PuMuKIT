@@ -1,0 +1,5 @@
+pumukit_schema:
+    resource: "@PumukitSchemaBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
