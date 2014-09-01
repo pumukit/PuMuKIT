@@ -11,32 +11,48 @@ class Series
 {
 
     /**
+     * @MongoDB\Id
+     */
+    protected $id;
+
+    /**
      * @var datetime $public_date
      *
-     * @MongoDB\DateTime
+     * @MongoDB\Date
      */
     private $public_date;
 
     /**
      * @var string $title
      *
-     * @MongoDB\Text
+     * @MongoDB\String
      */
     private $title;
 
     /**
      * @var string $subtitle
      *
-     * @MongoDB\Text
+     * @MongoDB\String
      */
     private $subtitle;
 
     /**
      * @var text $description
      *
-     * @MongoDB\Text
+     * @MongoDB\String
      */
     private $description;
+
+    /**
+     * Get id
+     *
+     * @return id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
 
     /**
      * Set public_date
