@@ -53,7 +53,6 @@ class Series
         return $this->id;
     }
 
-
     /**
      * Set public_date
      *

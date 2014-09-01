@@ -2,10 +2,10 @@
 
 namespace Pumukit\SchemaBundle\Document;
 
-use Doctrime\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * @MongoDB\Document
+ * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\RoleRepository")
  */
 class Role
 {
@@ -25,7 +25,7 @@ class Role
     /**
      * @var integer $rank
      *
-     * @MongoDB\Integer
+     * @MongoDB\Int
      */
     private $rank;
 
@@ -33,41 +33,32 @@ class Role
      * See European Broadcasting Union Role Codes
      * @var string $xml
      *
-     * @MongoDB\Column
+     * @MongoDB\String
      */
     private $xml;
 
     /**
      * @var boolean $display
      *
-     * @MongoDB\Column
+     * @MongoDB\Boolean
      */
     private $display = true;
 
     /**
      * @var string $name
      *
-     * @MongoDB\Column
+     * @MongoDB\String
      */
     private $name;
 
     /**
      * @var string $text
      *
-     * @Gedmo\Translatable
-     * @MongoDB\Column
+     * @MongoDB\String
      */
     private $text;
 
     /**
-     * @var ArrayCollection $person_in_multimedia_object
-     *
-     * @MongoDB\OneToMany
-     */
-    private $people_in_multimedia_object;
-
-    /**
-     * @Gedmo\Locale
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property
      */
