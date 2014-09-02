@@ -7,7 +7,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 /**
  * Pumukit\SchemaBundle\Document\Track
  *
- * @MongoDB\EmbedDocument
+ * @MongoDB\EmbeddedDocument
  */
 class Track extends Element
 {

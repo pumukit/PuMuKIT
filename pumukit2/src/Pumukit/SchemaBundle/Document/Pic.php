@@ -7,7 +7,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 /**
  * Pumukit\SchemaBundle\Document\Pic
  *
- * @MongoDB\EmbedDocument
+ * @MongoDB\EmbeddedDocument
  */
 class Pic extends Element
 {

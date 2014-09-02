@@ -7,7 +7,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 /**
  * Comments
  *
- * @MongoDB\EmbedDocument
+ * @MongoDB\EmbeddedDocument
  */
 class Comments
 {

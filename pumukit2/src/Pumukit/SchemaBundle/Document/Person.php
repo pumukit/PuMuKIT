@@ -3,12 +3,12 @@
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use Symfony\Component\Validator\Constraint as Assert;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Pumukit\SchemaBundle\Document\Person
  *
- * @MongoDB\EmbedDocument
+ * @MongoDB\EmbeddedDocument
  */
 class Person
 {
@@ -37,7 +37,7 @@ class Person
 	 * @var string $web
 	 *
 	 * @MongoDB\String
-	 * @Assert\Url()
+	 * //@Assert\Url()
 	 */
 	protected $web;
 

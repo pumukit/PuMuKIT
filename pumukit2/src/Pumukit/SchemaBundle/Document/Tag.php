@@ -2,12 +2,12 @@
 
 namespace Pumukit\SchemaBundle\Document;
 
-use Doctrine\ODM\MongoDB\Mapping as MongoDB;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
  * Pumukit\SchemaBundle\Document\Tag
  * 
- * @MongoDB\EmbedDocument
+ * @MongoDB\EmbeddedDocument
  */
 class Tag
 {
@@ -85,6 +85,8 @@ class Tag
 
 	/**
 	 * //TreeParent
+         * @MongoDB\ReferenceOne(targetDocument="Tag")
+         * @MongoDB\Index 
 	 * //@MongoDB\ManyToOne(targetDocument="Tag", inversedBy="children")
 	 * //@MongoDB\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
@@ -93,6 +95,7 @@ class Tag
 	/**
 	 * @var int $root
 	 * //TreeRoot
+         * //@MongoDB\ReferenceOne(targetDocument="Tag")
 	 * @MongoDB\Int
 	 */
 	private $root;
@@ -105,6 +108,8 @@ class Tag
 	private $level;
 
 	/**
+  	 * @MongoDB\ReferenceMany(targetDocument="Tag")
+	 * @MongoDB\Index
 	 * //@MongoDB\OneToMany(targetDocument="Tag", mappedBy="parent")
 	 * //MongoDB\OrderBy({"left" = "ASC"})
 	 */

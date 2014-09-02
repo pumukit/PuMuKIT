@@ -7,7 +7,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 /**
  * Pumukit\SchemaBundle\Document\Material
  *
- * @MongoDB\EmbedDocument
+ * @MongoDB\EmbeddedDocument
  */
 class Material extends Element
 {
