@@ -23,7 +23,7 @@ class Tag
 	 *
 	 * //@MongoDB\ManyToMany(targetDocument="MultimediaObject", mappedBy="tags")
 	 */
-	private $multimedia_objects;
+	//private $multimedia_objects;
 
 	/**
 	 * @var string $title
