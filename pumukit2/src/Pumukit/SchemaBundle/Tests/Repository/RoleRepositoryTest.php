@@ -35,7 +35,7 @@ class RoleRepositoryTest extends WebTestCase
         $display = true;
         $name = 'rol1';
         $text = 'Bruno ha venido a ver cómo funciona esto';
-        
+
         $rol = new Role();
         $rol->setCod($cod);
         $rol->setRank($rank);
@@ -49,6 +49,6 @@ class RoleRepositoryTest extends WebTestCase
 
         // This should pass to check the unrequired fields
         $this->assertEquals(1, count($this->repo->findAll()));
-        
+
     }
 }

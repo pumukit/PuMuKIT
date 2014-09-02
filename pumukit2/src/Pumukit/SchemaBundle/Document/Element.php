@@ -5,10 +5,10 @@ namespace Pumukit\SchemaBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
-* Pumukit\SchemaBundle\Document\Element
-*
-* @MongoDB\MappedSuperclass
-*/
+ * Pumukit\SchemaBundle\Document\Element
+ *
+ * @MongoDB\MappedSuperclass
+ */
 class Element
 {
     /**
@@ -18,10 +18,16 @@ class Element
      */
     private $id;
 
-    ///**
-    // * @MongoDB\OneToOne(targetEntity="Element")
-    // * @MongoDB\JoinColumn(name="ref_id", referencedColumnName="id")
-    // **/
+    /**
+	 * @ORM\ManyToOne(targetEntity="MultimediaObject", inversedBy="id")
+	 * @ORM\JoinColumn(name="multimedia_object_id", referencedColumnName="id")
+	 */
+    //private $multimedia_object;
+
+    /**
+     * @MongoDB\OneToOne(targetEntity="Element")
+     * @MongoDB\JoinColumn(name="ref_id", referencedColumnName="id")
+     **/
     //private $ref = null;
 
     /**
@@ -100,7 +106,27 @@ class Element
     public function getId()
     {
         return $this->id;
-    } 
+    }
+
+    /**
+	 * Set multimedia_object
+	 *
+	 * @param MultimediaObject $multimedia_object
+	 */
+    /*public function setMultimediaObject(MultimediaObject $multimedia_object)
+	{
+		$this->multimedia_object = $multimedia_object;
+	}*/
+
+    /**
+	 * Get multimedia_object
+	 *
+	 * @return MultimediaObject
+	 */
+    /*public function getMultimediaObject()
+	{
+		return $this->multimedia_object;
+	}*/
 
     /**
      * Set ref
@@ -157,7 +183,7 @@ class Element
     /**
      * Remove tag
      *
-     * @param string $tag
+     * @param  string  $tag
      * @return boolean TRUE if this pic contained the specified tag, FALSE otherwise.
      */
     public function removeTag($tag)
@@ -176,7 +202,7 @@ class Element
     /**
      * Contains tag
      *
-     * @param string $tag
+     * @param  string  $tag
      * @return boolean TRUE if this pic contained the specified tag, FALSE otherwise.
      */
     public function containsTag($tag)
@@ -187,7 +213,7 @@ class Element
     /**
      * Contains all tags
      *
-     * @param array $tags
+     * @param  array   $tags
      * @return boolean TRUE if this pic contained all tags, FALSE otherwise.
      */
     public function containsAllTags(array $tags)
@@ -198,7 +224,7 @@ class Element
     /**
      * Contains any tags
      *
-     * @param array $tags 
+     * @param  array   $tags
      * @return boolean TRUE if this pic contained any tag of the list, FALSE otherwise.
      */
     public function containsAnyTag(array $tags)
@@ -272,97 +298,97 @@ class Element
      * @param string $mime_type
      */
     public function setMimeType($mime_type)
-	{
-		$this->mime_type = $mime_type;
-	}
+    {
+        $this->mime_type = $mime_type;
+    }
 
-	/**
+    /**
 	 * Get mime_type
  	 *
 	 * @return string
 	 */
-	public function getMimeType()
-	{
-		return $this->mime_type;
-	}
+    public function getMimeType()
+    {
+        return $this->mime_type;
+    }
 
-	/**
+    /**
 	 * Set rank
 	 *
 	 * @param int $rank
 	 */
-	public function setRank($rank)
-	{
-		$this->rank = $rank;
-	}
+    public function setRank($rank)
+    {
+        $this->rank = $rank;
+    }
 
-	/**
+    /**
 	 * Get rank
 	 *
 	 * @return int
 	 */
-	public function getRank()
-	{
-		return $this->rank;
-	}
+    public function getRank()
+    {
+        return $this->rank;
+    }
 
-	/**
+    /**
 	 * Set size
 	 *
 	 * @param int $size
 	 */
-	public function setSize($size)
-	{
-		$this->size = $size;
-	}
+    public function setSize($size)
+    {
+        $this->size = $size;
+    }
 
-	/**
+    /**
 	 * Get size
 	 *
 	 * @return int
   	 */
-	public function getSize()
-	{
-		return $this->size;
-	}
+    public function getSize()
+    {
+        return $this->size;
+    }
 
-	/**
+    /**
 	 * Set hide
 	 *
 	 * @param boolean $hide
 	 */
-	public function setHide($hide)
-	{
-		$this->hide = $hide;
-	}
+    public function setHide($hide)
+    {
+        $this->hide = $hide;
+    }
 
-	/**
+    /**
 	 * Get hide
 	 *
 	 * @return boolean
 	 */
-	public function getHide()
-	{
-		return $this->hide;
-	}
+    public function getHide()
+    {
+        return $this->hide;
+    }
 
-	/**
+    /**
 	 * Set description
 	 *
 	 * @param text $description
 	 */
-	public function setDescription($description)
-	{
-		$this->description = $description;
-	}
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
 
-	/**
+    /**
 	 * Get description
 	 *
 	 * @return text
 	 */
-	public function getDescription()
-	{
-		return $this->description;
-	}
+    public function getDescription()
+    {
+        return $this->description;
+    }
 }
