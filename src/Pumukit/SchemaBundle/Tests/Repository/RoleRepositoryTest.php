@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\SchemaBundle\Tests\Document;
+namespace Pumukit\SchemaBundle\Tests\Repository;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -15,7 +15,11 @@ class RoleRepositoryTest extends WebTestCase
     public function setUp()
     {
         //INIT TEST SUITE
-        $kernel = static::createKernel();
+	$options = array(
+		'environment' => 'test'
+	);
+        $kernel = static::createKernel($options);
+	//$kernel = static::createKernel();
         $kernel->boot();
         $this->dm = $kernel->getContainer()
             ->get('doctrine_mongodb')->getManager();
@@ -33,8 +37,8 @@ class RoleRepositoryTest extends WebTestCase
         $rank = 5;
         $xml = '<xml contenido del xml/>';
         $display = true;
-        $name = 'rol1';
-        $text = 'Bruno ha venido a ver cómo funciona esto';
+        $name = 'rolename1';
+        $text = 'Ahora prueba para ver si coge bien la base de datos';
 
         $rol = new Role();
         $rol->setCod($cod);

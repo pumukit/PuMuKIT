@@ -155,7 +155,7 @@ class MultimediaObject
 	}
 
 	/**
-	 * @MongoDB\EmbedMany(targetDocument="MultimediaObjectTranslation")
+	 * //@MongoDB\EmbedMany(targetDocument="MultimediaObjectTranslation")
 	 */
 	private $translations;
 

@@ -18,6 +18,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
 	public function testGetterAndSetter()
 	{
 		$series = new Series();
+		
 		$rank = 3;
 		$status = MultimediaObject::STATUS_NORMAL;
 		$record_date = new \DateTime();
