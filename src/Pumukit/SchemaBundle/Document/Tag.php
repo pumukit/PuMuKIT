@@ -21,9 +21,9 @@ class Tag
 	/**
 	 * @var collection $multimedia_objects
 	 *
-	 * //@MongoDB\ManyToMany(targetDocument="MultimediaObject", mappedBy="tags")
+	 * @MongoDB\EmbedMany(targetDocument="MultimediaObject")
 	 */
-	//private $multimedia_objects;
+	private $multimedia_objects;
 
 	/**
 	 * @var string $title
@@ -446,32 +446,32 @@ class Tag
 	 * @param \Pumukit\SchemaBundle\Document\MultimediaObject $multimediaObjects
 	 * @return Tag
 	 */
-	/*public function addMultimediaObject(\Pumukit\SchemaBundle\Document\MultimediaObject $multimediaObjects)
+	public function addMultimediaObject(\Pumukit\SchemaBundle\Document\MultimediaObject $multimediaObjects)
 	{
 		$this->multimedia_objects[] = $multimediaObjects;
 
 		return $this;
-	}*/
+	}
 
 	/**
 	 * Remove multimedia_objects
 	 *
 	 * @param \Pumukit\SchemaBundle\Document\MultimediaObject $multimediaObjects
 	 */
-	/*public function removeMultimediaObject(\Pumukit\SchemaBundle\Document\MultimediaObject $multimediaObjects)
+	public function removeMultimediaObject(\Pumukit\SchemaBundle\Document\MultimediaObject $multimediaObjects)
 	{
 		$this->multimedia_objects->removeElement($multimediaObjects);
-	}*/
+	}
 
 	/**
 	 * Get multimedia_objects
 	 *
 	 * @return \Doctrine\Common\Collections\Collection
 	 */
-	/*public function getMultimediaObjects()
+	public function getMultimediaObjects()
 	{
 		return $this->multimedia_objects;
-	}*/
+	}
 
 	/**
 	 * Add children

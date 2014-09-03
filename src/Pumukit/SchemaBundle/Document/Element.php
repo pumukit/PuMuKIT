@@ -11,384 +11,383 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  */
 class Element
 {
-    /**
-     * @var int $id
-     *
-     * @MongoDB\Int
-     */
-    private $id;
-
-    /**
-	 * @ORM\ManyToOne(targetEntity="MultimediaObject", inversedBy="id")
-	 * @ORM\JoinColumn(name="multimedia_object_id", referencedColumnName="id")
+	/**
+	 * @var int $id
+	 *
+	 * @MongoDB\Int
 	 */
-    //private $multimedia_object;
+	private $id;
 
-    /**
-     * @MongoDB\OneToOne(targetEntity="Element")
-     * @MongoDB\JoinColumn(name="ref_id", referencedColumnName="id")
-     **/
-    //private $ref = null;
+	/**
+	 * @MongoDB\EmbedOne(targetDocument="MultimediaObject")
+	 */
+	private $multimedia_object;
 
-    /**
-     * @var array $tags
-     *
-     * @MongoDB\Collection
-     */
-    private $tags;
+	/**
+	 * @MongoDB\OneToOne(targetDocument="Element")
+	 * @MongoDB\JoinColumn(name="ref_id", referencedColumnName="id")
+	 **/
+	//private $ref = null;
 
-    /**
-     * @var string $url
-     *
-     * @MongoDB\String
-     */
-    private $url;
+	/**
+	 * @var array $tags
+	 *
+	 * @MongoDB\Collection
+	 */
+	private $tags;
 
-    /**
-     * @var string $path
-     *
-     * @MongoDB\String
-     */
-    private $path;
+	/**
+	 * @var string $url
+	 *
+	 * @MongoDB\String
+	 */
+	private $url;
 
-    /**
-     * @var string $format
-     *
-     * @MongoDB\String
-     */
-    private $format;
+	/**
+	 * @var string $path
+	 *
+	 * @MongoDB\String
+	 */
+	private $path;
 
-    /**
-     * @var string $mime_type
-     *
-     * @MongoDB\String
-     */
-    private $mime_type;
+	/**
+	 * @var string $format
+	 *
+	 * @MongoDB\String
+	 */
+	private $format;
 
-    /**
-     * @var int $rank
-     *
-     * @MongoDB\Int
-     */
-    private $rank;
+	/**
+	 * @var string $mime_type
+	 *
+	 * @MongoDB\String
+	 */
+	private $mime_type;
 
-    /**
-     * @var int $size
-     *
-     * @MongoDB\Int
-     */
-    private $size;
+	/**
+	 * @var int $rank
+	 *
+	 * @MongoDB\Int
+	 */
+	private $rank;
 
-    /**
-     * @var boolean $hide
-     *
-     * @MongoDB\Boolean
-     */
-    private $hide = false;
+	/**
+	 * @var int $size
+	 *
+	 * @MongoDB\Int
+	 */
+	private $size;
 
-    /**
-     * @var string $description
-     *
-     * @MongoDB\String
-     */
-    private $description;
+	/**
+	 * @var boolean $hide
+	 *
+	 * @MongoDB\Boolean
+	 */
+	private $hide = false;
 
-    public function __construct()
-    {
-        $this->tags = array();
-    }
+	/**
+	 * @var string $description
+	 *
+	 * @MongoDB\String
+	 */
+	private $description;
 
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+	public function __construct()
+	{
+		$this->tags = array();
+	}
 
-    /**
+	/**
+	 * Get id
+	 *
+	 * @return int
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
+
+	/**
 	 * Set multimedia_object
 	 *
 	 * @param MultimediaObject $multimedia_object
 	 */
-    /*public function setMultimediaObject(MultimediaObject $multimedia_object)
+	public function setMultimediaObject(MultimediaObject $multimedia_object)
 	{
 		$this->multimedia_object = $multimedia_object;
-	}*/
+	}
 
-    /**
+	/**
 	 * Get multimedia_object
 	 *
 	 * @return MultimediaObject
 	 */
-    /*public function getMultimediaObject()
+	public function getMultimediaObject()
 	{
 		return $this->multimedia_object;
-	}*/
+	}
 
-    /**
-     * Set ref
-     *
-     * @param Pic $ref
-     */
-    /*public function setRef(Element $ref)
-    {
-        $this->ref = $ref;
-    }*/
+	/**
+	 * Set ref
+	 *
+	 * @param Pic $ref
+	 */
+	/*public function setRef(Element $ref)
+	  {
+	  $this->ref = $ref;
+	  }*/
 
-    /**
-     * Get ref
-     *
-     * @return Pic
-     */
-    /*public function getRef()
-    {
-        return $this->ref;
-    }*/
+	/**
+	 * Get ref
+	 *
+	 * @return Pic
+	 */
+	/*public function getRef()
+	  {
+	  return $this->ref;
+	  }*/
 
-    /**
-     * Set tags
-     *
-     * @param array $tags
-     */
-    public function setTags(array $tags)
-    {
-        $this->tags = $tags;
-    }
+	/**
+	 * Set tags
+	 *
+	 * @param array $tags
+	 */
+	public function setTags(array $tags)
+	{
+		$this->tags = $tags;
+	}
 
-    /**
-     * Get tags
-     *
-     * @return array
-     */
-    public function getTags()
-    {
-        return $this->tags;
-    }
+	/**
+	 * Get tags
+	 *
+	 * @return array
+	 */
+	public function getTags()
+	{
+		return $this->tags;
+	}
 
-    /**
-     * Add tag
-     *
-     * @param string $tag
-     */
-    public function addTag($tag)
-    {
-        $this->tags[] = $tag;
+	/**
+	 * Add tag
+	 *
+	 * @param string $tag
+	 */
+	public function addTag($tag)
+	{
+		$this->tags[] = $tag;
 
-        return $this->tags = array_unique($this->tags);
-    }
+		return $this->tags = array_unique($this->tags);
+	}
 
-    /**
-     * Remove tag
-     *
-     * @param  string  $tag
-     * @return boolean TRUE if this pic contained the specified tag, FALSE otherwise.
-     */
-    public function removeTag($tag)
-    {
-        $tag = array_search($tag, $this->tags, true);
+	/**
+	 * Remove tag
+	 *
+	 * @param  string  $tag
+	 * @return boolean TRUE if this pic contained the specified tag, FALSE otherwise.
+	 */
+	public function removeTag($tag)
+	{
+		$tag = array_search($tag, $this->tags, true);
 
-        if ($tag !== false) {
-            unset($this->tags[$tag]);
+		if ($tag !== false) {
+			unset($this->tags[$tag]);
 
-            return true;
-        }
+			return true;
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    /**
-     * Contains tag
-     *
-     * @param  string  $tag
-     * @return boolean TRUE if this pic contained the specified tag, FALSE otherwise.
-     */
-    public function containsTag($tag)
-    {
-        return in_array($tag, $this->tags, true);
-    }
+	/**
+	 * Contains tag
+	 *
+	 * @param  string  $tag
+	 * @return boolean TRUE if this pic contained the specified tag, FALSE otherwise.
+	 */
+	public function containsTag($tag)
+	{
+		return in_array($tag, $this->tags, true);
+	}
 
-    /**
-     * Contains all tags
-     *
-     * @param  array   $tags
-     * @return boolean TRUE if this pic contained all tags, FALSE otherwise.
-     */
-    public function containsAllTags(array $tags)
-    {
-        return count(array_intersect($tags, $this->tags)) === count($tags);
-    }
+	/**
+	 * Contains all tags
+	 *
+	 * @param  array   $tags
+	 * @return boolean TRUE if this pic contained all tags, FALSE otherwise.
+	 */
+	public function containsAllTags(array $tags)
+	{
+		return count(array_intersect($tags, $this->tags)) === count($tags);
+	}
 
-    /**
-     * Contains any tags
-     *
-     * @param  array   $tags
-     * @return boolean TRUE if this pic contained any tag of the list, FALSE otherwise.
-     */
-    public function containsAnyTag(array $tags)
-    {
-        return count(array_intersect($tags, $this->tags)) != 0;
-    }
+	/**
+	 * Contains any tags
+	 *
+	 * @param  array   $tags
+	 * @return boolean TRUE if this pic contained any tag of the list, FALSE otherwise.
+	 */
+	public function containsAnyTag(array $tags)
+	{
+		return count(array_intersect($tags, $this->tags)) != 0;
+	}
 
-    /**
-     * Set url
-     *
-     * @param string $url
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-    }
+	/**
+	 * Set url
+	 *
+	 * @param string $url
+	 */
+	public function setUrl($url)
+	{
+		$this->url = $url;
+	}
 
-    /**
-     * Get url
-     *
-     * @return string
-     */
-    public function getUrl()
-    {
-        return $this->url;
-    }
-
-    /**
-     * Set path
-     *
-     * @param string $path
-     */
-    public function setPath($path)
-    {
-        $this->path = $path;
-    }
-
-    /**
-     * Get path
-     *
-     * @return string
-     */
-    public function getPath()
-    {
-        return $this->path;
-    }
-
-    /**
-     * Set format
-     *
-     * @param string $format
-     */
-    public function setFormat($format)
-    {
-        $this->format = $format;
-    }
-
-    /**
-     * Get format
-     *
-     * @return string
-     */
-    public function getFormat()
-    {
-        return $this->format;
-    }
-
-    /**
-     * Set mime_type
-     *
-     * @param string $mime_type
-     */
-    public function setMimeType($mime_type)
-    {
-        $this->mime_type = $mime_type;
-    }
-
-    /**
-	 * Get mime_type
- 	 *
+	/**
+	 * Get url
+	 *
 	 * @return string
 	 */
-    public function getMimeType()
-    {
-        return $this->mime_type;
-    }
+	public function getUrl()
+	{
+		return $this->url;
+	}
 
-    /**
+	/**
+	 * Set path
+	 *
+	 * @param string $path
+	 */
+	public function setPath($path)
+	{
+		$this->path = $path;
+	}
+
+	/**
+	 * Get path
+	 *
+	 * @return string
+	 */
+	public function getPath()
+	{
+		return $this->path;
+	}
+
+	/**
+	 * Set format
+	 *
+	 * @param string $format
+	 */
+	public function setFormat($format)
+	{
+		$this->format = $format;
+	}
+
+	/**
+	 * Get format
+	 *
+	 * @return string
+	 */
+	public function getFormat()
+	{
+		return $this->format;
+	}
+
+	/**
+	 * Set mime_type
+	 *
+	 * @param string $mime_type
+	 */
+	public function setMimeType($mime_type)
+	{
+		$this->mime_type = $mime_type;
+	}
+
+	/**
+	 * Get mime_type
+	 *
+	 * @return string
+	 */
+	public function getMimeType()
+	{
+		return $this->mime_type;
+	}
+
+	/**
 	 * Set rank
 	 *
 	 * @param int $rank
 	 */
-    public function setRank($rank)
-    {
-        $this->rank = $rank;
-    }
+	public function setRank($rank)
+	{
+		$this->rank = $rank;
+	}
 
-    /**
+	/**
 	 * Get rank
 	 *
 	 * @return int
 	 */
-    public function getRank()
-    {
-        return $this->rank;
-    }
+	public function getRank()
+	{
+		return $this->rank;
+	}
 
-    /**
+	/**
 	 * Set size
 	 *
 	 * @param int $size
 	 */
-    public function setSize($size)
-    {
-        $this->size = $size;
-    }
+	public function setSize($size)
+	{
+		$this->size = $size;
+	}
 
-    /**
+	/**
 	 * Get size
 	 *
 	 * @return int
-  	 */
-    public function getSize()
-    {
-        return $this->size;
-    }
+	 */
+	public function getSize()
+	{
+		return $this->size;
+	}
 
-    /**
+	/**
 	 * Set hide
 	 *
 	 * @param boolean $hide
 	 */
-    public function setHide($hide)
-    {
-        $this->hide = $hide;
-    }
+	public function setHide($hide)
+	{
+		$this->hide = $hide;
+	}
 
-    /**
+	/**
 	 * Get hide
 	 *
 	 * @return boolean
 	 */
-    public function getHide()
-    {
-        return $this->hide;
-    }
+	public function getHide()
+	{
+		return $this->hide;
+	}
 
-    /**
+	/**
 	 * Set description
 	 *
 	 * @param text $description
 	 */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
+	public function setDescription($description)
+	{
+		$this->description = $description;
+	}
 
-    /**
+	/**
 	 * Get description
 	 *
 	 * @return text
 	 */
-    public function getDescription()
-    {
-        return $this->description;
-    }
+	public function getDescription()
+	{
+		return $this->description;
+	}
 }
