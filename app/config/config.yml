@@ -46,9 +46,9 @@ assetic:
 doctrine_mongodb:
     connections:
         default:
-            server: mongodb://localhost:27017
+            server: "%mongodb_server%"
             options: {}
-    default_database: pumukit
+    default_database: "%mongodb_database%"
     document_managers:
         default:
             auto_mapping: true
