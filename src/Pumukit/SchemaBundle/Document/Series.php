@@ -46,7 +46,7 @@ class Series
 	/**
 	 * @var ArrayCollection $multimedia_objects
 	 *
-	 * @MongoDB\EmbedMany(targetDocument="MultimediaObject")
+	 * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="series")
 	 */
 	private $multimedia_objects;
 

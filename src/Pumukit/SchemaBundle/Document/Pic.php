@@ -11,6 +11,12 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  */
 class Pic extends Element
 {
+
+	/**
+	 * //@MongoDB\EmbedOne(targetDocument="Series")
+	 */
+	//private $series;
+
 	/**
 	 * @var int $width
 	 *
@@ -24,6 +30,26 @@ class Pic extends Element
 	 * @MongoDB\Int
 	 */
 	private $height;
+
+	/**
+	 * Set series
+	 *
+	 * @param Series $series
+	 */
+	/*public function setSeries(Series $series)
+	{
+		$this->series = $series;
+	}*/
+
+	/**
+	 * Get series
+	 *
+	 * @return Series
+	 */
+	/*public function getSeries()
+	{
+		return $this->series;
+	}*/
 
 	/**
 	 * Set width

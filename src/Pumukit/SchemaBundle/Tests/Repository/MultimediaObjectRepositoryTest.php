@@ -12,6 +12,7 @@ use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\PersonInMultimediaObject;
 
 class MultimediaObjectRepositoryTest extends WebTestCase
 {
@@ -32,20 +33,14 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
 		//DELETE DATABASE
 		// pimo has to be deleted before mmobj
-		//$this->dm->getDocumentCollection('PumukitSchemaBundle:PersonInMultimediaObject pimo')->remove(array());
-
+		$this->dm->getDocumentCollection('PumukitSchemaBundle:PersonInMultimediaObject')
+			->remove(array());
 		$this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
 			->remove(array());
-		$this->dm->flush();
-
 		$this->dm->getDocumentCollection('PumukitSchemaBundle:Role')
 			->remove(array());
-		$this->dm->flush();
-
 		$this->dm->getDocumentCollection('PumukitSchemaBundle:Person')
 			->remove(array());
-		$this->dm->flush();
-
 		$this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
 			->remove(array());	
 		$this->dm->flush();
@@ -105,32 +100,35 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
 		//$series_type->addSeries($series_main);
 		$mm1 = $this->createMultimediaObjectAssignedToSeries('MmObject 1', $series_main);
-		//$mm2 = $this->createMultimediaObjectAssignedToSeries('MmObject 2', $series_wall);
-		//$mm3 = $this->createMultimediaObjectAssignedToSeries('MmObject 3', $series_main);
-		//$mm4 = $this->createMultimediaObjectAssignedToSeries('MmObject 4', $series_main);
+		$mm2 = $this->createMultimediaObjectAssignedToSeries('MmObject 2', $series_wall);
+		$mm3 = $this->createMultimediaObjectAssignedToSeries('MmObject 3', $series_main);
+		$mm4 = $this->createMultimediaObjectAssignedToSeries('MmObject 4', $series_lhazar);
 
 		$this->dm->persist($mm1);
-		//$this->dm->persist($mm2);
-		//$this->dm->persist($mm3);
-		//$this->dm->persist($mm4);
+		$this->dm->persist($mm2);
+		$this->dm->persist($mm3);
+		$this->dm->persist($mm4);
 		$this->dm->flush(); // It is needed to flush multimedia objects before pimo's
 
-		/*
-		   $this->addPersonWithRoleInMultimediaObject ($person_ned, $role_lord, $mm1);
-		   $this->addPersonWithRoleInMultimediaObject ($person_benjen, $role_ranger, $mm2);
-		   $this->addPersonWithRoleInMultimediaObject ($person_ned, $role_lord, $mm3);
-		   $this->addPersonWithRoleInMultimediaObject ($person_benjen, $role_ranger, $mm3);
-		   $this->addPersonWithRoleInMultimediaObject ($person_ned, $role_hand, $mm4);
-		   $this->dm->flush();*/
+		$this->addPersonWithRoleInMultimediaObject ($person_ned, $role_lord, $mm1);
+		$this->addPersonWithRoleInMultimediaObject ($person_benjen, $role_ranger, $mm2);
+		$this->addPersonWithRoleInMultimediaObject ($person_ned, $role_lord, $mm3);
+		$this->addPersonWithRoleInMultimediaObject ($person_benjen, $role_ranger, $mm3);
+		$this->addPersonWithRoleInMultimediaObject ($person_ned, $role_hand, $mm4);
+		$this->dm->flush();
 		// DB setup END.
 
-		/*
 		// Test find by person (and role)
-		$this->assertEquals(3,count($this->repo->findByPersonAndRole($person_ned)));
-		$this->assertEquals(2,count($this->repo->findByPersonAndRole($person_ned,$role_lord)));
-		$this->assertEquals(0,count($this->repo->findByPersonAndRole($person_ned,$role_ranger)));
-		$this->assertEquals(1,count($this->repo->findByPersonAndRole($person_ned,$role_hand)));
-		 */
+		//$qb = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')->field('people_in_multimedia_object')->equals($person_ned);
+		$qb = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')->field('rank')->equals(1);
+		$query = $qb->getQuery();
+		$results = $query->execute();
+		$this->assertEquals(3,count($results));
+
+		//$this->assertEquals(3,count($this->repo->findByPersonAndRole($person_ned)));
+		//$this->assertEquals(2,count($this->repo->findByPersonAndRole($person_ned,$role_lord)));
+		//$this->assertEquals(0,count($this->repo->findByPersonAndRole($person_ned,$role_ranger)));
+		//$this->assertEquals(1,count($this->repo->findByPersonAndRole($person_ned,$role_hand)));
 
 		/*
 		// Test find by series
@@ -184,7 +182,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 		$person->setPost($post);
 		$person->setBio($bio);
 
-		// FIXME esto no persiste
+		// FIXME esto no persiste. ¿Sera porque no tiene repositorio?
 		$this->dm->persist($person);
 		$this->dm->flush();
 
@@ -241,7 +239,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 		//$material1 = new Material();
 
 		$mm = new MultimediaObject();
-		//$series->addMultimediaObject($mm);
 
 		//$mm->addTag($tag1);
 		//$mm->addTrack($track1);
@@ -302,23 +299,20 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 	   return $series_type;
 	   }*/
 
-	/*
+
 	// This function was used to assure that pimo objects would persist.
 	public function addPersonWithRoleInMultimediaObject(
-	Person $person, Role $role, MultimediaObject $mm)
+			Person $person, Role $role, MultimediaObject $mm)
 	{
-	if (!$mm->containsPersonWithRole($person, $role)) {
-	$pimo = new PersonInMultimediaObject();
-	$pimo->setPerson( $person );
-	$pimo->setRole( $role );
-	$pimo->setMultimediaObject( $mm );
-	$pimo->setRank(count($mm->getPeopleInMultimediaObject()));
-	$mm->addPersonInMultimediaObject($pimo);
-	$this->em->persist($pimo);
+		if (!$mm->containsPersonWithRole($person, $role)) {
+			$pimo = new PersonInMultimediaObject();
+			$pimo->setPerson($person);
+			$pimo->setRole($role);
+			$pimo->setMultimediaObject($mm);
+			$pimo->setRank(count($mm->getPeopleInMultimediaObject()));
+			$mm->addPersonInMultimediaObject($pimo);
+			$this->dm->persist($pimo);
+			$this->dm->flush();
+		}
 	}
-	}
-	 */
-
-
-
 }

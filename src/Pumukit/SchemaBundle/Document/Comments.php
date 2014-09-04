@@ -4,6 +4,8 @@ namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+
 /**
  * Comments
  *
@@ -36,7 +38,7 @@ class Comments
 	 * @var int
 	 *
 	 * @MongoDB\Int
-	 * //@MongoDB\ManyToOne(targetDocument="Pumukit\SchemaBundle\Document\MultimediaObject")
+	 * @MongoDB\EmbedOne(targetDocument="MultimediaObject")
 	 */
 	private $multimedia_object_id;
 

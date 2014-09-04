@@ -26,7 +26,7 @@ class MultimediaObject
 	private $id;
 
 	/**
-	 * @MongoDB\EmbedOne(targetDocument="Series")
+	 * @MongoDB\ReferenceOne(targetDocument="Series", inversedBy="multimedia_objects")
 	 */
 	private $series;
 
@@ -138,9 +138,9 @@ class MultimediaObject
 	/**
 	 * @var ArrayCollection $people_in_multimedia_object
 	 *
-	 * //@MongoDB\EmbedMany(targetDocument="PersonInMultimediaObject")
+	 * @MongoDB\ReferenceMany(targetDocument="PersonInMultimediaObject", inversedBy="multimedia_object")
 	 */
-	//private $people_in_multimedia_object;
+	private $people_in_multimedia_object;
 
 	/**
 	 * //@Gedmo\Locale
@@ -181,7 +181,7 @@ class MultimediaObject
 		$this->pics = new ArrayCollection();
 		$this->materials = new ArrayCollection();
 		$this->tags = new ArrayCollection();
-		//$this->people_in_multimedia_object = new ArrayCollection();
+		$this->people_in_multimedia_object = new ArrayCollection();
 	}
 
 	public function __toString()
@@ -1128,6 +1128,7 @@ class MultimediaObject
 
 	// Start people_in_multimedia_object section.
 
+	// Check this in the new version:
 	// Caution: these are objects, not strings; ArrayCollection instead of plain php arrays...
 	// Note: As this is an auxiliary table, these functions will be scarcely used.
 	// Maybe in debug or very specific functions.
@@ -1139,27 +1140,27 @@ class MultimediaObject
 	 *
 	 * @param array $people_in_multimedia_object
 	 */
-	/*public function setPeopleInMultimediaObject(array $people_in_multimedia_object)
+	public function setPeopleInMultimediaObject(array $people_in_multimedia_object)
 	{
 		$this->people_in_multimedia_object = new ArrayCollection($people_in_multimedia_object);
-	}*/
+	}
 
 	/**
 	 * Get people_in_multimedia_object
 	 *
 	 * @return array
 	 */
-	/*public function getPeopleInMultimediaObject()
+	public function getPeopleInMultimediaObject()
 	{
 		return $this->people_in_multimedia_object;
-	}*/
+	}
 
 	/**
 	 * Add person_in_multimedia_object.
 	 *
 	 * @param PersonInMultimediaObject $pimo
 	 */
-	/*public function addPersonInMultimediaObject(PersonInMultimediaObject $pimo)
+	public function addPersonInMultimediaObject(PersonInMultimediaObject $pimo)
 	{
 		// This condition would check the rank, typically it isn't set yet.
 		// if (!$this->containsPersonInMultimediaObject($pimo)) {
@@ -1169,7 +1170,7 @@ class MultimediaObject
 			$this->people_in_multimedia_object[] = $pimo;
 
 		}
-	}*/
+	}
 
 	/**
 	 * Remove person_in_multimedia_object
@@ -1177,14 +1178,14 @@ class MultimediaObject
 	 * @param PersonInMultimediaObject $pimo
 	 * @return boolean TRUE if this multimedia_object contained the specified person_in_multimedia_object, FALSE otherwise.
 	 */
-	/*public function removePersonInMultimediaObject(PersonInMultimediaObject $pimo)
+	public function removePersonInMultimediaObject(PersonInMultimediaObject $pimo)
 	{
 		if ($this->people_in_multimedia_object->contains($pimo)) {
 			return $this->people_in_multimedia_object->removeElement($pimo);
 		}
 
 		return false;
-	}*/
+	}
 
 	/**
 	 * Contains person_in_multimedia_object (the whole object, not a given person)
@@ -1194,10 +1195,10 @@ class MultimediaObject
 	 * @param PersonInMultimediaObject $$pimo
 	 * @return boolean TRUE if this multimedia_object contained the specified person_in_multimedia_object, FALSE otherwise.
 	 */
-	/*public function containsPersonInMultimediaObject(PersonInMultimediaObject $pimo)
+	public function containsPersonInMultimediaObject(PersonInMultimediaObject $pimo)
 	{
 		return $this->people_in_multimedia_object->contains($pimo);
-	}*/
+	}
 
 	// End of people_in_multimedia_object section
 
@@ -1213,7 +1214,7 @@ class MultimediaObject
 	 *
 	 * @return boolean
 	 */
-	/*public function containsPersonWithRole(Person $person, Role $role = null)
+	public function containsPersonWithRole(Person $person, Role $role = null)
 	{
 		foreach ($this->people_in_multimedia_object as $pimo) {
 			if ($pimo->getPerson($person) === $person) {
@@ -1224,7 +1225,7 @@ class MultimediaObject
 		}
 
 		return false;
-	}*/
+	}
 
 	/**
 	 * Get people associated to multimediaobject with a given role.
@@ -1232,7 +1233,7 @@ class MultimediaObject
 	 *
 	 * @param Role $role
 	 */
-	/*public function getPeopleInMultimediaObjectByRole(Role $role = null)
+	public function getPeopleInMultimediaObjectByRole(Role $role = null)
 	{
 		$r = array();
 
@@ -1250,7 +1251,7 @@ class MultimediaObject
 				});
 
 		return $r;
-	}*/
+	}
 
 	/**
 	 * Adds a new PersonInMultimediaObject to the existing people_in_multimedia_object
@@ -1260,7 +1261,7 @@ class MultimediaObject
 	 * @param Person $person
 	 * @param Role $role
 	 */
-	/*public function addPersonWithRole(Person $person, Role $role)
+	public function addPersonWithRole(Person $person, Role $role)
 	{
 		if (!$this->containsPersonWithRole($person, $role)) {
 			$pimo = new PersonInMultimediaObject();
@@ -1271,7 +1272,7 @@ class MultimediaObject
 			$pimo->setRank(count($this->people_in_multimedia_object));
 			$this->people_in_multimedia_object[] = $pimo;
 		}
-	}*/
+	}
 
 	// Igual sirve removePersonInMultimediaObject(PersonInMultimediaObject $pimo)
 
@@ -1284,7 +1285,7 @@ class MultimediaObject
 	 * @param Role $role
 	 * @return boolean TRUE if this multimedia_object contained the specified person and role, FALSE otherwise.
 	 */
-	/*public function removePersonWithRole(Person $person, Role $role)
+	public function removePersonWithRole(Person $person, Role $role)
 	{
 		foreach ($this->people_in_multimedia_object as $pimo) {
 			if ($pimo->getPerson($person) === $person) {
@@ -1295,7 +1296,7 @@ class MultimediaObject
 		}
 
 		return false;
-	}*/
+	}
 
 	// TO DO: revisar funciones de manejo de arraycollections, igual me acortan alguna de las mías.
 
@@ -1305,20 +1306,20 @@ class MultimediaObject
 	 * @param \Pumukit\SchemaBundle\Document\PersonInMultimediaObject $peopleInMultimediaObject
 	 * @return MultimediaObject
 	 */
-	/*public function addPeopleInMultimediaObject(\Pumukit\SchemaBundle\Document\PersonInMultimediaObject $peopleInMultimediaObject)
+	public function addPeopleInMultimediaObject(\Pumukit\SchemaBundle\Document\PersonInMultimediaObject $peopleInMultimediaObject)
 	{
 		$this->people_in_multimedia_object[] = $peopleInMultimediaObject;
 
 		return $this;
-	}*/
+	}
 
 	/**
 	 * Remove people_in_multimedia_object
 	 *
 	 * @param \Pumukit\SchemaBundle\Document\PersonInMultimediaObject $peopleInMultimediaObject
 	 */
-	/*public function removePeopleInMultimediaObject(\Pumukit\SchemaBundle\Document\PersonInMultimediaObject $peopleInMultimediaObject)
+	public function removePeopleInMultimediaObject(\Pumukit\SchemaBundle\Document\PersonInMultimediaObject $peopleInMultimediaObject)
 	{
 		$this->people_in_multimedia_object->removeElement($peopleInMultimediaObject);
-	}*/
+	}
 }

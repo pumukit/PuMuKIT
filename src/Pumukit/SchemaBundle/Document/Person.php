@@ -5,6 +5,10 @@ namespace Pumukit\SchemaBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
+use Pumukit\SchemaBundle\Document\PersonInMultimediaObject;
+
 /**
  * Pumukit\SchemaBundle\Document\Person
  *
@@ -26,12 +30,12 @@ class Person
 	 */
 	protected $name;
 
-        /**
+	/**
 	 * @var string $email
-         *
+	 *
 	 * @MongoDB\String
-         */
-        protected $email;
+	 */
+	protected $email;
 
 	/**
 	 * @var string $web
@@ -77,6 +81,13 @@ class Person
 	protected $bio;
 
 	/**
+	 * @var ArrayCollection $person_in_multimedia_object
+	 *
+	 * @MongoDB\EmbedMany(targetDocument="PersonInMultimediaObject")
+	 */
+	protected $people_in_multimedia_object;
+
+	/**
 	 * Locale
 	 */
 	protected $locale;
@@ -111,22 +122,22 @@ class Person
 		return $this->name;
 	}
 
-        /**
-         * Set email
-         *
-         * @param string $email
-         */
-        public function setEmail($email)
-        {
-        	$this->email = $email;
-        }
+	/**
+	 * Set email
+	 *
+	 * @param string $email
+	 */
+	public function setEmail($email)
+	{
+		$this->email = $email;
+	}
 
-        /**
+	/**
 	 * Get email
 	 *
 	 * @return string
 	 */
-        public function getEmail()
+	public function getEmail()
 	{
 		return $this->email;
 	} 
@@ -249,5 +260,47 @@ class Person
 	public function getBio()
 	{
 		return $this->bio;
+	}
+
+	/**
+	 * Constructor
+	 */
+	public function __construct()
+	{
+		$this->people_in_multimedia_object = new ArrayCollection();
+		//parent::__construct();
+	}
+
+	/**
+	 * Add people_in_multimedia_object
+	 *
+	 * @param PersonInMultimediaObject $peopleInMultimediaObject
+	 * @return Person
+	 */
+	public function addPeopleInMultimediaObject(PersonInMultimediaObject $peopleInMultimediaObject)
+	{
+		$this->people_in_multimedia_object[] = $peopleInMultimediaObject;
+
+		return $this;
+	}
+
+	/**
+	 * Remove people_in_multimedia_object
+	 *
+	 * @param PersonInMultimediaObject $peopleInMultimediaObject
+	 */
+	public function removePeopleInMultimediaObject(PersonInMultimediaObject $peopleInMultimediaObject)
+	{
+		$this->people_in_multimedia_object->removeElement($peopleInMultimediaObject);
+	}
+
+	/**
+	 * Get people_in_multimedia_object
+	 *
+	 * @return \Doctrine\Common\Collections\Collection
+	 */
+	public function getPeopleInMultimediaObject()
+	{
+		return $this->people_in_multimedia_object;
 	}
 }
