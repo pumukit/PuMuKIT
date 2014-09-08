@@ -3,6 +3,8 @@
 namespace Pumukit\SchemaBundle\Tests\Document;
 
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\SeriesType;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class SeriesTest extends \PHPUnit_Framework_TestCase
 {
@@ -13,6 +15,8 @@ class SeriesTest extends \PHPUnit_Framework_TestCase
     $subtitle = 'subtitle';
     $description = 'description';
     $test_date = new \DateTime("now");
+
+    $serie_type = new SeriesType();
 
     $serie = new Series();
 
