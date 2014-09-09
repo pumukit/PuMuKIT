@@ -13,17 +13,17 @@ use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\PersonInMultimediaObject;
+use Pumukit\SchemaBundle\Document\SeriesType;
 
 class MultimediaObjectRepositoryTest extends WebTestCase
 {
 	private $dm;
 	private $repo;
+	private $qb;
 
 	public function setUp()
 	{
-		$options = array(
-				'environment' => 'test'
-				);
+		$options = array('environment' => 'test');
 		$kernel = static::createKernel($options);
 		$kernel->boot();
 		$this->dm = $kernel->getContainer()
@@ -43,10 +43,9 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 			->remove(array());
 		$this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
 			->remove(array());	
+		$this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
+			->remove(array());
 		$this->dm->flush();
-
-		//$this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')->remove(array());
-		//$this->dm->flush();
 	}
 
 	public function testRepositoryEmpty()
@@ -84,26 +83,26 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
 	public function testCreateMultimediaObjectAndFindByCriteria()
 	{
-		//$series_type = $this->createSeriesType("Medieval Fantasy Sitcom");
-		//$series_type = CommonCreateFunctions::createSeriesType($this->em, "prueba");
+		$series_type = $this->createSeriesType("Medieval Fantasy Sitcom");
 
 		$series_main = $this->createSeries("Stark's growing pains");
 		$series_wall = $this->createSeries("The Wall");
 		$series_lhazar = $this->createSeries("A quiet life");
 
 		$person_ned = $this->createPerson('Ned');
-		$person_benjen = $this->createPerson('Benjen');
+		$person_benjen = $this->createPerson('Benjen');	
 
 		$role_lord = $this->createRole("Lord");
 		$role_ranger = $this->createRole("First Ranger");
 		$role_hand = $this->createRole("Hand of the King");
 
-		//$series_type->addSeries($series_main);
+		$series_type->addSeries($series_main);
+
 		$mm1 = $this->createMultimediaObjectAssignedToSeries('MmObject 1', $series_main);
 		$mm2 = $this->createMultimediaObjectAssignedToSeries('MmObject 2', $series_wall);
 		$mm3 = $this->createMultimediaObjectAssignedToSeries('MmObject 3', $series_main);
 		$mm4 = $this->createMultimediaObjectAssignedToSeries('MmObject 4', $series_lhazar);
-
+	
 		$this->dm->persist($mm1);
 		$this->dm->persist($mm2);
 		$this->dm->persist($mm3);
@@ -118,53 +117,139 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 		$this->dm->flush();
 		// DB setup END.
 
+		// Testing the persistance of MultimediaObject
+		$mm1_id = $mm1->getId();
+		$mm2_id = $mm2->getId();
+		$mm3_id = $mm3->getId();
+		$mm4_id = $mm4->getId();
+
+		// Get repository object by id
+		$mm1_query = $this->dm->find('PumukitSchemaBundle:MultimediaObject', $mm1_id);
+		$this->assertEquals("Stark's growing pains", $mm1_query->getSeries()->getTitle());
+		$mm2_query = $this->dm->find('PumukitSchemaBundle:MultimediaObject', $mm2_id);
+		$this->assertEquals("The Wall", $mm2_query->getSeries()->getTitle());
+		$mm3_query = $this->dm->find('PumukitSchemaBundle:MultimediaObject', $mm3_id);
+		$this->assertEquals("Stark's growing pains", $mm3_query->getSeries()->getTitle());
+		$mm4_query = $this->dm->find('PumukitSchemaBundle:MultimediaObject', $mm4_id);
+		$this->assertEquals("A quiet life", $mm4_query->getSeries()->getTitle());
+
+		// Get document by field
+		$mm1_doc_title = $this->repo->findByTitle($mm1->getTitle());
+		$this->assertEquals(1, count($mm1_doc_title));
+
 		// Test find by person (and role)
-		//$qb = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')->field('people_in_multimedia_object')->equals($person_ned);
-		$qb = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')->field('rank')->equals(1);
-		$query = $qb->getQuery();
-		$results = $query->execute();
-		$this->assertEquals(3,count($results));
+		$person_ned_repo = $this->dm->find('PumukitSchemaBundle:Person', $person_ned->getId());
+		$person_benjen_repo = $this->dm->find('PumukitSchemaBundle:Person', $person_benjen->getId());
+		$role_lord_repo = $this->dm->find('PumukitSchemaBundle:Role', $role_lord->getId());
+		$role_ranger_repo = $this->dm->find('PumukitSchemaBundle:Role', $role_ranger->getId());
+		$role_hand_repo = $this->dm->find('PumukitSchemaBundle:Role', $role_hand->getId());
+
+		// person is EmbedOne in PersonInMultimediaObject		
+		$pimo_repo = $this->dm->getRepository('PumukitSchemaBundle:PersonInMultimediaObject');
+		$pimo_ned = $pimo_repo->findByPerson($person_ned);
+		$pimo_benjen = $pimo_repo->findByPerson($person_benjen);
+		$this->assertEquals(3, count($pimo_ned));
+		$this->assertEquals(2, count($pimo_benjen));
+		// Equivalent way to make the query
+		$pimo_ned_eq = $this->dm
+				->createQueryBuilder('PumukitSchemaBundle:PersonInMultimediaObject')
+				->field('person')->equals($person_ned)
+				->getQuery()->execute();
+		$this->assertEquals(3, count($pimo_ned_eq));
+
+		// role is ReferenceOne in PersonInMultimediaObject
+		$pimo_lord = $this->dm
+				->createQueryBuilder('PumukitSchemaBundle:PersonInMultimediaObject')
+				->field('role')->references($role_lord_repo)
+				->getQuery()->execute();
+		$this->assertEquals(2, count($pimo_lord));
+
+		$pimo_ranger = $this->dm
+				->createQueryBuilder('PumukitSchemaBundle:PersonInMultimediaObject')
+				->field('role')->references($role_ranger_repo)
+				->getQuery()->execute();
+		$this->assertEquals(2, count($pimo_ranger));
+
+		$pimo_hand = $this->dm
+				->createQueryBuilder('PumukitSchemaBundle:PersonInMultimediaObject')
+				->field('role')->references($role_hand_repo)
+				->getQuery()->execute();
+		$this->assertEquals(1, count($pimo_hand));
+
+		// person and role in PersonInMultimediaObject
+		$pimo_ned_lord = $this->dm
+				->createQueryBuilder('PumukitSchemaBundle:PersonInMultimediaObject')
+				->field('person')->equals($person_ned)
+				->field('role')->references($role_lord_repo)
+				->getQuery()->execute();
+		$this->assertEquals(2, count($pimo_ned_lord));
+
+		$pimo_ned_hand = $this->dm
+				->createQueryBuilder('PumukitSchemaBundle:PersonInMultimediaObject')
+				->field('person')->equals($person_ned)
+				->field('role')->references($role_hand_repo)
+				->getQuery()->execute();
+		$this->assertEquals(1, count($pimo_ned_hand));
+
+		$pimo_benjen_ranger = $this->dm
+				->createQueryBuilder('PumukitSchemaBundle:PersonInMultimediaObject')
+				->field('person')->equals($person_benjen)
+				->field('role')->references($role_ranger_repo)
+				->getQuery()->execute();
+		$this->assertEquals(2, count($pimo_benjen_ranger));
+
+		$pimo_benjen_lord = $this->dm
+				->createQueryBuilder('PumukitSchemaBundle:PersonInMultimediaObject')
+				->field('person')->equals($person_benjen)
+				->field('role')->references($role_lord_repo)
+				->getQuery()->execute();
+		$this->assertEquals(0, count($pimo_benjen_lord));
+
+		// Buscamos el numero de objetos multimedia y no el numero de personas en el objeto multimedia
 
 		//$this->assertEquals(3,count($this->repo->findByPersonAndRole($person_ned)));
 		//$this->assertEquals(2,count($this->repo->findByPersonAndRole($person_ned,$role_lord)));
 		//$this->assertEquals(0,count($this->repo->findByPersonAndRole($person_ned,$role_ranger)));
 		//$this->assertEquals(1,count($this->repo->findByPersonAndRole($person_ned,$role_hand)));
 
-		/*
+	    		
 		// Test find by series
-		$this->assertEquals(3,count($this->repo->findBySeries($series_main)));
-		$this->assertEquals(1,count($this->repo->findBySeries($series_wall)));
-		$this->assertEquals(0,count($this->repo->findBySeries($series_lhazar)));
-		$this->assertEquals(2,count($this->repo->findBySeries($series_main, 2)));
-		// exit("\n Intentando salir del test phpunit con un exit\n");
-		// // passthru('read ');*/
+		$series_main_repo = $this->dm
+				->find('PumukitSchemaBundle:Series', $series_main->getId());
+		$mmobj_series_main = $this->dm
+					->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
+					->field('series')->references($series_main_repo)
+					->getQuery()->execute();
+		$this->assertEquals(2, count($mmobj_series_main));
 
-		/*	
-			$titulo = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
-			->field('title')->equals('titulo cualquiera')
-			->getQuery()
-			->getSingleResult();
-
-			$qb = $this->dm->createQueryBuilder();*/
-
-		/*
-		   ->field('title')->equals('titulo cualquiera')
-		   ->getQuery()
-		   ->getSingleResult();*/
-		//$this->assertEquals('titulo cualquiera', $titulo);
+		$series_wall_repo = $this->dm
+				->find('PumukitSchemaBundle:Series', $series_wall->getId());
+		$mmobj_series_wall = $this->dm
+					->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
+					->field('series')->references($series_wall_repo)
+					->getQuery()->execute();
+		$this->assertEquals(1, count($mmobj_series_wall));
+	
+		$series_lhazar_repo = $this->dm
+				->find('PumukitSchemaBundle:Series', $series_lhazar->getId());
+		$mmobj_series_lhazar = $this->dm
+					->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
+					->field('series')->references($series_lhazar_repo)
+					->getQuery()->execute();
+		$this->assertEquals(1, count($mmobj_series_lhazar));	
+	
 	}
 
 
-	/*public function testFindBySeries()
+	public function testFindBySeries()
 	  {
 	  $this->assertEquals(0, count($this->repo->findAll()));
-	//$this->assertEquals(4,count($this->repo->findBySeries($series_main)));
-
-	}*/
+	  //$this->assertEquals(4,count($this->repo->findBySeries($series_main)));
+	}
 
 	private function createPerson($name)
 	{
-		$email = $name . "@pr.es";
+		$email = $name . '@mail.es';
 		$web = 'http://www.url.com';
 		$phone = '+34986123456';
 		$honorific = 'honorific';
@@ -182,7 +267,10 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 		$person->setPost($post);
 		$person->setBio($bio);
 
-		// FIXME esto no persiste. ¿Sera porque no tiene repositorio?
+		// FIXME esto no persiste.
+		// Este dm (DocumentManager) se refiere
+		// a doctrine_mongodb en la
+		// base de datos pumukit_test
 		$this->dm->persist($person);
 		$this->dm->flush();
 
@@ -196,13 +284,13 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 		$rank = strlen($name); // Quick and dirty way to keep it unique
 		$xml = '<xml content and definition of this/>';
 		$display = true;
-		$text = 'Black then white are all i see in my infancy.
-			red and yellow then came to be, reaching out to me.
+		$text = 'Black then white are all i see in my infancy,
+			red and yellow then came to be, reaching out to me,
 			lets me see.
-			as below, so above and beyond, I imagine
+			As below, so above and beyond, I imagine
 			drawn beyond the lines of reason.
 			Push the envelope. Watch it bend.';
-		//$pimo = new PersonInMultimediaObject();
+		$pimo = new PersonInMultimediaObject();
 
 		$rol = new Role();
 		$rol->setCod($cod);
@@ -211,6 +299,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 		$rol->setDisplay($display); // true by default
 		$rol->setName($name);
 		$rol->setText($text);
+		$rol->addPeopleInMultimediaObject($pimo);
 
 		$this->dm->persist($rol);
 		$this->dm->flush();
@@ -285,19 +374,19 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 		return $serie;
 	}
 
-	/*
-	   private function createSeriesType($name)
-	   {
-	   $description = 'description';
-	   $series_type = new SeriesType();
+	private function createSeriesType($name)
+	{
+		$description = 'description';
+	   	$series_type = new SeriesType();
 
-	   $series_type->setName($name);
-	   $series_type->setDescription($description);
+	   	$series_type->setName($name);
+	   	$series_type->setDescription($description);
 
-	   $this->em->persist($series_type);
+	   	$this->dm->persist($series_type);
+		$this->dm->flush();
 
-	   return $series_type;
-	   }*/
+	   	return $series_type;
+	}
 
 
 	// This function was used to assure that pimo objects would persist.
