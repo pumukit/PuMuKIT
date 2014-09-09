@@ -29,7 +29,7 @@ class SeriesRepository extends DocumentRepository
 			->setParameter('tag', $tag);
 
 		return $query->getResult();*/
-		return $results
+		return $results;
 	}
 
 	public function findOneByTag(Tag $tag)
@@ -50,7 +50,7 @@ class SeriesRepository extends DocumentRepository
 
 		return $query->getSingleResult();
 		*/
-		return $results
+		return $results;
 	}
 
 	public function findWithAnyTag(array $tags)
@@ -69,7 +69,7 @@ class SeriesRepository extends DocumentRepository
 			->setParameter('tags', $tags);
 
 		return $query->getResult();*/
-		return $results
+		return $results;
 	}
 
 	public function findWithAllTags(array $tags)
@@ -91,7 +91,7 @@ class SeriesRepository extends DocumentRepository
 			->setParameter('tags', $tags);
 
 		return $query->getResult();*/
-		return $results
+		return $results;
 	}
 
 	public function findOneWithAllTags(array $tags)
@@ -114,7 +114,7 @@ class SeriesRepository extends DocumentRepository
 			->setMaxResults(1);
 
 		return $query->getSingleResult();*/
-		return $results
+		return $results;
 	}
 
 	public function findWithoutTag(Tag $tag)
@@ -137,7 +137,7 @@ class SeriesRepository extends DocumentRepository
 			->setParameter('tag', $tag);
 
 		return $query->getResult();*/
-		return $results
+		return $results;
 	}
 
 	public function findOneWithoutTag(Tag $tag)
@@ -160,7 +160,7 @@ class SeriesRepository extends DocumentRepository
 			->setMaxResults(1);
 
 		return $query->getSingleResult();*/
-		return $results
+		return $results;
 	}
 
 	// Note: Maybe a "Find without metatag (category) and children" would be useful
@@ -192,7 +192,7 @@ class SeriesRepository extends DocumentRepository
 			->setParameter('tags', $tags);
 
 		return $query->getResult();*/
-		return $results
+		return $results;
 	}
 
 	// TO DO: check if LEFT JOIN will miss mmo without tags (null)
@@ -222,7 +222,7 @@ class SeriesRepository extends DocumentRepository
 			->setParameter('tags', $tags);
 
 		return $query->getResult();*/
-		return $results
+		return $results;
 	}
 
 }
