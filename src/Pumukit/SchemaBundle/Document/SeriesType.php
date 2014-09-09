@@ -5,11 +5,12 @@ namespace Pumukit\SchemaBundle\Document;
 //use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Pumukit\SchemaBundle\Document\Series;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Pumukit\SchemaBundle\Document\SeriesType
  *
- * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Document\SeriesTypeRepository")
+ * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\SeriesTypeRepository")
  */
 class SeriesType
 {
@@ -60,7 +61,7 @@ class SeriesType
 
 	public function __construct()
 	{
-		$this->series = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->series = new ArrayCollection();
 	}
 
 	/**

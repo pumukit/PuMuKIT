@@ -58,6 +58,16 @@ class PersonInMultimediaObject
 	}
 
 	/**
+	 * Get id
+	 *
+         * @return Id
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
+	
+	/**
 	 * Get multimedia_object
 	 *
 	 * @return MultimediaObject
