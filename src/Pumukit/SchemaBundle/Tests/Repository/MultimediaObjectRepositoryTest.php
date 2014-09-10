@@ -15,6 +15,9 @@ use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\PersonInMultimediaObject;
 use Pumukit\SchemaBundle\Document\SeriesType;
 
+use Doctrine\ODM\MongoDB\Cursor;
+use Doctrine\Common\Collections\ArrayCollection;
+
 class MultimediaObjectRepositoryTest extends WebTestCase
 {
 	private $dm;
@@ -117,125 +120,31 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 		$this->dm->flush();
 		// DB setup END.
 
-		// Testing the persistance of MultimediaObject
-		$mm1_id = $mm1->getId();
-		$mm2_id = $mm2->getId();
-		$mm3_id = $mm3->getId();
-		$mm4_id = $mm4->getId();
+		// Test find by person
+		$mmobj_ned = $this->getMultimediaObjectsWithPerson($person_ned);
+		$this->assertEquals(3, count($mmobj_ned));
 
-		// Get repository object by id
-		$mm1_query = $this->dm->find('PumukitSchemaBundle:MultimediaObject', $mm1_id);
-		$this->assertEquals("Stark's growing pains", $mm1_query->getSeries()->getTitle());
-		$mm2_query = $this->dm->find('PumukitSchemaBundle:MultimediaObject', $mm2_id);
-		$this->assertEquals("The Wall", $mm2_query->getSeries()->getTitle());
-		$mm3_query = $this->dm->find('PumukitSchemaBundle:MultimediaObject', $mm3_id);
-		$this->assertEquals("Stark's growing pains", $mm3_query->getSeries()->getTitle());
-		$mm4_query = $this->dm->find('PumukitSchemaBundle:MultimediaObject', $mm4_id);
-		$this->assertEquals("A quiet life", $mm4_query->getSeries()->getTitle());
+		// Test find by person and role
+		$mmobj_benjen_ranger = $this->getMultimediaObjectsWithPersonAndRole($person_benjen, $role_ranger);
+		$mmobj_ned_lord = $this->getMultimediaObjectsWithPersonAndRole($person_ned, $role_lord);
+		$mmobj_ned_hand = $this->getMultimediaObjectsWithPersonAndRole($person_ned, $role_hand);
+		$mmobj_benjen_lord = $this->getMultimediaObjectsWithPersonAndRole($person_benjen, $role_lord);
+		$mmobj_ned_ranger = $this->getMultimediaObjectsWithPersonAndRole($person_ned, $role_ranger);
 
-		// Get document by field
-		$mm1_doc_title = $this->repo->findByTitle($mm1->getTitle());
-		$this->assertEquals(1, count($mm1_doc_title));
-
-		// Test find by person (and role)
-		$person_ned_repo = $this->dm->find('PumukitSchemaBundle:Person', $person_ned->getId());
-		$person_benjen_repo = $this->dm->find('PumukitSchemaBundle:Person', $person_benjen->getId());
-		$role_lord_repo = $this->dm->find('PumukitSchemaBundle:Role', $role_lord->getId());
-		$role_ranger_repo = $this->dm->find('PumukitSchemaBundle:Role', $role_ranger->getId());
-		$role_hand_repo = $this->dm->find('PumukitSchemaBundle:Role', $role_hand->getId());
-
-		// person is EmbedOne in PersonInMultimediaObject		
-		$pimo_repo = $this->dm->getRepository('PumukitSchemaBundle:PersonInMultimediaObject');
-		$pimo_ned = $pimo_repo->findByPerson($person_ned);
-		$pimo_benjen = $pimo_repo->findByPerson($person_benjen);
-		$this->assertEquals(3, count($pimo_ned));
-		$this->assertEquals(2, count($pimo_benjen));
-		// Equivalent way to make the query
-		$pimo_ned_eq = $this->dm
-				->createQueryBuilder('PumukitSchemaBundle:PersonInMultimediaObject')
-				->field('person')->equals($person_ned)
-				->getQuery()->execute();
-		$this->assertEquals(3, count($pimo_ned_eq));
-
-		// role is ReferenceOne in PersonInMultimediaObject
-		$pimo_lord = $this->dm
-				->createQueryBuilder('PumukitSchemaBundle:PersonInMultimediaObject')
-				->field('role')->references($role_lord_repo)
-				->getQuery()->execute();
-		$this->assertEquals(2, count($pimo_lord));
-
-		$pimo_ranger = $this->dm
-				->createQueryBuilder('PumukitSchemaBundle:PersonInMultimediaObject')
-				->field('role')->references($role_ranger_repo)
-				->getQuery()->execute();
-		$this->assertEquals(2, count($pimo_ranger));
-
-		$pimo_hand = $this->dm
-				->createQueryBuilder('PumukitSchemaBundle:PersonInMultimediaObject')
-				->field('role')->references($role_hand_repo)
-				->getQuery()->execute();
-		$this->assertEquals(1, count($pimo_hand));
-
-		// person and role in PersonInMultimediaObject
-		$pimo_ned_lord = $this->dm
-				->createQueryBuilder('PumukitSchemaBundle:PersonInMultimediaObject')
-				->field('person')->equals($person_ned)
-				->field('role')->references($role_lord_repo)
-				->getQuery()->execute();
-		$this->assertEquals(2, count($pimo_ned_lord));
-
-		$pimo_ned_hand = $this->dm
-				->createQueryBuilder('PumukitSchemaBundle:PersonInMultimediaObject')
-				->field('person')->equals($person_ned)
-				->field('role')->references($role_hand_repo)
-				->getQuery()->execute();
-		$this->assertEquals(1, count($pimo_ned_hand));
-
-		$pimo_benjen_ranger = $this->dm
-				->createQueryBuilder('PumukitSchemaBundle:PersonInMultimediaObject')
-				->field('person')->equals($person_benjen)
-				->field('role')->references($role_ranger_repo)
-				->getQuery()->execute();
-		$this->assertEquals(2, count($pimo_benjen_ranger));
-
-		$pimo_benjen_lord = $this->dm
-				->createQueryBuilder('PumukitSchemaBundle:PersonInMultimediaObject')
-				->field('person')->equals($person_benjen)
-				->field('role')->references($role_lord_repo)
-				->getQuery()->execute();
-		$this->assertEquals(0, count($pimo_benjen_lord));
-
-		// Buscamos el numero de objetos multimedia y no el numero de personas en el objeto multimedia
-
-		//$this->assertEquals(3,count($this->repo->findByPersonAndRole($person_ned)));
-		//$this->assertEquals(2,count($this->repo->findByPersonAndRole($person_ned,$role_lord)));
-		//$this->assertEquals(0,count($this->repo->findByPersonAndRole($person_ned,$role_ranger)));
-		//$this->assertEquals(1,count($this->repo->findByPersonAndRole($person_ned,$role_hand)));
-
+		$this->assertEquals(2,count($mmobj_benjen_ranger));
+		$this->assertEquals(2,count($mmobj_ned_lord));
+		$this->assertEquals(1,count($mmobj_ned_hand));
+		$this->assertEquals(0,count($mmobj_benjen_lord));
+		$this->assertEquals(0,count($mmobj_ned_ranger));
+		
 	    		
-		// Test find by series
-		$series_main_repo = $this->dm
-				->find('PumukitSchemaBundle:Series', $series_main->getId());
-		$mmobj_series_main = $this->dm
-					->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
-					->field('series')->references($series_main_repo)
-					->getQuery()->execute();
-		$this->assertEquals(2, count($mmobj_series_main));
+		// Test find by series	
+		$mmobj_series_main = $this->getMultimediaObjectsWithSeries($series_main);
+		$mmobj_series_wall = $this->getMultimediaObjectsWithSeries($series_wall);
+		$mmobj_series_lhazar = $this->getMultimediaObjectsWithSeries($series_lhazar);
 
-		$series_wall_repo = $this->dm
-				->find('PumukitSchemaBundle:Series', $series_wall->getId());
-		$mmobj_series_wall = $this->dm
-					->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
-					->field('series')->references($series_wall_repo)
-					->getQuery()->execute();
-		$this->assertEquals(1, count($mmobj_series_wall));
-	
-		$series_lhazar_repo = $this->dm
-				->find('PumukitSchemaBundle:Series', $series_lhazar->getId());
-		$mmobj_series_lhazar = $this->dm
-					->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
-					->field('series')->references($series_lhazar_repo)
-					->getQuery()->execute();
+		$this->assertEquals(2, count($mmobj_series_main));
+		$this->assertEquals(1, count($mmobj_series_wall));	
 		$this->assertEquals(1, count($mmobj_series_lhazar));	
 	
 	}
@@ -402,6 +311,80 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 			$mm->addPersonInMultimediaObject($pimo);
 			$this->dm->persist($pimo);
 			$this->dm->flush();
+
+			return $pimo;
 		}
+	}
+
+	private function getMultimediaObjectsWithPerson(Person $person)
+	{
+		$pimo_cursor = $this->queryPersonInPIMO($person);
+		$mmobj_array = $this->getMultimediaObjectsWithPIMO($pimo_cursor);
+
+		return $mmobj_array;	
+		
+	}
+
+
+	private function queryPersonInPIMO(Person $person)
+	{
+		$pimo_cursor = $this->dm
+				->createQueryBuilder('PumukitSchemaBundle:PersonInMultimediaObject')
+				->field('person')->equals($person)
+				->getQuery()->execute();
+
+		return $pimo_cursor;
+	}
+	
+	private function getMultimediaObjectsWithPersonAndRole(Person $person, Role $role)
+	{
+		$role_object = $this->dm->find('PumukitSchemaBundle:Role', $role->getId());
+		$pimo_cursor = $this->queryPersonAndRoleInPIMO($person, $role_object);
+		$mmobj_array = $this->getMultimediaObjectsWithPIMO($pimo_cursor);
+
+		return $mmobj_array;
+	}	
+
+
+
+	private	function queryPersonAndRoleInPIMO(Person $person, Role $role_object)
+	{
+		$pimo_cursor = $this->dm
+				->createQueryBuilder('PumukitSchemaBundle:PersonInMultimediaObject')
+				->field('person')->equals($person)
+				->field('role')->references($role_object)
+				->getQuery()->execute();
+
+		return $pimo_cursor;
+	}
+
+	private function getMultimediaObjectsWithPIMO(Cursor $pimo_cursor)
+	{
+		$mmobj_array = new ArrayCollection();
+		// Buscamos el numero de objetos multimedia y no el numero de personas en el objeto multimedia
+		foreach ($pimo_cursor as $item) {
+			$query = $this->dm->find('PumukitSchemaBundle:PersonInMultimediaObject', $item->getId());
+			$cursor = $this->dm
+				->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
+				->field('people_in_multimedia_object')->references($query)
+				->getQuery()->execute();
+			foreach ($cursor as $object) {
+				$mmobj_array[] = $object;
+			}
+
+		}
+
+		return $mmobj_array;
+	}
+
+	private function getMultimediaObjectsWithSeries(Series $series)
+	{
+		$series_object = $this->dm
+				->find('PumukitSchemaBundle:Series', $series->getId());
+		$mmobj_series = $this->dm
+					->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
+					->field('series')->references($series_object)
+					->getQuery()->execute();
+		return $mmobj_series;
 	}
 }
