@@ -89,6 +89,7 @@ class Person
 
 	/**
 	 * Locale
+	 * @var locale $locale
 	 */
 	protected $locale;
 

@@ -73,6 +73,7 @@ class Role
 	/**
 	 * Used locale to override Translation listener`s locale
 	 * this is not a mapped field of entity metadata, just a simple property
+	 * @var locale $locale
 	 */
 	private $locale;
 

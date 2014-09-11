@@ -8,6 +8,8 @@ use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\SeriesRepository")
  */
@@ -106,12 +108,13 @@ class Series
 	 * //@Gedmo\Locale
 	 * Used locale to override Translation listener`s locale
 	 * this is not a mapped field of entity metadata, just a simple property
+	 * @var locale $locale
 	 */
 	private $locale;
 
 	public function __construct()
 	{
-		$this->multimedia_objects = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->multimedia_objects = new ArrayCollection();
 	}
 
 	/**
