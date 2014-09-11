@@ -4,6 +4,12 @@ namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
+use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Pumukit\SchemaBundle\Document\Tag
  * 
@@ -66,6 +72,7 @@ class Tag
 	 * //@Gedmo\Locale
 	 * //Used locale to override Translation listener`s locale
 	 * //this is not a mapped field of entity metadata, just a simple property
+	 * @var locale $locale
 	 */
 	private $locale;
 
@@ -95,7 +102,7 @@ class Tag
 	/**
 	 * @var int $root
 	 * //TreeRoot
-         * //@MongoDB\ReferenceOne(targetDocument="Tag")
+         * @MongoDB\ReferenceOne(targetDocument="Tag")
 	 * @MongoDB\Int
 	 */
 	private $root;
@@ -131,7 +138,7 @@ class Tag
 
 	public function __construct($title = null)
 	{
-		$this->children = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->children = new ArrayCollection();
 		if ($title != null) {
 			$this->setTitle($title);
 		}
@@ -376,7 +383,7 @@ class Tag
         /**
 	 * Set translatable locale
 	 *
-  	 * //@param locale $locale
+  	 * @param locale $locale
 	 */
 	public function setTranslatableLocale($locale)
 	{
@@ -443,10 +450,10 @@ class Tag
 	/**
 	 * Add multimedia_objects
 	 *
-	 * @param \Pumukit\SchemaBundle\Document\MultimediaObject $multimediaObjects
+	 * @param MultimediaObject $multimediaObjects
 	 * @return Tag
 	 */
-	public function addMultimediaObject(\Pumukit\SchemaBundle\Document\MultimediaObject $multimediaObjects)
+	public function addMultimediaObject(MultimediaObject $multimediaObjects)
 	{
 		$this->multimedia_objects[] = $multimediaObjects;
 
@@ -456,9 +463,9 @@ class Tag
 	/**
 	 * Remove multimedia_objects
 	 *
-	 * @param \Pumukit\SchemaBundle\Document\MultimediaObject $multimediaObjects
+	 * @param MultimediaObject $multimediaObjects
 	 */
-	public function removeMultimediaObject(\Pumukit\SchemaBundle\Document\MultimediaObject $multimediaObjects)
+	public function removeMultimediaObject(MultimediaObject $multimediaObjects)
 	{
 		$this->multimedia_objects->removeElement($multimediaObjects);
 	}
@@ -466,7 +473,7 @@ class Tag
 	/**
 	 * Get multimedia_objects
 	 *
-	 * @return \Doctrine\Common\Collections\Collection
+	 * @return Collection
 	 */
 	public function getMultimediaObjects()
 	{
@@ -476,10 +483,10 @@ class Tag
 	/**
 	 * Add children
 	 *
-	 * @param \Pumukit\SchemaBundle\Document\Tag $children
+	 * @param Tag $children
 	 * @return Tag
 	 */
-	public function addChildren(\Pumukit\SchemaBundle\Document\Tag $children)
+	public function addChildren(Tag $children)
 	{
 		$this->children[] = $children;
 
@@ -489,9 +496,9 @@ class Tag
 	/**
 	 * Remove children
 	 *
-	 * @param \Pumukit\SchemaBundle\Document\Tag $children
+	 * @param Tag $children
 	 */
-	public function removeChildren(\Pumukit\SchemaBundle\Document\Tag $children)
+	public function removeChildren(Tag $children)
 	{
 		$this->children->removeElement($children);
 	}
