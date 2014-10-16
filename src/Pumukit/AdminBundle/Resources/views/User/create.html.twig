@@ -1,0 +1,18 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <fieldset>
+            {{ form_row(form.username) }}
+            {{ form_row(form.email) }}
+	    </fieldset>
+    </div>
+</div>
+{{ form_rest(form) }}
+
+
+{% endblock %}
+

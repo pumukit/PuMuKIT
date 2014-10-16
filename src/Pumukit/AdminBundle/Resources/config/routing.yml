@@ -1,0 +1,6 @@
+pumukitadmin_fos_user:
+    resource: @PumukitAdminBundle/Resources/config/fos_user.yml
+
+pumukitadmin_user:
+    resource: @PumukitAdminBundle/Resources/config/user.yml
+    prefix: /users
