@@ -25,18 +25,16 @@ class SeriesType
   /**
    * @var string $name
    *
-   * //@Gedmo\Translatable
-   * @MongoDB\String
+   * @MongoDB\Raw
    */
-  private $name;
+  private $name = array('en'=>'');
 
   /**
    * @var string $description
    *
-   * //@Gedmo\Translatable
-   * @MongoDB\String
+   * @MongoDB\Raw
    */
-  private $description;
+  private $description = array('en'=>'');
 
   /**
    * @var string $cod
@@ -57,7 +55,7 @@ class SeriesType
    * this is not a mapped field of entity metadata, just a simple property
    * @var locale $locale
    */
-  private $locale = 'en';;
+  private $locale = 'en';
 
   public function __construct()
   {
@@ -79,9 +77,12 @@ class SeriesType
    *
    * @param string $name
    */
-  public function setName($name)
+  public function setName($name, $locale = null)
   {
-    $this->name = $name;
+    if ($locale = null) {
+      $locale = $this->locale;
+    }
+    $this->name[$locale] = $name;
   }
 
   /**
@@ -89,9 +90,15 @@ class SeriesType
    *
    * @return string
    */
-  public function getName()
+  public function getName($locale = null)
   {
-    return $this->name;
+    if ($locale = null) {
+      $locale = $this->locale;
+    }
+    if (!isset($this->name[$locale])){
+      return null;
+    }
+    return $this->name[$locale];
   }
 
   /**
@@ -99,9 +106,12 @@ class SeriesType
    *
    * @param string $description
    */
-  public function setDescription($description)
+  public function setDescription($description, $locale = null)
   {
-    $this->description = $description;
+    if ($locale = null) {
+      $locale = $this->locale;
+    }
+    $this->description[$locale] = $description;
   }
 
   /**
@@ -109,9 +119,15 @@ class SeriesType
    *
    * @return string
    */
-  public function getDescription()
+  public function getDescription($locale = null)
   {
-    return $this->description;
+    if ($locale = null) {
+      $locale = $this->locale;
+    }
+    if (!isset($this->description[$locale])){
+      return null;
+    }
+    return $this->description[$locale];
   }
 
   /**
@@ -133,6 +149,27 @@ class SeriesType
   {
     return $this->cod;
   }
+
+  /**
+   * Set locale
+   *
+   * @param string $locale
+   */
+  public function setLocale($locale)
+  {
+    $this->locale = $locale;
+  }
+
+  /**
+   * Get locale
+   *
+   * @return string
+   */
+  public function getLocale()
+  {
+    return $this->locale;
+  }
+
 
   /**
    * Add series
