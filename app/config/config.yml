@@ -60,3 +60,9 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+# FOSUser Configuration
+fos_user:
+    db_driver: mongodb
+    firewall_name: main
+    user_class: Pumukit\SchemaBundle\Document\User
