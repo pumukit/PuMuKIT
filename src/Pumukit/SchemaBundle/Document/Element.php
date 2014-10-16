@@ -386,7 +386,7 @@ class Element
    */
   public function setDescription($description, $locale = null)
   {
-    if ($locale = null) {
+    if ($locale == null) {
       $locale = $this->locale;
     }
     $this->description[$locale] = $description;
@@ -399,7 +399,7 @@ class Element
    */
   public function getDescription($locale = null)
   {
-    if ($locale = null) {
+    if ($locale == null) {
       $locale = $this->locale;
     }
     if (!isset($this->description[$locale])){

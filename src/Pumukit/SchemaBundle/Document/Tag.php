@@ -160,7 +160,7 @@ class Tag
    */
   public function setTitle($title, $locale = null)
   {
-    if ($locale = null) {
+    if ($locale == null) {
       $locale = $this->locale;
     }
     $this->title[$locale] = $title;
@@ -173,7 +173,7 @@ class Tag
    */
   public function getTitle($locale = null)
   {
-    if ($locale = null) {
+    if ($locale == null) {
       $locale = $this->locale;
     }
     if (!isset($this->title[$locale])){
@@ -189,7 +189,7 @@ class Tag
    */
   public function setDescription($description, $locale = null)
   {
-    if ($locale = null) {
+    if ($locale == null) {
       $locale = $this->locale;
     }
     $this->description[$locale] = $description;
@@ -202,7 +202,7 @@ class Tag
    */
   public function getDescription($locale = null)
   {
-    if ($locale = null) {
+    if ($locale == null) {
       $locale = $this->locale;
     }
     if (!isset($this->description[$locale])){

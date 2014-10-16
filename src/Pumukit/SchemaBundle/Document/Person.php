@@ -190,7 +190,7 @@ class Person
    */
   public function setHonorific($honorific, $locale = null)
   {
-    if ($locale = null) {
+    if ($locale == null) {
       $locale = $this->locale;
     }
     $this->honorific[$locale] = $honorific;
@@ -203,7 +203,7 @@ class Person
    */
   public function getHonorific($locale = null)
   {
-    if ($locale = null) {
+    if ($locale == null) {
       $locale = $this->locale;
     }
     if (!isset($this->honorific[$locale])){
@@ -219,7 +219,7 @@ class Person
    */
   public function setFirm($firm, $locale = null)
   {
-    if ($locale = null) {
+    if ($locale == null) {
       $locale = $this->locale;
     }
     $this->firm[$locale] = $firm;
@@ -232,7 +232,7 @@ class Person
    */
   public function getFirm($locale = null)
   {
-    if ($locale = null) {
+    if ($locale == null) {
       $locale = $this->locale;
     }
     if (!isset($this->firm[$locale])){
@@ -248,7 +248,7 @@ class Person
    */
   public function setPost($post, $locale = null)
   {
-    if ($locale = null) {
+    if ($locale == null) {
       $locale = $this->locale;
     }
     $this->post[$locale] = $post;
@@ -261,7 +261,7 @@ class Person
    */
   public function getPost($locale = null)
   {
-    if ($locale = null) {
+    if ($locale == null) {
       $locale = $this->locale;
     }
     if (!isset($this->post[$locale])){
@@ -277,7 +277,7 @@ class Person
    */
   public function setBio($bio, $locale = null)
   {
-    if ($locale = null) {
+    if ($locale == null) {
       $locale = $this->locale;
     }
     $this->bio[$locale] = $bio;
@@ -290,7 +290,7 @@ class Person
    */
   public function getBio($locale = null)
   {
-    if ($locale = null) {
+    if ($locale == null) {
       $locale = $this->locale;
     }
     if (!isset($this->bio[$locale])){

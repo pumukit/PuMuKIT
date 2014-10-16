@@ -194,7 +194,7 @@ class Role
    */
   public function setText($text, $locale = null)
   {
-    if ($locale = null) {
+    if ($locale == null) {
       $locale = $this->locale;
     }
     $this->text[$locale] = $text;
@@ -207,7 +207,7 @@ class Role
    */
   public function getText($locale = null)
   {
-    if ($locale = null) {
+    if ($locale == null) {
       $locale = $this->locale;
     }
     if (!isset($this->text[$locale])){

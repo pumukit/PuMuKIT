@@ -79,7 +79,7 @@ class SeriesType
    */
   public function setName($name, $locale = null)
   {
-    if ($locale = null) {
+    if ($locale == null) {
       $locale = $this->locale;
     }
     $this->name[$locale] = $name;
@@ -92,7 +92,7 @@ class SeriesType
    */
   public function getName($locale = null)
   {
-    if ($locale = null) {
+    if ($locale == null) {
       $locale = $this->locale;
     }
     if (!isset($this->name[$locale])){
@@ -108,7 +108,7 @@ class SeriesType
    */
   public function setDescription($description, $locale = null)
   {
-    if ($locale = null) {
+    if ($locale == null) {
       $locale = $this->locale;
     }
     $this->description[$locale] = $description;
@@ -121,7 +121,7 @@ class SeriesType
    */
   public function getDescription($locale = null)
   {
-    if ($locale = null) {
+    if ($locale == null) {
       $locale = $this->locale;
     }
     if (!isset($this->description[$locale])){
