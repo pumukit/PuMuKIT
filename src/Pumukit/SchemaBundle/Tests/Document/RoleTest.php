@@ -33,12 +33,12 @@ class RoleTest extends \PHPUnit_Framework_TestCase
 		$role->setName($name);
 		$role->setText($text);
 
-		$this->assertEquals($cod, $role->getCod($cod));
-		$this->assertEquals($rank, $role->getRank($rank));
-		$this->assertEquals($xml, $role->getXml($xml));
-		$this->assertEquals($display, $role->getDisplay($display));
-		$this->assertEquals($name, $role->getName($name));
-		$this->assertEquals($text, $role->getText($text));
+		$this->assertEquals($cod, $role->getCod());
+		$this->assertEquals($rank, $role->getRank());
+		$this->assertEquals($xml, $role->getXml());
+		$this->assertEquals($display, $role->getDisplay());
+		$this->assertEquals($name, $role->getName());
+		$this->assertEquals($text, $role->getText());
 
 	}
 }
