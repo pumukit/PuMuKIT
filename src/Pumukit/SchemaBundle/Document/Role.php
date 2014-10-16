@@ -14,237 +14,266 @@ use Pumukit\SchemaBundle\Document\PersonInMultimediaObject;
 class Role
 {
 
-	/**
-	 * @MongoDB\Id
-	 */
-	protected $id;
+  /**
+   * @MongoDB\Id
+   */
+  protected $id;
 
-	/**
-	 * @var string $cod
-	 *
-	 * @MongoDB\String
-	 */
-	private $cod = 0;
+  /**
+   * @var string $cod
+   *
+   * @MongoDB\String
+   */
+  private $cod = 0;
 
-	/**
-	 * @var integer $rank
-	 *
-	 * @MongoDB\Int
-	 */
-	private $rank;
+  /**
+   * @var integer $rank
+   *
+   * @MongoDB\Int
+   */
+  private $rank;
 
-	/**
-	 * See European Broadcasting Union Role Codes
-	 * @var string $xml
-	 *
-	 * @MongoDB\String
-	 */
-	private $xml;
+  /**
+   * See European Broadcasting Union Role Codes
+   * @var string $xml
+   *
+   * @MongoDB\String
+   */
+  private $xml;
 
-	/**
-	 * @var boolean $display
-	 *
-	 * @MongoDB\Boolean
-	 */
-	private $display = true;
+  /**
+   * @var boolean $display
+   *
+   * @MongoDB\Boolean
+   */
+  private $display = true;
 
-	/**
-	 * @var string $name
-	 *
-	 * @MongoDB\String
-	 */
-	private $name;
+  /**
+   * @var string $name
+   *
+   * @MongoDB\String
+   */
+  private $name;
 
-	/**
-	 * @var string $text
-	 *
-	 * @MongoDB\String
-	 */
-	private $text;
+  /**
+   * @var string $text
+   *
+   * @MongoDB\Raw
+   */
+  private $text = array('en'=>'');
 
 
-	/**
-	 * @var ArrayCollection $person_in_multimedia_object
-	 *
-	 * @MongoDB\ReferenceMany(targetDocument="PersonInMultimediaObject", mappedBy="role")
-	 */
-	private $people_in_multimedia_object;
+  /**
+   * @var ArrayCollection $person_in_multimedia_object
+   *
+   * @MongoDB\ReferenceMany(targetDocument="PersonInMultimediaObject", mappedBy="role")
+   */
+  private $people_in_multimedia_object;
 
-	/**
-	 * Used locale to override Translation listener`s locale
-	 * this is not a mapped field of entity metadata, just a simple property
-	 * @var locale $locale
-	 */
-	private $locale;
+  /**
+   * Used locale to override Translation listener`s locale
+   * this is not a mapped field of entity metadata, just a simple property
+   * @var locale $locale
+   */
+  private $locale = 'en';
 
-	/**
-	 * Get id
-	 *
-	 * @return integer
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
+  /**
+   * Geto id
+   *
+   * @return integer
+   */
+  public function getId()
+  {
+    return $this->id;
+  }
 
-	/**
-	 * Set cod
-	 *
-	 * @param string $cod
-	 */
-	public function setCod($cod)
-	{
-		$this->cod = $cod;
-	}
+  /**
+   * Set cod
+   *
+   * @param string $cod
+   */
+  public function setCod($cod)
+  {
+    $this->cod = $cod;
+  }
 
-	/**
-	 * Get cod
-	 *
-	 * @return string
-	 */
-	public function getCod()
-	{
-		return $this->cod;
-	}
+  /**
+   * Get cod
+   *
+   * @return string
+   */
+  public function getCod()
+  {
+    return $this->cod;
+  }
 
-	/**
-	 * Set rank
-	 *
-	 * @param integer $rank
-	 */
-	public function setRank($rank)
-	{
-		$this->rank = $rank;
-	}
+  /**
+   * Set rank
+   *
+   * @param integer $rank
+   */
+  public function setRank($rank)
+  {
+    $this->rank = $rank;
+  }
 
-	/**
-	 * Get rank
-	 *
-	 * @return integer
-	 */
-	public function getRank()
-	{
-		return $this->rank;
-	}
+  /**
+   * Get rank
+   *
+   * @return integer
+   */
+  public function getRank()
+  {
+    return $this->rank;
+  }
 
-	/**
-	 * Set xml
-	 *
-	 * @param string $xml
-	 */
-	public function setXml($xml)
-	{
-		$this->xml = $xml;
-	}
+  /**
+   * Set xml
+   *
+   * @param string $xml
+   */
+  public function setXml($xml)
+  {
+    $this->xml = $xml;
+  }
 
-	/**
-	 * Get xml
-	 *
-	 * @return string
-	 */
-	public function getXml()
-	{
-		return $this->xml;
-	}
+  /**
+   * Get xml
+   *
+   * @return string
+   */
+  public function getXml()
+  {
+    return $this->xml;
+  }
 
-	/**
-	 * Set display
-	 *
-	 * @param boolean $display
-	 */
-	public function setDisplay($display)
-	{
-		$this->display = $display;
-	}
+  /**
+   * Set display
+   *
+   * @param boolean $display
+   */
+  public function setDisplay($display)
+  {
+    $this->display = $display;
+  }
 
-	/**
-	 * Get display
-	 *
-	 * @return boolean
-	 */
-	public function getDisplay()
-	{
-		return $this->display;
-	}
+  /**
+   * Get display
+   *
+   * @return boolean
+   */
+  public function getDisplay()
+  {
+    return $this->display;
+  }
 
-	/**
-	 * Set name
-	 *
-	 * @param string $name
-	 */
-	public function setName($name)
-	{
-		$this->name = $name;
-	}
+  /**
+   * Set name
+   *
+   * @param string $name
+   */
+  public function setName($name)
+  {
+    $this->name = $name;
+  }
 
-	/**
-	 * Get name
-	 *
-	 * @return string
-	 */
-	public function getName()
-	{
-		return $this->name;
-	}
+  /**
+   * Get name
+   *
+   * @return string
+   */
+  public function getName()
+  {
+    return $this->name;
+  }
 
-	/**
-	 * Set text
-	 *
-	 * @param string $text
-	 */
-	public function setText($text)
-	{
-		$this->text = $text;
-	}
+  /**
+   * Set text
+   *
+   * @param string $text
+   */
+  public function setText($text, $locale = null)
+  {
+    if ($locale = null) {
+      $locale = $this->locale;
+    }
+    $this->text[$locale] = $text;
+  }
 
-	/**
-	 * Get text
-	 *
-	 * @return string
-	 */
-	public function getText()
-	{
-		return $this->text;
-	}
+  /**
+   * Get text
+   *
+   * @return string
+   */
+  public function getText($locale = null)
+  {
+    if ($locale = null) {
+      $locale = $this->locale;
+    }
+    if (!isset($this->text[$locale])){
+      return null;
+    }
+    return $this->text[$locale];
+  }
 
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-		$this->people_in_multimedia_object = new ArrayCollection();
-	}
+  /**
+   * Set locale
+   *
+   * @param string $locale
+   */
+  public function setLocale($locale)
+  {
+    $this->locale = $locale;
+  }
 
-	/**
-	 * Add people_in_multimedia_object
-	 *
-	 * @param PersonInMultimediaObject $peopleInMultimediaObject
-	 * @return Role
-	 */
-	public function addPeopleInMultimediaObject(PersonInMultimediaObject $peopleInMultimediaObject)
-	{
-		$this->people_in_multimedia_object[] = $peopleInMultimediaObject;
+  /**
+   * Get locale
+   *
+   * @return string
+   */
+  public function getLocale()
+  {
+    return $this->locale;
+  }
 
-		return $this;
-	}
+  /**
+   * Constructor
+   */
+  public function __construct()
+  {
+    $this->people_in_multimedia_object = new ArrayCollection();
+  }
 
-	/**
-	 * Remove people_in_multimedia_object
-	 *
-	 * @param PersonInMultimediaObject $peopleInMultimediaObject
-	 */
-	public function removePeopleInMultimediaObject(PersonInMultimediaObject $peopleInMultimediaObject)
-	{
-		$this->people_in_multimedia_object->removeElement($peopleInMultimediaObject);
-	}
+  /**
+   * Add people_in_multimedia_object
+   *
+   * @param PersonInMultimediaObject $peopleInMultimediaObject
+   * @return Role
+   */
+  public function addPeopleInMultimediaObject(PersonInMultimediaObject $peopleInMultimediaObject)
+  {
+    $this->people_in_multimedia_object[] = $peopleInMultimediaObject;
 
-	/**
-	 * Get people_in_multimedia_object
-	 *
-	 * @return \Doctrine\Common\Collections\Collection
-	 */
-	public function getPeopleInMultimediaObject()
-	{
-		return $this->people_in_multimedia_object;
-	}
+    return $this;
+  }
+
+  /**
+   * Remove people_in_multimedia_object
+   *
+   * @param PersonInMultimediaObject $peopleInMultimediaObject
+   */
+  public function removePeopleInMultimediaObject(PersonInMultimediaObject $peopleInMultimediaObject)
+  {
+    $this->people_in_multimedia_object->removeElement($peopleInMultimediaObject);
+  }
+
+  /**
+   * Get people_in_multimedia_object
+   *
+   * @return \Doctrine\Common\Collections\Collection
+   */
+  public function getPeopleInMultimediaObject()
+  {
+    return $this->people_in_multimedia_object;
+  }
 }

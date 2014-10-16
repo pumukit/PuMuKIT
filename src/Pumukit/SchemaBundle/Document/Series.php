@@ -16,523 +16,606 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Series
 {
 
-	/**
-	 * @MongoDB\Id
-	 */
-	protected $id;
+  /**
+   * @MongoDB\Id
+   */
+  protected $id;
 
-	/**
-	 * @MongoDB\ReferenceOne(targetDocument="SeriesType", inversedBy="id")
-	 */
-	private $series_type;
+  /**
+   * @MongoDB\ReferenceOne(targetDocument="SeriesType", inversedBy="id")
+   */
+  private $series_type;
 
-	/**
-	 * @var ArrayCollection $multimedia_objects
-	 *
-	 * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="series")
-	 */
-	private $multimedia_objects;
+  /**
+   * @var ArrayCollection $multimedia_objects
+   *
+   * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="series")
+   */
+  private $multimedia_objects;
 
-	/**
-	 * @var datetime $public_date
-	 *
-	 * @MongoDB\Date
-	 */
-	private $public_date;
+  /**
+   * @var datetime $public_date
+   *
+   * @MongoDB\Date
+   */
+  private $public_date;
 
-	/**
-	 * @var string $title
-	 *
-	 * //@Gedmo\Translatable
-	 * @MongoDB\String
-	 */
-	private $title;
+  /**
+   * @var string $title
+   *
+   * @MongoDB\Raw
+   */
+  private $title = array('en'=>'');
 
-	/**
-	 * @var string $subtitle
-	 *
-	 * //@Gedmo\Translatable
-	 * @MongoDB\String
-	 */
-	private $subtitle;
+  /**
+   * @var string $subtitle
+   *
+   * @MongoDB\Raw
+   */
+  private $subtitle = array('en'=>'');
 
-	/**
-	 * @var text $description
-	 *
-	 * //@Gedmo\Translatable
-	 * @MongoDB\String
-	 */
-	private $description;
+  /**
+   * @var text $description
+   *
+   * @MongoDB\Raw
+   */
+  private $description = array('en'=>'');
 
-	/**
-	 * @var text $header
-	 *
-	 * //@Gedmo\Translatable
-	 * @MongoDB\String
-	 */
-	private $header;
+  /**
+   * @var text $header
+   *
+   * @MongoDB\Raw
+   */
+  private $header = array('en'=>'');
 
-	/**
-	 * @var text $footer
-	 *
-	 * //@Gedmo\Translatable
-	 * @MongoDB\String
-	 */
-	private $footer;
+  /**
+   * @var text $footer
+   *
+   * @MongoDB\Raw
+   */
+  private $footer = array('en'=>'');
 
-	/**
-	 * @var string $copyright
-	 *
-	 * //@Gedmo\Translatable
-	 * @MongoDB\String
-	 */
-	private $copyright;
+  /**
+   * @var string $copyright
+   *
+   * @MongoDB\Raw
+   */
+  private $copyright = array('en'=>'');
 
-	/**
-	 * @var string $keyword
-	 *
-	 * //@Gedmo\Translatable
-	 * @MongoDB\String
-	 */
-	private $keyword;
+  /**
+   * @var string $keyword
+   *
+   * @MongoDB\Raw
+   */
+  private $keyword = array('en'=>'');
 
-	/**
-	 * @var string $line2
-	 *
-	 * //@Gedmo\Translatable
-	 * @MongoDB\String
-	 */
-	private $line2;
+  /**
+   * @var string $line2
+   *
+   * @MongoDB\Raw
+   */
+  private $line2 = array('en'=>'');
 
-	/**
-	 * //@Gedmo\Locale
-	 * Used locale to override Translation listener`s locale
-	 * this is not a mapped field of entity metadata, just a simple property
-	 * @var locale $locale
-	 */
-	private $locale;
+  /**
+   * Used locale to override Translation listener`s locale
+   * this is not a mapped field of entity metadata, just a simple property
+   * @var locale $locale
+   */
+  private $locale = 'en';
 
-	public function __construct()
-	{
-		$this->multimedia_objects = new ArrayCollection();
-	}
+  public function __construct()
+  {
+    $this->multimedia_objects = new ArrayCollection();
+  }
 
-	/**
-	 * Get id
-	 *
-	 * @return id
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
+  /**
+   * Get id
+   *
+   * @return id
+   */
+  public function getId()
+  {
+    return $this->id;
+  }
 
-	/**
-	 * Set series_type
-	 *
-	 * @param SeriesType $series_type
-	 */
-	public function setSeriesType(SeriesType $series_type)
-	{
-		$this->series_type = $series_type;
-	}
+  /**
+   * Set series_type
+   *
+   * @param SeriesType $series_type
+   */
+  public function setSeriesType(SeriesType $series_type)
+  {
+    $this->series_type = $series_type;
+  }
 
-	/**
-	 * Get series_type
-	 *
-	 * @return SeriesType
-	 */
-	public function getSeriesType()
-	{
-		return $this->series_type;
-	}
+  /**
+   * Get series_type
+   *
+   * @return SeriesType
+   */
+  public function getSeriesType()
+  {
+    return $this->series_type;
+  }
 
-	/**
-	 * Add multimedia_object
-	 *
-	 * @param MultimediaObject $multimedia_object
-	 */
-	public function addMultimediaObject(MultimediaObject $multimedia_object)
-	{
-		$this->multimedia_objects[] = $multimedia_object;
-		$multimedia_object->setSeries($this);
+  /**
+   * Add multimedia_object
+   *
+   * @param MultimediaObject $multimedia_object
+   */
+  public function addMultimediaObject(MultimediaObject $multimedia_object)
+  {
+    $this->multimedia_objects[] = $multimedia_object;
+    $multimedia_object->setSeries($this);
 
-		$multimedia_object->setRank(count($this->multimedia_objects));
-	}
+    $multimedia_object->setRank(count($this->multimedia_objects));
+  }
 
-	/**
-	 * Remove multimedia_object
-	 *
-	 * @param MultimediaObject $multimedia_object
-	 */
-	public function removeMultimediaObject(MultimediaObject $multimedia_object)
-	{
-		$this->multimedia_objects->removeElement($multimedia_object);
-	}
+  /**
+   * Remove multimedia_object
+   *
+   * @param MultimediaObject $multimedia_object
+   */
+  public function removeMultimediaObject(MultimediaObject $multimedia_object)
+  {
+    $this->multimedia_objects->removeElement($multimedia_object);
+  }
 
-	/**
-	 * Contains multimedia_object
-	 *
-	 * @param MultimediaObject $multimedia_object
-	 *
-	 * @return boolean
-	 */
-	public function containsMultimediaObject(MultimediaObject $multimedia_object)
-	{
-		return $this->multimedia_objects->contains($multimedia_object);
-	}
+  /**
+   * Contains multimedia_object
+   *
+   * @param MultimediaObject $multimedia_object
+   *
+   * @return boolean
+   */
+  public function containsMultimediaObject(MultimediaObject $multimedia_object)
+  {
+    return $this->multimedia_objects->contains($multimedia_object);
+  }
 
-	/**
-	 * Get multimedia_objects
-	 *
-	 * @return ArrayCollection
-	 */
-	public function getMultimediaObjects()
-	{
-		return $this->multimedia_objects;
-	}
+  /**
+   * Get multimedia_objects
+   *
+   * @return ArrayCollection
+   */
+  public function getMultimediaObjects()
+  {
+    return $this->multimedia_objects;
+  }
 
-	/**
-	 * Set public_date
-	 *
-	 * @param datetime $publicDate
-	 */
-	public function setPublicDate($publicDate)
-	{
-		$this->public_date = $publicDate;
-	}
+  /**
+   * Set public_date
+   *
+   * @param datetime $publicDate
+   */
+  public function setPublicDate($publicDate)
+  {
+    $this->public_date = $publicDate;
+  }
 
-	/**
-	 * Get public_date
-	 *
-	 * @return datetime
-	 */
-	public function getPublicDate()
-	{
-		return $this->public_date;
-	}
+  /**
+   * Get public_date
+   *
+   * @return datetime
+   */
+  public function getPublicDate()
+  {
+    return $this->public_date;
+  }
 
-	/**
-	 * Set title
-	 *
-	 * @param string $title
-	 */
-	public function setTitle($title)
-	{
-		$this->title = $title;
-	}
+  /**
+   * Set title
+   *
+   * @param string $title
+   */
+  public function setTitle($title, $locale = null)
+  {
+    if ($locale = null) {
+      $locale = $this->locale;
+    }
+    $this->title[$locale] = $title;
+  }
 
-	/**
-	 * Get title
-	 *
-	 * @return string
-	 */
-	public function getTitle()
-	{
-		return $this->title;
-	}
+  /**
+   * Get title
+   *
+   * @return string
+   */
+  public function getTitle($locale = null)
+  {
+    if ($locale = null) {
+      $locale = $this->locale;
+    }
+    if (!isset($this->title[$locale])){
+      return null;
+    }
+    return $this->title[$locale];
+  }
 
-	/**
-	 * Set subtitle
-	 *
-	 * @param string $subtitle
-	 */
-	public function setSubtitle($subtitle)
-	{
-		$this->subtitle = $subtitle;
-	}
+  /**
+   * Set subtitle
+   *
+   * @param string $subtitle
+   */
+  public function setSubtitle($subtitle, $locale = null)
+  {
+    if ($locale = null) {
+      $locale = $this->locale;
+    }
+    $this->subtitle[$locale] = $subtitle;
+  }
 
-	/**
-	 * Get subtitle
-	 *
-	 * @return string
-	 */
-	public function getSubtitle()
-	{
-		return $this->subtitle;
-	}
+  /**
+   * Get subtitle
+   *
+   * @return string
+   */
+  public function getSubtitle($locale = null)
+  {
+    if ($locale = null) {
+      $locale = $this->locale;
+    }
+    if (!isset($this->subtitle[$locale])){
+      return null;
+    }
+    return $this->subtitle[$locale];
+  }
 
-	/**
-	 * Set description
-	 *
-	 * @param text $description
-	 */
-	public function setDescription($description)
-	{
-		$this->description = $description;
-	}
+  /**
+   * Set description
+   *
+   * @param text $description
+   */
+  public function setDescription($description, $locale = null)
+  {
+    if ($locale = null) {
+      $locale = $this->locale;
+    }
+    $this->description[$locale] = $description;
+  }
 
-	/**
-	 * Get description
-	 *
-	 * @return text
-	 */
-	public function getDescription()
-	{
-		return $this->description;
-	}
+  /**
+   * Get description
+   *
+   * @return text
+   */
+  public function getDescription($locale = null)
+  {
+    if ($locale = null) {
+      $locale = $this->locale;
+    }
+    if (!isset($this->description[$locale])){
+      return null;
+    }
+    return $this->description[$locale];
+  }
 
-	/**
-	 * Set header
-	 *
-	 * @param text $header
-	 */
-	public function setHeader($header)
-	{
-		$this->header = $header;
-	}
+  /**
+   * Set header
+   *
+   * @param text $header
+   */
+  public function setHeader($header, $locale = null)
+  {
+    if ($locale = null) {
+      $locale = $this->locale;
+    }
+    $this->header[$locale] = $header;
+  }
 
-	/**
-	 * Get header
-	 *
-	 * @return text
-	 */
-	public function getHeader()
-	{
-		return $this->header;
-	}
+  /**
+   * Get header
+   *
+   * @return text
+   */
+  public function getHeader($locale = null)
+  {
+    if ($locale = null) {
+      $locale = $this->locale;
+    }
+    if (!isset($this->header[$locale])){
+      return null;
+    }
+    return $this->header[$locale];
+  }
 
-	/**
-	 * Set footer
-	 *
-	 * @param text $footer
-	 */
-	public function setFooter($footer)
-	{
-		$this->footer = $footer;
-	}
+  /**
+   * Set footer
+   *
+   * @param text $footer
+   */
+  public function setFooter($footer, $locale = null)
+  {
+    if ($locale = null) {
+      $locale = $this->locale;
+    }
+    $this->footer[$locale] = $footer;
+  }
 
-	/**
-	 * Get footer
-	 *
-	 * @return text
-	 */
-	public function getFooter()
-	{
-		return $this->footer;
-	}
+  /**
+   * Get footer
+   *
+   * @return text
+   */
+  public function getFooter($locale = null)
+  {
+    if ($locale = null) {
+      $locale = $this->locale;
+    }
+    if (!isset($this->footer[$locale])){
+      return null;
+    }
+    return $this->footer[$locale];
+  }
 
-	/**
-	 * Set copyright
-	 *
-	 * @param string $copyright
-	 */
-	public function setCopyright($copyright)
-	{
-		$this->copyright = $copyright;
-	}
+  /**
+   * Set copyright
+   *
+   * @param string $copyright
+   */
+  public function setCopyright($copyright, $locale = null)
+  {
+    if ($locale = null) {
+      $locale = $this->locale;
+    }
+    $this->copyright[$locale] = $copyright;
+  }
 
-	/**
-	 * Get copyright
-	 *
-	 * @return string
-	 */
-	public function getCopyright()
-	{
-		return $this->copyright;
-	}
+  /**
+   * Get copyright
+   *
+   * @return string
+   */
+  public function getCopyright($locale = null)
+  {
+    if ($locale = null) {
+      $locale = $this->locale;
+    }
+    if (!isset($this->copyright[$locale])){
+      return null;
+    }
+    return $this->copyright[$locale];
+  }
 
-	/**
-	 * Set keyword
-	 *
-	 * @param string $keyword
-	 */
-	public function setKeyword($keyword)
-	{
-		$this->keyword = $keyword;
-	}
+  /**
+   * Set keyword
+   *
+   * @param string $keyword
+   */
+  public function setKeyword($keyword, $locale = null)
+  {
+    if ($locale = null) {
+      $locale = $this->locale;
+    }
+    $this->keyword[$locale] = $keyword;
+  }
 
-	/**
-	 * Get keyword
-	 *
-	 * @return string
-	 */
-	public function getKeyword()
-	{
-		return $this->keyword;
-	}
+  /**
+   * Get keyword
+   *
+   * @return string
+   */
+  public function getKeyword($locale = null)
+  {
+    if ($locale = null) {
+      $locale = $this->locale;
+    }
+    if (!isset($this->keyword[$locale])){
+      return null;
+    }
+    return $this->keyword[$locale];
+  }
 
-	/**
-	 * Set line2
-	 *
-	 * @param string $line2
-	 */
-	public function setLine2($line2)
-	{
-		$this->line2 = $line2;
-	}
+  /**
+   * Set line2
+   *
+   * @param string $line2
+   */
+  public function setLine2($line2, $locale = null)
+  {
+    if ($locale = null) {
+      $locale = $this->locale;
+    }
+    $this->line2[$locale] = $line2;
+  }
 
-	/**
-	 * Get line2
-	 *
-	 * @return string
-	 */
-	public function getLine2()
-	{
-		return $this->line2;
-	}
+  /**
+   * Get line2
+   *
+   * @return string
+   */
+  public function getLine2($locale = null)
+  {
+    if ($locale = null) {
+      $locale = $this->locale;
+    }
+    if (!isset($this->line2[$locale])){
+      return null;
+    }
+    return $this->line2[$locale];
+  }
 
-	public function __toString()
-	{
-		return $this->getTitle();
-	}
+  public function __toString()
+  {
+    return $this->getTitle();
+  }
 
-	/**
-	 * Contains multimediaobject with tags
-	 *
-	 * @param Tag $tag
-	 * @return boolean
-	 */
-	public function containsMultimediaObjectWithTag(Tag $tag)
-	{
-		foreach ($this->multimedia_objects as $mmo) {
-			if ($mmo->containsTag($tag)) {
-				return TRUE;
-			}
-		}
+  /**
+   * Set locale
+   *
+   * @param string $locale
+   */
+  public function setLocale($locale)
+  {
+    $this->locale = $locale;
+  }
 
-		return FALSE;
-	}
+  /**
+   * Get locale
+   *
+   * @return string
+   */
+  public function getLocale()
+  {
+    return $this->locale;
+  }
 
-	/**
-	 * Get multimediaobjects with a tag
-	 *
-	 * @param Tag $tag
-	 * @return ArrayCollection
-	 */
-	public function getMultimediaObjectsByTag(Tag $tag)
-	{
-		$r = array();
+  /**
+   * Contains multimediaobject with tags
+   *
+   * @param Tag $tag
+   * @return boolean
+   */
+  public function containsMultimediaObjectWithTag(Tag $tag)
+  {
+    foreach ($this->multimedia_objects as $mmo) {
+      if ($mmo->containsTag($tag)) {
+	return TRUE;
+      }
+    }
 
-		foreach ($this->multimedia_objects as $mmo) {
-			if ($mmo->containsTag($tag)) {
-				$r[] = $mmo;
-			}
-		}
+    return FALSE;
+  }
 
-		return $r;
-	}
+  /**
+   * Get multimediaobjects with a tag
+   *
+   * @param Tag $tag
+   * @return ArrayCollection
+   */
+  public function getMultimediaObjectsByTag(Tag $tag)
+  {
+    $r = array();
 
-	/**
-	 * Get one multimedia object with tag
-	 *
-	 * @param Tag $tag
-	 * @return MultimediaObject
-	 */
-	public function getMultimediaObjectByTag(Tag $tag)
-	{
-		foreach ($this->multimedia_objects as $mmo) {
-			//if ($mmo->tags->contains($tag)) {
-			//FIXME no pasa el test phpunit cuando se llama desde seriestest
-			if ($mmo->containsTag($tag)) {
-				return $mmo;
-			}
-		}
+    foreach ($this->multimedia_objects as $mmo) {
+      if ($mmo->containsTag($tag)) {
+	$r[] = $mmo;
+      }
+    }
 
-		return null;
-	}
+    return $r;
+  }
 
-	/**
-	 * Get multimediaobjects with all tags
-	 *
-	 * @param array $tags
-	 * @return ArrayCollection
-	 */
-	public function getMultimediaObjectsWithAllTags(array $tags)
-	{
-		$r = array();
-		foreach ($this->multimedia_objects as $mmo) {
-			if ($mmo->containsAllTags($tags)) {
-				$r[] = $mmo;
-			}
-		}
+  /**
+   * Get one multimedia object with tag
+   *
+   * @param Tag $tag
+   * @return MultimediaObject
+   */
+  public function getMultimediaObjectByTag(Tag $tag)
+  {
+    foreach ($this->multimedia_objects as $mmo) {
+      //if ($mmo->tags->contains($tag)) {
+      //FIXME no pasa el test phpunit cuando se llama desde seriestest
+      if ($mmo->containsTag($tag)) {
+	return $mmo;
+      }
+    }
 
-		return $r;
-	}
+    return null;
+  }
 
-	/**
-	 * Get multimediaobject with all tags
-	 *
-	 * @param array $tags
-	 * @return multimedia_object
-	 */
-	public function getMultimediaObjectWithAllTags(array $tags)
-	{
-		foreach ($this->multimedia_objects as $mmo) {
-			if ($mmo->containsAllTags($tags)) {
-				return $mmo;
-			}
-		}
+  /**
+   * Get multimediaobjects with all tags
+   *
+   * @param array $tags
+   * @return ArrayCollection
+   */
+  public function getMultimediaObjectsWithAllTags(array $tags)
+  {
+    $r = array();
+    foreach ($this->multimedia_objects as $mmo) {
+      if ($mmo->containsAllTags($tags)) {
+	$r[] = $mmo;
+      }
+    }
 
-		return null;
-	}
+    return $r;
+  }
 
-	/**
-	 * Get multimediaobjects with any tag
-	 *
-	 * @param array $tags
-	 * @return ArrayCollection
-	 */
-	public function getMultimediaObjectsWithAnyTag(array $tags)
-	{
-		$r = array();
+  /**
+   * Get multimediaobject with all tags
+   *
+   * @param array $tags
+   * @return multimedia_object
+   */
+  public function getMultimediaObjectWithAllTags(array $tags)
+  {
+    foreach ($this->multimedia_objects as $mmo) {
+      if ($mmo->containsAllTags($tags)) {
+	return $mmo;
+      }
+    }
 
-		foreach ($this->multimedia_objects as $mmo) {
-			if ($mmo->containsAnyTag($tags)) {
-				$r[] = $mmo;
-			}
-		}
+    return null;
+  }
 
-		return $r;
-	}
+  /**
+   * Get multimediaobjects with any tag
+   *
+   * @param array $tags
+   * @return ArrayCollection
+   */
+  public function getMultimediaObjectsWithAnyTag(array $tags)
+  {
+    $r = array();
 
-	/**
-	 * Get multimediaobject with any tag
-	 *
-	 * @param array $tags
-	 * @return MultimediaObject
-	 */
-	public function getMultimediaObjectWithAnyTag(array $tags)
-	{
-		foreach ($this->multimedia_objects as $mmo) {
-			if ($mmo->containsAnyTag($tags)) {
-				return $mmo;
-			}
-		}
+    foreach ($this->multimedia_objects as $mmo) {
+      if ($mmo->containsAnyTag($tags)) {
+	$r[] = $mmo;
+      }
+    }
 
-		return null;
-	}
+    return $r;
+  }
 
-	/**
-	 * Get tracks ...
-	 *
-	 * @param array $any_tags
-	 * @param array $all_tags
-	 * @param array $not_any_tags
-	 * @param array $not_all_tags
-	 * @return ArrayCollection
-	 */
-	public function getFilteredMultimediaObjectsByTags(
-			array $any_tags = array(),
-			array $all_tags = array(),
-			array $not_any_tags = array(),
-			array $not_all_tags = array())
-	{
-		$r = array();
+  /**
+   * Get multimediaobject with any tag
+   *
+   * @param array $tags
+   * @return MultimediaObject
+   */
+  public function getMultimediaObjectWithAnyTag(array $tags)
+  {
+    foreach ($this->multimedia_objects as $mmo) {
+      if ($mmo->containsAnyTag($tags)) {
+	return $mmo;
+      }
+    }
 
-		foreach ($this->multimedia_objects as $mmo) {
-			if($any_tags && !$mmo->containsAnyTag($any_tags))
-				continue;
-			if($all_tags && !$mmo->containsAllTags($all_tags))
-				continue;
-			if($not_any_tags && $mmo->containsAnyTag($not_any_tags))
-				continue;
-			if($not_all_tags && $mmo->containsAllTags($not_all_tags))
-				continue;
+    return null;
+  }
 
-			$r[] = $mmo;
-		}
+  /**
+   * Get tracks ...
+   *
+   * @param array $any_tags
+   * @param array $all_tags
+   * @param array $not_any_tags
+   * @param array $not_all_tags
+   * @return ArrayCollection
+   */
+  public function getFilteredMultimediaObjectsByTags(
+						     array $any_tags = array(),
+						     array $all_tags = array(),
+						     array $not_any_tags = array(),
+						     array $not_all_tags = array())
+  {
+    $r = array();
 
-		return $r;
-	}
+    foreach ($this->multimedia_objects as $mmo) {
+      if($any_tags && !$mmo->containsAnyTag($any_tags))
+	continue;
+      if($all_tags && !$mmo->containsAllTags($all_tags))
+	continue;
+      if($not_any_tags && $mmo->containsAnyTag($not_any_tags))
+	continue;
+      if($not_all_tags && $mmo->containsAllTags($not_all_tags))
+	continue;
+
+      $r[] = $mmo;
+    }
+
+    return $r;
+  }
 }
