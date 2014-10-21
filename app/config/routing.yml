@@ -1,3 +1,8 @@
+pumukit_direct:
+    resource: "@PumukitDirectBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 pumukit_schema:
     resource: "@PumukitSchemaBundle/Controller/"
     type:     annotation
