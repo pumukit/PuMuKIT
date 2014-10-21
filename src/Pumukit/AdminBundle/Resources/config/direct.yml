@@ -1,0 +1,35 @@
+pumukitadmin_direct_index:
+    pattern: /
+    methods: [GET]
+    defaults:
+        _controller: pumukitadmin.controller.direct:indexAction
+
+pumukitadmin_direct_create:
+    pattern: /new
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitadmin.controller.direct:createAction
+        _sylius:
+            redirect: pumukitadmin_direct_show
+
+pumukitadmin_direct_update:
+    pattern: /{id}/edit
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitadmin.controller.direct:updateAction
+        _sylius:
+            redirect: pumukitadmin_direct_show
+
+pumukitadmin_direct_delete:
+    pattern: /{id}
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitadmin.controller.direct:deleteAction
+        _sylius:
+            redirect: pumukitadmin_direct_index
+
+pumukitadmin_direct_show:
+    pattern: /{id}
+    methods: [GET]
+    defaults:
+        _controller: pumukitadmin.controller.direct:showAction

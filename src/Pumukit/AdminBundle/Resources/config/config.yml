@@ -6,3 +6,8 @@ sylius_resource:
             templates: PumukitAdminBundle:User
             classes:
                 model: Pumukit\SchemaBundle\Document\User
+        pumukitadmin.direct:
+            driver: doctrine/mongodb-odm
+            templates: PumukitAdminBundle:Direct
+            classes:
+                model: Pumukit\DirectBundle\Document\Direct
