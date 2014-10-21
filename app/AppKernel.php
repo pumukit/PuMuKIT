@@ -23,6 +23,7 @@ class AppKernel extends Kernel
 	    new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
 	    new Sylius\Bundle\ResourceBundle\SyliusResourceBundle(),
             new Pumukit\AdminBundle\PumukitAdminBundle(),
+            new Pumukit\DirectBundle\PumukitDirectBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
