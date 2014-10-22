@@ -395,7 +395,7 @@ class Direct
    *
    * @return string
    */
-  public function getDescription()
+  public function getDescription($locale = null)
   {  
     if ($locale == null) {
       $locale = $this->locale;
