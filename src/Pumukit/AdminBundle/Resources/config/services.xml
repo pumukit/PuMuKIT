@@ -9,5 +9,9 @@
             <argument>Pumukit\SchemaBundle\Document\User</argument>
             <tag name="form.type" alias="pumukitadmin_user" />
         </service>
+
+        <service id="pumukitadmin.form.type.direct" class="Pumukit\AdminBundle\Form\Type\DirectType">
+            <tag name="form.type" alias="pumukitadmin_direct" />
+        </service>
     </services>
 </container>
