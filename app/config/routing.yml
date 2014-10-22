@@ -1,9 +1,5 @@
 pumukitadmin:
     resource: @PumukitAdminBundle/Resources/config/routing.yml
-pumukit_direct:
-    resource: "@PumukitDirectBundle/Controller/"
-    type:     annotation
-    prefix:   /
 
 pumukit_schema:
     resource: "@PumukitSchemaBundle/Controller/"

@@ -1,6 +1,11 @@
 pumukitadmin_fos_user:
     resource: @PumukitAdminBundle/Resources/config/fos_user.yml
 
+pumukit_direct:
+    resource: "@PumukitAdminBundle/Controller/"
+    type:     annotation
+    prefix:   /admin
+
 pumukitadmin_user:
     resource: @PumukitAdminBundle/Resources/config/user.yml
     prefix: /admin/users
