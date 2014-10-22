@@ -1,0 +1,74 @@
+/********************* Tabs *********************/
+
+/* Tabs are the category level navigational menus - vertical, not horizontal */
+
+ul.tabs {
+    border-top:1px solid #bebebe;
+    background-color:#e8f8fe;
+    }
+ul.tabs li {
+    list-style-type:none;
+    }
+/*MIO*/
+ul.tabs li img.button {
+    float:right;
+    padding-right:10px;
+    }
+ul.tabs li a.active {
+    padding:0;
+    border-bottom:1px solid #bebebe;
+    background:none;
+    }
+ul.tabs li a {
+    display:block;
+    background:url(/images/admin/tp/section_menu_link_bg.gif) repeat-x 0 100%;
+    padding-bottom:1px;
+    }
+
+ul.tabs li a a{
+    display: inline;
+    background: transparent;
+    color: blue;
+    }
+
+ul.tabs li a a:hover{
+    color:blue;
+    text-decoration:underline;
+    }
+
+ul.tabs li a, ul.tabs li a:hover {
+    color:#000;
+    text-decoration:none;
+    }
+ul.tabs li a:hover.active {
+    padding:0;
+    }
+ul.tabs li span {
+    display:block;
+    padding:.3em 0.5em .28em 1.5em;
+    cursor:pointer;
+    }
+ul.tabs li a.active span, ul.tabs li a:hover.active span {
+    background:#fff;
+    font-weight:bold;
+    }
+ul.tabs a.subitem {
+    padding-left:2.2em;
+    }
+ul.tabs div.changed, ul.tabs div.error {
+    float:right;
+    }
+
+ul.tabs a.changed div.changed {
+    background:url(/images/admin/tp/fam_bullet_disk.gif);
+    width:16px;
+    height:16px;
+    }
+ul.tabs a.error div.error {
+    background:url(/images/admin/tp/fam_bullet_error.gif);
+    width:16px;
+    height:16px;
+    }
+ul.tabs a.changed {
+    font-style:italic;
+    }

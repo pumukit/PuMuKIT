@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+	<link rel="stylesheet" type="text/css" media="screen" href="/legacy/css/main.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="/legacy/css/admin/cab.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="/legacy/css/admin/menu.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="/legacy/css/admin/modalbox.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="/legacy/css/admin/admin.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="/legacy/css/admin/accordion.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="/legacy/css/admin/tree.css" />
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        {% include 'PumukitAdminBundle::menu.html.twig' %}
+        {% block body %}{% endblock %}
+        {% include 'PumukitAdminBundle::footer.html.twig' %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

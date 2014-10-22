@@ -1,0 +1,152 @@
+body{ 
+  width: 240px;
+  font-size:17px;
+  font-family:Verdana,Tahoma,Helvetica sans-serif;
+  /*background: #ffffff url(/images/mobile/down.gif) no-repeat 100% 90%;*/
+}
+
+#menu{ 
+  background-color:#CC0000;
+  color:#FFFFFF;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:7.5pt;
+  font-weight:normal;
+  margin-top:0px;
+  margin-bottom:5px;
+  vertical-align:middle;
+  text-align: right;
+  padding-right: 4px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+#menu a{ 
+  color:#FFFFFF;
+}
+
+#menu a.sel{ 
+  font-weight:bold;
+}
+
+#menu_img{ 
+  float: left;
+  width: 50px;
+}
+
+#body{  
+  /*background: transparent url(/images/mobile/up.gif) no-repeat top left;*/
+}
+
+#body .title_serial{  
+  font-family:Verdana,Tahoma,Helvetica sans-serif;
+  font-size:7pt;
+  font-weight:bold;
+}
+
+#body .date_serial{  
+  font-family:Verdana,Tahoma,Helvetica sans-serif;
+  font-size:6pt;
+  font-weight:bold;
+}
+
+#body .img{ 
+  border:0px none;
+  float:left;
+  height:37px;
+  padding:3px;
+  vertical-align:bottom;
+  width:42px;
+}
+
+#body .img img{ 
+  border:1px solid #000000;
+}
+
+#body .text{  
+  height: 42px;
+  clear:none;
+  color:#000000;
+  font-family:Verdana,Tahoma,Helvetica sans-serif;
+  font-size:7.5pt;
+  font-weight:bold;
+  vertical-align:middle;
+  /*padding-left:40px;*/
+}
+
+div.sep{ 
+  height: 1px;
+}
+
+#body .tv{ 
+  padding:8px;
+}
+
+#body .long{ 
+  padding-left:42px;
+}
+
+#body .text a{  
+  color:#0000FF;
+}
+
+#body .text p.ocho{  
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+#body .text p.cuatro{  
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+#body .pager{  
+  padding-top: 5px;
+  text-align: right;
+  font-family: Verdana,Tahoma,Helvetica sans-serif;
+  font-size: 7.5pt;
+  font-weight: bold;
+}
+
+
+#pie{  
+  width: 100%;
+  clear: both;
+  margin-top:10px;
+  margin-bottom:10px;
+  text-align: center;
+  color: #999999;
+  font-family: "Trebuchet MS";
+  font-size: 9pt;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: bold;
+  line-height: normal;
+  text-decoration: none;
+  text-transform: none;
+}
+
+
+
+.element_1{ 
+  padding: 10px;
+  border: 1px solid red;
+  margin: 3px;
+}
+
+.element_1 a{ 
+  display: block;
+}
+
+.link{ 
+  text-decoration: underline;
+}
+
+.button{ 
+  padding: 10px;
+  margin: 6px;
+  border: 1px solid;
+  font-size: 9pt;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: bold;
+}

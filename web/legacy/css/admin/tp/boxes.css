@@ -1,0 +1,62 @@
+/*SI*/
+.section-menu {
+    float:left;
+    position:relative;
+    margin-left:-17.08em;
+    width:17.08em;
+    background:url(/images/admin/tp/section_menu_bg.gif) repeat-y 100% 0;
+    }
+/*SI*/
+.content-container {
+    position:relative;
+    width:100%;
+    float:right;
+    margin-left:-1px;
+    }
+.container { /* created to browser-compatible liquid-layout */
+    border-left:17.48em solid #fff;
+    padding:1.8em 2.2em 1.8em 2em;
+    padding-top:0;
+    }
+/*SI*/
+.content { /* Created to accomodate spacing specification for items nested in content-container */
+    margin-left:2em;f
+    }
+/*SI*/
+.section-menu .bottom { /* Creates the gradient facade below the menu */
+    height:157px;
+    background:url(/images/admin/tp/section_menu_bottom.gif) no-repeat 100% 100%;
+    }
+/*SI*/
+.section-menu ul.tabs {
+    margin-top:.8em;
+    background:url(/images/admin/tp/section_menu_bg.gif) repeat-y 100% 0;
+    }
+.section-menu ul.tabs li a span {
+     background:url(/images/admin/tp/section_menu_span_bg.gif) repeat-y 100% 100% #EEEEFF;
+      }
+.section-menu ul.tabs li a:hover span {
+    background:url(/images/admin/tp/section_menu_over_span_bg.gif) repeat-y 100% 100% #EEEEFF;
+    }
+.section-menu ul.tabs li a.active span { background:#fff !important; }
+.section-menu .x-tree {
+    margin:10px 0;
+    }
+.section-menu ul.tabs li  span span{
+    background:none !important;   
+    padding: 0px; 
+    color:blue; 
+    display:inline
+}
+/*SI*//*ESPACIO PARA ICONO*/
+.icon-head {
+    min-height:18px;
+    background-repeat:no-repeat;
+    background-position:0 50%;
+    padding-left:22px;
+    }
+/*SI*//*ES EL ICONO*/
+.head-edit-form { background-image:url(/images/admin/tp/fam_page_white.gif); }
+
+
+

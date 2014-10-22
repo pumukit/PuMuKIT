@@ -1,0 +1,90 @@
+#sidebar{
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #CCCCCC;
+    border-right: 1px solid #CCCCCC;
+    border-top: 1px solid #CCCCCC;
+    display: block;
+    float: right;
+    height: 880px; /* Antes height: 725px igual que en #mh_toggle_div y recortaba */
+    margin: 0;
+    overflow: hidden;
+    width: 270px;
+    -moz-transition-duration: 0.3s;	
+    -webkit-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+}
+
+#mh_toggle_div {
+    background-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1) inset, 0 -1px 0 rgba(0, 0, 0, 0.07) inset;
+    cursor: pointer;
+    float: left;
+    height: 880px;     
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    width: 18px;
+}
+
+#mh_toggle_div:hover{
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+#mh_toggle_div:active{
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+#mh_toggle_div .mh_toggle_img{
+  width:15px; 
+  height:15px; 
+  position:absolute; 
+  background-image: url('/images/tv/iconos/flechas.png'); 
+  background-repeat: no-repeat; 
+  background-position: -22px 0px;
+}
+
+
+#mh_footer {
+    clear: both;
+    content: ".";
+    display: block;
+    background-color: #333333;
+    border-top: 1px solid #CCCCCC;
+    clear: both;
+    color: #999999;
+    margin: 0;
+    padding: 10px 0 20px;
+    position: relative;
+    min-width: 1220px;
+}
+
+#mh_player {
+    margin: 0px 287px 0px 0px;
+    -moz-transition-duration: 0.3s;
+    -webkit-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+}
+
+div.usctv_mmobjs .usctv_mmobj .mmobj_bottom, div.usctv_mini_mmobjs .usctv_mini_mmobj .mini_mmobj_bottom{
+  bottom: 16px; /* FIGURE */
+  right: 6px;
+  position: inherit !important;  /* coloca bien en el player matterhorn las descripciones */
+  font-size: 85%;
+  color: #A2A2A2;
+}
+
+
+div.other_mmobjs_mh .box {
+    background-color: #FFFFFF;
+    box-shadow: 0 0 3px #000000;
+    height: 322px !important;
+    margin: 10px !important;
+    overflow: auto;
+    position: relative;
+}
+
+#bloque {
+  min-height:900px; 
+}

@@ -1,0 +1,33 @@
+/*
+ Vertical Accordions 
+MIO
+*/
+
+#bottom_container .accordion_toggle{
+  display: block;
+  height: 13px;
+  width: 342px;
+  background-color:  #8EB0BC;
+  padding: 3px;
+  /*line-height: 30px;*/
+  color: #333333;
+  outline: none;
+  font-size: 11px;
+  cursor: pointer;
+  border-bottom: 1px solid #dddddd;
+  margin: 0pt;
+}
+		
+#bottom_container .accordion_toggle_active {
+  background-color: #a2bae7;
+  color: #333333;
+  border-bottom: 1px solid #dddddd;
+}
+		
+.accordion_content {
+  background-color: #ffffff;
+  color: #444444;
+  overflow: hidden;
+  border-bottom: 1px solid #DDDDDD;
+}
+			

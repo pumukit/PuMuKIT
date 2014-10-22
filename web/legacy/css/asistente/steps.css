@@ -1,0 +1,159 @@
+/********************************************************
+                     BUTTONS
+********************************************************/
+div.navigation{ 
+    /*background: #EEEEEE none repeat scroll 0% 0%;*/
+    clear: both;
+    height: 30px;
+    text-align: left;
+    margin: 25pt 0pt 1em;
+}
+
+
+div.navigation .rt{ 
+    float:right;
+    width:80px;
+    background: transparent url('/images/asistente/buttons/bg_button_span_right.gif') no-repeat scroll top right;
+    color: #444;
+    display: block;
+    font: normal 12px arial, sans-serif;
+    height: 14px;
+    margin-right: 6px;
+    text-decoration: none;
+    text-align: right;
+    padding: 5px 18px 5px 0px;
+    border-left: 1px solid #aaaaaa;
+    color: black;
+}
+
+
+div.navigation .lt{ 
+    float: right;
+    width:80px;
+    background: transparent url('/images/asistente/buttons/bg_button_span_left.gif') no-repeat scroll top left;
+    color: #444;
+    display: block;
+    font: normal 12px arial, sans-serif;
+    height: 14px;
+    margin-left: 6px;
+    margin-right: 13px;
+    text-decoration: none;
+    padding: 5px 0 5px 18px;
+    border-right: 1px solid #aaaaaa;
+
+}
+
+
+div.navigation a{ 
+    color: #666666;
+}
+
+
+div.navigation a:hover{ 
+    color: #000000;
+    text-decoration: none !important;
+}
+
+
+div.navigation .lt:active{ 
+    background-position: bottom left;
+    color: #000;
+    outline: none; /* hide dotted outline in Firefox */
+}
+
+div.navigation .rt:active{ 
+    background-position: bottom right;
+    color: #000;
+    outline: none; /* hide dotted outline in Firefox */
+}
+
+/********************************************************
+                      STEPS
+********************************************************/
+.clearfloat { 
+  clear: both;
+  display: block; 
+}
+
+#mainNav li{
+	height:71px;
+	list-style:none;
+	float:left;
+	background-color:#EBEBEB;
+	background-image: url(/images/asistente/steps/navBtn.gif);
+	background-repeat: no-repeat;
+	background-position: right top;
+}
+
+#mainNav li.current{
+	background-color:#DE7010;
+	background-image: url(/images/asistente/steps/navCurrentBtn.gif);
+}
+
+#mainNav li.lastDone{
+	background-color:#8EB0BC;
+	background-image: url(/images/asistente/steps/navLastDoneBtn.gif);
+}
+
+#mainNav li.done{
+	background-color:#8EB0BC;
+	background-image: url(/images/asistente/steps/navDoneBtn.gif);
+}
+
+#mainNav li a, #mainNav li a:link, #mainNav li a:visited, #mainNav li a:hover, #mainNav li a:active {
+color:#ccc;
+}
+
+#mainNav li.lastDone a, #mainNav li.lastDone a:link, #mainNav li.lastDone a:visited, #mainNav li.lastDone a:hover, #mainNav li.lastDone a:active, #mainNav li.current a, #mainNav li.current a:link, #mainNav li.current a:visited, #mainNav li.current a:hover, #mainNav li.current a:active, #mainNav li.done a, #mainNav li.done a:link, #mainNav li.done a:visited, #mainNav li.done a:hover, #mainNav li.done a:active {
+color:#fff;
+}
+
+#mainNav li a:hover
+{ 
+/*color:#FFFF99;
+cursor:hand;*/
+text-decoration: none;
+}
+
+#mainNav li a em{
+width:150px;
+display:block;
+margin:6px 0 0 10px;
+font-style:normal;
+font-weight:bold;
+font-size: 14px;
+}
+
+#mainNav li a span{
+width:140px;
+display:block;
+margin-left:10px;
+font-weight:normal;
+}
+
+#mainNav li.mainNavNoBg{
+background-image:none;
+}
+
+#mainNav li a{
+height:71px;
+display:block;
+}
+
+/* #mainNav.fiveStep */
+#mainNav.fiveStep li{width:182px;}
+#mainNav.fiveStep li a{width:182px;}
+
+/* #mainNav.fourStep */
+#mainNav.fourStep li{width:227px;}
+#mainNav.fourStep li.mainNavNoBg{width:229px;}
+#mainNav.fourStep li a{width:227px;}
+
+/* #mainNav.threeStep */
+#mainNav.threeStep li{width:303px;}
+#mainNav.threeStep li.mainNavNoBg{width:304px;}
+#mainNav.threeStep li a{width:303px;}
+
+/* #mainNav.twoStep */
+#mainNav.twoStep li{width:455px;}
+#mainNav.twoStep li a{width:455px;}

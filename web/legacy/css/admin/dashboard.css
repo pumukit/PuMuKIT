@@ -1,0 +1,22 @@
+.dashboard_element{ 
+       text-align: left;
+       width: 350px;
+       min-height: 200px;
+       display: -moz-inline-stack; /* FF2*/
+       display: inline-block;
+       vertical-align: top; /* BASELINE */
+       margin: 5px;
+       zoom: 1; /* IE7 (hasLayout)*/
+       *display: inline; /* IE */
+       _height: 200px; /* IE6 */
+}
+
+.dashboard_element legend{ 
+       font-size: 140%;
+       color: #AAA;
+}
+
+
+.dashboard_timeline{ 
+       
+}

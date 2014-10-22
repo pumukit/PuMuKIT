@@ -1,0 +1,64 @@
+div#new_template
+{
+  padding-top: 55px;
+  padding-right: 10px;
+}
+
+div#new_template fieldset{
+  border-color:#DDDDDD; 
+  border-style:solid solid none; 
+  border-width:1px 1px 0px; 
+  margin-bottom:3px;
+}
+
+div#new_template .form-row{
+  border-bottom:1px solid #DDDDDD; 
+  height:40px; 
+  padding:10px;
+}
+
+div#new_template label{
+  color:#666666;
+  display:block;
+  font-weight:normal !important;
+  padding:0pt 1em 3px 0pt;
+  text-align:left;
+}
+
+div#new_template .content{  
+  margin-left:2em;
+}
+
+div#new_template input{
+  border:1px solid #DDDDDD;
+  font-family:Arial,sans-serif;
+  font-size:11px;
+  padding:3px;
+  vertical-align:middle;
+}
+
+div#new_template ul.sf_asset_actions{  
+  display:block;
+  list-style-type:none;
+  margin:0pt;
+  text-align:right;
+}
+
+div#new_template ul.sf_asset_actions li{  
+  display:inline;
+  list-style-type:none;
+}
+
+div#new_template ul.sf_asset_actions input{
+  background:transparent url(/images/admin/navigator/folder_new.png) no-repeat scroll 3px 2px;
+  background-color:#FFFFCC;
+  border-color:-moz-use-text-color #999999 -moz-use-text-color -moz-use-text-color;
+  border-style:none solid none none;
+  border-width:0px 4px 0px 0px;
+  color:#333333;
+  cursor:pointer;
+  font-family:Arial,sans-serif;
+  font-size:11px;
+  padding:3px 3px 3px 20px;
+  border-right:4px solid #73B65A !important;
+}  

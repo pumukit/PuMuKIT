@@ -1,0 +1,75 @@
+/*
+  VIDEOSERV TREE
+*/
+.videoserv{ 
+      margin-top:20px; 
+      border:1px solid #DDD; 
+      width:100%; 
+      height:200px; 
+      overflow: scroll; 
+}
+
+.videoserv_tree{width:100%;}
+.videoserv_tree, .videoserv_tree ul, .videoserv_tree li{
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+.videoserv_tree ul{
+	/*
+	Uncomment this if you want to initially hide the child lists. 
+	If you do, Javascript disabled and CSS enabled browsers will not be able to use this list.
+	display:none;
+	*/ 
+        padding-left: 14px !important;
+}
+.videoserv_tree li{
+	line-height:200%;
+	margin-top:1px;
+	cursor:default;
+	text-indent:30px;
+	width:100%;
+}
+
+.videoserv_tree li.collapsed span, .videoserv_tree li.expanded span,
+.videoserv_tree li.element span{
+         cursor:pointer;
+} 
+
+
+.videoserv_tree li, .videoserv_tree li.collapsed span{
+        background:#fff url(/images/admin/tree/collapsed.gif) no-repeat 5px .4em;
+	font-weight: normal;
+} 
+.videoserv_tree li.expanded span{
+        background:#fff url(/images/admin/tree/expanded.gif) no-repeat 5px .4em;
+	font-weight: bold;
+}
+
+.videoserv_tree li.element span{
+        background:#fff url(/images/admin/tree/element.gif) no-repeat 5px .4em;
+	font-weight: bold;
+}
+
+/* first level
+
+.videoserv_tree li, .videoserv_tree li.collapsed{background:#aaa url(/images/admin/tree/collapsed.gif) no-repeat 5px .4em;} 
+.videoserv_tree li.expanded{background:#aaa url(/images/admin/tree/expanded.gif) no-repeat 5px .4em;}
+
+second level 
+
+.videoserv_tree li ul, .videoserv_tree li li{background:#f8f8f8;font-weight:normal;}
+.videoserv_tree li li.collapsed{background:#ddd url(/images/admin/tree/collapsed.gif) no-repeat 5px .4em;}  
+.videoserv_tree li li.expanded{background:#ddd url(/images/admin/tree/expanded.gif) no-repeat 5px .4em;}
+
+ third level 
+
+.videoserv_tree li li ul, .videoserv_tree li li li{background:#fff;}
+.videoserv_tree li li li.collapsed{background:#fff url(/images/admin/tree/collapsed.gif) no-repeat 5px .4em;} 
+.videoserv_tree li li li.expanded{background:#fff url(/images/admin/tree/expanded.gif) no-repeat 5px .4em;}
+
+ fourth level 
+
+.videoserv_tree li li li li{text-indent:0;margin-left:30px;width:auto;}
+*/
+
