@@ -16,7 +16,9 @@
     </head>
     <body>
         {% include 'PumukitAdminBundle::menu.html.twig' %}
-        {% block body %}{% endblock %}
+        <div id="body_div">
+          {% block body %}{% endblock %}
+        </div>
         {% include 'PumukitAdminBundle::footer.html.twig' %}
         {% block javascripts %}
         <script type="text/javascript" src="/legacy/js/prototype.js"></script>
