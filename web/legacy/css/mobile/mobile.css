@@ -2,7 +2,7 @@ body{
   width: 240px;
   font-size:17px;
   font-family:Verdana,Tahoma,Helvetica sans-serif;
-  /*background: #ffffff url(/images/mobile/down.gif) no-repeat 100% 90%;*/
+  /*background: #ffffff url(/legacy/images/mobile/down.gif) no-repeat 100% 90%;*/
 }
 
 #menu{ 
@@ -34,7 +34,7 @@ body{
 }
 
 #body{  
-  /*background: transparent url(/images/mobile/up.gif) no-repeat top left;*/
+  /*background: transparent url(/legacy/images/mobile/up.gif) no-repeat top left;*/
 }
 
 #body .title_serial{  

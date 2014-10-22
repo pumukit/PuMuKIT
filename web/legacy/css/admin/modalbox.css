@@ -58,7 +58,7 @@
 #MB_loading {
 	padding: 1.5em;
 	text-indent: -10000px;
-	background: transparent url(/images/admin/load/spinner.gif) 50% 0 no-repeat;
+	background: transparent url(/legacy/images/admin/load/spinner.gif) 50% 0 no-repeat;
 }
 
 /* Color scheme */

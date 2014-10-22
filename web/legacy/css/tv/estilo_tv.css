@@ -301,7 +301,7 @@ div#cab_serial div#title{
   text-transform: none;
   font-size: 13px;
   padding-left: 18px;
-  background: transparent url(/images/tv/tri.gif) no-repeat scroll 10px 0px;
+  background: transparent url(/legacy/images/tv/tri.gif) no-repeat scroll 10px 0px;
 }
 
 div#cab_serial div#subtitle{ 
@@ -492,60 +492,60 @@ div#directo div#pantalla_completa{
 
 
 .audio { 
-  background: url('/images/tv/altavoz2.gif') left top no-repeat;
+  background: url('/legacy/images/tv/altavoz2.gif') left top no-repeat;
 }  
     
 
 .book { 
-  background: url('/images/tv/book2.gif') left top no-repeat;
+  background: url('/legacy/images/tv/book2.gif') left top no-repeat;
 }       
 
 .doc { 
-  background: url('/images/tv/doc.gif') left top no-repeat;
+  background: url('/legacy/images/tv/doc.gif') left top no-repeat;
 }        
 
 .video { 
-  background: url('/images/tv/movie2.gif') left top no-repeat;
+  background: url('/legacy/images/tv/movie2.gif') left top no-repeat;
 }     
 
 .link { 
-  background: url('/images/tv/url.gif') left top no-repeat;
+  background: url('/legacy/images/tv/url.gif') left top no-repeat;
 }     
 
 .mp3 { 
-  background: url('/images/tv/mp3.gif') left top no-repeat;
+  background: url('/legacy/images/tv/mp3.gif') left top no-repeat;
 }     
 
 .pdf { 
-  background: url('/images/tv/pdf.gif') left top no-repeat;
+  background: url('/legacy/images/tv/pdf.gif') left top no-repeat;
 }     
 
 .pps { 
-  background: url('/images/tv/pps.gif') left top no-repeat;
+  background: url('/legacy/images/tv/pps.gif') left top no-repeat;
 }     
 
 .ppt { 
-  background: url('/images/tv/ppt.gif') left top no-repeat;
+  background: url('/legacy/images/tv/ppt.gif') left top no-repeat;
 }     
 
 .url { 
-  background: url('/images/tv/url.gif') left top no-repeat;
+  background: url('/legacy/images/tv/url.gif') left top no-repeat;
 }     
 
 .txt { 
-  background: url('/images/tv/txt.gif') left top no-repeat;
+  background: url('/legacy/images/tv/txt.gif') left top no-repeat;
 }     
 
 .swf { 
-  background: url('/images/tv/swf.gif') left top no-repeat;
+  background: url('/legacy/images/tv/swf.gif') left top no-repeat;
 }     
 
 .xlm { 
-  background: url('/images/tv/swf.xlm') left top no-repeat;
+  background: url('/legacy/images/tv/swf.xlm') left top no-repeat;
 }     
 
 .zip { 
-  background: url('/images/tv/zip.gif') left top no-repeat;
+  background: url('/legacy/images/tv/zip.gif') left top no-repeat;
 }     
 /*
 #######################################################
@@ -1027,7 +1027,7 @@ a:hover {
 .star-rating a:active,
 .star-rating a:focus,
 .star-rating .current-rating{
-	background: url(/images/tv/star.gif) left -1000px repeat-x;
+	background: url(/legacy/images/tv/star.gif) left -1000px repeat-x;
 }
 .star-rating{
 	position:relative;
@@ -1102,7 +1102,7 @@ a:hover {
 .small-star a:active,
 .small-star a:focus,
 .small-star .current-rating{
-	background-image: url(/images/tv/star_small.gif);
+	background-image: url(/legacy/images/tv/star_small.gif);
 	line-height: 10px;
 	height: 10px;
 }

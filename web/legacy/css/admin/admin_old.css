@@ -10,7 +10,7 @@
 img.mini{  
   width : 30px;
   height : 23px;
-  background: url(/images/admin/spinner.gif) no-repeat center center; /*efecto carga*/
+  background: url(/legacy/images/admin/spinner.gif) no-repeat center center; /*efecto carga*/
 }
 
 img.miniTag{  
@@ -34,7 +34,7 @@ div.div_edit fieldset {
 
 
 img.grande{ 
-  background: url(/images/admin/spinner.gif) no-repeat center center;
+  background: url(/legacy/images/admin/spinner.gif) no-repeat center center;
 
 }
 
@@ -89,7 +89,7 @@ img.grande{
 .loginError
 {
   color:#fff; 
-  background: url(/images/admin/rayas.png) repeat-x;
+  background: url(/legacy/images/admin/rayas.png) repeat-x;
   padding:10px; 
   margin-top:7px; 
   text-align: center;
@@ -105,17 +105,17 @@ img.grande{
 }
 .wrap0 {
 	float:left;
-	background:url(/images/admin/shadowt.gif) left top no-repeat;
+	background:url(/legacy/images/admin/shadowt.gif) left top no-repeat;
 }	
 .wrap1 {
 	position:relative;
-	background:url(/images/admin/shadow.gif) right bottom no-repeat;
+	background:url(/legacy/images/admin/shadow.gif) right bottom no-repeat;
 	top:10px;
 	left:10px;
 }	
 .wrap2 {
 	position:relative;
-	background:url(/images/admin/corner_bl.gif) left bottom no-repeat;
+	background:url(/legacy/images/admin/corner_bl.gif) left bottom no-repeat;
 	bottom:0;
 	left:-10px;
 }
@@ -125,7 +125,7 @@ img.grande{
 	left:10px;
 	right:0;
 	padding:10px 10px 0 0;
-	background:url(/images/admin/corner_tr.gif) right top no-repeat;
+	background:url(/legacy/images/admin/corner_tr.gif) right top no-repeat;
 }
 .wrap3 img {
 	display:block;
@@ -348,7 +348,7 @@ div.auto_complete ul li.selected {
   padding: 5px 20px 5px 25px;
   font-size: 11px;
   color: #fff;
-  background: #73B65A url(/images/admin/ok.png) no-repeat 5px 2px;
+  background: #73B65A url(/legacy/images/admin/ok.png) no-repeat 5px 2px;
 }
 
 #tv_admin_container .form-row
@@ -410,7 +410,7 @@ div.auto_complete ul li.selected {
   padding: 5px 20px 5px 25px;
   font-size: 11px;
   color: #fff;
-  background: #f33 url(/images/admin/error.png) no-repeat 5px 2px;
+  background: #f33 url(/legacy/images/admin/error.png) no-repeat 5px 2px;
 }
 
 #tv_admin_container .form-errors dl
@@ -508,87 +508,87 @@ div.auto_complete ul li.selected {
 
 #tv_admin_container .tv_admin_action_create
 {
-  background: url(/images/admin/add.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/add.png) no-repeat 3px 2px;
   border-right: 4px solid #73B65A !important;
 }
 
 #tv_admin_container .tv_admin_action_next
 {
-  background: url(/images/admin/next.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/next.png) no-repeat 3px 2px;
   border-right: 4px solid #73B65A !important;
 }
 
 #tv_admin_container .tv_admin_action_previous
 {
-  background: url(/images/admin/previous.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/previous.png) no-repeat 3px 2px;
   border-right: 4px solid #73B65A !important;
 }
 
 
 #tv_admin_container .tv_admin_action_save
 {
-  background: url(/images/admin/save.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/save.png) no-repeat 3px 2px;
   border-right: 4px solid #73B65A !important;
 }
 
 #tv_admin_container .tv_admin_action_save_and_add
 {
-  background: url(/images/admin/save.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/save.png) no-repeat 3px 2px;
   border-right: 4px solid #73B65A !important;
 }
 
 #tv_admin_container .tv_admin_action_save_and_list
 {
-  background: url(/images/admin/save.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/save.png) no-repeat 3px 2px;
   border-right: 4px solid #73B65A !important;
 }
 
 #tv_admin_container .tv_admin_action_delete
 {
-  background: url(/images/admin/delete.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/delete.png) no-repeat 3px 2px;
   border-right: 4px solid #E75C58 !important;
 }
 
 #tv_admin_container .tv_admin_action_cancel
 {
-  background: url(/images/admin/cancel.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/cancel.png) no-repeat 3px 2px;
   border-right: 4px solid #E75C58 !important;
 }
 
 #tv_admin_container .tv_admin_action_filter
 {
-  background: url(/images/admin/filter.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/filter.png) no-repeat 3px 2px;
   border-right: 4px solid #66f !important;
 }
 
 #tv_admin_container .tv_admin_action_view
 {
-  background: url(/images/admin/filter.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/filter.png) no-repeat 3px 2px;
   border-right: 4px solid #66f !important;
 }
 
 /*MIO*/
 #tv_admin_container .tv_admin_action_filenew
 {
-  background: url(/images/admin/filenew.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/filenew.png) no-repeat 3px 2px;
   border-right: 4px solid #66f !important;
 }
 
 #tv_admin_container .tv_admin_action_reset_filter
 {
-  background: url(/images/admin/reset.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/reset.png) no-repeat 3px 2px;
   border-right: 4px solid #E75C58 !important;
 }
 
 #tv_admin_container .tv_admin_action_mail
 {
-  background: url(/images/admin/email_go.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/email_go.png) no-repeat 3px 2px;
   border-right: 4px solid #73B65A !important;
 }
 
 #tv_admin_container .tv_admin_action_list
 {
-  background: url(/images/admin/list.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/list.png) no-repeat 3px 2px;
   border-right: 4px solid #66f !important;
 }
 
@@ -835,20 +835,20 @@ div#barra_sup{
 
 /* first level */
 
-.videoserv_tree li, .videoserv_tree li.collapsed{background:#aaa url(/images/admin/collapsed.gif) no-repeat 5px .4em;} 
-.videoserv_tree li.expanded{background:#aaa url(/images/admin/expanded.gif) no-repeat 5px .4em;}
+.videoserv_tree li, .videoserv_tree li.collapsed{background:#aaa url(/legacy/images/admin/collapsed.gif) no-repeat 5px .4em;} 
+.videoserv_tree li.expanded{background:#aaa url(/legacy/images/admin/expanded.gif) no-repeat 5px .4em;}
 
 /* second level */
 
 .videoserv_tree li ul, .videoserv_tree li li{background:#f8f8f8;font-weight:normal;}
-.videoserv_tree li li.collapsed{background:#ddd url(/images/admin/collapsed.gif) no-repeat 5px .4em;} 
-.videoserv_tree li li.expanded{background:#ddd url(/images/admin/expanded.gif) no-repeat 5px .4em;}
+.videoserv_tree li li.collapsed{background:#ddd url(/legacy/images/admin/collapsed.gif) no-repeat 5px .4em;} 
+.videoserv_tree li li.expanded{background:#ddd url(/legacy/images/admin/expanded.gif) no-repeat 5px .4em;}
 
 /* third level */
 
 .videoserv_tree li li ul, .videoserv_tree li li li{background:#fff;}
-.videoserv_tree li li li.collapsed{background:#fff url(/images/admin/collapsed.gif) no-repeat 5px .4em;} 
-.videoserv_tree li li li.expanded{background:#fff url(/images/admin/expanded.gif) no-repeat 5px .4em;}
+.videoserv_tree li li li.collapsed{background:#fff url(/legacy/images/admin/collapsed.gif) no-repeat 5px .4em;} 
+.videoserv_tree li li li.expanded{background:#fff url(/legacy/images/admin/expanded.gif) no-repeat 5px .4em;}
 
 /* fourth level */
 
@@ -861,7 +861,7 @@ div#barra_sup{
 */
 
 div.info_growl{ 
-  background: #ffffff url(/images/admin/information.png) center no-repeat;
+  background: #ffffff url(/legacy/images/admin/information.png) center no-repeat;
   background-position: 15px 50%; /* x-pos y-pos */
   text-align: left;
   padding: 5px 20px 5px 45px;
@@ -869,7 +869,7 @@ div.info_growl{
 }
 
 div.alert_growl{ 
-  background: #ffa0a0 url(/images/admin/exclamation.png) center no-repeat;
+  background: #ffa0a0 url(/legacy/images/admin/exclamation.png) center no-repeat;
   background-position: 15px 50%; /* x-pos y-pos */
   text-align: left;
   padding: 5px 20px 5px 45px;

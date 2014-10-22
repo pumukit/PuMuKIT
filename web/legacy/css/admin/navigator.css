@@ -130,13 +130,13 @@
 
 #sf_asset_container .sf_asset_action_add_file
 {
-  background: url(/images/admin/navigator/filenew.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/navigator/filenew.png) no-repeat 3px 2px;
   border-right: 4px solid #73B65A !important;
 }
 
 #sf_asset_container .sf_asset_action_add_folder
 {
-  background: url(/images/admin/navigator/folder_new.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/navigator/folder_new.png) no-repeat 3px 2px;
   border-right: 4px solid #73B65A !important;
 }
 

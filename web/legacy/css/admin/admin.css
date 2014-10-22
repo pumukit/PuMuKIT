@@ -100,13 +100,13 @@ body{
 }
 
 span.span_atras_mms{ 
-  background: transparent url(/images/admin/buttons/icon_btn_back.gif) no-repeat 0% 50%; 
+  background: transparent url(/legacy/images/admin/buttons/icon_btn_back.gif) no-repeat 0% 50%; 
   padding: 8px 8px 8px 18px;
 }
 
 
 button.btn_atras_mms{ 
-    background:#FFAC47 url(/images/admin/buttons/btn_bg.gif) repeat-x scroll 0 100%;
+    background:#FFAC47 url(/legacy/images/admin/buttons/btn_bg.gif) repeat-x scroll 0 100%;
     border-color:#ED6502 #A04300 #A04300 #ED6502;
     border-style:solid;
     border-width:1px;
@@ -135,7 +135,7 @@ span.span_view_tr{
 
 
 button.btn_view_tr{ 
-    background:#FFAC47 url(/images/admin/buttons/btn_bg.gif) repeat-x scroll 0 100%;
+    background:#FFAC47 url(/legacy/images/admin/buttons/btn_bg.gif) repeat-x scroll 0 100%;
     border-color:#ED6502 #A04300 #A04300 #ED6502;
     border-style:solid;
     border-width:1px;
@@ -202,11 +202,11 @@ div.div_messages{
 }
 
 div#div_messages_info{
-  background:#FFF9E9 url(/images/admin/buttons/information.png) no-repeat scroll 3% 50%;
+  background:#FFF9E9 url(/legacy/images/admin/buttons/information.png) no-repeat scroll 3% 50%;
 }
 
 div#div_messages_error{  
-  background:#FFE9E9 url(/images/admin/buttons/delete.png) no-repeat scroll 3% 50%;
+  background:#FFE9E9 url(/legacy/images/admin/buttons/delete.png) no-repeat scroll 3% 50%;
 }
 
 
@@ -237,7 +237,7 @@ div.background_id
 
 .tv_admin_edit
 {  
-  background:transparent url(/images/admin/shadows/sheet_bg.png) repeat-x scroll center top;
+  background:transparent url(/legacy/images/admin/shadows/sheet_bg.png) repeat-x scroll center top;
   overflow:auto;
   padding-bottom:30px;
   padding-right: 4%;
@@ -443,7 +443,7 @@ div.background_id
   padding: 5px 20px 5px 25px;
   font-size: 11px;
   color: #fff;
-  background: #73B65A url(/images/admin/buttons/ok.png) no-repeat 5px 2px;
+  background: #73B65A url(/legacy/images/admin/buttons/ok.png) no-repeat 5px 2px;
 }
 
 #tv_admin_container .form-row
@@ -516,7 +516,7 @@ div.background_id
   padding: 5px 20px 5px 25px;
   font-size: 11px;
   color: #fff;
-  background: #f33 url(/images/admin/buttons/error.png) no-repeat 5px 2px;
+  background: #f33 url(/legacy/images/admin/buttons/error.png) no-repeat 5px 2px;
 }
 
 #tv_admin_container .form-errors dl
@@ -613,87 +613,87 @@ div.background_id
 
 #tv_admin_container .tv_admin_action_create
 {
-  background: url(/images/admin/buttons/add.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/buttons/add.png) no-repeat 3px 2px;
   border-right: 4px solid #73B65A !important;
 }
 
 #tv_admin_container .tv_admin_action_next
 {
-  background: url(/images/admin/buttons/next.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/buttons/next.png) no-repeat 3px 2px;
   border-right: 4px solid #73B65A !important;
 }
 
 #tv_admin_container .tv_admin_action_previous
 {
-  background: url(/images/admin/buttons/previous.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/buttons/previous.png) no-repeat 3px 2px;
   border-right: 4px solid #73B65A !important;
 }
 
 
 #tv_admin_container .tv_admin_action_save
 {
-  background: url(/images/admin/buttons/save.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/buttons/save.png) no-repeat 3px 2px;
   border-right: 4px solid #73B65A !important;
 }
 
 #tv_admin_container .tv_admin_action_save_and_add
 {
-  background: url(/images/admin/buttons/save.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/buttons/save.png) no-repeat 3px 2px;
   border-right: 4px solid #73B65A !important;
 }
 
 #tv_admin_container .tv_admin_action_save_and_list
 {
-  background: url(/images/admin/buttons/save.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/buttons/save.png) no-repeat 3px 2px;
   border-right: 4px solid #73B65A !important;
 }
 
 #tv_admin_container .tv_admin_action_delete
 {
-  background: url(/images/admin/buttons/delete.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/buttons/delete.png) no-repeat 3px 2px;
   border-right: 4px solid #E75C58 !important;
 }
 
 #tv_admin_container .tv_admin_action_cancel
 {
-  background: url(/images/admin/buttons/cancel.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/buttons/cancel.png) no-repeat 3px 2px;
   border-right: 4px solid #E75C58 !important;
 }
 
 #tv_admin_container .tv_admin_action_filter
 {
-  background: url(/images/admin/buttons/filter.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/buttons/filter.png) no-repeat 3px 2px;
   border-right: 4px solid #66f !important;
 }
 
 #tv_admin_container .tv_admin_action_view
 {
-  background: url(/images/admin/buttons/filter.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/buttons/filter.png) no-repeat 3px 2px;
   border-right: 4px solid #66f !important;
 }
 
 /*MIO*/
 #tv_admin_container .tv_admin_action_filenew
 {
-  background: url(/images/admin/buttons/filenew.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/buttons/filenew.png) no-repeat 3px 2px;
   border-right: 4px solid #66f !important;
 }
 
 #tv_admin_container .tv_admin_action_reset_filter
 {
-  background: url(/images/admin/buttons/reset.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/buttons/reset.png) no-repeat 3px 2px;
   border-right: 4px solid #E75C58 !important;
 }
 
 #tv_admin_container .tv_admin_action_mail
 {
-  background: url(/images/admin/buttons/email_go.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/buttons/email_go.png) no-repeat 3px 2px;
   border-right: 4px solid #73B65A !important;
 }
 
 #tv_admin_container .tv_admin_action_list
 {
-  background: url(/images/admin/buttons/list.png) no-repeat 3px 2px;
+  background: url(/legacy/images/admin/buttons/list.png) no-repeat 3px 2px;
   border-right: 4px solid #66f !important;
 }
 
@@ -811,17 +811,17 @@ tr.tv_admin_row_0  td, tr.tv_admin_row_1  td{
 }
 .wrap0 {
 	float:left;
-	background:url(/images/admin/shadows/shadowt.gif) left top no-repeat;
+	background:url(/legacy/images/admin/shadows/shadowt.gif) left top no-repeat;
 }	
 .wrap1 {
 	position:relative;
-	background:url(/images/admin/shadows/shadow.gif) right bottom no-repeat;
+	background:url(/legacy/images/admin/shadows/shadow.gif) right bottom no-repeat;
 	top:10px;
 	left:10px;
 }	
 .wrap2 {
 	position:relative;
-	background:url(/images/admin/shadows/corner_bl.gif) left bottom no-repeat;
+	background:url(/legacy/images/admin/shadows/corner_bl.gif) left bottom no-repeat;
 	bottom:0;
 	left:-10px;
 }
@@ -831,7 +831,7 @@ tr.tv_admin_row_0  td, tr.tv_admin_row_1  td{
 	left:10px;
 	right:0;
 	padding:10px 10px 0 0;
-	background:url(/images/admin/shadows/corner_tr.gif) right top no-repeat;
+	background:url(/legacy/images/admin/shadows/corner_tr.gif) right top no-repeat;
 }
 .wrap3 img {
 	/* \*/display:block;/**/
@@ -844,7 +844,7 @@ tr.tv_admin_row_0  td, tr.tv_admin_row_1  td{
 */
 
 #footer { 
-  background:#F5F5F5 url(/images/admin/shadows/pie.gif) repeat scroll 0%;
+  background:#F5F5F5 url(/legacy/images/admin/shadows/pie.gif) repeat scroll 0%;
   border-bottom:10px solid #F5F5F5;
   border-top:1px solid #DDDDDD;
   bottom:0px;
@@ -998,7 +998,7 @@ div.auto_complete ul li.selected {
 #div_login
 {
   font-size: 11px;
-  background: #EEEEFF url(/images/admin/cab/serial.png) no-repeat 15px 15px;
+  background: #EEEEFF url(/legacy/images/admin/cab/serial.png) no-repeat 15px 15px;
   margin: 100px auto;
   width: 200px;
   border: 4px solid #DFDFDF ;
@@ -1042,7 +1042,7 @@ div.auto_complete ul li.selected {
 .loginError
 {
   color:#fff; 
-  background: url(/images/admin/rayas.png) repeat-x;
+  background: url(/legacy/images/admin/rayas.png) repeat-x;
   padding:10px; 
   margin-top:7px; 
   text-align: center;
@@ -1055,7 +1055,7 @@ div.auto_complete ul li.selected {
 
 input.ok
 { 
-  background: transparent url(/images/admin/shadows/button.gif) repeat-x;
+  background: transparent url(/legacy/images/admin/shadows/button.gif) repeat-x;
   padding: 0px 12px !important;
   border: none !important;
   height: 22px !important;
@@ -1066,7 +1066,7 @@ input.ok
 
 input.ok:hover
 { 
-  background: transparent url(/images/admin/shadows/button_hover.gif) repeat-x;
+  background: transparent url(/legacy/images/admin/shadows/button_hover.gif) repeat-x;
 }
 
 
@@ -1149,7 +1149,7 @@ div.trans_menu  div.mas_info{
   overflow: hidden;
   border:1px solid #333333;
   padding: 3px;
-  background: #F5F5F5 url(/images/admin/shadows/pie.gif) repeat scroll 0%;
+  background: #F5F5F5 url(/legacy/images/admin/shadows/pie.gif) repeat scroll 0%;
 }
 
 div.trans_menu div.trans_button_up{ 
@@ -1175,7 +1175,7 @@ div.trans_menu div.list_options{
   padding: 0;
   position: relative;
   width: 298px;
-  background: #F5F5F5 url(/images/admin/shadows/pie.gif) repeat scroll 0%;
+  background: #F5F5F5 url(/legacy/images/admin/shadows/pie.gif) repeat scroll 0%;
 }
 
 div.trans_menu div.list_options ul{ 
@@ -1212,7 +1212,7 @@ div.trans_menu div.list_options ul li a:hover{
 }
 
 div.sidebar {
-    background: #EDF3FE url("/images/admin/tree_bg.png") 0% 0%;
+    background: #EDF3FE url("/legacy/images/admin/tree_bg.png") 0% 0%;
     overflow: hidden;
     margin-right: 3px;
     border-right: 1px solid #bbb;
@@ -1367,31 +1367,31 @@ button {
 }
 
 .cab_up_down {
-  background: url(/images/admin/menu/nav1_sep.gif) no-repeat 0% 0%;
+  background: url(/legacy/images/admin/menu/nav1_sep.gif) no-repeat 0% 0%;
 }
 
 .cab_up_down div {
   cursor: pointer;
   text-decoration: none;
-  background: transparent url(/images/admin/flechas.png) no-repeat 50% 100%;
+  background: transparent url(/legacy/images/admin/flechas.png) no-repeat 50% 100%;
   width: 16px;
   height: 16px;
   margin: 5px;
 }
 
 .cab_up_down div.inv {
-  background: transparent url(/images/admin/flechas.png) no-repeat 50% 0%;
+  background: transparent url(/legacy/images/admin/flechas.png) no-repeat 50% 0%;
 }
 
 .advanced_search_up_down div {
   cursor: pointer;
   text-decoration: none;
-  background: #ddd url(/images/admin/arrow_advanced.png) no-repeat 50% 100%;
+  background: #ddd url(/legacy/images/admin/arrow_advanced.png) no-repeat 50% 100%;
   height: 15px;
 }
 
 .advanced_search_up_down div.inv {
-  background: #ddd url(/images/admin/arrow_advanced.png) no-repeat 50% 0%;
+  background: #ddd url(/legacy/images/admin/arrow_advanced.png) no-repeat 50% 0%;
 }
 
 .unesco_element {
@@ -1416,7 +1416,7 @@ button {
     margin: 15px 0 0 0;
 }
 .pic_arrow{
-    background: transparent url(/images/admin/flechas.png) no-repeat 50% 100%;
+    background: transparent url(/legacy/images/admin/flechas.png) no-repeat 50% 100%;
     -moz-transform:rotate(90deg);
     -webkit-transform:rotate(90deg);
     -o-transform:rotate(90deg);
@@ -1424,7 +1424,7 @@ button {
     filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=0.5);
 }
 .burst_arrow{
-    background: transparent url(/images/admin/flechas.png) no-repeat 50% 100%;
+    background: transparent url(/legacy/images/admin/flechas.png) no-repeat 50% 100%;
     -moz-transform:rotate(180deg);
     -webkit-transform:rotate(180deg);
     -o-transform:rotate(180deg);
@@ -1453,11 +1453,11 @@ button {
   cursor:hand;
 }
 #MB_window  .extractpic .tv_admin_action_save {
-    background: url(/images/admin/buttons/save.png) no-repeat 3px 2px;
+    background: url(/legacy/images/admin/buttons/save.png) no-repeat 3px 2px;
     border-right: 4px solid #73B65A !important;
 }
 #MB_window  .extractpic .tv_admin_action_delete {
-    background: url(/images/admin/buttons/delete.png) no-repeat 3px 2px;
+    background: url(/legacy/images/admin/buttons/delete.png) no-repeat 3px 2px;
     border-right: 4px solid #E75C58 !important;
 }
 #MB_window  .extractpic ul.tv_admin_actions {
@@ -1505,14 +1505,14 @@ button {
 
 .grippy{
   padding-left: 10px !important;
-  background: red url(/images/admin/icons/grippy.png) no-repeat 12% 22%;
+  background: red url(/legacy/images/admin/icons/grippy.png) no-repeat 12% 22%;
 }
 
 .grippy:hover{
 }
 
 #noResolution {
-   background: #EEEEFF url(/images/admin/icons/obsolete.png) no-repeat 15px 15px;
+   background: #EEEEFF url(/legacy/images/admin/icons/obsolete.png) no-repeat 15px 15px;
    margin: 100px auto;
    width: 270px;
    height: 50px;

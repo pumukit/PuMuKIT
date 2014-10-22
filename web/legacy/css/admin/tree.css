@@ -37,39 +37,39 @@
 
 
 .videoserv_tree li span, .videoserv_tree li.collapsed > span{
-        background:#fff url(/images/admin/tree/collapsed.gif) no-repeat 5px 50%;
+        background:#fff url(/legacy/images/admin/tree/collapsed.gif) no-repeat 5px 50%;
 	font-weight: normal;
 	padding-left: 23px;
 } 
 .videoserv_tree li.expanded > span{
-        background:#fff url(/images/admin/tree/expanded.gif) no-repeat 5px 50%;
+        background:#fff url(/legacy/images/admin/tree/expanded.gif) no-repeat 5px 50%;
 	font-weight: bold;
 	padding-left: 23px;
 }
 
 .videoserv_tree li.element > span{
-        background:#fff url(/images/admin/tree/element.gif) no-repeat 5px 50%;
+        background:#fff url(/legacy/images/admin/tree/element.gif) no-repeat 5px 50%;
 	font-weight: bold;
         color: blue;
 	padding-left: 23px;
 }
 
 .jstree ul li.first_node > ins.collapsed, .jstree ul li.first_node a > ins.collapsed {
-        background:transparent url(/images/admin/root.png) no-repeat;
+        background:transparent url(/legacy/images/admin/root.png) no-repeat;
 	font-weight: normal;
 	padding-left: 19px;
         cursor: pointer;
 	width: 0px;
 } 
 .jstree ul li.first_node > ins {
-        background:transparent url(/images/admin/root.png) no-repeat;
+        background:transparent url(/legacy/images/admin/root.png) no-repeat;
 	font-weight: bold;
 	padding-left: 19px;
         cursor: pointer;
 	width: 0px;
 }
 .jstree ul li.first_node > ins.expanded {
-	background: transparent url(/images/admin/d.png) no-repeat -18px 2px;
+	background: transparent url(/legacy/images/admin/d.png) no-repeat -18px 2px;
 	position: relative;
 	left: -6px;
 	top: -2px;
@@ -77,7 +77,7 @@
 	width: 0px;
 }
 .jstree ul li.first_node > ins.collapsed, .jstree ul li.first_node a > ins.collapsed {
-	background: transparent url(/images/admin/d.png) no-repeat 0px 2px;
+	background: transparent url(/legacy/images/admin/d.png) no-repeat 0px 2px;
 	position: relative;
 	left: -6px;
 	top: -2px;
@@ -86,20 +86,20 @@
 }
 /* first level
 
-.videoserv_tree li, .videoserv_tree li.collapsed{background:#aaa url(/images/admin/tree/collapsed.gif) no-repeat 5px .4em;} 
-.videoserv_tree li.expanded{background:#aaa url(/images/admin/tree/expanded.gif) no-repeat 5px .4em;}
+.videoserv_tree li, .videoserv_tree li.collapsed{background:#aaa url(/legacy/images/admin/tree/collapsed.gif) no-repeat 5px .4em;} 
+.videoserv_tree li.expanded{background:#aaa url(/legacy/images/admin/tree/expanded.gif) no-repeat 5px .4em;}
 
 second level 
 
 .videoserv_tree li ul, .videoserv_tree li li{background:#f8f8f8;font-weight:normal;}
-.videoserv_tree li li.collapsed{background:#ddd url(/images/admin/tree/collapsed.gif) no-repeat 5px .4em;}  
-.videoserv_tree li li.expanded{background:#ddd url(/images/admin/tree/expanded.gif) no-repeat 5px .4em;}
+.videoserv_tree li li.collapsed{background:#ddd url(/legacy/images/admin/tree/collapsed.gif) no-repeat 5px .4em;}  
+.videoserv_tree li li.expanded{background:#ddd url(/legacy/images/admin/tree/expanded.gif) no-repeat 5px .4em;}
 
  third level 
 
 .videoserv_tree li li ul, .videoserv_tree li li li{background:#fff;}
-.videoserv_tree li li li.collapsed{background:#fff url(/images/admin/tree/collapsed.gif) no-repeat 5px .4em;} 
-.videoserv_tree li li li.expanded{background:#fff url(/images/admin/tree/expanded.gif) no-repeat 5px .4em;}
+.videoserv_tree li li li.collapsed{background:#fff url(/legacy/images/admin/tree/collapsed.gif) no-repeat 5px .4em;} 
+.videoserv_tree li li li.expanded{background:#fff url(/legacy/images/admin/tree/expanded.gif) no-repeat 5px .4em;}
 
  fourth level 
 
@@ -154,18 +154,18 @@ second level
 } 
 
 .category_tree li span.icon, .category_tree li.collapsed > span.icon{
-        background:#fff url(/images/admin/tree/collapsed.gif) no-repeat 5px 50%;
+        background:#fff url(/legacy/images/admin/tree/collapsed.gif) no-repeat 5px 50%;
 	font-weight: normal;
 	padding-left: 23px;
 } 
 .category_tree li.expanded > span.icon{
-        background:#fff url(/images/admin/tree/expanded.gif) no-repeat 5px 50%;
+        background:#fff url(/legacy/images/admin/tree/expanded.gif) no-repeat 5px 50%;
 	font-weight: normal;
 	padding-left: 23px;
 }
 
 .category_tree li.element > span.icon{
-        background:#fff url(/images/admin/tree/element.gif) no-repeat 5px 50%;
+        background:#fff url(/legacy/images/admin/tree/element.gif) no-repeat 5px 50%;
 	font-weight: normal;
 	padding-left: 23px;
 }
@@ -184,7 +184,7 @@ second level
     font-size: 15px;
 }
 .first_node ins{
-    background-image: url(/images/admin/root.png);
+    background-image: url(/legacy/images/admin/root.png);
     background-position: 0 0;
     background-repeat: no-repeat;
     float:left;
@@ -206,8 +206,8 @@ second level
     background: transparent;
 }
 .second_node ins{
-    background-image: url(/images/admin/folder.png);
-    /*background-image: url(/images/admin/icons/ui-icons_454545_256x240.png);
+    background-image: url(/legacy/images/admin/folder.png);
+    /*background-image: url(/legacy/images/admin/icons/ui-icons_454545_256x240.png);
     background-position: -32px -95px;*/
     background-repeat: no-repeat;
     float:left;
@@ -233,20 +233,20 @@ second level
 
 /* first level
 
-.category_tree li, .category_tree li.collapsed{background:#aaa url(/images/admin/tree/collapsed.gif) no-repeat 5px .4em;} 
-.category_tree li.expanded{background:#aaa url(/images/admin/tree/expanded.gif) no-repeat 5px .4em;}
+.category_tree li, .category_tree li.collapsed{background:#aaa url(/legacy/images/admin/tree/collapsed.gif) no-repeat 5px .4em;} 
+.category_tree li.expanded{background:#aaa url(/legacy/images/admin/tree/expanded.gif) no-repeat 5px .4em;}
 
 second level 
 
 .category_tree li ul, .category_tree li li{background:#f8f8f8;font-weight:normal;}
-.category_tree li li.collapsed{background:#ddd url(/images/admin/tree/collapsed.gif) no-repeat 5px .4em;}  
-.category_tree li li.expanded{background:#ddd url(/images/admin/tree/expanded.gif) no-repeat 5px .4em;}
+.category_tree li li.collapsed{background:#ddd url(/legacy/images/admin/tree/collapsed.gif) no-repeat 5px .4em;}  
+.category_tree li li.expanded{background:#ddd url(/legacy/images/admin/tree/expanded.gif) no-repeat 5px .4em;}
 
  third level 
 
 .category_tree li li ul, .category_tree li li li{background:#fff;}
-.category_tree li li li.collapsed{background:#fff url(/images/admin/tree/collapsed.gif) no-repeat 5px .4em;} 
-.category_tree li li li.expanded{background:#fff url(/images/admin/tree/expanded.gif) no-repeat 5px .4em;}
+.category_tree li li li.collapsed{background:#fff url(/legacy/images/admin/tree/collapsed.gif) no-repeat 5px .4em;} 
+.category_tree li li li.expanded{background:#fff url(/legacy/images/admin/tree/expanded.gif) no-repeat 5px .4em;}
 
  fourth level 
 

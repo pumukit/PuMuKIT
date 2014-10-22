@@ -13,7 +13,7 @@ div.navigation{
 div.navigation .rt{ 
     float:right;
     width:80px;
-    background: transparent url('/images/asistente/buttons/bg_button_span_right.gif') no-repeat scroll top right;
+    background: transparent url('/legacy/images/asistente/buttons/bg_button_span_right.gif') no-repeat scroll top right;
     color: #444;
     display: block;
     font: normal 12px arial, sans-serif;
@@ -30,7 +30,7 @@ div.navigation .rt{
 div.navigation .lt{ 
     float: right;
     width:80px;
-    background: transparent url('/images/asistente/buttons/bg_button_span_left.gif') no-repeat scroll top left;
+    background: transparent url('/legacy/images/asistente/buttons/bg_button_span_left.gif') no-repeat scroll top left;
     color: #444;
     display: block;
     font: normal 12px arial, sans-serif;
@@ -80,24 +80,24 @@ div.navigation .rt:active{
 	list-style:none;
 	float:left;
 	background-color:#EBEBEB;
-	background-image: url(/images/asistente/steps/navBtn.gif);
+	background-image: url(/legacy/images/asistente/steps/navBtn.gif);
 	background-repeat: no-repeat;
 	background-position: right top;
 }
 
 #mainNav li.current{
 	background-color:#DE7010;
-	background-image: url(/images/asistente/steps/navCurrentBtn.gif);
+	background-image: url(/legacy/images/asistente/steps/navCurrentBtn.gif);
 }
 
 #mainNav li.lastDone{
 	background-color:#8EB0BC;
-	background-image: url(/images/asistente/steps/navLastDoneBtn.gif);
+	background-image: url(/legacy/images/asistente/steps/navLastDoneBtn.gif);
 }
 
 #mainNav li.done{
 	background-color:#8EB0BC;
-	background-image: url(/images/asistente/steps/navDoneBtn.gif);
+	background-image: url(/legacy/images/asistente/steps/navDoneBtn.gif);
 }
 
 #mainNav li a, #mainNav li a:link, #mainNav li a:visited, #mainNav li a:hover, #mainNav li a:active {
