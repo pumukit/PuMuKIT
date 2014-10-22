@@ -18,6 +18,16 @@
         {% include 'PumukitAdminBundle::menu.html.twig' %}
         {% block body %}{% endblock %}
         {% include 'PumukitAdminBundle::footer.html.twig' %}
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+        <script type="text/javascript" src="/legacy/js/prototype.js"></script>
+        <script type="text/javascript" src="/legacy/js/scriptaculous.js"></script>
+        <script type="text/javascript" src="/legacy/js/effects.js"></script>
+        <script type="text/javascript" src="/legacy/js/modalbox.js"></script>
+        <script type="text/javascript" src="/legacy/js/js.js"></script>
+        <script type="text/javascript" src="/legacy/js/admin/validate.js"></script>
+        <script type="text/javascript" src="/legacy/js/sh/shadowbox-prototype.js"></script>
+        <script type="text/javascript" src="/legacy/js/sh/shadowbox.js"></script>
+        <script type="text/javascript" src="/legacy/js/swfobject.js"></script>
+        {% endblock %}
     </body>
 </html>
