@@ -3,8 +3,8 @@ pumukitadmin_fos_user:
 
 pumukitadmin_user:
     resource: @PumukitAdminBundle/Resources/config/user.yml
-    prefix: /users
+    prefix: /admin/users
 
 pumukitadmin_direct:
     resource: @PumukitAdminBundle/Resources/config/direct.yml
-    prefix: /direct
+    prefix: /admin/direct
