@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<skin version="2.0" name="newtubedark" author="SolidSynDesign">
+
+	<settings>
+		<setting name="backcolor" value="0x000000" />
+		<setting name="frontcolor" value="0xFFFFFF" />
+		<setting name="lightcolor" value="0x989898" />
+		<setting name="screencolor" value="0x000000" />
+	</settings>
+
+	<components>
+		<component name="controlbar">
+			<settings>
+				<setting name="margin" value="0" />
+				<setting name="fontsize" value="11" />
+       			        <setting name='fontcolor' value='0xffffff' />
+			</settings>
+
+			<layout>
+				<group position="left">
+					<divider width="5" />
+					<button name="play" />
+					<divider width="2" />
+					<divider />
+					<divider width="6" />
+       					<button name='mute' />
+					<slider name="volume" />
+					<text name='elapsed' />
+					<divider />
+				</group>
+				<group position="center">
+					<slider name="time" />
+				</group>
+
+				<group position="right">
+					<divider />
+					<text name='duration' />
+					<divider />
+					<button name="prev" />
+					<divider />
+					<button name="next" />
+					<divider />
+					<button name="fullscreen" />
+				</group>
+			</layout>
+
+			<elements>
+				<element name="background" src="background.png" />
+				<element name="capLeft" src="capLeft.png" />
+				<element name="capRight" src="capRight.png" />
+				<element name="shade" src="background.png" />
+				<element name="divider" src="divider.png" />
+								
+				<element name="blankButton" src="blankButton.png" />
+				<element name="blankButtonOver" src="blankButton.png" />
+				
+				<element name="playButton" src="playButton.png" />
+				<element name="playButtonOver" src="playButtonOver.png" />
+				
+				<element name="pauseButton" src="pauseButton.png" />
+				<element name="pauseButtonOver" src="pauseButtonOver.png" />
+
+				<element name="muteButton" src="muteButton.png" />
+				<element name="muteButtonOver" src="muteButtonOver.png" />
+				
+				<element name="unmuteButton" src="unmuteButton.png" />
+				<element name="unmuteButtonOver" src="unmuteButtonOver.png" />
+				
+				<element name="stopButton" src="stopButton.png" />
+				<element name="stopButtonOver" src="stopButtonOver.png" />
+				
+				<element name="prevButton" src="prevButton.png" />
+				<element name="prevButtonOver" src="prevButtonOver.png" />
+				<element name="nextButton" src="nextButton.png" />
+				<element name="nextButtonOver" src="nextButtonOver.png" />
+				
+				<element name="volumeSliderCapLeft" src="volumeSliderCapLeft.png" />
+				<element name="volumeSliderThumb" src="volumeSliderThumb.png" />
+				<element name="volumeSliderRail" src="volumeSliderRail.png" />
+				<element name="volumeSliderBuffer" src="volumeSliderBuffer.png" />
+				<element name="volumeSliderProgress" src="volumeSliderProgress.png" />
+				<element name="volumeSliderCapRight" src="volumeSliderCapRight.png" />
+
+				<element name="timeSliderCapLeft" src="timeSliderCapLeft.png" />
+				<element name="timeSliderRail" src="timeSliderRail.png" />      							
+				<element name="timeSliderBuffer" src="timeSliderBuffer.png" />
+				<element name="timeSliderProgress" src="timeSliderProgress.png" />
+				<element name="timeSliderThumb" src="timeSliderThumb.png" />
+				<element name="timeSliderCapRight" src="timeSliderCapRight.png" />
+				
+				<element name="fullscreenButton" src="fullscreenButton.png" />
+				<element name="fullscreenButtonOver" src="fullscreenButtonOver.png" />
+				
+				<element name="normalscreenButton" src="normalscreenButton.png" />
+				<element name="normalscreenButtonOver" src="normalscreenButtonOver.png" />
+			</elements>
+		</component>
+		
+		<component name="display">
+      			<settings>
+         			<setting name='backgroundcolor' value='0x000000' />
+         			<setting name="bufferinterval" value="100" />
+				<setting name="bufferrotation" value="25" />
+      			</settings>
+			<elements>
+				<element name="background" src="back.png" />
+				<element name="playIcon" src="play.png" />
+				<element name="muteIcon" src="mute.png" />
+				<element name="errorIcon" src="error.png" />
+				<element name="bufferIcon" src="buffer.png" />
+			</elements>
+		</component>
+		
+		<component name="dock">
+		   <settings>
+      			<setting name='fontcolor' value='0x000000' />
+		   </settings>
+			<elements>
+				<element name="button" src="button.png" />
+				<element name="buttonOver" src="buttonOver.png" />
+			</elements>
+		</component>
+		
+		<component name="playlist">
+			<settings>
+				<setting name="fontcolor" value="0x000000" />
+				<setting name="overcolor" value="0xff0000" />
+				<setting name="activecolor" value="0x989898" />
+				<setting name="backgroundcolor" value="0x000000" />
+			</settings>
+			<elements>
+				<element name="item" src="item.png" />
+				<element name="itemOver" src="itemOver.png" />
+				<element name="itemImage" src="itemImage.png" />
+				<element name="sliderRail" src="sliderRail.png" />
+				<element name="sliderThumb" src="sliderThumb.png" />
+				<element name="sliderCapTop" src="sliderCapTop.png" />
+				<element name="sliderCapBottom" src="sliderCapBottom.png" />
+				<element name="background" src="background.png" />
+			</elements>
+		</component>
+		
+		<component name="hd">
+			<elements>
+				<element name="dockIcon" src="dockIcon.png" />
+				<element name="controlbarIcon" src="controlbarIcon.png" />
+			</elements>
+		</component>
+
+		<component name="sharing">
+			<elements>
+				<element name="embedScreen" src="embedScreen.png" />
+				<element name="shareScreen" src="shareScreen.png" />
+			</elements>
+		</component>
+
+	</components>
+
+</skin>
