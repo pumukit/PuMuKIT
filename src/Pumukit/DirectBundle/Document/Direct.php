@@ -102,14 +102,14 @@ class Direct
   /**
    * @var string $name
    * 
-   * @MongoDB\String
+   * @MongoDB\Raw
    */
   private $name = array('en'=>'');
 
   /**
    * @var string $description
    *
-   * @MongoDB\String
+   * @MongoDB\Raw
    */
   private $description = array('en'=>'');
   
@@ -355,7 +355,7 @@ class Direct
    */
   public function setName($name, $locale = null)
   {
-    if ($localle == null) {
+    if ($locale == null) {
       $locale = $this->locale;
     }
     $this->name[$locale] = $name;
