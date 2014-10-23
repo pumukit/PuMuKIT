@@ -2,11 +2,11 @@
 
 {% block body %}
 
-<h3 class="cab_body_div"><img src="/legacy/images/admin/cab/direct_ico.png"/> Canales en directo </h3> 
+<h3 class="cab_body_div"><img src="/legacy/images/admin/cab/direct_ico.png"/> {% trans %}Canales en directo{% endtrans %} </h3> 
 
 <div id="tv_admin_container">
   <div id="tv_admin_bar">
-    {# <?php include_partial('filters') ?> #}
+    {% include 'PumukitAdminBundle:Direct:filters.html.twig' %}
     <div id="preview_direct" style="padding:5px; border: solid 1px #DDD; background: #8eb0bc url(/legacy/images/admin/cab/cab.gif) repeat-x scroll 0% 0%; text-align:center">
       {# <?php include_component('directs', 'preview') ?> #}
     </div>
@@ -27,10 +27,10 @@
     </div>
 
     <select id="options_directs" style="margin: 10px 0px; width: 33%" title="<?php echo __('Acciones sobre elementos seleccionados')?>" onchange="window.change_select('direct', $('options_directs'))">
-      <option value="default" selected="selected"><?php echo __('Selecciona una acci&oacute;n...')?></option>
+      <option value="default" selected="selected">{% trans %}Selecciona una acción...{% endtrans %}</option>
       <option disabled="">---</option>
-      <option value="delete_sel"><?php echo __('Borrar seleccionados')?></option>
-      <option value="create"><?php echo __('Crear nuevo')?></option>
+      <option value="delete_sel">{% trans %}Borrar seleccionados{% endtrans %}</option>
+      <option value="create">{% trans %}Crear nuevo{% endtrans %}</option>
     </select>
     
   </div>
