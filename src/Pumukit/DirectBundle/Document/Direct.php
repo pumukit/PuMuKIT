@@ -102,14 +102,14 @@ class Direct
   /**
    * @var string $name
    * 
-   * @MongoDB\String
+   * @MongoDB\Raw
    */
   private $name = array('en'=>'');
 
   /**
    * @var string $description
    *
-   * @MongoDB\String
+   * @MongoDB\Raw
    */
   private $description = array('en'=>'');
   

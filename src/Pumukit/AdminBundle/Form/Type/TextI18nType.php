@@ -22,12 +22,9 @@ class TextI18nType extends AbstractType
 			      
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
-    $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
-        $data = $event->getData();
-        $form = $event->getForm();
-
-
-      });
+    foreach($this->locales as $locale) {
+      $builder->add($locale, 'text', array());
+    }
   }
 
   public function buildView(FormView $view, FormInterface $form, array $options)

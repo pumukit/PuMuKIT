@@ -3,7 +3,7 @@
 {% block body %}
 
 {% form_theme form 'PumukitAdminBundle:Form:fields.html.twig' %}
-{{ form(form, {'action': path('pumukitadmin_direct_create')}) }}
+{{ form(form, {'action': path('pumukitadmin_direct_create'), 'attr': {'novalidate': 'novalidate'}}) }}
 
 
 {% endblock %}
