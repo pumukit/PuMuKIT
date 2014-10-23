@@ -222,10 +222,12 @@
 {%- endblock repeated_row %}
 
 {% block form_row -%}
-    <div>
+    <div class="form-row">
         {{- form_label(form) -}}
         {{- form_errors(form) -}}
-        {{- form_widget(form) -}}
+        <div class="content">
+            {{- form_widget(form) -}}
+        </div>
     </div>
 {%- endblock form_row %}
 
@@ -254,19 +256,25 @@
     {%- else -%}
         {% set form_method = "POST" %}
     {%- endif -%}
-    <form name="{{ form.vars.name }}" method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
+    <div id="tv_admin_container">
+        <form name="{{ form.vars.name }}" method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
     {%- if form_method != method -%}
-        <input type="hidden" name="_method" value="{{ method }}" />
+            <input type="hidden" name="_method" value="{{ method }}" />
     {%- endif -%}
-        <fieldset>
+            <fieldset>
 {%- endblock form_start %}
 
 {% block form_end -%}
     {% if not render_rest is defined or render_rest %}
         {{- form_rest(form) -}}
     {% endif -%}
-        </fieldset>
-    </form>
+            </fieldset>
+            <ul class="tv_admin_actions">
+                <li><input type="submit" name="OK" value="{% trans %}OK{% endtrans %}" class="tv_admin_action_save" onclick="return true"></li> {#TODO#}
+                <li><input class="tv_admin_action_delete" onclick="Modalbox.hide(); return false;" type="button" value="{% trans %}Cancel{% endtrans %}"> </li>
+            </ul>
+        </form>
+    </div>
 {%- endblock form_end %}
 
 {% block form_enctype -%}

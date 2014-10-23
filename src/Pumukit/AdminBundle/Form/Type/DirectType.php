@@ -23,8 +23,7 @@ class DirectType extends AbstractType
       ->add('ip_source')
       ->add('source_name')
       ->add('index_play', 'checkbox', array('required'=>false))
-      ->add('broadcasting', 'checkbox', array('required'=>false))
-      ->add('save', 'submit');
+      ->add('broadcasting', 'checkbox', array('required'=>false));
   }
   
 
