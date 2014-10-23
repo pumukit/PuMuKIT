@@ -16,8 +16,15 @@ class DirectType extends AbstractType
       ->add('name')
       ->add('description')
       ->add('url')
+      ->add('direct_type_id', 'number')
+      ->add('resolution_width', 'number')
+      ->add('resolution_height', 'number')
+      ->add('qualities')
+      ->add('ip_source')
+      ->add('source_name')
+      ->add('index_play', 'checkbox', array('required'=>false))
+      ->add('broadcasting', 'checkbox', array('required'=>false))
       ->add('save', 'submit');
-    
   }
   
 
