@@ -5,7 +5,7 @@ pumukitadmin_direct_index:
         _controller: pumukitadmin.controller.direct:indexAction
 
 pumukitadmin_direct_create:
-    pattern: /new
+    pattern: /create
     methods: [GET, POST]
     defaults:
         _controller: pumukitadmin.controller.direct:createAction
