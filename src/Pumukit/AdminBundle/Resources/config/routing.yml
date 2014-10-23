@@ -13,3 +13,7 @@ pumukitadmin_user:
 pumukitadmin_direct:
     resource: @PumukitAdminBundle/Resources/config/direct.yml
     prefix: /admin/direct
+
+pumukitadmin_event:
+    resource: @PumukitAdminBundle/Resources/config/event.yml
+    prefix: /admin/event
