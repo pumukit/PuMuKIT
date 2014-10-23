@@ -7,23 +7,18 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 
-class DirectType extends AbstractType
+class EventType extends AbstractType
 {
 
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
       ->add('name')
-      ->add('description')
-      ->add('url')
-      ->add('direct_type_id', 'number')
-      ->add('resolution_width', 'number')
-      ->add('resolution_height', 'number')
-      ->add('qualities')
-      ->add('ip_source')
-      ->add('source_name')
-      ->add('index_play', 'checkbox', array('required'=>false))
-      ->add('broadcasting', 'checkbox', array('required'=>false))
+      ->add('place')
+      ->add('date', 'date')
+      ->add('duration', 'number')
+      ->add('display', 'checkbox', array('required'=>false))
+      ->add('create_serial', 'checkbox', array('required'=>false))
       ->add('save', 'submit');
   }
   
@@ -31,12 +26,12 @@ class DirectType extends AbstractType
   public function setDefaultOptions(OptionsResolverInterface $resolver)
   {
     $resolver->setDefaults(array(
-        'data_class' => 'Pumukit\DirectBundle\Document\Direct'
+        'data_class' => 'Pumukit\DirectBundle\Document\Event'
     ));
   }
 
   public function getName()
   {
-    return 'pumukitadmin_direct';
+    return 'pumukitadmin_event';
   }
 }

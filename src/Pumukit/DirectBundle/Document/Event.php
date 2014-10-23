@@ -59,14 +59,14 @@ class Event
    * 
    * @MongoDB\Boolean
    */
-  private $display = 1;
+  private $display = true;
 
   /**
    * @var boolean $create_serial
    *
    * @MongoDB\Boolean
    */
-  private $create_serial = 1;
+  private $create_serial = true;
 
   /**
    * @var locale $locale

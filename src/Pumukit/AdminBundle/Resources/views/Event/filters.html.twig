@@ -1,0 +1,33 @@
+<!-- Filter -->
+<div class="tv_admin_filters">
+<?php echo form_remote_tag(array('update' => 'list_events', 'url' => 'events/list', 'script' => 'true' ), 'id=filter_events') ?>
+  <fieldset>
+    <h2>{% trans %}Buscar{% endtrans %}</h2>
+
+    <div class="form-row">
+      <label for="name">{% trans %}Name:{% endtrans %}</label>
+      <div class="content">
+        <?php echo input_tag('filters[name]', null) ?>
+      </div>
+    </div>
+
+
+    <div class="form-row">
+      <label for="date">{% trans %}Fecha:{% endtrans %}</label>
+      <div class="content">
+        <?php echo input_date_range_tag('filters[date]',  null, array ('rich' => true, 'calendar_button_img' => '/legacy/images/admin/buttons/date.png', 'before'=>{% trans %}Desde:{% endtrans %}, 'middle'=><br />{% trans %}Hasta: {% endtrans %} )) ?>
+      </div>
+    </div>
+
+  </fieldset>
+
+  <ul class="tv_admin_actions">
+    <li>
+      <?php echo button_to_remote({% trans %}reset{% endtrans %}, array('before' => '$("filter_events").reset();', 'update' => 'list_events', 'url' => 'events/list?filter=filter ', 'script' => 'true'), 'class=tv_admin_action_reset_filter') ?>
+    </li>
+    <li>
+      <?php echo submit_tag({% trans %}filtrar{% endtrans %}, 'name=filter class=tv_admin_action_filter') ?>
+    </li>
+  </ul>
+</form>
+</div>

@@ -83,21 +83,21 @@ class Direct
    * 
    * @MongoDB\Boolean
    */
-  private $index_play = 0;
+  private $index_play = false;
 
   /**
    * @var boolean $broadcasting
    *
    * @MongoDB\Boolean
    */
-  private $broadcasting = 0;
+  private $broadcasting = false;
 
   /**
    * @var boolean $debug
    *
    * @MongoDB\Boolean
    */
-  private $debug = 0;
+  private $debug = false;
 
   /**
    * @var string $name
