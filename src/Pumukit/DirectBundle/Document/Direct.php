@@ -377,6 +377,27 @@ class Direct
     return $this->name[$locale];
   }
 
+
+  /**
+   * Set I18n name
+   *
+   * @param array $name
+   */
+  public function setI18nName(array $name)
+  {
+    $this->name = $name;
+  }
+  
+  /**
+   * Get i18n name
+   *
+   * @return array
+   */
+  public function getI18nName()
+  {
+    return $this->name;
+  }
+
   /**
    * Set description
    *
@@ -404,6 +425,26 @@ class Direct
       return null;
     }
     return $this->description[$locale];
+  }
+
+  /**
+   * Set I18n description
+   *
+   * @param array $description
+   */
+  public function setI18nDescription(array $description)
+  {
+    $this->description = $description;
+  }
+  
+  /**
+   * Get I18n description
+   *
+   * @return string
+   */
+  public function getI18nDescription()
+  {  
+    return $this->description;
   }
 
   /**
