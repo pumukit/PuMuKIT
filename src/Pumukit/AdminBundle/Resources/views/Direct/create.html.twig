@@ -1,4 +1,2 @@
 {% form_theme form 'PumukitAdminBundle:Form:fields.html.twig' %}
-{{ form(form) }}
-
-
+{{ form(form, {'action': path('pumukitadmin_direct_create')}) }}
