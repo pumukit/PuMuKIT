@@ -8,25 +8,25 @@
   <div id="tv_admin_bar">
     {% include 'PumukitAdminBundle:Direct:filters.html.twig' %}
     <div id="preview_direct" style="padding:5px; border: solid 1px #DDD; background: #8eb0bc url(/legacy/images/admin/cab/cab.gif) repeat-x scroll 0% 0%; text-align:center">
-      {# <?php include_component('directs', 'preview') ?> #}
+      {% include 'PumukitAdminBundle:Direct:preview.html.twig' %}
     </div>
   </div>
 
   <div id="tv_admin_content" >
     <div id="list_directs" name="list_directs" act="/directs/list">
-      {# <?php include_component('directs', 'list') ?> }#
+      {% include 'PumukitAdminBundle:Direct:list.html.twig' %}
     </div>
 
     <div style="float:right; width:50%">
       <ul class="tv_admin_actions">
         <!-- Falta -->
         <li>
-         {# <?php echo button_to_function(__('nuevo'), 'Modalbox.show("directs/create", {title:"' . __('Editar Nuevo Directo') . '", width:800}); return false;', array ('class' => 'tv_admin_action_create')) ?> #}
+	 <input class="tv_admin_action_create" onclick="Modalbox.show('{{ path('pumukitadmin_direct_create') }}', {title:'{% trans %}Editar Nuevo Directo{% endtrans %}', width:800}); return false; return false;" type="button" value="{% trans %}nuevo{% endtrans %}">
          </li>
       </ul>
     </div>
 
-    <select id="options_directs" style="margin: 10px 0px; width: 33%" title="<?php echo __('Acciones sobre elementos seleccionados')?>" onchange="window.change_select('direct', $('options_directs'))">
+    <select id="options_directs" style="margin: 10px 0px; width: 33%" title="{% trans %}Acciones sobre elementos seleccionados{% endtrans %}" onchange="window.change_select('direct', $('options_directs'))">
       <option value="default" selected="selected">{% trans %}Selecciona una acción...{% endtrans %}</option>
       <option disabled="">---</option>
       <option value="delete_sel">{% trans %}Borrar seleccionados{% endtrans %}</option>
