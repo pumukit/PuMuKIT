@@ -21,38 +21,39 @@
       </td>
     </tr>
   {% else %}
+    {% set i = 1 %}
     {% for direct in directs %}
-      <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="{# TODO tv_admin_row_<?php echo $odd ?> <?php if($direct->getId() == $sf_user->getAttribute('id', null, 'tv_admin/direct')) echo ' tv_admin_row_this'?> #}" >
+      {% set cod = i % 2 %}
+      {% set i = i + 1 %}
+      <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ cod }} {# TODO <?php if($direct->getId() == $sf_user->getAttribute('id', null, 'tv_admin/direct')) echo ' tv_admin_row_this'?> #}" >
         <td>
           <input id="{{ direct.id }}" class="direct_checkbox" type="checkbox">
         </td>
         <td onclick="click_fila('direct', this, {{ direct.id }});">
-    	<a title="{% trans %}Editar canal en directo {% endtrans %}{{ direct.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="/editar.php/directs/edit/id/1"><img alt="{% trans %}editar{% endtrans %}" title="{% trans %}editar{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a>    
+    	<a title="{% trans %}Editar canal en directo {% endtrans %}{{ direct.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_direct_update', {'id': direct.id}) }}"><img alt="{% trans %}editar{% endtrans %}" title="{% trans %}editar{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a>    
         </td>
         <td>
-	  <a href="#" onclick="if (window.confirm('{% trans %}¿Seguro que desea eliminar este canal?{% endtrans %}')) { new Ajax.Updater('list_directs', '/editar.php/directs/delete/id/1', {asynchronous:true, evalScripts:true}); }; return false;"><img alt="{% trans %}borrar{% endtrans %}" title="{% trans %}borrar{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif"></a>
+	  <a href="#" onclick="if (window.confirm('{% trans %}¿Seguro que desea eliminar este canal?{% endtrans %}')) { new Ajax.Updater('list_directs', '{{ path('pumukitadmin_direct_delete', {'id': direct.id}) }}', {asynchronous:true, evalScripts:true}); }; return false;"><img alt="{% trans %}borrar{% endtrans %}" title="{% trans %}borrar{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif"></a>
         </td>
         <td>
-          <?php echo link_to_remote(image_tag('admin/mbuttons/copy_inline.gif', 'alt=' . __('copiar') . ' title=' . __('copiar')), array('update' => 'list_directs', 'url' => 'directs/copy?id='.$direct->getId(), 'script' => 'true'))?>
-	  <a href="#" onclick="new Ajax.Updater('list_directs', '/editar.php/directs/copy/id/1', {asynchronous:true, evalScripts:true}); return false;"><img alt="{% trans %}copiar{% endtrans %}" title="{% trans %}copiar{% endtrans %}" src="/legacy/images/admin/mbuttons/copy_inline.gif"></a>
+	  <a href="#" onclick="new Ajax.Updater('list_directs', '{{ path('pumukitadmin_direct_copy', {'id': direct.id }) }}', {asynchronous:true, evalScripts:true}); return false;"><img alt="{% trans %}copiar{% endtrans %}" title="{% trans %}copiar{% endtrans %}" src="/legacy/images/admin/mbuttons/copy_inline.gif"></a>
         </td>
         <td onclick="click_fila('direct', this, {{ direct.id }});">
           {{ direct.id }}
         </td>
         <td onclick="click_fila('direct', this, {{ direct.id }});">
-          <?php $value = $direct->getName(); echo $value ? $value : '&nbsp;'  ?>
+	  {{ direct.name }}
         </td>
         <td onclick="click_fila('direct', this, {{ direct.id }});">
-          <?php $value = $direct->getUrl(); echo $value ? $value : '&nbsp;'  ?>
+	  {{ direct.url }}
         </td>
         <td onclick="click_fila('direct', this, {{ direct.id }});">
-          <?php $value = $direct->getResolution(); echo $value ? $value : '&nbsp;'  ?>
+	  {{ direct.getResolutionWidth }}x{{ direct.getResolutionHeight }}
         </td>
         <td onclick="click_fila('direct', this, {{ direct.id }});">
-          <?php $value = $direct->getDirectType(); echo $value ? $value : '&nbsp;'  ?>
+	  {{ direct.getDirectTypeId }}
         </td>
       </tr>
-    {# <?php endforeach; ?> #}
     {% endfor %}
   {% endif %}
 
