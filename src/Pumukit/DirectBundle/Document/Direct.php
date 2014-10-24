@@ -12,8 +12,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Direct
 {
-  const DIRECT_TYPE_FMS = 0;
-  const DIRECT_TYPE_WMS = 1;
+  const DIRECT_TYPE_FMS = 'FMS';
+  const DIRECT_TYPE_WMS = 'WMS';
 
   /** 
    * @var int $id
@@ -37,11 +37,11 @@ class Direct
   private $passwd;
   
   /**
-   * @var int $direct_type_id
+   * @var int $direct_type
    *
-   * @MongoDB\Int
+   * @MongoDB\String
    */
-  private $direct_type_id = self::DIRECT_TYPE_FMS;
+  private $direct_type = self::DIRECT_TYPE_FMS;
   
   /**
    * @var int $resolution_width
@@ -169,23 +169,23 @@ class Direct
   }
 
   /**
-   * Set direct_type_id
+   * Set direct_type
    *
-   * @param int $direct_type_id
+   * @param string $direct_type
    */
-  public function setDirectTypeId($direct_type_id)
+  public function setDirectType($direct_type)
   {
-    $this->direct_type_id = $direct_type_id;
+    $this->direct_type = $direct_type;
   }
   
   /**
-   * Get direct_type_id
+   * Get direct_type
    *
-   * @return int
+   * @return string
    */
-  public function getDirectTypeId()
+  public function getDirectType()
   {
-    return $this->direct_type_id;
+    return $this->direct_type;
   }
 
   /**

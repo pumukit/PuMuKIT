@@ -9,7 +9,7 @@ class DirectTest extends \PHPUnit_Framework_TestCase
   {
     $url = 'http://www.pumukit2.com/directo1';
     $passwd = 'password';
-    $direct_type_id = Direct::DIRECT_TYPE_FMS;
+    $direct_type = Direct::DIRECT_TYPE_FMS;
     $resolution_width = 640;
     $resolution_height = 480;
     $qualities = 'high';
@@ -26,7 +26,7 @@ class DirectTest extends \PHPUnit_Framework_TestCase
     
     $directo->setUrl($url);
     $directo->setPasswd($passwd);
-    $directo->setDirectTypeId($direct_type_id);
+    $directo->setDirectType($direct_type);
     $directo->setResolutionWidth($resolution_width);
     $directo->setResolutionHeight($resolution_height);
     $directo->setQualities($qualities);
@@ -41,7 +41,7 @@ class DirectTest extends \PHPUnit_Framework_TestCase
 
     $this->assertEquals($url, $directo->getUrl());
     $this->assertEquals($passwd, $directo->getPasswd());
-    $this->assertEquals($direct_type_id, $directo->getDirectTypeId());
+    $this->assertEquals($direct_type, $directo->getDirectType());
     $this->assertEquals($resolution_width, $directo->getResolutionWidth());
     $this->assertEquals($resolution_height, $directo->getResolutionHeight());
     $this->assertEquals($qualities, $directo->getQualities());

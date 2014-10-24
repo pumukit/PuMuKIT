@@ -23,7 +23,7 @@ class DirectType extends AbstractType
       ->add('broadcasting', 'choice', 
 	    array('choices'   => array('0'   => 'Espera', '1' => 'Emitiendo en Directo'),
 		  'label' => 'Estado'))
-      ->add('direct_type_id', 'choice', 
+      ->add('direct_type', 'choice', 
 	    array('choices'   => array(Direct::DIRECT_TYPE_FMS => 'FMS', Direct::DIRECT_TYPE_WMS => 'WMS'),
 		  'label' => 'Tecnología'))
       ->add('resolution_width', 'number', array('required'=>false))
