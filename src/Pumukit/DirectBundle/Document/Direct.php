@@ -41,7 +41,7 @@ class Direct
    *
    * @MongoDB\Int
    */
-  private $direct_type_id;
+  private $direct_type_id = self::DIRECT_TYPE_FMS;
   
   /**
    * @var int $resolution_width
