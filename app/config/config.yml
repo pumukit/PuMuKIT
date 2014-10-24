@@ -67,3 +67,10 @@ fos_user:
     db_driver: mongodb
     firewall_name: main
     user_class: Pumukit\SchemaBundle\Document\User
+
+# Pumukit2 parameters
+parameters:
+    pumukit2.locales:
+        - es
+        - en
+        - eu

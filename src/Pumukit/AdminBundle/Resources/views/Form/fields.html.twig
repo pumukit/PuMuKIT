@@ -351,3 +351,38 @@
         {%- endif -%}
     {%- endfor -%}
 {%- endblock button_attributes %}
+
+{# Pumukit2 Widgets #}
+
+{% block texti18n_widget -%}
+    {%- for locale in form.vars.locales %}
+        <input type="text" {{ block('widgeti18n_attributes') }} value="{{ value[locale]|default("") }}"/> 
+        <span class="lang">{{ locale }}</span>
+        <br><br>
+    {%- endfor -%}
+{%- endblock texti18n_widget %}
+
+{% block textareai18n_widget -%}
+    {%- for locale in form.vars.locales %}
+        <textarea {{ block('widgeti18n_attributes') }}>{{ value[locale]|default("") }}</textarea>
+        <span class="lang">{{ locale }}</span>
+        <br><br>
+    {%- endfor -%}
+{%- endblock textareai18n_widget %}
+
+{% block widgeti18n_attributes -%}
+    id="{{ id }}_{{ locale }}" name="{{ full_name }}[{{ locale }}]"
+    {%- if read_only %} readonly="readonly"{% endif -%}
+    {%- if disabled %} disabled="disabled"{% endif -%}
+    {%- if required %} required="required"{% endif -%}
+    {%- for attrname, attrvalue in attr -%}
+        {{- " " -}}
+        {%- if attrname in ['placeholder', 'title'] -%}
+            {{- attrname }}="{{ attrvalue|trans({}, translation_domain) }}"
+        {%- elseif attrvalue is sameas(true) -%}
+            {{- attrname }}="{{ attrname }}"
+        {%- elseif attrvalue is not sameas(false) -%}
+            {{- attrname }}="{{ attrvalue }}"
+        {%- endif -%}
+    {%- endfor -%}
+{%- endblock widgeti18n_attributes %}
