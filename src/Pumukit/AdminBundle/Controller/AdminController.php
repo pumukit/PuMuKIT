@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sylius\Bundle\ResourceBundle\Event\ResourceEvent;
 
-class Controller extends ResourceController
+class AdminController extends ResourceController
 {
 
 
