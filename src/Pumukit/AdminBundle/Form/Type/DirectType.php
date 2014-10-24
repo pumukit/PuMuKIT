@@ -19,14 +19,15 @@ class DirectType extends AbstractType
 	    array('required'=>false, 'attr' => array('style' => 'width: 420px'), 'label' => 'Description'))
       ->add('url', 'url',
 	    array('attr' => array('style' => 'width: 420px'), 'label' => 'Url'))
+      ->add('broadcasting', 'choice', 
+	    array('choices'   => array('0'   => 'Espera', '1' => 'Emitiendo en Directo')))
       ->add('direct_type_id', 'number', array('required'=>false))
       ->add('resolution_width', 'number', array('required'=>false))
       ->add('resolution_height', 'number', array('required'=>false))
       ->add('qualities', 'text', array('required'=>false))
       ->add('ip_source', 'text', array('required'=>false))
       ->add('source_name')
-      ->add('index_play', 'checkbox', array('required'=>false))
-      ->add('broadcasting', 'checkbox', array('required'=>false));
+      ->add('index_play', 'checkbox', array('required'=>false));
   }
   
 
