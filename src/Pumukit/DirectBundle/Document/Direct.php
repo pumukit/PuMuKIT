@@ -4,6 +4,8 @@ namespace Pumukit\DirectBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Pumukit\DirectBundle\Document\Direct
@@ -26,6 +28,8 @@ class Direct
    * @var string $url
    * 
    * @MongoDB\String
+   * @Assert\NotBlank()
+   * @Assert\Url(protocols= {"rtmp", "http", "mms", "rtp", "https"})
    */
   private $url;
 
@@ -68,6 +72,7 @@ class Direct
    * @var string $ip_source
    *
    * @MongoDB\String
+   * @Assert\Ip
    */
   private $ip_source;
 
@@ -75,6 +80,7 @@ class Direct
    * @var string $source_name
    *
    * @MongoDB\String
+   * @Assert\NotBlank()
    */
   private $source_name;
    
@@ -103,6 +109,7 @@ class Direct
    * @var string $name
    * 
    * @MongoDB\Raw
+   * @Assert\NotBlank()
    */
   private $name = array('en'=>'');
 
@@ -186,6 +193,15 @@ class Direct
   public function getDirectType()
   {
     return $this->direct_type;
+  }
+
+  /**
+   * @Assert\True(message = "Direct type not valid")
+   */
+  public function isValidDirectType()
+  {
+    //var_dump(in_array($this->direct_type, array(self::DIRECT_TYPE_WMS, self::DIRECT_TYPE_FMS))); exit;
+    return in_array($this->direct_type, array(self::DIRECT_TYPE_WMS, self::DIRECT_TYPE_FMS));
   }
 
   /**
@@ -466,5 +482,7 @@ class Direct
   {
     return $this->locale;
   }
+
+  
 
 }
