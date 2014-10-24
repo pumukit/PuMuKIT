@@ -33,7 +33,7 @@
     	<a title="{% trans %}Editar canal en directo {% endtrans %}{{ direct.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_direct_update', {'id': direct.id}) }}"><img alt="{% trans %}editar{% endtrans %}" title="{% trans %}editar{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a>    
         </td>
         <td>
-	  <a href="#" onclick="if (window.confirm('{% trans %}¿Seguro que desea eliminar este canal?{% endtrans %}')) { new Ajax.Updater('list_directs', '{{ path('pumukitadmin_direct_delete', {'id': direct.id}) }}', {asynchronous:true, evalScripts:true}); }; return false;"><img alt="{% trans %}borrar{% endtrans %}" title="{% trans %}borrar{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif"></a>
+	  <a href="#" onclick="if (window.confirm('{% trans %}¿Seguro que desea eliminar este canal?{% endtrans %}')) { new Ajax.Updater('list_directs', '{{ path('pumukitadmin_direct_delete', {'id': direct.id, '_method': 'DELETE'}) }}', {asynchronous:true, evalScripts:true, parameters:{confirmed:true}});}; return false;"><img alt="{% trans %}borrar{% endtrans %}" title="{% trans %}borrar{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif"></a>
         </td>
         <td>
 	  <a href="#" onclick="new Ajax.Updater('list_directs', '{{ path('pumukitadmin_direct_copy', {'id': direct.id }) }}', {asynchronous:true, evalScripts:true}); return false;"><img alt="{% trans %}copiar{% endtrans %}" title="{% trans %}copiar{% endtrans %}" src="/legacy/images/admin/mbuttons/copy_inline.gif"></a>
