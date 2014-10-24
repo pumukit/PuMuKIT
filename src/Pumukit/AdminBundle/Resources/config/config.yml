@@ -11,6 +11,7 @@ sylius_resource:
             templates: PumukitAdminBundle:Direct
             classes:
                 model: Pumukit\DirectBundle\Document\Direct
+                controller: Pumukit\AdminBundle\Controller\Controller
         pumukitadmin.event:
             driver: doctrine/mongodb-odm
             templates: PumukitAdminBundle:Event
