@@ -200,7 +200,6 @@ class Direct
    */
   public function isValidDirectType()
   {
-    //var_dump(in_array($this->direct_type, array(self::DIRECT_TYPE_WMS, self::DIRECT_TYPE_FMS))); exit;
     return in_array($this->direct_type, array(self::DIRECT_TYPE_WMS, self::DIRECT_TYPE_FMS));
   }
 
