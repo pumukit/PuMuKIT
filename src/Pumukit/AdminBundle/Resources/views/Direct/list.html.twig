@@ -21,11 +21,8 @@
       </td>
     </tr>
   {% else %}
-    {% set i = 1 %}
     {% for direct in directs %}
-      {% set cod = i % 2 %}
-      {% set i = i + 1 %}
-      <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ cod }} {# TODO <?php if($direct->getId() == $sf_user->getAttribute('id', null, 'tv_admin/direct')) echo ' tv_admin_row_this'?> #}" >
+      <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ loop.index % 2 }} {# TODO <?php if($direct->getId() == $sf_user->getAttribute('id', null, 'tv_admin/direct')) echo ' tv_admin_row_this'?> #}" >
         <td>
           <input id="{{ direct.id }}" class="direct_checkbox" type="checkbox">
         </td>
@@ -33,7 +30,14 @@
     	<a title="{% trans %}Editar canal en directo {% endtrans %}{{ direct.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_direct_update', {'id': direct.id}) }}"><img alt="{% trans %}editar{% endtrans %}" title="{% trans %}editar{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a>    
         </td>
         <td>
-	  <a href="#" onclick="if (window.confirm('{% trans %}¿Seguro que desea eliminar este canal?{% endtrans %}')) { new Ajax.Updater('list_directs', '{{ path('pumukitadmin_direct_delete', {'id': direct.id, '_method': 'DELETE'}) }}', {asynchronous:true, evalScripts:true, parameters:{confirmed:true}});}; return false;"><img alt="{% trans %}borrar{% endtrans %}" title="{% trans %}borrar{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif"></a>
+          <form action="{{ path('pumukitadmin_direct_delete', {'id': direct.id}) }}" method="post" class="delete-action-form" novalidate="">
+              <input type="hidden" name="_method" value="DELETE">
+              <input type="hidden" name="confirmed" value="true">
+              <button type="submit" class="tv_admin_row_delete">
+                  <img alt="{% trans %}borrar{% endtrans %}" title="{% trans %}borrar{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
+              </button>
+          </form>
+          </a>
         </td>
         <td>
 	  <a href="#" onclick="new Ajax.Updater('list_directs', '{{ path('pumukitadmin_direct_copy', {'id': direct.id }) }}', {asynchronous:true, evalScripts:true}); return false;"><img alt="{% trans %}copiar{% endtrans %}" title="{% trans %}copiar{% endtrans %}" src="/legacy/images/admin/mbuttons/copy_inline.gif"></a>

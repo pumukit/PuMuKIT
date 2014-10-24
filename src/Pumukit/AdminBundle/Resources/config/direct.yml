@@ -10,7 +10,7 @@ pumukitadmin_direct_create:
     defaults:
         _controller: pumukitadmin.controller.direct:createAction
         _sylius:
-            redirect: pumukitadmin_direct_show
+            redirect: pumukitadmin_direct_index
 
 pumukitadmin_direct_update:
     pattern: /{id}/edit
