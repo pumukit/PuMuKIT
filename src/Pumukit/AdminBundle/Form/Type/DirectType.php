@@ -5,6 +5,7 @@ namespace Pumukit\AdminBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Pumukit\DirectBundle\Document\Direct;
 
 
 class DirectType extends AbstractType
@@ -20,13 +21,18 @@ class DirectType extends AbstractType
       ->add('url', 'url',
 	    array('attr' => array('style' => 'width: 420px'), 'label' => 'Url'))
       ->add('broadcasting', 'choice', 
-	    array('choices'   => array('0'   => 'Espera', '1' => 'Emitiendo en Directo')))
-      ->add('direct_type_id', 'number', array('required'=>false))
+	    array('choices'   => array('0'   => 'Espera', '1' => 'Emitiendo en Directo'),
+		  'label' => 'Estado'))
+      ->add('direct_type_id', 'choice', 
+	    array('choices'   => array(Direct::DIRECT_TYPE_FMS => 'FMS', Direct::DIRECT_TYPE_WMS => 'WMS'),
+		  'label' => 'Tecnología'))
       ->add('resolution_width', 'number', array('required'=>false))
       ->add('resolution_height', 'number', array('required'=>false))
       ->add('qualities', 'text', array('required'=>false))
-      ->add('ip_source', 'text', array('required'=>false))
-      ->add('source_name')
+      ->add('ip_source', 'text', 
+	    array('required'=>false))
+      ->add('source_name', 'text',
+	    array('label' => 'STREAM'))
       ->add('index_play', 'checkbox', array('required'=>false));
   }
   
