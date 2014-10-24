@@ -13,9 +13,12 @@ class DirectType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
-      ->add('i18n_name', 'texti18n')
-      ->add('i18n_description', 'textareai18n')
-      ->add('url')
+      ->add('i18n_name', 'texti18n', 
+	    array('attr' => array('style' => 'width: 420px'), 'label' => 'Nombre'))
+      ->add('i18n_description', 'textareai18n', 
+	    array('required'=>false, 'attr' => array('style' => 'width: 420px'), 'label' => 'Description'))
+      ->add('url', 'url',
+	    array('attr' => array('style' => 'width: 420px'), 'label' => 'Url'))
       ->add('direct_type_id', 'number', array('required'=>false))
       ->add('resolution_width', 'number', array('required'=>false))
       ->add('resolution_height', 'number', array('required'=>false))
