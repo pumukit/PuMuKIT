@@ -29,7 +29,7 @@ pumukitadmin_direct_delete:
             redirect: pumukitadmin_direct_index
 
 pumukitadmin_direct_copy:
-    pattern: /{id}
+    pattern: /{id}/copy
     methods: [GET, PUT, POST]
     defaults:
         _controller: pumukitadmin.controller.direct:copyAction
