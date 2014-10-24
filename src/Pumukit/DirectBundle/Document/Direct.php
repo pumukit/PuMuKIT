@@ -355,7 +355,7 @@ class Direct
    */
   public function setName($name, $locale = null)
   {
-    if ($localle == null) {
+    if ($locale == null) {
       $locale = $this->locale;
     }
     $this->name[$locale] = $name;
