@@ -18,7 +18,7 @@ pumukitadmin_direct_update:
     defaults:
         _controller: pumukitadmin.controller.direct:updateAction
         _sylius:
-            redirect: pumukitadmin_direct_show
+            redirect: pumukitadmin_direct_index
 
 pumukitadmin_direct_delete:
     pattern: /{id}
