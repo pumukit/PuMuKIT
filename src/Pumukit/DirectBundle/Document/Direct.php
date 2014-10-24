@@ -64,7 +64,7 @@ class Direct
   /**
    * @var string $qualities
    *
-   * @MongoDB\String
+   * @MongoDB\Raw
    */
   private $qualities;
 

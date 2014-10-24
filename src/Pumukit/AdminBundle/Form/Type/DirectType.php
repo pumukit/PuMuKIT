@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Pumukit\DirectBundle\Document\Direct;
+use Pumukit\AdminBundle\Form\Type\Other\DirectqualitiesType;
 
 
 class DirectType extends AbstractType
@@ -28,7 +29,8 @@ class DirectType extends AbstractType
 		  'label' => 'Tecnología'))
       ->add('resolution_width', 'number', array('required'=>false))
       ->add('resolution_height', 'number', array('required'=>false))
-      ->add('qualities', 'text', array('required'=>false))
+      ->add('qualities', new DirectqualitiesType(), 
+	    array('label' => 'Calidades', 'required'=>false))
       ->add('ip_source', 'text', 
 	    array('required'=>false))
       ->add('source_name', 'text',
