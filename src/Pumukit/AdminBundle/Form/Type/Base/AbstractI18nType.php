@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\AdminBundle\Form\Type;
+namespace Pumukit\AdminBundle\Form\Type\Base;
 
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\AbstractType;
@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 
-class TextareaI18nType extends AbstractType
+abstract class AbstractI18nType extends AbstractType
 {
   private $locales;
 
@@ -22,18 +22,17 @@ class TextareaI18nType extends AbstractType
 			      
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
-    foreach($this->locales as $locale) {
-      $builder->add($locale, 'textarea', array());
-    }
+  }
+
+  public function setDefaultOptions(OptionsResolverInterface $resolver)
+  {
+    $resolver->setDefaults(array(
+        'compound' => false,
+    ));
   }
 
   public function buildView(FormView $view, FormInterface $form, array $options)
   {
     $view->vars['locales'] = $this->locales;
-  }
-  
-  public function getName()
-  {
-    return 'textareai18n';
   }
 }
