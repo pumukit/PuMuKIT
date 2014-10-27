@@ -4,7 +4,11 @@
     <img style="width:280px; padding-left:5%" src="/legacy/images/admin/cab/pumukitDer.png" />
   </div>
   <div id="ah_status" style="">
-    {# TODO user#}
+    <b>{{ app.user.username }}</b>
+    {# TODO user.type #}
+    {{ "now"|date("m/d/Y") }} |
+    <a href="{{ path('fos_user_security_logout') }}">logout</a>
+    
 
   </div>  
   <div style="position:absolute; right: 10px; top : 25px; color: #fff; font-weight: bold">
