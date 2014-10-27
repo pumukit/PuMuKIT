@@ -12,14 +12,6 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="/legacy/css/admin/accordion.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="/legacy/css/admin/tree.css" />
         {% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% include 'PumukitAdminBundle::menu.html.twig' %}
-        <div id="body_div">
-          {% block body %}{% endblock %}
-        </div>
-        {% include 'PumukitAdminBundle::footer.html.twig' %}
         {% block javascripts %}
         <script type="text/javascript" src="/legacy/js/prototype.js"></script>
         <script type="text/javascript" src="/legacy/js/scriptaculous.js"></script>
@@ -31,5 +23,13 @@
         <script type="text/javascript" src="/legacy/js/sh/shadowbox.js"></script>
         <script type="text/javascript" src="/legacy/js/swfobject.js"></script>
         {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        {% include 'PumukitAdminBundle::menu.html.twig' %}
+        <div id="body_div">
+          {% block body %}{% endblock %}
+        </div>
+        {% include 'PumukitAdminBundle::footer.html.twig' %}
     </body>
 </html>

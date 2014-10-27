@@ -66,9 +66,9 @@
     <tr>
       <th colspan="9">
         <div class="float-right">
-          {# TODO <?php include_partial('global/pager_ajax', array('name' => 'direct', 'page' => $page, 'total' => $total)) ?>  #}
+          {{ include('PumukitAdminBundle:Macros:pager_ajax.html.twig', {'name': 'direct', 'page': directs.getCurrentPage, 'total':directs.getNbPages}) }}
         </div>
-        {{ directs|length }}/{{ directs.getNbResults }} {% trans %}Canales{% endtrans %}
+        {{ (directs.getNbResults > directs.getMaxPerPage ) ? directs.getMaxPerPage : directs.getNbResults }}/{{ directs.getNbResults }} {% trans %}Canales{% endtrans %}
         {#
         <?php $aux = ($total_direct == $total_direct_all?'display:none; ':'')?>
         <?php echo link_to_remote(__('Cancelar búsqueda'), array('before' => '$("filter_directs").reset();', 'update' => 'list_directs', 'url' => 'directs/list?filter=filter ', 'script' => 'true'), array('title' => __('Cancelar la búsqueda actual'), 'style' => 'color:blue; font-weight:normal;'.$aux)) ?>
