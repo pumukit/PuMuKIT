@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Pumukit\DirectBundle\Document\Direct;
 use Pumukit\AdminBundle\Form\Type\Other\DirectqualitiesType;
-
+use Pumukit\AdminBundle\Form\Type\Other\DirectresolutionType;
 
 class DirectType extends AbstractType
 {
@@ -27,8 +27,8 @@ class DirectType extends AbstractType
       ->add('direct_type', 'choice', 
 	    array('choices'   => array(Direct::DIRECT_TYPE_FMS => 'FMS', Direct::DIRECT_TYPE_WMS => 'WMS'),
 		  'label' => 'Tecnología'))
-      ->add('resolution_width', 'number', array('required'=>false))
-      ->add('resolution_height', 'number', array('required'=>false))
+      ->add('resolution', new DirectresolutionType(), 
+	    array('label' => 'Resolución', 'required'=>false))
       ->add('qualities', new DirectqualitiesType(), 
 	    array('label' => 'Calidades', 'required'=>false))
       ->add('ip_source', 'text', 

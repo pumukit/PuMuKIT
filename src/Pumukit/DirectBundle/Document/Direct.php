@@ -52,14 +52,14 @@ class Direct
    *
    * @MongoDB\Int
    */
-  private $resolution_width = 0;
+  private $resolution_width = 720;
 
   /**
    * @var int $resolution_height
    *
    * @MongoDB\Int
    */
-  private $resolution_height = 0;
+  private $resolution_height = 576;
 
   /**
    * @var string $qualities
@@ -482,6 +482,42 @@ class Direct
     return $this->locale;
   }
 
-  
+  /**
+   * Clone Direct
+   *
+   * @return Direct
+   */
+  public function cloneDirect()
+  {
+    $aux = clone $this;
+    $aux->id = null;
 
+    return $aux;
+  }
+
+  /**
+   * Get Resolution
+   *
+   * @return array
+   */
+  public function getResolution()
+  {
+    return array('resolution_width' => $this->resolution_width, 
+		 'resolution_height' => $this->resolution_height);
+  }
+
+  /**
+   * Set Resolution
+   *
+   * @param array
+   */
+  public function setResolution($resolution)
+  {
+    if ((!empty($resolution['resolution_width'])) && (!empty($resolution['resolution_height']))){
+      $this->resolution_width = $resolution['resolution_width'];
+      $this->resolution_height = $resolution['resolution_height'];
+    }
+  }
+
+  
 }
