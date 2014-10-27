@@ -30,7 +30,7 @@
     	<a title="{% trans %}Editar canal en directo {% endtrans %}{{ direct.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_direct_update', {'id': direct.id}) }}"><img alt="{% trans %}editar{% endtrans %}" title="{% trans %}editar{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a>    
         </td>
         <td>
-          <form action="{{ path('pumukitadmin_direct_delete', {'id': direct.id}) }}" method="post" class="delete-action-form" novalidate="">
+          <form action="{{ path('pumukitadmin_direct_delete', {'id': direct.id}) }}" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}¿Seguro que desea eliminar este canal?{% endtrans %}')">
               <input type="hidden" name="_method" value="DELETE">
               <input type="hidden" name="confirmed" value="true">
               <button type="submit" class="tv_admin_row_delete">
