@@ -15,44 +15,26 @@ use Sylius\Bundle\ResourceBundle\Event\ResourceEvent;
 class AdminController extends ResourceController
 {
 
-
-    public function deleteAction(Request $request)
-    {
+  public function copyAction(Request $request)
+  {
         $resource = $this->findOr404();
-        if ($request->request->get('confirmed', false)) {
-            $event = $this->delete($resource);
+	
+	$new_resource = $resource->cloneDirect();
+	
+	$this->create($new_resource);
+	
 
-            if ($request->isXmlHttpRequest()) {
-                return JsonResponse::create(array('id' => $request->get('id')));
-            }
+	$this->setFlash('success', 'copy');
+	
+	$config = $this->getConfiguration();
+	
+	return $this->redirectToRoute(
+	   $config->getRedirectRoute('index'),
+	   $config->getRedirectParameters()
+	);
+	
 
-            if ($event->isStopped()) {
-                $this->setFlash($event->getMessageType(), $event->getMessage(), $event->getMessageParams());
 
-                return $this->redirectTo($resource);
-            }
-
-            $this->setFlash('success', 'delete');
-
-            $config = $this->getConfiguration();
-
-            return $this->redirectToRoute(
-                $config->getRedirectRoute('index'),
-                $config->getRedirectParameters()
-            );
-        }
-
-        if ($request->isXmlHttpRequest()) {
-            throw new AccessDeniedHttpException;
-        }
-
-        $view = $this
-            ->view()
-            ->setTemplate($request->attributes->get('template', 'SyliusWebBundle:Backend/Misc:delete.html.twig'))
-        ;
-
-        return $this->handleView($view);
-    }
-
+  }
 
 }
