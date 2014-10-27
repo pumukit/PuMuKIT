@@ -48,18 +48,18 @@ class Direct
   private $direct_type = self::DIRECT_TYPE_FMS;
   
   /**
-   * @var int $resolution_width
+   * @var int $width
    *
    * @MongoDB\Int
    */
-  private $resolution_width = 720;
+  private $width = 720;
 
   /**
-   * @var int $resolution_height
+   * @var int $height
    *
    * @MongoDB\Int
    */
-  private $resolution_height = 576;
+  private $height = 576;
 
   /**
    * @var string $qualities
@@ -204,43 +204,43 @@ class Direct
   }
 
   /**
-   * Set resolution_width
+   * Set width
    *
-   * @param int $resolution_width
+   * @param int $width
    */
-  public function setResolutionWidth($resolution_width)
+  public function setResolutionWidth($width)
   {
-    $this->resolution_width = $resolution_width;
+    $this->width = $width;
   }
   
   /**
-   * Get resolution_width
+   * Get width
    *
    * @return int
    */
   public function getResolutionWidth()
   {
-    return $this->resolution_width;
+    return $this->width;
   }
 
   /**
-   * Set resolution_height
+   * Set height
    *
-   * @param int $resolution_height
+   * @param int $height
    */
-  public function setResolutionHeight($resolution_height)
+  public function setResolutionHeight($height)
   {
-    $this->resolution_height = $resolution_height;
+    $this->height = $height;
   }
   
   /**
-   * Get resolution_height
+   * Get height
    *
    * @return int
    */
   public function getResolutionHeight()
   {
-    return $this->resolution_height;
+    return $this->height;
   } 
 
   /**
@@ -502,8 +502,8 @@ class Direct
    */
   public function getResolution()
   {
-    return array('resolution_width' => $this->resolution_width, 
-		 'resolution_height' => $this->resolution_height);
+    return array('width' => $this->width, 
+		 'height' => $this->height);
   }
 
   /**
@@ -513,9 +513,9 @@ class Direct
    */
   public function setResolution($resolution)
   {
-    if ((!empty($resolution['resolution_width'])) && (!empty($resolution['resolution_height']))){
-      $this->resolution_width = $resolution['resolution_width'];
-      $this->resolution_height = $resolution['resolution_height'];
+    if ((!empty($resolution['width'])) && (!empty($resolution['height']))){
+      $this->width = $resolution['width'];
+      $this->height = $resolution['height'];
     }
   }
 

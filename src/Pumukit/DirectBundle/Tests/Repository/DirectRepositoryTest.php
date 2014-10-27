@@ -29,8 +29,8 @@ class DirectRepositoryTest extends WebTestCase
     $url = 'http://www.pumukit2.com/directo1';
     $passwd = 'password';
     $direct_type_id = Direct::DIRECT_TYPE_FMS;
-    $resolution_width = 640;
-    $resolution_height = 480;
+    $width = 640;
+    $height = 480;
     $qualities = 'high';
     $ip_source = '127.0.0.1';
     $source_name = 'localhost';
@@ -46,8 +46,8 @@ class DirectRepositoryTest extends WebTestCase
     $directo->setUrl($url);
     $directo->setPasswd($passwd);
     $directo->setDirectTypeId($direct_type_id);
-    $directo->setResolutionWidth($resolution_width);
-    $directo->setResolutionHeight($resolution_height);
+    $directo->setResolutionWidth($width);
+    $directo->setResolutionHeight($height);
     $directo->setQualities($qualities);
     $directo->setIpSource($ip_source);
     $directo->setSourceName($source_name);

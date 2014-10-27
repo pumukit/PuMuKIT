@@ -390,8 +390,8 @@
 
 {# Direct Widgets #}
 {% block directresolution_widget -%}
-  <input style="margin-top: 5px;" type="number" size="6" value="{{ value['resolution_width']|default("") }}" id="{{ id }}_resolution_width" name="{{ full_name }}[resolution_width]"> x 
-  <input style="margin-top: 5px;" type="number" size="6" value="{{ value['resolution_height']|default("") }}" id="{{ id }}_resolution_height" name="{{ full_name }}[resolution_height]">
+  <input style="margin-top: 5px;" type="number" size="6" value="{{ value['width']|default("") }}" id="{{ id }}_width" name="{{ full_name }}[width]"> x 
+  <input style="margin-top: 5px;" type="number" size="6" value="{{ value['height']|default("") }}" id="{{ id }}_height" name="{{ full_name }}[height]">
 {%- endblock directresolution_widget %}
 
 {% block directqualities_widget -%}
