@@ -53,5 +53,16 @@ class AdminController extends ResourceController
     }
 
 
+    public function delete($resource)
+    {
+        $event = $this->dispatchEvent('pre_delete', $resource);
+        if (!$event->isStopped()) {
+            $this->get('session')->remove('admin/direct/id');
+            $this->removeAndFlush($resource);
+        }
+
+        return $event;
+    }
+
 
 }
