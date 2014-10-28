@@ -173,17 +173,17 @@ window.change_select = function(elemento, selector)
     case 'delete_sel':
         seleccionados = $$('.' + elemento + '_checkbox:checked');
         if (seleccionados.length == 0) break;
-        if (confirm('Seguro')) {
+        if (confirm('Seguro?')) {
             new Ajax.Updater('list_'+elemento+'s', '/editar.php/'+elemento+'s/delete', {
 		asynchronous: true,
 		evalScripts: true,
                 onSuccess:  selector.selectedIndex = 0,
 		parameters: 'ids='+seleccionados.invoke('getAttribute', 'id').toJSON()}
-			    );
+	    );
         }
         break;
     case 'create':
-        Modalbox.show(elemento+'s/create', {title:'Editar Nueva '+elemento, width:800}); 
+        Modalbox.show('create', {title:'Editar Nueva '+elemento, width:800});
         selector.selectedIndex = 0;
         break;
     case 'serial_preview':
