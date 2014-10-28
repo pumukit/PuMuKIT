@@ -65,4 +65,34 @@ class AdminController extends ResourceController
     }
 
 
+
+    public function batchDeleteAction(Request $request)
+    {
+        $ids = $this->getRequest()->get('ids');
+
+	foreach($ids as $id) {
+            $resource = $this->find($id);
+	    $this->delete($resource);
+	}
+	$config = $this->getConfiguration();
+
+	$this->setFlash('success', 'delete');
+
+	return $this->redirectToRoute(
+	    $config->getRedirectRoute('index'),
+	    $config->getRedirectParameters()
+	);
+    }
+
+
+    public function find($id)
+    {
+        $config = $this->getConfiguration();
+        $repository = $this->getRepository();
+
+	$criteria = array('id' => $id);
+
+        return $this->getResourceResolver()->getResource($repository, $config, 'findOneBy', array($criteria));
+    }
+
 }

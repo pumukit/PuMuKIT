@@ -174,12 +174,30 @@ window.change_select = function(elemento, selector)
         seleccionados = $$('.' + elemento + '_checkbox:checked');
         if (seleccionados.length == 0) break;
         if (confirm('Seguro?')) {
-            new Ajax.Updater('list_'+elemento+'s', '/editar.php/'+elemento+'s/delete', {
-		asynchronous: true,
-		evalScripts: true,
-                onSuccess:  selector.selectedIndex = 0,
-		parameters: 'ids='+seleccionados.invoke('getAttribute', 'id').toJSON()}
-	    );
+            var form = document.createElement('form');
+            var method = document.createElement('input'); 
+
+            form.method = 'POST';
+            form.action = 'delete';
+
+            method.name='_method';
+            method.value='DELETE';
+            method.type='hidden';
+            form.appendChild(method);
+
+            for (var i = 0; i < seleccionados.length; i++){
+                console.log(seleccionados[i]);
+                console.log(seleccionados[i].id);
+                element = document.createElement('input');
+                element.name='ids[]';
+                element.value=seleccionados[i].id;
+                element.type='hidden';
+                form.appendChild(element);
+            }
+
+            document.body.appendChild(form);
+
+            form.submit();
         }
         break;
     case 'create':
