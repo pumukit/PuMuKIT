@@ -8,7 +8,9 @@
   <div id="tv_admin_bar">
     {% include 'PumukitAdminBundle:Direct:filters.html.twig' %}
     <div id="preview_direct" style="padding:5px; border: solid 1px #DDD; background: #8eb0bc url(/legacy/images/admin/cab/cab.gif) repeat-x scroll 0% 0%; text-align:center">
-      {{ render_hinclude(url('pumukitadmin_direct_show', {'id': app.session.get('admin/direct/id')})) }}
+      {% if(app.session.has('admin/direct/id')) %}
+        {{ render_hinclude(url('pumukitadmin_direct_show', {'id': app.session.get('admin/direct/id')})) }}
+      {% endif %}
     </div>
   </div>
 
