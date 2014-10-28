@@ -27,8 +27,8 @@ class DirectTest extends \PHPUnit_Framework_TestCase
     $directo->setUrl($url);
     $directo->setPasswd($passwd);
     $directo->setDirectType($direct_type);
-    $directo->setResolutionWidth($width);
-    $directo->setResolutionHeight($height);
+    $directo->setWidth($width);
+    $directo->setHeight($height);
     $directo->setQualities($qualities);
     $directo->setIpSource($ip_source);
     $directo->setSourceName($source_name);
@@ -42,8 +42,8 @@ class DirectTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals($url, $directo->getUrl());
     $this->assertEquals($passwd, $directo->getPasswd());
     $this->assertEquals($direct_type, $directo->getDirectType());
-    $this->assertEquals($width, $directo->getResolutionWidth());
-    $this->assertEquals($height, $directo->getResolutionHeight());
+    $this->assertEquals($width, $directo->getWidth());
+    $this->assertEquals($height, $directo->getHeight());
     $this->assertEquals($qualities, $directo->getQualities());
     $this->assertEquals($ip_source, $directo->getIpSource());
     $this->assertEquals($source_name, $directo->getSourceName());

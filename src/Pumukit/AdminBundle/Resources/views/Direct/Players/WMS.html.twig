@@ -1,0 +1,28 @@
+<object id="mediaplayer"
+    classid="CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6"
+    standby="{% trans %}Loading Microsoft Windows Media Player components...{% endtrans %}"
+    type="application/x-oleobject" width="{{ direct.width }}" height="{{ direct.height }}">
+  <param name="url" value="{{ direct.url }}" />
+  <param name="AutoStart" value="true" />
+  <param name="ShowControls" value="1" />
+  <param name="uiMode" value="mini" />
+
+
+  <param value="{{ direct.url }}" name="filename"/>
+  <param value="1" name="showcontrols"/>
+  <param value="0" name="showdisplay"/>
+  <param value="0" name="showstatusbar"/>
+  <param value="0" name="autosize"/>
+
+  <embed
+    width="{{ direct.width }}" height="{{ direct.height }}"
+    autosize="0"
+    showstatusbar="0"
+    showdisplay="0"
+    showcontrols="1"
+    filename="{{ direct.url }}"
+    pluginspage="http://www.microsoft.com/windows/downloads/contents/products/mediaplayer/"
+    type="application/x-mplayer2"
+  />
+
+</object>

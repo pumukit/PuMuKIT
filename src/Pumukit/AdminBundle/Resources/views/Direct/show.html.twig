@@ -1,27 +1,23 @@
 <!-- Vista previa -->
-id: {{ direct.id|default("nada") }}
-name: {{ direct.name|default("nada") }}
+{% if direct is not null %}
 
-{# TODO 
-<?php if(isset($direct)):?>
-
-<h3><?php echo $direct->getName()?></h3>
-<?php echo $direct->getDescription()?>
+<h3>{{ direct.name }}</h3>
+{{ direct.description }}
 
 <div style="overflow:hidden; padding:5px; border:solid 1px #DDD; background:#DDD" >
   <div>
-    {% trans %}URL:{% endtrans %} <a href="TODO: <?php echo sfConfig::get('app_info_link') . "/directo/index/id/" . $direct->getId()?>"> 
-           <?php echo sfConfig::get('app_info_link') ?>/directo/index/id/<?php echo $direct->getId()?> 
-         </a>
+    {% trans %}URL:{% endtrans %} <a href="TODO: /direct/index/id/{{ direct.id }}">
+      "TODO: /directo/index/id/{{ direct.id }}" 
+      </a>
   </div>
   <div>
-    {% trans %}IP fuente:{% endtrans %} <span style="font-style:italic"> <?php echo $direct->getIpSource()?> </span>
+    {% trans %}IP fuente:{% endtrans %} <span style="font-style:italic"> {{ direct.getIpSource() }}</span>
   </div>
   <div>
-    {% trans %}Mostrar reproductor en página de inicio:{% endtrans %} <span style="font-style:italic"><?php echo $direct->getIndexPlay()?{% trans %}Activado{% endtrans %}:{% trans %}Desactivado{% endtrans %}?></span>
+    {% trans %}Mostrar reproductor en página de inicio:{% endtrans %} <span style="font-style:italic">{% if direct.getIndexPlay() %}{% trans %}Activado{% endtrans %}{% else %}{% trans %}Desactivado{% endtrans %}{% endif %}</span>
   </div>
   <div>
-    {% trans %}Estado:{% endtrans %} <span style="font-style:italic"><?php echo ($direct->getBroadcasting() == 0)?{% trans %}Espera{% endtrans %}:{% trans %}Emitiendo en directo{% endtrans %}?></span>
+    {% trans %}Estado:{% endtrans %} <span style="font-style:italic">{% if not direct.broadcasting %}{% trans %}Espera{% endtrans %}{% else %}{% trans %}Emitiendo en directo{% endtrans %}{% endif %}</span>
   </div>
 </div>
 
@@ -30,25 +26,12 @@ name: {{ direct.name|default("nada") }}
 <a href="#" onclick="Effect.toggle('player','appear'); return false">{% trans %}Preview{% endtrans %}</a>  
 
 
-<div id="player" style="display: none;">  
-  <?php     
-    switch ($direct->getDirectType()) {
-     case 'WMS':
-       include_partial('directs/asx', array('url' => $direct->getUrl(), 'hor' => '320', 'ver' => '230'));
-       break;
-     case 'FMS':
-       include_partial('directs/flv', array('url' => $direct->getUrl(), 'hor' => '320', 'ver' => '230'));
-       break;
-     default:
-       echo $direct->getUrl();
-       break;
-    }
-  ?>
+<div id="player" style="display: none;">
+  {{ include('PumukitAdminBundle:Direct/Players:'~direct.getDirectType()~'.html.twig') }}
 </div>
 
-<?php else:?>
+{% else %}
 <p>
   {% trans %}Seleccione algún directo.{% endtrans %}
 </p>
-<?php endif?>  
-#}
+{% endif %}
