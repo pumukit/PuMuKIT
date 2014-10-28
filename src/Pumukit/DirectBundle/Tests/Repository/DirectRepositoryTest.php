@@ -46,8 +46,8 @@ class DirectRepositoryTest extends WebTestCase
     $directo->setUrl($url);
     $directo->setPasswd($passwd);
     $directo->setDirectTypeId($direct_type_id);
-    $directo->setResolutionWidth($width);
-    $directo->setResolutionHeight($height);
+    $directo->setWidth($width);
+    $directo->setHeight($height);
     $directo->setQualities($qualities);
     $directo->setIpSource($ip_source);
     $directo->setSourceName($source_name);

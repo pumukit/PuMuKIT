@@ -208,7 +208,7 @@ class Direct
    *
    * @param int $width
    */
-  public function setResolutionWidth($width)
+  public function setWidth($width)
   {
     $this->width = $width;
   }
@@ -218,7 +218,7 @@ class Direct
    *
    * @return int
    */
-  public function getResolutionWidth()
+  public function getWidth()
   {
     return $this->width;
   }
@@ -228,7 +228,7 @@ class Direct
    *
    * @param int $height
    */
-  public function setResolutionHeight($height)
+  public function setHeight($height)
   {
     $this->height = $height;
   }
@@ -238,7 +238,7 @@ class Direct
    *
    * @return int
    */
-  public function getResolutionHeight()
+  public function getHeight()
   {
     return $this->height;
   } 
