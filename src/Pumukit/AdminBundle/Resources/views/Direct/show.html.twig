@@ -1,5 +1,8 @@
 <!-- Vista previa -->
-<!-- TODO -->
+id: {{ direct.id|default("nada") }}
+name: {{ direct.name|default("nada") }}
+
+{# TODO 
 <?php if(isset($direct)):?>
 
 <h3><?php echo $direct->getName()?></h3>
@@ -48,3 +51,4 @@
   {% trans %}Seleccione algún directo.{% endtrans %}
 </p>
 <?php endif?>  
+#}

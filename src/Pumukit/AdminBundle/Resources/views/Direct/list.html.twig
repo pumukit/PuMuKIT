@@ -22,11 +22,11 @@
     </tr>
   {% else %}
     {% for direct in directs %}
-      <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ loop.index % 2 }} {# TODO <?php if($direct->getId() == $sf_user->getAttribute('id', null, 'tv_admin/direct')) echo ' tv_admin_row_this'?> #}" >
+      <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ loop.index % 2 }} {{  direct.id == app.session.get('admin/direct/id')?'tv_admin_row_this':'' }}{# TODO <?php if($direct->getId() == $sf_user->getAttribute('id', null, 'tv_admin/direct')) echo ' tv_admin_row_this'?> #}" >
         <td>
           <input id="{{ direct.id }}" class="direct_checkbox" type="checkbox">
         </td>
-        <td onclick="click_fila('direct', this, {{ direct.id }});">
+        <td onclick="click_fila_url('direct', this, '{{ path('pumukitadmin_direct_show', {'id': direct.id}) }}');">
     	<a title="{% trans %}Editar canal en directo {% endtrans %}{{ direct.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_direct_update', {'id': direct.id}) }}"><img alt="{% trans %}editar{% endtrans %}" title="{% trans %}editar{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a>    
         </td>
         <td>
@@ -46,19 +46,19 @@
 	      </button>
 	  </form>
         </td>
-        <td onclick="click_fila('direct', this, {{ direct.id }});">
+        <td onclick="click_fila_url('direct', this, '{{ path('pumukitadmin_direct_show', {'id': direct.id}) }}');">
           {{ direct.id }}
         </td>
-        <td onclick="click_fila('direct', this, {{ direct.id }});">
+        <td onclick="click_fila_url('direct', this, '{{ path('pumukitadmin_direct_show', {'id': direct.id}) }}');">
 	  {{ direct.name }}
         </td>
-        <td onclick="click_fila('direct', this, {{ direct.id }});">
+        <td onclick="click_fila_url('direct', this, '{{ path('pumukitadmin_direct_show', {'id': direct.id}) }}');">
 	  {{ direct.url }}
         </td>
-        <td onclick="click_fila('direct', this, {{ direct.id }});">
+        <td onclick="click_fila_url('direct', this, '{{ path('pumukitadmin_direct_show', {'id': direct.id}) }}');">
 	  {{ direct.getResolutionWidth }}x{{ direct.getResolutionHeight }}
         </td>
-        <td onclick="click_fila('direct', this, {{ direct.id }});">
+        <td onclick="click_fila_url('direct', this, '{{ path('pumukitadmin_direct_show', {'id': direct.id}) }}');">
 	  {{ direct.getDirectType }}
         </td>
       </tr>

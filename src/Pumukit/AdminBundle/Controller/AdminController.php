@@ -31,10 +31,27 @@ class AdminController extends ResourceController
 	return $this->redirectToRoute(
 	   $config->getRedirectRoute('index'),
 	   $config->getRedirectParameters()
-	);
-	
+	);	
+    }
 
 
-  }
+    public function showAction()
+    {
+        $config = $this->getConfiguration();
+	$data = $this->findOr404();
+
+	$this->get('session')->set('admin/direct/id', $data->getId());
+
+        $view = $this
+            ->view()
+            ->setTemplate($config->getTemplate('show.html'))
+            ->setTemplateVar($config->getResourceName())
+            ->setData($data)
+        ;
+
+        return $this->handleView($view);
+    }
+
+
 
 }
