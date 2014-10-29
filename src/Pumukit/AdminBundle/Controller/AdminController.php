@@ -25,24 +25,22 @@ class AdminController extends ResourceController
         $criteria = $config->getCriteria();
         $sorting = $config->getSorting();
 
-	
 	if (array_key_exists('reset', $criteria)) {
-            $this->get('session')->remove('admin/direct/criteria');
+            $this->get('session')->remove('admin/'.$config->getResourceName().'/criteria');
 	} elseif ($criteria){
-	    $this->get('session')->set('admin/direct/criteria', $criteria);
+	    $this->get('session')->set('admin/'.$config->getResourceName().'/criteria', $criteria);
 	}
-	$criteria = $this->get('session')->get('admin/direct/criteria', array());
+	$criteria = $this->get('session')->get('admin/'.$config->getResourceName().'/criteria', array());
 
+	//TODO: do upstream
 	$new_criteria = array();
 	foreach ($criteria as $property => $value) {
 	    //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
 	    if ('' !== $value) {
-	        $new_criteria[$property] = new \MongoRegex('/' . $value . '/');
+	        $new_criteria[$property] = new \MongoRegex('/' . $value . '/i');
 	    }
 	}
 	$criteria = $new_criteria;
-
-
 
         $pluralName = $config->getPluralResourceName();
         $repository = $this->getRepository();
@@ -79,8 +77,8 @@ class AdminController extends ResourceController
     {
         $resource = $this->findOr404();
 	
-	$new_resource = $resource->cloneDirect();
-	
+	$new_resource = $resource->cloneResource();
+
 	$this->create($new_resource);
 	
 
@@ -102,7 +100,7 @@ class AdminController extends ResourceController
         $config = $this->getConfiguration();
 	$data = $this->findOr404();
 
-	$this->get('session')->set('admin/direct/id', $data->getId());
+	$this->get('session')->set('admin/'.$config->getResourceName().'/id', $data->getId());
 
         $view = $this
             ->view()
@@ -120,9 +118,10 @@ class AdminController extends ResourceController
      */
     public function delete($resource)
     {
+        $config = $this->getConfiguration();
         $event = $this->dispatchEvent('pre_delete', $resource);
         if (!$event->isStopped()) {
-            $this->get('session')->remove('admin/direct/id');
+            $this->get('session')->remove('admin/'.$config->getResourceName().'/id');
             $this->removeAndFlush($resource);
         }
 
