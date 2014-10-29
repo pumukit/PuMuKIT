@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: @PumukitAdminBundle/Resources/config/config.yml }
+    - { resource: doctrine_extensions.yml }
 
 framework:
     #esi:             ~

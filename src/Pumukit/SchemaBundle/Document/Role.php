@@ -3,9 +3,8 @@
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-
 use Doctrine\Common\Collections\ArrayCollection;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 use Pumukit\SchemaBundle\Document\PersonInMultimediaObject;
 
 /**
@@ -30,6 +29,7 @@ class Role
    * @var integer $rank
    *
    * @MongoDB\Int
+   * @Gedmo\SortablePosition
    */
   private $rank;
 
