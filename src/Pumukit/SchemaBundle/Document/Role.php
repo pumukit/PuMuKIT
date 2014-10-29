@@ -335,6 +335,7 @@ class Role
   {
     $aux = clone $this;
     $aux->id = null;
+    $aux->rank = null;
 
     return $aux;
   }
