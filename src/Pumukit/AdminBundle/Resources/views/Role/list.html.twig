@@ -20,16 +20,15 @@
         </td>
       </tr>
     {% endif %}
-    {#     <?php $t = count($roles) ; for( $i=0; $i<$t; $i++): $role = $roles[$i]; $odd = fmod($i, 2); $numP = $role->countMmPersons()?> #}
     {% for role in roles %}
-      <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ loop.index % 2 }}{# TODO {% if role.id == $sf_user->getAttribute('id', null, 'tv_admin/role')) %} ' tv_admin_row_this'{% endif %} #}" >
+      <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ loop.index % 2 }} {{ role.id == app.session.get('admin/role/id')?'tv_admin_row_this':'' }}" >
         <td>
           <input id="{{ role.id }}" class="role_checkbox" type="checkbox">
         </td>
-        <td onclick="click_fila_url('role', this, '{{ path('pumukitadmin_role_show', {'id': role.id}) }}');">
-          <a title="{% trans %}Editar Novedad {% endtrans %}{{ role.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_role_show', {'id': role.id}) }}"><img alt="{% trans %}editar{% endtrans %}" title="{% trans %}editar{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a>
+        <td onclick="click_fila_no_preview('role', this, '{{ role.id }}');">
+          <a title="{% trans %}Editar Novedad {% endtrans %}{{ role.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_role_update', {'id': role.id}) }}"><img alt="{% trans %}editar{% endtrans %}" title="{% trans %}editar{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a>
         </td>
-        <td onclick="click_fila_url('role', this, '{{ path('pumukitadmin_role_show', {'id': role.id}) }}');">
+        <td onclick="click_fila_no_preview('role', this, '{{ role.id }}');">
 	{% if role.getPeopleInMultimediaObject() is empty %}
           <form action="{{ path('pumukitadmin_role_delete', {'id': role.id}) }}" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}¿Seguro que desea eliminar este rol?{% endtrans %}')">
               <input type="hidden" name="_method" value="DELETE">
@@ -44,19 +43,19 @@
 	  </a>
         {% endif %}
         </td>
-        <td onclick="click_fila_url('role', this, '{{ path('pumukitadmin_role_show', {'id': role.id}) }}');">
+        <td onclick="click_fila_no_preview('role', this, '{{ role.id }}');">
           <form action="{{ path('pumukitadmin_role_copy', {'id': role.id}) }}" method="post" class="delete-action-form" novalidate="">
               <button type="submit" class="tv_admin_row_post">
 		<img alt="{% trans %}copiar{% endtrans %}" title="{% trans %}copiar{% endtrans %}" src="/legacy/images/admin/mbuttons/copy_inline.gif">
 	      </button>
 	  </form>
         </td>
-        <td onclick="click_fila_url('role', this, '{{ path('pumukitadmin_role_show', {'id': role.id}) }}');">
+        <td onclick="click_fila_no_preview('role', this, '{{ role.id }}');">
 	  {# TODO
           <?php echo ((($page == 1)&&( $i == 0)) ? '&nbsp;' : (link_to_remote('&#8593;', array('update' => 'list_roles', 'url' => 'roles/up?id='.$role->getId(), 'script' => 'true'))).(link_to_remote('&#8657;', array('update' => 'list_roles', 'url' => 'roles/top?id='.$role->getId(), 'script' => 'true')))) ?>
 	  #}
         </td>
-        <td onclick="click_fila_url('role', this, '{{ path('pumukitadmin_role_show', {'id': role.id}) }}');">
+        <td onclick="click_fila_no_preview('role', this, '{{ role.id }}');">
 	  {# TODO
           <?php echo ((($page == $total)&&( $i == $t-1))? '&nbsp;' : (link_to_remote('&#8595;', array('update' => 'list_roles', 'url' => 'roles/down?id='.$role->getId(), 'script' => 'true'))).(link_to_remote('&#8659;', array('update' => 'list_roles', 'url' => 'roles/bottom?id='.$role->getId(), 'script' => 'true')))) ?>
 	  #}
