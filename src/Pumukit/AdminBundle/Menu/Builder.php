@@ -46,7 +46,7 @@ class Builder extends ContainerAware
     $management->addChild('Tipos de materiales');
     $management->addChild('Tipos de series');
     $management->addChild('Idiomas');
-    $management->addChild('Roles');
+    $management->addChild('Roles', array('route'=>'pumukitadmin_role_index'));
     $management->addChild('Perfiles Acceso');
     $management->addChild('Servidores de Distribución');
 
