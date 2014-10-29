@@ -20,7 +20,7 @@
     <div style="float:right; width:50%">
       <ul class="tv_admin_actions">
         <!-- Falta -->
-        <li><input class="tv_admin_action_create" onclick="Modalbox.show('roles/create', {title:'{% trans %}Editar nuevo rol{% endtrans %}', width:800}); return false; return false;" type="button" value="{% trans %}Nuevo{% endtrans %}"></li>
+        <li><input class="tv_admin_action_create" onclick="Modalbox.show('{{ path('pumukitadmin_role_create') }}', {title:'{% trans %}Editar nuevo rol{% endtrans %}', width:800}); return false; return false;" type="button" value="{% trans %}Nuevo{% endtrans %}"></li>
       </ul>
     </div>
 
