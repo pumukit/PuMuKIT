@@ -85,11 +85,13 @@
         <div class="float-right">
           {{ include('PumukitAdminBundle:Macros:pager_ajax.html.twig', {'name': 'roles', 'page': roles.getCurrentPage, 'total': roles.getNbPages}) }}      
         </div>
-        {{ (roles.getNbResults > roles.getMaxPerPage ) ? roles.getMaxPerPage : roles.getNbResults }}/{{ roles.getNbResults }} {% trans %}Roles{% endtrans %}
-	{# TODO
-        <?php $aux = ($total_role==$total_role_all?'display:none; ':'')?>
-        <?php echo link_to_remote('Cancelar búsqueda', array('before' => '$("filter_roles").reset();', 'update' => 'list_roles', 'url' => 'roles/list?filter=filter ', 'script' => 'true'), array('title' => __('Cancelar la búsqueda actual'), 'style' => 'color:blue; font-weight:normal;'.$aux)) ?>
-	#}
+        {{ roles.getNbResults }}
+        {% transchoice roles.getNbResults %}
+	      {0} canales|{1} canal|]1,Inf] canales
+	{% endtranschoice %}
+	{% if app.session.get('admin/role/criteria')|length != 0%}
+          <a title="{% trans %}Cancelar la búsqueda actual{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancelar búsqueda{% endtrans %}</a>
+	{% endif %}
       </th>
     </tr>
   </tfoot>
