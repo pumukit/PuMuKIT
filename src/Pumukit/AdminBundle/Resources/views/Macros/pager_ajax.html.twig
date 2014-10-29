@@ -5,7 +5,7 @@
   <div id="pager_{{ name }}" style="float:left;">
     <div style="float:left; margin:0em .5em;">
       {% if(page != 1) %}
-        <a href="{{ path('pumukitadmin_direct_index', {'page': (page -1 )}) }}" style="{{ prev_style }}">&laquo; {% trans %}Anterior{% endtrans %}</a>
+        <a href="{{ path('pumukitadmin_'~name~'_index', {'page': (page -1 )}) }}" style="{{ prev_style }}">&laquo; {% trans %}Anterior{% endtrans %}</a>
       {% endif %}
       {# <?php echo link_to_remote('&laquo;' . __('Anterior'), array('update' => 'list_'.$name.'s', 'url' => $name.'s/list?page='.($page-1), 'script' => 'true'), $ver_anterior)  ?> #}
     </div>
@@ -17,7 +17,7 @@
     </div>
     <div style="float:left; margin:0em .5em;">
       {% if(page != total and total != 0) %}
-        <a href="{{ path('pumukitadmin_direct_index', {'page': (page +1 )}) }}" style="{{ next_style }}">{% trans %}Siguiente{% endtrans %} &raquo;</a>
+        <a href="{{ path('pumukitadmin_'~name~'_index', {'page': (page +1 )}) }}" style="{{ next_style }}">{% trans %}Siguiente{% endtrans %} &raquo;</a>
       {% endif %}
       {# <?php echo link_to_remote(__('Siguiente') . '&raquo;', array('update'=> 'list_'.$name.'s', 'url' => $name.'s/list?page='.($page+1), 'script' => 'true'), $ver_siguiente) ?> #}
     </div>
@@ -31,7 +31,7 @@
         values: $R(1,{{ total }}).toArray(),
         sliderValue: {{ page }},
         onSlide: function(v){$("num_pag_{{ name }}").innerHTML= (v);},
-        onChange: function(v){ window.location.href= "{{ path('pumukitadmin_direct_index', {'page': ''}) }}"+v; }
+        onChange: function(v){ window.location.href= "{{ path('pumukitadmin_'~name~'_index', {'page': ''}) }}"+v; }
       } );
     
       $("handle_{{ name }}").show();    {# evito efecto de empezar en cero y ponerse en su posicion #}

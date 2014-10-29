@@ -82,7 +82,7 @@
     <tr>
       <th colspan="11">
         <div class="float-right">
-          {{ include('PumukitAdminBundle:Macros:pager_ajax.html.twig', {'name': 'roles', 'page': roles.getCurrentPage, 'total': roles.getNbPages}) }}      
+          {{ include('PumukitAdminBundle:Macros:pager_ajax.html.twig', {'name': 'role', 'page': roles.getCurrentPage, 'total': roles.getNbPages}) }}      
         </div>
         {{ roles.getNbResults }}
         {% transchoice roles.getNbResults %}
