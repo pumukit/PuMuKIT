@@ -51,14 +51,20 @@
 	  </form>
         </td>
         <td onclick="click_fila_no_preview('role', this, '{{ role.id }}');">
-	  {# TODO
-          <?php echo ((($page == 1)&&( $i == 0)) ? '&nbsp;' : (link_to_remote('&#8593;', array('update' => 'list_roles', 'url' => 'roles/up?id='.$role->getId(), 'script' => 'true'))).(link_to_remote('&#8657;', array('update' => 'list_roles', 'url' => 'roles/top?id='.$role->getId(), 'script' => 'true')))) ?>
-	  #}
+	{% if roles.getCurrentPage() != 1 or not loop.first %}
+	  {% spaceless %}
+	  <a href="{{ path('pumukitadmin_role_up', {'id': role.id}) }}">&#8593;</a>
+	  <a href="{{ path('pumukitadmin_role_top', {'id': role.id}) }}">&#8657;</a>
+	  {% endspaceless %}
+	{% endif %}
         </td>
         <td onclick="click_fila_no_preview('role', this, '{{ role.id }}');">
-	  {# TODO
-          <?php echo ((($page == $total)&&( $i == $t-1))? '&nbsp;' : (link_to_remote('&#8595;', array('update' => 'list_roles', 'url' => 'roles/down?id='.$role->getId(), 'script' => 'true'))).(link_to_remote('&#8659;', array('update' => 'list_roles', 'url' => 'roles/bottom?id='.$role->getId(), 'script' => 'true')))) ?>
-	  #}
+	{% if roles.getCurrentPage() == roles.getNbPages() and not loop.last %}
+	  {% spaceless %}
+	  <a href="{{ path('pumukitadmin_role_down', {'id': role.id}) }}">&#8595;</a>
+	  <a href="{{ path('pumukitadmin_role_bottom', {'id': role.id}) }}">&#8659;</a>
+	  {% endspaceless %}
+	{% endif %}
         </td>
         <td onclick="click_fila_no_preview('role', this, '{{ role.id }}');">
           {{ role.id }}
