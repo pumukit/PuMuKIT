@@ -15,8 +15,68 @@ use Sylius\Bundle\ResourceBundle\Event\ResourceEvent;
 class AdminController extends ResourceController
 {
 
-  public function copyAction(Request $request)
-  {
+    /**
+     * Overwrite to update the criteria with MongoRegex, and save it in the session
+     */
+    public function indexAction(Request $request)
+    {
+        $config = $this->getConfiguration();
+
+        $criteria = $config->getCriteria();
+        $sorting = $config->getSorting();
+
+	
+	if (array_key_exists('reset', $criteria)) {
+            $this->get('session')->remove('admin/direct/criteria');
+	} elseif ($criteria){
+	    $this->get('session')->set('admin/direct/criteria', $criteria);
+	}
+	$criteria = $this->get('session')->get('admin/direct/criteria', array());
+
+	$new_criteria = array();
+	foreach ($criteria as $property => $value) {
+	    //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
+	    if ('' !== $value) {
+	        $new_criteria[$property] = new \MongoRegex('/' . $value . '/');
+	    }
+	}
+	$criteria = $new_criteria;
+
+
+
+        $pluralName = $config->getPluralResourceName();
+        $repository = $this->getRepository();
+
+        if ($config->isPaginated()) {
+            $resources = $this
+                ->getResourceResolver()
+                ->getResource($repository, $config, 'createPaginator', array($criteria, $sorting))
+            ;
+
+            $resources
+                ->setCurrentPage($request->get('page', 1), true, true)
+                ->setMaxPerPage($config->getPaginationMaxPerPage())
+            ;
+        } else {
+            $resources = $this
+                ->getResourceResolver()
+                ->getResource($repository, $config, 'findBy', array($criteria, $sorting, $config->getLimit()))
+            ;
+        }
+
+        $view = $this
+            ->view()
+            ->setTemplate($config->getTemplate('index.html'))
+            ->setTemplateVar($pluralName)
+            ->setData($resources)
+        ;
+
+        return $this->handleView($view);
+    }
+
+
+    public function copyAction(Request $request)
+    {
         $resource = $this->findOr404();
 	
 	$new_resource = $resource->cloneDirect();
@@ -34,7 +94,9 @@ class AdminController extends ResourceController
 	);	
     }
 
-
+    /**
+     * Overwrite to update the session.
+     */
     public function showAction()
     {
         $config = $this->getConfiguration();
@@ -53,6 +115,9 @@ class AdminController extends ResourceController
     }
 
 
+    /**
+     * Overwrite to update the session.
+     */
     public function delete($resource)
     {
         $event = $this->dispatchEvent('pre_delete', $resource);

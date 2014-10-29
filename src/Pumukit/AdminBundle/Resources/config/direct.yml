@@ -3,6 +3,8 @@ pumukitadmin_direct_index:
     methods: [GET]
     defaults:
         _controller: pumukitadmin.controller.direct:indexAction
+        _sylius:
+            filterable: true
 
 pumukitadmin_direct_create:
     pattern: /create
