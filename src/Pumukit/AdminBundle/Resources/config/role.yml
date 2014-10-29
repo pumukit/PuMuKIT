@@ -3,6 +3,8 @@ pumukitadmin_role_index:
     methods: [GET]
     defaults:
         _controller: pumukitadmin.controller.role:indexAction
+        _sylius:
+            filterable: true
 
 pumukitadmin_role_create:
     pattern: /create
