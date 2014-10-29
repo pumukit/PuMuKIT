@@ -13,7 +13,7 @@ class RoleType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
-      ->add('display', 'checkbox')
+      ->add('display', 'checkbox', array('required'=>false))
       ->add('cod', 'text',
 	    array('attr' => array('style' => 'width: 420px'), 'label' => 'Código'))
       ->add('xml', 'text',
