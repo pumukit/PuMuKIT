@@ -1,0 +1,51 @@
+pumukitadmin_role_index:
+    pattern: /
+    methods: [GET]
+    defaults:
+        _controller: pumukitadmin.controller.role:indexAction
+
+pumukitadmin_role_create:
+    pattern: /create
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitadmin.controller.role:createAction
+        _sylius:
+            redirect: pumukitadmin_role_index
+
+pumukitadmin_role_update:
+    pattern: /{id}/edit
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitadmin.controller.role:updateAction
+        _sylius:
+            redirect: pumukitadmin_role_index
+
+pumukitadmin_role_batch_delete:
+    pattern: /delete
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitadmin.controller.role:batchDeleteAction
+        _sylius:
+            redirect: pumukitadmin_role_index
+
+pumukitadmin_role_delete:
+    pattern: /{id}
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitadmin.controller.role:deleteAction
+        _sylius:
+            redirect: pumukitadmin_role_index
+
+pumukitadmin_role_copy:
+    pattern: /{id}/copy
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitadmin.controller.role:copyAction
+        _sylius:
+            redirect: pumukitadmin_role_index
+
+pumukitadmin_role_show:
+    pattern: /{id}
+    methods: [GET]
+    defaults:
+        _controller: pumukitadmin.controller.role:showAction

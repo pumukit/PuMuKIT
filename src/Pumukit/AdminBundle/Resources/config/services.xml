@@ -27,5 +27,9 @@
         <service id="pumukitadmin.form.type.event" class="Pumukit\AdminBundle\Form\Type\EventType">
             <tag name="form.type" alias="pumukitadmin_event" />
         </service>
+
+        <service id="pumukitadmin.form.type.role" class="Pumukit\AdminBundle\Form\Type\RoleType">
+            <tag name="form.type" alias="pumukitadmin_role" />
+        </service>
     </services>
 </container>

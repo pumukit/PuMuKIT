@@ -1,0 +1,37 @@
+{% extends 'PumukitAdminBundle::layout.html.twig' %}
+
+{% block body %}
+
+<h3 class="cab_body_div"><img src="/legacy/images/admin/cab/config_ico.png"/>{% trans %}Roles{% endtrans %}</h3>
+
+<div id="tv_admin_container">
+  <div id="tv_admin_bar">
+    <?php include_partial('filters') ?>
+    <div id="preview_role" style="display:none; padding:5px; border: solid 1px #DDD; background: #8eb0bc url(/legacy/images/admin/cab/cab.gif) repeat-x scroll 0% 0%">
+      {# <?php //include_component('roles', 'preview') ?> #}
+    </div>
+  </div>
+
+  <div id="tv_admin_content" >
+    <div id="list_roles" name="list_roles" act="/roles/list">
+      {% include 'PumukitAdminBundle:Role:list.html.twig' %}
+    </div>
+
+    <div style="float:right; width:50%">
+      <ul class="tv_admin_actions">
+        <!-- Falta -->
+        <li><input class="tv_admin_action_create" onclick="Modalbox.show('roles/create', {title:'{% trans %}Editar nuevo rol{% endtrans %}', width:800}); return false; return false;" type="button" value="{% trans %}Nuevo{% endtrans %}"></li>
+      </ul>
+    </div>
+
+    <select id="options_roles" style="margin: 10px 0px; width: 33%" title="{% trans %}Acciones sobre elementos seleccionados{% endtrans %}" onchange="window.change_select('role', $('options_roles'))">
+      <option value="default" selected="selected">{% trans %}Selecciona una acción...{% endtrans %}</option>
+      <option disabled="">---</option>
+      <option value="delete_sel">{% trans %}Borrar seleccionados{% endtrans %}</option>
+      <option value="create">{% trans %}Crear nuevo{% endtrans %}</option>
+    </select>
+    
+  </div>
+</div>
+
+{% endblock %}

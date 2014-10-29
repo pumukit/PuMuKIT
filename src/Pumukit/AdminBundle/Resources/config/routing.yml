@@ -17,3 +17,7 @@ pumukitadmin_direct:
 pumukitadmin_event:
     resource: @PumukitAdminBundle/Resources/config/event.yml
     prefix: /admin/event
+
+pumukitadmin_role:
+    resource: @PumukitAdminBundle/Resources/config/role.yml
+    prefix: /admin/role
