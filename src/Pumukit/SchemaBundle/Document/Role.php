@@ -325,4 +325,18 @@ class Role
   {
     return $this->people_in_multimedia_object;
   }
+
+  /**
+   * Clone Role
+   *
+   * @return Role
+   */
+  public function cloneResource()
+  {
+    $aux = clone $this;
+    $aux->id = null;
+
+    return $aux;
+  }
+
 }

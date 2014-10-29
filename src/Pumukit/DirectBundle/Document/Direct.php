@@ -487,7 +487,7 @@ class Direct
    *
    * @return Direct
    */
-  public function cloneDirect()
+  public function cloneResource()
   {
     $aux = clone $this;
     $aux->id = null;
