@@ -22,7 +22,7 @@
     </tr>
   {% else %}
     {% for direct in directs %}
-      <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ loop.index % 2 }} {{  direct.id == app.session.get('admin/direct/id')?'tv_admin_row_this':'' }}{# TODO <?php if($direct->getId() == $sf_user->getAttribute('id', null, 'tv_admin/direct')) echo ' tv_admin_row_this'?> #}" >
+      <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ loop.index % 2 }} {{  direct.id == app.session.get('admin/direct/id')?'tv_admin_row_this':'' }}" >
         <td>
           <input id="{{ direct.id }}" class="direct_checkbox" type="checkbox">
         </td>
@@ -71,11 +71,13 @@
         <div class="float-right">
           {{ include('PumukitAdminBundle:Macros:pager_ajax.html.twig', {'name': 'direct', 'page': directs.getCurrentPage, 'total':directs.getNbPages}) }}
         </div>
-        {{ (directs.getNbResults > directs.getMaxPerPage ) ? directs.getMaxPerPage : directs.getNbResults }}/{{ directs.getNbResults }} {% trans %}Canales{% endtrans %}
-        {#
-        <?php $aux = ($total_direct == $total_direct_all?'display:none; ':'')?>
-        <?php echo link_to_remote(__('Cancelar búsqueda'), array('before' => '$("filter_directs").reset();', 'update' => 'list_directs', 'url' => 'directs/list?filter=filter ', 'script' => 'true'), array('title' => __('Cancelar la búsqueda actual'), 'style' => 'color:blue; font-weight:normal;'.$aux)) ?>
-        #}
+        {{ directs.getNbResults }} 
+        {% transchoice directs.getNbResults %}
+	      {0} canales|{1} canal|]1,Inf] canales
+	{% endtranschoice %}
+	{% if app.session.get('admin/direct/criteria')|length != 0%}
+          <a title="{% trans %}Cancelar la búsqueda actual{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancelar búsqueda{% endtrans %}</a>
+	{% endif %}
       </th>
     </tr>
   </tfoot>
