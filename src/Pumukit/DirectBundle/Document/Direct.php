@@ -455,7 +455,7 @@ class Direct
   /**
    * Get I18n description
    *
-   * @return string
+   * @return array
    */
   public function getI18nDescription()
   {  
