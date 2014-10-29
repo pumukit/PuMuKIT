@@ -60,19 +60,19 @@
           <?php echo ((($page == $total)&&( $i == $t-1))? '&nbsp;' : (link_to_remote('&#8595;', array('update' => 'list_roles', 'url' => 'roles/down?id='.$role->getId(), 'script' => 'true'))).(link_to_remote('&#8659;', array('update' => 'list_roles', 'url' => 'roles/bottom?id='.$role->getId(), 'script' => 'true')))) ?>
 	  #}
         </td>
-        <td onclick="click_fila_url('role', this, '{{ path('pumukitadmin_role_show', {'id': role.id}) }}');">
+        <td onclick="click_fila_no_preview('role', this, '{{ role.id }}');">
           {{ role.id }}
 	</td>
-        <td onclick="click_fila_url('role', this, '{{ path('pumukitadmin_role_show', {'id': role.id}) }}');">
+        <td onclick="click_fila_no_preview('role', this, '{{ role.id }}');">
           {{ role.display }}
 	</td>
-        <td onclick="click_fila_url('role', this, '{{ path('pumukitadmin_role_show', {'id': role.id}) }}');">
+        <td onclick="click_fila_no_preview('role', this, '{{ role.id }}');">
 	  {{ role.cod }}
 	</td>
-        <td onclick="click_fila_url('role', this, '{{ path('pumukitadmin_role_show', {'id': role.id}) }}');">
+        <td onclick="click_fila_no_preview('role', this, '{{ role.id }}');">
 	  {{ role.name }}
-	</td>        
-	<td onclick="click_fila_url('role', this, '{{ path('pumukitadmin_role_show', {'id': role.id}) }}');">
+	</td>
+        <td onclick="click_fila_no_preview('role', this, '{{ role.id }}');">
 	  {{ role.getPeopleInMultimediaObject()|length }}
 	</td>
       </tr>

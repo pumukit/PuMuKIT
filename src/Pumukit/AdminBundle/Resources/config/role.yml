@@ -45,9 +45,3 @@ pumukitadmin_role_copy:
         _controller: pumukitadmin.controller.role:copyAction
         _sylius:
             redirect: pumukitadmin_role_index
-
-pumukitadmin_role_show:
-    pattern: /{id}
-    methods: [GET]
-    defaults:
-        _controller: pumukitadmin.controller.role:showAction
