@@ -51,9 +51,9 @@ class Role
   /**
    * @var string $name
    *
-   * @MongoDB\String
+   * @MongoDB\Raw
    */
-  private $name;
+  private $name = array('en'=>'');
 
   /**
    * @var string $text
@@ -172,9 +172,12 @@ class Role
    *
    * @param string $name
    */
-  public function setName($name)
+  public function setName($name, $locale = null)
   {
-    $this->name = $name;
+    if ($locale == null) {
+      $locale = $this->locale;
+    }
+    $this->name[$locale] = $name;
   }
 
   /**
@@ -182,7 +185,33 @@ class Role
    *
    * @return string
    */
-  public function getName()
+  public function getName($locale = null)
+  {
+    if ($locale == null) {
+      $locale = $this->locale;
+    }
+    if (!isset($this->name[$locale])){
+      return null;
+    }
+    return $this->name[$locale];
+  }
+
+  /**
+   * Set I18n name
+   *
+   * @param array $name
+   */
+  public function setI18nName(array $name)
+  {
+    $this->name = $name;
+  }
+  
+  /**
+   * Get i18n name
+   *
+   * @return array
+   */
+  public function getI18nName()
   {
     return $this->name;
   }
@@ -214,6 +243,26 @@ class Role
       return null;
     }
     return $this->text[$locale];
+  }
+
+  /**
+   * Set I18n text
+   *
+   * @param array $text
+   */
+  public function setI18nText(array $text)
+  {
+    $this->text = $text;
+  }
+  
+  /**
+   * Get i18n text
+   *
+   * @return array
+   */
+  public function getI18nText()
+  {
+    return $this->text;
   }
 
   /**
