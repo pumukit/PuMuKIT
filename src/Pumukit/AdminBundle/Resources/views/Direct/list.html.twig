@@ -22,7 +22,7 @@
     </tr>
   {% else %}
     {% for direct in directs %}
-      <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ loop.index % 2 }} {{  direct.id == app.session.get('admin/direct/id')?'tv_admin_row_this':'' }}{# TODO <?php if($direct->getId() == $sf_user->getAttribute('id', null, 'tv_admin/direct')) echo ' tv_admin_row_this'?> #}" >
+      <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ loop.index % 2 }} {{  direct.id == app.session.get('admin/direct/id')?'tv_admin_row_this':'' }}" >
         <td>
           <input id="{{ direct.id }}" class="direct_checkbox" type="checkbox">
         </td>
