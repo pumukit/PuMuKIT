@@ -57,6 +57,12 @@ window.click_fila = function(element, tr, id)
   tr.parentNode.addClassName('tv_admin_row_this');
 }
 
+window.click_fila_no_preview = function(element, tr, id)
+{
+  //$('list_'+element+'s').getElementsByClassName('tv_admin_row_this').invoke('removeClassName', 'tv_admin_row_this');
+  $('list_'+element+'s').select('.tv_admin_row_this').invoke('removeClassName', 'tv_admin_row_this');
+  tr.parentNode.addClassName('tv_admin_row_this');
+}
 
 window.click_fila_url = function(element, tr, url)
 {
