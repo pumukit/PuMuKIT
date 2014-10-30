@@ -6,7 +6,7 @@
 
     
     <services>
-        <service id="pumukitschema.schema.locate" class="Pumukit\SchemaBundle\Listener\LocaleListener">
+        <service id="pumukitschema.schema.locale" class="Pumukit\SchemaBundle\Listener\LocaleListener">
             <argument type="service" id="request_stack" />
 	    <argument>%kernel.default_locale%</argument>
             <tag name="doctrine_mongodb.odm.event_listener" event="postLoad" />
