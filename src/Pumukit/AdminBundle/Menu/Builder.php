@@ -40,7 +40,7 @@ class Builder extends ContainerAware
     $tables->addChild('Personas');
 
     $management = $menu->addChild('Administración');
-    $management->addChild('Usuarios admin');
+    $management->addChild('Usuarios admin', array('route'=>'pumukitadmin_user_index'));
     $management->addChild('Categorías');
     $management->addChild('Géneros');
     $management->addChild('Tipos de materiales');

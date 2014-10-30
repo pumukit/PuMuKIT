@@ -1,9 +1,35 @@
-{% extends '::base.html.twig' %}
+{% extends 'PumukitAdminBundle::layout.html.twig' %}
 
 {% block body %}
 
+<h3 class="cab_body_div"><img src="/legacy/images/admin/cab/user_ico.png"/>{% trans %}Usuarios{% endtrans %}</h3>
 
-{{  users|length  }}
+
+<div id="tv_admin_container">
+  <div id="tv_admin_bar">
+    {% include 'PumukitAdminBundle:User:filters.html.twig' %}
+  </div>
+
+  <div id="tv_admin_content" >
+    <div id="list_users" name="list_users" act="/users/list">
+      {% include 'PumukitAdminBundle:User:list.html.twig' %}
+    </div>
+
+    <div style="float:right; width:50%">
+      <ul class="tv_admin_actions">
+        <!-- Falta -->
+        <li><input class="tv_admin_action_create" onclick="Modalbox.show('{{ path('pumukitadmin_user_create') }}', {title:'{% trans %}Editar Nuevo Usuario{% endtrans %}', width:800}); return false;" type="button" value="create"></li>
+      </ul>
+    </div>
+
+    <select id="options_users" style="margin: 10px 0px; width: 33%" title="{% trans %}Acciones sobre elementos seleccionados{% endtrans %}" onchange="window.change_select('user', $('options_users'))">
+      <option value="default" selected="selected">{% trans %}Selecciona una acción...{% endtrans %}</option>
+      <option disabled="">---</option>
+      <option value="delete_sel">{% trans %}Borrar seleccionados{% endtrans %}</option>
+      <option value="create">{% trans %}Crear nuevo{% endtrans %}</option>
+    </select>
+    
+  </div>
+</div>
 
 {% endblock %}
-

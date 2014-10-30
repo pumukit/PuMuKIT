@@ -1,0 +1,85 @@
+<table cellspacing="0" class="tv_admin_list">
+  <thead>
+    <tr>
+      <th width="1%">
+        <input type="checkbox" onclick="window.click_checkbox_all('user', this.checked)">
+      </th>
+      <th colspan="2" width="3%"></th>
+      <th width="1%">{% trans %}Id{% endtrans %}</th>
+      <th>{% trans %}Nombre{% endtrans %}</th>
+      <th>{% trans %}Login{% endtrans %}</th>
+      <th>{% trans %}Tipo{% endtrans %}</th>
+      <th>{% trans %}Email{% endtrans %}</th>
+      <th width="1%">{% trans %}Root{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+
+  {% if users is empty %}
+    <tr>
+      <td colspan="9">
+       {% trans %}No existen usuarios con esos valores.{% endtrans %}
+      </td>
+    </tr>
+  {% endif %}
+
+  {% for user in users %}
+    <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ loop.index % 2 }} {{ user.id == app.session.get('admin/user/id')?'tv_admin_row_this':'' }}" >
+      <td>
+        <input id="{{ user.id }}" class="user_checkbox" type="checkbox">
+      </td>
+      <td onclick="click_fila_no_preview('user', this, '{{ user.id }}');">
+	<a title="{% trans %}Editar Usuario{% endtrans %} {{ user.fullname }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_user_update', {'id': user.id}) }}"><img alt="editar" title="editar" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a>
+      </td>
+      <td>
+	<form action="{{ path('pumukitadmin_user_delete', {'id': user.id}) }}" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}¿Seguro que desea eliminar el usuario?{% endtrans %} {{ user.fullname }}')">
+              <input type="hidden" name="_method" value="DELETE">
+              <input type="hidden" name="confirmed" value="true">
+              <button type="submit" class="tv_admin_row_post">
+                  <img alt="{% trans %}borrar{% endtrans %}" title="{% trans %}borrar{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
+              </button>
+          </form>
+      </td>
+      <td onclick="click_fila_no_preview('user', this, '{{ user.id }}');">
+	{{ user.id }}
+      </td>
+      <td onclick="click_fila_no_preview('user', this, '{{ user.id }}');">
+	{% if user.fullname is not empty %}{{ user.fullname }}{% endif %}
+      </td>
+      <td onclick="click_fila_no_preview('user', this, '{{ user.id }}');">
+	{% if user.username is not empty %}{{ user.username }}{% endif %}
+      </td>
+      <td onclick="click_fila_no_preview('user', this, '{{ user.id }}');">
+	{{ user.getUserType(user.locale) }}
+      </td>
+      <td onclick="click_fila_no_preview('user', this, '{{ user.id }}');">
+	{% if user.email is not empty %}{{ user.email }}{% endif %}
+      </td>
+      <td onclick="click_fila_no_preview('user', this, '{{ user.id }}');">
+	{% if user.root is not empty %}{{ user.root }}{% endif %}
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+  <tfoot>
+    <tr>
+      <th colspan="9">
+        <div class="float-right">
+          {{ include('PumukitAdminBundle:Macros:pager_ajax.html.twig', {'name': 'user', 'page': users.getCurrentPage, 'total': users.getNbPages}) }}
+        </div>
+        {{ users.getNbResults }}
+        {% transchoice users.getNbResults %}
+	      {0} usuarios|{1} usario|]1,Inf] usuarios
+	{% endtranschoice %}
+	{% if app.session.get('admin/user/criteria')|length != 0%}
+          <a title="{% trans %}Cancelar la búsqueda actual{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancelar búsqueda{% endtrans %}</a>
+	{% endif %}
+      </th>
+    </tr>
+  </tfoot>
+</table>
+
+{# TODO
+<?php if (isset($msg_alert)) echo m_msg_alert($msg_alert) ?>
+#}

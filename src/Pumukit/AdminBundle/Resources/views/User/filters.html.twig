@@ -1,0 +1,25 @@
+<!-- Filter -->
+<div class="tv_admin_filters">
+<form id="filter_users" onsubmit="" action="{{ path('pumukitadmin_user_index') }}" method="GET">
+  <fieldset>
+    <h2>{% trans %}Buscar{% endtrans %}</h2>
+
+    <div class="form-row">
+      <label for="name">{% trans %}Nombre{% endtrans %}:</label>
+      <div class="content">
+        {% set criteria = app.session.get('admin/user/criteria') %}
+	<input type="text" name="criteria[name.en]" id="filters_name" value="{{ criteria['name.en']|default("") }}">
+      </div>
+    </div>
+  </fieldset>
+
+  <ul class="tv_admin_actions">
+    <li>
+     <input class="tv_admin_action_reset_filter" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
+    </li>
+    <li>
+      <input type="submit" name="filter" value="{% trans %}filtrar{% endtrans %}" class="tv_admin_action_filter">
+    </li>
+  </ul>
+</form>
+</div>

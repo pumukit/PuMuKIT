@@ -3,6 +3,8 @@ pumukitadmin_user_index:
     methods: [GET]
     defaults:
         _controller: pumukitadmin.controller.user:indexAction
+        _sylius:
+            filterable: true
 
 pumukitadmin_user_create:
     pattern: /new
@@ -10,7 +12,7 @@ pumukitadmin_user_create:
     defaults:
         _controller: pumukitadmin.controller.user:createAction
         _sylius:
-            redirect: pumukitadmin_user_show
+            redirect: pumukitadmin_user_index
 
 pumukitadmin_user_update:
     pattern: /{id}/edit
@@ -18,7 +20,15 @@ pumukitadmin_user_update:
     defaults:
         _controller: pumukitadmin.controller.user:updateAction
         _sylius:
-            redirect: pumukitadmin_user_show
+            redirect: pumukitadmin_user_index
+
+pumukitadmin_user_batch_delete:
+    pattern: /delete
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitadmin.controller.user:batchDeleteAction
+        _sylius:
+            redirect: pumukitadmin_user_index
 
 pumukitadmin_user_delete:
     pattern: /{id}
@@ -27,9 +37,3 @@ pumukitadmin_user_delete:
         _controller: pumukitadmin.controller.user:deleteAction
         _sylius:
             redirect: pumukitadmin_user_index
-
-pumukitadmin_user_show:
-    pattern: /{id}
-    methods: [GET]
-    defaults:
-        _controller: pumukitadmin.controller.user:showAction
