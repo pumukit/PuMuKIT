@@ -51,8 +51,12 @@ class AdminController extends ResourceController
                 ->getResource($repository, $config, 'createPaginator', array($criteria, $sorting))
             ;
 
+	    if ($request->get('page', null)) {
+                $this->get('session')->set('admin/'.$config->getResourceName().'/page', $request->get('page', 1));
+	    }
+
             $resources
-                ->setCurrentPage($request->get('page', 1), true, true)
+	      ->setCurrentPage($this->get('session')->get('admin/'.$config->getResourceName().'/page', 1), true, true)
                 ->setMaxPerPage($config->getPaginationMaxPerPage())
             ;
         } else {
