@@ -1,4 +1,11 @@
 services:
+    gedmo.listener.tree:
+        class: Gedmo\Tree\TreeListener
+        tags:
+            - { name: doctrine_mongodb.odm.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ @annotation_reader ] ]
+
     gedmo.listener.sortable:
         class: Gedmo\Sortable\SortableListener
         tags:

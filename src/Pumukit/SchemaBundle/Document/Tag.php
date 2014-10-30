@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -13,7 +14,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Pumukit\SchemaBundle\Document\Tag
  * 
- * @MongoDB\EmbeddedDocument
+ * @MongoDB\Document(repositoryClass="Gedmo\Tree\Document\MongoDB\Repository\MaterializedPathRepository")
+ * @Gedmo\Tree(type="materializedPath", activateLocking=true)
  */
 class Tag
 {
@@ -76,52 +78,6 @@ class Tag
   private $locale = 'en';
 
   /**
-   * @var int $left
-   * //TreeLeft
-   * @MongoDB\Int
-   */
-  private $left;
-
-  /**
-   * @var int $right
-   * //TreeRight
-   * @MongoDB\Int
-   */
-  private $right;
-
-  /**
-   * //TreeParent
-   * @MongoDB\ReferenceOne(targetDocument="Tag")
-   * @MongoDB\Index 
-   * //@MongoDB\ManyToOne(targetDocument="Tag", inversedBy="children")
-   * //@MongoDB\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="SET NULL")
-   */
-  private $parent;
-
-  /**
-   * @var int $root
-   * //TreeRoot
-   * @MongoDB\ReferenceOne(targetDocument="Tag")
-   * @MongoDB\Int
-   */
-  private $root;
-
-  /**
-   * @var int $level
-   * //TreeLevel
-   * @MongoDB\Int
-   */
-  private $level;
-
-  /**
-   * @MongoDB\ReferenceMany(targetDocument="Tag")
-   * @MongoDB\Index
-   * //@MongoDB\OneToMany(targetDocument="Tag", mappedBy="parent")
-   * //MongoDB\OrderBy({"left" = "ASC"})
-   */
-  private $children;
-
-  /**
    * @var date $created
    *
    * @MongoDB\Date
@@ -135,9 +91,41 @@ class Tag
    */
   private $updated;
 
+
+  /**
+   * @MongoDB\Field(type="string")
+   * @Gedmo\TreePathSource
+   */
+  private $path_source;
+
+  /**
+   * @MongoDB\Field(type="string")
+   * @Gedmo\TreePath(separator="|", appendId=false)
+   */
+  private $path;
+
+  /**
+   * @Gedmo\TreeParent
+   * @MongoDB\ReferenceOne(targetDocument="Tag")
+   */
+  private $parent;
+
+  /**
+   * @Gedmo\TreeLevel
+   * @MongoDB\Field(type="int")
+   */
+  private $level;
+
+  /**
+   * @Gedmo\TreeLockTime
+   * @MongoDB\Field(type="date")
+   */
+  private $lockTime;
+
+
+
   public function __construct($title = null)
   {
-    $this->children = new ArrayCollection();
     if ($title != null) {
       $this->setTitle($title);
     }
@@ -273,83 +261,6 @@ class Tag
   {
     return $this->metatag;
   }
-
-
-  /**
-   * Set parent
-   * 
-   * @param Tag $parent
-   */
-  public function setParent(Tag $parent)
-  {
-    $this->parent = $parent;
-  }
-
-  /**
-   * Get parent
-   * 
-   * @return Tag
-   */
-  public function getParent()
-  {
-    return $this->parent;
-  }
-
-  /**
-   * Set root
-   *
-   * @param int $root
-   * @return Tag
-   */
-  public function setRoot($root)
-  {
-    $this->root = $root;
-
-    return $this;
-  }
-
-  /**
-   * Get root
-   * 
-   * @return int
-   */
-  public function getRoot()
-  {
-    return $this->root;
-  }
-
-  /**
-   * Set level
-   *
-   * @param int $level
-   * @return Tag
-   */
-  public function setLevel($level)
-  {
-    $this->level = $level;
-
-    return $this;
-  }
-
-  /**
-   * Get level
-   *
-   * @return int
-   */
-  public function getLevel()
-  {
-    return $this->level;
-  }
-
-  /**
-   * Get children
-   *
-   * @return Tag
-   */
-  public function getChildren()
-  {
-    return $this->children;
-  }
  
   /**
    * Set created
@@ -429,52 +340,6 @@ class Tag
   }
 
   /**
-   * Set left
-   *
-   * @param integer $left
-   * @return Tag
-   */
-  public function setLeft($left)
-  {
-    $this->left = $left;
-
-    return $this;
-  }
-
-  /**
-   * Get left
-   *
-   * @return int
-   */
-  public function getLeft()
-  {
-    return $this->left;
-  }
-
-  /**
-   * Set right
-   *
-   * @param int $right
-   * @return Tag
-   */
-  public function setRight($right)
-  {
-    $this->right = $right;
-
-    return $this;
-  }
-
-  /**
-   * Get right
-   *
-   * @return int
-   */
-  public function getRight()
-  {
-    return $this->right;
-  }
-
-  /**
    * Add multimedia_objects
    *
    * @param MultimediaObject $multimediaObjects
@@ -507,26 +372,39 @@ class Tag
     return $this->multimedia_objects;
   }
 
-  /**
-   * Add children
-   *
-   * @param Tag $children
-   * @return Tag
-   */
-  public function addChildren(Tag $children)
+  public function setPathSource($path_source)
   {
-    $this->children[] = $children;
-
-    return $this;
+    $this->path_source = $path_source;
   }
 
-  /**
-   * Remove children
-   *
-   * @param Tag $children
-   */
-  public function removeChildren(Tag $children)
+  public function getPathSource()
   {
-    $this->children->removeElement($children);
+    return $this->path_source;
   }
+
+  public function setParent(Tag $parent = null)
+  {
+    $this->parent = $parent;
+  }
+
+  public function getParent()
+  {
+    return $this->parent;
+  }
+
+  public function getLevel()
+  {
+    return $this->level;
+  }
+
+  public function getPath()
+  {
+    return $this->path;
+  }
+
+  public function getLockTime()
+  {
+    return $this->lockTime;
+  }
+
 }
