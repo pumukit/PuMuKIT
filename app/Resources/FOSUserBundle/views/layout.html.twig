@@ -27,7 +27,7 @@
                             {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
                         </a>
                     {% else %}
-                        <a class="header" href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                        {{ 'layout.login'|trans({}, 'FOSUserBundle') }}
                     {% endif %}
                 </div>
         

@@ -17,18 +17,22 @@
       <input type="password" id="password" name="_password" class="form-control" placeholder="{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}" required="required" />
     </div>
 
-    <div class="form-group">
-    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-       {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
+    <div class="form-group checkbox">
+      <label>
+        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+        {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
+      </label>
     </div>
   </div>    
-
-    <div class="footer">
+  
+  <div class="footer">
     <button type="submit" id="_submit" name="_submit" class="btn bg-olive btn-block">
       {{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}
     </button>
+    {#
     <p><a href="#">I forgot my password</a></p>
     <a href="register" class="text-center">Register a new membership</a>
-    </div>
+    #}
+  </div>
 </form>
 {% endblock fos_user_content %}
