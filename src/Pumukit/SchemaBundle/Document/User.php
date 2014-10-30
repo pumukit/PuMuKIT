@@ -126,16 +126,6 @@ class User extends BaseUser
   }
 
   /**
-   * Set locale
-   *
-   * @param string $locale
-   */
-  public function setLocale($locale)
-  {
-    $this->locale = $locale;
-  }
-
-  /**
    * Set root
    *
    * @param boolean $root
@@ -153,6 +143,16 @@ class User extends BaseUser
   public function getRoot()
   {
     return $this->root;
+  }
+
+  /**
+   * Set locale
+   *
+   * @param string $locale
+   */
+  public function setLocale($locale)
+  {
+    $this->locale = $locale;
   }
   
   /**
