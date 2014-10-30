@@ -8,7 +8,7 @@ pumukit_direct:
 
 pumukitadmin_user:
     resource: @PumukitAdminBundle/Resources/config/user.yml
-    prefix: /admin/users
+    prefix: /admin/user
 
 pumukitadmin_direct:
     resource: @PumukitAdminBundle/Resources/config/direct.yml

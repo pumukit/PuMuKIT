@@ -10,7 +10,7 @@ pumukitadmin_event_create:
     defaults:
         _controller: pumukitadmin.controller.event:createAction
         _sylius:
-            reevent: pumukitadmin_event_show
+            redirect: pumukitadmin_event_show
 
 pumukitadmin_event_update:
     pattern: /{id}/edit
@@ -18,7 +18,7 @@ pumukitadmin_event_update:
     defaults:
         _controller: pumukitadmin.controller.event:updateAction
         _sylius:
-            reevent: pumukitadmin_event_show
+            redirect: pumukitadmin_event_show
 
 pumukitadmin_event_delete:
     pattern: /{id}
@@ -26,7 +26,7 @@ pumukitadmin_event_delete:
     defaults:
         _controller: pumukitadmin.controller.event:deleteAction
         _sylius:
-            reevent: pumukitadmin_event_index
+            redirect: pumukitadmin_event_index
 
 pumukitadmin_event_show:
     pattern: /{id}

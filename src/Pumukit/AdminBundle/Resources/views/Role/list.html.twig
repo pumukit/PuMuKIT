@@ -26,7 +26,7 @@
           <input id="{{ role.id }}" class="role_checkbox" type="checkbox">
         </td>
         <td onclick="click_fila_no_preview('role', this, '{{ role.id }}');">
-          <a title="{% trans %}Editar Novedad {% endtrans %}{{ role.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_role_update', {'id': role.id}) }}"><img alt="{% trans %}editar{% endtrans %}" title="{% trans %}editar{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a>
+          <a title="{% trans %}Editar Rol {% endtrans %}{{ role.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_role_update', {'id': role.id}) }}"><img alt="{% trans %}editar{% endtrans %}" title="{% trans %}editar{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a>
         </td>
         <td onclick="click_fila_no_preview('role', this, '{{ role.id }}');">
 	{% if role.getPeopleInMultimediaObject() is empty %}
@@ -92,7 +92,7 @@
         </div>
         {{ roles.getNbResults }}
         {% transchoice roles.getNbResults %}
-	      {0} canales|{1} canal|]1,Inf] canales
+	      {0} roles|{1} rol|]1,Inf] roles
 	{% endtranschoice %}
 	{% if app.session.get('admin/role/criteria')|length != 0%}
           <a title="{% trans %}Cancelar la búsqueda actual{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancelar búsqueda{% endtrans %}</a>
