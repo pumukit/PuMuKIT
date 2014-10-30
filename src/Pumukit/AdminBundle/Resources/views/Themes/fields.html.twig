@@ -45,8 +45,10 @@
 {% block choice_widget_expanded -%}
     <div {{ block('widget_container_attributes') }}>
     {%- for child in form %}
+        <div>
         {{- form_widget(child) -}}
-        {{- form_label(child) -}}
+        {{- child.vars.label|trans({}, translation_domain) -}}
+        </div>
     {% endfor -%}
     </div>
 {% endblock choice_widget_expanded %}

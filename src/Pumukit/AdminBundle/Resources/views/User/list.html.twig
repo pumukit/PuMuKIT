@@ -10,7 +10,6 @@
       <th>{% trans %}Login{% endtrans %}</th>
       <th>{% trans %}Tipo{% endtrans %}</th>
       <th>{% trans %}Email{% endtrans %}</th>
-      <th width="1%">{% trans %}Root{% endtrans %}</th>
     </tr>
   </thead>
   
@@ -51,13 +50,23 @@
 	{% if user.username is not empty %}{{ user.username }}{% endif %}
       </td>
       <td onclick="click_fila_no_preview('user', this, '{{ user.id }}');">
-	{{ user.getUserType(user.locale) }}
+	{% for role in user.roles %}
+	  {% if 'ROLE_SUPER_ADMIN' == role %}
+	    {% trans %}Administrador{% endtrans %}
+	  {% elseif 'ROLE_ADMIN' == role %}
+	    {% trans %}Publicador{% endtrans %}
+	  {% elseif 'ROLE_USER' == role %}
+	    {% trans %}Usuario{% endtrans %}
+	  {% endif %}
+	  {% spaceless %}
+	  {% if not loop.last %}
+	    ,&nbsp;
+          {% endif %} 
+          {% endspaceless %}
+	{% endfor %}
       </td>
       <td onclick="click_fila_no_preview('user', this, '{{ user.id }}');">
 	{% if user.email is not empty %}{{ user.email }}{% endif %}
-      </td>
-      <td onclick="click_fila_no_preview('user', this, '{{ user.id }}');">
-	{% if user.root is not empty %}{{ user.root }}{% endif %}
       </td>
     </tr>
   {% endfor %}
