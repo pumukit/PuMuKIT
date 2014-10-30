@@ -26,11 +26,11 @@ class User extends BaseUser
   protected $id;
 
   /**
-   * @var string $name
+   * @var string $fullname
    *
    * @MongoDB\String
    */
-  protected $name;
+  protected $fullname;
 
   /**
    * @var string $type
@@ -57,23 +57,23 @@ class User extends BaseUser
   }
 
   /**
-   * Set name
+   * Set fullname
    *
-   * @param string $name
+   * @param string $fullname
    */
-  public function setName($name)
+  public function setFullname($fullname)
   {
-    $this->name = $name;
+    $this->fullname = $fullname;
   }
   
   /**
-   * Get name
+   * Get fullname
    *
    * @return string
    */
-  public function getName()
+  public function getFullname()
   {
-    return $this->name;
+    return $this->fullname;
   }
 
   /**
@@ -110,7 +110,7 @@ class User extends BaseUser
    *
    * @param array $user_type
    */
-  public function setI18nName(array $user_type)
+  public function setI18nUserType(array $user_type)
   {
     $this->user_type = $user_type;
   }
