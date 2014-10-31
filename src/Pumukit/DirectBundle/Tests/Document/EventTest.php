@@ -2,23 +2,25 @@
 
 namespace Pumukit\DirectBundle\Tests\Document;
 
-class DirectTest extends \PHPUnit_Framework_TestCase
+use Pumukit\DirectBundle\Document\Direct;
+use Pumukit\DirectBundle\Document\Event;
+
+class EvenTest extends \PHPUnit_Framework_TestCase
 {
 
   public function testGetterAndSetter()
   {
     $directo = new Direct();
-    $direct_id = $directo->getId();
     $name = 'event name';
     $place = 'event place';
-    $date = new Timestamp();
+    $date = new \DateTime();
     $duration = '60';
     $display = 0;
     $create_serial = 0;
     
     $event = new Event();
     
-    $event->setDirectId($direct_id);
+    $event->setDirect($direct);
     $event->setName($name);
     $event->setPlace($place);
     $event->setDate($date);
