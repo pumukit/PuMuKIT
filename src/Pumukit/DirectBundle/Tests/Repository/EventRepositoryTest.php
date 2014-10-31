@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 use Pumukit\DirectBundle\Document\Event;
 
-class DirectRepositoryTest extends WebTestCase
+class EventRepositoryTest extends WebTestCase
 {
   private $dm;
   private $repo;

@@ -2,6 +2,8 @@
 
 namespace Pumukit\DirectBundle\Tests\Document;
 
+use Pumukit\DirectBundle\Document\Direct;
+
 class DirectTest extends \PHPUnit_Framework_TestCase
 {
 

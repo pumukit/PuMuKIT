@@ -13,6 +13,7 @@ class UserType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
+      ->add('enabled', 'hidden', array('data' => true)) 
       ->add('fullname', 'text', array('attr' => array('style' => 'width: 420px'), 'label' => 'Nombre'))
       ->add('username', 'text', array(
                 'attr' => array(
@@ -21,23 +22,23 @@ class UserType extends AbstractType
                     'oninput' => "setCustomValidity('')",
                     'style' => 'width: 420px'), 
                 'label' => 'Username'))
-      ->add('password', 'repeated', array(
+      ->add('plain_password', 'repeated', array(
 		'type' => 'password',
 		'invalid_message' => 'The password fields must match.',
 		'options' => array('attr' => array('class' => 'password-field')),
-		'required' => true,
+		'required' => false,
 		'first_options'  => array('label' => 'Password'),
 		'second_options' => array('label' => 'Repeat Password'),
                 'attr' => array('style' => 'width: 420px')))
       ->add('email', 'email', array('attr' => array('style' => 'width: 420px'), 'label' => 'Email'))
-      ->add('user_type', 'choice', array(
-                'choices' => array(
-                    User::USER_TYPE_ADMIN => 'Administrador',
-                    User::USER_TYPE_PUB => 'Publicador',
-                    User::USER_TYPE_FTP => 'FTP'),
-                'attr' => array('style' => 'width: 420px'),
-                'label' => 'Tipo'))
-      ->add('root', 'checkbox', array('required'=>false, 'label' => 'Root'));
+      ->add('roles', 'choice', array(
+                    'choices' => array(
+                        'ROLE_SUPER_ADMIN' => 'Administrador',
+                        'ROLE_ADMIN' => 'Publicador'),
+		    'multiple' => true,
+		    'expanded' => true,
+                    'attr' => array('style' => 'width: 420px'),
+                    'label' => 'Tipo'));
   }
   
 
