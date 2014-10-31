@@ -28,7 +28,7 @@ class DirectRepositoryTest extends WebTestCase
   {
     $url = 'http://www.pumukit2.com/directo1';
     $passwd = 'password';
-    $direct_type_id = Direct::DIRECT_TYPE_FMS;
+    $direct_type = Direct::DIRECT_TYPE_FMS;
     $width = 640;
     $height = 480;
     $qualities = 'high';
@@ -45,7 +45,7 @@ class DirectRepositoryTest extends WebTestCase
     
     $directo->setUrl($url);
     $directo->setPasswd($passwd);
-    $directo->setDirectTypeId($direct_type_id);
+    $directo->setDirectType($direct_type);
     $directo->setWidth($width);
     $directo->setHeight($height);
     $directo->setQualities($qualities);
