@@ -27,7 +27,7 @@ class Builder extends ContainerAware
 
     $live = $menu->addChild('Directos');
     $live->addChild('Canales en Directo', array('route'=>'pumukitadmin_direct_index'));
-    $live->addChild('Anuncios de Directos');
+    $live->addChild('Anuncios de Directos', array('route'=>'pumukitadmin_event_index'));
 
     $transcoding = $menu->addChild('Transcodificación');
     $transcoding->addChild('Perfil de Transcodificación');

@@ -3,14 +3,16 @@ pumukitadmin_event_index:
     methods: [GET]
     defaults:
         _controller: pumukitadmin.controller.event:indexAction
+        _sylius:
+            filterable: true
 
 pumukitadmin_event_create:
-    pattern: /new
+    pattern: /create
     methods: [GET, POST]
     defaults:
         _controller: pumukitadmin.controller.event:createAction
         _sylius:
-            redirect: pumukitadmin_event_show
+            redirect: pumukitadmin_event_index
 
 pumukitadmin_event_update:
     pattern: /{id}/edit
@@ -18,13 +20,21 @@ pumukitadmin_event_update:
     defaults:
         _controller: pumukitadmin.controller.event:updateAction
         _sylius:
-            redirect: pumukitadmin_event_show
+            redirect: pumukitadmin_event_index
 
 pumukitadmin_event_delete:
     pattern: /{id}
     methods: [DELETE]
     defaults:
         _controller: pumukitadmin.controller.event:deleteAction
+        _sylius:
+            redirect: pumukitadmin_event_index
+
+pumukitadmin_event_batch_delete:
+    pattern: /delete
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitadmin.controller.event:batchDeleteAction
         _sylius:
             redirect: pumukitadmin_event_index
 

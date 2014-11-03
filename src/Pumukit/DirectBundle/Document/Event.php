@@ -251,4 +251,29 @@ class Event
   {
     return $this->create_serial;
   }
+
+  /**
+   * Set Schedule
+   *
+   * @return array
+   */
+  public function getSchedule()
+  {
+    return array('date' => $this->date,
+		 'duration' => $this->duration);
+  }
+
+  /**
+   * Get Schedule
+   *
+   * @param array
+   */
+  public function setSchedule($schedule)
+  {
+    if ((!empty($schedule['date'])) && (!empty($schedule['duration']))){
+      $this->date = $schedule['date'];
+      $this->duration = $schedule['duration'];
+    }
+  }
+
 }

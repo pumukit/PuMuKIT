@@ -5,7 +5,7 @@ namespace Pumukit\AdminBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
+use Pumukit\AdminBundle\Form\Type\Other\EventscheduleType;
 
 class EventType extends AbstractType
 {
@@ -13,13 +13,14 @@ class EventType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
-      ->add('name')
-      ->add('place')
-      ->add('date', 'date')
-      ->add('duration', 'number')
-      ->add('display', 'checkbox', array('required'=>false))
-      ->add('create_serial', 'checkbox', array('required'=>false))
-      ->add('save', 'submit');
+      ->add('i18n_name', 'texti18n',
+	    array('attr' => array('style' => 'width: 420px'), 'label' => 'Evento'))
+      ->add('place', 'text',
+	    array('attr' => array('style' => 'width: 420px'), 'label' => 'Lugar'))
+      ->add('direct', null, array('label' => 'Channels'))
+      ->add('schedule', new EventscheduleType(),
+	array('attr' => array('style' => 'width: 420px'), 'label' => 'Horario')) 
+      ->add('display', 'checkbox', array('required'=>false));
   }
   
 

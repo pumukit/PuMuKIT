@@ -1,9 +1,2 @@
-{% extends 'PumukitAdminBundle::layout.html.twig' %}
-
-{% block body %}
-
-{{ form(form) }}
-
-
-{% endblock %}
-
+{% form_theme form 'PumukitAdminBundle:Themes:fields.html.twig' %}
+{{ form(form, {'action': path('pumukitadmin_event_create')}) }}

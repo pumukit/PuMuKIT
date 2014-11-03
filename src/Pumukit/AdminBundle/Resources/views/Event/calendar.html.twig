@@ -1,0 +1,81 @@
+<table cellspacing="0" class="tv_admin_list">
+  <thead>
+    <tr>
+      <th width="14%">{% trans %}LUNES{% endtrans %}</th>
+      <th width="14%">{% trans %}MARTES{% endtrans %}</th>
+      <th width="14%">{% trans %}MIÉRCOLES{% endtrans %}</th>
+      <th width="14%">{% trans %}JUEVES{% endtrans %}</th>
+      <th width="14%">{% trans %}VIERNES{% endtrans %}</th>
+      <th width="14%">{% trans %}SÁBADO{% endtrans %}</th>
+      <th width="14%">{% trans %}DOMINGO{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+
+    
+  {# <?php $total_event=0; foreach($cal as $dweek => $c):?> #}
+  {% set total_event = 0 %}
+  {% for dweek in calendar %}
+    <tr>
+    {% for d in range(0,6) %}
+      <td style="cursor: auto; {{ (date(dmY) == calendar[dweek][d]~m~y)?"border:3px solid #000":"" }}">
+          <div style="overflow: hidden; position: relative; height: 70px;">
+          {% if calendar[dweek][d] is not empty %}
+            <span style="position:absolute; top:0px; right:0px">{{ calendar[dweek][d] }}</span>
+             {% set calendar_events = PumukitSchemaBundle:EventRepository:getByDate(y, m, calendar[dweek][d]) %}
+             <ul style="padding-left: 6px; list-style-type: none; ">
+               {% for event in calendar_events %}
+	         {% set total_event = total_event + 1 %}
+                 <li>
+		   <form action="{{ path('pumukitadmin_event_delete', {'id': event.id}) }}" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}¿Seguro que desea eliminar el evento de fecha {% endtrans %}{{ event.date|date('Y-m-d H:m') }}?')">
+		     <input type="hidden" name="_method" value="DELETE">
+		     <input type="hidden" name="confirmed" value="true">
+		     <button type="submit" class="tv_admin_row_post">
+		       <img alt="{% trans %}borrar{% endtrans %}" title="{% trans %}borrar{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
+		     </button>
+		   </form>
+		   <a title="{% trans %}Editar Evento{% endtrans %} {{ event.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_event_update', {'cal': cal, 'id': event.id}) }}">{{ event.name }}</a>
+                 </li>
+               {% endfor %}
+             </ul>
+          {% endif %}
+        </div>
+      </td>
+    {% endfor %}
+    </tr>
+  {% endfor %}
+  </tbody>
+  <tfoot>
+    <tr>
+      <th colspan="7">        
+        <div class="float-left" style="padding-right: 5px">
+          <a class="azul" href="{{ path('pumukitadmin_event_index') }}" style="color:blue">{% trans %}Lista{% endtrans %}</a>
+          <a class="azul" href="{{ path('pumukitadmin_event_index')~'?cal=cal' }}" style="color:grey">{% trans %}Calendario{% endtrans %}</a>
+        </div>
+        <div class="float-right">
+        {#  {{ include('PumukitAdminBundle:Macros:pager_ajax.html.twig', {'name': 'event', 'page': events.getCurrentPage, 'total':events.getNbPages}) }} #}
+
+	<a class="azul" style="color:blue" href="#" onclick="new Ajax.Updater('list_events', '{{ path('pumukitadmin_event_index', {'cal': 'cal', 'month': 'previous'}) }}', {asynchronous:true, evalScripts:true}); return false;">&laquo;{% trans %}Anterior{% endtrans %}</a>
+
+        {# TODO
+          <?php echo link_to_remote(__('&laquo;Anterior'), array('update'=> 'list_events', 'url' => 'events/list?cal=cal&mes=menos', 'script' => 'true'), array('class' =>'azul', 'style' => 'color:blue')) ?>
+          &nbsp;<?php echo $m.'-'.$y?>&nbsp;
+          <?php echo link_to_remote(__('HOY'), array('update'=> 'list_events', 'url' => 'events/list?cal=cal&mes=hoy', 'script' => 'true'), array('class' =>'azul', 'style' => 'color:blue')) ?>
+          <?php echo link_to_remote(__('Siguiente&raquo;'), array('update'=> 'list_events', 'url' => 'events/list?cal=cal&mes=mas', 'script' => 'true'), array('class' =>'azul', 'style' => 'color:blue')) ?>#}
+        </div>
+        {{ events.getNbResults }} 
+        {% transchoice events.getNbResults %}
+	      {0} eventos|{1} evento|]1,Inf] eventos
+	{% endtranschoice %}
+	{% if app.session.get('admin/event/criteria')|length != 0%}
+          <a title="{% trans %}Cancelar la búsqueda actual{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancelar búsqueda{% endtrans %}</a>
+	{% endif %}
+     </th>
+    </tr>
+  </tfoot>
+</table>
+
+{# TODO
+<?php if (isset($msg_alert)) echo m_msg_alert($msg_alert) ?>
+#}

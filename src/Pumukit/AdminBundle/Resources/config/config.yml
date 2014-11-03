@@ -18,6 +18,7 @@ sylius_resource:
             templates: PumukitAdminBundle:Event
             classes:
                 model: Pumukit\DirectBundle\Document\Event
+                controller: Pumukit\AdminBundle\Controller\CalendarAdminController
         pumukitadmin.role:
             driver: doctrine/mongodb-odm
             templates: PumukitAdminBundle:Role

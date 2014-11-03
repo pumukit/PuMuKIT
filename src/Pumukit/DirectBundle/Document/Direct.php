@@ -125,6 +125,16 @@ class Direct
    */
   private $locale = 'en';
 
+  /** 
+   * Constructor
+   */
+  protected static $instances = array();
+
+  public function __toString()
+  {
+    return $this->url;
+  }
+
   /**
    * Get id
    *
@@ -519,5 +529,4 @@ class Direct
     }
   }
 
-  
 }

@@ -8,26 +8,36 @@
 
 <div id="tv_admin_container">
   <div id="tv_admin_bar">
-    {% include 'filters.html.twig' %}
+    {% include 'PumukitAdminBundle:Event:filters.html.twig' %}
     <div id="preview_event" style="padding:5px; border: solid 1px #DDD; background: #8eb0bc url(/legacy/images/admin/cab/cab.gif) repeat-x scroll 0% 0%">
-      <?php include_component('events', 'preview') ?>
+    {% if(app.session.has('admin/event/id')) %}
+      {{ render_hinclude(url('pumukitadmin_event_show', {'id': app.session.get('admin/event/id')})) }}
+    {% else %}
+      {% trans %}Seleccione algún evento.{% endtrans %}
+    {% endif %}
     </div>
   </div>
 
   <div id="tv_admin_content" >
     <div id="list_events" name="list_events" act="/events/list">
-      <?php include_component('events', $div) ?>
+    {% if app.request.query.get('cal') %}
+      {% set div_url = 'cal' %}
+      {% include 'PumukitAdminBundle:Event:calendar.html.twig' %}
+    {% else %}
+      {% set div_url = '' %}
+      {% include 'PumukitAdminBundle:Event:array.html.twig' %}
+    {% endif %}
     </div>
 
     <div style="float:right; width:50%">
       <ul class="tv_admin_actions">
-        <li><?php echo button_to_function({% trans %}Nueva Serie{% endtrans %}, 'Modalbox.show("'.url_for('events/createseveral'.$div_url).'", {title:"' . {% trans %}Crear serie de Eventos Nuevos{% endtrans %} . '", width:800}); return false;', array ('class' => 'tv_admin_action_create')) ?></li>
-        <li><?php echo button_to_function( {% trans %}Nuevo Evento{% endtrans %}, 'Modalbox.show("'.url_for('events/create'.$div_url).'", {title:"' . {% trans %}Crear Nuevo Evento{% endtrans %} . '", width:800}); return false;', array ('class' => 'tv_admin_action_create')) ?></li>
+        {# TODO <li><input class="tv_admin_action_create" onclick="Modalbox.show('{{ path('pumukitadmin_event_createseveral', {'cal': div_url}) }}', {title:{% trans %}Crear serie de Eventos Nuevos{% endtrans %}, width:800}); return false;" type="button" value="{% trans %}Nueva Serie{% endtrans %}"></li> #}
+        <li><input class="tv_admin_action_create" onclick="Modalbox.show('{{ path('pumukitadmin_event_create', {'cal': div_url}) }}', {title:'{% trans %}Crear Nuevo Evento{% endtrans %}', width:800}); return false;" type="button" value="{% trans %}Nuevo Evento{% endtrans %}"></li>
       </ul>
     </div>
 
     <select id="options_events" style="margin: 10px 0px; width: 33%" title={% trans %}"Acciones sobre elementos seleccionados"{% endtrans %} onchange="window.change_select('event', $('options_events'))">
-      <option value="default" selected="selected">{% trans %}Selecciona una acci&oacute;n...{% endtrans %}</option>
+      <option value="default" selected="selected">{% trans %}Selecciona una acción...{% endtrans %}</option>
       <option disabled="">---</option>
       <!-- <option value="delete_sel"><?php echo __('Borrar seleccionados')?></option>
       <option value="create">Crear nuevo</option>
@@ -39,4 +49,3 @@
 </div>
 
 {% endblock %}
-
