@@ -4,6 +4,7 @@ namespace Pumukit\DirectBundle\Tests\Repository;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+use Pumukit\DirectBundle\Document\Direct;
 use Pumukit\DirectBundle\Document\Event;
 
 class EventRepositoryTest extends WebTestCase
@@ -26,18 +27,17 @@ class EventRepositoryTest extends WebTestCase
 
   public function testRepository()
   {
-    $directo = new Direct();
-    $direct_id = $directo->getId();
+    $direct = new Direct();
     $name = 'event name';
     $place = 'event place';
-    $date = new Timestamp();
+    $date = new \DateTime();
     $duration = '60';
     $display = 0;
     $create_serial = 0;
-    
+
     $event = new Event();
     
-    $event->setDirectId($direct_id);
+    $event->setDirect($direct);
     $event->setName($name);
     $event->setPlace($place);
     $event->setDate($date);
@@ -45,7 +45,8 @@ class EventRepositoryTest extends WebTestCase
     $event->setDisplay($display);
     $event->setCreateSerial($create_serial);
 
-    $this->dm->persist($directo);
+    $this->dm->persist($direct);    
+    $this->dm->persist($event);
     $this->dm->flush();
 
     $this->assertEquals(1, count($this->repo->findAll()));

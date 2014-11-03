@@ -10,7 +10,7 @@ class EvenTest extends \PHPUnit_Framework_TestCase
 
   public function testGetterAndSetter()
   {
-    $directo = new Direct();
+    $direct = new Direct();
     $name = 'event name';
     $place = 'event place';
     $date = new \DateTime();
@@ -28,7 +28,7 @@ class EvenTest extends \PHPUnit_Framework_TestCase
     $event->setDisplay($display);
     $event->setCreateSerial($create_serial);
 
-    $this->assertEquals($url, $event->getUrl());
+    $this->assertEquals($direct, $event->getDirect());
     $this->assertEquals($name, $event->getName());
     $this->assertEquals($place, $event->getPlace());
     $this->assertEquals($date, $event->getDate());

@@ -149,11 +149,6 @@ class MultimediaObject
    */
   private $locale = 'en';
 
-  public function setTranslatableLocale($locale)
-  {
-    $this->locale = $locale;
-  }
-
   /**
    * //@MongoDB\EmbedMany(targetDocument="MultimediaObjectTranslation")
    */

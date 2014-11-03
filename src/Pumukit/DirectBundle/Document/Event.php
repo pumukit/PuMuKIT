@@ -20,11 +20,11 @@ class Event
   private $id;
 
   /**
-   * @var int $direct_id
+   * @var int $direct
    *
    * @MongoDB\ReferenceOne(targetDocument="Direct")
    */
-  private $direct_id;
+  private $direct;
 
   /**
    * @var string $name
@@ -41,9 +41,9 @@ class Event
   private $place;
 
   /**
-   * @var timestamp $date
+   * @var datetime $date
    *
-   * @MongoDB\Timestamp
+   * @MongoDB\Date
    */
   private $date;
 
@@ -82,6 +82,26 @@ class Event
   {
     return $this->id;
   }
+
+  /**
+   * Set direct
+   *
+   * @param string $direct
+   */
+  public function setDirect($direct)
+  {
+    $this->direct = $direct;
+  }
+  
+  /**
+   * Get direct
+   *
+   * @return string
+   */
+  public function getDirect()
+  {
+    return $this->direct;
+  } 
 
   /**
    * Set name
@@ -126,7 +146,7 @@ class Event
   /**
    * Set date
    *
-   * @param Timestamp $date
+   * @param Date $date
    */
   public function setDate($date)
   {
@@ -136,7 +156,7 @@ class Event
   /**
    * Get date
    *
-   * @return Timestamp
+   * @return Date
    */
   public function getDate()
   {

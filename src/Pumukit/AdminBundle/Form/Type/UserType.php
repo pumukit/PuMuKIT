@@ -22,14 +22,20 @@ class UserType extends AbstractType
                     'oninput' => "setCustomValidity('')",
                     'style' => 'width: 420px'), 
                 'label' => 'Username'))
+      ->add('plain_password', 'password', array(
+		'required' => false,
+		'label' => 'Password',
+                'attr' => array('style' => 'width: 420px')))
+      /*
       ->add('plain_password', 'repeated', array(
 		'type' => 'password',
-		'invalid_message' => 'The password fields must match.',
-		'options' => array('attr' => array('class' => 'password-field')),
+		'options' => array('attr' => array('oninvalid' => "setCustomValidity('password-field')")),
 		'required' => false,
+		'invalid_message' => 'The password fields must match.',
 		'first_options'  => array('label' => 'Password'),
-		'second_options' => array('label' => 'Repeat Password'),
+		'second_options' => array('label' => 'Repita Password'),
                 'attr' => array('style' => 'width: 420px')))
+      */
       ->add('email', 'email', array('attr' => array('style' => 'width: 420px'), 'label' => 'Email'))
       ->add('roles', 'choice', array(
                     'choices' => array(
