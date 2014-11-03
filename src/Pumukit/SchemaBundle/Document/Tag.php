@@ -60,6 +60,9 @@ class Tag
    * @var string $cod
    *
    * @MongoDB\String
+   * @Gedmo\TreePathSource
+   *
+   * TODO Unique
    */
   private $cod = 0;
 
@@ -91,12 +94,6 @@ class Tag
    */
   private $updated;
 
-
-  /**
-   * @MongoDB\Field(type="string")
-   * @Gedmo\TreePathSource
-   */
-  private $path_source;
 
   /**
    * @MongoDB\Field(type="string")
@@ -370,16 +367,6 @@ class Tag
   public function getMultimediaObjects()
   {
     return $this->multimedia_objects;
-  }
-
-  public function setPathSource($path_source)
-  {
-    $this->path_source = $path_source;
-  }
-
-  public function getPathSource()
-  {
-    return $this->path_source;
   }
 
   public function setParent(Tag $parent = null)
