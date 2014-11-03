@@ -29,7 +29,7 @@ class Event
   /**
    * @var string $name
    *
-   * @MongoDB\String
+   * @MongoDB\Raw
    */
   private $name;
 
@@ -108,9 +108,12 @@ class Event
    *
    * @param string $name
    */
-  public function setName($name)
+  public function setName($name, $locale = null)
   {
-    $this->name = $name;
+    if ($locale == null){
+      $locale = $this->locale;
+    }
+    $this->name[$locale] = $name[$locale];
   }
   
   /**
@@ -118,10 +121,36 @@ class Event
    *
    * @return string
    */
-  public function getName()
+  public function getName($locale = null)
+  {
+    if ($locale == null){
+      $locale = $this->locale;
+    }
+    if (!isset($this->name[$locale])){
+      return null;
+    }
+    return $this->name[$locale];
+  } 
+
+  /**
+   * Set I18n name
+   *
+   * @param array $name
+   */
+  public function setI18nName(array $name)
+  {
+    $this->name = $name;
+  }
+  
+  /**
+   * Get i18n name
+   *
+   * @return array
+   */
+  public function getI18nName()
   {
     return $this->name;
-  } 
+  }
 
   /**
    * Set place
