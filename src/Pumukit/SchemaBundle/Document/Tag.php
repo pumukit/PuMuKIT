@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Pumukit\SchemaBundle\Document\Tag
  * 
- * @MongoDB\Document(repositoryClass="Gedmo\Tree\Document\MongoDB\Repository\MaterializedPathRepository")
+ * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\TagRepository")
  * @Gedmo\Tree(type="materializedPath", activateLocking=true)
  */
 class Tag
