@@ -26,9 +26,9 @@ class CalendarAdminController extends AdminController
   public function indexAction(Request $request)
   {
     $config = $this->getConfiguration();
- 
+
     $criteria = $config->getCriteria();
-    $sorting = $config->getSorting();
+    $sorting = $config->getSorting(); 
 
     if (array_key_exists('reset', $criteria)) {
       $this->get('session')->remove('admin/'.$config->getResourceName().'/criteria');
@@ -71,8 +71,20 @@ class CalendarAdminController extends AdminController
 	;
     }
 
-    list($m, $y, $calendar) = $this->getCalendar($config, $request);
-    $resources = array($pluralName => $resources, 'm' => $m, 'y' => $y, 'calendar' => $calendar);
+
+    if ("cal" == $request->query->get('cal')){
+      $this->get('session')->set('admin/'.$config->getResourceName().'/cal', 'cal');
+    }else if ("list" == $request->query->get('cal')){
+      $this->get('session')->remove('admin/'.$config->getResourceName().'/cal');
+    }
+
+    if ($this->get('session')->has('admin/'.$config->getResourceName().'/cal')){
+      list($m, $y, $calendar) = $this->getCalendar($config, $request);
+      $resources = array($pluralName => $resources, 'm' => $m, 'y' => $y, 'calendar' => $calendar);
+    }else{
+      $resources = array($pluralName => $resources);
+    }
+
 
     $view = $this
       ->view()
@@ -82,6 +94,44 @@ class CalendarAdminController extends AdminController
 
     return $this->handleView($view);
   }
+
+
+    /**
+     * Overwrite to update the session.
+     */
+    public function delete($resource)
+    {
+        $config = $this->getConfiguration();
+        $event = $this->dispatchEvent('pre_delete', $resource);
+
+        if (!$event->isStopped()) {
+            $this->get('session')->remove('admin/'.$config->getResourceName().'/id');
+            $this->removeAndFlush($resource);
+        }
+
+
+        return $event;
+    }
+
+
+
+    public function batchDeleteAction(Request $request)
+    {
+        $ids = $this->getRequest()->get('ids');
+
+	foreach($ids as $id) {
+            $resource = $this->find($id);
+	    $this->delete($resource);
+	}
+	$config = $this->getConfiguration();
+
+	$this->setFlash('success', 'delete');
+
+	return $this->redirectToRoute(
+	    $config->getRedirectRoute('index'),
+	    $config->getRedirectParameters()
+	);
+    }
 
 
   /**

@@ -57,8 +57,8 @@
     <tr>
       <th colspan="7">        
         <div class="float-left" style="padding-right: 5px">
-          <a class="azul" title="{% trans %}Lista{% endtrans %}" href="{{ path('pumukitadmin_event_index') }}" style="color:grey">{% trans %}Lista{% endtrans %}</a>
-          <a class="azul" title="{% trans %}Calendario{% endtrans %}" href="{{ path('pumukitadmin_event_index')~'?cal=cal' }}" style="color:blue">{% trans %}Calendario{% endtrans %}</a>
+          <a class="azul" title="{% trans %}Lista{% endtrans %}" href="{{ path('pumukitadmin_event_index', {'cal': 'list'}) }}" style="color:grey">{% trans %}Lista{% endtrans %}</a>
+          <a class="azul" title="{% trans %}Calendario{% endtrans %}" href="{{ path('pumukitadmin_event_index', {'cal': 'cal'}) }}" style="color:blue">{% trans %}Calendario{% endtrans %}</a>
         </div>
         <div class="float-right">
           {{ include('PumukitAdminBundle:Macros:pager_ajax.html.twig', {'name': 'event', 'page': events.getCurrentPage, 'total':events.getNbPages}) }}

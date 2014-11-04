@@ -20,7 +20,7 @@
 
   <div id="tv_admin_content" >
     <div id="list_events" name="list_events" act="/events/list">
-    {% if app.request.query.get('cal') %}
+    {% if app.session.has('admin/event/cal') %}
       {% set div_url = 'cal' %}
       {% include 'PumukitAdminBundle:Event:calendar.html.twig' %}
     {% else %}

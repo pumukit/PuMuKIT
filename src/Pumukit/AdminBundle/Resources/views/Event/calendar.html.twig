@@ -26,16 +26,12 @@
           <div style="overflow: hidden; position: relative; height: 70px;">
           {% if d is not empty %}
             <span style="position:absolute; top:0px; right:0px">{{ d }}</span>
-
-             {# {% set calendar_events = PumukitSchemaBundle:EventRepository:getByDate(y, m, calendar[dweek][d]) %} #}
-
 	     {% set calendar_events = [] %}
 	     {% for event in events %}
 	       {% if ((y == event.date|date('Y')) and (m == event.date|date('m')) and (d == event.date|date('d'))) %}
 	         {% set calendar_events = calendar_events|merge([event]) %}
                {% endif %}
 	     {% endfor %}
-
              <ul style="padding-left: 6px; list-style-type: none; ">
                {% for day_event in calendar_events %}
 	         {% set total_event = total_event + 1 %}
@@ -62,14 +58,14 @@
     <tr>
       <th colspan="7">        
         <div class="float-left" style="padding-right: 5px">
-          <a class="azul" href="{{ path('pumukitadmin_event_index') }}" style="color:blue">{% trans %}Lista{% endtrans %}</a>
-          <a class="azul" href="{{ path('pumukitadmin_event_index')~'?cal=cal' }}" style="color:grey">{% trans %}Calendario{% endtrans %}</a>
+          <a class="azul" href="{{ path('pumukitadmin_event_index', {'cal': 'list'}) }}" style="color:blue">{% trans %}Lista{% endtrans %}</a>
+          <a class="azul" href="{{ path('pumukitadmin_event_index', {'cal': 'cal'}) }}" style="color:grey">{% trans %}Calendario{% endtrans %}</a>
         </div>
         <div class="float-right">
-	  <a class="azul" style="color:blue" href="{{ path('pumukitadmin_event_index', {'cal': 'cal', 'month': 'previous'}) }}">&laquo;{% trans %}Anterior{% endtrans %}</a>
+	  <a class="azul" style="color:blue" href="{{ path('pumukitadmin_event_index', {'month': 'previous'}) }}">&laquo;{% trans %}Anterior{% endtrans %}</a>
           &nbsp;{{ m ~'-'~y }}&nbsp;
-	  <a class="azul" style="color:blue" href="{{ path('pumukitadmin_event_index', {'cal': 'cal', 'month': 'today'}) }}">{% trans %}HOY{% endtrans %}</a>
-	  <a class="azul" style="color:blue" href="{{ path('pumukitadmin_event_index', {'cal': 'cal', 'month': 'next'}) }}">{% trans %}Siguiente{% endtrans %}&raquo;</a>
+	  <a class="azul" style="color:blue" href="{{ path('pumukitadmin_event_index', {'month': 'today'}) }}">{% trans %}HOY{% endtrans %}</a>
+	  <a class="azul" style="color:blue" href="{{ path('pumukitadmin_event_index', {'month': 'next'}) }}">{% trans %}Siguiente{% endtrans %}&raquo;</a>
         </div>
         {{ events.getNbResults }} 
         {% transchoice events.getNbResults %}
