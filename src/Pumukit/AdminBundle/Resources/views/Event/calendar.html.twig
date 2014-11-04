@@ -36,7 +36,7 @@
                {% for day_event in calendar_events %}
 	         {% set total_event = total_event + 1 %}
                  <li>
-		   <form action="{{ path('pumukitadmin_event_delete', {'id': day_event.id, 'cal': 'cal'}) }}" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}¿Seguro que desea eliminar el evento de fecha {% endtrans %}{{ day_event.date|date('Y-m-d H:m') }}?')">
+		   <form action="{{ path('pumukitadmin_event_delete', {'id': day_event.id}) }}" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}¿Seguro que desea eliminar el evento de fecha {% endtrans %}{{ day_event.date|date('Y-m-d H:i') }}?')">
 		     <input type="hidden" name="_method" value="DELETE">
 		     <input type="hidden" name="confirmed" value="true">
 		     <button type="submit" class="tv_admin_row_post">

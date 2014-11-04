@@ -5,8 +5,7 @@
     {{ event.name }}
   </p>
   <p style="overflow:hidden; padding:5px; border:solid 1px #DDD; background: {{ event.display ? '#FFEAD6' : '#DDD' }}" >
-    {# <?php echo $event->getDate('d/m/Y H:m')?>  <?php echo $event->getDuration()?> <?php echo __('min.')?> #}
-    {{ event.date|date('Y-m-d H:m') }} {{ event.duration }} {% trans %}min.{% endtrans %}
+    {{ event.date|date('Y-m-d H:i') }} {{ event.duration }} {% trans %}min.{% endtrans %}
   </p>
 </div>
 
