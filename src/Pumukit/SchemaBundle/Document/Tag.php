@@ -74,6 +74,13 @@ class Tag
   private $metatag = false;
 
   /**
+   * @var boolean $display
+   *
+   * @MongoDB\Boolean
+   */
+  private $display = false;
+
+  /**
    * Used locale to override Translation listener`s locale
    * this is not a mapped field of entity metadata, just a simple property
    * @var locale $locale
@@ -259,6 +266,27 @@ class Tag
     return $this->metatag;
   }
  
+
+  /**
+   * Set display
+   *
+   * @param boolean $display
+   */
+  public function setDisplay($display)
+  {
+    $this->display = $display;
+  }
+
+  /**
+   * Get display
+   *
+   * @return boolean
+   */
+  public function getDisplay()
+  {
+    return $this->display;
+  }
+
   /**
    * Set created
    *
