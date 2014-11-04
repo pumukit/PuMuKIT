@@ -12,30 +12,42 @@
   </thead>
   
   <tbody>
-
-    
-  {# <?php $total_event=0; foreach($cal as $dweek => $c):?> #}
   {% set total_event = 0 %}
-  {% for dweek in calendar %}
+  {% for key,dweek in calendar %}
     <tr>
-    {% for d in range(0,6) %}
-      <td style="cursor: auto; {{ (date(dmY) == calendar[dweek][d]~m~y)?"border:3px solid #000":"" }}">
+    {# {% for dkey,d in dweek %} #}
+    {% for dkey in range(0, 6) %} 
+      {% if dweek[dkey] is defined %} 
+        {% set d = dweek[dkey] %}
+      {% else %} 
+        {% set d = '' %}
+      {% endif %}
+      <td style="cursor: auto; {{ ((d == 'now'|date('d')) and (m == 'now'|date('m')) and (y == 'now'|date('Y')))?"border:3px solid #000":"" }}">
           <div style="overflow: hidden; position: relative; height: 70px;">
-          {% if calendar[dweek][d] is not empty %}
-            <span style="position:absolute; top:0px; right:0px">{{ calendar[dweek][d] }}</span>
-             {% set calendar_events = PumukitSchemaBundle:EventRepository:getByDate(y, m, calendar[dweek][d]) %}
+          {% if d is not empty %}
+            <span style="position:absolute; top:0px; right:0px">{{ d }}</span>
+
+             {# {% set calendar_events = PumukitSchemaBundle:EventRepository:getByDate(y, m, calendar[dweek][d]) %} #}
+
+	     {% set calendar_events = [] %}
+	     {% for event in events %}
+	       {% if ((y == event.date|date('Y')) and (m == event.date|date('m')) and (d == event.date|date('d'))) %}
+	         {% set calendar_events = calendar_events|merge([event]) %}
+               {% endif %}
+	     {% endfor %}
+
              <ul style="padding-left: 6px; list-style-type: none; ">
-               {% for event in calendar_events %}
+               {% for day_event in calendar_events %}
 	         {% set total_event = total_event + 1 %}
                  <li>
-		   <form action="{{ path('pumukitadmin_event_delete', {'id': event.id}) }}" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}¿Seguro que desea eliminar el evento de fecha {% endtrans %}{{ event.date|date('Y-m-d H:m') }}?')">
+		   <form action="{{ path('pumukitadmin_event_delete', {'id': day_event.id, 'cal': 'cal'}) }}" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}¿Seguro que desea eliminar el evento de fecha {% endtrans %}{{ day_event.date|date('Y-m-d H:m') }}?')">
 		     <input type="hidden" name="_method" value="DELETE">
 		     <input type="hidden" name="confirmed" value="true">
 		     <button type="submit" class="tv_admin_row_post">
 		       <img alt="{% trans %}borrar{% endtrans %}" title="{% trans %}borrar{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
 		     </button>
 		   </form>
-		   <a title="{% trans %}Editar Evento{% endtrans %} {{ event.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_event_update', {'cal': cal, 'id': event.id}) }}">{{ event.name }}</a>
+		   <a title="{% trans %}Editar Evento{% endtrans %} {{ day_event.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_event_update', {'id': day_event.id, 'cal': 'cal'}) }}">{{ day_event.name }}</a>
                  </li>
                {% endfor %}
              </ul>
@@ -54,15 +66,10 @@
           <a class="azul" href="{{ path('pumukitadmin_event_index')~'?cal=cal' }}" style="color:grey">{% trans %}Calendario{% endtrans %}</a>
         </div>
         <div class="float-right">
-        {#  {{ include('PumukitAdminBundle:Macros:pager_ajax.html.twig', {'name': 'event', 'page': events.getCurrentPage, 'total':events.getNbPages}) }} #}
-
-	<a class="azul" style="color:blue" href="#" onclick="new Ajax.Updater('list_events', '{{ path('pumukitadmin_event_index', {'cal': 'cal', 'month': 'previous'}) }}', {asynchronous:true, evalScripts:true}); return false;">&laquo;{% trans %}Anterior{% endtrans %}</a>
-
-        {# TODO
-          <?php echo link_to_remote(__('&laquo;Anterior'), array('update'=> 'list_events', 'url' => 'events/list?cal=cal&mes=menos', 'script' => 'true'), array('class' =>'azul', 'style' => 'color:blue')) ?>
-          &nbsp;<?php echo $m.'-'.$y?>&nbsp;
-          <?php echo link_to_remote(__('HOY'), array('update'=> 'list_events', 'url' => 'events/list?cal=cal&mes=hoy', 'script' => 'true'), array('class' =>'azul', 'style' => 'color:blue')) ?>
-          <?php echo link_to_remote(__('Siguiente&raquo;'), array('update'=> 'list_events', 'url' => 'events/list?cal=cal&mes=mas', 'script' => 'true'), array('class' =>'azul', 'style' => 'color:blue')) ?>#}
+	  <a class="azul" style="color:blue" href="{{ path('pumukitadmin_event_index', {'cal': 'cal', 'month': 'previous'}) }}">&laquo;{% trans %}Anterior{% endtrans %}</a>
+          &nbsp;{{ m ~'-'~y }}&nbsp;
+	  <a class="azul" style="color:blue" href="{{ path('pumukitadmin_event_index', {'cal': 'cal', 'month': 'today'}) }}">{% trans %}HOY{% endtrans %}</a>
+	  <a class="azul" style="color:blue" href="{{ path('pumukitadmin_event_index', {'cal': 'cal', 'month': 'next'}) }}">{% trans %}Siguiente{% endtrans %}&raquo;</a>
         </div>
         {{ events.getNbResults }} 
         {% transchoice events.getNbResults %}

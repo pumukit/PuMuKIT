@@ -12,12 +12,4 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
  */
 class EventRepository extends DocumentRepository
 {
-  /**
-   * Get by date
-   */
-  public static function getByDate($y, $m, $d)
-  {
-    
-  }
-
 }

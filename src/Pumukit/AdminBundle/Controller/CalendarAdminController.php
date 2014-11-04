@@ -26,7 +26,7 @@ class CalendarAdminController extends AdminController
   public function indexAction(Request $request)
   {
     $config = $this->getConfiguration();
-    
+ 
     $criteria = $config->getCriteria();
     $sorting = $config->getSorting();
 
@@ -71,14 +71,12 @@ class CalendarAdminController extends AdminController
 	;
     }
 
-
-    $this->getCalendar($config, $request);
-
+    list($m, $y, $calendar) = $this->getCalendar($config, $request);
+    $resources = array($pluralName => $resources, 'm' => $m, 'y' => $y, 'calendar' => $calendar);
 
     $view = $this
       ->view()
       ->setTemplate($config->getTemplate('index.html'))
-      ->setTemplateVar($pluralName)
       ->setData($resources)
       ;
 
@@ -102,7 +100,6 @@ class CalendarAdminController extends AdminController
       $this->div_url = '';
       $this->div = "array";
       }*/
-    
 
     if (!$this->get('session')->get('admin/'.$config->getResourceName().'/month'))
       $this->get('session')->set('admin/'.$config->getResourceName().'/month', date('m'));
@@ -114,24 +111,25 @@ class CalendarAdminController extends AdminController
 
     //$this->total_event_all = EventPeer::doCount(new Criteria());
 
-    $changed_date = mktime(0,0,0,$m,1,$y);
-
-    if ($request->query->get('month') == "next")
-    {
+    if ($request->query->get('month') == "next"){
       $changed_date = mktime(0,0,0,$m+1,1,$y);
+      $this->get('session')->set('admin/'.$config->getResourceName().'/year', date("Y", $changed_date));
+      $this->get('session')->set('admin/'.$config->getResourceName().'/month', date("m", $changed_date));
     }elseif ($request->query->get('month') == "previous"){
       $changed_date = mktime(0,0,0,$m-1,1,$y);
+      $this->get('session')->set('admin/'.$config->getResourceName().'/year', date("Y", $changed_date));
+      $this->get('session')->set('admin/'.$config->getResourceName().'/month', date("m", $changed_date));
     }elseif ($request->query->get('month') == "today"){
-      $changed_date = mktime(0,0,0,$m,1,$y);
+      $this->get('session')->set('admin/'.$config->getResourceName().'/year', date("Y"));
+      $this->get('session')->set('admin/'.$config->getResourceName().'/month', date("m"));
     }
 
-    $this->get('session')->set('admin/'.$config->getResourceName().'/year', date("Y", $changed_date));
-    $this->get('session')->set('admin/'.$config->getResourceName().'/month', date("m", $changed_date));
+    $m = $this->get('session')->get('admin/'.$config->getResourceName().'/month', date('m'));
+    $y = $this->get('session')->get('admin/'.$config->getResourceName().'/year', date('Y'));
 
-    $this->m = $this->get('session')->get('month', date('m'), 'tv_admin/event');
-    $this->y = $this->get('session')->get('year', date('Y'), 'tv_admin/event');
-    $this->cal = $this->generateArray($this->m, $this->y);
+    $calendar = $this->generateArray($m, $y);
 
+    return (array($m, $y, $calendar));
   }
 
   /**
