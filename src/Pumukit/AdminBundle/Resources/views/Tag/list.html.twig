@@ -1,0 +1,156 @@
+<table cellspacing="0" class="tv_admin_list">
+  <thead>
+    <tr>
+      <th width="1%">
+        <input type="checkbox" onclick="window.click_checkbox_all('category', this.checked)">
+      </th>
+      <th colspan="3" width="3%"></th>
+      <th width="1%">{% trans %}Id{% endtrans %}</th>
+      <th>{% trans %}Cod - Nombre{% endtrans %}</th>
+      <th>{% trans %}Obj. MM.{% endtrans %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if not root %}
+      <tr>
+        <td colspan="8">
+         {% trans %}No existen tags con esos valores.{% endtrans %}
+        </td>
+      </tr>
+    {% endif %}
+    {% for tag in childrens %}
+      {% set has_children = tag.children|length %}
+      <tr onmouseover="this.addClassName('tv_admin_row_over')" onmouseout="this.removeClassName('tv_admin_row_over')" 
+        class="tv_admin_row_0 c_0" id="row_cat_{{ tag.id }}" data-level="{{ tag.level}}">
+          <td>
+            <input id="{{ tag.id }}" class="category_checkbox" type="checkbox">
+          </td>
+          <td>
+              <a href="#" title="{% trans %}borrar{% endtrans %}" onclick="return cat_delete({{ tag.id }}, {{tag.parent.id}})">
+                   <img alt="{% trans %}borrar{% endtrans %}"  src="/legacy/images/admin/mbuttons/delete_inline.gif">
+              </a>
+          </td>
+          <td>
+              <a title="{% trans %}Editar categoria {% endtrans %} {{tag.cod}}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" 
+                 href="{{ path('pumukitadmin_tag_update', {'id': tag.id}) }}">
+                  <img alt="{% trans %}editar{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif">
+              </a>
+          </td>
+	  <td>
+            <a title="{% trans %}Nueva categoria hijo para{% endtrans %} {{tag.cod}}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" 
+               href="{{ path('pumukitadmin_tag_create', {'id': tag.id}) }}">
+	        <img alt="{% trans %}nuevo{% endtrans %}" src="/legacy/images/admin/mbuttons/copy_inline.gif">
+	    </a>
+	  </td>
+	  <td>
+	    {{ tag.id }}
+	  </td>
+          <td>
+              <ul class="category_tree" >
+                  <li class="{{ has_children?'collapsed noload':'element' }}" >
+                  <span class="icon" onclick="javascript:toggle_section_cat('{{ tag.id }}', this, {{ tag.level }})">&nbsp;</span> 
+                  <span id="info_cat_{{ tag.id }}">{{ tag.cod}} - {{ tag.title}} </span>
+                  </li>
+              </ul>
+          </td>
+          <td>
+              {# <?php echo $c->getNumMm() ?> #} TODO
+          </td>
+      </tr>
+{#
+
+      <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ loop.index % 2 }} {{ tag.id == app.session.get('admin/tag/id')?'tv_admin_row_this':'' }}" >
+        <td>
+          <input id="{{ tag.id }}" class="tag_checkbox" type="checkbox">
+        </td>
+        <td onclick="click_fila_no_preview('tag', this, '{{ tag.id }}');">
+          <a title="{% trans %}Editar Rol {% endtrans %}{{ tag.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_tag_update', {'id': tag.id}) }}"><img alt="{% trans %}editar{% endtrans %}" title="{% trans %}editar{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a>
+        </td>
+        <td onclick="click_fila_no_preview('tag', this, '{{ tag.id }}');">
+	{% if tag.getPeopleInMultimediaObject() is empty %}
+          <form action="{{ path('pumukitadmin_tag_delete', {'id': tag.id}) }}" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}¿Seguro que desea eliminar este rol?{% endtrans %}')">
+              <input type="hidden" name="_method" value="DELETE">
+              <input type="hidden" name="confirmed" value="true">
+              <button type="submit" class="tv_admin_row_post">
+                  <img alt="{% trans %}borrar{% endtrans %}" title="{% trans %}borrar{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
+              </button>
+          </form>
+        {% else %}
+	  <a href="#" onclick="alert('{% trans %}Imposible borrar, con{% endtrans %} {{ tag.getPeopleInMultimediaObject()|length }} {% trans %}personas{% endtrans %}'); return false;">
+	    <img alt="{% trans %}borrar{% endtrans %}" title="borrar" src="/legacy/images/admin/mbuttons/delete_inline.gif">
+	  </a>
+        {% endif %}
+        </td>
+        <td onclick="click_fila_no_preview('tag', this, '{{ tag.id }}');">
+          <form action="{{ path('pumukitadmin_tag_copy', {'id': tag.id}) }}" method="post" class="delete-action-form" novalidate="">
+              <button type="submit" class="tv_admin_row_post">
+		<img alt="{% trans %}copiar{% endtrans %}" title="{% trans %}copiar{% endtrans %}" src="/legacy/images/admin/mbuttons/copy_inline.gif">
+	      </button>
+	  </form>
+        </td>
+        <td onclick="click_fila_no_preview('tag', this, '{{ tag.id }}');">
+	{% if tags.getCurrentPage() != 1 or not loop.first %}
+	  {% spaceless %}
+	  <a href="{{ path('pumukitadmin_tag_up', {'id': tag.id}) }}">&#8593;</a>
+	  <a href="{{ path('pumukitadmin_tag_top', {'id': tag.id}) }}">&#8657;</a>
+	  {% endspaceless %}
+	{% endif %}
+        </td>
+        <td onclick="click_fila_no_preview('tag', this, '{{ tag.id }}');">
+	{% if tags.getCurrentPage() == tags.getNbPages() and not loop.last %}
+	  {% spaceless %}
+	  <a href="{{ path('pumukitadmin_tag_down', {'id': tag.id}) }}">&#8595;</a>
+	  <a href="{{ path('pumukitadmin_tag_bottom', {'id': tag.id}) }}">&#8659;</a>
+	  {% endspaceless %}
+	{% endif %}
+        </td>
+        <td onclick="click_fila_no_preview('tag', this, '{{ tag.id }}');">
+          {{ tag.id }}
+	</td>
+        <td onclick="click_fila_no_preview('tag', this, '{{ tag.id }}');">
+          {{ tag.display }}
+	</td>
+        <td onclick="click_fila_no_preview('tag', this, '{{ tag.id }}');">
+	  {{ tag.cod }}
+	</td>
+        <td onclick="click_fila_no_preview('tag', this, '{{ tag.id }}');">
+	  {{ tag.name }}
+	</td>
+        <td onclick="click_fila_no_preview('tag', this, '{{ tag.id }}');">
+	  {{ tag.getPeopleInMultimediaObject()|length }}
+	</td>
+      </tr>
+#}
+    {% endfor %}
+
+
+
+
+
+  </tbody>
+  <tfoot>
+    <tr>
+      <th colspan="8">
+
+
+{#
+        {{ tags.getNbResults }}
+        {% transchoice tags.getNbResults %}
+	      {0} tags|{1} rol|]1,Inf] tags
+	{% endtranschoice %}
+	{% if app.session.get('admin/tag/criteria')|length != 0%}
+          <a title="{% trans %}Cancelar la búsqueda actual{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancelar búsqueda{% endtrans %}</a>
+	{% endif %}
+
+#}
+
+
+      </th>
+    </tr>
+  </tfoot>
+</table>
+
+
+{# TODO
+<?php if (isset($msg_alert)) echo m_msg_alert($msg_alert) ?>
+#}

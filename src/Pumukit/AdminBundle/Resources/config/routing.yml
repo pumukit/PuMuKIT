@@ -21,3 +21,7 @@ pumukitadmin_event:
 pumukitadmin_role:
     resource: @PumukitAdminBundle/Resources/config/role.yml
     prefix: /admin/role
+
+pumukitadmin_tag:
+    resource: @PumukitAdminBundle/Resources/config/tag.yml
+    prefix: /admin/tag
