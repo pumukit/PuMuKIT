@@ -149,7 +149,7 @@ class TagRepositoryTest extends WebTestCase
       $this->createTestTree();
 
       //TODO FIXME Clear DocumentManager to reset document.children array.
-      $this->dm->clear();
+      //$this->dm->clear();
 
       $tag = $this->repo->findOneByCod("ROOT");
       $this->assertEquals(2, count($tag->getChildren()));

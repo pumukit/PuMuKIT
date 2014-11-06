@@ -402,6 +402,7 @@ class Tag
   public function setParent(Tag $parent = null)
   {
     $this->parent = $parent;
+    $parent->addChild($this);
   }
 
   public function getParent()
@@ -412,6 +413,11 @@ class Tag
   public function getChildren()
   {
     return $this->children;
+  }
+
+  public function addChild(Tag $tag)
+  {
+    return $this->children[] = $tag;
   }
 
   public function getLevel()
