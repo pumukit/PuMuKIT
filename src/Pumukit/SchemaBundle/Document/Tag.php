@@ -128,11 +128,8 @@ class Tag
 
 
 
-  public function __construct($title = null)
+  public function __construct()
   {
-    if ($title != null) {
-      $this->setTitle($title);
-    }
   }
 
   /**
