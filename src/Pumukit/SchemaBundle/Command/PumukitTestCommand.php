@@ -75,7 +75,6 @@ class PumukitTestCommand extends ContainerAwareCommand
 		continue;
 	      }
 
-	      var_dump($currentRow);
 	      /*
 	      if (!isset($imported_id_category_id[$currentRow[2]])){
 		echo "\n\nCurrent csv row: " . $row . "\n";
