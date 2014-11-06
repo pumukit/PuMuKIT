@@ -103,16 +103,21 @@ class Tag
 
 
   /**
+   * @Gedmo\TreeParent
+   * @MongoDB\ReferenceOne(targetDocument="Tag", inversedBy="children")
+   */
+  private $parent;
+
+  /**
+   * @MongoDB\ReferenceMany(targetDocument="Tag", mappedBy="parent")
+   */
+  private $children = array();
+
+  /**
    * @MongoDB\Field(type="string")
    * @Gedmo\TreePath(separator="|", appendId=false)
    */
   private $path;
-
-  /**
-   * @Gedmo\TreeParent
-   * @MongoDB\ReferenceOne(targetDocument="Tag")
-   */
-  private $parent;
 
   /**
    * @Gedmo\TreeLevel
@@ -127,9 +132,9 @@ class Tag
   private $lockTime;
 
 
-
   public function __construct()
   {
+    $this->children = array();
   }
 
   /**
@@ -402,6 +407,11 @@ class Tag
   public function getParent()
   {
     return $this->parent;
+  }
+
+  public function getChildren()
+  {
+    return $this->children;
   }
 
   public function getLevel()

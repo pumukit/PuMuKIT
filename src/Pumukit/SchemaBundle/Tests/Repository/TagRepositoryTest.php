@@ -143,6 +143,19 @@ class TagRepositoryTest extends WebTestCase
       $this->assertFalse($tagB->isDescendantOf($tagB));
     }
 
+
+    public function testGetChildrenFromDocument()
+    {
+      $this->createTestTree();
+
+      //TODO FIXME Clear DocumentManager to reset document.children array.
+      $this->dm->clear();
+
+      $tag = $this->repo->findOneByCod("ROOT");
+      $this->assertEquals(2, count($tag->getChildren()));
+
+    }
+
     public function testCRUDRepository()
     {
 	$this->createTestTree();
