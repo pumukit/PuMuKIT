@@ -27,10 +27,12 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+      <div id="full_body">
         {% include 'PumukitAdminBundle::menu.html.twig' %}
         <div id="body_div">
           {% block body %}{% endblock %}
         </div>
         {% include 'PumukitAdminBundle::footer.html.twig' %}
+      </div>
     </body>
 </html>

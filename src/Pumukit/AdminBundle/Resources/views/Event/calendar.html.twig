@@ -62,10 +62,10 @@
           <a class="azul" href="{{ path('pumukitadmin_event_index', {'cal': 'cal'}) }}" style="color:grey">{% trans %}Calendario{% endtrans %}</a>
         </div>
         <div class="float-right">
-	  <a class="azul" style="color:blue" href="{{ path('pumukitadmin_event_index', {'month': 'previous'}) }}">&laquo;{% trans %}Anterior{% endtrans %}</a>
+	  <a class="azul" style="color:blue" href="#" onclick="new Ajax.Updater('full_body', '{{ path('pumukitadmin_event_index', {'month': 'previous'}) }}', {asynchronous:true, evalScripts:true}); return false;">&laquo;{% trans %}Anterior{% endtrans %}</a>
           &nbsp;{{ m ~'-'~y }}&nbsp;
-	  <a class="azul" style="color:blue" href="{{ path('pumukitadmin_event_index', {'month': 'today'}) }}">{% trans %}HOY{% endtrans %}</a>
-	  <a class="azul" style="color:blue" href="{{ path('pumukitadmin_event_index', {'month': 'next'}) }}">{% trans %}Siguiente{% endtrans %}&raquo;</a>
+	  <a class="azul" style="color:blue" href="#" onclick="new Ajax.Updater('full_body', '{{ path('pumukitadmin_event_index', {'month': 'today'}) }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}HOY{% endtrans %}</a>
+	  <a class="azul" style="color:blue" href="#" onclick="new Ajax.Updater('full_body', '{{ path('pumukitadmin_event_index', {'month': 'next'}) }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Siguiente{% endtrans %}&raquo;</a>
         </div>
         {{ events.getNbResults }} 
         {% transchoice events.getNbResults %}

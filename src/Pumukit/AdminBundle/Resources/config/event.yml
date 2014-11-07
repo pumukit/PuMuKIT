@@ -1,6 +1,6 @@
 pumukitadmin_event_index:
     pattern: /
-    methods: [GET]
+    methods: [GET, POST]
     defaults:
         _controller: pumukitadmin.controller.event:indexAction
         _sylius:
