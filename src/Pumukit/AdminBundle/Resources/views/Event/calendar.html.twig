@@ -58,8 +58,8 @@
     <tr>
       <th colspan="7">        
         <div class="float-left" style="padding-right: 5px">
-          <a class="azul" href="{{ path('pumukitadmin_event_index', {'cal': 'list'}) }}" style="color:blue">{% trans %}Lista{% endtrans %}</a>
-          <a class="azul" href="{{ path('pumukitadmin_event_index', {'cal': 'cal'}) }}" style="color:grey">{% trans %}Calendario{% endtrans %}</a>
+          <a class="azul" style="color:blue" href="#" onclick="new Ajax.Updater('full_body', '{{ path('pumukitadmin_event_index', {'cal': 'list'}) }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Lista{% endtrans %}</a>
+          <a class="azul" style="color:grey" href="#" onclick="new Ajax.Updater('full_body', '{{ path('pumukitadmin_event_index', {'cal': 'cal'}) }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Calendario{% endtrans %}</a>
         </div>
         <div class="float-right">
 	  <a class="azul" style="color:blue" href="#" onclick="new Ajax.Updater('full_body', '{{ path('pumukitadmin_event_index', {'month': 'previous'}) }}', {asynchronous:true, evalScripts:true}); return false;">&laquo;{% trans %}Anterior{% endtrans %}</a>
