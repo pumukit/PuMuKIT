@@ -113,7 +113,7 @@ class Event
     if ($locale == null){
       $locale = $this->locale;
     }
-    $this->name[$locale] = $name[$locale];
+    $this->name[$locale] = $name;
   }
   
   /**
