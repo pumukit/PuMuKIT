@@ -50,7 +50,6 @@ class CalendarAdminController extends AdminController
       }
     }
     $criteria = $new_criteria;
-    var_dump($criteria);
 
     $pluralName = $config->getPluralResourceName();
     $repository = $this->getRepository();
