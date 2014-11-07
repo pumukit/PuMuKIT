@@ -41,11 +41,16 @@ class CalendarAdminController extends AdminController
     $new_criteria = array();
     foreach ($criteria as $property => $value) {
       //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
-      if ('' !== $value) {
+      if (('' !== $value) && ('date' !== $property)) {
 	$new_criteria[$property] = new \MongoRegex('/' . $value . '/i');
+      } elseif (('' !== $value) && ('date' == $property)) {
+        $date_from = new \DateTime($value['from']);
+        $date_to = new \DateTime($value['to']);
+	$new_criteria[$property] = ['$gte' => $date_from, '$lt'=> $date_to];
       }
     }
     $criteria = $new_criteria;
+    var_dump($criteria);
 
     $pluralName = $config->getPluralResourceName();
     $repository = $this->getRepository();
@@ -96,46 +101,8 @@ class CalendarAdminController extends AdminController
   }
 
 
-    /**
-     * Overwrite to update the session.
-     */
-    public function delete($resource)
-    {
-        $config = $this->getConfiguration();
-        $event = $this->dispatchEvent('pre_delete', $resource);
-
-        if (!$event->isStopped()) {
-            $this->get('session')->remove('admin/'.$config->getResourceName().'/id');
-            $this->removeAndFlush($resource);
-        }
-
-
-        return $event;
-    }
-
-
-
-    public function batchDeleteAction(Request $request)
-    {
-        $ids = $this->getRequest()->get('ids');
-
-	foreach($ids as $id) {
-            $resource = $this->find($id);
-	    $this->delete($resource);
-	}
-	$config = $this->getConfiguration();
-
-	$this->setFlash('success', 'delete');
-
-	return $this->redirectToRoute(
-	    $config->getRedirectRoute('index'),
-	    $config->getRedirectParameters()
-	);
-    }
-
-
   /**
-   *
+   * Get calendar
    */
   private function getCalendar($config, $request)
   {
@@ -146,7 +113,7 @@ class CalendarAdminController extends AdminController
     /*if($this->hasRequestParameter("cal")){
       $this->div_url = '?cal=cal';
       $this->div = "calendar";
-    }else{
+      }else{
       $this->div_url = '';
       $this->div = "array";
       }*/
@@ -220,8 +187,5 @@ class CalendarAdminController extends AdminController
     }
     return $aux;
   }
-
-
-
 
 }
