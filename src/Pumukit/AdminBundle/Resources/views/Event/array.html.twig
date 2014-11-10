@@ -23,7 +23,7 @@
   {% for event in events %}
     <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ loop.index % 2}} {{ event.id == app.session.get('admin/event/id')?'tv_admin_row_this':'' }}" >
       <td>
-        <input id="event.id" class="event_checkbox" type="checkbox">
+        <input id="{{ event.id }}" class="event_checkbox" type="checkbox">
       </td>
       <td onclick="click_fila_url('event', this, '{{ path('pumukitadmin_event_show', {'id': event.id}) }}');">
 	<a title="{% trans %}Editar Evento {% endtrans %}{{ event.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_event_update', {'id': event.id}) }}"><img alt="{% trans %}editar{% endtrans %}" title="{% trans %}editar{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a>
