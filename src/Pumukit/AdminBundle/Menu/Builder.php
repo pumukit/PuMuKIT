@@ -47,7 +47,7 @@ class Builder extends ContainerAware
     $management->addChild('Tipos de series');
     $management->addChild('Idiomas');
     $management->addChild('Roles', array('route'=>'pumukitadmin_role_index'));
-    $management->addChild('Perfiles Acceso');
+    $management->addChild('Perfiles Acceso', array('route'=>'pumukitadmin_broadcast_index'));
     $management->addChild('Servidores de Distribución');
 
     $ingester = $menu->addChild('Ingestador');
