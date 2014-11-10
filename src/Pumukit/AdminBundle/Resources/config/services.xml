@@ -31,5 +31,9 @@
         <service id="pumukitadmin.form.type.role" class="Pumukit\AdminBundle\Form\Type\RoleType">
             <tag name="form.type" alias="pumukitadmin_role" />
         </service>
+
+        <service id="pumukitadmin.form.type.broadcast" class="Pumukit\AdminBundle\Form\Type\BroadcastType">
+            <tag name="form.type" alias="pumukitadmin_broadcast" />
+        </service>
     </services>
 </container>

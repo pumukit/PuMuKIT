@@ -1,0 +1,37 @@
+{% extends 'PumukitAdminBundle::layout.html.twig' %}
+
+{% block body %}
+
+<h3 class="cab_body_div"><img src="/legacy/images/admin/cab/config_ico.png"/> {% trans %}Difusiones{% endtrans %}</h3>
+
+<div id="tv_admin_container">
+  <div id="tv_admin_bar">
+    {% include 'PumukitAdminBundle:Broadcast:filters.html.twig' %}
+    <div id="preview_broadcast" style="display:none; padding:5px; border: solid 1px #DDD; background: #8eb0bc url(/legacy/images/admin/cab/cab.gif) repeat-x scroll 0% 0%">
+    {# <?php //include_component('broadcasts', 'preview') ?> #}
+    </div>
+  </div>
+
+  <div id="tv_admin_content" >
+    <div id="list_broadcasts" name="list_broadcasts" act="/broadcasts/list">
+    {% include 'PumukitAdminBundle:Broadcast:list.html.twig' %}
+    </div>
+
+    <div style="float:right; width:50%">
+      <ul class="tv_admin_actions">
+        <!-- Falta -->
+        <li><input class="tv_admin_action_create" onclick="Modalbox.show('{{ path('pumukitadmin_broadcast_create') }}', {title:'{% trans %}Crear nueva difusión{% endtrans %}', width:800}); return false;" type="button" value="{% trans %}nuevo{% endtrans %}"></li>
+      </ul>
+    </div>
+    
+    <select id="options_broadcasts" style="margin: 10px 0px; width: 33%" title="{% trans %}Acciones sobre elementos seleccionados{% endtrans %}" onchange="window.change_select('broadcast', $('options_broadcasts'))">
+      <option value="default" selected="selected">{% trans %}Selecciona una acción...{% endtrans %}</option>
+      <option disabled="">---</option>
+      <option value="delete_sel">{% trans %}Borrar seleccionados{% endtrans %}</option>
+      <option value="create">{% trans %}Crear nuevo{% endtrans %}</option>
+    </select>
+
+  </div>
+</div>
+
+{% endblock %}

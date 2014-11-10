@@ -21,3 +21,7 @@ pumukitadmin_event:
 pumukitadmin_role:
     resource: @PumukitAdminBundle/Resources/config/role.yml
     prefix: /admin/role
+
+pumukitadmin_broadcast:
+    resource: @PumukitAdminBundle/Resources/config/broadcast.yml
+    prefix: /admin/broadcast

@@ -1,0 +1,93 @@
+<table cellspacing="0" class="tv_admin_list">
+  <thead>
+    <tr>
+      <th width="1%">
+        <input type="checkbox" onclick="window.click_checkbox_all('broadcast', this.checked)">
+      </th>
+      <th colspan="4" width="5%"></th>
+      <th width="1%">{% trans %}Id{% endtrans %}</th>
+      <th width="5%">{% trans %}Type{% endtrans %}</th>
+      <th>{% trans %}Name{% endtrans %}</th>
+      <th>{% trans %}Description{% endtrans %}</th>
+      <th>{% trans %}Serials{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+  {% if broadcasts|length == 0 %}
+    <tr>
+      <td colspan="10">
+       {% trans %}No existen difusiones con esos valores.{% endtrans %}
+      </td>
+    </tr>
+  {% endif %}
+  {# <?php $i = 1; foreach ($broadcasts as $broadcast): $odd = fmod(++$i, 2); $numS = $broadcast->countMms()?> #}
+  {% for broadcast in broadcasts %}
+    <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ loop.index % 2 }} {{ broadcast.id == app.session.get('admin/broadcast/id')?'tv_admin_row_this':'' }}" >
+      <td>
+        <input id="{{ broadcast.id }}" class="broadcast_checkbox" type="checkbox">
+      </td>
+      <td onclick="click_fila_no_preview('broadcast', this, '{{ broadcast.id }}');">
+	<a title="{% trans %}Editar Difusión{% endtrans %} {{ broadcast.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_broadcast_update', {'id': broadcast.id}) }}"><img alt="editar" title="editar" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a>
+      </td>
+      <td>
+	<form action="{{ path('pumukitadmin_broadcast_delete', {'id': broadcast.id}) }}" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}¿Seguro que desea borrar esta difusión?{% endtrans %}')">
+              <input type="hidden" name="_method" value="DELETE">
+              <input type="hidden" name="confirmed" value="true">
+              <button type="submit" class="tv_admin_row_post">
+                  <img alt="{% trans %}borrar{% endtrans %}" title="{% trans %}borrar{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
+              </button>
+          </form>
+      </td>
+      <td>
+          <form action="{{ path('pumukitadmin_broadcast_copy', {'id': broadcast.id}) }}" method="post" class="delete-action-form" novalidate="">
+              <button type="submit" class="tv_admin_row_post">
+		<img alt="{% trans %}copiar{% endtrans %}" title="{% trans %}copiar{% endtrans %}" src="/legacy/images/admin/mbuttons/copy_inline.gif">
+	      </button>
+	  </form>
+      </td>
+      <td>
+        <input type="radio" name="radio_broadcast" title="{% trans %}Seleccionar esta difusión por defecto{% endtrans %}"
+               value="broadcast_{{ broadcast.id }}" {{ broadcast.getDefaultSel()?'checked="checked"':'' }}
+               onchange="new Ajax.Request('/editar.php/broadcasts/default/id/{{ broadcast.id }}/value/'+ this.checked, {asynchronous:true, evalScripts:true})"
+        > {# TODO - PATH DEFAULT CHECKED #}
+      </td>
+      <td onclick="click_fila_no_preview('broadcast', this, '{{ broadcast.id }}');">
+        {{ broadcast.id }}
+      </td>
+      <td onclick="click_fila_no_preview('broadcast', this, '{{ broadcast.id }}');">
+        {# TODO {{ broadcast.getBroadcastType().name }} #} TODO
+      </td>
+      <td onclick="click_fila_no_preview('broadcast', this, '{{ broadcast.id }}');">
+        {{ broadcast.name }}
+      </td>
+      <td onclick="click_fila_no_preview('broadcast', this, '{{ broadcast.id }}');">
+        {# TODO {{ broadcast.description }} #}
+      </td>
+      <td onclick="click_fila_no_preview('broadcast', this, '{{ broadcast.id }}');">
+        {# TODO {{ broadcast.countMms }} #}
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+  <tfoot>
+    <tr>
+      <th colspan="10">
+        <div class="float-right">
+          {{ include('PumukitAdminBundle:Macros:pager_ajax.html.twig', {'name': 'broadcast', 'page': broadcasts.getCurrentPage, 'total': broadcasts.getNbPages}) }}
+        </div>
+        {{ broadcasts.getNbResults }} 
+        {% transchoice broadcasts.getNbResults %}
+	      {0} difusiones|{1} difusión|]1,Inf] difusiones
+	{% endtranschoice %}
+	{% if app.session.get('admin/broadcast/criteria')|length != 0%}
+          <a title="{% trans %}Cancelar la búsqueda actual{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancelar búsqueda{% endtrans %}</a>
+	{% endif %}
+      </th>
+    </tr>
+  </tfoot>
+</table>
+
+{# TODO
+<?php if (isset($msg_alert)) echo m_msg_alert($msg_alert) ?>
+#}
