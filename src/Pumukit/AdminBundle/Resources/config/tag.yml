@@ -14,13 +14,13 @@ pumukitadmin_tag_create:
     pattern: /create
     methods: [GET, POST]
     defaults:
-        _controller: PumukitAdminBundle:Tag:index
+        _controller: PumukitAdminBundle:Tag:create
 
 pumukitadmin_tag_update:
     pattern: /{id}/edit
     methods: [GET, PUT, POST]
     defaults:
-        _controller: PumukitAdminBundle:Tag:index
+        _controller: PumukitAdminBundle:Tag:update
 
 pumukitadmin_tag_delete:
     pattern: /{id}

@@ -8,8 +8,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
-
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\AdminBundle\Form\Type\TagType;
+
 
 class TagController extends Controller
 {
@@ -59,5 +60,28 @@ class TagController extends Controller
 
     }
     
+    /**
+     * @ParamConverter("tag", class="PumukitSchemaBundle:Tag")
+     * @Template
+     */
+    public function updateAction(Tag $tag, Request $request)
+    {
+
+      $form = $this->createForm(new TagType(), $tag);
+
+      if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
+	$event = $this->update($resource);
+	if (!$event->isStopped()) {
+	  $this->setFlash('success', 'update');
+	  
+	  return $this->redirectTo($resource);
+	}
+	
+	$this->setFlash($event->getMessageType(), $event->getMessage(), $event->getMessageParams());
+      }
+
+
+      return array('tag' => $tag, 'form' => $form->createView());
+    }
 
 }

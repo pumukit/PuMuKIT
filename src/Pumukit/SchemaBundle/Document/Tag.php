@@ -176,6 +176,27 @@ class Tag
     return $this->title[$locale];
   }
 
+
+  /**
+   * Get i18n title
+   *
+   * @return array
+   */
+  public function getI18nTitle()
+  {
+    return $this->title;
+  }
+
+  /**
+   * Set i18n title
+   *
+   * @param array $title
+   */
+  public function setI18nTitle(array $title)
+  {
+    $this->title = $title;
+  }
+
   /**
    * Set description
    * 
@@ -203,6 +224,26 @@ class Tag
       return null;
     }
     return $this->description[$locale];
+  }
+
+  /**
+   * Set i18n description
+   * 
+   * @param array $description
+   */
+  public function setI18nDescription(array $description)
+  {
+    $this->description = $description;
+  }
+
+  /**
+   * Get i18n description
+   * 
+   * @return array
+   */
+  public function getI18nDescription()
+  {
+    return $this->description;
   }
 
   /**
