@@ -9,7 +9,7 @@
       <div class="content">
         {# TODO culture #}
         {% set criteria = app.session.get('admin/broadcast/criteria') %}
-	<input type="text" name="criteria[name.en]" id="filters_name" value="{{ criteria['name.en']|default("") }}">
+	<input type="text" name="criteria[name]" id="filters_name" value="{{ criteria['name']|default("") }}">
       </div>
     </div>
   </fieldset>
