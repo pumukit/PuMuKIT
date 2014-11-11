@@ -7,7 +7,7 @@ pumukitadmin_user_index:
             filterable: true
 
 pumukitadmin_user_create:
-    pattern: /new
+    pattern: /create
     methods: [GET, POST]
     defaults:
         _controller: pumukitadmin.controller.user:createAction
