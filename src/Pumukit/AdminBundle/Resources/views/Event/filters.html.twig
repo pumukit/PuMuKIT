@@ -15,12 +15,11 @@
 
 
     <div class="form-row">
-      <label for="description">{% trans %}Fecha{% endtrans %}:</label>
+      <label for="date">{% trans %}Fecha{% endtrans %}:</label>
       <div class="content">
 	{% trans %}Desde{% endtrans %}:&nbsp;<input type="datetime-local" size="11" name="criteria[date][from]" id="filters_date_from" value="{{ criteria['date']['from']|default("") }}">
         <br/>
 	{% trans %}Hasta{% endtrans %}:&nbsp;&nbsp;<input type="datetime-local" size="11" name="criteria[date][to]" id="filters_date_to" value="{{ criteria['date']['to']|default("") }}">
-        {# <?php echo input_date_range_tag('filters[date]',  null, array ('rich' => true, 'calendar_button_img' => '/legacy/images/admin/buttons/date.png', 'before'=>{% trans %}Desde:{% endtrans %}, 'middle'=><br />{% trans %}Hasta: {% endtrans %} )) ?> #}
       </div>
     </div>
 
