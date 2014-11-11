@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Pumukit\AdminBundle\Document\Broadcast
  *
- * @MongoDB\Document
+ * @MongoDB\Document(repositoryClass="Pumukit\AdminBundle\Repository\BroadcastRepository")
  */
 class Broadcast
 {
@@ -25,9 +25,9 @@ class Broadcast
   /** 
    * @var string $name
    * 
-   * @MongoDB\Raw
+   * @MongoDB\String
    */
-  private $name = array('en' => '');
+  private $name;
 
   /** 
    * @var int $broadcast_type_id
@@ -51,6 +51,20 @@ class Broadcast
   private $default_sel = false;
 
   /** 
+   * @var BroadcastType $a_broadcast_type
+   * 
+   * @MongoDB\ReferenceOne(targetDocument="BroadcastType")
+   */
+  private $a_broadcast_type;
+
+  /** 
+   * @var string $description
+   * 
+   * @MongoDB\Raw
+   */
+  private $description = array('en' => '');
+
+  /** 
    * @var locale $locale
    */
   private $locale;
@@ -70,12 +84,9 @@ class Broadcast
    *
    * @param string $name
    */
-  public function setName($name, $locale = null)
+  public function setName($name)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    $this->name[$locale] = $name;
+    $this->name = $name;
   }
   
   /**
@@ -83,33 +94,7 @@ class Broadcast
    *
    * @return string
    */
-  public function getName($locale = null)
-  {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    if (!isset($this->name[$locale])){
-      return null;
-    }
-    return $this->name[$locale];
-  }
-
-  /**
-   * Set I18n name
-   *
-   * @param array $name
-   */
-  public function setI18nName(array $name)
-  {
-    $this->name = $name;
-  }
-  
-  /**
-   * Get i18n name
-   *
-   * @return array
-   */
-  public function getI18nName()
+  public function getName()
   {
     return $this->name;
   }
@@ -172,6 +157,75 @@ class Broadcast
   public function getDefaultSel()
   {
     return $this->default_sel;
+  }
+
+  /**
+   * Set a_broadcast_type
+   *
+   * @param string $a_broadcast_type
+   */
+  public function setABroadcastType($a_broadcast_type)
+  {
+    $this->a_broadcast_type = $a_broadcast_type;
+  }
+  
+  /**
+   * Get a broadcast type
+   *
+   * @return string
+   */
+  public function getABroadcastType()
+  {
+    return $this->a_broadcast_type;
+  } 
+
+  /**
+   * Set description
+   *
+   * @param string $description
+   */
+  public function setDescription($description, $locale = null)
+  {
+    if ($locale == null) {
+      $locale = $this->locale;
+    }
+    $this->description[$locale] = $description;
+  }
+  
+  /**
+   * Get description
+   *
+   * @return string
+   */
+  public function getDescription($locale = null)
+  {
+    if ($locale == null) {
+      $locale = $this->locale;
+    }
+    if (!isset($this->description[$locale])){
+      return null;
+    }
+    return $this->description[$locale];
+  }
+
+  /**
+   * Set I18n description
+   *
+   * @param array $description
+   */
+  public function setI18nDescription(array $description)
+  {
+    $this->description = $description;
+  }
+  
+  /**
+   * Get i18n description
+   *
+   * @return array
+   */
+  public function getI18nDescription()
+  {
+    return $this->description;
   }
 
   /**
