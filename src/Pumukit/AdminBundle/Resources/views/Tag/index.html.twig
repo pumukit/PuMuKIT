@@ -36,14 +36,15 @@
 
 
 <script>
-function load_children_cat(id) {
-  $$(".c_" + id).each(function(e){ e.remove() });
+function load_children_cat(id, cod) {
+  $$(".c_" + cod).each(function(e){ e.remove() });
   var tr = $('row_cat_' +id);
   var level = tr.getAttribute('data-level');
-  new Ajax.Request('{{ path('pumukitadmin_tag_children_post') }}' , {
+  var url = '{{ path('pumukitadmin_tag_children', {'id': '___id___'}) }}';
+  new Ajax.Request(url.replace('___id___', id) , {
+    method: 'GET',
     asynchronous:true, 
     evalScripts:true, 
-    parameters:  {'id': id, 'level': level},
     onSuccess: function(response) {
       var t = tr.up('tbody');
       var ss = t.childElements();
@@ -55,7 +56,7 @@ function load_children_cat(id) {
 	  t.insert(response.transport.response);
 	}
       }
-      if ($$('.d_' + id).length != 0) {
+      if ($$('.d_' + cod).length != 0) {
 	$$('#row_cat_' + id + ' .element').each(function(e){
 						  e.addClassName("expanded");
 						  e.removeClassName("element")});
@@ -65,19 +66,19 @@ function load_children_cat(id) {
 
 }
 
-function toggle_section_cat(id, element, level) {
+function toggle_section_cat(id, element, level, cod) {
 
   if(element.parentElement.hasClassName("expanded")){
-    $$(".c_" + id).each(function(e){
+    $$(".c_" + cod).each(function(e){
       e.getElementsBySelector(".expanded").each(function(ee){ee.removeClassName("expanded").addClassName("collapsed");});
       e.hide();
     });
   }else{
     if(element.parentElement.hasClassName("noload")) {
       element.parentElement.removeClassName("noload");
-      load_children_cat(id);
+      load_children_cat(id, cod);
     }else {
-      $$(".d_" + id).each(function(e){e.show()});
+      $$(".d_" + cod).each(function(e){e.show()});
     }
   }
   element.parentElement.toggleClassName("expanded").toggleClassName("collapsed");
@@ -92,16 +93,18 @@ function cat_relation_change(one_id, two_id, value) {
 }
 
 
-function cat_delete(id, pid) {
+function cat_delete(id, pid, pcod) {
   if (window.confirm('Seguro')) { 
-    new Ajax.Request('{{ path('pumukitadmin_tag_delete', {'id': ' '}) }}', {
+    var url = '{{ path('pumukitadmin_tag_delete', {'id': '___id___'}) }}';
+    new Ajax.Request(url.replace('___id___', id), {
+      metod: 'DELETE',
       asynchronous:true, 
       evalScripts:true,
-      parameters:  {'id': id},
+      parameters:  {'_method': 'DELETE'},
       onFailure: function() {window.alert('No se pueden borrar categorías con descendientes.')},
       onSuccess: function(response) { 
         $('row_cat_' +id).remove(); 
-        if ($$('.d_' + pid).length == 0) {
+        if ($$('.d_' + pcod).length == 0) {
 	  $$('#row_cat_' + pid + ' .expanded').each(function(e){
 						     e.removeClassName("expanded");
 						     e.addClassName("element")});

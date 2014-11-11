@@ -22,7 +22,7 @@ class PumukitTestCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('pumukit:test')
+            ->setName('pumukit:init:tags')
             ->setDescription('Pumukit test command')
             ->addArgument('file', InputArgument::REQUIRED, 'Input CSV path')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')

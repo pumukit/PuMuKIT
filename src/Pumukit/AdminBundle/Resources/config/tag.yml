@@ -10,12 +10,6 @@ pumukitadmin_tag_children:
     defaults:
         _controller: PumukitAdminBundle:Tag:children
 
-pumukitadmin_tag_children_post:
-    pattern: /children
-    methods: [POST]
-    defaults:
-        _controller: PumukitAdminBundle:Tag:children
-
 pumukitadmin_tag_create:
     pattern: /create
     methods: [GET, POST]
@@ -28,44 +22,8 @@ pumukitadmin_tag_update:
     defaults:
         _controller: PumukitAdminBundle:Tag:index
 
-pumukitadmin_tag_batch_delete:
-    pattern: /delete
-    methods: [DELETE]
-    defaults:
-        _controller: PumukitAdminBundle:Tag:index
-
 pumukitadmin_tag_delete:
     pattern: /{id}
     methods: [DELETE]
     defaults:
-        _controller: PumukitAdminBundle:Tag:index
-
-pumukitadmin_tag_copy:
-    pattern: /{id}/copy
-    methods: [GET, PUT, POST]
-    defaults:
-        _controller: PumukitAdminBundle:Tag:index
-
-pumukitadmin_tag_up:
-    pattern: /{id}/up
-    methods: [GET, PUT, POST]
-    defaults:
-        _controller: PumukitAdminBundle:Tag:index
-
-pumukitadmin_tag_down:
-    pattern: /{id}/down
-    methods: [GET, PUT, POST]
-    defaults:
-        _controller: PumukitAdminBundle:Tag:index
-
-pumukitadmin_tag_top:
-    pattern: /{id}/top
-    methods: [GET, PUT, POST]
-    defaults:
-        _controller: PumukitAdminBundle:Tag:index
-
-pumukitadmin_tag_bottom:
-    pattern: /{id}/bottom
-    methods: [GET, PUT, POST]
-    defaults:
-        _controller: PumukitAdminBundle:Tag:index
+        _controller: PumukitAdminBundle:Tag:delete
