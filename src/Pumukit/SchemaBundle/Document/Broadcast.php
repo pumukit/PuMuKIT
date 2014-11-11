@@ -1,19 +1,22 @@
 <?php
 
-namespace Pumukit\AdminBundle\Document;
+namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 /**
- * Pumukit\AdminBundle\Document\Broadcast
+ * Pumukit\SchemaBundle\Document\Broadcast
  *
- * @MongoDB\Document(repositoryClass="Pumukit\AdminBundle\Repository\BroadcastRepository")
+ * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\BroadcastRepository")
  */
 class Broadcast
 {
+
+  const BROADCAST_TYPE_PUB = 'public';
+  const BROADCAST_TYPE_PRI = 'private';
+  const BROADCAST_TYPE_COR = 'corporative';
 
   /** 
    * @var int $id
@@ -21,6 +24,13 @@ class Broadcast
    * @MongoDB\Id
    */
   private $id;
+
+  /**
+   * @var ArrayCollection $multimedia_objects
+   * 
+   * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="broadcast")
+   */
+  private $multimedia_objects;
 
   /** 
    * @var string $name
@@ -30,11 +40,11 @@ class Broadcast
   private $name;
 
   /** 
-   * @var int $broadcast_type_id
+   * @var string $broadcast_type_id
    * 
-   * @MongoDB\Int
+   * @MongoDB\String
    */
-  private $broadcast_type_id;
+  private $broadcast_type_id = self::BROADCAST_TYPE_PUB;
 
   /** 
    * @var string $passwd
@@ -49,13 +59,6 @@ class Broadcast
    * @MongoDB\Boolean
    */
   private $default_sel = false;
-
-  /** 
-   * @var BroadcastType $a_broadcast_type
-   * 
-   * @MongoDB\ReferenceOne(targetDocument="BroadcastType")
-   */
-  private $a_broadcast_type;
 
   /** 
    * @var string $description
@@ -77,6 +80,49 @@ class Broadcast
   public function getId()
   {
     return $this->id;
+  }
+
+  /**
+   * Add multimedia_object
+   *
+   * @param MultimediaObject $multimedia_object
+   */
+  public function addMultimediaObject(MultimediaObject $multimedia_object)
+  {
+    $this->multimedia_objects[] = $multimedia_object;
+    $multimedia_object->setBroadcast($this);
+  }
+
+  /**
+   * Remove multimedia_object
+   *
+   * @param MultimediaObject $multimedia_object
+   */
+  public function removeMultimediaObject(MultimediaObject $multimedia_object)
+  {
+    $this->multimedia_objects->removeElement($multimedia_object);
+  }
+
+  /**
+   * Contains multimedia_object
+   *
+   * @param MultimediaObject $multimedia_object
+   *
+   * @return boolean
+   */
+  public function containsMultimediaObject(MultimediaObject $multimedia_object)
+  {
+    return $this->multimedia_objects->contains($multimedia_object);
+  }
+
+  /**
+   * Get multimedia_objects
+   *
+   * @return ArrayCollection
+   */
+  public function getMultimediaObjects()
+  {
+    return $this->multimedia_objects;
   }
 
   /**
@@ -102,7 +148,7 @@ class Broadcast
   /**
    * Set broadcast_type_id
    *
-   * @param int $broadcast_type_id
+   * @param string $broadcast_type_id
    */
   public function setBroadcastTypeId($broadcast_type_id)
   {
@@ -112,7 +158,7 @@ class Broadcast
   /**
    * Get broadcast_type_id
    *
-   * @return int
+   * @return string
    */
   public function getBroadcastTypeId()
   {
@@ -158,26 +204,6 @@ class Broadcast
   {
     return $this->default_sel;
   }
-
-  /**
-   * Set a_broadcast_type
-   *
-   * @param string $a_broadcast_type
-   */
-  public function setABroadcastType($a_broadcast_type)
-  {
-    $this->a_broadcast_type = $a_broadcast_type;
-  }
-  
-  /**
-   * Get a broadcast type
-   *
-   * @return string
-   */
-  public function getABroadcastType()
-  {
-    return $this->a_broadcast_type;
-  } 
 
   /**
    * Set description
