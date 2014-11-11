@@ -1,6 +1,6 @@
 pumukitadmin_broadcast_index:
     pattern: /
-    methods: [GET, POST]
+    methods: [GET]
     defaults:
         _controller: pumukitadmin.controller.broadcast:indexAction
         _sylius:
@@ -22,19 +22,19 @@ pumukitadmin_broadcast_update:
         _sylius:
             redirect: pumukitadmin_broadcast_index
 
-pumukitadmin_broadcast_delete:
-    pattern: /{id}
-    methods: [DELETE]
-    defaults:
-        _controller: pumukitadmin.controller.broadcast:deleteAction
-        _sylius:
-            redirect: pumukitadmin_broadcast_index
-
 pumukitadmin_broadcast_batch_delete:
     pattern: /delete
     methods: [DELETE]
     defaults:
         _controller: pumukitadmin.controller.broadcast:batchDeleteAction
+        _sylius:
+            redirect: pumukitadmin_broadcast_index
+
+pumukitadmin_broadcast_delete:
+    pattern: /{id}
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitadmin.controller.broadcast:deleteAction
         _sylius:
             redirect: pumukitadmin_broadcast_index
 
