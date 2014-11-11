@@ -12,8 +12,13 @@ class BroadcastType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
-      ->add('i18n_name', 'texti18n',
-	    array('attr' => array('style' => 'width: 420px'), 'label' => 'Nombre'));
+      ->add('name', 'text',
+	    array('attr' => array('style' => 'width: 420px'), 'label' => 'Nombre'))
+      ->add('a_broadcast_type', null, array('label' => 'Tipo'))
+      ->add('passwd', 'password',
+	    array('attr' => array('style' => 'width: 420px'), 'label' => 'Passwd'))
+      ->add('i18n_description', 'textareai18n',
+	    array('attr' => array('style' => 'width: 420px'), 'label' => 'Descripción'));
   }
   
 
