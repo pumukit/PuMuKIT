@@ -51,3 +51,11 @@ pumukitadmin_broadcast_show:
     methods: [GET]
     defaults:
         _controller: pumukitadmin.controller.broadcast:showAction
+
+pumukitadmin_broadcast_default:
+    pattern: /{id}/default
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitadmin.controller.broadcast:defaultAction
+        _sylius:
+            redirect: pumukitadmin_broadcast_index

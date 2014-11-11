@@ -21,7 +21,7 @@
       </td>
     </tr>
   {% endif %}
-  {# <?php $i = 1; foreach ($broadcasts as $broadcast): $odd = fmod(++$i, 2); $numS = $broadcast->countMms()?> #}
+
   {% for broadcast in broadcasts %}
     <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ loop.index % 2 }} {{ broadcast.id == app.session.get('admin/broadcast/id')?'tv_admin_row_this':'' }}" >
       <td>
@@ -48,9 +48,9 @@
       </td>
       <td>
         <input type="radio" name="radio_broadcast" title="{% trans %}Seleccionar esta difusión por defecto{% endtrans %}"
-               value="broadcast_{{ broadcast.id }}" {{ broadcast.getDefaultSel()?'checked="checked"':'' }}
-               onchange="new Ajax.Request('/editar.php/broadcasts/default/id/{{ broadcast.id }}/value/'+ this.checked, {asynchronous:true, evalScripts:true})"
-        > {# TODO - PATH DEFAULT CHECKED #}
+	       value="broadcast_{{ broadcast.id }}" {{ broadcast.getDefaultSel()?'checked="checked"':'' }}
+	       onchange="new Ajax.Request('{{ path('pumukitadmin_broadcast_default', {'id': broadcast.id}) }}', {asynchronous:true, evalScripts:true})"
+	       >
       </td>
       <td onclick="click_fila_no_preview('broadcast', this, '{{ broadcast.id }}');">
         {{ broadcast.id }}
