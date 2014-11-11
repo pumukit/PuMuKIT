@@ -39,9 +39,9 @@
     <select id="options_events" style="margin: 10px 0px; width: 33%" title={% trans %}"Acciones sobre elementos seleccionados"{% endtrans %} onchange="window.change_select('event', $('options_events'))">
       <option value="default" selected="selected">{% trans %}Selecciona una acción...{% endtrans %}</option>
       <option disabled="">---</option>
-      <!-- <option value="delete_sel"><?php echo __('Borrar seleccionados')?></option>
-      <option value="create">Crear nuevo</option>
-      <option value="inv_working_sel"><?php echo __('Ocultar/Mostrar seleccionados')?></option> 
+      <option value="delete_sel">{% trans %}Borrar seleccionados{% endtrans %}</option>
+      <option value="create">{% trans %}Crear nuevo{% endtrans %}</option>
+      <!--<option value="inv_working_sel"><?php echo __('Ocultar/Mostrar seleccionados')?></option> 
       <option value="inv_working_all"><?php echo __('Ocultar/Mostrar todos')?></option> -->
     </select>
     

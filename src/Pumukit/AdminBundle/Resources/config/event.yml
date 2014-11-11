@@ -22,19 +22,19 @@ pumukitadmin_event_update:
         _sylius:
             redirect: pumukitadmin_event_index
 
-pumukitadmin_event_delete:
-    pattern: /{id}
-    methods: [DELETE]
-    defaults:
-        _controller: pumukitadmin.controller.event:deleteAction
-        _sylius:
-            redirect: pumukitadmin_event_index
-
 pumukitadmin_event_batch_delete:
     pattern: /delete
     methods: [DELETE]
     defaults:
         _controller: pumukitadmin.controller.event:batchDeleteAction
+        _sylius:
+            redirect: pumukitadmin_event_index
+
+pumukitadmin_event_delete:
+    pattern: /{id}
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitadmin.controller.event:deleteAction
         _sylius:
             redirect: pumukitadmin_event_index
 
