@@ -25,3 +25,7 @@ pumukitadmin_role:
 pumukitadmin_broadcast:
     resource: @PumukitAdminBundle/Resources/config/broadcast.yml
     prefix: /admin/broadcast
+
+pumukitadmin_series:
+    resource: @PumukitAdminBundle/Resources/config/series.yml
+    prefix: /admin/series

@@ -29,5 +29,11 @@ sylius_resource:
             driver: doctrine/mongodb-odm
             templates: PumukitAdminBundle:Broadcast
             classes:
-                model: Pumukit\AdminBundle\Document\Broadcast
+                model: Pumukit\SchemaBundle\Document\Broadcast
+                controller: Pumukit\AdminBundle\Controller\BroadcastController
+        pumukitadmin.series:
+            driver: doctrine/mongodb-odm
+            templates: PumukitAdminBundle:Series
+            classes:
+                model: Pumukit\SchemaBundle\Document\Series
                 controller: Pumukit\AdminBundle\Controller\AdminController

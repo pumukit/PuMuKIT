@@ -1,0 +1,152 @@
+{% extends 'PumukitAdminBundle::layout.html.twig' %}
+
+{% block body %}
+
+<h3 class="cab_body_div"><img src="/legacy/images/admin/cab/serial_ico.png"/> {% trans %}Series Multimedia{% endtrans %}</h3>
+
+<div id="tv_admin_container">
+  <div id="tv_admin_bar">
+    <div id="preview_series" style="min-height:74px; padding:5px; border: solid 1px #DDD; background: #8eb0bc url(/legacy/images/admin/cab/cab.gif) repeat-x scroll 0% 0%; margin-bottom: 10px">
+      {{ render_hinclude(url('pumukitadmin_series_show', {'id': app.session.get('admin/series/id')})) }}
+    </div>
+    {# TODO    
+    <?php include_partial('acordeon', array('name' => 'series', 'broadcasts' => $broadcasts, 'seriestypes' => $seriestypes)) ?> 
+    {{ render_hinclude(url('pumukitadmin_series_acordeon', {'name': 'series'})) }} #}
+    {% include 'PumukitAdminBundle:Series:acordeon.html.twig' %}
+  </div>
+
+  <div id="tv_admin_content" >
+    <div id="list_series" name="list_series" act="/series/list">
+    {% include 'PumukitAdminBundle:Series:list.html.twig' %}
+    </div>
+
+    <div style="float:right; width:50%">
+      <ul class="tv_admin_actions">
+        <!-- Falta -->
+        <li> {# TODO wizard and path #}
+	 <a class="tv_admin_action_next" href="#" onclick="Modalbox.show('/editar.php/wizard/serial',{width:800, title:'{% trans %}PASO I: Serie{% endtrans %}'}); return false;">{% trans %}Wizard{% endtrans %}</a>
+        </li>
+        <li> {# TODO check route with filter /editar.php/serials/create/filter/filter #}
+	 <a title="{% trans %}Crear nueva serie{% endtrans %}" class="tv_admin_action_create" href="#" onclick="$('filter_series').reset(); new Ajax.Updater('list_series', '{{ path('pumukitadmin_series_create') }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Create{% endtrans %}</a>
+        </li>
+      </ul>
+    </div>
+
+    <select id="options_series" style="margin: 10px 0px; width: 33%" title="{% trans %}Acciones sobre elementos selecionados{% endtrans %}" onchange="window.change_select('series', $('options_series'))">
+      <option value="default" selected="selected">{% trans %}Seleciona una acción...{% endtrans %}</option>
+      <option disabled="">---</option>
+      <option value="delete_sel">{% trans %}Borrar selecionados{% endtrans %}</option>
+      <!-- <option value="inv_announce_sel">{% trans %}Anunciar/Desanunciar selecionados{% endtrans %}</option> -->
+      <!-- <option value="inv_working_sel">{% trans %}Ocultar/Desocultar selecionados{% endtrans %}</option> Ocultarlos todos -->
+    </select>
+    
+  </div>
+  <div style="clear:both"></div>
+</div>
+
+
+</div>
+
+<!-- div editar -->
+<div id="edit_series" class="tv_admin_edit">  
+  {% include 'PumukitAdminBundle:Series:update.html.twig' %}
+
+  {% block javascripts %}
+  <script type="text/javascript"> {# TODO check all url_for routes #}
+
+function toggle_tree_cat(element, id, mm_id, cat_id) {
+  if (element.parentElement.hasClassName("notload")) {
+    element.parentElement.removeClassName("notload");
+    new Ajax.Updater("cat_ul_children_" + id, "' . url_for('mmtemplates/getchildren') . '/id/"  + id + "/block_cat/" + cat_id + "/mm/" + mm_id);
+  } else {
+    $$(".cat_li_parent_" + id).each(function(e){e.toggleClassName("nodisplay")});
+    //element.scrollIntoView();
+    $("all_category_" + cat_id).scrollTop = ((element.positionedOffset()[1]) - 44);
+  }
+  element.parentElement.toggleClassName("expanded").toggleClassName("collapsed");
+}
+
+function toggle_show_all()
+{
+  // SHOW - Quito el punto a los nodos que muestran sus hijos al desocultar
+  $$(".expanded.element, .collapsed.element").each(function(e){
+    e.removeClassName("element");
+  });
+
+  // SHOW & HIDE - Oculto/Muestro elementos finales que no tiene objetos multimedia
+  $$(".nomm.element").each(function(e){
+    e.toggleClassName("nodisplayall");
+  });
+
+  // SHOW & HIDE - Oculto/Muestro elementos todos sus hijos son finales sin objetos multimedia
+  $$(".nomm.expanded, .nomm.collapsed").each(function(e){
+    if (e.getElementsBySelector("li.nomm").length == e.getElementsBySelector("li").length) {
+      e.toggleClassName("nodisplayall");
+    }
+  });
+
+  // HIDE - Pongo el punto a los nodos que se quedan sin hijos al ocultar
+  $$(".nomm").each(function(e){
+    p = e.parentElement.parentElement;
+    if (p.getElementsBySelector("li.nodisplayall").length == p.getElementsBySelector("li").length) {
+      p.addClassName("element");
+    }
+  });
+
+}
+
+function create_li_in_select(cat, block_cat_id, mm_id) {
+  var $ul = $("select_ul_category_" + block_cat_id);
+  var li = new Element("li", {"id": "select_li_" + cat.id, "class": "element"});
+  var span1 = new Element("span", {"class": "icon"}).update("&nbsp;");
+  var span2 = new Element("span", {"onclick":"$$(\'.clicked_category_left\').invoke(\'removeClassName\', \'clicked_category_left\'); this.addClassName(\'clicked_category_left\');", "ondblclick": "del_tree_cat(" + cat.id +", "+ mm_id + ")"}).update(cat.cod+ " - " + cat.name);
+  li.insert(span1).insert(span2);
+  //Add quit logica.
+  $ul.insert(li);
+}
+
+function add_tree_cat(cat_id, mm_id, block_cat_id) {
+  new Ajax.Request("'. url_for("mmtemplates/addCategory") .'/id/" + mm_id,  {
+    method: "post",
+    parameters: "category=" + cat_id,
+    asynchronous: true, 
+    evalScripts: true,
+    onSuccess: function(response){
+        for (var i=0; i<response.responseJSON.added.length; i++) {
+            var c = response.responseJSON.added[i];
+            if (c.group.length!=0 && c.group[1]!=undefined) {
+               create_li_in_select(c, c.group[1], mm_id);  
+            } 
+        }
+    }
+  });  
+}
+
+
+function del_tree_cat(cat_id, mm_id) {
+  // TODO Si ya lo tiene no hacer nada.
+  console.log("del_tree_cat info_num_mm_" + cat_id);
+
+  new Ajax.Request("'. url_for("mmtemplates/delCategory") .'/id/" + mm_id,  {
+    method: "post",
+    parameters: "category=" + cat_id,
+    asynchronous: true, 
+    evalScripts: true,
+    onSuccess: function(response){
+        for (var i=0; i<response.responseJSON.deleted.length; i++) {
+            var c = response.responseJSON.deleted[i];
+            var $_element = $("select_li_" + c.id); 
+            if ($_element)  $_element.remove(); 
+        }
+    }
+  });  
+}
+
+window.update_preview = function(id) {
+  new Ajax.Updater("preview_series", "' . url_for('series/preview') . '/id/" + id, {asynchronous:true, evalScripts:true});
+}
+
+  </script>
+  {% endblock %}
+</div>
+{% endblock %}

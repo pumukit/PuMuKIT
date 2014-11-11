@@ -14,7 +14,7 @@ class Builder extends ContainerAware
 
     $menu->addChild('Dashboard');
 
-    $menu->addChild('Series Multimedia');   
+    $menu->addChild('Series Multimedia', array('route'=>'pumukitadmin_series_index'));
     
     $menu->addChild('Catalogador Unesco');
 
