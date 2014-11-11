@@ -94,11 +94,6 @@ EOT
 		? $idCodMapping[$currentRow[2]]
 		: $root;
 
-	      //Necesary to create the tree
-	      if (!$parent->getId()) {
-		$this->dm->flush();
-	      }
-
 	      try {
 		$tag = $this->createTagFromCsvArray($currentRow, $parent);
 		$idCodMapping[$currentRow[0]] = $tag;
