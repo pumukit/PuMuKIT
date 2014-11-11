@@ -31,6 +31,13 @@ class MultimediaObject
   private $series;
 
   /**
+   * @var Broadcast $broadcast
+   * //Try with EmbedOne
+   * @MongoDB\ReferenceOne(targetDocument="Broadcast", inversedBy="multimedia_objects")
+   */
+  private $broadcast;
+
+  /**
    * @var array $tags
    *
    * @MongoDB\EmbedMany(targetDocument="Tag")
@@ -212,6 +219,26 @@ class MultimediaObject
   public function getSeries()
   {
     return $this->series;
+  }
+
+  /**
+   * Set broadcast
+   *
+   * @param Broadcast $broadcast
+   */
+  public function setBroadcast(Broadcast $broadcast)
+  {
+    $this->broadcast = $broadcast;
+  }
+
+  /**
+   * Get broadcast
+   *
+   * @return Broadcast
+   */
+  public function getBroadcast()
+  {
+    return $this->broadcast;
   }
 
   // Start tag section. Caution: MultimediaObject tags are Tag objects, not strings.
