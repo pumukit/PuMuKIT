@@ -56,13 +56,13 @@
         {{ broadcast.id }}
       </td>
       <td onclick="click_fila_no_preview('broadcast', this, '{{ broadcast.id }}');">
-        {# TODO {{ broadcast.getBroadcastType().name }} #} TODO
+        {{ broadcast.getABroadcastType()?broadcast.getABroadcastType().name:'' }}
       </td>
       <td onclick="click_fila_no_preview('broadcast', this, '{{ broadcast.id }}');">
         {{ broadcast.name }}
       </td>
       <td onclick="click_fila_no_preview('broadcast', this, '{{ broadcast.id }}');">
-        {# TODO {{ broadcast.description }} #}
+        {{ broadcast.description }}
       </td>
       <td onclick="click_fila_no_preview('broadcast', this, '{{ broadcast.id }}');">
         {# TODO {{ broadcast.countMms }} #}
