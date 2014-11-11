@@ -56,7 +56,7 @@
         {{ broadcast.id }}
       </td>
       <td onclick="click_fila_no_preview('broadcast', this, '{{ broadcast.id }}');">
-        {{ broadcast.getABroadcastType()?broadcast.getABroadcastType().name:'' }}
+        {{ broadcast.getBroadcastTypeId() }}
       </td>
       <td onclick="click_fila_no_preview('broadcast', this, '{{ broadcast.id }}');">
         {{ broadcast.name }}
@@ -65,7 +65,7 @@
         {{ broadcast.description }}
       </td>
       <td onclick="click_fila_no_preview('broadcast', this, '{{ broadcast.id }}');">
-        {# TODO {{ broadcast.countMms }} #}
+        {{ broadcast.getMultimediaObjects()|length }}
       </td>
     </tr>
   {% endfor %}
