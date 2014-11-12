@@ -1,46 +1,52 @@
-<?php if ($sf_user->getAttribute('sort', 'id', 'tv_admin/serial') == 'id'): ?>
+{# TODO paths and sort by type #}
+
+{# <?php if ($sf_user->getAttribute('sort', 'id', 'tv_admin/serial') == 'id'): ?> #}
+{% if false %}
   <th width="1%">
-    <?php echo link_to_remote(__('Id').($sf_user->getAttribute('type', 'asc', 'tv_admin/serial') == 'asc' ? '&nbsp;&#x25BE;' : '&nbsp;&#x25B4;'), array('update' => 'list_serials', 'url' => 'serials/list?sort=id&type='.($sf_user->getAttribute('type', 'asc', 'tv_admin/serial') == 'asc' ? 'desc' : 'asc'), 'script' => 'true')) ?>
+    {# ($sf_user->getAttribute('type', 'asc', 'tv_admin/serial') == 'asc' #}
+    <a href="#" onclick="new Ajax.Updater('list_serials', '/editar.php/serials/list/sort/id/type/{{ true?'desc':'asc'}}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Id{% endtrans %}&nbsp;{{ true?'&#x25BE;':'&#x25B4;' }}</a>
   </th>
-<?php else: ?>
+{% else %}
   <th width="1%">
-    <?php echo link_to_remote(__('Id'), array('update' => 'list_serials', 'url' => 'serials/list?sort=id&type=asc', 'script' => 'true')) ?>
+    <a href="#" onclick="new Ajax.Updater('list_serials', '/editar.php/serials/list/sort/id/type/asc', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Id{% endtrans %}</a>
   </th>
-<?php endif; ?>
+{% endif %}
 
 
-
-<?php if ($sf_user->getAttribute('sort', 'id', 'tv_admin/serial') == 'title'): ?>
+{# <?php if ($sf_user->getAttribute('sort', 'id', 'tv_admin/serial') == 'title'): ?> #}
+{% if false %}
   <th>
-  <?php echo link_to_remote( __('Titulo').($sf_user->getAttribute('type', 'asc', 'tv_admin/serial') == 'asc' ? '&nbsp;&#x25BE;' : '&nbsp;&#x25B4;'), array('update' => 'list_serials', 'url' => 'serials/list?sort=title&type='.($sf_user->getAttribute('type', 'asc', 'tv_admin/serial') == 'asc' ? 'desc' : 'asc'), 'script' => 'true')) ?>
+    {# ($sf_user->getAttribute('type', 'asc', 'tv_admin/serial') == 'asc' #}
+    <a href="#" onclick="new Ajax.Updater('list_serials', '/editar.php/serials/list/sort/title/type/{{ true?'desc':'asc'}}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Title{% endtrans %}&nbsp;{{ true?'&#x25BE;':'&#x25B4;' }}</a>
   </th>
-<?php else: ?>
+{% else %}
   <th>
-    <?php echo link_to_remote( __('Titulo'), array('update' => 'list_serials', 'url' => 'serials/list?sort=title&type=asc', 'script' => 'true')) ?>
+    <a href="#" onclick="new Ajax.Updater('list_serials', '/editar.php/serials/list/sort/title/type/asc', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Tittle{% endtrans %}</a>
   </th>
-<?php endif; ?>
+{% endif %}
 
 
-
-
-<?php if ($sf_user->getAttribute('sort', 'id', 'tv_admin/serial') == 'publicDate'): ?>
+{# <?php if ($sf_user->getAttribute('sort', 'id', 'tv_admin/serial') == 'publicDate'): ?> #}
+{% if false %}
   <th width="1%">
-    <?php echo link_to_remote( __('Fecha').($sf_user->getAttribute('type', 'asc', 'tv_admin/serial') == 'asc' ? '&nbsp;&#x25BE;' : '&nbsp;&#x25B4;'), array('update' => 'list_serials', 'url' => 'serials/list?sort=publicDate&type='.($sf_user->getAttribute('type', 'asc', 'tv_admin/serial') == 'asc' ? 'desc' : 'asc'), 'script' => 'true')) ?>
+    {# ($sf_user->getAttribute('type', 'asc', 'tv_admin/serial') == 'asc' #}
+    <a href="#" onclick="new Ajax.Updater('list_serials', '/editar.php/serials/list/sort/public_date/type/{{ true?'desc':'asc'}}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Date{% endtrans %}&nbsp;{{ true?'&#x25BE;':'&#x25B4;' }}</a>
   </th>
-<?php else: ?>
+{% else %}
   <th width="1%">
-    <?php echo link_to_remote( __('Fecha'), array('update' => 'list_serials', 'url' => 'serials/list?sort=publicDate&type=asc', 'script' => 'true')) ?>
+    <a href="#" onclick="new Ajax.Updater('list_serials', '/editar.php/serials/list/sort/public_date/type/asc', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Date{% endtrans %}</a>
   </th>
-<?php endif; ?>
+{% endif %}
 
 
-
-<?php if ($sf_user->getAttribute('sort', 'id', 'tv_admin/serial') == 'num_videos'): ?>
+{# <?php if ($sf_user->getAttribute('sort', 'id', 'tv_admin/serial') == 'num_videos'): ?> #}
+{% if false %}
   <th width="1%">
-    <?php echo link_to_remote(__('Obj.Mm.').($sf_user->getAttribute('type', 'asc', 'tv_admin/serial') == 'asc' ? '&nbsp;&#x25BE;' : '&nbsp;&#x25B4;'), array('update' => 'list_serials', 'url' => 'serials/list?sort=num_videos&type='.($sf_user->getAttribute('type', 'asc', 'tv_admin/serial') == 'asc' ? 'desc' : 'asc'), 'script' => 'true')) ?>
+    {# ($sf_user->getAttribute('type', 'asc', 'tv_admin/serial') == 'asc' #}
+    <a href="#" onclick="new Ajax.Updater('list_serials', '/editar.php/serials/list/sort/num_videos/type/{{ true?'desc':'asc'}}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Obj.Mm.{% endtrans %}&nbsp;{{ true?'&#x25BE;':'&#x25B4;' }}</a>
   </th>  
-<?php else: ?>
+{% else %}
   <th width="1%">
-    <?php echo link_to_remote(__('Obj.Mm.'), array('update' => 'list_serials', 'url' => 'serials/list?sort=num_videos&type=asc', 'script' => 'true')) ?>
+    <a href="#" onclick="new Ajax.Updater('list_serials', '/editar.php/serials/list/sort/num_videos/type/asc', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Obj.Mm.{% endtrans %}</a>
   </th>
-<?php endif; ?>
+{% endif %}

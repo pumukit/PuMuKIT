@@ -15,12 +15,10 @@ pumukitadmin_series_create:
             redirect: pumukitadmin_series_index
 
 pumukitadmin_series_update:
-    pattern: /{id}/edit
-    methods: [GET, PUT, POST]
+    pattern: /{id}
+    methods: [GET]
     defaults:
         _controller: pumukitadmin.controller.series:updateAction
-        _sylius:
-            redirect: pumukitadmin_series_index
 
 pumukitadmin_series_batch_delete:
     pattern: /delete
@@ -37,3 +35,17 @@ pumukitadmin_series_delete:
         _controller: pumukitadmin.controller.series:deleteAction
         _sylius:
             redirect: pumukitadmin_series_index
+
+pumukitadmin_series_copy:
+    pattern: /{id}/copy
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitadmin.controller.series:copyAction
+        _sylius:
+            redirect: pumukitadmin_series_index
+
+pumukitadmin_series_show:
+    pattern: /{id}
+    methods: [GET]
+    defaults:
+        _controller: pumukitadmin.controller.series:showAction

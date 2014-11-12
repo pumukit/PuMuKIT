@@ -7,12 +7,12 @@
 <div id="tv_admin_container">
   <div id="tv_admin_bar">
     <div id="preview_series" style="min-height:74px; padding:5px; border: solid 1px #DDD; background: #8eb0bc url(/legacy/images/admin/cab/cab.gif) repeat-x scroll 0% 0%; margin-bottom: 10px">
-      {{ render_hinclude(url('pumukitadmin_series_show', {'id': app.session.get('admin/series/id')})) }}
+      {% if(app.session.has('admin/direct/id')) %}
+        {{ render_hinclude(url('pumukitadmin_series_show', {'id': app.session.get('admin/series/id')})) }}
+      {% endif %}
     </div>
-    {# TODO    
-    <?php include_partial('acordeon', array('name' => 'series', 'broadcasts' => $broadcasts, 'seriestypes' => $seriestypes)) ?> 
-    {{ render_hinclude(url('pumukitadmin_series_acordeon', {'name': 'series'})) }} #}
-    {% include 'PumukitAdminBundle:Series:acordeon.html.twig' %}
+    {# TODO define $broadcasts and $seriestypes #}
+    {% include 'PumukitAdminBundle:Series:acordeon.html.twig' with {'name': 'series', 'broadcasts': 'broadcasts', 'seriestypes': 'seriestypes'} %}
   </div>
 
   <div id="tv_admin_content" >
@@ -49,7 +49,10 @@
 
 <!-- div editar -->
 <div id="edit_series" class="tv_admin_edit">  
-  {% include 'PumukitAdminBundle:Series:update.html.twig' %}
+  {# {% include 'PumukitAdminBundle:Series:update.html.twig' %} #}
+  {% if(app.session.has('admin/direct/id')) %}      
+    {{ render_hinclude(url('pumukitadmin_series_update', {'id': app.session.get('admin/series/id')})) }}
+  {% endif %}
 
   {% block javascripts %}
   <script type="text/javascript"> {# TODO check all url_for routes #}

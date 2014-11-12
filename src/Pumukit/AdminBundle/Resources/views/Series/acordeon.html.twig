@@ -69,7 +69,7 @@
 	<input class="tv_admin_action_reset_filter" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
       </li>
       <li>
-	<input type="submit" name="filter" value="{% trans %}filtrar{% endtrans %}" class="tv_admin_action_filter">
+	<input type="submit" name="filter" value="{% trans %}filtrar{% endtrans %}" class="tv_admin_action_filter" onclick="return testDates($('filters_date_from').value, $('filters_date_to').value, /^(\d+)-(\d+)-(\d+)$/)"> {# TODO GET CULTURE DATE FORMAT #}
 	{# <?php echo submit_tag('filter', 'name=filter class=tv_admin_action_filter onclick=return testDates($("filters_date_from").value, $("filters_date_to").value, '. get_js_regexp_date($sf_user->getCulture()) . ')') ?> #}
       </li>
     </ul>

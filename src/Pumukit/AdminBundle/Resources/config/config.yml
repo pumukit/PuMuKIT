@@ -36,4 +36,4 @@ sylius_resource:
             templates: PumukitAdminBundle:Series
             classes:
                 model: Pumukit\SchemaBundle\Document\Series
-                controller: Pumukit\AdminBundle\Controller\AdminController
+                controller: Pumukit\AdminBundle\Controller\SeriesAdminController

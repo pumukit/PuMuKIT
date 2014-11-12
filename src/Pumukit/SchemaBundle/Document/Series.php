@@ -34,6 +34,14 @@ class Series
   private $multimedia_objects;
 
   /**
+   * @var boolean $announce
+   *
+   * @MongoDB\Boolean
+   */
+  private $announce = false;
+   
+
+  /**
    * @var datetime $public_date
    *
    * @MongoDB\Date
@@ -184,13 +192,33 @@ class Series
   }
 
   /**
+   * Set announce
+   *
+   * @param boolean $announce
+   */
+  public function setAnnounce($announce)
+  {
+    $this->announce = $announce;
+  }
+
+  /**
+   * Get announce
+   *
+   * @return boolean
+   */
+  public function getAnnounce()
+  {
+    return $this->announce;
+  }
+
+  /**
    * Set public_date
    *
-   * @param datetime $publicDate
+   * @param datetime $public_date
    */
-  public function setPublicDate($publicDate)
+  public function setPublicDate($public_date)
   {
-    $this->public_date = $publicDate;
+    $this->public_date = $public_date;
   }
 
   /**
