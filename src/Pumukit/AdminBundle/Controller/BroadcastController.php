@@ -173,30 +173,17 @@ class BroadcastController extends AdminController
       $repository = $this->getRepository();
 
       $true_resource = $this->findOr404();
-
       $resources = $this->getResourceResolver()->getResource($repository, $config, 'findAll');
-      foreach ($resources as $resource){
-	$criteria = array('id' => $resource->getId());
-	if (0 !== strcmp($resource->getId(), $true_resource->getId())){
-	  $this->getResourceResolver()->getResource($repository, $config, 'findOneBy', array($criteria))->setDefaultSel(false);
-	}else{
-	  $this->getResourceResolver()->getResource($repository, $config, 'findOneBy', array($criteria))->setDefaultSel(true);
-	}
-      }
-      
 
-     
-      /* pumukit 1.8
-	 $this->getResponse()->setContentType('text/javascript');
-	 $this->setLayout(false);
-	 $broadcast = BroadcastPeer::retrieveByPk($this->getRequestParameter('id'));
-	 $this->forward404Unless($broadcast);
-	 
-	 $broadcast->setDefaultSelect();
-      */
-      
+      foreach ($resources as $resource){
+	if (0 !== strcmp($resource->getId(), $true_resource->getId())){
+	  $resource->setDefaultSel(false);
+	}else{
+	  $resource->setDefaultSel(true);
+	}
+	$this->update($resource);
+      }
       $this->setFlash('success', 'default');
-      
       
       return new JsonResponse(array('default' => $resource->getId()));
     }
