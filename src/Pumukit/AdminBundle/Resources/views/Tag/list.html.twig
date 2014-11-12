@@ -24,20 +24,7 @@
   <tfoot>
     <tr>
       <th colspan="8">
-
-
-{#
-        {{ tags.getNbResults }}
-        {% transchoice tags.getNbResults %}
-	      {0} tags|{1} rol|]1,Inf] tags
-	{% endtranschoice %}
-	{% if app.session.get('admin/tag/criteria')|length != 0%}
-          <a title="{% trans %}Cancelar la búsqueda actual{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancelar búsqueda{% endtrans %}</a>
-	{% endif %}
-
-#}
-
-
+        &nbsp;
       </th>
     </tr>
   </tfoot>
