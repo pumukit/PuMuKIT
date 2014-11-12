@@ -30,7 +30,7 @@ sylius_resource:
             templates: PumukitAdminBundle:Broadcast
             classes:
                 model: Pumukit\SchemaBundle\Document\Broadcast
-                controller: Pumukit\AdminBundle\Controller\BroadcastController
+                controller: Pumukit\AdminBundle\Controller\BroadcastAdminController
         pumukitadmin.series:
             driver: doctrine/mongodb-odm
             templates: PumukitAdminBundle:Series

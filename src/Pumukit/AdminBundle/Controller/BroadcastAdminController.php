@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sylius\Bundle\ResourceBundle\Event\ResourceEvent;
 
-class BroadcastController extends AdminController
+class BroadcastAdminController extends AdminController
 {
 
     /**
