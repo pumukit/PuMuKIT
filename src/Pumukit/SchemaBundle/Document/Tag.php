@@ -2,14 +2,12 @@
 
 namespace Pumukit\SchemaBundle\Document;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Pumukit\SchemaBundle\Document\Tag
@@ -60,11 +58,12 @@ class Tag
    * @var string $cod
    *
    * @MongoDB\String
+   * @Assert\Regex("/^\w*$/")
    * @Gedmo\TreePathSource
    *
    * TODO Unique
    */
-  private $cod = 0;
+  private $cod = "";
 
   /**
    * @var boolean $metatag

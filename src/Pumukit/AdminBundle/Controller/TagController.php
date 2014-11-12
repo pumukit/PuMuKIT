@@ -66,18 +66,14 @@ class TagController extends Controller
      */
     public function updateAction(Tag $tag, Request $request)
     {
-
+      $dm = $this->get('doctrine_mongodb')->getManager();
       $form = $this->createForm(new TagType(), $tag);
 
       if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
-	$event = $this->update($resource);
-	if (!$event->isStopped()) {
-	  $this->setFlash('success', 'update');
-	  
-	  return $this->redirectTo($resource);
-	}
-	
-	$this->setFlash($event->getMessageType(), $event->getMessage(), $event->getMessageParams());
+
+        $dm->persist($tag);
+        $dm->flush();
+	return $this->redirect($this->generateUrl('pumukitadmin_tag_index'));
       }
 
 
