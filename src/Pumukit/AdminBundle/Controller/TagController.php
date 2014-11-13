@@ -30,11 +30,11 @@ class TagController extends Controller
       if (null !== $root){
 	$children = $root->getChildren();
       }else{
-	$children = null;
+	$children = array();
       }
       
       return array('root' => $root,
-		   'childrens' => $children);
+		   'children' => $children);
     }
 
     /**
@@ -44,7 +44,7 @@ class TagController extends Controller
     public function childrenAction(Tag $tag, Request $request)
     {      
       return array('tag' => $tag,
-		   'childrens' => $tag->getChildren());
+		   'children' => $tag->getChildren());
     }
 
 
