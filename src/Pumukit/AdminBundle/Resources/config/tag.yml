@@ -11,7 +11,7 @@ pumukitadmin_tag_children:
         _controller: PumukitAdminBundle:Tag:children
 
 pumukitadmin_tag_create:
-    pattern: /create
+    pattern: /create/parent/{parent}
     methods: [GET, POST]
     defaults:
         _controller: PumukitAdminBundle:Tag:create

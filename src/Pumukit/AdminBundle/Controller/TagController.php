@@ -85,21 +85,19 @@ class TagController extends Controller
     }
 
     /**
+     * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"id" = "parent"})
      * @Template
      */
-    public function createAction(Request $request)
+    public function createAction(Tag $parent, Request $request)
     {
       $dm = $this->get('doctrine_mongodb')->getManager();
-
       $repo = $dm->getRepository('PumukitSchemaBundle:Tag');
-      $root_name = "ROOT";
-      $root = $repo->findOneByCod($root_name);
 
       $tag = new Tag();
-      $tag->setParent($root);
+      $tag->setParent($parent);
 
       $form = $this->createForm(new TagType(), $tag);
-
+       
       if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
         $dm->persist($tag);
         $dm->flush();

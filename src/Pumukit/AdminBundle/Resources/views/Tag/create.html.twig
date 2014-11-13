@@ -1,2 +1,2 @@
 {% form_theme form 'PumukitAdminBundle:Themes:fields.html.twig' %}
-{{ form(form, {'action': path('pumukitadmin_tag_create')}) }}
+{{ form(form, {'action': path('pumukitadmin_tag_create', {'parent': tag.parent.id})}) }}

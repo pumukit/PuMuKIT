@@ -19,7 +19,7 @@
       </td>
 	  <td>
         <a title="{% trans %}Nueva categoria hijo para{% endtrans %} {{tag.cod}}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" 
-           href="{{ path('pumukitadmin_tag_create', {'id': tag.id}) }}">
+           href="{{ path('pumukitadmin_tag_create', {'parent': tag.id}) }}">
 	        <img alt="{% trans %}nuevo{% endtrans %}" src="/legacy/images/admin/mbuttons/copy_inline.gif">
 	    </a>
 	  </td>

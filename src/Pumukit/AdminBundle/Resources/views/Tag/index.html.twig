@@ -16,7 +16,7 @@
         <li>
           {% if root %}
               <input class="tv_admin_action_create" type="button" value="{% trans %}Nuevo{% endtrans %}"
-                     onclick="Modalbox.show('{{ path('pumukitadmin_tag_create') }}', {title:'{% trans %}Crear nuevo tag{% endtrans %}', width:800}); return false;" > 
+                     onclick="Modalbox.show('{{ path('pumukitadmin_tag_create', {'parent': root.id}) }}', {title:'{% trans %}Crear nuevo tag{% endtrans %}', width:800}); return false;" > 
           {% endif%}
         </li>
       </ul>
