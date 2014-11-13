@@ -92,14 +92,18 @@ class TagController extends Controller
         $tag->setParent($parent);
 
         $form = $this->createForm(new TagType(), $tag);
-
+	
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
+	  try{
             $dm->persist($tag);
             $dm->flush();
-
-            return $this->redirect($this->generateUrl('pumukitadmin_tag_index'));
+	  }catch (\Exception $e){
+	    $this->get('session')->getFlashBag()->add('error', $e->getMessage());
+	  }
+	  return $this->redirect($this->generateUrl('pumukitadmin_tag_index'));	  
         }
 
         return array('tag' => $tag, 'form' => $form->createView());
     }
+
 }

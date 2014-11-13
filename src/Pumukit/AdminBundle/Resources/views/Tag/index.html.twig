@@ -1,10 +1,20 @@
 {% extends 'PumukitAdminBundle::layout.html.twig' %}
 
 {% block body %}
-
 <h3 class="cab_body_div"><img src="/legacy/images/admin/cab/config_ico.png"/> Categories</h3>
 
 <div id="tv_admin_container">
+
+{% for flashMessage in app.session.flashbag.get('error') %}
+{% if 'dup key' in flashMessage %}
+<script type="text/javascript">
+  window.addEventListener("load", function () { 
+  cat_error('crear');
+  }, false);  
+</script>
+{% endif %}
+{% endfor %}
+
 
   <div id="tv_admin_content" style="margin: 0px">
     <div id="list_categories" name="list_categories">
@@ -33,9 +43,7 @@
   </div>
 </div>
 
-
-
-<script>
+<script type="text/javascript">
 function load_children_cat(id, cod) {
   $$(".c_" + cod).each(function(e){ e.remove() });
   var tr = $('row_cat_' +id);
@@ -121,6 +129,5 @@ function cat_error(action){
 }
 
 </script>
-
 
 {% endblock %}

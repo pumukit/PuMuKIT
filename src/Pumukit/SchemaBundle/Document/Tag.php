@@ -55,9 +55,10 @@ class Tag
    * @var string $cod
    *
    * @MongoDB\String
+   * @MongoDB\UniqueIndex(order="asc")
    * @Assert\Regex("/^\w*$/")
    * @Gedmo\TreePathSource
-   *
+   * 
    * TODO Unique
    */
   private $cod = "";
