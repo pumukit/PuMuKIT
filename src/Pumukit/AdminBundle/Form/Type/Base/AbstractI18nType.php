@@ -4,35 +4,32 @@ namespace Pumukit\AdminBundle\Form\Type\Base;
 
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-
 abstract class AbstractI18nType extends AbstractType
 {
-  private $locales;
+    private $locales;
 
-  public function __construct(array $locales = array())
-  {
-    $this->locales = $locales;
-  }
-			      
-  public function buildForm(FormBuilderInterface $builder, array $options)
-  {
-  }
+    public function __construct(array $locales = array())
+    {
+        $this->locales = $locales;
+    }
 
-  public function setDefaultOptions(OptionsResolverInterface $resolver)
-  {
-    $resolver->setDefaults(array(
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+    }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
         'compound' => false,
     ));
-  }
+    }
 
-  public function buildView(FormView $view, FormInterface $form, array $options)
-  {
-    $view->vars['locales'] = $this->locales;
-  }
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars['locales'] = $this->locales;
+    }
 }

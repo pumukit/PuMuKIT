@@ -7,7 +7,7 @@
       {% if(page != 1) %}
         <a href="{{ path('pumukitadmin_'~name~'_index', {'page': (page -1 )}) }}" style="{{ prev_style }}">&laquo; {% trans %}Anterior{% endtrans %}</a>
       {% endif %}
-      {# <?php echo link_to_remote('&laquo;' . __('Anterior'), array('update' => 'list_'.$name.'s', 'url' => $name.'s/list?page='.($page-1), 'script' => 'true'), $ver_anterior)  ?> #}
+      {# <?php echo link_to_remote('&laquo;'.__('Anterior'), array('update' => 'list_'.$name.'s', 'url' => $name.'s/list?page='.($page-1), 'script' => 'true'), $ver_anterior)  ?> #}
     </div>
     <div style="float:left; margin:0em .5em; width:9em">{% trans %}Pag.{% endtrans %} <span id="num_pag_{{ name }}">{{ page }}</span> {% trans %}de{% endtrans %} {{ total }}</div>
     <div style="float:left; margin:0em .5em; background:transparent url(/legacy/images/admin/pag/sliderbgleft100.png) no-repeat scroll left center; height:18px;  width:100px; ">
@@ -19,7 +19,7 @@
       {% if(page != total and total != 0) %}
         <a href="{{ path('pumukitadmin_'~name~'_index', {'page': (page +1 )}) }}" style="{{ next_style }}">{% trans %}Siguiente{% endtrans %} &raquo;</a>
       {% endif %}
-      {# <?php echo link_to_remote(__('Siguiente') . '&raquo;', array('update'=> 'list_'.$name.'s', 'url' => $name.'s/list?page='.($page+1), 'script' => 'true'), $ver_siguiente) ?> #}
+      {# <?php echo link_to_remote(__('Siguiente').'&raquo;', array('update' => 'list_'.$name.'s', 'url' => $name.'s/list?page='.($page+1), 'script' => 'true'), $ver_siguiente) ?> #}
     </div>
   </div>
 
@@ -27,13 +27,13 @@
     <script language="javascript" type="text/javascript">
       //<![CDATA[
       new Control.Slider("handle_{{ name }}", "track_{{ name }}", {
-        range: $R(1,{{ total }}), 
+        range: $R(1,{{ total }}),
         values: $R(1,{{ total }}).toArray(),
         sliderValue: {{ page }},
         onSlide: function(v){$("num_pag_{{ name }}").innerHTML= (v);},
         onChange: function(v){ window.location.href= "{{ path('pumukitadmin_'~name~'_index', {'page': ''}) }}"+v; }
       } );
-    
+
       $("handle_{{ name }}").show();    {# evito efecto de empezar en cero y ponerse en su posicion #}
       //]]>
     </script>

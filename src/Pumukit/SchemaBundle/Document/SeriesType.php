@@ -4,7 +4,6 @@ namespace Pumukit\SchemaBundle\Document;
 
 //use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use Pumukit\SchemaBundle\Document\Series;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -14,7 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class SeriesType
 {
-  /**
+    /**
    * @var int $id
    *
    * @MongoDB\Int
@@ -27,14 +26,14 @@ class SeriesType
    *
    * @MongoDB\Raw
    */
-  private $name = array('en'=>'');
+  private $name = array('en' => '');
 
   /**
    * @var string $description
    *
    * @MongoDB\Raw
    */
-  private $description = array('en'=>'');
+  private $description = array('en' => '');
 
   /**
    * @var string $cod
@@ -57,10 +56,10 @@ class SeriesType
    */
   private $locale = 'en';
 
-  public function __construct()
-  {
-    $this->series = new ArrayCollection();
-  }
+    public function __construct()
+    {
+        $this->series = new ArrayCollection();
+    }
 
   /**
    * Get id
@@ -69,7 +68,7 @@ class SeriesType
    */
   public function getId()
   {
-    return $this->id;
+      return $this->id;
   }
 
   /**
@@ -79,10 +78,10 @@ class SeriesType
    */
   public function setName($name, $locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    $this->name[$locale] = $name;
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      $this->name[$locale] = $name;
   }
 
   /**
@@ -92,13 +91,14 @@ class SeriesType
    */
   public function getName($locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    if (!isset($this->name[$locale])){
-      return null;
-    }
-    return $this->name[$locale];
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      if (!isset($this->name[$locale])) {
+          return null;
+      }
+
+      return $this->name[$locale];
   }
 
   /**
@@ -108,10 +108,10 @@ class SeriesType
    */
   public function setDescription($description, $locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    $this->description[$locale] = $description;
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      $this->description[$locale] = $description;
   }
 
   /**
@@ -121,13 +121,14 @@ class SeriesType
    */
   public function getDescription($locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    if (!isset($this->description[$locale])){
-      return null;
-    }
-    return $this->description[$locale];
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      if (!isset($this->description[$locale])) {
+          return null;
+      }
+
+      return $this->description[$locale];
   }
 
   /**
@@ -137,7 +138,7 @@ class SeriesType
    */
   public function setCod($cod)
   {
-    $this->cod = $cod;
+      $this->cod = $cod;
   }
 
   /**
@@ -147,7 +148,7 @@ class SeriesType
    */
   public function getCod()
   {
-    return $this->cod;
+      return $this->cod;
   }
 
   /**
@@ -157,7 +158,7 @@ class SeriesType
    */
   public function setLocale($locale)
   {
-    $this->locale = $locale;
+      $this->locale = $locale;
   }
 
   /**
@@ -167,9 +168,8 @@ class SeriesType
    */
   public function getLocale()
   {
-    return $this->locale;
+      return $this->locale;
   }
-
 
   /**
    * Add series
@@ -178,7 +178,7 @@ class SeriesType
    */
   public function addSeries(Series $series)
   {
-    $this->series[] = $series;
+      $this->series[] = $series;
     // $this->series = array_unique($this->tags);
     // Extra verification
     $series->setSeriesType($this);
@@ -191,7 +191,7 @@ class SeriesType
    */
   public function removeSeries(Series $series)
   {
-    $this->series->removeElement($series);
+      $this->series->removeElement($series);
   }
 
   /**
@@ -203,7 +203,7 @@ class SeriesType
    */
   public function containsSeries(Series $series)
   {
-    return $this->series->contains($series);
+      return $this->series->contains($series);
   }
 
   /**
@@ -213,7 +213,7 @@ class SeriesType
    */
   public function getSeries()
   {
-    return $this->series;
+      return $this->series;
   }
 
   /**
@@ -224,9 +224,9 @@ class SeriesType
    */
   public function addSerie(Series $series)
   {
-    $this->series[] = $series;
+      $this->series[] = $series;
 
-    return $this;
+      return $this;
   }
 
   /**
@@ -236,6 +236,6 @@ class SeriesType
    */
   public function removeSerie(Series $series)
   {
-    $this->series->removeElement($series);
+      $this->series->removeElement($series);
   }
 }

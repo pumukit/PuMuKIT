@@ -4,10 +4,7 @@ namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
-
 use Doctrine\Common\Collections\ArrayCollection;
-
-use Pumukit\SchemaBundle\Document\PersonInMultimediaObject;
 
 /**
  * Pumukit\SchemaBundle\Document\Person
@@ -16,7 +13,7 @@ use Pumukit\SchemaBundle\Document\PersonInMultimediaObject;
  */
 class Person
 {
-  /**
+    /**
    * @var int $id
    *
    * @MongoDB\Id
@@ -57,28 +54,28 @@ class Person
    *
    * @MongoDB\Raw
    */
-  protected $honorific = array('en'=>'');
+  protected $honorific = array('en' => '');
 
   /**
    * @var string $firm
    *
    * @MongoDB\Raw
    */
-  protected $firm = array('en'=>'');
+  protected $firm = array('en' => '');
 
   /**
    * @var string $post
    *
    * @MongoDB\Raw
    */
-  protected $post = array('en'=>'');
+  protected $post = array('en' => '');
 
   /**
    * @var string $bio
    *
    * @MongoDB\Raw
    */
-  protected $bio = array('en'=>'');
+  protected $bio = array('en' => '');
 
   /**
    * @var ArrayCollection $person_in_multimedia_object
@@ -100,7 +97,7 @@ class Person
    */
   public function getId()
   {
-    return $this->id;
+      return $this->id;
   }
 
   /**
@@ -110,7 +107,7 @@ class Person
    */
   public function setName($name)
   {
-    $this->name = $name;
+      $this->name = $name;
   }
 
   /**
@@ -120,7 +117,7 @@ class Person
    */
   public function getName()
   {
-    return $this->name;
+      return $this->name;
   }
 
   /**
@@ -130,7 +127,7 @@ class Person
    */
   public function setEmail($email)
   {
-    $this->email = $email;
+      $this->email = $email;
   }
 
   /**
@@ -140,8 +137,8 @@ class Person
    */
   public function getEmail()
   {
-    return $this->email;
-  } 
+      return $this->email;
+  }
 
   /**
    * Set web
@@ -150,7 +147,7 @@ class Person
    */
   public function setWeb($web)
   {
-    $this->web = $web;
+      $this->web = $web;
   }
 
   /**
@@ -160,7 +157,7 @@ class Person
    */
   public function getWeb()
   {
-    return $this->web;
+      return $this->web;
   }
 
   /**
@@ -170,7 +167,7 @@ class Person
    */
   public function setPhone($phone)
   {
-    $this->phone = $phone;
+      $this->phone = $phone;
   }
 
   /**
@@ -180,7 +177,7 @@ class Person
    */
   public function getPhone()
   {
-    return $this->phone;
+      return $this->phone;
   }
 
   /**
@@ -190,10 +187,10 @@ class Person
    */
   public function setHonorific($honorific, $locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    $this->honorific[$locale] = $honorific;
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      $this->honorific[$locale] = $honorific;
   }
 
   /**
@@ -203,13 +200,14 @@ class Person
    */
   public function getHonorific($locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    if (!isset($this->honorific[$locale])){
-      return null;
-    }
-    return $this->honorific[$locale];
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      if (!isset($this->honorific[$locale])) {
+          return null;
+      }
+
+      return $this->honorific[$locale];
   }
 
   /**
@@ -219,10 +217,10 @@ class Person
    */
   public function setFirm($firm, $locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    $this->firm[$locale] = $firm;
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      $this->firm[$locale] = $firm;
   }
 
   /**
@@ -232,13 +230,14 @@ class Person
    */
   public function getFirm($locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    if (!isset($this->firm[$locale])){
-      return null;
-    }
-    return $this->firm[$locale];
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      if (!isset($this->firm[$locale])) {
+          return null;
+      }
+
+      return $this->firm[$locale];
   }
 
   /**
@@ -248,10 +247,10 @@ class Person
    */
   public function setPost($post, $locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    $this->post[$locale] = $post;
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      $this->post[$locale] = $post;
   }
 
   /**
@@ -261,13 +260,14 @@ class Person
    */
   public function getPost($locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    if (!isset($this->post[$locale])){
-      return null;
-    }
-    return $this->post[$locale];
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      if (!isset($this->post[$locale])) {
+          return null;
+      }
+
+      return $this->post[$locale];
   }
 
   /**
@@ -277,11 +277,11 @@ class Person
    */
   public function setBio($bio, $locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    $this->bio[$locale] = $bio;
-   }
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      $this->bio[$locale] = $bio;
+  }
 
   /**
    * Get bio
@@ -290,13 +290,14 @@ class Person
    */
   public function getBio($locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    if (!isset($this->bio[$locale])){
-      return null;
-    }
-    return $this->bio[$locale];
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      if (!isset($this->bio[$locale])) {
+          return null;
+      }
+
+      return $this->bio[$locale];
   }
 
   /**
@@ -306,7 +307,7 @@ class Person
    */
   public function setLocale($locale)
   {
-    $this->locale = $locale;
+      $this->locale = $locale;
   }
 
   /**
@@ -316,7 +317,7 @@ class Person
    */
   public function getLocale()
   {
-    return $this->locale;
+      return $this->locale;
   }
 
   /**
@@ -324,7 +325,7 @@ class Person
    */
   public function __construct()
   {
-    $this->people_in_multimedia_object = new ArrayCollection();
+      $this->people_in_multimedia_object = new ArrayCollection();
     //parent::__construct();
   }
 
@@ -336,9 +337,9 @@ class Person
    */
   public function addPeopleInMultimediaObject(PersonInMultimediaObject $peopleInMultimediaObject)
   {
-    $this->people_in_multimedia_object[] = $peopleInMultimediaObject;
+      $this->people_in_multimedia_object[] = $peopleInMultimediaObject;
 
-    return $this;
+      return $this;
   }
 
   /**
@@ -348,7 +349,7 @@ class Person
    */
   public function removePeopleInMultimediaObject(PersonInMultimediaObject $peopleInMultimediaObject)
   {
-    $this->people_in_multimedia_object->removeElement($peopleInMultimediaObject);
+      $this->people_in_multimedia_object->removeElement($peopleInMultimediaObject);
   }
 
   /**
@@ -358,6 +359,6 @@ class Person
    */
   public function getPeopleInMultimediaObject()
   {
-    return $this->people_in_multimedia_object;
+      return $this->people_in_multimedia_object;
   }
 }

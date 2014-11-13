@@ -6,7 +6,6 @@ use Pumukit\SchemaBundle\Document\Material;
 
 class MaterialTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testGetterAndSetter()
     {
         $tags = array('tag_a', 'tag_b');
@@ -39,7 +38,7 @@ class MaterialTest extends \PHPUnit_Framework_TestCase
 
         $material = new material();
         $material->setSize($size);
-        $this->assertEquals($size,$material->getSize());
+        $this->assertEquals($size, $material->getSize());
     }
 
     public function testTagCollection()
@@ -74,13 +73,12 @@ class MaterialTest extends \PHPUnit_Framework_TestCase
     }
 
     /*public function testRef()
-	{
-		$t1 = new material();
-		$t2 = new material();
+    {
+        $t1 = new material();
+        $t2 = new material();
 
-		$t2->setRef($t1);
-		$this->assertEquals(null, $t1->getRef());
-		$this->assertEquals($t1, $t2->getRef());
-	}*/
-
+        $t2->setRef($t1);
+        $this->assertEquals(null, $t1->getRef());
+        $this->assertEquals($t1, $t2->getRef());
+    }*/
 }

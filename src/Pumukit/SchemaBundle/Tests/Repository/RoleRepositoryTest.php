@@ -3,23 +3,21 @@
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-
 use Pumukit\SchemaBundle\Document\Role;
 
 class RoleRepositoryTest extends WebTestCase
 {
-
     private $dm;
     private $repo;
 
     public function setUp()
     {
         //INIT TEST SUITE
-	$options = array(
-		'environment' => 'test'
-	);
+    $options = array(
+        'environment' => 'test',
+    );
         $kernel = static::createKernel($options);
-	//$kernel = static::createKernel();
+    //$kernel = static::createKernel();
         $kernel->boot();
         $this->dm = $kernel->getContainer()
             ->get('doctrine_mongodb')->getManager();
@@ -53,6 +51,5 @@ class RoleRepositoryTest extends WebTestCase
 
         // This should pass to check the unrequired fields
         $this->assertEquals(1, count($this->repo->findAll()));
-
     }
 }

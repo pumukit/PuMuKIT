@@ -39,7 +39,7 @@
       <!-- <option value="inv_announce_sel">{% trans %}Anunciar/Desanunciar selecionados{% endtrans %}</option> -->
       <!-- <option value="inv_working_sel">{% trans %}Ocultar/Desocultar selecionados{% endtrans %}</option> Ocultarlos todos -->
     </select>
-    
+
   </div>
   <div style="clear:both"></div>
 </div>
@@ -48,9 +48,9 @@
 </div>
 
 <!-- div editar -->
-<div id="edit_series" class="tv_admin_edit">  
+<div id="edit_series" class="tv_admin_edit">
   {# {% include 'PumukitAdminBundle:Series:update.html.twig' %} #}
-  {% if(app.session.has('admin/direct/id')) %}      
+  {% if(app.session.has('admin/direct/id')) %}
     {{ render_hinclude(url('pumukitadmin_series_update', {'id': app.session.get('admin/series/id')})) }}
   {% endif %}
 
@@ -112,17 +112,17 @@ function add_tree_cat(cat_id, mm_id, block_cat_id) {
   new Ajax.Request("'. url_for("mmtemplates/addCategory") .'/id/" + mm_id,  {
     method: "post",
     parameters: "category=" + cat_id,
-    asynchronous: true, 
+    asynchronous: true,
     evalScripts: true,
     onSuccess: function(response){
         for (var i=0; i<response.responseJSON.added.length; i++) {
             var c = response.responseJSON.added[i];
             if (c.group.length!=0 && c.group[1]!=undefined) {
-               create_li_in_select(c, c.group[1], mm_id);  
-            } 
+               create_li_in_select(c, c.group[1], mm_id);
+            }
         }
     }
-  });  
+  });
 }
 
 
@@ -133,16 +133,16 @@ function del_tree_cat(cat_id, mm_id) {
   new Ajax.Request("'. url_for("mmtemplates/delCategory") .'/id/" + mm_id,  {
     method: "post",
     parameters: "category=" + cat_id,
-    asynchronous: true, 
+    asynchronous: true,
     evalScripts: true,
     onSuccess: function(response){
         for (var i=0; i<response.responseJSON.deleted.length; i++) {
             var c = response.responseJSON.deleted[i];
-            var $_element = $("select_li_" + c.id); 
-            if ($_element)  $_element.remove(); 
+            var $_element = $("select_li_" + c.id);
+            if ($_element)  $_element.remove();
         }
     }
-  });  
+  });
 }
 
 window.update_preview = function(id) {

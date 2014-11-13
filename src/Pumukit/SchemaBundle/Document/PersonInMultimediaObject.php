@@ -4,10 +4,6 @@ namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Person;
-use Pumukit\SchemaBundle\Document\Role;
-
 /**
  * Pumukit\SchemaBundle\Document\PersonInMultimediaObject
  *
@@ -15,7 +11,7 @@ use Pumukit\SchemaBundle\Document\Role;
  */
 class PersonInMultimediaObject
 {
-  /**
+    /**
    * @MongoDB\Id
    */
   protected $id;
@@ -54,7 +50,7 @@ class PersonInMultimediaObject
    */
   public function setMultimediaObject(MultimediaObject $multimedia_object)
   {
-    $this->multimedia_object = $multimedia_object;
+      $this->multimedia_object = $multimedia_object;
   }
 
   /**
@@ -64,9 +60,9 @@ class PersonInMultimediaObject
    */
   public function getId()
   {
-    return $this->id;
+      return $this->id;
   }
-	
+
   /**
    * Get multimedia_object
    *
@@ -74,7 +70,7 @@ class PersonInMultimediaObject
    */
   public function getMultimediaObject()
   {
-    return $this->multimedia_object;
+      return $this->multimedia_object;
   }
 
   /**
@@ -84,7 +80,7 @@ class PersonInMultimediaObject
    */
   public function setPerson(Person $person)
   {
-    $this->person = $person;
+      $this->person = $person;
   }
 
   /**
@@ -94,7 +90,7 @@ class PersonInMultimediaObject
    */
   public function getPerson()
   {
-    return $this->person;
+      return $this->person;
   }
 
   /**
@@ -104,7 +100,7 @@ class PersonInMultimediaObject
    */
   public function setRole(Role $role)
   {
-    $this->role = $role;
+      $this->role = $role;
   }
 
   /**
@@ -114,7 +110,7 @@ class PersonInMultimediaObject
    */
   public function getRole()
   {
-    return $this->role;
+      return $this->role;
   }
 
   /**
@@ -124,7 +120,7 @@ class PersonInMultimediaObject
    */
   public function setRank($rank)
   {
-    $this->rank = $rank;
+      $this->rank = $rank;
   }
 
   /**
@@ -134,6 +130,6 @@ class PersonInMultimediaObject
    */
   public function getRank()
   {
-    return $this->rank;
+      return $this->rank;
   }
 }

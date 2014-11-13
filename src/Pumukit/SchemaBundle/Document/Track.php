@@ -11,7 +11,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  */
 class Track extends Element
 {
-  /**
+    /**
    * @var string $language
    *
    * @MongoDB\String
@@ -88,7 +88,7 @@ class Track extends Element
    */
   public function setLanguage($language)
   {
-    $this->language = $language;
+      $this->language = $language;
   }
 
   /**
@@ -98,7 +98,7 @@ class Track extends Element
    */
   public function getLanguage()
   {
-    return $this->language;
+      return $this->language;
   }
 
   /**
@@ -108,7 +108,7 @@ class Track extends Element
    */
   public function setAcodec($acodec)
   {
-    $this->acodec = $acodec;
+      $this->acodec = $acodec;
   }
 
   /**
@@ -118,7 +118,7 @@ class Track extends Element
    */
   public function getAcodec()
   {
-    return $this->acodec;
+      return $this->acodec;
   }
 
   /**
@@ -128,7 +128,7 @@ class Track extends Element
    */
   public function setVcodec($vcodec)
   {
-    $this->vcodec = $vcodec;
+      $this->vcodec = $vcodec;
   }
 
   /**
@@ -138,7 +138,7 @@ class Track extends Element
    */
   public function getVcodec()
   {
-    return $this->vcodec;
+      return $this->vcodec;
   }
 
   /**
@@ -148,7 +148,7 @@ class Track extends Element
    */
   public function setBitrate($bitrate)
   {
-    $this->bitrate = $bitrate;
+      $this->bitrate = $bitrate;
   }
 
   /**
@@ -158,7 +158,7 @@ class Track extends Element
    */
   public function getBitrate()
   {
-    return $this->bitrate;
+      return $this->bitrate;
   }
 
   /**
@@ -168,7 +168,7 @@ class Track extends Element
    */
   public function setFramerate($framerate)
   {
-    $this->framerate = $framerate;
+      $this->framerate = $framerate;
   }
 
   /**
@@ -178,7 +178,7 @@ class Track extends Element
    */
   public function getFramerate()
   {
-    return $this->framerate;
+      return $this->framerate;
   }
 
   /**
@@ -188,7 +188,7 @@ class Track extends Element
    */
   public function setOnlyAudio($onlyAudio)
   {
-    $this->only_audio = $onlyAudio;
+      $this->only_audio = $onlyAudio;
   }
 
   /**
@@ -198,7 +198,7 @@ class Track extends Element
    */
   public function getOnlyAudio()
   {
-    return $this->only_audio;
+      return $this->only_audio;
   }
 
   /**
@@ -208,7 +208,7 @@ class Track extends Element
    */
   public function setChannels($channels)
   {
-    $this->channels = $channels;
+      $this->channels = $channels;
   }
 
   /**
@@ -218,7 +218,7 @@ class Track extends Element
    */
   public function getChannels()
   {
-    return $this->channels;
+      return $this->channels;
   }
 
   /**
@@ -228,7 +228,7 @@ class Track extends Element
    */
   public function setDuration($duration)
   {
-    $this->duration = $duration;
+      $this->duration = $duration;
   }
 
   /**
@@ -238,7 +238,7 @@ class Track extends Element
    */
   public function getDuration()
   {
-    return $this->duration;
+      return $this->duration;
   }
 
   /**
@@ -248,7 +248,7 @@ class Track extends Element
    */
   public function setWidth($width)
   {
-    $this->width = $width;
+      $this->width = $width;
   }
 
   /**
@@ -258,7 +258,7 @@ class Track extends Element
    */
   public function getWidth()
   {
-    return $this->width;
+      return $this->width;
   }
 
   /**
@@ -268,7 +268,7 @@ class Track extends Element
    */
   public function setHeight($height)
   {
-    $this->height = $height;
+      $this->height = $height;
   }
 
   /**
@@ -278,6 +278,6 @@ class Track extends Element
    */
   public function getHeight()
   {
-    return $this->height;
+      return $this->height;
   }
 }

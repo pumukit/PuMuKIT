@@ -6,18 +6,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-use Pumukit\SchemaBundle\Document\Tag;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-
 /**
  * Pumukit\SchemaBundle\Document\Tag
- * 
+ *
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\TagRepository")
  * @Gedmo\Tree(type="materializedPath", activateLocking=true)
  */
 class Tag
 {
-  /**
+    /**
    * @var integer $id
    *
    * @MongoDB\Id
@@ -37,7 +34,7 @@ class Tag
    *
    * @MongoDB\Raw
    */
-  private $title = array('en'=>'');
+  private $title = array('en' => '');
 
   /**
    * @var string $description
@@ -45,7 +42,7 @@ class Tag
    *
    * @MongoDB\Raw
    */
-  private $description = array('en'=>'');
+  private $description = array('en' => '');
 
   /**
    * @var string $slug
@@ -100,7 +97,6 @@ class Tag
    */
   private $updated;
 
-
   /**
    * @Gedmo\TreeParent
    * @MongoDB\ReferenceOne(targetDocument="Tag", inversedBy="children")
@@ -130,11 +126,10 @@ class Tag
    */
   private $lockTime;
 
-
-  public function __construct()
-  {
-    $this->children = array();
-  }
+    public function __construct()
+    {
+        $this->children = array();
+    }
 
   /**
    * Get id
@@ -143,7 +138,7 @@ class Tag
    */
   public function getId()
   {
-    return $this->id;
+      return $this->id;
   }
 
   /**
@@ -153,10 +148,10 @@ class Tag
    */
   public function setTitle($title, $locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    $this->title[$locale] = $title;
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      $this->title[$locale] = $title;
   }
 
   /**
@@ -166,15 +161,15 @@ class Tag
    */
   public function getTitle($locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    if (!isset($this->title[$locale])){
-      return null;
-    }
-    return $this->title[$locale];
-  }
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      if (!isset($this->title[$locale])) {
+          return null;
+      }
 
+      return $this->title[$locale];
+  }
 
   /**
    * Get i18n title
@@ -183,7 +178,7 @@ class Tag
    */
   public function getI18nTitle()
   {
-    return $this->title;
+      return $this->title;
   }
 
   /**
@@ -193,56 +188,57 @@ class Tag
    */
   public function setI18nTitle(array $title)
   {
-    $this->title = $title;
+      $this->title = $title;
   }
 
   /**
    * Set description
-   * 
+   *
    * @param string $description
    */
   public function setDescription($description, $locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    $this->description[$locale] = $description;
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      $this->description[$locale] = $description;
   }
 
   /**
    * Get description
-   * 
+   *
    * @return string
    */
   public function getDescription($locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    if (!isset($this->description[$locale])){
-      return null;
-    }
-    return $this->description[$locale];
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      if (!isset($this->description[$locale])) {
+          return null;
+      }
+
+      return $this->description[$locale];
   }
 
   /**
    * Set i18n description
-   * 
+   *
    * @param array $description
    */
   public function setI18nDescription(array $description)
   {
-    $this->description = $description;
+      $this->description = $description;
   }
 
   /**
    * Get i18n description
-   * 
+   *
    * @return array
    */
   public function getI18nDescription()
   {
-    return $this->description;
+      return $this->description;
   }
 
   /**
@@ -253,9 +249,9 @@ class Tag
    */
   public function setSlug($slug)
   {
-    $this->slug = $slug;
+      $this->slug = $slug;
 
-    return $this;
+      return $this;
   }
 
   /**
@@ -265,7 +261,7 @@ class Tag
    */
   public function getSlug()
   {
-    return $this->slug;
+      return $this->slug;
   }
 
   /**
@@ -275,7 +271,7 @@ class Tag
    */
   public function setCod($cod)
   {
-    $this->cod = $cod;
+      $this->cod = $cod;
   }
 
   /**
@@ -285,7 +281,7 @@ class Tag
    */
   public function getCod()
   {
-    return $this->cod;
+      return $this->cod;
   }
 
   /**
@@ -295,7 +291,7 @@ class Tag
    */
   public function setMetatag($metatag)
   {
-    $this->metatag = $metatag;
+      $this->metatag = $metatag;
   }
 
   /**
@@ -305,9 +301,8 @@ class Tag
    */
   public function getMetatag()
   {
-    return $this->metatag;
+      return $this->metatag;
   }
- 
 
   /**
    * Set display
@@ -316,7 +311,7 @@ class Tag
    */
   public function setDisplay($display)
   {
-    $this->display = $display;
+      $this->display = $display;
   }
 
   /**
@@ -326,7 +321,7 @@ class Tag
    */
   public function getDisplay()
   {
-    return $this->display;
+      return $this->display;
   }
 
   /**
@@ -337,9 +332,9 @@ class Tag
    */
   public function setCreated($created)
   {
-    $this->created = $created;
+      $this->created = $created;
 
-    return $this;
+      return $this;
   }
 
   /**
@@ -350,7 +345,7 @@ class Tag
    */
   public function getCreated()
   {
-    return $this->created;
+      return $this->created;
   }
 
   /**
@@ -361,9 +356,9 @@ class Tag
    */
   public function setUpdated($updated)
   {
-    $this->updated = $updated;
+      $this->updated = $updated;
 
-    return $this;
+      return $this;
   }
 
   /**
@@ -373,7 +368,7 @@ class Tag
    */
   public function getUpdated()
   {
-    return $this->updated;
+      return $this->updated;
   }
 
   /**
@@ -383,7 +378,7 @@ class Tag
    */
   public function setLocale($locale)
   {
-    $this->locale = $locale;
+      $this->locale = $locale;
   }
 
   /**
@@ -393,7 +388,7 @@ class Tag
    */
   public function getLocale()
   {
-    return $this->locale;
+      return $this->locale;
   }
 
   /**
@@ -403,7 +398,7 @@ class Tag
    */
   public function __toString()
   {
-    return $this->getTitle();
+      return $this->getTitle();
   }
 
   /**
@@ -414,9 +409,9 @@ class Tag
    */
   public function addMultimediaObject(MultimediaObject $multimediaObjects)
   {
-    $this->multimedia_objects[] = $multimediaObjects;
+      $this->multimedia_objects[] = $multimediaObjects;
 
-    return $this;
+      return $this;
   }
 
   /**
@@ -426,7 +421,7 @@ class Tag
    */
   public function removeMultimediaObject(MultimediaObject $multimediaObjects)
   {
-    $this->multimedia_objects->removeElement($multimediaObjects);
+      $this->multimedia_objects->removeElement($multimediaObjects);
   }
 
   /**
@@ -436,44 +431,44 @@ class Tag
    */
   public function getMultimediaObjects()
   {
-    return $this->multimedia_objects;
+      return $this->multimedia_objects;
   }
 
-  public function setParent(Tag $parent = null)
-  {
-    $this->parent = $parent;
-    $parent->addChild($this);
-  }
+    public function setParent(Tag $parent = null)
+    {
+        $this->parent = $parent;
+        $parent->addChild($this);
+    }
 
-  public function getParent()
-  {
-    return $this->parent;
-  }
+    public function getParent()
+    {
+        return $this->parent;
+    }
 
-  public function getChildren()
-  {
-    return $this->children;
-  }
+    public function getChildren()
+    {
+        return $this->children;
+    }
 
-  public function addChild(Tag $tag)
-  {
-    return $this->children[] = $tag;
-  }
+    public function addChild(Tag $tag)
+    {
+        return $this->children[] = $tag;
+    }
 
-  public function getLevel()
-  {
-    return $this->level;
-  }
+    public function getLevel()
+    {
+        return $this->level;
+    }
 
-  public function getPath()
-  {
-    return $this->path;
-  }
+    public function getPath()
+    {
+        return $this->path;
+    }
 
-  public function getLockTime()
-  {
-    return $this->lockTime;
-  }
+    public function getLockTime()
+    {
+        return $this->lockTime;
+    }
 
   /**
    * Returns true if given node is children of tag
@@ -484,7 +479,7 @@ class Tag
    */
   public function isChildrenOf(Tag $tag)
   {
-    return $tag == $this->getParent();
+      return $tag == $this->getParent();
   }
 
   /**
@@ -496,8 +491,10 @@ class Tag
    */
   public function isDescendantOf(Tag $tag)
   {
-    if ($tag == $this ) return false;
+      if ($tag == $this) {
+          return false;
+      }
 
-    return substr($this->getPath(), 0, strlen($tag->getPath())) === $tag->getPath();
+      return substr($this->getPath(), 0, strlen($tag->getPath())) === $tag->getPath();
   }
 }

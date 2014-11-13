@@ -12,5 +12,4 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
  */
 class MultimediaObjectRepository extends DocumentRepository
 {
-
 }

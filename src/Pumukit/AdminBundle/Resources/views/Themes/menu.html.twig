@@ -18,7 +18,7 @@
 {% set listAttributes = item.childrenAttributes %}
 {% if item.hasChildren and options.depth is not sameas(0) and item.displayChildren %}
     {% import _self as knp_menu %}
-    <ul{{ knp_menu.attributes(listAttributes) }} id="nav"> 
+    <ul{{ knp_menu.attributes(listAttributes) }} id="nav">
         {{ block('children') }}
     </ul>
 {% endif %}
@@ -27,7 +27,7 @@
 {% block list %}
 {% if item.hasChildren and options.depth is not sameas(0) and item.displayChildren %}
     {% import _self as knp_menu %}
-    <ul{{ knp_menu.attributes(listAttributes) }} > 
+    <ul{{ knp_menu.attributes(listAttributes) }} >
         {{ block('children') }}
     </ul>
 {% endif %}
@@ -90,7 +90,7 @@
     {% import _self as knp_menu %}
     <li{{ knp_menu.attributes(attributes) }}
     {%- if item.hasChildren %}
-    onmouseover="Element.addClassName(this,'over')" onmouseout="Element.removeClassName(this,'over')" 
+    onmouseover="Element.addClassName(this,'over')" onmouseout="Element.removeClassName(this,'over')"
     {%- endif %}
     >
         {{ block('linkElement') }}

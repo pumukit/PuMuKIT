@@ -12,13 +12,12 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
  */
 class SeriesRepository extends DocumentRepository
 {
-
-  public function findByTag(Tag $tag)
-  {
-    $dm = $kernel->getContainer()->get('doctrine_mongodb')->getManager();
-    $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->equals($tag)->sort('public_date', 'desc');
-    $query = $qb->getQuery();
-    $results = $query->execute();
+    public function findByTag(Tag $tag)
+    {
+        $dm = $kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->equals($tag)->sort('public_date', 'desc');
+        $query = $qb->getQuery();
+        $results = $query->execute();
     /*
       $query = $dm->createQuery('SELECT s
       FROM PumukitSchemaBundle:Series s
@@ -30,14 +29,14 @@ class SeriesRepository extends DocumentRepository
 
       return $query->getResult();*/
     return $results;
-  }
+    }
 
-  public function findOneByTag(Tag $tag)
-  {
-    $dm = $this->$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-    $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->equals($tag)->sort('public_date', 'desc');
-    $query = $qb->getQuery()->getSingleResult();
-    $results = $query->execute();
+    public function findOneByTag(Tag $tag)
+    {
+        $dm = $this->$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->equals($tag)->sort('public_date', 'desc');
+        $query = $qb->getQuery()->getSingleResult();
+        $results = $query->execute();
     /*
       $query = $dm->createQuery('SELECT s
       FROM PumukitSchemaBundle:Series s
@@ -51,14 +50,14 @@ class SeriesRepository extends DocumentRepository
       return $query->getSingleResult();
     */
     return $results;
-  }
+    }
 
-  public function findWithAnyTag(array $tags)
-  {
-    $dm = $this->$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-    $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->in($tags)->sort('public_date', 'desc');
-    $query = $qb->getQuery();
-    $results = $query->execute();
+    public function findWithAnyTag(array $tags)
+    {
+        $dm = $this->$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->in($tags)->sort('public_date', 'desc');
+        $query = $qb->getQuery();
+        $results = $query->execute();
     /*
       $query = $dm->createQuery('SELECT s
       FROM PumukitSchemaBundle:Series s
@@ -70,14 +69,14 @@ class SeriesRepository extends DocumentRepository
 
       return $query->getResult();*/
     return $results;
-  }
+    }
 
-  public function findWithAllTags(array $tags)
-  {
-    $dm = $this->$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-    $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->all($tags)->sort('public_date', 'desc');
-    $query = $qb->getQuery();
-    $results = $query->execute();
+    public function findWithAllTags(array $tags)
+    {
+        $dm = $this->$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->all($tags)->sort('public_date', 'desc');
+        $query = $qb->getQuery();
+        $results = $query->execute();
     /*
       $query = $dm->createQuery('SELECT s
       FROM PumukitSchemaBundle:Series s
@@ -92,14 +91,14 @@ class SeriesRepository extends DocumentRepository
 
       return $query->getResult();*/
     return $results;
-  }
+    }
 
-  public function findOneWithAllTags(array $tags)
-  {
-    $dm = $this->$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-    $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->all($tags)->sort('public_date', 'desc');
-    $query = $qb->getQuery()->getSingleResult();
-    $results = $query->execute();	
+    public function findOneWithAllTags(array $tags)
+    {
+        $dm = $this->$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->all($tags)->sort('public_date', 'desc');
+        $query = $qb->getQuery()->getSingleResult();
+        $results = $query->execute();
     /*
       $query = $dm->createQuery('SELECT s
       FROM PumukitSchemaBundle:Series s
@@ -115,15 +114,14 @@ class SeriesRepository extends DocumentRepository
 
       return $query->getSingleResult();*/
     return $results;
-  }
+    }
 
-  public function findWithoutTag(Tag $tag)
-  {
-
-    $dm = $this->$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-    $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->equals($tag)->sort('public_date', 'desc');
-    $query = $qb->getQuery();
-    $results = $query->execute();
+    public function findWithoutTag(Tag $tag)
+    {
+        $dm = $this->$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->equals($tag)->sort('public_date', 'desc');
+        $query = $qb->getQuery();
+        $results = $query->execute();
     /*
       $query = $dm->createQuery('SELECT s
       FROM PumukitSchemaBundle:Series s
@@ -138,14 +136,14 @@ class SeriesRepository extends DocumentRepository
 
       return $query->getResult();*/
     return $results;
-  }
+    }
 
-  public function findOneWithoutTag(Tag $tag)
-  {
-    $dm = $this->$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-    $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->equals($tag)->sort('public_date', 'desc');
-    $query = $qb->getQuery()->getSingleResult();
-    $results = $query->execute();
+    public function findOneWithoutTag(Tag $tag)
+    {
+        $dm = $this->$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->equals($tag)->sort('public_date', 'desc');
+        $query = $qb->getQuery()->getSingleResult();
+        $results = $query->execute();
     /*
       $query = $dm->createQuery('SELECT s
       FROM PumukitSchemaBundle:Series s
@@ -161,7 +159,7 @@ class SeriesRepository extends DocumentRepository
 
       return $query->getSingleResult();*/
     return $results;
-  }
+    }
 
   // Note: Maybe a "Find without metatag (category) and children" would be useful
   /**
@@ -173,10 +171,10 @@ class SeriesRepository extends DocumentRepository
    */
   public function findWithoutAllTags(array $tags)
   {
-    $dm = $this->$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-    $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->notIn($tags)->sort('public_date', 'desc');
-    $query = $qb->getQuery();
-    $results = $query->execute();
+      $dm = $this->$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+      $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->notIn($tags)->sort('public_date', 'desc');
+      $query = $qb->getQuery();
+      $results = $query->execute();
     /*
       $query = $dm->createQuery('SELECT se
       FROM PumukitSchemaBundle:Series se
@@ -206,10 +204,10 @@ class SeriesRepository extends DocumentRepository
    */
   public function findWithoutSomeTags(array $tags)
   {
-    $dm = $this->$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-    $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->in($tags)->sort('public_date', 'desc');
-    $query = $qb->getQuery();
-    $results = $query->execute();
+      $dm = $this->$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+      $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->in($tags)->sort('public_date', 'desc');
+      $query = $qb->getQuery();
+      $results = $query->execute();
     /*
       $query = $dm->createQuery('SELECT se
       FROM PumukitSchemaBundle:Series se
@@ -224,5 +222,4 @@ class SeriesRepository extends DocumentRepository
       return $query->getResult();*/
     return $results;
   }
-
 }

@@ -3,9 +3,7 @@
 namespace Pumukit\DirectBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
-
 
 /**
  * Pumukit\DirectBundle\Document\Direct
@@ -14,19 +12,19 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Direct
 {
-  const DIRECT_TYPE_FMS = 'FMS';
-  const DIRECT_TYPE_WMS = 'WMS';
+    const DIRECT_TYPE_FMS = 'FMS';
+    const DIRECT_TYPE_WMS = 'WMS';
 
-  /** 
+  /**
    * @var int $id
-   * 
+   *
    * @MongoDB\Id
    */
   private $id;
 
   /**
    * @var string $url
-   * 
+   *
    * @MongoDB\String
    * @Assert\NotBlank()
    * @Assert\Url(protocols= {"rtmp", "http", "mms", "rtp", "https"})
@@ -39,14 +37,14 @@ class Direct
    * @MongoDB\String
    */
   private $passwd;
-  
+
   /**
    * @var int $direct_type
    *
    * @MongoDB\String
    */
   private $direct_type = self::DIRECT_TYPE_FMS;
-  
+
   /**
    * @var int $width
    *
@@ -83,10 +81,10 @@ class Direct
    * @Assert\NotBlank()
    */
   private $source_name;
-   
+
   /**
    * @var boolean $index_play
-   * 
+   *
    * @MongoDB\Boolean
    */
   private $index_play = false;
@@ -107,33 +105,33 @@ class Direct
 
   /**
    * @var string $name
-   * 
+   *
    * @MongoDB\Raw
    * @Assert\NotBlank()
    */
-  private $name = array('en'=>'');
+  private $name = array('en' => '');
 
   /**
    * @var string $description
    *
    * @MongoDB\Raw
    */
-  private $description = array('en'=>'');
-  
+  private $description = array('en' => '');
+
   /**
    * @var locale $locale
    */
   private $locale = 'en';
 
-  /** 
+  /**
    * Constructor
    */
   protected static $instances = array();
 
-  public function __toString()
-  {
-    return $this->url;
-  }
+    public function __toString()
+    {
+        return $this->url;
+    }
 
   /**
    * Get id
@@ -142,7 +140,7 @@ class Direct
    */
   public function getId()
   {
-    return $this->id;
+      return $this->id;
   }
 
   /**
@@ -152,9 +150,9 @@ class Direct
    */
   public function setUrl($url)
   {
-    $this->url = $url;
+      $this->url = $url;
   }
-  
+
   /**
    * Get url
    *
@@ -162,8 +160,8 @@ class Direct
    */
   public function getUrl()
   {
-    return $this->url;
-  } 
+      return $this->url;
+  }
 
   /**
    * Set passwd
@@ -172,9 +170,9 @@ class Direct
    */
   public function setPasswd($passwd)
   {
-    $this->passwd = $passwd;
+      $this->passwd = $passwd;
   }
-  
+
   /**
    * Get passwd
    *
@@ -182,7 +180,7 @@ class Direct
    */
   public function getPasswd()
   {
-    return $this->passwd;
+      return $this->passwd;
   }
 
   /**
@@ -192,9 +190,9 @@ class Direct
    */
   public function setDirectType($direct_type)
   {
-    $this->direct_type = $direct_type;
+      $this->direct_type = $direct_type;
   }
-  
+
   /**
    * Get direct_type
    *
@@ -202,7 +200,7 @@ class Direct
    */
   public function getDirectType()
   {
-    return $this->direct_type;
+      return $this->direct_type;
   }
 
   /**
@@ -210,7 +208,7 @@ class Direct
    */
   public function isValidDirectType()
   {
-    return in_array($this->direct_type, array(self::DIRECT_TYPE_WMS, self::DIRECT_TYPE_FMS));
+      return in_array($this->direct_type, array(self::DIRECT_TYPE_WMS, self::DIRECT_TYPE_FMS));
   }
 
   /**
@@ -220,9 +218,9 @@ class Direct
    */
   public function setWidth($width)
   {
-    $this->width = $width;
+      $this->width = $width;
   }
-  
+
   /**
    * Get width
    *
@@ -230,7 +228,7 @@ class Direct
    */
   public function getWidth()
   {
-    return $this->width;
+      return $this->width;
   }
 
   /**
@@ -240,9 +238,9 @@ class Direct
    */
   public function setHeight($height)
   {
-    $this->height = $height;
+      $this->height = $height;
   }
-  
+
   /**
    * Get height
    *
@@ -250,8 +248,8 @@ class Direct
    */
   public function getHeight()
   {
-    return $this->height;
-  } 
+      return $this->height;
+  }
 
   /**
    * Set qualities
@@ -260,9 +258,9 @@ class Direct
    */
   public function setQualities($qualities)
   {
-    $this->qualities = $qualities;
+      $this->qualities = $qualities;
   }
-  
+
   /**
    * Get qualities
    *
@@ -270,8 +268,8 @@ class Direct
    */
   public function getQualities()
   {
-    return $this->qualities;
-  }  
+      return $this->qualities;
+  }
 
   /**
    * Set ip_source
@@ -280,9 +278,9 @@ class Direct
    */
   public function setIpSource($ip_source)
   {
-    $this->ip_source = $ip_source;
+      $this->ip_source = $ip_source;
   }
-  
+
   /**
    * Get ip_source
    *
@@ -290,7 +288,7 @@ class Direct
    */
   public function getIpSource()
   {
-    return $this->ip_source;
+      return $this->ip_source;
   }
 
   /**
@@ -300,9 +298,9 @@ class Direct
    */
   public function setSourceName($source_name)
   {
-    $this->source_name = $source_name;
+      $this->source_name = $source_name;
   }
-  
+
   /**
    * Get source_name
    *
@@ -310,7 +308,7 @@ class Direct
    */
   public function getSourceName()
   {
-    return $this->source_name;
+      return $this->source_name;
   }
 
   /**
@@ -320,9 +318,9 @@ class Direct
    */
   public function setIndexPlay($index_play)
   {
-    $this->index_play = $index_play;
+      $this->index_play = $index_play;
   }
-  
+
   /**
    * Get index_play
    *
@@ -330,7 +328,7 @@ class Direct
    */
   public function getIndexPlay()
   {
-    return $this->index_play;
+      return $this->index_play;
   }
 
   /**
@@ -340,9 +338,9 @@ class Direct
    */
   public function setBroadcasting($broadcasting)
   {
-    $this->broadcasting = $broadcasting;
+      $this->broadcasting = $broadcasting;
   }
-  
+
   /**
    * Get broadcasting
    *
@@ -350,7 +348,7 @@ class Direct
    */
   public function getBroadcasting()
   {
-    return $this->broadcasting;
+      return $this->broadcasting;
   }
 
   /**
@@ -360,9 +358,9 @@ class Direct
    */
   public function setDebug($debug)
   {
-    $this->debug = $debug;
+      $this->debug = $debug;
   }
-  
+
   /**
    * Get debug
    *
@@ -370,8 +368,8 @@ class Direct
    */
   public function getDebug()
   {
-    return $this->debug;
-  } 
+      return $this->debug;
+  }
 
   /**
    * Set name
@@ -380,12 +378,12 @@ class Direct
    */
   public function setName($name, $locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    $this->name[$locale] = $name;
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      $this->name[$locale] = $name;
   }
-  
+
   /**
    * Get name
    *
@@ -393,15 +391,15 @@ class Direct
    */
   public function getName($locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    if (!isset($this->name[$locale])){
-      return null;
-    }
-    return $this->name[$locale];
-  }
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      if (!isset($this->name[$locale])) {
+          return null;
+      }
 
+      return $this->name[$locale];
+  }
 
   /**
    * Set I18n name
@@ -410,9 +408,9 @@ class Direct
    */
   public function setI18nName(array $name)
   {
-    $this->name = $name;
+      $this->name = $name;
   }
-  
+
   /**
    * Get i18n name
    *
@@ -420,7 +418,7 @@ class Direct
    */
   public function getI18nName()
   {
-    return $this->name;
+      return $this->name;
   }
 
   /**
@@ -430,26 +428,27 @@ class Direct
    */
   public function setDescription($description, $locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    $this->description[$locale] = $description;
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      $this->description[$locale] = $description;
   }
-  
+
   /**
    * Get description
    *
    * @return string
    */
   public function getDescription($locale = null)
-  {  
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    if (!isset($this->description[$locale])){
-      return null;
-    }
-    return $this->description[$locale];
+  {
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      if (!isset($this->description[$locale])) {
+          return null;
+      }
+
+      return $this->description[$locale];
   }
 
   /**
@@ -459,17 +458,17 @@ class Direct
    */
   public function setI18nDescription(array $description)
   {
-    $this->description = $description;
+      $this->description = $description;
   }
-  
+
   /**
    * Get I18n description
    *
    * @return array
    */
   public function getI18nDescription()
-  {  
-    return $this->description;
+  {
+      return $this->description;
   }
 
   /**
@@ -479,9 +478,9 @@ class Direct
    */
   public function setLocale($locale)
   {
-    $this->locale = $locale;
+      $this->locale = $locale;
   }
-  
+
   /**
    * Get locale
    *
@@ -489,7 +488,7 @@ class Direct
    */
   public function getLocale()
   {
-    return $this->locale;
+      return $this->locale;
   }
 
   /**
@@ -499,10 +498,10 @@ class Direct
    */
   public function cloneResource()
   {
-    $aux = clone $this;
-    $aux->id = null;
+      $aux = clone $this;
+      $aux->id = null;
 
-    return $aux;
+      return $aux;
   }
 
   /**
@@ -512,8 +511,8 @@ class Direct
    */
   public function getResolution()
   {
-    return array('width' => $this->width, 
-		 'height' => $this->height);
+      return array('width' => $this->width,
+         'height' => $this->height, );
   }
 
   /**
@@ -523,10 +522,9 @@ class Direct
    */
   public function setResolution($resolution)
   {
-    if ((!empty($resolution['width'])) && (!empty($resolution['height']))){
-      $this->width = $resolution['width'];
-      $this->height = $resolution['height'];
-    }
+      if ((!empty($resolution['width'])) && (!empty($resolution['height']))) {
+          $this->width = $resolution['width'];
+          $this->height = $resolution['height'];
+      }
   }
-
 }

@@ -3,56 +3,55 @@
 namespace Pumukit\AdminBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
-use Knp\Menu\Iterator\RecursiveItemIterator;
 use Symfony\Component\DependencyInjection\ContainerAware;
 
 class Builder extends ContainerAware
 {
-  public function mainMenu(FactoryInterface $factory, array $options)
-  {
-    $menu = $factory->createItem('root');
+    public function mainMenu(FactoryInterface $factory, array $options)
+    {
+        $menu = $factory->createItem('root');
 
-    $menu->addChild('Dashboard');
+        $menu->addChild('Dashboard');
 
-    $menu->addChild('Series Multimedia', array('route'=>'pumukitadmin_series_index'));
-    
-    $menu->addChild('Catalogador Unesco');
+        $menu->addChild('Series Multimedia', array('route' => 'pumukitadmin_series_index'));
 
-    $portal_design = $menu->addChild('Diseño Portal');
-    $portal_design->addChild('Diseño');
-    $portal_design->addChild('Plantillas');
-    $portal_design->addChild('FileManager');
-    $portal_design->addChild('Categorías');
-    $portal_design->addChild('Noticias');
+        $menu->addChild('Catalogador Unesco');
 
-    $live = $menu->addChild('Directos');
-    $live->addChild('Canales en Directo', array('route'=>'pumukitadmin_direct_index'));
-    $live->addChild('Anuncios de Directos', array('route'=>'pumukitadmin_event_index'));
+        $portal_design = $menu->addChild('Diseño Portal');
+        $portal_design->addChild('Diseño');
+        $portal_design->addChild('Plantillas');
+        $portal_design->addChild('FileManager');
+        $portal_design->addChild('Categorías');
+        $portal_design->addChild('Noticias');
 
-    $transcoding = $menu->addChild('Transcodificación');
-    $transcoding->addChild('Perfil de Transcodificación');
-    $transcoding->addChild('Lista de tareas');
-    $transcoding->addChild('Trascodificadores');
+        $live = $menu->addChild('Directos');
+        $live->addChild('Canales en Directo', array('route' => 'pumukitadmin_direct_index'));
+        $live->addChild('Anuncios de Directos', array('route' => 'pumukitadmin_event_index'));
 
-    $menu->addChild('Editoriales Temporizadas');
+        $transcoding = $menu->addChild('Transcodificación');
+        $transcoding->addChild('Perfil de Transcodificación');
+        $transcoding->addChild('Lista de tareas');
+        $transcoding->addChild('Trascodificadores');
 
-    $tables = $menu->addChild('Tablas');
-    $tables->addChild('Personas');
+        $menu->addChild('Editoriales Temporizadas');
 
-    $management = $menu->addChild('Administración');
-    $management->addChild('Usuarios admin', array('route'=>'pumukitadmin_user_index'));
-    $management->addChild('Categorías');
-    $management->addChild('Géneros');
-    $management->addChild('Tipos de materiales');
-    $management->addChild('Tipos de series');
-    $management->addChild('Idiomas');
-    $management->addChild('Roles', array('route'=>'pumukitadmin_role_index'));
-    $management->addChild('Perfiles Acceso', array('route'=>'pumukitadmin_broadcast_index'));
-    $management->addChild('Servidores de Distribución');
+        $tables = $menu->addChild('Tablas');
+        $tables->addChild('Personas');
 
-    $ingester = $menu->addChild('Ingestador');
-    $ingester->addChild('Ingestador Matterhorn');
+        $management = $menu->addChild('Administración');
+        $management->addChild('Usuarios admin', array('route' => 'pumukitadmin_user_index'));
+        $management->addChild('Categorías');
+        $management->addChild('Géneros');
+        $management->addChild('Tipos de materiales');
+        $management->addChild('Tipos de series');
+        $management->addChild('Idiomas');
+        $management->addChild('Roles', array('route' => 'pumukitadmin_role_index'));
+        $management->addChild('Perfiles Acceso', array('route' => 'pumukitadmin_broadcast_index'));
+        $management->addChild('Servidores de Distribución');
 
-    return $menu;
-  }
+        $ingester = $menu->addChild('Ingestador');
+        $ingester->addChild('Ingestador Matterhorn');
+
+        return $menu;
+    }
 }

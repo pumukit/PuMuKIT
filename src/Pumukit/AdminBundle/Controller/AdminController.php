@@ -3,18 +3,11 @@
 namespace Pumukit\AdminBundle\Controller;
 
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
-use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\EventDispatcher\Event;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Sylius\Bundle\ResourceBundle\Event\ResourceEvent;
 
 class AdminController extends ResourceController
 {
-
     /**
      * Overwrite to update the criteria with MongoRegex, and save it in the session
      */
@@ -25,22 +18,22 @@ class AdminController extends ResourceController
         $criteria = $config->getCriteria();
         $sorting = $config->getSorting();
 
-	if (array_key_exists('reset', $criteria)) {
+        if (array_key_exists('reset', $criteria)) {
             $this->get('session')->remove('admin/'.$config->getResourceName().'/criteria');
-	} elseif ($criteria){
-	    $this->get('session')->set('admin/'.$config->getResourceName().'/criteria', $criteria);
-	}
-	$criteria = $this->get('session')->get('admin/'.$config->getResourceName().'/criteria', array());
+        } elseif ($criteria) {
+            $this->get('session')->set('admin/'.$config->getResourceName().'/criteria', $criteria);
+        }
+        $criteria = $this->get('session')->get('admin/'.$config->getResourceName().'/criteria', array());
 
-	//TODO: do upstream
-	$new_criteria = array();
-	foreach ($criteria as $property => $value) {
-	    //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
-	    if ('' !== $value) {
-	        $new_criteria[$property] = new \MongoRegex('/' . $value . '/i');
-	    }
-	}
-	$criteria = $new_criteria;
+    //TODO: do upstream
+    $new_criteria = array();
+        foreach ($criteria as $property => $value) {
+            //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
+        if ('' !== $value) {
+            $new_criteria[$property] = new \MongoRegex('/'.$value.'/i');
+        }
+        }
+        $criteria = $new_criteria;
 
         $pluralName = $config->getPluralResourceName();
         $repository = $this->getRepository();
@@ -51,12 +44,12 @@ class AdminController extends ResourceController
                 ->getResource($repository, $config, 'createPaginator', array($criteria, $sorting))
             ;
 
-	    if ($request->get('page', null)) {
+            if ($request->get('page', null)) {
                 $this->get('session')->set('admin/'.$config->getResourceName().'/page', $request->get('page', 1));
-	    }
+            }
 
             $resources
-	      ->setCurrentPage($this->get('session')->get('admin/'.$config->getResourceName().'/page', 1), true, true)
+          ->setCurrentPage($this->get('session')->get('admin/'.$config->getResourceName().'/page', 1), true, true)
                 ->setMaxPerPage($config->getPaginationMaxPerPage())
             ;
         } else {
@@ -76,24 +69,22 @@ class AdminController extends ResourceController
         return $this->handleView($view);
     }
 
-
     public function copyAction(Request $request)
     {
         $resource = $this->findOr404();
-	
-	$new_resource = $resource->cloneResource();
 
-	$this->create($new_resource);
-	
+        $new_resource = $resource->cloneResource();
 
-	$this->setFlash('success', 'copy');
-	
-	$config = $this->getConfiguration();
-	
-	return $this->redirectToRoute(
-	   $config->getRedirectRoute('index'),
-	   $config->getRedirectParameters()
-	);	
+        $this->create($new_resource);
+
+        $this->setFlash('success', 'copy');
+
+        $config = $this->getConfiguration();
+
+        return $this->redirectToRoute(
+       $config->getRedirectRoute('index'),
+       $config->getRedirectParameters()
+    );
     }
 
     /**
@@ -102,9 +93,9 @@ class AdminController extends ResourceController
     public function showAction()
     {
         $config = $this->getConfiguration();
-	$data = $this->findOr404();
+        $data = $this->findOr404();
 
-	$this->get('session')->set('admin/'.$config->getResourceName().'/id', $data->getId());
+        $this->get('session')->set('admin/'.$config->getResourceName().'/id', $data->getId());
 
         $view = $this
             ->view()
@@ -115,7 +106,6 @@ class AdminController extends ResourceController
 
         return $this->handleView($view);
     }
-
 
     /**
      * Overwrite to update the session.
@@ -132,35 +122,31 @@ class AdminController extends ResourceController
         return $event;
     }
 
-
-
     public function batchDeleteAction(Request $request)
     {
         $ids = $this->getRequest()->get('ids');
 
-	foreach($ids as $id) {
+        foreach ($ids as $id) {
             $resource = $this->find($id);
-	    $this->delete($resource);
-	}
-	$config = $this->getConfiguration();
+            $this->delete($resource);
+        }
+        $config = $this->getConfiguration();
 
-	$this->setFlash('success', 'delete');
+        $this->setFlash('success', 'delete');
 
-	return $this->redirectToRoute(
-	    $config->getRedirectRoute('index'),
-	    $config->getRedirectParameters()
-	);
+        return $this->redirectToRoute(
+        $config->getRedirectRoute('index'),
+        $config->getRedirectParameters()
+    );
     }
-
 
     public function find($id)
     {
         $config = $this->getConfiguration();
         $repository = $this->getRepository();
 
-	$criteria = array('id' => $id);
+        $criteria = array('id' => $id);
 
         return $this->getResourceResolver()->getResource($repository, $config, 'findOneBy', array($criteria));
     }
-
 }

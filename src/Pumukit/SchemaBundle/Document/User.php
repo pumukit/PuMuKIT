@@ -3,8 +3,6 @@
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Document\User as BaseUser;
 
 /**
@@ -14,8 +12,7 @@ use FOS\UserBundle\Document\User as BaseUser;
  */
 class User extends BaseUser
 {
-
-  /**
+    /**
    * @var int $id
    *
    * @MongoDB\Id(strategy="auto")
@@ -28,11 +25,11 @@ class User extends BaseUser
    * @MongoDB\String
    */
   protected $fullname;
-  
-  public function __construct()
-  {
-    parent::__construct();
-  }
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
   /**
    * Set fullname
@@ -41,9 +38,9 @@ class User extends BaseUser
    */
   public function setFullname($fullname)
   {
-    $this->fullname = $fullname;
+      $this->fullname = $fullname;
   }
-  
+
   /**
    * Get fullname
    *
@@ -51,7 +48,6 @@ class User extends BaseUser
    */
   public function getFullname()
   {
-    return $this->fullname;
+      return $this->fullname;
   }
-
 }

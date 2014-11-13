@@ -11,7 +11,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  */
 class Element
 {
-  /**
+    /**
    * @var int $id
    *
    * @MongoDB\Int
@@ -98,12 +98,11 @@ class Element
    * @var locale $locale
    */
   private $locale = 'en';
-  
 
-  public function __construct()
-  {
-    $this->tags = array();
-  }
+    public function __construct()
+    {
+        $this->tags = array();
+    }
 
   /**
    * Get id
@@ -112,7 +111,7 @@ class Element
    */
   public function getId()
   {
-    return $this->id;
+      return $this->id;
   }
 
   /**
@@ -122,7 +121,7 @@ class Element
    */
   public function setMultimediaObject(MultimediaObject $multimedia_object)
   {
-    $this->multimedia_object = $multimedia_object;
+      $this->multimedia_object = $multimedia_object;
   }
 
   /**
@@ -132,7 +131,7 @@ class Element
    */
   public function getMultimediaObject()
   {
-    return $this->multimedia_object;
+      return $this->multimedia_object;
   }
 
   /**
@@ -162,7 +161,7 @@ class Element
    */
   public function setTags(array $tags)
   {
-    $this->tags = $tags;
+      $this->tags = $tags;
   }
 
   /**
@@ -172,7 +171,7 @@ class Element
    */
   public function getTags()
   {
-    return $this->tags;
+      return $this->tags;
   }
 
   /**
@@ -182,9 +181,9 @@ class Element
    */
   public function addTag($tag)
   {
-    $this->tags[] = $tag;
+      $this->tags[] = $tag;
 
-    return $this->tags = array_unique($this->tags);
+      return $this->tags = array_unique($this->tags);
   }
 
   /**
@@ -195,15 +194,15 @@ class Element
    */
   public function removeTag($tag)
   {
-    $tag = array_search($tag, $this->tags, true);
+      $tag = array_search($tag, $this->tags, true);
 
-    if ($tag !== false) {
-      unset($this->tags[$tag]);
+      if ($tag !== false) {
+          unset($this->tags[$tag]);
 
-      return true;
-    }
+          return true;
+      }
 
-    return false;
+      return false;
   }
 
   /**
@@ -214,7 +213,7 @@ class Element
    */
   public function containsTag($tag)
   {
-    return in_array($tag, $this->tags, true);
+      return in_array($tag, $this->tags, true);
   }
 
   /**
@@ -225,7 +224,7 @@ class Element
    */
   public function containsAllTags(array $tags)
   {
-    return count(array_intersect($tags, $this->tags)) === count($tags);
+      return count(array_intersect($tags, $this->tags)) === count($tags);
   }
 
   /**
@@ -236,7 +235,7 @@ class Element
    */
   public function containsAnyTag(array $tags)
   {
-    return count(array_intersect($tags, $this->tags)) != 0;
+      return count(array_intersect($tags, $this->tags)) != 0;
   }
 
   /**
@@ -246,7 +245,7 @@ class Element
    */
   public function setUrl($url)
   {
-    $this->url = $url;
+      $this->url = $url;
   }
 
   /**
@@ -256,7 +255,7 @@ class Element
    */
   public function getUrl()
   {
-    return $this->url;
+      return $this->url;
   }
 
   /**
@@ -266,7 +265,7 @@ class Element
    */
   public function setPath($path)
   {
-    $this->path = $path;
+      $this->path = $path;
   }
 
   /**
@@ -276,7 +275,7 @@ class Element
    */
   public function getPath()
   {
-    return $this->path;
+      return $this->path;
   }
 
   /**
@@ -286,7 +285,7 @@ class Element
    */
   public function setFormat($format)
   {
-    $this->format = $format;
+      $this->format = $format;
   }
 
   /**
@@ -296,7 +295,7 @@ class Element
    */
   public function getFormat()
   {
-    return $this->format;
+      return $this->format;
   }
 
   /**
@@ -306,7 +305,7 @@ class Element
    */
   public function setMimeType($mime_type)
   {
-    $this->mime_type = $mime_type;
+      $this->mime_type = $mime_type;
   }
 
   /**
@@ -316,7 +315,7 @@ class Element
    */
   public function getMimeType()
   {
-    return $this->mime_type;
+      return $this->mime_type;
   }
 
   /**
@@ -326,7 +325,7 @@ class Element
    */
   public function setRank($rank)
   {
-    $this->rank = $rank;
+      $this->rank = $rank;
   }
 
   /**
@@ -336,7 +335,7 @@ class Element
    */
   public function getRank()
   {
-    return $this->rank;
+      return $this->rank;
   }
 
   /**
@@ -346,7 +345,7 @@ class Element
    */
   public function setSize($size)
   {
-    $this->size = $size;
+      $this->size = $size;
   }
 
   /**
@@ -356,7 +355,7 @@ class Element
    */
   public function getSize()
   {
-    return $this->size;
+      return $this->size;
   }
 
   /**
@@ -366,7 +365,7 @@ class Element
    */
   public function setHide($hide)
   {
-    $this->hide = $hide;
+      $this->hide = $hide;
   }
 
   /**
@@ -376,7 +375,7 @@ class Element
    */
   public function getHide()
   {
-    return $this->hide;
+      return $this->hide;
   }
 
   /**
@@ -386,10 +385,10 @@ class Element
    */
   public function setDescription($description, $locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    $this->description[$locale] = $description;
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      $this->description[$locale] = $description;
   }
 
   /**
@@ -399,13 +398,14 @@ class Element
    */
   public function getDescription($locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    if (!isset($this->description[$locale])){
-      return null;
-    }
-    return $this->description[$locale];
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      if (!isset($this->description[$locale])) {
+          return null;
+      }
+
+      return $this->description[$locale];
   }
 
   /**
@@ -415,10 +415,9 @@ class Element
    */
   public function setLocale($locale)
   {
-    $this->locale = $locale;
+      $this->locale = $locale;
   }
-  
-  
+
   /**
    * Get locale
    *
@@ -426,6 +425,6 @@ class Element
    */
   public function getLocale()
   {
-    return $this->locale;
+      return $this->locale;
   }
 }

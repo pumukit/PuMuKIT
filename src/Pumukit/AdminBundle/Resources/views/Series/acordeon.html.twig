@@ -4,7 +4,7 @@
   <form id="filter_series" onsubmit="" action="{{ path('pumukitadmin_series_index') }}" method="GET">
     <fieldset>
       <div id="bottom_container" >
-    	
+
         <h2 class="accordion_toggle">{% trans %}Buscar{% endtrans %}</h2>
         <div class="accordion_content" style="overflow: hidden; display: none;">
           <div class="form-row">
@@ -24,8 +24,8 @@
             </div>
           </div>
         </div>
-        <div class="accordion_content" style="overflow: hidden; display: none;">  
-	  
+        <div class="accordion_content" style="overflow: hidden; display: none;">
+
 	  <div class="form-row">
 	    <label for="publicdate">{% trans %}Fecha{% endtrans %}:</label>
 	    <div class="content">
@@ -34,12 +34,12 @@
 	      {% trans %}Hasta{% endtrans %}:&nbsp;&nbsp;<input type="datetime-local" size="11" name="criteria[date][to]" id="filters_date_to" value="{{ criteria['date']['to']|default("") }}">
 	    </div>
 	  </div>
-	  
+
         </div>
-	
+
         <h2 class="accordion_toggle">{% trans %}Otros{% endtrans %}</h2>
         <div class="accordion_content" style="overflow: hidden; display: none;">
-	  
+
           <div class="form-row">
  	    <label for="announce">{% trans %}Anunciado{% endtrans %}:</label>
             <div class="content">
@@ -48,8 +48,8 @@
 		<option value="false">{% trans %}No{% endtrans %}</option>
 	      </select>
             </div>
-            <br /> 
-	    
+            <br />
+
  	    <label for="status">{% trans %}Oculto:{% endtrans %}</label>
             <div class="content">
 	      <select name="criteria[status]" id="filters_status"><option value="all" selected="selected">{% trans %}Todo{% endtrans %}</option>
@@ -58,19 +58,19 @@
 	      </select>
             </div>
           </div>
-	  
+
         </div>
-	
+
       </div>
     </fieldset>
-    
+
     <ul class="tv_admin_actions">
       <li>
 	<input class="tv_admin_action_reset_filter" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
       </li>
       <li>
 	<input type="submit" name="filter" value="{% trans %}filtrar{% endtrans %}" class="tv_admin_action_filter" onclick="return testDates($('filters_date_from').value, $('filters_date_to').value, /^(\d+)-(\d+)-(\d+)$/)"> {# TODO GET CULTURE DATE FORMAT #}
-	{# <?php echo submit_tag('filter', 'name=filter class=tv_admin_action_filter onclick=return testDates($("filters_date_from").value, $("filters_date_to").value, '. get_js_regexp_date($sf_user->getCulture()) . ')') ?> #}
+	{# <?php echo submit_tag('filter', 'name=filter class=tv_admin_action_filter onclick=return testDates($("filters_date_from").value, $("filters_date_to").value, '.get_js_regexp_date($sf_user->getCulture()).')') ?> #}
       </li>
     </ul>
   </form>
@@ -85,7 +85,7 @@
   function loadAccordions() {
     var bottomAccordion = new accordion('bottom_container');
     //bottomAccordion.activate($$('#bottom_container .accordion_toggle')[0]);
-  } 
+  }
   function resetSearchForm() {
     $('filters_title').value = '';
     $('filters_person').value = '';

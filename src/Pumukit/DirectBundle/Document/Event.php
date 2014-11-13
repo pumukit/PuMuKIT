@@ -3,7 +3,6 @@
 namespace Pumukit\DirectBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Pumukit\DirectBundle\Document\Event
@@ -12,9 +11,9 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Event
 {
-  /** 
+    /**
    * @var int $id
-   * 
+   *
    * @MongoDB\Id
    */
   private $id;
@@ -56,7 +55,7 @@ class Event
 
   /**
    * @var boolean $display
-   * 
+   *
    * @MongoDB\Boolean
    */
   private $display = true;
@@ -80,7 +79,7 @@ class Event
    */
   public function getId()
   {
-    return $this->id;
+      return $this->id;
   }
 
   /**
@@ -90,9 +89,9 @@ class Event
    */
   public function setDirect($direct)
   {
-    $this->direct = $direct;
+      $this->direct = $direct;
   }
-  
+
   /**
    * Get direct
    *
@@ -100,8 +99,8 @@ class Event
    */
   public function getDirect()
   {
-    return $this->direct;
-  } 
+      return $this->direct;
+  }
 
   /**
    * Set name
@@ -110,12 +109,12 @@ class Event
    */
   public function setName($name, $locale = null)
   {
-    if ($locale == null){
-      $locale = $this->locale;
-    }
-    $this->name[$locale] = $name;
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      $this->name[$locale] = $name;
   }
-  
+
   /**
    * Get name
    *
@@ -123,14 +122,15 @@ class Event
    */
   public function getName($locale = null)
   {
-    if ($locale == null){
-      $locale = $this->locale;
-    }
-    if (!isset($this->name[$locale])){
-      return null;
-    }
-    return $this->name[$locale];
-  } 
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      if (!isset($this->name[$locale])) {
+          return null;
+      }
+
+      return $this->name[$locale];
+  }
 
   /**
    * Set I18n name
@@ -139,9 +139,9 @@ class Event
    */
   public function setI18nName(array $name)
   {
-    $this->name = $name;
+      $this->name = $name;
   }
-  
+
   /**
    * Get i18n name
    *
@@ -149,7 +149,7 @@ class Event
    */
   public function getI18nName()
   {
-    return $this->name;
+      return $this->name;
   }
 
   /**
@@ -159,9 +159,9 @@ class Event
    */
   public function setPlace($place)
   {
-    $this->place = $place;
+      $this->place = $place;
   }
-  
+
   /**
    * Get place
    *
@@ -169,7 +169,7 @@ class Event
    */
   public function getPlace()
   {
-    return $this->place;
+      return $this->place;
   }
 
   /**
@@ -179,9 +179,9 @@ class Event
    */
   public function setDate($date)
   {
-    $this->date = $date;
+      $this->date = $date;
   }
-  
+
   /**
    * Get date
    *
@@ -189,7 +189,7 @@ class Event
    */
   public function getDate()
   {
-    return $this->date;
+      return $this->date;
   }
 
   /**
@@ -199,9 +199,9 @@ class Event
    */
   public function setDuration($duration)
   {
-    $this->duration = $duration;
+      $this->duration = $duration;
   }
-  
+
   /**
    * Get duration
    *
@@ -209,7 +209,7 @@ class Event
    */
   public function getDuration()
   {
-    return $this->duration;
+      return $this->duration;
   }
 
   /**
@@ -219,9 +219,9 @@ class Event
    */
   public function setDisplay($display)
   {
-    $this->display = $display;
+      $this->display = $display;
   }
-  
+
   /**
    * Get display
    *
@@ -229,7 +229,7 @@ class Event
    */
   public function getDisplay()
   {
-    return $this->display;
+      return $this->display;
   }
 
   /**
@@ -239,9 +239,9 @@ class Event
    */
   public function setCreateSerial($create_serial)
   {
-    $this->create_serial = $create_serial;
+      $this->create_serial = $create_serial;
   }
-  
+
   /**
    * Get create_serial
    *
@@ -249,7 +249,7 @@ class Event
    */
   public function getCreateSerial()
   {
-    return $this->create_serial;
+      return $this->create_serial;
   }
 
   /**
@@ -259,8 +259,8 @@ class Event
    */
   public function getSchedule()
   {
-    return array('date' => $this->date,
-		 'duration' => $this->duration);
+      return array('date' => $this->date,
+         'duration' => $this->duration, );
   }
 
   /**
@@ -270,10 +270,9 @@ class Event
    */
   public function setSchedule($schedule)
   {
-    if ((!empty($schedule['date'])) && (!empty($schedule['duration']))){
-      $this->date = $schedule['date'];
-      $this->duration = $schedule['duration'];
-    }
+      if ((!empty($schedule['date'])) && (!empty($schedule['duration']))) {
+          $this->date = $schedule['date'];
+          $this->duration = $schedule['duration'];
+      }
   }
-
 }

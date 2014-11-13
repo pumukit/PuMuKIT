@@ -358,7 +358,7 @@
 
 {% block texti18n_widget -%}
     {%- for locale in form.vars.locales %}
-        <input type="text" {{ block('widgeti18n_attributes') }} value="{{ value[locale]|default("") }}"/> 
+        <input type="text" {{ block('widgeti18n_attributes') }} value="{{ value[locale]|default("") }}"/>
         <span class="lang">{{ locale }}</span>
         <br><br>
     {%- endfor -%}
@@ -392,7 +392,7 @@
 
 {# Direct Widgets #}
 {% block directresolution_widget -%}
-  <input style="margin-top: 5px;" type="number" size="6" value="{{ value['width']|default("") }}" id="{{ id }}_width" name="{{ full_name }}[width]"> x 
+  <input style="margin-top: 5px;" type="number" size="6" value="{{ value['width']|default("") }}" id="{{ id }}_width" name="{{ full_name }}[width]"> x
   <input style="margin-top: 5px;" type="number" size="6" value="{{ value['height']|default("") }}" id="{{ id }}_height" name="{{ full_name }}[height]">
 {%- endblock directresolution_widget %}
 

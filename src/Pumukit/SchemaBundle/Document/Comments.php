@@ -4,8 +4,6 @@ namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-
 /**
  * Comments
  *
@@ -13,27 +11,27 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
  */
 class Comments
 {
-  /**
+    /**
    * @var int
    *
    * @MongoDB\Id
    */
   private $id;
-  
+
   /**
    * @var \Date
    *
    * @MongoDB\Date
    */
   private $date;
-  
+
   /**
    * @var string
    *
    * @MongoDB\String
    */
   private $text;
-  
+
   /**
    * @var int
    *
@@ -41,7 +39,7 @@ class Comments
    * @MongoDB\EmbedOne(targetDocument="MultimediaObject")
    */
   private $multimedia_object_id;
-  
+
   /**
    * Get id
    *
@@ -49,9 +47,9 @@ class Comments
    */
   public function getId()
   {
-    return $this->id;
+      return $this->id;
   }
-  
+
   /**
    * Set date
    *
@@ -60,11 +58,11 @@ class Comments
    */
   public function setDate($date)
   {
-    $this->date = $date;
-    
-    return $this;
+      $this->date = $date;
+
+      return $this;
   }
-  
+
   /**
    * Get date
    *
@@ -72,9 +70,9 @@ class Comments
    */
   public function getDate()
   {
-    return $this->date;
+      return $this->date;
   }
-  
+
   /**
    * Set text
    *
@@ -83,11 +81,11 @@ class Comments
    */
   public function setText($text)
   {
-    $this->text = $text;
-    
-    return $this;
+      $this->text = $text;
+
+      return $this;
   }
-  
+
   /**
    * Get text
    *
@@ -95,9 +93,9 @@ class Comments
    */
   public function getText()
   {
-    return $this->text;
+      return $this->text;
   }
-  
+
   /**
    * Set multimedia_object_id
    *
@@ -106,11 +104,11 @@ class Comments
    */
   public function setMultimediaObjectId($multimediaObjectId)
   {
-    $this->multimedia_object_id = $multimediaObjectId;
-    
-    return $this;
+      $this->multimedia_object_id = $multimediaObjectId;
+
+      return $this;
   }
-  
+
   /**
    * Get multimedia_object_id
    *
@@ -118,6 +116,6 @@ class Comments
    */
   public function getMultimediaObjectId()
   {
-    return $this->multimedia_object_id;
+      return $this->multimedia_object_id;
   }
 }

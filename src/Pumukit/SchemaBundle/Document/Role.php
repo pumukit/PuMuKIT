@@ -5,15 +5,13 @@ namespace Pumukit\SchemaBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Pumukit\SchemaBundle\Document\PersonInMultimediaObject;
 
 /**
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\RoleRepository")
  */
 class Role
 {
-
-  /**
+    /**
    * @MongoDB\Id
    */
   protected $id;
@@ -53,15 +51,14 @@ class Role
    *
    * @MongoDB\Raw
    */
-  private $name = array('en'=>'');
+  private $name = array('en' => '');
 
   /**
    * @var string $text
    *
    * @MongoDB\Raw
    */
-  private $text = array('en'=>'');
-
+  private $text = array('en' => '');
 
   /**
    * @var ArrayCollection $person_in_multimedia_object
@@ -84,7 +81,7 @@ class Role
    */
   public function getId()
   {
-    return $this->id;
+      return $this->id;
   }
 
   /**
@@ -94,7 +91,7 @@ class Role
    */
   public function setCod($cod)
   {
-    $this->cod = $cod;
+      $this->cod = $cod;
   }
 
   /**
@@ -104,7 +101,7 @@ class Role
    */
   public function getCod()
   {
-    return $this->cod;
+      return $this->cod;
   }
 
   /**
@@ -114,7 +111,7 @@ class Role
    */
   public function setRank($rank)
   {
-    $this->rank = $rank;
+      $this->rank = $rank;
   }
 
   /**
@@ -124,7 +121,7 @@ class Role
    */
   public function getRank()
   {
-    return $this->rank;
+      return $this->rank;
   }
 
   /**
@@ -134,7 +131,7 @@ class Role
    */
   public function setXml($xml)
   {
-    $this->xml = $xml;
+      $this->xml = $xml;
   }
 
   /**
@@ -144,7 +141,7 @@ class Role
    */
   public function getXml()
   {
-    return $this->xml;
+      return $this->xml;
   }
 
   /**
@@ -154,7 +151,7 @@ class Role
    */
   public function setDisplay($display)
   {
-    $this->display = $display;
+      $this->display = $display;
   }
 
   /**
@@ -164,7 +161,7 @@ class Role
    */
   public function getDisplay()
   {
-    return $this->display;
+      return $this->display;
   }
 
   /**
@@ -174,10 +171,10 @@ class Role
    */
   public function setName($name, $locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    $this->name[$locale] = $name;
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      $this->name[$locale] = $name;
   }
 
   /**
@@ -187,13 +184,14 @@ class Role
    */
   public function getName($locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    if (!isset($this->name[$locale])){
-      return null;
-    }
-    return $this->name[$locale];
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      if (!isset($this->name[$locale])) {
+          return null;
+      }
+
+      return $this->name[$locale];
   }
 
   /**
@@ -203,9 +201,9 @@ class Role
    */
   public function setI18nName(array $name)
   {
-    $this->name = $name;
+      $this->name = $name;
   }
-  
+
   /**
    * Get i18n name
    *
@@ -213,7 +211,7 @@ class Role
    */
   public function getI18nName()
   {
-    return $this->name;
+      return $this->name;
   }
 
   /**
@@ -223,10 +221,10 @@ class Role
    */
   public function setText($text, $locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    $this->text[$locale] = $text;
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      $this->text[$locale] = $text;
   }
 
   /**
@@ -236,13 +234,14 @@ class Role
    */
   public function getText($locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    if (!isset($this->text[$locale])){
-      return null;
-    }
-    return $this->text[$locale];
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      if (!isset($this->text[$locale])) {
+          return null;
+      }
+
+      return $this->text[$locale];
   }
 
   /**
@@ -252,9 +251,9 @@ class Role
    */
   public function setI18nText(array $text)
   {
-    $this->text = $text;
+      $this->text = $text;
   }
-  
+
   /**
    * Get i18n text
    *
@@ -262,7 +261,7 @@ class Role
    */
   public function getI18nText()
   {
-    return $this->text;
+      return $this->text;
   }
 
   /**
@@ -272,7 +271,7 @@ class Role
    */
   public function setLocale($locale)
   {
-    $this->locale = $locale;
+      $this->locale = $locale;
   }
 
   /**
@@ -282,7 +281,7 @@ class Role
    */
   public function getLocale()
   {
-    return $this->locale;
+      return $this->locale;
   }
 
   /**
@@ -290,7 +289,7 @@ class Role
    */
   public function __construct()
   {
-    $this->people_in_multimedia_object = new ArrayCollection();
+      $this->people_in_multimedia_object = new ArrayCollection();
   }
 
   /**
@@ -301,9 +300,9 @@ class Role
    */
   public function addPeopleInMultimediaObject(PersonInMultimediaObject $peopleInMultimediaObject)
   {
-    $this->people_in_multimedia_object[] = $peopleInMultimediaObject;
+      $this->people_in_multimedia_object[] = $peopleInMultimediaObject;
 
-    return $this;
+      return $this;
   }
 
   /**
@@ -313,7 +312,7 @@ class Role
    */
   public function removePeopleInMultimediaObject(PersonInMultimediaObject $peopleInMultimediaObject)
   {
-    $this->people_in_multimedia_object->removeElement($peopleInMultimediaObject);
+      $this->people_in_multimedia_object->removeElement($peopleInMultimediaObject);
   }
 
   /**
@@ -323,7 +322,7 @@ class Role
    */
   public function getPeopleInMultimediaObject()
   {
-    return $this->people_in_multimedia_object;
+      return $this->people_in_multimedia_object;
   }
 
   /**
@@ -333,11 +332,10 @@ class Role
    */
   public function cloneResource()
   {
-    $aux = clone $this;
-    $aux->id = null;
-    $aux->rank = null;
+      $aux = clone $this;
+      $aux->id = null;
+      $aux->rank = null;
 
-    return $aux;
+      return $aux;
   }
-
 }

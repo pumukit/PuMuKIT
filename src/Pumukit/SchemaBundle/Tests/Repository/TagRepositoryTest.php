@@ -3,23 +3,21 @@
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-
 use Pumukit\SchemaBundle\Document\Tag;
 
 class TagRepositoryTest extends WebTestCase
 {
-
     private $dm;
     private $repo;
 
     public function setUp()
     {
         //INIT TEST SUITE
-	$options = array(
-		'environment' => 'test'
-	);
+    $options = array(
+        'environment' => 'test',
+    );
         $kernel = static::createKernel($options);
-	//$kernel = static::createKernel();
+    //$kernel = static::createKernel();
         $kernel->boot();
         $this->dm = $kernel->getContainer()
             ->get('doctrine_mongodb')->getManager();
@@ -30,7 +28,6 @@ class TagRepositoryTest extends WebTestCase
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')->remove(array());
         $this->dm->flush();
     }
-
 
     public function createTestTree()
     {
@@ -66,9 +63,7 @@ class TagRepositoryTest extends WebTestCase
         $this->dm->persist($tagB2A);
 
         $this->dm->flush();
-
     }
-
 
     public function testCreate()
     {
@@ -82,108 +77,100 @@ class TagRepositoryTest extends WebTestCase
         $this->assertEquals(1, count($this->repo->findAll()));
     }
 
-
     public function testGetChildren()
     {
-	$this->createTestTree();
+        $this->createTestTree();
 
-	$tag = $this->repo->findOneByCod("ROOT");
-	$tree = $this->repo->getTree($tag);
-        $this->assertEquals(6, count($tree));	
-	$children = $this->repo->getChildren($tag);
+        $tag = $this->repo->findOneByCod("ROOT");
+        $tree = $this->repo->getTree($tag);
+        $this->assertEquals(6, count($tree));
+        $children = $this->repo->getChildren($tag);
         $this->assertEquals(5, count($children));
-	$this->assertEquals(5, $this->repo->childCount($tag));
-	$directChildren = $this->repo->getChildren($tag, true);
-        $this->assertEquals(2, count($directChildren));	
+        $this->assertEquals(5, $this->repo->childCount($tag));
+        $directChildren = $this->repo->getChildren($tag, true);
+        $this->assertEquals(2, count($directChildren));
 
-
-	$tag = $this->repo->findOneByCod("B");
-	$tree = $this->repo->getTree($tag);
+        $tag = $this->repo->findOneByCod("B");
+        $tree = $this->repo->getTree($tag);
         $this->assertEquals(4, count($tree));
-	$children = $this->repo->getChildren($tag);
+        $children = $this->repo->getChildren($tag);
         $this->assertEquals(3, count($children));
-	$this->assertEquals(3, $this->repo->childCount($tag));	
-	$directChildren = $this->repo->getChildren($tag, true);
-        $this->assertEquals(2, count($directChildren));	
+        $this->assertEquals(3, $this->repo->childCount($tag));
+        $directChildren = $this->repo->getChildren($tag, true);
+        $this->assertEquals(2, count($directChildren));
     }
-
 
     public function testGetRootNodes()
     {
-	$this->createTestTree();
+        $this->createTestTree();
 
-	$tree = $this->repo->getRootNodes();
+        $tree = $this->repo->getRootNodes();
         $this->assertEquals(1, count($tree));
     }
 
-
     public function testIsChildrenOrDescendantOf()
     {
-      $this->createTestTree();
-      
-      $root = $this->repo->findOneByCod("ROOT");
-      $tagA = $this->repo->findOneByCod("A");
-      $tagB = $this->repo->findOneByCod("B");
-      $tagB2 = $this->repo->findOneByCod("B2");
-      $tagB2A = $this->repo->findOneByCod("B2A");
-      
-      $this->assertTrue($tagB2->isChildrenOf($tagB));
-      $this->assertFalse($tagB->isChildrenOf($tagB2));
-      $this->assertFalse($tagB2A->isChildrenOf($tagB));
-      $this->assertFalse($tagA->isChildrenOf($tagB));
-      $this->assertFalse($tagB->isChildrenOf($tagB));
+        $this->createTestTree();
 
-      $this->assertTrue($tagB2->isDescendantOf($tagB));
-      $this->assertFalse($tagB->isDescendantOf($tagB2));
-      $this->assertTrue($tagB2A->isDescendantOf($tagB));
-      $this->assertTrue($tagB2A->isDescendantOf($tagB2));
-      $this->assertTrue($tagB2A->isDescendantOf($root));
-      $this->assertFalse($root->isDescendantOf($tagB2A));
-      $this->assertFalse($tagA->isDescendantOf($tagB));
-      $this->assertFalse($tagB->isDescendantOf($tagB));
+        $root = $this->repo->findOneByCod("ROOT");
+        $tagA = $this->repo->findOneByCod("A");
+        $tagB = $this->repo->findOneByCod("B");
+        $tagB2 = $this->repo->findOneByCod("B2");
+        $tagB2A = $this->repo->findOneByCod("B2A");
+
+        $this->assertTrue($tagB2->isChildrenOf($tagB));
+        $this->assertFalse($tagB->isChildrenOf($tagB2));
+        $this->assertFalse($tagB2A->isChildrenOf($tagB));
+        $this->assertFalse($tagA->isChildrenOf($tagB));
+        $this->assertFalse($tagB->isChildrenOf($tagB));
+
+        $this->assertTrue($tagB2->isDescendantOf($tagB));
+        $this->assertFalse($tagB->isDescendantOf($tagB2));
+        $this->assertTrue($tagB2A->isDescendantOf($tagB));
+        $this->assertTrue($tagB2A->isDescendantOf($tagB2));
+        $this->assertTrue($tagB2A->isDescendantOf($root));
+        $this->assertFalse($root->isDescendantOf($tagB2A));
+        $this->assertFalse($tagA->isDescendantOf($tagB));
+        $this->assertFalse($tagB->isDescendantOf($tagB));
     }
-
 
     public function testGetChildrenFromDocument()
     {
-      $this->createTestTree();
+        $this->createTestTree();
 
       //TODO FIXME Clear DocumentManager to reset document.children array.
       //$this->dm->clear();
 
       $tag = $this->repo->findOneByCod("ROOT");
-      $this->assertEquals(2, count($tag->getChildren()));
-
+        $this->assertEquals(2, count($tag->getChildren()));
     }
 
     public function testCRUDRepository()
     {
-	$this->createTestTree();
+        $this->createTestTree();
 
         $this->assertEquals(6, count($this->repo->findAll()));
 
-	$tag = $this->repo->findOneByCod("ROOT");
-	$tagA = $this->repo->findOneByCod("A");
-	$tagB = $this->repo->findOneByCod("B");
-	$tagB2A = $this->repo->findOneByCod("B2A");
-	  
-	//Test rename
+        $tag = $this->repo->findOneByCod("ROOT");
+        $tagA = $this->repo->findOneByCod("A");
+        $tagB = $this->repo->findOneByCod("B");
+        $tagB2A = $this->repo->findOneByCod("B2A");
+
+    //Test rename
         $tag->setCod("ROOT2");
         $this->dm->persist($tag);
         $this->dm->flush();
-	$this->assertEquals(4, $tagB2A->getLevel());
+        $this->assertEquals(4, $tagB2A->getLevel());
         $this->assertEquals(6, count($this->repo->findAll()));
 
-	
-	//Test move
+    //Test move
         $tagB->setParent($tagA);
         $this->dm->persist($tag);
         $this->dm->flush();
-	$this->assertEquals(5, $tagB2A->getLevel());
+        $this->assertEquals(5, $tagB2A->getLevel());
         $this->assertEquals(6, count($this->repo->findAll()));
-	
 
-	//Test delete
+    //Test delete
         $this->dm->remove($tagB);
         $this->dm->flush();
         $this->assertEquals(2, count($this->repo->findAll())); //When a parent is deleted all the descendant.

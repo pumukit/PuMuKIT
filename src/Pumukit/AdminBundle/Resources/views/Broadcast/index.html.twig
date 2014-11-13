@@ -22,7 +22,7 @@
         <li><input class="tv_admin_action_create" onclick="Modalbox.show('{{ path('pumukitadmin_broadcast_create') }}', {title:'{% trans %}Crear nueva difusión{% endtrans %}', width:800}); return false;" type="button" value="{% trans %}nuevo{% endtrans %}"></li>
       </ul>
     </div>
-    
+
     <select id="options_broadcasts" style="margin: 10px 0px; width: 33%" title="{% trans %}Acciones sobre elementos seleccionados{% endtrans %}" onchange="window.change_select('broadcast', $('options_broadcasts'))">
       <option value="default" selected="selected">{% trans %}Selecciona una acción...{% endtrans %}</option>
       <option disabled="">---</option>

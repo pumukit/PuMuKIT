@@ -11,8 +11,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  */
 class Pic extends Element
 {
-
-  /**
+    /**
    * //@MongoDB\EmbedOne(targetDocument="Series")
    */
   //private $series;
@@ -58,7 +57,7 @@ class Pic extends Element
    */
   public function setWidth($width)
   {
-    $this->width = $width;
+      $this->width = $width;
   }
 
   /**
@@ -68,7 +67,7 @@ class Pic extends Element
    */
   public function getWidth()
   {
-    return $this->width;
+      return $this->width;
   }
 
   /**
@@ -78,7 +77,7 @@ class Pic extends Element
    */
   public function setHeight($height)
   {
-    $this->height = $height;
+      $this->height = $height;
   }
 
   /**
@@ -88,6 +87,6 @@ class Pic extends Element
    */
   public function getHeight()
   {
-    return $this->height;
+      return $this->height;
   }
 }

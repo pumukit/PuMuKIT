@@ -4,7 +4,6 @@ namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Pumukit\SchemaBundle\Document\Broadcast
@@ -13,61 +12,60 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Broadcast
 {
+    const BROADCAST_TYPE_PUB = 'public';
+    const BROADCAST_TYPE_PRI = 'private';
+    const BROADCAST_TYPE_COR = 'corporative';
 
-  const BROADCAST_TYPE_PUB = 'public';
-  const BROADCAST_TYPE_PRI = 'private';
-  const BROADCAST_TYPE_COR = 'corporative';
-
-  /** 
+  /**
    * @var int $id
-   * 
+   *
    * @MongoDB\Id
    */
   private $id;
 
   /**
    * @var ArrayCollection $multimedia_objects
-   * 
+   *
    * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="broadcast")
    */
   private $multimedia_objects;
 
-  /** 
+  /**
    * @var string $name
-   * 
+   *
    * @MongoDB\String
    */
   private $name;
 
-  /** 
+  /**
    * @var string $broadcast_type_id
-   * 
+   *
    * @MongoDB\String
    */
   private $broadcast_type_id = self::BROADCAST_TYPE_PUB;
 
-  /** 
+  /**
    * @var string $passwd
-   * 
+   *
    * @MongoDB\String
    */
   private $passwd;
 
-  /** 
+  /**
    * @var boolean $default_sel
-   * 
+   *
    * @MongoDB\Boolean
    */
   private $default_sel = false;
 
-  /** 
+  /**
    * @var string $description
-   * 
+   *
    * @MongoDB\Raw
    */
   private $description = array('en' => '');
 
-  /** 
+  /**
    * @var locale $locale
    */
   private $locale;
@@ -79,7 +77,7 @@ class Broadcast
    */
   public function getId()
   {
-    return $this->id;
+      return $this->id;
   }
 
   /**
@@ -89,8 +87,8 @@ class Broadcast
    */
   public function addMultimediaObject(MultimediaObject $multimedia_object)
   {
-    $this->multimedia_objects[] = $multimedia_object;
-    $multimedia_object->setBroadcast($this);
+      $this->multimedia_objects[] = $multimedia_object;
+      $multimedia_object->setBroadcast($this);
   }
 
   /**
@@ -100,7 +98,7 @@ class Broadcast
    */
   public function removeMultimediaObject(MultimediaObject $multimedia_object)
   {
-    $this->multimedia_objects->removeElement($multimedia_object);
+      $this->multimedia_objects->removeElement($multimedia_object);
   }
 
   /**
@@ -112,7 +110,7 @@ class Broadcast
    */
   public function containsMultimediaObject(MultimediaObject $multimedia_object)
   {
-    return $this->multimedia_objects->contains($multimedia_object);
+      return $this->multimedia_objects->contains($multimedia_object);
   }
 
   /**
@@ -122,7 +120,7 @@ class Broadcast
    */
   public function getMultimediaObjects()
   {
-    return $this->multimedia_objects;
+      return $this->multimedia_objects;
   }
 
   /**
@@ -132,9 +130,9 @@ class Broadcast
    */
   public function setName($name)
   {
-    $this->name = $name;
+      $this->name = $name;
   }
-  
+
   /**
    * Get name
    *
@@ -142,7 +140,7 @@ class Broadcast
    */
   public function getName()
   {
-    return $this->name;
+      return $this->name;
   }
 
   /**
@@ -152,9 +150,9 @@ class Broadcast
    */
   public function setBroadcastTypeId($broadcast_type_id)
   {
-    $this->broadcast_type_id = $broadcast_type_id;
+      $this->broadcast_type_id = $broadcast_type_id;
   }
-  
+
   /**
    * Get broadcast_type_id
    *
@@ -162,7 +160,7 @@ class Broadcast
    */
   public function getBroadcastTypeId()
   {
-    return $this->broadcast_type_id;
+      return $this->broadcast_type_id;
   }
 
   /**
@@ -172,9 +170,9 @@ class Broadcast
    */
   public function setPasswd($passwd)
   {
-    $this->passwd = $passwd;
+      $this->passwd = $passwd;
   }
-  
+
   /**
    * Get passwd
    *
@@ -182,7 +180,7 @@ class Broadcast
    */
   public function getPasswd()
   {
-    return $this->passwd;
+      return $this->passwd;
   }
 
   /**
@@ -192,9 +190,9 @@ class Broadcast
    */
   public function setDefaultSel($default_sel)
   {
-    $this->default_sel = $default_sel;
+      $this->default_sel = $default_sel;
   }
-  
+
   /**
    * Get default_sel
    *
@@ -202,7 +200,7 @@ class Broadcast
    */
   public function getDefaultSel()
   {
-    return $this->default_sel;
+      return $this->default_sel;
   }
 
   /**
@@ -212,12 +210,12 @@ class Broadcast
    */
   public function setDescription($description, $locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    $this->description[$locale] = $description;
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      $this->description[$locale] = $description;
   }
-  
+
   /**
    * Get description
    *
@@ -225,13 +223,14 @@ class Broadcast
    */
   public function getDescription($locale = null)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    if (!isset($this->description[$locale])){
-      return null;
-    }
-    return $this->description[$locale];
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      if (!isset($this->description[$locale])) {
+          return null;
+      }
+
+      return $this->description[$locale];
   }
 
   /**
@@ -241,9 +240,9 @@ class Broadcast
    */
   public function setI18nDescription(array $description)
   {
-    $this->description = $description;
+      $this->description = $description;
   }
-  
+
   /**
    * Get i18n description
    *
@@ -251,7 +250,7 @@ class Broadcast
    */
   public function getI18nDescription()
   {
-    return $this->description;
+      return $this->description;
   }
 
   /**
@@ -261,9 +260,9 @@ class Broadcast
    */
   public function setLocale($locale)
   {
-    $this->locale = $locale;
+      $this->locale = $locale;
   }
-  
+
   /**
    * Get locale
    *
@@ -271,7 +270,7 @@ class Broadcast
    */
   public function getLocale()
   {
-    return $this->locale;
+      return $this->locale;
   }
 
   /**
@@ -281,10 +280,9 @@ class Broadcast
    */
   public function cloneResource()
   {
-    $aux = clone $this;
-    $aux->id = null;
+      $aux = clone $this;
+      $aux->id = null;
 
-    return $aux;
+      return $aux;
   }
-
 }
