@@ -84,4 +84,29 @@ class TagController extends Controller
       return array('tag' => $tag, 'form' => $form->createView());
     }
 
+    /**
+     * @Template
+     */
+    public function createAction(Request $request)
+    {
+      $dm = $this->get('doctrine_mongodb')->getManager();
+
+      $repo = $dm->getRepository('PumukitSchemaBundle:Tag');
+      $root_name = "ROOT";
+      $root = $repo->findOneByCod($root_name);
+
+      $tag = new Tag();
+      $tag->setParent($root);
+
+      $form = $this->createForm(new TagType(), $tag);
+
+      if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
+        $dm->persist($tag);
+        $dm->flush();
+	return $this->redirect($this->generateUrl('pumukitadmin_tag_index'));
+      }
+
+      return array('tag' => $tag, 'form' => $form->createView());
+    }
+
 }
