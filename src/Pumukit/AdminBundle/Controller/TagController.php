@@ -27,10 +27,14 @@ class TagController extends Controller
       $root_name = "ROOT";
       $root = $repo->findOneByCod($root_name);
 
-      
+      if (null !== $root){
+	$children = $root->getChildren();
+      }else{
+	$children = null;
+      }
       
       return array('root' => $root,
-		   'childrens' => $root->getChildren());
+		   'childrens' => $children);
     }
 
     /**
