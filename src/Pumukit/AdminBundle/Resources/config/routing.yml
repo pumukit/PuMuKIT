@@ -29,3 +29,7 @@ pumukitadmin_broadcast:
 pumukitadmin_series:
     resource: @PumukitAdminBundle/Resources/config/series.yml
     prefix: /admin/series
+
+pumukitadmin_tag:
+    resource: @PumukitAdminBundle/Resources/config/tag.yml
+    prefix: /admin/tag

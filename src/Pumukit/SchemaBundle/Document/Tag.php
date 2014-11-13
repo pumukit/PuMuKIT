@@ -2,18 +2,18 @@
 
 namespace Pumukit\SchemaBundle\Document;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
-
 /**
  * Pumukit\SchemaBundle\Document\Tag
  * 
- * @MongoDB\EmbeddedDocument
+ * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\TagRepository")
+ * @Gedmo\Tree(type="materializedPath", activateLocking=true)
  */
 class Tag
 {
@@ -58,8 +58,12 @@ class Tag
    * @var string $cod
    *
    * @MongoDB\String
+   * @Assert\Regex("/^\w*$/")
+   * @Gedmo\TreePathSource
+   *
+   * TODO Unique
    */
-  private $cod = 0;
+  private $cod = "";
 
   /**
    * @var boolean $metatag
@@ -69,57 +73,18 @@ class Tag
   private $metatag = false;
 
   /**
+   * @var boolean $display
+   *
+   * @MongoDB\Boolean
+   */
+  private $display = false;
+
+  /**
    * Used locale to override Translation listener`s locale
    * this is not a mapped field of entity metadata, just a simple property
    * @var locale $locale
    */
   private $locale = 'en';
-
-  /**
-   * @var int $left
-   * //TreeLeft
-   * @MongoDB\Int
-   */
-  private $left;
-
-  /**
-   * @var int $right
-   * //TreeRight
-   * @MongoDB\Int
-   */
-  private $right;
-
-  /**
-   * //TreeParent
-   * @MongoDB\ReferenceOne(targetDocument="Tag")
-   * @MongoDB\Index 
-   * //@MongoDB\ManyToOne(targetDocument="Tag", inversedBy="children")
-   * //@MongoDB\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="SET NULL")
-   */
-  private $parent;
-
-  /**
-   * @var int $root
-   * //TreeRoot
-   * @MongoDB\ReferenceOne(targetDocument="Tag")
-   * @MongoDB\Int
-   */
-  private $root;
-
-  /**
-   * @var int $level
-   * //TreeLevel
-   * @MongoDB\Int
-   */
-  private $level;
-
-  /**
-   * @MongoDB\ReferenceMany(targetDocument="Tag")
-   * @MongoDB\Index
-   * //@MongoDB\OneToMany(targetDocument="Tag", mappedBy="parent")
-   * //MongoDB\OrderBy({"left" = "ASC"})
-   */
-  private $children;
 
   /**
    * @var date $created
@@ -135,12 +100,40 @@ class Tag
    */
   private $updated;
 
-  public function __construct($title = null)
+
+  /**
+   * @Gedmo\TreeParent
+   * @MongoDB\ReferenceOne(targetDocument="Tag", inversedBy="children")
+   */
+  private $parent;
+
+  /**
+   * @MongoDB\ReferenceMany(targetDocument="Tag", mappedBy="parent")
+   */
+  private $children = array();
+
+  /**
+   * @MongoDB\Field(type="string")
+   * @Gedmo\TreePath(separator="|", appendId=false, startsWithSeparator=false, endsWithSeparator=false)
+   */
+  private $path;
+
+  /**
+   * @Gedmo\TreeLevel
+   * @MongoDB\Field(type="int")
+   */
+  private $level;
+
+  /**
+   * @Gedmo\TreeLockTime
+   * @MongoDB\Field(type="date")
+   */
+  private $lockTime;
+
+
+  public function __construct()
   {
-    $this->children = new ArrayCollection();
-    if ($title != null) {
-      $this->setTitle($title);
-    }
+    $this->children = array();
   }
 
   /**
@@ -182,6 +175,27 @@ class Tag
     return $this->title[$locale];
   }
 
+
+  /**
+   * Get i18n title
+   *
+   * @return array
+   */
+  public function getI18nTitle()
+  {
+    return $this->title;
+  }
+
+  /**
+   * Set i18n title
+   *
+   * @param array $title
+   */
+  public function setI18nTitle(array $title)
+  {
+    $this->title = $title;
+  }
+
   /**
    * Set description
    * 
@@ -209,6 +223,26 @@ class Tag
       return null;
     }
     return $this->description[$locale];
+  }
+
+  /**
+   * Set i18n description
+   * 
+   * @param array $description
+   */
+  public function setI18nDescription(array $description)
+  {
+    $this->description = $description;
+  }
+
+  /**
+   * Get i18n description
+   * 
+   * @return array
+   */
+  public function getI18nDescription()
+  {
+    return $this->description;
   }
 
   /**
@@ -273,84 +307,28 @@ class Tag
   {
     return $this->metatag;
   }
-
-
-  /**
-   * Set parent
-   * 
-   * @param Tag $parent
-   */
-  public function setParent(Tag $parent)
-  {
-    $this->parent = $parent;
-  }
-
-  /**
-   * Get parent
-   * 
-   * @return Tag
-   */
-  public function getParent()
-  {
-    return $this->parent;
-  }
-
-  /**
-   * Set root
-   *
-   * @param int $root
-   * @return Tag
-   */
-  public function setRoot($root)
-  {
-    $this->root = $root;
-
-    return $this;
-  }
-
-  /**
-   * Get root
-   * 
-   * @return int
-   */
-  public function getRoot()
-  {
-    return $this->root;
-  }
-
-  /**
-   * Set level
-   *
-   * @param int $level
-   * @return Tag
-   */
-  public function setLevel($level)
-  {
-    $this->level = $level;
-
-    return $this;
-  }
-
-  /**
-   * Get level
-   *
-   * @return int
-   */
-  public function getLevel()
-  {
-    return $this->level;
-  }
-
-  /**
-   * Get children
-   *
-   * @return Tag
-   */
-  public function getChildren()
-  {
-    return $this->children;
-  }
  
+
+  /**
+   * Set display
+   *
+   * @param boolean $display
+   */
+  public function setDisplay($display)
+  {
+    $this->display = $display;
+  }
+
+  /**
+   * Get display
+   *
+   * @return boolean
+   */
+  public function getDisplay()
+  {
+    return $this->display;
+  }
+
   /**
    * Set created
    *
@@ -429,52 +407,6 @@ class Tag
   }
 
   /**
-   * Set left
-   *
-   * @param integer $left
-   * @return Tag
-   */
-  public function setLeft($left)
-  {
-    $this->left = $left;
-
-    return $this;
-  }
-
-  /**
-   * Get left
-   *
-   * @return int
-   */
-  public function getLeft()
-  {
-    return $this->left;
-  }
-
-  /**
-   * Set right
-   *
-   * @param int $right
-   * @return Tag
-   */
-  public function setRight($right)
-  {
-    $this->right = $right;
-
-    return $this;
-  }
-
-  /**
-   * Get right
-   *
-   * @return int
-   */
-  public function getRight()
-  {
-    return $this->right;
-  }
-
-  /**
    * Add multimedia_objects
    *
    * @param MultimediaObject $multimediaObjects
@@ -507,26 +439,65 @@ class Tag
     return $this->multimedia_objects;
   }
 
-  /**
-   * Add children
-   *
-   * @param Tag $children
-   * @return Tag
-   */
-  public function addChildren(Tag $children)
+  public function setParent(Tag $parent = null)
   {
-    $this->children[] = $children;
+    $this->parent = $parent;
+    $parent->addChild($this);
+  }
 
-    return $this;
+  public function getParent()
+  {
+    return $this->parent;
+  }
+
+  public function getChildren()
+  {
+    return $this->children;
+  }
+
+  public function addChild(Tag $tag)
+  {
+    return $this->children[] = $tag;
+  }
+
+  public function getLevel()
+  {
+    return $this->level;
+  }
+
+  public function getPath()
+  {
+    return $this->path;
+  }
+
+  public function getLockTime()
+  {
+    return $this->lockTime;
   }
 
   /**
-   * Remove children
+   * Returns true if given node is children of tag
    *
-   * @param Tag $children
+   * @param Tag $tag
+   *
+   * @return bool
    */
-  public function removeChildren(Tag $children)
+  public function isChildrenOf(Tag $tag)
   {
-    $this->children->removeElement($children);
+    return $tag == $this->getParent();
+  }
+
+  /**
+   * Returns true if given node is descendant of tag
+   *
+   * @param Tag $tag
+   *
+   * @return bool
+   */
+  public function isDescendantOf(Tag $tag)
+  {
+    if ($tag == $this ) return false;
+
+    return substr($this->getPath(), 0, strlen($tag->getPath())) === $tag->getPath();
   }
 }

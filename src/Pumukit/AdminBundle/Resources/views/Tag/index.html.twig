@@ -1,0 +1,126 @@
+{% extends 'PumukitAdminBundle::layout.html.twig' %}
+
+{% block body %}
+
+<h3 class="cab_body_div"><img src="/legacy/images/admin/cab/config_ico.png"/> Categories</h3> 
+
+<div id="tv_admin_container">
+
+  <div id="tv_admin_content" style="margin: 0px">
+    <div id="list_categories" name="list_categories">
+      {% include 'PumukitAdminBundle:Tag:list.html.twig' %}
+    </div>
+
+    <div style="float:right; width:50%">
+      <ul class="tv_admin_actions">
+        <li>
+          {% if root %}
+              <input class="tv_admin_action_create" type="button" value="{% trans %}Nuevo{% endtrans %}"
+                     onclick="Modalbox.show('{{ path('pumukitadmin_tag_create', {'parent': root.id}) }}', {title:'{% trans %}Crear nuevo tag{% endtrans %}', width:800}); return false;" > 
+          {% endif%}
+        </li>
+      </ul>
+    </div>
+
+    <select id="options_categories" style="margin: 10px 0px; width: 33%" 
+            title="{% trans %}Acciones sobre elementos seleccionados{% endtrans %}" onchange="window.change_select('role', $('options_categories'))">
+      <option value="default" selected="selected">{% trans %}Selecciona una acción...{% endtrans %}</option>
+      <option disabled="">---</option>
+      <!-- <option value="delete_sel">Borrar selecionados</option>
+      <option value="create">Crear nuevo</option> -->
+    </select>
+    
+  </div>
+</div>
+
+
+
+<script>
+function load_children_cat(id, cod) {
+  $$(".c_" + cod).each(function(e){ e.remove() });
+  var tr = $('row_cat_' +id);
+  var level = tr.getAttribute('data-level');
+  var url = '{{ path('pumukitadmin_tag_children', {'id': '___id___'}) }}';
+  new Ajax.Request(url.replace('___id___', id) , {
+    method: 'GET',
+    asynchronous:true, 
+    evalScripts:true, 
+    onSuccess: function(response) {
+      var t = tr.up('tbody');
+      var ss = t.childElements();
+      var b_move = false;
+      for (var i=0;i<ss.length;i++) {
+        if(b_move) t.insert(ss[i]);
+        if (ss[i] == tr) {
+	  b_move = true;
+	  t.insert(response.transport.response);
+	}
+      }
+      if ($$('.d_' + cod).length != 0) {
+	$$('#row_cat_' + id + ' .element').each(function(e){
+						  e.addClassName("expanded");
+						  e.removeClassName("element")});
+      }
+    }
+  });
+
+}
+
+function toggle_section_cat(id, element, level, cod) {
+
+  if(element.parentElement.hasClassName("expanded")){
+    $$(".c_" + cod).each(function(e){
+      e.getElementsBySelector(".expanded").each(function(ee){ee.removeClassName("expanded").addClassName("collapsed");});
+      e.hide();
+    });
+  }else{
+    if(element.parentElement.hasClassName("noload")) {
+      element.parentElement.removeClassName("noload");
+      load_children_cat(id, cod);
+    }else {
+      $$(".d_" + cod).each(function(e){e.show()});
+    }
+  }
+  element.parentElement.toggleClassName("expanded").toggleClassName("collapsed");
+}
+
+
+function cat_relation_change(one_id, two_id, value) {
+  new Ajax.Request("/editar.php/categories/changecategory/oneid/" + one_id + "/twoid/" + two_id + "/value/" + value,  {
+    asynchronous: true, 
+    evalScripts: true,
+  });
+}
+
+
+function cat_delete(id, pid, pcod) {
+  if (window.confirm('Seguro')) { 
+    var url = '{{ path('pumukitadmin_tag_delete', {'id': '___id___'}) }}';
+    new Ajax.Request(url.replace('___id___', id), {
+      metod: 'DELETE',
+      asynchronous:true, 
+      evalScripts:true,
+      parameters:  {'_method': 'DELETE'},
+      onFailure: function() {window.alert('No se pueden borrar categorías con descendientes.')},
+      onSuccess: function(response) { 
+        $('row_cat_' +id).remove(); 
+        if ($$('.d_' + pcod).length == 0) {
+	  $$('#row_cat_' + pid + ' .expanded').each(function(e){
+						     e.removeClassName("expanded");
+						     e.addClassName("element")});
+      }
+      }
+    }); 
+  }
+  return false;
+}
+
+function cat_error(action){
+  $('div_messages_span_error').innerHTML ='Error al ' + action + ' la catagoría. Código Repetido';
+  new Effect.Opacity('div_messages_error', {duration:7.0, from:1.0, to:0.0});
+}
+
+</script>
+
+
+{% endblock %}

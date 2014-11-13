@@ -1,0 +1,29 @@
+pumukitadmin_tag_index:
+    pattern: /
+    methods: [GET]
+    defaults:
+        _controller: PumukitAdminBundle:Tag:index
+
+pumukitadmin_tag_children:
+    pattern: /{id}/children
+    methods: [GET]
+    defaults:
+        _controller: PumukitAdminBundle:Tag:children
+
+pumukitadmin_tag_create:
+    pattern: /create/parent/{parent}
+    methods: [GET, POST]
+    defaults:
+        _controller: PumukitAdminBundle:Tag:create
+
+pumukitadmin_tag_update:
+    pattern: /{id}/edit
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: PumukitAdminBundle:Tag:update
+
+pumukitadmin_tag_delete:
+    pattern: /{id}
+    methods: [DELETE]
+    defaults:
+        _controller: PumukitAdminBundle:Tag:delete
