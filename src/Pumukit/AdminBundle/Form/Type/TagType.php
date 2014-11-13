@@ -16,14 +16,14 @@ class TagType extends AbstractType
       ->add('cod', 'text', array(
           'attr' => array(
           'pattern' => "^\w*$",
-          'oninvalid' => "setCustomValidity('El código no puede tener espacios en blanco ni caracteres especiales')",
+          'oninvalid' => "setCustomValidity('The code can not have blank spaces neither special characters')",
           'oninput' => "setCustomValidity('')",
               'style' => 'width: 420px', ),
-          'label' => 'Código', ))
+          'label' => 'Cod', ))
       ->add('i18n_title', 'texti18n',
         array('attr' => array('style' => 'width: 420px'), 'label' => 'Titulo'))
       ->add('i18n_description', 'textareai18n',
-        array('required' => false, 'attr' => array('style' => 'width: 420px'), 'label' => 'Descripcion'))
+        array('required' => false, 'attr' => array('style' => 'width: 420px'), 'label' => 'Description'))
       ;
     }
 

@@ -6,18 +6,18 @@
 
 <div style="overflow:hidden; padding:5px; border:solid 1px #DDD; background:#DDD" >
   <div>
-    {% trans %}URL:{% endtrans %} <a href="TODO: /direct/index/id/{{ direct.id }}">
+    {% trans %}URL{% endtrans %}: <a href="TODO: /direct/index/id/{{ direct.id }}">
       "TODO: /directo/index/id/{{ direct.id }}"
       </a>
   </div>
   <div>
-    {% trans %}IP fuente:{% endtrans %} <span style="font-style:italic"> {{ direct.getIpSource() }}</span>
+    {% trans %}Source IP{% endtrans %}: <span style="font-style:italic"> {{ direct.getIpSource() }}</span>
   </div>
   <div>
-    {% trans %}Mostrar reproductor en página de inicio:{% endtrans %} <span style="font-style:italic">{% if direct.getIndexPlay() %}{% trans %}Activado{% endtrans %}{% else %}{% trans %}Desactivado{% endtrans %}{% endif %}</span>
+    {% trans %}Show player at homepage{% endtrans %}: <span style="font-style:italic">{% if direct.getIndexPlay() %}{% trans %}Activated{% endtrans %}{% else %}{% trans %}Deactivated{% endtrans %}{% endif %}</span>
   </div>
   <div>
-    {% trans %}Estado:{% endtrans %} <span style="font-style:italic">{% if not direct.broadcasting %}{% trans %}Espera{% endtrans %}{% else %}{% trans %}Emitiendo en directo{% endtrans %}{% endif %}</span>
+    {% trans %}Status{% endtrans %}: <span style="font-style:italic">{% if not direct.broadcasting %}{% trans %}On hold{% endtrans %}{% else %}{% trans %}Live broadcasting{% endtrans %}{% endif %}</span>
   </div>
 </div>
 
@@ -32,6 +32,6 @@
 
 {% else %}
 <p>
-  {% trans %}Seleccione algún directo.{% endtrans %}
+  {% trans %}Select any live channel.{% endtrans %}
 </p>
 {% endif %}

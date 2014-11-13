@@ -20,15 +20,15 @@
     <div style="float:right; width:50%">
       <ul class="tv_admin_actions">
         <!-- Falta -->
-        <li><input class="tv_admin_action_create" onclick="Modalbox.show('{{ path('pumukitadmin_role_create') }}', {title:'{% trans %}Editar nuevo rol{% endtrans %}', width:800}); return false; return false;" type="button" value="{% trans %}Nuevo{% endtrans %}"></li>
+        <li><input class="tv_admin_action_create" onclick="Modalbox.show('{{ path('pumukitadmin_role_create') }}', {title:'{% trans %}Create new role{% endtrans %}', width:800}); return false; return false;" type="button" value="{% trans %}Create{% endtrans %}"></li>
       </ul>
     </div>
 
-    <select id="options_roles" style="margin: 10px 0px; width: 33%" title="{% trans %}Acciones sobre elementos seleccionados{% endtrans %}" onchange="window.change_select('role', $('options_roles'))">
-      <option value="default" selected="selected">{% trans %}Selecciona una acción...{% endtrans %}</option>
+    <select id="options_roles" style="margin: 10px 0px; width: 33%" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('role', $('options_roles'))">
+      <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
       <option disabled="">---</option>
-      <option value="delete_sel">{% trans %}Borrar seleccionados{% endtrans %}</option>
-      <option value="create">{% trans %}Crear nuevo{% endtrans %}</option>
+      <option value="delete_sel">{% trans %}Delete selected{% endtrans %}</option>
+      <option value="create">{% trans %}Create new{% endtrans %}</option>
     </select>
 
   </div>

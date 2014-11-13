@@ -13,12 +13,12 @@ class EventType extends AbstractType
     {
         $builder
       ->add('i18n_name', 'texti18n',
-        array('attr' => array('style' => 'width: 420px'), 'label' => 'Evento'))
+        array('attr' => array('style' => 'width: 420px'), 'label' => 'Event'))
       ->add('place', 'text',
-        array('attr' => array('style' => 'width: 420px'), 'label' => 'Lugar'))
+        array('attr' => array('style' => 'width: 420px'), 'label' => 'Place'))
       ->add('direct', null, array('label' => 'Channels'))
       ->add('schedule', new EventscheduleType(),
-    array('attr' => array('style' => 'width: 420px'), 'label' => 'Horario'))
+    array('attr' => array('style' => 'width: 420px'), 'label' => 'Schedule'))
       ->add('display', 'checkbox', array('required' => false));
     }
 

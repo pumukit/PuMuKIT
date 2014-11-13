@@ -5,11 +5,11 @@
   <div id="pager_{{ name }}" style="float:left;">
     <div style="float:left; margin:0em .5em;">
       {% if(page != 1) %}
-        <a href="{{ path('pumukitadmin_'~name~'_index', {'page': (page -1 )}) }}" style="{{ prev_style }}">&laquo; {% trans %}Anterior{% endtrans %}</a>
+        <a href="{{ path('pumukitadmin_'~name~'_index', {'page': (page -1 )}) }}" style="{{ prev_style }}">&laquo; {% trans %}Previous{% endtrans %}</a>
       {% endif %}
       {# <?php echo link_to_remote('&laquo;'.__('Anterior'), array('update' => 'list_'.$name.'s', 'url' => $name.'s/list?page='.($page-1), 'script' => 'true'), $ver_anterior)  ?> #}
     </div>
-    <div style="float:left; margin:0em .5em; width:9em">{% trans %}Pag.{% endtrans %} <span id="num_pag_{{ name }}">{{ page }}</span> {% trans %}de{% endtrans %} {{ total }}</div>
+    <div style="float:left; margin:0em .5em; width:9em">{% trans %}Page{% endtrans %} <span id="num_pag_{{ name }}">{{ page }}</span> {% trans %}of{% endtrans %} {{ total }}</div>
     <div style="float:left; margin:0em .5em; background:transparent url(/legacy/images/admin/pag/sliderbgleft100.png) no-repeat scroll left center; height:18px;  width:100px; ">
       <div id="track_{{ name }}" style="background-color : #aaa;  height : 18px; background:transparent url(/legacy/images/admin/pag/sliderbgright.png) no-repeat scroll right center; ">
         <div id="handle_{{ name }}" style="display : none; background-color : #f00; width : 12px; height : 18px; cursor : move; background:transparent url(/legacy/images/admin/pag/sliderhandle.png) no-repeat scroll center;"> </div>
@@ -17,7 +17,7 @@
     </div>
     <div style="float:left; margin:0em .5em;">
       {% if(page != total and total != 0) %}
-        <a href="{{ path('pumukitadmin_'~name~'_index', {'page': (page +1 )}) }}" style="{{ next_style }}">{% trans %}Siguiente{% endtrans %} &raquo;</a>
+        <a href="{{ path('pumukitadmin_'~name~'_index', {'page': (page +1 )}) }}" style="{{ next_style }}">{% trans %}Next{% endtrans %} &raquo;</a>
       {% endif %}
       {# <?php echo link_to_remote(__('Siguiente').'&raquo;', array('update' => 'list_'.$name.'s', 'url' => $name.'s/list?page='.($page+1), 'script' => 'true'), $ver_siguiente) ?> #}
     </div>

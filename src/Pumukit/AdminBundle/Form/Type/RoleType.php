@@ -14,13 +14,13 @@ class RoleType extends AbstractType
         $builder
       ->add('display', 'checkbox', array('required' => false))
       ->add('cod', 'text',
-        array('attr' => array('style' => 'width: 420px'), 'label' => 'Código'))
+        array('attr' => array('style' => 'width: 420px'), 'label' => 'Code'))
       ->add('xml', 'text',
         array('attr' => array('style' => 'width: 420px'), 'label' => 'XML'))
       ->add('i18n_name', 'texti18n',
-        array('attr' => array('style' => 'width: 420px'), 'label' => 'Nombre'))
+        array('attr' => array('style' => 'width: 420px'), 'label' => 'Name'))
       ->add('i18n_text', 'textareai18n',
-        array('required' => false, 'attr' => array('style' => 'width: 420px'), 'label' => 'Texto'));
+        array('required' => false, 'attr' => array('style' => 'width: 420px'), 'label' => 'Text'));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

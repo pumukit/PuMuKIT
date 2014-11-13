@@ -15,21 +15,21 @@ class DirectType extends AbstractType
     {
         $builder
       ->add('i18n_name', 'texti18n',
-        array('attr' => array('style' => 'width: 420px'), 'label' => 'Nombre'))
+        array('attr' => array('style' => 'width: 420px'), 'label' => 'Name'))
       ->add('i18n_description', 'textareai18n',
         array('required' => false, 'attr' => array('style' => 'width: 420px'), 'label' => 'Description'))
       ->add('url', 'url',
-        array('attr' => array('style' => 'width: 420px'), 'label' => 'Url'))
+        array('attr' => array('style' => 'width: 420px'), 'label' => 'URL'))
       ->add('broadcasting', 'choice',
-        array('choices'   => array('0'   => 'Espera', '1' => 'Emitiendo en Directo'),
-          'label' => 'Estado', ))
+        array('choices'   => array('0'   => 'On hold', '1' => 'Live Broadcasting'),
+          'label' => 'Status', ))
       ->add('direct_type', 'choice',
         array('choices'   => array(Direct::DIRECT_TYPE_FMS => 'FMS', Direct::DIRECT_TYPE_WMS => 'WMS'),
-          'label' => 'Tecnología', ))
+          'label' => 'Tecnology', ))
       ->add('resolution', new DirectresolutionType(),
-        array('label' => 'Resolución', 'required' => false))
+        array('label' => 'Resolution', 'required' => false))
       ->add('qualities', new DirectqualitiesType(),
-        array('label' => 'Calidades', 'required' => false))
+        array('label' => 'Qualities', 'required' => false))
       ->add('ip_source', 'text',
         array('required' => false))
       ->add('source_name', 'text',

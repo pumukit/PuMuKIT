@@ -7,7 +7,7 @@
       <th colspan="5" width="7%"></th>
       <th width="1%">{% trans %}Id{% endtrans %}</th>
       <th width="1%">{% trans %}Display{% endtrans %}</th>
-      <th>{% trans %}Código{% endtrans %}</th>
+      <th>{% trans %}Code{% endtrans %}</th>
       <th>{% trans %}Name{% endtrans %}</th>
       <th width="1%">{% trans %}Roles{% endtrans %}</th>
     </tr>
@@ -16,7 +16,7 @@
     {% if roles is empty %}
       <tr>
         <td colspan="11">
-         {% trans %}No existen roles con esos valores.{% endtrans %}
+         {% trans %}There are no roles with those values.{% endtrans %}
         </td>
       </tr>
     {% endif %}
@@ -26,27 +26,27 @@
           <input id="{{ role.id }}" class="role_checkbox" type="checkbox">
         </td>
         <td onclick="click_fila_no_preview('role', this, '{{ role.id }}');">
-          <a title="{% trans %}Editar Rol {% endtrans %}{{ role.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_role_update', {'id': role.id}) }}"><img alt="{% trans %}editar{% endtrans %}" title="{% trans %}editar{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a>
+          <a title="{% trans %}Edit Role {% endtrans %}{{ role.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_role_update', {'id': role.id}) }}"><img alt="{% trans %}edit{% endtrans %}" title="{% trans %}edit{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a>
         </td>
         <td onclick="click_fila_no_preview('role', this, '{{ role.id }}');">
 	{% if role.getPeopleInMultimediaObject() is empty %}
-          <form action="{{ path('pumukitadmin_role_delete', {'id': role.id}) }}" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}¿Seguro que desea eliminar este rol?{% endtrans %}')">
+          <form action="{{ path('pumukitadmin_role_delete', {'id': role.id}) }}" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}Are you sure you want to delete this role?{% endtrans %}')">
               <input type="hidden" name="_method" value="DELETE">
               <input type="hidden" name="confirmed" value="true">
               <button type="submit" class="tv_admin_row_post">
-                  <img alt="{% trans %}borrar{% endtrans %}" title="{% trans %}borrar{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
+                  <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
               </button>
           </form>
         {% else %}
-	  <a href="#" onclick="alert('{% trans %}Imposible borrar, con{% endtrans %} {{ role.getPeopleInMultimediaObject()|length }} {% trans %}personas{% endtrans %}'); return false;">
-	    <img alt="{% trans %}borrar{% endtrans %}" title="borrar" src="/legacy/images/admin/mbuttons/delete_inline.gif">
+	  <a href="#" onclick="alert('{% trans %}Impossible to delete, role with{% endtrans %} {{ role.getPeopleInMultimediaObject()|length }} {% trans %}people{% endtrans %}'); return false;">
+	    <img alt="{% trans %}delete{% endtrans %}" title="delete" src="/legacy/images/admin/mbuttons/delete_inline.gif">
 	  </a>
         {% endif %}
         </td>
         <td onclick="click_fila_no_preview('role', this, '{{ role.id }}');">
           <form action="{{ path('pumukitadmin_role_copy', {'id': role.id}) }}" method="post" class="delete-action-form" novalidate="">
               <button type="submit" class="tv_admin_row_post">
-		<img alt="{% trans %}copiar{% endtrans %}" title="{% trans %}copiar{% endtrans %}" src="/legacy/images/admin/mbuttons/copy_inline.gif">
+		<img alt="{% trans %}clone{% endtrans %}" title="{% trans %}clone{% endtrans %}" src="/legacy/images/admin/mbuttons/copy_inline.gif">
 	      </button>
 	  </form>
         </td>
@@ -92,10 +92,10 @@
         </div>
         {{ roles.getNbResults }}
         {% transchoice roles.getNbResults %}
-	      {0} roles|{1} rol|]1,Inf] roles
+	      {0} roles|{1} role|]1,Inf] roles
 	{% endtranschoice %}
 	{% if app.session.get('admin/role/criteria')|length != 0%}
-          <a title="{% trans %}Cancelar la búsqueda actual{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancelar búsqueda{% endtrans %}</a>
+          <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
 	{% endif %}
       </th>
     </tr>

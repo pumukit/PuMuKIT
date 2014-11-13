@@ -2,7 +2,7 @@
 <div class="tv_admin_filters">
 <form id="filter_events" onsubmit="" action="{{ path('pumukitadmin_event_index') }}" method="GET">
   <fieldset>
-    <h2>{% trans %}Buscar{% endtrans %}</h2>
+    <h2>{% trans %}Search{% endtrans %}</h2>
 
     <div class="form-row">
       <label for="name">{% trans %}Name{% endtrans %}:</label>
@@ -15,11 +15,11 @@
 
 
     <div class="form-row">
-      <label for="date">{% trans %}Fecha{% endtrans %}:</label>
+      <label for="date">{% trans %}Date{% endtrans %}:</label>
       <div class="content">
-	{% trans %}Desde{% endtrans %}:&nbsp;<input type="datetime-local" size="11" name="criteria[date][from]" id="filters_date_from" value="{{ criteria['date']['from']|default("") }}">
+	{% trans %}From{% endtrans %}:&nbsp;<input type="datetime-local" size="11" name="criteria[date][from]" id="filters_date_from" value="{{ criteria['date']['from']|default("") }}">
         <br/>
-	{% trans %}Hasta{% endtrans %}:&nbsp;&nbsp;<input type="datetime-local" size="11" name="criteria[date][to]" id="filters_date_to" value="{{ criteria['date']['to']|default("") }}">
+	{% trans %}To{% endtrans %}:&nbsp;&nbsp;<input type="datetime-local" size="11" name="criteria[date][to]" id="filters_date_to" value="{{ criteria['date']['to']|default("") }}">
       </div>
     </div>
 
@@ -30,7 +30,7 @@
       <input class="tv_admin_action_reset_filter" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
     </li>
     <li>
-      <input type="submit" name="filter" value="{% trans %}filtrar{% endtrans %}" class="tv_admin_action_filter">
+      <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="tv_admin_action_filter">
     </li>
   </ul>
 </form>

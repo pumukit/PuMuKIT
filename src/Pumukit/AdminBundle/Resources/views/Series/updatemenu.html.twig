@@ -30,7 +30,7 @@
 
       <li class="normal">
         {# TODO PATH SERIES CHANGEPUB #}
-	<a title="{% trans %}Modify broadcast status of multimedia objects{% endtrans %}" onclick="Modalbox.show(this.href, {title:this.title, width:925}); return false;" href="/editar.php/serials/changePub/serial/{{ oneseries.id }}"><img alt="??" title="estado" id="table_serials_status_{{ oneseries.id }}" src="/legacy/images/admin/bbuttons/{# TODO {{ oneseries.getStatusMin() }}{{ oneseries.getStatusMax() }} #}11_inline.gif"> {% trans %}Modify broadcast status of multimedia objects{% endtrans %}</a>
+	<a title="{% trans %}Modify broadcast status of multimedia objects{% endtrans %}" onclick="Modalbox.show(this.href, {title:this.title, width:925}); return false;" href="/editar.php/serials/changePub/serial/{{ oneseries.id }}"><img alt="??" title="{% trans %}status{% endtrans %}" id="table_serials_status_{{ oneseries.id }}" src="/legacy/images/admin/bbuttons/{# TODO {{ oneseries.getStatusMin() }}{{ oneseries.getStatusMax() }} #}11_inline.gif"> {% trans %}Modify broadcast status of multimedia objects{% endtrans %}</a>
       </li>
 
       <li class="normal">

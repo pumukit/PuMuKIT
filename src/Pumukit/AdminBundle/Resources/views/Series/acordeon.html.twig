@@ -5,17 +5,17 @@
     <fieldset>
       <div id="bottom_container" >
 
-        <h2 class="accordion_toggle">{% trans %}Buscar{% endtrans %}</h2>
+        <h2 class="accordion_toggle">{% trans %}Search{% endtrans %}</h2>
         <div class="accordion_content" style="overflow: hidden; display: none;">
           <div class="form-row">
-            <label for="title">{% trans %}Título{% endtrans %}:</label>
+            <label for="title">{% trans %}Title{% endtrans %}:</label>
             <div class="content">
               {# TODO culture #}
               {% set criteria = app.session.get('admin/series/criteria') %}
               <input type="text" size="37" name="criteria[title.en]" id="filters_title" value="{{ criteria['title.en']|default("") }}">
             </div>
             <br />
-            <label for="person">{% trans %}Persona{% endtrans %}:</label>
+            <label for="person">{% trans %}Person{% endtrans %}:</label>
             <div class="content">
               {# TODO person name, comes from multimedia object in series #}
               {# TODO culture #}
@@ -27,34 +27,34 @@
         <div class="accordion_content" style="overflow: hidden; display: none;">
 
 	  <div class="form-row">
-	    <label for="publicdate">{% trans %}Fecha{% endtrans %}:</label>
+	    <label for="publicdate">{% trans %}Date{% endtrans %}:</label>
 	    <div class="content">
-	      {% trans %}Desde{% endtrans %}:&nbsp;<input type="datetime-local" size="11" name="criteria[date][from]" id="filters_date_from" value="{{ criteria['date']['from']|default("") }}">
+	      {% trans %}From{% endtrans %}:&nbsp;<input type="datetime-local" size="11" name="criteria[date][from]" id="filters_date_from" value="{{ criteria['date']['from']|default("") }}">
               <br/>
-	      {% trans %}Hasta{% endtrans %}:&nbsp;&nbsp;<input type="datetime-local" size="11" name="criteria[date][to]" id="filters_date_to" value="{{ criteria['date']['to']|default("") }}">
+	      {% trans %}To{% endtrans %}:&nbsp;&nbsp;<input type="datetime-local" size="11" name="criteria[date][to]" id="filters_date_to" value="{{ criteria['date']['to']|default("") }}">
 	    </div>
 	  </div>
 
         </div>
 
-        <h2 class="accordion_toggle">{% trans %}Otros{% endtrans %}</h2>
+        <h2 class="accordion_toggle">{% trans %}Others{% endtrans %}</h2>
         <div class="accordion_content" style="overflow: hidden; display: none;">
 
           <div class="form-row">
- 	    <label for="announce">{% trans %}Anunciado{% endtrans %}:</label>
+ 	    <label for="announce">{% trans %}Announced{% endtrans %}:</label>
             <div class="content">
-	      <select name="criteria[announce]" id="filters_announce"><option value="diff" selected="selected">{% trans %}Indiferente{% endtrans %}</option>
-		<option value="true">{% trans %}Sí{% endtrans %}</option>
+	      <select name="criteria[announce]" id="filters_announce"><option value="diff" selected="selected">{% trans %}Indifferent{% endtrans %}</option>
+		<option value="true">{% trans %}Yes{% endtrans %}</option>
 		<option value="false">{% trans %}No{% endtrans %}</option>
 	      </select>
             </div>
             <br />
 
- 	    <label for="status">{% trans %}Oculto:{% endtrans %}</label>
+ 	    <label for="status">{% trans %}Hidden{% endtrans %}:</label>
             <div class="content">
-	      <select name="criteria[status]" id="filters_status"><option value="all" selected="selected">{% trans %}Todo{% endtrans %}</option>
+	      <select name="criteria[status]" id="filters_status"><option value="all" selected="selected">{% trans %}All{% endtrans %}</option>
 		<option value="false">{% trans %}No{% endtrans %}</option>
-		<option value="true">{% trans %}Sí{% endtrans %}</option>
+		<option value="true">{% trans %}Yes{% endtrans %}</option>
 	      </select>
             </div>
           </div>
@@ -69,7 +69,7 @@
 	<input class="tv_admin_action_reset_filter" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
       </li>
       <li>
-	<input type="submit" name="filter" value="{% trans %}filtrar{% endtrans %}" class="tv_admin_action_filter" onclick="return testDates($('filters_date_from').value, $('filters_date_to').value, /^(\d+)-(\d+)-(\d+)$/)"> {# TODO GET CULTURE DATE FORMAT #}
+	<input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="tv_admin_action_filter" onclick="return testDates($('filters_date_from').value, $('filters_date_to').value, /^(\d+)-(\d+)-(\d+)$/)"> {# TODO GET CULTURE DATE FORMAT #}
 	{# <?php echo submit_tag('filter', 'name=filter class=tv_admin_action_filter onclick=return testDates($("filters_date_from").value, $("filters_date_to").value, '.get_js_regexp_date($sf_user->getCulture()).')') ?> #}
       </li>
     </ul>

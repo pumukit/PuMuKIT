@@ -43,10 +43,10 @@
 {% if false %}
   <th width="1%">
     {# ($sf_user->getAttribute('type', 'asc', 'tv_admin/serial') == 'asc' #}
-    <a href="#" onclick="new Ajax.Updater('list_serials', '/editar.php/serials/list/sort/num_videos/type/{{ true?'desc':'asc'}}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Obj.Mm.{% endtrans %}&nbsp;{{ true?'&#x25BE;':'&#x25B4;' }}</a>
+    <a href="#" onclick="new Ajax.Updater('list_serials', '/editar.php/serials/list/sort/num_videos/type/{{ true?'desc':'asc'}}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Mm.Obj.{% endtrans %}&nbsp;{{ true?'&#x25BE;':'&#x25B4;' }}</a>
   </th>  
 {% else %}
   <th width="1%">
-    <a href="#" onclick="new Ajax.Updater('list_serials', '/editar.php/serials/list/sort/num_videos/type/asc', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Obj.Mm.{% endtrans %}</a>
+    <a href="#" onclick="new Ajax.Updater('list_serials', '/editar.php/serials/list/sort/num_videos/type/asc', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Mm.Obj.{% endtrans %}</a>
   </th>
 {% endif %}

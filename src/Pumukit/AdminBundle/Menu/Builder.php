@@ -13,44 +13,44 @@ class Builder extends ContainerAware
 
         $menu->addChild('Dashboard');
 
-        $menu->addChild('Series Multimedia', array('route' => 'pumukitadmin_series_index'));
+        $menu->addChild('Multimedia Series', array('route' => 'pumukitadmin_series_index'));
 
-        $menu->addChild('Catalogador Unesco');
+        $menu->addChild('Unesco Cataloger');
 
-        $portal_design = $menu->addChild('Diseño Portal');
-        $portal_design->addChild('Diseño');
-        $portal_design->addChild('Plantillas');
+        $portal_design = $menu->addChild('WebTV Portal Design');
+        $portal_design->addChild('Design');
+        $portal_design->addChild('Templates');
         $portal_design->addChild('FileManager');
-        $portal_design->addChild('Categorías');
-        $portal_design->addChild('Noticias');
+        $portal_design->addChild('Tags');
+        $portal_design->addChild('News');
 
-        $live = $menu->addChild('Directos');
-        $live->addChild('Canales en Directo', array('route' => 'pumukitadmin_direct_index'));
-        $live->addChild('Anuncios de Directos', array('route' => 'pumukitadmin_event_index'));
+        $live = $menu->addChild('Live');
+        $live->addChild('Live Channels', array('route' => 'pumukitadmin_direct_index'));
+        $live->addChild('Live Events', array('route' => 'pumukitadmin_event_index'));
 
-        $transcoding = $menu->addChild('Transcodificación');
-        $transcoding->addChild('Perfil de Transcodificación');
-        $transcoding->addChild('Lista de tareas');
-        $transcoding->addChild('Trascodificadores');
+        $transcoding = $menu->addChild('Transcoding');
+        $transcoding->addChild('Transcoder Profile');
+        $transcoding->addChild('Task list');
+        $transcoding->addChild('Transcoders');
 
-        $menu->addChild('Editoriales Temporizadas');
+        $menu->addChild('Temporized Publishing');
 
-        $tables = $menu->addChild('Tablas');
-        $tables->addChild('Personas');
+        $tables = $menu->addChild('Tables');
+        $tables->addChild('People');
 
-        $management = $menu->addChild('Administración');
-        $management->addChild('Usuarios admin', array('route' => 'pumukitadmin_user_index'));
-        $management->addChild('Categorías', array('route' => 'pumukitadmin_tag_index'));
-        $management->addChild('Géneros');
-        $management->addChild('Tipos de materiales');
-        $management->addChild('Tipos de series');
-        $management->addChild('Idiomas');
+        $management = $menu->addChild('Management');
+        $management->addChild('Admin users', array('route' => 'pumukitadmin_user_index'));
+        $management->addChild('Tags', array('route' => 'pumukitadmin_tag_index'));
+        $management->addChild('Genres');
+        $management->addChild('Material types');
+        $management->addChild('Series types');
+        $management->addChild('Languages');
         $management->addChild('Roles', array('route' => 'pumukitadmin_role_index'));
-        $management->addChild('Perfiles Acceso', array('route' => 'pumukitadmin_broadcast_index'));
-        $management->addChild('Servidores de Distribución');
+        $management->addChild('Access Profiles', array('route' => 'pumukitadmin_broadcast_index'));
+        $management->addChild('Broadcast Servers');
 
-        $ingester = $menu->addChild('Ingestador');
-        $ingester->addChild('Ingestador Matterhorn');
+        $ingester = $menu->addChild('Ingester');
+        $ingester->addChild('Matterhorn Ingester');
 
         return $menu;
     }

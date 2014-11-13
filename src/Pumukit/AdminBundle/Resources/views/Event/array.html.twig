@@ -6,9 +6,9 @@
       </th>
       <th colspan="2" width="5%"></th>
       <th width="1%">{% trans %}Id{% endtrans %}</th>
-      <th width="7%">{% trans %}Fecha{% endtrans %}</th>
-      <th>{% trans %}Texto{% endtrans %}</th>
-      <th width="1%">{% trans %}Público{% endtrans %}</th>
+      <th width="7%">{% trans %}Date{% endtrans %}</th>
+      <th>{% trans %}Text{% endtrans %}</th>
+      <th width="1%">{% trans %}Public{% endtrans %}</th>
     </tr>
   </thead>
   
@@ -16,7 +16,7 @@
   {% if events|length == 0 %}
     <tr>
       <td colspan="7">
-       {% trans %}No existen eventos con esos valores.{% endtrans %}
+       {% trans %}There are no events with those values.{% endtrans %}
       </td>
     </tr>
   {% endif %}
@@ -26,14 +26,14 @@
         <input id="{{ event.id }}" class="event_checkbox" type="checkbox">
       </td>
       <td onclick="click_fila_url('event', this, '{{ path('pumukitadmin_event_show', {'id': event.id}) }}');">
-	<a title="{% trans %}Editar Evento {% endtrans %}{{ event.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_event_update', {'id': event.id}) }}"><img alt="{% trans %}editar{% endtrans %}" title="{% trans %}editar{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a>
+	<a title="{% trans %}Edit Event {% endtrans %}{{ event.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_event_update', {'id': event.id}) }}"><img alt="{% trans %}edit{% endtrans %}" title="{% trans %}edit{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a>
       </td>
       <td>
-        <form action="{{ path('pumukitadmin_event_delete', {'id': event.id}) }}" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}¿Seguro que desea eliminar el evento de fecha {% endtrans %}{{ event.date|date('Y-m-d H:i') }}?')">
+        <form action="{{ path('pumukitadmin_event_delete', {'id': event.id}) }}" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}Are you sure you want to delete the event with date {% endtrans %}{{ event.date|date('Y-m-d H:i') }}?')">
           <input type="hidden" name="_method" value="DELETE">
           <input type="hidden" name="confirmed" value="true">
           <button type="submit" class="tv_admin_row_post">
-            <img alt="{% trans %}borrar{% endtrans %}" title="{% trans %}borrar{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
+            <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
           </button>
         </form>
       </td>
@@ -56,18 +56,18 @@
     <tr>
       <th colspan="7">        
         <div class="float-left" style="padding-right: 5px">
-          <a class="azul" style="color:grey" title="{% trans %}Lista{% endtrans %}" href="#" onclick="new Ajax.Updater('full_body', '{{ path('pumukitadmin_event_index', {'cal': 'list'}) }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Lista{% endtrans %}</a>
-          <a class="azul" style="color:blue" title="{% trans %}Calendario{% endtrans %}" href="#" onclick="new Ajax.Updater('full_body', '{{ path('pumukitadmin_event_index', {'cal': 'cal'}) }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Calendario{% endtrans %}</a>
+          <a class="azul" style="color:grey" title="{% trans %}List{% endtrans %}" href="#" onclick="new Ajax.Updater('full_body', '{{ path('pumukitadmin_event_index', {'cal': 'list'}) }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}List{% endtrans %}</a>
+          <a class="azul" style="color:blue" title="{% trans %}Calendar{% endtrans %}" href="#" onclick="new Ajax.Updater('full_body', '{{ path('pumukitadmin_event_index', {'cal': 'cal'}) }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Calendar{% endtrans %}</a>
         </div>
         <div class="float-right">
           {{ include('PumukitAdminBundle:Macros:pager_ajax.html.twig', {'name': 'event', 'page': events.getCurrentPage, 'total':events.getNbPages}) }}
         </div>
         {{ events.getNbResults }} 
         {% transchoice events.getNbResults %}
-	      {0} eventos|{1} evento|]1,Inf] eventos
+	      {0} events|{1} event|]1,Inf] events
 	{% endtranschoice %}
 	{% if app.session.get('admin/event/criteria')|length != 0%}
-          <a title="{% trans %}Cancelar la búsqueda actual{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancelar búsqueda{% endtrans %}</a>
+          <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
 	{% endif %}
       </th>
     </tr>

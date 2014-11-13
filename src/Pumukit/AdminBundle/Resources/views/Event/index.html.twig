@@ -3,7 +3,7 @@
 {% block body %}
 
 <h3 class="cab_body_div">
-  {% trans %}Retransmisiones en Directo{% endtrans %}
+  {% trans %}Live broadcastings{% endtrans %}
 </h3>
 
 <div id="tv_admin_container">
@@ -13,7 +13,7 @@
     {% if(app.session.has('admin/event/id')) %}
       {{ render_hinclude(url('pumukitadmin_event_show', {'id': app.session.get('admin/event/id')})) }}
     {% else %}
-      {% trans %}Seleccione algún evento.{% endtrans %}
+      {% trans %}Select any event.{% endtrans %}
     {% endif %}
     </div>
   </div>
@@ -31,16 +31,16 @@
 
     <div style="float:right; width:50%">
       <ul class="tv_admin_actions">
-        {# TODO <li><input class="tv_admin_action_create" onclick="Modalbox.show('{{ path('pumukitadmin_event_createseveral', {'cal': div_url}) }}', {title:{% trans %}Crear serie de Eventos Nuevos{% endtrans %}, width:800}); return false;" type="button" value="{% trans %}Nueva Serie{% endtrans %}"></li> #}
-        <li><input class="tv_admin_action_create" onclick="Modalbox.show('{{ path('pumukitadmin_event_create', {'cal': div_url}) }}', {title:'{% trans %}Crear Nuevo Evento{% endtrans %}', width:800}); return false;" type="button" value="{% trans %}Nuevo Evento{% endtrans %}"></li>
+        {# TODO <li><input class="tv_admin_action_create" onclick="Modalbox.show('{{ path('pumukitadmin_event_createseveral', {'cal': div_url}) }}', {title:{% trans %}Create series of New Events{% endtrans %}, width:800}); return false;" type="button" value="{% trans %}Nueva Serie{% endtrans %}"></li> #}
+        <li><input class="tv_admin_action_create" onclick="Modalbox.show('{{ path('pumukitadmin_event_create', {'cal': div_url}) }}', {title:'{% trans %}Create New Event{% endtrans %}', width:800}); return false;" type="button" value="{% trans %}New Event{% endtrans %}"></li>
       </ul>
     </div>
 
-    <select id="options_events" style="margin: 10px 0px; width: 33%" title={% trans %}"Acciones sobre elementos seleccionados"{% endtrans %} onchange="window.change_select('event', $('options_events'))">
-      <option value="default" selected="selected">{% trans %}Selecciona una acción...{% endtrans %}</option>
+    <select id="options_events" style="margin: 10px 0px; width: 33%" title={% trans %}"Actions on selected items"{% endtrans %} onchange="window.change_select('event', $('options_events'))">
+      <option value="default" selected="selected">{% trans %}Select any action...{% endtrans %}</option>
       <option disabled="">---</option>
-      <option value="delete_sel">{% trans %}Borrar seleccionados{% endtrans %}</option>
-      <option value="create">{% trans %}Crear nuevo{% endtrans %}</option>
+      <option value="delete_sel">{% trans %}Delete selected{% endtrans %}</option>
+      <option value="create">{% trans %}Create new{% endtrans %}</option>
       <!--<option value="inv_working_sel"><?php echo __('Ocultar/Mostrar seleccionados')?></option>
       <option value="inv_working_all"><?php echo __('Ocultar/Mostrar todos')?></option> -->
     </select>

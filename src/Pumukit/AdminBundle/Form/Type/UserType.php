@@ -13,11 +13,11 @@ class UserType extends AbstractType
     {
         $builder
       ->add('enabled', 'hidden', array('data' => true))
-      ->add('fullname', 'text', array('attr' => array('style' => 'width: 420px'), 'label' => 'Nombre'))
+      ->add('fullname', 'text', array('attr' => array('style' => 'width: 420px'), 'label' => 'Name'))
       ->add('username', 'text', array(
                 'attr' => array(
                     'pattern' => "^[a-zA-Z0-9_]{4,16}$",
-                    'oninvalid' => "setCustomValidity('El username no puede tener espacios en blanco ni caracteres especiales')",
+                    'oninvalid' => "setCustomValidity('The username can not have blank spaces neither special characters')",
                     'oninput' => "setCustomValidity('')",
                     'style' => 'width: 420px', ),
                 'label' => 'Username', ))
@@ -38,12 +38,12 @@ class UserType extends AbstractType
       ->add('email', 'email', array('attr' => array('style' => 'width: 420px'), 'label' => 'Email'))
       ->add('roles', 'choice', array(
                     'choices' => array(
-                        'ROLE_SUPER_ADMIN' => 'Administrador',
-                        'ROLE_ADMIN' => 'Publicador', ),
+                        'ROLE_SUPER_ADMIN' => 'Administrator',
+                        'ROLE_ADMIN' => 'Publisher', ),
             'multiple' => true,
             'expanded' => true,
                     'attr' => array('style' => 'width: 420px'),
-                    'label' => 'Tipo', ));
+                    'label' => 'Type', ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

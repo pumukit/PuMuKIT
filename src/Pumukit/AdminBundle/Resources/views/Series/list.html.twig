@@ -18,7 +18,7 @@
   {% if series|length == 0 %}
     <tr>
       <td colspan="13">
-       {% trans %}No existen series con esos valores.{% endtrans %}
+       {% trans %}There are no series with those values.{% endtrans %}
       </td>
     </tr>
   {% endif %}
@@ -43,7 +43,7 @@
           <input type="hidden" name="_method" value="DELETE">
           <input type="hidden" name="confirmed" value="true">
           <button type="submit" class="tv_admin_row_post">
-            <img alt="{% trans %}borrar{% endtrans %}" title="{% trans %}borrar{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
+            <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
           </button>
         </form>
       </td>
@@ -91,7 +91,7 @@
 	      {0} series|{1} series|]1,Inf] series
 	{% endtranschoice %}
 	{% if app.session.get('admin/series/criteria')|length != 0%}
-          <a title="{% trans %}Cancelar la búsqueda actual{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancelar búsqueda{% endtrans %}</a>
+          <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
 	{% endif %}
       </th>
     </tr>

@@ -2,7 +2,7 @@
 
 {% block body %}
 
-<h3 class="cab_body_div"><img src="/legacy/images/admin/cab/serial_ico.png"/> {% trans %}Series Multimedia{% endtrans %}</h3>
+<h3 class="cab_body_div"><img src="/legacy/images/admin/cab/serial_ico.png"/> {% trans %}Multimedia Series{% endtrans %}</h3>
 
 <div id="tv_admin_container">
   <div id="tv_admin_bar">
@@ -24,18 +24,18 @@
       <ul class="tv_admin_actions">
         <!-- Falta -->
         <li> {# TODO wizard and path #}
-	 <a class="tv_admin_action_next" href="#" onclick="Modalbox.show('/editar.php/wizard/serial',{width:800, title:'{% trans %}PASO I: Serie{% endtrans %}'}); return false;">{% trans %}Wizard{% endtrans %}</a>
+	 <a class="tv_admin_action_next" href="#" onclick="Modalbox.show('/editar.php/wizard/serial',{width:800, title:'{% trans %}STEP I: Serie{% endtrans %}'}); return false;">{% trans %}Wizard{% endtrans %}</a>
         </li>
         <li> {# TODO check route with filter /editar.php/serials/create/filter/filter #}
-	 <a title="{% trans %}Crear nueva serie{% endtrans %}" class="tv_admin_action_create" href="#" onclick="$('filter_series').reset(); new Ajax.Updater('list_series', '{{ path('pumukitadmin_series_create') }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Create{% endtrans %}</a>
+	 <a title="{% trans %}Create new series{% endtrans %}" class="tv_admin_action_create" href="#" onclick="$('filter_series').reset(); new Ajax.Updater('list_series', '{{ path('pumukitadmin_series_create') }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Create{% endtrans %}</a>
         </li>
       </ul>
     </div>
 
-    <select id="options_series" style="margin: 10px 0px; width: 33%" title="{% trans %}Acciones sobre elementos selecionados{% endtrans %}" onchange="window.change_select('series', $('options_series'))">
-      <option value="default" selected="selected">{% trans %}Seleciona una acción...{% endtrans %}</option>
+    <select id="options_series" style="margin: 10px 0px; width: 33%" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('series', $('options_series'))">
+      <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
       <option disabled="">---</option>
-      <option value="delete_sel">{% trans %}Borrar selecionados{% endtrans %}</option>
+      <option value="delete_sel">{% trans %}Delete selected{% endtrans %}</option>
       <!-- <option value="inv_announce_sel">{% trans %}Anunciar/Desanunciar selecionados{% endtrans %}</option> -->
       <!-- <option value="inv_working_sel">{% trans %}Ocultar/Desocultar selecionados{% endtrans %}</option> Ocultarlos todos -->
     </select>
