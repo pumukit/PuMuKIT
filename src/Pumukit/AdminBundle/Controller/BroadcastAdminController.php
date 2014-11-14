@@ -133,6 +133,7 @@ class BroadcastAdminController extends AdminController
         $config = $this->getConfiguration();
 
         $this->setFlash('success', 'delete');
+	$this->get('session')->getFlashBag()->add('default', 'changed');
 
         return $this->redirectToRoute(
         $config->getRedirectRoute('index'),
@@ -169,6 +170,10 @@ class BroadcastAdminController extends AdminController
             }
             $this->update($resource);
         }
+	// TODO fix show flash message after change default broadcast on click
+	//$this->get('session')->getFlashBag()->add('success', 'default');
+	//return $this->redirect($this->generateUrl('pumukitadmin_broadcast_index'));
+
         $this->setFlash('success', 'default');
 
         return new JsonResponse(array('default' => $resource->getId()));
