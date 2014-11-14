@@ -9,7 +9,7 @@
 {% if 'dup key' in flashMessage %}
 <script type="text/javascript">
   window.addEventListener("load", function () { 
-  cat_error('create');
+  cat_error('creating');
   }, false);
 </script>
 {% endif %}
@@ -102,7 +102,7 @@ function cat_relation_change(one_id, two_id, value) {
 
 
 function cat_delete(id, pid, pcod) {
-  if (window.confirm('{% trans %}Are you sure you want to delete the tag with code{% endtrans %} '.pcod.'?')) {
+  if (window.confirm('{% trans %}Are you sure you want to delete this tag?{% endtrans %}')) {
     var url = '{{ path('pumukitadmin_tag_delete', {'id': '___id___'}) }}';
     new Ajax.Request(url.replace('___id___', id), {
       metod: 'DELETE',
