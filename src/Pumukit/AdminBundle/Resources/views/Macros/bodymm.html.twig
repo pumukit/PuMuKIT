@@ -22,8 +22,7 @@
 {% endif %}
 
 <!-- SUBSERIAL -->
-{% if (((3 == template) and (((mm.getSubserialTitle()|raw) != lastSubserialTitle) or (mm.getRecorddate()|date('dmy') != lastDate))) or
-	 ((template == 4) and((mm.getSubserialTitle()|raw) != lastSubserialTitle))) %}
+{% if (((3 == template) and (((mm.getSubserialTitle()|raw) != lastSubserialTitle) or (mm.getRecorddate()|date('dmy') != lastDate))) or ((template == 4) and((mm.getSubserialTitle()|raw) != lastSubserialTitle))) %}
   <div class="serial_date">
     {{ mm.getSubserialTitle() }}
   </div>
@@ -31,12 +30,12 @@
 
 <!-- MULTISUBSERIAL -->
 {% if (template == 5) %}
-  {% set subserial_ahora = (mm.getSubserialTitle()|filter('\\n')) %}
-  {% set subserial_antes = (lastSubserialTitle|filter('\\n')) %}
+  {% set subserial_ahora = (mm.getSubserialTitle()|split('\\n')) %}
+  {% set subserial_antes = (lastSubserialTitle|split('\\n')) %}
   {# TODO false value in twig #}
   {% set subserial_todos = false %}
   {% for subserial_level, subserial_text in subserial_ahora %}
-    {% if(subserial_todos or ((subserial_antes|length) <= subserial_level) or ((subserial_text|raw) != subserial_antes[subserial_level])) %}
+    {% if ( (subserial_todos) or ( subserial_antes|length <= subserial_level ) or ( subserial_text|raw != subserial_antes.subserial_level ) ) %}
       {% set subserial_todos = true %}
       <div class="serial_date">
         {% subserial_text %}
@@ -80,7 +79,7 @@
                &nbsp;|&nbsp;&nbsp;<span class="language">{{ file.getLanguage().getName() }}</span>
 
                &nbsp;({{ file.getDurationString() }})
-               &nbsp;|&nbsp;{% trans %}Seen{% endtrans %}: <span class="numView">{{ file.getNumView() }}</span>{{ (1 == file.getNumView())?' {% trans %}time{% endtrans %}':' {% trans %}times{% endtrans %}')?>
+               &nbsp;|&nbsp;{% trans %}Seen{% endtrans %}: <span class="numView">{{ file.getNumView() }}</span>{{ (1 == file.getNumView())?' {% trans %}time{% endtrans %}':' {% trans %}times{% endtrans %}' }}
             </div>
           {% endfor %}
 
@@ -109,7 +108,7 @@
             {% for act in mm.getPersons(role.getId()) %}
               <div>
                 <div class="person">
-	          {{ role.getText() %}
+	          {{ role.getText() }}
                   {% if act.getWeb() is not empty %}
                     <a href="{{ act.getWeb() }}">{{ act.getHName() }} </a>
                   {% else %}
