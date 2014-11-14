@@ -1,38 +1,35 @@
-<?php $pubs = PubChannelPeer::doSelect(new Criteria()); ?>
+{# TODO pubs and its methods <?php $pubs = PubChannelPeer::doSelect(new Criteria()); ?> #}
+{% set pubs = '' %}
 
 <div>
   <div id="tv_admin_container" style="width:100%">
 
-<?php echo __('Cambiar la difusión de los objetos multimedia de la serie:')?>
-<div style="margin-bottom: 15p; font-size: 200%; color: #666666">&laquo;<?php echo $serial->getTitle() ?>&raquo;</div>
+{% trans %}Cambiar la difusión de los objetos multimedia de la serie{% endtrans %}:
+<div style="margin-bottom: 15p; font-size: 200%; color: #666666">&laquo;{{ series.getTitle() }}&raquo;</div>
 
 <!--  'update' => 'list_serials', -->
-
-<?php echo form_remote_tag(array(
-  'update' => 'list_serials',
-  'url' => 'serials/update_pub',
-  'script' => 'true',
-)) ?>
-
+{# TODO path pumukitadmin_series_updatepub and action #}
+<form onsubmit="new Ajax.Updater('list_serials', '/editar.php/serials/update_pub', {asynchronous:true, evalScripts:true, parameters:Form.serialize(this)}); return false;" action="/editar.php/serials/update_pub" method="post">
 
 <fieldset>
 
   <div class="form-row">
-    <?php echo label_for('mm', __('Obj. MM:'), 'class="required" ') ?>
+    <label for="mm" class="required">{% trans %}MM Obj.{% endtrans %}:</label>
     <div class="content" style="max-height: 400px; overflow-y: scroll">
 
       <table id="table_mms_change_pub" style="width:97%; border: 1px solid #000; padding: 1%;">
         <thead>
           <tr>
             <th></th>
-            <th><?php echo __('ID')?></th>
-            <th><?php echo __('Título')?></th>
-            <?php if ($sf_user->getAttribute('user_type_id', 1) == 0) :?>
-            <th><?php echo __('Estado')?></th>
-            <?php endif ?>
-            <?php foreach ($pubs as $p): ?>
-              <th style="<?php echo $p->getEnable() ? '' : 'color:grey'?>"><?php echo $p->getName()?></th>
-            <?php endforeach; ?>
+            <th>{% trans %}ID{% endtrans %}</th>
+            <th>{% trans %}Title{% endtrans %}</th>
+            {# TODO <?php if ($sf_user->getAttribute('user_type_id', 1) == 0) :?> #}
+	    {% if true %}
+              <th>{% trans %}Status{% endtrans %}</th>
+            {% endif %}
+            {% for p in pubs %}
+              <th style="{{ p.getEnable() ? '' : 'color:grey' }}">{{ p.name }}</th>
+	    {% endfor %}
           </tr>
         </thead>
         <tbody>
@@ -41,87 +38,87 @@
           <tr>
             <td></td>
             <td></td>
-            <td><span style="font-weight: bold"><?php echo __('TODOS')?></span></td>
-            <?php if ($sf_user->getAttribute('user_type_id', 1) == 0) :?>
+            <td><span style="font-weight: bold">{% trans %}ALL{% endtrans %}</span></td>
+            {# TODO <?php if ($sf_user->getAttribute('user_type_id', 1) == 0) :?> #}
+	    {% if true %}
             <td style="background: transparent">
-              <select onchange="
-if(this.value.length != 0){
-  var val = this.value;
-  $('table_mms_change_pub').select('select.status_change_pub').each(function(s){s.value = val});
-}
-                  " id="all_status_change_pub">
+              <select onchange="if(this.value.length != 0){
+				  var val = this.value;
+				  $('table_mms_change_pub').select('select.status_change_pub').each(function(s){s.value = val});
+				}"
+                      id="all_status_change_pub">
                 <option selected="selected" ></option>
-                <option value="<?php echo MmPeer::STATUS_NORMAL ?>" ><?php echo __('Publicado') ?></option>
-                <option value="<?php echo MmPeer::STATUS_BLOQ ?>" ><?php echo __('Bloqueado') ?></option>
-                <option value="<?php echo MmPeer::STATUS_HIDE ?>" ><?php echo __('Oculto') ?></option>
+                <option value="{{ MultimediaObject::STATUS_NORMAL }}" >{% trans %}Published{% endtrans %}</option>
+                <option value="{{ MultimediaObject::STATUS_BLOQ }}" >{% trans %}Blocked{% endtrans %}</option>
+                <option value="{{ MultimediaObject::STATUS_HIDE }}" >{% trans %}Hidden{% endtrans %}</option>
               </select>
             </td>
-            <?php endif ?>
-            <?php foreach ($pubs as $p): ?>
+            {% endif %}
+            {% for p in pubs %}
 	      <td style="text-align:center; background: transparent">
                 <input type="checkbox"
-                  <?php if ($p->getEnable() == 0):?>
+                  {% if (0 == p.getEnable()) %}
                       disabled="disabled"
-                  <?php else: ?>
+                  {% else %}
                       onchange=" var val = this.checked;
-                     $('table_mms_change_pub').select('input.pub_channel_change_pub_<?php echo $p->getId()?>').each(function(s){s.checked = val});"
-                  <?php endif ?>
+                     $('table_mms_change_pub').select('input.pub_channel_change_pub_{{ p.id }}').each(function(s){s.checked = val});"
+                  {% endif %}
                 />
               </td>
-            <?php endforeach ?>
+	    {% endfor %}
           </tr>
 
-
-          <?php foreach ($serial->getMms() as $mm): ?>
-          <tr <?php echo($mm->getStatusId() == 0) ? '' : ' style="background-color: rgb(242, 242, 242)" '?>>
-            <td style="background: transparent"><input id="<?php echo $mm->getId()?>" class="change_pub_mms" type="checkbox" checked="checked"> </td>
-            <td style="background: transparent"><?php echo $mm->getId()?> </td>
-            <td style="background: transparent"><?php echo $mm->getTitle() ?> </td>
-            <?php if ($sf_user->getAttribute('user_type_id', 1) == 0) :?>
+          {% for mm in series.getMultimediaObjects() %}
+          <tr {{ (0 == mm.status) ? '' : ' style="background-color: rgb(242, 242, 242)" ' }}>
+            <td style="background: transparent"><input id="{{ mm.id }}" class="change_pub_mms" type="checkbox" checked="checked"> </td>
+            <td style="background: transparent">{{ mm.id }} </td>
+            <td style="background: transparent">{{ mm.title }} </td>
+            {# TODO <?php if ($sf_user->getAttribute('user_type_id', 1) == 0) :?> #}
+	    {% if true %}
             <td style="background: transparent">
-              <select name="data[<?php echo $mm->getId()?>][status]" id="filters_anounce_<?php echo $mm->getId()?>" onchange="" class="status_change_pub">
-                <option <?php echo(($mm->getStatusId() == MmPeer::STATUS_NORMAL) ? 'selected="selected"' : ''); ?>value="0" ><?php echo __('Publicado')?></option>
-                <option <?php echo(($mm->getStatusId() == MmPeer::STATUS_BLOQ) ? 'selected="selected"' : ''); ?>value="1" ><?php echo __('Bloqueado')?></option>
-                <option <?php echo(($mm->getStatusId() == MmPeer::STATUS_HIDE) ? 'selected="selected"' : ''); ?>value="2" ><?php echo __('Oculto')?></option>
+              <select name="data[{{ mm.id }}][status]" id="filters_anounce_{{ mm.id }}" onchange="" class="status_change_pub">
+                <option {{ (MultimediaObject::STATUS_NORMAL == mm.status) ? 'selected="selected"' : '' }} value="0" >{% trans %}Published{% endtrans %}</option>
+                <option {{ (MultimediaObject::STATUS_BLOQ == mm.status) ? 'selected="selected"' : '' }} value="1" >{% trans %}Blocked{% endtrans %}</option>
+                <option {{ (MultimediaObject::STATUS_HIDE == mm.status) ? 'selected="selected"' : '' }} value="2" >{% trans %}Hidden{% endtrans %}</option>
               </select>
             </td>
-            <?php endif ?>
+            {% endif %}
 
-            <?php foreach ($pubs as $p): ?>
-               <?php if ($p->getEnable() == 0):?>
+	    {% for p in pubs %}
+	       {% if (0 == p.enable) %}
                   <td style="background: transparent; color: grey; text-align: center">
                     <input type="checkbox" disabled="disabled" />
                   </td>
-                <?php else:?>
+                {% else %}
                   <td style="text-align:center; background: transparent">
                     <!-- SOLO UNA QUERY-->
-                    <?php $estado = $p->hasMm($mm->getId()) ?>
+                    {% set status = p.hasMm(mm.id) %}
                       <input type="checkbox"
                            onchange=""
-                           name="data[<?php echo $mm->getId()?>][pub_channels][<?php echo $p->getId()?>]"
-                           class="pub_channel_input_checkbox pub_channel_change_pub_<?php echo $p->getId()?>"
-                           <?php echo($estado !== 0) ? 'checked="checked"' : ""?>
-                           <?php echo(($estado === 2) || ($estado === 3)) ? 'disabled="disabled"' : ''?>
+                           name="data[{{ mm.id }}][pub_channels][{{ p.id }}]"
+                           class="pub_channel_input_checkbox pub_channel_change_pub_{{ p.id }}"
+                           {{ (0 !== status) ? 'checked="checked"' : "" }}
+                           {{ ((2 == status) || (3 == status)) ? 'disabled="disabled"' : '' }}
                     />
                   </td>
-                <?php endif ?>
-            <?php endforeach ?>
+                {% endif %}
+            {% endfor %}
 
           </tr>
-          <?php endforeach ?>
+          {% endfor %}
         </tbody>
       </table>
     </div>
-    <div style="text-align: right"><?php echo __('Seleccionar:')?>
-      <a href="#" onclick="$('table_mms_change_pub').select('input.change_pub_mms').each(function(s){s.checked=false});return false"><?php echo __('nada')?></a>
-      <a href="#" onclick="$('table_mms_change_pub').select('input.change_pub_mms').each(function(s){s.checked=true});return false"><?php echo __('todo')?></a>
+    <div style="text-align: right">{% trans %}Select{% endtrans %}:
+      <a href="#" onclick="$('table_mms_change_pub').select('input.change_pub_mms').each(function(s){s.checked=false});return false">{% trans %}nothing{% endtrans %}</a>
+      <a href="#" onclick="$('table_mms_change_pub').select('input.change_pub_mms').each(function(s){s.checked=true});return false">{% trans %}all{% endtrans %}</a>
     </div>
   </div>
 
 
 <ul class="tv_admin_actions">
-  <li><?php echo submit_tag(__('OK'), 'name=OK class=tv_admin_action_save onclick=Modalbox.hide()'); ?></li>
-  <li><?php echo button_to_function(__('Cancel'), "Modalbox.hide()", 'class=tv_admin_action_delete') ?> </li>
+  <li><input type="submit" name="OK" value="{% trans %}OK{% endtrans %}" class="tv_admin_action_save MB_focusable" onclick="Modalbox.hide()"></li>
+  <li><input class="tv_admin_action_delete MB_focusable" onclick="Modalbox.hide(); return false;" type="button" value="{% trans %}Cancel{% endtrans %}"></li>
 </ul>
 
 </fieldset>

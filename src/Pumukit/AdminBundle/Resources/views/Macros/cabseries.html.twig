@@ -1,0 +1,22 @@
+<div class="cab_serial">
+  <h1 class="title">
+    {{ oneseries.getTitle() }}
+  </h1>
+
+
+  {% if ('' !== oneseries.getSubtitle()) %}
+    <h2 class="subtitle">
+      {{ oneseries.getSubtitle() }}
+    </h2>
+  {% endif %}
+
+
+  {% set precinct = oneseries.getPrecinct() %}
+  {% if ((precinct) and (precinct.id > 1)) %}
+    <h3 class="place">
+      <!-- falta address -->
+      {{ precinct.getCompleteName() }}
+    </h3>
+  {% endif %}
+
+</div>

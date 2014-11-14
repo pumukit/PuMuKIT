@@ -1,4 +1,4 @@
-{# <?php use_helper('Object', 'JSRegExp') ?> #}
+{# TODO <?php use_helper('Object', 'JSRegExp') ?> #}
 
 <div class="tv_admin_filters">
   <form id="filter_series" onsubmit="" action="{{ path('pumukitadmin_series_index') }}" method="GET">
@@ -70,14 +70,13 @@
       </li>
       <li>
 	<input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="tv_admin_action_filter" onclick="return testDates($('filters_date_from').value, $('filters_date_to').value, /^(\d+)-(\d+)-(\d+)$/)"> {# TODO GET CULTURE DATE FORMAT #}
-	{# <?php echo submit_tag('filter', 'name=filter class=tv_admin_action_filter onclick=return testDates($("filters_date_from").value, $("filters_date_to").value, '.get_js_regexp_date($sf_user->getCulture()).')') ?> #}
       </li>
     </ul>
   </form>
 </div>
 
-{% block javascripts %}
-<script type="text/javascript">
+<script type="text/javascript" src="/legacy/js/accordion.js"></script>
+<script>
   Event.observe(window, 'load', loadAccordions, false);
   //
   //      Set up all accordions
@@ -95,6 +94,5 @@
     $('filters_status').value = 'all';
   }
 </script>
-{% endblock %}
 
 {# FALTA VER OCULTOS Y ANUNCIADOS #}

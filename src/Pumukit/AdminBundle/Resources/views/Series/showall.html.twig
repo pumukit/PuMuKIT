@@ -1,26 +1,32 @@
-<h1 id="serial_h1"><?php echo __('Mediateca')?></h1>
+<h1 id="serial_h1">{% trans %}Media Library{% endtrans %}</h1>
 
-<?php include_partial('global/cabSerial', array('serial' => $serial)) ?>
+{% include 'PumukitAdminBundle:Macros:cabseries.html.twig' with {'series': series} %}
 
-<div id="serial_header">
-  <?php echo $sf_data->getRaw('serial')->getHeader() ?>
+<div id="series_header">
+  TODO SERIES HEADER {# <?php echo $sf_data->getRaw('serial')->getHeader() ?> #}
 </div>
 
 <div id="serial_body">
-  <?php $lastDate = '--'; $lastPrecinct = 0; $lastSubserialTitle = 0; foreach ($mms as $mm): ?>
-
-  <?php include_partial('global/bodyMm',
-            array('mm' => $mm, 'roles' => $roles,
-                  'lastDate' => $lastDate, 'lastPrecinct' => $lastPrecinct,
-                  'template' => $serial->getSerialTemplateId(), 'lastSubserialTitle' => $lastSubserialTitle, )
-            )
-     ?>
-
-  <?php $lastDate = $mm->getRecorddate('dmy'); $lastPrecinct = $mm->getPrecinctId();
-        $lastSubserialTitle = $mm->getSubserialTitle(); endforeach; ?>
+  {% set lastDate = '--' %}
+  {% set lastPrecinct = 0 %}
+  {% set lastSubserialTitle = 0 %}
+  {% for mm in mms %}
+    {% include 'PumukitAdminBundle:Macros:bodymm.html.twig' with {
+                  'mm': mm,
+                  'roles': roles,
+                  'lastDate': lastDate,
+                  'lastPrecinct': lastPrecinct,
+                  'template': series.getSerialTemplateId(),
+                  'lastSubserialTitle': lastSubserialTitle
+               }
+    %}
+    {% set lastDate = mm.getRecordDate('dmy') %}
+    {% set lastPrecinct = mm.getPrecinctId() %}
+    {% set lastSubserialTitle = mm.getSuberialTitle() %}
+  {% endfor %}
 </div>
 
 
-<div id="serial_footer">
-  <?php echo $sf_data->getRaw('serial')->getFooter() ?>
+<div id="series_footer">
+  TODO SERIES FOOTER {# <?php echo $sf_data->getRaw('serial')->getFooter() ?> #}
 </div>

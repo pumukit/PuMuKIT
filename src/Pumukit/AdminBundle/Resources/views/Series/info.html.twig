@@ -3,16 +3,16 @@
 <fieldset>
 
 
-<h2><strong><?php echo __('URL:')?></strong></h2>
+<h2><strong>{% trans %}URL{% endtrans %}:</strong></h2>
 <div class="form-row">
-  <?php echo label_for('embed', __('Serie:'), 'class="required" ') ?>
+  <label for="embed" class="required">{% trans %}Series{% endtrans %}:</label>
   <div class="content">
-    <input type="text" onclick="this.select()" size="80" value="<?php echo $serial->getUrl(true) ?>" />
+    <input type="text" onclick="this.select()" size="80" value="{{ path('pumukitadmin_series_show', {'id': oneseries.id}) }}" />
   </div>
   <br />
-  <?php echo label_for('embed', __('M&aacute;gica:'), 'class="required" ') ?>
+  <label for="embed" class="required">{% trans %}Magical{% endtrans %}:</label>
   <div class="content">
-    <input type="text" onclick="this.select()" size="80" value="<?php echo $hash->getUrl(true) ?>" />
+    <input type="text" onclick="this.select()" size="80" value="{# TODO <?php echo $hash->getUrl(true) ?> #}{% set hash = 'hash_value' %}{{ path('pumukitadmin_series_show', {'id': hash}) }}" />
   </div>
 </div>
 
@@ -20,7 +20,7 @@
 
 
 <ul class="tv_admin_actions">
-  <li><?php echo button_to_function(__('OK'), "Modalbox.hide()", 'class=tv_admin_action_save') ?> </li>
+  <li><input class="tv_admin_action_save MB_focusable" onclick="Modalbox.hide(); return false;" type="button" value="{% trans %}OK{% endtrans %}"></li>
 </ul>
 
 </form>
