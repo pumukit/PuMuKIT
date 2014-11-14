@@ -111,7 +111,7 @@ class Tag
 
   /**
    * @MongoDB\Field(type="string")
-   * @Gedmo\TreePath(separator="|", appendId=false, startsWithSeparator=false, endsWithSeparator=false)
+   * @Gedmo\TreePath(separator="|", appendId=false, startsWithSeparator=false, endsWithSeparator=true)
    */
   private $path;
 
