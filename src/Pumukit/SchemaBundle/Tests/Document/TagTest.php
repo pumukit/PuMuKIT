@@ -4,7 +4,6 @@ namespace Pumukit\SchemaBundle\Tests\Document;
 
 use Pumukit\SchemaBundle\Document\Tag;
 
-
 class TagTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetterAndSetter()
