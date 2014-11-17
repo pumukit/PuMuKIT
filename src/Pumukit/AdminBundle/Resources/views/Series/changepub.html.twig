@@ -48,9 +48,9 @@
 				}"
                       id="all_status_change_pub">
                 <option selected="selected" ></option>
-                <option value="{{ MultimediaObject::STATUS_NORMAL }}" >{% trans %}Published{% endtrans %}</option>
-                <option value="{{ MultimediaObject::STATUS_BLOQ }}" >{% trans %}Blocked{% endtrans %}</option>
-                <option value="{{ MultimediaObject::STATUS_HIDE }}" >{% trans %}Hidden{% endtrans %}</option>
+                <option value="{{ 'PumukitSchemaBundle:MultimediaObject:STATUS_NORMAL' }}" >{% trans %}Published{% endtrans %}</option>
+                <option value="{{ 'PumukitSchemaBundle:MultimediaObject:STATUS_BLOQ' }}" >{% trans %}Blocked{% endtrans %}</option>
+                <option value="{{ 'PumukitSchemaBundle:MultimediaObject:STATUS_HIDE' }}" >{% trans %}Hidden{% endtrans %}</option>
               </select>
             </td>
             {% endif %}
@@ -77,9 +77,9 @@
 	    {% if true %}
             <td style="background: transparent">
               <select name="data[{{ mm.id }}][status]" id="filters_anounce_{{ mm.id }}" onchange="" class="status_change_pub">
-                <option {{ (MultimediaObject::STATUS_NORMAL == mm.status) ? 'selected="selected"' : '' }} value="0" >{% trans %}Published{% endtrans %}</option>
-                <option {{ (MultimediaObject::STATUS_BLOQ == mm.status) ? 'selected="selected"' : '' }} value="1" >{% trans %}Blocked{% endtrans %}</option>
-                <option {{ (MultimediaObject::STATUS_HIDE == mm.status) ? 'selected="selected"' : '' }} value="2" >{% trans %}Hidden{% endtrans %}</option>
+                <option {{ ('PumukitSchemaBundle:MultimediaObject:STATUS_NORMAL' == mm.status) ? 'selected="selected"' : '' }} value="0" >{% trans %}Published{% endtrans %}</option>
+                <option {{ ('PumukitSchemaBundle:MultimediaObject:STATUS_BLOQ' == mm.status) ? 'selected="selected"' : '' }} value="1" >{% trans %}Blocked{% endtrans %}</option>
+                <option {{ ('PumukitSchemaBundle:MultimediaObject:STATUS_HIDE' == mm.status) ? 'selected="selected"' : '' }} value="2" >{% trans %}Hidden{% endtrans %}</option>
               </select>
             </td>
             {% endif %}
@@ -97,8 +97,8 @@
                            onchange=""
                            name="data[{{ mm.id }}][pub_channels][{{ p.id }}]"
                            class="pub_channel_input_checkbox pub_channel_change_pub_{{ p.id }}"
-                           {{ (0 !== status) ? 'checked="checked"' : "" }}
-                           {{ ((2 == status) || (3 == status)) ? 'disabled="disabled"' : '' }}
+                           {{ (0 != status) ? 'checked="checked"' : "" }}
+                           {{ ((2 == status) or (3 == status)) ? 'disabled="disabled"' : '' }}
                     />
                   </td>
                 {% endif %}

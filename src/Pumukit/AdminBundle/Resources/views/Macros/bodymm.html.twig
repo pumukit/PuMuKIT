@@ -38,7 +38,7 @@
     {% if ( (subserial_todos) or ( subserial_antes|length <= subserial_level ) or ( subserial_text|raw != subserial_antes.subserial_level ) ) %}
       {% set subserial_todos = true %}
       <div class="serial_date">
-        {% subserial_text %}
+        {{ subserial_text }}
       </div>
     {% endif %}
   {% endfor %}
