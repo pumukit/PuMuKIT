@@ -7,7 +7,7 @@
 <div id="tv_admin_container">
   <div id="tv_admin_bar">
     <div id="preview_series" style="min-height:74px; padding:5px; border: solid 1px #DDD; background: #8eb0bc url(/legacy/images/admin/cab/cab.gif) repeat-x scroll 0% 0%; margin-bottom: 10px">
-      {% if(app.session.has('admin/direct/id')) %}
+      {% if(app.session.has('admin/series/id')) %}
         {{ render_hinclude(url('pumukitadmin_series_show', {'id': app.session.get('admin/series/id')})) }}
       {% endif %}
     </div>
@@ -49,7 +49,7 @@
 
 <!-- div editar -->
 <div id="edit_series" class="tv_admin_edit">
-  {% if(app.session.has('admin/direct/id')) %}
+  {% if(app.session.has('admin/series/id')) %}
     {{ render_hinclude(url('pumukitadmin_series_update', {'id': app.session.get('admin/series/id')})) }}
   {% endif %}
 

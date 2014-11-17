@@ -1,10 +1,10 @@
-function comprobar_form_serial(date, re_date){
+function comprobar_form_series(date, re_date){
     
     $$('.error').invoke('hide');
 
     if (comprobar_date(date, re_date)){
 	$('error_date').show();
-	new Effect.Opacity('serial_save_error', {duration:3.0, from:1.0, to:0.0});
+	new Effect.Opacity('series_save_error', {duration:3.0, from:1.0, to:0.0});
 	return false;
     }
 

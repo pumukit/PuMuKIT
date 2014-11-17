@@ -15,8 +15,8 @@ pumukitadmin_series_create:
             redirect: pumukitadmin_series_index
 
 pumukitadmin_series_update:
-    pattern: /{id}
-    methods: [GET]
+    pattern: /{id}/update
+    methods: [GET, POST]
     defaults:
         _controller: pumukitadmin.controller.series:updateAction
 
@@ -45,7 +45,7 @@ pumukitadmin_series_copy:
             redirect: pumukitadmin_series_index
 
 pumukitadmin_series_show:
-    pattern: /{id}
-    methods: [GET]
+    pattern: /{id}/show
+    methods: [GET, POST]
     defaults:
         _controller: pumukitadmin.controller.series:showAction

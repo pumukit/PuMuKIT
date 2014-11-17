@@ -61,20 +61,20 @@
 	{# <a href="{{ path('pumukitadmin_mms_series', {'id': oneseries.id}) }}">videos</a> #}
 	<a href="/editar.php/mms/index/series/{{ oneseries.id }}">{% trans %}videos{% endtrans %}</a>
       </td>
-      <td onclick="click_fila_edit('series', this, '{{ oneseries.id }}')" ondblclick="dblclick_fila('series', this, '{{ oneseries.id }}')">
+      <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila('series', this, '{{ oneseries.id }}')">
         {# TODO PIC URL ROUTE <?php echo image_tag($series['pic_url'], 'class=mini size=23x23')?> #}
 	<img class="mini" src="/legacy/images/folder.png" alt="Folder" height="23" width="23">
       </td>
-      <td onclick="click_fila_edit('series', this, '{{ oneseries.id }}')" ondblclick="dblclick_fila('series', this, '{{ oneseries.id }}')">
+      <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila('series', this, '{{ oneseries.id }}')">
         <span style="font-weight: bold; ">{{ oneseries.id }}</span>
       </td>
-      <td onclick="click_fila_edit('series', this, '{{ oneseries.id }}')" ondblclick="dblclick_fila('series', this, '{{ oneseries.id }}')">
+      <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila('series', this, '{{ oneseries.id }}')">
 	{{ oneseries.getTitle() }}
       </td>
-      <td onclick="click_fila_edit('series', this, '{{ oneseries.id }}')" ondblclick="dblclick_fila('series', this, '{{ oneseries.id }}')">
+      <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila('series', this, '{{ oneseries.id }}')">
 	{{ oneseries.getPublicDate()|date('Y-m-d') }}
       </td>
-      <td onclick="click_fila_edit('series', this, '{{ oneseries.id }}')" ondblclick="dblclick_fila('series', this, '{{ oneseries.id }}')">
+      <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila('series', this, '{{ oneseries.id }}')">
         {{ oneseries.getMultimediaObjects()|length }}
       </td>
     </tr>

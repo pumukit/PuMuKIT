@@ -3,18 +3,18 @@
    <tbody>
    <tr>
     <td style="background-color:transparent" height="53" valign="top" width="15%">
-      <img src="{# TODO FUNCTION {{ oneseries.getFirstUrlPic() }} #}" style="border:3px solid #000000;" height="51" width="60" />
+      <img src="{# TODO FUNCTION {{ series.getFirstUrlPic() }} #}" style="border:3px solid #000000;" height="51" width="60" />
     </td>
 
     <td style="background-color:transparent" valign="top" width="85%">
 
     <!-- TITLE -->
       <div style="padding-left:5px">
-        <a href="#">{{ oneseries.getTitle() }}</a> <br />
+        <a href="#">{{ series.getTitle() }}</a> <br />
     <!-- LINE2 (PLACE) -->
-        <strong>{{ oneseries.getLine2() }}</strong><br />
+        <strong>{{ series.getLine2() }}</strong><br />
     <!-- DATE -->
-        <span style="color:#990000"><strong>{{ oneseries.getPublicDate()|date('d/m/Y') }}</strong></span>
+        <span style="color:#990000"><strong>{{ series.getPublicDate()|date('d/m/Y') }}</strong></span>
       </div>
     </td>
    </tr>

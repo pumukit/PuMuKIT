@@ -11,6 +11,11 @@
 	    <argument>%kernel.default_locale%</argument>
             <tag name="doctrine_mongodb.odm.event_listener" event="postLoad" />
         </service>
+
+        <service id="pumukitschema.factory" class="Pumukit\SchemaBundle\Services\FactoryService">
+            <argument type="service" id="doctrine_mongodb"/>
+        </service>
+
     </services>
 
 </container>

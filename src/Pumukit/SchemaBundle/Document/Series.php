@@ -255,6 +255,26 @@ class Series
   }
 
   /**
+   * Set I18n title
+   *
+   * @param array $title
+   */
+  public function setI18nTitle(array $title)
+  {
+      $this->title = $title;
+  }
+
+  /**
+   * Get i18n title
+   *
+   * @return array
+   */
+  public function getI18nTitle()
+  {
+      return $this->title;
+  }
+
+  /**
    * Set subtitle
    *
    * @param string $subtitle
@@ -282,6 +302,26 @@ class Series
       }
 
       return $this->subtitle[$locale];
+  }
+
+  /**
+   * Set I18n subtitle
+   *
+   * @param array $subtitle
+   */
+  public function setI18nSubtitle(array $subtitle)
+  {
+      $this->subtitle = $subtitle;
+  }
+
+  /**
+   * Get i18n subtitle
+   *
+   * @return array
+   */
+  public function getI18nSubtitle()
+  {
+      return $this->subtitle;
   }
 
   /**
@@ -315,6 +355,26 @@ class Series
   }
 
   /**
+   * Set I18n description
+   *
+   * @param array $description
+   */
+  public function setI18nDescription(array $description)
+  {
+      $this->description = $description;
+  }
+
+  /**
+   * Get i18n description
+   *
+   * @return array
+   */
+  public function getI18nDescription()
+  {
+      return $this->description;
+  }
+
+  /**
    * Set header
    *
    * @param text $header
@@ -342,6 +402,26 @@ class Series
       }
 
       return $this->header[$locale];
+  }
+
+  /**
+   * Set I18n header
+   *
+   * @param array $header
+   */
+  public function setI18nHeader(array $header)
+  {
+      $this->header = $header;
+  }
+
+  /**
+   * Get i18n header
+   *
+   * @return array
+   */
+  public function getI18nHeader()
+  {
+      return $this->header;
   }
 
   /**
@@ -375,6 +455,26 @@ class Series
   }
 
   /**
+   * Set I18n footer
+   *
+   * @param array $footer
+   */
+  public function setI18nFooter(array $footer)
+  {
+      $this->footer = $footer;
+  }
+
+  /**
+   * Get i18n footer
+   *
+   * @return array
+   */
+  public function getI18nFooter()
+  {
+      return $this->footer;
+  }
+
+  /**
    * Set copyright
    *
    * @param string $copyright
@@ -402,6 +502,26 @@ class Series
       }
 
       return $this->copyright[$locale];
+  }
+
+  /**
+   * Set I18n copyright
+   *
+   * @param array $copyright
+   */
+  public function setI18nCopyright(array $copyright)
+  {
+      $this->copyright = $copyright;
+  }
+
+  /**
+   * Get i18n copyright
+   *
+   * @return array
+   */
+  public function getI18nCopyright()
+  {
+      return $this->copyright;
   }
 
   /**
@@ -435,6 +555,26 @@ class Series
   }
 
   /**
+   * Set I18n keyword
+   *
+   * @param array $keyword
+   */
+  public function setI18nKeyword(array $keyword)
+  {
+      $this->keyword = $keyword;
+  }
+
+  /**
+   * Get i18n keyword
+   *
+   * @return array
+   */
+  public function getI18nKeyword()
+  {
+      return $this->keyword;
+  }
+
+  /**
    * Set line2
    *
    * @param string $line2
@@ -462,6 +602,26 @@ class Series
       }
 
       return $this->line2[$locale];
+  }
+
+  /**
+   * Set I18n line2
+   *
+   * @param array $line2
+   */
+  public function setI18nLine2(array $line2)
+  {
+      $this->line2 = $line2;
+  }
+
+  /**
+   * Get i18n line2
+   *
+   * @return array
+   */
+  public function getI18nLine2()
+  {
+      return $this->line2;
   }
 
     public function __toString()

@@ -103,6 +103,7 @@
             {{- form_errors(form.time) -}}
             {{- form_widget(form.date) -}}
             {{- form_widget(form.time) -}}
+	    {# {% trans %}Date{% endtrans %}: <input style="margin-top: 5px;" type="datetime-local" size="6" value="{{ value|date('Y-m-dTH:i')|default("") }}" id="{{ id }}_date" name="{{ full_name }}"/> #}
         </div>
     {% endif %}
 {%- endblock datetime_widget %}
@@ -410,6 +411,11 @@
 
 {# Event Widgets #}
 {% block eventschedule_widget -%}
-  {% trans %}Date{% endtrans %}: <input style="margin-top: 5px;" type="datetime-local" size="6" value="{{ value['date']|date('Y-m-dTH:i')|default("") }}" id="{{ id }}_date" name="{{ full_name }}[date]">&nbsp;&nbsp;&nbsp;
-  {% trans %}Duration(min){% endtrans %}: <input style="margin-top: 5px;" type="number" min="1" size="6" value="{{ value['duration']|default("") }}" id="{{ id }}_duration" name="{{ full_name }}[duration]">
+  {% trans %}Date{% endtrans %}: <input style="margin-top: 5px;" type="datetime-local" size="6" value="{{ value['date']|date('Y-m-dTH:i')|default("") }}" id="{{ id }}_date" name="{{ full_name }}[date]" />&nbsp;&nbsp;&nbsp;
+  {% trans %}Duration(min){% endtrans %}: <input style="margin-top: 5px;" type="number" min="1" size="6" value="{{ value['duration']|default("") }}" id="{{ id }}_duration" name="{{ full_name }}[duration]"/>
 {%- endblock eventschedule_widget %}
+
+{# Series Widgets #}
+{% block seriesdate_widget -%}
+  {% trans %}Date{% endtrans %}: <input style="margin-top: 5px;" type="datetime-local" size="6" value="{{ value|date('Y-m-dTH:i')|default("") }}" id="{{ id }}_date" name="{{ full_name }}" />
+{% endblock %}

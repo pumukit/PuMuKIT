@@ -14,8 +14,97 @@ class SeriesAdminController extends AdminController
   {
       $config = $this->getConfiguration();
 
+      $criteria = $this->_getCriteria($config);
+      $resources = $this->_getResources($request, $config, $criteria);
+
+      $pluralName = $config->getPluralResourceName();
+
+      $view = $this
+      ->view()
+      ->setTemplate($config->getTemplate('index.html'))
+      ->setTemplateVar($pluralName)
+      ->setData($resources)
+      ;
+
+      return $this->handleView($view);
+  }
+
+  /**
+   * Create new resource
+   */
+  public function createAction(Request $request)
+  {
+      $config = $this->getConfiguration();
+      $pluralName = $config->getPluralResourceName();
+
+      $series = $this->get('pumukitschema.factory');
+      $series->createSeries($this);
+
+      $this->setFlash('success', 'create');
+
+      $criteria = $this->_getCriteria($config);
+      $resources = $this->_getResources($request, $config, $criteria);
+
+      $pluralName = $config->getPluralResourceName();
+
+      $view = $this
+      ->view()
+      ->setTemplate($config->getTemplate('list.html'))
+      ->setTemplateVar($pluralName)
+      ->setData($resources)
+      ;
+
+      return $this->handleView($view);
+  }
+
+  // TODO
+  /**
+   * Display the form for editing or update the resource.
+   */
+  public function updateAction(Request $request)
+  {
+      $config = $this->getConfiguration();
+
+      $resource = $this->findOr404();
+      $form = $this->getForm($resource);
+
+      try {
+          if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
+              $event = $this->update($resource);
+              if (!$event->isStopped()) {
+                  $this->setFlash('success', 'update');
+
+                  return $this->redirectTo($resource);
+              }
+
+              $this->setFlash($event->getMessageType(), $event->getMessage(), $event->getMessageParams());
+          }
+      } catch (\Exception $e) {
+          $this->get('session')->getFlashBag()->add('error', $e->getMessage());
+      }
+
+      if ($config->isApiRequest()) {
+          return $this->handleView($this->view($form));
+      }
+
+      $view = $this
+      ->view()
+      ->setTemplate($config->getTemplate('update.html'))
+      ->setData(array(
+              $config->getResourceName() => $resource,
+              'form'                     => $form->createView(),
+              ))
+      ;
+
+      return $this->handleView($view);
+  }
+
+  /**
+   * Gets the criteria values
+   */
+  private function _getCriteria($config)
+  {
       $criteria = $config->getCriteria();
-      $sorting = $config->getSorting();
 
       if (array_key_exists('reset', $criteria)) {
           $this->get('session')->remove('admin/'.$config->getResourceName().'/criteria');
@@ -36,9 +125,16 @@ class SeriesAdminController extends AdminController
           $new_criteria[$property] = ['$gte' => $date_from, '$lt' => $date_to];
       }
       }
-      $criteria = $new_criteria;
 
-      $pluralName = $config->getPluralResourceName();
+      return $new_criteria;
+  }
+
+  /**
+   * Gets the list of resources according to a criteria
+   */
+  private function _getResources(Request $request, $config, $criteria)
+  {
+      $sorting = $config->getSorting();
       $repository = $this->getRepository();
 
       if ($config->isPaginated()) {
@@ -62,65 +158,6 @@ class SeriesAdminController extends AdminController
     ;
       }
 
-      $view = $this
-      ->view()
-      ->setTemplate($config->getTemplate('index.html'))
-      ->setTemplateVar($pluralName)
-      ->setData($resources)
-      ;
-
-      return $this->handleView($view);
-  }
-
-  // TODO
-  /**
-   * Create new resource
-   */
-  public function createAction(Request $request)
-  {
-      $config = $this->getConfiguration();
-
-      $resource = $this->createNew();
-
-      $event = $this->create($resource);
-      if (!$event->isStopped()) {
-          $this->setFlash('success', 'create');
-
-          return $this->redirectTo($resource);
-      }
-
-      $this->setFlash($event->getMessageType(), $event->getMessage(), $event->getMessageParams());
-
-      $view = $this
-      ->view()
-      ->setTemplate($config->getTemplate('index.html'))
-      ->setTemplateVar($config->getResourceName())
-      ->setData($resource)
-      ;
-
-      return $this->handleView($view);
-  }
-
-  // TODO
-  /**
-   * Display the form for editing or update the resource.
-   */
-  public function updateAction(Request $request)
-  {
-      $config = $this->getConfiguration();
-
-      $resource = $this->findOr404();
-      $form = $this->getForm($resource);
-
-      $view = $this
-      ->view()
-      ->setTemplate($config->getTemplate('update.html'))
-      ->setData(array(
-              $config->getResourceName() => $resource,
-              'form'                     => $form->createView(),
-              ))
-      ;
-
-      return $this->handleView($view);
+      return $resources;
   }
 }

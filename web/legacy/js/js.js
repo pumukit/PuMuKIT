@@ -107,6 +107,24 @@ window.click_fila_edit = function(element, tr, id)
   if (tr != null) tr.parentNode.addClassName('tv_admin_row_this');
 }
 
+// URLs given by twig & symfony
+window.click_fila_edit_urls = function(element, tr, show_url, update_url)
+{
+  new Ajax.Updater('preview_'+element, show_url, {
+      asynchronous: true, 
+      evalScripts: true
+  });
+
+  new Ajax.Updater('edit_'+element, update_url, {
+      asynchronous: true, 
+      evalScripts: true
+  });
+
+
+  $$('.tv_admin_row_this').invoke('removeClassName', 'tv_admin_row_this');
+  if (tr != null) tr.parentNode.addClassName('tv_admin_row_this');
+}
+
 //
 window.dblclick_fila = function(element, tr, id)
 {
