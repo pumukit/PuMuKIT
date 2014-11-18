@@ -46,6 +46,6 @@ pumukitadmin_series_copy:
 
 pumukitadmin_series_show:
     pattern: /{id}/show
-    methods: [GET, POST]
+    methods: [GET]
     defaults:
         _controller: pumukitadmin.controller.series:showAction

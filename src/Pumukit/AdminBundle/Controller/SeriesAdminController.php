@@ -68,19 +68,15 @@ class SeriesAdminController extends AdminController
       $resource = $this->findOr404();
       $form = $this->getForm($resource);
 
-      try {
-          if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
-              $event = $this->update($resource);
-              if (!$event->isStopped()) {
-                  $this->setFlash('success', 'update');
+      if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
+          $event = $this->update($resource);
+          if (!$event->isStopped()) {
+              $this->setFlash('success', 'update');
 
-                  return $this->redirectTo($resource);
-              }
-
-              $this->setFlash($event->getMessageType(), $event->getMessage(), $event->getMessageParams());
+              return $this->redirectTo($resource);
           }
-      } catch (\Exception $e) {
-          $this->get('session')->getFlashBag()->add('error', $e->getMessage());
+
+          $this->setFlash($event->getMessageType(), $event->getMessage(), $event->getMessageParams());
       }
 
       if ($config->isApiRequest()) {

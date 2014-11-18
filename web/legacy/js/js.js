@@ -112,12 +112,14 @@ window.click_fila_edit_urls = function(element, tr, show_url, update_url)
 {
   new Ajax.Updater('preview_'+element, show_url, {
       asynchronous: true, 
-      evalScripts: true
+      evalScripts: true,
+      method: 'GET'
   });
 
   new Ajax.Updater('edit_'+element, update_url, {
       asynchronous: true, 
-      evalScripts: true
+      evalScripts: true,
+      method: 'GET'
   });
 
 
