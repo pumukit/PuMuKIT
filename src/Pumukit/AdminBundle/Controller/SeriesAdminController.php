@@ -67,13 +67,25 @@ class SeriesAdminController extends AdminController
 
       $resource = $this->findOr404();
       $form = $this->getForm($resource);
-
+      
       if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
           $event = $this->update($resource);
           if (!$event->isStopped()) {
               $this->setFlash('success', 'update');
 
-              return $this->redirectTo($resource);
+	      $criteria = $this->_getCriteria($config);
+	      $resources = $this->_getResources($request, $config, $criteria);	      
+
+	      $pluralName = $config->getPluralResourceName();
+	      
+	      $view = $this
+		->view()
+		->setTemplate($config->getTemplate('list.html'))
+		->setTemplateVar($pluralName)
+		->setData($resources)
+		;
+	      
+	      return $this->handleView($view);
           }
 
           $this->setFlash($event->getMessageType(), $event->getMessage(), $event->getMessageParams());

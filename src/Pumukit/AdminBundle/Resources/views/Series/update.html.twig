@@ -8,11 +8,11 @@
   <br />
 
   <form onsubmit="new Ajax.Updater('list_series', '{{ path('pumukitadmin_series_update', {'id': series.id}) }}', {
-		  asynchronous:true, evalScripts:true,
+		  asynchronous:true, evalScripts:true, method:'POST',
 		  onFailure:function(request, json){new Effect.Opacity('series_save_error', {duration:3.0, from:1.0, to:0.0});},
 		  onSuccess:function(request, json){
 		  new Effect.Opacity('series_save_ok', {duration:3.0, from:1.0, to:0.0});
-		  new Ajax.Updater('preview_series', '{{ path('pumukitadmin_series_show', {'id': series.id}) }}', {asynchronous:true, evalScripts:true});
+		  new Ajax.Updater('preview_series', '{{ path('pumukitadmin_series_show', {'id': series.id}) }}', {asynchronous:true, evalScripts:true, method:'GET'});
 		  },
 		  parameters:Form.serialize(this)});
 		  return false;"
@@ -27,7 +27,8 @@
 	<ul class="tv_admin_actions">
 	  <span id="series_save_error" style="color:red; opacity: 0.0; filter: alpha(opacity=0); ZOOM:1">Guardado ERROR</span>
 	  <span id="series_save_ok" style="color:blue; opacity: 0.0; filter: alpha(opacity=0);ZOOM:1">Guardado OK</span>
-	  <li><input type="submit" name="OK" value="{% trans %}OK{% endtrans %}" class="tv_admin_action_save" onclick="if(comprobar_form_series($('public_date').value, /^(\d+)\/(\d+)\/(\d+) (\d+):(\d+)(:(\d+))?$/)){$('remember_save_series').hide();}else{return false}"></li>
+	  <li><input type="submit" name="OK" value="{% trans %}OK{% endtrans %}" class="tv_admin_action_save" onclick="$('remember_save_series').hide();" ></li>
+	  {# TODO onclick="if(comprobar_form_series($('public_date').value, /^(\d+)\/(\d+)\/(\d+) (\d+):(\d+)(:(\d+))?$/)){$('remember_save_series').hide();}else{return false}" #}
 	  <li><input type="reset" name="reset" value="{% trans %}Reset{% endtrans %}" class="tv_admin_action_delete" onclick="$('remember_save_series').hide()"></li>
 	</ul>
 
@@ -38,3 +39,11 @@
       </fieldset>
   </Form>
 </div>
+
+<script>
+$(document).ready( function() {
+    $('*[id^="pumukitadmin_series_"]').change(function() {
+       $('remember_save_series').show();
+    });
+});
+</script>
