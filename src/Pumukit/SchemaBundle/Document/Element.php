@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Pumukit\SchemaBundle\Document\Element
@@ -17,11 +18,6 @@ class Element
    * @MongoDB\Int
    */
   private $id;
-
-  /**
-   * @MongoDB\EmbedOne(targetDocument="MultimediaObject")
-   */
-  private $multimedia_object;
 
   /**
    * @MongoDB\OneToOne(targetDocument="Element")
@@ -68,6 +64,7 @@ class Element
    * @var int $rank
    *
    * @MongoDB\Int
+   * @Gedmo\SortablePosition
    */
   private $rank;
 
@@ -112,26 +109,6 @@ class Element
   public function getId()
   {
       return $this->id;
-  }
-
-  /**
-   * Set multimedia_object
-   *
-   * @param MultimediaObject $multimedia_object
-   */
-  public function setMultimediaObject(MultimediaObject $multimedia_object)
-  {
-      $this->multimedia_object = $multimedia_object;
-  }
-
-  /**
-   * Get multimedia_object
-   *
-   * @return MultimediaObject
-   */
-  public function getMultimediaObject()
-  {
-      return $this->multimedia_object;
   }
 
   /**
@@ -406,6 +383,26 @@ class Element
       }
 
       return $this->description[$locale];
+  }
+
+  /**
+   * Set I18n description
+   *
+   * @param array $description
+   */
+  public function setI18nDescription(array $description)
+  {
+      $this->description = $description;
+  }
+
+  /**
+   * Get I18n description
+   *
+   * @return array
+   */
+  public function getI18nDescription()
+  {
+      return $this->description;
   }
 
   /**

@@ -1,0 +1,37 @@
+pumukitadmin_element_index:
+    pattern: /
+    methods: [GET]
+    defaults:
+        _controller: pumukitadmin.controller.element:indexAction
+        _sylius:
+            filterable: true
+
+pumukitadmin_element_create:
+    pattern: /create
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitadmin.controller.element:createAction
+        _sylius:
+            redirect: pumukitadmin_element_index
+
+pumukitadmin_element_batch_delete:
+    pattern: /delete
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitadmin.controller.element:batchDeleteAction
+        _sylius:
+            redirect: pumukitadmin_element_index
+
+pumukitadmin_element_delete:
+    pattern: /{id}
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitadmin.controller.element:deleteAction
+        _sylius:
+            redirect: pumukitadmin_element_index
+
+pumukitadmin_element_show:
+    pattern: /{id}/show
+    methods: [GET]
+    defaults:
+        _controller: pumukitadmin.controller.element:showAction

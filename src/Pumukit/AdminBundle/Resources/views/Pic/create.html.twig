@@ -1,0 +1,104 @@
+{# TODO
+<?php
+$ver_siguiente = (($page == 1)? array('style' => 'display : none'): 
+		  array('class' => 'tv_admin_action_next', 'style' => 'color : blue; font-weight : normal ', 'title' => __('Nueva Imagen')) );
+$ver_anterior = (($page == $total)||($total == 0)? array('style' => 'display : none'): 
+		 array('class' => 'tv_admin_action_previous', 'style' => 'color : blue; font-weight : normal ', 'title' => __('Nueva Imagen')) );
+?>
+#}
+
+<div id="tv_admin_container" style="width:100%">
+  <form onsubmit="new Ajax.Updater('pic_series', '/editar.php/pics/update', {asynchronous:true, evalScripts:true, onSuccess:function(request, json){Modalbox.hide()}, parameters:Form.serialize(this)}); return false;" action="/editar.php/pics/update" method="post"> 
+    <input type="hidden" name="type" id="type" value="url">    
+    <input type="hidden" name="series" id="series" value="{{ series.id }}">
+
+
+    <fieldset>
+      <div class="form-row">
+        <label for="url">{% trans %}Write the URL{% endtrans %}:</label>
+        <div class="content">
+          <input type="text" name="url" id="url" value="" size="65" class="MB_focusable">
+	  <span id="error_url" style="display:none" class="error">{% trans %}URL format not valid{% endtrans%}</span>
+        </div>
+      </div>
+    </fieldset>
+
+    <ul class="tv_admin_actions">
+      <li>
+        <input type="submit" name="add" value="{% trans %}Save{% endtrans %}" class="tv_admin_action_save MB_focusable" onclick="return comprobar_form_url($('url').value)">      </li>
+    </ul>
+
+  </form>
+</div>
+<div style="clear:both"></div>
+
+
+<div id="tv_admin_container" style="width:100%">
+
+  <form method="post" enctype="multipart/form-data" target="iframeUpload" action="<?php echo url_for('pics/upload')?>">
+    <input type="hidden" name="type" id="type" value="url">    
+    <input type="hidden" name="series" id="series" value="{{ series.id }}">
+
+    <fieldset>
+      <div class="form-row">
+	<label for="file">{% trans %}Add a file{% endtrans %}:</label>
+        <div class="content">
+	  <input type="file" name="file" id="file" value="" size="66" class="MB_focusable">
+        </div>
+      </div>
+      <iframe name="iframeUpload" style="display:none" src=""></iframe>
+    </fieldset>
+
+
+    <ul class="tv_admin_actions">
+      <li>
+	<input type="submit" name="add" value="{% trans %}Add{% endtrans %}" class="tv_admin_action_filenew MB_focusable" onclick="if($('file').value=='') { alert('{% trans %}Select a file on first place. Thank you.{% endtrans %}');return false; }">
+      </li>
+    </ul>
+
+    </form>
+  </div>
+
+<div style="clear:both"></div>
+
+<div id="tv_admin_container" style="width:100%">
+
+    <fieldset>
+      <div class="form-row">
+	<label for="other">{% trans %}Use Image{% endtrans %}:</label>
+        <div class="content">
+          {% if 0 == series.getPics()|length %}
+            {% trans %}There are no images in the database.{% endtrans %}
+          {% endif %}
+          {% for pic in series.getPics() %}
+	    <div style="padding: 18px; float:left">
+              <div class="wrap0">
+               <div class="wrap1">
+                <div class="wrap2">
+                 <div class="wrap3">
+		   <a href="#" onclick="new Ajax.Updater('pic_series', '/editar.php/pics/update/type/pic/id/319/serial/47', {asynchronous:true, evalScripts:true, onSuccess:function(request, json){Modalbox.hide()}}); return false;" class="MB_focusable"><img src="{{ pic.getUrl() }}" alt="{{ pic.getUrl()|split('/')|last }}" height="82" width="100"></a>
+                 </div>
+                </div>
+               </div>
+              </div>
+            </div>
+          {% endfor %}
+
+        <div style="clear: left"></div>
+        </div>
+      </div>
+    </fieldset>
+
+<ul class="tv_admin_actions">
+  <li>
+    TODO PREVIOUS {# <?php echo m_link_to(__('Anterior'), 'pics/create?'.$que.'=' . $object_id. '&page='. ($page + 1), $ver_anterior, array('width' => '800'))?> #}
+  </li>
+  <li>
+    TODO NEXT {# <?php echo m_link_to(__('Siguiente'), 'pics/create?'.$que.'=' . $object_id. '&page='. ($page - 1), $ver_siguiente, array('width' => '800'))?> #}
+  </li>
+  <li><input class="tv_admin_action_delete MB_focusable" onclick="Modalbox.hide(); return false;" type="button" value="{% trans %}Cancel{% endtrans %}"> </li>
+</ul>
+
+</div>
+
+

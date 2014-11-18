@@ -1,0 +1,57 @@
+<div>
+  <img id="pic_mms_load" src="/legacy/images/admin/load/spinner.gif" alt="{% trans %}loading{% endtrans %}" style="position: relative; top: 50px; float:left; display: none"/>
+
+{% for index,pic in series.getPics() %}
+  <div style="width : 120px; float: left; padding : 10px; ">
+    <div style="padding: 10px; float:left; text-align : center">
+      <div class="wrap0"><div class="wrap1"><div class="wrap2"><div class="wrap3">
+              <img src="{{ pic.getUrl() }}" width="100" height="82" border="1">
+      </div></div></div></div>
+    </div>
+    <div style="text-align : center">
+      {% trans %}Image number{% endtrans %} {{ pic.id }}  <br />
+        {% if (0 != index) %}
+          {# TODO path pics up #}
+          <a href="#" onclick="new Ajax.Updater('pic_series', '/editar.php/pics/up/id/362/serial/47', {asynchronous:true, evalScripts:true}); return false;">&#8592;</a>
+        {% endif %}
+      {# TODO path pics delete #}
+      <form action="/editar.php/pics/delete/id/362/serial/47" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}Are you sure you want to delete this picture?{% endtrans %}')">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="confirmed" value="true">
+        <button type="submit" class="tv_admin_row_post">
+          <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
+        </button>
+      </form>
+      {% if ((pics|length - 1) != index) %}
+        {# TODO path pics down #}
+        <a href="#" onclick="new Ajax.Updater('pic_series', '/editar.php/pics/down/id/362/serial/47', {asynchronous:true, evalScripts:true}); return false;">&#8594;</a>
+      {% endif %}
+    </div>
+  </div>
+{% endfor %}
+
+</div>
+
+<div style="width : 120px; float: left; padding : 10px; ">
+  <div style="padding: 10px; float:left; text-align : center">
+    <div class="wrap0"><div class="wrap1"><div class="wrap2"><div class="wrap3">
+            <img src="/legacy/images/sin_foto.jpg" width="100" height="82" border="1">
+    </div></div></div></div>
+  </div>
+  
+  <div style="text-align : center">
+    <a title="{% trans %}New Image{% endtrans %}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{# TODO /editar.php/pics/create/serial/39/page/1 #}">{% trans %}new image{% endtrans %}...</a>
+  </div>
+</div>
+
+<div style="clear : left"></div>
+
+{# TODO
+<?php 
+if (($sf_request->getParameter('preview'))||((isset($preview))&&($preview))){
+  echo javascript_tag('update_preview(' . $object_id . ');');
+}
+
+if (isset($msg_alert)) echo m_msg_alert($msg_alert) 
+?>
+#}

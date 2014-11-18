@@ -102,6 +102,26 @@ class SeriesType
   }
 
   /**
+   * Set I18n name
+   *
+   * @param array $name
+   */
+  public function setI18nName(array $name)
+  {
+      $this->name = $name;
+  }
+
+  /**
+   * Get i18n name
+   *
+   * @return array
+   */
+  public function getI18nName()
+  {
+      return $this->name;
+  }
+
+  /**
    * Set description
    *
    * @param string $description
@@ -129,6 +149,26 @@ class SeriesType
       }
 
       return $this->description[$locale];
+  }
+
+  /**
+   * Set I18n description
+   *
+   * @param array $description
+   */
+  public function setI18nDescription(array $description)
+  {
+      $this->description = $description;
+  }
+
+  /**
+   * Get i18n description
+   *
+   * @return array
+   */
+  public function getI18nDescription()
+  {
+      return $this->description;
   }
 
   /**
@@ -238,4 +278,10 @@ class SeriesType
   {
       $this->series->removeElement($series);
   }
+
+  public function __toString()
+  {
+    return $this->name($this->locale);
+  }
+  
 }

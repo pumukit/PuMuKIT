@@ -546,9 +546,9 @@ class MultimediaObject
   /**
    * Add pic
    *
-   * @param Pic $pic
+   * @param MmPic $pic
    */
-  public function addPic(Pic $pic)
+  public function addPic(MmPic $pic)
   {
       $this->pics[] = $pic;
       $pic->setMultimediaObject($this);
@@ -558,9 +558,9 @@ class MultimediaObject
   /**
    * Remove pic
    *
-   * @param Pic $pic
+   * @param MmPic $pic
    */
-  public function removePic(Pic $pic)
+  public function removePic(MmPic $pic)
   {
       $this->pics->removeElement($pic);
   }
@@ -568,11 +568,11 @@ class MultimediaObject
   /**
    * Contains pic
    *
-   * @param Pic $pic
+   * @param MmPic $pic
    *
    * @return boolean
    */
-  public function containsPic(Pic $pic)
+  public function containsPic(MmPic $pic)
   {
       return $this->pics->contains($pic);
   }
@@ -611,7 +611,7 @@ class MultimediaObject
    * Get pic ...
    *
    * @param string $tag
-   * @return Pic
+   * @return MmPic
    * TODO
    */
   public function getPicByTag($tag)
@@ -649,7 +649,7 @@ class MultimediaObject
    * Get pics ...
    *
    * @param array $tags
-   * @return Pic
+   * @return MmPic
    * TODO
    */
   public function getPicWithAllTags(array $tags)
@@ -687,7 +687,7 @@ class MultimediaObject
    * Get pic ...
    *
    * @param array $tags
-   * @return Pic
+   * @return MmPic
    * TODO
    */
   public function getPicWithAnyTag(array $tags)
@@ -739,7 +739,7 @@ class MultimediaObject
       return $r;
   }
 
-  // End of Pic getter - setter etc methods section
+  // End of MmPic getter - setter etc methods section
 
   /**
    * Add material

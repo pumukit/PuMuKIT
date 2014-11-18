@@ -28,6 +28,13 @@ class Series
   private $multimedia_objects;
 
   /**
+   * @var ArrayCollection $pics
+   *
+   * @MongoDB\ReferenceMany(targetDocument="SeriesPic", mappedBy="series")
+   */
+  private $pics;
+
+  /**
    * @var boolean $announce
    *
    * @MongoDB\Boolean
@@ -811,4 +818,49 @@ class Series
 
       return $r;
   }
+
+  /**
+   * Add pic
+   *
+   * @param SeriesPic $pic
+   */
+  public function addPic(SeriesPic $pic)
+  {
+      $this->pics[] = $pic;
+      $pic->setSeries($this);
+      $pic->setRank(count($this->pics));
+  }
+
+  /**
+   * Remove pic
+   *
+   * @param SeriesPic $pic
+   */
+  public function removePic(SeriesPic $pic)
+  {
+      $this->pics->removeElement($pic);
+  }
+
+  /**
+   * Contains pic
+   *
+   * @param SeriesPic $pic
+   *
+   * @return boolean
+   */
+  public function containsPic(SeriesPic $pic)
+  {
+      return $this->pics->contains($pic);
+  }
+
+  /**
+   * Get pics
+   *
+   * @return ArrayCollection
+   */
+  public function getPics()
+  {
+      return $this->pics;
+  }
+
 }

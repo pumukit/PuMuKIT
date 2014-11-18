@@ -32,9 +32,65 @@
 	  <li><input type="reset" name="reset" value="{% trans %}Reset{% endtrans %}" class="tv_admin_action_delete" onclick="$('remember_save_series').hide()"></li>
 	</ul>
 
-	{% for child in form %}
+	{% for child in form if (('pumukitadmin_series_i18n_header' not in child.vars.id) and ('pumukitadmin_series_i18n_footer' not in child.vars.id) and ('pumukitadmin_series_i18n_line2' not in child.vars.id)) %}
+          {{ form_row(child) }}
+	{% endfor %}
+
+	<div class="form-row">
+	   <dl style="margin: 0px">
+	     <dt>{% trans %}Images{% endtrans %}</dt>
+	     <dd>
+               <div id="pic_series">
+		 {% include 'PumukitAdminBundle:Pic:list.html.twig' with {'series': series} %}
+               </div>
+	     </dd>
+	   </dl>
+	</div>
+	
+	<div class="form-row">
+	  <a style="color:#666; text-decoration:underline" href="#"
+	     onclick="$('pumukitadmin_series_i18n_header', 'pumukitadmin_series_i18n_footer', 'html_text_arr_1' ,'html_text_arr_2').invoke('toggle'); return false;">
+	    <span id="html_text_arr_1">&#9654;</span> <span style="display:none" id="html_text_arr_2">&#9660;</span>
+	    {% trans %}Show configuration{% endtrans %} <strong>HTML</strong> {% trans %}Texts.{% endtrans %}
+	  </a>
+	</div>
+
+	{% for child in form if (('pumukitadmin_series_i18n_header' in child.vars.id) or ('pumukitadmin_series_i18n_footer' in child.vars.id)) %}
+	<div class="form-row" style="display:none" id="{{ child.vars.id }}">
+	  <label for="header" class="long">{{ child.vars.label }} <br><strong>HTML</strong></label>
+	  <diV class="content content_long">
+            {{ form_widget(child) }}
+	  </div>
+	</div>
+        {% endfor %}
+
+	{% for child in form if ('pumukitadmin_series_i18n_line2' in child.vars.id) %}
 	  {{ form_row(child) }}
 	{% endfor %}
+
+        {# TODO with tags	
+	<div class="form-row" id="pumukitadmin_series_structure">
+	  <label for="series_template_id" class="long">{% trans %}Structure{% endtrans %}:</label>
+	  <div class="content content_long">
+	    <select name="serial_template_id" id="series_template_id" onchange="$('remember_save_serial').show()"><option value="1" selected="selected">date</option>
+	      <option value="2">date_all</option>
+	      <option value="3">date_subserial</option>
+	      <option value="4">subserial</option>
+	    </select> #}
+	    
+	    {#
+	    <?php $value = object_select_tag($serial, 'getSerialTemplateId', array (
+		  'related_class' => 'SerialTemplate',
+            'control_name' => 'serial_template_id',
+            'peer_method' => 'doSelect',
+            'include_blank' => false,
+            'onchange' => "$('remember_save_serial').show()",
+	    )); echo $value ? $value : '&nbsp;' ?>
+	    #}
+         {#
+	  </div>
+	</div>#}
+
 
       </fieldset>
   </Form>
