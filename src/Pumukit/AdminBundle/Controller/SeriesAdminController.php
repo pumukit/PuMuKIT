@@ -7,15 +7,15 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SeriesAdminController extends AdminController
 {
-    /**
+  /**
    * Overwrite to search criteria with date
    */
   public function indexAction(Request $request)
   {
       $config = $this->getConfiguration();
 
-      $criteria = $this->_getCriteria($config);
-      $resources = $this->_getResources($request, $config, $criteria);
+      $criteria = $this->getCriteria($config);
+      $resources = $this->getResources($request, $config, $criteria);
 
       $pluralName = $config->getPluralResourceName();
 
@@ -110,7 +110,7 @@ class SeriesAdminController extends AdminController
   /**
    * Gets the criteria values
    */
-  private function _getCriteria($config)
+  public function getCriteria($config)
   {
       $criteria = $config->getCriteria();
 
@@ -137,35 +137,4 @@ class SeriesAdminController extends AdminController
       return $new_criteria;
   }
 
-  /**
-   * Gets the list of resources according to a criteria
-   */
-  private function _getResources(Request $request, $config, $criteria)
-  {
-      $sorting = $config->getSorting();
-      $repository = $this->getRepository();
-
-      if ($config->isPaginated()) {
-          $resources = $this
-    ->getResourceResolver()
-    ->getResource($repository, $config, 'createPaginator', array($criteria, $sorting))
-    ;
-
-          if ($request->get('page', null)) {
-              $this->get('session')->set('admin/'.$config->getResourceName().'/page', $request->get('page', 1));
-          }
-
-          $resources
-    ->setCurrentPage($this->get('session')->get('admin/'.$config->getResourceName().'/page', 1), true, true)
-    ->setMaxPerPage($config->getPaginationMaxPerPage())
-    ;
-      } else {
-          $resources = $this
-    ->getResourceResolver()
-    ->getResource($repository, $config, 'findBy', array($criteria, $sorting, $config->getLimit()))
-    ;
-      }
-
-      return $resources;
-  }
 }

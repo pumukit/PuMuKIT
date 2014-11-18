@@ -19,66 +19,8 @@ class CalendarAdminController extends AdminController
   {
       $config = $this->getConfiguration();
 
-      $criteria = $config->getCriteria();
-      $sorting = $config->getSorting();
-
-      if (array_key_exists('reset', $criteria)) {
-          $this->get('session')->remove('admin/'.$config->getResourceName().'/criteria');
-      } elseif ($criteria) {
-          $this->get('session')->set('admin/'.$config->getResourceName().'/criteria', $criteria);
-      }
-      $criteria = $this->get('session')->get('admin/'.$config->getResourceName().'/criteria', array());
-
-    //TODO: do upstream
-    $new_criteria = array();
-      foreach ($criteria as $property => $value) {
-          //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
-      if (('' !== $value) && ('date' !== $property)) {
-          $new_criteria[$property] = new \MongoRegex('/'.$value.'/i');
-      } elseif (('' !== $value) && ('date' == $property)) {
-          $date_from = new \DateTime($value['from']);
-          $date_to = new \DateTime($value['to']);
-          $new_criteria[$property] = ['$gte' => $date_from, '$lt' => $date_to];
-      }
-      }
-      $criteria = $new_criteria;
-
-      $pluralName = $config->getPluralResourceName();
-      $repository = $this->getRepository();
-
-      if ($config->isPaginated()) {
-          $resources = $this
-    ->getResourceResolver()
-    ->getResource($repository, $config, 'createPaginator', array($criteria, $sorting))
-    ;
-
-          if ($request->get('page', null)) {
-              $this->get('session')->set('admin/'.$config->getResourceName().'/page', $request->get('page', 1));
-          }
-
-          $resources
-    ->setCurrentPage($this->get('session')->get('admin/'.$config->getResourceName().'/page', 1), true, true)
-    ->setMaxPerPage($config->getPaginationMaxPerPage())
-    ;
-      } else {
-          $resources = $this
-    ->getResourceResolver()
-    ->getResource($repository, $config, 'findBy', array($criteria, $sorting, $config->getLimit()))
-    ;
-      }
-
-      if ("cal" == $request->query->get('cal')) {
-          $this->get('session')->set('admin/'.$config->getResourceName().'/cal', 'cal');
-      } elseif ("list" == $request->query->get('cal')) {
-          $this->get('session')->remove('admin/'.$config->getResourceName().'/cal');
-      }
-
-      if ($this->get('session')->has('admin/'.$config->getResourceName().'/cal')) {
-          list($m, $y, $calendar) = $this->getCalendar($config, $request);
-          $resources = array($pluralName => $resources, 'm' => $m, 'y' => $y, 'calendar' => $calendar);
-      } else {
-          $resources = array($pluralName => $resources);
-      }
+      $criteria = $this->getCriteria($config);
+      $resources = $this->getResources($request, $config, $criteria);
 
       $view = $this
       ->view()
@@ -97,14 +39,6 @@ class CalendarAdminController extends AdminController
       /*if (!$this->getUser()->hasAttribute('page', 'tv_admin/event'))
       $this->getUser()->setAttribute('page', 1, 'tv_admin/event');*/
 
-    /*if($this->hasRequestParameter("cal")){
-      $this->div_url = '?cal=cal';
-      $this->div = "calendar";
-      }else{
-      $this->div_url = '';
-      $this->div = "array";
-      }*/
-
     if (!$this->get('session')->get('admin/'.$config->getResourceName().'/month')) {
         $this->get('session')->set('admin/'.$config->getResourceName().'/month', date('m'));
     }
@@ -115,7 +49,6 @@ class CalendarAdminController extends AdminController
       $m = $this->get('session')->get('admin/'.$config->getResourceName().'/month');
       $y = $this->get('session')->get('admin/'.$config->getResourceName().'/year');
 
-    //$this->total_event_all = EventPeer::doCount(new Criteria());
 
     if ($request->query->get('month') == "next") {
         $changed_date = mktime(0, 0, 0, $m+1, 1, $y);
@@ -179,4 +112,81 @@ class CalendarAdminController extends AdminController
 
       return $aux;
   }
+
+  /**
+   * Gets the criteria values
+   */
+  public function getCriteria($config)
+  {
+    $criteria = $config->getCriteria();
+
+    if (array_key_exists('reset', $criteria)) {
+      $this->get('session')->remove('admin/'.$config->getResourceName().'/criteria');
+    } elseif ($criteria) {
+      $this->get('session')->set('admin/'.$config->getResourceName().'/criteria', $criteria);
+    }
+    $criteria = $this->get('session')->get('admin/'.$config->getResourceName().'/criteria', array());
+
+    //TODO: do upstream
+    $new_criteria = array();
+    foreach ($criteria as $property => $value) {
+      //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
+      if (('' !== $value) && ('date' !== $property)) {
+	$new_criteria[$property] = new \MongoRegex('/'.$value.'/i');
+      } elseif (('' !== $value) && ('date' == $property)) {
+	$date_from = new \DateTime($value['from']);
+	$date_to = new \DateTime($value['to']);
+	$new_criteria[$property] = ['$gte' => $date_from, '$lt' => $date_to];
+      }
+    }
+
+    return $new_criteria;
+  }
+
+  /**
+   * Gets the list of resources according to a criteria
+   */
+  public function getResources(Request $request, $config, $criteria)
+  {
+    $sorting = $config->getSorting();
+    $repository = $this->getRepository();
+    $pluralName = $config->getPluralResourceName();
+
+    if ($config->isPaginated()) {
+      $resources = $this
+	->getResourceResolver()
+	->getResource($repository, $config, 'createPaginator', array($criteria, $sorting))
+	;
+
+      if ($request->get('page', null)) {
+	$this->get('session')->set('admin/'.$config->getResourceName().'/page', $request->get('page', 1));
+      }
+
+      $resources
+	->setCurrentPage($this->get('session')->get('admin/'.$config->getResourceName().'/page', 1), true, true)
+	->setMaxPerPage($config->getPaginationMaxPerPage())
+	;
+    } else {
+      $resources = $this
+	->getResourceResolver()
+	->getResource($repository, $config, 'findBy', array($criteria, $sorting, $config->getLimit()))
+	;
+    }
+
+    if ("cal" == $request->query->get('cal')) {
+      $this->get('session')->set('admin/'.$config->getResourceName().'/cal', 'cal');
+    } elseif ("list" == $request->query->get('cal')) {
+      $this->get('session')->remove('admin/'.$config->getResourceName().'/cal');
+    }
+
+    if ($this->get('session')->has('admin/'.$config->getResourceName().'/cal')) {
+      list($m, $y, $calendar) = $this->getCalendar($config, $request);
+      $resources = array($pluralName => $resources, 'm' => $m, 'y' => $y, 'calendar' => $calendar);
+    } else {
+      $resources = array($pluralName => $resources);
+    }
+
+    return $resources;
+  }
+
 }

@@ -15,49 +15,10 @@ class AdminController extends ResourceController
     {
         $config = $this->getConfiguration();
 
-        $criteria = $config->getCriteria();
-        $sorting = $config->getSorting();
-
-        if (array_key_exists('reset', $criteria)) {
-            $this->get('session')->remove('admin/'.$config->getResourceName().'/criteria');
-        } elseif ($criteria) {
-            $this->get('session')->set('admin/'.$config->getResourceName().'/criteria', $criteria);
-        }
-        $criteria = $this->get('session')->get('admin/'.$config->getResourceName().'/criteria', array());
-
-    //TODO: do upstream
-    $new_criteria = array();
-        foreach ($criteria as $property => $value) {
-            //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
-        if ('' !== $value) {
-            $new_criteria[$property] = new \MongoRegex('/'.$value.'/i');
-        }
-        }
-        $criteria = $new_criteria;
+	$criteria = $this->getCriteria($config);
+	$resources = $this->getResources($request, $config, $criteria);
 
         $pluralName = $config->getPluralResourceName();
-        $repository = $this->getRepository();
-
-        if ($config->isPaginated()) {
-            $resources = $this
-                ->getResourceResolver()
-                ->getResource($repository, $config, 'createPaginator', array($criteria, $sorting))
-            ;
-
-            if ($request->get('page', null)) {
-                $this->get('session')->set('admin/'.$config->getResourceName().'/page', $request->get('page', 1));
-            }
-
-            $resources
-          ->setCurrentPage($this->get('session')->get('admin/'.$config->getResourceName().'/page', 1), true, true)
-                ->setMaxPerPage($config->getPaginationMaxPerPage())
-            ;
-        } else {
-            $resources = $this
-                ->getResourceResolver()
-                ->getResource($repository, $config, 'findBy', array($criteria, $sorting, $config->getLimit()))
-            ;
-        }
 
         $view = $this
             ->view()
@@ -69,6 +30,9 @@ class AdminController extends ResourceController
         return $this->handleView($view);
     }
 
+    /**
+     * Clone the given resource
+     */
     public function copyAction(Request $request)
     {
         $resource = $this->findOr404();
@@ -149,4 +113,62 @@ class AdminController extends ResourceController
 
         return $this->getResourceResolver()->getResource($repository, $config, 'findOneBy', array($criteria));
     }
+
+  /**
+   * Gets the criteria values
+   */
+  public function getCriteria($config)
+  {
+    $criteria = $config->getCriteria();
+
+    if (array_key_exists('reset', $criteria)) {
+      $this->get('session')->remove('admin/'.$config->getResourceName().'/criteria');
+    } elseif ($criteria) {
+      $this->get('session')->set('admin/'.$config->getResourceName().'/criteria', $criteria);
+    }
+    $criteria = $this->get('session')->get('admin/'.$config->getResourceName().'/criteria', array());
+
+    //TODO: do upstream
+    $new_criteria = array();
+    foreach ($criteria as $property => $value) {
+      //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
+      if ('' !== $value) {
+	$new_criteria[$property] = new \MongoRegex('/'.$value.'/i');
+      }
+    }
+    return $new_criteria;
+  }
+
+  /**
+   * Gets the list of resources according to a criteria
+   */
+  public function getResources(Request $request, $config, $criteria)
+  {
+    $sorting = $config->getSorting();     
+    $repository = $this->getRepository();
+
+    if ($config->isPaginated()) {
+      $resources = $this
+	->getResourceResolver()
+	->getResource($repository, $config, 'createPaginator', array($criteria, $sorting))
+	;
+
+      if ($request->get('page', null)) {
+	$this->get('session')->set('admin/'.$config->getResourceName().'/page', $request->get('page', 1));
+      }
+
+      $resources
+	->setCurrentPage($this->get('session')->get('admin/'.$config->getResourceName().'/page', 1), true, true)
+	->setMaxPerPage($config->getPaginationMaxPerPage())
+	;
+    } else {
+      $resources = $this
+	->getResourceResolver()
+	->getResource($repository, $config, 'findBy', array($criteria, $sorting, $config->getLimit()))
+	;
+    }
+    
+    return $resources;
+  }
+
 }
