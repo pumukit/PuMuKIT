@@ -22,7 +22,7 @@
           <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
         </button>
       </form>
-      {% if ((pics|length - 1) != index) %}
+      {% if ((series.getPics()|length - 1) != index) %}
         {# TODO path pics down #}
         <a href="#" onclick="new Ajax.Updater('pic_series', '/editar.php/pics/down/id/362/serial/47', {asynchronous:true, evalScripts:true}); return false;">&#8594;</a>
       {% endif %}
@@ -40,7 +40,7 @@
   </div>
   
   <div style="text-align : center">
-    <a title="{% trans %}New Image{% endtrans %}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{# TODO /editar.php/pics/create/serial/39/page/1 #}">{% trans %}new image{% endtrans %}...</a>
+    <a title="{% trans %}New Image{% endtrans %}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_seriespic_create', {'id': series.id}) }}">{% trans %}new image{% endtrans %}...</a>
   </div>
 </div>
 

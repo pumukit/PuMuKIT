@@ -33,3 +33,7 @@ pumukitadmin_series:
 pumukitadmin_tag:
     resource: @PumukitAdminBundle/Resources/config/tag.yml
     prefix: /admin/tag
+
+pumukitadmin_seriespic:
+    resource: @PumukitAdminBundle/Resources/config/seriespic.yml
+    prefix: /admin/seriespic

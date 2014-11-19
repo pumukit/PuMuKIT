@@ -16,6 +16,10 @@
             <argument type="service" id="doctrine_mongodb"/>
         </service>
 
+        <service id="pumukitschema.pic" class="Pumukit\SchemaBundle\Services\PicService">
+            <argument type="service" id="doctrine_mongodb"/>
+        </service>
+
     </services>
 
 </container>

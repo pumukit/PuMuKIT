@@ -6,7 +6,7 @@ use Pumukit\SchemaBundle\Document\Series;
 
 class FactoryService
 {
-    /**
+  /**
    * Create a new series with default values
    */
   public function createSeries($controller)
@@ -23,10 +23,4 @@ class FactoryService
       $dm->flush();
   }
 
-  /**
-   * Create new Multimedia Object with default values
-   */
-  public function createMultimediaObject($controller)
-  {
-  }
 }
