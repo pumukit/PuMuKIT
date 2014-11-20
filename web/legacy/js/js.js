@@ -133,6 +133,12 @@ window.dblclick_fila = function(element, tr, id)
   document.location.href= ('/editar.php/mms/index/serial/'+id);
 }
 
+// Symfony 2
+window.dblclick_fila_url = function(element, tr, url)
+{
+  document.location.href= (url);
+}
+
 //
 window.click_fila_np = function(element, tr, id)
 {

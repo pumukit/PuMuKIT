@@ -70,7 +70,7 @@
       <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila('series', this, '{{ oneseries.id }}')">
         <span style="font-weight: bold; ">{{ oneseries.id }}</span>
       </td>
-      <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila('series', this, '{{ oneseries.id }}')">
+      <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitadmin_mms_index', {'id': oneseries.id }) }}')">
 	{{ oneseries.getTitle() }}
       </td>
       <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila('series', this, '{{ oneseries.id }}')">
