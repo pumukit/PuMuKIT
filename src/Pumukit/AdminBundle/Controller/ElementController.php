@@ -13,7 +13,7 @@ class ElementController extends AdminController
   public function uploadAction(Request $request)
   {
 
-    var_dump($request); exit;
+    //var_dump($request); exit;
 
   }
 

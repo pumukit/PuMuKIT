@@ -17,7 +17,7 @@ class PicService
   public function getResource($controller, $resource_name, $id)
   {
       $dm = $controller->get('doctrine_mongodb')->getManager();
-      $repository = $dm->getRepository('PumukitSchemaBundle:'.ucwords($resource_name));
+      $repository = $dm->getRepository('PumukitSchemaBundle:'.$resource_name);
       $resource = $repository->find($id);
 
       return $resource;
@@ -29,13 +29,13 @@ class PicService
   public function getPics($controller, $resource_name, $id, $page)
   {
       $dm = $controller->get('doctrine_mongodb')->getManager();
-      $repository = $dm->getRepository('PumukitSchemaBundle:'.ucwords($resource_name));
+      $repository = $dm->getRepository('PumukitSchemaBundle:'.$resource_name);
 
       $limit = 12;
       $offset = ($page - 1) * $limit;
 
       // TODO
-      if (0 == strcmp('Series', ucwords($resource_name))){
+      if (0 == strcmp('Series', $resource_name)){
 	// Series: pics from multimedia objects inside Series
 	$series = $repository->find($id);
 	$total_pics = array();
@@ -51,7 +51,7 @@ class PicService
 	}else{
 	  $array_pics = array();
 	}
-      } elseif (0 == strcmp('MultimediaObject', ucword($resource_name))) {
+      } elseif (0 == strcmp('MultimediaObject', $resource_name)) {
 	// MultimediaObject: last used pics or pics from video
 	$array_pics = array();
 	$total = 0;
@@ -59,6 +59,11 @@ class PicService
 
       $adapter = new ArrayAdapter($array_pics);
       $pics = new Pagerfanta($adapter);
+
+      $pics
+	->setCurrentPage($page, true, true)
+	->setMaxPerPage($limit)
+	;
 
       return array($pics, $total);
   }
@@ -69,7 +74,7 @@ class PicService
   public function setPicUrl($controller, $resource_name, $resource_id, $pic_url)
   {
     $dm = $controller->get('doctrine_mongodb')->getManager();
-    $repository = $dm->getRepository('PumukitSchemaBundle:'.ucwords($resource_name));
+    $repository = $dm->getRepository('PumukitSchemaBundle:'.$resource_name);
     $resource = $repository->find($resource_id);
 
     $pic = new SeriesPic();
