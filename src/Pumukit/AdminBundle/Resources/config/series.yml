@@ -16,7 +16,7 @@ pumukitadmin_series_create:
 
 pumukitadmin_series_update:
     pattern: /{id}/update
-    methods: [GET, POST]
+    methods: [GET, POST, DELETE]
     defaults:
         _controller: pumukitadmin.controller.series:updateAction
 

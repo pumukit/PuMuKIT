@@ -3,7 +3,7 @@
 {% set see_previous = ((total == page)or(0 == total)? {'class': '', 'style': 'display : none', 'title': ''}: {'class': 'tv_admin_action_previous', 'style': 'color : blue; font-weight : normal ', 'title': '{% trans %}New Image{% endtrans %}'}) %}
 
 <div id="tv_admin_container" style="width:100%">
-  <form onsubmit="new Ajax.Updater('pic_{{ resource_name }}', '{{ path('pumukitadmin_seriespic_update') }}', {asynchronous:true, evalScripts:true, onSuccess:function(request, json){Modalbox.hide()}, parameters:Form.serialize(this)}); return false;" action="{{ path('pumukitadmin_seriespic_update') }}" method="post">
+  <form onsubmit="new Ajax.Updater('pic_{{ resource_name }}', '{{ path('pumukitadmin_seriespic_update', {'id': resource.id}) }}', {asynchronous:true, evalScripts:true, onSuccess:function(request, json){Modalbox.hide()}, parameters:Form.serialize(this)}); return false;" action="{{ path('pumukitadmin_seriespic_update', {'id': resource.id}) }}" method="post">
     <input type="hidden" name="type" id="type" value="url">    
     <input type="hidden" name="{{ resource_name }}" id="{{ resource_name }}" value="{{ resource.id }}">
 

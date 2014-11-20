@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Services;
 
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\SeriesPic;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 use Pagerfanta\Adapter\ArrayAdapter;
@@ -62,4 +63,24 @@ class PicService
       return array($pics, $total);
   }
 
+  /**
+   * Set a pic from an url into the series
+   */
+  public function setPicUrl($controller, $resource_name, $resource_id, $pic_url)
+  {
+    $dm = $controller->get('doctrine_mongodb')->getManager();
+    $repository = $dm->getRepository('PumukitSchemaBundle:'.ucwords($resource_name));
+    $resource = $repository->find($resource_id);
+
+    $pic = new SeriesPic();
+    $pic->setUrl($pic_url);    
+    $dm->persist($pic);
+    $dm->flush();
+
+    $resource->addPic($pic);
+    $dm->persist($resource);
+    $dm->flush();
+
+    return $resource;
+  }
 }

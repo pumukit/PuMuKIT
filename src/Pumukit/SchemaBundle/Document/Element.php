@@ -15,7 +15,7 @@ class Element
     /**
    * @var int $id
    *
-   * @MongoDB\Int
+   * @MongoDB\Id
    */
   private $id;
 

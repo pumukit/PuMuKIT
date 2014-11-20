@@ -15,8 +15,8 @@ pumukitadmin_seriespic_create:
             redirect: pumukitadmin_series_index
 
 pumukitadmin_seriespic_update:
-    pattern: /update
-    methods: [GET]
+    pattern: /{id}/update
+    methods: [GET, POST]
     defaults:
         _controller: pumukitadmin.controller.seriespic:updateAction
 

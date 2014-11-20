@@ -42,8 +42,8 @@ class SeriesAdminController extends AdminController
 
       $this->setFlash('success', 'create');
 
-      $criteria = $this->_getCriteria($config);
-      $resources = $this->_getResources($request, $config, $criteria);
+      $criteria = $this->getCriteria($config);
+      $resources = $this->getResources($request, $config, $criteria);
 
       $pluralName = $config->getPluralResourceName();
 
@@ -63,18 +63,20 @@ class SeriesAdminController extends AdminController
    */
   public function updateAction(Request $request)
   {
+    //var_dump($request->getMethod());exit;
+
       $config = $this->getConfiguration();
 
       $resource = $this->findOr404();
       $form = $this->getForm($resource);
       
-      if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
+      if (($request->isMethod('PUT') || $request->isMethod('POST') || $request->isMethod('DELETE')) && $form->bind($request)->isValid()) {
           $event = $this->update($resource);
           if (!$event->isStopped()) {
               $this->setFlash('success', 'update');
 
-	      $criteria = $this->_getCriteria($config);
-	      $resources = $this->_getResources($request, $config, $criteria);	      
+	      $criteria = $this->getCriteria($config);
+	      $resources = $this->getResources($request, $config, $criteria);	      
 
 	      $pluralName = $config->getPluralResourceName();
 	      
