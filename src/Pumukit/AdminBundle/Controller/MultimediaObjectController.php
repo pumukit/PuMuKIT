@@ -5,6 +5,9 @@ namespace Pumukit\AdminBundle\Controller;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 
+use Pagerfanta\Adapter\DoctrineCollectionAdapter;
+use Pagerfanta\Pagerfanta;
+
 class MultimediaObjectController extends AdminController
 {
   /**
@@ -23,16 +26,77 @@ class MultimediaObjectController extends AdminController
       $repository = $dm->getRepository('PumukitSchemaBundle:Series');
       $series = $repository->find($request->get('id'));
 
+      $page = $this->get('session')->get('admin/mms/page', 1);
+
+      $coll_mms = $series->getMultimediaObjects();
+      
+      $adapter = new DoctrineCollectionAdapter($coll_mms);
+      $mms = new Pagerfanta($adapter);
+      
+      $mms
+	->setCurrentPage($page, true, true)
+	->setMaxPerPage(12)
+	;
+      
       $view = $this
 	->view()
 	->setTemplate($config->getTemplate('index.html'))
 	->setData(array(
 			$pluralName => $resources,
-			'series' => $series
+			'series' => $series,
+			'mms' => $mms
 			))
 	;
       
       return $this->handleView($view);
   }
+
+
+  /**
+   * Create new resource
+   */
+  public function createAction(Request $request)
+  {
+      $config = $this->getConfiguration();
+      $pluralName = $config->getPluralResourceName();
+
+      $mm = $this->get('pumukitschema.factory');
+      $mm->createMultimediaObject($this);
+
+      $this->setFlash('success', 'create');
+
+      $criteria = $this->getCriteria($config);
+      $resources = $this->getResources($request, $config, $criteria);
+
+      $view = $this
+      ->view()
+      ->setTemplate($config->getTemplate('list.html'))
+      ->setTemplateVar($pluralName)
+      ->setData($resources)
+      ;
+
+      return $this->handleView($view);
+  }
+
+  /**
+   * Overwrite to update the session.
+   */
+  public function showAction()
+  {
+    $config = $this->getConfiguration();
+    $data = $this->findOr404();
+
+    $this->get('session')->set('admin/'.$config->getResourceName().'/id', $data->getId());
+
+    $view = $this
+      ->view()
+      ->setTemplate($config->getTemplate('show.html'))
+      ->setTemplateVar($config->getResourceName())
+      ->setData($data)
+      ;
+
+    return $this->handleView($view);
+  }
+
   
 }

@@ -1,0 +1,190 @@
+<div id="faceted_search" style="width: 100%">
+{# TODO <?php //include_partial('search', array('years' => $sf_data->getRaw('years'),
+      //                                'genres' => $sf_data->getRaw('genres'))) ?>
+#}
+</div>
+<table cellspacing="0" class="tv_admin_list" style="float:left;">
+  <thead>
+    <tr>
+      <th width="1%">
+        <input type="checkbox" onclick="window.click_checkbox_all('mm', this.checked)">
+      </th>
+      <th colspan="6" width="5%"></th>
+      {# TODO <?php if(sfConfig::get('app_mail_use')):?> #}
+      {% if false %}
+      <th width="2%"></th>
+      {% endif %}
+      <th width="1%">{% trans %}Audio/Video{% endtrans %}</th>
+      <th width="1%">{% trans %}Img{% endtrans %}</th>
+      <th width="1%">{% trans %}Id{% endtrans %}</th>
+      <th>{% trans %}Title{% endtrans %}</th>
+      <th width="1%">{% trans %}Duration{% endtrans %}</th>
+      <th width="1%">{% trans %}RecDate{% endtrans %}</th>
+      <th width="1%">{% trans %}PubDate{% endtrans %}</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  {% if (0 == mms|length) %}
+    <div style="position: absolute; top: 310px; left: 30%; font-size: 20px; width: 30%; font-weight: bold;">
+       {% trans %}There are no multimedia objects with those values.{% endtrans %}
+    </div>
+  {% endif %}
+  {# TODO <?php $t = count($mms) ; for( $i=0; $i<$t; $i++): $mm = $mms[$i]; $odd = fmod($i, 2) ?> #}
+  {% for mm in mms %}
+    <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ loop.index % 2 }} {{ mm.id == app.session.get('admin/mms/id')?'tv_admin_row_this':'' }}" >
+      <td>
+        <input id="{{ mm.id }}" class="mm_checkbox" type="checkbox">
+      </td>
+      <td>
+	<img alt="{{ mm.status }}" title="{% trans %}status{% endtrans %}" class="miniTag" id="table_mms_status_{{ mm.id }}" src="/legacy/images/admin/bbuttons/mm{{ mm.status }}_inline.gif">
+      </td>
+      <td>
+	{# TODO define mm.announce #}
+	{{ true?'<span style="color: blue" title="">A</span>':'&nbsp;' }}
+      </td> 
+       <td>
+        <form action="{{ path('pumukitadmin_mms_delete', {'id': mm.id}) }}" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}Are you sure you want to delete this multimedia object?{% endtrans %}')">
+          <input type="hidden" name="_method" value="DELETE">
+          <input type="hidden" name="confirmed" value="true">
+          <button type="submit" class="tv_admin_row_post">
+            <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
+          </button>
+        </form>
+      </td>
+
+      <td>
+        {# TODO <?php include_partial("mms/edit_menu", array('mm' => $mm))?> #}
+      </td>
+      {# TODO <?php if(sfConfig::get('app_mail_use')):?> #}
+      {% if true %}
+      <td>
+        {# TODO <?php include_partial("mms/edit_announce", array('mm' => $mm))?> #}
+      </td>
+      {% endif %}
+      <td> {# TODO mms is not pagerfanta #}
+	{% if mms.getCurrentPage() != 1 or not loop.first %}
+	  {% spaceless %}
+	    <a href="{{ path('pumukitadmin_mms_up', {'id': mm.id}) }}" title="{% trans %}Move one position up{% endtrans %}">&#8593;</a>
+	    <a href="{{ path('pumukitadmin_mms_top', {'id': mm.id}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}">&#8657;</a>
+	  {% endspaceless %}
+	{% endif %}
+      </td>
+      <td>
+	{% if mms.getCurrentPage() == mms.getNbPages() and not loop.last %}
+	  {% spaceless %}
+ 	    <a href="{{ path('pumukitadmin_mms_down', {'id': mm.id}) }}" title="{% trans %}Move one position down{% endtrans %}">&#8595;</a>
+	    <a href="{{ path('pumukitadmin_mms_bottom', {'id': mm.id}) }}" title="{% trans %}Move to the end of the list{% endtrans %}">&#8659;</a>
+	  {% endspaceless %}
+	{% endif %}
+      </td>
+      <td>
+         <span>{{ mm.audio ? 'Audio':'Video' }}</span>
+      </td>
+      <td onclick="click_fila_edit('mm', this, {{ mm.id }})" >
+        {% set url_set = false %}
+	{% if mm.getPics() is not empty %}
+	  {% for pic in mm.getPics() if not url_set %}
+	    {% if pic.url is not empty %}
+              <img class="mini" src="{{ pic.url }}" alt="{{ pic.size }}" height="23" width="30">
+	      {% set url_set = true %}
+            {% endif %}
+          {% endfor %}
+	{% endif %}
+	{% if not url_set %}
+          <img class="mini" src="/legacy/images/sin_foto.jpg" alt="{% trans %}No_pic{% endtrans %}" height="23" width="30">
+	{% endif %}
+      </td>
+      <td onclick="click_fila_edit('mm', this, {{ mm.id }})" >
+        {{ mm.id }}
+      </td>
+      <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitadmin_mms_update', {'id': mm.id}) }}')" >
+        {{ mm.getTitle() }}
+      </td>
+      <td>
+        {{ mm.getDurationString() }}
+      </td>
+      <td onclick="click_fila_edit('mm', this, {{ mm.id }})">
+        {{ mm.getRecordDate() }}
+      </td>
+      <td onclick="click_fila_edit('mm', this, {{ mm.id }})" >
+        {{ mm.getPublicDate() }}
+      </td>
+    </tr>
+  {% endfor %}
+  {% if mms|length < 11 %}
+    {# <?php for ($i=0;$i<(11-$t); $i++): $odd = fmod($i, 2)?> #}
+    {% for i in 0..(11-mms|length) %}
+       <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ loop.index % 2 }}">
+	<td style="height: 23px; padding: 0.2%;"></td>
+        <td style="padding: 0.2%;"></td>
+        <td style="padding: 0.2%;"></td>
+        <td style="padding: 0.2%;"></td>
+        <td style="padding: 0.2%;"></td>
+        <td style="padding: 0.2%;"></td>
+        <td style="padding: 0.2%;"></td>
+        <td style="padding: 0.2%;"></td>
+        <td style="padding: 0.2%;"></td>
+        <td style="padding: 0.2%;"></td>
+        <td style="padding: 0.2%;"></td>
+        <td style="padding: 0.2%;"></td>
+        <td style="padding: 0.2%;"></td>
+        <td style="padding: 0.2%;"></td>
+      </tr>
+    {% endfor %}
+  {% endif %}
+  </tbody>
+  <tfoot>
+    <tr>
+      <th colspan="14">
+        <div class="float-right">
+          {{ include('PumukitAdminBundle:Macros:pager_ajax.html.twig', {'name': 'mms', 'page': mms.getCurrentPage, 'total':mms.getNbPages}) }}
+        </div>
+        {{ mms.getNbResults }} {% trans %}Mm. Obj.{% endtrans %}
+	{% if app.session.get('admin/mms/criteria')|length != 0%}
+          <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
+	{% endif %}
+      </th>
+    </tr>
+  </tfoot>
+</table>
+
+{# TODO <?php if (isset($msg_alert)) echo m_msg_alert($msg_alert) ?> #}
+
+{# TODO
+<?php if (isset($reload_pub_channel)): ?>
+  <?php echo javascript_tag("
+    new Ajax.Updater('list_pub_" . $mm_sel->getId() . "', '" . url_for('mms/updatelistpub?id=' . $mm_sel->getId()) . "')
+  "); ?>
+<?php endif ?>
+
+<?php if(isset($reloadEditAndPreview)): ?>
+<?php echo javascript_tag("
+  new Ajax.Updater('edit_mms', '" . url_for('mms/edit') . "', {
+      asynchronous: true, 
+      evalScripts: true,
+      parameters: {id: " . $mm_sel->getId() ."}
+  });
+  new Ajax.Updater('preview_mm', '" . url_for('mms/preview') . "', {
+      asynchronous: true, 
+      evalScripts: true,
+      parameters: {id: " . $mm_sel->getId() ."}
+  });
+"); ?>
+<?php endif ?>
+
+<?php if (isset($enBloq)): ?>
+  <?php echo javascript_tag("
+    $('list_pub_channel').setStyle('background-color: #f2f2f2');
+    $$('.pub_channel_input_checkbox').invoke('disable');
+  "); ?>
+<?php endif ?>
+
+
+<?php if (isset($desBloq)): ?>
+  <?php echo javascript_tag("
+    $('list_pub_channel').setStyle('background-color: transparent');
+    $$('.pub_channel_input_checkbox').invoke('enable');
+  "); ?>
+<?php endif ?>
+#}

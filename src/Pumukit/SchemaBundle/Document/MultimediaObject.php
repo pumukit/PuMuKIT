@@ -54,7 +54,7 @@ class MultimediaObject
   /**
    * @var ArrayCollection $pics
    *
-   * @MongoDB\EmbedMany(targetDocument="Pic")
+   * @MongoDB\EmbedMany(targetDocument="MmsPic")
    */
   private $pics;
 
@@ -546,9 +546,9 @@ class MultimediaObject
   /**
    * Add pic
    *
-   * @param MmPic $pic
+   * @param MmsPic $pic
    */
-  public function addPic(MmPic $pic)
+  public function addPic(MmsPic $pic)
   {
       $this->pics[] = $pic;
       $pic->setMultimediaObject($this);
@@ -558,9 +558,9 @@ class MultimediaObject
   /**
    * Remove pic
    *
-   * @param MmPic $pic
+   * @param MmsPic $pic
    */
-  public function removePic(MmPic $pic)
+  public function removePic(MmsPic $pic)
   {
       $this->pics->removeElement($pic);
   }
@@ -568,11 +568,11 @@ class MultimediaObject
   /**
    * Contains pic
    *
-   * @param MmPic $pic
+   * @param MmsPic $pic
    *
    * @return boolean
    */
-  public function containsPic(MmPic $pic)
+  public function containsPic(MmsPic $pic)
   {
       return $this->pics->contains($pic);
   }
@@ -611,7 +611,7 @@ class MultimediaObject
    * Get pic ...
    *
    * @param string $tag
-   * @return MmPic
+   * @return MmsPic
    * TODO
    */
   public function getPicByTag($tag)
@@ -649,7 +649,7 @@ class MultimediaObject
    * Get pics ...
    *
    * @param array $tags
-   * @return MmPic
+   * @return MmsPic
    * TODO
    */
   public function getPicWithAllTags(array $tags)
@@ -687,7 +687,7 @@ class MultimediaObject
    * Get pic ...
    *
    * @param array $tags
-   * @return MmPic
+   * @return MmsPic
    * TODO
    */
   public function getPicWithAnyTag(array $tags)
@@ -739,7 +739,7 @@ class MultimediaObject
       return $r;
   }
 
-  // End of MmPic getter - setter etc methods section
+  // End of MmsPic getter - setter etc methods section
 
   /**
    * Add material
@@ -1217,6 +1217,28 @@ class MultimediaObject
   public function getDuration()
   {
       return $this->duration;
+  }
+
+  /**
+   * Get duration in string format
+   *
+   * @return string
+   */
+  static public function getDurationString()
+  {
+    if (isset($this->duration)){
+      $min =  floor($this->duration / 60);
+      
+      $seg = $this->duration %60;
+      if ($seg < 10 ) $seg = '0' . $seg;
+      
+      if ($min == 0 ) $aux = $seg . "''";
+      else $aux = $min . "' ". $seg ."''";
+      
+      return $aux;
+    }else{
+      return '';
+    }
   }
 
   /**

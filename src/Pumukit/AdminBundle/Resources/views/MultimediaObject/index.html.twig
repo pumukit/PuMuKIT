@@ -18,8 +18,9 @@
 <div id="tv_admin_container">
   <div id="tv_admin_bar">
     <div id="preview_mm" style="padding:5px; border: solid 1px #DDD; background: #8eb0bc url(/legacy/images/admin/cab/cab.gif) repeat-x scroll 0% 0%; margin-bottom: 10px">
-      {# TODO <?php include_component('mms', 'preview') ?> #}
-      
+      {% if(app.session.has('admin/mms/id')) %}
+        {{ render_hinclude(url('pumukitadmin_mms_show', {'id': app.session.get('admin/mms/id')})) }}
+      {% endif %}
     </div>
   </div>
 
@@ -27,7 +28,7 @@
 
   <div id="tv_admin_content" >
     <div id="list_mms" name="list_mms" act="/mms/list" style="min-width: 690px;">
-      {# TODO <?php include_component('mms', 'list') ?> #}
+      {% include 'PumukitAdminBundle:MultimediaObject:list.html.twig' %}
     </div>
 
     <div style="float:right; width:50%">
@@ -39,7 +40,7 @@
         </li>
         <li>
 	  {# TODO Path create with page number #}
-	  <a title="{% trans %}Create new multimedia object{% endtrans %}" class="tv_admin_action_create" href="#" onclick="new Ajax.Updater('list_mms', '/editar.php/mms/create/filter/filter', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Create{% endtrans %}</a>
+	  <a title="{% trans %}Create new multimedia object{% endtrans %}" class="tv_admin_action_create" href="#" onclick="new Ajax.Updater('list_mms', '{{ path('pumukitadmin_mms_create') }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Create{% endtrans %}</a>
         </li>
       </ul>
     </div>

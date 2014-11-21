@@ -45,8 +45,6 @@ class SeriesAdminController extends AdminController
       $criteria = $this->getCriteria($config);
       $resources = $this->getResources($request, $config, $criteria);
 
-      $pluralName = $config->getPluralResourceName();
-
       $view = $this
       ->view()
       ->setTemplate($config->getTemplate('list.html'))
