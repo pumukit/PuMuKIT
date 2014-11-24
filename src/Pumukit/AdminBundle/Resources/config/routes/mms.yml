@@ -7,7 +7,7 @@ pumukitadmin_mms_index:
             filterable: true
 
 pumukitadmin_mms_create:
-    pattern: /create
+    pattern: /{id}/ocreate
     methods: [GET, POST]
     defaults:
         _controller: pumukitadmin.controller.mms:createAction
@@ -49,3 +49,35 @@ pumukitadmin_mms_show:
     methods: [GET]
     defaults:
         _controller: pumukitadmin.controller.mms:showAction
+
+pumukitadmin_mms_up:
+    pattern: /{id}/up
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitadmin.controller.mms:upAction
+        _sylius:
+            redirect: pumukitadmin_mms_index
+
+pumukitadmin_mms_down:
+    pattern: /{id}/down
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitadmin.controller.mms:downAction
+        _sylius:
+            redirect: pumukitadmin_mms_index
+
+pumukitadmin_mms_top:
+    pattern: /{id}/top
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitadmin.controller.mms:topAction
+        _sylius:
+            redirect: pumukitadmin_mms_index
+
+pumukitadmin_mms_bottom:
+    pattern: /{id}/bottom
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitadmin.controller.mms:bottomAction
+        _sylius:
+            redirect: pumukitadmin_mms_index
