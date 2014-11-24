@@ -1,0 +1,58 @@
+{% if mm is not empty %}
+  
+  <!-- actualizar vistaPrevia -->
+  <ul id="menuTab">
+    <li id="pubMm"   class="noSel" >
+      <a href="#" onclick="menuTab.select('pubMm'); update_file.stop(); return false;" >{% trans %}Publicación{% endtrans %}</a>
+    </li>
+    <li id="metaMm"   class="noSel" >
+      <a href="#" onclick="menuTab.select('metaMm'); update_file.stop(); return false;" >{% trans %}Metadatos{% endtrans %}</a>
+    </li>
+    <li id="categoryMm" class="noSel" >
+      <a href="#" onclick="menuTab.select('categoryMm'); update_file.stop(); return false;" >{% trans %}Categorias{% endtrans %}</a>
+    </li>
+    <li id="personMm" class="noSel" >
+      <a href="#" onclick="menuTab.select('personMm'); update_file.stop(); return false;" >{% trans %}Personas{% endtrans %}</a>
+    </li>
+    <li id="mediaMm"  class="noSel" >
+      <a href="#" onclick="menuTab.select('mediaMm'); update_file.start(); return false;" >{% trans %}Multimedia{% endtrans %}</a>
+    </li>
+  </ul>
+  
+  <div class="background_id">
+    {{ mm.id }}
+  </div>
+  
+  <div id="pubMmDiv"  style="display:none;">
+    {# TODO set the below values #}
+    {% set langs = '' %}
+    {% set timeframe1 = '' %}
+    {% set interval1cmp = '' %}
+    {% set timeframe2 = '' %}
+    {% set interval2cmp = '' %}
+    {% incluce 'PumukitAdminBundle:MultimediaObject:updatepub.html.twig' with {'mm': mm, 'langs': langs, 'timeframe1': timeframe1, 'interval1cmp': interval1cmp, 'timeframe2': timeframe2, 'interval2cmp': interval2cmp} %}
+  </div>  
+
+  <div id="metaMmDiv"  style="display:none;">
+    {% include 'PumukitAdminBundle:MultimediaObject:updatemeta.html.twig' with {'mm': mm, 'langs': langs} %}
+  </div>
+  
+  <div id="categoryMmDiv" class="virtual_edit"  style="display:none;">
+    {% include 'PumukitAdminBundle:MultimediaObject:updatetag.html.twig' with {'mm': mm, 'langs': langs} %}
+  </div>
+  
+  <div id="personMmDiv" style="display:none;">
+    {% include 'PumukitAdminBundle:MultimediaObject:updateperson.html.twig' with {'mm': mm, 'langs': langs, 'roles': roles} %}
+  </div>
+  
+  <div id="mediaMmDiv" style="display:none;">
+    {% include 'PumukitAdminBundle:MultimediaObject:updatemedia.html.twig' with {'mm': mm, 'langs': langs} %}
+  </div>
+  
+  <script type="text/javascript">
+    //alert('Tengo ('+document.location.hash+') y ('+(['#metaMmHash', '#groundMmHash', '#personMmHash', '#mediaMmHash'].indexOf(document.location.hash))+')');
+    var menuTab = new menuTabClass(document.location.hash);
+  </script>
+    
+{% endif %}
+

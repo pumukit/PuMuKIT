@@ -1,0 +1,43 @@
+<span class="trans_button" onclick="$('list_pics_{{ mm.id }}').toggle()"><img src="/legacy/images/admin/mbuttons/edit_inline.gif" title="{% trans %}options{% endtrans %}" alt="{% trans %}options{% endtrans %}">
+<div class="trans_menu" id="list_pics_{{ mm.id }}" style="display:none">
+
+  <div class="mas_info" style="">
+    <div class="trans_button_up"><img src="/legacy/images/admin/mbuttons/edit_inline.gif" alt="{% trans %}options{% endtrans %}" /></div>
+    <div class="trans_button_info">{% trans %}Options{% endtrans %}:</div>
+  </div>
+
+  <div class="list_options">
+    <ul style="">
+
+      <li class="normal">
+        <form action="{{ path('pumukitadmin_mms_delete', {'id': mm.id}) }}" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}Are you sure you want to delete this multimedia object?{% endtrans %}">
+          <input type="hidden" name="_method" value="DELETE">
+          <input type="hidden" name="confirmed" value="true">
+	  {% spaceless %}
+          <button type="submit" class="tv_admin_row_post">
+            <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}Delete multimedia object{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">{% trans %}Delete multimedia object{% endtrans %}
+          </button>
+	  {% endspaceless %}
+        </form>
+      </li>
+      <li class="normal">
+        <form action="{{ path('pumukitadmin_mms_copy', {'id': mm.id}) }}" method="post" class="delete-action-form" novalidate="">
+          <button type="submit" class="tv_admin_row_post">
+	    <img alt="{% trans %}clone{% endtrans %}" title="{% trans %}Clone multimedia object{% endtrans %}" src="/legacy/images/admin/mbuttons/copy_inline.gif">{% trans %}Clone multimedia object{% endtrans %}
+	  </button>
+	</form>
+      </li>
+      <li class="normal">
+	{# TODO PATH INFO #}
+	<a title="{% trans %}File information of multimedia object{% endtrans %} {{ mm.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="/editar.php/mms/info/id/14575"><img alt="{% trans %}info{% endtrans %}" src="/legacy/images/admin/mbuttons/info_inline.gif">{% trans %}Multimedia object information{% endtrans %}</a>
+      </li>
+
+      <li class="cancel"><a href="#" onclick="return false;">{% trans %}Cancel{% endtrans %}...</a></li>
+
+    </ul>
+
+
+  </div>
+</div>
+</span>
+
