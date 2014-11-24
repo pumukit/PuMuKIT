@@ -40,7 +40,7 @@
         </li>
         <li>
 	  {# TODO Path create with page number #}
-	  <a title="{% trans %}Create new multimedia object{% endtrans %}" class="tv_admin_action_create" href="#" onclick="new Ajax.Updater('list_mms', '{{ path('pumukitadmin_mms_create') }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Create{% endtrans %}</a>
+	  <a title="{% trans %}Create new multimedia object{% endtrans %}" class="tv_admin_action_create" href="#" onclick="new Ajax.Updater('list_mms', '{{ path('pumukitadmin_mms_create', {'id': series.id}) }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Create{% endtrans %}</a>
         </li>
       </ul>
     </div>
