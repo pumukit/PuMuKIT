@@ -14,7 +14,7 @@ class FactoryService
   {
       $dm = $controller->get('doctrine_mongodb')->getManager();
 
-      $series = $controller->createNew();
+      $series = new Series();
 
       $series->setPublicDate(new \DateTime("now"));
       $series->setTitle('New');
@@ -31,7 +31,7 @@ class FactoryService
   {
       $dm = $controller->get('doctrine_mongodb')->getManager();
 
-      $mm = $controller->createNew();
+      $mm = new MultimediaObject();
 
       $mm->setPublicDate(new \DateTime("now"));
       $mm->setRecordDate($mm->getPublicDate());
