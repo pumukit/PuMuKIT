@@ -20,10 +20,10 @@ class SeriesAdminController extends AdminController
       $pluralName = $config->getPluralResourceName();
 
       $view = $this
-      ->view()
-      ->setTemplate($config->getTemplate('index.html'))
-      ->setTemplateVar($pluralName)
-      ->setData($resources)
+	->view()
+	->setTemplate($config->getTemplate('index.html'))
+	->setTemplateVar($pluralName)
+	->setData($resources)
       ;
 
       return $this->handleView($view);
@@ -46,10 +46,10 @@ class SeriesAdminController extends AdminController
       $resources = $this->getResources($request, $config, $criteria);
 
       $view = $this
-      ->view()
-      ->setTemplate($config->getTemplate('list.html'))
-      ->setTemplateVar($pluralName)
-      ->setData($resources)
+	->view()
+	->setTemplate($config->getTemplate('list.html'))
+	->setTemplateVar($pluralName)
+	->setData($resources)
       ;
 
       return $this->handleView($view);
