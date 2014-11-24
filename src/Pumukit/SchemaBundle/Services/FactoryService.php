@@ -45,7 +45,7 @@ class FactoryService
   /**
    * Create a new series with default values
    */
-  public function createMultimediaObject()
+  public function createMultimediaObject($series)
   {
       $mm = new MultimediaObject();
 
@@ -55,8 +55,11 @@ class FactoryService
           $title = $this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE, array(), null, $locale);
           $mm->setTitle($title, $locale);
       }
+      
+      $series->addMultimediaObject($mm);
 
       $this->dm->persist($mm);
+      $this->dm->persist($series);
       $this->dm->flush();
   }
 

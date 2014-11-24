@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 use Pagerfanta\Pagerfanta;
 
-class MultimediaObjectController extends AdminController
+class MultimediaObjectController extends SortableAdminController
 {
   /**
    * Overwrite to search criteria with date
@@ -22,7 +22,7 @@ class MultimediaObjectController extends AdminController
 
       $pluralName = $config->getPluralResourceName();
 
-      $dm = $this->get('doctrine_mongodb')->getManager();
+      $dm = $this->get('doctrine_mongodb.odm.document_manager');
       $repository = $dm->getRepository('PumukitSchemaBundle:Series');
       $series = $repository->find($request->get('id'));
 
@@ -60,8 +60,12 @@ class MultimediaObjectController extends AdminController
       $config = $this->getConfiguration();
       $pluralName = $config->getPluralResourceName();
 
+      $dm = $this->get('doctrine_mongodb.odm.document_manager');
+      $repository = $dm->getRepository('PumukitSchemaBundle:Series');
+      $series = $repository->find($request->attributes->get('id'));
+
       $factory = $this->get('pumukitschema.factory');
-      $factory->createMultimediaObject();
+      $factory->createMultimediaObject($series);
 
       $this->setFlash('success', 'create');
 
@@ -86,13 +90,19 @@ class MultimediaObjectController extends AdminController
     $config = $this->getConfiguration();
     $data = $this->findOr404();
 
-    $this->get('session')->set('admin/'.$config->getResourceName().'/id', $data->getId());
+    $this->get('session')->set('admin/mms/id', $data->getId());
+
+    $dm = $this->get('doctrine_mongodb.odm.document_manager');
+    $repository = $dm->getRepository('PumukitSchemaBundle:Role');
+    $roles = $repository->findAll();
 
     $view = $this
       ->view()
       ->setTemplate($config->getTemplate('show.html'))
-      ->setTemplateVar($config->getResourceName())
-      ->setData($data)
+      ->setData(array(
+		      'mm' => $data,
+		      'roles' => $roles
+		      ))
       ;
 
     return $this->handleView($view);
