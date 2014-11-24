@@ -13,7 +13,7 @@
         </service>
 
         <service id="pumukitschema.factory" class="Pumukit\SchemaBundle\Services\FactoryService">
-            <argument type="service" id="doctrine_mongodb"/>
+            <argument type="service" id="doctrine_mongodb.odm.document_manager" />
         </service>
 
         <service id="pumukitschema.pic" class="Pumukit\SchemaBundle\Services\PicService">
