@@ -417,5 +417,5 @@
 
 {# Series Widgets #}
 {% block seriesdate_widget -%}
-  {% trans %}Date{% endtrans %}: <input style="margin-top: 5px;" type="datetime-local" size="6" value="{{ value|date('Y-m-dTH:i')|default("") }}" id="{{ id }}_date" name="{{ full_name }}" />
+  <input type="datetime-local" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value|date('Y-m-d\\TH:i:s') }}" {% endif %}/>
 {% endblock %}
