@@ -1,5 +1,5 @@
 pumukitadmin_fos_user:
-    resource: @PumukitAdminBundle/Resources/config/fos_user.yml
+    resource: @PumukitAdminBundle/Resources/config/routes/fos_user.yml
 
 pumukit_direct:
     resource: "@PumukitAdminBundle/Controller/"
@@ -7,37 +7,37 @@ pumukit_direct:
     prefix:   /admin
 
 pumukitadmin_user:
-    resource: @PumukitAdminBundle/Resources/config/user.yml
+    resource: @PumukitAdminBundle/Resources/config/routes/user.yml
     prefix: /admin/user
 
 pumukitadmin_direct:
-    resource: @PumukitAdminBundle/Resources/config/direct.yml
+    resource: @PumukitAdminBundle/Resources/config/routes/direct.yml
     prefix: /admin/direct
 
 pumukitadmin_event:
-    resource: @PumukitAdminBundle/Resources/config/event.yml
+    resource: @PumukitAdminBundle/Resources/config/routes/event.yml
     prefix: /admin/event
 
 pumukitadmin_role:
-    resource: @PumukitAdminBundle/Resources/config/role.yml
+    resource: @PumukitAdminBundle/Resources/config/routes/role.yml
     prefix: /admin/role
 
 pumukitadmin_broadcast:
-    resource: @PumukitAdminBundle/Resources/config/broadcast.yml
+    resource: @PumukitAdminBundle/Resources/config/routes/broadcast.yml
     prefix: /admin/broadcast
 
 pumukitadmin_series:
-    resource: @PumukitAdminBundle/Resources/config/series.yml
+    resource: @PumukitAdminBundle/Resources/config/routes/series.yml
     prefix: /admin/series
 
 pumukitadmin_tag:
-    resource: @PumukitAdminBundle/Resources/config/tag.yml
+    resource: @PumukitAdminBundle/Resources/config/routes/tag.yml
     prefix: /admin/tag
 
 pumukitadmin_seriespic:
-    resource: @PumukitAdminBundle/Resources/config/seriespic.yml
+    resource: @PumukitAdminBundle/Resources/config/routes/seriespic.yml
     prefix: /admin/seriespic
 
 pumukitadmin_mms:
-    resource: @PumukitAdminBundle/Resources/config/mms.yml
+    resource: @PumukitAdminBundle/Resources/config/routes/mms.yml
     prefix: /admin/mms
