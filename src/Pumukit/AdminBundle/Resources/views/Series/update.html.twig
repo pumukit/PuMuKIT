@@ -18,8 +18,6 @@
 		  return false;"
 	action="{{ path('pumukitadmin_series_update', {'id': series.id}) }}" method="POST">
 
-      <fieldset>
-
 	<input type="hidden" name="id" id="id" value="{{ series.id }}">
 	<div id="remember_save_series" style="display: none; position: absolute; color:red; border: 1px solid red; padding: 5px; background-color:#fdc; font-weight:bold;">
 	  Pulse OK para que el cambio tenga efecto  </div>
@@ -31,6 +29,8 @@
 	  {# TODO onclick="if(comprobar_form_series($('public_date').value, /^(\d+)\/(\d+)\/(\d+) (\d+):(\d+)(:(\d+))?$/)){$('remember_save_series').hide();}else{return false}" #}
 	  <li><input type="reset" name="reset" value="{% trans %}Reset{% endtrans %}" class="tv_admin_action_delete" onclick="$('remember_save_series').hide()"></li>
 	</ul>
+
+      <fieldset>
 
 	{% for child in form if (('pumukitadmin_series_i18n_header' not in child.vars.id) and ('pumukitadmin_series_i18n_footer' not in child.vars.id) and ('pumukitadmin_series_i18n_line2' not in child.vars.id)) %}
           {{ form_row(child) }}
