@@ -5,24 +5,25 @@
 
 <!-- DATE -->
 <div style="background-color:#006699; color:#FFFFFF; font-weight:bold; margin-bottom:11px; text-align:center;">
-   {{ mm.getRecordDate()|date('d B Y') }}
+   {{ mm.getRecordDate()|date('d F Y') }}
 </div>
 
 <!-- SUBSERIAL_TITLE-->
-{% if (mm.getSubserialTitle() is not empty) %}
+{# TODO define getSubseriesTitle, getPrecinctId and getPlace.getName functions
+{% if (mm.getSubseriesTitle() is not empty) %}
   <div style="background-color:#006699; color:#FFFFFF; font-weight:bold; margin-bottom:11px; text-align:center;">
-    {{ mm.getSubserialTitle() }}
-  </div>
+    {{ mm.getSubseriesTitle() }}
+  </div> 
 <!-- PALCE-->
 {% elseif (mm.getPrecinctId() > 1) %}
   <div style="background-color:#DFDFFF; color:#660000; font-weight:bold; margin-bottom:11px; padding-right:5px; text-align:right;">
     {{ mm.getPlace().getName() }}  
   </div>
-{% endif %}
+{% endif %} #}
 
 
 <!-- PIC -->
-<div id="serial_mm" class="serial_mm_{{ mm.getStatusId()?'1':'0' }}" style="background-color:transparent">
+<div id="serial_mm" class="serial_mm_{{ mm.getStatus()?'1':'0' }}" style="background-color:transparent">
   <table>
    <tbody>
     <tr>
@@ -62,7 +63,7 @@
                  {{ file.getAudio()?'{% trans %}Audio{% endtrans %}':'{% trans %}Video{% endtrans %}' }}
                </a>
                {% if file.getDescription() is not empty %}
-                 &nbsp;|&nbsp;&nbsp;<strong>( {{file.getDescription() }} )</strong>
+                 &nbsp;|&nbsp;&nbsp;<strong>( {{ file.getDescription() }} )</strong>
                {% endif %}
                &nbsp;|&nbsp;&nbsp;<span id="language">{{ file.getLanguage().getName() }}</span>
 
@@ -82,17 +83,18 @@
           {% endfor %}
   
   <!-- LINK -->
+          {# TODO define link, getLinks...
           {% for link in mm.getLinks() %}
             <div id="link" class="link">
               <a target="_blank" href="{{ link.getUrl() }}">{{ link.getName() }}</a>
             </div>
-          {% endfor %}
+          {% endfor %} #}
         </div>
         <br />
         
   <!-- PERSONS PRESENT -->
         {% for role in roles if role.getDisplay() %}
-	  {% for act in mm.getPersons(role.getId()) %}
+	  {% for act in mm.getPeopleInMultimediaObjectByRole(role) %}
             <div>
               <div class="person" style="color:#000099; font-weight:bold;">
 	        {{ role.getText() }}
