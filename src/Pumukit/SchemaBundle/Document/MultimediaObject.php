@@ -54,7 +54,7 @@ class MultimediaObject
   /**
    * @var ArrayCollection $pics
    *
-   * @MongoDB\EmbedMany(targetDocument="MmsPic")
+   * @MongoDB\EmbedMany(targetDocument="MultimediaObjectPic")
    */
   private $pics;
 
@@ -546,9 +546,9 @@ class MultimediaObject
   /**
    * Add pic
    *
-   * @param MmsPic $pic
+   * @param MultimediaObjectPic $pic
    */
-  public function addPic(MmsPic $pic)
+  public function addPic(MultimediaObjectPic $pic)
   {
       $this->pics[] = $pic;
       $pic->setMultimediaObject($this);
@@ -558,9 +558,9 @@ class MultimediaObject
   /**
    * Remove pic
    *
-   * @param MmsPic $pic
+   * @param MultimediaObjectPic $pic
    */
-  public function removePic(MmsPic $pic)
+  public function removePic(MultimediaObjectPic $pic)
   {
       $this->pics->removeElement($pic);
   }
@@ -568,11 +568,11 @@ class MultimediaObject
   /**
    * Contains pic
    *
-   * @param MmsPic $pic
+   * @param MultimediaObjectPic $pic
    *
    * @return boolean
    */
-  public function containsPic(MmsPic $pic)
+  public function containsPic(MultimediaObjectPic $pic)
   {
       return $this->pics->contains($pic);
   }
@@ -611,7 +611,7 @@ class MultimediaObject
    * Get pic ...
    *
    * @param string $tag
-   * @return MmsPic
+   * @return MultimediaObjectPic
    * TODO
    */
   public function getPicByTag($tag)
@@ -649,7 +649,7 @@ class MultimediaObject
    * Get pics ...
    *
    * @param array $tags
-   * @return MmsPic
+   * @return MultimediaObjectPic
    * TODO
    */
   public function getPicWithAllTags(array $tags)
@@ -687,7 +687,7 @@ class MultimediaObject
    * Get pic ...
    *
    * @param array $tags
-   * @return MmsPic
+   * @return MultimediaObjectPic
    * TODO
    */
   public function getPicWithAnyTag(array $tags)
@@ -739,7 +739,7 @@ class MultimediaObject
       return $r;
   }
 
-  // End of MmsPic getter - setter etc methods section
+  // End of MultimediaObjectPic getter - setter etc methods section
 
   /**
    * Add material

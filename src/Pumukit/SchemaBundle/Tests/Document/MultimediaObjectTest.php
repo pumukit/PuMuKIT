@@ -5,7 +5,7 @@ namespace Pumukit\SchemaBundle\Tests\Document;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\SchemaBundle\Document\Pic;
+use Pumukit\SchemaBundle\Document\MultimediaObjectPic;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Person;
@@ -87,9 +87,9 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
     public function testPicsInMultimediaObject()
     {
         $mm = new MultimediaObject();
-        $pic1 = new Pic();
-        $pic2 = new Pic();
-        $pic3 = new Pic();
+        $pic1 = new MultimediaObjectPic();
+        $pic2 = new MultimediaObjectPic();
+        $pic3 = new MultimediaObjectPic();
 
         $this->assertEquals(0, count($mm->getPics()));
 
@@ -197,19 +197,19 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
     {
         $mm = new MultimediaObject();
 
-        $p1 = new Pic();
+        $p1 = new MultimediaObjectPic();
         $p1->setRank(3);
         $p1->setTags(array('master'));
-        $p2 = new Pic();
+        $p2 = new MultimediaObjectPic();
         $p2->setRank(2);
         $p2->setTags(array('master', 'mosca', 'old'));
-        $p3 = new Pic();
+        $p3 = new MultimediaObjectPic();
         $p3->setRank(1);
         $p3->setTags(array('master', 'mosca'));
-        $p4 = new Pic();
+        $p4 = new MultimediaObjectPic();
         $p4->setRank(4);
         $p4->setTags(array('flv', 'itunes', 'hide'));
-        $p5 = new Pic();
+        $p5 = new MultimediaObjectPic();
         $p5->setRank(5);
         $p5->setTags(array('flv', 'webtv'));
 

@@ -5,11 +5,11 @@ namespace Pumukit\SchemaBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * Pumukit\SchemaBundle\Document\MmPic
+ * Pumukit\SchemaBundle\Document\MultimediaObjectPic
  *
  * @MongoDB\EmbeddedDocument
  */
-class MmPic extends MmElement
+class MultimediaObjectPic extends MmsElement
 {
   /**
    * @var int $width

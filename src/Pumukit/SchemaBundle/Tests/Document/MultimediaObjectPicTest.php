@@ -2,9 +2,9 @@
 
 namespace Pumukit\SchemaBundle\Tests\Document;
 
-use Pumukit\SchemaBundle\Document\Pic;
+use Pumukit\SchemaBundle\Document\MultimediaObjectPic;
 
-class PicTest extends \PHPUnit_Framework_TestCase
+class MultimediaObjectPicTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetterAndSetter()
     {
@@ -19,7 +19,7 @@ class PicTest extends \PHPUnit_Framework_TestCase
         $height = 600;
         $hide = true; // Change assertTrue accordingly.
 
-        $pic = new pic();
+        $pic = new MultimediaObjectPic();
 
         $pic->setTags($tags);
         $pic->setUrl($url);
@@ -44,7 +44,7 @@ class PicTest extends \PHPUnit_Framework_TestCase
 
     public function testTagCollection()
     {
-        $pic = new pic();
+        $pic = new MultimediaObjectPic();
         $this->assertFalse($pic->containsTag('t'));
         $pic->addTag('t');
         $this->assertTrue($pic->containsTag('t'));
