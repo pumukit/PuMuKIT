@@ -32,7 +32,7 @@
 
       <fieldset>
 
-	{% for child in form if (('pumukitadmin_series_i18n_header' not in child.vars.id) and ('pumukitadmin_series_i18n_footer' not in child.vars.id) and ('pumukitadmin_series_i18n_line2' not in child.vars.id)) %}
+	{% for child in form if (child.vars.id not in ['pumukitadmin_series_i18n_header', 'pumukitadmin_series_i18n_footer', 'pumukitadmin_series_i18n_line2']) %}
           {{ form_row(child) }}
 	{% endfor %}
 
@@ -55,7 +55,7 @@
 	  </a>
 	</div>
 
-	{% for child in form if (('pumukitadmin_series_i18n_header' in child.vars.id) or ('pumukitadmin_series_i18n_footer' in child.vars.id)) %}
+	{% for child in form if (child.vars.id in ['pumukitadmin_series_i18n_header', 'pumukitadmin_series_i18n_footer']) %}
 	<div class="form-row" style="display:none" id="{{ child.vars.id }}">
 	  <label for="header" class="long">{{ child.vars.label }} <br><strong>HTML</strong></label>
 	  <diV class="content content_long">
@@ -64,7 +64,7 @@
 	</div>
         {% endfor %}
 
-	{% for child in form if ('pumukitadmin_series_i18n_line2' in child.vars.id) %}
+	{% for child in form if (child.vars.id in ['pumukitadmin_series_i18n_line2']) %}
 	  {{ form_row(child) }}
 	{% endfor %}
 
