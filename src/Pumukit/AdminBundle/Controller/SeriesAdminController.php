@@ -38,7 +38,7 @@ class SeriesAdminController extends AdminController
       $pluralName = $config->getPluralResourceName();
 
       $series = $this->get('pumukitschema.factory');
-      $series->createSeries($this);
+      $series->createSeries();
 
       $this->setFlash('success', 'create');
 

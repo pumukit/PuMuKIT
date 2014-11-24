@@ -6,18 +6,27 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\SeriesPic;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 
 class PicService
 {
+  private $dm;
+
+  public function __construct(DocumentManager $documentManager)
+  {
+      $this->dm = $documentManager;
+  }
+
+
   /**
    * Search for resource with id
    */
-  public function getResource($controller, $resource_name, $id)
+  public function getResource($resource_name, $id)
   {
-      $dm = $controller->get('doctrine_mongodb')->getManager();
-      $repository = $dm->getRepository('PumukitSchemaBundle:'.$resource_name);
+      $repository = $this->dm->getRepository('PumukitSchemaBundle:'.$resource_name);
       $resource = $repository->find($id);
 
       return $resource;
@@ -26,10 +35,9 @@ class PicService
   /**
    * Get pics from series or multimedia object
    */
-  public function getPics($controller, $resource_name, $id, $page)
+  public function getPics($resource_name, $id, $page)
   {
-      $dm = $controller->get('doctrine_mongodb')->getManager();
-      $repository = $dm->getRepository('PumukitSchemaBundle:'.$resource_name);
+      $repository = $this->dm->getRepository('PumukitSchemaBundle:'.$resource_name);
 
       $limit = 12;
       $offset = ($page - 1) * $limit;
@@ -71,20 +79,21 @@ class PicService
   /**
    * Set a pic from an url into the series
    */
-  public function setPicUrl($controller, $resource_name, $resource_id, $pic_url)
+  public function setPicUrl($resource_name, $resource_id, $pic_url)
   {
-    $dm = $controller->get('doctrine_mongodb')->getManager();
-    $repository = $dm->getRepository('PumukitSchemaBundle:'.$resource_name);
+    // TODO validate repository, resource, url
+    $repository = $this->dm->getRepository('PumukitSchemaBundle:'.$resource_name);
     $resource = $repository->find($resource_id);
 
-    $pic = new SeriesPic();
+    $class = "\\Pumukit\\SchemaBundle\\Document\\" . $resource_name . "Pic";
+    $pic = new $class();
     $pic->setUrl($pic_url);    
-    $dm->persist($pic);
-    $dm->flush();
+    $this->dm->persist($pic);
+    $this->dm->flush();
 
     $resource->addPic($pic);
-    $dm->persist($resource);
-    $dm->flush();
+    $this->dm->persist($resource);
+    $this->dm->flush();
 
     return $resource;
   }

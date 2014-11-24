@@ -19,7 +19,9 @@
         </service>
 
         <service id="pumukitschema.pic" class="Pumukit\SchemaBundle\Services\PicService">
-            <argument type="service" id="doctrine_mongodb"/>
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="translator" />
+            <argument>%pumukit2.locales%</argument>
         </service>
 
     </services>

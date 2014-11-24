@@ -17,7 +17,7 @@ class SeriesPicController extends ElementController
     if (null != $request->attributes->get('id')) {
       $id = $request->attributes->get('id');
       $pic_service = $this->get('pumukitschema.pic');
-      $series = $pic_service->getResource($this, 'Series', $id);
+      $series = $pic_service->getResource('Series', $id);
     }else{
       $series = null;
     }
@@ -32,7 +32,7 @@ class SeriesPicController extends ElementController
     }
     $page = $this->get('session')->get('admin/seriespic/page', 1);
 
-    list($pics, $total) = $pic_service->getPics($this, 'Series', $id, $page);
+    list($pics, $total) = $pic_service->getPics('Series', $id, $page);
 	
     $view = $this
       ->view()
@@ -60,7 +60,7 @@ class SeriesPicController extends ElementController
     if ($request->get('url', null)){
       $series_id = $request->attributes->get('id');
       $pic_service = $this->get('pumukitschema.pic');
-      $series = $pic_service->setPicUrl($this, 'Series', $series_id, $request->get('url'));
+      $series = $pic_service->setPicUrl('Series', $series_id, $request->get('url'));
     }
     
     $view = $this
