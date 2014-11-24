@@ -15,17 +15,16 @@
           <input type="hidden" name="_method" value="DELETE">
           <input type="hidden" name="confirmed" value="true">
           <button type="submit" class="tv_admin_row_post">
-            <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}Delete the series{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
+            <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}Delete the series{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">>{% trans %}Delete the series{% endtrans %}
           </button>
         </form>
       </li>
       <li class="normal">
         <form action="{{ path('pumukitadmin_series_copy', {'id': oneseries.id}) }}" method="post" class="delete-action-form" novalidate="">
           <button type="submit" class="tv_admin_row_post">
-	    <img alt="{% trans %}clone{% endtrans %}" title="{% trans %}Clone the series{% endtrans %}" src="/legacy/images/admin/mbuttons/copy_inline.gif">
+	    <img alt="{% trans %}clone{% endtrans %}" title="{% trans %}Clone the series{% endtrans %}" src="/legacy/images/admin/mbuttons/copy_inline.gif">{% trans %}Clone the series{% endtrans %}
 	  </button>
 	</form>
-
       </li>
 
       <li class="normal">
