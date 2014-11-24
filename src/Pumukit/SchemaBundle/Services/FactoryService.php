@@ -26,6 +26,8 @@ class FactoryService
 
   /**
    * Create a new series with default values
+   *
+   * @return Series
    */
   public function createSeries()
   {
@@ -40,10 +42,14 @@ class FactoryService
 
       $this->dm->persist($series);
       $this->dm->flush();
+
+      return $series;
   }
 
   /**
    * Create a new series with default values
+   *
+   * @return MultimediaObject
    */
   public function createMultimediaObject()
   {
@@ -58,6 +64,8 @@ class FactoryService
 
       $this->dm->persist($mm);
       $this->dm->flush();
+
+      return $mm;
   }
 
 }
