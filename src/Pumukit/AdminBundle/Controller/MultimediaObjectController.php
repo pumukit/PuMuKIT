@@ -60,8 +60,8 @@ class MultimediaObjectController extends AdminController
       $config = $this->getConfiguration();
       $pluralName = $config->getPluralResourceName();
 
-      $mm = $this->get('pumukitschema.factory');
-      $mm->createMultimediaObject();
+      $factory = $this->get('pumukitschema.factory');
+      $factory->createMultimediaObject();
 
       $this->setFlash('success', 'create');
 
