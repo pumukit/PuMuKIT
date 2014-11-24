@@ -34,7 +34,8 @@ class FactoryService
       $series->setPublicDate(new \DateTime("now"));
       $series->setCopyright('UdN-TV');
       foreach ($this->locales as $locale) {
-	  $series->setTitle($this->translator->trans(self::DEFAULT_SERIES_TITLE), $locale);
+          $title = $this->translator->trans(self::DEFAULT_SERIES_TITLE, array(), null, $locale);
+          $series->setTitle($title, $locale);
       }
 
       $this->dm->persist($series);
@@ -51,7 +52,8 @@ class FactoryService
       $mm->setPublicDate(new \DateTime("now"));
       $mm->setRecordDate($mm->getPublicDate());
       foreach ($this->locales as $locale) {
-	  $mm->setTitle($this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE), $locale);
+          $title = $this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE, array(), null, $locale);
+          $mm->setTitle($title, $locale);
       }
 
       $this->dm->persist($mm);

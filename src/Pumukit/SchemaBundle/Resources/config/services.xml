@@ -8,12 +8,14 @@
     <services>
         <service id="pumukitschema.schema.locale" class="Pumukit\SchemaBundle\Listener\LocaleListener">
             <argument type="service" id="request_stack" />
-	    <argument>%kernel.default_locale%</argument>
+            <argument>%kernel.default_locale%</argument>
             <tag name="doctrine_mongodb.odm.event_listener" event="postLoad" />
         </service>
 
         <service id="pumukitschema.factory" class="Pumukit\SchemaBundle\Services\FactoryService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+            <argument type="service" id="translator" />
+            <argument>%pumukit2.locales%</argument>
         </service>
 
         <service id="pumukitschema.pic" class="Pumukit\SchemaBundle\Services\PicService">
