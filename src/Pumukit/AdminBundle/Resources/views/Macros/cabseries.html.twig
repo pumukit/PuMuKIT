@@ -4,7 +4,7 @@
   </h1>
 
 
-  {% if ('' != oneseries.getSubtitle()) %}
+  {% if oneseries.getSubtitle() is not empty %}
     <h2 class="subtitle">
       {{ oneseries.getSubtitle() }}
     </h2>
