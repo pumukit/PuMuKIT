@@ -54,10 +54,10 @@
       </td>
 
       <td>
-        {# TODO <?php include_partial("mms/edit_menu", array('mm' => $mm))?> #}
+	{% include 'PumukitAdminBundle:MultimediaObject:updatemenu.html.twig' with {'mm': mm} %}
       </td>
       {# TODO <?php if(sfConfig::get('app_mail_use')):?> #}
-      {% if true %}
+      {% if false %}
       <td>
         {# TODO <?php include_partial("mms/edit_announce", array('mm' => $mm))?> #}
       </td>
@@ -79,7 +79,7 @@
 	{% endif %}
       </td>
       <td>
-         <span>{{ mm.audio ? 'Audio':'Video' }}</span>
+         {# TODO <span>{{ mm.audio ? 'Audio':'Video' }}</span> #}
       </td>
       <td onclick="click_fila_edit('mm', this, {{ mm.id }})" >
         {% set url_set = false %}
@@ -105,10 +105,10 @@
         {{ mm.getDurationString() }}
       </td>
       <td onclick="click_fila_edit('mm', this, {{ mm.id }})">
-        {{ mm.getRecordDate() }}
+        {{ mm.getRecordDate()|date('d-m-Y') }}
       </td>
       <td onclick="click_fila_edit('mm', this, {{ mm.id }})" >
-        {{ mm.getPublicDate() }}
+        {{ mm.getPublicDate()|date('d-m-Y') }}
       </td>
     </tr>
   {% endfor %}
