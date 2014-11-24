@@ -15,16 +15,16 @@ class SeriesFormType extends AbstractType
     {
         $builder
       ->add('announce', 'checkbox', 
-	    array('required' => false, 'label' => 'New'))
+        array('required' => false, 'label' => 'New'))
       ->add('i18n_title', 'texti18n',
         array('attr' => array('style' => 'width: 420px'), 'label' => 'Title'))
       ->add('i18n_keyword', 'texti18n',
-        array('attr' => array('style' => 'width: 420px'), 'label' => 'Keyword'))
+        array('required' => false, 'attr' => array('style' => 'width: 420px'), 'label' => 'Keyword'))
       ->add('i18n_copyright', 'texti18n',
         array('required' => false, 'attr' => array('style' => 'width: 420px'), 'label' => 'Copyright'))
-	  ->add('series_type', null, array('required' => false, 'label' => 'Channel'))
-	  ->add('public_date', new SeriesdateType(),
-		array('attr' => array('style' => 'width: 420px'), 'data_class' => 'DateTime', 'label' => 'Public Date'))
+      ->add('series_type', null, array('required' => false, 'label' => 'Channel'))
+      ->add('public_date', new SeriesdateType(),
+        array('attr' => array('style' => 'width: 420px'), 'data_class' => 'DateTime', 'label' => 'Public Date'))
       ->add('i18n_description', 'textareai18n',
         array('required' => false, 'attr' => array('style' => 'width: 420px'), 'label' => 'Description'))
       ->add('i18n_header', 'textareai18n',
