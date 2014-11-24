@@ -1224,12 +1224,12 @@ class MultimediaObject
    *
    * @return string
    */
-  static public function getDurationString()
+  public function getDurationString()
   {
-    if (isset($this->duration)){
+    if ($this->duration > 0){
       $min =  floor($this->duration / 60);
-      
       $seg = $this->duration %60;
+
       if ($seg < 10 ) $seg = '0' . $seg;
       
       if ($min == 0 ) $aux = $seg . "''";
@@ -1237,7 +1237,7 @@ class MultimediaObject
       
       return $aux;
     }else{
-      return '';
+      return "0''";
     }
   }
 
