@@ -21,7 +21,7 @@
     </tr>
   {% endif %}
   {% for event in events %}
-    <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ loop.index % 2}} {{ event.id == app.session.get('admin/event/id')?'tv_admin_row_this':'' }}" >
+    <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ loop.index % 2 }} {{ event.id == app.session.get('admin/event/id')?'tv_admin_row_this':'' }}" >
       <td>
         <input id="{{ event.id }}" class="event_checkbox" type="checkbox">
       </td>
