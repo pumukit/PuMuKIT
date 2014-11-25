@@ -5,7 +5,7 @@ namespace Pumukit\AdminBundle\Form\Type\Other;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class SeriesdateType extends AbstractType
+class Html5dateType extends AbstractType
 {
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
@@ -21,6 +21,6 @@ class SeriesdateType extends AbstractType
 
     public function getName()
     {
-        return 'seriesdate';
+        return 'html5date';
     }
 }

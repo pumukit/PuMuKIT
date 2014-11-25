@@ -25,17 +25,14 @@
             <tag name="form.type" alias="pumukitadmin_user" />
         </service>
 
-	<!-- TODO Service not necesary -->
         <service id="pumukitadmin.form.type.direct" class="Pumukit\AdminBundle\Form\Type\DirectType">
             <tag name="form.type" alias="pumukitadmin_direct" />
         </service>
 
-	<!-- TODO Service not necesary -->
         <service id="pumukitadmin.form.type.event" class="Pumukit\AdminBundle\Form\Type\EventType">
             <tag name="form.type" alias="pumukitadmin_event" />
         </service>
 
-	<!-- TODO Service not necesary -->
         <service id="pumukitadmin.form.type.role" class="Pumukit\AdminBundle\Form\Type\RoleType">
             <tag name="form.type" alias="pumukitadmin_role" />
         </service>
@@ -46,6 +43,10 @@
 
         <service id="pumukitadmin.form.type.series" class="Pumukit\AdminBundle\Form\Type\SeriesFormType">
             <tag name="form.type" alias="pumukitadmin_series" />
+        </service>
+
+        <service id="pumukitadmin.form.type.mms" class="Pumukit\AdminBundle\Form\Type\MultimediaObjectType">
+            <tag name="form.type" alias="pumukitadmin_mms" />
         </service>
     </services>
 </container>

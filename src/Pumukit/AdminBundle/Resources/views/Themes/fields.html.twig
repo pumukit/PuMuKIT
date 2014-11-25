@@ -415,7 +415,7 @@
   {% trans %}Duration(min){% endtrans %}: <input style="margin-top: 5px;" type="number" min="1" size="6" value="{{ value['duration']|default("") }}" id="{{ id }}_duration" name="{{ full_name }}[duration]"/>
 {%- endblock eventschedule_widget %}
 
-{# Series Widgets #}
-{% block seriesdate_widget -%}
+{# HTML5 Date Widget #}
+{% block html5date_widget -%}
   <input type="datetime-local" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value|date('Y-m-d\\TH:i:s') }}" {% endif %}/>
 {% endblock %}
