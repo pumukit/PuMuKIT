@@ -20,11 +20,11 @@
 
 	<input type="hidden" name="id" id="id" value="{{ series.id }}">
 	<div id="remember_save_series" style="display: none; position: absolute; color:red; border: 1px solid red; padding: 5px; background-color:#fdc; font-weight:bold;">
-	  Pulse OK para que el cambio tenga efecto  </div>
+	  {% trans %}Press OK for the change to take effect{% endtrans %} </div>
 
 	<ul class="tv_admin_actions">
-	  <span id="series_save_error" style="color:red; opacity: 0.0; filter: alpha(opacity=0); ZOOM:1">Guardado ERROR</span>
-	  <span id="series_save_ok" style="color:blue; opacity: 0.0; filter: alpha(opacity=0);ZOOM:1">Guardado OK</span>
+	  <span id="series_save_error" style="color:red; opacity: 0.0; filter: alpha(opacity=0); ZOOM:1">{% trans %}Saved ERROR{% endtrans %}</span>
+	  <span id="series_save_ok" style="color:blue; opacity: 0.0; filter: alpha(opacity=0);ZOOM:1">{% trans %}Saved OK{% endtrans %}</span>
 	  <li><input type="submit" name="OK" value="{% trans %}OK{% endtrans %}" class="tv_admin_action_save" onclick="$('remember_save_series').hide();" ></li>
 	  {# TODO onclick="if(comprobar_form_series($('public_date').value, /^(\d+)\/(\d+)\/(\d+) (\d+):(\d+)(:(\d+))?$/)){$('remember_save_series').hide();}else{return false}" #}
 	  <li><input type="reset" name="reset" value="{% trans %}Reset{% endtrans %}" class="tv_admin_action_delete" onclick="$('remember_save_series').hide()"></li>
@@ -72,7 +72,7 @@
 	<div class="form-row" id="pumukitadmin_series_structure">
 	  <label for="series_template_id" class="long">{% trans %}Structure{% endtrans %}:</label>
 	  <div class="content content_long">
-	    <select name="serial_template_id" id="series_template_id" onchange="$('remember_save_serial').show()"><option value="1" selected="selected">date</option>
+	    <select name="serial_template_id" id="series_template_id" onchange="$('remember_save_series').show()"><option value="1" selected="selected">date</option>
 	      <option value="2">date_all</option>
 	      <option value="3">date_subserial</option>
 	      <option value="4">subserial</option>
@@ -84,7 +84,7 @@
             'control_name' => 'serial_template_id',
             'peer_method' => 'doSelect',
             'include_blank' => false,
-            'onchange' => "$('remember_save_serial').show()",
+            'onchange' => "$('remember_save_series').show()",
 	    )); echo $value ? $value : '&nbsp;' ?>
 	    #}
          {#
@@ -96,10 +96,17 @@
   </Form>
 </div>
 
-<script>
-$(document).ready( function() {
-    $('*[id^="pumukitadmin_series_"]').change(function() {
-       $('remember_save_series').show();
+<script type="text/javascript">
+  
+  Event.observe(window, 'load', rememberSave, false);
+
+  function rememberSave(){
+    var inputs = document.querySelectorAll("*[id^='pumukitadmin_series_']");
+    [].forEach.call(inputs, function(el, i){
+        el.addEventListener("change", function(){
+          $('remember_save_series').show();
+        });
     });
-});
+  }
+
 </script>
