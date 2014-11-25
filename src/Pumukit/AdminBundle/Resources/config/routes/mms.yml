@@ -1,5 +1,5 @@
 pumukitadmin_mms_index:
-    pattern: /series/{id}
+    pattern: /series
     methods: [GET]
     defaults:
         _controller: pumukitadmin.controller.mms:indexAction

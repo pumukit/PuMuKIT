@@ -30,14 +30,14 @@
        {% trans %}There are no multimedia objects with those values.{% endtrans %}
     </div>
   {% endif %}
-  {# TODO <?php $t = count($mms) ; for( $i=0; $i<$t; $i++): $mm = $mms[$i]; $odd = fmod($i, 2) ?> #}
+
   {% for mm in mms %}
     <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ loop.index % 2 }} {{ mm.id == app.session.get('admin/mms/id')?'tv_admin_row_this':'' }}" >
       <td>
         <input id="{{ mm.id }}" class="mm_checkbox" type="checkbox">
       </td>
       <td>
-	<img alt="{{ mm.status }}" title="{% trans %}status{% endtrans %}" class="miniTag" id="table_mms_status_{{ mm.id }}" src="/legacy/images/admin/bbuttons/mm{{ mm.status }}_inline.gif">
+	<img alt="{{ mm.status }}" title="{% trans %}status{% endtrans %}" class="miniTag" id="table_mms_status_{{ mm.id }}" {# TODO src="/legacy/images/admin/bbuttons/mm{{ mm.status }}_inline.gif" #}>
       </td>
       <td>
 	{# TODO define mm.announce #}
@@ -81,7 +81,7 @@
       <td>
          {# TODO <span>{{ mm.audio ? 'Audio':'Video' }}</span> #}
       </td>
-      <td onclick="click_fila_edit('mm', this, {{ mm.id }})" >
+      <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitadmin_mms_update', {'id': mm.id}) }}')" >
         {% set url_set = false %}
 	{% if mm.getPics() is not empty %}
 	  {% for pic in mm.getPics() if not url_set %}
@@ -95,27 +95,26 @@
           <img class="mini" src="/legacy/images/sin_foto.jpg" alt="{% trans %}No_pic{% endtrans %}" height="23" width="30">
 	{% endif %}
       </td>
-      <td onclick="click_fila_edit('mm', this, {{ mm.id }})" >
+      <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitadmin_mms_update', {'id': mm.id}) }}')" >
         {{ mm.id }}
       </td>
-      <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitadmin_mms_update', {'id': mm.id}) }}')" >
+      <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitadmin_mms_update', {'id': mm.id}) }}')" >
         {{ mm.getTitle() }}
       </td>
       <td>
         {{ mm.getDurationString() }}
       </td>
-      <td onclick="click_fila_edit('mm', this, {{ mm.id }})">
+      <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitadmin_mms_update', {'id': mm.id}) }}')" >
         {{ mm.getRecordDate()|date('d-m-Y') }}
       </td>
-      <td onclick="click_fila_edit('mm', this, {{ mm.id }})" >
+      <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitadmin_mms_update', {'id': mm.id}) }}')" >
         {{ mm.getPublicDate()|date('d-m-Y') }}
       </td>
     </tr>
   {% endfor %}
   {% if mms|length < 11 %}
-    {# <?php for ($i=0;$i<(11-$t); $i++): $odd = fmod($i, 2)?> #}
     {% for i in 0..(11-mms|length) %}
-       <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ loop.index % 2 }}">
+       <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ (loop.index + mms|length) % 2 }}">
 	<td style="height: 23px; padding: 0.2%;"></td>
         <td style="padding: 0.2%;"></td>
         <td style="padding: 0.2%;"></td>
