@@ -51,7 +51,7 @@
 <!-- div editar -->
 <div id="edit_series" class="tv_admin_edit">
   {% if(app.session.has('admin/series/id')) %}
-    {{ render_hinclude(url('pumukitadmin_series_update', {'id': app.session.get('admin/series/id')})) }}
+    {{ render(url('pumukitadmin_series_update', {'id': app.session.get('admin/series/id')})) }}
   {% endif %}
 
   <script type="text/javascript"> {# TODO check all url_for routes #}

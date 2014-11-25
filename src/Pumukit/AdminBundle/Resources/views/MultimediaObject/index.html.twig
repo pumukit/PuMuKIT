@@ -82,8 +82,12 @@
 </div>
 
 <!-- div editar -->
-<div id="edit_mms" class="tv_admin_edit" >  
-      {# TODO <?php include_component('mms', 'edit')?> #}
+<div id="edit_mm" class="tv_admin_edit" >  
+  {% if(app.session.has('admin/series/id') and app.session.has('admin/mms/id')) %}
+    {{ render(url('pumukitadmin_mms_update', {'id': app.session.get('admin/mms/id')})) }}
+  {% endif %}
+
+
 
 <script type="text/javascript">
 var update_file;
