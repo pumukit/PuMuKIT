@@ -4,6 +4,7 @@ namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Pumukit\SchemaBundle\Document\MultimediaObject
@@ -27,6 +28,7 @@ class MultimediaObject
 
   /**
    * @MongoDB\ReferenceOne(targetDocument="Series", inversedBy="multimedia_objects")
+   * // TODO SortableGroup
    */
   private $series;
 
@@ -69,6 +71,7 @@ class MultimediaObject
    * @var int $rank
    *
    * @MongoDB\Int
+   * @Gedmo\SortablePosition
    */
   private $rank;
 
@@ -1050,6 +1053,26 @@ class MultimediaObject
   }
 
   /**
+   * Set I18n title
+   *
+   * @param array $title
+   */
+  public function setI18nTitle(array $title)
+  {
+      $this->title = $title;
+  }
+
+  /**
+   * Get I18n title
+   *
+   * @return array
+   */
+  public function getI18nTitle()
+  {
+      return $this->title;
+  }
+
+  /**
    * Set subtitle
    *
    * @param string $subtitle
@@ -1077,6 +1100,26 @@ class MultimediaObject
       }
 
       return $this->subtitle[$locale];
+  }
+
+  /**
+   * Set I18n subtitle
+   *
+   * @param array $subtitle
+   */
+  public function setI18nSubtitle(array $subtitle)
+  {
+      $this->subtitle = $subtitle;
+  }
+
+  /**
+   * Get I18n subtitle
+   *
+   * @return array
+   */
+  public function getI18nSubtitle()
+  {
+      return $this->subtitle;
   }
 
   /**
@@ -1110,6 +1153,26 @@ class MultimediaObject
   }
 
   /**
+   * Set I18n description
+   *
+   * @param array $description
+   */
+  public function setI18nDescription(array $description)
+  {
+      $this->description = $description;
+  }
+
+  /**
+   * Get I18n description
+   *
+   * @return array
+   */
+  public function getI18nDescription()
+  {
+      return $this->description;
+  }
+
+  /**
    * Set line2
    *
    * @param string $line2
@@ -1137,6 +1200,26 @@ class MultimediaObject
       }
 
       return $this->line2[$locale];
+  }
+
+  /**
+   * Set I18n line2
+   *
+   * @param array $line2
+   */
+  public function setI18nLine2(array $line2)
+  {
+      $this->line2 = $line2;
+  }
+
+  /**
+   * Get I18n line2
+   *
+   * @return array
+   */
+  public function getI18nLine2()
+  {
+      return $this->line2;
   }
 
   /**
@@ -1170,6 +1253,26 @@ class MultimediaObject
   }
 
   /**
+   * Set I18n copyright
+   *
+   * @param array $copyright
+   */
+  public function setI18nCopyright(array $copyright)
+  {
+      $this->copyright = $copyright;
+  }
+
+  /**
+   * Get I18n copyright
+   *
+   * @return array
+   */
+  public function getI18nCopyright()
+  {
+      return $this->copyright;
+  }
+
+  /**
    * Set keyword
    *
    * @param string $keyword
@@ -1197,6 +1300,26 @@ class MultimediaObject
       }
 
       return $this->keyword[$locale];
+  }
+
+  /**
+   * Set I18n keyword
+   *
+   * @param array $keyword
+   */
+  public function setI18nKeyword(array $keyword)
+  {
+      $this->keyword = $keyword;
+  }
+
+  /**
+   * Get I18n keyword
+   *
+   * @return array
+   */
+  public function getI18nKeyword()
+  {
+      return $this->keyword;
   }
 
   /**
