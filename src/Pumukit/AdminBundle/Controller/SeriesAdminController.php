@@ -61,11 +61,10 @@ class SeriesAdminController extends AdminController
    */
   public function updateAction(Request $request)
   {
-    //var_dump($request->getMethod());exit;
-
       $config = $this->getConfiguration();
 
       $resource = $this->findOr404();
+      $this->get('session')->set('admin/series/id', $request->get('id'));
       $form = $this->getForm($resource);
       
       if (($request->isMethod('PUT') || $request->isMethod('POST') || $request->isMethod('DELETE')) && $form->bind($request)->isValid()) {
