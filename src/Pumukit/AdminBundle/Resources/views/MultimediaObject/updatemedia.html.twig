@@ -24,6 +24,7 @@
       </dd>
     </div>
 
+    {# TODO FILES PATH
     <script type="text/javascript">
         if (typeof update_file == 'object') update_file.stop();
         update_file = new Ajax.PeriodicalUpdater('files_mms', '/editar.php/files/list/mm/" + {{ mm.id }} + "', {
@@ -31,7 +32,7 @@
         });
         if (document.location.hash != '#mediaMmHash') update_file.stop();
      </script>
-
+     #}
 
 
     <div class="form-row">
