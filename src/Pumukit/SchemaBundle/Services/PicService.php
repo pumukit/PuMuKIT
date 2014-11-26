@@ -8,9 +8,6 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 
-use Pagerfanta\Adapter\ArrayAdapter;
-use Pagerfanta\Pagerfanta;
-
 class PicService
 {
   private $dm;
@@ -24,9 +21,9 @@ class PicService
   /**
    * Search for resource with id
    */
-  public function getResource($resource_name, $id)
+  public function getResource($resourceName, $id)
   {
-      $repository = $this->dm->getRepository('PumukitSchemaBundle:'.$resource_name);
+      $repository = $this->dm->getRepository('PumukitSchemaBundle:'.$resourceName);
       $resource = $repository->find($id);
 
       return $resource;
@@ -35,59 +32,63 @@ class PicService
   /**
    * Get pics from series or multimedia object
    */
-  public function getPics($resource_name, $id, $page)
+  public function getPics($resourceName, $id, $page, $limit)
   {
-      $repository = $this->dm->getRepository('PumukitSchemaBundle:'.$resource_name);
+      $repository = $this->dm->getRepository('PumukitSchemaBundle:'.$resourceName);
 
-      $limit = 12;
       $offset = ($page - 1) * $limit;
 
+      $collPics = null;
+      $total = 0;
+
       // TODO
-      if (0 == strcmp('Series', $resource_name)){
+      if (0 == strcmp('Series', $resourceName)){
 	// Series: pics from multimedia objects inside Series
 	$series = $repository->find($id);
-	$total_pics = array();
-	$series_mmobjs = $series->getMultimediaObjects();
-	foreach ($series_mmobjs as $mmboj) {
-	  array_push($total_pics, $mmobj->getPics());
+	$auxFirst = true;
+	$seriesMmobjs = $series->getMultimediaObjects();
+	foreach ($seriesMmobjs as $mmobj) {
+	  if ($auxFirst){
+	    $collPics = $mmobj->getPics();
+	    $auxFirst = false;
+	  }else{
+	    foreach ($mmobj->getPics() as $pic) {
+	      $collPics->add($pic);
+	    }
+	  }
 	}
-	$total = count($total_pics);
-	// TODO: get last $limit images according to $page
 
-	if (!empty($total_pics)) {
-	  $array_pics = array_slice($total_pics, -$offset, $limit);
-	}else{
-	  $array_pics = array();
+	if ($collPics !== null){
+	  $total = $collPics->count();
 	}
-      } elseif (0 == strcmp('MultimediaObject', $resource_name)) {
+
+	// TODO: get last $limit images according to $page
+	if (0 !== $total) {
+	  foreach ($collPics as $index => $pic){
+	    if (!in_array($index, range($offset, $limit + $offset - 1))) {
+	      $collPics->remove($pic);
+	    }
+	  }
+	}
+      } elseif (0 == strcmp('MultimediaObject', $resourceName)) {
 	// MultimediaObject: last used pics or pics from video
-	$array_pics = array();
-	$total = 0;
       }
 
-      $adapter = new ArrayAdapter($array_pics);
-      $pics = new Pagerfanta($adapter);
-
-      $pics
-	->setCurrentPage($page, true, true)
-	->setMaxPerPage($limit)
-	;
-
-      return array($pics, $total);
+      return array($collPics, $total);
   }
 
   /**
    * Set a pic from an url into the series
    */
-  public function setPicUrl($resource_name, $resource_id, $pic_url)
+  public function setPicUrl($resourceName, $resource_id, $picUrl)
   {
     // TODO validate repository, resource, url
-    $repository = $this->dm->getRepository('PumukitSchemaBundle:'.$resource_name);
+    $repository = $this->dm->getRepository('PumukitSchemaBundle:'.$resourceName);
     $resource = $repository->find($resource_id);
 
-    $class = "\\Pumukit\\SchemaBundle\\Document\\" . $resource_name . "Pic";
+    $class = "\\Pumukit\\SchemaBundle\\Document\\" . $resourceName . "Pic";
     $pic = new $class();
-    $pic->setUrl($pic_url);    
+    $pic->setUrl($picUrl);    
     $this->dm->persist($pic);
     $this->dm->flush();
 

@@ -5,6 +5,9 @@ namespace Pumukit\AdminBundle\Controller;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 
+use Pagerfanta\Adapter\DoctrineCollectionAdapter;
+use Pagerfanta\Pagerfanta;
+
 class SeriesPicController extends ElementController
 {
   /**
@@ -16,8 +19,8 @@ class SeriesPicController extends ElementController
 
     if (null != $request->attributes->get('id')) {
       $id = $request->attributes->get('id');
-      $pic_service = $this->get('pumukitschema.pic');
-      $series = $pic_service->getResource('Series', $id);
+      $picService = $this->get('pumukitschema.pic');
+      $series = $picService->getResource('Series', $id);
     }else{
       $series = null;
     }
@@ -31,9 +34,18 @@ class SeriesPicController extends ElementController
       $this->get('session')->set('admin/seriespic/page', $request->get('page', 1));
     }
     $page = $this->get('session')->get('admin/seriespic/page', 1);
+    $limit = 12;
 
-    list($pics, $total) = $pic_service->getPics('Series', $id, $page);
-	
+    list($collPics, $total) = $picService->getPics('Series', $id, $page, $limit);
+    
+    $adapter = new DoctrineCollectionAdapter($collPics);
+    $pics = new Pagerfanta($adapter);
+
+    $pics
+      ->setCurrentPage($page, true, true)
+      ->setMaxPerPage($limit)
+      ;
+
     $view = $this
       ->view()
       ->setTemplate($config->getTemplate('create.html'))
@@ -59,8 +71,8 @@ class SeriesPicController extends ElementController
 
     if ($request->get('url', null)){
       $series_id = $request->attributes->get('id');
-      $pic_service = $this->get('pumukitschema.pic');
-      $series = $pic_service->setPicUrl('Series', $series_id, $request->get('url'));
+      $picService = $this->get('pumukitschema.pic');
+      $series = $picService->setPicUrl('Series', $series_id, $request->get('url'));
     }
     
     $view = $this
