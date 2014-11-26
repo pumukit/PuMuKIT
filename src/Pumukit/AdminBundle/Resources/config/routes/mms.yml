@@ -14,11 +14,23 @@ pumukitadmin_mms_create:
         _sylius:
             redirect: pumukitadmin_mms_index
 
-pumukitadmin_mms_update:
-    pattern: /{id}/update
-    methods: [GET, POST]
+pumukitadmin_mms_edit:
+    pattern: /{id}/edit
+    methods: [GET]
     defaults:
-        _controller: pumukitadmin.controller.mms:updateAction
+        _controller: pumukitadmin.controller.mms:editAction
+
+pumukitadmin_mms_update_meta:
+    pattern: /{id}/update/meta
+    methods: [POST]
+    defaults:
+        _controller: pumukitadmin.controller.mms:updatemetaAction
+
+pumukitadmin_mms_update_pub:
+    pattern: /{id}/update/pub
+    methods: [POST]
+    defaults:
+        _controller: pumukitadmin.controller.mms:updatepubAction
 
 pumukitadmin_mms_batch_delete:
     pattern: /delete

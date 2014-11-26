@@ -81,7 +81,7 @@
       <td>
          {# TODO <span>{{ mm.audio ? 'Audio':'Video' }}</span> #}
       </td>
-      <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitadmin_mms_update', {'id': mm.id}) }}')" >
+      <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitadmin_mms_edit', {'id': mm.id}) }}')" >
         {% set url_set = false %}
 	{% if mm.getPics() is not empty %}
 	  {% for pic in mm.getPics() if not url_set %}
@@ -95,19 +95,19 @@
           <img class="mini" src="/legacy/images/sin_foto.jpg" alt="{% trans %}No_pic{% endtrans %}" height="23" width="30">
 	{% endif %}
       </td>
-      <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitadmin_mms_update', {'id': mm.id}) }}')" >
+      <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitadmin_mms_edit', {'id': mm.id}) }}')" >
         {{ mm.id }}
       </td>
-      <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitadmin_mms_update', {'id': mm.id}) }}')" >
+      <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitadmin_mms_edit', {'id': mm.id}) }}')" >
         {{ mm.getTitle() }}
       </td>
       <td>
         {{ mm.getDurationString() }}
       </td>
-      <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitadmin_mms_update', {'id': mm.id}) }}')" >
+      <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitadmin_mms_edit', {'id': mm.id}) }}')" >
         {{ mm.getRecordDate()|date('d-m-Y') }}
       </td>
-      <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitadmin_mms_update', {'id': mm.id}) }}')" >
+      <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitadmin_mms_edit', {'id': mm.id}) }}')" >
         {{ mm.getPublicDate()|date('d-m-Y') }}
       </td>
     </tr>

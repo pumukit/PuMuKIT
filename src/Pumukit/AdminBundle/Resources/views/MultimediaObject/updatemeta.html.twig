@@ -1,10 +1,10 @@
 {# TODO <?php use_helper('Object', 'JSRegExp') ?> #}
 
-{% form_theme form 'PumukitAdminBundle:Themes:fields.html.twig' %}
+{% form_theme form_meta 'PumukitAdminBundle:Themes:fields.html.twig' %}
 
 <div id="tv_admin_container" style="padding: 4px 20px 20px">
 
-  <form onsubmit="new Ajax.Updater('list_mms', '{{ path('pumukitadmin_mms_update', {'id': mm.id}) }}', {
+  <form onsubmit="new Ajax.Updater('list_mms', '{{ path('pumukitadmin_mms_update_meta', {'id': mm.id}) }}', {
 		  asynchronous:true, evalScripts:true, method:'POST',
 		  onFailure:function(request, json){new Effect.Opacity('series_save_error', {duration:3.0, from:1.0, to:0.0});},
 		  onSuccess:function(request, json){
@@ -13,13 +13,15 @@
 		  },
 		  parameters:Form.serialize(this)});
 		  return false;"
-	action="{{ path('pumukitadmin_mms_update', {'id': mm.id}) }}" method="POST">
+	action="{{ path('pumukitadmin_mms_update_meta', {'id': mm.id}) }}" method="POST">
+        {# TODO on action show update_meta #}
 
 	<input type="hidden" name="id" id="id" value="{{ mm.id }}">
 	<input type="hidden" name="series_id" id="series_id" value="{{ series.id }}">
 
 	<div id="remember_save_mm" style="display: none; position: absolute; color:red; border: 1px solid red; padding: 5px; background-color:#fdc; font-weight:bold;">
-          {% trans %}Press OK for the change to take effect{% endtrans %} </div>
+          {% trans %}Press OK for the change to take effect{% endtrans %}
+        </div>
 
 	<ul class="tv_admin_actions" style="width: 100%">
 	  <span id="mm_save_error" style="color:red; opacity: 0.0; filter: alpha(opacity=0); ZOOM:1">{% trans %}Saved ERROR{% endtrans %}</span>
@@ -31,7 +33,7 @@
 
 	<fieldset id="tv_fieldset_none" class="">
 
-  	  {% for child in form %}
+  	  {% for child in form_meta %}
             {{ form_row(child) }}
 	  {% endfor %}
 
@@ -45,7 +47,7 @@
   Event.observe(window, 'load', rememberSaveMm, false);
 
   function rememberSaveMm(){
-    var inputs = document.querySelectorAll("*[id^='pumukitadmin_mms_']");
+    var inputs = document.querySelectorAll("*[id^='pumukitadmin_mms_meta_']");
     [].forEach.call(inputs, function(el, i){
         el.addEventListener("change", function(){
           $('remember_save_mm').show();

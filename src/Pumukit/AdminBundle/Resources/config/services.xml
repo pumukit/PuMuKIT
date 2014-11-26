@@ -45,8 +45,12 @@
             <tag name="form.type" alias="pumukitadmin_series" />
         </service>
 
-        <service id="pumukitadmin.form.type.mms" class="Pumukit\AdminBundle\Form\Type\MultimediaObjectType">
-            <tag name="form.type" alias="pumukitadmin_mms" />
+        <service id="pumukitadmin.form.type.mms.meta" class="Pumukit\AdminBundle\Form\Type\MultimediaObjectMetaType">
+            <tag name="form.type" alias="pumukitadmin_mms_meta" />
         </service>
+        <service id="pumukitadmin.form.type.mms.pub" class="Pumukit\AdminBundle\Form\Type\MultimediaObjectPubType">
+            <tag name="form.type" alias="pumukitadmin_mms_pub" />
+        </service>
+
     </services>
 </container>

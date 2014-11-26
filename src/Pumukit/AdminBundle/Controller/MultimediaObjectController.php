@@ -106,20 +106,63 @@ class MultimediaObjectController extends SortableAdminController
   /**
    * Display the form for editing or update the resource.
    */
-  public function updateAction(Request $request)
+  public function editAction(Request $request)
   {
       $config = $this->getConfiguration();
+
       // TODO VALIDATE SERIES and roles
       $series = $this->getSeries($request);
       $roles = $this->getRoles();
 
       $resource = $this->findOr404();
-      $form = $this->getForm($resource);
+
+      $formMeta = $this->createForm($config->getFormType() . '_meta', $resource);
+      $formPub = $this->createForm($config->getFormType() . '_pub', $resource);
       
-      if (($request->isMethod('PUT') || $request->isMethod('POST') || $request->isMethod('DELETE')) && $form->bind($request)->isValid()) {
-          $event = $this->update($resource);
+      $pubChannelTags = $this->getTagsByCod('PUBCHANNELS');
+      $pubDecisionsTags = $this->getTagsByCod('PUBDECISIONS');
+
+      $view = $this
+      ->view()
+      ->setTemplate($config->getTemplate('edit.html'))
+      ->setData(array(
+              'mm'            => $resource,
+              'form_meta'     => $formMeta->createView(),
+              'form_pub'      => $formPub->createView(),
+	      'series'        => $series,
+	      'roles'         => $roles,
+	      'pub_channels'  => $pubChannelTags,
+	      'pub_decisions' => $pubDecisionsTags
+              ))
+      ;
+
+      return $this->handleView($view);
+  }
+
+  // TODO
+  /**
+   * Display the form for editing or update the resource.
+   */
+  public function updatemetaAction(Request $request)
+  {
+      $config = $this->getConfiguration();
+
+      // TODO VALIDATE SERIES and roles
+      $series = $this->getSeries($request);
+      $roles = $this->getRoles();
+
+      $resource = $this->findOr404();
+
+      $formMeta = $this->createForm($config->getFormType() . '_meta', $resource);
+      $formPub = $this->createForm($config->getFormType() . '_pub', $resource);
+
+      $pubChannelsTags = $this->getTagsByCod('PUBCHANNELS');
+      $pubDecisionsTags = $this->getTagsByCod('PUBDECISIONS');
+
+      if (($request->isMethod('PUT') || $request->isMethod('POST') || $request->isMethod('DELETE')) && $formMeta->bind($request)->isValid()) {
+	$event = $this->update($resource);
           if (!$event->isStopped()) {
-              $this->setFlash('success', 'update');
+              $this->setFlash('success', 'updatemeta');
 
 	      $criteria = $this->getCriteria($config);
 	      $resources = $this->getResources($request, $config, $criteria);	      
@@ -140,17 +183,84 @@ class MultimediaObjectController extends SortableAdminController
       }
 
       if ($config->isApiRequest()) {
-          return $this->handleView($this->view($form));
+          return $this->handleView($this->view($formMeta));
       }
 
       $view = $this
       ->view()
-      ->setTemplate($config->getTemplate('update.html'))
+      ->setTemplate($config->getTemplate('edit.html'))
       ->setData(array(
-              'mm'     => $resource,
-              'form'   => $form->createView(),
-	      'series' => $series,
-	      'roles'  => $roles
+              'mm'            => $resource,
+              'form_meta'     => $formMeta->createView(),
+              'form_pub'      => $formPub->createView(),
+	      'series'        => $series,
+	      'roles'         => $roles,
+	      'pub_channels'  => $pubChannelsTags,
+	      'pub_decisions' => $pubDecisionsTags
+              ))
+      ;
+
+      return $this->handleView($view);
+  }
+
+  // TODO
+  /**
+   * Display the form for editing or update the resource.
+   */
+  public function updatepubAction(Request $request)
+  {
+      $config = $this->getConfiguration();
+
+      // TODO VALIDATE SERIES and roles
+      $series = $this->getSeries($request);
+      $roles = $this->getRoles();
+
+      $resource = $this->findOr404();
+
+      $formMeta = $this->createForm($config->getFormType() . '_meta', $resource);
+      $formPub = $this->createForm($config->getFormType() . '_pub', $resource);
+
+      $pubChannelsTags = $this->getTagsByCod('PUBCHANNELS');
+      $pubDecisionsTags = $this->getTagsByCod('PUBDECISIONS');
+      
+      if (($request->isMethod('PUT') || $request->isMethod('POST') || $request->isMethod('DELETE')) && $formPub->bind($request)->isValid()) {
+	$event = $this->update($resource);
+          if (!$event->isStopped()) {
+              $this->setFlash('success', 'updatepub');
+
+	      $criteria = $this->getCriteria($config);
+	      $resources = $this->getResources($request, $config, $criteria);	      
+
+	      $pluralName = $config->getPluralResourceName();
+	      
+	      $view = $this
+		->view()
+		->setTemplate($config->getTemplate('list.html'))
+		->setTemplateVar($pluralName)
+		->setData($resources)
+		;
+	      
+	      return $this->handleView($view);
+          }
+
+          $this->setFlash($event->getMessageType(), $event->getMessage(), $event->getMessageParams());
+      }
+
+      if ($config->isApiRequest()) {
+          return $this->handleView($this->view($formPub));
+      }
+
+      $view = $this
+      ->view()
+	->setTemplate($config->getTemplate('edit.html'))
+      ->setData(array(
+              'mm'            => $resource,
+              'form_meta'     => $formMeta->createView(),
+              'form_pub'      => $formPub->createView(),
+	      'series'        => $series,
+	      'roles'         => $roles,
+	      'pub_channels'  => $pubChannelsTags,
+	      'pub_decisions' => $pubDecisionsTags
               ))
       ;
 
@@ -186,4 +296,16 @@ class MultimediaObjectController extends SortableAdminController
 
     return $roles;
   }
+
+  /**
+   * Get all roles
+   */
+  private function getTagsByCod($cod)
+  {
+    $dm = $this->get('doctrine_mongodb.odm.document_manager');
+    $repository = $dm->getRepository('PumukitSchemaBundle:Tag');
+    $tags = $repository->findOneByCod($cod)->getChildren();
+
+    return $tags;
+  }  
 }

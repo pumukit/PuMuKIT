@@ -84,7 +84,7 @@
 <!-- div editar -->
 <div id="edit_mm" class="tv_admin_edit" >  
   {% if(app.session.has('admin/series/id') and app.session.has('admin/mms/id')) %}
-    {{ render(url('pumukitadmin_mms_update', {'id': app.session.get('admin/mms/id')})) }}
+    {{ render(url('pumukitadmin_mms_edit', {'id': app.session.get('admin/mms/id')})) }}
   {% endif %}
 
 

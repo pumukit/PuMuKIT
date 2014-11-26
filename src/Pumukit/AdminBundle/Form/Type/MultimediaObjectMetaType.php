@@ -5,10 +5,10 @@ namespace Pumukit\AdminBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Pumukit\SchemaBundle\Document\MultimediObject;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\AdminBundle\Form\Type\Other\Html5dateType;
 
-class MultimediaObjectType extends AbstractType
+class MultimediaObjectMetaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -45,6 +45,6 @@ class MultimediaObjectType extends AbstractType
 
     public function getName()
     {
-        return 'pumukitadmin_mms';
+        return 'pumukitadmin_mms_meta';
     }
 }
