@@ -7,7 +7,7 @@
         <input id="{{ tag.id }}" class="category_checkbox" type="checkbox">
       </td>
       <td>
-          <a href="#" title="{% trans %}delete{% endtrans %}" onclick="return cat_delete('{{ tag.id }}', '{{ tag.parent.id }}', '{{ tag.parent.cod }}')">
+          <a href="#" title="{% trans %}delete{% endtrans %}" onclick="return cat_delete('{{ tag.id }}', '{{ tag.cod }}', '{{ tag.parent.id }}')">
                <img alt="{% trans %}delete{% endtrans %}"  src="/legacy/images/admin/mbuttons/delete_inline.gif">
           </a>
       </td>

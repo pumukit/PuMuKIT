@@ -9,7 +9,7 @@
 {% if 'dup key' in flashMessage %}
 <script type="text/javascript">
   window.addEventListener("load", function () {
-  cat_error('creating');
+  cat__error('creating');
   }, false);
 </script>
 {% endif %}
@@ -101,8 +101,8 @@ function cat_relation_change(one_id, two_id, value) {
 }
 
 
-function cat_delete(id, pid, pcod) {
-  if (window.confirm('{% trans %}Are you sure you want to delete the tag with code{% endtrans %} ' + pcod + '?')) {
+function cat_delete(id, cod, pid) {
+  if (window.confirm('{% trans %}Are you sure you want to delete the tag with code{% endtrans %} ' + cod + '?')) {
     var url = '{{ path('pumukitadmin_tag_delete', {'id': '___id___'}) }}';
     new Ajax.Request(url.replace('___id___', id), {
       metod: 'DELETE',
@@ -112,7 +112,7 @@ function cat_delete(id, pid, pcod) {
       onFailure: function() {window.alert('{% trans %}Tags with children can not be deleted.{% endtrans %}')},
       onSuccess: function(response) {
         $('row_cat_' +id).remove();
-        if ($$('.d_' + pcod).length == 0) {
+        if ($$('.d_' + pid).length == 0) {
 	  $$('#row_cat_' + pid + ' .expanded').each(function(e){
 						     e.removeClassName("expanded");
 						     e.addClassName("element")});
