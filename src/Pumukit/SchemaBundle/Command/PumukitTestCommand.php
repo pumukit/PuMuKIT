@@ -6,6 +6,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Finder\Finder;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Pumukit\SchemaBundle\Document\Tag;
 
@@ -14,12 +15,14 @@ class PumukitTestCommand extends ContainerAwareCommand
     private $dm = null;
     private $repo = null;
 
+    private $tagsPath = "../Resources/data/tags/";
+
     protected function configure()
     {
         $this
             ->setName('pumukit:init:tags')
             ->setDescription('Pumukit test command')
-            ->addArgument('file', InputArgument::REQUIRED, 'Input CSV path')
+            ->addArgument('file', InputArgument::OPTIONAL, 'Input CSV path')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
             ->setHelp(<<<EOT
 TODO
@@ -36,10 +39,22 @@ EOT
         $this->repo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:Tag");
 
         if ($input->getOption('force')) {
-            $file = $input->getArgument('file');
+            $finder = new Finder();
+            $finder->files()->in(__DIR__ . '/' . $this->tagsPath);
+	    $file = $input->getArgument('file');
+            if ((0 == strcmp($file, "")) && (!$finder)){
+		$output->writeln("<error>There's no data to initialize</error>");
+
+	        return -1;
+	    }
             $this->removeTags();
             $root = $this->createRoot();
-            $this->createFromFile($file, $root, $output);
+	    foreach ($finder as $tagFile) {
+      	      $this->createFromFile($tagFile, $root, $output);
+	    }
+	    if ($file){
+	      $this->createFromFile($file, $root, $output);
+	    }
         } else {
             $output->writeln('<error>ATTENTION:</error> This operation should not be executed in a production environment.');
             $output->writeln('');
