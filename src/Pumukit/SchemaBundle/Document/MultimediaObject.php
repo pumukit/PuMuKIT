@@ -40,7 +40,7 @@ class MultimediaObject
   private $broadcast;
 
   /**
-   * @var array $tags
+   * @var ArrayCollection $tags
    *
    * @MongoDB\EmbedMany(targetDocument="Tag")
    */
@@ -274,6 +274,7 @@ class MultimediaObject
   {
       if (!($this->containsTag($tag))) {
           $this->tags[] = $tag;
+	  $tag->addMultimediaObject($this);
       }
   }
 
