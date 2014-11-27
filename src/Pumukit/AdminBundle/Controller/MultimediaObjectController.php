@@ -119,8 +119,8 @@ class MultimediaObjectController extends SortableAdminController
       $formMeta = $this->createForm($config->getFormType() . '_meta', $resource);
       $formPub = $this->createForm($config->getFormType() . '_pub', $resource);
       
-      $pubChannelTags = $this->getTagsByCod('PUBCHANNELS');
-      $pubDecisionsTags = $this->getTagsByCod('PUBDECISIONS');
+      $pubChannelTags = $this->getTagsByCod('PUBCHANNELS', true);
+      $pubDecisionsTags = $this->getTagsByCod('PUBDECISIONS', true);
 
       $view = $this
       ->view()
@@ -156,8 +156,8 @@ class MultimediaObjectController extends SortableAdminController
       $formMeta = $this->createForm($config->getFormType() . '_meta', $resource);
       $formPub = $this->createForm($config->getFormType() . '_pub', $resource);
 
-      $pubChannelsTags = $this->getTagsByCod('PUBCHANNELS');
-      $pubDecisionsTags = $this->getTagsByCod('PUBDECISIONS');
+      $pubChannelsTags = $this->getTagsByCod('PUBCHANNELS', true);
+      $pubDecisionsTags = $this->getTagsByCod('PUBDECISIONS', true);
 
       if (($request->isMethod('PUT') || $request->isMethod('POST') || $request->isMethod('DELETE')) && $formMeta->bind($request)->isValid()) {
 	$event = $this->update($resource);
@@ -220,10 +220,14 @@ class MultimediaObjectController extends SortableAdminController
       $formMeta = $this->createForm($config->getFormType() . '_meta', $resource);
       $formPub = $this->createForm($config->getFormType() . '_pub', $resource);
 
-      $pubChannelsTags = $this->getTagsByCod('PUBCHANNELS');
-      $pubDecisionsTags = $this->getTagsByCod('PUBDECISIONS');
+      $pubChannelsTags = $this->getTagsByCod('PUBCHANNELS', true);
+      $pubDecisionsTags = $this->getTagsByCod('PUBDECISIONS', true);
       
       if (($request->isMethod('PUT') || $request->isMethod('POST') || $request->isMethod('DELETE')) && $formPub->bind($request)->isValid()) {
+
+	$resource = $this->updateTags($request->get('pub_channels', null), "PUCH", $resource);
+	$resource = $this->updateTags($request->get('pub_decisions', null), "PUDE", $resource);
+
 	$event = $this->update($resource);
           if (!$event->isStopped()) {
               $this->setFlash('success', 'updatepub');
@@ -298,14 +302,43 @@ class MultimediaObjectController extends SortableAdminController
   }
 
   /**
-   * Get all roles
+   * Get tags by cod
    */
-  private function getTagsByCod($cod)
+  private function getTagsByCod($cod, $getChildren)
   {
     $dm = $this->get('doctrine_mongodb.odm.document_manager');
     $repository = $dm->getRepository('PumukitSchemaBundle:Tag');
-    $tags = $repository->findOneByCod($cod)->getChildren();
-
+    if ($getChildren){
+      $tags = $repository->findOneByCod($cod)->getChildren();
+    }else{
+      $tags = $repository->findOneByCod($cod);
+    }
     return $tags;
   }  
+
+  /**
+   * Update Tags in Multimedia Object from form
+   */
+  private function updateTags($checkedTags, $codStart, $resource)
+  {
+    if (null !== $checkedTags){
+      foreach ($resource->getTags() as $tag){
+	if ((0 == strpos($tag->getCod(), $codStart)) && (false !== strpos($tag->getCod(), $codStart)) && (!in_array($tag->getCod(), $checkedTags))){
+	  $resource->removeTag($tag);
+	}
+      }
+      foreach ($checkedTags as $cod => $checked) {
+	$tag = $this->getTagsByCod($cod, false);
+	$resource->addTag($tag);
+      }
+    }else{
+      foreach ($resource->getTags() as $tag){
+	if ((0 == strpos($tag->getCod(), $codStart)) && (false !== strpos($tag->getCod(), $codStart))){
+	  $resource->removeTag($tag);
+	}
+      }
+    }
+
+    return $resource;
+  }
 }

@@ -37,135 +37,132 @@
           {% endfor %}
 	  
 	  <!-- Si no tiene master podia no poder cambiar pub_channels -->
-	  {# <div class="form-row" id="list_pub_channel" {{ (mm.getStatus() == 1)?'style="background-color: #f2f2f2"':'' }}> #}
+	  {# TODO define id <div class="form-row" id="list_pub_channel" {{ (mm.getStatus() == 1)?'style="background-color: #f2f2f2"':'' }}> #}
 	  <div class="form-row" id="pumukitadmin_mms_pub_channel" {{ (mm.getStatus() == 1)?'style="background-color: #f2f2f2"':'' }}>
 	    <label for="pub" class="required long">{% trans %}Publication Channels{% endtrans %}:</label>
 	    <div id="list_pub_{{ mm.id }}" class="content content_long">
-	      {% include 'PumukitAdminBundle:MultimediaObject:listpub.html.twig' with {'mm': mm, 'pubs': pub_channels} %}
+	      {% include 'PumukitAdminBundle:MultimediaObject:listpub.html.twig' with {'mm': mm, 'pubs': pub_channels, 'pub_type': 'channels'} %}
+	    </div>
+          </div>
+
+	  <div class="form-row" id="pumukitadmin_mms_pub_decision">
+	    <label for="announce_label" class="required long">{% trans %}Publishing Decisions{% endtrans %}:</label>
+	    <div id="list_pubdecisions_{{ mm.id }}" class="content content_long">
+	      {% include 'PumukitAdminBundle:MultimediaObject:listpub.html.twig' with {'mm': mm, 'pubs': pub_decisions, 'pub_type': 'decisions'} %}
 	    </div>
           </div>
 
 
+            {# TODO editoriales temporizadas dentro del div anterior
+	    <?php // Fila para decision editorial 1?>
+	    <div class="content content_long" style="overflow:hidden;" >
+	      <span class="editorial_fija" style="float:left; margin: 3px 0 0 0; width:115px;">
+		<?php echo checkbox_tag('editorial1', 1, ($mm->getEditorial1() || isset($timeframe1)), array (
+		'onchange' => "procesaEditorial(1);",
+		'style' => 'float:left'
+		) );?>&nbsp; Decisión editorial 1
+	      </span>  
+	      <span class="temporizada" id="temporizada1" style="float:left;" >
+		<span id="radios1" style="margin-top:6px;<?php if (!$mm->getEditorial1() && !isset($timeframe1)) echo "opacity:0.5;"//ojo, necesito algún caracter dentro de este span?>">&nbsp;
+		  <?php echo radiobutton_tag('temporizada1', 'permanente', (!isset($timeframe1)), 
+			array('style'=> 'margin:3px;float:left;', 
+                  'onchange' => 'procesaPermanente(1)'));?> 
+		  <label for ="temporizada1_permanente" style="position:relative;padding:3px;margin-right:3px;color:black;width:auto;"> Permanente</label> 
+		  <?php echo radiobutton_tag('temporizada1', 'temporizada',    (isset($timeframe1)), 
+			array('style'=> 'margin:3px;float:left;', 
+                  'onchange' => 'procesaTemporizada(1)')); ?> 
+		  <label for ="temporizada1_temporizada" style="position:relative;padding:3px 0 3px 3px;color:black;width:auto;"> Temporizado</label>
+		</span>
+		<span id="calendarios1" style="<?php if (!isset($timeframe1)) echo "opacity:0.5;"?>">
+		  <span>del: </span>
+		  <?php // ---- INICIALIZACIÓN VARIABLES DECISION EDITORIAL 1 ----
+			if (!isset($timeframe1)) { // variable a retornar por el formulario
+			// timeframe inicializado para poder pintar el textbox y calendario
+			$timeframe1 = new CategoryMmTimeframe();
+			}?>
+		  <?php $value = object_input_date_tag($timeframe1, 'getTimestart', array (
+			'rich' => true,
+		  'withtime' => true,
+		  'calendar_button_img' => '/images/admin/buttons/date.png',
+		  'control_name' => 'timestart1',
+		  'onchange' => "procesaTimestart(1);",
+		  'size' => 14 //por defecto es 17
+		  )); echo $value ? $value : '&nbsp;' ?>
+		  
+		  <span id="error_start1" style="display:none" class="error"><?php echo __('Formato de fecha no v&aacute;lido')?></span> 
+		  
+		  <?php //echo label_for('timeend1', 'al:', 'class="required long" ') ?>
+		  <span style="margin-left:5px;" >al: </span>
+		  
+		  <?php $value = object_input_date_tag($timeframe1, 'getTimeend', array (
+			'rich' => true,
+		  'withtime' => true,
+		  'calendar_button_img' => '/images/admin/buttons/date.png',
+		  'control_name' => 'timeend1',
+		  'onchange' => "procesaTimeend(1);",
+		  'size' => 14 //por defecto es 17
+		  )); echo $value ? $value : '&nbsp;' ?>        
+		  <span id="intervalo1" style="display:none"></span>
+		  <?php if (isset($interval1cmp) && $interval1cmp !== ''):?>
+		  <script type="text/javascript">mensajeIntervalo ([<?php echo $interval1cmp;?>,''], 1) </script>
+		  <?php endif?>
+		  <span id="error_end1" style="display:none" class="error"><?php echo __('Formato de fecha no v&aacute;lido')?></span>
+		</span>
+		
+		
+	      </span> <!-- fin temporizada -->
+	    </div>
 
-{# TODO
-<div class="form-row">
-  <?php echo label_for('announce_label', __('Decisiones Editoriales:'), 'class="required long" ') ?>
-  <div class="content content_long" style="height:18px">
-    <?php $value = object_checkbox_tag($mm, 'getAnnounce', array (
-      'control_name' => 'announce',
-      'onchange' => "$('remember_save_mm_pub').show()",
-    )); echo $value ? $value : '&nbsp;' ?>&nbsp; <?php echo __('Novedad') ?>
-  </div>
-
-<?php // Fila para decision editorial 1?>
-  <div class="content content_long" style="overflow:hidden;" >
-    <span class="editorial_fija" style="float:left; margin: 3px 0 0 0; width:115px;">
-      <?php echo checkbox_tag('editorial1', 1, ($mm->getEditorial1() || isset($timeframe1)), array (
-        'onchange' => "procesaEditorial(1);",
-        'style' => 'float:left'
-      ) );?>&nbsp; Decisión editorial 1
-    </span>  
-    <span class="temporizada" id="temporizada1" style="float:left;" >
-      <span id="radios1" style="margin-top:6px;<?php if (!$mm->getEditorial1() && !isset($timeframe1)) echo "opacity:0.5;"//ojo, necesito algún caracter dentro de este span?>">&nbsp;
-        <?php echo radiobutton_tag('temporizada1', 'permanente', (!isset($timeframe1)), 
-          array('style'=> 'margin:3px;float:left;', 
-                'onchange' => 'procesaPermanente(1)'));?> 
-            <label for ="temporizada1_permanente" style="position:relative;padding:3px;margin-right:3px;color:black;width:auto;"> Permanente</label> 
-        <?php echo radiobutton_tag('temporizada1', 'temporizada',    (isset($timeframe1)), 
-          array('style'=> 'margin:3px;float:left;', 
-                'onchange' => 'procesaTemporizada(1)')); ?> 
-            <label for ="temporizada1_temporizada" style="position:relative;padding:3px 0 3px 3px;color:black;width:auto;"> Temporizado</label>
-      </span>
-      <span id="calendarios1" style="<?php if (!isset($timeframe1)) echo "opacity:0.5;"?>">
-        <span>del: </span>
-        <?php // ---- INICIALIZACIÓN VARIABLES DECISION EDITORIAL 1 ----
-          if (!isset($timeframe1)) { // variable a retornar por el formulario
-            // timeframe inicializado para poder pintar el textbox y calendario
-            $timeframe1 = new CategoryMmTimeframe();
-          }?>
-        <?php $value = object_input_date_tag($timeframe1, 'getTimestart', array (
-          'rich' => true,
-          'withtime' => true,
-          'calendar_button_img' => '/images/admin/buttons/date.png',
-          'control_name' => 'timestart1',
-          'onchange' => "procesaTimestart(1);",
-          'size' => 14 //por defecto es 17
-            )); echo $value ? $value : '&nbsp;' ?>
-
-        <span id="error_start1" style="display:none" class="error"><?php echo __('Formato de fecha no v&aacute;lido')?></span> 
-    
-        <?php //echo label_for('timeend1', 'al:', 'class="required long" ') ?>
-        <span style="margin-left:5px;" >al: </span>
-        
-          <?php $value = object_input_date_tag($timeframe1, 'getTimeend', array (
-            'rich' => true,
-            'withtime' => true,
-            'calendar_button_img' => '/images/admin/buttons/date.png',
-            'control_name' => 'timeend1',
-            'onchange' => "procesaTimeend(1);",
-            'size' => 14 //por defecto es 17
-              )); echo $value ? $value : '&nbsp;' ?>        
-        <span id="intervalo1" style="display:none"></span>
-        <?php if (isset($interval1cmp) && $interval1cmp !== ''):?>
-        <script type="text/javascript">mensajeIntervalo ([<?php echo $interval1cmp;?>,''], 1) </script>
-        <?php endif?>
-        <span id="error_end1" style="display:none" class="error"><?php echo __('Formato de fecha no v&aacute;lido')?></span>
-      </span>
-      
-      
-    </span> <!-- fin temporizada -->
-  </div>
-
-<?php // Fila para decision editorial 2?>
-  <div class="content content_long" style="overflow:hidden;" >
-    <span class="editorial_fija" style="float:left; margin: 3px 0px 0px 0px; width:115px;">
-    <?php $value = object_checkbox_tag($mm, 'getEditorial2', array (
-      'control_name' => 'editorial2',
-        'onchange' => "procesaEditorial(2);",
-      )); echo $value ? $value : '&nbsp;' ?>&nbsp; Decisión editorial 2
-    </span>  
-
-    <span class="temporizada" id="temporizada2" style="float:left;" >
-      <span id="radios2" style="<?php if (!$mm->getEditorial2() && !isset($timeframe2)) echo "opacity:0.5;"//ojo, necesito algún caracter dentro de este span?>">&nbsp;
-        <?php echo radiobutton_tag('temporizada2', 'permanente', (!isset($timeframe2)), array('style' => 'margin:3px;float:left;', 'onchange' => 'procesaPermanente(2)'));?><label for ="temporizada2_permanente" style="position:relative;padding:3px;margin-right:3px;color:black;width:auto;"><?php echo __(' Permanente')?></label> 
-        <?php echo radiobutton_tag('temporizada2', 'temporizada',    (isset($timeframe2)), array('style' => 'margin:3px;float:left;', 'onchange' => 'procesaTemporizada(2)')); ?><label for ="temporizada2_temporizada" style="position:relative;padding:3px 0 3px 3px;color:black;width:auto;"><?php echo __('Temporizado')?></label>
-      </span>
-      <span id="calendarios2" style="<?php if (!isset($timeframe2)) echo "opacity:0.5;"?>">
-        <span>del: </span>
-        <?php // ---- INICIALIZACIÓN VARIABLES DECISION EDITORIAL 2 ----
-          if (!isset($timeframe2)) { // variable a retornar por el formulario
-              // timeframe inicializado para poder pintar el textbox y calendario
-              $timeframe2 = new CategoryMmTimeframe();
-          }?>
-        <?php $value = object_input_date_tag($timeframe2, 'getTimestart', array (
-          'rich' => true,
-          'withtime' => true,
-          'calendar_button_img' => '/images/admin/buttons/date.png',
-          'control_name' => 'timestart2',
-          'onchange' => "procesaTimestart(2)",
-          'size' => 14 //por defecto es 17
-            )); echo $value ? $value : '&nbsp;' ?>
-     
-        <span id="error_start2" style="display:none" class="error"><?php echo __('Formato de fecha no v&aacute;lido')?></span> 
-        <span style="margin-left:5px;" >al: </span>       
-          <?php $value = object_input_date_tag($timeframe2, 'getTimeend', array (
-            'rich' => true,
-            'withtime' => true,
-            'calendar_button_img' => '/images/admin/buttons/date.png',
-            'control_name' => 'timeend2',
-            'onchange' => "procesaTimeend(2);",
-            'size' => 14 //por defecto es 17
-              )); echo $value ? $value : '&nbsp;' ?> 
-        <span id="intervalo2" style="display:none"></span>
-        <?php if (isset($interval2cmp) && $interval2cmp !== ''):?>
-        <script type="text/javascript">mensajeIntervalo([<?php echo $interval2cmp;?>,''], 2) </script>
-        <?php endif?>
-        <span id="error_end2" style="display:none" class="error"><?php echo __('Formato de fecha no v&aacute;lido')?></span> 
-      </span>
-    </span> <!-- fin temporizada -->
-  </div>
-</div>
-#}
+	    <?php // Fila para decision editorial 2?>
+	    <div class="content content_long" style="overflow:hidden;" >
+	      <span class="editorial_fija" style="float:left; margin: 3px 0px 0px 0px; width:115px;">
+		<?php $value = object_checkbox_tag($mm, 'getEditorial2', array (
+		      'control_name' => 'editorial2',
+		'onchange' => "procesaEditorial(2);",
+		)); echo $value ? $value : '&nbsp;' ?>&nbsp; Decisión editorial 2
+	      </span>  
+	      
+	      <span class="temporizada" id="temporizada2" style="float:left;" >
+		<span id="radios2" style="<?php if (!$mm->getEditorial2() && !isset($timeframe2)) echo "opacity:0.5;"//ojo, necesito algún caracter dentro de este span?>">&nbsp;
+		  <?php echo radiobutton_tag('temporizada2', 'permanente', (!isset($timeframe2)), array('style' => 'margin:3px;float:left;', 'onchange' => 'procesaPermanente(2)'));?><label for ="temporizada2_permanente" style="position:relative;padding:3px;margin-right:3px;color:black;width:auto;"><?php echo __(' Permanente')?></label> 
+		  <?php echo radiobutton_tag('temporizada2', 'temporizada',    (isset($timeframe2)), array('style' => 'margin:3px;float:left;', 'onchange' => 'procesaTemporizada(2)')); ?><label for ="temporizada2_temporizada" style="position:relative;padding:3px 0 3px 3px;color:black;width:auto;"><?php echo __('Temporizado')?></label>
+		</span>
+		<span id="calendarios2" style="<?php if (!isset($timeframe2)) echo "opacity:0.5;"?>">
+		  <span>del: </span>
+		  <?php // ---- INICIALIZACIÓN VARIABLES DECISION EDITORIAL 2 ----
+			if (!isset($timeframe2)) { // variable a retornar por el formulario
+			// timeframe inicializado para poder pintar el textbox y calendario
+			$timeframe2 = new CategoryMmTimeframe();
+			}?>
+		  <?php $value = object_input_date_tag($timeframe2, 'getTimestart', array (
+			'rich' => true,
+		  'withtime' => true,
+		  'calendar_button_img' => '/images/admin/buttons/date.png',
+		  'control_name' => 'timestart2',
+		  'onchange' => "procesaTimestart(2)",
+		  'size' => 14 //por defecto es 17
+		  )); echo $value ? $value : '&nbsp;' ?>
+		  
+		  <span id="error_start2" style="display:none" class="error"><?php echo __('Formato de fecha no v&aacute;lido')?></span> 
+		  <span style="margin-left:5px;" >al: </span>       
+		  <?php $value = object_input_date_tag($timeframe2, 'getTimeend', array (
+			'rich' => true,
+		  'withtime' => true,
+		  'calendar_button_img' => '/images/admin/buttons/date.png',
+		  'control_name' => 'timeend2',
+		  'onchange' => "procesaTimeend(2);",
+		  'size' => 14 //por defecto es 17
+		  )); echo $value ? $value : '&nbsp;' ?> 
+		  <span id="intervalo2" style="display:none"></span>
+		  <?php if (isset($interval2cmp) && $interval2cmp !== ''):?>
+		  <script type="text/javascript">mensajeIntervalo([<?php echo $interval2cmp;?>,''], 2) </script>
+		  <?php endif?>
+		  <span id="error_end2" style="display:none" class="error"><?php echo __('Formato de fecha no v&aacute;lido')?></span> 
+		</span>
+	      </span> <!-- fin temporizada -->
+	    </div> 
+	  </div>
+	 #}
 
 
 {# TODO
