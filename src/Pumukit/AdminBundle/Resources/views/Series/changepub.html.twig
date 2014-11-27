@@ -84,21 +84,22 @@
             </td>
             {% endif %}
 
-	    {% for p in pubs %}
-	       {% if (0 == p.enable) %}
+	    {% for pub in pubs %}
+	       {% if not pub.getDisplay() %}
                   <td style="background: transparent; color: grey; text-align: center">
                     <input type="checkbox" disabled="disabled" />
                   </td>
                 {% else %}
                   <td style="text-align:center; background: transparent">
                     <!-- SOLO UNA QUERY-->
-                    {% set status = p.hasMm(mm.id) %}
+		    {# <?php $estado = $p->hasMm($mm->getId()) ?> #}
+                    {% set status = mm.containsTag(pub) %}
                       <input type="checkbox"
                            onchange=""
                            name="data[{{ mm.id }}][pub_channels][{{ p.id }}]"
                            class="pub_channel_input_checkbox pub_channel_change_pub_{{ p.id }}"
-                           {{ (0 != status) ? 'checked="checked"' : "" }}
-                           {{ ((2 == status) or (3 == status)) ? 'disabled="disabled"' : '' }}
+                           {{ (status) ? 'checked="checked"' : "" }}
+ 	                   {# TODO <?php echo (($estado === 2)||($estado === 2))?'disabled="disabled"':''?> #}
                     />
                   </td>
                 {% endif %}
