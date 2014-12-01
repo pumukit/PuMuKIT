@@ -41,3 +41,7 @@ pumukitadmin_seriespic:
 pumukitadmin_mms:
     resource: @PumukitAdminBundle/Resources/config/routes/mms.yml
     prefix: /admin/mms
+
+pumukitadmin_person:
+    resource: @PumukitAdminBundle/Resources/config/routes/person.yml
+    prefix: /admin/person

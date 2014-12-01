@@ -1,0 +1,70 @@
+{# TODO <?php use_helper('Object') ?> #}
+
+<div id="tv_admin_container">
+
+<p>
+{% trans %}Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and{% endtrans %} <strong>{% trans %}use him/her{% endtrans %}</strong>. {% trans %}If he/she doesn't exist in the databese{% endtrans %}, <strong>{% trans %}create{% endtrans %}</strong> {% trans %}a new entrance with the written name{% endtrans %}.
+</p>
+
+<fieldset>
+  
+  <div class="form-row">
+    <label for="name" class="required">{% trans %}Name{% endtrans %}:</label>
+    <div class="content">
+      <input type="text" name="name" id="name" value="{% trans %}name to search for{% endtrans %}" autocomplete="on" size="80" />
+      <span id="indicator1" style="display: none"><img alt="{% trans %}working{% endtrans %}..." src="/legacy/images/admin/load/spinner.gif" height="18" width="18"></span>
+      <div id="name_auto_complete" class="auto_complete" style="display:none"></div>
+    </div>
+  </div>
+  
+</fieldset>
+
+
+<ul class="tv_admin_actions">
+  <li>
+    {# TODO PATH CREATERELATION #}
+    <input class="tv_admin_action_create MB_focusable" onclick="
+	var aux=$('name').value;
+	if (aux == '{% trans %}name to search for{% endtrans %}') aux='';
+	Modalbox.show('/editar.php/persons/createrelation/mm/{{ mm.id }}/role/{{ role.id }}/name/' + aux,
+	{title:'Editar Nueva Novedad', width:800}); return false; return false;" type="button" value="{% trans %}New{% endtrans %}">
+
+  </li>
+  <li>
+    {# TODO PATH USE PERSON #}
+    {# TODO send template value #}
+    {% set template = '' %}
+    <input class="tv_admin_action_create" onclick="
+      if(/^\d+ -/.test($('name').value.strip())) { 
+        new Ajax.Updater('{{ role.id }}_person_mms', 
+           '/editar.php/persons/link{{ template }}/preview/true/mm/{{ mm.id }}/role/{{ role.id }}/person/'+parseInt($('name').value.strip()), 
+           {asynchronous:true, evalScripts:true}
+        ); 
+        Modalbox.hide();   
+      }else{
+        alert('{% trans %}Select before a person{% endtrans %}');
+      }
+      return false;" 
+    type="button" value="{% trans %}Use{% endtrans %}" />
+  </li>
+
+
+  <li>
+    <input class="tv_admin_action_delete MB_focusable" onclick="Modalbox.hide(); return false;" type="button" value="{% trans %}Cancel{% endtrans %}">
+  </li>
+</ul>
+
+</div>
+ 
+<div style="clear:right"></div>
+
+
+
+
+
+{# TODO person autocomplete path #}
+<script type="text/javascript">
+  if($('MB_content')) $('MB_content').setStyle({ 'position' : 'static' });
+  new Ajax.Autocompleter('name', 'name_auto_complete', '/editar.php/persons/autoComplete', {minChars: 2, indicator: 'indicator1'});
+  $('name').focus();  $('name').select();
+</script>

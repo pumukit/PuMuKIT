@@ -1,0 +1,87 @@
+pumukitadmin_person_index:
+    pattern: /series
+    methods: [GET]
+    defaults:
+        _controller: pumukitadmin.controller.person:indexAction
+        _sylius:
+            filterable: true
+
+pumukitadmin_person_create:
+    pattern: /{id}/create
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitadmin.controller.person:createAction
+        _sylius:
+            redirect: pumukitadmin_person_index
+
+pumukitadmin_person_createrelation:
+    pattern: /{id}/createrelation
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitadmin.controller.person:createRelationAction
+        _sylius:
+            redirect: pumukitadmin_person_index
+
+pumukitadmin_person_update:
+    pattern: /{id}/update
+    methods: [GET]
+    defaults:
+        _controller: pumukitadmin.controller.person:updateAction
+
+pumukitadmin_person_delete_relation:
+    pattern: /{id}/delete_relation
+    methods: [POST]
+    defaults:
+        _controller: pumukitadmin.controller.person:deleteRelationAction
+
+pumukitadmin_person_batch_delete:
+    pattern: /delete
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitadmin.controller.person:batchDeleteAction
+        _sylius:
+            redirect: pumukitadmin_person_index
+
+pumukitadmin_person_delete:
+    pattern: /{id}
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitadmin.controller.person:deleteAction
+        _sylius:
+            redirect: pumukitadmin_person_index
+
+pumukitadmin_person_copy:
+    pattern: /{id}/copy
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitadmin.controller.person:copyAction
+        _sylius:
+            redirect: pumukitadmin_person_index
+
+pumukitadmin_person_show:
+    pattern: /{id}/show
+    methods: [GET]
+    defaults:
+        _controller: pumukitadmin.controller.person:showAction
+
+pumukitadmin_person_up:
+    pattern: /{id}/up
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitadmin.controller.person:upAction
+        _sylius:
+            redirect: pumukitadmin_person_index
+
+pumukitadmin_person_down:
+    pattern: /{id}/down
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitadmin.controller.person:downAction
+        _sylius:
+            redirect: pumukitadmin_person_index
+
+pumukitadmin_person_list_autocomplete:
+    pattern: /list
+    methods: [GET]
+    defaults:
+        _controller: pumukitadmin.controller.person:listAutocompleteAction
