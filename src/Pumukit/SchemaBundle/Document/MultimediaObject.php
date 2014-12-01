@@ -42,7 +42,7 @@ class MultimediaObject
   /**
    * @var ArrayCollection $tags
    *
-   * @MongoDB\EmbedMany(targetDocument="Tag")
+   * @MongoDB\EmbedMany(targetDocument="EmbeddedTag")
    */
   private $tags;
 
@@ -246,16 +246,6 @@ class MultimediaObject
 
   // Start tag section. Caution: MultimediaObject tags are Tag objects, not strings.
   /**
-   * Set tags
-   *
-   * @param array $tags
-   */
-  public function setTags(array $tags)
-  {
-      $this->tags = new ArrayCollection($tags);
-  }
-
-  /**
    * Get tags
    *
    * @return array
@@ -268,13 +258,14 @@ class MultimediaObject
   /**
    * Add tag
    * The original string tag logic used array_unique to avoid tag duplication.
-   * @param Tag $tag
+   * @param Tag|EmbeddedTag $tag
    */
-  public function addTag(Tag $tag)
+  public function addTag($tag)
   {
-      if (!($this->containsTag($tag))) {
-          $this->tags[] = $tag;
-	  $tag->addMultimediaObject($this);
+      $embedTag = EmbeddedTag::getEmbeddedTag($tag);
+
+      if (!($this->containsTag($embedTag))) {
+          $this->tags[] = $embedTag;
       }
   }
 
@@ -282,28 +273,44 @@ class MultimediaObject
    * Remove tag
    * The original string tag logic used array_search to seek the tag element in array.
    * This function uses doctrine2 arrayCollection contains function instead.
-   * @param Tag $tag
+   * @param Tag|EmbeddedTag $tag
    * @return boolean TRUE if this multimedia_object contained the specified tag, FALSE otherwise.
    */
-  public function removeTag(Tag $tag)
+  public function removeTag($tag)
   {
-      if ($this->tags->contains($tag)) {
-          return $this->tags->removeElement($tag);
+      $this->tags = $this->tags->filter(function ($i) use ($tag) {
+    return $i->getId() === $tag->getId();
+    });
+
+   /*
+
+      $embedTag = EmbeddedTag::getEmbeddedTag($tag);
+
+      var_dump("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv");
+      var_dump(get_class($this->tags));
+      var_dump($this->tags->contains($embedTag));
+      var_dump("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+
+      if ($this->tags->contains($embedTag)) {
+          return $this->tags->removeElement($embedTag);
       }
 
       return false;
+    */
   }
 
   /**
    * Contains tag
    * The original string tag logic used in_array to check it.
    * This function uses doctrine2 arrayCollection contains function instead.
-   * @param Tag $tag
+   * @param Tag|EmbeddedTag $tag
    * @return boolean TRUE if this multimedia_object contained the specified tag, FALSE otherwise.
    */
-  public function containsTag(Tag $tag)
+  public function containsTag($tag)
   {
-      return $this->tags->contains($tag);
+      $embedTag = EmbeddedTag::getEmbeddedTag($tag);
+
+      return $this->tags->contains($embedTag);
   }
 
   /**
@@ -1350,19 +1357,24 @@ class MultimediaObject
    */
   public function getDurationString()
   {
-    if ($this->duration > 0){
-      $min =  floor($this->duration / 60);
-      $seg = $this->duration %60;
+      if ($this->duration > 0) {
+          $min =  floor($this->duration / 60);
+          $seg = $this->duration %60;
 
-      if ($seg < 10 ) $seg = '0' . $seg;
-      
-      if ($min == 0 ) $aux = $seg . "''";
-      else $aux = $min . "' ". $seg ."''";
-      
-      return $aux;
-    }else{
-      return "0''";
-    }
+          if ($seg < 10) {
+              $seg = '0'.$seg;
+          }
+
+          if ($min == 0) {
+              $aux = $seg."''";
+          } else {
+              $aux = $min."' ".$seg."''";
+          }
+
+          return $aux;
+      } else {
+          return "0''";
+      }
   }
 
   /**

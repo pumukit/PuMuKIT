@@ -2,17 +2,14 @@
 
 namespace Pumukit\SchemaBundle\Document;
 
-use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Pumukit\SchemaBundle\Document\Tag
  *
- * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\TagRepository")
- * @Gedmo\Tree(type="materializedPath", activateLocking=true)
+ * @MongoDB\EmbeddedDocument()
  */
-class Tag
+class EmbeddedTag
 {
     /**
    * @var integer $id
@@ -22,15 +19,7 @@ class Tag
   private $id;
 
   /**
-   * @var collection $multimedia_objects
-   *
-   * MongoDB\EmbedMany(targetDocument="MultimediaObject")
-   */
-  //private $multimedia_objects;
-
-  /**
    * @var string $title
-   * //Translatable
    *
    * @MongoDB\Raw
    */
@@ -55,11 +44,6 @@ class Tag
    * @var string $cod
    *
    * @MongoDB\String
-   * @MongoDB\UniqueIndex(order="asc")
-   * @Assert\Regex("/^\w*$/")
-   * @Gedmo\TreePathSource
-   *
-   * TODO Unique Index
    */
   private $cod = "";
 
@@ -99,37 +83,17 @@ class Tag
   private $updated;
 
   /**
-   * @Gedmo\TreeParent
-   * @MongoDB\ReferenceOne(targetDocument="Tag", inversedBy="children")
-   */
-  private $parent;
-
-  /**
-   * @MongoDB\ReferenceMany(targetDocument="Tag", mappedBy="parent")
-   */
-  private $children = array();
-
-  /**
    * @MongoDB\Field(type="string")
-   * @Gedmo\TreePath(separator="|", appendId=false, startsWithSeparator=false, endsWithSeparator=true)
    */
   private $path;
 
   /**
-   * @Gedmo\TreeLevel
    * @MongoDB\Field(type="int")
    */
   private $level;
 
-  /**
-   * @Gedmo\TreeLockTime
-   * @MongoDB\Field(type="date")
-   */
-  private $lockTime;
-
     public function __construct()
     {
-        $this->children = array();
     }
 
   /**
@@ -402,66 +366,6 @@ class Tag
       return $this->getTitle();
   }
 
-  /**
-   * Add multimedia_objects
-   *
-   * @param MultimediaObject $multimediaObjects
-   * @return Tag
-   */
-  /*
-  public function addMultimediaObject(MultimediaObject $multimediaObjects)
-  {
-      $this->multimedia_objects[] = $multimediaObjects;
-
-      return $this;
-  }
-  */
-
-  /**
-   * Remove multimedia_objects
-   *
-   * @param MultimediaObject $multimediaObjects
-   */
-  /*
-  public function removeMultimediaObject(MultimediaObject $multimediaObjects)
-  {
-      $this->multimedia_objects->removeElement($multimediaObjects);
-  }
-  */
-
-  /**
-   * Get multimedia_objects
-   *
-   * @return Collection
-   */
-  /*
-  public function getMultimediaObjects()
-  {
-      return $this->multimedia_objects;
-  }
-  */
-
-    public function setParent(Tag $parent = null)
-    {
-        $this->parent = $parent;
-        $parent->addChild($this);
-    }
-
-    public function getParent()
-    {
-        return $this->parent;
-    }
-
-    public function getChildren()
-    {
-        return $this->children;
-    }
-
-    public function addChild(Tag $tag)
-    {
-        return $this->children[] = $tag;
-    }
-
     public function getLevel()
     {
         return $this->level;
@@ -472,36 +376,29 @@ class Tag
         return $this->path;
     }
 
-    public function getLockTime()
-    {
-        return $this->lockTime;
-    }
-
   /**
-   * Returns true if given node is children of tag
    *
-   * @param Tag $tag
+   * @param EmbeddedTag|Tag $tag
    *
-   * @return bool
+   * @return EmbeddedTag
    */
-  public function isChildrenOf(Tag $tag)
+  public static function getEmbeddedTag($tag)
   {
-      return $tag == $this->getParent();
-  }
+      if ($tag instanceof self) {
+          return $tag;
+      } elseif ($tag instanceof Tag) {
+          $embedTag = new self();
+          $embedTag->setI18nTitle($tag->getI18nTitle());
+          $embedTag->setI18nDescription($tag->getI18nDescription());
+          $embedTag->setSlug($tag->getSlug());
+          $embedTag->setCod($tag->getCod());
+          $embedTag->setMetatag($tag->getMetatag());
+          $embedTag->setDisplay($tag->getDisplay());
+          $embedTag->setLocale($tag->getLocale());
 
-  /**
-   * Returns true if given node is descendant of tag
-   *
-   * @param Tag $tag
-   *
-   * @return bool
-   */
-  public function isDescendantOf(Tag $tag)
-  {
-      if ($tag == $this) {
-          return false;
+          return $embedTag;
       }
 
-      return substr($this->getPath(), 0, strlen($tag->getPath())) === $tag->getPath();
+      throw new \InvalidArgumentException('Only Tag or EmbeddedTag are allowed.');
   }
 }
