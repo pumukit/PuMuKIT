@@ -43,7 +43,9 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $mm->setTitle($title);
         $mm->setSubtitle($subtitle);
         $mm->setDescription($description);
-        $mm->setTags($mm_tags);
+        $mm->addTag($tag1);
+        $mm->addTag($tag2);
+        $mm->addTag($tag3);
 
         $this->assertEquals($series, $mm->getSeries());
         $this->assertEquals($rank, $mm->getRank());
