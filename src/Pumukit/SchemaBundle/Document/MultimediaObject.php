@@ -269,6 +269,7 @@ class MultimediaObject
       }
   }
 
+
   /**
    * Remove tag
    * The original string tag logic used array_search to seek the tag element in array.
@@ -276,27 +277,12 @@ class MultimediaObject
    * @param Tag|EmbeddedTag $tag
    * @return boolean TRUE if this multimedia_object contained the specified tag, FALSE otherwise.
    */
+  //TODO: ADD TEST (yo creo que es !== y no === ver removePicById)
   public function removeTag($tag)
   {
-      $this->tags = $this->tags->filter(function ($i) use ($tag) {
-    return $i->getId() === $tag->getId();
+    $this->tags = $this->tags->filter(function ($i) use ($tag) {
+	return $i->getId() === $tag->getId();
     });
-
-   /*
-
-      $embedTag = EmbeddedTag::getEmbeddedTag($tag);
-
-      var_dump("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv");
-      var_dump(get_class($this->tags));
-      var_dump($this->tags->contains($embedTag));
-      var_dump("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-
-      if ($this->tags->contains($embedTag)) {
-          return $this->tags->removeElement($embedTag);
-      }
-
-      return false;
-    */
   }
 
   /**
