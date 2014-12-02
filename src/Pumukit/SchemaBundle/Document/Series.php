@@ -30,7 +30,7 @@ class Series
   /**
    * @var ArrayCollection $pics
    *
-   * @MongoDB\ReferenceMany(targetDocument="SeriesPic", mappedBy="series")
+   * @MongoDB\EmbedMany(targetDocument="SeriesPic")
    */
   private $pics;
 
@@ -114,6 +114,7 @@ class Series
     public function __construct()
     {
         $this->multimedia_objects = new ArrayCollection();
+        $this->pics = new ArrayCollection();
     }
 
   /**
@@ -826,9 +827,7 @@ class Series
    */
   public function addPic(SeriesPic $pic)
   {
-      $this->pics[] = $pic;
-      $pic->setSeries($this);
-      $pic->setRank(count($this->pics));
+     $this->pics->add($pic);
   }
 
   /**

@@ -90,8 +90,6 @@ class PicService
     $class = "\\Pumukit\\SchemaBundle\\Document\\" . $resourceName . "Pic";
     $pic = new $class();
     $pic->setUrl($picUrl);    
-    $this->dm->persist($pic);
-    $this->dm->flush();
 
     $resource->addPic($pic);
     $this->dm->persist($resource);
