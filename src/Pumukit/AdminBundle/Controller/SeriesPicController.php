@@ -4,9 +4,12 @@ namespace Pumukit\AdminBundle\Controller;
 
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 use Pagerfanta\Pagerfanta;
+
+use Pumukit\SchemaBundle\Document\Series;
 
 class SeriesPicController extends ElementController
 {
@@ -60,6 +63,13 @@ class SeriesPicController extends ElementController
     return $this->handleView($view);
   }
 
+
+
+  public function listAction(Series $series)
+  {
+      return $this->render('PumukitAdminBundle:Pic:list.html.twig', array('series' => $series));
+  }
+
   /**
    * Assign a picture from an url 
    * or from an existing one
@@ -82,5 +92,68 @@ class SeriesPicController extends ElementController
 
     return $this->handleView($view);
   }
-  
+
+
+  public function deleteAction(Request $request)
+  {
+    $picId = $this->getRequest()->get('id');
+
+    $repo = $this->get('doctrine_mongodb')
+      ->getRepository('PumukitSchemaBundle:Series');
+      
+    if (!$series = $repo->findByPicId($picId)) {
+      throw new NotFoundHttpException('Requested series does not exist');
+    }
+
+    $series->removePicById($picId);
+
+    $dm = $this->get('doctrine_mongodb')->getManager();
+    $dm->persist($series);
+    $dm->flush();
+
+    return $this->redirect($this->generateUrl('pumukitadmin_seriespic_list', array('id' => $series->getId())));
+  }
+
+
+  public function upAction(Request $request)
+  {
+    $picId = $this->getRequest()->get('id');
+
+    $repo = $this->get('doctrine_mongodb')
+      ->getRepository('PumukitSchemaBundle:Series');
+      
+    if (!$series = $repo->findByPicId($picId)) {
+      throw new NotFoundHttpException('Requested series does not exist');
+    }
+
+    $series->upPicById($picId);
+
+    $dm = $this->get('doctrine_mongodb')->getManager();
+    $dm->persist($series);
+    $dm->flush();
+
+
+    return $this->redirect($this->generateUrl('pumukitadmin_seriespic_list', array('id' => $series->getId())));
+  }
+
+
+  public function downAction(Request $request)
+  {
+    $picId = $this->getRequest()->get('id');
+
+    $repo = $this->get('doctrine_mongodb')
+      ->getRepository('PumukitSchemaBundle:Series');
+      
+    if (!$series = $repo->findByPicId($picId)) {
+      throw new NotFoundHttpException('Requested series does not exist');
+    }
+
+    $series->downPicById($picId);
+
+    $dm = $this->get('doctrine_mongodb')->getManager();
+    $dm->persist($series);
+    $dm->flush();
+
+    return $this->redirect($this->generateUrl('pumukitadmin_seriespic_list', array('id' => $series->getId())));
+  }
 }
