@@ -850,6 +850,42 @@ class Series
       });
   }
 
+
+
+  /**
+   * TODO Add doc.
+   */
+  public function upPicById($picId)
+  {
+    $this->reorderPicById($picId, true);
+  }
+
+  public function downPicById($picId)
+  {
+    $this->reorderPicById($picId, false);
+  }
+
+  //TODO move out
+  private function reorderPicById($picId, $up=true)
+  {
+    $snapshot = $this->pics->toArray();
+    $this->pics->clear();
+    
+    $out = array();
+    foreach($snapshot as $key => $pic){
+      if ($pic->getId() === $picId) {
+	$out[($key * 10) + ($up?-11:11) ] = $pic;
+      }else{
+	$out[$key * 10] = $pic;
+      }
+    } 
+
+    ksort($out); 
+    foreach($out as $pic) {
+      $this->pics->add($pic);
+    }
+  }
+
   /**
    * Contains pic
    *
