@@ -6,6 +6,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\SeriesPic;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
 class PicService
@@ -38,7 +39,7 @@ class PicService
 
       $offset = ($page - 1) * $limit;
 
-      $collPics = null;
+      $collPics = new ArrayCollection();
       $total = 0;
 
       // TODO
