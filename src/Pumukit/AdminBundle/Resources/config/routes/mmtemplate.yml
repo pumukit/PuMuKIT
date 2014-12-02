@@ -1,0 +1,17 @@
+pumukitadmin_mmtemplate_edit:
+    pattern: /{id}/edit
+    methods: [GET]
+    defaults:
+        _controller: pumukitadmin.controller.mmtemplate:editAction
+
+pumukitadmin_mmtemplate_update_meta:
+    pattern: /{id}/update/meta
+    methods: [POST]
+    defaults:
+        _controller: pumukitadmin.controller.mmtemplate:updatemetaAction
+
+pumukitadmin_mms_update_person:
+    pattern: /{id}/update/person
+    methods: [POST]
+    defaults:
+        _controller: pumukitadmin.controller.mmtemplate:updatepersonAction

@@ -285,4 +285,13 @@ class Broadcast
 
       return $aux;
   }
+
+  /**
+   * to String
+   */
+  public function __toString()
+  {
+      return $this->broadcast_type_id;
+  }
+
 }
