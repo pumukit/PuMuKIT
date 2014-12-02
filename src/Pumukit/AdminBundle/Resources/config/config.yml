@@ -55,3 +55,9 @@ sylius_resource:
             classes:
                 model: Pumukit\SchemaBundle\Document\Person
                 controller: Pumukit\AdminBundle\Controller\PersonController
+        pumukitadmin.mmtemplate:
+            driver: doctrine/mongodb-odm
+            templates: PumukitAdminBundle:MultimediaObjectTemplate
+            classes:
+                model: Pumukit\SchemaBundle\Document\MultimediaObject
+                controller: Pumukit\AdminBundle\Controller\MultimediaObjectTemplateController

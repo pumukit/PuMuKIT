@@ -43,6 +43,8 @@ class FactoryService
       $this->dm->persist($series);
       $this->dm->flush();
 
+      $mm = $this->createMultimediaObject($series, MultimediaObject::STATUS_PROTOTYPE);
+
       return $series;
   }
 
@@ -51,7 +53,7 @@ class FactoryService
    *
    * @return MultimediaObject
    */
-  public function createMultimediaObject($series)
+  public function createMultimediaObject($series, $status = MultimediaObject::STATUS_NEW)
   {
       $mm = new MultimediaObject();
 
@@ -61,7 +63,8 @@ class FactoryService
           $title = $this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE, array(), null, $locale);
           $mm->setTitle($title, $locale);
       }
-      
+      $mm->setStatus($status);
+
       $series->addMultimediaObject($mm);
 
       $this->dm->persist($mm);

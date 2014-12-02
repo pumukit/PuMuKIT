@@ -15,7 +15,7 @@
           <input type="hidden" name="_method" value="DELETE">
           <input type="hidden" name="confirmed" value="true">
           <button type="submit" class="tv_admin_row_post">
-            <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}Delete the series{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">>{% trans %}Delete the series{% endtrans %}
+            <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}Delete the series{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">{% trans %}Delete the series{% endtrans %}
           </button>
         </form>
       </li>
@@ -33,8 +33,7 @@
       </li>
 
       <li class="normal">
-        {# TODO PATH MMTEMPLATES #}
-	<a href="#" onclick="new Ajax.Updater('edit_serials', '/editar.php/mmtemplates/edit/id/{{ oneseries.id}}', {asynchronous:true, evalScripts:true});; return false;"><img alt="{% trans %}edit{% endtrans %}" title="{% trans %}edit{% endtrans %}" class="miniTag" src="/legacy/images/admin/mbuttons/edit_template_inline.gif"> {% trans %}Modify default values from multimedia objects{% endtrans %}</a>
+	<a href="#" onclick="new Ajax.Updater('edit_series', '{{ path('pumukitadmin_mmtemplate_edit', {'id': oneseries.id}) }}', {asynchronous:true, evalScripts:true, method:'GET'}); return false;"><img alt="{% trans %}edit{% endtrans %}" title="{% trans %}edit{% endtrans %}" class="miniTag" src="/legacy/images/admin/mbuttons/edit_template_inline.gif"> {% trans %}Modify default values from multimedia objects{% endtrans %}</a>
       </li>
 
       <li class="normal">

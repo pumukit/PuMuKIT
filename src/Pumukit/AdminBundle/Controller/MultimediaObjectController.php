@@ -274,7 +274,7 @@ class MultimediaObjectController extends SortableAdminController
   /**
    * Get series
    */
-  private function getSeries(Request $request)
+  public function getSeries(Request $request)
   {
       $dm = $this->get('doctrine_mongodb.odm.document_manager');
       $repository = $dm->getRepository('PumukitSchemaBundle:Series');
@@ -292,7 +292,7 @@ class MultimediaObjectController extends SortableAdminController
   /**
    * Get all roles
    */
-  private function getRoles()
+  public function getRoles()
   {
     $dm = $this->get('doctrine_mongodb.odm.document_manager');
     $repository = $dm->getRepository('PumukitSchemaBundle:Role');
@@ -304,7 +304,7 @@ class MultimediaObjectController extends SortableAdminController
   /**
    * Get tags by cod
    */
-  private function getTagsByCod($cod, $getChildren)
+  public function getTagsByCod($cod, $getChildren)
   {
     $dm = $this->get('doctrine_mongodb.odm.document_manager');
     $repository = $dm->getRepository('PumukitSchemaBundle:Tag');

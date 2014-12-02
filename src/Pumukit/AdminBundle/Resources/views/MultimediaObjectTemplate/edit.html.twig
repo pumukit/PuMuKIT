@@ -1,0 +1,43 @@
+{% if mmtemplate is not empty %}
+
+  <div style="text-align:right;">
+    <a href="#" onclick="$('edit_series').innerHTML=''; return false"><img src="/legacy/images/admin/buttons/close.png" alt="{% trans %}CLOSE{% endtrans %}" /></a>
+  </div>
+
+  
+  <!-- actualizar vistaPrevia -->
+  <ul id="menuTab">
+    <li id="metaMmTemplate"   class="noSelMmTemplate" >
+      <a href="#" onclick="menuTabTemplate.select('metaMmTemplate'); return false;" >{% trans %}Metadata{% endtrans %}</a>
+    </li>
+    <li id="categoryMmTemplate" class="noSelMmTemplate" >
+      <a href="#" onclick="menuTabTemplate.select('categoryMmTemplate'); return false;" >{% trans %}Tags{% endtrans %}</a>
+    </li>
+    <li id="personMmTemplate" class="noSelMmTemplate" >
+      <a href="#" onclick="menuTabTemplate.select('personMmTemplate'); return false;" >{% trans %}People{% endtrans %}</a>
+    </li>
+  </ul>
+  
+  <div class="background_id">
+    {% trans %}Default values for series{% endtrans %} {{ mmtemplate.getSeries().getId() }}
+  </div>
+  
+  
+  <div id="metaMmTemplateDiv"  style="display:none;">
+    {% include 'PumukitAdminBundle:MultimediaObjectTemplate:updatemeta.html.twig' with {'mm': mmtemplate} %}
+  </div>
+  
+  <div id="categoryMmTemplateDiv" class="virtual_edit"  style="display:none;">
+    {% include 'PumukitAdminBundle:MultimediaObjectTemplate:updatetags.html.twig' with {'mm': mmtemplate} %}
+  </div>
+
+  <div id="personMmTemplateDiv" style="display:none;">
+    {% include 'PumukitAdminBundle:MultimediaObjectTemplate:updatepeople.html.twig' with {'mm': mmtemplate, 'roles': roles} %}
+  </div>
+ 
+  <script type="text/javascript">
+    window.menuTabTemplate = new menuTab2Class(document.location.hash);
+  </script>
+    
+{% endif %}
+

@@ -52,5 +52,9 @@
             <tag name="form.type" alias="pumukitadmin_mms_pub" />
         </service>
 
+        <service id="pumukitadmin.form.type.mmtemplate.meta" class="Pumukit\AdminBundle\Form\Type\MultimediaObjectTemplateMetaType">
+            <tag name="form.type" alias="pumukitadmin_mmtemplate_meta" />
+        </service>
+
     </services>
 </container>
