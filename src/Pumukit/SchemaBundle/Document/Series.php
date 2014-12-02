@@ -841,6 +841,16 @@ class Series
   }
 
   /**
+   * TODO Add doc.
+   */
+  public function removePicById($picId)
+  {
+      $this->pics = $this->pics->filter(function($pic) use ($picId){
+	  return $pic->getId() !== $picId;
+      });
+  }
+
+  /**
    * Contains pic
    *
    * @param SeriesPic $pic
