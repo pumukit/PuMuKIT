@@ -3,7 +3,11 @@
    <tbody>
    <tr>
     <td style="background-color:transparent" height="53" valign="top" width="15%">
-      <img src="{# TODO FUNCTION {{ series.getFirstUrlPic() }} #}" style="border:3px solid #000000;" height="51" width="60" />
+      {% if series.getFirstUrlPic() is not empty %}
+        <img src="{{ series.getFirstUrlPic() }}" style="border:3px solid #000000;" height="51" width="60" />
+      {% else %}
+	<img class="mini" src="/legacy/images/folder.png" style="border:3px solid #000000;" height="51" width="60">
+      {% endif %}
     </td>
 
     <td style="background-color:transparent" valign="top" width="85%">

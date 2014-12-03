@@ -62,8 +62,11 @@
 	<a href="{{ path('pumukitadmin_mms_index', {'id': oneseries.id }) }}">{% trans %}videos{% endtrans %}</a>
       </td>
       <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitadmin_mms_index', {'id': oneseries.id }) }}')">
-        {# TODO PIC URL ROUTE <?php echo image_tag($series['pic_url'], 'class=mini size=23x23')?> #}
-	<img class="mini" src="/legacy/images/folder.png" alt="Folder" height="23" width="23">
+        {% if oneseries.getFirstUrlPic() is not empty %}
+          <img src="{{ oneseries.getFirstUrlPic() }}" height="23" width="23" />
+        {% else %}
+          <img class="mini" src="/legacy/images/folder.png" alt="{% trans %}Folder{% endtrans %}" height="23" width="23">
+        {% endif %}
       </td>
       <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitadmin_mms_index', {'id': oneseries.id }) }}')">
         <span style="font-weight: bold; ">{{ oneseries.id }}</span>
