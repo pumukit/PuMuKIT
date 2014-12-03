@@ -1,6 +1,3 @@
-
-{# TODO <?php use_helper('Object');?> #}
-
 <div style="height:41px"></div>
 <div id="tv_admin_container" style="padding: 4px 20px 20px">
 <fieldset id="tv_fieldset_none" class="" style="position:relative">
@@ -12,58 +9,48 @@
 
 <div style="float: right; padding: 5px 20px" id="cat_update_link_{{ mm.getSeries().getId() }}">
    {# TODO link or form. Copy path #}
-   <a href="#" onclick="if (window.confirm('{% trans %}Are you sure you want to copy these tags to this series?{% endtrans %}')) { $('cat_update_link_{{ mm.getSeries().getId() }}').innerHTML = 'loading...'; new Ajax.Updater('cat_update_link_{{ mm.getSeries().getId() }}', '/editar.php/mms/serialcategory/mm_id/14574/serial_id/782', {asynchronous:true, evalScripts:true}); }; return false;">{% trans %}Copy these tags to this series{% endtrans %}</a>
+   <a href="#" onclick="if (window.confirm('{% trans %}Are you sure you want to copy these tags to this series?{% endtrans %}')) { $('cat_update_link_{{ mm.getSeries().getId() }}').innerHTML = '{% trans %}loading{% endtrans %}...'; new Ajax.Updater('cat_update_link_{{ mm.getSeries().getId() }}', '/editar.php/mms/serialcategory/mm_id/14574/serial_id/782', {asynchronous:true, evalScripts:true}); }; return false;">{% trans %}Copy these tags to this series{% endtrans %}</a>
 </div>
 
 <dl style="margin: 0px">
 
-   {# TODO
-   <?php /*$aux = CategoryPeer::buildTreeArray(); foreach(($aux[0][CategoryPeer::TREE_ARRAY_CHILDREN]) as $node): $c = $node[CategoryPeer::TREE_ARRAY_NODE] */?>
-   <?php foreach(CategoryPeer::doSelectParents() as $c): $children = $c->getChildren() ?>
-   <?php if(!$c->getDisplay()) continue?>
-   <div class="form-row">
-   <dt><?php echo $c->getName()?>:</dt>
-   <dd>
-     <div id="category<?php echo $c->getId()?>_mms">
+   {% for parent in parent_tags if not parent.getDisplay() %}
+     <div class="form-row">
+     <dt>{{ parent.getTitle() }}:</dt>
+     <dd>
+       <div id="category{{ parent.id }}_mms">
+	 <div style="overflow:hidden;height: 270px">
+	   <div style="width:400px; float: left; height: 260px" class="category" id="all_category_{{ parent.id }}">
+	     {% if (0 != parent.getChildren()|length) %}
+	     <ul class="category_tree" >
+	       {% include 'PumukitAdminBundle:MultimediaObject:listtagsajax.html.twig' with {'mmId': mm.id, 'parent': 'root', 'block_tag': parent.id, 'nodes': parent.getChildren()} %}
+	     </ul>
+	     {% endif %}
+	   </div>
 
-<div style="overflow:hidden;height: 270px"><?php // Altura del espacio para el cajón de categorías?>
-
-<div style="width:400px; float: left; height: 260px" class="category" id="all_category_<?php echo $c->getId()?>">
-   <?php /*if(count($node[CategoryPeer::TREE_ARRAY_CHILDREN])): $children = $node[CategoryPeer::TREE_ARRAY_CHILDREN] */?>
-   <?php if(count($children)):?>
-     <ul class="category_tree" >
-       <?php include_partial('list_categories_ajax', array('mm_id' => $mm->getId(), 
-                                                      'parent'=> 'root', 
-                                                      'block_cat' => $c->getId(),
-                                                      'nodes' => $children)) ?>
-     </ul>
-   <?php endif?>
-</div>
-
-<div style="float: left; padding: 220px 5px 0px">
- <a href="#" onclick="if ( $$('.clicked_category_left')[0] != undefined ) { $$('.clicked_category_left')[0].ondblclick() } return false;">&#8592;</a>
- <a href="#" onclick="if ( $$('.clicked_category_right')[0] != undefined ) { $$('.clicked_category_right')[0].ondblclick() } return false;">&#8594;</a>
-</div>
-
-<div style="width:400px; height:260px; border: 1px solid #bbb; float: left;" class="category" id="select_category_<?php echo $c->getId()?>">
-    <ul class="category_tree" id="select_ul_category_<?php echo $c->getId()?>" >
-       <?php foreach($mm->getCategorys($c) as $mmc):?>
-       <li class="element" id="select_li_<?php echo $mmc->getId() ?>" >
-          <span class="icon">&nbsp;</span>
-          <span onclick="$$('.clicked_category_left').invoke('removeClassName', 'clicked_category_left'); this.addClassName('clicked_category_left');" ondblclick="javascript:del_tree_cat(<?php echo $mmc->getId()?>, <?php echo $mm->getId() ?>);" >
-          <?php echo $mmc->getCod() ?> - <?php echo $mmc->getName() ?> 
-          </span>
-       </li>
-       <?php endforeach?>
-    </ul>
-</div>
-
-</div>
+	   <div style="float: left; padding: 220px 5px 0px">
+	     <a href="#" onclick="if ( $$('.clicked_category_left')[0] != undefined ) { $$('.clicked_category_left')[0].ondblclick() } return false;">&#8592;</a>
+	     <a href="#" onclick="if ( $$('.clicked_category_right')[0] != undefined ) { $$('.clicked_category_right')[0].ondblclick() } return false;">&#8594;</a>
+	   </div>
+	   
+	   <div style="width:400px; height:260px; border: 1px solid #bbb; float: left;" class="category" id="select_category_{{ parent.id }}">
+	     <ul class="category_tree" id="select_ul_category_{{ parent.id }}" >
+	       {% for embedded_tag in mm.getTags() %}
+	         <li class="element" id="select_li_{{ embedded_tag.id }}" >
+		   <span class="icon">&nbsp;</span>
+		   <span onclick="$$('.clicked_category_left').invoke('removeClassName', 'clicked_category_left'); this.addClassName('clicked_category_left');" ondblclick="javascript:del_tree_cat({{ embedded_tag.id }}, {{ mm.id }});" >
+		     {{ embedded_tag.getCod() }} - {{ embedded_tag.getTitle() }} 
+		   </span>
+	         </li>
+	       {% endfor %}
+	     </ul>
+	   </div>
+	   
+	 </div>
+       </div>
+     </dd>
      </div>
-   </dd>
-   </div>
-   <?php endforeach?>
-#}
+   {% endfor %}
 
 </dl>
 </fieldset>
@@ -125,7 +112,7 @@ function create_li_in_select(cat, block_cat_id, mm_id) {
 }
 
 function add_tree_cat(cat_id, mm_id, block_cat_id) {
-  new Ajax.Request(url_for("mms/addCategory") + '/id/' + mm_id,  {
+  new Ajax.Request('{{ path('pumukitadmin_mms_addtag', {'id': mm_id, 'tagId': cat_id}) }}',  {
     method: "post",
     parameters: "category=" + cat_id,
     asynchronous: true, 

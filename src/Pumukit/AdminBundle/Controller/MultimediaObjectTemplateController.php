@@ -21,6 +21,7 @@ class MultimediaObjectTemplateController extends MultimediaObjectController
       // TODO VALIDATE SERIES AND ROLES
       $roles = $this->getRoles();
       $series = $this->getSeries($request);
+      $parentTags = $this->getParentTags();
       $mmtemplate = $this->getMultimediaObjectTemplate($series);
       
       $formMeta = $this->createForm($config->getFormType() . '_meta', $mmtemplate);
@@ -37,7 +38,8 @@ class MultimediaObjectTemplateController extends MultimediaObjectController
               'form_meta'      => $formMeta->createView(),
               'series'        => $series,
               'roles'         => $roles,
-              'pub_decisions' => $pubDecisionsTags
+              'pub_decisions' => $pubDecisionsTags,
+	      'parent_tags'   => $parentTags
               ))
       ;
 
@@ -55,6 +57,7 @@ class MultimediaObjectTemplateController extends MultimediaObjectController
       // TODO VALIDATE SERIES and roles
       $series = $this->getSeries($request);
       $roles = $this->getRoles();
+      $parentTags = $this->getParentTags();
       $mmtemplate = $this->getMultimediaObjectTemplate($series);
 
       $formMeta = $this->createForm($config->getFormType() . '_meta', $mmtemplate);
@@ -86,7 +89,8 @@ class MultimediaObjectTemplateController extends MultimediaObjectController
               'form_meta'     => $formMeta->createView(),
 	      'series'        => $series,
 	      'roles'         => $roles,
-	      'pub_decisions' => $pubDecisionsTags
+	      'pub_decisions' => $pubDecisionsTags,
+	      'parent_tags'   => $parentTags
               ))
       ;
 
