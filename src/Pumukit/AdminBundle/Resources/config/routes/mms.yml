@@ -93,3 +93,11 @@ pumukitadmin_mms_bottom:
         _controller: pumukitadmin.controller.mms:bottomAction
         _sylius:
             redirect: pumukitadmin_mms_index
+
+pumukitadmin_mms_addtag:
+    pattern: /{id}/addtag/
+    methods: [POST]
+    defaults:
+        _controller: pumukitadmin.controller.mms:addTagAction
+        _sylius:
+            redirect: pumukitadmin_mms_edit

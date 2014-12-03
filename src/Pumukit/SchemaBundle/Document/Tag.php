@@ -29,6 +29,13 @@ class Tag
   //private $multimedia_objects;
 
   /**
+   * @var int $number_multimedia_objects
+   *
+   * @MongoDB\Int
+   */
+  private $number_multimedia_objects = 0;
+
+  /**
    * @var string $title
    * //Translatable
    *
@@ -440,6 +447,22 @@ class Tag
       return $this->multimedia_objects;
   }
   */
+
+  /**
+   * Increase number_multimedia_objects
+   */
+  public function increaseNumberMultimediaObjects()
+  {
+    ++$this->number_multimedia_objects;
+  }
+
+  /**
+   * Decrease number_multimedia_objects
+   */
+  public function decreaseMultimediaObjects()
+  {
+    --$this->number_multimedia_objects;
+  }
 
     public function setParent(Tag $parent = null)
     {
