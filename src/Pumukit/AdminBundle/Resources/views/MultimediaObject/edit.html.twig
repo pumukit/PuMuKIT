@@ -50,8 +50,8 @@
   </div>
 
   <script type="text/javascript">
-    //alert('Tengo ('+document.location.hash+') y ('+(['#metaMmHash', '#groundMmHash', '#personMmHash', '#mediaMmHash'].indexOf(document.location.hash))+')');
-    var menuTab = new menuTabClass(document.location.hash);
+    //console.log('Tengo ('+document.location.hash+') y ('+(['#metaMmHash', '#groundMmHash', '#personMmHash', '#mediaMmHash'].indexOf(document.location.hash))+')');
+    window.menuTab = new menuTabClass(document.location.hash);
   </script>
     
 {% endif %}
