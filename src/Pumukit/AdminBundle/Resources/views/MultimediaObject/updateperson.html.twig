@@ -9,7 +9,7 @@
         <dt>{{ role.getName() }}{{ role.getDisplay()?'*':'' }}:</dt>
         <dd>  
           <div id="{{ role.getId() }}_person_mms">
-	    {% include 'PumukitAdminBundle:Person:listrelation.html.twig' with {'people': mm.getPeopleInMultimediaObject(), 'mmId': mm.id, 'role': role} %}
+	    {% include 'PumukitAdminBundle:Person:listrelation.html.twig' with {'people': mm.getPeopleInMultimediaObject(), 'mmId': mm, 'role': role} %}
           </div>
         </dd>
       </div>
