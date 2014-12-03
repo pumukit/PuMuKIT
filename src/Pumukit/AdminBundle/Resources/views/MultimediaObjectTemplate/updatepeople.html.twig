@@ -1,0 +1,23 @@
+<div id="tv_admin_container" style="padding: 4px 20px 20px">
+
+<div style="height:41px"></div>
+
+<fieldset id="tv_fieldset_none" class="">
+  <dl style="margin: 0px">
+    {% for role in roles %}
+      <div class="form-row">
+        <dt>{{ role.getName() }}{{ role.getDisplay()?'*':'' }}:</dt>
+        <dd>  
+          <div id="{{ role.getId() }}_person_mms">
+
+            {% include 'PumukitAdminBundle:Person:listerelationtemplate' with {'people': mm.getPeopleInMultimediaObject(), 'mm': mm, 'role': role} %}
+        
+          </div>
+        </dd>
+      </div>
+    {% endfor %}
+  </dl>
+</fieldset>
+
+
+</div>
