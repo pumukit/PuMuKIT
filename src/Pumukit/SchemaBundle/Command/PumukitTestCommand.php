@@ -133,7 +133,7 @@ EOT
     /**
      *
      */
-    private function createTagFromCsvArray($csv_array, $cat_parent = null)
+    private function createTagFromCsvArray($csv_array, $tag_parent = null)
     {
         $c = new Tag();
         if ($tag = $this->repo->findOneByCod($csv_array[1])) {
@@ -144,8 +144,8 @@ EOT
         $tag->setCod($csv_array[1]);
         $tag->setMetatag($csv_array[3]);
         $tag->setDisplay($csv_array[4]);
-        if ($cat_parent) {
-            $tag->setParent($cat_parent);
+        if ($tag_parent) {
+            $tag->setParent($tag_parent);
         }
         $tag->setTitle($csv_array[5], 'es');
       // TODO Take care of csv language order!
