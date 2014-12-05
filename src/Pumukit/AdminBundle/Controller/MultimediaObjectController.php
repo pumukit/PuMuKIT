@@ -27,7 +27,7 @@ class MultimediaObjectController extends SortableAdminController
       $page = $this->get('session')->get('admin/mms/page', 1);
 
       $coll_mms = $series->getMultimediaObjects();
-      
+
       $adapter = new DoctrineCollectionAdapter($coll_mms);
       $mms = new Pagerfanta($adapter);
       
@@ -61,20 +61,31 @@ class MultimediaObjectController extends SortableAdminController
       $series = $this->getSeries($request);
 
       $factory = $this->get('pumukitschema.factory');
-      $factory->createMultimediaObject($series);
+      $mmobj = $factory->createMultimediaObject($series);
 
       $this->setFlash('success', 'create');
 
-      $criteria = $this->getCriteria($config);
-      $resources = $this->getResources($request, $config, $criteria);
+      $page = $this->get('session')->get('admin/mms/page', 1);
+
+      $coll_mms = $series->getMultimediaObjects();
+
+      $adapter = new DoctrineCollectionAdapter($coll_mms);
+      $mms = new Pagerfanta($adapter);
+      
+      $mms
+	->setCurrentPage($page, true, true)
+	->setMaxPerPage(12)
+	;
 
       $view = $this
-      ->view()
-      ->setTemplate($config->getTemplate('list.html'))
-      ->setTemplateVar($pluralName)
-      ->setData($resources)
-      ;
-
+	->view()
+	->setTemplate($config->getTemplate('list.html'))
+	->setData(array(
+			'series' => $series,
+			'mms' => $mms
+			))
+	;
+      
       return $this->handleView($view);
   }
 
@@ -302,9 +313,6 @@ class MultimediaObjectController extends SortableAdminController
 
       if ($this->get('session')->get('admin/series/id', null)){
 	$series = $repository->find($this->get('session')->get('admin/series/id'));
-      }else{
-	$series = $repository->find($request->get('id'));
-	$this->get('session')->set('admin/series/id', $request->get('id'));
       }
 
       return $series;
