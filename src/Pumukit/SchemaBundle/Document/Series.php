@@ -925,4 +925,21 @@ class Series
     return null;
   }
 
+  /**
+   * Get first pic url
+   *
+   * @return string
+   */
+  public function getFirstUrlPic()
+  {
+    $url = '';
+    foreach ($this->pics as $pic){
+      if (null !== $pic->getUrl()){
+	$url = $pic->getUrl();
+	break;
+      }
+    }
+
+    return $url;
+  }
 }

@@ -113,6 +113,7 @@ class MultimediaObjectController extends SortableAdminController
       // TODO VALIDATE SERIES and roles
       $series = $this->getSeries($request);
       $roles = $this->getRoles();
+      $parentTags = $this->getParentTags();
 
       $resource = $this->findOr404();
 
@@ -132,7 +133,8 @@ class MultimediaObjectController extends SortableAdminController
 	      'series'        => $series,
 	      'roles'         => $roles,
 	      'pub_channels'  => $pubChannelTags,
-	      'pub_decisions' => $pubDecisionsTags
+	      'pub_decisions' => $pubDecisionsTags,
+	      'parent_tags'   => $parentTags
               ))
       ;
 
@@ -150,6 +152,7 @@ class MultimediaObjectController extends SortableAdminController
       // TODO VALIDATE SERIES and roles
       $series = $this->getSeries($request);
       $roles = $this->getRoles();
+      $parentTags = $this->getParentTags();
 
       $resource = $this->findOr404();
 
@@ -196,7 +199,8 @@ class MultimediaObjectController extends SortableAdminController
 	      'series'        => $series,
 	      'roles'         => $roles,
 	      'pub_channels'  => $pubChannelsTags,
-	      'pub_decisions' => $pubDecisionsTags
+	      'pub_decisions' => $pubDecisionsTags,
+	      'parent_tags'   => $parentTags
               ))
       ;
 
@@ -214,6 +218,7 @@ class MultimediaObjectController extends SortableAdminController
       // TODO VALIDATE SERIES and roles
       $series = $this->getSeries($request);
       $roles = $this->getRoles();
+      $parentTags = $this->getParentTags();
 
       $resource = $this->findOr404();
 
@@ -264,11 +269,27 @@ class MultimediaObjectController extends SortableAdminController
 	      'series'        => $series,
 	      'roles'         => $roles,
 	      'pub_channels'  => $pubChannelsTags,
-	      'pub_decisions' => $pubDecisionsTags
+	      'pub_decisions' => $pubDecisionsTags,
+	      'parent_tags'   => $parentTags
               ))
       ;
 
       return $this->handleView($view);
+  }
+
+  /**
+   * Add Tag
+   */
+  public function addTagAction(Request $request)
+  {
+    $config = $this->getConfiguration();
+
+    $resource = $this->findOr404();
+
+    $tagService = $this->get('pumukitschema.tag');
+    $resource = $tagService->addTagToMultimediaObject($resource, $request->get('tagId'));
+
+    return $this->redirectTo($resource);
   }
   
   /**
@@ -302,6 +323,18 @@ class MultimediaObjectController extends SortableAdminController
   }
 
   /**
+   * Get parten tags
+   */
+  public function getParentTags()
+  {
+    $dm = $this->get('doctrine_mongodb.odm.document_manager');
+    $repository = $dm->getRepository('PumukitSchemaBundle:Tag');
+    $parentTags = $repository->findOneByCod('ROOT')->getChildren();
+
+    return $parentTags;
+  }
+
+  /**
    * Get tags by cod
    */
   public function getTagsByCod($cod, $getChildren)
@@ -314,7 +347,7 @@ class MultimediaObjectController extends SortableAdminController
       $tags = $repository->findOneByCod($cod);
     }
     return $tags;
-  }  
+  }
 
   /**
    * Update Tags in Multimedia Object from form

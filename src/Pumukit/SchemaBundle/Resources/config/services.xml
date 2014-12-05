@@ -24,6 +24,10 @@
             <argument>%pumukit2.locales%</argument>
         </service>
 
+        <service id="pumukitschema.tag" class="Pumukit\SchemaBundle\Services\TagService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+        </service>
+
     </services>
 
 </container>

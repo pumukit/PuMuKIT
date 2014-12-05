@@ -1,0 +1,54 @@
+<div style="height:41px"></div>
+<div id="tv_admin_container" style="padding: 4px 20px 20px">
+<fieldset id="tv_fieldset_none" class="" style="position:relative">
+
+<div style="text-align: right; padding: 5px 20px">
+  <input type="checkbox" checked="checked" onchange="toggle_show_all();"/> {% trans %}Show all tags{% endtrans %}
+</div>
+
+
+<dl style="margin: 0px">
+
+   {% for parent in parent_tags if parent.getDisplay() %}
+     <div class="form-row">
+     <dt>{{ parent.getName() }}:</dt>
+     <dd>
+       <div id="category{{ parent.id }}_mms">
+
+	 <div style="overflow:hidden">
+	   
+	   <div style="float: left; height: 260px" class="category" id="all_category_{{ parent.id }}">
+	     {% if (0 != parent.getChildren()|length) %}
+	     <ul class="category_tree" >
+	       {% include 'PumukitAdminBundle:MultimediaObject:listtagsajax.html.twig' with {'mmId': mm.id, 'parent': 'root', 'block_tag': parent.id, 'nodes': parent.getChildren()} %}
+	     </ul>
+	     {% endif %}
+	   </div>
+	   
+	   <div style="height: 160px; float: left; padding: 120px 5px 0px">
+	     <a href="#" onclick="if ( $$('.clicked_category_left')[0] != undefined ) { $$('.clicked_category_left')[0].ondblclick() } return false;">&#8592;</a>
+	     <a href="#" onclick="if ( $$('.clicked_category_right')[0] != undefined ) { $$('.clicked_category_right')[0].ondblclick() } return false;">&#8594;</a>
+	   </div>
+	   
+	   <div style="width:400px; height: 260px; border: 1px solid #bbb; float: left;" class="category" id="select_category_{{ parent.id }}">
+	     <ul class="category_tree" id="select_ul_category_{{ parent.id }}" >
+	       {% for embedded_tag in mm.getTags() %}
+	         <li class="element" id="select_li_{{ embedded_tag.id }}" >
+		   <span class="icon">&nbsp;</span>
+		   <span onclick="$$('.clicked_category_left').invoke('removeClassName', 'clicked_category_left'); this.addClassName('clicked_category_left');" ondblclick="javascript:del_tree_cat({{ embedded_tag.id }}, {{ mm.id }});" >
+		     {{ embedded_tag.getCod() }} - {{ embedded_tag.getName() }} 
+		   </span>
+	         </li>
+	       {% endfor %}
+	     </ul>
+	   </div>
+	   
+	 </div>
+       </div>
+     </dd>
+     </div>
+     {% endfor %}
+     
+</dl>
+</fieldset>
+</div>
