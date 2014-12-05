@@ -9,7 +9,7 @@
 {% if 'dup key' in flashMessage %}
 <script type="text/javascript">
   window.addEventListener("load", function () {
-  cat__error('creating');
+  tag__error('creating');
   }, false);
 </script>
 {% endif %}
@@ -17,7 +17,7 @@
 
 
   <div id="tv_admin_content" style="margin: 0px">
-    <div id="list_categories" name="list_categories">
+    <div id="list_tagegories" name="list_tagegories">
       {% include 'PumukitAdminBundle:Tag:list.html.twig' %}
     </div>
 
@@ -32,8 +32,8 @@
       </ul>
     </div>
 
-    <select id="options_categories" style="margin: 10px 0px; width: 33%"
-            title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('role', $('options_categories'))">
+    <select id="options_tagegories" style="margin: 10px 0px; width: 33%"
+            title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('role', $('options_tagegories'))">
       <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
       <option disabled="">---</option>
       <!-- <option value="delete_sel">Borrar selecionados</option>
@@ -44,9 +44,9 @@
 </div>
 
 <script type="text/javascript">
-function load_children_cat(id, cod) {
+function load_children_tag(id, cod) {
   $$(".c_" + cod).each(function(e){ e.remove() });
-  var tr = $('row_cat_' +id);
+  var tr = $('row_tag_' +id);
   var level = tr.getAttribute('data-level');
   var url = '{{ path('pumukitadmin_tag_children', {'id': '___id___'}) }}';
   new Ajax.Request(url.replace('___id___', id) , {
@@ -65,7 +65,7 @@ function load_children_cat(id, cod) {
 	}
       }
       if ($$('.d_' + cod).length != 0) {
-	$$('#row_cat_' + id + ' .element').each(function(e){
+	$$('#row_tag_' + id + ' .element').each(function(e){
 						  e.addClassName("expanded");
 						  e.removeClassName("element")});
       }
@@ -74,7 +74,7 @@ function load_children_cat(id, cod) {
 
 }
 
-function toggle_section_cat(id, element, level, cod) {
+function toggle_section_tag(id, element, level, cod) {
 
   if(element.parentElement.hasClassName("expanded")){
     $$(".c_" + cod).each(function(e){
@@ -84,7 +84,7 @@ function toggle_section_cat(id, element, level, cod) {
   }else{
     if(element.parentElement.hasClassName("noload")) {
       element.parentElement.removeClassName("noload");
-      load_children_cat(id, cod);
+      load_children_tag(id, cod);
     }else {
       $$(".d_" + cod).each(function(e){e.show()});
     }
@@ -93,7 +93,7 @@ function toggle_section_cat(id, element, level, cod) {
 }
 
 
-function cat_relation_change(one_id, two_id, value) {
+function tag_relation_change(one_id, two_id, value) {
   new Ajax.Request("/editar.php/categories/changetag/oneid/" + one_id + "/twoid/" + two_id + "/value/" + value,  {
     asynchronous: true,
     evalScripts: true,
@@ -101,7 +101,7 @@ function cat_relation_change(one_id, two_id, value) {
 }
 
 
-function cat_delete(id, cod, pid) {
+function tag_delete(id, cod, pid) {
   if (window.confirm('{% trans %}Are you sure you want to delete the tag with code{% endtrans %} ' + cod + '?')) {
     var url = '{{ path('pumukitadmin_tag_delete', {'id': '___id___'}) }}';
     new Ajax.Request(url.replace('___id___', id), {
@@ -111,9 +111,9 @@ function cat_delete(id, cod, pid) {
       parameters:  {'_method': 'DELETE'},
       onFailure: function() {window.alert('{% trans %}Tags with children can not be deleted.{% endtrans %}')},
       onSuccess: function(response) {
-        $('row_cat_' +id).remove();
+        $('row_tag_' +id).remove();
         if ($$('.d_' + pid).length == 0) {
-	  $$('#row_cat_' + pid + ' .expanded').each(function(e){
+	  $$('#row_tag_' + pid + ' .expanded').each(function(e){
 						     e.removeClassName("expanded");
 						     e.addClassName("element")});
       }
@@ -123,7 +123,7 @@ function cat_delete(id, cod, pid) {
   return false;
 }
 
-function cat_error(action){
+function tag_error(action){
   $('div_messages_span_error').innerHTML ='{% trans %}Error on{% endtrans %} ' + action + ' {% trans %}the tag. Existing Code{% endtrans %}';
   new Effect.Opacity('div_messages_error', {duration:7.0, from:1.0, to:0.0});
 }

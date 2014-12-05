@@ -933,7 +933,7 @@ div.pumukit_mmobjs .pumukit_mmobj .date {
 
 /* nuevas reglas 1.8 */
 /* CSS para las cateorias del player */
-.label-categories {
+.label-tags {
     font-size: 10px;
     padding: 2px 8px;
     display: inline-block;
@@ -945,7 +945,7 @@ div.pumukit_mmobjs .pumukit_mmobj .date {
     -moz-border-radius: 3px;
     border-radius: 3px;
 }
-.label-categories a {
+.label-tags a {
     color: #FFF;
 }
 .label-info {

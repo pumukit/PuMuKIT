@@ -3,7 +3,7 @@ var menuTabClass = new Class.create();
 menuTabClass.prototype = {
     initialize : function(hash){
         var q = 'metaMm';
-        if ((['#pubMmHash', '#metaMmHash', '#categoryMmHash', '#personMmHash', '#mediaMmHash'].indexOf(hash)) != -1){
+        if ((['#pubMmHash', '#metaMmHash', '#tagMmHash', '#personMmHash', '#mediaMmHash'].indexOf(hash)) != -1){
           q =hash.substring(1, hash.length - 4);
         }
 	this.activo = q;

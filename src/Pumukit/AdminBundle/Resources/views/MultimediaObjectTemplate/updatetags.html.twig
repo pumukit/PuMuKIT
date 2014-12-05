@@ -35,7 +35,7 @@
 	       {% for embedded_tag in mm.getTags() %}
 	         <li class="element" id="select_li_{{ embedded_tag.id }}" >
 		   <span class="icon">&nbsp;</span>
-		   <span onclick="$$('.clicked_tag_left').invoke('removeClassName', 'clicked_tag_left'); this.addClassName('clicked_tag_left');" ondblclick="javascript:del_tree_cat({{ embedded_tag.id }}, {{ mm.id }});" >
+		   <span onclick="$$('.clicked_tag_left').invoke('removeClassName', 'clicked_tag_left'); this.addClassName('clicked_tag_left');" ondblclick="javascript:del_tree_tag({{ embedded_tag.id }}, {{ mm.id }});" >
 		     {{ embedded_tag.getCod() }} - {{ embedded_tag.getName() }} 
 		   </span>
 	         </li>
