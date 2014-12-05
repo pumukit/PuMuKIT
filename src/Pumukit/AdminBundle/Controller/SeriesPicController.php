@@ -2,35 +2,26 @@
 
 namespace Pumukit\AdminBundle\Controller;
 
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 use Pagerfanta\Pagerfanta;
 
 use Pumukit\SchemaBundle\Document\Series;
 
-class SeriesPicController extends ElementController
+class SeriesPicController extends Controller
 {
   /**
-   * Render create.html
+   *
+   * @Template("PumukitAdminBundle:Pic:create.html.twig")
    */
-  public function createAction(Request $request)
+  public function createAction(Series $series, Request $request)
   {
-    $config = $this->getConfiguration();
-
-    if (null != $request->attributes->get('id')) {
-      $id = $request->attributes->get('id');
-      $picService = $this->get('pumukitschema.pic');
-      $series = $picService->getResource('Series', $id);
-    }else{
-      $series = null;
-    }
-	 
-    if (!isset($series)) {
-      //raise error or show message
-    }
+    $picService = $this->get('pumukitschema.seriespic');
 
     // TODO search in picservice according to page (in criteria)
     if ($request->get('page', null)) {
@@ -39,58 +30,66 @@ class SeriesPicController extends ElementController
     $page = $this->get('session')->get('admin/seriespic/page', 1);
     $limit = 12;
 
-    list($collPics, $total) = $picService->getPics('Series', $id, $page, $limit);
+    list($collPics, $total) = $picService->getRecomendedPics($series, $page, $limit);
     
+    $pics = $collPics;
+
+    /*
     $adapter = new DoctrineCollectionAdapter($collPics);
     $pics = new Pagerfanta($adapter);
 
     $pics
       ->setCurrentPage($page, true, true)
-      ->setMaxPerPage($limit)
-      ;
+      ->setMaxPerPage($limit);
+    */
 
-    $view = $this
-      ->view()
-      ->setTemplate($config->getTemplate('create.html'))
-      ->setData(array(
-		      'resource' => $series,
-		      'resource_name' => 'series',
-		      'pics' => $pics,
-		      'page' => $page,
-		      'total' => $total
-		      ));
-
-    return $this->handleView($view);
+    return array(
+      'resource' => $series,
+      'resource_name' => 'series',
+      'pics' => $pics,
+      'page' => $page,
+      'total' => $total);
   }
 
-
-
-  public function listAction(Series $series)
-  {
-      return $this->render('PumukitAdminBundle:Pic:list.html.twig', array('series' => $series));
-  }
 
   /**
-   * Assign a picture from an url 
-   * or from an existing one
-   * to the series
+   *
+   * @Template("PumukitAdminBundle:Pic:list.html.twig")
    */
-  public function updateAction(Request $request)
+  public function listAction(Series $series)
   {
-    $config = $this->getConfiguration();
+      return array('series' => $series);
+  }
 
-    if ($request->get('url', null)){
-      $series_id = $request->attributes->get('id');
-      $picService = $this->get('pumukitschema.pic');
-      $series = $picService->setPicUrl('Series', $series_id, $request->get('url'));
+
+  /**
+   * Assign a picture from an url or from an existing one to the series
+   *
+   * @Template("PumukitAdminBundle:Pic:list.html.twig")
+   */
+  public function updateAction(Series $series, Request $request)
+  {
+    if ($url = $request->get('url')){
+      $picService = $this->get('pumukitschema.seriespic');
+      $series = $picService->addPicUrl($series, $url);
     }
     
-    $view = $this
-      ->view()
-      ->setTemplate($config->getTemplate('list.html'))
-      ->setData(array('series' => $series));
+    return array('series' => $series);
+  }
 
-    return $this->handleView($view);
+
+  /**
+   *
+   * @Template("PumukitAdminBundle:Pic:upload.html.twig")
+   */
+  public function uploadAction(Series $series, Request $request)
+  {
+    if ($request->files->has("file")) {
+      $picService = $this->get('pumukitschema.seriespic');
+      $media = $picService->addPicFile($series, $request->files->get("file"));
+    }
+
+    return array('series' => $series);
   }
 
 
@@ -156,4 +155,8 @@ class SeriesPicController extends ElementController
 
     return $this->redirect($this->generateUrl('pumukitadmin_seriespic_list', array('id' => $series->getId())));
   }
+
+
+
+
 }
