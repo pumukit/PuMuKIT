@@ -909,6 +909,23 @@ class Series
   }
 
   /**
+   * Get pic by id
+   *
+   * @param $picId
+   *
+   * @return SerialPic|null
+   */
+  public function getPicById($picId)
+  {
+    foreach($this->pics as $pic) {
+      if ($pic->getId() == $picId)
+	return $pic;
+    }
+    
+    return null;
+  }
+
+  /**
    * Get first pic url
    *
    * @return string
