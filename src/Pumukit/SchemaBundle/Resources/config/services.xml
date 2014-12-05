@@ -24,6 +24,12 @@
             <argument>%pumukit2.locales%</argument>
         </service>
 
+        <service id="pumukitschema.seriespic" class="Pumukit\SchemaBundle\Services\SeriesPicService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+	    <argument type="expression">parameter('kernel.root_dir') ~ '/../web/uploads/pic/'</argument>
+	    <argument>/uploads/pic/</argument>
+        </service>
+
         <service id="pumukitschema.tag" class="Pumukit\SchemaBundle\Services\TagService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
