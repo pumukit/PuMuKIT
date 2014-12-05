@@ -3,9 +3,9 @@
                                                            cat_li_parent_{{ parent }}  
                                                            {{ (node.getChildren()|length)?'collapsed':'element' }} 
                                                            {{ node.getMetatag()?'metacategory':'' }} 
-                                                           {# TODO function getnummm {{ (node.getNumMm()==0)?'nomm':''}} #}">
+                                                           {# TODO function getNumMm {{ (node.getNumMm()==0)?'nomm':'' }} #}">
     <span class="icon" onclick="javascript:toggle_tree_cat(this, '{{ node.id }}', '{{ mmId }}', '{{ block_tag }}')">&nbsp;</span>
-    <span {% if not node.getMetatag() %} onclick="$$('.clicked_category_right').invoke('removeClassName', 'clicked_category_right'); this.addClassName('clicked_category_right');" ondblclick="javascript:add_tree_cat({{ node.id }}, {{ mmId }}, {{ block_tag }});" {% endif %} >
+    <span {% if not node.getMetatag() %} onclick="$$('.clicked_category_right').invoke('removeClassName', 'clicked_category_right'); this.addClassName('clicked_category_right');" ondblclick="javascript:add_tree_cat('{{ node.id }}', '{{ mmId }}', '{{ block_tag }}');" {% endif %} >
       {{ node.getCod() }} - {{ node.getTitle() }} 
       {% if not node.getMetatag() %}(<span id="info_num_mm_{{ node.id }}">TODO {# function getNumMm {{ node.getNumMm() }} #}</span>){% endif %}
     </span>
