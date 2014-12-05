@@ -908,4 +908,21 @@ class Series
       return $this->pics;
   }
 
+  /**
+   * Get pic by id
+   *
+   * @param $picId
+   *
+   * @return SerialPic|null
+   */
+  public function getPicById($picId)
+  {
+    foreach($this->pics as $pic) {
+      if ($pic->getId() == $picId)
+	return $pic;
+    }
+    
+    return null;
+  }
+
 }
