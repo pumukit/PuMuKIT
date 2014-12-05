@@ -655,18 +655,18 @@ table.pumukit_index{
   width: 100%;
 }
 
-table.pumukit_index div.img_category{
+table.pumukit_index div.img_tag{
   margin: 7px;
   position: relative;
   overflow: hidden;
 }
 
-table.pumukit_index div.img_category:hover div.cover{
+table.pumukit_index div.img_tag:hover div.cover{
   background-color: #fff;
   color: #000;
 }
 
-table.pumukit_index div.img_category div.cover{
+table.pumukit_index div.img_tag div.cover{
   position: absolute;
   bottom: 0px;
   right: 0px;
@@ -682,7 +682,7 @@ table.pumukit_index div.img_category div.cover{
   font-size: 120%;  
 }
 
-table.pumukit_index div.img_category div.cover div, table.pumukit_index div.img_category div.cover span{
+table.pumukit_index div.img_tag div.cover div, table.pumukit_index div.img_tag div.cover span{
   padding: 20px 8px 8px;
 }
 

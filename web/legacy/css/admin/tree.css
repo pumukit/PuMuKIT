@@ -111,7 +111,7 @@ second level
 /*
   CATEGORY TREE
 */
-.category{ 
+.tag{ 
       width:40%; 
       border:1px solid #DDD; 
       height:200px; 
@@ -119,13 +119,13 @@ second level
       overflow-y: scroll; 
 }
 
-/*.category_tree{width:100%;}*/
-.category_tree, .category_tree ul, .category_tree li{
+/*.tag_tree{width:100%;}*/
+.tag_tree, .tag_tree ul, .tag_tree li{
 	margin:0;
 	padding:0;
 	list-style:none;
 }
-.category_tree ul{
+.tag_tree ul{
 	/*
 	Uncomment this if you want to initially hide the child lists. 
 	If you do, Javascript disabled and CSS enabled browsers will not be able to use this list.
@@ -133,44 +133,44 @@ second level
 	*/ 
         padding-left: 14px !important;
 }
-.category_tree  li{
+.tag_tree  li{
 	line-height:200%;
 	margin-top:1px;
 	cursor:default;
 	/*width:100%; */
 }
 
-.category_tree li.collapsed span, .category_tree li.expanded span,
-.category_tree li.element span{
+.tag_tree li.collapsed span, .tag_tree li.expanded span,
+.tag_tree li.element span{
          cursor:pointer;
 } 
 
-.category_tree li.metacategory > span{
+.tag_tree li.metatag > span{
          cursor: default;
 } 
 
-.category_tree li.metacategory > span{
+.tag_tree li.metatag > span{
         color: grey;
 } 
 
-.category_tree li span.icon, .category_tree li.collapsed > span.icon{
+.tag_tree li span.icon, .tag_tree li.collapsed > span.icon{
         background:#fff url(/legacy/images/admin/tree/collapsed.gif) no-repeat 5px 50%;
 	font-weight: normal;
 	padding-left: 23px;
 } 
-.category_tree li.expanded > span.icon{
+.tag_tree li.expanded > span.icon{
         background:#fff url(/legacy/images/admin/tree/expanded.gif) no-repeat 5px 50%;
 	font-weight: normal;
 	padding-left: 23px;
 }
 
-.category_tree li.element > span.icon{
+.tag_tree li.element > span.icon{
         background:#fff url(/legacy/images/admin/tree/element.gif) no-repeat 5px 50%;
 	font-weight: normal;
 	padding-left: 23px;
 }
 
-.category_tree .nodisplayall, .category_tree .nodisplay{
+.tag_tree .nodisplayall, .tag_tree .nodisplay{
         display: none;
 }
 
@@ -233,23 +233,23 @@ second level
 
 /* first level
 
-.category_tree li, .category_tree li.collapsed{background:#aaa url(/legacy/images/admin/tree/collapsed.gif) no-repeat 5px .4em;} 
-.category_tree li.expanded{background:#aaa url(/legacy/images/admin/tree/expanded.gif) no-repeat 5px .4em;}
+.tag_tree li, .tag_tree li.collapsed{background:#aaa url(/legacy/images/admin/tree/collapsed.gif) no-repeat 5px .4em;} 
+.tag_tree li.expanded{background:#aaa url(/legacy/images/admin/tree/expanded.gif) no-repeat 5px .4em;}
 
 second level 
 
-.category_tree li ul, .category_tree li li{background:#f8f8f8;font-weight:normal;}
-.category_tree li li.collapsed{background:#ddd url(/legacy/images/admin/tree/collapsed.gif) no-repeat 5px .4em;}  
-.category_tree li li.expanded{background:#ddd url(/legacy/images/admin/tree/expanded.gif) no-repeat 5px .4em;}
+.tag_tree li ul, .tag_tree li li{background:#f8f8f8;font-weight:normal;}
+.tag_tree li li.collapsed{background:#ddd url(/legacy/images/admin/tree/collapsed.gif) no-repeat 5px .4em;}  
+.tag_tree li li.expanded{background:#ddd url(/legacy/images/admin/tree/expanded.gif) no-repeat 5px .4em;}
 
  third level 
 
-.category_tree li li ul, .category_tree li li li{background:#fff;}
-.category_tree li li li.collapsed{background:#fff url(/legacy/images/admin/tree/collapsed.gif) no-repeat 5px .4em;} 
-.category_tree li li li.expanded{background:#fff url(/legacy/images/admin/tree/expanded.gif) no-repeat 5px .4em;}
+.tag_tree li li ul, .tag_tree li li li{background:#fff;}
+.tag_tree li li li.collapsed{background:#fff url(/legacy/images/admin/tree/collapsed.gif) no-repeat 5px .4em;} 
+.tag_tree li li li.expanded{background:#fff url(/legacy/images/admin/tree/expanded.gif) no-repeat 5px .4em;}
 
  fourth level 
 
-.category_tree li li li li{text-indent:0;margin-left:30px;width:auto;}
+.tag_tree li li li li{text-indent:0;margin-left:30px;width:auto;}
 */
 

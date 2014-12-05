@@ -8,8 +8,8 @@
     <li id="metaMm"   class="noSel" >
       <a href="#" onclick="menuTab.select('metaMm'); {# TODO update_file.stop(); #} return false;" >{% trans %}Metadata{% endtrans %}</a>
     </li>
-    <li id="categoryMm" class="noSel" >
-      <a href="#" onclick="menuTab.select('categoryMm'); {# TODO update_file.stop(); #} return false;" >{% trans %}Tags{% endtrans %}</a>
+    <li id="tagMm" class="noSel" >
+      <a href="#" onclick="menuTab.select('tagMm'); {# TODO update_file.stop(); #} return false;" >{% trans %}Tags{% endtrans %}</a>
     </li>
     <li id="personMm" class="noSel" >
       <a href="#" onclick="menuTab.select('personMm'); {# TODO update_file.stop(); #} return false;" >{% trans %}People{% endtrans %}</a>
@@ -37,7 +37,7 @@
    {% include 'PumukitAdminBundle:MultimediaObject:updatemeta.html.twig' with {'mm': mm} %}
   </div>
   
-  <div id="categoryMmDiv" class="virtual_edit"  style="display:none;">
+  <div id="tagMmDiv" class="virtual_edit"  style="display:none;">
    {% include 'PumukitAdminBundle:MultimediaObject:updatetag.html.twig' with {'mm': mm, 'parent_tags': parent_tags} %}
   </div>
   

@@ -94,7 +94,7 @@ function toggle_section_cat(id, element, level, cod) {
 
 
 function cat_relation_change(one_id, two_id, value) {
-  new Ajax.Request("/editar.php/categories/changecategory/oneid/" + one_id + "/twoid/" + two_id + "/value/" + value,  {
+  new Ajax.Request("/editar.php/categories/changetag/oneid/" + one_id + "/twoid/" + two_id + "/value/" + value,  {
     asynchronous: true,
     evalScripts: true,
   });

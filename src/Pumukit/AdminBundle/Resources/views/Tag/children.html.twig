@@ -4,7 +4,7 @@
   <tr onmouseover="this.addClassName('tv_admin_row_over')" onmouseout="this.removeClassName('tv_admin_row_over')"
     class="tv_admin_row_0 c_{{ tag.path|replace({ ("|" ~ tag.cod ~ "|"): '', '|': ' c_'}) }} d_{{ tag.parent.cod|default("")}}" id="row_cat_{{ tag.id }}" data-level="{{ tag.level}}">
       <td>
-        <input id="{{ tag.id }}" class="category_checkbox" type="checkbox">
+        <input id="{{ tag.id }}" class="tag_checkbox" type="checkbox">
       </td>
       <td>
           <a href="#" title="{% trans %}delete{% endtrans %}" onclick="return cat_delete('{{ tag.id }}', '{{ tag.cod }}', '{{ tag.parent.id }}')">
@@ -27,9 +27,9 @@
 	    {{ tag.id }}
 	  </td>
       <td>
-          <ul class="category_tree" >
+          <ul class="tag_tree" >
               {% for i in  2..tag.level %}
-                  <ul class="category_tree" ><li class="element" >
+                  <ul class="tag_tree" ><li class="element" >
               {% endfor%}
               <li class="{{ has_children?'collapsed noload':'element' }}" >
               <span class="icon" onclick="javascript:toggle_section_cat('{{ tag.id }}', this, {{ tag.level }}, '{{ tag.cod }}')">&nbsp;</span>

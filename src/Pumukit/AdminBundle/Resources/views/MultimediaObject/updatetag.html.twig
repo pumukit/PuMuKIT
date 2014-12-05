@@ -7,9 +7,9 @@
 </div>
 
 
-<div style="float: right; padding: 5px 20px" id="cat_update_link_{{ mm.getSeries().getId() }}">
+<div style="float: right; padding: 5px 20px" id="tag_update_link_{{ mm.getSeries().getId() }}">
    {# TODO link or form. Copy path #}
-   <a href="#" onclick="if (window.confirm('{% trans %}Are you sure you want to copy these tags to this series?{% endtrans %}')) { $('cat_update_link_{{ mm.getSeries().getId() }}').innerHTML = '{% trans %}loading{% endtrans %}...'; new Ajax.Updater('cat_update_link_{{ mm.getSeries().getId() }}', '/editar.php/mms/serialcategory/mm_id/14574/serial_id/782', {asynchronous:true, evalScripts:true}); }; return false;">{% trans %}Copy these tags to this series{% endtrans %}</a>
+   <a href="#" onclick="if (window.confirm('{% trans %}Are you sure you want to copy these tags to this series?{% endtrans %}')) { $('tag_update_link_{{ mm.getSeries().getId() }}').innerHTML = '{% trans %}loading{% endtrans %}...'; new Ajax.Updater('tag_update_link_{{ mm.getSeries().getId() }}', '/editar.php/mms/serialtag/mm_id/14574/serial_id/782', {asynchronous:true, evalScripts:true}); }; return false;">{% trans %}Copy these tags to this series{% endtrans %}</a>
 </div>
 
 <dl style="margin: 0px">
@@ -18,27 +18,27 @@
      <div class="form-row">
      <dt>{{ parent.getTitle() }}:</dt>
      <dd>
-       <div id="category{{ parent.id }}_mms">
+       <div id="tag{{ parent.id }}_mms">
 	 <div style="overflow:hidden;height: 270px">
-	   <div style="width:400px; float: left; height: 260px" class="category" id="all_category_{{ parent.id }}">
+	   <div style="width:400px; float: left; height: 260px" class="tag" id="all_tag_{{ parent.id }}">
 	     {% if (0 != parent.getChildren()|length) %}
-	     <ul class="category_tree" >
+	     <ul class="tag_tree" >
 	       {% include 'PumukitAdminBundle:MultimediaObject:listtagsajax.html.twig' with {'mmId': mm.id, 'parent': 'root', 'block_tag': parent.id, 'nodes': parent.getChildren()} %}
 	     </ul>
 	     {% endif %}
 	   </div>
 
 	   <div style="float: left; padding: 220px 5px 0px">
-	     <a href="#" onclick="if ( $$('.clicked_category_left')[0] != undefined ) { $$('.clicked_category_left')[0].ondblclick() } return false;">&#8592;</a>
-	     <a href="#" onclick="if ( $$('.clicked_category_right')[0] != undefined ) { $$('.clicked_category_right')[0].ondblclick() } return false;">&#8594;</a>
+	     <a href="#" onclick="if ( $$('.clicked_tag_left')[0] != undefined ) { $$('.clicked_tag_left')[0].ondblclick() } return false;">&#8592;</a>
+	     <a href="#" onclick="if ( $$('.clicked_tag_right')[0] != undefined ) { $$('.clicked_tag_right')[0].ondblclick() } return false;">&#8594;</a>
 	   </div>
 	   
-	   <div style="width:400px; height:260px; border: 1px solid #bbb; float: left;" class="category" id="select_category_{{ parent.id }}">
-	     <ul class="category_tree" id="select_ul_category_{{ parent.id }}" >
+	   <div style="width:400px; height:260px; border: 1px solid #bbb; float: left;" class="tag" id="select_tag_{{ parent.id }}">
+	     <ul class="tag_tree" id="select_ul_tag_{{ parent.id }}" >
 	       {% for embedded_tag in mm.getTags() %}
 	         <li class="element" id="select_li_{{ embedded_tag.id }}" >
 		   <span class="icon">&nbsp;</span>
-		   <span onclick="$$('.clicked_category_left').invoke('removeClassName', 'clicked_category_left'); this.addClassName('clicked_category_left');" ondblclick="javascript:del_tree_cat({{ embedded_tag.id }}, {{ mm.id }});" >
+		   <span onclick="$$('.clicked_tag_left').invoke('removeClassName', 'clicked_tag_left'); this.addClassName('clicked_tag_left');" ondblclick="javascript:del_tree_tag({{ embedded_tag.id }}, {{ mm.id }});" >
 		     {{ embedded_tag.getCod() }} - {{ embedded_tag.getTitle() }} 
 		   </span>
 	         </li>
@@ -57,17 +57,17 @@
 </div>
 
 <script type="text/javascript">
-function toggle_tree_cat(element, id, mm_id, cat_id) {
+function toggle_tree_tag(element, id, mm_id, tag_id) {
   if (element.parentElement.hasClassName("notload")) {
     element.parentElement.removeClassName("notload");
 
-  new Ajax.Updater("cat_ul_children_" + id, "' . url_for('mms/getchildren') . '/id/"  + id + "/block_cat/" + cat_id + "/mm/" + mm_id, {
-      onComplete: function(){ $("all_category_" + cat_id).scrollTop = ((element.positionedOffset()[1]) - 750); }
+  new Ajax.Updater("tag_ul_children_" + id, "' . url_for('mms/getchildren') . '/id/"  + id + "/block_tag/" + tag_id + "/mm/" + mm_id, {
+      onComplete: function(){ $("all_tag_" + tag_id).scrollTop = ((element.positionedOffset()[1]) - 750); }
     });}
 else {
-    $$(".cat_li_parent_" + id).each(function(e){e.toggleClassName("nodisplay")});
+    $$(".tag_li_parent_" + id).each(function(e){e.toggleClassName("nodisplay")});
     //element.scrollIntoView();
-    $("all_category_" + cat_id).scrollTop = ((element.positionedOffset()[1]) - 750);
+    $("all_tag_" + tag_id).scrollTop = ((element.positionedOffset()[1]) - 750);
   }
   element.parentElement.toggleClassName("expanded").toggleClassName("collapsed");
 }
@@ -101,20 +101,23 @@ function toggle_show_all()
 
 }
 
-function create_li_in_select(cat, block_cat_id, mm_id) {
-  var $ul = $("select_ul_category_" + block_cat_id);
-  var li = new Element("li", {"id": "select_li_" + cat.id, "class": "element"});
+function create_li_in_select(tag, block_tag_id, mm_id) {
+  var $ul = $("select_ul_tag_" + block_tag_id);
+  var li = new Element("li", {"id": "select_li_" + tag.id, "class": "element"});
   var span1 = new Element("span", {"class": "icon"}).update("&nbsp;");
-  var span2 = new Element("span", {"onclick":"$$(\'.clicked_category_left\').invoke(\'removeClassName\', \'clicked_category_left\'); this.addClassName(\'clicked_category_left\');", "ondblclick": "del_tree_cat(" + cat.id +", "+ mm_id + ")"}).update(cat.cod+ " - " + cat.name);
+  var span2 = new Element("span", {"onclick":"$$(\'.clicked_tag_left\').invoke(\'removeClassName\', \'clicked_tag_left\'); this.addClassName(\'clicked_tag_left\');", "ondblclick": "del_tree_tag(" + tag.id +", "+ mm_id + ")"}).update(tag.cod+ " - " + tag.name);
   li.insert(span1).insert(span2);
   //Add quit logica.
   $ul.insert(li);
 }
 
-function add_tree_cat(cat_id, mm_id, block_cat_id) {
-  new Ajax.Request('{{ path('pumukitadmin_mms_addtag', {'id': mm_id, 'tagId': cat_id}) }}',  {
+function add_tree_tag(tag_id, mm_id, block_tag_id) {
+  var route = "{{ path('pumukitadmin_mms_addtag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' }) }}";
+  route.replace('PLACEHOLDER_MM_ID', mm_id);
+  route.replace('PLACEHOLDER_TAG_ID', tag_id);
+  new Ajax.Request(route,  {
     method: "post",
-    parameters: "category=" + cat_id,
+    parameters: "tag=" + tag_id,
     asynchronous: true, 
     evalScripts: true,
     onSuccess: function(response){
@@ -130,13 +133,13 @@ function add_tree_cat(cat_id, mm_id, block_cat_id) {
 }
 
 
-function del_tree_cat(cat_id, mm_id) {
+function del_tree_tag(tag_id, mm_id) {
   // TODO Si ya lo tiene no hacer nada.
-  console.log("del_tree_cat info_num_mm_" + cat_id);
+  console.log("del_tree_tag info_num_mm_" + tag_id);
 
   new Ajax.Request(url_for("mms/delCategory") + '/id/' + mm_id,  {
     method: "post",
-    parameters: "category=" + cat_id,
+    parameters: "tag=" + tag_id,
     asynchronous: true, 
     evalScripts: true,
     onSuccess: function(response){
@@ -151,9 +154,9 @@ function del_tree_cat(cat_id, mm_id) {
 }
 
 
-function inc_num_mm(cat_id, num)
+function inc_num_mm(tag_id, num)
 {
-  var aux = $("info_num_mm_" + cat_id);
+  var aux = $("info_num_mm_" + tag_id);
   if (aux){
     var nn = (parseInt(aux.innerHTML) + num);
     var p = aux.parentElement.parentElement;

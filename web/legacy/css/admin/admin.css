@@ -1349,11 +1349,11 @@ table .table {
     color: #FFF;
     background-color: #015442;
 }
-.clicked_category_left {
+.clicked_tag_left {
     background-color: #beebff !important;
     border: 1px solid #99defd;
 }
-.clicked_category_right {
+.clicked_tag_right {
     background-color: #beebff !important;
     border: 1px solid #99defd;
 }
