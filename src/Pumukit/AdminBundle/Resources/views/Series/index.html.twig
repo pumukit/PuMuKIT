@@ -97,11 +97,11 @@ function toggle_show_all()
 
 }
 
-function create_li_in_select(cat, block_tag_id, mm_id) {
+function create_li_in_select(tag, block_tag_id, mm_id) {
   var $ul = $("select_ul_tag_" + block_tag_id);
-  var li = new Element("li", {"id": "select_li_" + cat.id, "class": "element"});
+  var li = new Element("li", {"id": "select_li_" + tag.id, "class": "element"});
   var span1 = new Element("span", {"class": "icon"}).update("&nbsp;");
-  var span2 = new Element("span", {"onclick":"$$(\'.clicked_tag_left\').invoke(\'removeClassName\', \'clicked_tag_left\'); this.addClassName(\'clicked_tag_left\');", "ondblclick": "del_tree_tag(" + cat.id +", "+ mm_id + ")"}).update(cat.cod+ " - " + cat.name);
+  var span2 = new Element("span", {"onclick":"$$(\'.clicked_tag_left\').invoke(\'removeClassName\', \'clicked_tag_left\'); this.addClassName(\'clicked_tag_left\');", "ondblclick": "del_tree_tag(" + tag.id +", "+ mm_id + ")"}).update(tag.cod+ " - " + tag.name);
   li.insert(span1).insert(span2);
   //Add quit logica.
   $ul.insert(li);
