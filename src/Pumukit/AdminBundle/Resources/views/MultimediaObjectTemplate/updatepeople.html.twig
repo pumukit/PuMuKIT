@@ -10,7 +10,7 @@
         <dd>  
           <div id="{{ role.getId() }}_person_mms">
 
-            {% include 'PumukitAdminBundle:Person:listerelationtemplate' with {'people': mm.getPeopleInMultimediaObject(), 'mm': mm, 'role': role} %}
+            {% include 'PumukitAdminBundle:Person:listrelationtemplate.html.twig' with {'people': mm.getPeopleInMultimediaObject(), 'mm': mm, 'role': role} %}
         
           </div>
         </dd>
