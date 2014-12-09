@@ -37,11 +37,11 @@ class BroadcastAdminController extends AdminController
 
         foreach ($ids as $id) {
             $resource = $this->find($id);
-            $this->delete($resource);
+            $this->domainManager->delete($resource);
         }
         $config = $this->getConfiguration();
 
-        $this->setFlash('success', 'delete');
+        $this->addFlash('success', 'delete');
         $this->get('session')->getFlashBag()->add('default', 'changed');
 
         return $this->redirectToRoute(
@@ -58,7 +58,7 @@ class BroadcastAdminController extends AdminController
         $config = $this->getConfiguration();
         $repository = $this->getRepository();
 
-        $true_resource = $this->findOr404();
+        $true_resource = $this->findOr404($request);
         $resources = $this->getResourceResolver()->getResource($repository, $config, 'findAll');
 
         foreach ($resources as $resource) {
@@ -67,13 +67,13 @@ class BroadcastAdminController extends AdminController
             } else {
                 $resource->setDefaultSel(true);
             }
-            $this->update($resource);
+            $this->domainManager->update($resource);
         }
     // TODO fix show flash message after change default broadcast on click
     //$this->get('session')->getFlashBag()->add('success', 'default');
     //return $this->redirect($this->generateUrl('pumukitadmin_broadcast_index'));
 
-        $this->setFlash('success', 'default');
+        $this->addFlash('success', 'default');
 
         return new JsonResponse(array('default' => $resource->getId()));
     }

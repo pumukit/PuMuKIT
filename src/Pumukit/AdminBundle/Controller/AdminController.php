@@ -35,13 +35,13 @@ class AdminController extends ResourceController
      */
     public function copyAction(Request $request)
     {
-        $resource = $this->findOr404();
+        $resource = $this->findOr404($request);
 
         $new_resource = $resource->cloneResource();
 
-        $this->create($new_resource);
+        $this->domainManager->create($new_resource);
 
-        $this->setFlash('success', 'copy');
+        $this->addFlash('success', 'copy');
 
         $config = $this->getConfiguration();
 
@@ -54,10 +54,10 @@ class AdminController extends ResourceController
     /**
      * Overwrite to update the session.
      */
-    public function showAction()
+    public function showAction(Request $request)
     {
         $config = $this->getConfiguration();
-        $data = $this->findOr404();
+        $data = $this->findOr404($request);
 
         $this->get('session')->set('admin/'.$config->getResourceName().'/id', $data->getId());
 
@@ -92,11 +92,11 @@ class AdminController extends ResourceController
 
         foreach ($ids as $id) {
             $resource = $this->find($id);
-            $this->delete($resource);
+            $this->domainManager->delete($resource);
         }
         $config = $this->getConfiguration();
 
-        $this->setFlash('success', 'delete');
+        $this->addFlash('success', 'delete');
 
         return $this->redirectToRoute(
         $config->getRedirectRoute('index'),
@@ -111,7 +111,7 @@ class AdminController extends ResourceController
 
         $criteria = array('id' => $id);
 
-        return $this->getResourceResolver()->getResource($repository, $config, 'findOneBy', array($criteria));
+        return $this->resourceResolver->getResource($repository, 'findOneBy', array($criteria));
     }
 
   /**
@@ -149,8 +149,8 @@ class AdminController extends ResourceController
 
     if ($config->isPaginated()) {
       $resources = $this
-	->getResourceResolver()
-	->getResource($repository, $config, 'createPaginator', array($criteria, $sorting))
+	->resourceResolver
+	->getResource($repository, 'createPaginator', array($criteria, $sorting))
 	;
 
       if ($request->get('page', null)) {
@@ -163,8 +163,8 @@ class AdminController extends ResourceController
 	;
     } else {
       $resources = $this
-	->getResourceResolver()
-	->getResource($repository, $config, 'findBy', array($criteria, $sorting, $config->getLimit()))
+	->resourceResolver
+	->getResource($repository, 'findBy', array($criteria, $sorting, $config->getLimit()))
 	;
     }
     

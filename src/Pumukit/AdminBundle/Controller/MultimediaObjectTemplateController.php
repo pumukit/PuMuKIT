@@ -67,14 +67,14 @@ class MultimediaObjectTemplateController extends MultimediaObjectController
       $pubDecisionsTags = $this->getTagsByCod('PUBDECISIONS', true);
 
       if (($request->isMethod('PUT') || $request->isMethod('POST') || $request->isMethod('DELETE')) && $formMeta->bind($request)->isValid()) {
-	$event = $this->update($mmtemplate);
+	$event = $this->domainManager->update($mmtemplate);
           if (!$event->isStopped()) {
-              $this->setFlash('success', 'updatemeta');
+              $this->addFlash('success', 'updatemeta');
 
 	      return new JsonResponse(array('mmtemplate' => 'updatemeta'));
           }
 
-          $this->setFlash($event->getMessageType(), $event->getMessage(), $event->getMessageParams());
+          $this->addFlash($event->getMessageType(), $event->getMessage(), $event->getMessageParams());
       }
 
       if ($config->isApiRequest()) {

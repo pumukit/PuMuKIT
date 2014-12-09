@@ -2,7 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
-use Symfony\Bundle\FrameworkBundle\Translation\Translator;
+use Symfony\Component\Translation\TranslatorInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
 use Pumukit\SchemaBundle\Document\Series;
@@ -17,7 +17,7 @@ class FactoryService
   private $translator;
   private $locales;
 
-  public function __construct(DocumentManager $documentManager, Translator $translator, array $locales = array())
+  public function __construct(DocumentManager $documentManager, TranslatorInterface $translator, array $locales = array())
   {
       $this->dm = $documentManager;
       $this->translator = $translator;

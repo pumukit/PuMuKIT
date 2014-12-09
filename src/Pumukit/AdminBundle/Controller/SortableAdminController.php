@@ -9,13 +9,13 @@ class SortableAdminController extends AdminController
     public function upAction(Request $request)
     {
         $config = $this->getConfiguration();
-        $resource = $this->findOr404();
+        $resource = $this->findOr404($request);
 
         $new_rank = $resource->getRank() + 1;
         $resource->setRank($new_rank);
-        $this->update($resource);
+        $this->domainManager->update($resource);
 
-        $this->setFlash('success', 'up');
+        $this->addFlash('success', 'up');
 
         return $this->redirectToRoute(
         $config->getRedirectRoute('index'),
@@ -26,13 +26,13 @@ class SortableAdminController extends AdminController
     public function downAction(Request $request)
     {
         $config = $this->getConfiguration();
-        $resource = $this->findOr404();
+        $resource = $this->findOr404($request);
 
         $new_rank = $resource->getRank() - 1;
         $resource->setRank($new_rank);
-        $this->update($resource);
+        $this->domainManager->update($resource);
 
-        $this->setFlash('success', 'up');
+        $this->addFlash('success', 'up');
 
         return $this->redirectToRoute(
         $config->getRedirectRoute('index'),
@@ -43,13 +43,13 @@ class SortableAdminController extends AdminController
     public function topAction(Request $request)
     {
         $config = $this->getConfiguration();
-        $resource = $this->findOr404();
+        $resource = $this->findOr404($request);
 
         $new_rank = -1;
         $resource->setRank($new_rank);
-        $this->update($resource);
+        $this->domainManager->update($resource);
 
-        $this->setFlash('success', 'up');
+        $this->addFlash('success', 'up');
 
         return $this->redirectToRoute(
         $config->getRedirectRoute('index'),
@@ -60,13 +60,13 @@ class SortableAdminController extends AdminController
     public function bottomAction(Request $request)
     {
         $config = $this->getConfiguration();
-        $resource = $this->findOr404();
+        $resource = $this->findOr404($request);
 
         $new_rank = 0;
         $resource->setRank($new_rank);
-        $this->update($resource);
+        $this->domainManager->update($resource);
 
-        $this->setFlash('success', 'up');
+        $this->addFlash('success', 'up');
 
         return $this->redirectToRoute(
         $config->getRedirectRoute('index'),

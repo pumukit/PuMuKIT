@@ -1,5 +1,7 @@
 # Sylius resource
 sylius_resource:
+    settings:
+        sortable: true
     resources:
         pumukitadmin.user:
             driver: doctrine/mongodb-odm
