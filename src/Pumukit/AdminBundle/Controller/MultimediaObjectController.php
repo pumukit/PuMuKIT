@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 use Pagerfanta\Pagerfanta;
 
+use Pumukit\SchemaBundle\Document\Series;
+
 class MultimediaObjectController extends SortableAdminController
 {
   /**
@@ -24,25 +26,14 @@ class MultimediaObjectController extends SortableAdminController
 
       $series = $this->getSeries($request);
 
-      $page = $this->get('session')->get('admin/mms/page', 1);
+      $mms = $this->getListMultimediaObjects($series);
 
-      $coll_mms = $series->getMultimediaObjects();
-
-      $adapter = new DoctrineCollectionAdapter($coll_mms);
-      $mms = new Pagerfanta($adapter);
-      
-      $mms
-	->setCurrentPage($page, true, true)
-	->setMaxPerPage(12)
-	;
-      
       $view = $this
 	->view()
 	->setTemplate($config->getTemplate('index.html'))
 	->setData(array(
-			$pluralName => $resources,
 			'series' => $series,
-			'mms' => $mms
+                        'mms' => $mms
 			))
 	;
       
@@ -64,28 +55,18 @@ class MultimediaObjectController extends SortableAdminController
       $mmobj = $factory->createMultimediaObject($series);
 
       $this->setFlash('success', 'create');
-
-      $page = $this->get('session')->get('admin/mms/page', 1);
-
-      $coll_mms = $series->getMultimediaObjects();
-
-      $adapter = new DoctrineCollectionAdapter($coll_mms);
-      $mms = new Pagerfanta($adapter);
       
-      $mms
-	->setCurrentPage($page, true, true)
-	->setMaxPerPage(12)
-	;
+      $mms = $this->getListMultimediaObjects($series);
 
       $view = $this
 	->view()
 	->setTemplate($config->getTemplate('list.html'))
 	->setData(array(
 			'series' => $series,
-			'mms' => $mms
+                        'mms' => $mms
 			))
 	;
-      
+
       return $this->handleView($view);
   }
 
@@ -178,18 +159,22 @@ class MultimediaObjectController extends SortableAdminController
           if (!$event->isStopped()) {
               $this->setFlash('success', 'updatemeta');
 
+	      /*
 	      $criteria = $this->getCriteria($config);
 	      $resources = $this->getResources($request, $config, $criteria);	      
+	      */
 
-	      $pluralName = $config->getPluralResourceName();
-	      
+	      $mms = $this->getListMultimediaObjects($series);
+
 	      $view = $this
 		->view()
-		->setTemplate($config->getTemplate('list.html'))
-		->setTemplateVar($pluralName)
-		->setData($resources)
+		->setTemplate($this->getConfiguration()->getTemplate('list.html'))
+		->setData(array(
+				'series' => $series,
+				'mms' => $mms
+				))
 		;
-	      
+
 	      return $this->handleView($view);
           }
 
@@ -248,16 +233,15 @@ class MultimediaObjectController extends SortableAdminController
           if (!$event->isStopped()) {
               $this->setFlash('success', 'updatepub');
 
-	      $criteria = $this->getCriteria($config);
-	      $resources = $this->getResources($request, $config, $criteria);	      
+	      $mms = $this->getListMultimediaObjects($series);
 
-	      $pluralName = $config->getPluralResourceName();
-	      
 	      $view = $this
 		->view()
-		->setTemplate($config->getTemplate('list.html'))
-		->setTemplateVar($pluralName)
-		->setData($resources)
+		->setTemplate($this->getConfiguration()->getTemplate('list.html'))
+		->setData(array(
+				'series' => $series,
+				'mms' => $mms
+				))
 		;
 	      
 	      return $this->handleView($view);
@@ -381,5 +365,28 @@ class MultimediaObjectController extends SortableAdminController
     }
 
     return $resource;
+  }
+
+  /**
+   * Get the view list of multimedia objects
+   * belonging to a series
+   */
+  private function getListMultimediaObjects(Series $series)
+  {
+      $page = $this->get('session')->get('admin/mms/page', 1);
+
+      $coll_mms = $series->getMultimediaObjects();
+
+      $adapter = new DoctrineCollectionAdapter($coll_mms);
+      $mms = new Pagerfanta($adapter);
+      
+      $mms
+	->setCurrentPage($page, true, true)
+	->setMaxPerPage(12)
+	;
+
+      // TODO get criteria
+
+      return $mms;
   }
 }
