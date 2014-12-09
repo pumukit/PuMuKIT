@@ -62,7 +62,7 @@
         {# TODO <?php include_partial("mms/edit_announce", array('mm' => $mm))?> #}
       </td>
       {% endif %}
-      <td> {# TODO mms is not pagerfanta #}
+      <td>
 	{% if mms.getCurrentPage() != 1 or not loop.first %}
 	  {% spaceless %}
 	    <a href="{{ path('pumukitadmin_mms_up', {'id': mm.id}) }}" title="{% trans %}Move one position up{% endtrans %}">&#8593;</a>
@@ -150,40 +150,41 @@
 
 {# TODO <?php if (isset($msg_alert)) echo m_msg_alert($msg_alert) ?> #}
 
-{# TODO
-<?php if (isset($reload_pub_channel)): ?>
-  <?php echo javascript_tag("
-    new Ajax.Updater('list_pub_" . $mm_sel->getId() . "', '" . url_for('mms/updatelistpub?id=' . $mm_sel->getId()) . "')
-  "); ?>
-<?php endif ?>
 
-<?php if(isset($reloadEditAndPreview)): ?>
-<?php echo javascript_tag("
-  new Ajax.Updater('edit_mms', '" . url_for('mms/edit') . "', {
-      asynchronous: true, 
-      evalScripts: true,
-      parameters: {id: " . $mm_sel->getId() ."}
-  });
-  new Ajax.Updater('preview_mm', '" . url_for('mms/preview') . "', {
-      asynchronous: true, 
-      evalScripts: true,
-      parameters: {id: " . $mm_sel->getId() ."}
-  });
-"); ?>
-<?php endif ?>
+{# TODO variables
 
-<?php if (isset($enBloq)): ?>
-  <?php echo javascript_tag("
+{% if reload_pub_channel %}
+  <script type="text/javascript">
+    new Ajax.Updater('list_pub_{{ mm_sel.id }}', 'TODO path pumukitadmin_mms_updatelistpub mms/updatelistpub?id= mm_sel id')
+  </script>
+{% endif %}
+
+{% if reloadEditAndPreview %}
+<script type="text/javascript">
+  new Ajax.Updater('edit_mms', '{{ path('pumukitadmin_mms_edit', {'id': mm_sel.id}) }}', {
+      asynchronous: true, 
+      evalScripts: true
+  });
+  new Ajax.Updater('preview_mms', '{{ path('pumukitadmin_mms_show', {'id': mm_sel.id}) }}', {
+      asynchronous: true, 
+      evalScripts: true
+  });
+</script>
+{% endif %}
+
+{% if enBloq %}
+  <script type="text/javascript">
     $('list_pub_channel').setStyle('background-color: #f2f2f2');
     $$('.pub_channel_input_checkbox').invoke('disable');
-  "); ?>
-<?php endif ?>
+  </script>
+{% endif %}
 
 
-<?php if (isset($desBloq)): ?>
-  <?php echo javascript_tag("
+{% if desBloq %}
+  <script type="text/javascript">
     $('list_pub_channel').setStyle('background-color: transparent');
     $$('.pub_channel_input_checkbox').invoke('enable');
-  "); ?>
-<?php endif ?>
+  </script>
+{% endif %}
+
 #}
