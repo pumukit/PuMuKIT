@@ -40,7 +40,7 @@ class SeriesAdminController extends AdminController
       $series = $this->get('pumukitschema.factory');
       $series->createSeries();
 
-      $this->setFlash('success', 'create');
+      $this->addFlash('success', 'create');
 
       $criteria = $this->getCriteria($config);
       $resources = $this->getResources($request, $config, $criteria);
@@ -63,14 +63,14 @@ class SeriesAdminController extends AdminController
   {
       $config = $this->getConfiguration();
 
-      $resource = $this->findOr404();
+      $resource = $this->findOr404($request);
       $this->get('session')->set('admin/series/id', $request->get('id'));
       $form = $this->getForm($resource);
       
       if (($request->isMethod('PUT') || $request->isMethod('POST') || $request->isMethod('DELETE')) && $form->bind($request)->isValid()) {
-          $event = $this->update($resource);
+          $event = $this->domainManager->update($resource);
           if (!$event->isStopped()) {
-              $this->setFlash('success', 'update');
+              $this->addFlash('success', 'update');
 
 	      $criteria = $this->getCriteria($config);
 	      $resources = $this->getResources($request, $config, $criteria);	      
@@ -87,7 +87,7 @@ class SeriesAdminController extends AdminController
 	      return $this->handleView($view);
           }
 
-          $this->setFlash($event->getMessageType(), $event->getMessage(), $event->getMessageParams());
+          $this->addFlash($event->getMessageType(), $event->getMessage(), $event->getMessageParams());
       }
 
       if ($config->isApiRequest()) {

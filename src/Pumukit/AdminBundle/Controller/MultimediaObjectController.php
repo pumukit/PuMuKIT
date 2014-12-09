@@ -63,7 +63,7 @@ class MultimediaObjectController extends SortableAdminController
       $factory = $this->get('pumukitschema.factory');
       $mmobj = $factory->createMultimediaObject($series);
 
-      $this->setFlash('success', 'create');
+      $this->addFlash('success', 'create');
 
       $page = $this->get('session')->get('admin/mms/page', 1);
 
@@ -92,10 +92,10 @@ class MultimediaObjectController extends SortableAdminController
   /**
    * Overwrite to update the session.
    */
-  public function showAction()
+  public function showAction(Request $request)
   {
     $config = $this->getConfiguration();
-    $data = $this->findOr404();
+    $data = $this->findOr404($request);
 
     $this->get('session')->set('admin/mms/id', $data->getId());
 
@@ -126,7 +126,7 @@ class MultimediaObjectController extends SortableAdminController
       $roles = $this->getRoles();
       $parentTags = $this->getParentTags();
 
-      $resource = $this->findOr404();
+      $resource = $this->findOr404($request);
 
       $formMeta = $this->createForm($config->getFormType() . '_meta', $resource);
       $formPub = $this->createForm($config->getFormType() . '_pub', $resource);
@@ -165,7 +165,7 @@ class MultimediaObjectController extends SortableAdminController
       $roles = $this->getRoles();
       $parentTags = $this->getParentTags();
 
-      $resource = $this->findOr404();
+      $resource = $this->findOr404($request);
 
       $formMeta = $this->createForm($config->getFormType() . '_meta', $resource);
       $formPub = $this->createForm($config->getFormType() . '_pub', $resource);
@@ -174,9 +174,9 @@ class MultimediaObjectController extends SortableAdminController
       $pubDecisionsTags = $this->getTagsByCod('PUBDECISIONS', true);
 
       if (($request->isMethod('PUT') || $request->isMethod('POST') || $request->isMethod('DELETE')) && $formMeta->bind($request)->isValid()) {
-	$event = $this->update($resource);
+	$event = $this->domainManager->update($resource);
           if (!$event->isStopped()) {
-              $this->setFlash('success', 'updatemeta');
+              $this->addFlash('success', 'updatemeta');
 
 	      $criteria = $this->getCriteria($config);
 	      $resources = $this->getResources($request, $config, $criteria);	      
@@ -193,7 +193,7 @@ class MultimediaObjectController extends SortableAdminController
 	      return $this->handleView($view);
           }
 
-          $this->setFlash($event->getMessageType(), $event->getMessage(), $event->getMessageParams());
+          $this->addFlash($event->getMessageType(), $event->getMessage(), $event->getMessageParams());
       }
 
       if ($config->isApiRequest()) {
@@ -231,7 +231,7 @@ class MultimediaObjectController extends SortableAdminController
       $roles = $this->getRoles();
       $parentTags = $this->getParentTags();
 
-      $resource = $this->findOr404();
+      $resource = $this->findOr404($request);
 
       $formMeta = $this->createForm($config->getFormType() . '_meta', $resource);
       $formPub = $this->createForm($config->getFormType() . '_pub', $resource);
@@ -244,9 +244,9 @@ class MultimediaObjectController extends SortableAdminController
 	$resource = $this->updateTags($request->get('pub_channels', null), "PUCH", $resource);
 	$resource = $this->updateTags($request->get('pub_decisions', null), "PUDE", $resource);
 
-	$event = $this->update($resource);
+	$event = $this->domainManager->update($resource);
           if (!$event->isStopped()) {
-              $this->setFlash('success', 'updatepub');
+              $this->addFlash('success', 'updatepub');
 
 	      $criteria = $this->getCriteria($config);
 	      $resources = $this->getResources($request, $config, $criteria);	      
@@ -263,7 +263,7 @@ class MultimediaObjectController extends SortableAdminController
 	      return $this->handleView($view);
           }
 
-          $this->setFlash($event->getMessageType(), $event->getMessage(), $event->getMessageParams());
+          $this->addFlash($event->getMessageType(), $event->getMessage(), $event->getMessageParams());
       }
 
       if ($config->isApiRequest()) {
@@ -295,7 +295,7 @@ class MultimediaObjectController extends SortableAdminController
   {
     $config = $this->getConfiguration();
 
-    $resource = $this->findOr404();
+    $resource = $this->findOr404($request);
 
     $tagService = $this->get('pumukitschema.tag');
     $resource = $tagService->addTagToMultimediaObject($resource, $request->get('tagId'));
