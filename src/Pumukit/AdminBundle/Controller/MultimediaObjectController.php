@@ -154,31 +154,32 @@ class MultimediaObjectController extends SortableAdminController
       $pubChannelsTags = $this->getTagsByCod('PUBCHANNELS', true);
       $pubDecisionsTags = $this->getTagsByCod('PUBDECISIONS', true);
 
-      if (($request->isMethod('PUT') || $request->isMethod('POST') || $request->isMethod('DELETE')) && $formMeta->bind($request)->isValid()) {
-	$event = $this->domainManager->update($resource);
-          if (!$event->isStopped()) {
-              $this->addFlash('success', 'updatemeta');
+      $method = $request->getMethod();
+      if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
+	  $formMeta->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+	$this->domainManager->update($resource);
 
-	      /*
-	      $criteria = $this->getCriteria($config);
-	      $resources = $this->getResources($request, $config, $criteria);	      
-	      */
-
-	      $mms = $this->getListMultimediaObjects($series);
-
-	      $view = $this
-		->view()
-		->setTemplate($this->getConfiguration()->getTemplate('list.html'))
-		->setData(array(
-				'series' => $series,
-				'mms' => $mms
-				))
+	if ($config->isApiRequest()) {
+          return $this->handleView($this->view($formMeta));
+	}
+		
+	/*
+	  $criteria = $this->getCriteria($config);
+	  $resources = $this->getResources($request, $config, $criteria);	      
+	*/
+	
+	$mms = $this->getListMultimediaObjects($series);
+	
+	$view = $this
+	  ->view()
+	  ->setTemplate($this->getConfiguration()->getTemplate('list.html'))
+	  ->setData(array(
+			  'series' => $series,
+			  'mms' => $mms
+			  ))
 		;
-
-	      return $this->handleView($view);
-          }
-
-          $this->addFlash($event->getMessageType(), $event->getMessage(), $event->getMessageParams());
+	
+	return $this->handleView($view);
       }
 
       if ($config->isApiRequest()) {
@@ -224,30 +225,30 @@ class MultimediaObjectController extends SortableAdminController
       $pubChannelsTags = $this->getTagsByCod('PUBCHANNELS', true);
       $pubDecisionsTags = $this->getTagsByCod('PUBDECISIONS', true);
       
-      if (($request->isMethod('PUT') || $request->isMethod('POST') || $request->isMethod('DELETE')) && $formPub->bind($request)->isValid()) {
-
+      $method = $request->getMethod();
+      if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
+	  $formPub->submit($request, !$request->isMethod('PATCH'))->isValid()) {
 	$resource = $this->updateTags($request->get('pub_channels', null), "PUCH", $resource);
 	$resource = $this->updateTags($request->get('pub_decisions', null), "PUDE", $resource);
 
-	$event = $this->domainManager->update($resource);
-          if (!$event->isStopped()) {
-              $this->addFlash('success', 'updatepub');
+	$this->domainManager->update($resource);
 
-	      $mms = $this->getListMultimediaObjects($series);
+	if ($config->isApiRequest()) {
+          return $this->handleView($this->view($formPub));
+	}
 
-	      $view = $this
-		->view()
-		->setTemplate($this->getConfiguration()->getTemplate('list.html'))
-		->setData(array(
-				'series' => $series,
-				'mms' => $mms
-				))
-		;
-	      
-	      return $this->handleView($view);
-          }
-
-          $this->addFlash($event->getMessageType(), $event->getMessage(), $event->getMessageParams());
+	$mms = $this->getListMultimediaObjects($series);
+	
+	$view = $this
+	  ->view()
+	  ->setTemplate($this->getConfiguration()->getTemplate('list.html'))
+	  ->setData(array(
+			  'series' => $series,
+			  'mms' => $mms
+			  ))
+	  ;
+	
+	return $this->handleView($view);
       }
 
       if ($config->isApiRequest()) {

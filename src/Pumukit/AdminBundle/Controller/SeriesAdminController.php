@@ -67,27 +67,28 @@ class SeriesAdminController extends AdminController
       $this->get('session')->set('admin/series/id', $request->get('id'));
       $form = $this->getForm($resource);
       
-      if (($request->isMethod('PUT') || $request->isMethod('POST') || $request->isMethod('DELETE')) && $form->bind($request)->isValid()) {
-          $event = $this->domainManager->update($resource);
-          if (!$event->isStopped()) {
-              $this->addFlash('success', 'update');
-
-	      $criteria = $this->getCriteria($config);
-	      $resources = $this->getResources($request, $config, $criteria);	      
-
-	      $pluralName = $config->getPluralResourceName();
-	      
-	      $view = $this
-		->view()
-		->setTemplate($config->getTemplate('list.html'))
-		->setTemplateVar($pluralName)
-		->setData($resources)
-		;
-	      
-	      return $this->handleView($view);
-          }
-
-          $this->addFlash($event->getMessageType(), $event->getMessage(), $event->getMessageParams());
+      $method = $request->getMethod();
+      if (in_array($method, array('POST', 'PUT', 'PATCH')) && 
+	  $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+        $this->domainManager->update($resource);
+	
+	if ($config->isApiRequest()) {
+          return $this->handleView($this->view($form));
+	}
+		
+	$criteria = $this->getCriteria($config);
+	$resources = $this->getResources($request, $config, $criteria);	      
+	
+	$pluralName = $config->getPluralResourceName();
+	
+	$view = $this
+	  ->view()
+	  ->setTemplate($config->getTemplate('list.html'))
+	  ->setTemplateVar($pluralName)
+	  ->setData($resources)
+	  ;
+	
+	return $this->handleView($view);
       }
 
       if ($config->isApiRequest()) {

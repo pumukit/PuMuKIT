@@ -21,6 +21,7 @@ class MultimediaObjectTemplateController extends MultimediaObjectController
       // TODO VALIDATE SERIES AND ROLES
       $roles = $this->getRoles();
       $series = $this->getSeries($request);
+
       $parentTags = $this->getParentTags();
       $mmtemplate = $this->getMultimediaObjectTemplate($series);
       
@@ -61,24 +62,24 @@ class MultimediaObjectTemplateController extends MultimediaObjectController
       $mmtemplate = $this->getMultimediaObjectTemplate($series);
 
       $formMeta = $this->createForm($config->getFormType() . '_meta', $mmtemplate);
-      //$formPub = $this->createForm($config->getFormType() . '_pub', $mmtemplate);
 
       //$pubChannelsTags = $this->getTagsByCod('PUBCHANNELS', true);
       $pubDecisionsTags = $this->getTagsByCod('PUBDECISIONS', true);
 
-      if (($request->isMethod('PUT') || $request->isMethod('POST') || $request->isMethod('DELETE')) && $formMeta->bind($request)->isValid()) {
-	$event = $this->domainManager->update($mmtemplate);
-          if (!$event->isStopped()) {
-              $this->addFlash('success', 'updatemeta');
-
-	      return new JsonResponse(array('mmtemplate' => 'updatemeta'));
-          }
-
-          $this->addFlash($event->getMessageType(), $event->getMessage(), $event->getMessageParams());
+      $method = $request->getMethod();
+      if (in_array($method, array('POST', 'PUT', 'PATCH')) && 
+	  $formMeta->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+        $this->domainManager->update($mmtemplate);
+	
+	if ($config->isApiRequest()) {
+          return $this->handleView($this->view($formMeta));
+	}
+		
+	return new JsonResponse(array('mmtemplate' => 'updatemeta'));
       }
 
       if ($config->isApiRequest()) {
-          return $this->handleView($this->view($formMeta));
+	return $this->handleView($this->view($formMeta));
       }
 
       $view = $this
