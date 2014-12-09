@@ -54,7 +54,7 @@ class MultimediaObjectController extends SortableAdminController
       $factory = $this->get('pumukitschema.factory');
       $mmobj = $factory->createMultimediaObject($series);
 
-      $this->setFlash('success', 'create');
+      $this->addFlash('success', 'create');
 
       $mms = $this->getListMultimediaObjects($series);
 
