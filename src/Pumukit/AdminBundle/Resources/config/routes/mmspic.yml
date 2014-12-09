@@ -1,0 +1,70 @@
+pumukitadmin_mmspic_index:
+    pattern: /
+    methods: [GET]
+    defaults:
+        _controller: pumukitadmin.controller.mmspic:indexAction
+        _sylius:
+            filterable: true
+
+pumukitadmin_mmspic_create:
+    pattern: /create/{id}
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitadmin.controller.mmspic:createAction
+        _sylius:
+            redirect: pumukitadmin_mms_index
+
+pumukitadmin_mmspic_update:
+    pattern: /{id}/update
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitadmin.controller.mmspic:updateAction
+
+pumukitadmin_mmspic_batch_delete:
+    pattern: /delete
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitadmin.controller.mmspic:batchDeleteAction
+        _sylius:
+            redirect: pumukitadmin_mms_index
+
+pumukitadmin_mmspic_delete:
+    pattern: /{id}
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitadmin.controller.mmspic:deleteAction
+
+
+pumukitadmin_mmspic_up:
+    pattern: /{id}/up
+    methods: [POST]
+    defaults:
+        _controller: pumukitadmin.controller.mmspic:upAction
+
+
+pumukitadmin_mmspic_down:
+    pattern: /{id}/down
+    methods: [POST]
+    defaults:
+        _controller: pumukitadmin.controller.mmspic:downAction
+
+
+pumukitadmin_mmspic_list:
+    pattern: /{id}
+    methods: [GET]
+    defaults:
+        _controller: pumukitadmin.controller.mmspic:listAction
+
+
+pumukitadmin_mmspic_show:
+    pattern: /{id}/show
+    methods: [GET]
+    defaults:
+        _controller: pumukitadmin.controller.mmspic:showAction
+
+
+pumukitadmin_mmspic_upload:
+    pattern: /{id}/upload
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitadmin.controller.mmspic:uploadAction

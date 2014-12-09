@@ -4,9 +4,8 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Symfony\Component\HttpFoundation\File\File;
 
-use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\SeriesPic;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\MultimediaObjectPic;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -21,7 +20,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 
  */
 
-class SeriesPicService
+class MultimediaObjectPicService
 {
   private $dm;
   private $targetPath;
@@ -58,38 +57,38 @@ class SeriesPicService
 
 
   /**
-   * Set a pic from an url into the series
+   * Set a pic from an url into the multimediaObject
    */
-  public function addPicUrl(Series $series, $picUrl)
+  public function addPicUrl(MultimediaObject $multimediaObject, $picUrl)
   {
     //TODO check URL is valid and a image.
-    $pic = new SeriesPic();
+    $pic = new MultimediaObjectPic();
     $pic->setUrl($picUrl);    
 
-    $series->addPic($pic);
-    $this->dm->persist($series);
+    $multimediaObject->addPic($pic);
+    $this->dm->persist($multimediaObject);
     $this->dm->flush();
 
-    return $series;
+    return $multimediaObject;
   }
 
 
   /**
-   * Set a pic from an url into the series
+   * Set a pic from an url into the multimediaObject
    */
-  public function addPicFile(Series $series, File $picFile)
+  public function addPicFile(MultimediaObject $multimediaObject, File $picFile)
   {
     //TODO check file is a image
     //TODO delete double slash "//"
-    $path = $picFile->move($this->targetPath . "/" . $series->getId(), $picFile->getClientOriginalName());
+    $path = $picFile->move($this->targetPath . "/" . $multimediaObject->getId(), $picFile->getClientOriginalName());
     
-    $pic = new SeriesPic();
+    $pic = new MultimediaObjectPic();
     $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));    
 
-    $series->addPic($pic);
-    $this->dm->persist($series);
+    $multimediaObject->addPic($pic);
+    $this->dm->persist($multimediaObject);
     $this->dm->flush();
 
-    return $series;
+    return $multimediaObject;
   }
 }

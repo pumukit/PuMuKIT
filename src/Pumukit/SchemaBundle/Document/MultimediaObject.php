@@ -547,9 +547,7 @@ class MultimediaObject
    */
   public function addPic(MultimediaObjectPic $pic)
   {
-      $this->pics[] = $pic;
-      $pic->setMultimediaObject($this);
-      $pic->setRank(count($this->pics));
+      $this->pics->add($pic);
   }
 
   /**

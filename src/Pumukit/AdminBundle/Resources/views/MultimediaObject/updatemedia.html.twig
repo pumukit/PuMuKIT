@@ -10,7 +10,7 @@
       <dt>{% trans %}Images{% endtrans %}:</dt>
       <dd>  
         <div id="pic_mms">
-	  {# {% include 'PumukitAdminBundle:Pic:list.html.twig' with {'mm': mm.id} %} #}
+	  {% include 'PumukitAdminBundle:Pic:list.html.twig' with {'resource': mm, 'resource_name': 'mms'} %}
         </div>
       </dd>
     </div>

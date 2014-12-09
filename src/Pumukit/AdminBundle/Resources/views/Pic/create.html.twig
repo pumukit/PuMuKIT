@@ -3,7 +3,7 @@
 {% set see_previous = ((total == page)or(0 == total)? {'class': '', 'style': 'display : none', 'title': ''}: {'class': 'tv_admin_action_previous', 'style': 'color : blue; font-weight : normal ', 'title': '{% trans %}New Image{% endtrans %}'}) %}
 
 <div id="tv_admin_container" style="width:100%">
-  <form onsubmit="new Ajax.Updater('pic_{{ resource_name }}', '{{ path('pumukitadmin_seriespic_update', {'id': resource.id}) }}', {asynchronous:true, evalScripts:true, onSuccess:function(request, json){Modalbox.hide()}, parameters:Form.serialize(this)}); return false;" action="{{ path('pumukitadmin_seriespic_update', {'id': resource.id}) }}" method="post">
+  <form onsubmit="new Ajax.Updater('pic_{{ resource_name }}', '{{ path('pumukitadmin_'~resource_name~'pic_update', {'id': resource.id}) }}', {asynchronous:true, evalScripts:true, onSuccess:function(request, json){Modalbox.hide()}, parameters:Form.serialize(this)}); return false;" action="{{ path('pumukitadmin_'~resource_name~'pic_update', {'id': resource.id}) }}" method="post">
     <input type="hidden" name="type" id="type" value="url">    
     <input type="hidden" name="{{ resource_name }}" id="{{ resource_name }}" value="{{ resource.id }}">
 
@@ -29,7 +29,7 @@
 
 <div id="tv_admin_container" style="width:100%">
 
-  <form method="post" enctype="multipart/form-data" target="iframeUpload" action="{{ path('pumukitadmin_seriespic_upload', {'id': resource.id}) }}">
+  <form method="post" enctype="multipart/form-data" target="iframeUpload" action="{{ path('pumukitadmin_'~resource_name~'pic_upload', {'id': resource.id}) }}">
     <input type="hidden" name="type" id="type" value="url">    
     <input type="hidden" name="{{ resource_name }}" id="{{ resource_name }}" value="{{ resource.id }}">
 
@@ -61,7 +61,7 @@
       <div class="form-row">
 	<label for="other">{% trans %}Use Image{% endtrans %}:</label>
         <div class="content">
-          {% if 0 == total %}
+          {% if 0 == pics|length %}
             {% trans %}There are no images in the database.{% endtrans %}
           {% endif %}
           {% for pic in pics %}
@@ -70,7 +70,7 @@
                <div class="wrap1">
                 <div class="wrap2">
                  <div class="wrap3">
-		   <a href="#" onclick="new Ajax.Updater('pic_{{ resource_name }}', '/editar.php/pics/update/type/pic/id/319/serial/47', {asynchronous:true, evalScripts:true, onSuccess:function(request, json){Modalbox.hide()}}); return false;" class="MB_focusable"><img src="{{ pic.getUrl() }}" alt="{{ pic.getUrl()|split('/')|last }}" height="82" width="100"></a>
+		   <a href="#" onclick="new Ajax.Updater('pic_{{ resource_name }}', '{{ path('pumukitadmin_'~resource_name~'pic_update', {'id': resource.id, 'picUrl': pic.getUrl()}) }}', {asynchronous:true, evalScripts:true, onSuccess:function(request, json){Modalbox.hide()}}); return false;" class="MB_focusable"><img src="{{ pic.getUrl() }}" alt="{{ pic.getUrl()|split('/')|last }}" height="82" width="100"></a>
                  </div>
                 </div>
                </div>
@@ -85,10 +85,10 @@
 
 <ul class="tv_admin_actions">
   <li>
-    <a class="{{ see_previous.class }} MB_focusable" style="{{ see_previous.style }}" title="{{ see_previous.title }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_seriespic_create', {'id': resource.id, 'page': (page + 1)}) }}">{% trans %}Previous{% endtrans %}</a>
+    <a class="{{ see_previous.class }} MB_focusable" style="{{ see_previous.style }}" title="{{ see_previous.title }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_'~resource_name~'pic_create', {'id': resource.id, 'page': (page + 1)}) }}">{% trans %}Previous{% endtrans %}</a>
   </li>
   <li>
-    <a class="{{ see_next.class }} MB_focusable" style="{{ see_next.style }}" title="{{ see_next.title }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_seriespic_create', {'id': resource.id, 'page': (page - 1)}) }}">{% trans %}Next{% endtrans %}</a>
+    <a class="{{ see_next.class }} MB_focusable" style="{{ see_next.style }}" title="{{ see_next.title }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_'~resource_name~'pic_create', {'id': resource.id, 'page': (page - 1)}) }}">{% trans %}Next{% endtrans %}</a>
   </li>
   <li><input class="tv_admin_action_delete MB_focusable" onclick="Modalbox.hide(); return false;" type="button" value="{% trans %}Cancel{% endtrans %}"> </li>
 </ul>

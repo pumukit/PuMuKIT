@@ -41,7 +41,7 @@
 	     <dt>{% trans %}Images{% endtrans %}</dt>
 	     <dd>
                <div id="pic_series">
-		 {% include 'PumukitAdminBundle:Pic:list.html.twig' with {'series': series} %}
+		 {% include 'PumukitAdminBundle:Pic:list.html.twig' with {'resource': series, 'resource_name': 'series'} %}
                </div>
 	     </dd>
 	   </dl>

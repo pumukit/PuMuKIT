@@ -1,7 +1,7 @@
 <div>
   <img id="pic_mms_load" src="/legacy/images/admin/load/spinner.gif" alt="{% trans %}loading{% endtrans %}" style="position: relative; top: 50px; float:left; display: none"/>
 
-{% for index,pic in series.getPics() %}
+{% for index,pic in resource.getPics() %}
   <div style="width : 120px; float: left; padding : 10px; ">
     <div style="padding: 10px; float:left; text-align : center">
       <div class="wrap0"><div class="wrap1"><div class="wrap2"><div class="wrap3">
@@ -17,7 +17,7 @@
       <a href="#" onclick="window.delete_pic('{{ pic.id }}'); return false;">
           <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
       </a>
-      {% if ((series.getPics()|length - 1) != index) %}
+      {% if ((resource.getPics()|length - 1) != index) %}
         {# TODO path pics down #}
         <a href="#" onclick="window.down_pic('{{ pic.id }}'); return false;">&#8594;</a>
       {% endif %}
@@ -35,7 +35,7 @@
   </div>
   
   <div style="text-align : center">
-    <a title="{% trans %}New Image{% endtrans %}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_seriespic_create', {'id': series.id}) }}">{% trans %}new image{% endtrans %}...</a>
+    <a title="{% trans %}New Image{% endtrans %}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_'~resource_name~'pic_create', {'id': resource.id}) }}">{% trans %}new image{% endtrans %}...</a>
   </div>
 </div>
 

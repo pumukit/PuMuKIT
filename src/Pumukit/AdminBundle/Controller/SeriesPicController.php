@@ -58,7 +58,10 @@ class SeriesPicController extends Controller
    */
   public function listAction(Series $series)
   {
-      return array('series' => $series);
+    return array(
+		 'resource' => $series, 
+		 'resource_name' => 'series'
+		 );
   }
 
 
@@ -69,12 +72,15 @@ class SeriesPicController extends Controller
    */
   public function updateAction(Series $series, Request $request)
   {
-    if ($url = $request->get('url')){
+    if (($url = $request->get('url')) || ($url = $request->get('picUrl'))){
       $picService = $this->get('pumukitschema.seriespic');
       $series = $picService->addPicUrl($series, $url);
     }
     
-    return array('series' => $series);
+    return array(
+		 'resource' => $series,
+		 'resource_name' => 'series'
+		 );
   }
 
 
@@ -89,7 +95,10 @@ class SeriesPicController extends Controller
       $media = $picService->addPicFile($series, $request->files->get("file"));
     }
 
-    return array('series' => $series);
+    return array(
+		 'resource' => $series,
+		 'resource_name' => 'series'
+		 );
   }
 
 
@@ -155,8 +164,5 @@ class SeriesPicController extends Controller
 
     return $this->redirect($this->generateUrl('pumukitadmin_seriespic_list', array('id' => $series->getId())));
   }
-
-
-
 
 }
