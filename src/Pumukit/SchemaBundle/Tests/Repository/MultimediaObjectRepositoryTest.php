@@ -150,6 +150,51 @@ class MultimediaObjectRepositoryTest extends WebTestCase
       //$this->assertEquals(4,count($this->repo->findBySeries($series_main)));
     }
 
+    public function testFindWithStatus()
+    {
+      $series = $this->createSeries('Serie prueba status');
+
+      $mmPrototype = $this->createMultimediaObjectAssignedToSeries('Status prototype', $series);
+      $mmPrototype->setStatus(MultimediaObject::STATUS_PROTOTYPE);
+
+      $mmNew = $this->createMultimediaObjectAssignedToSeries('Status new', $series);
+      $mmNew->setStatus(MultimediaObject::STATUS_NEW);
+
+      $mmHide = $this->createMultimediaObjectAssignedToSeries('Status hide', $series);
+      $mmHide->setStatus(MultimediaObject::STATUS_HIDE);
+
+      $mmBloq = $this->createMultimediaObjectAssignedToSeries('Status bloq', $series);
+      $mmBloq->setStatus(MultimediaObject::STATUS_BLOQ);
+
+      $mmNormal = $this->createMultimediaObjectAssignedToSeries('Status normal', $series);
+      $mmNormal->setStatus(MultimediaObject::STATUS_NORMAL);
+
+      $this->dm->persist($mmPrototype);
+      $this->dm->persist($mmNew);
+      $this->dm->persist($mmHide);
+      $this->dm->persist($mmBloq);
+      $this->dm->persist($mmNormal);
+      $this->dm->flush();
+
+      $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PROTOTYPE))));
+      $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NEW))));
+      $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_HIDE))));
+      $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_BLOQ))));
+      $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NORMAL))));
+      $this->assertEquals(2, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PROTOTYPE, MultimediaObject::STATUS_NEW))));
+      $this->assertEquals(3, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NORMAL, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDE))));
+    }
+
+    public function testFindPrototype()
+    {
+
+    }
+
+    public function testFindWithoutPrototype()
+    {
+
+    }
+
     private function createPerson($name)
     {
         $email = $name.'@mail.es';
