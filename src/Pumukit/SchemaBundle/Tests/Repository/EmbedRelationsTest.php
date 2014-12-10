@@ -51,43 +51,6 @@ class EmbedRelationsTest extends WebTestCase
 	$this->assertEquals(0, count($this->repoTags->findAll()));
     }
 
-
-    public function createTestTree()
-    {
-        $tag = new Tag();
-        $tag->setCod("ROOT");
-
-        $this->dm->persist($tag);
-        $this->dm->flush();
-
-        $tagA = new Tag();
-        $tagA->setCod("A");
-        $tagA->setParent($tag);
-        $this->dm->persist($tagA);
-
-        $tagB = new Tag();
-        $tagB->setCod("B");
-        $tagB->setParent($tag);
-        $this->dm->persist($tagB);
-
-        $tagB1 = new Tag();
-        $tagB1->setCod("B1");
-        $tagB1->setParent($tagB);
-        $this->dm->persist($tagB1);
-
-        $tagB2 = new Tag();
-        $tagB2->setCod("B2");
-        $tagB2->setParent($tagB);
-        $this->dm->persist($tagB2);
-
-        $tagB2A = new Tag();
-        $tagB2A->setCod("B2A");
-        $tagB2A->setParent($tagB2);
-        $this->dm->persist($tagB2A);
-
-        $this->dm->flush();
-    }
-
     public function testCreateRootTag()
     {
         $tag = new Tag();
@@ -133,7 +96,72 @@ class EmbedRelationsTest extends WebTestCase
     }
 
 
-    public function createTestMultimediaObject()
+    public function testTagEmptyInMultimediaObject()
+    {
+        $this->createTestMultimediaObject();
+  
+        $this->assertEquals(0, count($this->repoMmobjs->findOneByDuration(300)->getTags()));
+    }
+    
+    public function testAddTagToMultimediaObject()
+    {
+        $this->createTestTree();
+	$this->createTestMultimediaObject();
+	$this->addTagToMultimediaObject();
+
+	$this->assertEquals(1, count($this->repoMmobjs->findOneByDuration(300)->getTags()));
+	$this->assertEquals(1, count($this->repoTags->findOneByCod("B2A")));
+
+    }
+
+    public function testAddAndRemoveTagToMultimediaObject()
+    {
+        $this->createTestTree();
+	$this->createTestMultimediaObject();
+        $this->addTagToMultimediaObject();
+	$this->removeTagFromMultimediaObject();
+
+	$this->assertEquals(0, count($this->repoMmobjs->findOneByDuration(300)->getTags()));
+	$this->assertEquals(1, count($this->repoTags->findOneByCod("B2A")));
+    }
+
+    private function createTestTree()
+    {
+        $tag = new Tag();
+        $tag->setCod("ROOT");
+
+        $this->dm->persist($tag);
+        $this->dm->flush();
+
+        $tagA = new Tag();
+        $tagA->setCod("A");
+        $tagA->setParent($tag);
+        $this->dm->persist($tagA);
+
+        $tagB = new Tag();
+        $tagB->setCod("B");
+        $tagB->setParent($tag);
+        $this->dm->persist($tagB);
+
+        $tagB1 = new Tag();
+        $tagB1->setCod("B1");
+        $tagB1->setParent($tagB);
+        $this->dm->persist($tagB1);
+
+        $tagB2 = new Tag();
+        $tagB2->setCod("B2");
+        $tagB2->setParent($tagB);
+        $this->dm->persist($tagB2);
+
+        $tagB2A = new Tag();
+        $tagB2A->setCod("B2A");
+        $tagB2A->setParent($tagB2);
+        $this->dm->persist($tagB2A);
+
+        $this->dm->flush();
+    }
+
+    private function createTestMultimediaObject()
     {
         $status = MultimediaObject::STATUS_NORMAL;
         $record_date = new \DateTime();
@@ -157,44 +185,24 @@ class EmbedRelationsTest extends WebTestCase
 
     }
 
-    public function testTagEmptyInMultimediaObject()
+    private function addTagToMultimediaObject()
     {
-        $this->createTestMultimediaObject();
-  
-        $this->assertEquals(0, count($this->repoMmobjs->findOneByDuration(300)->getTags()));
-    }
-    
-    public function testAddTagToMultimediaObject()
-    {
-        $this->createTestTree();
-	$this->createTestMultimediaObject();
-
 	$tagB2A = $this->repoTags->findOneByCod("B2A");
 	$mmobj = $this->repoMmobjs->findOneByDuration(300);
 
 	$mmobj->addTag($tagB2A);
 	$this->dm->persist($mmobj);
 	$this->dm->flush();
-
-	$this->assertEquals(1, count($this->repoMmobjs->findOneByDuration(300)->getTags()));
-	$this->assertEquals(1, count($this->repoTags->findOneByCod("B2A")));
-
     }
 
-    public function testAddAndRemoveTagToMultimediaObject()
+    private function removeTagFromMultimediaObject()
     {
-        $this->testAddTagToMultimediaObject();
-
 	$tagB2A = $this->repoTags->findOneByCod("B2A");
 	$mmobj = $this->repoMmobjs->findOneByDuration(300);
 
-	$mmobj->removeTag($tagB2A);
+	$hasRemoved = $mmobj->removeTag($tagB2A);
+
 	$this->dm->persist($mmobj);
 	$this->dm->flush();
-
-	$this->assertEquals(0, count($this->repoMmobjs->findOneByDuration(300)->getTags()));
-	$this->assertEquals(1, count($this->repoTags->findOneByCod("B2A")));
     }
-
-
 }
