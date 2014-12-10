@@ -118,7 +118,7 @@ class SeriesRepository extends DocumentRepository
 
     public function findWithoutTag(Tag $tag)
     {
-        $dm = $this->$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $dm = $this->kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->equals($tag)->sort('public_date', 'desc');
         $query = $qb->getQuery();
         $results = $query->execute();
