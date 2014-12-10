@@ -28,16 +28,19 @@ class TagService
       $tag = $repository->findById($tagId);
       if (null !== $tag){
         $mmobj->addTag($tag);
-	$dm->persist($mmobj);
       }
       
       $node = $tag;
       do {
-	$node->increaseNumberMultimediaObjects();
-	$dm->persist($node);
+	if (!($mmobj->containsTag($node))){
+	  $mmobj->addTag($node);
+	  $node->increaseNumberMultimediaObjects();	  
+	  $dm->persist($node);
+	}
 	$node = $node->getParent();
-      } while (0 !== strcmp($this->getParent()->getCod(), 'ROOT'))
+      } while (0 !== strcmp($this->getParent()->getCod(), 'ROOT'));
 
+      $dm->persist($mmobj);
       $dm->flush();
 
       return $mmobj;
