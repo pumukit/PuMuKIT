@@ -262,7 +262,7 @@ class MultimediaObject
    */
   public function addTag($tag)
   {
-      $embedTag = EmbeddedTag::getEmbeddedTag($tag);
+      $embedTag = EmbeddedTag::getEmbeddedTag($this->tags, $tag);
 
       if (!($this->containsTag($embedTag))) {
           $this->tags[] = $embedTag;
@@ -280,9 +280,17 @@ class MultimediaObject
   //TODO: ADD TEST (yo creo que es !== y no === ver removePicById)
   public function removeTag($tag)
   {
-    $this->tags = $this->tags->filter(function ($i) use ($tag) {
-	return $i->getId() === $tag->getId();
+    $embedTag = EmbeddedTag::getEmbeddedTag($this->tags, $tag);
+
+    $aux = $this->tags->filter(function ($i) use ($embedTag) {
+	return $i->getId() !== $embedTag->getId();
     });
+    
+    $hasRemoved = (count($aux) !== count($this->tags));
+
+    $this->tags = $aux;
+
+    return $hasRemoved;
   }
 
   /**
@@ -294,7 +302,7 @@ class MultimediaObject
    */
   public function containsTag($tag)
   {
-      $embedTag = EmbeddedTag::getEmbeddedTag($tag);
+      $embedTag = EmbeddedTag::getEmbeddedTag($this->tags, $tag);
 
       return $this->tags->contains($embedTag);
   }
@@ -1577,5 +1585,18 @@ class MultimediaObject
   public function removePeopleInMultimediaObject(\Pumukit\SchemaBundle\Document\PersonInMultimediaObject $peopleInMultimediaObject)
   {
       $this->people_in_multimedia_object->removeElement($peopleInMultimediaObject);
+  }
+
+  /**
+   * Clone Multimedia Object
+   *
+   * @return 
+   */
+  public function cloneResource()
+  {
+      $aux = clone $this;
+      $aux->id = null;
+
+      return $aux;
   }
 }

@@ -378,15 +378,18 @@ class EmbeddedTag
 
   /**
    *
+   * @param ArrayCollection $embeddedTags
    * @param EmbeddedTag|Tag $tag
    *
    * @return EmbeddedTag
    */
-  public static function getEmbeddedTag($tag)
+  public static function getEmbeddedTag($embedTags, $tag)
   {
       if ($tag instanceof self) {
           return $tag;
-      } elseif ($tag instanceof Tag) {
+      } elseif (null !== ($containedEmbedTag = self::containedEmbeddedTag($embedTags, $tag))) {
+	  return $containedEmbedTag;
+      }elseif ($tag instanceof Tag) {
           $embedTag = new self();
           $embedTag->setI18nTitle($tag->getI18nTitle());
           $embedTag->setI18nDescription($tag->getI18nDescription());
@@ -400,5 +403,26 @@ class EmbeddedTag
       }
 
       throw new \InvalidArgumentException('Only Tag or EmbeddedTag are allowed.');
+  }
+
+  /**
+   * Contained embed tag
+   *
+   * @param ArrayCollection $embedTags
+   * @param Tag|EmbeddedTag $tag
+   * @return EmbeddedTag
+   */
+  private static function containedEmbeddedTag($embedTags, $tag)
+  {
+    $containedEmbedTag = null;
+    
+    foreach ($embedTags as $embedTag){
+      if (0 === strcmp($tag->getCod(), $embedTag->getCod())){
+	$containedEmbedTag = $embedTag;
+	break;
+      }
+    }
+    
+    return $containedEmbedTag;
   }
 }
