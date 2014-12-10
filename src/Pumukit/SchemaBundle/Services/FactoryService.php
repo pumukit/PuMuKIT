@@ -7,6 +7,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Broadcast;
 
 class FactoryService
 {
@@ -43,30 +44,64 @@ class FactoryService
       $this->dm->persist($series);
       $this->dm->flush();
 
-      $mm = $this->createMultimediaObject($series, MultimediaObject::STATUS_PROTOTYPE);
+      $mm = $this->createMultimediaObjectTemplate($series);
 
       return $series;
   }
 
   /**
-   * Create a new series with default values
+   * Create a new Multimedia Object Template
    *
    * @return MultimediaObject
    */
-  public function createMultimediaObject($series, $status = MultimediaObject::STATUS_NEW)
+  public function createMultimediaObjectTemplate($series)
   {
       $mm = new MultimediaObject();
-
+      $mm->setStatus(MultimediaObject::STATUS_PROTOTYPE);
+      $mm->setBroadcast($this->getDefaultBroadcast());
       $mm->setPublicDate(new \DateTime("now"));
       $mm->setRecordDate($mm->getPublicDate());
       foreach ($this->locales as $locale) {
           $title = $this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE, array(), null, $locale);
           $mm->setTitle($title, $locale);
       }
-      $mm->setStatus($status);
 
+      $mm->setSeries($series);
+
+      $this->dm->persist($mm);
+      $this->dm->flush();
+
+      return $mm;
+  }
+
+  /**
+   * Create a new Multimedia Object from Template
+   *
+   * @return MultimediaObject
+   */
+  public function createMultimediaObject($series)
+  {
+      $prototype = $this->dm
+	->getRepository('PumukitSchemaBundle:MultimediaObject')
+	->findPrototype($series);
+
+      if (null != $prototype){
+	$mm = $prototype->cloneResource();
+      }else{
+	$mm = new MultimediaObject();
+	$mm->setBroadcast($this->getDefaultBroadcast());
+	$mm->setPublicDate(new \DateTime("now"));
+	$mm->setRecordDate($mm->getPublicDate());
+	foreach ($this->locales as $locale) {
+          $title = $this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE, array(), null, $locale);
+          $mm->setTitle($title, $locale);
+	}
+      }
+
+      $mm->setStatus(MultimediaObject::STATUS_NEW);
+      	
       $series->addMultimediaObject($mm);
-
+	
       $this->dm->persist($mm);
       $this->dm->persist($series);
       $this->dm->flush();
@@ -74,4 +109,25 @@ class FactoryService
       return $mm;
   }
 
+  /**
+   * Gets default broadcast or public one
+   *
+   * @return Broadcast
+   */
+  public function getDefaultBroadcast()
+  {
+      $broadcast = $this->dm
+	->getRepository('PumukitSchemaBundle:Broadcast')
+	->findDefaultSel();
+
+      if (null == $broadcast){
+	$broadcast = $this->dm
+	  ->getRepository('PumukitSchemaBundle:Broadcast')
+	  ->findPublicBroadcast();
+      }else{
+	// TODO throw exception
+      }
+
+      return $broadcast;    
+  }
 }

@@ -23,7 +23,7 @@ class Series
   /**
    * @var ArrayCollection $multimedia_objects
    *
-   * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="series")
+   * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="series", repositoryMethod="findWithoutPrototype")
    */
   private $multimedia_objects;
 
@@ -157,7 +157,7 @@ class Series
       $this->multimedia_objects[] = $multimedia_object;
       $multimedia_object->setSeries($this);
 
-      $multimedia_object->setRank(count($this->multimedia_objects));
+      //$multimedia_object->setRank(count($this->multimedia_objects));
   }
 
   /**
