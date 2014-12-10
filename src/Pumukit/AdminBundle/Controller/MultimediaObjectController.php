@@ -298,8 +298,11 @@ class MultimediaObjectController extends SortableAdminController
 
       if ($this->get('session')->get('admin/series/id', null)){
 	$series = $repository->find($this->get('session')->get('admin/series/id'));
+      }else{
+	$series = $repository->find($request->get('id'));
+	$this->get('session')->set('admin/series/id', $series->getId());
       }
-
+      
       return $series;
   }
 
