@@ -30,7 +30,7 @@
 
 	<fieldset id="tv_fieldset_none" class="">
 
-          {% for child in form_pub %}
+          {% for child in form_pub if child.vars.id in ['pumukitadmin_mms_pub_status'] %}
 	    {{ form_row(child) }}
           {% endfor %}
 	  
@@ -162,6 +162,11 @@
 	 #}
 
 
+          {% for child in form_pub if child.vars.id in ['pumukitadmin_mms_pub_broadcast'] %}
+	    {{ form_row(child) }}
+          {% endfor %}
+
+
 {# TODO
 <div class="form-row">
   <?php echo label_for('broadcast_id', 'Perfil de distribución:', 'class="required long"') ?>
@@ -185,14 +190,14 @@
 
        <input type="button" style="background-color: #ffc; border-right: 1px solid #ddd !important; padding-left: 20px;" class="tv_admin_action_save" id="view_passwd" onclick="toggleName(this); replaceType(pass1); replaceType(pass2); return false;" value="Ver contraseña" />
        <input type="button" style="background-color: #ffc; border-right: 1px solid #ddd !important; padding-left: 20px;" class="tv_admin_action_save" id="gen_passwd" onclick="genpasswd($('pass1'),$('pass2')); return false;" title="Genera una contraseña aletaoria" value="Generar contraseña" />
-
-
-
        <span id="passwdFail" style="display: none; color: red; margin: 0px 10px;">Las contraseñas deben ser iguales.</span>
      </span>
   </div>
 </div>
 #}
+
+
+
 {#
 <!--
 <div class="form-row">

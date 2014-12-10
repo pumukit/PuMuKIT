@@ -21,7 +21,8 @@ class MultimediaObjectPubType extends AbstractType
                   MultimediaObject::STATUS_NEW => 'New', 
                   MultimediaObject::STATUS_PROTOTYPE => 'Prototype'
             ),
-		  'label' => 'Status'));
+		  'label' => 'Status'))
+      ->add('broadcast', null, array('label' => 'Broadcast'));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
