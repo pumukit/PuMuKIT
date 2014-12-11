@@ -153,8 +153,8 @@ class CalendarAdminController extends AdminController
 
       if ($config->isPaginated()) {
           $resources = $this
-    ->getResourceResolver()
-    ->getResource($repository, $config, 'createPaginator', array($criteria, $sorting))
+    ->resourceResolver
+    ->getResource($repository, 'createPaginator', array($criteria, $sorting))
     ;
 
           if ($request->get('page', null)) {
@@ -167,8 +167,8 @@ class CalendarAdminController extends AdminController
     ;
       } else {
           $resources = $this
-    ->getResourceResolver()
-    ->getResource($repository, $config, 'findBy', array($criteria, $sorting, $config->getLimit()))
+    ->resourceResolver
+    ->getResource($repository, 'findBy', array($criteria, $sorting, $config->getLimit()))
     ;
       }
 

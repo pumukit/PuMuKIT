@@ -57,7 +57,7 @@ class BroadcastAdminController extends AdminController
         $repository = $this->getRepository();
 
         $true_resource = $this->findOr404($request);
-        $resources = $this->getResourceResolver()->getResource($repository, $config, 'findAll');
+        $resources = $this->resourceResolver->getResource($repository, 'findAll');
 
         foreach ($resources as $resource) {
             if (0 !== strcmp($resource->getId(), $true_resource->getId())) {
