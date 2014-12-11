@@ -63,17 +63,22 @@ class FactoryServiceTest extends WebTestCase
 
     public function createBroadcasts()
     {
+        $locale = 'en';
+
         $broadcastPrivate = new Broadcast();
+        $broadcastPrivate->setLocale($locale);
         $broadcastPrivate->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PRI);
         $broadcastPrivate->setDefaultSel(true);
         $broadcastPrivate->setName('Private');
 
         $broadcastPublic = new Broadcast();
+        $broadcastPublic->setLocale($locale);
         $broadcastPublic->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
         $broadcastPublic->setDefaultSel(false);
         $broadcastPublic->setName('Public');
 
         $broadcastCorporative = new Broadcast();
+        $broadcastCorporative->setLocale($locale);
         $broadcastCorporative->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_COR);
         $broadcastCorporative->setDefaultSel(false);
         $broadcastCorporative->setName('Corporative');

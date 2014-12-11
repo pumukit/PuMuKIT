@@ -59,10 +59,10 @@
         {{ broadcast.getBroadcastTypeId() }}
       </td>
       <td onclick="click_fila_no_preview('broadcast', this, '{{ broadcast.id }}');">
-        {{ broadcast.name }}
+        {{ broadcast.getName() }}
       </td>
       <td onclick="click_fila_no_preview('broadcast', this, '{{ broadcast.id }}');">
-        {{ broadcast.description }}
+        {{ broadcast.getDescription() }}
       </td>
       <td onclick="click_fila_no_preview('broadcast', this, '{{ broadcast.id }}');">
         {{ broadcast.getMultimediaObjects()|length }}

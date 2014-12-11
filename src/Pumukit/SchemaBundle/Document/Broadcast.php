@@ -33,9 +33,9 @@ class Broadcast
   /**
    * @var string $name
    *
-   * @MongoDB\String
+   * @MongoDB\Raw
    */
-  private $name;
+  private $name = array('en' => '');
 
   /**
    * @var string $broadcast_type_id
@@ -128,9 +128,12 @@ class Broadcast
    *
    * @param string $name
    */
-  public function setName($name)
+  public function setName($name, $locale = null)
   {
-      $this->name = $name;
+      if ($locale == null){
+    	  $locale = $this->locale;
+      }
+      $this->name[$locale] = $name;
   }
 
   /**
@@ -138,7 +141,34 @@ class Broadcast
    *
    * @return string
    */
-  public function getName()
+  public function getName($locale = null)
+  {
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      if (!isset($this->name[$locale])) {
+          return;
+      }
+
+      return $this->name[$locale];
+  }
+
+  /**
+   * Set I18n name
+   *
+   * @param array $name
+   */
+  public function setI18nName(array $name)
+  {
+      $this->name = $name;
+  }
+
+  /**
+   * Get i18n name
+   *
+   * @return array
+   */
+  public function getI18nName()
   {
       return $this->name;
   }
