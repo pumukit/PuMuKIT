@@ -92,6 +92,14 @@ class FactoryServiceTest extends WebTestCase
 	}
     }
 
+    public function testNoDefaultBroadcast()
+    {
+	$series = $this->factory->createSeries();
+	$mmobj = $this->factory->createMultimediaObject($series);
+
+	$this->assertNull($this->mmobjRepo->find($mmobj->getId())->getBroadcast());
+    }
+
     public function createBroadcasts()
     {
         $locale = 'en';

@@ -65,7 +65,10 @@ class FactoryService
   {
       $mm = new MultimediaObject();
       $mm->setStatus(MultimediaObject::STATUS_PROTOTYPE);
-      $mm->setBroadcast($this->getDefaultBroadcast());
+      $broadcast = $this->getDefaultBroadcast();
+      if (null !== $broadcast){
+	  $mm->setBroadcast($broadcast);
+      }
       $mm->setPublicDate(new \DateTime("now"));
       $mm->setRecordDate($mm->getPublicDate());
       foreach ($this->locales as $locale) {
@@ -96,7 +99,10 @@ class FactoryService
           $mm = $prototype->cloneResource();
       } else {
           $mm = new MultimediaObject();
-          $mm->setBroadcast($this->getDefaultBroadcast());
+	  $broadcast = $this->getDefaultBroadcast();
+	  if (null !== $broadcast){
+	    $mm->setBroadcast($broadcast);
+	  }
           $mm->setPublicDate(new \DateTime("now"));
           $mm->setRecordDate($mm->getPublicDate());
           foreach ($this->locales as $locale) {
@@ -131,8 +137,11 @@ class FactoryService
           $broadcast = $this->dm
       ->getRepository('PumukitSchemaBundle:Broadcast')
       ->findPublicBroadcast();
-      } else {
+      }
+
+      if (null == $broadcast) {
           // TODO throw exception
+	  return null;
       }
 
       return $broadcast;
