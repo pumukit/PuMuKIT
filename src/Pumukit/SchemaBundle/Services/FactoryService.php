@@ -24,6 +24,14 @@ class FactoryService
         $this->locales = $locales;
     }
 
+    /**
+     * Get locales
+     */
+    public function getLocales()
+    {
+      return $this->locales;
+    }
+
   /**
    * Create a new series with default values
    *
