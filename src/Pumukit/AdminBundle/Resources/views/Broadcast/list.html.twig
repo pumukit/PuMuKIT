@@ -49,7 +49,7 @@
       <td>
         <input type="radio" name="radio_broadcast" title="{% trans %}Select this broadcast by default{% endtrans %}"
 	       value="broadcast_{{ broadcast.id }}" {{ broadcast.getDefaultSel()?'checked="checked"':'' }}
-	       onchange="new Ajax.Request('{{ path('pumukitadmin_broadcast_default', {'id': broadcast.id}) }}', {asynchronous:true, evalScripts:true})"
+	       onchange="new Ajax.Request('{{ path('pumukitadmin_broadcast_default', {'id': broadcast.id}) }}', {asynchronous:true, evalScripts:true, onSuccess: broad_default})"
 	       >
       </td>
       <td onclick="click_fila_no_preview('broadcast', this, '{{ broadcast.id }}');">
