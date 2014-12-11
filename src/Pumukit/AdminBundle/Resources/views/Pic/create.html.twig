@@ -4,7 +4,7 @@
 
 <div id="tv_admin_container" style="width:100%">
   <form onsubmit="new Ajax.Updater('pic_{{ resource_name }}', '{{ path('pumukitadmin_'~resource_name~'pic_update', {'id': resource.id}) }}', {asynchronous:true, evalScripts:true, onSuccess:function(request, json){Modalbox.hide()}, parameters:Form.serialize(this)}); return false;" action="{{ path('pumukitadmin_'~resource_name~'pic_update', {'id': resource.id}) }}" method="post">
-    <input type="hidden" name="type" id="type" value="url">    
+    <input type="hidden" name="type" id="type" value="url">
     <input type="hidden" name="{{ resource_name }}" id="{{ resource_name }}" value="{{ resource.id }}">
 
     <fieldset>
@@ -30,7 +30,7 @@
 <div id="tv_admin_container" style="width:100%">
 
   <form method="post" enctype="multipart/form-data" target="iframeUpload" action="{{ path('pumukitadmin_'~resource_name~'pic_upload', {'id': resource.id}) }}">
-    <input type="hidden" name="type" id="type" value="url">    
+    <input type="hidden" name="type" id="type" value="url">
     <input type="hidden" name="{{ resource_name }}" id="{{ resource_name }}" value="{{ resource.id }}">
 
     <fieldset>
@@ -94,5 +94,3 @@
 </ul>
 
 </div>
-
-

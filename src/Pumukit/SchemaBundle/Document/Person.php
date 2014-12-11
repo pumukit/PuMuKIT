@@ -204,7 +204,7 @@ class Person
           $locale = $this->locale;
       }
       if (!isset($this->honorific[$locale])) {
-          return null;
+          return;
       }
 
       return $this->honorific[$locale];
@@ -234,7 +234,7 @@ class Person
           $locale = $this->locale;
       }
       if (!isset($this->firm[$locale])) {
-          return null;
+          return;
       }
 
       return $this->firm[$locale];
@@ -264,7 +264,7 @@ class Person
           $locale = $this->locale;
       }
       if (!isset($this->post[$locale])) {
-          return null;
+          return;
       }
 
       return $this->post[$locale];
@@ -294,7 +294,7 @@ class Person
           $locale = $this->locale;
       }
       if (!isset($this->bio[$locale])) {
-          return null;
+          return;
       }
 
       return $this->bio[$locale];

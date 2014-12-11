@@ -6,7 +6,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\AdminBundle\Form\Type\Other\Html5dateType;
 
 class SeriesFormType extends AbstractType
@@ -14,7 +13,7 @@ class SeriesFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-      ->add('announce', 'checkbox', 
+      ->add('announce', 'checkbox',
         array('required' => false, 'label' => 'New'))
       ->add('i18n_title', 'texti18n',
         array('attr' => array('style' => 'width: 420px'), 'label' => 'Title'))

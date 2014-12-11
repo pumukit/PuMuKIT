@@ -223,13 +223,12 @@ class SeriesRepository extends DocumentRepository
     return $results;
   }
 
-
   /**
    * TODO DOC.
    */
   public function findByPicId($picId)
   {
-    return $this->createQueryBuilder()
+      return $this->createQueryBuilder()
       ->field('pics._id')->equals(new \MongoId($picId))
       ->getQuery()
       ->getSingleResult();

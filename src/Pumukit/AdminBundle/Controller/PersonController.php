@@ -2,15 +2,11 @@
 
 namespace Pumukit\AdminBundle\Controller;
 
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
-
-use Pagerfanta\Adapter\DoctrineCollectionAdapter;
-use Pagerfanta\Pagerfanta;
 
 class PersonController extends SortableAdminController
 {
-  /**
+    /**
    * Create new person
    */
   public function listAutocompleteAction(Request $request)
@@ -20,7 +16,6 @@ class PersonController extends SortableAdminController
 
       $role = $this->getResourceFromId('Role', $request->get('roleId'));
       $multimediaObject = $this->getResourceFromId('MultimediaObject', $request->get('mmId'));
-
 
       // TODO complete functionally
 
@@ -32,14 +27,13 @@ class PersonController extends SortableAdminController
       ->view()
       ->setTemplate($config->getTemplate('listautocomplete.html'))
       ->setData(array(
-		      'persons' => $resources,
-		      'mm' => $multimediaObject,
-		      'role' => $role
-		      ));
-		
+              'persons' => $resources,
+              'mm' => $multimediaObject,
+              'role' => $role,
+              ));
+
       return $this->handleView($view);
   }
-
 
   /**
    * Get resource from id
@@ -48,11 +42,9 @@ class PersonController extends SortableAdminController
   {
       $dm = $this->get('doctrine_mongodb.odm.document_manager');
       $repository = $dm->getRepository('PumukitSchemaBundle:'.$className);
-      
+
       $resource = $repository->find($id);
-      
+
       return $resource;
   }
-
-
 }

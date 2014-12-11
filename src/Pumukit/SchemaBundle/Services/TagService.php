@@ -2,22 +2,18 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
-use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Doctrine\ODM\MongoDB\DocumentManager;
-
 use Pumukit\SchemaBundle\Document\Tag;
-use Pumukit\SchemaBundle\Document\EmbeddedTag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class TagService
 {
+    private $dm;
 
-  private $dm;
-
-  public function __construct(DocumentManager $documentManager)
-  {
-      $this->dm = $documentManager;
-  }
+    public function __construct(DocumentManager $documentManager)
+    {
+        $this->dm = $documentManager;
+    }
 
   /**
    * Add Tag to Multimedia Object
@@ -26,18 +22,18 @@ class TagService
   {
       $repository = $this->dm->getRepository('PumukitSchemaBundle:Tag');
       $tag = $repository->findById($tagId);
-      if (null !== $tag){
-        $mmobj->addTag($tag);
+      if (null !== $tag) {
+          $mmobj->addTag($tag);
       }
-      
+
       $node = $tag;
       do {
-	if (!($mmobj->containsTag($node))){
-	  $mmobj->addTag($node);
-	  $node->increaseNumberMultimediaObjects();	  
-	  $dm->persist($node);
-	}
-	$node = $node->getParent();
+          if (!($mmobj->containsTag($node))) {
+              $mmobj->addTag($node);
+              $node->increaseNumberMultimediaObjects();
+              $dm->persist($node);
+          }
+          $node = $node->getParent();
       } while (0 !== strcmp($this->getParent()->getCod(), 'ROOT'));
 
       $dm->persist($mmobj);

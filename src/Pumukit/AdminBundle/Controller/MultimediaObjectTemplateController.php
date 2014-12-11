@@ -2,7 +2,6 @@
 
 namespace Pumukit\AdminBundle\Controller;
 
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Pumukit\SchemaBundle\Document\Series;
@@ -10,8 +9,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class MultimediaObjectTemplateController extends MultimediaObjectController
 {
-
-  /**
+    /**
    * Edit Multimedia Object Template
    */
   public function editAction(Request $request)
@@ -24,10 +22,10 @@ class MultimediaObjectTemplateController extends MultimediaObjectController
 
       $parentTags = $this->getParentTags();
       $mmtemplate = $this->getMultimediaObjectTemplate($series);
-      
-      $formMeta = $this->createForm($config->getFormType() . '_meta', $mmtemplate);
+
+      $formMeta = $this->createForm($config->getFormType().'_meta', $mmtemplate);
       //$formPub = $this->createForm($config->getFormType() . '_pub', $resource);
-      
+
       //$pubChannelTags = $this->getTagsByCod('PUBCHANNELS', true);
       $pubDecisionsTags = $this->getTagsByCod('PUBDECISIONS', true);
 
@@ -40,7 +38,7 @@ class MultimediaObjectTemplateController extends MultimediaObjectController
               'series'        => $series,
               'roles'         => $roles,
               'pub_decisions' => $pubDecisionsTags,
-	      'parent_tags'   => $parentTags
+          'parent_tags'   => $parentTags,
               ))
       ;
 
@@ -61,25 +59,25 @@ class MultimediaObjectTemplateController extends MultimediaObjectController
       $parentTags = $this->getParentTags();
       $mmtemplate = $this->getMultimediaObjectTemplate($series);
 
-      $formMeta = $this->createForm($config->getFormType() . '_meta', $mmtemplate);
+      $formMeta = $this->createForm($config->getFormType().'_meta', $mmtemplate);
 
       //$pubChannelsTags = $this->getTagsByCod('PUBCHANNELS', true);
       $pubDecisionsTags = $this->getTagsByCod('PUBDECISIONS', true);
 
       $method = $request->getMethod();
-      if (in_array($method, array('POST', 'PUT', 'PATCH')) && 
-	  $formMeta->submit($request, !$request->isMethod('PATCH'))->isValid()) {
-        $this->domainManager->update($mmtemplate);
-	
-	if ($config->isApiRequest()) {
-          return $this->handleView($this->view($formMeta));
-	}
-		
-	return new JsonResponse(array('mmtemplate' => 'updatemeta'));
+      if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
+      $formMeta->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+          $this->domainManager->update($mmtemplate);
+
+          if ($config->isApiRequest()) {
+              return $this->handleView($this->view($formMeta));
+          }
+
+          return new JsonResponse(array('mmtemplate' => 'updatemeta'));
       }
 
       if ($config->isApiRequest()) {
-	return $this->handleView($this->view($formMeta));
+          return $this->handleView($this->view($formMeta));
       }
 
       $view = $this
@@ -88,10 +86,10 @@ class MultimediaObjectTemplateController extends MultimediaObjectController
       ->setData(array(
               'mm'            => $resource,
               'form_meta'     => $formMeta->createView(),
-	      'series'        => $series,
-	      'roles'         => $roles,
-	      'pub_decisions' => $pubDecisionsTags,
-	      'parent_tags'   => $parentTags
+          'series'        => $series,
+          'roles'         => $roles,
+          'pub_decisions' => $pubDecisionsTags,
+          'parent_tags'   => $parentTags,
               ))
       ;
 
@@ -103,18 +101,17 @@ class MultimediaObjectTemplateController extends MultimediaObjectController
    */
   public function getMultimediaObjectTemplate(Series $series)
   {
-    $mmtemplate = null;
-    if (!isset($series)){
-      return $mmtemplate;
-    }
-    foreach ($series->getMultimediaObjects() as $mmobj){
-      if (MultimediaObject::STATUS_PROTOTYPE == $mmobj->getStatus()){
-	$mmtemplate = $mmobj;
-	break;
+      $mmtemplate = null;
+      if (!isset($series)) {
+          return $mmtemplate;
       }
-    }
-    
-    return $mmtemplate;
-  }
+      foreach ($series->getMultimediaObjects() as $mmobj) {
+          if (MultimediaObject::STATUS_PROTOTYPE == $mmobj->getStatus()) {
+              $mmtemplate = $mmobj;
+              break;
+          }
+      }
 
+      return $mmtemplate;
+  }
 }

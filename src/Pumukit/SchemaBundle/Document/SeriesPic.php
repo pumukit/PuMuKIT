@@ -11,7 +11,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  */
 class SeriesPic extends SeriesElement
 {
-  /**
+    /**
    * @var int $width
    *
    * @MongoDB\Int
@@ -24,7 +24,7 @@ class SeriesPic extends SeriesElement
    * @MongoDB\Int
    */
   private $height;
- 
+
   /**
    * Set width
    *

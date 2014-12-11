@@ -379,7 +379,7 @@ class Element
           $locale = $this->locale;
       }
       if (!isset($this->description[$locale])) {
-          return null;
+          return;
       }
 
       return $this->description[$locale];

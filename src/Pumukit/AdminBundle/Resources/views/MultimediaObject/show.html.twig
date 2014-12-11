@@ -13,11 +13,11 @@
 {% if (mm.getSubseriesTitle() is not empty) %}
   <div style="background-color:#006699; color:#FFFFFF; font-weight:bold; margin-bottom:11px; text-align:center;">
     {{ mm.getSubseriesTitle() }}
-  </div> 
+  </div>
 <!-- PALCE-->
 {% elseif (mm.getPrecinctId() > 1) %}
   <div style="background-color:#DFDFFF; color:#660000; font-weight:bold; margin-bottom:11px; padding-right:5px; text-align:right;">
-    {{ mm.getPlace().getName() }}  
+    {{ mm.getPlace().getName() }}
   </div>
 {% endif %} #}
 
@@ -30,23 +30,23 @@
      <td width="1%" valign="top"  style="background-color:transparent"> <!-- hack-->
        TODO {# <?php $pics = $mm->getUrlPics(false, 3) ?> #}
        {% set pics = '' %}
-       <div id="serial_mm_pics"> 
+       <div id="serial_mm_pics">
          {% for url in pics %}<img style="border:1px solid #000000; height:82px; width:100px;" src="{{ url }}" class="serial">{% endfor %}
        </div>
-        
+
      </td>
      <td style="background-color:transparent">
        <div id="serial_mm_info" style="background-color:transparent; padding-left:2%; padding-right:2%; text-align:left; width:95%; ">
-  
+
   <!-- TITLE & SUBTITLE -->
-  
+
         {% if mm.getTitle() is not empty %}
           <div id="title" style="font-size:13px; font-weight:bold">"{{ mm.getTitle() }}"</div>
         {% endif %}
         {% if mm.getSubtitle() is not empty %}
-          <div id="subtitle" style="color:#660000;">{{ mm.getSubtitle() }}</div>	
+          <div id="subtitle" style="color:#660000;">{{ mm.getSubtitle() }}</div>
         {% endif %}
-  
+
         <div id="objects">
   <!-- FILES -->
         {# TODO all file functions {% set files = mm.getFiles() %} #}
@@ -74,14 +74,14 @@
 
           {% endfor %}
 
-  
+
   <!-- MATERIAL -->
     	  {% for material in mm.getMaterials() %}
             <div id="material" class="{{ material.getMatType().getType() }}">
               <a href="{{ material.getUrl() }}">{{ material.getName() }}</a>
             </div>
           {% endfor %}
-  
+
   <!-- LINK -->
           {# TODO define link, getLinks...
           {% for link in mm.getLinks() %}
@@ -91,7 +91,7 @@
           {% endfor %} #}
         </div>
         <br />
-        
+
   <!-- PERSONS PRESENT -->
         {% for role in roles if role.getDisplay() %}
 	  {% for act in mm.getPeopleInMultimediaObjectByRole(role) %}
@@ -108,7 +108,7 @@
             </div>
           {% endfor %}
         {% endfor %}
-  
+
 
        </div>
      </td>

@@ -11,7 +11,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  */
 class MultimediaObjectPic extends MmsElement
 {
-  /**
+    /**
    * @var int $width
    *
    * @MongoDB\Int
@@ -24,7 +24,7 @@ class MultimediaObjectPic extends MmsElement
    * @MongoDB\Int
    */
   private $height;
- 
+
   /**
    * Set width
    *

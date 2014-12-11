@@ -95,7 +95,7 @@ class SeriesType
           $locale = $this->locale;
       }
       if (!isset($this->name[$locale])) {
-          return null;
+          return;
       }
 
       return $this->name[$locale];
@@ -145,7 +145,7 @@ class SeriesType
           $locale = $this->locale;
       }
       if (!isset($this->description[$locale])) {
-          return null;
+          return;
       }
 
       return $this->description[$locale];
@@ -279,9 +279,8 @@ class SeriesType
       $this->series->removeElement($series);
   }
 
-  public function __toString()
-  {
-    return $this->name($this->locale);
-  }
-  
+    public function __toString()
+    {
+        return $this->name($this->locale);
+    }
 }

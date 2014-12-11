@@ -11,11 +11,11 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  */
 class SeriesElement extends Element
 {
-  /**
+    /**
    * @MongoDB\EmbedOne(targetDocument="Series")
    */
   private $series;
-  
+
   /**
    * Set series
    *
@@ -23,9 +23,9 @@ class SeriesElement extends Element
    */
   public function setSeries(Series $series)
   {
-    $this->series = $series;
+      $this->series = $series;
   }
-  
+
   /**
    * Get series
    *
@@ -33,7 +33,6 @@ class SeriesElement extends Element
    */
   public function getSeries()
   {
-    return $this->series;
+      return $this->series;
   }
-
 }

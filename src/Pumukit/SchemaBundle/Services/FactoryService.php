@@ -4,26 +4,25 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Symfony\Component\Translation\TranslatorInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
-
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Broadcast;
 
 class FactoryService
 {
-  const DEFAULT_SERIES_TITLE = 'New';
-  const DEFAULT_MULTIMEDIAOBJECT_TITLE = 'New';
+    const DEFAULT_SERIES_TITLE = 'New';
+    const DEFAULT_MULTIMEDIAOBJECT_TITLE = 'New';
 
-  private $dm;
-  private $translator;
-  private $locales;
+    private $dm;
+    private $translator;
+    private $locales;
 
-  public function __construct(DocumentManager $documentManager, TranslatorInterface $translator, array $locales = array())
-  {
-      $this->dm = $documentManager;
-      $this->translator = $translator;
-      $this->locales = $locales;
-  }
+    public function __construct(DocumentManager $documentManager, TranslatorInterface $translator, array $locales = array())
+    {
+        $this->dm = $documentManager;
+        $this->translator = $translator;
+        $this->locales = $locales;
+    }
 
   /**
    * Create a new series with default values
@@ -82,26 +81,26 @@ class FactoryService
   public function createMultimediaObject($series)
   {
       $prototype = $this->dm
-	->getRepository('PumukitSchemaBundle:MultimediaObject')
-	->findPrototype($series);
+    ->getRepository('PumukitSchemaBundle:MultimediaObject')
+    ->findPrototype($series);
 
-      if (null != $prototype){
-	$mm = $prototype->cloneResource();
-      }else{
-	$mm = new MultimediaObject();
-	$mm->setBroadcast($this->getDefaultBroadcast());
-	$mm->setPublicDate(new \DateTime("now"));
-	$mm->setRecordDate($mm->getPublicDate());
-	foreach ($this->locales as $locale) {
-          $title = $this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE, array(), null, $locale);
-          $mm->setTitle($title, $locale);
-	}
+      if (null != $prototype) {
+          $mm = $prototype->cloneResource();
+      } else {
+          $mm = new MultimediaObject();
+          $mm->setBroadcast($this->getDefaultBroadcast());
+          $mm->setPublicDate(new \DateTime("now"));
+          $mm->setRecordDate($mm->getPublicDate());
+          foreach ($this->locales as $locale) {
+              $title = $this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE, array(), null, $locale);
+              $mm->setTitle($title, $locale);
+          }
       }
 
       $mm->setStatus(MultimediaObject::STATUS_NEW);
-      	
+
       $series->addMultimediaObject($mm);
-	
+
       $this->dm->persist($mm);
       $this->dm->persist($series);
       $this->dm->flush();
@@ -117,17 +116,17 @@ class FactoryService
   public function getDefaultBroadcast()
   {
       $broadcast = $this->dm
-	->getRepository('PumukitSchemaBundle:Broadcast')
-	->findDefaultSel();
+    ->getRepository('PumukitSchemaBundle:Broadcast')
+    ->findDefaultSel();
 
-      if (null == $broadcast){
-	$broadcast = $this->dm
-	  ->getRepository('PumukitSchemaBundle:Broadcast')
-	  ->findPublicBroadcast();
-      }else{
-	// TODO throw exception
+      if (null == $broadcast) {
+          $broadcast = $this->dm
+      ->getRepository('PumukitSchemaBundle:Broadcast')
+      ->findPublicBroadcast();
+      } else {
+          // TODO throw exception
       }
 
-      return $broadcast;    
+      return $broadcast;
   }
 }

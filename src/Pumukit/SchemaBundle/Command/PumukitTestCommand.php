@@ -40,21 +40,21 @@ EOT
 
         if ($input->getOption('force')) {
             $finder = new Finder();
-            $finder->files()->in(__DIR__ . '/' . $this->tagsPath);
-	    $file = $input->getArgument('file');
-            if ((0 == strcmp($file, "")) && (!$finder)){
-		$output->writeln("<error>There's no data to initialize</error>");
+            $finder->files()->in(__DIR__.'/'.$this->tagsPath);
+            $file = $input->getArgument('file');
+            if ((0 == strcmp($file, "")) && (!$finder)) {
+                $output->writeln("<error>There's no data to initialize</error>");
 
-	        return -1;
-	    }
+                return -1;
+            }
             $this->removeTags();
             $root = $this->createRoot();
-	    foreach ($finder as $tagFile) {
-      	      $this->createFromFile($tagFile, $root, $output);
-	    }
-	    if ($file){
-	      $this->createFromFile($file, $root, $output);
-	    }
+            foreach ($finder as $tagFile) {
+                $this->createFromFile($tagFile, $root, $output);
+            }
+            if ($file) {
+                $this->createFromFile($file, $root, $output);
+            }
         } else {
             $output->writeln('<error>ATTENTION:</error> This operation should not be executed in a production environment.');
             $output->writeln('');

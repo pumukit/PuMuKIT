@@ -55,14 +55,12 @@ class RoleRepositoryTest extends WebTestCase
 
     public function testRank()
     {
-
         $role1 = $this->getRole();
 
         $this->dm->persist($role1);
         $this->dm->flush();
 
         $this->assertEquals(0, $role1->getRank());
-
 
         $role2 = $this->getRole();
 
@@ -81,8 +79,8 @@ class RoleRepositoryTest extends WebTestCase
         $this->assertEquals(2, $role3->getRank());
         $this->assertEquals(3, $role4->getRank());
 
-	$roleFirst = $this->getRole();
-	$roleFirst->setRank(0);
+        $roleFirst = $this->getRole();
+        $roleFirst->setRank(0);
 
         $this->dm->persist($roleFirst);
         $this->dm->flush();
@@ -91,9 +89,8 @@ class RoleRepositoryTest extends WebTestCase
         $this->assertEquals(1, $role1->getRank());
         $this->assertEquals(4, $role4->getRank());
 
-
-	$roleLast = $this->getRole();
-	$roleLast->setRank(-1);
+        $roleLast = $this->getRole();
+        $roleLast->setRank(-1);
 
         $this->dm->persist($roleLast);
         $this->dm->flush();
@@ -103,7 +100,7 @@ class RoleRepositoryTest extends WebTestCase
         $this->assertEquals(4, $role4->getRank());
         $this->assertEquals(5, $roleLast->getRank());
 
-	$role1->setRank(-1);
+        $role1->setRank(-1);
 
         $this->dm->persist($role1);
         $this->dm->flush();
@@ -112,12 +109,10 @@ class RoleRepositoryTest extends WebTestCase
         $this->assertEquals(3, $role4->getRank());
         $this->assertEquals(4, $roleLast->getRank());
 
-	//TODO FIX in the lib
+    //TODO FIX in the lib
         //$this->assertEquals(5, $role1->getRank());
         $this->assertEquals(6, $role1->getRank());
     }
-
-
 
     private function getRole()
     {
@@ -134,6 +129,6 @@ class RoleRepositoryTest extends WebTestCase
         $role->setName($name);
         $role->setText($text);
 
-	return $role;
+        return $role;
     }
 }

@@ -21,19 +21,19 @@ class MultimediaObjectMetaType extends AbstractType
         array('required' => false, 'attr' => array('style' => 'width: 420px'), 'label' => 'Keyword'))
       ->add('i18n_copyright', 'texti18n',
         array('required' => false, 'attr' => array('style' => 'width: 420px'), 'label' => 'Copyright'))
-	  // TODO with tags ->add('genre', null, array('required' => false, 'label' => 'Genre'))
+      // TODO with tags ->add('genre', null, array('required' => false, 'label' => 'Genre'))
       ->add('public_date', new Html5dateType(),
         array('attr' => array('style' => 'width: 420px'), 'data_class' => 'DateTime', 'label' => 'Public Date'))
       ->add('record_date', new Html5dateType(),
         array('attr' => array('style' => 'width: 420px'), 'data_class' => 'DateTime', 'label' => 'Record Date'))
       ->add('i18n_description', 'textareai18n',
         array('required' => false, 'attr' => array('style' => 'width: 420px'), 'label' => 'Description'))
-	  /* TODO ->add('subserie', 'checkbox',
-	     array('required' => false), 'label' => 'Subserie:'))*/
+      /* TODO ->add('subserie', 'checkbox',
+         array('required' => false), 'label' => 'Subserie:'))*/
       ->add('i18n_line2', 'textareai18n',
-	    array('required' => false, 'attr' => array('style' => 'width: 420px'), 'label' => 'Headline'));
-	/* TODO ->add('i18n_subserie_title', 'textareai18n',
-	   array('required' => false, 'attr' => array('style' => 'width: 420px'), 'label' => 'Subserie Title:')); */
+        array('required' => false, 'attr' => array('style' => 'width: 420px'), 'label' => 'Headline'));
+    /* TODO ->add('i18n_subserie_title', 'textareai18n',
+       array('required' => false, 'attr' => array('style' => 'width: 420px'), 'label' => 'Subserie Title:')); */
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

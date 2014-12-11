@@ -126,7 +126,7 @@ class Event
           $locale = $this->locale;
       }
       if (!isset($this->name[$locale])) {
-          return null;
+          return;
       }
 
       return $this->name[$locale];

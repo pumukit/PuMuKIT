@@ -6,7 +6,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\AdminBundle\Form\Type\Other\Html5dateType;
 
 class MultimediaObjectPubType extends AbstractType
 {
@@ -14,14 +13,14 @@ class MultimediaObjectPubType extends AbstractType
     {
         $builder
       ->add('status', 'choice',
-	    array('choices' => array(
-                  MultimediaObject::STATUS_NORMAL => 'Normal', 
-                  MultimediaObject::STATUS_BLOQ => 'Blocked', 
-                  MultimediaObject::STATUS_HIDE => 'Hidden', 
-                  MultimediaObject::STATUS_NEW => 'New', 
-                  MultimediaObject::STATUS_PROTOTYPE => 'Prototype'
+        array('choices' => array(
+                  MultimediaObject::STATUS_NORMAL => 'Normal',
+                  MultimediaObject::STATUS_BLOQ => 'Blocked',
+                  MultimediaObject::STATUS_HIDE => 'Hidden',
+                  MultimediaObject::STATUS_NEW => 'New',
+                  MultimediaObject::STATUS_PROTOTYPE => 'Prototype',
             ),
-		  'label' => 'Status'))
+          'label' => 'Status', ))
       ->add('broadcast', null, array('label' => 'Broadcast'));
     }
 

@@ -227,7 +227,7 @@ class Broadcast
           $locale = $this->locale;
       }
       if (!isset($this->description[$locale])) {
-          return null;
+          return;
       }
 
       return $this->description[$locale];
@@ -293,5 +293,4 @@ class Broadcast
   {
       return $this->broadcast_type_id;
   }
-
 }

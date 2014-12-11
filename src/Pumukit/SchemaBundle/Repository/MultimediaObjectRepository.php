@@ -14,8 +14,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
  */
 class MultimediaObjectRepository extends DocumentRepository
 {
-
-  /**
+    /**
    * Find all multimedia objects in a series with given status
    *
    * @param Series $series
@@ -24,7 +23,7 @@ class MultimediaObjectRepository extends DocumentRepository
    */
   public function findWithStatus(Series $series, array $status)
   {
-    return $this->createQueryBuilder()
+      return $this->createQueryBuilder()
       ->field('series')->references($series)
       ->field('status')->in($status)
       ->getQuery()
@@ -41,7 +40,7 @@ class MultimediaObjectRepository extends DocumentRepository
    */
   public function findPrototype(Series $series)
   {
-    return $this->createQueryBuilder()
+      return $this->createQueryBuilder()
       ->field('series')->references($series)
       ->field('status')->equals(MultimediaObject::STATUS_PROTOTYPE)
       ->getQuery()
@@ -57,7 +56,7 @@ class MultimediaObjectRepository extends DocumentRepository
    */
   public function findWithoutPrototype(Series $series)
   {
-    return $this->createQueryBuilder()
+      return $this->createQueryBuilder()
       ->field('series')->references($series)
       ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
       ->getQuery()

@@ -11,11 +11,11 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  */
 class MmsElement extends Element
 {
-  /**
+    /**
    * @MongoDB\EmbedOne(targetDocument="MultimediaObject")
    */
   private $multimedia_object;
-  
+
   /**
    * Set multimedia object
    *
@@ -23,9 +23,9 @@ class MmsElement extends Element
    */
   public function setMultimediaObject(MultimediaObject $multimedia_object)
   {
-    $this->multimedia_object = $multimedia_object;
+      $this->multimedia_object = $multimedia_object;
   }
-  
+
   /**
    * Get multimedia object
    *
@@ -33,7 +33,6 @@ class MmsElement extends Element
    */
   public function getMultimediaObject()
   {
-    return $this->multimedia_object;
+      return $this->multimedia_object;
   }
-
 }

@@ -256,7 +256,7 @@ class Series
           $locale = $this->locale;
       }
       if (!isset($this->title[$locale])) {
-          return null;
+          return;
       }
 
       return $this->title[$locale];
@@ -306,7 +306,7 @@ class Series
           $locale = $this->locale;
       }
       if (!isset($this->subtitle[$locale])) {
-          return null;
+          return;
       }
 
       return $this->subtitle[$locale];
@@ -356,7 +356,7 @@ class Series
           $locale = $this->locale;
       }
       if (!isset($this->description[$locale])) {
-          return null;
+          return;
       }
 
       return $this->description[$locale];
@@ -406,7 +406,7 @@ class Series
           $locale = $this->locale;
       }
       if (!isset($this->header[$locale])) {
-          return null;
+          return;
       }
 
       return $this->header[$locale];
@@ -456,7 +456,7 @@ class Series
           $locale = $this->locale;
       }
       if (!isset($this->footer[$locale])) {
-          return null;
+          return;
       }
 
       return $this->footer[$locale];
@@ -506,7 +506,7 @@ class Series
           $locale = $this->locale;
       }
       if (!isset($this->copyright[$locale])) {
-          return null;
+          return;
       }
 
       return $this->copyright[$locale];
@@ -556,7 +556,7 @@ class Series
           $locale = $this->locale;
       }
       if (!isset($this->keyword[$locale])) {
-          return null;
+          return;
       }
 
       return $this->keyword[$locale];
@@ -606,7 +606,7 @@ class Series
           $locale = $this->locale;
       }
       if (!isset($this->line2[$locale])) {
-          return null;
+          return;
       }
 
       return $this->line2[$locale];
@@ -709,7 +709,7 @@ class Series
       }
       }
 
-      return null;
+      return;
   }
 
   /**
@@ -744,7 +744,7 @@ class Series
           }
       }
 
-      return null;
+      return;
   }
 
   /**
@@ -780,7 +780,7 @@ class Series
           }
       }
 
-      return null;
+      return;
   }
 
   /**
@@ -827,7 +827,7 @@ class Series
    */
   public function addPic(SeriesPic $pic)
   {
-     $this->pics->add($pic);
+      $this->pics->add($pic);
   }
 
   /**
@@ -845,45 +845,43 @@ class Series
    */
   public function removePicById($picId)
   {
-      $this->pics = $this->pics->filter(function($pic) use ($picId){
-	  return $pic->getId() !== $picId;
+      $this->pics = $this->pics->filter(function ($pic) use ($picId) {
+      return $pic->getId() !== $picId;
       });
   }
-
-
 
   /**
    * TODO Add doc.
    */
   public function upPicById($picId)
   {
-    $this->reorderPicById($picId, true);
+      $this->reorderPicById($picId, true);
   }
 
-  public function downPicById($picId)
-  {
-    $this->reorderPicById($picId, false);
-  }
+    public function downPicById($picId)
+    {
+        $this->reorderPicById($picId, false);
+    }
 
   //TODO move out
-  private function reorderPicById($picId, $up=true)
+  private function reorderPicById($picId, $up = true)
   {
-    $snapshot = $this->pics->toArray();
-    $this->pics->clear();
-    
-    $out = array();
-    foreach($snapshot as $key => $pic){
-      if ($pic->getId() === $picId) {
-	$out[($key * 10) + ($up?-11:11) ] = $pic;
-      }else{
-	$out[$key * 10] = $pic;
-      }
-    } 
+      $snapshot = $this->pics->toArray();
+      $this->pics->clear();
 
-    ksort($out); 
-    foreach($out as $pic) {
-      $this->pics->add($pic);
-    }
+      $out = array();
+      foreach ($snapshot as $key => $pic) {
+          if ($pic->getId() === $picId) {
+              $out[($key * 10) + ($up ? -11 : 11) ] = $pic;
+          } else {
+              $out[$key * 10] = $pic;
+          }
+      }
+
+      ksort($out);
+      foreach ($out as $pic) {
+          $this->pics->add($pic);
+      }
   }
 
   /**
@@ -917,12 +915,13 @@ class Series
    */
   public function getPicById($picId)
   {
-    foreach($this->pics as $pic) {
-      if ($pic->getId() == $picId)
-	return $pic;
-    }
-    
-    return null;
+      foreach ($this->pics as $pic) {
+          if ($pic->getId() == $picId) {
+              return $pic;
+          }
+      }
+
+      return;
   }
 
   /**
@@ -932,14 +931,14 @@ class Series
    */
   public function getFirstUrlPic()
   {
-    $url = '';
-    foreach ($this->pics as $pic){
-      if (null !== $pic->getUrl()){
-	$url = $pic->getUrl();
-	break;
+      $url = '';
+      foreach ($this->pics as $pic) {
+          if (null !== $pic->getUrl()) {
+              $url = $pic->getUrl();
+              break;
+          }
       }
-    }
 
-    return $url;
+      return $url;
   }
 }

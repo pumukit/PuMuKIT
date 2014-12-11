@@ -269,7 +269,6 @@ class MultimediaObject
       }
   }
 
-
   /**
    * Remove tag
    * The original string tag logic used array_search to seek the tag element in array.
@@ -280,17 +279,17 @@ class MultimediaObject
   //TODO: ADD TEST (yo creo que es !== y no === ver removePicById)
   public function removeTag($tag)
   {
-    $embedTag = EmbeddedTag::getEmbeddedTag($this->tags, $tag);
+      $embedTag = EmbeddedTag::getEmbeddedTag($this->tags, $tag);
 
-    $aux = $this->tags->filter(function ($i) use ($embedTag) {
-	return $i->getId() !== $embedTag->getId();
+      $aux = $this->tags->filter(function ($i) use ($embedTag) {
+    return $i->getId() !== $embedTag->getId();
     });
-    
-    $hasRemoved = (count($aux) !== count($this->tags));
 
-    $this->tags = $aux;
+      $hasRemoved = (count($aux) !== count($this->tags));
 
-    return $hasRemoved;
+      $this->tags = $aux;
+
+      return $hasRemoved;
   }
 
   /**
@@ -429,7 +428,7 @@ class MultimediaObject
           }
       }
 
-      return null;
+      return;
   }
 
   /**
@@ -467,7 +466,7 @@ class MultimediaObject
           }
       }
 
-      return null;
+      return;
   }
 
   /**
@@ -505,7 +504,7 @@ class MultimediaObject
           }
       }
 
-      return null;
+      return;
   }
 
   /**
@@ -625,7 +624,7 @@ class MultimediaObject
           }
       }
 
-      return null;
+      return;
   }
 
   /**
@@ -663,7 +662,7 @@ class MultimediaObject
           }
       }
 
-      return null;
+      return;
   }
 
   /**
@@ -701,7 +700,7 @@ class MultimediaObject
           }
       }
 
-      return null;
+      return;
   }
 
   /**
@@ -823,7 +822,7 @@ class MultimediaObject
           }
       }
 
-      return null;
+      return;
   }
 
   /**
@@ -861,7 +860,7 @@ class MultimediaObject
           }
       }
 
-      return null;
+      return;
   }
 
   /**
@@ -899,7 +898,7 @@ class MultimediaObject
           }
       }
 
-      return null;
+      return;
   }
 
   /**
@@ -1046,7 +1045,7 @@ class MultimediaObject
           $locale = $this->locale;
       }
       if (!isset($this->title[$locale])) {
-          return null;
+          return;
       }
 
       return $this->title[$locale];
@@ -1096,7 +1095,7 @@ class MultimediaObject
           $locale = $this->locale;
       }
       if (!isset($this->subtitle[$locale])) {
-          return null;
+          return;
       }
 
       return $this->subtitle[$locale];
@@ -1146,7 +1145,7 @@ class MultimediaObject
           $locale = $this->locale;
       }
       if (!isset($this->description[$locale])) {
-          return null;
+          return;
       }
 
       return $this->description[$locale];
@@ -1196,7 +1195,7 @@ class MultimediaObject
           $locale = $this->locale;
       }
       if (!isset($this->line2[$locale])) {
-          return null;
+          return;
       }
 
       return $this->line2[$locale];
@@ -1246,7 +1245,7 @@ class MultimediaObject
           $locale = $this->locale;
       }
       if (!isset($this->copyright[$locale])) {
-          return null;
+          return;
       }
 
       return $this->copyright[$locale];
@@ -1296,7 +1295,7 @@ class MultimediaObject
           $locale = $this->locale;
       }
       if (!isset($this->keyword[$locale])) {
-          return null;
+          return;
       }
 
       return $this->keyword[$locale];
@@ -1590,7 +1589,7 @@ class MultimediaObject
   /**
    * Clone Multimedia Object
    *
-   * @return 
+   * @return
    */
   public function cloneResource()
   {

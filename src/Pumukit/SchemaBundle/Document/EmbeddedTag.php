@@ -130,7 +130,7 @@ class EmbeddedTag
           $locale = $this->locale;
       }
       if (!isset($this->title[$locale])) {
-          return null;
+          return;
       }
 
       return $this->title[$locale];
@@ -180,7 +180,7 @@ class EmbeddedTag
           $locale = $this->locale;
       }
       if (!isset($this->description[$locale])) {
-          return null;
+          return;
       }
 
       return $this->description[$locale];
@@ -388,8 +388,8 @@ class EmbeddedTag
       if ($tag instanceof self) {
           return $tag;
       } elseif (null !== ($containedEmbedTag = self::containedEmbeddedTag($embedTags, $tag))) {
-	  return $containedEmbedTag;
-      }elseif ($tag instanceof Tag) {
+          return $containedEmbedTag;
+      } elseif ($tag instanceof Tag) {
           $embedTag = new self();
           $embedTag->setI18nTitle($tag->getI18nTitle());
           $embedTag->setI18nDescription($tag->getI18nDescription());
@@ -414,15 +414,15 @@ class EmbeddedTag
    */
   private static function containedEmbeddedTag($embedTags, $tag)
   {
-    $containedEmbedTag = null;
-    
-    foreach ($embedTags as $embedTag){
-      if (0 === strcmp($tag->getCod(), $embedTag->getCod())){
-	$containedEmbedTag = $embedTag;
-	break;
+      $containedEmbedTag = null;
+
+      foreach ($embedTags as $embedTag) {
+          if (0 === strcmp($tag->getCod(), $embedTag->getCod())) {
+              $containedEmbedTag = $embedTag;
+              break;
+          }
       }
-    }
-    
-    return $containedEmbedTag;
+
+      return $containedEmbedTag;
   }
 }

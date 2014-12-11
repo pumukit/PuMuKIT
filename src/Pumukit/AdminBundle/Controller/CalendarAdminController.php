@@ -49,19 +49,18 @@ class CalendarAdminController extends AdminController
       $m = $this->get('session')->get('admin/'.$config->getResourceName().'/month');
       $y = $this->get('session')->get('admin/'.$config->getResourceName().'/year');
 
-
-    if ($request->query->get('month') == "next") {
-        $changed_date = mktime(0, 0, 0, $m+1, 1, $y);
-        $this->get('session')->set('admin/'.$config->getResourceName().'/year', date("Y", $changed_date));
-        $this->get('session')->set('admin/'.$config->getResourceName().'/month', date("m", $changed_date));
-    } elseif ($request->query->get('month') == "previous") {
-        $changed_date = mktime(0, 0, 0, $m-1, 1, $y);
-        $this->get('session')->set('admin/'.$config->getResourceName().'/year', date("Y", $changed_date));
-        $this->get('session')->set('admin/'.$config->getResourceName().'/month', date("m", $changed_date));
-    } elseif ($request->query->get('month') == "today") {
-        $this->get('session')->set('admin/'.$config->getResourceName().'/year', date("Y"));
-        $this->get('session')->set('admin/'.$config->getResourceName().'/month', date("m"));
-    }
+      if ($request->query->get('month') == "next") {
+          $changed_date = mktime(0, 0, 0, $m+1, 1, $y);
+          $this->get('session')->set('admin/'.$config->getResourceName().'/year', date("Y", $changed_date));
+          $this->get('session')->set('admin/'.$config->getResourceName().'/month', date("m", $changed_date));
+      } elseif ($request->query->get('month') == "previous") {
+          $changed_date = mktime(0, 0, 0, $m-1, 1, $y);
+          $this->get('session')->set('admin/'.$config->getResourceName().'/year', date("Y", $changed_date));
+          $this->get('session')->set('admin/'.$config->getResourceName().'/month', date("m", $changed_date));
+      } elseif ($request->query->get('month') == "today") {
+          $this->get('session')->set('admin/'.$config->getResourceName().'/year', date("Y"));
+          $this->get('session')->set('admin/'.$config->getResourceName().'/month', date("m"));
+      }
 
       $m = $this->get('session')->get('admin/'.$config->getResourceName().'/month', date('m'));
       $y = $this->get('session')->get('admin/'.$config->getResourceName().'/year', date('Y'));
@@ -118,29 +117,29 @@ class CalendarAdminController extends AdminController
    */
   public function getCriteria($config)
   {
-    $criteria = $config->getCriteria();
+      $criteria = $config->getCriteria();
 
-    if (array_key_exists('reset', $criteria)) {
-      $this->get('session')->remove('admin/'.$config->getResourceName().'/criteria');
-    } elseif ($criteria) {
-      $this->get('session')->set('admin/'.$config->getResourceName().'/criteria', $criteria);
-    }
-    $criteria = $this->get('session')->get('admin/'.$config->getResourceName().'/criteria', array());
+      if (array_key_exists('reset', $criteria)) {
+          $this->get('session')->remove('admin/'.$config->getResourceName().'/criteria');
+      } elseif ($criteria) {
+          $this->get('session')->set('admin/'.$config->getResourceName().'/criteria', $criteria);
+      }
+      $criteria = $this->get('session')->get('admin/'.$config->getResourceName().'/criteria', array());
 
     //TODO: do upstream
     $new_criteria = array();
-    foreach ($criteria as $property => $value) {
-      //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
+      foreach ($criteria as $property => $value) {
+          //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
       if (('' !== $value) && ('date' !== $property)) {
-	$new_criteria[$property] = new \MongoRegex('/'.$value.'/i');
+          $new_criteria[$property] = new \MongoRegex('/'.$value.'/i');
       } elseif (('' !== $value) && ('date' == $property)) {
-	$date_from = new \DateTime($value['from']);
-	$date_to = new \DateTime($value['to']);
-	$new_criteria[$property] = ['$gte' => $date_from, '$lt' => $date_to];
+          $date_from = new \DateTime($value['from']);
+          $date_to = new \DateTime($value['to']);
+          $new_criteria[$property] = ['$gte' => $date_from, '$lt' => $date_to];
       }
-    }
+      }
 
-    return $new_criteria;
+      return $new_criteria;
   }
 
   /**
@@ -148,45 +147,44 @@ class CalendarAdminController extends AdminController
    */
   public function getResources(Request $request, $config, $criteria)
   {
-    $sorting = $config->getSorting();
-    $repository = $this->getRepository();
-    $pluralName = $config->getPluralResourceName();
+      $sorting = $config->getSorting();
+      $repository = $this->getRepository();
+      $pluralName = $config->getPluralResourceName();
 
-    if ($config->isPaginated()) {
-      $resources = $this
-	->getResourceResolver()
-	->getResource($repository, $config, 'createPaginator', array($criteria, $sorting))
-	;
+      if ($config->isPaginated()) {
+          $resources = $this
+    ->getResourceResolver()
+    ->getResource($repository, $config, 'createPaginator', array($criteria, $sorting))
+    ;
 
-      if ($request->get('page', null)) {
-	$this->get('session')->set('admin/'.$config->getResourceName().'/page', $request->get('page', 1));
+          if ($request->get('page', null)) {
+              $this->get('session')->set('admin/'.$config->getResourceName().'/page', $request->get('page', 1));
+          }
+
+          $resources
+    ->setCurrentPage($this->get('session')->get('admin/'.$config->getResourceName().'/page', 1), true, true)
+    ->setMaxPerPage($config->getPaginationMaxPerPage())
+    ;
+      } else {
+          $resources = $this
+    ->getResourceResolver()
+    ->getResource($repository, $config, 'findBy', array($criteria, $sorting, $config->getLimit()))
+    ;
       }
 
-      $resources
-	->setCurrentPage($this->get('session')->get('admin/'.$config->getResourceName().'/page', 1), true, true)
-	->setMaxPerPage($config->getPaginationMaxPerPage())
-	;
-    } else {
-      $resources = $this
-	->getResourceResolver()
-	->getResource($repository, $config, 'findBy', array($criteria, $sorting, $config->getLimit()))
-	;
-    }
+      if ("cal" == $request->query->get('cal')) {
+          $this->get('session')->set('admin/'.$config->getResourceName().'/cal', 'cal');
+      } elseif ("list" == $request->query->get('cal')) {
+          $this->get('session')->remove('admin/'.$config->getResourceName().'/cal');
+      }
 
-    if ("cal" == $request->query->get('cal')) {
-      $this->get('session')->set('admin/'.$config->getResourceName().'/cal', 'cal');
-    } elseif ("list" == $request->query->get('cal')) {
-      $this->get('session')->remove('admin/'.$config->getResourceName().'/cal');
-    }
+      if ($this->get('session')->has('admin/'.$config->getResourceName().'/cal')) {
+          list($m, $y, $calendar) = $this->getCalendar($config, $request);
+          $resources = array($pluralName => $resources, 'm' => $m, 'y' => $y, 'calendar' => $calendar);
+      } else {
+          $resources = array($pluralName => $resources);
+      }
 
-    if ($this->get('session')->has('admin/'.$config->getResourceName().'/cal')) {
-      list($m, $y, $calendar) = $this->getCalendar($config, $request);
-      $resources = array($pluralName => $resources, 'm' => $m, 'y' => $y, 'calendar' => $calendar);
-    } else {
-      $resources = array($pluralName => $resources);
-    }
-
-    return $resources;
+      return $resources;
   }
-
 }

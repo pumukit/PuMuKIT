@@ -173,7 +173,7 @@ class Tag
           $locale = $this->locale;
       }
       if (!isset($this->title[$locale])) {
-          return null;
+          return;
       }
 
       return $this->title[$locale];
@@ -223,7 +223,7 @@ class Tag
           $locale = $this->locale;
       }
       if (!isset($this->description[$locale])) {
-          return null;
+          return;
       }
 
       return $this->description[$locale];
@@ -453,7 +453,7 @@ class Tag
    */
   public function increaseNumberMultimediaObjects()
   {
-    ++$this->number_multimedia_objects;
+      ++$this->number_multimedia_objects;
   }
 
   /**
@@ -461,7 +461,7 @@ class Tag
    */
   public function decreaseMultimediaObjects()
   {
-    --$this->number_multimedia_objects;
+      --$this->number_multimedia_objects;
   }
 
     public function setParent(Tag $parent = null)

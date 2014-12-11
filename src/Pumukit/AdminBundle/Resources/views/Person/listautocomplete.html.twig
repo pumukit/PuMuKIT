@@ -5,7 +5,7 @@
 </p>
 
 <fieldset>
-  
+
   <div class="form-row">
     <label for="name" class="required">{% trans %}Name{% endtrans %}:</label>
     <div class="content">
@@ -14,7 +14,7 @@
       <div id="name_auto_complete" class="auto_complete" style="display:none"></div>
     </div>
   </div>
-  
+
 </fieldset>
 
 
@@ -33,16 +33,16 @@
     {# TODO send template value #}
     {% set template = '' %}
     <input class="tv_admin_action_create" onclick="
-      if(/^\d+ -/.test($('name').value.strip())) { 
-        new Ajax.Updater('{{ role.id }}_person_mms', 
-           '/editar.php/persons/link{{ template }}/preview/true/mm/{{ mm.id }}/role/{{ role.id }}/person/'+parseInt($('name').value.strip()), 
+      if(/^\d+ -/.test($('name').value.strip())) {
+        new Ajax.Updater('{{ role.id }}_person_mms',
+           '/editar.php/persons/link{{ template }}/preview/true/mm/{{ mm.id }}/role/{{ role.id }}/person/'+parseInt($('name').value.strip()),
            {asynchronous:true, evalScripts:true}
-        ); 
-        Modalbox.hide();   
+        );
+        Modalbox.hide();
       }else{
         alert('{% trans %}Select before a person{% endtrans %}');
       }
-      return false;" 
+      return false;"
     type="button" value="{% trans %}Use{% endtrans %}" />
   </li>
 
@@ -53,7 +53,7 @@
 </ul>
 
 </div>
- 
+
 <div style="clear:right"></div>
 
 

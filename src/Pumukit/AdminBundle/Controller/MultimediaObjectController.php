@@ -2,17 +2,14 @@
 
 namespace Pumukit\AdminBundle\Controller;
 
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
-
 use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 use Pagerfanta\Pagerfanta;
-
 use Pumukit\SchemaBundle\Document\Series;
 
 class MultimediaObjectController extends SortableAdminController
 {
-  /**
+    /**
    * Overwrite to search criteria with date
    */
   public function indexAction(Request $request)
@@ -29,17 +26,16 @@ class MultimediaObjectController extends SortableAdminController
       $mms = $this->getListMultimediaObjects($series);
 
       $view = $this
-	->view()
-	->setTemplate($config->getTemplate('index.html'))
-	->setData(array(
-			'series' => $series,
-                        'mms' => $mms
-			))
-	;
-      
+    ->view()
+    ->setTemplate($config->getTemplate('index.html'))
+    ->setData(array(
+            'series' => $series,
+                        'mms' => $mms,
+            ))
+    ;
+
       return $this->handleView($view);
   }
-
 
   /**
    * Create new resource
@@ -59,13 +55,13 @@ class MultimediaObjectController extends SortableAdminController
       $mms = $this->getListMultimediaObjects($series);
 
       $view = $this
-	->view()
-	->setTemplate($config->getTemplate('list.html'))
-	->setData(array(
-			'series' => $series,
-                        'mms' => $mms
-			))
-	;
+    ->view()
+    ->setTemplate($config->getTemplate('list.html'))
+    ->setData(array(
+            'series' => $series,
+                        'mms' => $mms,
+            ))
+    ;
 
       return $this->handleView($view);
   }
@@ -75,23 +71,23 @@ class MultimediaObjectController extends SortableAdminController
    */
   public function showAction(Request $request)
   {
-    $config = $this->getConfiguration();
-    $data = $this->findOr404($request);
+      $config = $this->getConfiguration();
+      $data = $this->findOr404($request);
 
-    $this->get('session')->set('admin/mms/id', $data->getId());
+      $this->get('session')->set('admin/mms/id', $data->getId());
 
-    $roles = $this->getRoles();
+      $roles = $this->getRoles();
 
-    $view = $this
+      $view = $this
       ->view()
       ->setTemplate($config->getTemplate('show.html'))
       ->setData(array(
-		      'mm' => $data,
-		      'roles' => $roles
-		      ))
+              'mm' => $data,
+              'roles' => $roles,
+              ))
       ;
 
-    return $this->handleView($view);
+      return $this->handleView($view);
   }
 
   // TODO
@@ -109,9 +105,9 @@ class MultimediaObjectController extends SortableAdminController
 
       $resource = $this->findOr404($request);
 
-      $formMeta = $this->createForm($config->getFormType() . '_meta', $resource);
-      $formPub = $this->createForm($config->getFormType() . '_pub', $resource);
-      
+      $formMeta = $this->createForm($config->getFormType().'_meta', $resource);
+      $formPub = $this->createForm($config->getFormType().'_pub', $resource);
+
       $pubChannelTags = $this->getTagsByCod('PUBCHANNELS', true);
       $pubDecisionsTags = $this->getTagsByCod('PUBDECISIONS', true);
 
@@ -122,11 +118,11 @@ class MultimediaObjectController extends SortableAdminController
               'mm'            => $resource,
               'form_meta'     => $formMeta->createView(),
               'form_pub'      => $formPub->createView(),
-	      'series'        => $series,
-	      'roles'         => $roles,
-	      'pub_channels'  => $pubChannelTags,
-	      'pub_decisions' => $pubDecisionsTags,
-	      'parent_tags'   => $parentTags
+          'series'        => $series,
+          'roles'         => $roles,
+          'pub_channels'  => $pubChannelTags,
+          'pub_decisions' => $pubDecisionsTags,
+          'parent_tags'   => $parentTags,
               ))
       ;
 
@@ -148,38 +144,38 @@ class MultimediaObjectController extends SortableAdminController
 
       $resource = $this->findOr404($request);
 
-      $formMeta = $this->createForm($config->getFormType() . '_meta', $resource);
-      $formPub = $this->createForm($config->getFormType() . '_pub', $resource);
+      $formMeta = $this->createForm($config->getFormType().'_meta', $resource);
+      $formPub = $this->createForm($config->getFormType().'_pub', $resource);
 
       $pubChannelsTags = $this->getTagsByCod('PUBCHANNELS', true);
       $pubDecisionsTags = $this->getTagsByCod('PUBDECISIONS', true);
 
       $method = $request->getMethod();
       if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
-	  $formMeta->submit($request, !$request->isMethod('PATCH'))->isValid()) {
-	$this->domainManager->update($resource);
+      $formMeta->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+          $this->domainManager->update($resource);
 
-	if ($config->isApiRequest()) {
-          return $this->handleView($this->view($formMeta));
-	}
-		
-	/*
-	  $criteria = $this->getCriteria($config);
-	  $resources = $this->getResources($request, $config, $criteria);	      
-	*/
-	
-	$mms = $this->getListMultimediaObjects($series);
-	
-	$view = $this
-	  ->view()
-	  ->setTemplate($this->getConfiguration()->getTemplate('list.html'))
-	  ->setData(array(
-			  'series' => $series,
-			  'mms' => $mms
-			  ))
-		;
-	
-	return $this->handleView($view);
+          if ($config->isApiRequest()) {
+              return $this->handleView($this->view($formMeta));
+          }
+
+    /*
+      $criteria = $this->getCriteria($config);
+      $resources = $this->getResources($request, $config, $criteria);
+    */
+
+    $mms = $this->getListMultimediaObjects($series);
+
+          $view = $this
+      ->view()
+      ->setTemplate($this->getConfiguration()->getTemplate('list.html'))
+      ->setData(array(
+              'series' => $series,
+              'mms' => $mms,
+              ))
+        ;
+
+          return $this->handleView($view);
       }
 
       if ($config->isApiRequest()) {
@@ -193,11 +189,11 @@ class MultimediaObjectController extends SortableAdminController
               'mm'            => $resource,
               'form_meta'     => $formMeta->createView(),
               'form_pub'      => $formPub->createView(),
-	      'series'        => $series,
-	      'roles'         => $roles,
-	      'pub_channels'  => $pubChannelsTags,
-	      'pub_decisions' => $pubDecisionsTags,
-	      'parent_tags'   => $parentTags
+          'series'        => $series,
+          'roles'         => $roles,
+          'pub_channels'  => $pubChannelsTags,
+          'pub_decisions' => $pubDecisionsTags,
+          'parent_tags'   => $parentTags,
               ))
       ;
 
@@ -219,36 +215,36 @@ class MultimediaObjectController extends SortableAdminController
 
       $resource = $this->findOr404($request);
 
-      $formMeta = $this->createForm($config->getFormType() . '_meta', $resource);
-      $formPub = $this->createForm($config->getFormType() . '_pub', $resource);
+      $formMeta = $this->createForm($config->getFormType().'_meta', $resource);
+      $formPub = $this->createForm($config->getFormType().'_pub', $resource);
 
       $pubChannelsTags = $this->getTagsByCod('PUBCHANNELS', true);
       $pubDecisionsTags = $this->getTagsByCod('PUBDECISIONS', true);
-      
+
       $method = $request->getMethod();
       if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
-	  $formPub->submit($request, !$request->isMethod('PATCH'))->isValid()) {
-	$resource = $this->updateTags($request->get('pub_channels', null), "PUCH", $resource);
-	$resource = $this->updateTags($request->get('pub_decisions', null), "PUDE", $resource);
+      $formPub->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+          $resource = $this->updateTags($request->get('pub_channels', null), "PUCH", $resource);
+          $resource = $this->updateTags($request->get('pub_decisions', null), "PUDE", $resource);
 
-	$this->domainManager->update($resource);
+          $this->domainManager->update($resource);
 
-	if ($config->isApiRequest()) {
-          return $this->handleView($this->view($formPub));
-	}
+          if ($config->isApiRequest()) {
+              return $this->handleView($this->view($formPub));
+          }
 
-	$mms = $this->getListMultimediaObjects($series);
-	
-	$view = $this
-	  ->view()
-	  ->setTemplate($this->getConfiguration()->getTemplate('list.html'))
-	  ->setData(array(
-			  'series' => $series,
-			  'mms' => $mms
-			  ))
-	  ;
-	
-	return $this->handleView($view);
+          $mms = $this->getListMultimediaObjects($series);
+
+          $view = $this
+      ->view()
+      ->setTemplate($this->getConfiguration()->getTemplate('list.html'))
+      ->setData(array(
+              'series' => $series,
+              'mms' => $mms,
+              ))
+      ;
+
+          return $this->handleView($view);
       }
 
       if ($config->isApiRequest()) {
@@ -257,16 +253,16 @@ class MultimediaObjectController extends SortableAdminController
 
       $view = $this
       ->view()
-	->setTemplate($config->getTemplate('edit.html'))
+    ->setTemplate($config->getTemplate('edit.html'))
       ->setData(array(
               'mm'            => $resource,
               'form_meta'     => $formMeta->createView(),
               'form_pub'      => $formPub->createView(),
-	      'series'        => $series,
-	      'roles'         => $roles,
-	      'pub_channels'  => $pubChannelsTags,
-	      'pub_decisions' => $pubDecisionsTags,
-	      'parent_tags'   => $parentTags
+          'series'        => $series,
+          'roles'         => $roles,
+          'pub_channels'  => $pubChannelsTags,
+          'pub_decisions' => $pubDecisionsTags,
+          'parent_tags'   => $parentTags,
               ))
       ;
 
@@ -278,16 +274,16 @@ class MultimediaObjectController extends SortableAdminController
    */
   public function addTagAction(Request $request)
   {
-    $config = $this->getConfiguration();
+      $config = $this->getConfiguration();
 
-    $resource = $this->findOr404($request);
+      $resource = $this->findOr404($request);
 
-    $tagService = $this->get('pumukitschema.tag');
-    $resource = $tagService->addTagToMultimediaObject($resource, $request->get('tagId'));
+      $tagService = $this->get('pumukitschema.tag');
+      $resource = $tagService->addTagToMultimediaObject($resource, $request->get('tagId'));
 
-    return $this->redirectTo($resource);
+      return $this->redirectTo($resource);
   }
-  
+
   /**
    * Get series
    */
@@ -296,13 +292,13 @@ class MultimediaObjectController extends SortableAdminController
       $dm = $this->get('doctrine_mongodb.odm.document_manager');
       $repository = $dm->getRepository('PumukitSchemaBundle:Series');
 
-      if ($this->get('session')->get('admin/series/id', null)){
-	$series = $repository->find($this->get('session')->get('admin/series/id'));
-      }else{
-	$series = $repository->find($request->get('id'));
-	$this->get('session')->set('admin/series/id', $series->getId());
+      if ($this->get('session')->get('admin/series/id', null)) {
+          $series = $repository->find($this->get('session')->get('admin/series/id'));
+      } else {
+          $series = $repository->find($request->get('id'));
+          $this->get('session')->set('admin/series/id', $series->getId());
       }
-      
+
       return $series;
   }
 
@@ -311,11 +307,11 @@ class MultimediaObjectController extends SortableAdminController
    */
   public function getRoles()
   {
-    $dm = $this->get('doctrine_mongodb.odm.document_manager');
-    $repository = $dm->getRepository('PumukitSchemaBundle:Role');
-    $roles = $repository->findAll();
+      $dm = $this->get('doctrine_mongodb.odm.document_manager');
+      $repository = $dm->getRepository('PumukitSchemaBundle:Role');
+      $roles = $repository->findAll();
 
-    return $roles;
+      return $roles;
   }
 
   /**
@@ -323,11 +319,11 @@ class MultimediaObjectController extends SortableAdminController
    */
   public function getParentTags()
   {
-    $dm = $this->get('doctrine_mongodb.odm.document_manager');
-    $repository = $dm->getRepository('PumukitSchemaBundle:Tag');
-    $parentTags = $repository->findOneByCod('ROOT')->getChildren();
+      $dm = $this->get('doctrine_mongodb.odm.document_manager');
+      $repository = $dm->getRepository('PumukitSchemaBundle:Tag');
+      $parentTags = $repository->findOneByCod('ROOT')->getChildren();
 
-    return $parentTags;
+      return $parentTags;
   }
 
   /**
@@ -335,14 +331,15 @@ class MultimediaObjectController extends SortableAdminController
    */
   public function getTagsByCod($cod, $getChildren)
   {
-    $dm = $this->get('doctrine_mongodb.odm.document_manager');
-    $repository = $dm->getRepository('PumukitSchemaBundle:Tag');
-    if ($getChildren){
-      $tags = $repository->findOneByCod($cod)->getChildren();
-    }else{
-      $tags = $repository->findOneByCod($cod);
-    }
-    return $tags;
+      $dm = $this->get('doctrine_mongodb.odm.document_manager');
+      $repository = $dm->getRepository('PumukitSchemaBundle:Tag');
+      if ($getChildren) {
+          $tags = $repository->findOneByCod($cod)->getChildren();
+      } else {
+          $tags = $repository->findOneByCod($cod);
+      }
+
+      return $tags;
   }
 
   /**
@@ -350,25 +347,25 @@ class MultimediaObjectController extends SortableAdminController
    */
   private function updateTags($checkedTags, $codStart, $resource)
   {
-    if (null !== $checkedTags){
-      foreach ($resource->getTags() as $tag){
-	if ((0 == strpos($tag->getCod(), $codStart)) && (false !== strpos($tag->getCod(), $codStart)) && (!in_array($tag->getCod(), $checkedTags))){
-	  $resource->removeTag($tag);
-	}
+      if (null !== $checkedTags) {
+          foreach ($resource->getTags() as $tag) {
+              if ((0 == strpos($tag->getCod(), $codStart)) && (false !== strpos($tag->getCod(), $codStart)) && (!in_array($tag->getCod(), $checkedTags))) {
+                  $resource->removeTag($tag);
+              }
+          }
+          foreach ($checkedTags as $cod => $checked) {
+              $tag = $this->getTagsByCod($cod, false);
+              $resource->addTag($tag);
+          }
+      } else {
+          foreach ($resource->getTags() as $tag) {
+              if ((0 == strpos($tag->getCod(), $codStart)) && (false !== strpos($tag->getCod(), $codStart))) {
+                  $resource->removeTag($tag);
+              }
+          }
       }
-      foreach ($checkedTags as $cod => $checked) {
-	$tag = $this->getTagsByCod($cod, false);
-	$resource->addTag($tag);
-      }
-    }else{
-      foreach ($resource->getTags() as $tag){
-	if ((0 == strpos($tag->getCod(), $codStart)) && (false !== strpos($tag->getCod(), $codStart))){
-	  $resource->removeTag($tag);
-	}
-      }
-    }
 
-    return $resource;
+      return $resource;
   }
 
   /**
@@ -383,11 +380,11 @@ class MultimediaObjectController extends SortableAdminController
 
       $adapter = new DoctrineCollectionAdapter($coll_mms);
       $mms = new Pagerfanta($adapter);
-      
+
       $mms
-	->setCurrentPage($page, true, true)
-	->setMaxPerPage(12)
-	;
+    ->setCurrentPage($page, true, true)
+    ->setMaxPerPage(12)
+    ;
 
       // TODO get criteria
 

@@ -8,8 +8,6 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\SeriesType;
-use Doctrine\ODM\MongoDB\Cursor;
-use Doctrine\Common\Collections\ArrayCollection;
 
 class EmbedRelationsTest extends WebTestCase
 {
@@ -48,7 +46,7 @@ class EmbedRelationsTest extends WebTestCase
     public function testRepositoryEmpty()
     {
         $this->assertEquals(0, count($this->repoMmobjs->findAll()));
-	$this->assertEquals(0, count($this->repoTags->findAll()));
+        $this->assertEquals(0, count($this->repoTags->findAll()));
     }
 
     public function testCreateRootTag()
@@ -62,7 +60,6 @@ class EmbedRelationsTest extends WebTestCase
         // This should pass to check the unrequired fields
         $this->assertEquals(1, count($this->repoTags->findAll()));
     }
-
 
     public function testGetChildren()
     {
@@ -95,34 +92,32 @@ class EmbedRelationsTest extends WebTestCase
         $this->assertEquals(1, count($tree));
     }
 
-
     public function testTagEmptyInMultimediaObject()
     {
         $this->createTestMultimediaObject();
-  
+
         $this->assertEquals(0, count($this->repoMmobjs->findOneByDuration(300)->getTags()));
     }
-    
+
     public function testAddTagToMultimediaObject()
     {
         $this->createTestTree();
-	$this->createTestMultimediaObject();
-	$this->addTagToMultimediaObject();
+        $this->createTestMultimediaObject();
+        $this->addTagToMultimediaObject();
 
-	$this->assertEquals(1, count($this->repoMmobjs->findOneByDuration(300)->getTags()));
-	$this->assertEquals(1, count($this->repoTags->findOneByCod("B2A")));
-
+        $this->assertEquals(1, count($this->repoMmobjs->findOneByDuration(300)->getTags()));
+        $this->assertEquals(1, count($this->repoTags->findOneByCod("B2A")));
     }
 
     public function testAddAndRemoveTagToMultimediaObject()
     {
         $this->createTestTree();
-	$this->createTestMultimediaObject();
+        $this->createTestMultimediaObject();
         $this->addTagToMultimediaObject();
-	$this->removeTagFromMultimediaObject();
+        $this->removeTagFromMultimediaObject();
 
-	$this->assertEquals(0, count($this->repoMmobjs->findOneByDuration(300)->getTags()));
-	$this->assertEquals(1, count($this->repoTags->findOneByCod("B2A")));
+        $this->assertEquals(0, count($this->repoMmobjs->findOneByDuration(300)->getTags()));
+        $this->assertEquals(1, count($this->repoTags->findOneByCod("B2A")));
     }
 
     private function createTestTree()
@@ -182,27 +177,26 @@ class EmbedRelationsTest extends WebTestCase
 
         $this->dm->persist($mmobj);
         $this->dm->flush();
-
     }
 
     private function addTagToMultimediaObject()
     {
-	$tagB2A = $this->repoTags->findOneByCod("B2A");
-	$mmobj = $this->repoMmobjs->findOneByDuration(300);
+        $tagB2A = $this->repoTags->findOneByCod("B2A");
+        $mmobj = $this->repoMmobjs->findOneByDuration(300);
 
-	$mmobj->addTag($tagB2A);
-	$this->dm->persist($mmobj);
-	$this->dm->flush();
+        $mmobj->addTag($tagB2A);
+        $this->dm->persist($mmobj);
+        $this->dm->flush();
     }
 
     private function removeTagFromMultimediaObject()
     {
-	$tagB2A = $this->repoTags->findOneByCod("B2A");
-	$mmobj = $this->repoMmobjs->findOneByDuration(300);
+        $tagB2A = $this->repoTags->findOneByCod("B2A");
+        $mmobj = $this->repoMmobjs->findOneByDuration(300);
 
-	$hasRemoved = $mmobj->removeTag($tagB2A);
+        $hasRemoved = $mmobj->removeTag($tagB2A);
 
-	$this->dm->persist($mmobj);
-	$this->dm->flush();
+        $this->dm->persist($mmobj);
+        $this->dm->flush();
     }
 }

@@ -395,7 +395,7 @@ class Direct
           $locale = $this->locale;
       }
       if (!isset($this->name[$locale])) {
-          return null;
+          return;
       }
 
       return $this->name[$locale];
@@ -445,7 +445,7 @@ class Direct
           $locale = $this->locale;
       }
       if (!isset($this->description[$locale])) {
-          return null;
+          return;
       }
 
       return $this->description[$locale];

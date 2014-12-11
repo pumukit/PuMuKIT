@@ -7,7 +7,7 @@
 
     <services>
         <!-- See #5826 -->
-        <service id="doctrine" alias="doctrine_mongodb" /> 
+        <service id="doctrine" alias="doctrine_mongodb" />
 
         <service id="pumukitschema.schema.locale" class="Pumukit\SchemaBundle\Listener\LocaleListener">
             <argument type="service" id="request_stack" />

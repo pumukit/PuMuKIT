@@ -2,12 +2,11 @@
 
 namespace Pumukit\AdminBundle\Controller;
 
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 
 class SeriesAdminController extends AdminController
 {
-  /**
+    /**
    * Overwrite to search criteria with date
    */
   public function indexAction(Request $request)
@@ -20,10 +19,10 @@ class SeriesAdminController extends AdminController
       $pluralName = $config->getPluralResourceName();
 
       $view = $this
-	->view()
-	->setTemplate($config->getTemplate('index.html'))
-	->setTemplateVar($pluralName)
-	->setData($resources)
+    ->view()
+    ->setTemplate($config->getTemplate('index.html'))
+    ->setTemplateVar($pluralName)
+    ->setData($resources)
       ;
 
       return $this->handleView($view);
@@ -46,10 +45,10 @@ class SeriesAdminController extends AdminController
       $resources = $this->getResources($request, $config, $criteria);
 
       $view = $this
-	->view()
-	->setTemplate($config->getTemplate('list.html'))
-	->setTemplateVar($pluralName)
-	->setData($resources)
+    ->view()
+    ->setTemplate($config->getTemplate('list.html'))
+    ->setTemplateVar($pluralName)
+    ->setData($resources)
       ;
 
       return $this->handleView($view);
@@ -66,29 +65,29 @@ class SeriesAdminController extends AdminController
       $resource = $this->findOr404($request);
       $this->get('session')->set('admin/series/id', $request->get('id'));
       $form = $this->getForm($resource);
-      
+
       $method = $request->getMethod();
-      if (in_array($method, array('POST', 'PUT', 'PATCH')) && 
-	  $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
-        $this->domainManager->update($resource);
-	
-	if ($config->isApiRequest()) {
-          return $this->handleView($this->view($form));
-	}
-		
-	$criteria = $this->getCriteria($config);
-	$resources = $this->getResources($request, $config, $criteria);	      
-	
-	$pluralName = $config->getPluralResourceName();
-	
-	$view = $this
-	  ->view()
-	  ->setTemplate($config->getTemplate('list.html'))
-	  ->setTemplateVar($pluralName)
-	  ->setData($resources)
-	  ;
-	
-	return $this->handleView($view);
+      if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
+      $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+          $this->domainManager->update($resource);
+
+          if ($config->isApiRequest()) {
+              return $this->handleView($this->view($form));
+          }
+
+          $criteria = $this->getCriteria($config);
+          $resources = $this->getResources($request, $config, $criteria);
+
+          $pluralName = $config->getPluralResourceName();
+
+          $view = $this
+      ->view()
+      ->setTemplate($config->getTemplate('list.html'))
+      ->setTemplateVar($pluralName)
+      ->setData($resources)
+      ;
+
+          return $this->handleView($view);
       }
 
       if ($config->isApiRequest()) {
@@ -136,5 +135,4 @@ class SeriesAdminController extends AdminController
 
       return $new_criteria;
   }
-
 }

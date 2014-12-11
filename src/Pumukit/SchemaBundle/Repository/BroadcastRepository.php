@@ -12,14 +12,14 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
  */
 class BroadcastRepository extends DocumentRepository
 {
-  /**
+    /**
    * Find default selected broadcast
    *
    * @return Broadcast
    */
   public function findDefaultSel()
   {
-    return $this->createQueryBuilder()
+      return $this->createQueryBuilder()
       ->field('default_sel')->equals(true)
       ->getQuery()
       ->getSingleResult();
@@ -32,7 +32,7 @@ class BroadcastRepository extends DocumentRepository
    */
   public function findPublicBroadcast()
   {
-    return $this->createQueryBuilder()
+      return $this->createQueryBuilder()
       ->field('broadcast_type_id')->equals('public')
       ->getQuery()
       ->getSingleResult();
