@@ -21,23 +21,29 @@ class TagService
   public function addTagToMultimediaObject(MultimediaObject $mmobj, $tagId)
   {
       $repository = $this->dm->getRepository('PumukitSchemaBundle:Tag');
-      $tag = $repository->findById($tagId);
+      $tag = $repository->find($tagId);
       if (null !== $tag) {
-          $mmobj->addTag($tag);
-      }
+          $node = $tag;
+          do {
+              if (!($mmobj->containsTag($node))) {
+                  $mmobj->addTag($node);
+                  $node->increaseNumberMultimediaObjects();
+                  $this->dm->persist($node);
+              }
+              $aux = $node->getParent();
+	      if (null !== $aux){
+	          $node = $aux;
+	      }else{
+	          break;
+	          // TODO throw exception tag tree broken or without ROOT
+	      }
+          } while (0 !== strcmp($node->getCod(), 'ROOT'));
 
-      $node = $tag;
-      do {
-          if (!($mmobj->containsTag($node))) {
-              $mmobj->addTag($node);
-              $node->increaseNumberMultimediaObjects();
-              $dm->persist($node);
-          }
-          $node = $node->getParent();
-      } while (0 !== strcmp($this->getParent()->getCod(), 'ROOT'));
-
-      $dm->persist($mmobj);
-      $dm->flush();
+          $this->dm->persist($mmobj);
+          $this->dm->flush();
+      }else{
+	  // TODO throw exception tag not found
+      }       
 
       return $mmobj;
   }
