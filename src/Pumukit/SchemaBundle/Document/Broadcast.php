@@ -68,7 +68,7 @@ class Broadcast
   /**
    * @var locale $locale
    */
-  private $locale;
+  private $locale = 'en';
 
   /**
    * Get id
