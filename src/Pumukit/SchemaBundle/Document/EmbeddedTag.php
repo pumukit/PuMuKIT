@@ -92,9 +92,25 @@ class EmbeddedTag
    */
   private $level;
 
-    public function __construct()
-    {
+  /**
+   * Construct
+   */
+  public function __construct(Tag $tag)
+  {
+    if (null !== $tag){
+        $this->setI18nTitle($tag->getI18nTitle());
+        $this->setI18nDescription($tag->getI18nDescription());
+        $this->slug = $tag->getSlug();
+        $this->cod = $tag->getCod();
+        $this->metatag = $tag->getMetatag();
+        $this->display = $tag->getDisplay();
+        $this->locale = $tag->getLocale();
+        $this->created = $tag->getCreated();
+        $this->updated = $tag->getUpdated();
+        $this->path = $tag->getPath();
+        $this->level = $tag->getLevel();
     }
+  }
 
   /**
    * Get id
@@ -366,16 +382,22 @@ class EmbeddedTag
       return $this->getTitle();
   }
 
-    public function getLevel()
-    {
-        return $this->level;
-    }
-
-    public function getPath()
-    {
-        return $this->path;
-    }
-
+  /**
+   * Get level
+   */
+  public function getLevel()
+  {
+      return $this->level;
+  }
+  
+  /**
+   * Get path
+   */
+  public function getPath()
+  {
+      return $this->path;
+  }
+  
   /**
    *
    * @param ArrayCollection $embeddedTags
@@ -390,14 +412,7 @@ class EmbeddedTag
       } elseif (null !== ($containedEmbedTag = self::containedEmbeddedTag($embedTags, $tag))) {
           return $containedEmbedTag;
       } elseif ($tag instanceof Tag) {
-          $embedTag = new self();
-          $embedTag->setI18nTitle($tag->getI18nTitle());
-          $embedTag->setI18nDescription($tag->getI18nDescription());
-          $embedTag->setSlug($tag->getSlug());
-          $embedTag->setCod($tag->getCod());
-          $embedTag->setMetatag($tag->getMetatag());
-          $embedTag->setDisplay($tag->getDisplay());
-          $embedTag->setLocale($tag->getLocale());
+          $embedTag = new self($tag);
 
           return $embedTag;
       }

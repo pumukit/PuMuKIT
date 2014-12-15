@@ -22,13 +22,6 @@ class Tag
   private $id;
 
   /**
-   * @var collection $multimedia_objects
-   *
-   * MongoDB\EmbedMany(targetDocument="MultimediaObject")
-   */
-  //private $multimedia_objects;
-
-  /**
    * @var int $number_multimedia_objects
    *
    * @MongoDB\Int
@@ -410,45 +403,6 @@ class Tag
   }
 
   /**
-   * Add multimedia_objects
-   *
-   * @param MultimediaObject $multimediaObjects
-   * @return Tag
-   */
-  /*
-  public function addMultimediaObject(MultimediaObject $multimediaObjects)
-  {
-      $this->multimedia_objects[] = $multimediaObjects;
-
-      return $this;
-  }
-  */
-
-  /**
-   * Remove multimedia_objects
-   *
-   * @param MultimediaObject $multimediaObjects
-   */
-  /*
-  public function removeMultimediaObject(MultimediaObject $multimediaObjects)
-  {
-      $this->multimedia_objects->removeElement($multimediaObjects);
-  }
-  */
-
-  /**
-   * Get multimedia_objects
-   *
-   * @return Collection
-   */
-  /*
-  public function getMultimediaObjects()
-  {
-      return $this->multimedia_objects;
-  }
-  */
-
-  /**
    * Increase number_multimedia_objects
    */
   public function increaseNumberMultimediaObjects()
@@ -459,9 +413,17 @@ class Tag
   /**
    * Decrease number_multimedia_objects
    */
-  public function decreaseMultimediaObjects()
+  public function decreaseNumberMultimediaObjects()
   {
       --$this->number_multimedia_objects;
+  }
+
+  /**
+   * Get number_multimedia_objects
+   */
+  public function getNumberMultimediaObjects()
+  {
+      return $this->number_multimedia_objects;
   }
 
     public function setParent(Tag $parent = null)

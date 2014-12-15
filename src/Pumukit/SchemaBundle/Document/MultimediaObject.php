@@ -279,13 +279,13 @@ class MultimediaObject
   public function removeTag($tag)
   {
       $embedTag = EmbeddedTag::getEmbeddedTag($this->tags, $tag);
-
+      
       $aux = $this->tags->filter(function ($i) use ($embedTag) {
     return $i->getId() !== $embedTag->getId();
     });
 
       $hasRemoved = (count($aux) !== count($this->tags));
-
+      
       $this->tags = $aux;
 
       return $hasRemoved;
@@ -315,7 +315,7 @@ class MultimediaObject
   public function containsAllTags(array $tags)
   {
       foreach ($tags as $tag) {
-          if (!($this->tags->contains($tag))) {
+          if (!($this->containsTag($tag))) {
               return false;
           }
       }
@@ -333,7 +333,7 @@ class MultimediaObject
   public function containsAnyTag(array $tags)
   {
       foreach ($tags as $tag) {
-          if ($this->tags->contains($tag)) {
+          if ($this->containsTag($tag)) {
               return true;
           }
       }

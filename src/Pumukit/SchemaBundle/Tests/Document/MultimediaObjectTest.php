@@ -299,15 +299,129 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, count($mm->getFilteredMaterialsByTags(array('mosca', 'old'), array(), array(), array('old'))));
     }
 
+    public function testEmbeddedTag()
+    {
+        $locale = 'en';
+	$title = 'title';
+        $description = 'description';
+        $slug = 'slug';
+        $cod = 23;
+        $metatag = true;
+        $created = new \DateTime("now");
+        $updated = new \DateTime("now");
+	$display = true;
+
+        $tag = new Tag($title);
+
+	$tag->setLocale($locale);
+        $tag->setTitle($title);
+        $tag->setDescription($description);
+        $tag->setSlug($slug);
+        $tag->setCod($cod);
+        $tag->setMetatag($metatag);
+        $tag->setCreated($created);
+        $tag->setUpdated($updated);
+	$tag->setDisplay($display);
+
+	$titleEs = 'título';
+	$titleArray = array('en' => $title, 'es' => $titleEs);
+	$descriptionEs = 'descripción';
+	$descriptionArray = array('en' => $description, 'es' => $descriptionEs);
+
+	$tag->setI18nTitle($titleArray);
+	$tag->setI18nDescription($descriptionArray);
+	
+        $mm = new MultimediaObject();
+
+	$mm->addTag($tag);
+
+	// TEST GETTERS
+
+        $this->assertEquals($locale, $mm->getTags()[0]->getLocale());
+        $this->assertEquals($title, $mm->getTags()[0]->getTitle());
+        $this->assertEquals($description, $mm->getTags()[0]->getDescription());
+        $this->assertEquals($slug, $mm->getTags()[0]->getSlug());
+        $this->assertEquals($cod,  $mm->getTags()[0]->getCod());
+        $this->assertEquals($metatag, $mm->getTags()[0]->getMetatag());
+        $this->assertEquals($created, $mm->getTags()[0]->getCreated());
+        $this->assertEquals($updated, $mm->getTags()[0]->getUpdated());
+	$this->assertEquals($display, $mm->getTags()[0]->getDisplay());
+	$this->assertEquals($tag->getPath(), $mm->getTags()[0]->getPath());
+	$this->assertEquals($tag->getLevel(), $mm->getTags()[0]->getLevel());
+	
+	$this->assertNull($mm->getTags()[0]->getTitle('fr'));
+	$this->assertNull($mm->getTags()[0]->getDescription('fr'));
+
+	$this->assertEquals($titleArray, $mm->getTags()[0]->getI18nTitle());
+	$this->assertEquals($descriptionArray, $mm->getTags()[0]->getI18nDescription());
+
+	$this->assertEquals($mm->getTags()[0]->getTitle(), $mm->getTags()[0]->__toString());
+
+	// TEST SETTERS
+	
+	$title = 'modified title';
+        $description = 'modified description';
+        $slug = 'modified slug';
+        $cod = 'modcod';
+        $metatag = false;
+        $created = new \DateTime("now");
+        $updated = new \DateTime("now");
+	$display = false;
+	
+        $mm->getTags()[0]->setTitle($title);
+        $mm->getTags()[0]->setDescription($description);
+        $mm->getTags()[0]->setSlug($slug);
+        $mm->getTags()[0]->setCod($cod);
+        $mm->getTags()[0]->setMetatag($metatag);
+        $mm->getTags()[0]->setCreated($created);
+        $mm->getTags()[0]->setUpdated($updated);
+	$mm->getTags()[0]->setDisplay($display);
+
+	$titleEs = 'título modificado';
+	$titleArray = array('en' => $title, 'es' => $titleEs);
+	$descriptionEs = 'descripción modificada';
+	$descriptionArray = array('en' => $description, 'es' => $descriptionEs);
+
+	$mm->getTags()[0]->setI18nTitle($titleArray);
+	$mm->getTags()[0]->setI18nDescription($descriptionArray);
+
+        $this->assertEquals($title, $mm->getTags()[0]->getTitle());
+        $this->assertEquals($description, $mm->getTags()[0]->getDescription());
+        $this->assertEquals($slug, $mm->getTags()[0]->getSlug());
+        $this->assertEquals($cod,  $mm->getTags()[0]->getCod());
+        $this->assertEquals($metatag, $mm->getTags()[0]->getMetatag());
+        $this->assertEquals($created, $mm->getTags()[0]->getCreated());
+        $this->assertEquals($updated, $mm->getTags()[0]->getUpdated());
+	$this->assertEquals($display, $mm->getTags()[0]->getDisplay());
+	
+	$this->assertNull($mm->getTags()[0]->getTitle('fr'));
+	$this->assertNull($mm->getTags()[0]->getDescription('fr'));
+
+	$this->assertEquals($titleArray, $mm->getTags()[0]->getI18nTitle());
+	$this->assertEquals($descriptionArray, $mm->getTags()[0]->getI18nDescription());
+
+	$this->assertEquals($mm->getTags()[0]->getTitle(), $mm->getTags()[0]->__toString());
+
+	$locale = 'es';
+	$mm->getTags()[0]->setLocale($locale);
+        $this->assertEquals($titleEs, $mm->getTags()[0]->getTitle());
+        $this->assertEquals($descriptionEs, $mm->getTags()[0]->getDescription());
+    }
+
     public function testTagCollection()
     {
         $mm = new MultimediaObject();
 
         $tag0 = new Tag();
+	$tag0->setCod('cod0');
         $tag1 = new Tag();
+	$tag1->setCod('cod1');
         $tag2 = new Tag();
+	$tag2->setCod('cod2');
         $tag3 = new Tag();
+	$tag3->setCod('cod3');
         $tag4 = new Tag();
+	$tag4->setCod('cod4');
 
         $this->assertFalse($mm->containsTag($tag1));
         $mm->addTag($tag1);
@@ -328,11 +442,11 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $mm->addTag($tag1);
         $mm->addTag($tag2);
         $mm->addTag($tag3);
-        // TODO $this->assertTrue($mm->containsAnyTag(array($tag0, $tag2)));
-        // TODO $this->assertTrue($mm->containsAnyTag(array($tag2, $tag3)));
+        $this->assertTrue($mm->containsAnyTag(array($tag0, $tag2)));
+        $this->assertTrue($mm->containsAnyTag(array($tag2, $tag3)));
         $this->assertFalse($mm->containsAnyTag(array($tag0, $tag4)));
-        // TODO $this->assertTrue($mm->containsAllTags(array($tag1, $tag2)));
-        // TODO $this->assertTrue($mm->containsAllTags(array($tag1)));
+        $this->assertTrue($mm->containsAllTags(array($tag1, $tag2)));
+        $this->assertTrue($mm->containsAllTags(array($tag1)));
         $this->assertFalse($mm->containsAllTags(array($tag0, $tag2)));
         $this->assertFalse($mm->containsAllTags(array($tag0, $tag1, $tag2, $tag3)));
     }
