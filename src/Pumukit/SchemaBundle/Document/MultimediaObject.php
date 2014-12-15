@@ -34,8 +34,7 @@ class MultimediaObject
 
   /**
    * @var Broadcast $broadcast
-   * //Try with EmbedOne
-   * @MongoDB\ReferenceOne(targetDocument="Broadcast", inversedBy="multimedia_objects")
+   * @MongoDB\EmbedOne(targetDocument="Broadcast")
    */
   private $broadcast;
 

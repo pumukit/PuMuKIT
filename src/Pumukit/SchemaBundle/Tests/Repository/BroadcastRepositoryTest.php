@@ -4,7 +4,6 @@ namespace Pumukit\SchemaBundle\Tests\Repository;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Broadcast;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class BroadcastRepositoryTest extends WebTestCase
 {
@@ -44,20 +43,14 @@ class BroadcastRepositoryTest extends WebTestCase
 
     private function createBroadcast($broadcastTypeId)
     {
-        $mmobj = new MultimediaObject();
 	$locale = 'en';
-	$mmobj->setLocale($locale);
-	$mmobj->setTitle('Multimedia Object', $locale);
 	$name = ucfirst($broadcastTypeId);
 	$passwd = 'password';
 	$defaultSel = $broadcastTypeId == Broadcast::BROADCAST_TYPE_PRI;
 	$description = ucfirst($broadcastTypeId).' broadcast';
 	
-	$this->dm->persist($mmobj);
-
 	$broadcast = new Broadcast();
 	$broadcast->setLocale($locale);
-	$broadcast->addMultimediaObject($mmobj);
 	$broadcast->setName($name);
 	$broadcast->setBroadcastTypeId($broadcastTypeId);
 	$broadcast->setPasswd($passwd);

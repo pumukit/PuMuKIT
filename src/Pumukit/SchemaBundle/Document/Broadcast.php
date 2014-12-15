@@ -24,13 +24,6 @@ class Broadcast
   private $id;
 
   /**
-   * @var ArrayCollection $multimedia_objects
-   *
-   * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="broadcast")
-   */
-  private $multimedia_objects;
-
-  /**
    * @var string $name
    *
    * @MongoDB\Raw
@@ -78,49 +71,6 @@ class Broadcast
   public function getId()
   {
       return $this->id;
-  }
-
-  /**
-   * Add multimedia_object
-   *
-   * @param MultimediaObject $multimedia_object
-   */
-  public function addMultimediaObject(MultimediaObject $multimedia_object)
-  {
-      $this->multimedia_objects[] = $multimedia_object;
-      $multimedia_object->setBroadcast($this);
-  }
-
-  /**
-   * Remove multimedia_object
-   *
-   * @param MultimediaObject $multimedia_object
-   */
-  public function removeMultimediaObject(MultimediaObject $multimedia_object)
-  {
-      $this->multimedia_objects->removeElement($multimedia_object);
-  }
-
-  /**
-   * Contains multimedia_object
-   *
-   * @param MultimediaObject $multimedia_object
-   *
-   * @return boolean
-   */
-  public function containsMultimediaObject(MultimediaObject $multimedia_object)
-  {
-      return $this->multimedia_objects->contains($multimedia_object);
-  }
-
-  /**
-   * Get multimedia_objects
-   *
-   * @return ArrayCollection
-   */
-  public function getMultimediaObjects()
-  {
-      return $this->multimedia_objects;
   }
 
   /**

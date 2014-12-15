@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\Broadcast;
 //use Pumukit\SchemaBundle\Document\PersonInMultimediaObject;
 
 class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
@@ -34,6 +35,13 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $tag3 = new Tag();
         $mm_tags = array($tag1, $tag2, $tag3);
 
+	$broadcast = new Broadcast();
+	$broadcast->setName('Private');
+	$broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PRI);
+	$broadcast->setPasswd('password');
+	$broadcast->setDefaultSel(true);
+	$broadcast->setDescription('Private broadcast');
+
         $mm = new MultimediaObject();
         $mm->setRank($rank);
         $mm->setStatus($status);
@@ -46,6 +54,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $mm->addTag($tag1);
         $mm->addTag($tag2);
         $mm->addTag($tag3);
+	$mm->setBroadcast($broadcast);
 
         $this->assertEquals($series, $mm->getSeries());
         $this->assertEquals($rank, $mm->getRank());
@@ -57,6 +66,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($subtitle, $mm->getSubtitle());
         $this->assertEquals($description, $mm->getDescription());
         // TODO $this->assertEquals($mm_tags, $mm->getTags()->toArray());
+	$this->assertEquals($broadcast, $mm->getBroadcast());
     }
 
     public function testDefaultState()

@@ -10,9 +10,6 @@ class BroadcastTest extends \PHPUnit_Framework_TestCase
     public function testSetterAndGetter()
     {
 	$locale = 'en';
-        $mmobj1 = new MultimediaObject();
-	$mmobj1->setLocale($locale);
-	$mmobj1->setTitle('Multimedia Object 1', $locale);
 	$broadcastTypeId = Broadcast::BROADCAST_TYPE_PRI;
 	$nameEn = 'Private';
 	$passwd = 'password';
@@ -21,14 +18,12 @@ class BroadcastTest extends \PHPUnit_Framework_TestCase
 	
 	$broadcast = new Broadcast();
 	$broadcast->setLocale($locale);
-	$broadcast->addMultimediaObject($mmobj1);
 	$broadcast->setName($nameEn, $locale);
 	$broadcast->setBroadcastTypeId($broadcastTypeId);
 	$broadcast->setPasswd($passwd);
 	$broadcast->setDefaultSel($defaultSel);
 	$broadcast->setDescription($descriptionEn, $locale);
 
-	$this->assertEquals(array($mmobj1), $broadcast->getMultimediaObjects());
 	$this->assertEquals($locale, $broadcast->getLocale());
 	$this->assertEquals($nameEn, $broadcast->getName());
 	$this->assertEquals($nameEn, $broadcast->getName($locale));
@@ -49,31 +44,41 @@ class BroadcastTest extends \PHPUnit_Framework_TestCase
 	$this->assertEquals($i18nName, $broadcast->getI18nName());
 	$this->assertEquals($i18nDescription, $broadcast->getI18nDescription());
 
-	$mmobj2 = new MultimediaObject();
-	$mmobj2->setLocale($locale);
-	$mmobj2->setTitle('Multimedia Object 2', $locale);
-	$mmobj3 = new MultimediaObject();
-	$mmobj3->setLocale($locale);
-	$mmobj3->setTitle('Multimedia Object 3', $locale);
-
-	$broadcast->addMultimediaObject($mmobj2);
-	$broadcast->addMultimediaObject($mmobj3);
-
-	$mmobjs = array($mmobj1, $mmobj2, $mmobj3);
-	
-	$this->assertEquals($mmobjs, $broadcast->getMultimediaObjects());
-	/*
-	$broadcast->removeMultimediaObject($mmobj1);
-
-	$mmobjs = array($mmobj2, $mmobj3);
-	$this->assertEquals($mmobjs, $broadcast->getMultimediaObjects());
-
-	$this->assertEquals(false, $broadcast->containsMultimediaObject($mmobj1));
-	$this->assertEquals(true, $broadcast->containsMultimediaObject($mmobj2));
-	$this->assertEquals(true, $broadcast->containsMultimediaObject($mmobj3));
-	*/
+	$this->assertNull($broadcast->getName('fr'));
+	$this->assertNull($broadcast->getDescription('fr'));
+	$this->assertNull($broadcast->getId());
     }
 
+    public function testCloneResource()
+    {
+        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
+      
+	$this->assertEquals($broadcast, $broadcast->cloneResource());
+    }
 
+    public function testToString()
+    {
+        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
 
+	$this->assertEquals($broadcast->getBroadcastTypeId(), $broadcast->__toString());
+    }
+
+    private function createBroadcast($broadcastTypeId)
+    {
+	$locale = 'en';
+	$nameEn = ucfirst($broadcastTypeId);
+	$passwd = 'password';
+	$defaultSel = true;
+	$descriptionEn = ucfirst($broadcastTypeId).' broadcast';
+	
+	$broadcast = new Broadcast();
+	$broadcast->setLocale($locale);
+	$broadcast->setName($nameEn, $locale);
+	$broadcast->setBroadcastTypeId($broadcastTypeId);
+	$broadcast->setPasswd($passwd);
+	$broadcast->setDefaultSel($defaultSel);
+	$broadcast->setDescription($descriptionEn, $locale);
+
+	return $broadcast;
+    }
 }

@@ -13,6 +13,7 @@ use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\PersonInMultimediaObject;
 use Pumukit\SchemaBundle\Document\SeriesType;
+use Pumukit\SchemaBundle\Document\Broadcast;
 use Doctrine\ODM\MongoDB\Cursor;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -64,6 +65,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $subtitle = 'Subtitle paragraph';
         $description = "Description text";
         $duration = 300;
+	$broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
 
         $mmobj = new MultimediaObject();
         $mmobj->setRank($rank);
@@ -74,6 +76,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mmobj->setSubtitle($subtitle);
         $mmobj->setDescription($description);
         $mmobj->setDuration($duration);
+	$mmobj->setBroadcast($broadcast);
 
         $this->dm->persist($mmobj);
         $this->dm->flush();
@@ -416,5 +419,24 @@ class MultimediaObjectRepositoryTest extends WebTestCase
                     ->getQuery()->execute();
 
         return $mmobj_series;
+    }
+
+    private function createBroadcast($broadcastTypeId)
+    {
+	$broadcast = new Broadcast();
+	$broadcast->setName(ucfirst($broadcastTypeId));
+	$broadcast->setBroadcastTypeId($broadcastTypeId);
+	$broadcast->setPasswd('password');
+	if (0 === strcmp(Broadcast::BROADCAST_TYPE_PRI, $broadcastTypeId)){
+	  $broadcast->setDefaultSel(true);
+	}else{
+	  $broadcast->setDefaultSel(false);
+	}
+	$broadcast->setDescription(ucfirst($broadcastTypeId).' broadcast');
+
+	$this->dm->persist($broadcast);
+	$this->dm->flush();
+
+	return $broadcast;
     }
 }
