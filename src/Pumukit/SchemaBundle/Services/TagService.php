@@ -65,12 +65,6 @@ class TagService
           $node = $tag;
           do {
 	      $children = $node->getChildren();
-	      //var_dump(get_class($children));
-	      //var_dump(count($children));
-	      /*$children = array();
-	      foreach ($node->getChildren() as $child){
-		array_push($children, $child);		
-		}*/
 	      if (!($mmobj->containsAnyTag($children->toArray()))){
 		  $mmobj->removeTag($node);
 		  $node->decreaseNumberMultimediaObjects();
