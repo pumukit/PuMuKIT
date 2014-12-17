@@ -186,20 +186,90 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NORMAL))));
         $this->assertEquals(2, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PROTOTYPE, MultimediaObject::STATUS_NEW))));
         $this->assertEquals(3, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NORMAL, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDE))));
+
+	$mmArray = array($mmPrototype->getId() => $mmPrototype);
+	$this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PROTOTYPE))->toArray());
+	$mmArray = array($mmNew->getId() => $mmNew);
+        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NEW))->toArray());
+	$mmArray = array($mmHide->getId() => $mmHide);
+        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_HIDE))->toArray());
+	$mmArray = array($mmBloq->getId() => $mmBloq);
+        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_BLOQ))->toArray());
+	$mmArray = array($mmNormal->getId() => $mmNormal);
+        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NORMAL))->toArray());
+	$mmArray = array($mmPrototype->getId() => $mmPrototype, $mmNew->getId() => $mmNew);
+	$this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PROTOTYPE, MultimediaObject::STATUS_NEW))->toArray());
+	$mmArray = array($mmNormal->getId() => $mmNormal, $mmNew->getId() => $mmNew, $mmHide->getId() => $mmHide);
+        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NORMAL, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDE))->toArray());
     }
 
     public function testFindPrototype()
     {
+        $series = $this->createSeries('Serie prueba status');
+
+        $mmPrototype = $this->createMultimediaObjectAssignedToSeries('Status prototype', $series);
+        $mmPrototype->setStatus(MultimediaObject::STATUS_PROTOTYPE);
+
+        $mmNew = $this->createMultimediaObjectAssignedToSeries('Status new', $series);
+        $mmNew->setStatus(MultimediaObject::STATUS_NEW);
+
+        $mmHide = $this->createMultimediaObjectAssignedToSeries('Status hide', $series);
+        $mmHide->setStatus(MultimediaObject::STATUS_HIDE);
+
+        $mmBloq = $this->createMultimediaObjectAssignedToSeries('Status bloq', $series);
+        $mmBloq->setStatus(MultimediaObject::STATUS_BLOQ);
+
+        $mmNormal = $this->createMultimediaObjectAssignedToSeries('Status normal', $series);
+        $mmNormal->setStatus(MultimediaObject::STATUS_NORMAL);
+
+        $this->dm->persist($mmPrototype);
+        $this->dm->persist($mmNew);
+        $this->dm->persist($mmHide);
+        $this->dm->persist($mmBloq);
+        $this->dm->persist($mmNormal);
+        $this->dm->flush();
+
+	$this->assertEquals(1, count($this->repo->findPrototype($series)));
+	$this->assertEquals($mmPrototype, $this->repo->findPrototype($series));
     }
 
     public function testFindWithoutPrototype()
     {
+        $series = $this->createSeries('Serie prueba status');
+
+        $mmPrototype = $this->createMultimediaObjectAssignedToSeries('Status prototype', $series);
+        $mmPrototype->setStatus(MultimediaObject::STATUS_PROTOTYPE);
+
+        $mmNew = $this->createMultimediaObjectAssignedToSeries('Status new', $series);
+        $mmNew->setStatus(MultimediaObject::STATUS_NEW);
+
+        $mmHide = $this->createMultimediaObjectAssignedToSeries('Status hide', $series);
+        $mmHide->setStatus(MultimediaObject::STATUS_HIDE);
+
+        $mmBloq = $this->createMultimediaObjectAssignedToSeries('Status bloq', $series);
+        $mmBloq->setStatus(MultimediaObject::STATUS_BLOQ);
+
+        $mmNormal = $this->createMultimediaObjectAssignedToSeries('Status normal', $series);
+        $mmNormal->setStatus(MultimediaObject::STATUS_NORMAL);
+
+        $this->dm->persist($mmPrototype);
+        $this->dm->persist($mmNew);
+        $this->dm->persist($mmHide);
+        $this->dm->persist($mmBloq);
+        $this->dm->persist($mmNormal);
+        $this->dm->flush();
+
+	$this->assertEquals(4, count($this->repo->findWithoutPrototype($series)));
+
+	$mmArray = array(
+			 $mmNew->getId() => $mmNew,
+			 $mmHide->getId() => $mmHide,
+			 $mmBloq->getId() => $mmBloq,
+			 $mmNormal->getId() => $mmNormal
+			 );
+	$this->assertEquals($mmArray, $this->repo->findWithoutPrototype($series)->toArray());
     }
 
-    public function testRankInAddTrack()
-    {
-    }
-    
     private function createPerson($name)
     {
         $email = $name.'@mail.es';
