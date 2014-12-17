@@ -17,14 +17,14 @@
         {% if loop.first %}
 	  &nbsp;
 	{% else %}
-	  <a href="#" onclick="new Ajax.Updater('{{ role.id }}_person_mms', '{{ path('pumukitamin_person_up', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}', {asynchronous:true, evalScripts:true}); return false;">&#8593;</a>
+	  <a href="#" onclick="new Ajax.Updater('{{ role.id }}_person_mms', '{{ path('pumukitadmin_person_up', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}', {asynchronous:true, evalScripts:true}); return false;">&#8593;</a>
 	{% endif %}
       </td>
       <td>
 	{% if loop.last %}
           &nbsp;
 	{% else %}
-	  <a href="#" onclick="new Ajax.Updater('{{ role.id }}_person_mms', '{{ path('pumukitamin_person_down', {'id': person.id, 'role': role.id, 'mmId': mm.id}) }}', {asynchronous:true, evalScripts:true}); return false;">&#8595;</a>
+	  <a href="#" onclick="new Ajax.Updater('{{ role.id }}_person_mms', '{{ path('pumukitadmin_person_down', {'id': person.id, 'role': role.id, 'mmId': mm.id}) }}', {asynchronous:true, evalScripts:true}); return false;">&#8595;</a>
 	{% endif %}
       </td>
       <td>&nbsp;{{ person.id }} - {{ person.getHName() }}</td>
