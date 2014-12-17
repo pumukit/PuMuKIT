@@ -5,10 +5,10 @@ namespace Pumukit\SchemaBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * Pumukit\SchemaBundle\Document\Material
+ * Pumukit\SchemaBundle\Document\Link
  *
  * @MongoDB\EmbeddedDocument
  */
-class Material extends Element
+class Link extends Element
 {
 }

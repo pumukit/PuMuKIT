@@ -55,7 +55,7 @@ class MultimediaObject
   /**
    * @var ArrayCollection $pics
    *
-   * @MongoDB\EmbedMany(targetDocument="MultimediaObjectPic")
+   * @MongoDB\EmbedMany(targetDocument="Pic")
    */
   private $pics;
 
@@ -65,6 +65,13 @@ class MultimediaObject
    * @MongoDB\EmbedMany(targetDocument="Material")
    */
   private $materials;
+
+  /**
+   * @var ArrayCollection $links
+   *
+   * @MongoDB\EmbedMany(targetDocument="Link")
+   */
+  private $links;
 
   /**
    * @var int $rank
@@ -184,6 +191,7 @@ class MultimediaObject
         $this->tracks = new ArrayCollection();
         $this->pics = new ArrayCollection();
         $this->materials = new ArrayCollection();
+	$this->links = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->people_in_multimedia_object = new ArrayCollection();
     }
@@ -343,6 +351,280 @@ class MultimediaObject
 
   // End of tags section
 
+
+  /**
+   * Add pic
+   *
+   * @param Pic $pic
+   */
+  public function addPic(Pic $pic)
+  {
+      $this->pics->add($pic);
+  }
+
+  /**
+   * Remove pic
+   *
+   * @param Pic $pic
+   */
+  public function removePic(Pic $pic)
+  {
+      $this->pics->removeElement($pic);
+  }
+
+  /**
+   * Remove pic by id
+   *
+   * @param string $picId
+   */
+  public function removePicById($picId)
+  {
+      $this->pics = $this->pics->filter(function ($pic) use ($picId) {
+      return $pic->getId() !== $picId;
+      });
+  }
+
+  /**
+   * Up pic by id
+   *
+   * @param string $picId
+   */
+  public function upPicById($picId)
+  {
+      $this->reorderPicById($picId, true);
+  }
+
+  /**
+   * Down pic by id
+   *
+   * @param string $picId
+   */
+  public function downPicById($picId)
+  {
+      $this->reorderPicById($picId, false);
+  }
+
+  //TODO move out
+  /**
+   * Reorder pic by id
+   *
+   * @param string $picId
+   * @param boolean $up
+   */
+  private function reorderPicById($picId, $up = true)
+  {
+      $snapshot = $this->pics->toArray();
+      $this->pics->clear();
+
+      $out = array();
+      foreach ($snapshot as $key => $pic) {
+          if ($pic->getId() === $picId) {
+              $out[($key * 10) + ($up ? -11 : 11) ] = $pic;
+          } else {
+              $out[$key * 10] = $pic;
+          }
+      }
+
+      ksort($out);
+      foreach ($out as $pic) {
+          $this->pics->add($pic);
+      }
+  }
+
+  /**
+   * Contains pic
+   *
+   * @param Pic $pic
+   *
+   * @return boolean
+   */
+  public function containsPic(Pic $pic)
+  {
+      return $this->pics->contains($pic);
+  }
+
+  /**
+   * Get pics
+   *
+   * @return ArrayCollection
+   */
+  public function getPics()
+  {
+      return $this->pics;
+  }
+
+  /**
+   * Get pic by id
+   *
+   * @param $picId
+   *
+   * @return Pic|null
+   */
+  public function getPicById($picId)
+  {
+      foreach ($this->pics as $pic) {
+          if ($pic->getId() == $picId) {
+              return $pic;
+          }
+      }
+
+      return null;
+  }
+
+  /**
+   * Get pics by Tag
+   *
+   * @param string $tag
+   * @return ArrayCollection
+   * TODO
+   */
+  public function getPicsByTag($tag)
+  {
+      $r = array();
+
+      foreach ($this->pics as $pic) {
+          if ($pic->containsTag($tag)) {
+              $r[] = $pic;
+          }
+      }
+
+      return $r;
+  }
+
+  /**
+   * Get pic by tag
+   *
+   * @param string $tag
+   * @return Pic
+   * TODO
+   */
+  public function getPicByTag($tag)
+  {
+      foreach ($this->pics as $pic) {
+          if ($pic->containsTag($tag)) {
+              return $pic;
+          }
+      }
+
+      return;
+  }
+
+  /**
+   * Get pics ...
+   *
+   * @param array $tags
+   * @return ArrayCollection
+   * TODO
+   */
+  public function getPicsWithAllTags(array $tags)
+  {
+      $r = array();
+
+      foreach ($this->pics as $pic) {
+          if ($pic->containsAllTags($tags)) {
+              $r[] = $pic;
+          }
+      }
+
+      return $r;
+  }
+
+  /**
+   * Get pics ...
+   *
+   * @param array $tags
+   * @return Pic
+   * TODO
+   */
+  public function getPicWithAllTags(array $tags)
+  {
+      foreach ($this->pics as $pic) {
+          if ($pic->containsAllTags($tags)) {
+              return $pic;
+          }
+      }
+
+      return;
+  }
+
+  /**
+   * Get pics ...
+   *
+   * @param array $tags
+   * @return ArrayCollection
+   * TODO
+   */
+  public function getPicsWithAnyTag(array $tags)
+  {
+      $r = array();
+
+      foreach ($this->pics as $pic) {
+          if ($pic->containsAnyTag($tags)) {
+              $r[] = $pic;
+          }
+      }
+
+      return $r;
+  }
+
+  /**
+   * Get pic ...
+   *
+   * @param array $tags
+   * @return Pic
+   * TODO
+   */
+  public function getPicWithAnyTag(array $tags)
+  {
+      foreach ($this->pics as $pic) {
+          if ($pic->containsAnyTag($tags)) {
+              return $pic;
+          }
+      }
+
+      return;
+  }
+
+  /**
+   * Get pics ...
+   *
+   * @param array $any_tags
+   * @param array $all_tags
+   * @param array $not_any_tags
+   * @param array $not_all_tags
+   * @return ArrayCollection
+   * TODO
+   */
+  public function getFilteredPicsByTags(
+                    array $any_tags = array(),
+                    array $all_tags = array(),
+                    array $not_any_tags = array(),
+                    array $not_all_tags = array())
+  {
+      $r = array();
+
+      foreach ($this->pics as $pic) {
+          if ($any_tags && !$pic->containsAnyTag($any_tags)) {
+              continue;
+          }
+          if ($all_tags && !$pic->containsAllTags($all_tags)) {
+              continue;
+          }
+          if ($not_any_tags && $pic->containsAnyTag($not_any_tags)) {
+              continue;
+          }
+          if ($not_all_tags && $pic->containsAllTags($not_all_tags)) {
+              continue;
+          }
+
+          $r[] = $pic;
+      }
+
+      return $r;
+  }
+
+  // End of Pic getter - setter etc methods section
+
   /**
    * Add track
    *
@@ -350,14 +632,11 @@ class MultimediaObject
    */
   public function addTrack(Track $track)
   {
-      $this->tracks[] = $track;
-      $track->setMultimediaObject($this);
+      $this->tracks->add($track);
 
       if ($track->getDuration() > $this->getDuration()) {
-          $this->setDuration($track->getDuration());
+	  $this->setDuration($track->getDuration());
       }
-
-      $track->setRank(count($this->tracks));
   }
 
   /**
@@ -368,6 +647,69 @@ class MultimediaObject
   public function removeTrack(Track $track)
   {
       $this->tracks->removeElement($track);
+
+      $this->updateDuration();
+  }
+
+  /**
+   * Remove track by id
+   *
+   * @param string $trackId
+   */
+  public function removeTrackById($trackId)
+  {
+      $this->tracks = $this->tracks->filter(function ($track) use ($trackId) {
+      return $track->getId() !== $trackId;
+      });
+
+      $this->updateDuration();
+  }
+
+  /**
+   * Up track by id
+   *
+   * @param string $trackId
+   */
+  public function upTrackById($trackId)
+  {
+      $this->reorderTrackById($trackId, true);
+  }
+
+  /**
+   * Down track by id
+   *
+   * @param string $trackId
+   */
+  public function downTrackById($trackId)
+  {
+      $this->reorderTrackById($trackId, false);
+  }
+
+  //TODO move out
+  /**
+   * Reorder track by id
+   *
+   * @param string $trackId
+   * @param boolean $up
+   */
+  private function reorderTrackById($trackId, $up = true)
+  {
+      $snapshot = $this->tracks->toArray();
+      $this->tracks->clear();
+
+      $out = array();
+      foreach ($snapshot as $key => $track) {
+          if ($track->getId() === $trackId) {
+              $out[($key * 10) + ($up ? -11 : 11) ] = $track;
+          } else {
+              $out[$key * 10] = $track;
+          }
+      }
+
+      ksort($out);
+      foreach ($out as $track) {
+          $this->tracks->add($track);
+      }
   }
 
   /**
@@ -390,6 +732,24 @@ class MultimediaObject
   public function getTracks()
   {
       return $this->tracks;
+  }
+
+  /**
+   * Get track by id
+   *
+   * @param $trackId
+   *
+   * @return Track|null
+   */
+  public function getTrackById($trackId)
+  {
+      foreach ($this->tracks as $track) {
+          if ($track->getId() == $trackId) {
+              return $track;
+          }
+      }
+
+      return null;
   }
 
   /**
@@ -517,10 +877,10 @@ class MultimediaObject
    * TODO
    */
   public function getFilteredTracksByTags(
-                      array $any_tags = array(),
-                      array $all_tags = array(),
-                      array $not_any_tags = array(),
-                      array $not_all_tags = array())
+                         array $any_tags = array(),
+                         array $all_tags = array(),
+                         array $not_any_tags = array(),
+                         array $not_all_tags = array())
   {
       $r = array();
 
@@ -547,211 +907,13 @@ class MultimediaObject
   // End of Track getter - setter etc methods section
 
   /**
-   * Add pic
-   *
-   * @param MultimediaObjectPic $pic
-   */
-  public function addPic(MultimediaObjectPic $pic)
-  {
-      $this->pics->add($pic);
-  }
-
-  /**
-   * Remove pic
-   *
-   * @param MultimediaObjectPic $pic
-   */
-  public function removePic(MultimediaObjectPic $pic)
-  {
-      $this->pics->removeElement($pic);
-  }
-
-  /**
-   * Contains pic
-   *
-   * @param MultimediaObjectPic $pic
-   *
-   * @return boolean
-   */
-  public function containsPic(MultimediaObjectPic $pic)
-  {
-      return $this->pics->contains($pic);
-  }
-
-  /**
-   * Get pics
-   *
-   * @return ArrayCollection
-   */
-  public function getPics()
-  {
-      return $this->pics;
-  }
-
-  /**
-   * Get pics ...
-   *
-   * @param string $tag
-   * @return ArrayCollection
-   * TODO
-   */
-  public function getPicsByTag($tag)
-  {
-      $r = array();
-
-      foreach ($this->pics as $pic) {
-          if ($pic->containsTag($tag)) {
-              $r[] = $pic;
-          }
-      }
-
-      return $r;
-  }
-
-  /**
-   * Get pic ...
-   *
-   * @param string $tag
-   * @return MultimediaObjectPic
-   * TODO
-   */
-  public function getPicByTag($tag)
-  {
-      foreach ($this->pics as $pic) {
-          if ($pic->containsTag($tag)) {
-              return $pic;
-          }
-      }
-
-      return;
-  }
-
-  /**
-   * Get pics ...
-   *
-   * @param array $tags
-   * @return ArrayCollection
-   * TODO
-   */
-  public function getPicsWithAllTags(array $tags)
-  {
-      $r = array();
-
-      foreach ($this->pics as $pic) {
-          if ($pic->containsAllTags($tags)) {
-              $r[] = $pic;
-          }
-      }
-
-      return $r;
-  }
-
-  /**
-   * Get pics ...
-   *
-   * @param array $tags
-   * @return MultimediaObjectPic
-   * TODO
-   */
-  public function getPicWithAllTags(array $tags)
-  {
-      foreach ($this->pics as $pic) {
-          if ($pic->containsAllTags($tags)) {
-              return $pic;
-          }
-      }
-
-      return;
-  }
-
-  /**
-   * Get pics ...
-   *
-   * @param array $tags
-   * @return ArrayCollection
-   * TODO
-   */
-  public function getPicsWithAnyTag(array $tags)
-  {
-      $r = array();
-
-      foreach ($this->pics as $pic) {
-          if ($pic->containsAnyTag($tags)) {
-              $r[] = $pic;
-          }
-      }
-
-      return $r;
-  }
-
-  /**
-   * Get pic ...
-   *
-   * @param array $tags
-   * @return MultimediaObjectPic
-   * TODO
-   */
-  public function getPicWithAnyTag(array $tags)
-  {
-      foreach ($this->pics as $pic) {
-          if ($pic->containsAnyTag($tags)) {
-              return $pic;
-          }
-      }
-
-      return;
-  }
-
-  /**
-   * Get pics ...
-   *
-   * @param array $any_tags
-   * @param array $all_tags
-   * @param array $not_any_tags
-   * @param array $not_all_tags
-   * @return ArrayCollection
-   * TODO
-   */
-  public function getFilteredPicsByTags(
-                    array $any_tags = array(),
-                    array $all_tags = array(),
-                    array $not_any_tags = array(),
-                    array $not_all_tags = array())
-  {
-      $r = array();
-
-      foreach ($this->pics as $pic) {
-          if ($any_tags && !$pic->containsAnyTag($any_tags)) {
-              continue;
-          }
-          if ($all_tags && !$pic->containsAllTags($all_tags)) {
-              continue;
-          }
-          if ($not_any_tags && $pic->containsAnyTag($not_any_tags)) {
-              continue;
-          }
-          if ($not_all_tags && $pic->containsAllTags($not_all_tags)) {
-              continue;
-          }
-
-          $r[] = $pic;
-      }
-
-      return $r;
-  }
-
-  // End of MultimediaObjectPic getter - setter etc methods section
-
-  /**
    * Add material
    *
    * @param Material $material
    */
   public function addMaterial(Material $material)
   {
-      $this->materials[] = $material;
-      $material->setMultimediaObject($this);
-      $material->setRank(count($this->materials));
+      $this->materials->add($material);
   }
 
   /**
@@ -762,6 +924,65 @@ class MultimediaObject
   public function removeMaterial(Material $material)
   {
       $this->materials->removeElement($material);
+  }
+
+  /**
+   * Remove material by id
+   *
+   * @param string $materialId
+   */
+  public function removeMaterialById($materialId)
+  {
+      $this->materials = $this->materials->filter(function ($material) use ($materialId) {
+      return $material->getId() !== $materialId;
+      });
+  }
+
+  /**
+   * Up material by id
+   *
+   * @param string $materialId
+   */
+  public function upMaterialById($materialId)
+  {
+      $this->reorderMaterialById($materialId, true);
+  }
+
+  /**
+   * Down material by id
+   *
+   * @param string $materialId
+   */
+  public function downMaterialById($materialId)
+  {
+      $this->reorderMaterialById($materialId, false);
+  }
+
+  //TODO move out
+  /**
+   * Reorder material by id
+   *
+   * @param string $materialId
+   * @param boolean $up
+   */
+  private function reorderMaterialById($materialId, $up = true)
+  {
+      $snapshot = $this->materials->toArray();
+      $this->materials->clear();
+
+      $out = array();
+      foreach ($snapshot as $key => $material) {
+          if ($material->getId() === $materialId) {
+              $out[($key * 10) + ($up ? -11 : 11) ] = $material;
+          } else {
+              $out[$key * 10] = $material;
+          }
+      }
+
+      ksort($out);
+      foreach ($out as $material) {
+          $this->materials->add($material);
+      }
   }
 
   /**
@@ -784,6 +1005,24 @@ class MultimediaObject
   public function getMaterials()
   {
       return $this->materials;
+  }
+
+  /**
+   * Get material by id
+   *
+   * @param $materialId
+   *
+   * @return Material|null
+   */
+  public function getMaterialById($materialId)
+  {
+      foreach ($this->materials as $material) {
+          if ($material->getId() == $materialId) {
+              return $material;
+          }
+      }
+
+      return null;
   }
 
   /**
@@ -939,6 +1178,279 @@ class MultimediaObject
   }
 
   // End of Material getter - setter etc methods section
+
+  /**
+   * Add link
+   *
+   * @param Link $link
+   */
+  public function addLink(Link $link)
+  {
+      $this->links->add($link);
+  }
+
+  /**
+   * Remove link
+   *
+   * @param Link $link
+   */
+  public function removeLink(Link $link)
+  {
+      $this->links->removeElement($link);
+  }
+
+  /**
+   * Remove link by id
+   *
+   * @param string $linkId
+   */
+  public function removeLinkById($linkId)
+  {
+      $this->links = $this->links->filter(function ($link) use ($linkId) {
+      return $link->getId() !== $linkId;
+      });
+  }
+
+  /**
+   * Up link by id
+   *
+   * @param string $linkId
+   */
+  public function upLinkById($linkId)
+  {
+      $this->reorderLinkById($linkId, true);
+  }
+
+  /**
+   * Down link by id
+   *
+   * @param string $linkId
+   */
+  public function downLinkById($linkId)
+  {
+      $this->reorderLinkById($linkId, false);
+  }
+
+  //TODO move out
+  /**
+   * Reorder link by id
+   *
+   * @param string $linkId
+   * @param boolean $up
+   */
+  private function reorderLinkById($linkId, $up = true)
+  {
+      $snapshot = $this->links->toArray();
+      $this->links->clear();
+
+      $out = array();
+      foreach ($snapshot as $key => $link) {
+          if ($link->getId() === $linkId) {
+              $out[($key * 10) + ($up ? -11 : 11) ] = $link;
+          } else {
+              $out[$key * 10] = $link;
+          }
+      }
+
+      ksort($out);
+      foreach ($out as $link) {
+          $this->links->add($link);
+      }
+  }
+
+  /**
+   * Contains link
+   *
+   * @param Link $link
+   *
+   * @return boolean
+   */
+  public function containsLink(Link $link)
+  {
+      return $this->links->contains($link);
+  }
+
+  /**
+   * Get links
+   *
+   * @return ArrayCollection
+   */
+  public function getLinks()
+  {
+      return $this->links;
+  }
+
+  /**
+   * Get link by id
+   *
+   * @param $linkId
+   *
+   * @return Link|null
+   */
+  public function getLinkById($linkId)
+  {
+      foreach ($this->links as $link) {
+          if ($link->getId() == $linkId) {
+              return $link;
+          }
+      }
+
+      return null;
+  }
+
+  /**
+   * Get links ...
+   *
+   * @param string $tag
+   * @return ArrayCollection
+   * TODO
+   */
+  public function getLinksByTag($tag)
+  {
+      $r = array();
+
+      foreach ($this->links as $link) {
+          if ($link->containsTag($tag)) {
+              $r[] = $link;
+          }
+      }
+
+      return $r;
+  }
+
+  /**
+   * Get link ...
+   *
+   * @param string $tag
+   * @return Link
+   * TODO
+   */
+  public function getLinkByTag($tag)
+  {
+      foreach ($this->links as $link) {
+          if ($link->containsTag($tag)) {
+              return $link;
+          }
+      }
+
+      return;
+  }
+
+  /**
+   * Get links ...
+   *
+   * @param array $tags
+   * @return ArrayCollection
+   * TODO
+   */
+  public function getLinksWithAllTags(array $tags)
+  {
+      $r = array();
+
+      foreach ($this->links as $link) {
+          if ($link->containsAllTags($tags)) {
+              $r[] = $link;
+          }
+      }
+
+      return $r;
+  }
+
+  /**
+   * Get links ...
+   *
+   * @param array $tags
+   * @return Link
+   * TODO
+   */
+  public function getLinkWithAllTags(array $tags)
+  {
+      foreach ($this->links as $link) {
+          if ($link->containsAllTags($tags)) {
+              return $link;
+          }
+      }
+
+      return;
+  }
+
+  /**
+   * Get links ...
+   *
+   * @param array $tags
+   * @return ArrayCollection
+   * TODO
+   */
+  public function getLinksWithAnyTag(array $tags)
+  {
+      $r = array();
+
+      foreach ($this->links as $link) {
+          if ($link->containsAnyTag($tags)) {
+              $r[] = $link;
+          }
+      }
+
+      return $r;
+  }
+
+  /**
+   * Get link ...
+   *
+   * @param array $tags
+   * @return Link
+   * TODO
+   */
+  public function getLinkWithAnyTag(array $tags)
+  {
+      foreach ($this->links as $link) {
+          if ($link->containsAnyTag($tags)) {
+              return $link;
+          }
+      }
+
+      return;
+  }
+
+  /**
+   * Get links ...
+   *
+   * @param array $any_tags
+   * @param array $all_tags
+   * @param array $not_any_tags
+   * @param array $not_all_tags
+   * @return ArrayCollection
+   * TODO
+   */
+  public function getFilteredLinksByTags(
+                         array $any_tags = array(),
+                         array $all_tags = array(),
+                         array $not_any_tags = array(),
+                         array $not_all_tags = array())
+  {
+      $r = array();
+
+      foreach ($this->links as $link) {
+          if ($any_tags && !$link->containsAnyTag($any_tags)) {
+              continue;
+          }
+          if ($all_tags && !$link->containsAllTags($all_tags)) {
+              continue;
+          }
+          if ($not_any_tags && $link->containsAnyTag($not_any_tags)) {
+              continue;
+          }
+          if ($not_all_tags && $link->containsAllTags($not_all_tags)) {
+              continue;
+          }
+
+          $r[] = $link;
+      }
+
+      return $r;
+  }
+
+  // End of Link getter - setter etc methods section
 
   /**
    * Set rank
@@ -1429,7 +1941,7 @@ class MultimediaObject
     // if (!$this->containsPersonInMultimediaObject($pimo)) {
     if (!$this->containsPersonWithRole($pimo->getPerson(), $pimo->getRole())) {
         $pimo->setMultimediaObject($this);
-        $pimo->setRank(count($this->people_in_multimedia_object));
+        //$pimo->setRank(count($this->people_in_multimedia_object));
         $this->people_in_multimedia_object[] = $pimo;
     }
   }
@@ -1531,7 +2043,7 @@ class MultimediaObject
           $pimo->setMultimediaObject($this);
           $pimo->setPerson($person);
           $pimo->setRole($role);
-          $pimo->setRank(count($this->people_in_multimedia_object));
+          //$pimo->setRank(count($this->people_in_multimedia_object));
           $this->people_in_multimedia_object[] = $pimo;
       }
   }
@@ -1596,5 +2108,23 @@ class MultimediaObject
       $aux->id = null;
 
       return $aux;
+  }
+
+  /**
+   * Update duration
+   */
+  private function updateDuration()
+  {
+      $maxDuration = $this->getDuration();
+
+      foreach ($this->tracks as $mmTrack){
+	  if ($mmTrack->getDuration() > $this->getDuration()){
+	      $maxDuration = $mmTrack->getDuration();
+	  }
+      }
+
+      if ($maxDuration !== $this->getDuration()){
+	  $this->setDuration($maxDuration);
+      }
   }
 }

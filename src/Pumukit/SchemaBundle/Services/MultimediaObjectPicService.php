@@ -4,7 +4,7 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Symfony\Component\HttpFoundation\File\File;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\MultimediaObjectPic;
+use Pumukit\SchemaBundle\Document\Pic;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
@@ -57,7 +57,7 @@ class MultimediaObjectPicService
   public function addPicUrl(MultimediaObject $multimediaObject, $picUrl)
   {
       //TODO check URL is valid and a image.
-    $pic = new MultimediaObjectPic();
+    $pic = new Pic();
       $pic->setUrl($picUrl);
 
       $multimediaObject->addPic($pic);
@@ -76,7 +76,7 @@ class MultimediaObjectPicService
     //TODO delete double slash "//"
     $path = $picFile->move($this->targetPath."/".$multimediaObject->getId(), $picFile->getClientOriginalName());
 
-      $pic = new MultimediaObjectPic();
+      $pic = new Pic();
       $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
 
       $multimediaObject->addPic($pic);

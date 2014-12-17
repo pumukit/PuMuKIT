@@ -30,7 +30,7 @@ class Series
   /**
    * @var ArrayCollection $pics
    *
-   * @MongoDB\EmbedMany(targetDocument="SeriesPic")
+   * @MongoDB\EmbedMany(targetDocument="Pic")
    */
   private $pics;
 
@@ -823,9 +823,9 @@ class Series
   /**
    * Add pic
    *
-   * @param SeriesPic $pic
+   * @param Pic $pic
    */
-  public function addPic(SeriesPic $pic)
+  public function addPic(Pic $pic)
   {
       $this->pics->add($pic);
   }
@@ -833,15 +833,17 @@ class Series
   /**
    * Remove pic
    *
-   * @param SeriesPic $pic
+   * @param Pic $pic
    */
-  public function removePic(SeriesPic $pic)
+  public function removePic(Pic $pic)
   {
       $this->pics->removeElement($pic);
   }
 
   /**
-   * TODO Add doc.
+   * Remove pic by id
+   *
+   * @param string $picId
    */
   public function removePicById($picId)
   {
@@ -851,19 +853,32 @@ class Series
   }
 
   /**
-   * TODO Add doc.
+   * Up pic by id
+   *
+   * @param string $picId
    */
   public function upPicById($picId)
   {
       $this->reorderPicById($picId, true);
   }
 
-    public function downPicById($picId)
-    {
-        $this->reorderPicById($picId, false);
-    }
+  /**
+   * Down pic by id
+   *
+   * @param string $picId
+   */
+  public function downPicById($picId)
+  {
+      $this->reorderPicById($picId, false);
+  }
 
   //TODO move out
+  /**
+   * Reorder pic by id
+   *
+   * @param string $picId
+   * @param boolean $up
+   */
   private function reorderPicById($picId, $up = true)
   {
       $snapshot = $this->pics->toArray();
@@ -887,11 +902,11 @@ class Series
   /**
    * Contains pic
    *
-   * @param SeriesPic $pic
+   * @param Pic $pic
    *
    * @return boolean
    */
-  public function containsPic(SeriesPic $pic)
+  public function containsPic(Pic $pic)
   {
       return $this->pics->contains($pic);
   }
@@ -911,7 +926,7 @@ class Series
    *
    * @param $picId
    *
-   * @return SerialPic|null
+   * @return Pic|null
    */
   public function getPicById($picId)
   {
@@ -921,7 +936,7 @@ class Series
           }
       }
 
-      return;
+      return null;
   }
 
   /**

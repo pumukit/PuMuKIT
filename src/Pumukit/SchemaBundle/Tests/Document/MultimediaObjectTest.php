@@ -5,12 +5,13 @@ namespace Pumukit\SchemaBundle\Tests\Document;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\SchemaBundle\Document\MultimediaObjectPic;
+use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\Link;
 //use Pumukit\SchemaBundle\Document\PersonInMultimediaObject;
 
 class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
@@ -99,9 +100,9 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
     public function testPicsInMultimediaObject()
     {
         $mm = new MultimediaObject();
-        $pic1 = new MultimediaObjectPic();
-        $pic2 = new MultimediaObjectPic();
-        $pic3 = new MultimediaObjectPic();
+        $pic1 = new Pic();
+        $pic2 = new Pic();
+        $pic3 = new Pic();
 
         $this->assertEquals(0, count($mm->getPics()));
 
@@ -138,6 +139,27 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($mm->containsMaterial($material2));
     }
 
+    public function testLinksInMultimediaObject()
+    {
+        $mm = new MultimediaObject();
+        $link1 = new Link();
+        $link2 = new Link();
+        $link3 = new Link();
+
+        $this->assertEquals(0, count($mm->getLinks()));
+
+        $mm->addLink($link1);
+        $mm->addLink($link2);
+        $mm->addLink($link3);
+        $this->assertEquals(3, count($mm->getLinks()));
+
+        $mm->removeLink($link2);
+        $this->assertEquals(2, count($mm->getLinks()));
+
+        $this->assertTrue($mm->containsLink($link1));
+        $this->assertFalse($mm->containsLink($link2));       
+    }
+
     public function testUpdateMmDurationWhenAddTracks()
     {
         $mm = new MultimediaObject();
@@ -163,19 +185,14 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $mm = new MultimediaObject();
 
         $t1 = new Track();
-        $t1->setRank(3);
         $t1->setTags(array('master'));
         $t2 = new Track();
-        $t2->setRank(2);
         $t2->setTags(array('mosca', 'master', 'old'));
         $t3 = new Track();
-        $t3->setRank(1);
         $t3->setTags(array('master', 'mosca'));
         $t4 = new Track();
-        $t4->setRank(4);
         $t4->setTags(array('flv', 'itunes', 'hide'));
         $t5 = new Track();
-        $t5->setRank(5);
         $t5->setTags(array('flv', 'webtv'));
 
         $mm->addTrack($t3);
@@ -209,20 +226,15 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
     {
         $mm = new MultimediaObject();
 
-        $p1 = new MultimediaObjectPic();
-        $p1->setRank(3);
+        $p1 = new Pic();
         $p1->setTags(array('master'));
-        $p2 = new MultimediaObjectPic();
-        $p2->setRank(2);
+        $p2 = new Pic();
         $p2->setTags(array('master', 'mosca', 'old'));
-        $p3 = new MultimediaObjectPic();
-        $p3->setRank(1);
+        $p3 = new Pic();
         $p3->setTags(array('master', 'mosca'));
-        $p4 = new MultimediaObjectPic();
-        $p4->setRank(4);
+        $p4 = new Pic();
         $p4->setTags(array('flv', 'itunes', 'hide'));
-        $p5 = new MultimediaObjectPic();
-        $p5->setRank(5);
+        $p5 = new Pic();
         $p5->setTags(array('flv', 'webtv'));
 
         $mm->addPic($p3);
@@ -257,19 +269,14 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $mm = new MultimediaObject();
 
         $m1 = new Material();
-        $m1->setRank(3);
         $m1->setTags(array('master'));
         $m2 = new Material();
-        $m2->setRank(2);
         $m2->setTags(array('mosca', 'master', 'old'));
         $m3 = new Material();
-        $m3->setRank(1);
         $m3->setTags(array('master', 'mosca'));
         $m4 = new Material();
-        $m4->setRank(4);
         $m4->setTags(array('flv', 'itunes', 'hide'));
         $m5 = new Material();
-        $m5->setRank(5);
         $m5->setTags(array('flv', 'webtv'));
 
         $mm->addMaterial($m3);
@@ -449,29 +456,6 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($mm->containsAllTags(array($tag1)));
         $this->assertFalse($mm->containsAllTags(array($tag0, $tag2)));
         $this->assertFalse($mm->containsAllTags(array($tag0, $tag1, $tag2, $tag3)));
-    }
-
-    public function testRankInAddTrack()
-    {
-        $mm = new MultimediaObject();
-
-        $t1 = new Track();
-        $t2 = new Track();
-        $t3 = new Track();
-        $t4 = new Track();
-        $t5 = new Track();
-
-        $mm->addTrack($t1);
-        $mm->addTrack($t2);
-        $mm->addTrack($t3);
-        $mm->addTrack($t4);
-        $mm->addTrack($t5);
-
-        $this->assertEquals(1, $t1->getRank());
-        $this->assertEquals(2, $t2->getRank());
-        $this->assertEquals(3, $t3->getRank());
-        $this->assertEquals(4, $t4->getRank());
-        $this->assertEquals(5, $t5->getRank());
     }
 
     /*public function testPersonInMultimediaObject()

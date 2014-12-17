@@ -4,7 +4,7 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Symfony\Component\HttpFoundation\File\File;
 use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\SeriesPic;
+use Pumukit\SchemaBundle\Document\Pic;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
@@ -57,7 +57,7 @@ class SeriesPicService
   public function addPicUrl(Series $series, $picUrl)
   {
       //TODO check URL is valid and a image.
-    $pic = new SeriesPic();
+    $pic = new Pic();
       $pic->setUrl($picUrl);
 
       $series->addPic($pic);
@@ -76,7 +76,7 @@ class SeriesPicService
     //TODO delete double slash "//"
     $path = $picFile->move($this->targetPath."/".$series->getId(), $picFile->getClientOriginalName());
 
-      $pic = new SeriesPic();
+      $pic = new Pic();
       $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
 
       $series->addPic($pic);

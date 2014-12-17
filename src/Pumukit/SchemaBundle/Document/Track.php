@@ -9,7 +9,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  *
  * @MongoDB\EmbeddedDocument
  */
-class Track extends MmsElement
+class Track extends Element
 {
     /**
    * @var string $language

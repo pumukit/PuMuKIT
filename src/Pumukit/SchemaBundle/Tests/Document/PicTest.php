@@ -2,9 +2,9 @@
 
 namespace Pumukit\SchemaBundle\Tests\Document;
 
-use Pumukit\SchemaBundle\Document\MultimediaObjectPic;
+use Pumukit\SchemaBundle\Document\Pic;
 
-class MultimediaObjectPicTest extends \PHPUnit_Framework_TestCase
+class PicTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetterAndSetter()
     {
@@ -13,19 +13,17 @@ class MultimediaObjectPicTest extends \PHPUnit_Framework_TestCase
         $path = '/mnt/video/123/23435.mp4';
         $mime = 'image/jpg';
 
-        $rank = 123;
         $size = 3456;
         $width = 800;
         $height = 600;
         $hide = true; // Change assertTrue accordingly.
 
-        $pic = new MultimediaObjectPic();
+        $pic = new Pic();
 
         $pic->setTags($tags);
         $pic->setUrl($url);
         $pic->setPath($path);
         $pic->setMimeType($mime);
-        $pic->setRank($rank);
         $pic->setSize($size);
         $pic->setWidth($width);
         $pic->setHeight($height);
@@ -35,7 +33,6 @@ class MultimediaObjectPicTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($url, $pic->getUrl());
         $this->assertEquals($path, $pic->getPath());
         $this->assertEquals($mime, $pic->getMimeType());
-        $this->assertEquals($rank, $pic->getRank());
         $this->assertEquals($size, $pic->getSize());
         $this->assertEquals($width, $pic->getWidth());
         $this->assertEquals($height, $pic->getHeight());
@@ -44,7 +41,7 @@ class MultimediaObjectPicTest extends \PHPUnit_Framework_TestCase
 
     public function testTagCollection()
     {
-        $pic = new MultimediaObjectPic();
+        $pic = new Pic();
         $this->assertFalse($pic->containsTag('t'));
         $pic->addTag('t');
         $this->assertTrue($pic->containsTag('t'));

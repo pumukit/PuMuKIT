@@ -43,7 +43,7 @@ sylius_resource:
             driver: doctrine/mongodb-odm
             templates: PumukitAdminBundle:Pic
             classes:
-                model: Pumukit\SchemaBundle\Document\SeriesPic
+                model: Pumukit\SchemaBundle\Document\Pic
                 controller: Pumukit\AdminBundle\Controller\SeriesPicController
         pumukitadmin.mms:
             driver: doctrine/mongodb-odm
@@ -55,7 +55,7 @@ sylius_resource:
             driver: doctrine/mongodb-odm
             templates: PumukitAdminBundle:Pic
             classes:
-                model: Pumukit\SchemaBundle\Document\MultimediaObjectPic
+                model: Pumukit\SchemaBundle\Document\Pic
                 controller: Pumukit\AdminBundle\Controller\MultimediaObjectPicController
         pumukitadmin.person:
             driver: doctrine/mongodb-odm
