@@ -56,5 +56,8 @@
             <tag name="form.type" alias="pumukitadmin_mmtemplate_meta" />
         </service>
 
+        <service id="pumukitadmin.form.type.link" class="Pumukit\AdminBundle\Form\Type\LinkType">
+            <tag name="form.type" alias="pumukitadmin_link" />
+        </service>
     </services>
 </container>

@@ -43,6 +43,10 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
 
+        <service id="pumukitschema.link" class="Pumukit\SchemaBundle\Services\LinkService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+        </service>
+
     </services>
 
 </container>

@@ -48,7 +48,7 @@
       <dt>{% trans %}Links{% endtrans %}:</dt>
       <dd>
         <div id="links_mms">
-	  {# {% include 'PumukitAdminBundle:Link:list.html.twig' with {'mm': mm.id} %} #}
+	  {% include 'PumukitAdminBundle:Link:list.html.twig' with {'mmId': mm.id, 'links': mm.getLinks()} %}
         </div>
       </dd>
     </div>

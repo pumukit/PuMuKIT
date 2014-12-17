@@ -53,3 +53,7 @@ pumukitadmin_mmtemplate:
 pumukitadmin_mmspic:
     resource: @PumukitAdminBundle/Resources/config/routes/mmspic.yml
     prefix: /admin/mmspic
+
+pumukitadmin_link:
+    resource: @PumukitAdminBundle/Resources/config/routes/link.yml
+    prefix: /admin/link
