@@ -330,6 +330,48 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, count($mm->getFilteredMaterialsByTags(array('mosca', 'old'), array(), array(), array('old'))));
     }
 
+    public function testGetLinksByTag()
+    {
+        $mm = new MultimediaObject();
+
+        $m1 = new Link();
+        $m1->setTags(array('master'));
+        $m2 = new Link();
+        $m2->setTags(array('mosca', 'master', 'old'));
+        $m3 = new Link();
+        $m3->setTags(array('master', 'mosca'));
+        $m4 = new Link();
+        $m4->setTags(array('flv', 'itunes', 'hide'));
+        $m5 = new Link();
+        $m5->setTags(array('flv', 'webtv'));
+
+        $mm->addLink($m3);
+        $mm->addLink($m2);
+        $mm->addLink($m1);
+        $mm->addLink($m4);
+        $mm->addLink($m5);
+
+        $this->assertEquals(array($m3, $m2, $m1), $mm->getLinksByTag('master'));
+        $this->assertEquals($m3, $mm->getLinkByTag('master'));
+        $this->assertEquals(null, $mm->getLinkByTag('del_universo'));
+        $this->assertEquals($m3, $mm->getLinkWithAnyTag(array('master', 'pr')));
+        $this->assertEquals(array($m2), $mm->getLinksWithAllTags(array('master', 'mosca', 'old')));
+        $this->assertTrue(in_array($mm->getLinkWithAllTags(array('mosca', 'master')), array($m3, $m2)));
+        $this->assertEquals(null, $mm->getLinkWithAllTags(array('mosca', 'master', 'del_universo')));
+        $this->assertEquals(4, count($mm->getLinksWithAnyTag(array('master', 'webtv'))));
+        $this->assertEquals(1, count($mm->getLinkWithAnyTag(array('master'))));
+        $this->assertEquals(null, $mm->getLinkWithAnyTag(array('del_universo')));
+
+        $this->assertEquals(5, count($mm->getFilteredLinksByTags()));
+        $this->assertEquals(3, count($mm->getFilteredLinksByTags(array('master'))));
+        $this->assertEquals(1, count($mm->getFilteredLinksByTags(array('master'), array('mosca', 'old'))));
+        $this->assertEquals(0, count($mm->getFilteredLinksByTags(array(), array('mosca', 'old'), array('master'))));
+        $this->assertEquals(3, count($mm->getFilteredLinksByTags(array(), array(), array('flv'))));
+        $this->assertEquals(0, count($mm->getFilteredLinksByTags(array(), array(), array('flv', 'master'))));
+        $this->assertEquals(5, count($mm->getFilteredLinksByTags(array(), array(), array(), array('flv', 'master'))));
+        $this->assertEquals(1, count($mm->getFilteredLinksByTags(array('mosca', 'old'), array(), array(), array('old'))));
+    }
+
     public function testEmbeddedTag()
     {
         $locale = 'en';
