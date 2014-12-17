@@ -57,7 +57,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
     public function testRepository()
     {
-        $rank = 1;
+        //$rank = 1;
         $status = MultimediaObject::STATUS_NORMAL;
         $record_date = new \DateTime();
         $public_date = new \DateTime();
@@ -68,7 +68,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 	$broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
 
         $mmobj = new MultimediaObject();
-        $mmobj->setRank($rank);
+        //$mmobj->setRank($rank);
         $mmobj->setStatus($status);
         $mmobj->setRecordDate($record_date);
         $mmobj->setPublicDate($public_date);
@@ -196,6 +196,10 @@ class MultimediaObjectRepositoryTest extends WebTestCase
     {
     }
 
+    public function testRankInAddTrack()
+    {
+    }
+    
     private function createPerson($name)
     {
         $email = $name.'@mail.es';

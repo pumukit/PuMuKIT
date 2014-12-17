@@ -12,7 +12,6 @@ class MaterialTest extends \PHPUnit_Framework_TestCase
         $url = '/mnt/video/123/23435.mp4';
         $path = '/mnt/video/123/23435.mp4';
         $mime = 'video/mpeg4';
-        $rank = 123;
         $hide = false;
 
         $material = new material();
@@ -21,14 +20,12 @@ class MaterialTest extends \PHPUnit_Framework_TestCase
         $material->setUrl($url);
         $material->setPath($path);
         $material->setMimeType($mime);
-        $material->setRank($rank);
         $material->setHide($hide);
 
         $this->assertEquals($tags, $material->getTags());
         $this->assertEquals($url, $material->getUrl());
         $this->assertEquals($path, $material->getPath());
         $this->assertEquals($mime, $material->getMimeType());
-        $this->assertEquals($rank, $material->getRank());
         $this->assertFalse($hide, $material->getHide());
     }
 

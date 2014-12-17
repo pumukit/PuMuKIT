@@ -61,14 +61,6 @@ class Element
   private $mime_type;
 
   /**
-   * @var int $rank
-   *
-   * @MongoDB\Int
-   * @Gedmo\SortablePosition
-   */
-  private $rank;
-
-  /**
    * @var int $size
    *
    * @MongoDB\Int
@@ -293,26 +285,6 @@ class Element
   public function getMimeType()
   {
       return $this->mime_type;
-  }
-
-  /**
-   * Set rank
-   *
-   * @param int $rank
-   */
-  public function setRank($rank)
-  {
-      $this->rank = $rank;
-  }
-
-  /**
-   * Get rank
-   *
-   * @return int
-   */
-  public function getRank()
-  {
-      return $this->rank;
   }
 
   /**
