@@ -881,7 +881,7 @@ class Series
    */
   private function reorderPicById($picId, $up = true)
   {
-      $snapshot = $this->pics->toArray();
+      $snapshot = array_values($this->pics->toArray());
       $this->pics->clear();
 
       $out = array();
