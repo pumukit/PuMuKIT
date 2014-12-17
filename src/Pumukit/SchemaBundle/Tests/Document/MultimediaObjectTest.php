@@ -90,11 +90,17 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $mm->addTrack($track3);
         $this->assertEquals(3, count($mm->getTracks()));
 
+	$tracksArray = array($track1, $track2, $track3);
+	$this->assertEquals($tracksArray, $mm->getTracks()->toArray());
+
         $mm->removeTrack($track2);
         $this->assertEquals(2, count($mm->getTracks()));
 
         $this->assertTrue($mm->containsTrack($track1));
         $this->assertFalse($mm->containsTrack($track2));
+
+	$tracksArray = array(0 => $track1, 2 => $track3);
+	$this->assertEquals($tracksArray, $mm->getTracks()->toArray());
     }
 
     public function testPicsInMultimediaObject()
@@ -111,11 +117,17 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $mm->addPic($pic3);
         $this->assertEquals(3, count($mm->getPics()));
 
+	$picsArray = array($pic1, $pic2, $pic3);
+	$this->assertEquals($picsArray, $mm->getPics()->toArray());
+
         $mm->removePic($pic2);
         $this->assertEquals(2, count($mm->getPics()));
 
         $this->assertTrue($mm->containsPic($pic1));
         $this->assertFalse($mm->containsPic($pic2));
+
+	$picsArray = array(0 => $pic1, 2 => $pic3);
+	$this->assertEquals($picsArray, $mm->getPics()->toArray());
     }
 
     public function testMaterialsInMultimediaObject()
@@ -132,11 +144,17 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $mm->addMaterial($material3);
         $this->assertEquals(3, count($mm->getMaterials()));
 
+	$materialsArray = array($material1, $material2, $material3);
+	$this->assertEquals($materialsArray, $mm->getMaterials()->toArray());
+
         $mm->removeMaterial($material2);
         $this->assertEquals(2, count($mm->getMaterials()));
 
         $this->assertTrue($mm->containsMaterial($material1));
         $this->assertFalse($mm->containsMaterial($material2));
+
+	$materialsArray = array(0 => $material1, 2 => $material3);
+	$this->assertEquals($materialsArray, $mm->getMaterials()->toArray());
     }
 
     public function testLinksInMultimediaObject()
@@ -153,11 +171,17 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $mm->addLink($link3);
         $this->assertEquals(3, count($mm->getLinks()));
 
+	$linksArray = array($link1, $link2, $link3);
+	$this->assertEquals($linksArray, $mm->getLinks()->toArray());
+
         $mm->removeLink($link2);
         $this->assertEquals(2, count($mm->getLinks()));
 
         $this->assertTrue($mm->containsLink($link1));
-        $this->assertFalse($mm->containsLink($link2));       
+        $this->assertFalse($mm->containsLink($link2));
+
+	$linksArray = array(0 => $link1, 2 => $link3);
+	$this->assertEquals($linksArray, $mm->getLinks()->toArray());
     }
 
     public function testUpdateMmDurationWhenAddTracks()
