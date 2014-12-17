@@ -413,8 +413,8 @@ class MultimediaObject
    */
   private function reorderPicById($picId, $up = true)
   {
-      $snapshot = $this->pics->toArray();
-      $this->pics->clear();
+      $snapshot = array_values($this->pics->toArray());
+      $this->pics->clear(); 
 
       $out = array();
       foreach ($snapshot as $key => $pic) {
@@ -694,7 +694,7 @@ class MultimediaObject
    */
   private function reorderTrackById($trackId, $up = true)
   {
-      $snapshot = $this->tracks->toArray();
+      $snapshot = array_values($this->tracks->toArray());
       $this->tracks->clear();
 
       $out = array();
@@ -967,7 +967,7 @@ class MultimediaObject
    */
   private function reorderMaterialById($materialId, $up = true)
   {
-      $snapshot = $this->materials->toArray();
+      $snapshot = array_values($this->materials->toArray());
       $this->materials->clear();
 
       $out = array();
@@ -1240,7 +1240,7 @@ class MultimediaObject
    */
   private function reorderLinkById($linkId, $up = true)
   {
-      $snapshot = $this->links->toArray();
+      $snapshot = array_values($this->links->toArray());
       $this->links->clear();
 
       $out = array();
