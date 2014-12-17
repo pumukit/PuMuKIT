@@ -22,10 +22,11 @@ class SeriesRepositoryTest extends WebTestCase
         $this->repo = $this->dm
             ->getRepository('PumukitSchemaBundle:Series');
 
-        /*
         //DELETE DATABASE - pimo has to be deleted before mm
+	/*
         $this->dm->getDocumentCollection('PumukitSchemaBundle:PersonInMultimediaObject')
             ->remove(array());
+	*/
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
             ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Role')
@@ -39,7 +40,6 @@ class SeriesRepositoryTest extends WebTestCase
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')
             ->remove(array());
         $this->dm->flush();
-        */
     }
 
     public function testRepositoryEmpty()
