@@ -29,8 +29,12 @@ class LinkController extends Controller
                 $this->get('session')->getFlashBag()->add('error', $e->getMessage());
             }
 
-	    // TODO get to the edit multimedia tab and not metadata tab
-            return $this->redirect($this->generateUrl('pumukitadmin_mms_index'));
+	    return $this->render('PumukitAdminBundle:Link:list.html.twig', 
+				 array(
+				       'links' => $multimediaObject->getLinks(), 
+				       'mmId'=> $multimediaObject->getId()
+				       )
+				 );
         }
 	
         return array(
@@ -46,20 +50,22 @@ class LinkController extends Controller
      */
     public function updateAction(MultimediaObject $multimediaObject, Request $request)
     {
-        // TODO - FIX GET DOCTRINE INSTANCE
-      
-        $link = $this->find($this->getRequest()->get('id'));
+        $link = $multimediaObject->getLinkById($this->getRequest()->get('id'));
         $form = $this->createForm(new LinkType(), $link);
-     
+
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
             try {
-	        //$multimediaObject = $this->get('pumukitschema.link')->addLinkToMultimediaObject($multimediaObject, $link);
+	        $multimediaObject = $this->get('pumukitschema.link')->updateLinkInMultimediaObject($multimediaObject, $link);
             } catch (\Exception $e) {
                 $this->get('session')->getFlashBag()->add('error', $e->getMessage());
             }
 
-	    // TODO get to the edit multimedia tab and not metadata tab
-            return $this->redirect($this->generateUrl('pumukitadmin_mms_index'));
+	    return $this->render('PumukitAdminBundle:Link:list.html.twig', 
+				 array(
+				       'links' => $multimediaObject->getLinks(), 
+				       'mmId'=> $multimediaObject->getId()
+				       )
+				 );
         }
 	
         return array(
@@ -71,6 +77,7 @@ class LinkController extends Controller
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @Template("PumukitAdminBundle:Link:list.html.twig")
      */
     public function deleteAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -78,8 +85,10 @@ class LinkController extends Controller
 
 	$this->addFlash('success', 'delete');
 
-	// TODO get to the edit multimedia tab and not metadata tab
-	return $this->redirect($this->generateUrl('pumukitadmin_mms_index'));
+	return array(
+		     'links' => $multimediaObject->getLinks(), 
+		     'mmId'=> $multimediaObject->getId()
+		     );
     }
 
     /**
@@ -112,14 +121,5 @@ class LinkController extends Controller
 		     'mmId' => $multimediaObject->getId(), 
 		     'links' => $multimediaObject->getLinks()
 		     );
-    }
-
-    private function find($id)
-    {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-	$repo = $this->dm->getRepository('PumukitSchemaBundle:Link');
-	$link = $repo->find($id);
-
-	return $link;
     }
 }

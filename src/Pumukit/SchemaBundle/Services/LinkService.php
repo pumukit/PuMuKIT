@@ -28,40 +28,51 @@ class LinkService
 
         return $multimediaObject;
     }
+
+    /**
+     * Update Link in Multimedia Object
+     */
+    public function updateLinkInMultimediaObject(MultimediaObject $multimediaObject, Link $link)
+    {
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        return $multimediaObject;
+    }
     
-  /**
-   * Remove Link from Multimedia Object
-   */
-  public function removeLinkFromMultimediaObject(MultimediaObject $multimediaObject, $linkId)
-  {
-      $multimediaObject->removeLinkById($linkId);
-      $this->dm->persist($multimediaObject);
-      $this->dm->flush();
+    /**
+     * Remove Link from Multimedia Object
+     */
+    public function removeLinkFromMultimediaObject(MultimediaObject $multimediaObject, $linkId)
+    {
+        $multimediaObject->removeLinkById($linkId);
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
 
-      return $multimediaObject;
-  }
+        return $multimediaObject;
+    }
 
-  /**
-   * Up Link in Multimedia Object
-   */
-  public function upLinkInMultimediaObject(MultimediaObject $multimediaObject, $linkId)
-  {
-      $multimediaObject->upLinkById($linkId);
-      $this->dm->persist($multimediaObject);
-      $this->dm->flush();
+    /**
+     * Up Link in Multimedia Object
+     */
+    public function upLinkInMultimediaObject(MultimediaObject $multimediaObject, $linkId)
+    {
+        $multimediaObject->upLinkById($linkId);
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
 
-      return $multimediaObject;
-  }
+        return $multimediaObject;
+    }
 
-  /**
-   * Down Link in Multimedia Object
-   */
-  public function downLinkInMultimediaObject(MultimediaObject $multimediaObject, $linkId)
-  {
-      $multimediaObject->downLinkById($linkId);
-      $this->dm->persist($multimediaObject);
-      $this->dm->flush();
+    /**
+     * Down Link in Multimedia Object
+     */
+    public function downLinkInMultimediaObject(MultimediaObject $multimediaObject, $linkId)
+    {
+        $multimediaObject->downLinkById($linkId);
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
 
-      return $multimediaObject;
-  }
+        return $multimediaObject;
+    }
 }

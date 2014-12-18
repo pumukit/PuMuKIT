@@ -5,13 +5,13 @@ pumukitadmin_link_create:
         _controller: pumukitadmin.controller.link:createAction
 
 pumukitadmin_link_update:
-    pattern: /{id}/update
+    pattern: /{id}/update/{mmId}
     methods: [GET, PUT, POST]
     defaults:
         _controller: pumukitadmin.controller.link:updateAction
 
 pumukitadmin_link_delete:
-    pattern: /{id}/{mmId}
+    pattern: /{id}/delete/{mmId}
     methods: [DELETE]
     defaults:
         _controller: pumukitadmin.controller.link:deleteAction
