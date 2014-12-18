@@ -150,19 +150,19 @@ window.update_preview = function(id) {
   new Ajax.Updater("preview_series", route, {asynchronous:true, evalScripts:true});
 }
 
-window.delete_pic = function(id) {
+window.delete_seriespic = function(id) {
     if (window.confirm('{% trans %}Are you sure you want to delete this picture?{% endtrans %}')) {
         var url = '{{ path('pumukitadmin_seriespic_delete', {'id': '___id___'}) }}';
         new Ajax.Updater('pic_series', url.replace('___id___', id), {method: 'POST', parameters: {'_method': 'DELETE'}, asynchronous:true, evalScripts:true});
     }
 }
 
-window.up_pic = function(id) {
+window.up_seriespic = function(id) {
     var url = '{{ path('pumukitadmin_seriespic_up', {'id': '___id___'}) }}';
     new Ajax.Updater('pic_series', url.replace('___id___', id), {method: 'POST', asynchronous:true, evalScripts:true});
 }
 
-window.down_pic = function(id) {
+window.down_seriespic = function(id) {
     var url = '{{ path('pumukitadmin_seriespic_down', {'id': '___id___'}) }}';
     new Ajax.Updater('pic_series', url.replace('___id___', id), {method: 'POST', asynchronous:true, evalScripts:true});
 }
