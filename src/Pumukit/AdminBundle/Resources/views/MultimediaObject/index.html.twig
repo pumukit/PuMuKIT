@@ -133,6 +133,16 @@ window.down_mmspic = function(id) {
     new Ajax.Updater('pic_mms', url.replace('___id___', id), {method: 'POST', asynchronous:true, evalScripts:true});
 }
 
+window.submit_delete_material = function(id, mmId)
+{
+    if (window.confirm('{% trans %}Are you sure you want to delete this material?{% endtrans %}')){
+        var url = "{{ path('pumukitadmin_material_delete', {'id': 'PLACEHOLDER_ID', 'mmId': 'PLACEHOLDER_MMID'}) }}";
+        url = url.replace('PLACEHOLDER_ID', id);
+        url = url.replace('PLACEHOLDER_MMID', mmId);
+        new Ajax.Updater('materials_mms', url, {asynchronous:true, evalScripts:true, method:'POST', parameters: {'_method': 'DELETE'}});
+    }
+}
+
 </script>
 
 {% endblock %}

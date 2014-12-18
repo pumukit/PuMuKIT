@@ -75,3 +75,9 @@ sylius_resource:
             classes:
                 model: Pumukit\SchemaBundle\Document\Link
                 controller: Pumukit\AdminBundle\Controller\LinkController
+        pumukitadmin.material:
+            driver: doctrine/mongodb-odm
+            templates: PumukitAdminBundle:Material
+            classes:
+                model: Pumukit\SchemaBundle\Document\Material
+                controller: Pumukit\AdminBundle\Controller\MaterialController

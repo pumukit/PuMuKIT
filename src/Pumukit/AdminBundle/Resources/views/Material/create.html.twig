@@ -1,0 +1,9 @@
+{% form_theme form 'PumukitAdminBundle:Themes:fields.html.twig' %}
+{{ form(form, {'attr': {'onsubmit': 'submit_create_material(); return false;'}, 'action': path('pumukitadmin_material_create', {'id': mm.id})}) }}
+
+<script type="text/javascript">
+window.submit_create_material = function(){
+    parent.Modalbox.hide();
+    new parent.Ajax.Updater('materials_mms', '{{ path('pumukitadmin_material_create', {'id': mm.id}) }}', {method: 'POST', asynchronous: true, evalScripts: true, parameters: Form.serialize('pumukitadmin_material')});
+}
+</script>

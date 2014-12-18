@@ -47,6 +47,10 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
 
+        <service id="pumukitschema.material" class="Pumukit\SchemaBundle\Services\MaterialService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+        </service>
+
     </services>
 
 </container>

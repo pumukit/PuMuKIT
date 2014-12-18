@@ -1,0 +1,14 @@
+<script type="text/javascript">
+//<![CDATA[
+
+  parent.Modalbox.hide();
+
+  new parent.Ajax.Updater('material_mms', '{{ path('pumukitadmin_material_list', {'id': mm.id}) }}', {method: 'GET', asynchronous: true, evalScripts: true});
+  window.update_preview('{{ mm.id }}');
+  parent.$('material_mms').innerHTML= 'Actualice el vídeo para que se muestren los materiales.';
+
+  parent.$('div_messages_span_info').innerHTML ='Nueva imagen subida e insertada.';
+  new parent.Effect.Opacity('div_messages_info', {duration:7.0, from:1.0, to:0.0});
+
+//]]>
+</script>
