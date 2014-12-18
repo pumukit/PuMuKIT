@@ -32,7 +32,7 @@ class LinkService
     /**
      * Update Link in Multimedia Object
      */
-    public function updateLinkInMultimediaObject(MultimediaObject $multimediaObject, Link $link)
+    public function updateLinkInMultimediaObject(MultimediaObject $multimediaObject)
     {
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
