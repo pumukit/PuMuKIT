@@ -4,6 +4,7 @@ namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Pumukit\SchemaBundle\Document\Element
@@ -36,6 +37,7 @@ class Element
    * @var string $url
    *
    * @MongoDB\String
+   * @Assert\Url(protocols={"http", "https", "ftp"})
    */
   private $url;
 
