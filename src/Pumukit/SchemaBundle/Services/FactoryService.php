@@ -29,7 +29,7 @@ class FactoryService
      */
     public function getLocales()
     {
-      return $this->locales;
+        return $this->locales;
     }
 
   /**
@@ -66,8 +66,8 @@ class FactoryService
       $mm = new MultimediaObject();
       $mm->setStatus(MultimediaObject::STATUS_PROTOTYPE);
       $broadcast = $this->getDefaultBroadcast();
-      if (null !== $broadcast){
-	  $mm->setBroadcast($broadcast);
+      if (null !== $broadcast) {
+          $mm->setBroadcast($broadcast);
       }
       $mm->setPublicDate(new \DateTime("now"));
       $mm->setRecordDate($mm->getPublicDate());
@@ -99,10 +99,10 @@ class FactoryService
           $mm = $prototype->cloneResource();
       } else {
           $mm = new MultimediaObject();
-	  $broadcast = $this->getDefaultBroadcast();
-	  if (null !== $broadcast){
-	    $mm->setBroadcast($broadcast);
-	  }
+          $broadcast = $this->getDefaultBroadcast();
+          if (null !== $broadcast) {
+              $mm->setBroadcast($broadcast);
+          }
           $mm->setPublicDate(new \DateTime("now"));
           $mm->setRecordDate($mm->getPublicDate());
           foreach ($this->locales as $locale) {
@@ -141,7 +141,7 @@ class FactoryService
 
       if (null == $broadcast) {
           // TODO throw exception
-	  return null;
+      return;
       }
 
       return $broadcast;

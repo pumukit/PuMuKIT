@@ -35,21 +35,20 @@ class TagService
                   $this->dm->persist($node);
               }
               $aux = $node->getParent();
-	      if (null !== $aux){
-	          $node = $aux;
-	      }else{
-		  // TODO throw exception tag tree broken or without ROOT
-		break;
-	      }
-
+              if (null !== $aux) {
+                  $node = $aux;
+              } else {
+                  // TODO throw exception tag tree broken or without ROOT
+        break;
+              }
           } while (0 !== strcmp($node->getCod(), 'ROOT'));
 
-	  $this->dm->persist($mmobj);
+          $this->dm->persist($mmobj);
           $this->dm->flush();
-      }else{
-	  // TODO throw exception tag not found
-	  return $mmobj;
-      }       
+      } else {
+          // TODO throw exception tag not found
+      return $mmobj;
+      }
 
       return $mmobj;
   }
@@ -64,28 +63,27 @@ class TagService
       if (null !== $tag) {
           $node = $tag;
           do {
-	      $children = $node->getChildren();
-	      if (!($mmobj->containsAnyTag($children->toArray()))){
-		  $mmobj->removeTag($node);
-		  $node->decreaseNumberMultimediaObjects();
-		  $this->dm->persist($node);
-	      }
+              $children = $node->getChildren();
+              if (!($mmobj->containsAnyTag($children->toArray()))) {
+                  $mmobj->removeTag($node);
+                  $node->decreaseNumberMultimediaObjects();
+                  $this->dm->persist($node);
+              }
               $aux = $node->getParent();
-	      if (null !== $aux){
-	          $node = $aux;
-	      }else{
-		  // TODO throw exception tag tree broken or without ROOT
-		break;
-	      }
-
+              if (null !== $aux) {
+                  $node = $aux;
+              } else {
+                  // TODO throw exception tag tree broken or without ROOT
+        break;
+              }
           } while (0 !== strcmp($node->getCod(), 'ROOT'));
-	  $this->dm->persist($mmobj);
+          $this->dm->persist($mmobj);
           $this->dm->flush();
-      }else{
-	  // TODO throw exception tag not found
-	  return $mmobj;
-      }       
+      } else {
+          // TODO throw exception tag not found
+      return $mmobj;
+      }
+
       return $mmobj;
   }
-
 }

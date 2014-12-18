@@ -14,8 +14,8 @@ class ElementTest extends \PHPUnit_Framework_TestCase
         $path = '/mnt/video/123/23435.mp4';
         $mime = 'video/mpeg4';
         $hide = false;
-	$format = 'formato';
-	$description = 'element description';
+        $format = 'formato';
+        $description = 'element description';
 
         $element = new Element();
         $element->setTags($tags);
@@ -24,8 +24,8 @@ class ElementTest extends \PHPUnit_Framework_TestCase
         $element->setPath($path);
         $element->setMimeType($mime);
         $element->setHide($hide);
-	$element->setFormat($format);
-	$element->setDescription($description);
+        $element->setFormat($format);
+        $element->setDescription($description);
 
         $this->assertEquals($tags, $element->getTags());
         $this->assertEquals($locale, $element->getLocale());
@@ -34,7 +34,7 @@ class ElementTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($mime, $element->getMimeType());
         $this->assertFalse($hide, $element->getHide());
         $this->assertEquals($format, $element->getFormat());
-	$this->assertEquals($description, $element->getDescription());
+        $this->assertEquals($description, $element->getDescription());
     }
 
     public function testMaxSize()

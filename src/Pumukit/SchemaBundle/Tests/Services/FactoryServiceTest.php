@@ -5,7 +5,6 @@ namespace Pumukit\SchemaBundle\Tests\Services;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Broadcast;
-use Pumukit\SchemaBundle\Repository\MultimediaObjectRepository;
 
 class FactoryServiceTest extends WebTestCase
 {
@@ -23,15 +22,15 @@ class FactoryServiceTest extends WebTestCase
         $kernel->boot();
         $this->dm = $kernel->getContainer()
       ->get('doctrine_mongodb')->getManager();
-	$this->seriesRepo = $this->dm
+        $this->seriesRepo = $this->dm
      ->getRepository('PumukitSchemaBundle:Series');
-	$this->mmobjRepo = $this->dm
+        $this->mmobjRepo = $this->dm
      ->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->translator = $kernel->getContainer()
       ->get('translator');
         $this->factory = $kernel->getContainer()
       ->get('pumukitschema.factory');
-	$this->locales = $this->factory->getLocales();
+        $this->locales = $this->factory->getLocales();
 
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
       ->remove(array());
@@ -75,29 +74,29 @@ class FactoryServiceTest extends WebTestCase
 
         $mmobj = $this->factory->createMultimediaObject($series);
 
-	$mmobjTemplate = $this->mmobjRepo->findPrototype($series);
-	foreach ($this->locales as $locale) {
-	    $keyword = $this->translator->trans('keytest', array(), null, $locale);
-	    $mmobjTemplate->setKeyword($keyword, $locale);
-	}
-	$this->dm->persist($mmobjTemplate);
+        $mmobjTemplate = $this->mmobjRepo->findPrototype($series);
+        foreach ($this->locales as $locale) {
+            $keyword = $this->translator->trans('keytest', array(), null, $locale);
+            $mmobjTemplate->setKeyword($keyword, $locale);
+        }
+        $this->dm->persist($mmobjTemplate);
 
-	$mmobj2 = $this->factory->createMultimediaObject($series);
-	$this->dm->persist($mmobj2);
-	$this->dm->flush();
+        $mmobj2 = $this->factory->createMultimediaObject($series);
+        $this->dm->persist($mmobj2);
+        $this->dm->flush();
 
-	foreach ($this->locales as $locale) {
-	  $this->assertNotEquals($mmobj->getKeyword($locale), $this->mmobjRepo->findPrototype($series)->getKeyword($locale));
-	  $this->assertEquals($mmobj2->getKeyword($locale), $this->mmobjRepo->findPrototype($series)->getKeyword($locale));
-	}
+        foreach ($this->locales as $locale) {
+            $this->assertNotEquals($mmobj->getKeyword($locale), $this->mmobjRepo->findPrototype($series)->getKeyword($locale));
+            $this->assertEquals($mmobj2->getKeyword($locale), $this->mmobjRepo->findPrototype($series)->getKeyword($locale));
+        }
     }
 
     public function testNoDefaultBroadcast()
     {
-	$series = $this->factory->createSeries();
-	$mmobj = $this->factory->createMultimediaObject($series);
+        $series = $this->factory->createSeries();
+        $mmobj = $this->factory->createMultimediaObject($series);
 
-	$this->assertNull($this->mmobjRepo->find($mmobj->getId())->getBroadcast());
+        $this->assertNull($this->mmobjRepo->find($mmobj->getId())->getBroadcast());
     }
 
     public function createBroadcasts()

@@ -66,7 +66,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $subtitle = 'Subtitle paragraph';
         $description = "Description text";
         $duration = 300;
-	$broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
+        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
 
         $mmobj = new MultimediaObject();
         //$mmobj->setRank($rank);
@@ -77,7 +77,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mmobj->setSubtitle($subtitle);
         $mmobj->setDescription($description);
         $mmobj->setDuration($duration);
-	$mmobj->setBroadcast($broadcast);
+        $mmobj->setBroadcast($broadcast);
 
         $this->dm->persist($mmobj);
         $this->dm->flush();
@@ -188,19 +188,19 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(2, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PROTOTYPE, MultimediaObject::STATUS_NEW))));
         $this->assertEquals(3, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NORMAL, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDE))));
 
-	$mmArray = array($mmPrototype->getId() => $mmPrototype);
-	$this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PROTOTYPE))->toArray());
-	$mmArray = array($mmNew->getId() => $mmNew);
+        $mmArray = array($mmPrototype->getId() => $mmPrototype);
+        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PROTOTYPE))->toArray());
+        $mmArray = array($mmNew->getId() => $mmNew);
         $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NEW))->toArray());
-	$mmArray = array($mmHide->getId() => $mmHide);
+        $mmArray = array($mmHide->getId() => $mmHide);
         $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_HIDE))->toArray());
-	$mmArray = array($mmBloq->getId() => $mmBloq);
+        $mmArray = array($mmBloq->getId() => $mmBloq);
         $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_BLOQ))->toArray());
-	$mmArray = array($mmNormal->getId() => $mmNormal);
+        $mmArray = array($mmNormal->getId() => $mmNormal);
         $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NORMAL))->toArray());
-	$mmArray = array($mmPrototype->getId() => $mmPrototype, $mmNew->getId() => $mmNew);
-	$this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PROTOTYPE, MultimediaObject::STATUS_NEW))->toArray());
-	$mmArray = array($mmNormal->getId() => $mmNormal, $mmNew->getId() => $mmNew, $mmHide->getId() => $mmHide);
+        $mmArray = array($mmPrototype->getId() => $mmPrototype, $mmNew->getId() => $mmNew);
+        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PROTOTYPE, MultimediaObject::STATUS_NEW))->toArray());
+        $mmArray = array($mmNormal->getId() => $mmNormal, $mmNew->getId() => $mmNew, $mmHide->getId() => $mmHide);
         $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NORMAL, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDE))->toArray());
     }
 
@@ -230,8 +230,8 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mmNormal);
         $this->dm->flush();
 
-	$this->assertEquals(1, count($this->repo->findPrototype($series)));
-	$this->assertEquals($mmPrototype, $this->repo->findPrototype($series));
+        $this->assertEquals(1, count($this->repo->findPrototype($series)));
+        $this->assertEquals($mmPrototype, $this->repo->findPrototype($series));
     }
 
     public function testFindWithoutPrototype()
@@ -260,15 +260,15 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mmNormal);
         $this->dm->flush();
 
-	$this->assertEquals(4, count($this->repo->findWithoutPrototype($series)));
+        $this->assertEquals(4, count($this->repo->findWithoutPrototype($series)));
 
-	$mmArray = array(
-			 $mmNew->getId() => $mmNew,
-			 $mmHide->getId() => $mmHide,
-			 $mmBloq->getId() => $mmBloq,
-			 $mmNormal->getId() => $mmNormal
-			 );
-	$this->assertEquals($mmArray, $this->repo->findWithoutPrototype($series)->toArray());
+        $mmArray = array(
+             $mmNew->getId() => $mmNew,
+             $mmHide->getId() => $mmHide,
+             $mmBloq->getId() => $mmBloq,
+             $mmNormal->getId() => $mmNormal,
+             );
+        $this->assertEquals($mmArray, $this->repo->findWithoutPrototype($series)->toArray());
     }
 
     public function testEmbedPicsInMultimediaObject()
@@ -277,45 +277,45 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $pic2 = new Pic();
         $pic3 = new Pic();
 
-	$this->dm->persist($pic1);
-	$this->dm->persist($pic2);
-	$this->dm->persist($pic3);
+        $this->dm->persist($pic1);
+        $this->dm->persist($pic2);
+        $this->dm->persist($pic3);
 
         $mm = new MultimediaObject();
-	$mm->addPic($pic1);
-	$mm->addPic($pic2);
-	$mm->addPic($pic3);
-	
-	$this->dm->persist($mm);
+        $mm->addPic($pic1);
+        $mm->addPic($pic2);
+        $mm->addPic($pic3);
 
-	$this->dm->flush();
+        $this->dm->persist($mm);
 
-	$this->assertEquals($pic1, $this->repo->find($mm->getId())->getPicById($pic1->getId()));
-	$this->assertEquals($pic2, $this->repo->find($mm->getId())->getPicById($pic2->getId()));
-	$this->assertEquals($pic3, $this->repo->find($mm->getId())->getPicById($pic3->getId()));
-	$this->assertNull($this->repo->find($mm->getId())->getPicById(null));
+        $this->dm->flush();
 
-	$mm->removePicById($pic2->getId());
-	$this->dm->persist($mm);
-	$this->dm->flush();
+        $this->assertEquals($pic1, $this->repo->find($mm->getId())->getPicById($pic1->getId()));
+        $this->assertEquals($pic2, $this->repo->find($mm->getId())->getPicById($pic2->getId()));
+        $this->assertEquals($pic3, $this->repo->find($mm->getId())->getPicById($pic3->getId()));
+        $this->assertNull($this->repo->find($mm->getId())->getPicById(null));
 
-	$picsArray = array($pic1, $pic3);
-	$this->assertEquals(count($picsArray), count($this->repo->find($mm->getId())->getPics()));
-	$this->assertEquals($picsArray, array_values($this->repo->find($mm->getId())->getPics()->toArray()));
-  
-	$mm->upPicById($pic3->getId());
-	$this->dm->persist($mm);
-	$this->dm->flush();
+        $mm->removePicById($pic2->getId());
+        $this->dm->persist($mm);
+        $this->dm->flush();
 
-	$picsArray = array($pic3, $pic1);
-	$this->assertEquals($picsArray, array_values($this->repo->find($mm->getId())->getPics()->toArray()));
+        $picsArray = array($pic1, $pic3);
+        $this->assertEquals(count($picsArray), count($this->repo->find($mm->getId())->getPics()));
+        $this->assertEquals($picsArray, array_values($this->repo->find($mm->getId())->getPics()->toArray()));
 
-	$mm->downPicById($pic3->getId());
-	$this->dm->persist($mm);
-	$this->dm->flush();
+        $mm->upPicById($pic3->getId());
+        $this->dm->persist($mm);
+        $this->dm->flush();
 
-	$picsArray = array($pic1, $pic3);
-	$this->assertEquals($picsArray, array_values($this->repo->find($mm->getId())->getPics()->toArray()));
+        $picsArray = array($pic3, $pic1);
+        $this->assertEquals($picsArray, array_values($this->repo->find($mm->getId())->getPics()->toArray()));
+
+        $mm->downPicById($pic3->getId());
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $picsArray = array($pic1, $pic3);
+        $this->assertEquals($picsArray, array_values($this->repo->find($mm->getId())->getPics()->toArray()));
     }
 
     public function testEmbedMaterialsInMultimediaObject()
@@ -324,45 +324,45 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $material2 = new Material();
         $material3 = new Material();
 
-	$this->dm->persist($material1);
-	$this->dm->persist($material2);
-	$this->dm->persist($material3);
+        $this->dm->persist($material1);
+        $this->dm->persist($material2);
+        $this->dm->persist($material3);
 
         $mm = new MultimediaObject();
-	$mm->addMaterial($material1);
-	$mm->addMaterial($material2);
-	$mm->addMaterial($material3);
-	
-	$this->dm->persist($mm);
+        $mm->addMaterial($material1);
+        $mm->addMaterial($material2);
+        $mm->addMaterial($material3);
 
-	$this->dm->flush();
+        $this->dm->persist($mm);
 
-	$this->assertEquals($material1, $this->repo->find($mm->getId())->getMaterialById($material1->getId()));
-	$this->assertEquals($material2, $this->repo->find($mm->getId())->getMaterialById($material2->getId()));
-	$this->assertEquals($material3, $this->repo->find($mm->getId())->getMaterialById($material3->getId()));
-	$this->assertNull($this->repo->find($mm->getId())->getMaterialById(null));
+        $this->dm->flush();
 
-	$mm->removeMaterialById($material2->getId());
-	$this->dm->persist($mm);
-	$this->dm->flush();
+        $this->assertEquals($material1, $this->repo->find($mm->getId())->getMaterialById($material1->getId()));
+        $this->assertEquals($material2, $this->repo->find($mm->getId())->getMaterialById($material2->getId()));
+        $this->assertEquals($material3, $this->repo->find($mm->getId())->getMaterialById($material3->getId()));
+        $this->assertNull($this->repo->find($mm->getId())->getMaterialById(null));
 
-	$materialsArray = array($material1, $material3);
-	$this->assertEquals(count($materialsArray), count($this->repo->find($mm->getId())->getMaterials()));
-	$this->assertEquals($materialsArray, array_values($this->repo->find($mm->getId())->getMaterials()->toArray()));
-  
-	$mm->upMaterialById($material3->getId());
-	$this->dm->persist($mm);
-	$this->dm->flush();
+        $mm->removeMaterialById($material2->getId());
+        $this->dm->persist($mm);
+        $this->dm->flush();
 
-	$materialsArray = array($material3, $material1);
-	$this->assertEquals($materialsArray, array_values($this->repo->find($mm->getId())->getMaterials()->toArray()));
+        $materialsArray = array($material1, $material3);
+        $this->assertEquals(count($materialsArray), count($this->repo->find($mm->getId())->getMaterials()));
+        $this->assertEquals($materialsArray, array_values($this->repo->find($mm->getId())->getMaterials()->toArray()));
 
-	$mm->downMaterialById($material3->getId());
-	$this->dm->persist($mm);
-	$this->dm->flush();
+        $mm->upMaterialById($material3->getId());
+        $this->dm->persist($mm);
+        $this->dm->flush();
 
-	$materialsArray = array($material1, $material3);
-	$this->assertEquals($materialsArray, array_values($this->repo->find($mm->getId())->getMaterials()->toArray()));
+        $materialsArray = array($material3, $material1);
+        $this->assertEquals($materialsArray, array_values($this->repo->find($mm->getId())->getMaterials()->toArray()));
+
+        $mm->downMaterialById($material3->getId());
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $materialsArray = array($material1, $material3);
+        $this->assertEquals($materialsArray, array_values($this->repo->find($mm->getId())->getMaterials()->toArray()));
     }
 
     public function testEmbedLinksInMultimediaObject()
@@ -371,45 +371,45 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $link2 = new Link();
         $link3 = new Link();
 
-	$this->dm->persist($link1);
-	$this->dm->persist($link2);
-	$this->dm->persist($link3);
+        $this->dm->persist($link1);
+        $this->dm->persist($link2);
+        $this->dm->persist($link3);
 
         $mm = new MultimediaObject();
-	$mm->addLink($link1);
-	$mm->addLink($link2);
-	$mm->addLink($link3);
-	
-	$this->dm->persist($mm);
+        $mm->addLink($link1);
+        $mm->addLink($link2);
+        $mm->addLink($link3);
 
-	$this->dm->flush();
+        $this->dm->persist($mm);
 
-	$this->assertEquals($link1, $this->repo->find($mm->getId())->getLinkById($link1->getId()));
-	$this->assertEquals($link2, $this->repo->find($mm->getId())->getLinkById($link2->getId()));
-	$this->assertEquals($link3, $this->repo->find($mm->getId())->getLinkById($link3->getId()));
-	$this->assertNull($this->repo->find($mm->getId())->getLinkById(null));
+        $this->dm->flush();
 
-	$mm->removeLinkById($link2->getId());
-	$this->dm->persist($mm);
-	$this->dm->flush();
+        $this->assertEquals($link1, $this->repo->find($mm->getId())->getLinkById($link1->getId()));
+        $this->assertEquals($link2, $this->repo->find($mm->getId())->getLinkById($link2->getId()));
+        $this->assertEquals($link3, $this->repo->find($mm->getId())->getLinkById($link3->getId()));
+        $this->assertNull($this->repo->find($mm->getId())->getLinkById(null));
 
-	$linksArray = array($link1, $link3);
-	$this->assertEquals(count($linksArray), count($this->repo->find($mm->getId())->getLinks()));
-	$this->assertEquals($linksArray, array_values($this->repo->find($mm->getId())->getLinks()->toArray()));
-  
-	$mm->upLinkById($link3->getId());
-	$this->dm->persist($mm);
-	$this->dm->flush();
+        $mm->removeLinkById($link2->getId());
+        $this->dm->persist($mm);
+        $this->dm->flush();
 
-	$linksArray = array($link3, $link1);
-	$this->assertEquals($linksArray, array_values($this->repo->find($mm->getId())->getLinks()->toArray()));
+        $linksArray = array($link1, $link3);
+        $this->assertEquals(count($linksArray), count($this->repo->find($mm->getId())->getLinks()));
+        $this->assertEquals($linksArray, array_values($this->repo->find($mm->getId())->getLinks()->toArray()));
 
-	$mm->downLinkById($link3->getId());
-	$this->dm->persist($mm);
-	$this->dm->flush();
+        $mm->upLinkById($link3->getId());
+        $this->dm->persist($mm);
+        $this->dm->flush();
 
-	$linksArray = array($link1, $link3);
-	$this->assertEquals($linksArray, array_values($this->repo->find($mm->getId())->getLinks()->toArray()));
+        $linksArray = array($link3, $link1);
+        $this->assertEquals($linksArray, array_values($this->repo->find($mm->getId())->getLinks()->toArray()));
+
+        $mm->downLinkById($link3->getId());
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $linksArray = array($link1, $link3);
+        $this->assertEquals($linksArray, array_values($this->repo->find($mm->getId())->getLinks()->toArray()));
     }
 
     public function testEmbedTracksInMultimediaObject()
@@ -418,45 +418,45 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $track2 = new Track();
         $track3 = new Track();
 
-	$this->dm->persist($track1);
-	$this->dm->persist($track2);
-	$this->dm->persist($track3);
+        $this->dm->persist($track1);
+        $this->dm->persist($track2);
+        $this->dm->persist($track3);
 
         $mm = new MultimediaObject();
-	$mm->addTrack($track1);
-	$mm->addTrack($track2);
-	$mm->addTrack($track3);
-	
-	$this->dm->persist($mm);
+        $mm->addTrack($track1);
+        $mm->addTrack($track2);
+        $mm->addTrack($track3);
 
-	$this->dm->flush();
+        $this->dm->persist($mm);
 
-	$this->assertEquals($track1, $this->repo->find($mm->getId())->getTrackById($track1->getId()));
-	$this->assertEquals($track2, $this->repo->find($mm->getId())->getTrackById($track2->getId()));
-	$this->assertEquals($track3, $this->repo->find($mm->getId())->getTrackById($track3->getId()));
-	$this->assertNull($this->repo->find($mm->getId())->getTrackById(null));
+        $this->dm->flush();
 
-	$mm->removeTrackById($track2->getId());
-	$this->dm->persist($mm);
-	$this->dm->flush();
+        $this->assertEquals($track1, $this->repo->find($mm->getId())->getTrackById($track1->getId()));
+        $this->assertEquals($track2, $this->repo->find($mm->getId())->getTrackById($track2->getId()));
+        $this->assertEquals($track3, $this->repo->find($mm->getId())->getTrackById($track3->getId()));
+        $this->assertNull($this->repo->find($mm->getId())->getTrackById(null));
 
-	$tracksArray = array($track1, $track3);
-	$this->assertEquals(count($tracksArray), count($this->repo->find($mm->getId())->getTracks()));
-	$this->assertEquals($tracksArray, array_values($this->repo->find($mm->getId())->getTracks()->toArray()));
-  
-	$mm->upTrackById($track3->getId());
-	$this->dm->persist($mm);
-	$this->dm->flush();
+        $mm->removeTrackById($track2->getId());
+        $this->dm->persist($mm);
+        $this->dm->flush();
 
-	$tracksArray = array($track3, $track1);
-	$this->assertEquals($tracksArray, array_values($this->repo->find($mm->getId())->getTracks()->toArray()));
+        $tracksArray = array($track1, $track3);
+        $this->assertEquals(count($tracksArray), count($this->repo->find($mm->getId())->getTracks()));
+        $this->assertEquals($tracksArray, array_values($this->repo->find($mm->getId())->getTracks()->toArray()));
 
-	$mm->downTrackById($track3->getId());
-	$this->dm->persist($mm);
-	$this->dm->flush();
+        $mm->upTrackById($track3->getId());
+        $this->dm->persist($mm);
+        $this->dm->flush();
 
-	$tracksArray = array($track1, $track3);
-	$this->assertEquals($tracksArray, array_values($this->repo->find($mm->getId())->getTracks()->toArray()));
+        $tracksArray = array($track3, $track1);
+        $this->assertEquals($tracksArray, array_values($this->repo->find($mm->getId())->getTracks()->toArray()));
+
+        $mm->downTrackById($track3->getId());
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $tracksArray = array($track1, $track3);
+        $this->assertEquals($tracksArray, array_values($this->repo->find($mm->getId())->getTracks()->toArray()));
     }
 
     private function createPerson($name)
@@ -686,20 +686,20 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
     private function createBroadcast($broadcastTypeId)
     {
-	$broadcast = new Broadcast();
-	$broadcast->setName(ucfirst($broadcastTypeId));
-	$broadcast->setBroadcastTypeId($broadcastTypeId);
-	$broadcast->setPasswd('password');
-	if (0 === strcmp(Broadcast::BROADCAST_TYPE_PRI, $broadcastTypeId)){
-	  $broadcast->setDefaultSel(true);
-	}else{
-	  $broadcast->setDefaultSel(false);
-	}
-	$broadcast->setDescription(ucfirst($broadcastTypeId).' broadcast');
+        $broadcast = new Broadcast();
+        $broadcast->setName(ucfirst($broadcastTypeId));
+        $broadcast->setBroadcastTypeId($broadcastTypeId);
+        $broadcast->setPasswd('password');
+        if (0 === strcmp(Broadcast::BROADCAST_TYPE_PRI, $broadcastTypeId)) {
+            $broadcast->setDefaultSel(true);
+        } else {
+            $broadcast->setDefaultSel(false);
+        }
+        $broadcast->setDescription(ucfirst($broadcastTypeId).' broadcast');
 
-	$this->dm->persist($broadcast);
-	$this->dm->flush();
+        $this->dm->persist($broadcast);
+        $this->dm->flush();
 
-	return $broadcast;
+        return $broadcast;
     }
 }

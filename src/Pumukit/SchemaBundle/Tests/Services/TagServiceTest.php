@@ -17,18 +17,18 @@ class TagServiceTest extends WebTestCase
     {
         $options = array('environment' => 'test');
         $kernel = static::createKernel($options);
-	$kernel->boot();
-	$this->dm = $kernel->getContainer()
+        $kernel->boot();
+        $this->dm = $kernel->getContainer()
       ->get('doctrine_mongodb')->getManager();
-	$this->tagRepo = $this->dm
+        $this->tagRepo = $this->dm
       ->getRepository('PumukitSchemaBundle:Tag');
-	$this->mmobjRepo = $this->dm
+        $this->mmobjRepo = $this->dm
       ->getRepository('PumukitSchemaBundle:MultimediaObject');
-	$this->tagService = $kernel->getContainer()->get('pumukitschema.tag');
+        $this->tagService = $kernel->getContainer()->get('pumukitschema.tag');
 
-	$this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
       ->remove(array());
-	$this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')
       ->remove(array());
     }
 
@@ -37,14 +37,14 @@ class TagServiceTest extends WebTestCase
         $mmobj = $this->createMultimediaObject('titulo cualquiera');
         $tag = $this->createTagWithTree('tag1');
 
-	$this->assertEquals(0, count($this->mmobjRepo->find($mmobj->getId())->getTags()));
-	$this->assertEquals($mmobj, $this->mmobjRepo->find($mmobj->getId()));
-	$this->assertEquals($tag, $this->tagRepo->find($tag->getId()));
-	
-	$mmobjWithTag = $this->tagService->addTagToMultimediaObject($mmobj, $tag->getId());
-	$this->assertEquals(2, count($this->mmobjRepo->find($mmobj->getId())->getTags()));
-	$this->assertTrue($this->mmobjRepo->find($mmobj->getId())->containsTag($tag));
-	$this->assertEquals($mmobjWithTag, $this->tagService->addTagToMultimediaObject($mmobj, $tag->getId()));
+        $this->assertEquals(0, count($this->mmobjRepo->find($mmobj->getId())->getTags()));
+        $this->assertEquals($mmobj, $this->mmobjRepo->find($mmobj->getId()));
+        $this->assertEquals($tag, $this->tagRepo->find($tag->getId()));
+
+        $mmobjWithTag = $this->tagService->addTagToMultimediaObject($mmobj, $tag->getId());
+        $this->assertEquals(2, count($this->mmobjRepo->find($mmobj->getId())->getTags()));
+        $this->assertTrue($this->mmobjRepo->find($mmobj->getId())->containsTag($tag));
+        $this->assertEquals($mmobjWithTag, $this->tagService->addTagToMultimediaObject($mmobj, $tag->getId()));
     }
 
     public function testAddTagWithoutRoot()
@@ -52,67 +52,67 @@ class TagServiceTest extends WebTestCase
         $mmobj = $this->createMultimediaObject('titulo cualquiera');
         $tag = $this->createTagWithTree('tag1', false);
 
-	$mmobjWithTag = $this->tagService->addTagToMultimediaObject($mmobj, $tag->getId());
-	$this->assertEquals(3, count($this->mmobjRepo->find($mmobj->getId())->getTags()));
+        $mmobjWithTag = $this->tagService->addTagToMultimediaObject($mmobj, $tag->getId());
+        $this->assertEquals(3, count($this->mmobjRepo->find($mmobj->getId())->getTags()));
 
-	$mmobjWithTag = $this->tagService->removeTagFromMultimediaObject($mmobj, $tag->getId());
-	$this->assertEquals(0, count($this->mmobjRepo->find($mmobj->getId())->getTags()));
+        $mmobjWithTag = $this->tagService->removeTagFromMultimediaObject($mmobj, $tag->getId());
+        $this->assertEquals(0, count($this->mmobjRepo->find($mmobj->getId())->getTags()));
     }
 
     public function testRemoveTagFromMultimediaObject()
     {
         $mmobj = $this->createMultimediaObject('multimedia object test');
-	$tag = $this->createTagWithTree('tag1');
-	
-	$this->assertEquals(0, count($this->mmobjRepo->find($mmobj->getId())->getTags()));
-	$this->assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
-	$this->assertEquals(0, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
-	$this->assertEquals(0, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
-	
-	$mmobjWithTag = $this->tagService->addTagToMultimediaObject($mmobj, $tag->getId());
+        $tag = $this->createTagWithTree('tag1');
 
-	$this->assertEquals(2, count($this->mmobjRepo->find($mmobj->getId())->getTags()));
-	$this->assertEquals(1, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
-	$this->assertEquals(1, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());	
-	$this->assertEquals(0, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
+        $this->assertEquals(0, count($this->mmobjRepo->find($mmobj->getId())->getTags()));
+        $this->assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
+        $this->assertEquals(0, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
+        $this->assertEquals(0, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
 
-	$broTag = $this->tagRepo->findOneByCod('brother');
-	$mmobjWithTag = $this->tagService->addTagToMultimediaObject($mmobj, $broTag->getId());
-	$this->assertEquals(3, count($this->mmobjRepo->find($mmobj->getId())->getTags()));
-	$this->assertEquals(1, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
-	$this->assertEquals(1, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());	
-	$this->assertEquals(1, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
-	
-	$mmobjWithTag = $this->tagService->removeTagFromMultimediaObject($mmobj, $tag->getId());
-	$this->assertEquals(2, count($this->mmobjRepo->find($mmobj->getId())->getTags()));
-	$this->assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
-	$this->assertEquals(1, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());	
-	$this->assertEquals(1, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
+        $mmobjWithTag = $this->tagService->addTagToMultimediaObject($mmobj, $tag->getId());
 
-	$parentTag = $this->tagRepo->findOneByCod('parent');
-	$mmobjWithTag = $this->tagService->removeTagFromMultimediaObject($mmobj, $parentTag->getId());
-	$this->assertEquals(2, count($this->mmobjRepo->find($mmobj->getId())->getTags()));
-	$this->assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
-	$this->assertEquals(1, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());	
-	$this->assertEquals(1, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
+        $this->assertEquals(2, count($this->mmobjRepo->find($mmobj->getId())->getTags()));
+        $this->assertEquals(1, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
+        $this->assertEquals(1, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
+        $this->assertEquals(0, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
 
-	$mmobjWithTag = $this->tagService->removeTagFromMultimediaObject($mmobj, $broTag->getId());
-	$this->assertEquals(0, count($this->mmobjRepo->find($mmobj->getId())->getTags()));
-	$this->assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
-	$this->assertEquals(0, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());	
-	$this->assertEquals(0, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
-	
-	$mmobjWithTag = $this->tagService->addTagToMultimediaObject($mmobj, $parentTag->getId());
-	$this->assertEquals(1, count($this->mmobjRepo->find($mmobj->getId())->getTags()));
-	$this->assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
-	$this->assertEquals(1, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());	
-	$this->assertEquals(0, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
-	
-	$mmobjWithTag = $this->tagService->removeTagFromMultimediaObject($mmobj, $parentTag->getId());
-	$this->assertEquals(0, count($this->mmobjRepo->find($mmobj->getId())->getTags()));
-	$this->assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
-	$this->assertEquals(0, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());	
-	$this->assertEquals(0, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
+        $broTag = $this->tagRepo->findOneByCod('brother');
+        $mmobjWithTag = $this->tagService->addTagToMultimediaObject($mmobj, $broTag->getId());
+        $this->assertEquals(3, count($this->mmobjRepo->find($mmobj->getId())->getTags()));
+        $this->assertEquals(1, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
+        $this->assertEquals(1, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
+        $this->assertEquals(1, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
+
+        $mmobjWithTag = $this->tagService->removeTagFromMultimediaObject($mmobj, $tag->getId());
+        $this->assertEquals(2, count($this->mmobjRepo->find($mmobj->getId())->getTags()));
+        $this->assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
+        $this->assertEquals(1, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
+        $this->assertEquals(1, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
+
+        $parentTag = $this->tagRepo->findOneByCod('parent');
+        $mmobjWithTag = $this->tagService->removeTagFromMultimediaObject($mmobj, $parentTag->getId());
+        $this->assertEquals(2, count($this->mmobjRepo->find($mmobj->getId())->getTags()));
+        $this->assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
+        $this->assertEquals(1, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
+        $this->assertEquals(1, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
+
+        $mmobjWithTag = $this->tagService->removeTagFromMultimediaObject($mmobj, $broTag->getId());
+        $this->assertEquals(0, count($this->mmobjRepo->find($mmobj->getId())->getTags()));
+        $this->assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
+        $this->assertEquals(0, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
+        $this->assertEquals(0, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
+
+        $mmobjWithTag = $this->tagService->addTagToMultimediaObject($mmobj, $parentTag->getId());
+        $this->assertEquals(1, count($this->mmobjRepo->find($mmobj->getId())->getTags()));
+        $this->assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
+        $this->assertEquals(1, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
+        $this->assertEquals(0, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
+
+        $mmobjWithTag = $this->tagService->removeTagFromMultimediaObject($mmobj, $parentTag->getId());
+        $this->assertEquals(0, count($this->mmobjRepo->find($mmobj->getId())->getTags()));
+        $this->assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
+        $this->assertEquals(0, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
+        $this->assertEquals(0, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
     }
 
     public function testOfSimpleTest()
@@ -120,7 +120,7 @@ class TagServiceTest extends WebTestCase
         $varUno = 'hola';
         $varDos = 'adiós';
 
-	$this->assertNotEquals($varUno, $varDos);
+        $this->assertNotEquals($varUno, $varDos);
     }
 
     private function createMultimediaObject($title)
@@ -134,7 +134,7 @@ class TagServiceTest extends WebTestCase
         $duration = 300;
 
         $mmobj = new MultimediaObject();
-	$mmobj->setLocale($locale);
+        $mmobj->setLocale($locale);
         $mmobj->setStatus($status);
         $mmobj->setRecordDate($record_date);
         $mmobj->setPublicDate($public_date);
@@ -146,44 +146,44 @@ class TagServiceTest extends WebTestCase
         $this->dm->persist($mmobj);
         $this->dm->flush();
 
-	return $mmobj;
+        return $mmobj;
     }
 
     private function createTagWithTree($cod, $withROOT = true)
     {
-	$rootTag = new Tag();
-        if ($withROOT){
-	  $rootTag->setCod('ROOT');
-	}else{
-	  $rootTag->setCod('grandparent');
-	}
-	$this->dm->persist($rootTag);
+        $rootTag = new Tag();
+        if ($withROOT) {
+            $rootTag->setCod('ROOT');
+        } else {
+            $rootTag->setCod('grandparent');
+        }
+        $this->dm->persist($rootTag);
 
         $locale = 'en';
 
         $parentTag = new Tag();
-	$parentTag->setLocale($locale);
-	$parentTag->setCod('parent');
-	$parentTag->setTitle('Parent');
-	$parentTag->setParent($rootTag);
-	$this->dm->persist($parentTag);
+        $parentTag->setLocale($locale);
+        $parentTag->setCod('parent');
+        $parentTag->setTitle('Parent');
+        $parentTag->setParent($rootTag);
+        $this->dm->persist($parentTag);
 
         $tag = new Tag();
-	$tag->setLocale($locale);
-	$tag->setCod($cod);
-	$tag->setTitle(ucfirst($cod));
-	$tag->setParent($parentTag);
-	$this->dm->persist($tag);
+        $tag->setLocale($locale);
+        $tag->setCod($cod);
+        $tag->setTitle(ucfirst($cod));
+        $tag->setParent($parentTag);
+        $this->dm->persist($tag);
 
         $broTag = new Tag();
-	$broTag->setLocale($locale);
-	$broTag->setCod('brother');
-	$broTag->setTitle('Brother');
-	$broTag->setParent($parentTag);
-	$this->dm->persist($broTag);
+        $broTag->setLocale($locale);
+        $broTag->setCod('brother');
+        $broTag->setTitle('Brother');
+        $broTag->setParent($parentTag);
+        $this->dm->persist($broTag);
 
-	$this->dm->flush();
+        $this->dm->flush();
 
-	return $tag;
+        return $tag;
     }
 }

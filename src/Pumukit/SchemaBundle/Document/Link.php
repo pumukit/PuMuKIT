@@ -11,7 +11,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  */
 class Link extends Element
 {
-  /**
+    /**
    * @var string $name
    *
    * @MongoDB\Raw
@@ -26,7 +26,7 @@ class Link extends Element
   public function setName($name, $locale = null)
   {
       if ($locale == null) {
-	$locale = $this->getLocale();
+          $locale = $this->getLocale();
       }
       $this->name[$locale] = $name;
   }
@@ -39,7 +39,7 @@ class Link extends Element
   public function getName($locale = null)
   {
       if ($locale == null) {
-	  $locale = $this->getLocale();
+          $locale = $this->getLocale();
       }
       if (!isset($this->name[$locale])) {
           return;
@@ -67,5 +67,4 @@ class Link extends Element
   {
       return $this->name;
   }
-
 }

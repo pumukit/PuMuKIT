@@ -5,7 +5,6 @@ namespace Pumukit\SchemaBundle\Services;
 use Symfony\Component\HttpFoundation\File\File;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Material;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
 class MaterialService
@@ -39,7 +38,7 @@ class MaterialService
 
         return $multimediaObject;
     }
-    
+
     /**
      * Set a material from an url into the multimediaObject
      */
@@ -47,13 +46,13 @@ class MaterialService
     {
         //TODO check URL is valid and a image.
         $material = new Material();
-	$material->setUrl($materialUrl);
-	
-	$multimediaObject->addMaterial($material);
-	$this->dm->persist($multimediaObject);
-	$this->dm->flush();
-	
-	return $multimediaObject;
+        $material->setUrl($materialUrl);
+
+        $multimediaObject->addMaterial($material);
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        return $multimediaObject;
     }
 
     /**
@@ -66,13 +65,13 @@ class MaterialService
         $path = $materialFile->move($this->targetPath."/".$multimediaObject->getId(), $materialFile->getClientOriginalName());
 
         $material = new Material();
-	$material->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
-	
-	$multimediaObject->addMaterial($material);
-	$this->dm->persist($multimediaObject);
-	$this->dm->flush();
-	
-	return $multimediaObject;
+        $material->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
+
+        $multimediaObject->addMaterial($material);
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        return $multimediaObject;
     }
 
     /**

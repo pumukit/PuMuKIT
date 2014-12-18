@@ -19,7 +19,7 @@ class TrackTest extends \PHPUnit_Framework_TestCase
         $bitrate = 10000;
         $framerate = 25;
         $only_audio = false;
-	$channels = 1;
+        $channels = 1;
         $duration = 66666;
         $width = 1920;
         $height = 1080;
@@ -37,7 +37,7 @@ class TrackTest extends \PHPUnit_Framework_TestCase
         $track->setBitrate($bitrate);
         $track->setFramerate($framerate);
         $track->setOnlyAudio($only_audio);
-	$track->setChannels($channels);
+        $track->setChannels($channels);
         $track->setDuration($duration);
         $track->setWidth($width);
         $track->setHeight($height);
@@ -54,7 +54,7 @@ class TrackTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($bitrate, $track->getBitrate());
         $this->assertEquals($framerate, $track->getFramerate());
         $this->assertFalse($only_audio, $track->getOnlyAudio());
-	$this->assertEquals($channels, $track->getChannels());
+        $this->assertEquals($channels, $track->getChannels());
         $this->assertEquals($duration, $track->getDuration());
         $this->assertEquals($width, $track->getWidth());
         $this->assertEquals($height, $track->getHeight());

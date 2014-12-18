@@ -4,7 +4,6 @@ namespace Pumukit\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Pumukit\SchemaBundle\Document\Link;
@@ -21,7 +20,7 @@ class LinkController extends Controller
     {
         $link = new Link();
         $form = $this->createForm(new LinkType(), $link);
-     
+
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
             try {
                 $multimediaObject = $this->get('pumukitschema.link')->addLinkToMultimediaObject($multimediaObject);
@@ -29,19 +28,19 @@ class LinkController extends Controller
                 $this->get('session')->getFlashBag()->add('error', $e->getMessage());
             }
 
-	    return $this->render('PumukitAdminBundle:Link:list.html.twig', 
-				 array(
-				       'links' => $multimediaObject->getLinks(), 
-				       'mmId'=> $multimediaObject->getId()
-				       )
-				 );
+            return $this->render('PumukitAdminBundle:Link:list.html.twig',
+                 array(
+                       'links' => $multimediaObject->getLinks(),
+                       'mmId' => $multimediaObject->getId(),
+                       )
+                 );
         }
-	
+
         return array(
-		     'link' => $link, 
-		     'form' => $form->createView(), 
-		     'mm' => $multimediaObject
-		     );
+             'link' => $link,
+             'form' => $form->createView(),
+             'mm' => $multimediaObject,
+             );
     }
 
     /**
@@ -55,24 +54,24 @@ class LinkController extends Controller
 
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
             try {
-	        $multimediaObject = $this->get('pumukitschema.link')->updateLinkInMultimediaObject($multimediaObject, $link);
+                $multimediaObject = $this->get('pumukitschema.link')->updateLinkInMultimediaObject($multimediaObject, $link);
             } catch (\Exception $e) {
                 $this->get('session')->getFlashBag()->add('error', $e->getMessage());
             }
 
-	    return $this->render('PumukitAdminBundle:Link:list.html.twig', 
-				 array(
-				       'links' => $multimediaObject->getLinks(), 
-				       'mmId'=> $multimediaObject->getId()
-				       )
-				 );
+            return $this->render('PumukitAdminBundle:Link:list.html.twig',
+                 array(
+                       'links' => $multimediaObject->getLinks(),
+                       'mmId' => $multimediaObject->getId(),
+                       )
+                 );
         }
-	
+
         return array(
-		     'link' => $link, 
-		     'form' => $form->createView(), 
-		     'mm' => $multimediaObject
-		     );
+             'link' => $link,
+             'form' => $form->createView(),
+             'mm' => $multimediaObject,
+             );
     }
 
     /**
@@ -83,28 +82,28 @@ class LinkController extends Controller
     {
         $multimediaObject = $this->get('pumukitschema.link')->removeLinkFromMultimediaObject($multimediaObject, $this->getRequest()->get('id'));
 
-	$this->addFlash('success', 'delete');
+        $this->addFlash('success', 'delete');
 
-	return array(
-		     'links' => $multimediaObject->getLinks(), 
-		     'mmId'=> $multimediaObject->getId()
-		     );
+        return array(
+             'links' => $multimediaObject->getLinks(),
+             'mmId' => $multimediaObject->getId(),
+             );
     }
 
     /**
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"}) 
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @Template("PumukitAdminBundle:Link:list.html.twig")
      */
     public function upAction(MultimediaObject $multimediaObject, Request $request)
     {
         $multimediaObject = $this->get('pumukitschema.link')->upLinkInMultimediaObject($multimediaObject, $this->getRequest()->get('id'));
 
-	$this->addFlash('success', 'delete');
+        $this->addFlash('success', 'delete');
 
-	return array(
-		     'mmId' => $multimediaObject->getId(), 
-		     'links' => $multimediaObject->getLinks()
-		     );
+        return array(
+             'mmId' => $multimediaObject->getId(),
+             'links' => $multimediaObject->getLinks(),
+             );
     }
 
     /**
@@ -115,11 +114,11 @@ class LinkController extends Controller
     {
         $multimediaObject = $this->get('pumukitschema.link')->downLinkInMultimediaObject($multimediaObject, $this->getRequest()->get('id'));
 
-	$this->addFlash('success', 'delete');
+        $this->addFlash('success', 'delete');
 
-	return array(
-		     'mmId' => $multimediaObject->getId(), 
-		     'links' => $multimediaObject->getLinks()
-		     );
+        return array(
+             'mmId' => $multimediaObject->getId(),
+             'links' => $multimediaObject->getLinks(),
+             );
     }
 }

@@ -191,7 +191,7 @@ class MultimediaObject
         $this->tracks = new ArrayCollection();
         $this->pics = new ArrayCollection();
         $this->materials = new ArrayCollection();
-	$this->links = new ArrayCollection();
+        $this->links = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->people_in_multimedia_object = new ArrayCollection();
     }
@@ -287,13 +287,13 @@ class MultimediaObject
   public function removeTag($tag)
   {
       $embedTag = EmbeddedTag::getEmbeddedTag($this->tags, $tag);
-      
+
       $aux = $this->tags->filter(function ($i) use ($embedTag) {
     return $i->getId() !== $embedTag->getId();
     });
 
       $hasRemoved = (count($aux) !== count($this->tags));
-      
+
       $this->tags = $aux;
 
       return $hasRemoved;
@@ -414,7 +414,7 @@ class MultimediaObject
   private function reorderPicById($picId, $up = true)
   {
       $snapshot = array_values($this->pics->toArray());
-      $this->pics->clear(); 
+      $this->pics->clear();
 
       $out = array();
       foreach ($snapshot as $key => $pic) {
@@ -468,7 +468,7 @@ class MultimediaObject
           }
       }
 
-      return null;
+      return;
   }
 
   /**
@@ -635,7 +635,7 @@ class MultimediaObject
       $this->tracks->add($track);
 
       if ($track->getDuration() > $this->getDuration()) {
-	  $this->setDuration($track->getDuration());
+          $this->setDuration($track->getDuration());
       }
   }
 
@@ -749,7 +749,7 @@ class MultimediaObject
           }
       }
 
-      return null;
+      return;
   }
 
   /**
@@ -1022,7 +1022,7 @@ class MultimediaObject
           }
       }
 
-      return null;
+      return;
   }
 
   /**
@@ -1295,7 +1295,7 @@ class MultimediaObject
           }
       }
 
-      return null;
+      return;
   }
 
   /**
@@ -2117,14 +2117,14 @@ class MultimediaObject
   {
       $maxDuration = $this->getDuration();
 
-      foreach ($this->tracks as $mmTrack){
-	  if ($mmTrack->getDuration() > $this->getDuration()){
-	      $maxDuration = $mmTrack->getDuration();
-	  }
+      foreach ($this->tracks as $mmTrack) {
+          if ($mmTrack->getDuration() > $this->getDuration()) {
+              $maxDuration = $mmTrack->getDuration();
+          }
       }
 
-      if ($maxDuration !== $this->getDuration()){
-	  $this->setDuration($maxDuration);
+      if ($maxDuration !== $this->getDuration()) {
+          $this->setDuration($maxDuration);
       }
   }
 }

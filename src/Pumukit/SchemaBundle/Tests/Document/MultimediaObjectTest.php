@@ -36,12 +36,12 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $tag3 = new Tag();
         $mm_tags = array($tag1, $tag2, $tag3);
 
-	$broadcast = new Broadcast();
-	$broadcast->setName('Private');
-	$broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PRI);
-	$broadcast->setPasswd('password');
-	$broadcast->setDefaultSel(true);
-	$broadcast->setDescription('Private broadcast');
+        $broadcast = new Broadcast();
+        $broadcast->setName('Private');
+        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PRI);
+        $broadcast->setPasswd('password');
+        $broadcast->setDefaultSel(true);
+        $broadcast->setDescription('Private broadcast');
 
         $mm = new MultimediaObject();
         $mm->setRank($rank);
@@ -55,7 +55,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $mm->addTag($tag1);
         $mm->addTag($tag2);
         $mm->addTag($tag3);
-	$mm->setBroadcast($broadcast);
+        $mm->setBroadcast($broadcast);
 
         $this->assertEquals($series, $mm->getSeries());
         $this->assertEquals($rank, $mm->getRank());
@@ -67,7 +67,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($subtitle, $mm->getSubtitle());
         $this->assertEquals($description, $mm->getDescription());
         // TODO $this->assertEquals($mm_tags, $mm->getTags()->toArray());
-	$this->assertEquals($broadcast, $mm->getBroadcast());
+    $this->assertEquals($broadcast, $mm->getBroadcast());
     }
 
     public function testDefaultState()
@@ -90,8 +90,8 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $mm->addTrack($track3);
         $this->assertEquals(3, count($mm->getTracks()));
 
-	$tracksArray = array($track1, $track2, $track3);
-	$this->assertEquals($tracksArray, $mm->getTracks()->toArray());
+        $tracksArray = array($track1, $track2, $track3);
+        $this->assertEquals($tracksArray, $mm->getTracks()->toArray());
 
         $mm->removeTrack($track2);
         $this->assertEquals(2, count($mm->getTracks()));
@@ -99,8 +99,8 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($mm->containsTrack($track1));
         $this->assertFalse($mm->containsTrack($track2));
 
-	$tracksArray = array(0 => $track1, 2 => $track3);
-	$this->assertEquals($tracksArray, $mm->getTracks()->toArray());
+        $tracksArray = array(0 => $track1, 2 => $track3);
+        $this->assertEquals($tracksArray, $mm->getTracks()->toArray());
     }
 
     public function testPicsInMultimediaObject()
@@ -117,8 +117,8 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $mm->addPic($pic3);
         $this->assertEquals(3, count($mm->getPics()));
 
-	$picsArray = array($pic1, $pic2, $pic3);
-	$this->assertEquals($picsArray, $mm->getPics()->toArray());
+        $picsArray = array($pic1, $pic2, $pic3);
+        $this->assertEquals($picsArray, $mm->getPics()->toArray());
 
         $mm->removePic($pic2);
         $this->assertEquals(2, count($mm->getPics()));
@@ -126,8 +126,8 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($mm->containsPic($pic1));
         $this->assertFalse($mm->containsPic($pic2));
 
-	$picsArray = array(0 => $pic1, 2 => $pic3);
-	$this->assertEquals($picsArray, $mm->getPics()->toArray());
+        $picsArray = array(0 => $pic1, 2 => $pic3);
+        $this->assertEquals($picsArray, $mm->getPics()->toArray());
     }
 
     public function testMaterialsInMultimediaObject()
@@ -144,8 +144,8 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $mm->addMaterial($material3);
         $this->assertEquals(3, count($mm->getMaterials()));
 
-	$materialsArray = array($material1, $material2, $material3);
-	$this->assertEquals($materialsArray, $mm->getMaterials()->toArray());
+        $materialsArray = array($material1, $material2, $material3);
+        $this->assertEquals($materialsArray, $mm->getMaterials()->toArray());
 
         $mm->removeMaterial($material2);
         $this->assertEquals(2, count($mm->getMaterials()));
@@ -153,8 +153,8 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($mm->containsMaterial($material1));
         $this->assertFalse($mm->containsMaterial($material2));
 
-	$materialsArray = array(0 => $material1, 2 => $material3);
-	$this->assertEquals($materialsArray, $mm->getMaterials()->toArray());
+        $materialsArray = array(0 => $material1, 2 => $material3);
+        $this->assertEquals($materialsArray, $mm->getMaterials()->toArray());
     }
 
     public function testLinksInMultimediaObject()
@@ -171,8 +171,8 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $mm->addLink($link3);
         $this->assertEquals(3, count($mm->getLinks()));
 
-	$linksArray = array($link1, $link2, $link3);
-	$this->assertEquals($linksArray, $mm->getLinks()->toArray());
+        $linksArray = array($link1, $link2, $link3);
+        $this->assertEquals($linksArray, $mm->getLinks()->toArray());
 
         $mm->removeLink($link2);
         $this->assertEquals(2, count($mm->getLinks()));
@@ -180,8 +180,8 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($mm->containsLink($link1));
         $this->assertFalse($mm->containsLink($link2));
 
-	$linksArray = array(0 => $link1, 2 => $link3);
-	$this->assertEquals($linksArray, $mm->getLinks()->toArray());
+        $linksArray = array(0 => $link1, 2 => $link3);
+        $this->assertEquals($linksArray, $mm->getLinks()->toArray());
     }
 
     public function testUpdateMmDurationWhenAddTracks()
@@ -375,18 +375,18 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
     public function testEmbeddedTag()
     {
         $locale = 'en';
-	$title = 'title';
+        $title = 'title';
         $description = 'description';
         $slug = 'slug';
         $cod = 23;
         $metatag = true;
         $created = new \DateTime("now");
         $updated = new \DateTime("now");
-	$display = true;
+        $display = true;
 
         $tag = new Tag($title);
 
-	$tag->setLocale($locale);
+        $tag->setLocale($locale);
         $tag->setTitle($title);
         $tag->setDescription($description);
         $tag->setSlug($slug);
@@ -394,21 +394,21 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $tag->setMetatag($metatag);
         $tag->setCreated($created);
         $tag->setUpdated($updated);
-	$tag->setDisplay($display);
+        $tag->setDisplay($display);
 
-	$titleEs = 'título';
-	$titleArray = array('en' => $title, 'es' => $titleEs);
-	$descriptionEs = 'descripción';
-	$descriptionArray = array('en' => $description, 'es' => $descriptionEs);
+        $titleEs = 'título';
+        $titleArray = array('en' => $title, 'es' => $titleEs);
+        $descriptionEs = 'descripción';
+        $descriptionArray = array('en' => $description, 'es' => $descriptionEs);
 
-	$tag->setI18nTitle($titleArray);
-	$tag->setI18nDescription($descriptionArray);
-	
+        $tag->setI18nTitle($titleArray);
+        $tag->setI18nDescription($descriptionArray);
+
         $mm = new MultimediaObject();
 
-	$mm->addTag($tag);
+        $mm->addTag($tag);
 
-	// TEST GETTERS
+    // TEST GETTERS
 
         $this->assertEquals($locale, $mm->getTags()[0]->getLocale());
         $this->assertEquals($title, $mm->getTags()[0]->getTitle());
@@ -418,29 +418,29 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($metatag, $mm->getTags()[0]->getMetatag());
         $this->assertEquals($created, $mm->getTags()[0]->getCreated());
         $this->assertEquals($updated, $mm->getTags()[0]->getUpdated());
-	$this->assertEquals($display, $mm->getTags()[0]->getDisplay());
-	$this->assertEquals($tag->getPath(), $mm->getTags()[0]->getPath());
-	$this->assertEquals($tag->getLevel(), $mm->getTags()[0]->getLevel());
-	
-	$this->assertNull($mm->getTags()[0]->getTitle('fr'));
-	$this->assertNull($mm->getTags()[0]->getDescription('fr'));
+        $this->assertEquals($display, $mm->getTags()[0]->getDisplay());
+        $this->assertEquals($tag->getPath(), $mm->getTags()[0]->getPath());
+        $this->assertEquals($tag->getLevel(), $mm->getTags()[0]->getLevel());
 
-	$this->assertEquals($titleArray, $mm->getTags()[0]->getI18nTitle());
-	$this->assertEquals($descriptionArray, $mm->getTags()[0]->getI18nDescription());
+        $this->assertNull($mm->getTags()[0]->getTitle('fr'));
+        $this->assertNull($mm->getTags()[0]->getDescription('fr'));
 
-	$this->assertEquals($mm->getTags()[0]->getTitle(), $mm->getTags()[0]->__toString());
+        $this->assertEquals($titleArray, $mm->getTags()[0]->getI18nTitle());
+        $this->assertEquals($descriptionArray, $mm->getTags()[0]->getI18nDescription());
 
-	// TEST SETTERS
-	
-	$title = 'modified title';
+        $this->assertEquals($mm->getTags()[0]->getTitle(), $mm->getTags()[0]->__toString());
+
+    // TEST SETTERS
+
+    $title = 'modified title';
         $description = 'modified description';
         $slug = 'modified slug';
         $cod = 'modcod';
         $metatag = false;
         $created = new \DateTime("now");
         $updated = new \DateTime("now");
-	$display = false;
-	
+        $display = false;
+
         $mm->getTags()[0]->setTitle($title);
         $mm->getTags()[0]->setDescription($description);
         $mm->getTags()[0]->setSlug($slug);
@@ -448,15 +448,15 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $mm->getTags()[0]->setMetatag($metatag);
         $mm->getTags()[0]->setCreated($created);
         $mm->getTags()[0]->setUpdated($updated);
-	$mm->getTags()[0]->setDisplay($display);
+        $mm->getTags()[0]->setDisplay($display);
 
-	$titleEs = 'título modificado';
-	$titleArray = array('en' => $title, 'es' => $titleEs);
-	$descriptionEs = 'descripción modificada';
-	$descriptionArray = array('en' => $description, 'es' => $descriptionEs);
+        $titleEs = 'título modificado';
+        $titleArray = array('en' => $title, 'es' => $titleEs);
+        $descriptionEs = 'descripción modificada';
+        $descriptionArray = array('en' => $description, 'es' => $descriptionEs);
 
-	$mm->getTags()[0]->setI18nTitle($titleArray);
-	$mm->getTags()[0]->setI18nDescription($descriptionArray);
+        $mm->getTags()[0]->setI18nTitle($titleArray);
+        $mm->getTags()[0]->setI18nDescription($descriptionArray);
 
         $this->assertEquals($title, $mm->getTags()[0]->getTitle());
         $this->assertEquals($description, $mm->getTags()[0]->getDescription());
@@ -465,18 +465,18 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($metatag, $mm->getTags()[0]->getMetatag());
         $this->assertEquals($created, $mm->getTags()[0]->getCreated());
         $this->assertEquals($updated, $mm->getTags()[0]->getUpdated());
-	$this->assertEquals($display, $mm->getTags()[0]->getDisplay());
-	
-	$this->assertNull($mm->getTags()[0]->getTitle('fr'));
-	$this->assertNull($mm->getTags()[0]->getDescription('fr'));
+        $this->assertEquals($display, $mm->getTags()[0]->getDisplay());
 
-	$this->assertEquals($titleArray, $mm->getTags()[0]->getI18nTitle());
-	$this->assertEquals($descriptionArray, $mm->getTags()[0]->getI18nDescription());
+        $this->assertNull($mm->getTags()[0]->getTitle('fr'));
+        $this->assertNull($mm->getTags()[0]->getDescription('fr'));
 
-	$this->assertEquals($mm->getTags()[0]->getTitle(), $mm->getTags()[0]->__toString());
+        $this->assertEquals($titleArray, $mm->getTags()[0]->getI18nTitle());
+        $this->assertEquals($descriptionArray, $mm->getTags()[0]->getI18nDescription());
 
-	$locale = 'es';
-	$mm->getTags()[0]->setLocale($locale);
+        $this->assertEquals($mm->getTags()[0]->getTitle(), $mm->getTags()[0]->__toString());
+
+        $locale = 'es';
+        $mm->getTags()[0]->setLocale($locale);
         $this->assertEquals($titleEs, $mm->getTags()[0]->getTitle());
         $this->assertEquals($descriptionEs, $mm->getTags()[0]->getDescription());
     }
@@ -486,15 +486,15 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $mm = new MultimediaObject();
 
         $tag0 = new Tag();
-	$tag0->setCod('cod0');
+        $tag0->setCod('cod0');
         $tag1 = new Tag();
-	$tag1->setCod('cod1');
+        $tag1->setCod('cod1');
         $tag2 = new Tag();
-	$tag2->setCod('cod2');
+        $tag2->setCod('cod2');
         $tag3 = new Tag();
-	$tag3->setCod('cod3');
+        $tag3->setCod('cod3');
         $tag4 = new Tag();
-	$tag4->setCod('cod4');
+        $tag4->setCod('cod4');
 
         $this->assertFalse($mm->containsTag($tag1));
         $mm->addTag($tag1);

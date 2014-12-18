@@ -97,19 +97,19 @@ class EmbeddedTag
    */
   public function __construct(Tag $tag)
   {
-    if (null !== $tag){
-        $this->setI18nTitle($tag->getI18nTitle());
-        $this->setI18nDescription($tag->getI18nDescription());
-        $this->slug = $tag->getSlug();
-        $this->cod = $tag->getCod();
-        $this->metatag = $tag->getMetatag();
-        $this->display = $tag->getDisplay();
-        $this->locale = $tag->getLocale();
-        $this->created = $tag->getCreated();
-        $this->updated = $tag->getUpdated();
-        $this->path = $tag->getPath();
-        $this->level = $tag->getLevel();
-    }
+      if (null !== $tag) {
+          $this->setI18nTitle($tag->getI18nTitle());
+          $this->setI18nDescription($tag->getI18nDescription());
+          $this->slug = $tag->getSlug();
+          $this->cod = $tag->getCod();
+          $this->metatag = $tag->getMetatag();
+          $this->display = $tag->getDisplay();
+          $this->locale = $tag->getLocale();
+          $this->created = $tag->getCreated();
+          $this->updated = $tag->getUpdated();
+          $this->path = $tag->getPath();
+          $this->level = $tag->getLevel();
+      }
   }
 
   /**
@@ -389,7 +389,7 @@ class EmbeddedTag
   {
       return $this->level;
   }
-  
+
   /**
    * Get path
    */
@@ -397,7 +397,7 @@ class EmbeddedTag
   {
       return $this->path;
   }
-  
+
   /**
    *
    * @param ArrayCollection $embeddedTags

@@ -12,10 +12,10 @@ class MaterialType extends AbstractType
     {
         // TODO - check form is completed
         $builder
-	  ->add('i18n_name', 'texti18n', array('required' => false, 'attr' => array('style' => 'width: 420px'), 'label' => 'Name'))
+      ->add('i18n_name', 'texti18n', array('required' => false, 'attr' => array('style' => 'width: 420px'), 'label' => 'Name'))
           ->add('hide', 'checkbox', array('required' => false, 'label' => 'Hide'))
           ->add('mime_type', 'choice', array('choices' => array('TODO' => 'definir', 'mimetypes' => 'values'), 'label' => 'Type'))
-	  ->add('url', 'url', array('required' => false, 'attr' => array('style' => 'width: 420px'), 'label' => 'URL'))
+      ->add('url', 'url', array('required' => false, 'attr' => array('style' => 'width: 420px'), 'label' => 'URL'))
       ;
     }
 

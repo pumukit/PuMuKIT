@@ -15,7 +15,7 @@ class TagTest extends \PHPUnit_Framework_TestCase
         $metatag = true;
         $created = new \DateTime("now");
         $updated = new \DateTime("now");
-	$display = true;
+        $display = true;
 
         $tag = new Tag($title);
 
@@ -26,7 +26,7 @@ class TagTest extends \PHPUnit_Framework_TestCase
         $tag->setMetatag($metatag);
         $tag->setCreated($created);
         $tag->setUpdated($updated);
-	$tag->setDisplay($display);
+        $tag->setDisplay($display);
 
         $tag_parent = new Tag("parent");
         $tag->setParent($tag_parent);
@@ -39,41 +39,40 @@ class TagTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($created, $tag->getCreated());
         $this->assertEquals($updated, $tag->getUpdated());
         $this->assertEquals($tag_parent, $tag->getParent());
-	$this->assertEquals($display, $tag->getDisplay());
-	
-	$this->assertNull($tag->getTitle('fr'));
-	$this->assertNull($tag->getDescription('fr'));
+        $this->assertEquals($display, $tag->getDisplay());
 
-	$titleEs = 'título';
-	$titleArray = array('en' => $title, 'es' => $titleEs);
-	$descriptionEs = 'descripción';
-	$descriptionArray = array('en' => $description, 'es' => $descriptionEs);
+        $this->assertNull($tag->getTitle('fr'));
+        $this->assertNull($tag->getDescription('fr'));
 
-	$tag->setI18nTitle($titleArray);
-	$tag->setI18nDescription($descriptionArray);
-	
-	$this->assertEquals($titleArray, $tag->getI18nTitle());
-	$this->assertEquals($descriptionArray, $tag->getI18nDescription());
+        $titleEs = 'título';
+        $titleArray = array('en' => $title, 'es' => $titleEs);
+        $descriptionEs = 'descripción';
+        $descriptionArray = array('en' => $description, 'es' => $descriptionEs);
 
-	$this->assertEquals($tag->getTitle(), $tag->__toString());
+        $tag->setI18nTitle($titleArray);
+        $tag->setI18nDescription($descriptionArray);
+
+        $this->assertEquals($titleArray, $tag->getI18nTitle());
+        $this->assertEquals($descriptionArray, $tag->getI18nDescription());
+
+        $this->assertEquals($tag->getTitle(), $tag->__toString());
     }
 
     public function testNumberMultimediaObjects()
     {
         $tag = new Tag();
-	$this->assertEquals(0, $tag->getNumberMultimediaObjects());
+        $this->assertEquals(0, $tag->getNumberMultimediaObjects());
 
-	$tag->increaseNumberMultimediaObjects();
-	$this->assertEquals(1, $tag->getNumberMultimediaObjects());
+        $tag->increaseNumberMultimediaObjects();
+        $this->assertEquals(1, $tag->getNumberMultimediaObjects());
 
-	$tag->increaseNumberMultimediaObjects();
-	$this->assertEquals(2, $tag->getNumberMultimediaObjects());
+        $tag->increaseNumberMultimediaObjects();
+        $this->assertEquals(2, $tag->getNumberMultimediaObjects());
 
-	$tag->decreaseNumberMultimediaObjects();
-	$this->assertEquals(1, $tag->getNumberMultimediaObjects());
+        $tag->decreaseNumberMultimediaObjects();
+        $this->assertEquals(1, $tag->getNumberMultimediaObjects());
 
-	$tag->decreaseNumberMultimediaObjects();
-	$this->assertEquals(0, $tag->getNumberMultimediaObjects());
-
+        $tag->decreaseNumberMultimediaObjects();
+        $this->assertEquals(0, $tag->getNumberMultimediaObjects());
     }
 }

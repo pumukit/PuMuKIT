@@ -936,7 +936,7 @@ class Series
           }
       }
 
-      return null;
+      return;
   }
 
   /**

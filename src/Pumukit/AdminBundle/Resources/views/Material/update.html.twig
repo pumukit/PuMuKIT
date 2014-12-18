@@ -18,29 +18,29 @@
 {% if material.id is null %}
   <div class="form-row">
     <label for="file_type" class="required">{% trans %}Mode{% endtrans %}:</label>
-  
+
     <div class="content"> {# TODO checked the one that is default_sel #}
       <input type="radio" name="file_type" id="radio_file" value="file" checked="checked" onclick="$('pumukitadmin_material_url').hide();$('pumukitadmin_material_file').show();"/> {% trans %}File{% endtrans %}
       <input type="radio" name="file_type" value="url" checked="checked" ?>  onclick="$('pumukitadmin_material_file').hide();$('pumukitadmin_material_url').show();"/> {% trans %}URL{% endtrans %}
     </div>
   </div>
-  
+
   {# TODO
   <div id="pumukitadmin_material_url" class="form-row"  style="{# TODO if(default_sel == 'file') 'display:none' #}">
     <label for="url">{% trans %}URL{% endtrans %}:</label>
-  
+
     <div class="content">
-      <?php $value = object_input_tag($material, 'getUrl', array (
+      <?php $value = object_input_tag($material, 'getUrl', array(
         'size' => 60,
         'control_name' => 'url',
         )); echo $value ? $value : '&nbsp;' ?>
         <span id="error_url" style="display:none" class="error"><?php echo __('Formato URL no v&aacute;lido')?></span>
     </div>
   </div>
-  
-  
+
+
   <div id="pumukitadmin_material_file" class="form-row" style="{# TODO if(default_sel == 'url') echo 'display:none' #}">
-    <label for="file">{% trans %}File{% endtrans %}:</label>    
+    <label for="file">{% trans %}File{% endtrans %}:</label>
 
     <div class="content">
       <?php echo input_file_tag('file', 'size=50') ?>
@@ -51,15 +51,17 @@
 
 {% else %}
 {# TODO
-  <div id="pumukitadmin_material_url" class="form-row"  style="<?php if($default_sel == 'file') echo 'display:none' ?>">
+  <div id="pumukitadmin_material_url" class="form-row"  style="<?php if ($default_sel == 'file') {
+    echo 'display:none' ?>">
     <?php echo label_for('url', __('URL:'), '') ?>
-  
+
     <div class="content">
-      <?php $value = object_input_tag($material, 'getUrl', array (
+      <?php $value = object_input_tag($material, 'getUrl', array(
         'size' => 60,
         'control_name' => 'url',
         'disabled' => 'true',
-        )); echo $value ? $value : '&nbsp;' ?>
+        ));
+} echo $value ? $value : '&nbsp;' ?>
     </div>
   </div>
 #}
@@ -71,7 +73,7 @@
 <ul class="tv_admin_actions">
 {% if material.id is null %}
   <li>
-    <input type="submit" name="OK" value="{% trans %}OK{% endtrans %}" class="tv_admin_action_save MB_focusable" onclick="if($('radio_file').checked) {return comprobar_form_file_nmb($('file').value)}">   
+    <input type="submit" name="OK" value="{% trans %}OK{% endtrans %}" class="tv_admin_action_save MB_focusable" onclick="if($('radio_file').checked) {return comprobar_form_file_nmb($('file').value)}">
   </li>
 {% else %}
   <li><input type="submit" name="OK" value="{% trans %}OK{% endtrans %}" class="tv_admin_action_save MB_focusable"></li>

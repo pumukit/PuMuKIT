@@ -3,7 +3,6 @@
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Pumukit\SchemaBundle\Document\Broadcast
@@ -80,8 +79,8 @@ class Broadcast
    */
   public function setName($name, $locale = null)
   {
-      if ($locale == null){
-    	  $locale = $this->locale;
+      if ($locale == null) {
+          $locale = $this->locale;
       }
       $this->name[$locale] = $name;
   }

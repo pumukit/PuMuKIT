@@ -2,10 +2,8 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
-use Symfony\Component\HttpFoundation\File\File;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Link;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
 class LinkService
@@ -39,7 +37,7 @@ class LinkService
 
         return $multimediaObject;
     }
-    
+
     /**
      * Remove Link from Multimedia Object
      */

@@ -23,10 +23,10 @@ class SeriesRepositoryTest extends WebTestCase
             ->getRepository('PumukitSchemaBundle:Series');
 
         //DELETE DATABASE - pimo has to be deleted before mm
-	/*
+    /*
         $this->dm->getDocumentCollection('PumukitSchemaBundle:PersonInMultimediaObject')
             ->remove(array());
-	*/
+    */
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
             ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Role')
