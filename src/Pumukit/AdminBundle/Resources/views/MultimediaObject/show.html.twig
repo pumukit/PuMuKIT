@@ -77,7 +77,7 @@
 
   <!-- MATERIAL -->
     	  {% for material in mm.getMaterials() %}
-            <div id="material" class="{{ material.getMatType().getType() }}">
+            <div id="material" class="{{ material.getMimeType() }}">
               <a href="{{ material.getUrl() }}">{{ material.getName() }}</a>
             </div>
           {% endfor %}
