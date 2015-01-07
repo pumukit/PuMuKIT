@@ -23,7 +23,15 @@ class MaterialController extends Controller
 
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
             try {
-                $multimediaObject = $this->get('pumukitschema.material')->addMaterialToMultimediaObject($multimediaObject);
+                $materialService = $this->get('pumukitschema.material');
+                if (null !== $request->get('url', null)){
+                  $material->setUrl($request->get('url'));
+                }elseif (null !== $request->get('file', null)){
+                  $materialFile = $request->get('file')->getData();
+                  $path = $materialFile->move($this->targetPath."/".$multimediaObject->getId(), $materialFile->getClientOriginalName());
+                  $material->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
+                }
+                $multimediaObject = $materialService->addMaterialToMultimediaObject($multimediaObject, $material);
             } catch (\Exception $e) {
                 $this->get('session')->getFlashBag()->add('error', $e->getMessage());
             }
