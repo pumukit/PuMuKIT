@@ -8,7 +8,7 @@
              <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
           </a>
       </td>
-      <td><a target="_blank" href="material.getUrl(true)"><img alt="{% trans %}download{% endtrans %}" title="{% trans %}Download{% endtrans %}" src="/legacy/images/admin/mbuttons/download_inline.gif"></a></td>
+      <td><a target="_blank" href="{{ material.getUrl(true) }}"><img alt="{% trans %}download{% endtrans %}" title="{% trans %}Download{% endtrans %}" src="/legacy/images/admin/mbuttons/download_inline.gif"></a></td>
       <td>
         {% if loop.first %}
 	  &nbsp;
@@ -24,7 +24,7 @@
 	{% endif %}
       </td>
       <td>
-        &nbsp; {{ material.id }} - {{ material.getName() }} {{ (material.getHide())?'({% trans %}Hidden{% endtrans %})':'' }}
+        &nbsp; {{ material.id }} - {{ material.getName() }} {% if material.getHide() %}({% trans %}Hidden{% endtrans %}){% endif %}
       </td>
     </tr>
   {% endfor %}
