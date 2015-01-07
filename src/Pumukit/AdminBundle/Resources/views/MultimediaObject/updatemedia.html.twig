@@ -39,7 +39,7 @@
       <dt>{% trans %}Materials{% endtrans %}:</dt>
       <dd>
         <div id="materials_mms">
-	  {# {% include 'PumukitAdminBundle:Material:list.html.twig' with {'mm': mm.id} %} #}
+	  {% include 'PumukitAdminBundle:Material:list.html.twig' with {'mmId': mm.id, 'materials': mm.getMaterials()} %}
         </div>
       </dd>
     </div>
