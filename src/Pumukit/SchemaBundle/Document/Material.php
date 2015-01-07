@@ -55,7 +55,7 @@ class Material extends Element
      */
     public function setI18nName(array $name)
     {
-        $this->title = $title;
+        $this->name = $name;
     }
 
     /**
