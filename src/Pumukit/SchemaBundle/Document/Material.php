@@ -26,7 +26,7 @@ class Material extends Element
     public function setName($name, $locale = null)
     {
         if ($locale == null) {
-            $locale = $this->locale;
+            $locale = $this->getLocale();
         }
         $this->name[$locale] = $name;
     }
@@ -36,10 +36,10 @@ class Material extends Element
      *
      * @return string
      */
-    private function getName($locale = null)
+    public function getName($locale = null)
     {
         if ($locale == null) {
-            $locale = $this->locale;
+            $locale = $this->getLocale();
         }
         if (!isset($this->name[$locale])) {
             return;
