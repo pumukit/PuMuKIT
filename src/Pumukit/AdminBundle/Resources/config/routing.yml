@@ -61,3 +61,7 @@ pumukitadmin_link:
 pumukitadmin_material:
     resource: @PumukitAdminBundle/Resources/config/routes/material.yml
     prefix: /admin/material
+
+pumukitadmin_track:
+    resource: @PumukitAdminBundle/Resources/config/routes/track.yml
+    prefix: /admin/track

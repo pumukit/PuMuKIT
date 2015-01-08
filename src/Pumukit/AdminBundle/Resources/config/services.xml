@@ -63,5 +63,9 @@
         <service id="pumukitadmin.form.type.material" class="Pumukit\AdminBundle\Form\Type\MaterialType">
             <tag name="form.type" alias="pumukitadmin_material" />
         </service>
+
+        <service id="pumukitadmin.form.type.track" class="Pumukit\AdminBundle\Form\Type\TrackType">
+            <tag name="form.type" alias="pumukitadmin_track" />
+        </service>
     </services>
 </container>

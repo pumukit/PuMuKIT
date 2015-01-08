@@ -1,0 +1,47 @@
+pumukitadmin_track_create:
+    pattern: /create/{id}
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitadmin.controller.track:createAction
+
+pumukitadmin_track_update:
+    pattern: /{id}/update/{mmId}
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitadmin.controller.track:updateAction
+
+pumukitadmin_track_upload:
+    pattern: /{id}/upload
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitadmin.controller.track:uploadAction
+
+pumukitadmin_track_delete:
+    pattern: /{id}/delete/{mmId}
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitadmin.controller.track:deleteAction
+
+pumukitadmin_track_up:
+    pattern: /{id}/up/{mmId}
+    methods: [POST]
+    defaults:
+        _controller: pumukitadmin.controller.track:upAction
+
+pumukitadmin_track_down:
+    pattern: /{id}/down/{mmId}
+    methods: [POST]
+    defaults:
+        _controller: pumukitadmin.controller.track:downAction
+
+pumukitadmin_track_list:
+    pattern: /{id}/list
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitadmin.controller.track:listAction
+
+pumukitadmin_track_info:
+    pattern: /{id}/info/{mmId}
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitadmin.controller.track:infoAction
