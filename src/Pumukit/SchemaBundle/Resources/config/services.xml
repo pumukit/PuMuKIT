@@ -49,6 +49,8 @@
 
         <service id="pumukitschema.material" class="Pumukit\SchemaBundle\Services\MaterialService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="expression">parameter('kernel.root_dir') ~ '/../web/uploads/pic'</argument>
+            <argument>/uploads/pic</argument>
         </service>
 
     </services>

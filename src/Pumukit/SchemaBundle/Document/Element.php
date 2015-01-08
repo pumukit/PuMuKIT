@@ -36,7 +36,6 @@ class Element
    * @var string $url
    *
    * @MongoDB\String
-   * @Assert\Url(protocols={"http", "https", "ftp"})
    */
   private $url;
 

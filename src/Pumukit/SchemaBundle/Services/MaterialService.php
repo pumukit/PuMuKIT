@@ -10,22 +10,14 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 class MaterialService
 {
     private $dm;
+    private $targetPath;
+    private $targetUrl;
 
-    public function __construct(DocumentManager $documentManager)
+    public function __construct(DocumentManager $documentManager, $targetPath, $targetUrl)
     {
         $this->dm = $documentManager;
-    }
-
-    /**
-     * Add Material to Multimedia Object
-     */
-    public function addMaterialToMultimediaObject(MultimediaObject $multimediaObject, Material $material)
-    {
-        $multimediaObject->addMaterial($material);
-        $this->dm->persist($multimediaObject);
-        $this->dm->flush();
-
-        return $multimediaObject;
+        $this->targetPath = $targetPath;
+        $this->targetUrl = $targetUrl;
     }
 
     /**
@@ -42,11 +34,12 @@ class MaterialService
     /**
      * Set a material from an url into the multimediaObject
      */
-    public function addMaterialUrl(MultimediaObject $multimediaObject, $materialUrl)
+    public function addMaterialUrl(MultimediaObject $multimediaObject, $url, $formData)
     {
-        //TODO check URL is valid and a image.
         $material = new Material();
-        $material->setUrl($materialUrl);
+        $material = $this->saveFormData($material, $formData);
+
+        $material->setUrl($url);
 
         $multimediaObject->addMaterial($material);
         $this->dm->persist($multimediaObject);
@@ -58,13 +51,15 @@ class MaterialService
     /**
      * Add a material from a file into the multimediaObject
      */
-    public function addMaterialFile(MultimediaObject $multimediaObject, File $materialFile)
+    public function addMaterialFile(MultimediaObject $multimediaObject, File $materialFile, $formData)
     {
+        $material = new Material();
+        $material = $this->saveFormData($material, $formData);
+
         //TODO check file is mimetype
-        //TODO delete double slash "//"
         $path = $materialFile->move($this->targetPath."/".$multimediaObject->getId(), $materialFile->getClientOriginalName());
 
-        $material = new Material();
+        $material->setPath($path);
         $material->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
 
         $multimediaObject->addMaterial($material);
@@ -108,5 +103,25 @@ class MaterialService
         $this->dm->flush();
 
         return $multimediaObject;
+    }
+
+    /**
+     * Save form data of Material
+     *
+     * @return Material $material
+     */
+    private function saveFormData(Material $material, $formData)
+    {
+        if (array_key_exists('i18n_name', $formData)){
+            $material->setI18nName($formData['i18n_name']);
+        }
+        if (array_key_exists('hide', $formData)){
+            $material->setHide($formData['hide']);
+        }
+        if (array_key_exists('mime_type', $formData)){
+            $material->setMimeType($formData['mime_type']);
+        }
+
+        return $material;
     }
 }

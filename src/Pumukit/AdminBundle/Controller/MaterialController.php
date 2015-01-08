@@ -21,99 +21,59 @@ class MaterialController extends Controller
         $material = new Material();
         $form = $this->createForm(new MaterialType(), $material);
 
-        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
-            try {
-                $materialService = $this->get('pumukitschema.material');
-                if (null !== $request->get('url', null)){
-                  $material->setUrl($request->get('url'));
-                }elseif (null !== $request->get('file', null)){
-                  $materialFile = $request->get('file')->getData();
-                  $path = $materialFile->move($this->targetPath."/".$multimediaObject->getId(), $materialFile->getClientOriginalName());
-                  $material->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
-                }
-                $multimediaObject = $materialService->addMaterialToMultimediaObject($multimediaObject, $material);
-            } catch (\Exception $e) {
-                $this->get('session')->getFlashBag()->add('error', $e->getMessage());
-            }
-
-            return $this->render('PumukitAdminBundle:Material:list.html.twig',
-                 array(
-                       'materials' => $multimediaObject->getMaterials(),
-                       'mmId' => $multimediaObject->getId(),
-                       )
-                 );
-        }
-
         return array(
-             'material' => $material,
-             'form' => $form->createView(),
-             'mm' => $multimediaObject,
-             );
+                     'material' => $material,
+                     'form' => $form->createView(),
+                     'mm' => $multimediaObject,
+                     );
     }
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @Template
      */
     public function updateAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $material = $multimediaObject->getMaterialById($this->getRequest()->get('id'));
+        $material = $multimediaObject->getMaterialById($request->get('id'));
         $form = $this->createForm(new MaterialType(), $material);
 
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
             try {
-                $multimediaObject = $this->get('pumukitschema.material')->updateMaterialInMultimediaObject($multimediaObject, $material);
+                $multimediaObject = $this->get('pumukitschema.material')->updateMaterialInMultimediaObject($multimediaObject);
             } catch (\Exception $e) {
                 $this->get('session')->getFlashBag()->add('error', $e->getMessage());
             }
 
-            return $this->render('PumukitAdminBundle:Material:list.html.twig',
-                 array(
-                       'materials' => $multimediaObject->getMaterials(),
-                       'mmId' => $multimediaObject->getId(),
-                       )
-                 );
+            return $this->redirect($this->generateUrl('pumukitadmin_material_list', array('id' => $multimediaObject->getId())));
         }
 
-        return array(
-             'material' => $material,
-             'form' => $form->createView(),
-             'mm' => $multimediaObject,
-             );
+        return $this->render('PumukitAdminBundle:Material:update.html.twig', 
+                             array(
+                                   'material' => $material,
+                                   'form' => $form->createView(),
+                                   'mmId' => $multimediaObject->getId(),
+                                   ));
     }
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
+     * @Template
      */
     public function uploadAction(MultimediaObject $multimediaObject, Request $request)
     {
-        if ($request->files->has("file")) {
-            $materialService = $this->get('pumukitschema.material');
-            $media = $materialService->addMaterialFile($multimediaObject, $request->files->get("file"));
+        $formData = $request->get('pumukitadmin_material', array());
 
-            return $this->render('PumukitAdminBundle:Material:upload.html.twig',
-                 array('mm' => $multimediaObject));
-        } elseif (($url = $request->get('url')) || ($url = $request->get('materialUrl'))) {
-            $picService = $this->get('pumukitschema.mmspic');
-            $multimediaObject = $picService->addPicUrl($multimediaObject, $url);
-
-            return $this->render('PumukitAdminBundle:Material:list.html.twig',
-                 array(
-                       'materials' => $multimediaObject->getMaterials(),
-                       'mmId' => $multimediaObject->getId(),
-                       ));
+        $materialService = $this->get('pumukitschema.material');
+        if (($request->files->has('file')) && (!$request->get('url', null))) {
+            $multimediaObject = $materialService->addMaterialFile($multimediaObject, $request->files->get('file'), $formData);
+        } elseif ($request->get('url', null)) {
+          $multimediaObject = $materialService->addMaterialUrl($multimediaObject, $request->get('url'), $formData);
         }
 
-        return $this->render('PumukitAdminBundle:Material:list.html.twig',
-                 array(
-                   'materials' => $multimediaObject->getMaterials(),
-                   'mmId' => $multimediaObject->getId(),
-                   ));
+        return array('mm' => $multimediaObject);
     }
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @Template("PumukitAdminBundle:Material:list.html.twig")
      */
     public function deleteAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -121,15 +81,11 @@ class MaterialController extends Controller
 
         $this->addFlash('success', 'delete');
 
-        return array(
-             'materials' => $multimediaObject->getMaterials(),
-             'mmId' => $multimediaObject->getId(),
-             );
+        return $this->redirect($this->generateUrl('pumukitadmin_material_list', array('id' => $multimediaObject->getId())));
     }
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @Template("PumukitAdminBundle:Material:list.html.twig")
      */
     public function upAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -137,15 +93,11 @@ class MaterialController extends Controller
 
         $this->addFlash('success', 'delete');
 
-        return array(
-             'mmId' => $multimediaObject->getId(),
-             'materials' => $multimediaObject->getMaterials(),
-             );
+        return $this->redirect($this->generateUrl('pumukitadmin_material_list', array('id' => $multimediaObject->getId())));
     }
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     * @Template("PumukitAdminBundle:Material:list.html.twig")
      */
     public function downAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -153,9 +105,17 @@ class MaterialController extends Controller
 
         $this->addFlash('success', 'delete');
 
+        return $this->redirect($this->generateUrl('pumukitadmin_material_list', array('id' => $multimediaObject->getId())));
+    }
+
+    /**
+     * @Template("PumukitAdminBundle:Material:list.html.twig")
+     */
+    public function listAction(MultimediaObject $multimediaObject)
+    {
         return array(
-             'mmId' => $multimediaObject->getId(),
-             'materials' => $multimediaObject->getMaterials(),
-             );
+                     'mmId' => $multimediaObject->getId(),
+                     'materials' => $multimediaObject->getMaterials()
+                     );
     }
 }
