@@ -91,7 +91,7 @@ class MaterialController extends Controller
     {
         $multimediaObject = $this->get('pumukitschema.material')->upMaterialInMultimediaObject($multimediaObject, $this->getRequest()->get('id'));
 
-        $this->addFlash('success', 'delete');
+        $this->addFlash('success', 'up');
 
         return $this->redirect($this->generateUrl('pumukitadmin_material_list', array('id' => $multimediaObject->getId())));
     }
@@ -103,7 +103,7 @@ class MaterialController extends Controller
     {
         $multimediaObject = $this->get('pumukitschema.material')->downMaterialInMultimediaObject($multimediaObject, $this->getRequest()->get('id'));
 
-        $this->addFlash('success', 'delete');
+        $this->addFlash('success', 'down');
 
         return $this->redirect($this->generateUrl('pumukitadmin_material_list', array('id' => $multimediaObject->getId())));
     }
