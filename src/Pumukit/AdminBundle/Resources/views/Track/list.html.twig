@@ -1,25 +1,25 @@
 <table><tdody>
-  {% if true {# TODO (sfConfig::get('app_transcoder_use')) #} %}
-    {% for transcoding in transcoding %}
+  {% if true %} {# TODO (sfConfig::get('app_transcoder_use')) #}
+    {% for transcoding in transcodings %}
       <tr>
         <td><ul><li></li><ul></td>
         <td colspan="9">
           {{ transcoding.getStatusText() }}
-          {% if (transcoding.getStatusId() == TranscodingPeer::STATUS_ERROR) %}
-          <a href="#" onclick="new Ajax.Updater('tracks_mms', '{# TODO path transcoders/retrans?id= $transcoding->getId(). &mm='.$mm.'&preview=true #}', {asynchronous:true, evalScripts:true}); return false;">
+          {% if false %} {# TODO (transcoding.getStatusId() == TranscodingPeer::STATUS_ERROR) #}
+          <a href="#" onclick="new Ajax.Updater('tracks_mms', '{# TODO path transcoders/retrans?id= $transcoding->getId(). &mm='.$mmId.'&preview=true #}', {asynchronous:true, evalScripts:true}); return false;">
             <img alt="{% trans %}retranscode{% endtrans %}" title="{% trans %}retranscode{% endtrans %}" src="/legacy/images/admin/mbuttons/use_inline.gif">
           </a>
           {% endif %}
-          {% if (transcoding.getStatusId() == TranscodingPeer::STATUS_ERROR) %}
-          <a href="#" onclick="new Ajax.Updater('tracks_mms', '{# TODO path delete transcoders/deletefromfile?id='.$transcoding->getId().'&mm='.$mm.'&preview=true #}, {asynchronous:true, evalScripts:true}); return false;">
+          {% if false %} {# TODO (transcoding.getStatusId() == TranscodingPeer::STATUS_ERROR) #}
+          <a href="#" onclick="new Ajax.Updater('tracks_mms', '{# TODO path delete transcoders/deletefromfile?id='.$transcoding->getId().'&mm='.$mmId.'&preview=true #}, {asynchronous:true, evalScripts:true}); return false;">
             <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
           </a>
           {% endif %}
         </td>
         <td>
-          &nbsp;{{ transcoding.getId() }} - <strong>{{ transcoding.getPerfil().getName() }}</strong>
+          &nbsp; TODO {# {{ transcoding.getId() }} - <strong>{{ transcoding.getPerfil().getName() }}</strong>
 	  - {{ basename(transcoding.getPathini()) }}
-          - {{ transcoding.getDurationString() }}
+          - {{ transcoding.getDurationString() }} #}
         </td>
       </tr>
     {% endfor %}
@@ -35,14 +35,14 @@
              <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
           </a>
       </td>
-      {% if true {# TODO (sfConfig::get('app_videoserv_browser')) #} %}
+      {% if true %} {# TODO (sfConfig::get('app_videoserv_browser')) #}
         <td>
           <a href="#" onclick="new Ajax.Updater('tracks_mms', '{# TODO path autocomplete /editar.php/files/autocomplete/id/41835/mm/14588/preview/true/mod/mm #}', {asynchronous:true, evalScripts:true}); return false;">
             <img alt="{% trans %}autocomplete{% endtrans %}" title="{% trans %}autocomplete{% endtrans %}" src="/legacy/images/admin/mbuttons/auto_inline.gif">
           </a>
         </td>
       {% endif %}                                                                                                                                                                                                            
-      {% if true {# TODO (sfConfig::get('app_videoserv_browser')) #} %}
+      {% if true %} {# TODO (sfConfig::get('app_videoserv_browser')) #}
       <td>
         <span class="trans_button" onclick="$('list_picts_{{ track.id}}').toggle()"><img alt="{% trans %}frame{% endtrans %}" title="{% trans %}frame{% endtrans %}" src="/legacy/images/admin/mbuttons/frame_inline.gif">
         <div class="trans_menu" id="list_picts_{{ track.id }}" style="display:none">
@@ -70,11 +70,11 @@
       </td>
       {% endif %}
       
-      {% if true {# TODO (sfConfig::get('app_videoserv_browser')) #} %}
+      {% if true %} {# TODO (sfConfig::get('app_videoserv_browser')) #}
          <td><a target="_blank" href="{# TODO 'files/download?id='.$file->getId() #}"><img alt="{% trans %}download{% endtrans %}" title="{% trans %}download{% endtrans %}" src="/legacy/images/admin/mbuttons/download_inline.gif"></a></td>
       {% endif %}     
 
-      {% if true {# TODO (track.getPerfil().getDisplay()) #} %}
+      {% if true %} {# TODO (track.getPerfil().getDisplay()) #}
       <td>
         <span class="trans_button" onclick="$('list_perfiles_{{ track.id }}').toggle()"><img src="/legacy/images/admin/mbuttons/use_inline.gif" alt="X" />
         <div class="trans_menu" id="list_perfiles_{{ track.id }}" style="display:none">
@@ -87,7 +87,7 @@
           <div class="list_options">
             <ul style="">
               {% set profile = '' %}
-              {% for per in profile {# TODO (PerfilPeer::doSelectToWizard(false) as $per) #} %}
+              {% for per in profile %} {# TODO (PerfilPeer::doSelectToWizard(false) as $per) #}
                 <li><a href="#" onclick="new Ajax.Updater('tracks_mms', '{# TODO 'files/retrans?id='.$file->getId().'&mm='.$file->getMmId().'&profile='.$per->getId() #}, {asynchronous:true, evalScripts:true}); return false;">{{ per.getName() }}</a></li>
               {% endfor %}
               <li class="cancel"><a href="#" onclick="return false;">{% trans %}Cancel{% endtrans %}...</a></li>
@@ -116,14 +116,14 @@
       {% if loop.first %}
         &nbsp;
       {% else %}
-        <a href="#" onclick="new Ajax.Updater('tracks_mms', '{# TODO 'files/up?id='.$file->getId().'&mm='.$mm.'&preview=true' #}', {asynchronous:true, evalScripts:true}); return false;">&#8593;</a>
+        <a href="#" onclick="new Ajax.Updater('tracks_mms', '{# TODO 'files/up?id='.$file->getId().'&mm='.$mmId.'&preview=true' #}', {asynchronous:true, evalScripts:true}); return false;">&#8593;</a>
       {% endif %}
       </td>
       <td>
       {% if loop.last %}
         &nbsp;
       {% else %}
-        <a href="#" onclick="new Ajax.Updater('tracks_mms', '{# TODO 'files/down?id='.$file->getId().'&mm='.$mm.'&preview=true' #}', {asynchronous:true, evalScripts:true}); return false;">&#8595;</a>
+        <a href="#" onclick="new Ajax.Updater('tracks_mms', '{# TODO 'files/down?id='.$file->getId().'&mm='.$mmId.'&preview=true' #}', {asynchronous:true, evalScripts:true}); return false;">&#8595;</a>
       {% endif %}
       </td>
 
@@ -139,58 +139,42 @@
     </tr>
   {% endfor %}
   <!-- MATTERHORN -->
-  {% if true {# TODO (sfConfig::get('app_matterhorn_use') && $oc) #} %}
+  {% if false %} {# TODO (sfConfig::get('app_matterhorn_use') && $oc) #}
       <tr>
         <td><ul><li></li><ul></td>
-        <td><?php echo m_link_to(image_tag('admin/mbuttons/edit_inline.gif', 'alt=' . __('editar') . ' title=' . __('editar')), 'matterhorn/edit?id='.$oc->getId(), array('title' => __('Editar vídeo Matterhorn del objeto multimedia ').$oc->getId()), array('width' => '800')) ?></td>
-        <td><?php echo m_link_to(image_tag('admin/mbuttons/info_inline.gif', 'alt=' . __('info') . ' title=' . __('info')), 'matterhorn/infomp?id='.$oc->getId(), array('title' => __('Información del vídeo Matterhorn del objeto multimedia ').$oc->getId()), array('width' => '800')) ?></td>
+        <td><a title="{% trans %}Edit Matterhorn video of multimedia object{% endtrans %} {{ oc.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{# TODO 'matterhorn/edit?id=' oc.getId() #}"><img alt="{% trans %}edit{% endtrans %}" title="{% trans %}edit{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif" /></a></td>
+        <td><a title="{% trans %}Information of Matterhorn video from multimedia object{% endtrans %} {{ oc.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{# TODO matterhorn/infomp?id=' oc.id #}"><img alt="{% trans %}info{% endtrans %}" title="{% trans %}info{% endtrans %}" src="/legacy/images/admin/mbuttons/info_inline.gif" /></a></td>
         <td>
-	 <span class="trans_button" onclick="$('list_picts_<?php echo $oc->getId()?>').toggle()"><?php echo image_tag('admin/mbuttons/frame_inline.gif', 'alt=frame title=frame')?>
-          <div class="trans_menu" id="list_picts_<?php echo $oc->getId()?>" style="display:none">
-
- <td>
-	 <span class="trans_button" onclick="$('list_pics_<?php echo $oc->getId()?>').toggle()"><?php echo image_tag('admin/mbuttons/frame_inline.gif', 'alt=frame title=frame\
-')?>
-          <div class="trans_menu" id="list_pics_<?php echo $oc->getId()?>" style="display:none">
-
-            <div class="mas_info" style="">
-              <div class="trans_button_up"><img src="/legacy/images/admin/mbuttons/frame_inline.gif" alt="frame" /></div>
-	 <div class="trans_button_info">Capturar frame de:</div>
+	      <span class="trans_button" onclick="$('list_picts_{{ oc.id }}').toggle()"><img alt="{% trans %}frame{% endtrans %}" title="{% trans %}frame{% endtrans %}" src="/legacy/images/admin/mbuttons/frame_inline.gif" />
+            <div class="trans_menu" id="list_picts_{{ oc.id }}" style="display:none">
+              <div class="mas_info" style="">
+                <div class="trans_button_up"><img src="/legacy/images/admin/mbuttons/frame_inline.gif" alt="{% trans %}frame{% endtrans %}" /></div>
+	            <div class="trans_button_info">{% trans %}Capture frame from{% endtrans %}:</div>
+              </div>
+              
+              <div class="list_options">
+                <ul style="">
+	              <li><a href="#" onclick="new Ajax.Updater('pic_mms', 'TODO {# 'matterhorn/pic?id='. oc.id .'&preview=true' #}', {onLoading:$("pic_mms_load").show(), asynchronous:true, evalScripts:true}); return false;">{% trans %}Auto{% endtrans %}</a></li>
+	              <li><a href="#" onclick="new Ajax.Updater('pic_mms', 'TODO {# 'matterhorn/pic?id='. oc.id .'&preview=true&numframe=10%' #}', {onLoading:$("pic_mms_load").show(), asynchronous:true, evalScripts:true}); return false;">{% trans %}10%{% endtrans %}</a></li>
+	              <li><a href="#" onclick="new Ajax.Updater('pic_mms', 'TODO {# 'matterhorn/pic?id='. oc.id .'&preview=true&numframe=25%' #}', {onLoading:$("pic_mms_load").show(), asynchronous:true, evalScripts:true}); return false;">{% trans %}25%{% endtrans %}</a></li>
+	              <li><a href="#" onclick="new Ajax.Updater('pic_mms', 'TODO {# 'matterhorn/pic?id='. oc.id .'&preview=true&numframe=50%' #}', {onLoading:$("pic_mms_load").show(), asynchronous:true, evalScripts:true}); return false;">{% trans %}50%{% endtrans %}</a></li>
+	              <li><a href="#" onclick="new Ajax.Updater('pic_mms', 'TODO {# 'matterhorn/pic?id='. oc.id .'&preview=true&numframe=75%' #}', {onLoading:$("pic_mms_load").show(), asynchronous:true, evalScripts:true}); return false;">{% trans %}75%{% endtrans %}</a></li>
+	              <li><a href="#" onclick="new Ajax.Updater('pic_mms', 'TODO {# 'matterhorn/pic?id='. oc.id .'&preview=true&numframe=90%' #}', {onLoading:$("pic_mms_load").show(), asynchronous:true, evalScripts:true}); return false;">{% trans %}90%{% endtrans %}</a></li>
+                  <li class="cancel"><a href="#" onclick="return false;">{% trans %}Cancel{% endtrans %}...</a></li>
+                </ul>
+              </div>
             </div>
-
-            <div class="list_options">
-              <ul style="">
-	 <li><?php echo link_to_remote('Auto',
-				       array('update' => 'pic_mms', 'url' => 'matterhorn/pic?id='.$oc->getId().'&preview=true', 'script' => 'true', 'loading' => '$("pic_m\
-ms_load").show()'))?></li>
-	 <li><?php echo link_to_remote('10%',
-				       array('update' => 'pic_mms', 'url' => 'matterhorn/pic?id='.$oc->getId().'&preview=true&numframe=10%', 'script' => 'true', 'loading'  => '$("pic_mms_load").show()'))?></li>
-	 <li><?php echo link_to_remote('25%',
-				       array('update' => 'pic_mms', 'url' => 'matterhorn/pic?id='.$oc->getId().'&preview=true&numframe=25%', 'script' => 'true', 'loading' => '$("pic_mms_load").show()'))?></li>
-	 <li><?php echo link_to_remote('50%',
-				       array('update' => 'pic_mms', 'url' => 'matterhorn/pic?id='.$oc->getId().'&preview=true&numframe=50%', 'script' => 'true', 'loading' => '$("pic_mms_load").show()'))?></li>
-	 <li><?php echo link_to_remote('75%',
-				       array('update' => 'pic_mms', 'url' => 'matterhorn/pic?id='.$oc->getId().'&preview=true&numframe=75%', 'script' => 'true', 'loading' => '$("pic_mms_load").show()'))?></li>
-	 <li><?php echo link_to_remote('90%',
-				       array('update' => 'pic_mms', 'url' => 'matterhorn/pic?id='.$oc->getId().'&preview=true&numframe=90%', 'script' => 'true', 'loading' => '$("pic_mms_load").show()'))?></li>
-                <li class="cancel"><a href="#" onclick="return false;">Cancelar...</a></li>
-              </ul>
-            </div>
-          </div>
           </span>
         </td>
-
-	 {% if true {# TODO (sfConfig::get('app_videoserv_browser')) #} %}
-	 <td> <?php echo link_to(image_tag('admin/mbuttons/download_inline.gif', 'alt=descargar title=descargar'), 'matterhorn/download?id='.$oc->getId(), array('target' => '_blank')) ?> </td>
-	<td> <?php echo link_to_remote(image_tag('admin/mbuttons/use_inline.gif', 'alt=SbS title=SbS'),
-	     array('update' => 'files_mms', 'url' => 'matterhorn/sbs?id='.$oc->getId().'&mm='.$mm.'&preview=true', 'script' => 'true'))?>
-        </td>
-
-	 {% endif %}
+        
+	    {% if true %} {# TODO (sfConfig::get('app_videoserv_browser')) #}
+	    <td><a target="_blank" href="TODO {# 'matterhorn/download?id='. oc.id #}"><img alt="{% trans %}download{% endtrans %}" title="{% trans %}download{% endtrans %}" src="/legacy/images/admin/mbuttons/download_inline.gif" /></a></td>
+	    <td><a href="#" onclick="new Ajax.Updater('tracks_mms', 'TODO {# 'matterhorn/sbs?id='. oc.id .'&mm='.$mmId.'&preview=true' #}', {asynchronous:true, evalScripts:true}); return false;"><img alt="SbS" title="SbS" src="/legacy/images/admin/mbuttons/use_inline.gif" /></a></td>
+	    {% endif %}
 	    {# deberia ser colspan=4 #}
 	    <td colspan="2">&nbsp;<td>
         <td>
-        
+          
         <td>
           &nbsp;{{ oc.id }} - <strong>Opencast Matterhorn Recording</strong>
           <a target="_blank" href="{{ oc.getUrl() }}">{{ oc.getMhId() }}</a>
@@ -200,30 +184,31 @@ ms_load").show()'))?></li>
   {% endif %}
   <!-- <tr>
     <td><ul><li></li><ul></td>
-    <td colspan="9"><?php echo m_link_to(__('nuevo...'), 'files/create?mm='.$mm, array('title' => __('Crear File')), array('width' => '800')) ?></td>
+    <td colspan="9"><?php echo m_link_to(__('nuevo...'), 'files/create?mm='.$mmId, array('title' => __('Crear File')), array('width' => '800')) ?></td>
   </tr>-->
-  {% if true {# TODO (sfConfig::get('app_transcoder_use')) #} %}
+  {% if true %} {# TODO (sfConfig::get('app_transcoder_use')) #}
   <tr>
     <td><ul><li></li><ul></td>
-    <td colspan="9"><a title="{% trans %}New master{% endtrans %}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{# TODO 'transcoders/edit?mm='.$mm #}">{% trans %}new master{% endtrans %}...</a></td>
+    {# TODO real path href 'transcoders/edit?mm='.$mmId #}
+    <td colspan="9"><a title="{% trans %}New master{% endtrans %}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_track_create', {'id': mmId}) }}">{% trans %}new master{% endtrans %}...</a></td>
   </tr>
   {% endif %}
 </tbody></table>
 
+{% if false %} {# TODO ($sf_request->getParameter('preview')) #} {# define update_preview #}
+<script type="text/javascript">
+  update_preview('{{ mmId }}');
+</script>
+{% endif %}
+
+{% if false %} {# TODO (isset($reload_pub_channel)) #}
+<script type="text/javascript">
+    new Ajax.Updater('list_pub_{{ mmId }}', ' TODO {# " . url_for('mms/updatelistpub?id=' . $mmId) . " #}')
+</script>
+{% endif %}
 
 {# TODO
 <?php 
-if ($sf_request->getParameter('preview')){
-  echo javascript_tag("update_preview(" . $mm . ");");
-}
-
-if (isset($reload_pub_channel)){
-  echo javascript_tag("
-    new Ajax.Updater('list_pub_" . $mm . "', '" . url_for('mms/updatelistpub?id=' . $mm) . "')
-  "); 
-}
-
-
 if (isset($msg_alert)) echo m_msg_alert($msg_alert);
 ?>
 #}

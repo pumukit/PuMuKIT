@@ -1,0 +1,84 @@
+{% form_theme form 'PumukitAdminBundle:Themes:fields.html.twig' %}
+
+<div id="tv_admin_container">
+  <form method="post" target="iframeUpload"
+        action="{{ path('pumukitadmin_track_upload', {'id': mm.id}) }}" 
+        enctype="multipart/form-data" name="formulario">
+    <iframe name="iframeUpload" style="display:none" src=""></iframe> 
+    
+    <input type="hidden" name="num_video" id="num_video" value="{{ mm.id }}" />
+    <input type="hidden" name="num_serie" id="num_serie" value="{{ mm.getSeries().getId() }}" />
+    <input type="hidden" name="proveedor" id="proveedor" value="{# TODO sfConfig::get('app_transcoder_proveedor') #}" />  <!-- ojo  -->
+    <input type="hidden" name="titulo" id="titulo" value="{# TODO  $sf_data->getRaw('mm')->getTitle() {{ mm.getI18nTitle() }} #}" />
+    <input type="hidden" name="tit_serie" id="tit_serie" value="{# TODO sf_data->getRaw('mm')->getSerialWithI18n()->getTitle()  {{ mm.getSeries().getI18nTitle() }} #}" />
+    <input type="hidden" name="fecha_acto" id="fecha_acto" value="{{ mm.getRecorddate('ymd')|date('ymd') }}" />
+    <input type="hidden" name="copiar" id="copiar" value="1" />
+    
+    <fieldset>
+      
+      {% for child in form %}
+          {{ form_row(child) }}
+      {% endfor %}      
+      
+      {# TODO Profiles en archivo de configuracion ??
+      <div class="form-row">
+        <?php echo label_for('profile_id', __('Perfil:'), 'class="required" ') ?>
+        
+        <div class="content" style="overflow: hidden">
+          <?php foreach($profiles as $profile): ?>
+          <span style="display: block; float: left; width: 30%; overflow: hidden">
+            <?php echo radiobutton_tag('master', $profile->getId(), 1) ?><?php echo $profile->getName()?>
+          </span>
+          <?php endforeach?>
+        </div>
+      </div>
+      #}      
+
+      {# TODO check language_id in transcoder, language in track #}      
+      
+      <div class="form-row">
+        <label for="file_type" class="required">{% trans %}Mode{% endtrans %}</label>        
+        <div class="content">
+          <input type="radio" name="file_type" value="file" onclick="$('pumukitadmin_track_url').hide();$('pumukitadmin_track_file').show();"/> Inbox 
+          <input type="radio" name="file_type" value="url" checked="checked" onclick="$('pumukitadmin_track_file').hide();$('pumukitadmin_track_url').show();"/> {% trans %}File{% endtrans %}
+        </div>
+      </div>
+      
+      <div class="form-row" id="pumukitadmin_track_url">
+        <label for="url" class="required">{% trans %}URL{% endtrans %}:</label>
+        <div class="content">
+          <input type="file" name="video" id="video" value="" size="70" class="MB_focusable">
+          <span style="color: blue">({% trans %}Under 2GB{% endtrans %})</span>
+          <span id="file_upload_progress" style="color:blue; display:none;">{% trans %}Progress{% endtrans %}...</span>
+        </div>
+      </div>
+      
+      <div class="form-row" id="pumukitadmin_track_file" style="display: none">
+        <label for="file" class="required">{% trans %}File{% endtrans %}:</label>
+        <div class="content">
+          <input type="text" name="file" id="file" value="//172.20..." size="80" class="MB_focusable" style="width: 420px">
+          <input onclick="Effect.toggle('explorer_videoserv','blind', { afterFinish:function(){ Modalbox.resizeToContent() }}); return false;" type="button" value="{% trans %}explore{% endtrans %}" class="MB_focusable">
+          <div id="explorer_videoserv" class="videoserv" style="display:none;">            
+            <ul class="videoserv_tree">
+              {% set dirs = ['/tmp/test/1', '/tmp/test/2'] %}
+              {% for dir in dirs %} {# TODO (sfConfig::get('app_transcoder_inbox') as $dir) #}
+              <li class="collapsed">
+                {# TODO define fileServerTree #}
+                <span onclick="fileServerTree(this, 'file', '{{ dir }}', 0, 'explorer_videoserv')">{{ dir }}</span>
+                <ul></ul>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+    </fieldset>
+
+    <ul class="tv_admin_actions">
+      <li><input type="submit" name="OK" value="{% trans %}OK{% endtrans %}" class="tv_admin_action_save MB_focusable" onclick="$('file_upload_progress').show(); "></li>
+      <li><input class="tv_admin_action_delete MB_focusable" onclick="Modalbox.hide(); return false;" type="button" value="{% trans %}Cancel{% endtrans %}"> </li>
+    </ul>
+    
+  </form>
+</div>

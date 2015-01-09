@@ -1,0 +1,106 @@
+<div id="tv_admin_container">
+<form>
+<fieldset>
+<h2><strong>HTML:</strong></h2>
+<div class="form-row">
+  <label for="embed" class="required">{% trans %}Embedded IFRAME{% endtrans %}:</label>
+  <div class="content">
+    <textarea id="embed_code" name="embed_code" readonly="readonly" cols="80" rows="5" onclick="this.select()">
+      <iframe src="http://{# TODO sfConfig::get('app_info_link').'/'.$sf_user->getCulture() #}/video/iframe/{{ mm.id }}.html" width="570" frameborder="0">
+        {% trans %}Not understand iframes{% endtrans %}
+      </iframe>
+    </textarea>
+  </div>
+</div>
+
+{% if true %} {# TODO  if($file->getPerfil()->getExtension() == 'wmv') #}
+<h2><strong>{% trans %}EMBED{% endtrans %}:</strong></h2>
+<div class="form-row">
+  <label for="embed" class="required">{% trans %}Original resolution{% endtrans %}:</label>
+  <div class="content">
+	<textarea id="embed_code" name="embed_code" readonly="readonly" cols="80" rows="5" onclick="this.select()">
+      <object id="MediaPlayer" 
+              classid="CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6"
+              standby="{% trans %}Loading Microsoft Windows Media Player components{% endtrans %}..."
+              type="application/x-oleobject" width="{{ track.getPerfil().getResolutionHor() }}" height="{{ track.getPerfil().getResolutionVer() }}">
+        <param name="url" value="{{ track.getUrl() }}" />
+        <param name="AutoStart" value="true" />
+        <param name="ShowControls" value="1" />
+        <param name="uiMode" value="full" />
+        
+        <param value="{{ track.getUrl() }}" name="filename"/>
+        <param value="1" name="showcontrols"/>
+        <param value="0" name="showdisplay"/>
+        <param value="0" name="showstatusbar"/>
+        <param value="0" name="autosize"/>
+        
+        <embed 
+           width="{{ track.getPerfil().getResolutionHor() }}" height="{{ track.getPerfil().getResolutionVer() }}"
+           autosize="0" 
+           showstatusbar="0" 
+           showdisplay="0" 
+           showcontrols="1" 
+           filename="{{ track.getUrl() }}"
+           pluginspage="http://www.microsoft.com/windows/downloads/contents/products/mediaplayer/" 
+           type="application/x-mplayer2" 
+           />
+      </object>
+    </textarea>
+  </div>
+  <br />
+  <label for="embed" class="required">{% trans %}Resolution 480x320{% endtrans %}:</label>
+  <div class="content">
+	<textarea id="embed_code" name="embed_code" readonly="readonly" cols="80" rows="5" onclick="this.select()">
+      <object id="MediaPlayer" 
+              classid="CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6"
+              standby="{% trans %}Loading Microsoft Windows Media Player components{% endtrans %}..."
+              type="application/x-oleobject" width="480" height="320">
+        <param name="url" value="{{ track.getUrl() }}" />
+        <param name="AutoStart" value="true" />
+        <param name="ShowControls" value="1" />
+        <param name="uiMode" value="full" />
+        
+        <param value="{{ track.getUrl() }}" name="filename"/>
+        <param value="1" name="showcontrols"/>
+        <param value="0" name="showdisplay"/>
+        <param value="0" name="showstatusbar"/>
+        <param value="0" name="autosize"/>
+        
+        <embed 
+           width="480" height="320"
+           autosize="0" 
+           showstatusbar="0" 
+           showdisplay="0" 
+           showcontrols="1" 
+           filename="{{ track.getUrl() }}"
+           pluginspage="http://www.microsoft.com/windows/downloads/contents/products/mediaplayer/" 
+           type="application/x-mplayer2" 
+           />
+      </object>
+    </textarea>
+  </div>
+</div>
+
+{% endif %}
+
+<h2><strong>URL:</strong></h2>
+<div class="form-row">
+  <label for="embed" class="required">{% trans %}Video{% endtrans %}:</label>
+  <div class="content">
+    <input type="text" onclick="this.select()" size="80" value="{{ track.getUrlLink(true) }}" />
+  </div>
+  <br />
+  <label for="embed" class="required">{% trans %}Series{% endtrans %}:</label>
+  <div class="content">
+    <input type="text" onclick="this.select()" size="80" value="{{ track.getMm().getUrl(true) }}" />
+  </div>
+</div>
+
+</fieldset>
+
+<ul class="tv_admin_actions">
+  <li><input class="tv_admin_action_save MB_focusable" onclick="Modalbox.hide(); return false;" type="button" value="{% trans %}OK{% endtrans %}"> </li>
+</ul>
+
+</form>
+</div>

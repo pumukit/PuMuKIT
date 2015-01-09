@@ -19,7 +19,7 @@
       <dt>{% trans %}Video Files{% endtrans %}:</dt>
       <dd>
         <div id="tracks_mms">
-	      {% include 'PumukitAdminBundle:File:list.html.twig' with {'mm': mm.id, 'tracks': mm.getTracks()} %}
+	      {% include 'PumukitAdminBundle:Track:list.html.twig' with {'mmId': mm.id, 'tracks': mm.getTracks(), 'transcodings': '', 'oc': ''} %}
         </div>
       </dd>
     </div>
