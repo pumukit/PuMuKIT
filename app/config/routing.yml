@@ -1,3 +1,8 @@
+pumukit_encoder:
+    resource: "@PumukitEncoderBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 pumukitadmin:
     resource: @PumukitAdminBundle/Resources/config/routing.yml
 

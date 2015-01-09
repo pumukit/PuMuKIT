@@ -24,7 +24,8 @@ class AppKernel extends Kernel
 	    new Sylius\Bundle\ResourceBundle\SyliusResourceBundle(),
             new Pumukit\AdminBundle\PumukitAdminBundle(),
             new Pumukit\DirectBundle\PumukitDirectBundle(),
-	    new Knp\Bundle\MenuBundle\KnpMenuBundle()
+	    new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Pumukit\EncoderBundle\PumukitEncoderBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
