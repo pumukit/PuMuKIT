@@ -12,4 +12,14 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
  */
 class JobRepository extends DocumentRepository
 {
+    /**
+     * Find all jobs with given status
+     */
+    public function findWithStatus(array $status)
+    {
+        return $this->createQueryBuilder()
+          ->field('status_id')->in($status)
+          ->getQuery()
+          ->execute();
+    }
 }
