@@ -12,7 +12,17 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Job
 {
-
+    const STATUS_ERROR = -1;
+    const STATUS_PAUSED = 0;
+    const STATUS_WAITING = 1;
+    const STATUS_EXECUTING = 2;
+    const STATUS_FINISHED = 3;
+    const STATUS_ERROR_TR = -51;
+    const STATUS_PAUSED_TR = -50;
+    const STATUS_WAITING_TR = -49;
+    const STATUS_EXECUTING_TR = -48;
+    const STATUS_FINISHED_TR = -47;
+    
     /**
      * @var int $id
      *
@@ -605,5 +615,4 @@ class Job
     {
         return $this->locale;
     }
-
 }
