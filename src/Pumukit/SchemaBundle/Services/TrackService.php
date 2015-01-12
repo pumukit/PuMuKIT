@@ -25,6 +25,9 @@ class TrackService
      */
     public function addTrackToMultimediaObject(MultimediaObject $multimediaObject, File $trackFile, $formData)
     {
+        // TODO - Call JobService to encode the track
+
+
         // TODO - check it's ok
         $track = new Track();
         $track = $this->saveFormData($track, $formData);
@@ -37,8 +40,6 @@ class TrackService
         $multimediaObject->addTrack($track);
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
-
-        // TODO - Call JobService to encode the track
 
         return $multimediaObject;
     }
