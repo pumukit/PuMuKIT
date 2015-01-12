@@ -113,7 +113,8 @@ class FactoryService
 
       $mm->setStatus(MultimediaObject::STATUS_NEW);
 
-      $series->addMultimediaObject($mm);
+      //$series->addMultimediaObject($mm);
+      $mm->setSeries($series);
 
       $this->dm->persist($mm);
       $this->dm->persist($series);
