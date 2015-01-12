@@ -10,26 +10,28 @@ class CpuService
     private $dm;
     private $repo;
 
+    const TYPE_LINUX = 'linux';
+    const TYPE_WINDOWS = 'windows';
+    const TYPE_GSTREAMER = 'gstreamer';
+
     // TODO - Move CPUs to configuration files
     private $cpus = array(
                        'CPU_LOCAL' => array(
                                             'id' => 1,
-                                            'ip' => '127.0.0.1',
+                                            'host' => '127.0.0.1',
                                             'max' => 1,
-                                            'min' => 0,
-                                            'number' => 0,
-                                            'type' => 'linux',
-                                            'user' => 'transCO1',
+                                            'number' => 1,
+                                            'type' => self::TYPE_LINUX,
+                                            'user' => 'transco1',
                                             'password' => 'PUMUKIT',
                                             'description' => 'Pumukit transcoder'
                                             ),
                        'CPU_REMOTE' => array(
                                             'id' => 2,
-                                            'ip' => '192.168.5.123',
+                                            'host' => '192.168.5.123',
                                             'max' => 2,
-                                            'min' => 0,
-                                            'number' => 0,
-                                            'type' => 'linux',
+                                            'number' => 1,
+                                            'type' => self::TYPE_LINUX,
                                             'user' => 'transco2',
                                             'password' => 'PUMUKIT',
                                             'description' => 'Pumukit transcoder'
@@ -48,10 +50,8 @@ class CpuService
     /**
      * Get available free cpus
      */
-    public function getFreeCpu()
+    public function getFreeCpu($type = null)
     {
-        $freeCpus = array();
-
         $executingJobs = $this->repo->findWithStatus(array(Job::STATUS_EXECUTING));
 
         foreach ($this->cpus as $cpu){
@@ -61,11 +61,31 @@ class CpuService
                     $busy++;
                 }
             }
-            if ($busy < $cpu['max']){
-                array_push($freeCpus, $cpu);
+            if (($busy < $cpu['max']) && (($cpu['type'] == $type) || (null == $type))){
+                return $cpu;                
             }
         }
 
-        return $freeCpus;
+        return null;
+    }
+
+    /**
+     * Get Cpu by name
+     */
+    public function getCpuByName($name)
+    {
+        if (isset($this->cpus[strtoupper($name)])){
+            return $this->cpus[strtoupper($name)];
+        }
+
+        return null;
+    }
+
+    /**
+     * Get Cpus
+     */
+    public function getCpus()
+    {
+        return $this->cpus;
     }
 }
