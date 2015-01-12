@@ -18,7 +18,7 @@ class JobRepository extends DocumentRepository
     public function findWithStatus(array $status)
     {
         return $this->createQueryBuilder()
-          ->field('status_id')->in($status)
+          ->field('status')->in($status)
           ->getQuery()
           ->execute();
     }

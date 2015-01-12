@@ -10,7 +10,7 @@ class JobTest extends \PHPUnit_Framework_TestCase
     {
         $job = new Job();
 
-        $this->assertEquals(Job::STATUS_PAUSED, $job->getStatusId());
+        $this->assertEquals(Job::STATUS_WAITING, $job->getStatus());
         $this->assertEquals(array('en' => ''), $job->getI18nName());
         $this->assertEquals(0, $job->getDuration());
         $this->assertEquals('0', $job->getSize());
@@ -23,10 +23,10 @@ class JobTest extends \PHPUnit_Framework_TestCase
 
         $mm_id = '54ad3f5e6e4cd68a278b4573';
         $language_id = 'es';
-        $profile_id = 1;
+        $profile = 1;
         $cpu_id = 2;
         $url = 'video/'.$mm_id.'/video1.avi';
-        $status_id = Job::STATUS_WAITING;
+        $status = Job::STATUS_WAITING;
         $priority = 1;
         $name = 'video1';
         $timeini = new \DateTime('now');
@@ -45,10 +45,10 @@ class JobTest extends \PHPUnit_Framework_TestCase
         $job->setLocale('en');
         $job->setMmId($mm_id);
         $job->setLanguageId($language_id);
-        $job->setProfileId($profile_id);
+        $job->setProfile($profile);
         $job->setCpuId($cpu_id);
         $job->setUrl($url);
-        $job->setStatusId($status_id);
+        $job->setStatus($status);
         $job->setPriority($priority);
         $job->setName($name);
         $job->setTimeini($timeini);
@@ -65,10 +65,10 @@ class JobTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($mm_id, $job->getMmId());
         $this->assertEquals($language_id, $job->getLanguageId());
-        $this->assertEquals($profile_id, $job->getProfileId());
+        $this->assertEquals($profile, $job->getProfile());
         $this->assertEquals($cpu_id, $job->getCpuId());
         $this->assertEquals($url, $job->getUrl());
-        $this->assertEquals($status_id, $job->getStatusId());
+        $this->assertEquals($status, $job->getStatus());
         $this->assertEquals($priority, $job->getPriority());
         $this->assertEquals($name, $job->getName());
         $this->assertEquals($timeini, $job->getTimeini());

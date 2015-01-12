@@ -48,31 +48,32 @@ class JobRepositoryTest extends WebTestCase
         $mm_id = '54ad3f5e6e4cd68a278b4573';
         $name = 'video1';
         $pausedJob = $this->newJob($mm_id, $name);
+        $pausedJob->setStatus(Job::STATUS_PAUSED);
         
         $mm_id = '54ad3f5e6e4cd68a278b4574';
         $name = 'video2';
         $waitingJob = $this->newJob($mm_id, $name);
-        $waitingJob->setStatusId(Job::STATUS_WAITING);
+        $waitingJob->setStatus(Job::STATUS_WAITING);
 
         $mm_id = '54ad3f5e6e4cd68a278b4575';
         $name = 'video3';
         $executingJob = $this->newJob($mm_id, $name);
-        $executingJob->setStatusId(Job::STATUS_EXECUTING);
+        $executingJob->setStatus(Job::STATUS_EXECUTING);
 
         $mm_id = '54ad3f5e6e4cd68a278b4576';
         $name = 'video4';
         $executingJob2 = $this->newJob($mm_id, $name);
-        $executingJob2->setStatusId(Job::STATUS_EXECUTING);
+        $executingJob2->setStatus(Job::STATUS_EXECUTING);
 
         $mm_id = '54ad3f5e6e4cd68a278b4577';
         $name = 'video5';
         $errorJob = $this->newJob($mm_id, $name);
-        $errorJob->setStatusId(Job::STATUS_ERROR);
+        $errorJob->setStatus(Job::STATUS_ERROR);
 
         $mm_id = '54ad3f5e6e4cd68a278b4578';
         $name = 'video6';
         $finishedJob = $this->newJob($mm_id, $name);
-        $finishedJob->setStatusId(Job::STATUS_FINISHED);
+        $finishedJob->setStatus(Job::STATUS_FINISHED);
 
         $this->dm->persist($pausedJob);
         $this->dm->persist($waitingJob);
@@ -96,10 +97,10 @@ class JobRepositoryTest extends WebTestCase
         $job = new Job();
 
         $language_id = 'es';
-        $profile_id = 1;
+        $profile = 1;
         $cpu_id = 2;
         $url = 'video/'.$mm_id.'/'.$name.'.avi';
-        $status_id = Job::STATUS_PAUSED;
+        $status = Job::STATUS_WAITING;
         $priority = 1;
         $timeini = new \DateTime('now');
         $timestart = new \DateTime('now');
@@ -117,10 +118,10 @@ class JobRepositoryTest extends WebTestCase
         $job->setLocale('en');
         $job->setMmId($mm_id);
         $job->setLanguageId($language_id);
-        $job->setProfileId($profile_id);
+        $job->setProfile($profile);
         $job->setCpuId($cpu_id);
         $job->setUrl($url);
-        $job->setStatusId($status_id);
+        $job->setStatus($status);
         $job->setPriority($priority);
         $job->setName($name);
         $job->setTimeini($timeini);

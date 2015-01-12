@@ -18,12 +18,7 @@ class Job
     const STATUS_WAITING = 1;
     const STATUS_EXECUTING = 2;
     const STATUS_FINISHED = 3;
-    const STATUS_ERROR_TR = -51;
-    const STATUS_PAUSED_TR = -50;
-    const STATUS_WAITING_TR = -49;
-    const STATUS_EXECUTING_TR = -48;
-    const STATUS_FINISHED_TR = -47;
-    
+
     /**
      * @var int $id
      *
@@ -54,11 +49,11 @@ class Job
     private $language_id;
 
     /**
-     * @var int $profile_id
+     * @var string $profile
      *
-     * @MongoDB\Int
+     * @MongoDB\String
      */
-    private $profile_id;
+    private $profile;
 
     /**
      * @var int $cpu_id
@@ -79,7 +74,7 @@ class Job
      *
      * @MongoDB\Int
      */
-    private $status_id = self::STATUS_PAUSED;
+    private $status = self::STATUS_WAITING;
     
     /**
      * @var int $priority
@@ -229,23 +224,23 @@ class Job
     }
 
     /**
-     * Set profile_id
+     * Set profile
      *
-     * @param int $profile_id
+     * @param string $profile
      */
-    public function setProfileId($profile_id)
+    public function setProfile($profile)
     {
-        $this->profile_id = $profile_id;
+        $this->profile = $profile;
     }
 
     /**
-     * Get profile_id
+     * Get profile
      *
-     * @return int
+     * @return string
      */
-    public function getProfileId()
+    public function getProfile()
     {
-        return $this->profile_id;
+        return $this->profile;
     }
 
     /**
@@ -289,23 +284,23 @@ class Job
     }
 
     /**
-     * Set status_id
+     * Set status
      *
-     * @param int $status_id
+     * @param int $status
      */
-    public function setStatusId($status_id)
+    public function setStatus($status)
     {
-        $this->status_id = $status_id;
+        $this->status = $status;
     }
 
     /**
-     * Get status_id
+     * Get status
      *
      * @return int
      */
-    public function getStatusId()
+    public function getStatus()
     {
-        return $this->status_id;
+        return $this->status;
     }
 
     /**
