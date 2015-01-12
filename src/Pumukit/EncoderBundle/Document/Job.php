@@ -4,6 +4,7 @@ namespace Pumukit\EncoderBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Pumukit\EncoderBundle\Document\Job
@@ -168,6 +169,7 @@ class Job
      * @var string $email
      *
      * @MongoDB\String
+     * @Assert\Email
      */
     private $email;
 
