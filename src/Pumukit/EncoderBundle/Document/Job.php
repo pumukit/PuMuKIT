@@ -79,7 +79,7 @@ class Job
      *
      * @MongoDB\Int
      */
-    private $status_id;
+    private $status_id = self::STATUS_PAUSED;
     
     /**
      * @var int $priority

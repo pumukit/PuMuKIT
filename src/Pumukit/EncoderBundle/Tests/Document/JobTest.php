@@ -10,6 +10,7 @@ class JobTest extends \PHPUnit_Framework_TestCase
     {
         $job = new Job();
 
+        $this->assertEquals(Job::STATUS_PAUSED, $job->getStatusId());
         $this->assertEquals(array('en' => ''), $job->getI18nName());
         $this->assertEquals(0, $job->getDuration());
         $this->assertEquals('0', $job->getSize());
