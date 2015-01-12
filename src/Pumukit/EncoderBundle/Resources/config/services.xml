@@ -8,6 +8,16 @@
         <service id="pumukitencoder.cpu" class="Pumukit\EncoderBundle\Services\CpuService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
+
+        <service id="pumukitencoder.profile" class="Pumukit\EncoderBundle\Services\ProfileService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+        </service>
+
+        <service id="pumukitencoder.job" class="Pumukit\EncoderBundle\Services\JobService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="pumukitencoder.profile"/>
+            <argument type="service" id="pumukitencoder.cpu"/>
+        </service>
     </services>
 
 </container>
