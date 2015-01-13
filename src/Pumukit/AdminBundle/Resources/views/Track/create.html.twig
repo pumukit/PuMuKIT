@@ -25,7 +25,7 @@
         <div class="content" style="overflow: hidden">
           {% for profile in profiles %}
           <span style="display: block; float: left; width: 30%; overflow: hidden">
-            <input type="radio" name="master" id="master_{{ profile.id }}" value="{{ profile.id }}" checked="checked" class="MB_focusable" />{{ profile.name }}
+            <input type="radio" name="master" id="master_{{ profile.name }}" value="{{ profile.name }}" checked="checked" class="MB_focusable" />{{ profile.name }}
           </span>
           {% endfor %}
         </div>
