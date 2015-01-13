@@ -49,6 +49,8 @@ class JobService
 
     /**
      * Pause job
+     *
+     * Given an id, pauses the job only if it's waiting
      */
     public function pauseJob($id)
     {
@@ -57,23 +59,78 @@ class JobService
         if (null === $job){
           //throw exception
         }
-        if (Job::STATUS_WAITING === $job->getStatus()){
-            $job->setStatus(Job::STATUS_PAUSED);
+        $this->changeStatus($job, Job::STATUS_WAITING, Job::STATUS_PAUSED);
+    }
+
+    /**
+     * Resume Job
+     *
+     * Given an id, if the job status is waiting, pauses it
+     */
+    public function resumeJob($id)
+    {
+        $job = $this->repo->find($id);
+
+        if (null === $job){
+          //throw exception
+        }
+        $this->changeStatus($job, Job::STATUS_PAUSED, Job::STATUS_WAITING);      
+    }
+
+    /**
+     * Cancel job
+     *
+     * Given an id, if the job status is paused or waiting, delete it. Throw exception otherwise
+     */
+    public function cancelJob($id)
+    {
+        $job = $this->repo->find($id);
+
+        if (null === $job){
+          //throw exception
+        }
+        if ((Job::STATUS_WAITING !== $job->getStatus()) && (Job::STATUS_PAUSED !== $job->getStatus())){
+          //throw exception
+        }
+        $this->dm->remove($job);
+        $this->dm->flush();         
+    }
+
+    /**
+     * Get all jobs status
+     */
+    public function getAllJobsStatus()
+    {
+        return array(
+                     'error' => count($this->repo->findWithStatus(array(Job::STATUS_ERROR))),
+                     'paused' => count($this->repo->findWithStatus(array(Job::STATUS_PAUSED))),
+                     'waiting' => count($this->repo->findWithStatus(array(Job::STATUS_WAITING))),
+                     'executing' => count($this->repo->findWithStatus(array(Job::STATUS_EXECUTING))),
+                     'finished' => count($this->repo->findWithStatus(array(Job::STATUS_FINISHED)))
+                     );
+    }
+    
+    /**
+     * Get next job
+     *
+     * Returns the job in waiting status with higher priority (tie: timeini older)
+     * Returns null otherwise
+     * (TranscodingPeer::getNext())
+     */
+    public function getNextJob()
+    {
+        return $this->repo->findHigherPriorityWithStatus(array(Job::STATUS_WAITING));
+    }
+
+    /**
+     * Change status of a given job
+     */
+    private function changeStatus(Job $job, $actualStatus, $newStatus)
+    {
+        if ($actualStatus === $job->getStatus()){
+            $job->setStatus($newStatus);
             $this->dm->persist($job);
             $this->dm->flush();
         }
-
     }
-
-
-/*  TODO
-             - pause job (id)
-             - resume job (id) --- continuar si estaba pausado
-             - cancel job(id)--- pausado o waiting: borrarlo. en otro caso: exception
-
-             - estados job ()--- contar los job en cada estado. devolver array
-     
-        - get next job () --- de los que esté en waiting, el más prioritario (empate el mas viejo), sino null. (TranscodingPeer::getNext())
-*/
-
 }
