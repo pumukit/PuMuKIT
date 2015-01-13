@@ -13,36 +13,13 @@ class CpuService
     const TYPE_LINUX = 'linux';
     const TYPE_WINDOWS = 'windows';
     const TYPE_GSTREAMER = 'gstreamer';
-
-    // TODO - Move CPUs to configuration files
-    private $cpus = array(
-                       'CPU_LOCAL' => array(
-                                            'id' => 1,
-                                            'host' => '127.0.0.1',
-                                            'max' => 1,
-                                            'number' => 1,
-                                            'type' => self::TYPE_LINUX,
-                                            'user' => 'transco1',
-                                            'password' => 'PUMUKIT',
-                                            'description' => 'Pumukit transcoder'
-                                            ),
-                       'CPU_REMOTE' => array(
-                                            'id' => 2,
-                                            'host' => '192.168.5.123',
-                                            'max' => 2,
-                                            'number' => 1,
-                                            'type' => self::TYPE_LINUX,
-                                            'user' => 'transco2',
-                                            'password' => 'PUMUKIT',
-                                            'description' => 'Pumukit transcoder'
-                                            )
-                       );
     
     /**
      * Constructor
      */
-    public function __construct(DocumentManager $documentManager)
+    public function __construct(array $cpus, DocumentManager $documentManager)
     {
+        $this->cpus = $cpus;
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
     }

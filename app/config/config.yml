@@ -74,3 +74,9 @@ parameters:
     pumukit2.locales:
         - es
         - en
+
+pumukit_encoder:
+    cpus: 
+        local:
+            host: 127.0.0.1
+        
