@@ -22,4 +22,18 @@ class JobRepository extends DocumentRepository
           ->getQuery()
           ->execute();
     }
+
+    /**
+     * Find the job with higher priority with given status
+     */
+    public function findHigherPriorityWithStatus(array $status)
+    {
+        return $this->createQueryBuilder()
+          ->field('status')->in($status)
+          ->sort('priority', 'desc')
+          ->sort('timeini', 'asc')
+          ->getQuery()
+          ->getSingleResult();
+    }
+
 }

@@ -92,6 +92,77 @@ class JobRepositoryTest extends WebTestCase
         $this->assertEquals(3, count($this->repo->findWithStatus(array(Job::STATUS_PAUSED, Job::STATUS_FINISHED, Job::STATUS_ERROR))));
     }
 
+    public function testFindHigherPriorityWithStatus()
+    {
+        $mm_id = '54ad3f5e6e4cd68a278b4578';
+        $name = 'video6';
+        $job0 = $this->newJob($mm_id, $name);
+        $job0->setTimeini(new \DateTime('now'));
+        $job0->setPriority(3);
+        $job0->setStatus(Job::STATUS_PAUSED);
+
+        $mm_id = '54ad3f5e6e4cd68a278b4573';
+        $name = 'video1';
+        $job1 = $this->newJob($mm_id, $name);
+        $job1->setTimeini(new \DateTime('now'));
+        $job1->setPriority(2);
+        
+        $mm_id = '54ad3f5e6e4cd68a278b4574';
+        $name = 'video2';
+        $job2 = $this->newJob($mm_id, $name);
+        $job2->setTimeini(new \DateTime('now'));
+        $job2->setPriority(1);
+
+        $mm_id = '54ad3f5e6e4cd68a278b4575';
+        $name = 'video3';
+        $job3 = $this->newJob($mm_id, $name);
+        $job3->setTimeini(new \DateTime('now'));
+        $job3->setPriority(3);
+
+        $mm_id = '54ad3f5e6e4cd68a278b4576';
+        $name = 'video4';
+        $job4 = $this->newJob($mm_id, $name);
+        $job4->setTimeini(new \DateTime('now'));
+        $job4->setPriority(2);
+
+        $mm_id = '54ad3f5e6e4cd68a278b4577';
+        $name = 'video5';
+        $job5 = $this->newJob($mm_id, $name);
+        $job5->setTimeini(new \DateTime('now'));
+        $job5->setPriority(1);
+
+        $mm_id = '54ad3f5e6e4cd68a278b4578';
+        $name = 'video6';
+        $job6 = $this->newJob($mm_id, $name);
+        $job6->setTimeini(new \DateTime('now'));
+        $job6->setPriority(2);
+
+        $this->dm->persist($job0);
+        $this->dm->persist($job1);
+        $this->dm->persist($job2);
+        $this->dm->persist($job3);
+        $this->dm->persist($job4);
+        $this->dm->persist($job5);
+        $this->dm->persist($job6);
+        $this->dm->flush();
+
+        $this->assertEquals($job3, $this->repo->findHigherPriorityWithStatus(array(Job::STATUS_WAITING)));
+
+        $mm_id = '54ad3f5e6e4cd68a278b4578';
+        $name = 'video6';
+        $job7 = $this->newJob($mm_id, $name);
+        $job7->setTimeini(new \DateTime('now'));
+        $job7->setPriority(3);
+
+        $this->dm->persist($job7);
+        $this->dm->flush();
+
+        $this->assertEquals($job3, $this->repo->findHigherPriorityWithStatus(array(Job::STATUS_WAITING)));
+        $this->assertNotEquals($job7, $this->repo->findHigherPriorityWithStatus(array(Job::STATUS_WAITING)));
+
+        $this->assertEquals($job0, $this->repo->findHigherPriorityWithStatus(array(Job::STATUS_PAUSED)));    
+  }
+
     private function newJob($mm_id, $name)
     {
         $job = new Job();
