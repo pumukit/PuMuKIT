@@ -24,14 +24,14 @@ class CpuServiceTest extends WebTestCase
           ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
           ->getRepository('PumukitEncoderBundle:Job');
-        $this->cpuService = $kernel->getContainer()
-          ->get('pumukitencoder.cpu');
     }
 
     public function setUp()
     {
         $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')->remove(array());
         $this->dm->flush();
+
+        $this->cpuService = new CpuService($this->getDemoCpus(), $this->dm);
     }
 
     public function testGetFreeCpu()
