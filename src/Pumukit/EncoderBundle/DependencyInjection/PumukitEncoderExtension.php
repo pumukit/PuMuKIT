@@ -26,5 +26,6 @@ class PumukitEncoderExtension extends Extension
         $loader->load('services.xml');
 
         $container->setParameter('pumukitencode.cpulist', $config['cpus']);
+        $container->setParameter('pumukitencode.profilelist', $config['profiles']);
     }
 }

@@ -6,8 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\ProfileService;
 
-// TODO - Change way of testing when moving profiles to configuration files
-
 class ProfileServiceTest extends WebTestCase
 {
     private $dm;
@@ -24,14 +22,14 @@ class ProfileServiceTest extends WebTestCase
           ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
           ->getRepository('PumukitEncoderBundle:Job');
-        $this->profileService = $kernel->getContainer()
-          ->get('pumukitencoder.profile');
     }
 
     public function setUp()
     {
         $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')->remove(array());
         $this->dm->flush();
+
+        $this->profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
     }
 
     public function testGetProfiles()
@@ -42,10 +40,10 @@ class ProfileServiceTest extends WebTestCase
 
     public function testGetProfile()
     {
-      $profiles = $this->getDemoProfiles();
-      $this->assertEquals($profiles['MASTER_COPY'], $this->profileService->getProfile('master_copy'));
-      $this->assertEquals($profiles['MASTER_VIDEO_H264'], $this->profileService->getProfile('master_video_h264'));
-      $this->assertNull($this->profileService->getProfile('master'));
+        $profiles = $this->getDemoProfiles();
+        $this->assertEquals($profiles['MASTER_COPY'], $this->profileService->getProfile('master_copy'));
+        $this->assertEquals($profiles['MASTER_VIDEO_H264'], $this->profileService->getProfile('master_video_h264'));
+        $this->assertNull($this->profileService->getProfile('master'));
     }
 
     private function getDemoProfiles()
