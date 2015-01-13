@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\ProfileService;
 
+// TODO - Change way of testing when moving profiles to configuration files
+
 class ProfileServiceTest extends WebTestCase
 {
     private $dm;
