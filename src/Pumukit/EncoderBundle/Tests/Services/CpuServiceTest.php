@@ -6,8 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\CpuService;
 
-// TODO - Change way of testing when moving cpus to configuration files
-
 class CpuServiceTest extends WebTestCase
 {
     private $dm;

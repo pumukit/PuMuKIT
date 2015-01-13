@@ -9,6 +9,7 @@ class CpuService
 {
     private $dm;
     private $repo;
+    private $cpus;
 
     const TYPE_LINUX = 'linux';
     const TYPE_WINDOWS = 'windows';
