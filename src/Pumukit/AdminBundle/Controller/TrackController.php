@@ -21,10 +21,13 @@ class TrackController extends Controller
         $track = new Track();
         $form = $this->createForm(new TrackType(), $track);
 
+        $profiles = $this->get('pumukitencoder.profile')->getProfiles();
+
         return array(
                      'track' => $track,
                      'form' => $form->createView(),
-                     'mm' => $multimediaObject
+                     'mm' => $multimediaObject,
+                     'profiles' => $profiles
                      );
     }
 
@@ -36,13 +39,15 @@ class TrackController extends Controller
     {
         $formData = $request->get('pumukitadmin_track', array());
 
-        // TODO
+        // TODO job service
+
+        // TODO track service
         $trackService = $this->get('pumukitschema.track');
         if (($request->files->has('file')) && (!$request->get('url', null))) {
             $multimediaObject = $trackService->addTrackToMultimediaObject($multimediaObject, $request->files->get('file'), $formData);
         } elseif ($request->get('url', null)) {
           // TODO - addTrackUrl not defined
-          $multimediaObject = $trackService->addTrackUrl($multimediaObject, $request->get('url'), $formData);
+          //$multimediaObject = $trackService->addTrackUrl($multimediaObject, $request->get('url'), $formData);
         }
 
         return array('mm' => $multimediaObject);

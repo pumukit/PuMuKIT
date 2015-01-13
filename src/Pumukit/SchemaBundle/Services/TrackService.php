@@ -26,8 +26,11 @@ class TrackService
     public function addTrackToMultimediaObject(MultimediaObject $multimediaObject, File $trackFile, $formData)
     {
         // TODO - Call JobService to encode the track
+        $data = $this->getArrayData($formData);
+        $jobService = $this->get('pumukitencoder.job');
+        $jobService->addJob($trackFile, $data['profile'], $data['priority'], $data['language'], $data['description']);
 
-
+        /*
         // TODO - check it's ok
         $track = new Track();
         $track = $this->saveFormData($track, $formData);
@@ -40,7 +43,7 @@ class TrackService
         $multimediaObject->addTrack($track);
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
-
+        */
         return $multimediaObject;
     }
 
@@ -111,5 +114,33 @@ class TrackService
         */
 
         return $track;
+    }
+
+    /**
+     * Get data in array or default values
+     */
+    private function getFormData($formData)
+    {
+        $data = array(
+                      'profile' => array('name' => null),
+                      'priority' => 2,
+                      'language' => null,
+                      'description' => array()
+                      );
+        
+        if (array_key_exists('profile', $formData)){
+            $data['profile'] = $formData['profile'];
+        }
+        if (array_key_exists('priority', $formData)){
+            $data['priority'] = $formData['priority'];
+        }
+        if (array_key_exists('language', $formData)){
+            $data['language'] = $formData['language'];
+        }
+        if (array_key_exists('i18n_description', $formData)){
+            $data['description'] = $formData['i18n_description'];
+        }
+        
+        return $data;
     }
 }

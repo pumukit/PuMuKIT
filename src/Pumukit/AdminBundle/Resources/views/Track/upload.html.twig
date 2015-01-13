@@ -1,0 +1,13 @@
+<script type="text/javascript">
+//<![CDATA[
+
+  parent.Modalbox.hide();
+
+  new parent.Ajax.Updater('track_mms', '{{ path('pumukitadmin_track_list', {'id': mm.id}) }}', {method: 'GET', asynchronous: true, evalScripts: true});
+  parent.$('track_mms').innerHTML= 'Actualice el vídeo para que se muestren los másters.';
+
+  parent.$('div_messages_span_info').innerHTML ='Nuevo máster subido.';
+  new parent.Effect.Opacity('div_messages_info', {duration:7.0, from:1.0, to:0.0});
+
+//]]>
+</script>

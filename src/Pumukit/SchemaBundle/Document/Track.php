@@ -82,13 +82,6 @@ class Track extends Element
   private $height;
 
   /**
-   * @var int $priority
-   * // TODO here or in transcoders
-   * @MongoDB\Int
-   */
-  private $priority = 2;
-
-  /**
    * Set language
    *
    * @param string $language
@@ -286,25 +279,5 @@ class Track extends Element
   public function getHeight()
   {
       return $this->height;
-  }
-
-  /**
-   * Set priority
-   * // TODO here or in transcoders
-   * @param integer $priority
-   */
-  public function setPriority($priority)
-  {
-      $this->priority = $priority;
-  }
-
-  /**
-   * Get priority
-   * // TODO here or in transcoders
-   * @return integer
-   */
-  public function getPriority()
-  {
-      return $this->priority;
   }
 }
