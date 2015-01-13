@@ -29,22 +29,18 @@ class JobService
      */
     public function addJob($pathFile, $profile, $priority, $language = null, $description = array())
     {
-        //- add job (path del archivo a transcodificar, perfil (nombre del perfil), prioridad, idioma = null, description (array internacionalizable) = array() ------ check archivo y perfil existentes, crear new job waiting, init timeini, persisitirlo
-
         if (!is_file($pathFile)) {
-          throw new FileNotFoundException($pathFile); 
+            throw new FileNotFoundException($pathFile); 
         }
 
         if (null === $this->profileService->getProfile($profile['name'])){
-          // throw exception
+            throw new \Exception("Can't find given profile with name ".$profile['name']);
         }
         
         $job = new Job();
         $job->setTimeini(new \DateTime('now'));
         $this->dm->persist($job);
         $this->dm->flush();
-
-        // TODO - algo mas?
     }
 
     /**
@@ -57,7 +53,7 @@ class JobService
         $job = $this->repo->find($id);
 
         if (null === $job){
-          //throw exception
+            throw new \Exception("Can't find job with id ".$id);
         }
         $this->changeStatus($job, Job::STATUS_WAITING, Job::STATUS_PAUSED);
     }
@@ -72,7 +68,7 @@ class JobService
         $job = $this->repo->find($id);
 
         if (null === $job){
-          //throw exception
+            throw new \Exception("Can't find job with id ".$id);
         }
         $this->changeStatus($job, Job::STATUS_PAUSED, Job::STATUS_WAITING);      
     }
@@ -87,10 +83,10 @@ class JobService
         $job = $this->repo->find($id);
 
         if (null === $job){
-          //throw exception
+            throw new \Exception("Can't find job with id ".$id);
         }
         if ((Job::STATUS_WAITING !== $job->getStatus()) && (Job::STATUS_PAUSED !== $job->getStatus())){
-          //throw exception
+            throw new \Exception("Trying to cancel job ".$id." that is not paused or waiting");
         }
         $this->dm->remove($job);
         $this->dm->flush();         
