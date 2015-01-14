@@ -24,7 +24,7 @@ class JobTest extends \PHPUnit_Framework_TestCase
         $mm_id = '54ad3f5e6e4cd68a278b4573';
         $language_id = 'es';
         $profile = 1;
-        $cpu_id = 2;
+        $cpu = 'local';
         $url = 'video/'.$mm_id.'/video1.avi';
         $status = Job::STATUS_WAITING;
         $priority = 1;
@@ -46,7 +46,7 @@ class JobTest extends \PHPUnit_Framework_TestCase
         $job->setMmId($mm_id);
         $job->setLanguageId($language_id);
         $job->setProfile($profile);
-        $job->setCpuId($cpu_id);
+        $job->setCpu($cpu);
         $job->setUrl($url);
         $job->setStatus($status);
         $job->setPriority($priority);
@@ -66,7 +66,7 @@ class JobTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($mm_id, $job->getMmId());
         $this->assertEquals($language_id, $job->getLanguageId());
         $this->assertEquals($profile, $job->getProfile());
-        $this->assertEquals($cpu_id, $job->getCpuId());
+        $this->assertEquals($cpu, $job->getCpu());
         $this->assertEquals($url, $job->getUrl());
         $this->assertEquals($status, $job->getStatus());
         $this->assertEquals($priority, $job->getPriority());

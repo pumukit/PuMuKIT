@@ -56,11 +56,11 @@ class Job
     private $profile;
 
     /**
-     * @var int $cpu_id
+     * @var string $cpu
      *
-     * @MongoDB\Int
+     * @MongoDB\String
      */
-    private $cpu_id;
+    private $cpu;
 
     /**
      * @var string $url
@@ -244,23 +244,23 @@ class Job
     }
 
     /**
-     * Set cpu_id
+     * Set cpu
      *
-     * @param int $cpu_id
+     * @param string $cpu
      */
-    public function setCpuId($cpu_id)
+    public function setCpu($cpu)
     {
-        $this->cpu_id = $cpu_id;
+        $this->cpu = $cpu;
     }
 
     /**
-     * Get cpu_id
+     * Get cpu
      *
-     * @return int
+     * @return string
      */
-    public function getCpuId()
+    public function getCpu()
     {
-        return $this->cpu_id;
+        return $this->cpu;
     }
 
     /**

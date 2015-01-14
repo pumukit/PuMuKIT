@@ -35,7 +35,7 @@ class CpuService
         foreach ($this->cpus as $cpu){
             $busy = 0;
             foreach ($executingJobs as $job){
-                if ($cpu['id'] === $job->getCpuId()){
+                if ($cpu['name'] === $job->getCpu()){
                     $busy++;
                 }
             }
@@ -65,5 +65,16 @@ class CpuService
     public function getCpus()
     {
         return $this->cpus;
+    }
+
+    /**
+     * Is active
+     *
+     * Returns true if given cpu is active
+     */
+    public function isActive($cpu, $cmd = "")
+    {
+        // TODO
+        return true;
     }
 }

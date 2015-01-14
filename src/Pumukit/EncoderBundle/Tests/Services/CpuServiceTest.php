@@ -39,7 +39,7 @@ class CpuServiceTest extends WebTestCase
         $this->assertEquals($cpus['CPU_LOCAL'], $this->cpuService->getFreeCpu());
 
         $job = new Job();
-        $job->setCpuId(1);
+        $job->setCpu('local1');
         $job->setStatus(Job::STATUS_EXECUTING);
         $this->dm->persist($job);
         $this->dm->flush();
@@ -47,7 +47,7 @@ class CpuServiceTest extends WebTestCase
         $this->assertEquals($cpus['CPU_REMOTE'], $this->cpuService->getFreeCpu());
 
         $job2 = new Job();
-        $job2->setCpuId(2);
+        $job2->setCpu('local2');
         $job2->setStatus(Job::STATUS_EXECUTING);
         $this->dm->persist($job2);
         $this->dm->flush();
@@ -55,7 +55,7 @@ class CpuServiceTest extends WebTestCase
         $this->assertEquals($cpus['CPU_REMOTE'], $this->cpuService->getFreeCpu());
 
         $job3 = new Job();
-        $job3->setCpuId(2);
+        $job3->setCpu('local2');
         $job3->setStatus(Job::STATUS_EXECUTING);
         $this->dm->persist($job3);
         $this->dm->flush();

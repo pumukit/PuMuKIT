@@ -169,7 +169,7 @@ class JobRepositoryTest extends WebTestCase
 
         $language_id = 'es';
         $profile = 1;
-        $cpu_id = 2;
+        $cpu = 'local';
         $url = 'video/'.$mm_id.'/'.$name.'.avi';
         $status = Job::STATUS_WAITING;
         $priority = 1;
@@ -190,7 +190,7 @@ class JobRepositoryTest extends WebTestCase
         $job->setMmId($mm_id);
         $job->setLanguageId($language_id);
         $job->setProfile($profile);
-        $job->setCpuId($cpu_id);
+        $job->setCpu($cpu);
         $job->setUrl($url);
         $job->setStatus($status);
         $job->setPriority($priority);
