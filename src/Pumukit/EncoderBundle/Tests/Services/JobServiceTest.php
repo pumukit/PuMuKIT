@@ -51,7 +51,11 @@ class JobServiceTest extends WebTestCase
         $language = 'es';
         $description = array('en' => 'test', 'es' => 'prueba');
 
-        $this->jobService->addJob($pathFile, $profile, $priority, $language, $description);
+        $multimediaObject = new MultimediaObject();
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        $this->jobService->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description);
 
         $this->assertEquals(1, count($this->repo->findAll()));
 
@@ -63,7 +67,7 @@ class JobServiceTest extends WebTestCase
         $language2 = 'en';
         $description2 = array('en' => 'test2', 'es' => 'prueba2');
 
-        $this->jobService->addJob($pathFile2, $profile2, $priority2, $language2, $description2);
+        $this->jobService->addJob($pathFile2, $profile2, $priority2, $multimediaObject, $language2, $description2);
 
         $this->assertEquals(2, count($this->repo->findAll()));
 
@@ -191,7 +195,11 @@ class JobServiceTest extends WebTestCase
         $language = 'es';
         $description = array('en' => 'test', 'es' => 'prueba');
 
-        $this->jobService->addJob($pathFile, $profile, $priority, $language, $description);
+        $multimediaObject = new MultimediaObject();
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        $this->jobService->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description);
 
         $this->assertTrue($this->deleteFile($pathFile));      
     }
