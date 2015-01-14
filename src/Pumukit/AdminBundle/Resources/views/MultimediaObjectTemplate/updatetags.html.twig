@@ -6,7 +6,6 @@
   <input type="checkbox" checked="checked" onchange="toggle_show_all();"/> {% trans %}Show all tags{% endtrans %}
 </div>
 
-
 <dl style="margin: 0px">
 
    {% for parent in parent_tags if not parent.getDisplay() %}

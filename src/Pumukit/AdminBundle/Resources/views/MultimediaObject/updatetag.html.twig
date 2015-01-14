@@ -6,7 +6,6 @@
   <input type="checkbox" checked="checked" onchange="toggle_show_all();"/> {% trans %}Show all tags{% endtrans %}
 </div>
 
-
 <div style="float: right; padding: 5px 20px" id="tag_update_link_{{ mm.getSeries().getId() }}">
    {# TODO link or form. Copy path #}
    <a href="#" onclick="if (window.confirm('{% trans %}Are you sure you want to copy these tags to this series?{% endtrans %}')) { $('tag_update_link_{{ mm.getSeries().getId() }}').innerHTML = '{% trans %}loading{% endtrans %}...'; new Ajax.Updater('tag_update_link_{{ mm.getSeries().getId() }}', '/editar.php/mms/serialtag/mm_id/14574/serial_id/782', {asynchronous:true, evalScripts:true}); }; return false;">{% trans %}Copy these tags to this series{% endtrans %}</a>
@@ -57,14 +56,14 @@
 </div>
 
 <script type="text/javascript">
-function toggle_tree_tag(element, id, mm_id, tag_id) {
+window.toggle_tree_tag = function(element, id, mm_id, tag_id) {
   if (element.parentElement.hasClassName("notload")) {
     element.parentElement.removeClassName("notload");
 
   new Ajax.Updater("tag_ul_children_" + id, "' . url_for('mms/getchildren') . '/id/"  + id + "/block_tag/" + tag_id + "/mm/" + mm_id, {
       onComplete: function(){ $("all_tag_" + tag_id).scrollTop = ((element.positionedOffset()[1]) - 750); }
-    });}
-else {
+    });
+  } else {
     $$(".tag_li_parent_" + id).each(function(e){e.toggleClassName("nodisplay")});
     //element.scrollIntoView();
     $("all_tag_" + tag_id).scrollTop = ((element.positionedOffset()[1]) - 750);
@@ -72,7 +71,7 @@ else {
   element.parentElement.toggleClassName("expanded").toggleClassName("collapsed");
 }
 
-function toggle_show_all()
+window.toggle_show_all = function()
 {
   // SHOW - Quito el punto a los nodos que muestran sus hijos al desocultar
   $$(".expanded.element, .collapsed.element").each(function(e){
@@ -101,7 +100,7 @@ function toggle_show_all()
 
 }
 
-function create_li_in_select(tag, block_tag_id, mm_id) {
+window.create_li_in_select = function(tag, block_tag_id, mm_id) {
   var $ul = $("select_ul_tag_" + block_tag_id);
   var li = new Element("li", {"id": "select_li_" + tag.id, "class": "element"});
   var span1 = new Element("span", {"class": "icon"}).update("&nbsp;");
@@ -111,10 +110,9 @@ function create_li_in_select(tag, block_tag_id, mm_id) {
   $ul.insert(li);
 }
 
-function add_tree_tag(tag_id, mm_id, block_tag_id) {
+window.add_tree_tag = function(tag_id, mm_id, block_tag_id) {
   var route = "{{ path('pumukitadmin_mms_addtag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' }) }}";
-  route.replace('PLACEHOLDER_MM_ID', mm_id);
-  route.replace('PLACEHOLDER_TAG_ID', tag_id);
+  route = route.replace('PLACEHOLDER_MM_ID', mm_id).replace('PLACEHOLDER_TAG_ID', tag_id);
   new Ajax.Request(route,  {
     method: "post",
     parameters: "tag=" + tag_id,
@@ -133,7 +131,7 @@ function add_tree_tag(tag_id, mm_id, block_tag_id) {
 }
 
 
-function del_tree_tag(tag_id, mm_id) {
+window.del_tree_tag = function(tag_id, mm_id) {
   // TODO Si ya lo tiene no hacer nada.
   console.log("del_tree_tag info_num_mm_" + tag_id);
 
@@ -154,7 +152,7 @@ function del_tree_tag(tag_id, mm_id) {
 }
 
 
-function inc_num_mm(tag_id, num)
+window.inc_num_mm = function(tag_id, num)
 {
   var aux = $("info_num_mm_" + tag_id);
   if (aux){
