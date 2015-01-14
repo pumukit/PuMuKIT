@@ -151,7 +151,7 @@ class InspectionFfmpegServiceTest extends \PHPUnit_Framework_TestCase
         $framerate2 = '10'; // mediainfo = 9.091', it is variable fr. with max =10;
         $width2     = '1200';
         // FIXME mediainfo and ffprobe shows height = 900.
-        $height2    = '912';
+        $height2    = '900';
 
         $acodec2     = 'aac'; //mediainfo = 'AAC';
 
