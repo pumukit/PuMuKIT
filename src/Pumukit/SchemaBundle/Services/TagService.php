@@ -9,81 +9,80 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 class TagService
 {
     private $dm;
+    private $repository;
 
     public function __construct(DocumentManager $documentManager)
     {
         $this->dm = $documentManager;
+        $this->repository = $this->dm->getRepository('PumukitSchemaBundle:Tag');
     }
 
-  /**
-   * Add Tag to Multimedia Object
-   *
-   * @param MultimediaObject $mmobj
-   * @param string $tagId
-   * @return MultimediaObject $mmobj
-   */
-  public function addTagToMultimediaObject(MultimediaObject $mmobj, $tagId)
-  {
-      $repository = $this->dm->getRepository('PumukitSchemaBundle:Tag');
-      $tag = $repository->find($tagId);
-      if (null !== $tag) {
-          $node = $tag;
-          do {
-              if (!($mmobj->containsTag($node))) {
-                  $mmobj->addTag($node);
-                  $node->increaseNumberMultimediaObjects();
-                  $this->dm->persist($node);
-              }
-              $aux = $node->getParent();
-              if (null !== $aux) {
-                  $node = $aux;
-              } else {
-                  // TODO throw exception tag tree broken or without ROOT
-        break;
-              }
-          } while (0 !== strcmp($node->getCod(), 'ROOT'));
+    /**
+     * Add Tag to Multimedia Object
+     *
+     * @param MultimediaObject $mmobj
+     * @param string $tagId
+     * @return Array[Tag] addded tags
+     */
+    public function addTagToMultimediaObject(MultimediaObject $mmobj, $tagId)
+    {
+        $tagAdded = array();
 
-          $this->dm->persist($mmobj);
-          $this->dm->flush();
-      } else {
+        $tag = $this->repository->find($tagId);
+        if (!$tag) {
           // TODO throw exception tag not found
-      return $mmobj;
-      }
+          return $tagAdded;
+        }
 
-      return $mmobj;
+        do {
+          if (!$mmobj->containsTag($tag)) {
+            $tagAdded[] = $tag;
+            $mmobj->addTag($tag);
+            $tag->increaseNumberMultimediaObjects();
+            $this->dm->persist($tag);
+          }
+
+        } while($tag = $tag->getParent());
+
+        
+        $this->dm->persist($mmobj);
+        $this->dm->flush();
+        
+        return $tagAdded;
   }
 
   /**
    * Remove Tag from Multimedia Object
+   *
+   * @param MultimediaObject $mmobj
+   * @param string $tagId
+   * @return Array[Tag] removed tags
    */
   public function removeTagFromMultimediaObject(MultimediaObject $mmobj, $tagId)
   {
-      $repository = $this->dm->getRepository('PumukitSchemaBundle:Tag');
-      $tag = $repository->find($tagId);
-      if (null !== $tag) {
-          $node = $tag;
-          do {
-              $children = $node->getChildren();
-              if (!($mmobj->containsAnyTag($children->toArray()))) {
-                  $mmobj->removeTag($node);
-                  $node->decreaseNumberMultimediaObjects();
-                  $this->dm->persist($node);
-              }
-              $aux = $node->getParent();
-              if (null !== $aux) {
-                  $node = $aux;
-              } else {
-                  // TODO throw exception tag tree broken or without ROOT
-        break;
-              }
-          } while (0 !== strcmp($node->getCod(), 'ROOT'));
-          $this->dm->persist($mmobj);
-          $this->dm->flush();
-      } else {
-          // TODO throw exception tag not found
-      return $mmobj;
+      $removeTags = array();
+
+      $tag = $this->repository->find($tagId);
+      if (!$tag) {
+        //TODO throw exception tag not found
+        return $removeTags;
       }
 
-      return $mmobj;
+      do {
+        $children = $tag->getChildren();
+        if (!($mmobj->containsAnyTag($children->toArray()))) {
+          $removeTags[] = $tag;
+          $mmobj->removeTag($tag);
+          $tag->decreaseNumberMultimediaObjects();
+          $this->dm->persist($tag);
+        } else {
+          break;
+        }
+      } while ($tag = $tag->getParent());
+
+      $this->dm->persist($mmobj);
+      $this->dm->flush();
+      
+      return $removeTags;
   }
 }
