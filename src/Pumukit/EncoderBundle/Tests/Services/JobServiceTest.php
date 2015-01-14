@@ -177,6 +177,46 @@ class JobServiceTest extends WebTestCase
         $this->assertNull($this->jobService->getNextJob());
     }
 
+    /**
+     * @expectedException Exception
+     * @expectedExceptionMessage Can't find given profile with name
+     */
+    public function testExceptionProfileName()
+    {
+        $pathFile = 'test.txt';
+        $file = $this->createNewFile($pathFile, 'test file');
+
+        $profile = array('name' => 'non_existing');
+        $priority = 2;
+        $language = 'es';
+        $description = array('en' => 'test', 'es' => 'prueba');
+
+        $this->jobService->addJob($pathFile, $profile, $priority, $language, $description);
+
+        $this->assertTrue($this->deleteFile($pathFile));      
+    }
+
+    /**
+     * @expectedException Exception
+     * @expectedExceptionMessage Can't find job with id
+     */
+    public function testExceptionJobId()
+    {
+        $this->jobService->pauseJob('non_existing');
+        $this->jobService->resumeJob('non_existing');
+        $this->jobService->cancelJob('non_existing');
+    }
+
+    /**
+     * @expectedException Exception
+     * @expectedExceptionMessage Trying to cancel job
+     */
+    public function testExceptionCancelJobNotPausedOrWaiting()
+    {
+        $job = $this->createNewJob(Job::STATUS_EXECUTING);
+        $this->jobService->cancelJob($job->getId());
+    }
+
     private function createNewJob($status = null, $priority = null)
     {
         $job = new Job();
