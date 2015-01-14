@@ -101,3 +101,15 @@ pumukitadmin_mms_addtag:
         _controller: pumukitadmin.controller.mms:addTagAction
         _sylius:
             redirect: pumukitadmin_mms_edit
+
+pumukitadmin_mms_deletetag:
+    pattern: /{id}/deletetag/{tagId}
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitadmin.controller.mms:deleteTagAction
+
+pumukitadmin_mms_getchildrentag:
+    pattern: /{id}/getchildrentag/
+    methods: [GET]
+    defaults:
+        _controller: pumukitadmin.controller.mms:getChildrenTagAction
