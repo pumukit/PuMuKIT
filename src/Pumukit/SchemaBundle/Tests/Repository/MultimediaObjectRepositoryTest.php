@@ -134,7 +134,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(2, count($mmobj_ned_lord));
         $this->assertEquals(1, count($mmobj_ned_hand));
         // TODO - FAILS
-        // $this->assertEmpty($mmobj_benjen_lord->toArray());
+        //$this->assertEmpty($mmobj_benjen_lord->toArray());
         //$this->assertEmpty(array(), count($mmobj_ned_ranger));
 
         // Test find by series
@@ -172,12 +172,17 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($roleDirector);
 
         $mm = new MultimediaObject();
+        $this->dm->persist($mm);
+        $this->dm->flush();
 
         $this->assertFalse($mm->containsPerson($personKate));
         $this->assertFalse($mm->containsPersonWithRole($personKate, $roleActor));
         $this->assertEquals(0, count($mm->getPeopleInMultimediaObject()));
 
         $mm->addPersonWithRole($personKate, $roleActor);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
         $this->assertTrue($mm->containsPerson($personKate));
         $this->assertTrue($mm->containsPersonWithRole($personKate, $roleActor));
         $this->assertFalse($mm->containsPersonWithRole($personKate, $rolePresenter));
@@ -186,11 +191,17 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(1, count($mm->getPeopleInMultimediaObject()));
 
         $mm2 = new MultimediaObject();
+        $this->dm->persist($mm2);
+        $this->dm->flush();
+
         $this->assertFalse($mm2->containsPerson($personKate));
         $this->assertFalse($mm2->containsPersonWithRole($personKate, $roleActor));
         $this->assertEquals(0, count($mm2->getPeopleInMultimediaObject()));
 
         $mm2->addPersonWithRole($personKate, $roleActor);
+        $this->dm->persist($mm2);
+        $this->dm->flush();
+
         $this->assertTrue($mm2->containsPerson($personKate));
         $this->assertTrue($mm2->containsPersonWithRole($personKate, $roleActor));
         $this->assertFalse($mm2->containsPersonWithRole($personKate, $rolePresenter));
@@ -199,11 +210,14 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(1, count($mm2->getPeopleInMultimediaObject()));
 
         $mm->addPersonWithRole($personKate, $rolePresenter);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
         $this->assertTrue($mm->containsPersonWithRole($personKate, $roleActor));
         $this->assertTrue($mm->containsPersonWithRole($personKate, $rolePresenter));
         $this->assertFalse($mm->containsPersonWithRole($personKate, $roleDirector));
-        // TODO - CHECK. FAILS.
-        //$this->assertEquals(1, count($mm->getPeopleInMultimediaObject()));
+        $this->assertEquals(1, count($mm->getPeopleInMultimediaObject()));
+
     }
 
     public function testFindBySeries()
@@ -537,10 +551,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $person->setPost($post);
         $person->setBio($bio);
 
-        // FIXME esto no persiste.
-        // Este dm (DocumentManager) se refiere
-        // a doctrine_mongodb en la
-        // base de datos pumukit_test
         $this->dm->persist($person);
         $this->dm->flush();
 
@@ -580,22 +590,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $description = "Description";
         $duration = 123;
 
-        //$tag1 = new Tag('tag1');
-        //$tag2 = new Tag('tag2');
-        //$mm_tags = array($tag1, $tag2);
-
-        //$track1 = new Track();
-
-        //$pic1 = new Pic();
-
-        //$material1 = new Material();
-
         $mm = new MultimediaObject();
-
-        //$mm->addTag($tag1);
-        //$mm->addTrack($track1);
-        //$mm->addPic($pic1);
-        //$mm->addMaterial($material1);
 
         $mm->setStatus($status);
         $mm->setRecordDate($record_date);
@@ -605,13 +600,10 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mm->setDescription($description);
         $mm->setDuration($duration);
 
-        $series->addMultimediaObject($mm);
+        $mm->setSeries($series);
 
-        //$this->dm->persist($tag1);
-        //$this->dm->persist($track1);
-        //$this->dm->persist($pic1);
-        //$this->dm->persist($material1);
         $this->dm->persist($mm);
+        $this->dm->persist($series);
         $this->dm->flush();
 
         return $mm;

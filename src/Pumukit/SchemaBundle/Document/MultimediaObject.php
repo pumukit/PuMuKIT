@@ -1943,9 +1943,14 @@ class MultimediaObject
     public function addPersonWithRole($person, $role)
     {
         if (!($this->containsPersonWithRole($person, $role))){
-            $embeddedPerson = EmbeddedPerson::createEmbeddedPerson($this->people_in_multimedia_object, $person);
-            $embeddedPerson->addRole($role);
-            $this->people_in_multimedia_object[] = $embeddedPerson;
+            if ($this->containsPerson($person)){
+                $embeddedPerson = $this->getEmbeddedPerson($person);
+                $embeddedPerson->addRole($role);
+            }else{
+                $embeddedPerson = EmbeddedPerson::createEmbeddedPerson($this->people_in_multimedia_object, $person);
+                $embeddedPerson->addRole($role);
+                $this->people_in_multimedia_object[] = $embeddedPerson;
+            }   
         }
     }
 
