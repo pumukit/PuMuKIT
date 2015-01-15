@@ -98,6 +98,7 @@ class EmbeddedTag
   public function __construct(Tag $tag)
   {
       if (null !== $tag) {
+          $this->id = $tag->getId();
           $this->setI18nTitle($tag->getI18nTitle());
           $this->setI18nDescription($tag->getI18nDescription());
           $this->slug = $tag->getSlug();
