@@ -36,7 +36,7 @@
 
 	   <div style="width:400px; height:260px; border: 1px solid #bbb; float: left;" class="tag" id="select_tag_{{ parent.id }}">
 	     <ul class="tag_tree" id="select_ul_tag_cod_{{ parent.cod }}" >
-	       {% for embedded_tag in mm.getTags() %}
+	       {% for embedded_tag in mm.getTags() if embedded_tag.isDescendantOf(parent) %}
 	         <li class="element" id="select_li_{{ embedded_tag.id }}" >
 		   <span class="icon">&nbsp;</span>
 		   <span onclick="$$('.clicked_tag_left').invoke('removeClassName', 'clicked_tag_left'); this.addClassName('clicked_tag_left');" ondblclick="javascript:del_tree_tag('{{ embedded_tag.id }}', '{{ mm.id }}');" >

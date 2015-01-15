@@ -440,4 +440,32 @@ class EmbeddedTag
 
       return $containedEmbedTag;
   }
+
+  /**
+   * Returns true if given node is children of tag
+   *
+   * @param Tag $tag
+   *
+   * @return bool
+   */
+  public function isChildrenOf(Tag $tag)
+  {
+      return $tag->getCod() == $this->getParent()->getCod();
+  }
+
+  /**
+   * Returns true if given node is descendant of tag
+   *
+   * @param Tag $tag
+   *
+   * @return bool
+   */
+  public function isDescendantOf(Tag $tag)
+  {
+      if ($tag->getCod() == $this->getCod()) {
+          return false;
+      }
+
+      return substr($this->getPath(), 0, strlen($tag->getPath())) === $tag->getPath();
+  }
 }
