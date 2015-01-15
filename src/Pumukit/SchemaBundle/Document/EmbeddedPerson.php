@@ -553,11 +553,11 @@ class EmbeddedPerson
      * @param Person|EmbeddedPerson $person
      * @return EmbeddedPerson|boolean EmbeddedPerson if found, FALSE otherwise:
      */
-    public static function getEmbeddedPerson($embedPeople, $person)
+    public static function getEmbeddedPerson($embeddedPeople, $person)
     {
-        foreach ($embedPeople as $embedPerson) {
-            if (0 === strcmp($person->getId(), $embedPerson->getId())) {
-                return $embedPerson;
+        foreach ($embeddedPeople as $embeddedPerson) {
+            if ($person->getId() === $embeddedPerson->getId()) {
+                return $embeddedPerson;
             }
         }
         
