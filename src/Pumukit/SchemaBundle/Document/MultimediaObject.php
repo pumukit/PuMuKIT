@@ -13,11 +13,11 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class MultimediaObject
 {
-    const STATUS_NORMAL = 0;
-    const STATUS_BLOQ = 1;
-    const STATUS_HIDE = 2;
-    const STATUS_NEW = -1;
-    const STATUS_PROTOTYPE = -2;
+  const STATUS_NORMAL = 0;
+  const STATUS_BLOQ = 1;
+  const STATUS_HIDE = 2;
+  const STATUS_NEW = -1;
+  const STATUS_PROTOTYPE = -2;
 
     /**
      * @var int $id
@@ -170,36 +170,36 @@ class MultimediaObject
      */
     private $translations;
 
-    public function getTranslations()
-    {
-        return $this->translations;
-    }
+  public function getTranslations()
+  {
+    return $this->translations;
+  }
 
-    public function addTranslation($t)
-    {
-        if (!$this->translations->contains($t)) {
-            $this->translations[] = $t;
-            $t->setObject($this);
-        }
+  public function addTranslation($t)
+  {
+    if (!$this->translations->contains($t)) {
+      $this->translations[] = $t;
+      $t->setObject($this);
     }
-    public function removeTranslation($t)
-    {
-    }
+  }
+  public function removeTranslation($t)
+  {
+  }
 
-    public function __construct()
-    {
-        $this->tracks = new ArrayCollection();
-        $this->pics = new ArrayCollection();
-        $this->materials = new ArrayCollection();
-        $this->links = new ArrayCollection();
-        $this->tags = new ArrayCollection();
-        $this->people_in_multimedia_object = new ArrayCollection();
-    }
+  public function __construct()
+  {
+    $this->tracks = new ArrayCollection();
+    $this->pics = new ArrayCollection();
+    $this->materials = new ArrayCollection();
+    $this->links = new ArrayCollection();
+    $this->tags = new ArrayCollection();
+    $this->people_in_multimedia_object = new ArrayCollection();
+  }
 
-    public function __toString()
-    {
-        return $this->title;
-    }
+  public function __toString()
+  {
+    return $this->title;
+  }
 
     /**
      * Get id
@@ -903,7 +903,7 @@ class MultimediaObject
 
       return $r;
     }
-
+    
     // End of Track getter - setter etc methods section
 
     /**
@@ -1446,7 +1446,7 @@ class MultimediaObject
 
         $r[] = $link;
       }
-
+      
       return $r;
     }
 
@@ -2131,7 +2131,7 @@ class MultimediaObject
           $maxDuration = $mmTrack->getDuration();
         }
       }
-
+      
       if ($maxDuration !== $this->getDuration()) {
         $this->setDuration($maxDuration);
       }

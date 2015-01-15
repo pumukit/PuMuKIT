@@ -11,7 +11,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  */
 class EmbeddedTag
 {
-    /**
+  /**
    * @var integer $id
    *
    * @MongoDB\Id
@@ -98,6 +98,7 @@ class EmbeddedTag
   public function __construct(Tag $tag)
   {
       if (null !== $tag) {
+          $this->id = $tag->getId();
           $this->setI18nTitle($tag->getI18nTitle());
           $this->setI18nDescription($tag->getI18nDescription());
           $this->slug = $tag->getSlug();
@@ -439,5 +440,33 @@ class EmbeddedTag
       }
 
       return $containedEmbedTag;
+  }
+
+  /**
+   * Returns true if given node is children of tag
+   *
+   * @param Tag $tag
+   *
+   * @return bool
+   */
+  public function isChildrenOf(Tag $tag)
+  {
+      return $tag->getCod() == $this->getParent()->getCod();
+  }
+
+  /**
+   * Returns true if given node is descendant of tag
+   *
+   * @param Tag $tag
+   *
+   * @return bool
+   */
+  public function isDescendantOf(Tag $tag)
+  {
+      if ($tag->getCod() == $this->getCod()) {
+          return false;
+      }
+
+      return substr($this->getPath(), 0, strlen($tag->getPath())) === $tag->getPath();
   }
 }

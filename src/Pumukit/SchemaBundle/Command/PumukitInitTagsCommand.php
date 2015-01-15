@@ -10,7 +10,7 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Pumukit\SchemaBundle\Document\Tag;
 
-class PumukitTestCommand extends ContainerAwareCommand
+class PumukitInitTagsCommand extends ContainerAwareCommand
 {
     private $dm = null;
     private $repo = null;
@@ -82,7 +82,7 @@ EOT
     protected function createFromFile($file, $root, OutputInterface $output)
     {
         if (!file_exists($file)) {
-            $stderr->writeln("<error>Error stating ".$file."</error>");
+            $output->writeln("<error>Error stating ".$file."</error>");
 
             return -1;
         }
@@ -111,8 +111,8 @@ EOT
                         $output->writeln("<error>".$e->getMessage()."</error>");
                     }
                 } else {
-                    $stderr->writeln("Last valid row = ...");
-                    $stderr->writeln("Error: line $row has $number elements");
+                    $output->writeln("Last valid row = ...");
+                    $output->writeln("Error: line $row has $number elements");
                 }
 
                 if ($row % 100 == 0) {
@@ -124,7 +124,7 @@ EOT
             fclose($file);
             $this->dm->flush();
         } else {
-            $stderr->writeln("<error>Error opening ".$file."</error>");
+            $output->writeln("<error>Error opening ".$file."</error>");
 
             return -1;
         }

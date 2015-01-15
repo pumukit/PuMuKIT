@@ -135,7 +135,7 @@ class CalendarAdminController extends AdminController
       } elseif (('' !== $value) && ('date' == $property)) {
           $date_from = new \DateTime($value['from']);
           $date_to = new \DateTime($value['to']);
-          $new_criteria[$property] = ['$gte' => $date_from, '$lt' => $date_to];
+          $new_criteria[$property] = array('$gte' => $date_from, '$lt' => $date_to);
       }
       }
 

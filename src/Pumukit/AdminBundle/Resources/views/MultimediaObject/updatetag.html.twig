@@ -2,10 +2,11 @@
 <div id="tv_admin_container" style="padding: 4px 20px 20px">
 <fieldset id="tv_fieldset_none" class="" style="position:relative">
 
+{# TODO
 <div style="text-align: right; padding: 5px 20px">
   <input type="checkbox" checked="checked" onchange="toggle_show_all();"/> {% trans %}Show all tags{% endtrans %}
 </div>
-
+#}
 
 <div style="float: right; padding: 5px 20px" id="tag_update_link_{{ mm.getSeries().getId() }}">
    {# TODO link or form. Copy path #}
@@ -14,7 +15,7 @@
 
 <dl style="margin: 0px">
 
-   {% for parent in parent_tags if not parent.getDisplay() %}
+   {% for parent in parent_tags if parent.getDisplay() %}
      <div class="form-row">
      <dt>{{ parent.getTitle() }}:</dt>
      <dd>
@@ -28,17 +29,17 @@
 	     {% endif %}
 	   </div>
 
-	   <div style="float: left; padding: 220px 5px 0px">
+	   <div style="float: left; padding: 150px 5px 0px">
 	     <a href="#" onclick="if ( $$('.clicked_tag_left')[0] != undefined ) { $$('.clicked_tag_left')[0].ondblclick() } return false;">&#8592;</a>
 	     <a href="#" onclick="if ( $$('.clicked_tag_right')[0] != undefined ) { $$('.clicked_tag_right')[0].ondblclick() } return false;">&#8594;</a>
 	   </div>
 
 	   <div style="width:400px; height:260px; border: 1px solid #bbb; float: left;" class="tag" id="select_tag_{{ parent.id }}">
-	     <ul class="tag_tree" id="select_ul_tag_{{ parent.id }}" >
-	       {% for embedded_tag in mm.getTags() %}
+	     <ul class="tag_tree" id="select_ul_tag_cod_{{ parent.cod }}" >
+	       {% for embedded_tag in mm.getTags() if embedded_tag.isDescendantOf(parent) %}
 	         <li class="element" id="select_li_{{ embedded_tag.id }}" >
 		   <span class="icon">&nbsp;</span>
-		   <span onclick="$$('.clicked_tag_left').invoke('removeClassName', 'clicked_tag_left'); this.addClassName('clicked_tag_left');" ondblclick="javascript:del_tree_tag({{ embedded_tag.id }}, {{ mm.id }});" >
+		   <span onclick="$$('.clicked_tag_left').invoke('removeClassName', 'clicked_tag_left'); this.addClassName('clicked_tag_left');" ondblclick="javascript:del_tree_tag('{{ embedded_tag.id }}', '{{ mm.id }}');" >
 		     {{ embedded_tag.getCod() }} - {{ embedded_tag.getTitle() }}
 		   </span>
 	         </li>
@@ -57,22 +58,29 @@
 </div>
 
 <script type="text/javascript">
-function toggle_tree_tag(element, id, mm_id, tag_id) {
+window.toggle_tree_tag = function(element, id, mm_id, tag_id) {
   if (element.parentElement.hasClassName("notload")) {
     element.parentElement.removeClassName("notload");
-
-  new Ajax.Updater("tag_ul_children_" + id, "' . url_for('mms/getchildren') . '/id/"  + id + "/block_tag/" + tag_id + "/mm/" + mm_id, {
+  
+    var route = "{{ path('pumukitadmin_mms_getchildrentag', {'id': 'PLACEHOLDER_TAG_ID'}) }}";
+    route = route.replace('PLACEHOLDER_MM_ID', mm_id).replace('PLACEHOLDER_TAG_ID', id);
+    new Ajax.Updater("tag_ul_children_" + id, route + "?tag_id=" + tag_id + "&mm_id=" + mm_id, {
+      method: "GET",
       onComplete: function(){ $("all_tag_" + tag_id).scrollTop = ((element.positionedOffset()[1]) - 750); }
-    });}
-else {
-    $$(".tag_li_parent_" + id).each(function(e){e.toggleClassName("nodisplay")});
+    });
+  } else {
+    //$$(".tag_li_parent_" + id).each(function(e){e.toggleClassName("nodisplay")});
+    var children = document.querySelectorAll(".tag_li_parent_" + id);
+    for (i = 0; i < children.length; ++i) {
+       children[i].toggleClassName("nodisplay");
+    }
     //element.scrollIntoView();
     $("all_tag_" + tag_id).scrollTop = ((element.positionedOffset()[1]) - 750);
   }
   element.parentElement.toggleClassName("expanded").toggleClassName("collapsed");
 }
 
-function toggle_show_all()
+window.toggle_show_all = function()
 {
   // SHOW - Quito el punto a los nodos que muestran sus hijos al desocultar
   $$(".expanded.element, .collapsed.element").each(function(e){
@@ -101,22 +109,21 @@ function toggle_show_all()
 
 }
 
-function create_li_in_select(tag, block_tag_id, mm_id) {
-  var $ul = $("select_ul_tag_" + block_tag_id);
+window.create_li_in_select = function(tag, block_tag_cod, mm_id) {
+  var $ul = $("select_ul_tag_cod_" + block_tag_cod);
   var li = new Element("li", {"id": "select_li_" + tag.id, "class": "element"});
   var span1 = new Element("span", {"class": "icon"}).update("&nbsp;");
-  var span2 = new Element("span", {"onclick":"$$(\'.clicked_tag_left\').invoke(\'removeClassName\', \'clicked_tag_left\'); this.addClassName(\'clicked_tag_left\');", "ondblclick": "del_tree_tag(" + tag.id +", "+ mm_id + ")"}).update(tag.cod+ " - " + tag.name);
+  var span2 = new Element("span", {"onclick":"$$(\'.clicked_tag_left\').invoke(\'removeClassName\', \'clicked_tag_left\'); this.addClassName(\'clicked_tag_left\');", "ondblclick": "del_tree_tag(\'" + tag.id +"\', \'"+ mm_id + "\')"}).update(tag.cod+ " - " + tag.name);
   li.insert(span1).insert(span2);
   //Add quit logica.
   $ul.insert(li);
 }
 
-function add_tree_tag(tag_id, mm_id, block_tag_id) {
+window.add_tree_tag = function(tag_id, mm_id, block_tag_id) {
   var route = "{{ path('pumukitadmin_mms_addtag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' }) }}";
-  route.replace('PLACEHOLDER_MM_ID', mm_id);
-  route.replace('PLACEHOLDER_TAG_ID', tag_id);
+  route = route.replace('PLACEHOLDER_MM_ID', mm_id).replace('PLACEHOLDER_TAG_ID', tag_id);
   new Ajax.Request(route,  {
-    method: "post",
+    method: "POST",
     parameters: "tag=" + tag_id,
     asynchronous: true,
     evalScripts: true,
@@ -124,22 +131,23 @@ function add_tree_tag(tag_id, mm_id, block_tag_id) {
         for (var i=0; i<response.responseJSON.added.length; i++) {
             var c = response.responseJSON.added[i];
             inc_num_mm(c.id, 1);
-            if (c.group.length!=0 && c.group[1]!=undefined) {
-               create_li_in_select(c, c.group[1], mm_id);
-            }
+            var aux = c.group.split("|");
+            if(aux[1] && aux.length > 3) create_li_in_select(c, aux[1], mm_id);
         }
     }
   });
 }
 
 
-function del_tree_tag(tag_id, mm_id) {
+window.del_tree_tag = function(tag_id, mm_id) {
   // TODO Si ya lo tiene no hacer nada.
   console.log("del_tree_tag info_num_mm_" + tag_id);
 
-  new Ajax.Request(url_for("mms/delCategory") + '/id/' + mm_id,  {
-    method: "post",
-    parameters: "tag=" + tag_id,
+  var route = "{{ path('pumukitadmin_mms_deletetag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' }) }}";
+  route = route.replace('PLACEHOLDER_TAG_ID', tag_id).replace('PLACEHOLDER_MM_ID', mm_id);
+  new Ajax.Request(route,  {
+    method: "DELETE",
+    parameters:  {'_method': 'DELETE'},
     asynchronous: true,
     evalScripts: true,
     onSuccess: function(response){
@@ -154,7 +162,7 @@ function del_tree_tag(tag_id, mm_id) {
 }
 
 
-function inc_num_mm(tag_id, num)
+window.inc_num_mm = function(tag_id, num)
 {
   var aux = $("info_num_mm_" + tag_id);
   if (aux){
