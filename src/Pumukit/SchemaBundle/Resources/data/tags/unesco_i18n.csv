@@ -1,5 +1,5 @@
 id;cod;tree_parent_id;metacategory;display;name_es;name_gl;name_en
-1;UNESCO;0;1;0;UNESCO;UNESCO;UNESCO
+1;UNESCO;0;1;1;UNESCO;UNESCO;UNESCO
 2;U110000;1;0;1;"Lógica";"Lóxica";"Logic"
 3;U110100;2;0;1;"Aplicaciones de la lógica";"Aplicacións da lóxica";"Application of logic"
 4;U110200;2;0;1;"Lógica deductiva";"Lóxica dedutiva";"Deductive logic"

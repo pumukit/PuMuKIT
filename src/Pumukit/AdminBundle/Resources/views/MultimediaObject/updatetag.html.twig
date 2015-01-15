@@ -15,7 +15,7 @@
 
 <dl style="margin: 0px">
 
-   {% for parent in parent_tags if not parent.getDisplay() %}
+   {% for parent in parent_tags if parent.getDisplay() %}
      <div class="form-row">
      <dt>{{ parent.getTitle() }}:</dt>
      <dd>
