@@ -11,10 +11,10 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  */
 class EmbeddedTag
 {
-    /**
+  /**
    * @var integer $id
    *
-   * @MongoDB\Id
+   * @MongoDB\String
    */
   private $id;
 
