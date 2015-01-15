@@ -42,7 +42,7 @@ class JobService
         
         $job = new Job();
         $job->setMmId($multimediaObject->getId());
-        $job->setProfile($profile);
+        $job->setProfile($profile['name']);
         $job->setPathIni($pathFile);
         //$job->setDuration($pathFile);
         $job->setPriority($priority);
@@ -50,7 +50,8 @@ class JobService
             $job->setLanguageId($language);
         }
         if (!empty($description)){
-            $job->setDescription($description);
+            // TODO - DEFINE SET DESCRIPTION (i18n)
+            //$job->setDescription($description);
         }
         $job->setTimeini(new \DateTime('now'));
         $this->dm->persist($job);
@@ -265,10 +266,10 @@ class JobService
         $profile = $this->profileService->getProfile($job->getProfile());
 
         $extension = pathinfo($job->getPathIni(), PATHINFO_EXTENSION);
-        $finalExtenstion = ($profile['extension']?$profile['extension']:$extension);
+        $finalExtension = ($profile['extension']?$profile['extension']:$extension);
 
         $mmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
-        $tempDir = $profile['dir_out'].'/'.$mmobj->getSeries()->getId();
+        $tempDir = $profile['streamserver']['dir_out'].'/'.$mmobj->getSeries()->getId();
         @mkdir($tempDir, 0777, true);
 
         $pathEnd = $tempDir.'/'.$job->getId().'.'.$finalExtension;

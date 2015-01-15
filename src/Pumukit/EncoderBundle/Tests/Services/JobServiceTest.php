@@ -8,6 +8,8 @@ use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Services\CpuService;
 use Symfony\Component\HttpFoundation\File\File;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 
 class JobServiceTest extends WebTestCase
 {
@@ -51,7 +53,10 @@ class JobServiceTest extends WebTestCase
         $language = 'es';
         $description = array('en' => 'test', 'es' => 'prueba');
 
+        $series = new Series();
         $multimediaObject = new MultimediaObject();
+        $multimediaObject->setSeries($series);
+        $this->dm->persist($series);
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 

@@ -12,12 +12,14 @@ class TrackService
     private $dm;
     private $targetPath;
     private $targetUrl;
+    private $jobService;
 
     public function __construct(DocumentManager $documentManager, $targetPath, $targetUrl)
     {
         $this->dm = $documentManager;
         $this->targetPath = $targetPath;
         $this->targetUrl = $targetUrl;
+        //TODO inject service $this->jobService = $jobService;
     }
 
     /**
@@ -25,13 +27,14 @@ class TrackService
      */
     public function addTrackToMultimediaObject(MultimediaObject $multimediaObject, File $trackFile, $formData)
     {
+        // TODO - Move file to temp dir
+
         // TODO - Call JobService to encode the track
         $data = $this->getArrayData($formData);
-        $jobService = $this->get('pumukitencoder.job');
-        $jobService->addJob($trackFile, $data['profile'], $data['priority'], $data['language'], $data['description']);
+        //$this->jobService->addJob($trackFile, $data['profile'], $data['priority'], $multimediaObject, $data['language'], $data['description']);
 
         /*
-        // TODO - check it's ok
+        // TODO - redo
         $track = new Track();
         $track = $this->saveFormData($track, $formData);
 

@@ -39,7 +39,7 @@ class CpuServiceTest extends WebTestCase
         $this->assertEquals($cpus['CPU_LOCAL'], $this->cpuService->getFreeCpu());
 
         $job = new Job();
-        $job->setCpu('local1');
+        $job->setCpu($cpus['CPU_LOCAL']['name']);
         $job->setStatus(Job::STATUS_EXECUTING);
         $this->dm->persist($job);
         $this->dm->flush();
@@ -47,7 +47,7 @@ class CpuServiceTest extends WebTestCase
         $this->assertEquals($cpus['CPU_REMOTE'], $this->cpuService->getFreeCpu());
 
         $job2 = new Job();
-        $job2->setCpu('local2');
+        $job2->setCpu($cpus['CPU_REMOTE']['name']);
         $job2->setStatus(Job::STATUS_EXECUTING);
         $this->dm->persist($job2);
         $this->dm->flush();
@@ -55,7 +55,7 @@ class CpuServiceTest extends WebTestCase
         $this->assertEquals($cpus['CPU_REMOTE'], $this->cpuService->getFreeCpu());
 
         $job3 = new Job();
-        $job3->setCpu('local2');
+        $job3->setCpu($cpus['CPU_REMOTE']['name']);
         $job3->setStatus(Job::STATUS_EXECUTING);
         $this->dm->persist($job3);
         $this->dm->flush();
@@ -84,7 +84,7 @@ class CpuServiceTest extends WebTestCase
     {
         $cpus = array(
                       'CPU_LOCAL' => array(
-                                           'id' => 1,
+                                           'name' => 'local',
                                            'host' => '127.0.0.1',
                                            'max' => 1,
                                            'number' => 1,
@@ -94,7 +94,7 @@ class CpuServiceTest extends WebTestCase
                                            'description' => 'Pumukit transcoder'
                                            ),
                       'CPU_REMOTE' => array(
-                                            'id' => 2,
+                                            'name' => 'remote',
                                             'host' => '192.168.5.123',
                                             'max' => 2,
                                             'number' => 1,
