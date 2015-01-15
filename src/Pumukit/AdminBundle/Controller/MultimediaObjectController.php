@@ -369,10 +369,11 @@ class MultimediaObjectController extends SortableAdminController
   {
     $dm = $this->get('doctrine_mongodb.odm.document_manager');
     $repository = $dm->getRepository('PumukitSchemaBundle:Tag');
-    if ($getChildren) {
-      $tags = $repository->findOneByCod($cod)->getChildren();
-    } else {
-      $tags = $repository->findOneByCod($cod);
+
+    $tags = $repository->findOneByCod($cod);
+
+    if ($tags && $getChildren) {
+      return $tags->getChildren();
     }
 
     return $tags;
