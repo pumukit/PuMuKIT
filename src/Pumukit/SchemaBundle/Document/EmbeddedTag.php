@@ -14,7 +14,7 @@ class EmbeddedTag
   /**
    * @var integer $id
    *
-   * @MongoDB\String
+   * @MongoDB\Id
    */
   private $id;
 
