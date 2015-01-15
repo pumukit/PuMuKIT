@@ -113,7 +113,7 @@ window.create_li_in_select = function(tag, block_tag_cod, mm_id) {
   var $ul = $("select_ul_tag_cod_" + block_tag_cod);
   var li = new Element("li", {"id": "select_li_" + tag.id, "class": "element"});
   var span1 = new Element("span", {"class": "icon"}).update("&nbsp;");
-  var span2 = new Element("span", {"onclick":"$$(\'.clicked_tag_left\').invoke(\'removeClassName\', \'clicked_tag_left\'); this.addClassName(\'clicked_tag_left\');", "ondblclick": "del_tree_tag(" + tag.id +", "+ mm_id + ")"}).update(tag.cod+ " - " + tag.name);
+  var span2 = new Element("span", {"onclick":"$$(\'.clicked_tag_left\').invoke(\'removeClassName\', \'clicked_tag_left\'); this.addClassName(\'clicked_tag_left\');", "ondblclick": "del_tree_tag(\'" + tag.id +"\', \'"+ mm_id + "\')"}).update(tag.cod+ " - " + tag.name);
   li.insert(span1).insert(span2);
   //Add quit logica.
   $ul.insert(li);
