@@ -320,6 +320,34 @@ class MultimediaObjectController extends SortableAdminController
     return new JsonResponse($json);
   }
 
+
+
+  /**
+   * Delete Tag
+   */
+  public function deleteTagAction(Request $request)
+  {
+    $config = $this->getConfiguration();
+
+    $resource = $this->findOr404($request);
+
+    $tagService = $this->get('pumukitschema.tag');
+
+    $deletedTags = $tagService->removeTagFromMultimediaObject($resource, $request->get('tagId'));
+
+    $json = array('deleted' => array(), 'recommended' => array());
+    foreach($deletedTags as $n){
+      $json['deleted'][] = array(
+                               'id' => $n->getId(),
+                               'cod' => $n->getCod(),
+                               'name' => $n->getTitle(),
+                               'group' => $n->getPath()
+                               );
+    }
+
+    return new JsonResponse($json);
+  }
+
   /**
    * Get series
    */
