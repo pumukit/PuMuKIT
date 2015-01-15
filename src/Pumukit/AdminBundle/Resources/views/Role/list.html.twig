@@ -29,7 +29,7 @@
           <a title="{% trans %}Edit Role {% endtrans %}{{ role.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_role_update', {'id': role.id}) }}"><img alt="{% trans %}edit{% endtrans %}" title="{% trans %}edit{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a>
         </td>
         <td onclick="click_fila_no_preview('role', this, '{{ role.id }}');">
-	{% if role.getPeopleInMultimediaObject() is empty %}
+	{% if role.getNumberPeopleInMultimediaObject() == 0 %}
           <form action="{{ path('pumukitadmin_role_delete', {'id': role.id}) }}" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}Are you sure you want to delete this role?{% endtrans %}')">
               <input type="hidden" name="_method" value="DELETE">
               <input type="hidden" name="confirmed" value="true">
@@ -38,7 +38,7 @@
               </button>
           </form>
         {% else %}
-	  <a href="#" onclick="alert('{% trans %}Impossible to delete, role with{% endtrans %} {{ role.getPeopleInMultimediaObject()|length }} {% trans %}people{% endtrans %}'); return false;">
+	  <a href="#" onclick="alert('{% trans %}Impossible to delete, role with{% endtrans %} {{ role.getNumberPeopleInMultimediaObject() }} {% trans %}people{% endtrans %}'); return false;">
 	    <img alt="{% trans %}delete{% endtrans %}" title="delete" src="/legacy/images/admin/mbuttons/delete_inline.gif">
 	  </a>
         {% endif %}
@@ -79,7 +79,7 @@
 	  {{ role.name }}
 	</td>
         <td onclick="click_fila_no_preview('role', this, '{{ role.id }}');">
-	  {{ role.getPeopleInMultimediaObject()|length }}
+	  {{ role.getNumberPeopleInMultimediaObject() }}
 	</td>
       </tr>
     {% endfor %}

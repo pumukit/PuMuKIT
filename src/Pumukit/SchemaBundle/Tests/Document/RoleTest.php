@@ -12,7 +12,7 @@ class RoleTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('0', $role->getCod());
         $this->assertTrue($role->getDisplay());
-        $this->assertEquals(0, $role->getNumberPeople());
+        $this->assertEquals(0, $role->getNumberPeopleInMultimediaObject());
     }
 
     public function testGetterAndSetter()
@@ -53,20 +53,20 @@ class RoleTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($i18nText, $role->getI18nText());
     }
 
-    public function testNumberPeople()
+    public function testNumberPeopleInMultimediaObject()
     {
         $role = new Role();
 
-        $this->assertEquals(0, $role->getNumberPeople());
+        $this->assertEquals(0, $role->getNumberPeopleInMultimediaObject());
 
-        $role->increaseNumberPeople();
-        $this->assertEquals(1, $role->getNumberPeople());
+        $role->increaseNumberPeopleInMultimediaObject();
+        $this->assertEquals(1, $role->getNumberPeopleInMultimediaObject());
 
-        $role->increaseNumberPeople();
-        $role->increaseNumberPeople();
-        $this->assertEquals(3, $role->getNumberPeople());
+        $role->increaseNumberPeopleInMultimediaObject();
+        $role->increaseNumberPeopleInMultimediaObject();
+        $this->assertEquals(3, $role->getNumberPeopleInMultimediaObject());
 
-        $role->decreaseNumberPeople();
-        $this->assertEquals(2, $role->getNumberPeople());
+        $role->decreaseNumberPeopleInMultimediaObject();
+        $this->assertEquals(2, $role->getNumberPeopleInMultimediaObject());
     }
 }

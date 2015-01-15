@@ -562,7 +562,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $role->setDisplay($display); // true by default
         $role->setName($name);
         $role->setText($text);
-        $role->increaseNumberPeople();
+        $role->increaseNumberPeopleInMultimediaObject();
 
         $this->dm->persist($role);
         $this->dm->flush();

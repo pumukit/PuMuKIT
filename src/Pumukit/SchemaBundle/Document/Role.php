@@ -33,11 +33,11 @@ class Role
     private $rank;
     
     /**
-     * @var int $number_people
+     * @var int $number_people_in_multimedia_object
      *
      * @MongoDB\Int
      */
-    private $number_people = 0;
+    private $number_people_in_multimedia_object = 0;
 
     /**
      * See European Broadcasting Union Role Codes
@@ -284,27 +284,27 @@ class Role
     }
 
     /**
-     * Increase number_people
+     * Increase number_people_in_multimedia_object
      */
-    public function increaseNumberPeople()
+    public function increaseNumberPeopleInMultimediaObject()
     {
-        ++$this->number_people;
+        ++$this->number_people_in_multimedia_object;
     }
     
     /**
-     * Decrease number_people
+     * Decrease number_people_in_multimedia_object
      */
-    public function decreaseNumberPeople()
+    public function decreaseNumberPeopleInMultimediaObject()
     {
-        --$this->number_people;
+        --$this->number_people_in_multimedia_object;
     }
     
     /**
-     * Get number_people
+     * Get number_people_in_multimedia_object
      */
-    public function getNumberPeople()
+    public function getNumberPeopleInMultimediaObject()
     {
-        return $this->number_people;
+        return $this->number_people_in_multimedia_object;
     }    
     
     /**
