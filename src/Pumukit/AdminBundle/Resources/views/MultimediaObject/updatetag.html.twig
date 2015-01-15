@@ -132,7 +132,7 @@ window.add_tree_tag = function(tag_id, mm_id, block_tag_id) {
             var c = response.responseJSON.added[i];
             inc_num_mm(c.id, 1);
             var aux = c.group.split("|");
-            if(aux[1]) create_li_in_select(c, aux[1], mm_id);
+            if(aux[1] && aux.length > 3) create_li_in_select(c, aux[1], mm_id);
         }
     }
   });
