@@ -10,33 +10,63 @@ class RoleTest extends \PHPUnit_Framework_TestCase
     {
         $role = new Role();
 
-        $this->assertEquals(0, $role->getCod());
+        $this->assertEquals('0', $role->getCod());
         $this->assertTrue($role->getDisplay());
+        $this->assertEquals(0, $role->getNumberPeople());
     }
 
     public function testGetterAndSetter()
     {
         $role = new Role();
 
+        $locale = 'en';
         $cod = 'rol1'; //String - max length = 5
-        //$rank = 123;
         $xml = 'string <xml>';
         $display = true;
-        $name = 'Alonso de Lanzós';
-        $text = 'The Irmandiño Wars were two revolts that took place in 15th-century Kingdom of Galicia against attempts by the regional nobility to maintain their rights over the peasantry and the bourgeoisie. The revolts were also part of the larger phenomenon of popular revolts in late medieval Europe caused by the general economic and demographic crises in Europe during the fourteenth and fifteenth centuries.[1] Similar rebellions broke out in the Iberian Kingdoms, including the War of the Remences in Catalonia and the foráneo revolts in the Balearic Islands.[2]';
+        $name = 'Presenter';
+        $text = 'Presenter Role 1';
 
+        $role->setLocale($locale);
         $role->setCod($cod);
-        //$role->setRank($rank);
         $role->setXml($xml);
         $role->setDisplay($display);
         $role->setName($name);
         $role->setText($text);
 
+        $this->assertEquals($locale, $role->getLocale());
         $this->assertEquals($cod, $role->getCod());
-        //$this->assertEquals($rank, $role->getRank());
         $this->assertEquals($xml, $role->getXml());
         $this->assertEquals($display, $role->getDisplay());
         $this->assertEquals($name, $role->getName());
         $this->assertEquals($text, $role->getText());
+        
+        $nameEs = 'Presentador';
+        $textEs = 'Rol de presentador 1';
+
+        $i18nName = array('en' => $name, 'es' => $nameEs);
+        $i18nText = array('en' => $text, 'es' => $textEs);
+
+        $role->setI18nName($i18nName);
+        $role->setI18nText($i18nText);
+
+        $this->assertEquals($i18nName, $role->getI18nName());
+        $this->assertEquals($i18nText, $role->getI18nText());
+    }
+
+    public function testNumberPeople()
+    {
+        $role = new Role();
+
+        $this->assertEquals(0, $role->getNumberPeople());
+
+        $role->increaseNumberPeople();
+        $this->assertEquals(1, $role->getNumberPeople());
+
+        $role->increaseNumberPeople();
+        $role->increaseNumberPeople();
+        $this->assertEquals(3, $role->getNumberPeople());
+
+        $role->decreaseNumberPeople();
+        $this->assertEquals(2, $role->getNumberPeople());
     }
 }

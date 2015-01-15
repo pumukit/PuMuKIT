@@ -430,9 +430,9 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($mm->getTags()[0]->getTitle(), $mm->getTags()[0]->__toString());
 
-    // TEST SETTERS
+        // TEST SETTERS
 
-    $title = 'modified title';
+        $title = 'modified title';
         $description = 'modified description';
         $slug = 'modified slug';
         $cod = 'modcod';
@@ -524,122 +524,119 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($mm->containsAllTags(array($tag0, $tag1, $tag2, $tag3)));
     }
 
-    /*public function testPersonInMultimediaObject()
+    public function testEmbeddedPersonAndEmbeddedRole()
     {
+        // Person
+        $emailPerson = 'email@email.com';
+        $namePerson = 'name';
+        $webPerson = 'web';
+        $phonePerson = 'phone';
+        $honorificPerson = 'Mr';
+        $firmPerson = 'firm';
+        $postPerson = 'post';
+        $bioPerson = 'Biography of this person';
+
+        $person = new Person();
+
+        $person->setEmail($emailPerson);
+        $person->setName($namePerson);
+        $person->setWeb($webPerson);
+        $person->setPhone($phonePerson);
+        $person->setHonorific($honorificPerson);
+        $person->setFirm($firmPerson);
+        $person->setPost($postPerson);
+        $person->setBio($bioPerson);
+
+        // Role
+        $localeRole = 'en';
+        $codRole = 'rol1'; //String - max length = 5
+        $xmlRole = 'string <xml>';
+        $displayRole = true;
+        $nameRole = 'Presenter';
+        $textRole = 'Presenter Role 1';
+
+        $role = new Role();
+
+        $role->setLocale($localeRole);
+        $role->setCod($codRole);
+        $role->setXml($xmlRole);
+        $role->setDisplay($displayRole);
+        $role->setName($nameRole);
+        $role->setText($textRole);
+        
+        // MultimediaObject
         $mm = new MultimediaObject();
-        $pimo_sky = new PersonInMultimediaObject();
-        $pimo_lucy = new PersonInMultimediaObject();
-        $pimo_sky = new PersonInMultimediaObject();
-        // $person_humana = new Person();
-        // $person_riesgo = new Person();
+        $mm->addPersonWithRole($person, $role);
 
-        $person_pepe = new Person();
-        $person_lucy = new Person();
-        $person_sky = new Person();
-        $person_diamonds = new Person();
-        $role_tank = new Role();
-        $role_dps = new Role();
-        $role_unused = new Role();
+        // TEST GETTERS
+        $personInMultimediaObject = $mm->getPeopleInMultimediaObject()->toArray()[0];
+        $this->assertEquals($emailPerson, $personInMultimediaObject->getEmail());
+        $this->assertEquals($namePerson, $personInMultimediaObject->getName());
+        $this->assertEquals($webPerson, $personInMultimediaObject->getWeb());
+        $this->assertEquals($phonePerson, $personInMultimediaObject->getPhone());
+        $this->assertEquals($honorificPerson, $personInMultimediaObject->getHonorific());
+        $this->assertEquals($firmPerson, $personInMultimediaObject->getFirm());
+        $this->assertEquals($postPerson, $personInMultimediaObject->getPost());
+        $this->assertEquals($bioPerson, $personInMultimediaObject->getBio());
 
-        $person_pepe->setName("Pepe");
-        $person_lucy->setName("Lucy");
-        $person_sky->setname("Sky");
+        $roleInEmbeddedPerson = $personInMultimediaObject->getRoles()->toArray()[0];
+        $this->assertEquals($localeRole, $roleInEmbeddedPerson->getLocale());
+        $this->assertEquals($codRole, $roleInEmbeddedPerson->getCod());
+        $this->assertEquals($xmlRole, $roleInEmbeddedPerson->getXml());
+        $this->assertEquals($displayRole, $roleInEmbeddedPerson->getDisplay());
+        $this->assertEquals($nameRole, $roleInEmbeddedPerson->getName());
+        $this->assertEquals($textRole, $roleInEmbeddedPerson->getText());
 
-        $role_tank->setName("Tank");
-        $role_dps->setName("DPS");
-        $role_unused->setName("Unused");
+        // TEST SETTERS
+        // Person
+        $emailPerson = 'another@email.com';
+        $namePerson = 'John Smith';
+        $webPerson = 'http://johnsmith.com';
+        $phonePerson = '555-365214';
+        $honorificPerson = 'Mrs';
+        $firmPerson = 'Smith firm';
+        $postPerson = 'Smith post';
+        $bioPerson = 'Biography of John Smith';
 
-        $this->assertFalse($mm->containsPersonWithRole($person_pepe));
-        $this->assertFalse($mm->containsPersonWithRole($person_pepe, $role_tank));
-        $this->assertEquals(0, count($mm->getPeopleInMultimediaObject()));
+        $personInMultimediaObject->setEmail($emailPerson);
+        $personInMultimediaObject->setName($namePerson);
+        $personInMultimediaObject->setWeb($webPerson);
+        $personInMultimediaObject->setPhone($phonePerson);
+        $personInMultimediaObject->setHonorific($honorificPerson);
+        $personInMultimediaObject->setFirm($firmPerson);
+        $personInMultimediaObject->setPost($postPerson);
+        $personInMultimediaObject->setBio($bioPerson);
 
-        $mm->addPersonWithRole($person_pepe, $role_tank);
-        $this->assertTrue($mm->containsPersonWithRole($person_pepe));
-        $this->assertTrue($mm->containsPersonWithRole($person_pepe, $role_tank));
+        // Role
+        $localeRole = 'es';
+        $codRole = 'rol2'; //String - max length = 5
+        $xmlRole = 'string2 <xml>';
+        $displayRole = false;
+        $nameRole = 'Actor';
+        $textRole = 'Actor Rol 2';
 
-        $this->assertFalse($mm->containsPersonWithRole($person_pepe, $role_dps));
-        $this->assertFalse($mm->containsPersonWithRole($person_lucy, $role_tank));
-        $this->assertFalse($mm->containsPersonWithRole($person_lucy));
+        $roleInEmbeddedPerson->setLocale($localeRole);
+        $roleInEmbeddedPerson->setCod($codRole);
+        $roleInEmbeddedPerson->setXml($xmlRole);
+        $roleInEmbeddedPerson->setDisplay($displayRole);
+        $roleInEmbeddedPerson->setName($nameRole);
+        $roleInEmbeddedPerson->setText($textRole);
 
-        // Repeat pimo with same person and role , remove the same pimo twice.
-        $mm->addPersonWithRole($person_pepe, $role_tank);
-        $this->assertEquals(1, count($mm->getPeopleInMultimediaObject()));
-        $this->assertTrue($mm->removePersonWithRole($person_pepe, $role_tank));
-        $this->assertEquals(0, count($mm->getPeopleInMultimediaObject()));
-        $this->assertFalse($mm->removePersonWithRole($person_pepe, $role_tank));
+        $this->assertEquals($emailPerson, $personInMultimediaObject->getEmail());
+        $this->assertEquals($namePerson, $personInMultimediaObject->getName());
+        $this->assertEquals($webPerson, $personInMultimediaObject->getWeb());
+        $this->assertEquals($phonePerson, $personInMultimediaObject->getPhone());
+        $this->assertEquals($honorificPerson, $personInMultimediaObject->getHonorific());
+        $this->assertEquals($firmPerson, $personInMultimediaObject->getFirm());
+        $this->assertEquals($postPerson, $personInMultimediaObject->getPost());
+        $this->assertEquals($bioPerson, $personInMultimediaObject->getBio());
 
-        // Check different people with different roles
+        $this->assertEquals($localeRole, $roleInEmbeddedPerson->getLocale());
+        $this->assertEquals($codRole, $roleInEmbeddedPerson->getCod());
+        $this->assertEquals($xmlRole, $roleInEmbeddedPerson->getXml());
+        $this->assertEquals($displayRole, $roleInEmbeddedPerson->getDisplay());
+        $this->assertEquals($nameRole, $roleInEmbeddedPerson->getName());
+        $this->assertEquals($textRole, $roleInEmbeddedPerson->getText());
 
-        $mm->addPersonWithRole($person_pepe, $role_tank);
-        $mm->addPersonWithRole($person_lucy, $role_dps);
-        $mm->addPersonWithRole($person_sky, $role_dps);
-
-        // PhpUnit no acepta estos métodos:
-
-        // $pimo_pepe->setMultimediaObject($mm);
-        // $pimo_pepe->setPerson($person_pepe);
-        // $pimo_pepe->setRole($role_tank);
-        // $pimo_pepe->setRank(0);
-
-        // $pimo_lucy->setMultimediaObject($mm);
-        // $pimo_lucy->setPerson($person_lucy);
-        // $pimo_lucy->setRole($role_dps);
-        // $pimo_lucy->setRank(1);
-
-        // $pimo_sky->setMultimediaObject($mm);
-        // $pimo_sky->setPerson($person_sky);
-        // $pimo_sky->setRole($role_dps);
-        // $pimo_sky->setRank(2);
-
-        $three_results = array ();
-        $three_results = $mm->getPeopleInMultimediaObjectByRole();
-
-        $this->assertEquals(3,count($three_results));
-        $this->assertEquals($three_results[0]->getPerson(), $person_pepe);
-        $this->assertEquals($three_results[0]->getRank(), 0);
-        $this->assertNotEquals($three_results[0]->getRole(), $role_unused);
-        $this->assertEquals($three_results[2]->getPerson(), $person_sky);
-        $this->assertEquals($three_results[2]->getRole(), $role_dps);
-        $this->assertEquals($three_results[2]->getRank(), 2);
-
-        $two_results = array ();
-        $two_results = $mm->getPeopleInMultimediaObjectByRole($role_dps);
-
-        $this->assertEquals(2,count($two_results));
-        $this->assertEquals($two_results[0]->getPerson(), $person_lucy);
-        $this->assertNotEquals($two_results[0]->getRole(), $role_unused);
-        $this->assertEquals($two_results[1]->getPerson(), $person_sky);
-        $this->assertEquals($two_results[1]->getRole(), $role_dps);
-
-        // Three results should be equal to this, but mm->pimo->rank swapping is not implemented
-        $this->assertFalse($mm->removePersonWithRole($person_pepe, $role_dps));
-        $this->assertTrue($mm->removePersonWithRole($person_pepe, $role_tank));
-        $this->assertEquals(2,count($mm->getPeopleInMultimediaObjectByRole()));
-
-        // TO DO in middle term - implement sortable (swap, etc) behavior in databases.
-        // Review lib/behavior/SortableBehavior.class.php in pumukit - symfony 1
-
-        // TO DO: Ejemplos parecidos para implementar
-
-        // $this->assertEquals(array($mm3, $mm2, $mm1), $s->getMultimediaObjectsByTag($tag1));
-        // $this->assertEquals($mm3, $s->getMultimediaObjectByTag($tag1));
-        // $this->assertEquals(NULL, $s->getMultimediaObjectByTag($tag8));
-        // $this->assertEquals($mm3, $s->getMultimediaObjectWithAnyTag(array($tag1, $tag8)));
-        // $this->assertEquals(array($mm2), $s->getMultimediaObjectsWithAllTags(array($tag1, $tag2, $tag3)));
-        // $this->assertTrue(in_array($s->getMultimediaObjectWithAllTags(array($tag2,$tag1)),array($mm3, $mm2)));
-        // $this->assertEquals(NULL, $s->getMultimediaObjectWithAllTags(array($tag2,$tag1,$tag8)));
-        // $this->assertEquals(4, count($s->getMultimediaObjectsWithAnyTag(array($tag1,$tag7))));
-        // $this->assertEquals(1, count($s->getMultimediaObjectWithAnyTag(array($tag1))));
-        // $this->assertEquals(NULL, $s->getMultimediaObjectWithAnyTag(array($tag8)));
-
-        // $this->assertEquals(5, count($s->getFilteredMultimediaObjectsByTags()));
-        // $this->assertEquals(3, count($s->getFilteredMultimediaObjectsByTags(array($tag1))));
-        // $this->assertEquals(1, count($s->getFilteredMultimediaObjectsByTags(array($tag1), array($tag2, $tag3))));
-        // $this->assertEquals(0, count($s->getFilteredMultimediaObjectsByTags(array(), array($tag2, $tag3), array($tag1))));
-        // $this->assertEquals(3, count($s->getFilteredMultimediaObjectsByTags(array(), array(), array($tag4))));
-        // $this->assertEquals(0, count($s->getFilteredMultimediaObjectsByTags(array(), array(), array($tag4, $tag1))));
-        // $this->assertEquals(5, count($s->getFilteredMultimediaObjectsByTags(array(), array(), array(), array($tag4, $tag1))));
-        // $this->assertEquals(1, count($s->getFilteredMultimediaObjectsByTags(array($tag2, $tag3), array(), array(), array($tag3))))
-
-    }*/
+    }
 }

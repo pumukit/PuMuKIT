@@ -74,4 +74,44 @@ class MultimediaObjectRepository extends DocumentRepository
       ->getQuery()
       ->getSingleResult();
   }
+
+  /**
+   * Find multimedia objects by person id
+   *
+   * @param string $personId
+   * @return ArrayCollection
+   */
+  public function findByPersonId($personId)
+  {
+      return $this->createQueryBuilder()
+        ->field('people_in_multimedia_object._id')->equals(new \MongoId($personId))
+        ->getQuery()
+        ->execute();
+  }
+
+  /**
+   * Find multimedia objects by person id
+   * with given role
+   *
+   * @param string $personId
+   * @param string $roleCod
+   * @return ArrayCollection
+   */
+  public function findByPersonIdWithRoleCod($personId, $roleCod)
+  {
+      /* TODO - Fails in this case -> MultimediaObject with:
+         Person 1 with Role 1
+         Person 2 with Role 2
+        
+         findByPersonIdWithRoleCode(Person 1, Role 2)
+         -> returns this MultimediaObject because it has a person
+         with id 1 and has a person with role 2
+       */
+      return $this->createQueryBuilder()
+        ->field('people_in_multimedia_object._id')->equals(new \MongoId($personId))
+        ->field('people_in_multimedia_object.roles.cod')->equals($roleCod)
+        ->getQuery()
+        ->execute();
+  }
+
 }

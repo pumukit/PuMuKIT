@@ -7,11 +7,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\RoleRepository")
+ * Pumukit\SchemaBundle\Document\EmbeddedRole
+ *
+ * @MongoDB\EmbeddedDocument()
  */
-class Role
+class EmbeddedRole
 {
     /**
+     * @var string $id
+     *
      * @MongoDB\Id
      */
     protected $id;
@@ -20,24 +24,8 @@ class Role
      * @var string $cod
      *
      * @MongoDB\String
-     * @MongoDB\UniqueIndex(safe="true")
      */
     private $cod = '0';
-
-    /**
-     * @var integer $rank
-     *
-     * @MongoDB\Int
-     * @Gedmo\SortablePosition
-     */
-    private $rank;
-    
-    /**
-     * @var int $number_people
-     *
-     * @MongoDB\Int
-     */
-    private $number_people = 0;
 
     /**
      * See European Broadcasting Union Role Codes
@@ -76,7 +64,7 @@ class Role
     /**
      * Get id
      *
-     * @return integer
+     * @return string
      */
     public function getId()
     {
@@ -101,26 +89,6 @@ class Role
     public function getCod()
     {
         return $this->cod;
-    }
-
-    /**
-     * Set rank
-     *
-     * @param integer $rank
-     */
-    public function setRank($rank)
-    {
-        $this->rank = $rank;
-    }
-
-    /**
-     * Get rank
-     *
-     * @return integer
-     */
-    public function getRank()
-    {
-        return $this->rank;
     }
 
     /**
@@ -284,40 +252,58 @@ class Role
     }
 
     /**
-     * Increase number_people
+     * Constructor
      */
-    public function increaseNumberPeople()
+    public function __construct(Role $role)
     {
-        ++$this->number_people;
+        if (null !== $role){
+            $this->id = $role->getId();
+            $this->cod = $role->getCod();
+            $this->xml = $role->getXml();
+            $this->display = $role->getDisplay();
+            $this->setI18nName($role->getI18nName());
+            $this->setI18nText($role->getI18nText());
+        }
     }
-    
+
     /**
-     * Decrease number_people
-     */
-    public function decreaseNumberPeople()
-    {
-        --$this->number_people;
-    }
-    
-    /**
-     * Get number_people
-     */
-    public function getNumberPeople()
-    {
-        return $this->number_people;
-    }    
-    
-    /**
-     * Clone Role
+     * Create embedded role
      *
-     * @return Role
+     * @param ArrayCollection $embeddedRoles
+     * @param EmbeddedRole|Role $role
+     *
+     * @return EmbeddedRole
      */
-    public function cloneResource()
+    public static function createEmbeddedRole($embeddedRoles, $role)
     {
-        $aux = clone $this;
-        $aux->id = null;
-        $aux->rank = null;
+        if ($role instanceof self){
+            return $role;
+        }elseif ($containedEmbedRole = self::getEmbeddedRole($embeddedRoles, $role)) {
+            return $containedEmbedRole;
+        }elseif ($role instanceof Role){
+            $embeddedRole = new self($role);
+            
+            return $embeddedRole;
+        }
         
-        return $aux;
+        throw new \InvalidArgumentException('Only Role or EmbeddedRole are allowed.');
+    }
+
+    /**
+     * Get embedded role
+     *
+     * @param ArrayCollection $embeddedRoles
+     * @param Role|EmbeddedRole $role
+     * @return EmbeddedRole|boolean EmbeddedRole if found, FALSE otherwise.
+     */
+    public static function getEmbeddedRole($embeddedRoles, $role)
+    {
+        foreach ($embeddedRoles as $embeddedRole) {
+            if (0 === strcmp($role->getCod(), $embeddedRole->getCod())) {
+                return $embeddedRole;
+            }
+        }
+        
+        return false;
     }
 }

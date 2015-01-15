@@ -12,12 +12,8 @@ class RoleRepositoryTest extends WebTestCase
 
     public function setUp()
     {
-        //INIT TEST SUITE
-    $options = array(
-        'environment' => 'test',
-    );
+        $options = array('environment' => 'test');
         $kernel = static::createKernel($options);
-    //$kernel = static::createKernel();
         $kernel->boot();
         $this->dm = $kernel->getContainer()
             ->get('doctrine_mongodb')->getManager();
@@ -32,7 +28,6 @@ class RoleRepositoryTest extends WebTestCase
     public function testRepository()
     {
         $cod = 123;
-        $rank = 5;
         $xml = '<xml contenido del xml/>';
         $display = true;
         $name = 'rolename1';
@@ -40,9 +35,8 @@ class RoleRepositoryTest extends WebTestCase
 
         $role = new Role();
         $role->setCod($cod);
-        $role->setRank($rank);
         $role->setXml($xml);
-        $role->setDisplay($display); // true by default
+        $role->setDisplay($display);
         $role->setName($name);
         $role->setText($text);
 

@@ -11,10 +11,10 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $name = 'name';
         $web = 'web';
         $phone = 'phone';
-        $honorific = 'honorific';
+        $honorific = 'Mr';
         $firm = 'firm';
         $post = 'post';
-        $bio = 'Eu son Balbino. Un rapaz de aldea. Coma quen di, un ninguén. E ademais, pobre';
+        $bio = 'Biography of this person';
 
         $person = new Person();
 
@@ -35,5 +35,25 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($firm, $person->getFirm());
         $this->assertEquals($post, $person->getPost());
         $this->assertEquals($bio, $person->getBio());
+
+        $honorificEs = 'Don';
+        $firmEs = 'Firma de esta persona';
+        $postEs = 'Post de esta persona';
+        $bioEs = 'Biografía de esta persona';
+
+        $i18nHonorific = array('en' => $honorific, 'es' => $honorificEs);
+        $i18nFirm = array('en' => $firm, 'es' => $firmEs);
+        $i18nPost = array('en' => $post, 'es' => $postEs);
+        $i18nBio = array('en' => $bio, 'es' => $bioEs);
+
+        $person->setI18nHonorific($i18nHonorific);
+        $person->setI18nFirm($i18nFirm);
+        $person->setI18nPost($i18nPost);
+        $person->setI18nBio($i18nBio);
+
+        $this->assertEquals($i18nHonorific, $person->getI18nHonorific());
+        $this->assertEquals($i18nFirm, $person->getI18nFirm());
+        $this->assertEquals($i18nPost, $person->getI18nPost());
+        $this->assertEquals($i18nBio, $person->getI18nBio());
     }
 }

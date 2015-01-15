@@ -7,14 +7,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Pumukit\SchemaBundle\Document\Person
+ * Pumukit\SchemaBundle\Document\EmbeddedPerson
  *
- * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\PersonRepository")
+ * @MongoDB\EmbeddedDocument()
  */
-class Person
+class EmbeddedPerson
 {
     /**
-     * @var int $id
+     * @var string $id
      *
      * @MongoDB\Id
      */
@@ -35,7 +35,7 @@ class Person
      * //@Assert\NotEmpty
      */
     protected $email;
-
+    
     /**
      * @var string $web
      *
@@ -43,52 +43,78 @@ class Person
      * //@Assert\Url('http', 'https', 'ftp')
      */
     protected $web;
-
+    
     /**
      * @var string $phone
      *
      * @MongoDB\String
      */
     protected $phone;
-
+    
     /**
      * @var string $honorific
      *
      * @MongoDB\Raw
      */
     protected $honorific = array('en' => '');
-
+    
     /**
      * @var string $firm
      *
      * @MongoDB\Raw
      */
     protected $firm = array('en' => '');
-
+    
     /**
      * @var string $post
      *
      * @MongoDB\Raw
      */
     protected $post = array('en' => '');
-
+    
     /**
      * @var string $bio
      *
      * @MongoDB\Raw
      */
     protected $bio = array('en' => '');
-
+    
+    /**
+     * @var ArrayCollection $roles
+     *
+     * @MongoDB\EmbedMany(targetDocument="EmbeddedRole")
+     */
+    protected $roles;
+    
     /**
      * Locale
      * @var locale $locale
      */
     protected $locale = 'en';
-
+    
+    /**
+     * Construct
+     */
+    public function __construct(Person $person)
+    {
+        if (null !== $person){
+            $this->id = $person->getId();
+            $this->name = $person->getName();
+            $this->email = $person->getEmail();
+            $this->web = $person->getWeb();
+            $this->phone = $person->getPhone();
+            $this->setI18nHonorific($person->getI18nHonorific());
+            $this->setI18nFirm($person->getI18nFirm());
+            $this->setI18nPost($person->getI18nPost());
+            $this->setI18nBio($person->getI18nBio());
+        }
+        $this->roles = new ArrayCollection();
+    }
+    
     /**
      * Get id
      *
-     * @return integer
+     * @return string
      */
     public function getId()
     {
@@ -114,7 +140,7 @@ class Person
     {
         return $this->name;
     }
-
+    
     /**
      * Set email
      *
@@ -124,7 +150,7 @@ class Person
     {
         $this->email = $email;
     }
-
+    
     /**
      * Get email
      *
@@ -134,7 +160,7 @@ class Person
     {
         return $this->email;
     }
-
+    
     /**
      * Set web
      *
@@ -144,7 +170,7 @@ class Person
     {
         $this->web = $web;
     }
-
+    
     /**
      * Get web
      *
@@ -154,7 +180,7 @@ class Person
     {
         return $this->web;
     }
-
+    
     /**
      * Set phone
      *
@@ -164,7 +190,7 @@ class Person
     {
         $this->phone = $phone;
     }
-
+    
     /**
      * Get phone
      *
@@ -174,7 +200,7 @@ class Person
     {
         return $this->phone;
     }
-
+    
     /**
      * Set honorific
      *
@@ -187,7 +213,7 @@ class Person
         }
         $this->honorific[$locale] = $honorific;
     }
-
+    
     /**
      * Get honorific
      *
@@ -204,7 +230,7 @@ class Person
         
         return $this->honorific[$locale];
     }
-
+    
     /**
      * Set i18n honorific
      */
@@ -212,7 +238,7 @@ class Person
     {
         $this->honorific = $honorific;
     }
-
+    
     /**
      * Get i18n honorific
      */
@@ -220,7 +246,7 @@ class Person
     {
         return $this->honorific;
     }
-
+    
     /**
      * Set firm
      *
@@ -233,7 +259,7 @@ class Person
         }
         $this->firm[$locale] = $firm;
     }
-
+    
     /**
      * Get firm
      *
@@ -258,7 +284,7 @@ class Person
     {
         $this->firm = $firm;
     }
-
+    
     /**
      * Get i18n firm
      */
@@ -266,7 +292,7 @@ class Person
     {
         return $this->firm;
     }
-
+    
     /**
      * Set post
      *
@@ -296,7 +322,7 @@ class Person
         
         return $this->post[$locale];
     }
-
+    
     /**
      * Set i18n post
      */
@@ -304,7 +330,7 @@ class Person
     {
         $this->post = $post;
     }
-
+    
     /**
      * Get i18n post
      */
@@ -312,7 +338,7 @@ class Person
     {
         return $this->post;
     }
-
+    
     /**
      * Set bio
      *
@@ -325,7 +351,7 @@ class Person
         }
         $this->bio[$locale] = $bio;
     }
-
+    
     /**
      * Get bio
      *
@@ -342,7 +368,7 @@ class Person
         
         return $this->bio[$locale];
     }
-
+    
     /**
      * Set i18n bio
      */
@@ -350,13 +376,131 @@ class Person
     {
         $this->bio = $bio;
     }
-
+    
     /**
      * Get i18n bio
      */
     public function getI18nBio()
     {
         return $this->bio;
+    }
+    
+    /**
+     * Get roles
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    /**
+     * Get embedded role
+     *
+     * @param Role|EmbeddedRole $role
+     * @return EmbeddedRole|boolean EmbeddedRole if found, FALSE otherwise
+     */
+    public function getEmbeddedRole($role)
+    {
+        return EmbeddedRole::getEmbeddedRole($this->roles, $role);
+    }
+    
+    /**
+     * Set role
+     * @param Role|EmbeddedRole $role
+     */
+    public function addRole($role)
+    {      
+        if (!($this->containsRole($role))) {
+            $this->roles[] = EmbeddedRole::createEmbeddedRole($this->roles, $role);
+        }
+    }
+
+    /**
+     * Remove role
+     *
+     * @param Role|EmbeddedRole $role
+     * @return boolean TRUE if this embedded person contained the specified role, FLASE otherwise.
+     */
+    public function removeRole($role)
+    {
+        $embeddedRole = $this->getEmbeddedRole($role);
+
+        $aux = $this->roles->filter(function ($i) use ($embeddedRole) {
+              return $i->getId() !== $embeddedRole->getId();
+          });
+
+        $hasRemoved = (count($aux) !== count($this->roles));
+
+        $this->roles = $aux;
+
+        return $hasRemoved;
+    }
+
+    /**
+     * Contains role
+     *
+     * @param Role|EmbeddedRole $role
+     * @return EmbeddedRole|boolean EmbeddedRole if found, FALSE otherwise.
+     */
+    public function containsRole($role)
+    {
+        if ($this->getEmbeddedRole($role)){
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Contains all roles
+     *
+     * @param array $roles
+     * @return boolean TRUE if this embedded person contains all roles, FLASE otherwise.
+     */
+    public function containsAllRoles(array $roles)
+    {
+        foreach ($roles as $role) {
+            if (!($this->containsRole($role))) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    /**
+     * Contains any role
+     *
+     * @param array $roles
+     * @return boolean TRUE if this embedded person contains any role of the list, FLASE otherwise.
+     */
+    public function containsAnyRole(array $roles)
+    {
+        foreach ($roles as $role) {
+            if (!($this->containsRole($role))) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    /**
+     * Contains any visible role
+     *
+     * Checks if any of the roles in the embeddedPerson has display with true
+     *
+     * @return boolean TRUE if any of the roles has display=true, FALSE otherwise
+     */
+    public function containsAnyVisibleRole()
+    {
+        foreach ($this->roles as $role){
+            if ($role->getDisplay()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -378,23 +522,45 @@ class Person
     {
         return $this->locale;
     }
-
+    
     /**
-     * Get person object
+     * Create embedded person
      *
-     * @param Person|EmbeddedPerson $person
-     * @return Person
+     * @param ArrayCollection $embedPeople
+     * @param EmbeddedPerson|Person $person
+     *
+     * @return EmbeddedPerson
      */
-    public static function getPersonObject($person)
+    public static function createEmbeddedPerson($embedPeople, $person)
     {
         if ($person instanceof self){
             return $person;
-        }else{
-            //TODO - Possible ??
-            //return self->objects(id=$person->getId());
+        }elseif ($containedEmbedPerson = self::getEmbeddedPerson($embedPeople, $person)) {
+           return $containedEmbedPerson;
+        }elseif ($person instanceof Person){
+            $embedPerson = new self($person);
+            
+            return $embedPerson;
         }
-
-        // TODO - Delete line:
-        return $person;
+        
+        throw new \InvalidArgumentException('Only Person or EmbeddedPerson are allowed.');
     }
+
+    /**
+     * Contained embed person
+     *
+     * @param ArrayCollection $embedPeople
+     * @param Person|EmbeddedPerson $person
+     * @return EmbeddedPerson|boolean EmbeddedPerson if found, FALSE otherwise:
+     */
+    public static function getEmbeddedPerson($embedPeople, $person)
+    {
+        foreach ($embedPeople as $embedPerson) {
+            if (0 === strcmp($person->getId(), $embedPerson->getId())) {
+                return $embedPerson;
+            }
+        }
+        
+        return false;
+    }    
 }
