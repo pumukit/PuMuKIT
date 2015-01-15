@@ -426,6 +426,14 @@ class Tag
       return $this->number_multimedia_objects;
   }
 
+  /**
+   * Set number_multimedia_objects
+   */
+  public function setNumberMultimediaObjects($count)
+  {
+      return $this->number_multimedia_objects = $count;
+  }
+
     public function setParent(Tag $parent = null)
     {
         $this->parent = $parent;
