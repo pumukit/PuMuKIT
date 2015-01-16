@@ -154,7 +154,7 @@ class MultimediaObject
     /**
      * @var ArrayCollection $people
      *
-     * @MongoDB\EmbedMany(targetDocument="EmbeddedPerson")
+     * @MongoDB\EmbedMany(targetDocument="EmbeddedRole")
      */
     private $people_in_multimedia_object;
 
@@ -1904,104 +1904,38 @@ class MultimediaObject
     // Start people_in_multimedia_object section.
 
     /**
-     * Set people_in_multimedia_object
-     *
-     * @param array $people_in_multimedia_object
-     */
-    public function setPeopleInMultimediaObject(array $people_in_multimedia_object)
-    {
-        $this->people_in_multimedia_object = new ArrayCollection($people_in_multimedia_object);
-    }
-
-    /**
      * Get people_in_multimedia_object
      *
      * @return array
      */
     public function getPeopleInMultimediaObject()
     {
-        return $this->people_in_multimedia_object;
-    }
-
-    /**
-     * Get embedded person
-     *
-     * @param Person|EmbeddedPerson $person
-     * @return EmbeddedPerson|boolean EmbeddedPerson if found, FALSE otherwise
-     */
-    public function getEmbeddedPerson($person)
-    {
-        return EmbeddedPerson::getEmbeddedPerson($this->people_in_multimedia_object, $person);
-    }
-
-    /**
-     * Add Person with Role
-     *
-     * @param Person|EmbeddedPerson $person
-     * @param Role|EmbeddedRole $role
-     */
-    public function addPersonWithRole($person, $role)
-    {
-        if (!($this->containsPersonWithRole($person, $role))){
-            if ($this->containsPerson($person)){
-                $embeddedPerson = $this->getEmbeddedPerson($person);
-                $embeddedPerson->addRole($role);
-            }else{
-                $embeddedPerson = EmbeddedPerson::createEmbeddedPerson($this->people_in_multimedia_object, $person);
-                $embeddedPerson->addRole($role);
-                $this->people_in_multimedia_object[] = $embeddedPerson;
-            }   
-        }
-    }
-
-    /**
-     * Remove Person With Role
-     *
-     * @param Person|EmbeddedPerson $person
-     * @param Role|EmbeddedRole $role
-     * @return boolean TRUE if this multimedia_object contained the specified person_in_multimedia_object, FALSE otherwise.
-     */
-    public function removePersonWithRole($person, $role)
-    {
-        $embeddedPerson = $this->getEmbeddedPerson($person);
-        if (!($embeddedPerson->containsRole($role))){
-            return false;
-        }
-
-        $hasRemoved = $embeddedPerson->removeRole($role);
-
-        if (is_empty($embeddedPerson->getRoles())){
-            $aux = $this->people_in_multimedia_object->filter(function ($i) use ($embeddedPerson) {
-                return $i->getId() !== $embeddedPerson->getId();
-              });
-
-            if (count($aux) !== count($this->people_in_multimedia_object)){
-                $this->people_in_multimedia_object = $aux;
-                // TODO - move to controller ??? /////
-                //$documentPerson = Person::getPersonObject($person);
-                //$documentPerson->decreaseNumberMultimediaObjects();
-                if ($person instanceof Person){
-                    $person->decreaseNumberMultimediaObject();
-                }
-                ////////////////////
+        $aux = array();
+        
+        foreach ($this->people_in_multimedia_object as $role){
+            if ($role->getPeople()){
+                $aux = array_merge($aux, $role->getPeople()->toArray());
             }
         }
 
-        return $hasRemoved;
-    }
+        $people = array_values(array_unique(($aux)));
 
+        return $people;
+    }
+    
     /**
-     * TODO check !!! - Person with given roles or EmbeddedPerson
-     * Contains EmbeddedPerson without matter the role ???????
+     * Contains EmbeddedPerson without mattering the role
      * Use containsPersonWithRole instead.
      *
      * @param Person|EmbbededPerson $person
-     * @return boolean TRUE if this multimedia_object contained the specified person_in_multimedia_object, FALSE otherwise.
+     * @return boolean TRUE if this multimedia_object contains the specified person, FALSE otherwise.
      */
     public function containsPerson($person)
     {
-        if ($this->getEmbeddedPerson($person)){
-            return true;
+        foreach($this->getPeopleInMultimediaObject() as $embeddedPerson){
+            if ($person->getId() == $embeddedPerson->getId()){
+                return true;
+            }
         }
 
         return false;
@@ -2017,16 +1951,13 @@ class MultimediaObject
      */
     public function containsPersonWithRole($person, $role)
     {
-        $embeddedPerson = $this->getEmbeddedPerson($person);
-
-        if (!($embeddedPerson)){
-            return false;
+        foreach($this->getPeopleInMultimediaObjectByRole($role, true) as $embeddedPerson){
+            if ($person->getId() == $embeddedPerson->getId()){
+                return true;
+            }
+            
         }
 
-        if ($embeddedPerson->containsRole($role)){
-            return true;
-        }
-        
         return false;
     }
 
@@ -2040,17 +1971,13 @@ class MultimediaObject
      */
     public function containsPersonWithAllRoles($person, array $roles)
     {
-        $embeddedPerson = $this->getEmbeddedPerson($person);
-
-        if (!($embeddedPerson)){
-            return false;
+        foreach($roles as $role){
+            if (!($this->containsPersonWithRole($person, $role))){
+                return false;
+            }
         }
 
-        if ($embeddedPerson->containsAllRoles($roles)){
-            return true;
-        }
-        
-        return false;
+        return true;
     }
 
     /**
@@ -2063,50 +1990,160 @@ class MultimediaObject
      */
     public function containsPersonWithAnyRole($person, array $roles)
     {
-        $embeddedPerson = $this->getEmbeddedPerson($person);
-
-        if (!($embeddedPerson)){
-            return false;
+        foreach($roles as $role){
+            if ($this->containsPersonWithRole($person, $role)){
+                return true;
+            }
         }
 
-        if ($embeddedPerson->containsAnyRole($roles)){
-            return true;
-        }
-        
         return false;
     }
 
-
     /**
-     * Get people associated to multimediaobject with a given role.
-     * If the role is zero, it returns all people with a "displayable" role
+     * Get people in multimedia object by role
      *
      * @param Role|EmbeddedRole $role
+     * @param boolean $always
      * @return array
      */
-    public function getPeopleInMultimediaObjectByRole($role = null)
+    public function getPeopleInMultimediaObjectByRole($role = null, $always = false)
     {
       $aux = array();
 
       if (null !== $role){
-          foreach ($this->people_in_multimedia_object as $embeddedPerson){
-              if ($embeddedPerson->containsRole($role)){
-                  $embeddedRole = $embeddedPerson->getEmbeddedRole($role);
-                  if ($embeddedRole->getDisplay()){
-                      $aux[] = $embeddedPerson;
+          foreach ($this->people_in_multimedia_object as $embeddedRole){
+              if ($role->getCod() == $embeddedRole->getCod()){
+                  if ($always || $embeddedRole->getDisplay()){
+                      $aux[] = $embeddedRole->getPeople();
                   }
+                  break;
               }
           }
       }else{
-          // Check person and role (only roles with display = true) ????
-          foreach ($this->people_in_multimedia_object as $embeddedPerson){
-              if ($embeddedPerson->containsAnyVisibleRole()){
-                  $aux[] = $embeddedPerson;
+          foreach ($this->people_in_multimedia_object as $embeddedRole){
+              if ($always || $embeddedRole->getDisplay()){
+                  $aux[] = $embeddedRole->getPeople();
               }
           }
       }
 
       return $aux;
+    }
+
+    /**
+     * Add Person with Role
+     *
+     * @param Person|EmbeddedPerson $person
+     * @param Role|EmbeddedRole $role
+     */
+    public function addPersonWithRole($person, $role)
+    {
+        if (!($this->containsPersonWithRole($person, $role))){
+            if ($embeddedRole = EmbeddedRole::getEmbeddedRole($this->people_in_multimedia_object, $role)){
+                $this->people_in_multimedia_object[$this->getIndexOfRole($embeddedRole)]->addPerson($person);
+            }else{
+                $embeddedRole = EmbeddedRole::createEmbeddedRole($this->people_in_multimedia_object, $role);
+                $embeddedRole->addPerson($person);
+                $this->people_in_multimedia_object[] = $embeddedRole;
+            }
+        }
+    }
+
+    /**
+     * Remove Person With Role
+     *
+     * @param Person|EmbeddedPerson $person
+     * @param Role|EmbeddedRole $role
+     * @return boolean TRUE if this multimedia_object contained the specified person_in_multimedia_object, FALSE otherwise.
+     */
+    public function removePersonWithRole($person, $role)
+    {
+        if (!($this->containsPersonWithRole($person, $role))){
+            return false;
+        }
+
+        $embeddedRole = EmbeddedRole::getEmbeddedRole($this->people_in_multimedia_object, $role);
+        $key = $this->getIndexOfRole($embeddedRole);
+        if ($key == -1){
+          throw new \Exception('Role with code '.$embeddedRole->getCod().' not found');
+        }
+
+        $hasRemoved = $this->people_in_multimedia_object[$key]->removePerson($person);
+
+
+        if (!($this->people_in_multimedia_object[$key]->getPeople())){
+            $this->people_in_multimedia_object->remove($key);
+        }
+        
+        return $hasRemoved;
+    }
+
+    /**
+     * Get person with role
+     *
+     * @param Person|EmbeddedPerson $person
+     * @param Role|EmbeddedRole $role
+     *
+     * @return EmbeddedPerson|boolean EmbeddedPerson if found, FALSE otherwise
+     */
+    public function getPersonWithRole($person, $role)
+    {
+        if ($this->containsPersonWithRole($person, $role)){
+            return $this->people_in_multimedia_object[$this->getIndexOfRole($role)]->getEmbeddedPerson($person);
+        }
+
+        return false;
+    }
+
+    /**
+     * Up person with role
+     *
+     * @param Person|EmbeddedPerson $person
+     * @param Role|EmbeddedRole $role
+     */
+    public function upPersonWithRole($person, $role)
+    {
+        $this->reorderPersonWithRole($person, $role, true);
+    }
+
+    /**
+     * Down person with role
+     *
+     * @param Person|EmbeddedPerson $person
+     * @param Role|EmbeddedRole $role
+     */
+    public function downPersonWithRole($person, $role)
+    {
+        $this->reorderPersonWithRole($person, $role, false);
+    }
+
+    /**
+     * Reorder person with role
+     *
+     * @param Person|EmbeddedRole $person
+     * @param Role\EmbeddedRole $role
+     * @param boolean $up
+     */
+    public function reorderPersonWithRole($person, $role, $up = true)
+    {
+        $roleKey = $this->getIndexOfRole($role);
+        $people = array_values($this->people_in_multimedia_object[$roleKey]->getPeople()->toArray());
+        //$people = array_values($this->getPeopleInMultimediaObjectByRole($role, true));
+        $this->people_in_multimedia_object[$roleKey]->getPeople()->clear();
+
+        $out = array();
+        foreach ($people as $key => $embeddedPerson){
+          if ($person->getId() == $embeddedPerson->getId()) {
+            $out[($key * 10) + ($up ? -11 : 11)] = $embeddedPerson;
+          }else{
+            $out[($key * 10)] = $embeddedPerson;
+          }
+        }
+
+        ksort($out);
+        foreach ($out as $embeddedPerson){
+            $this->people_in_multimedia_object[$roleKey]->addPerson($embeddedPerson);
+        }
     }
 
     // End of people_in_multimedia_object section
@@ -2140,5 +2177,24 @@ class MultimediaObject
       if ($maxDuration !== $this->getDuration()) {
         $this->setDuration($maxDuration);
       }
+    }
+
+    /**
+     * Get index of role
+     *
+     * @param Role|EmbeddedRole $role
+     * @return int
+     */
+    private function getIndexOfRole($role)
+    {
+        $key = -1;
+
+        foreach($this->people_in_multimedia_object as $key => $embeddedRole){
+            if ($role->getCod() == $embeddedRole->getCod()){
+                return $key;
+            }
+        }
+        
+        return $key;
     }
 }

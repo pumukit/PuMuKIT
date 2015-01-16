@@ -57,6 +57,13 @@ class EmbeddedRole
     private $text = array('en' => '');
     
     /**
+     * @var ArrayCollection $people
+     *
+     * @MongoDB\EmbedMany(targetDocument="EmbeddedPerson")
+     */
+    protected $people;
+    
+    /**
      * @var locale $locale
      */
     private $locale = 'en';
@@ -264,6 +271,7 @@ class EmbeddedRole
             $this->setI18nName($role->getI18nName());
             $this->setI18nText($role->getI18nText());
         }
+        $this->people = new ArrayCollection();
     }
 
     /**
@@ -301,6 +309,110 @@ class EmbeddedRole
         foreach ($embeddedRoles as $embeddedRole) {
             if (0 === strcmp($role->getCod(), $embeddedRole->getCod())) {
                 return $embeddedRole;
+            }
+        }
+        
+        return false;
+    }
+
+    /**
+     * Get people
+     */
+    public function getPeople()
+    {
+        return $this->people;
+    }
+
+    /**
+     * Get embedded person
+     *
+     * @param Person|EmbeddedPerson $person
+     * @return EmbeddedPerson|boolean EmbeddedPerson if found, FALSE otherwise
+     */
+    public function getEmbeddedPerson($person)
+    {
+        return EmbeddedPerson::getEmbeddedPerson($this->people, $person);
+    }
+    
+    /**
+     * Add person
+     *
+     * @param Person|EmbeddedPerson $person
+     */
+    public function addPerson($person)
+    {      
+        if (!($this->containsPerson($person))) {
+             $this->roles[] = EmbeddedPerson::createEmbeddedPerson($this->people, $person);
+        }
+        
+    }
+
+    /**
+     * Remove person
+     *
+     * @param Person|EmbeddedPerson $person
+     * @return boolean TRUE if this embedded person contained the specified person, FLASE otherwise.
+     */
+    public function removePerson($person)
+    {
+        $embeddedPerson = $this->getEmbeddedPerson($person);
+
+        $aux = $this->people->filter(function ($i) use ($embeddedPerson) {
+              return $i->getId() !== $embeddedPerson->getId();
+          });
+
+        $hasRemoved = (count($aux) !== count($this->people));
+
+        $this->people = $aux;
+
+        return $hasRemoved;
+    }
+
+    /**
+     * Contains person
+     *
+     * @param Person|EmbeddedPerson $person
+     * @return EmbeddedPerson|boolean EmbeddedPerson if found, FALSE otherwise.
+     */
+    public function containsPerson($person)
+    {
+        foreach($this->people as $embeddedPerson){
+            if ($person->getId() === $embeddedPerson->getId()){
+                return true;
+            }
+        }
+            
+        return false;
+    }
+
+    /**
+     * Contains all people
+     *
+     * @param array $people
+     * @return boolean TRUE if this embedded role contains all people, FLASE otherwise.
+     */
+    public function containsAllPeople(array $people)
+    {
+        foreach ($people as $person) {
+            if (!($this->containsPerson($person))) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    /**
+     * Contains any person
+     *
+     * @param array $people
+     * @return boolean TRUE if this embedded person contains any person of the list, FLASE otherwise.
+     */
+    public function containsAnyPerson(array $people)
+    {
+        foreach ($people as $person) {
+            if (!($this->containsPerson($person))) {
+                return true;
             }
         }
         

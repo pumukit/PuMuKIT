@@ -80,13 +80,6 @@ class EmbeddedPerson
     protected $bio = array('en' => '');
     
     /**
-     * @var ArrayCollection $roles
-     *
-     * @MongoDB\EmbedMany(targetDocument="EmbeddedRole")
-     */
-    protected $roles;
-    
-    /**
      * Locale
      * @var locale $locale
      */
@@ -108,7 +101,6 @@ class EmbeddedPerson
             $this->setI18nPost($person->getI18nPost());
             $this->setI18nBio($person->getI18nBio());
         }
-        $this->roles = new ArrayCollection();
     }
     
     /**
@@ -383,125 +375,7 @@ class EmbeddedPerson
     public function getI18nBio()
     {
         return $this->bio;
-    }
-    
-    /**
-     * Get roles
-     */
-    public function getRoles()
-    {
-        return $this->roles;
-    }
-
-    /**
-     * Get embedded role
-     *
-     * @param Role|EmbeddedRole $role
-     * @return EmbeddedRole|boolean EmbeddedRole if found, FALSE otherwise
-     */
-    public function getEmbeddedRole($role)
-    {
-        return EmbeddedRole::getEmbeddedRole($this->roles, $role);
-    }
-    
-    /**
-     * Set role
-     * @param Role|EmbeddedRole $role
-     */
-    public function addRole($role)
-    {      
-        if (!($this->containsRole($role))) {
-            $this->roles[] = EmbeddedRole::createEmbeddedRole($this->roles, $role);
-        }
-    }
-
-    /**
-     * Remove role
-     *
-     * @param Role|EmbeddedRole $role
-     * @return boolean TRUE if this embedded person contained the specified role, FLASE otherwise.
-     */
-    public function removeRole($role)
-    {
-        $embeddedRole = $this->getEmbeddedRole($role);
-
-        $aux = $this->roles->filter(function ($i) use ($embeddedRole) {
-              return $i->getId() !== $embeddedRole->getId();
-          });
-
-        $hasRemoved = (count($aux) !== count($this->roles));
-
-        $this->roles = $aux;
-
-        return $hasRemoved;
-    }
-
-    /**
-     * Contains role
-     *
-     * @param Role|EmbeddedRole $role
-     * @return EmbeddedRole|boolean EmbeddedRole if found, FALSE otherwise.
-     */
-    public function containsRole($role)
-    {
-        if ($this->getEmbeddedRole($role)){
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Contains all roles
-     *
-     * @param array $roles
-     * @return boolean TRUE if this embedded person contains all roles, FLASE otherwise.
-     */
-    public function containsAllRoles(array $roles)
-    {
-        foreach ($roles as $role) {
-            if (!($this->containsRole($role))) {
-                return false;
-            }
-        }
-        
-        return true;
-    }
-    
-    /**
-     * Contains any role
-     *
-     * @param array $roles
-     * @return boolean TRUE if this embedded person contains any role of the list, FLASE otherwise.
-     */
-    public function containsAnyRole(array $roles)
-    {
-        foreach ($roles as $role) {
-            if (!($this->containsRole($role))) {
-                return true;
-            }
-        }
-        
-        return false;
-    }
-
-    /**
-     * Contains any visible role
-     *
-     * Checks if any of the roles in the embeddedPerson has display with true
-     *
-     * @return boolean TRUE if any of the roles has display=true, FALSE otherwise
-     */
-    public function containsAnyVisibleRole()
-    {
-        foreach ($this->roles as $role){
-            if ($role->getDisplay()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
+    }    
 
     /**
      * Set locale
