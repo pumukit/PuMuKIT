@@ -269,9 +269,9 @@ class MultimediaObject
      */
     public function addTag($tag)
     {
-        $embedTag = EmbeddedTag::getEmbeddedTag($this->tags, $tag);
-
-        if (!($this->containsTag($embedTag))) {
+        if (!($this->containsTag($tag))) {
+            //TODO rubenrua.
+            $embedTag = EmbeddedTag::getEmbeddedTag($this->tags, $tag);        
             $this->tags[] = $embedTag;
         }
     }
@@ -283,20 +283,15 @@ class MultimediaObject
      * @param Tag|EmbeddedTag $tag
      * @return boolean TRUE if this multimedia_object contained the specified tag, FALSE otherwise.
      */
-    //TODO: ADD TEST (yo creo que es !== y no === ver removePicById)
-    public function removeTag($tag)
+    public function removeTag($tagToRemove)
     {
-        $embedTag = EmbeddedTag::getEmbeddedTag($this->tags, $tag);
-
-        $aux = $this->tags->filter(function ($i) use ($embedTag) {
-              return $i->getId() !== $embedTag->getId();
-          });
+        foreach($this->tags as $tag) {
+           if($tag->getCod() == $tagToRemove->getCod()) {
+              return $this->tags->removeElement($tag);
+           }
+        }
         
-        $hasRemoved = (count($aux) !== count($this->tags));
-        
-        $this->tags = $aux;
-        
-        return $hasRemoved;
+        return false;    
     }
 
     /**
@@ -306,11 +301,15 @@ class MultimediaObject
      * @param Tag|EmbeddedTag $tag
      * @return boolean TRUE if this multimedia_object contained the specified tag, FALSE otherwise.
      */
-    public function containsTag($tag)
+    public function containsTag($tagToCheck)
     {
-        $embedTag = EmbeddedTag::getEmbeddedTag($this->tags, $tag);
+        foreach($this->tags as $tag) {
+           if($tag->getCod() == $tagToCheck->getCod()) {
+               return true;
+           }
+        }
         
-        return $this->tags->contains($embedTag);
+        return false;
     }
     
     /**
