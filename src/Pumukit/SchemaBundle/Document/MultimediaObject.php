@@ -270,7 +270,6 @@ class MultimediaObject
     public function addTag($tag)
     {
         if (!($this->containsTag($tag))) {
-            //TODO rubenrua.
             $embedTag = EmbeddedTag::getEmbeddedTag($this->tags, $tag);        
             $this->tags[] = $embedTag;
         }
