@@ -1913,14 +1913,14 @@ class MultimediaObject
         $aux = array();
         
         foreach ($this->people_in_multimedia_object as $role){
-            if ($role->getPeople()){
-                $aux = array_merge($aux, $role->getPeople()->toArray());
+            foreach ($role->getPeople() as $person){
+                if (!in_array($person, $aux)){
+                    $aux[] = $person;
+                }
             }
         }
 
-        $people = array_values(array_unique(($aux)));
-
-        return $people;
+        return $aux;
     }
     
     /**
@@ -2014,7 +2014,9 @@ class MultimediaObject
           foreach ($this->people_in_multimedia_object as $embeddedRole){
               if ($role->getCod() == $embeddedRole->getCod()){
                   if ($always || $embeddedRole->getDisplay()){
-                      $aux[] = $embeddedRole->getPeople();
+                      foreach ($embeddedRole->getPeople() as $embeddedPerson){
+                          $aux[] = $embeddedPerson;
+                      }
                   }
                   break;
               }
@@ -2022,7 +2024,11 @@ class MultimediaObject
       }else{
           foreach ($this->people_in_multimedia_object as $embeddedRole){
               if ($always || $embeddedRole->getDisplay()){
-                  $aux[] = $embeddedRole->getPeople();
+                  foreach ($embeddedRole->getPeople() as $embeddedPerson){
+                      if (!in_array($embeddedPerson, $aux)){
+                          $aux[] = $embeddedPerson;
+                      }
+                  }
               }
           }
       }
@@ -2039,10 +2045,10 @@ class MultimediaObject
     public function addPersonWithRole($person, $role)
     {
         if (!($this->containsPersonWithRole($person, $role))){
-            if ($embeddedRole = EmbeddedRole::getEmbeddedRole($this->people_in_multimedia_object, $role)){
-                $this->people_in_multimedia_object[$this->getIndexOfRole($embeddedRole)]->addPerson($person);
+            if ($embeddedRole = $this->getEmbeddedRole($role)){
+                $embeddedRole->addPerson($person);
             }else{
-                $embeddedRole = EmbeddedRole::createEmbeddedRole($this->people_in_multimedia_object, $role);
+                $embeddedRole = $this->createEmbeddedRole($role);
                 $embeddedRole->addPerson($person);
                 $this->people_in_multimedia_object[] = $embeddedRole;
             }
@@ -2062,139 +2068,150 @@ class MultimediaObject
             return false;
         }
 
-        $embeddedRole = EmbeddedRole::getEmbeddedRole($this->people_in_multimedia_object, $role);
-        $key = $this->getIndexOfRole($embeddedRole);
-        if ($key == -1){
-          throw new \Exception('Role with code '.$embeddedRole->getCod().' not found');
+        $embeddedRole = $this->getEmbeddedRole($role);
+
+        $hasRemoved = $embeddedRole->removePerson($person);
+
+        if (0 === count($embeddedRole->getPeople())){
+            $this->people_in_multimedia_object->removeElement($embeddedRole);
         }
 
-        $hasRemoved = $this->people_in_multimedia_object[$key]->removePerson($person);
-
-
-        if (!($this->people_in_multimedia_object[$key]->getPeople())){
-            $this->people_in_multimedia_object->remove($key);
-        }
-        
         return $hasRemoved;
+     }
+
+     /**
+      * Get person with role
+      *
+      * @param Person|EmbeddedPerson $person
+      * @param Role|EmbeddedRole $role
+      *
+      * @return EmbeddedPerson|boolean EmbeddedPerson if found, FALSE otherwise
+      */
+     public function getPersonWithRole($person, $role)
+     {
+         if ($this->containsPersonWithRole($person, $role)){
+             return $this->getEmbeddedRole($role)->getEmbeddedPerson($person);
+         }
+
+         return false;
+     }
+
+     /**
+      * Up person with role
+      *
+      * @param Person|EmbeddedPerson $person
+      * @param Role|EmbeddedRole $role
+      */
+     public function upPersonWithRole($person, $role)
+     {
+         $this->reorderPersonWithRole($person, $role, true);
+     }
+
+     /**
+      * Down person with role
+      *
+      * @param Person|EmbeddedPerson $person
+      * @param Role|EmbeddedRole $role
+      */
+     public function downPersonWithRole($person, $role)
+     {
+         $this->reorderPersonWithRole($person, $role, false);
+     }
+
+     /**
+      * Reorder person with role
+      *
+      * @param Person|EmbeddedRole $person
+      * @param Role\EmbeddedRole $role
+      * @param boolean $up
+      */
+     public function reorderPersonWithRole($person, $role, $up = true)
+     {
+         $people = array_values($this->getPeopleInMultimediaObjectByRole($role, true));
+         $this->getEmbeddedRole($role)->getPeople()->clear();
+
+         $out = array();
+         foreach ($people as $key => $embeddedPerson){
+           if ($person->getId() == $embeddedPerson->getId()) {
+             $out[($key * 10) + ($up ? -11 : 11)] = $embeddedPerson;
+           }else{
+             $out[($key * 10)] = $embeddedPerson;
+           }
+         }
+
+         ksort($out);
+         foreach ($out as $embeddedPerson){
+             $this->getEmbeddedRole($role)->addPerson($embeddedPerson);
+         }
+     }
+
+     /**
+      * Get embedded role
+      *
+      * @param Role|EmbeddedRole
+      * @return EmbeddedRole|boolean EmbeddedRole if found, FALSE otherwise.
+      */
+     public function getEmbeddedRole($role)
+     {
+         foreach ($this->people_in_multimedia_object as $embeddedRole) {
+             if ($role->getCod() === $embeddedRole->getCod()) {
+                 return $embeddedRole;
+             }
+         }
+
+         return false;
     }
 
     /**
-     * Get person with role
+     * Create embedded role
      *
-     * @param Person|EmbeddedPerson $person
-     * @param Role|EmbeddedRole $role
+     * @param EmbeddedRole|Role $role
      *
-     * @return EmbeddedPerson|boolean EmbeddedPerson if found, FALSE otherwise
+     * @return EmbeddedRole
      */
-    public function getPersonWithRole($person, $role)
+    public function createEmbeddedRole($role)
     {
-        if ($this->containsPersonWithRole($person, $role)){
-            return $this->people_in_multimedia_object[$this->getIndexOfRole($role)]->getEmbeddedPerson($person);
-        }
-
-        return false;
-    }
-
-    /**
-     * Up person with role
-     *
-     * @param Person|EmbeddedPerson $person
-     * @param Role|EmbeddedRole $role
-     */
-    public function upPersonWithRole($person, $role)
-    {
-        $this->reorderPersonWithRole($person, $role, true);
-    }
-
-    /**
-     * Down person with role
-     *
-     * @param Person|EmbeddedPerson $person
-     * @param Role|EmbeddedRole $role
-     */
-    public function downPersonWithRole($person, $role)
-    {
-        $this->reorderPersonWithRole($person, $role, false);
-    }
-
-    /**
-     * Reorder person with role
-     *
-     * @param Person|EmbeddedRole $person
-     * @param Role\EmbeddedRole $role
-     * @param boolean $up
-     */
-    public function reorderPersonWithRole($person, $role, $up = true)
-    {
-        $roleKey = $this->getIndexOfRole($role);
-        $people = array_values($this->people_in_multimedia_object[$roleKey]->getPeople()->toArray());
-        //$people = array_values($this->getPeopleInMultimediaObjectByRole($role, true));
-        $this->people_in_multimedia_object[$roleKey]->getPeople()->clear();
-
-        $out = array();
-        foreach ($people as $key => $embeddedPerson){
-          if ($person->getId() == $embeddedPerson->getId()) {
-            $out[($key * 10) + ($up ? -11 : 11)] = $embeddedPerson;
-          }else{
-            $out[($key * 10)] = $embeddedPerson;
-          }
-        }
-
-        ksort($out);
-        foreach ($out as $embeddedPerson){
-            $this->people_in_multimedia_object[$roleKey]->addPerson($embeddedPerson);
-        }
-    }
-
-    // End of people_in_multimedia_object section
-
-    /**
-     * Clone Multimedia Object
-     *
-     * @return
-     */
-    public function cloneResource()
-    {
-      $aux = clone $this;
-      $aux->id = null;
-
-      return $aux;
-    }
-
-    /**
-     * Update duration
-     */
-    private function updateDuration()
-    {
-      $maxDuration = $this->getDuration();
-
-      foreach ($this->tracks as $mmTrack) {
-        if ($mmTrack->getDuration() > $this->getDuration()) {
-          $maxDuration = $mmTrack->getDuration();
-        }
-      }
-      
-      if ($maxDuration !== $this->getDuration()) {
-        $this->setDuration($maxDuration);
-      }
-    }
-
-    /**
-     * Get index of role
-     *
-     * @param Role|EmbeddedRole $role
-     * @return int
-     */
-    private function getIndexOfRole($role)
-    {
-        $key = -1;
-
-        foreach($this->people_in_multimedia_object as $key => $embeddedRole){
-            if ($role->getCod() == $embeddedRole->getCod()){
-                return $key;
-            }
+        if ($role instanceof EmbeddedRole){
+            return $role;
+        }elseif ($role instanceof Role){
+            $embeddedRole = new EmbeddedRole($role);
+            
+            return $embeddedRole;
         }
         
-        return $key;
+        throw new \InvalidArgumentException('Only Role or EmbeddedRole are allowed.');
     }
+
+     // End of people_in_multimedia_object section
+
+     /**
+      * Clone Multimedia Object
+      *
+      * @return
+      */
+     public function cloneResource()
+     {
+       $aux = clone $this;
+       $aux->id = null;
+
+       return $aux;
+     }
+
+     /**
+      * Update duration
+      */
+     private function updateDuration()
+     {
+       $maxDuration = $this->getDuration();
+
+       foreach ($this->tracks as $mmTrack) {
+         if ($mmTrack->getDuration() > $this->getDuration()) {
+           $maxDuration = $mmTrack->getDuration();
+         }
+       }
+
+       if ($maxDuration !== $this->getDuration()) {
+         $this->setDuration($maxDuration);
+       }
+     }
 }
