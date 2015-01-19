@@ -120,9 +120,10 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         // DB setup END.
         
         // Test find by person
-        /*
+
         $mmobj_ned = $this->repo->findByPersonId($person_ned->getId());
         $this->assertEquals(3, count($mmobj_ned));
+
 
         // Test find by person and role
         $mmobj_benjen_ranger = $this->repo->findByPersonIdWithRoleCod($person_benjen->getId(), $role_ranger->getCod());
@@ -130,15 +131,17 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mmobj_ned_hand = $this->repo->findByPersonIdWithRoleCod($person_ned->getId(), $role_hand->getCod());
         $mmobj_benjen_lord = $this->repo->findByPersonIdWithRoleCod($person_benjen->getId(), $role_lord->getCod());
         $mmobj_ned_ranger = $this->repo->findByPersonIdWithRoleCod($person_ned->getId(), $role_ranger->getCod());
+        $mmobj_benjen_hand = $this->repo->findByPersonIdWithRoleCod($person_benjen->getId(), $role_hand->getCod());
 
         $this->assertEquals(2, count($mmobj_benjen_ranger));
         $this->assertEquals(2, count($mmobj_ned_lord));
         $this->assertEquals(1, count($mmobj_ned_hand));
+        
         // TODO - FAILS
-        //$this->assertEmpty($mmobj_benjen_lord->toArray());
-        //$this->assertEmpty(array(), count($mmobj_ned_ranger));
-        
-        
+        //$this->assertEquals(0, count($mmobj_benjen_lord));
+        //$this->assertEquals(0, count($mmobj_ned_ranger));
+        $this->assertEquals(0, count($mmobj_benjen_hand));
+
         // Test find by series
         $mmobj_series_main = $this->getMultimediaObjectsWithSeries($series_main);
         $mmobj_series_wall = $this->getMultimediaObjectsWithSeries($series_wall);
@@ -147,7 +150,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(2, count($mmobj_series_main));
         $this->assertEquals(1, count($mmobj_series_wall));
         $this->assertEquals(1, count($mmobj_series_lhazar));
-        */
     }
 
     public function testPeopleInMultimediaObjectCollection()
