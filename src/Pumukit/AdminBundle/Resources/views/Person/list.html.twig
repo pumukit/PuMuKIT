@@ -1,0 +1,84 @@
+<table cellspacing="0" class="tv_admin_list">
+  <thead>
+    <tr>
+      <th width="1%">
+        <input type="checkbox" onclick="window.click_checkbox_all('person', this.checked)">
+      </th>
+      <th colspan="3" width="5%"></th>
+      {% include 'PumukitAdminBundle:Person:listth.html.twig' %}
+      <th width="1%">{% trans %}Videos{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+  {% if people|length == 0 %}
+  <tr>
+      <td colspan="9">
+       {% trans %}There are no people with those values.{% endtrans %}
+      </td>
+    </tr>
+  {% endif %}
+  {# <?php $i = 1; foreach ($sf_data->getRaw('persons') as $person): $odd = fmod(++$i, 2); $numV = $person->countMmPersons()?> #}
+  {% for person in people %}
+    <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ loop.index % 2 }} {{ person.id == app.session.get('admin/person/id')?'tv_admin_row_this':'' }}" >
+      <td>
+        <input id="{{ person.id }}" class="person_checkbox" type="checkbox">
+      </td>
+      <td>
+        <a title="{% trans %}Edit Person{% endtrans %} {{ person.getHName() }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_person_update', {'id': person.id}) }}"><img alt="{% trans %}edit{% endtrans %}" title="{% trans %}edit{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a>
+      </td>
+      <td>
+          <form action="{{ path('pumukitadmin_person_delete', {'id': person.id}) }}" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}Are you sure you want to delete the data of{% endtrans %} {{ person.getHName() }}')">
+              <input type="hidden" name="_method" value="DELETE">
+              <input type="hidden" name="confirmed" value="true">
+              <button type="submit" class="tv_admin_row_post">
+                  <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
+              </button>
+          </form>
+      </td>
+      <td>
+        <form action="{{ path('pumukitadmin_person_copy', {'id': person.id}) }}" method="post" class="delete-action-form" novalidate="">
+          <button type="submit" class="tv_admin_row_post">
+		    <img alt="{% trans %}clone{% endtrans %}" title="{% trans %}clone{% endtrans %}" src="/legacy/images/admin/mbuttons/copy_inline.gif">
+	      </button>
+	    </form>
+      </td>
+      <td onclick="click_fila_url('person', this, '{{ path('pumukitadmin_person_show', {'id': person.id}) }}');">
+        {{ person.id }}
+      </td>
+      <td onclick="click_fila_url('person', this, '{{ path('pumukitadmin_person_show', {'id': person.id}) }}');">
+        <span style="color:gray">{{ person.getHonorific()~' </span>'~person.getName()~'&nbsp;'|trim }}
+      </td>
+      <td onclick="click_fila_url('person', this, '{{ path('pumukitadmin_person_show', {'id': person.id}) }}');">
+        {{ person.getEmail() }}
+      </td>
+      <td onclick="click_fila_url('person', this, '{{ path('pumukitadmin_person_show', {'id': person.id}) }}');">
+        {{ person.getPhone() }}
+      </td>
+      <td onclick="click_fila_url('person', this, '{{ path('pumukitadmin_person_show', {'id': person.id}) }}');">
+        TODO {# valor pasado por el controlador de person, calculado en el servicio de person <?php echo $numV  ?> #}
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+  <tfoot>
+    <tr>
+      <th colspan="9">
+        <div class="float-right">
+          {{ include('PumukitAdminBundle:Macros:pager_ajax.html.twig', {'name': 'person', 'page': people.getCurrentPage, 'total':people.getNbPages}) }}
+        </div>
+        {{ people.getNbResults }} 
+        {% transchoice people.getNbResults %}
+	      {0} people|{1} person|]1,Inf] people
+	    {% endtranschoice %}
+	    {% if app.session.get('admin/person/criteria')|length != 0%}
+          <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
+	    {% endif %}
+      </th>
+    </tr>
+  </tfoot>
+</table>
+
+{# TODO  
+<?php if (isset($msg_alert)) echo m_msg_alert($msg_alert) ?>
+#}
