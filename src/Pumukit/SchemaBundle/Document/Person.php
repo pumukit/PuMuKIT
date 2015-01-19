@@ -378,23 +378,4 @@ class Person
     {
         return $this->locale;
     }
-
-    /**
-     * Get person object
-     *
-     * @param Person|EmbeddedPerson $person
-     * @return Person
-     */
-    public static function getPersonObject($person)
-    {
-        if ($person instanceof self){
-            return $person;
-        }else{
-            //TODO - Possible ??
-            //return self->objects(id=$person->getId());
-        }
-
-        // TODO - Delete line:
-        return $person;
-    }
 }
