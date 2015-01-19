@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+
+        {% endblock %}
+        {% block javascripts %}
+
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        <div id="headerbar">
+           {% include 'PumukitWebTVBundle::header.html.twig' %}
+        </div><!--end div headerbar-->
+        {% block body %}{% endblock %}
+    </body>
+</html>
