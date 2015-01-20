@@ -1,7 +1,7 @@
 {% extends 'PumukitWebTVBundle::layout.html.twig' %}
 
 {% block body %}
-
-Hola que tal
-
+    <h1 id="index_h1">Principal</h1>
+    {% include 'PumukitWebTVBundle:Index:info.html.twig' %}
+    {% include 'PumukitWebTVBundle:Index:categories.html.twig' %}
 {% endblock %}
