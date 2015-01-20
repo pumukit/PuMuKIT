@@ -378,4 +378,43 @@ class Person
     {
         return $this->locale;
     }
+
+    /**
+     * Get honorific name
+     *
+     * Returns person name with his/her honorific
+     *
+     * @return string 
+     */
+    public function getHName()
+    {
+        return $this->getHonorific().' '.$this->getName();
+    }
+
+    /**
+     * Get Other
+     *
+     * Returns strings with person position
+     *
+     * @return string
+     */
+    public function getOther()
+    {
+        return $this->getPost().' '.$this->getFirm().' '.$this->getBio();
+    }
+
+    /**
+     * Get info
+     *
+     * Returns strings with person info:
+     * Firm, Post and Bio separated by commas
+     *
+     * @return string
+     */
+    public function getInfo()
+    {
+        $aux = array($this->getPost(), $this->getFirm(), $this->getBio());
+        $aux = array_filter($aux, create_function('$a', 'return (!is_null($a)&&(""!=$a));'));
+        return implode(', ', $aux);
+    }
 }
