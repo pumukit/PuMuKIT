@@ -24,7 +24,7 @@ pumukitadmin_person_createrelation:
 
 pumukitadmin_person_update:
     pattern: /{id}/update
-    methods: [GET]
+    methods: [GET, POST]
     defaults:
         _controller: pumukitadmin.controller.person:updateAction
 

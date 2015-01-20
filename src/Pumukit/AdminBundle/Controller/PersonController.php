@@ -39,12 +39,69 @@ class PersonController extends AdminController
      */
     public function createAction(Request $request)
     {
+        $personService = $this->get('pumukitschema.person');
+
         $person = new Person();
         $form = $this->createForm(new PersonType(), $person);
+
+        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
+            try {
+                $person = $personService->savePerson($person);
+            } catch (\Exception $e) {
+                $this->get('session')->getFlashBag()->add('error', $e->getMessage());
+            }
+
+            return $this->redirect($this->generateUrl('pumukitadmin_person_index'));
+        }
 
         return array(
                      'person' => $person,
                      'form' => $form->createView()
+                     );
+    }
+
+    /**
+     * Update person
+     * // TODO WITH symfony CONTROLLER @ParamConverter("person", class="PumukitSchemaBundle:Person")
+     * @Template("PumukitAdminBundle:Person:update.html.twig")
+     */
+    public function updateAction(Request $request)
+    {
+        $personService = $this->get('pumukitschema.person');
+        $person = $personService->findPersonById($request->get('id'));
+
+        $form = $this->createForm(new PersonType(), $person);
+
+        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
+            try {
+                $person = $personService->updatePerson($person);
+            } catch (\Exception $e) {
+                $this->get('session')->getFlashBag()->add('error', $e->getMessage());
+            }
+
+            return $this->redirect($this->generateUrl('pumukitadmin_person_index'));
+        }
+
+        return array(
+                     'person' => $person,
+                     'form' => $form->createView()
+                     );
+    }
+
+    /**
+     * Show person
+     * @Template("PumukitAdminBundle:Person:show.html.twig")
+     */
+    public function showAction(Request $request)
+    {
+        $personService = $this->get('pumukitschema.person');
+        $person = $personService->findPersonById($request->get('id'));
+        $limit = 5;
+        $series = $personService->findSeriesWithPerson($person, $limit);
+
+        return array(
+                     'person' => $person,
+                     'series' => $series
                      );
     }
 

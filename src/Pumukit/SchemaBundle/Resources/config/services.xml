@@ -59,6 +59,10 @@
             <argument>/uploads/track</argument>
         </service>
 
+        <service id="pumukitschema.person" class="Pumukit\SchemaBundle\Services\PersonService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+        </service>
+
     </services>
 
 </container>
