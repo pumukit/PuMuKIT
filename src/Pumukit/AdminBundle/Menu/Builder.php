@@ -36,7 +36,7 @@ class Builder extends ContainerAware
         $menu->addChild('Temporized Publishing');
 
         $tables = $menu->addChild('Tables');
-        $tables->addChild('People');
+        $tables->addChild('People', array('route' => 'pumukitadmin_person_index'));
 
         $management = $menu->addChild('Management');
         $management->addChild('Admin users', array('route' => 'pumukitadmin_user_index'));

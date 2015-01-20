@@ -380,21 +380,41 @@ class Person
     }
 
     /**
-     * Get person object
+     * Get honorific name
      *
-     * @param Person|EmbeddedPerson $person
-     * @return Person
+     * Returns person name with his/her honorific
+     *
+     * @return string 
      */
-    public static function getPersonObject($person)
+    public function getHName()
     {
-        if ($person instanceof self){
-            return $person;
-        }else{
-            //TODO - Possible ??
-            //return self->objects(id=$person->getId());
-        }
+        return $this->getHonorific().' '.$this->getName();
+    }
 
-        // TODO - Delete line:
-        return $person;
+    /**
+     * Get Other
+     *
+     * Returns strings with person position
+     *
+     * @return string
+     */
+    public function getOther()
+    {
+        return $this->getPost().' '.$this->getFirm().' '.$this->getBio();
+    }
+
+    /**
+     * Get info
+     *
+     * Returns strings with person info:
+     * Firm, Post and Bio separated by commas
+     *
+     * @return string
+     */
+    public function getInfo()
+    {
+        $aux = array($this->getPost(), $this->getFirm(), $this->getBio());
+        $aux = array_filter($aux, create_function('$a', 'return (!is_null($a)&&(""!=$a));'));
+        return implode(', ', $aux);
     }
 }

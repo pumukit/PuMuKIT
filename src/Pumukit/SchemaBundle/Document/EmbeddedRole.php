@@ -61,7 +61,7 @@ class EmbeddedRole
      *
      * @MongoDB\EmbedMany(targetDocument="EmbeddedPerson")
      */
-    protected $people;
+    private $people;
     
     /**
      * @var locale $locale
@@ -275,63 +275,11 @@ class EmbeddedRole
     }
 
     /**
-     * Create embedded role
-     *
-     * @param ArrayCollection $embeddedRoles
-     * @param EmbeddedRole|Role $role
-     *
-     * @return EmbeddedRole
-     */
-    public static function createEmbeddedRole($embeddedRoles, $role)
-    {
-        if ($role instanceof self){
-            return $role;
-        }elseif ($containedEmbedRole = self::getEmbeddedRole($embeddedRoles, $role)) {
-            return $containedEmbedRole;
-        }elseif ($role instanceof Role){
-            $embeddedRole = new self($role);
-            
-            return $embeddedRole;
-        }
-        
-        throw new \InvalidArgumentException('Only Role or EmbeddedRole are allowed.');
-    }
-
-    /**
-     * Get embedded role
-     *
-     * @param ArrayCollection $embeddedRoles
-     * @param Role|EmbeddedRole $role
-     * @return EmbeddedRole|boolean EmbeddedRole if found, FALSE otherwise.
-     */
-    public static function getEmbeddedRole($embeddedRoles, $role)
-    {
-        foreach ($embeddedRoles as $embeddedRole) {
-            if (0 === strcmp($role->getCod(), $embeddedRole->getCod())) {
-                return $embeddedRole;
-            }
-        }
-        
-        return false;
-    }
-
-    /**
      * Get people
      */
     public function getPeople()
     {
         return $this->people;
-    }
-
-    /**
-     * Get embedded person
-     *
-     * @param Person|EmbeddedPerson $person
-     * @return EmbeddedPerson|boolean EmbeddedPerson if found, FALSE otherwise
-     */
-    public function getEmbeddedPerson($person)
-    {
-        return EmbeddedPerson::getEmbeddedPerson($this->people, $person);
     }
     
     /**
@@ -342,9 +290,8 @@ class EmbeddedRole
     public function addPerson($person)
     {      
         if (!($this->containsPerson($person))) {
-             $this->roles[] = EmbeddedPerson::createEmbeddedPerson($this->people, $person);
+             $this->people[] = $this->createEmbeddedPerson($person);
         }
-        
     }
 
     /**
@@ -418,4 +365,41 @@ class EmbeddedRole
         
         return false;
     }
+    
+    /**
+     * Create embedded person
+     *
+     * @param EmbeddedPerson|Person $person
+     *
+     * @return EmbeddedPerson
+     */
+    public function createEmbeddedPerson($person)
+    {
+        if ($person instanceof EmbeddedPerson){
+            return $person;
+        }elseif ($person instanceof Person){
+            $embedPerson = new EmbeddedPerson($person);
+            
+            return $embedPerson;
+        }
+        
+        throw new \InvalidArgumentException('Only Person or EmbeddedPerson are allowed.');
+    }
+
+    /**
+     * Contained embed person
+     *
+     * @param Person|EmbeddedPerson $person
+     * @return EmbeddedPerson|boolean EmbeddedPerson if found, FALSE otherwise:
+     */
+    public function getEmbeddedPerson($person)
+    {
+        foreach ($this->people as $embeddedPerson) {
+            if ($person->getId() === $embeddedPerson->getId()) {
+                return $embeddedPerson;
+            }
+        }
+        
+        return false;
+    }    
 }

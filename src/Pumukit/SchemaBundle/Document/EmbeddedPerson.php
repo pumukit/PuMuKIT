@@ -396,45 +396,4 @@ class EmbeddedPerson
     {
         return $this->locale;
     }
-    
-    /**
-     * Create embedded person
-     *
-     * @param ArrayCollection $embedPeople
-     * @param EmbeddedPerson|Person $person
-     *
-     * @return EmbeddedPerson
-     */
-    public static function createEmbeddedPerson($embedPeople, $person)
-    {
-        if ($person instanceof self){
-            return $person;
-        }elseif ($containedEmbedPerson = self::getEmbeddedPerson($embedPeople, $person)) {
-           return $containedEmbedPerson;
-        }elseif ($person instanceof Person){
-            $embedPerson = new self($person);
-            
-            return $embedPerson;
-        }
-        
-        throw new \InvalidArgumentException('Only Person or EmbeddedPerson are allowed.');
-    }
-
-    /**
-     * Contained embed person
-     *
-     * @param ArrayCollection $embedPeople
-     * @param Person|EmbeddedPerson $person
-     * @return EmbeddedPerson|boolean EmbeddedPerson if found, FALSE otherwise:
-     */
-    public static function getEmbeddedPerson($embeddedPeople, $person)
-    {
-        foreach ($embeddedPeople as $embeddedPerson) {
-            if ($person->getId() === $embeddedPerson->getId()) {
-                return $embeddedPerson;
-            }
-        }
-        
-        return false;
-    }    
 }
