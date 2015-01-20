@@ -32,8 +32,8 @@ class JobService
             throw new FileNotFoundException($pathFile); 
         }
 
-        if (null === $this->profileService->getProfile($profile['name'])){
-            throw new \Exception("Can't find given profile with name ".$profile['name']);
+        if (null === $this->profileService->getProfile($profile)){
+            throw new \Exception("Can't find given profile with name ".$profile);
         }
         
         if (null === $multimediaObject){
@@ -42,7 +42,7 @@ class JobService
         
         $job = new Job();
         $job->setMmId($multimediaObject->getId());
-        $job->setProfile($profile['name']);
+        $job->setProfile($profile);
         $job->setPathIni($pathFile);
         //$job->setDuration($pathFile);
         $job->setPriority($priority);
