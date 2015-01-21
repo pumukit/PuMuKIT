@@ -32,7 +32,7 @@ pumukit_encoder:
             framerate: 0
             channels: 1
             audio: false
-            bat: 'cp {{1}} {{2}}'
+            bat: 'cp {{input}} {{output}}'
             streamserver:
                 name: Localmaster
                 type: store
@@ -57,7 +57,7 @@ pumukit_encoder:
             channels: 1
             audio: false
             bat: |
-                'ffmpeg -y -i "{{1}}" -acodec libfdk_aac -vcodec libx264 -threads 0 "{{2}}"'
+                'ffmpeg -y -i "{{input}}" -acodec libfdk_aac -vcodec libx264 -threads 0 "{{output}}"'
             streamserver:
                 name: Localmaster
                 type: store
