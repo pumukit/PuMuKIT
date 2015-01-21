@@ -1,6 +1,6 @@
 <!-- Filter -->
 <div class="tv_admin_filters">
-  <form id="filter_people" onsubmit="$('filters_letter').value=null; new Ajax.Updater('list_people', '{{ path('pumukitadmin_person_list') }}', {method:post, asynchronous:true, evalScripts:true, parameters:Form.serialize(this)}); return false;" action="{{ path('pumukitadmin_person_list') }}" method="post">  
+  <form id="filter_people" onsubmit="$('filters_letter').value=null; new Ajax.Updater('list_people', '{{ path('pumukitadmin_person_list') }}', {method:'POST', asynchronous:true, evalScripts:true, parameters:Form.serialize(this)}); return false;" action="{{ path('pumukitadmin_person_list') }}" method="post">
   <fieldset>
     <h2>{% trans %}Search{% endtrans %}</h2>
 
@@ -9,19 +9,21 @@
       <div class="content">
         {# TODO culture #}
         {% set criteria = app.session.get('admin/person/criteria') %}
-        <input type="text" name="criteria[name.en]" id="filters_name" value="{{ criteria['name.en']|default("") }}">
+        <input type="text" name="criteria[name]" id="filters_name" value="{{ criteria['name']|default("") }}">
       </div>
     </div>
+
     <div class="form-row">
-      <label for="another">{% trans %}Another{% endtrans %}:</label>
+      <label for="other">{% trans %}Other{% endtrans %}:</label>
       <div class="content">
-        <input type="text" name="criteria[another.en]" id="filters_another" value="">
+        <input type="text" name="criteria[other.en]" id="filters_other" value="{{ criteria['other']|default("") }}">
       </div>
     </div>
+
     <div class="form-row">
       <label for="letter">{% trans %}Letter{% endtrans %}:</label>
       <div class="content">
-        <input id="filters_letter" type="hidden" value="" name="filters[letter]">
+        <input id="filters_letter" type="hidden" value="" name="criteria[letter]">
         <a href="#" onclick="window.filter_click_letter('A')">A</a> 
         <a href="#" onclick="window.filter_click_letter('B')">B</a> 
         <a href="#" onclick="window.filter_click_letter('C')">C</a> 
@@ -68,8 +70,10 @@
   window.filter_click_letter = function(letter)
   {
     $('filters_letter').value= letter; 
-    new Ajax.Updater('list_people', '{{ path('pumukitadmin_person_list') }}', {asynchronous:true, 
-                      evalScripts: true, 
+    new Ajax.Updater('list_people', '{{ path('pumukitadmin_person_list') }}', {
+                      asynchronous:true, 
+                      evalScripts: true,
+                      method: 'POST',
                       parameters: Form.serialize($('filter_people'))}
     );
   }

@@ -20,12 +20,12 @@
 
 <ul class="tv_admin_actions">
   <li>
-    {# TODO PATH CREATERELATION #}
     <input class="tv_admin_action_create MB_focusable" onclick="
 	var aux=$('name').value;
 	if (aux == '{% trans %}name to search for{% endtrans %}') aux='';
-	Modalbox.show('/editar.php/persons/createrelation/mm/{{ mm.id }}/role/{{ role.id }}/name/' + aux,
-	{title:'Editar Nueva Novedad', width:800}); return false; return false;" type="button" value="{% trans %}New{% endtrans %}">
+    var route = '{{ path('pumukitadmin_person_create_relation', {'mmId': mm.id, 'roleId': role.id, 'name': '__aux__'}) }}';
+	Modalbox.show(route.replace('__aux__', aux),
+	{title:'{% trans %}Edit New Person{% endtrans %}', width:800}); return false; return false;" type="button" value="{% trans %}New{% endtrans %}">
 
   </li>
   <li>

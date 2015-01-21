@@ -81,7 +81,7 @@ pumukitadmin_person_down:
             redirect: pumukitadmin_person_index
 
 pumukitadmin_person_list_autocomplete:
-    pattern: /listautocomplete
+    pattern: /{mmId}/{roleId}/listautocomplete
     methods: [GET]
     defaults:
         _controller: pumukitadmin.controller.person:listAutocompleteAction
@@ -91,3 +91,9 @@ pumukitadmin_person_list:
     methods: [GET, POST]
     defaults:
         _controller: pumukitadmin.controller.person:listAction
+
+pumukitadmin_person_create_relation:
+    pattern: /{mmId}/{roleId}/createrelation
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitadmin.controller.person:createRelationAction
