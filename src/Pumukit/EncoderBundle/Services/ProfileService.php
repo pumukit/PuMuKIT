@@ -37,11 +37,12 @@ class ProfileService
 
     /**
      * Get given profile
+     * @param string the profile name (case sensitive)
      */
     public function getProfile($profile)
     {
-        if (isset($this->profiles[strtoupper($profile)])){
-            return $this->profiles[strtoupper($profile)];
+        if (isset($this->profiles[$profile])){
+            return $this->profiles[$profile];
         }
 
       return null;      

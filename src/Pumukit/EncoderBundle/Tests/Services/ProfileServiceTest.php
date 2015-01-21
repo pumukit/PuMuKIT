@@ -41,8 +41,9 @@ class ProfileServiceTest extends WebTestCase
     public function testGetProfile()
     {
         $profiles = $this->getDemoProfiles();
-        $this->assertEquals($profiles['MASTER_COPY'], $this->profileService->getProfile('master_copy'));
-        $this->assertEquals($profiles['MASTER_VIDEO_H264'], $this->profileService->getProfile('master_video_h264'));
+        $this->assertEquals($profiles['MASTER_COPY'], $this->profileService->getProfile('MASTER_COPY'));
+        $this->assertEquals($profiles['MASTER_VIDEO_H264'], $this->profileService->getProfile('MASTER_VIDEO_H264'));
+        $this->assertNull($this->profileService->getProfile('master_COPY')); //Case sensitive
         $this->assertNull($this->profileService->getProfile('master'));
     }
 
@@ -66,7 +67,7 @@ class ProfileServiceTest extends WebTestCase
                                                  'framerate' => 0,
                                                  'channels' => 1,
                                                  'audio' => false,
-                                                 'bat' => 'cp "%1" "%2"',
+                                                 'bat' => 'cp "{{input}}" "{{output}}"',
                                                  'file_cfg' => '??',
                                                  'streamserver' => array(
                                                                          'streamserver_type' => ProfileService::STREAMSERVER_STORE,
@@ -98,26 +99,26 @@ class ProfileServiceTest extends WebTestCase
                                                        'framerate' => 25,
                                                        'channels' => 1,
                                                        'audio' => false,
-                                                       'bat' => 'BitRate=$(/usr/local/bin/ffprobe "%1" -v 0 -show_format -print_format default=nk=1:nw=1 | sed -n 9p)
+                                                       'bat' => 'BitRate=$(/usr/local/bin/ffprobe "{{input}}" -v 0 -show_format -print_format default=nk=1:nw=1 | sed -n 9p)
                                                                      [[ "$(( BitRate ))" -gt 6000000 ]] && : $(( BitRate = 6000000 ))
 
-                                                                     FrameRate=$(/usr/local/bin/ffprobe "%1" -v 0 -show_streams -select_streams v -print_format default=nk=1:nw=1 | sed -n 18p)
+                                                                     FrameRate=$(/usr/local/bin/ffprobe "{{input}}" -v 0 -show_streams -select_streams v -print_format default=nk=1:nw=1 | sed -n 18p)
 
                                                                      BufSize=$(( BitRate*20/FrameRate ))
 
-                                                                     AudioSampleRate=$(/usr/local/bin/ffprobe "%1" -v 0 -show_streams -select_streams a -print_format default=nk=1:nw=1 |sed -n 10p)
+                                                                     AudioSampleRate=$(/usr/local/bin/ffprobe "{{input}}" -v 0 -show_streams -select_streams a -print_format default=nk=1:nw=1 |sed -n 10p)
 
-                                                                     AudioBitRate=$(/usr/local/bin/ffprobe "%1" -v 0 -show_streams -select_streams a -print_format default=nk=1:nw=1 |sed -n 22p)
+                                                                     AudioBitRate=$(/usr/local/bin/ffprobe "{{input}}" -v 0 -show_streams -select_streams a -print_format default=nk=1:nw=1 |sed -n 22p)
 
-                                                                     width=$(/usr/local/bin/ffprobe "%1" -v 0 -show_streams -select_streams v  -print_format default=nk=1:nw=1 |sed -n 9p)
+                                                                     width=$(/usr/local/bin/ffprobe "{{input}}" -v 0 -show_streams -select_streams v  -print_format default=nk=1:nw=1 |sed -n 9p)
 
                                                                      [[ "$(( width % 2 ))" -ne 0 ]] && : $(( width += 1 ))
 
-                                                                     height=$(/usr/local/bin/ffprobe "%1" -v 0 -show_streams -select_streams v  -print_format default=nk=1:nw=1 |sed -n 10p)
+                                                                     height=$(/usr/local/bin/ffprobe "{{input}}" -v 0 -show_streams -select_streams v  -print_format default=nk=1:nw=1 |sed -n 10p)
 
                                                                      [[ "$(( height % 2 ))" -ne 0 ]] && : $(( height += 1 ))
 
-                                                                     /usr/local/bin/ffmpeg -y -i "%1" -acodec libfdk_aac -b:a $AudioBitRate -ac 2 -ar $AudioSampleRate -vcodec libx264 -r 25 -preset slow -crf 15 -maxrate $BitRate -bufsize $BufSize -s $width"x"$height -threads 0 "%2"',
+                                                                     /usr/local/bin/ffmpeg -y -i "{{input}}" -acodec libfdk_aac -b:a $AudioBitRate -ac 2 -ar $AudioSampleRate -vcodec libx264 -r 25 -preset slow -crf 15 -maxrate $BitRate -bufsize $BufSize -s $width"x"$height -threads 0 "{{output}}"',
                                                        'file_cfg' => '',
                                                        'streamserver' => array(
                                                                                'streamserver_type' => ProfileService::STREAMSERVER_STORE,

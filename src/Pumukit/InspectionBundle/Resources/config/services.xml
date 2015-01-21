@@ -6,7 +6,7 @@
 
 
     <parameters>
-        <parameter key="pumukit.inspection.class">Pumukit\InspectionBundle\Service\InspectionMediainfoService</parameter>
+        <parameter key="pumukit.inspection.class">Pumukit\InspectionBundle\Services\InspectionMediainfoService</parameter>
     </parameters>
 
     <services>

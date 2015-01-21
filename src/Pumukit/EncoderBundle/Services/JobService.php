@@ -3,30 +3,42 @@
 namespace Pumukit\EncoderBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\EncoderBundle\Executor\LocalExecutor;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Services\CpuService;
-use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\InspectionBundle\Services\InspectionServiceInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\ProcessBuilder;
 
+//TODO add log
 class JobService
 {
     private $dm;
     private $repo;
     private $profileService;
     private $cpuService;
+    private $inspectionService;
+    private $tmp_path;
+    private $test;
 
-    public function __construct(DocumentManager $documentManager, ProfileService $profileService, CpuService $cpuService)
+    public function __construct(DocumentManager $documentManager, ProfileService $profileService, CpuService $cpuService, InspectionServiceInterface $inspectionService, $tmp_path=null, $test=false)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
         $this->profileService = $profileService;
         $this->cpuService = $cpuService;
+        $this->inspectionService = $inspectionService;
+        $this->tmp_path = $tmp_path ? $tmp_path : sys_get_temp_dir();
+        $this->test = $test;
     }
 
     /**
      * Add job
      */
-    public function addJob($pathFile, $profile, $priority, $multimediaObject, $language = null, $description = array())
+    public function addJob($pathFile, $profile, $priority, MultimediaObject $multimediaObject, $language = null, $description = array())
     {
         if (!is_file($pathFile)) {
             throw new FileNotFoundException($pathFile); 
@@ -39,14 +51,18 @@ class JobService
         if (null === $multimediaObject){
             throw new \Exception("Given null multimedia object");
         }
+
+        //TODO catch exception.
+        $duration = $this->inspectionService->getDuration($pathFile);
         
         $job = new Job();
         $job->setMmId($multimediaObject->getId());
         $job->setProfile($profile);
         $job->setPathIni($pathFile);
-        //$job->setDuration($pathFile);
+        $job->setDuration($duration);
         $job->setPriority($priority);
         if (null !== $language){
+            //TODO languageId is only language "es", "en", "gl"
             $job->setLanguageId($language);
         }
         if (!empty($description)){
@@ -57,6 +73,10 @@ class JobService
         $this->dm->persist($job);
         $this->dm->flush();
         $this->setPathEndAndExtensions($job);
+
+        $this->executeNextJob();
+
+        return $job;
     }
 
     /**
@@ -135,12 +155,16 @@ class JobService
     /**
      * Exec next job
      */
-    public function execNextJob()
+    public function executeNextJob()
     {
+        if($this->test){
+            return null;
+        }
+
         $freeCpu = $this->cpuService->getFreeCpu();
         $nextJob = $this->getNextJob();
         if (($freeCpu) && ($nextJob) && ($this->cpuService->isActive($freeCpu))){
-            $nextJob->setCpu($cpu['name']);
+            $nextJob->setCpu($freeCpu);
             $nextJob->setTimestart(new \DateTime('now'));
             $nextJob->setStatus(Job::STATUS_EXECUTING);
             $this->dm->persist($nextJob);
@@ -148,7 +172,7 @@ class JobService
 
             // TODO Define pumukit command and execute it in background
             // finalizado.php in Pumukit1.8
-            $this->execFinalizado($nextJob);
+            $this->executeInBackground($nextJob);
 
             return $nextJob;
         }
@@ -156,46 +180,87 @@ class JobService
         return null;
     }
 
-    /**
-     * Exec finalizado -> pasarlo a comando
-     *
-     * Para ejecutar en background
-     */
-    public function execFinalizado(Job $job)
+
+    public function executeInBackground(Job $job)
     {
-        $avsFile = null;
-        $commandLine = $this->getBatAuto($job);
+        $pb = new ProcessBuilder();
+        // PHP wraps the process in "sh -c" by default, but we need to control
+        // the process directly.
+        if ( ! defined('PHP_WINDOWS_VERSION_MAJOR')) {
+          $pb->add('exec');
+        }
+
+        //TODO
+        //$console = $this->getContainer()->getParameter('kernel.root_dir').'/console';
+        $console = __DIR__ . '/../../../../app/console';
+
+        $pb
+          ->add('php')
+          ->add($console)
+          ->add('--env=prod')
+          ;
+
+        if (false) {
+          $pb->add('--verbose');
+        }
+
+        $pb
+          ->add('pumukit:encoder:job')
+          ->add($job->getId())
+          ;
+
+        $process = $pb->getProcess();
+        $process->disableOutput();
+        $process->start();
+    }
+
+    public function execute(Job $job)
+    {
+        $profile = $this->getProfile($job);
+        $cpu = $this->cpuService->getCpuByName($job->getCpu());
+        $commandLine = $this->renderBat($job);
         // TODO - LOG FILE
 
         // TODO - Set pathEnd in some point
-        @mkdir(dirname($job->getPathEnd()));
+        @mkdir(dirname($job->getPathEnd()), 0777, true);
         
-        // TODO - Create Pumukit command with this and execute it in background
-        $cpu = $this->cpuService->getCpuByName($job->getCpu());
-        $ch = curl_init('http://'.$cpu['host'].'/webserver.php'); 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array("Authorization: Basic ".base64_encode($cpu['user'].':'.$cpu['password'])));
-        curl_setopt ($ch, CURLOPT_POST, 1);
-        // TODO - nombre 'ruta'
-        curl_setopt ($ch, CURLOPT_POSTFIELDS, "ruta=$commandLine");
-        $var = curl_exec($ch); 
-        $error = curl_error($ch);
-        ////////////////////////////////////////////////////////////////////////
+        $executor = $this->getExecutor($profile['app'], $cpu['type']);
+        $out = $executor->execute($commandLine);
         
         try{
-            // TODO with Inspection Bundle
-            //$duration = Track::getDuration($job->getPathEnd());
+            $duration = $this->inspectionService->getDuration($job->getPathEnd());
         }catch (\Exception $e){
+            //TODO is erro no call searchError
             $duration = 0;
         }
 
-        $profile = $this->profileService->getProfile($job->getProfile());
-        if ($this->searchError($profile['app'], $var, $job->getDuration(), $duration)){
 
 
+        dump($commandLine);
+        dump($profile['app']);
+        dump($out);
+        dump($job->getDuration());
+        dump($duration);
+
+        if ($this->searchError($profile['app'], $out, $job->getDuration(), $duration)){
+          dump("OK");
+        } else {
+          dump("ERROR");
         }
 
+        $this->executeNextJob();
 
+
+    }
+
+
+    public function searchError($profile, $var, $duration_in, $duration_end)
+    {
+        $duration_conf = 25;
+        if (($duration_in < $duration_end - $duration_conf ) || ($duration_in > $duration_end + $duration_conf )){
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -206,41 +271,27 @@ class JobService
      *
      * @return string commandLine
      */
-    public function getBatAuto(Job $job)
+    public function renderBat(Job $job)
     {
-        $profile = $this->profileService->getProfile($job->getProfile());
+        $profile = $this->getProfile($job);
 
-        $commandLine = $profile['bat'];
-        $commandLine = str_replace('%1', $job->getPathIni(), $commandLine);
-        $commandLine = str_replace('%2', $job->getPathEnd(), $commandLine);
+        $vars = array('{{input}}' => $job->getPathIni(), 
+                      '{{output}}' => $job->getPathEnd());
 
         foreach(range(1, 9) as $identifier){
-            do{
-                //$myTmpFile = sfConfig::get('app_transcoder_path_tmp').'/'. rand() ;
-                // TODO - TEMP PATH TRANSCODER
-                $tmpPathTranscoder = '/tmp/path/transcoder';
-                $myTmpFile = $tmpPathTranscoder.'/'.rand();
-            } while (file_exists($myTmpFile));
-            $commandLine = str_replace('%_' . $identifier, $myTmpFile, $commandLine);
+            $vars['{{temfile' . $identifier. '}}'] = $this->tmp_path . '/' . rand();
         }
+
+        $commandLine = str_replace(array_keys($vars), array_values($vars), $profile['bat']);
     
         $cpu = $this->cpuService->getCpuByName($job->getCpu());
         if(CpuService::TYPE_WINDOWS === $cpu['type']){
             // TODO - PATH UNIX TRANSCODER and PATH WIN TRANSCODER
-            //$commandLine = str_replace(sfConfig::get('app_transcoder_path_unix'), sfConfig::get('app_transcoder_path_win'), $commandLine); 
-            $commandLine = str_replace('/tmp/path/unix', '/tmp/path/windows', $commandLine);
-            // TODO - ¿----antes-----?
-            $commandLine = str_replace("\\/","----antes----",$commandLine);
-            $commandLine = str_replace("/","\\",$commandLine);
-            $commandLine = str_replace("----antes----", "/",$commandLine);
-            $commandLine = str_replace(" \\i "," /i ",$commandLine); // TODO ? CAMBIAR FORMA de hacerlo
         }
-    
-        $commandLine = urlencode($commandLine);
-        $commandLine .= " \n";
-    
+        
         return $commandLine;
     }
+
 
     /**
      * Change status of a given job
@@ -254,22 +305,33 @@ class JobService
         }
     }
     
+
     /**
      * Set path end auto
      */
     public function setPathEndAndExtensions($job)
     {
-        if ((0 === strlen($job->getPathIni())) || (is_null($job->getMmId())) || (is_null($job->getProfile()))){
-            throw new \Exception('Error in path, multimedia object id or profile name');
+        if (!file_exists($job->getPathIni())) {
+            throw new \Exception('Error input file not exits when setting the path_end');
         }
 
-        $profile = $this->profileService->getProfile($job->getProfile());
+        if (!$job->getMmId()) {
+            throw new \Exception('Error getting multimedia object to set path_end.');
+        }
+   
+        if (!$job->getProfile()) {
+            throw new \Exception('Error with profile name to set path_end.');
+        }
+
+        $profile = $this->getProfile($job);
 
         $extension = pathinfo($job->getPathIni(), PATHINFO_EXTENSION);
-        $finalExtension = ($profile['extension']?$profile['extension']:$extension);
+        $finalExtension = isset($profile['extension'])?$profile['extension']:$extension;
 
         $mmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
-        $tempDir = $profile['streamserver']['dir_out'].'/'.$mmobj->getSeries()->getId();
+        $tempDir = $profile['streamserver']['dir_out'] . '/' . $mmobj->getSeries()->getId();
+
+        //TODO repeat mkdir (see this->execute)
         @mkdir($tempDir, 0777, true);
 
         $pathEnd = $tempDir.'/'.$job->getId().'.'.$finalExtension;
@@ -279,5 +341,17 @@ class JobService
 
         $this->dm->persist($job);
         $this->dm->flush();
+    }
+    
+    private function getExecutor($app, $cpuType)
+    {
+        //TODO
+        $executor = new LocalExecutor();
+        return $executor;
+    }
+
+    private function getProfile($job)
+    {
+      return $this->profileService->getProfile($job->getProfile());
     }
 }

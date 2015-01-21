@@ -53,7 +53,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('format')->info('Format of the track')->end()
                             ->scalarNode('codec')->info('Codec of the track')->end()
                             ->scalarNode('mime_type')->info('Mime Type of the track')->end()
-                            ->scalarNode('extension')->info('Extension of the track')->end()
+                            ->scalarNode('extension')->info('Extension of the track. If empty the input file extension is used.')->end()
                             ->integerNode('resolution_hor')->min(0)->defaultValue(0)
                                 ->info('Horizontal resolution of the track')->end()
                             ->integerNode('resolution_ver')->min(0)->defaultValue(0)
@@ -74,7 +74,8 @@ class Configuration implements ConfigurationInterface
                                     ->scalarNode('name')->isRequired()->cannotBeEmpty()
                                         ->info('Name of the streamserver')->end()
                                     ->enumNode('type')
-                                        ->values(array(ProfileService::STREAMSERVER_STORE, ProfileService::STREAMSERVER_DOWNLOAD, ProfileService::STREAMSERVER_WMV, ProfileService::STREAMSERVER_FMS, ProfileService::STREAMSERVER_RED5))
+                                        ->values(array(ProfileService::STREAMSERVER_STORE, ProfileService::STREAMSERVER_DOWNLOAD, 
+                                                       ProfileService::STREAMSERVER_WMV, ProfileService::STREAMSERVER_FMS, ProfileService::STREAMSERVER_RED5))
                                         ->isRequired()
                                         ->info('Streamserver type')->end()
                                     ->scalarNode('host')->isRequired()->cannotBeEmpty()

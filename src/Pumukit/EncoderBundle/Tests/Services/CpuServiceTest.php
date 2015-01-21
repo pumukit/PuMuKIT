@@ -36,26 +36,26 @@ class CpuServiceTest extends WebTestCase
     {
         $cpus = $this->getDemoCpus();
 
-        $this->assertEquals($cpus['CPU_LOCAL'], $this->cpuService->getFreeCpu());
+        $this->assertEquals('CPU_LOCAL', $this->cpuService->getFreeCpu());
 
         $job = new Job();
-        $job->setCpu($cpus['CPU_LOCAL']['name']);
+        $job->setCpu('CPU_LOCAL');
         $job->setStatus(Job::STATUS_EXECUTING);
         $this->dm->persist($job);
         $this->dm->flush();
 
-        $this->assertEquals($cpus['CPU_REMOTE'], $this->cpuService->getFreeCpu());
+        $this->assertEquals('CPU_REMOTE', $this->cpuService->getFreeCpu());
 
         $job2 = new Job();
-        $job2->setCpu($cpus['CPU_REMOTE']['name']);
+        $job2->setCpu('CPU_REMOTE');
         $job2->setStatus(Job::STATUS_EXECUTING);
         $this->dm->persist($job2);
         $this->dm->flush();
 
-        $this->assertEquals($cpus['CPU_REMOTE'], $this->cpuService->getFreeCpu());
+        $this->assertEquals('CPU_REMOTE', $this->cpuService->getFreeCpu());
 
         $job3 = new Job();
-        $job3->setCpu($cpus['CPU_REMOTE']['name']);
+        $job3->setCpu('CPU_REMOTE');
         $job3->setStatus(Job::STATUS_EXECUTING);
         $this->dm->persist($job3);
         $this->dm->flush();
@@ -75,16 +75,16 @@ class CpuServiceTest extends WebTestCase
     {
         $cpus = $this->getDemoCpus();
 
-        $this->assertEquals($cpus['CPU_LOCAL'], $this->cpuService->getCpuByName('cpu_local'));
-        $this->assertEquals($cpus['CPU_REMOTE'], $this->cpuService->getCpuByName('cpu_remote'));
-        $this->assertNull($this->cpuService->getCpuByName('cpu_lo'));
+        $this->assertEquals($cpus['CPU_LOCAL'], $this->cpuService->getCpuByName('CPU_LOCAL'));
+        $this->assertEquals($cpus['CPU_REMOTE'], $this->cpuService->getCpuByName('CPU_REMOTE'));
+        $this->assertNull($this->cpuService->getCpuByName('CPU_local')); //Case sensitive
+        $this->assertNull($this->cpuService->getCpuByName('CPU_LO'));
     }
 
     private function getDemoCpus()
     {
         $cpus = array(
                       'CPU_LOCAL' => array(
-                                           'name' => 'local',
                                            'host' => '127.0.0.1',
                                            'max' => 1,
                                            'number' => 1,
@@ -94,7 +94,6 @@ class CpuServiceTest extends WebTestCase
                                            'description' => 'Pumukit transcoder'
                                            ),
                       'CPU_REMOTE' => array(
-                                            'name' => 'remote',
                                             'host' => '192.168.5.123',
                                             'max' => 2,
                                             'number' => 1,
