@@ -129,7 +129,7 @@ class PersonController extends AdminController
           ->view()
           ->setTemplate($config->getTemplate('listautocomplete.html'))
           ->setData(array(
-                          'persons' => $resources,
+                          'people' => $resources,
                           'mm' => $multimediaObject,
                           'role' => $role,
                           ));
