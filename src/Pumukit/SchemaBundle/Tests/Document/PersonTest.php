@@ -55,5 +55,13 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($i18nFirm, $person->getI18nFirm());
         $this->assertEquals($i18nPost, $person->getI18nPost());
         $this->assertEquals($i18nBio, $person->getI18nBio());
+
+        $this->assertEquals($honorific.' '.$name, $person->getHName());
+        $this->assertEquals($post.' '.$firm.' '.$bio, $person->getOther());
+        $this->assertEquals($post.', '.$firm.', '.$bio, $person->getInfo());
+
+        $bio = '';
+        $person->setBio($bio);
+        $this->assertEquals($post.', '.$firm, $person->getInfo());        
     }
 }

@@ -18,7 +18,7 @@
       </td>
     </tr>
   {% endif %}
-  {# <?php $i = 1; foreach ($sf_data->getRaw('persons') as $person): $odd = fmod(++$i, 2); $numV = $person->countMmPersons()?> #}
+  {# TODO COUNT MM PERSONS <?php $i = 1; foreach ($sf_data->getRaw('people') as $person): $odd = fmod(++$i, 2); $numV = $person->countMmPersons()?> #}
   {% for person in people %}
     <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ loop.index % 2 }} {{ person.id == app.session.get('admin/person/id')?'tv_admin_row_this':'' }}" >
       <td>
@@ -47,7 +47,7 @@
         {{ person.id }}
       </td>
       <td onclick="click_fila_url('person', this, '{{ path('pumukitadmin_person_show', {'id': person.id}) }}');">
-        <span style="color:gray">{{ person.getHonorific()~' </span>'~person.getName()~'&nbsp;'|trim }}
+        <span style="color:gray">{{ person.getHonorific() }}</span> {{ person.getName() }}
       </td>
       <td onclick="click_fila_url('person', this, '{{ path('pumukitadmin_person_show', {'id': person.id}) }}');">
         {{ person.getEmail() }}

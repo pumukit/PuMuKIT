@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Pumukit\EncoderBundle\PumukitEncoderBundle(),
             new Pumukit\InspectionBundle\PumukitInspectionBundle(),
+            new Pumukit\WebTVBundle\PumukitWebTVBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

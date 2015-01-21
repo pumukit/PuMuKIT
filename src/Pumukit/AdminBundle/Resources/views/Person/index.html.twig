@@ -17,7 +17,7 @@
   </div>
 
   <div id="tv_admin_content" >
-    <div id="list_persons" name="list_persons" act="/persons/list">
+    <div id="list_people" name="list_people" act="/people/list">
       {% include 'PumukitAdminBundle:Person:list.html.twig' %}
     </div>
 
@@ -30,7 +30,7 @@
       </ul>
     </div>
 
-    <select id="options_persons" style="margin: 10px 0px; width: 33%" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('person', $('options_persons'))">
+    <select id="options_people" style="margin: 10px 0px; width: 33%" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('person', $('options_people'))">
       <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
       <option disabled="">---</option>
       <option value="delete_sel">{% trans %}Delete selected{% endtrans %}</option>

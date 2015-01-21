@@ -4,17 +4,35 @@
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
-
+            <link rel="stylesheet" type="text/css" media="screen" href="/css/main.css">
+            <link rel="stylesheet" type="text/css" media="screen" href="/css/tv/default.css">
+            <link rel="stylesheet" type="text/css" media="screen" href="/css/css.css">
+            <link rel="stylesheet" type="text/css" media="screen" href="/css/tv/960.css">
         {% endblock %}
         {% block javascripts %}
 
         {% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="icon" type="image/x-icon" href="{{ asset('pumukitLogo.png') }}" />
     </head>
     <body>
-        <div id="headerbar">
-           {% include 'PumukitWebTVBundle::header.html.twig' %}
-        </div><!--end div headerbar-->
-        {% block body %}{% endblock %}
+        <div id="content" class="container_15">
+            <div id="headerbar">
+                {% include 'PumukitWebTVBundle::header.html.twig' %}
+            </div><!--end div headerbar-->
+
+            <div id="body">
+                <div id="slidebar" class="grid_3">
+                    {% include 'PumukitWebTVBundle::slidebar.html.twig' %}
+                </div>
+                <div id="other_body" class="grid_12">
+                    {% block body %}{% endblock %}
+                </div>
+                <div style="clear:both"></div>
+            </div>
+
+            <div id="footerbar">
+                {% include 'PumukitWebTVBundle::footer.html.twig'%}
+            </div>
+        </div>
     </body>
 </html>
