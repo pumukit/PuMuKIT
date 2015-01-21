@@ -41,8 +41,9 @@ class ProfileServiceTest extends WebTestCase
     public function testGetProfile()
     {
         $profiles = $this->getDemoProfiles();
-        $this->assertEquals($profiles['MASTER_COPY'], $this->profileService->getProfile('master_copy'));
-        $this->assertEquals($profiles['MASTER_VIDEO_H264'], $this->profileService->getProfile('master_video_h264'));
+        $this->assertEquals($profiles['MASTER_COPY'], $this->profileService->getProfile('MASTER_COPY'));
+        $this->assertEquals($profiles['MASTER_VIDEO_H264'], $this->profileService->getProfile('MASTER_VIDEO_H264'));
+        $this->assertNull($this->profileService->getProfile('master_COPY')); //Case sensitive
         $this->assertNull($this->profileService->getProfile('master'));
     }
 
