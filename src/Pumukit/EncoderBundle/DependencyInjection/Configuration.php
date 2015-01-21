@@ -53,7 +53,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('format')->info('Format of the track')->end()
                             ->scalarNode('codec')->info('Codec of the track')->end()
                             ->scalarNode('mime_type')->info('Mime Type of the track')->end()
-                            ->scalarNode('extension')->info('Extension of the track')->end()
+                            ->scalarNode('extension')->info('Extension of the track. If empty the input file extension is used.')->end()
                             ->integerNode('resolution_hor')->min(0)->defaultValue(0)
                                 ->info('Horizontal resolution of the track')->end()
                             ->integerNode('resolution_ver')->min(0)->defaultValue(0)
