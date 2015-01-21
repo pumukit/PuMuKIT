@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 
 class PersonServiceTest extends WebTestCase
 {
@@ -145,6 +146,130 @@ class PersonServiceTest extends WebTestCase
         $this->assertEquals($emailBob, $mm2->getPersonWithRole($personBob, $rolePresenter)->getEmail());
         $this->assertEquals($emailJohn, $mm2->getPersonWithRole($personJohn, $rolePresenter)->getEmail());
         $this->assertEquals($emailJohn, $mm3->getPersonWithRole($personJohn, $roleActor)->getEmail());
+    }
 
+    public function testFindSeriesWithPerson()
+    {
+        $series1 = new Series();
+        $title1 = 'Series 1';
+        $series1->setTitle($title1);
+
+        $series2 = new Series();
+        $title2 = 'Series 2';
+        $series2->setTitle($title2);
+
+        $series3 = new Series();
+        $title3 = 'Series 3';
+        $series3->setTitle($title3);
+
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->persist($series3);
+
+        $personJohn = new Person();
+        $nameJohn = 'John Smith';
+        $personJohn->setName($nameJohn);
+
+        $personBob = new Person();
+        $nameBob = 'Bob Clark';
+        $personBob->setName($nameBob);
+
+        $personKate = new Person();
+        $nameKate = 'Kate Simmons';
+        $personKate->setName($nameKate);        
+
+        $this->dm->persist($personJohn);
+        $this->dm->persist($personBob);
+        $this->dm->persist($personKate);
+
+        $roleActor = new Role();
+        $codActor = 'actor';
+        $roleActor->setCod($codActor);
+
+        $rolePresenter = new Role();
+        $codPresenter = 'presenter';
+        $rolePresenter->setCod($codPresenter);
+
+        $this->dm->persist($roleActor);
+        $this->dm->persist($rolePresenter);
+        $this->dm->flush();
+
+        $mm11 = new MultimediaObject();
+        $title11 = 'Multimedia Object 11';
+        $mm11->setTitle($title11);
+        $mm11->addPersonWithRole($personJohn, $roleActor);
+        $mm11->addPersonWithRole($personBob, $roleActor);
+        $mm11->addPersonWithRole($personJohn, $rolePresenter);
+
+        $mm12 = new MultimediaObject();
+        $title12 = 'Multimedia Object 12';
+        $mm12->setTitle($title12);
+        $mm12->addPersonWithRole($personBob, $roleActor);
+        $mm12->addPersonWithRole($personBob, $rolePresenter);
+
+        $mm13 = new MultimediaObject();
+        $title13 = 'Multimedia Object 13';
+        $mm13->setTitle($title13);
+        $mm13->addPersonWithRole($personKate, $roleActor);
+
+        $mm21 = new MultimediaObject();
+        $title21 = 'Multimedia Object 21';
+        $mm21->setTitle($title21);
+        $mm21->addPersonWithRole($personKate, $rolePresenter);
+        $mm21->addPersonWithRole($personKate, $roleActor);
+
+        $mm31 = new MultimediaObject();
+        $title31 = 'Multimedia Object 31';
+        $mm31->setTitle($title31);
+        $mm31->addPersonWithRole($personJohn, $rolePresenter);
+
+        $mm32 = new MultimediaObject();
+        $title32 = 'Multimedia Object 32';
+        $mm32->setTitle($title32);
+        $mm32->addPersonWithRole($personJohn, $roleActor);
+        $mm32->addPersonWithRole($personBob, $roleActor);
+        $mm32->addPersonWithRole($personJohn, $rolePresenter);
+
+        $this->dm->persist($mm11);
+        $this->dm->persist($mm12);
+        $this->dm->persist($mm13);
+        $this->dm->persist($mm21);
+        $this->dm->persist($mm31);
+        $this->dm->persist($mm32);
+        $this->dm->flush();
+
+        $series1->addMultimediaObject($mm11);
+        $series1->addMultimediaObject($mm12);
+        $series1->addMultimediaObject($mm13);
+
+        $series2->addMultimediaObject($mm21);
+
+        $series3->addMultimediaObject($mm31);
+        $series3->addMultimediaObject($mm32);
+
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->persist($series3);
+
+        $this->dm->persist($mm11);
+        $this->dm->persist($mm12);
+        $this->dm->persist($mm13);
+        $this->dm->persist($mm21);
+        $this->dm->persist($mm31);
+        $this->dm->persist($mm32);
+
+        $this->dm->flush();
+
+        $seriesJohn = $this->personService->findSeriesWithPerson($personJohn);
+        $seriesBob = $this->personService->findSeriesWithPerson($personBob);
+        $seriesKate = $this->personService->findSeriesWithPerson($personKate);
+
+        $this->assertEquals(2, count($seriesJohn));
+        $this->assertEquals(2, count($seriesBob));
+        $this->assertEquals(2, count($seriesKate));
+
+        $this->assertEquals(array($series1, $series3), $seriesJohn->toArray());
+        $this->assertEquals(array($series1, $series3), $seriesBob->toArray());
+        $this->assertEquals(array($series1, $series2), $seriesKate->toArray());
     }
 }

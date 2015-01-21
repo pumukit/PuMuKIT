@@ -6,8 +6,6 @@ use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\EmbeddedPerson;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\Common\Collections\ArrayCollection;
-use Pagerfanta\Adapter\DoctrineCollectionAdapter;
-use Pagerfanta\Pagerfanta;
 
 class PersonService
 {
@@ -83,28 +81,27 @@ class PersonService
     public function findSeriesWithPerson(Person $person, $limit = 0)
     {
         $mmobjs = $this->repoMmobj->findByPersonId($person->getId());
-        
+
         $seriesCollection = new ArrayCollection();
-        $count = $limit;
+        $count = 0;
         foreach($mmobjs as $mmobj){
-            if ($count === 0){
-                break;
+            if ($limit !== 0){
+                if ($count === $limit){
+                    break;
+                }
             }
             $oneseries = $mmobj->getSeries();
             if (!$seriesCollection->contains($oneseries)){
                 $seriesCollection->add($oneseries);
             }
-            --$count;
+            ++$count;
         }
-
-        $adapter = new DoctrineCollectionAdapter($seriesCollection);
-        $series = new Pagerfanta($adapter);
 
         return $seriesCollection;
     }
 
     /**
-     * Save embedded person
+     * Update embedded person
      *
      * @param Person $person
      * @param EmbeddedPerson $embeddedPerson
