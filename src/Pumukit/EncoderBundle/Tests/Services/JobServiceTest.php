@@ -48,7 +48,7 @@ class JobServiceTest extends WebTestCase
         $pathFile = 'test.txt';
         $file = $this->createNewFile($pathFile, 'test file');
 
-        $profile = $profiles['MASTER_COPY'];
+        $profile = 'MASTER_COPY';
         $priority = 2;
         $language = 'es';
         $description = array('en' => 'test', 'es' => 'prueba');
@@ -67,7 +67,7 @@ class JobServiceTest extends WebTestCase
         $pathFile2 = 'test2.txt';
         $file2 = $this->createNewFile($pathFile2, 'test file 2');
 
-        $profile2 = $profiles['MASTER_VIDEO_H264'];
+        $profile2 = 'MASTER_VIDEO_H264';
         $priority2 = 3;
         $language2 = 'en';
         $description2 = array('en' => 'test2', 'es' => 'prueba2');
@@ -195,7 +195,7 @@ class JobServiceTest extends WebTestCase
         $pathFile = 'test.txt';
         $file = $this->createNewFile($pathFile, 'test file');
 
-        $profile = array('name' => 'non_existing');
+        $profile = 'non_existing';
         $priority = 2;
         $language = 'es';
         $description = array('en' => 'test', 'es' => 'prueba');

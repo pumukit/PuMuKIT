@@ -417,4 +417,17 @@ class Person
         $aux = array_filter($aux, create_function('$a', 'return (!is_null($a)&&(""!=$a));'));
         return implode(', ', $aux);
     }
+
+    /**
+     * Clone Person
+     *
+     * @return Person
+     */
+    public function cloneResource()
+    {
+        $aux = clone $this;
+        $aux->id = null;
+        
+        return $aux;
+    }
 }

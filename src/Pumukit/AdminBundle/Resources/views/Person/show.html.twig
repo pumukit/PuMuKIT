@@ -1,0 +1,27 @@
+<!-- Vista previa -->
+{% if person is not null %}
+<div>
+   <p style="text-align:center; font-size: large;">
+    {{ person.getHName() }}
+  </p>
+
+  <p style="overflow:hidden; padding:5px; border:solid 1px #DDD; background:#DDD" >
+    {% trans %}INFO{% endtrans %}:
+      {{ person.getOther() }}
+      <br />
+    {% trans %}SERIES{% endtrans %}:
+      {% for oneseries in series %}
+        {{ oneseries.id }} ({{ oneseries.getTitle() }})
+      {% endfor %}
+      {% if series|length == 5 %}
+        <strong>...</strong>
+      {% endif %}
+  </p>
+</div>
+{% else %}
+<p>
+  {% trans %}Select any person{% endtrans %}.
+</p>
+{% endif %}
+
+

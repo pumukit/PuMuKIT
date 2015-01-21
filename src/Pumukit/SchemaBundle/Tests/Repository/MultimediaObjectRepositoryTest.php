@@ -290,6 +290,11 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(array($personKate->getId(), $personLucy->getId()), 
                             array($peopleDirector[0]->getId(), $peopleDirector[1]->getId()));
 
+        $this->assertEquals(3, count($mm->getAllEmbeddedPeopleByPerson($personKate)));
+        $this->assertEquals(1, count($mm->getAllEmbeddedPeopleByPerson($personLucy)));
+        $this->assertEquals(1, count($mm2->getAllEmbeddedPeopleByPerson($personKate)));
+        $this->assertEquals(0, count($mm2->getAllEmbeddedPeopleByPerson($personLucy)));
+
         $this->assertTrue($mm->removePersonWithRole($personKate, $roleActor));
         $this->dm->persist($mm);
         $this->dm->flush();

@@ -1,6 +1,6 @@
 <!-- Filter -->
 <div class="tv_admin_filters">
-  <form id="filter_persons" onsubmit="$('filters_letter').value=null; new Ajax.Updater('list_persons', '{{ path('pumukitadmin_person_list') }}', {method:post, asynchronous:true, evalScripts:true, parameters:Form.serialize(this)}); return false;" action="{{ path('pumukitadmin_person_list') }}" method="post">  
+  <form id="filter_people" onsubmit="$('filters_letter').value=null; new Ajax.Updater('list_people', '{{ path('pumukitadmin_person_list') }}', {method:post, asynchronous:true, evalScripts:true, parameters:Form.serialize(this)}); return false;" action="{{ path('pumukitadmin_person_list') }}" method="post">  
   <fieldset>
     <h2>{% trans %}Search{% endtrans %}</h2>
 
@@ -68,9 +68,9 @@
   window.filter_click_letter = function(letter)
   {
     $('filters_letter').value= letter; 
-    new Ajax.Updater('list_persons', '{{ path('pumukitadmin_person_list') }}', {asynchronous:true, 
+    new Ajax.Updater('list_people', '{{ path('pumukitadmin_person_list') }}', {asynchronous:true, 
                       evalScripts: true, 
-                      parameters: Form.serialize($('filter_persons'))}
+                      parameters: Form.serialize($('filter_people'))}
     );
   }
 </script>

@@ -6,13 +6,15 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\Person;
 
 class SeriesRepositoryTest extends WebTestCase
 {
     private $dm;
     private $repo;
 
-    public function setUp()
+    public function __construct()
     {
         $options = array('environment' => 'test');
         $kernel = static::createKernel($options);
@@ -21,12 +23,10 @@ class SeriesRepositoryTest extends WebTestCase
             ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
             ->getRepository('PumukitSchemaBundle:Series');
+    }
 
-        //DELETE DATABASE - pimo has to be deleted before mm
-    /*
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:PersonInMultimediaObject')
-            ->remove(array());
-    */
+    public function setUp()
+    {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
             ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Role')
@@ -45,6 +45,20 @@ class SeriesRepositoryTest extends WebTestCase
     public function testRepositoryEmpty()
     {
         $this->assertEquals(0, count($this->repo->findAll()));
+    }
+
+    public function testRepository()
+    {
+        $series = new Series();
+
+        $title = 'Series title';
+        $series->setTitle($title);
+
+        $this->dm->persist($series);
+        $this->dm->flush();
+
+        $this->assertEquals(1, count($this->repo->findAll()));
+        $this->assertEquals($series, $this->repo->find($series->getId()));
     }
 
     // TO DO: test proper time sorting
