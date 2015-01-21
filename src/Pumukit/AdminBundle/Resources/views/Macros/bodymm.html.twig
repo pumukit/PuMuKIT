@@ -105,7 +105,7 @@
   <!-- PERSONS ACT -->
         {% for role in roles %}
           {% if role.getDisplay() %}
-            {% for act in mm.getPersons(role.getId()) %}
+            {% for act in mm.getPeopleInMultimediaObjectByRole(role) %}
               <div>
                 <div class="person">
 	          {{ role.getText() }}
