@@ -165,41 +165,20 @@ class MultimediaObject
      */
     private $locale = 'en';
 
-    /**
-     * //@MongoDB\EmbedMany(targetDocument="MultimediaObjectTranslation")
-     */
-    private $translations;
-
-  public function getTranslations()
-  {
-    return $this->translations;
-  }
-
-  public function addTranslation($t)
-  {
-    if (!$this->translations->contains($t)) {
-      $this->translations[] = $t;
-      $t->setObject($this);
+    public function __construct()
+    {
+        $this->tracks = new ArrayCollection();
+        $this->pics = new ArrayCollection();
+        $this->materials = new ArrayCollection();
+        $this->links = new ArrayCollection();
+        $this->tags = new ArrayCollection();
+        $this->people_in_multimedia_object = new ArrayCollection();
     }
-  }
-  public function removeTranslation($t)
-  {
-  }
 
-  public function __construct()
-  {
-    $this->tracks = new ArrayCollection();
-    $this->pics = new ArrayCollection();
-    $this->materials = new ArrayCollection();
-    $this->links = new ArrayCollection();
-    $this->tags = new ArrayCollection();
-    $this->people_in_multimedia_object = new ArrayCollection();
-  }
-
-  public function __toString()
-  {
-    return $this->title;
-  }
+    public function __toString()
+    {
+        return $this->title;
+    }
 
     /**
      * Get id
