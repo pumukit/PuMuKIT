@@ -4,6 +4,8 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\EmbeddedPerson;
+use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -98,6 +100,27 @@ class PersonService
         }
 
         return $seriesCollection;
+    }
+
+    /**
+     * Create relation person
+     *
+     * @param Person $person
+     * @param Role $role
+     * @param MultimediaObject $multimediaObject
+     * @return MultimediaObject
+     */
+    public function createRelationPerson(Person $person, Role $role, MultimediaObject $multimediaObject)
+    {
+        if ($person && $role && $multimediaObject){
+            $this->dm->persist($person);
+            $this->dm->flush();
+            $multimediaObject->addPersonWithRole($person, $role);
+            $this->dm->persist($multimediaObject);
+            $this->dm->flush();
+        }
+
+        return $multimediaObject;
     }
 
     /**

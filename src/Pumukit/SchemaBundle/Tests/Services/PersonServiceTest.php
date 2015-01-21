@@ -272,4 +272,28 @@ class PersonServiceTest extends WebTestCase
         $this->assertEquals(array($series1, $series3), $seriesBob->toArray());
         $this->assertEquals(array($series1, $series2), $seriesKate->toArray());
     }
+
+    public function testCreateRelationPerson()
+    {
+        $roleActor = new Role();
+        $codActor = 'actor';
+        $roleActor->setCod($codActor);
+
+        $this->dm->persist($roleActor);
+        $this->dm->flush();
+
+        $mm = new MultimediaObject();
+        $title = 'Multimedia Object';
+        $mm->setTitle($title);
+
+        $personJohn = new Person();
+        $nameJohn = 'John Smith';
+        $personJohn->setName($nameJohn);
+
+        $this->assertEquals(0, count($mm->getPeopleInMultimediaObjectByRole($roleActor)));
+
+        $mm = $this->personService->createRelationPerson($personJohn, $roleActor, $mm);
+
+        $this->assertEquals(1, count($mm->getPeopleInMultimediaObjectByRole($roleActor)));
+    }
 }
