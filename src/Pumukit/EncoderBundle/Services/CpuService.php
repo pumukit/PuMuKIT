@@ -32,15 +32,15 @@ class CpuService
     {
         $executingJobs = $this->repo->findWithStatus(array(Job::STATUS_EXECUTING));
 
-        foreach ($this->cpus as $cpu){
+        foreach ($this->cpus as $name => $cpu){
             $busy = 0;
             foreach ($executingJobs as $job){
-                if ($cpu['name'] === $job->getCpu()){
+                if ($name === $job->getCpu()){
                     $busy++;
                 }
             }
             if (($busy < $cpu['max']) && (($cpu['type'] == $type) || (null == $type))){
-                return $cpu;                
+                return $name;
             }
         }
 
@@ -49,11 +49,12 @@ class CpuService
 
     /**
      * Get Cpu by name
+     * @param string the cpu name (case sensitive)
      */
     public function getCpuByName($name)
     {
-        if (isset($this->cpus[strtoupper($name)])){
-            return $this->cpus[strtoupper($name)];
+        if (isset($this->cpus[$name])){
+            return $this->cpus[$name];
         }
 
         return null;
