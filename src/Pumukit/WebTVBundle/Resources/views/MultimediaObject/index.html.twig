@@ -1,0 +1,11 @@
+{% extends 'PumukitWebTVBundle::layout_mm.html.twig' %}
+
+{% block body %}
+	<h1>{{multimediaObject.title}}</h1>
+	<div class="grid_10">
+		{% include 'PumukitWebTVBundle:MultimediaObject:player.html.twig' %}
+	</div>
+	<div class="grid_5">
+		{% include 'PumukitWebTVBundle:MultimediaObject:other_mmobjs.html.twig' %}
+	</div>
+{% endblock %}
