@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\SchemaBundle\Command;
+namespace Pumukit\EncoderBundle\Command;
 
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -10,14 +10,15 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Pumukit\SchemaBundle\Document\Tag;
 
-class PumukitInitTagsCommand extends ContainerAwareCommand
+      
+class PumukitEncoderExecuteCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
         $this
             ->setName('pumukit:encoder:job')
             ->setDescription('Pumukit execute a encoder job')
-            ->addArgument('id', InputArgument::InputArgument::REQUIRED, 'Job identifier to execute')
+            ->addArgument('id', InputArgument::REQUIRED, 'Job identifier to execute')
             ->setHelp(<<<EOT
 TODO
 
