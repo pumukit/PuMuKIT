@@ -134,11 +134,11 @@ class JobService
     public function getAllJobsStatus()
     {
         return array(
-                     'error' => count($this->repo->findWithStatus(array(Job::STATUS_ERROR))),
                      'paused' => count($this->repo->findWithStatus(array(Job::STATUS_PAUSED))),
                      'waiting' => count($this->repo->findWithStatus(array(Job::STATUS_WAITING))),
                      'executing' => count($this->repo->findWithStatus(array(Job::STATUS_EXECUTING))),
-                     'finished' => count($this->repo->findWithStatus(array(Job::STATUS_FINISHED)))
+                     'finished' => count($this->repo->findWithStatus(array(Job::STATUS_FINISHED))),
+                     'error' => count($this->repo->findWithStatus(array(Job::STATUS_ERROR)))
                      );
     }
     
