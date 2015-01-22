@@ -29,8 +29,8 @@ pumukitadmin_person_update:
         _controller: pumukitadmin.controller.person:updateAction
 
 pumukitadmin_person_delete_relation:
-    pattern: /{id}/delete_relation
-    methods: [POST]
+    pattern: /{id}/{roleId}/{mmId}/delete_relation
+    methods: [POST, DELETE]
     defaults:
         _controller: pumukitadmin.controller.person:deleteRelationAction
 
@@ -65,7 +65,7 @@ pumukitadmin_person_show:
         _controller: pumukitadmin.controller.person:showAction
 
 pumukitadmin_person_up:
-    pattern: /{id}/up
+    pattern: /{id}/{roleId}/{mmId}/up
     methods: [GET, PUT, POST]
     defaults:
         _controller: pumukitadmin.controller.person:upAction
@@ -73,7 +73,7 @@ pumukitadmin_person_up:
             redirect: pumukitadmin_person_index
 
 pumukitadmin_person_down:
-    pattern: /{id}/down
+    pattern: /{id}/{roleId}/{mmId}/down
     methods: [GET, PUT, POST]
     defaults:
         _controller: pumukitadmin.controller.person:downAction
@@ -97,3 +97,15 @@ pumukitadmin_person_create_relation:
     methods: [GET, POST]
     defaults:
         _controller: pumukitadmin.controller.person:createRelationAction
+
+pumukitadmin_person_link:
+    pattern: /{mmId}/{roleId}/{id}/link
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitadmin.controller.person:linkAction
+
+pumukitadmin_person_auto_complete:
+    pattern: /autocomplete
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitadmin.controller.person:autoCompleteAction

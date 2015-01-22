@@ -5,13 +5,9 @@
       <td><ul><li></li><ul></td>
       <td><a title="{% trans %}Edit Person{% endtrans %} '{{ person.getHName() }}'" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_person_update', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}"><img alt="{% trans %}edit{% endtrans %}" title="{% trans %}edit{% endtrans %}" class="miniTag" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a></td>
       <td>
-          <form action="{{ path('pumukitadmin_person_delete_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}Are you sure you want to delete the relation of {% endtrans %}{{ person.getHName() }}?')">
-              <input type="hidden" name="_method" value="DELETE">
-              <input type="hidden" name="confirmed" value="true">
-              <button type="submit" class="tv_admin_row_post">
-                  <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
-              </button>
-          </form>
+          <a href="#" onclick="window.submit_delete_person('{{ person.id }}', '{{ role.id }}', '{{ mm.id }}', '{{ person.getHName() }}', 'false'); return false;">
+             <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
+          </a>
       </td>
       <td>
         {% if loop.first %}
@@ -24,7 +20,7 @@
 	{% if loop.last %}
           &nbsp;
 	{% else %}
-	  <a href="#" onclick="new Ajax.Updater('{{ role.id }}_person_mms', '{{ path('pumukitadmin_person_down', {'id': person.id, 'role': role.id, 'mmId': mm.id}) }}', {asynchronous:true, evalScripts:true}); return false;">&#8595;</a>
+	  <a href="#" onclick="new Ajax.Updater('{{ role.id }}_person_mms', '{{ path('pumukitadmin_person_down', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}', {asynchronous:true, evalScripts:true}); return false;">&#8595;</a>
 	{% endif %}
       </td>
       <td>&nbsp;{{ person.id }} - {{ person.getHName() }}</td>

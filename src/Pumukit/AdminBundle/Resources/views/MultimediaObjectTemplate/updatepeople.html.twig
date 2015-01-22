@@ -8,10 +8,8 @@
       <div class="form-row">
         <dt>{{ role.getName() }}{{ role.getDisplay()?'*':'' }}:</dt>
         <dd>
-          <div id="{{ role.getId() }}_person_mms">
-
-            {% include 'PumukitAdminBundle:Person:listrelationtemplate.html.twig' with {'people': mm.getPeopleInMultimediaObject(), 'mm': mm, 'role': role} %}
-
+          <div id="{{ role.getId() }}_person_mms_template">
+            {% include 'PumukitAdminBundle:Person:listrelationtemplate.html.twig' with {'people': mm.getPeopleInMultimediaObjectByRole(role), 'mm': mm, 'role': role} %}
           </div>
         </dd>
       </div>

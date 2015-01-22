@@ -137,6 +137,58 @@ class PersonService
     }
 
     /**
+     * Up person with role
+     *
+     * @param Person $person
+     * @param Role $role
+     * @param MultimediaObject $multimediaObject
+     * @return MultimediaObject
+     */
+    public function upPersonWithRole(Person $person, Role $role, MultimediaObject $multimediaObject)
+    {
+        $multimediaObject->upPersonWithRole($person, $role);
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        return $multimediaObject;
+    }
+
+    /**
+     * Down person with role
+     *
+     * @param Person $person
+     * @param Role $role
+     * @param MultimediaObject $multimediaObject
+     * @return MultimediaObject
+     */
+    public function downPersonWithRole(Person $person, Role $role, MultimediaObject $multimediaObject)
+    {
+        $multimediaObject->downPersonWithRole($person, $role);
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        return $multimediaObject;
+    }
+
+    /**
+     * Delete relation of embedded person with role in multimedia object
+     *
+     * @param Person $person
+     * @param Role $role
+     * @param MultimediaObject $multimediaObject
+     * @return MultimediaObject
+     */
+    public function deleteRelation(Person $person, Role $role, MultimediaObject $multimediaObject)
+    {
+        // TODO flag exception
+        $flag = $multimediaObject->removePersonWithRole($person, $role);
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        return $multimediaObject;
+    }
+
+    /**
      * Update embedded person
      *
      * @param Person $person
