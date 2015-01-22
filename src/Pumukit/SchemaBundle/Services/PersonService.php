@@ -124,6 +124,19 @@ class PersonService
     }
 
     /**
+     * Auto complete
+     *
+     * Returns people with partial name in it
+     *
+     * @param string $name
+     * @return ArrayCollection
+     */
+    public function autoCompletePeopleByName($name)
+    {
+        return $this->repo->findByName(new \MongoRegex('/'.$name.'/i'));
+    }
+
+    /**
      * Update embedded person
      *
      * @param Person $person
