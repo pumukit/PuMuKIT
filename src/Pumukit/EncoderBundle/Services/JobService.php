@@ -134,11 +134,11 @@ class JobService
     public function getAllJobsStatus()
     {
         return array(
-                     'error' => count($this->repo->findWithStatus(array(Job::STATUS_ERROR))),
                      'paused' => count($this->repo->findWithStatus(array(Job::STATUS_PAUSED))),
                      'waiting' => count($this->repo->findWithStatus(array(Job::STATUS_WAITING))),
                      'executing' => count($this->repo->findWithStatus(array(Job::STATUS_EXECUTING))),
-                     'finished' => count($this->repo->findWithStatus(array(Job::STATUS_FINISHED)))
+                     'finished' => count($this->repo->findWithStatus(array(Job::STATUS_FINISHED))),
+                     'error' => count($this->repo->findWithStatus(array(Job::STATUS_ERROR)))
                      );
     }
     
@@ -225,28 +225,33 @@ class JobService
         @mkdir(dirname($job->getPathEnd()), 0777, true);
         
         $executor = $this->getExecutor($profile['app'], $cpu['type']);
-        $out = $executor->execute($commandLine);
         
         try{
+            $out = $executor->execute($commandLine);        
             $duration = $this->inspectionService->getDuration($job->getPathEnd());
+
+            dump($commandLine);
+            dump($profile['app']);
+            dump($out);
+            dump($job->getDuration());
+            dump($duration);
+    
+            $job->setTimeend(new \DateTime('now'));
+            $this->searchError($profile['app'], $out, $job->getDuration(), $duration);
+
+            $job->setStatus(Job::STATUS_FINISHED);
+
+            //$this->createFile();
         }catch (\Exception $e){
-            //TODO is erro no call searchError
-            $duration = 0;
+            $job->setStatus(Job::STATUS_ERROR);
+            dump("ERROR");
+            dump($e->getMessage());            
         }
 
 
+        $this->dm->persist($job);
+        $this->dm->flush();
 
-        dump($commandLine);
-        dump($profile['app']);
-        dump($out);
-        dump($job->getDuration());
-        dump($duration);
-
-        if ($this->searchError($profile['app'], $out, $job->getDuration(), $duration)){
-          dump("OK");
-        } else {
-          dump("ERROR");
-        }
 
         $this->executeNextJob();
 
@@ -254,11 +259,14 @@ class JobService
     }
 
 
+    /**
+     * Throw a exception if error executing the job.
+     */
     public function searchError($profile, $var, $duration_in, $duration_end)
     {
         $duration_conf = 25;
         if (($duration_in < $duration_end - $duration_conf ) || ($duration_in > $duration_end + $duration_conf )){
-            return false;
+            throw new \Exception();
         }
         return true;
     }

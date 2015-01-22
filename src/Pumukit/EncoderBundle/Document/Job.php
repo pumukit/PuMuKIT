@@ -23,6 +23,19 @@ class Job
     const STATUS_FINISHED = 3;
 
     /**
+     * Status codes translation table.
+     *
+     * @var array
+     */
+    public static $statusTexts = array(
+      -1 => "Error",
+      0 => "Paused",
+      1 => "Waiting",
+      2 => "Executing",
+      3 => "Finished"
+    );
+    
+    /**
      * @var int $id
      *
      * @MongoDB\Id
@@ -391,9 +404,12 @@ class Job
      *
      * @return datetime
      */
-    public function getTimeini()
+    public function getTimeini($format = null)
     {
-        return $this->timeini;
+        if((null === $this->timeini) || (null === $format)) {
+            return $this->timeini;
+        }
+        return $this->timeini->format($format);;
     }
 
     /**
@@ -411,9 +427,13 @@ class Job
      *
      * @return datetime
      */
-    public function getTimestart()
+    public function getTimestart($format = null)
     {
-        return $this->timestart;
+        if((null === $this->timestart) || (null === $format)) {
+            return $this->timestart;
+        }
+        return $this->timestart->format($format);;
+        
     }
 
     /**
@@ -431,9 +451,13 @@ class Job
      *
      * @return datetime
      */
-    public function getTimeend()
+    public function getTimeend($format = null)
     {
-        return $this->timeend;
+        if((null === $this->timeend) || (null === $format)) {
+            return $this->timeend;
+        }
+        return $this->timeend->format($format);;
+
     }
 
     /**
