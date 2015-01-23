@@ -76,9 +76,11 @@ class FactoryService
           $mm->setTitle($title, $locale);
       }
 
+      // TODO change to series addMultimediaObject(mm) and test it works
       $mm->setSeries($series);
 
       $this->dm->persist($mm);
+      $this->dm->persist($series);
       $this->dm->flush();
 
       return $mm;
