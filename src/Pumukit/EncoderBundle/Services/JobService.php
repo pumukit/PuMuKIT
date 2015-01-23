@@ -8,6 +8,7 @@ use Pumukit\EncoderBundle\Executor\LocalExecutor;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\InspectionBundle\Services\InspectionServiceInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\Process\Process;
@@ -241,7 +242,7 @@ class JobService
 
             $job->setStatus(Job::STATUS_FINISHED);
 
-            //$this->createFile();
+            $this->createFile($job);
         }catch (\Exception $e){
             $job->setStatus(Job::STATUS_ERROR);
             dump("ERROR");
@@ -337,6 +338,7 @@ class JobService
         $finalExtension = isset($profile['extension'])?$profile['extension']:$extension;
 
         $mmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
+        //TODO if mmobj doesn't exists
         $tempDir = $profile['streamserver']['dir_out'] . '/' . $mmobj->getSeries()->getId();
 
         //TODO repeat mkdir (see this->execute)
@@ -350,6 +352,31 @@ class JobService
         $this->dm->persist($job);
         $this->dm->flush();
     }
+
+
+    public function createFile($job)
+    {
+        $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
+        //TODO if mmobj doesn't exists
+        $track = new Track();
+        $track->addTag('profile:' . $job->getProfile());
+        $track->setLanguage($job->getLanguageId());
+        $track->setUrl($job->getPathEnd());
+        $track->setPath($job->getPathEnd());
+
+        $this->inspectionService->autocompleteTrack($track);
+
+        //TODO review
+        $track->setOnlyAudio($track->getWidth() == 0);
+        $track->setHide(false);
+
+        $multimediaObject->addTrack($track);
+     
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        
+    }
     
     private function getExecutor($app, $cpuType)
     {
@@ -360,6 +387,6 @@ class JobService
 
     private function getProfile($job)
     {
-      return $this->profileService->getProfile($job->getProfile());
+        return $this->profileService->getProfile($job->getProfile());
     }
 }
