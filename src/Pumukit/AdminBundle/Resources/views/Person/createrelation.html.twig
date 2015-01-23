@@ -4,15 +4,17 @@
 
   <form onsubmit="Modalbox.hide();
                   new Ajax.Updater('{{ role.id }}_person_mms', 
-                  '{{ path('pumukitadmin_person_update_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}', 
+                  '{{ path('pumukitadmin_person_create_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}', 
                   {
 		          asynchronous:true, evalScripts:true, method:'POST',
 		          parameters:Form.serialize(this)
                   });
 		          return false;"
-	    action="{{ path('pumukitadmin_person_update_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}" method="POST">
+	    action="{{ path('pumukitadmin_person_create_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}" method="POST">
 
     <input type="hidden" name="id" id="id" value="{{ person.id }}">
+    <input type="hidden" name="roleId" id="roleId" value="{{ role.id }}">
+    <input type="hidden" name="mmId" id="mmId" value="{{ mm.id }}">
 
     <fieldset>
 

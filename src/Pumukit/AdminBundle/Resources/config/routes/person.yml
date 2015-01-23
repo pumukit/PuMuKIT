@@ -14,25 +14,11 @@ pumukitadmin_person_create:
         _sylius:
             redirect: pumukitadmin_person_index
 
-pumukitadmin_person_createrelation:
-    pattern: /{id}/createrelation
-    methods: [GET, POST]
-    defaults:
-        _controller: pumukitadmin.controller.person:createRelationAction
-        _sylius:
-            redirect: pumukitadmin_person_index
-
 pumukitadmin_person_update:
     pattern: /{id}/update
     methods: [GET, POST]
     defaults:
         _controller: pumukitadmin.controller.person:updateAction
-
-pumukitadmin_person_delete_relation:
-    pattern: /{id}/{roleId}/{mmId}/delete_relation
-    methods: [POST, DELETE]
-    defaults:
-        _controller: pumukitadmin.controller.person:deleteRelationAction
 
 pumukitadmin_person_batch_delete:
     pattern: /delete
@@ -97,6 +83,18 @@ pumukitadmin_person_create_relation:
     methods: [GET, POST]
     defaults:
         _controller: pumukitadmin.controller.person:createRelationAction
+
+pumukitadmin_person_update_relation:
+    pattern: /{id}/{roleId}/{mmId}/updaterelation
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitadmin.controller.person:updateRelationAction
+
+pumukitadmin_person_delete_relation:
+    pattern: /{id}/{roleId}/{mmId}/delete_relation
+    methods: [POST, DELETE]
+    defaults:
+        _controller: pumukitadmin.controller.person:deleteRelationAction
 
 pumukitadmin_person_link:
     pattern: /{mmId}/{roleId}/{id}/link

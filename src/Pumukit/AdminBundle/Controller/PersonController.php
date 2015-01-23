@@ -155,7 +155,7 @@ class PersonController extends AdminController
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
-     * @Template("PumukitAdminBundle:Person:updaterelation.html.twig")
+     * @Template("PumukitAdminBundle:Person:createrelation.html.twig")
      */
     public function createRelationAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
@@ -190,6 +190,49 @@ class PersonController extends AdminController
                      'role' => $role,
                      'mm' => $multimediaObject,
                      'form' => $form->createView(),
+                     );
+    }
+
+    /**
+     * Update relation
+     *
+     * @Template("PumukitAdminBundle:Person:updaterelation.html.twig")
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
+     */
+    public function updateRelationAction(MultimediaObject $multimediaObject, Role $role, Request $request)
+    {
+        $personService = $this->get('pumukitschema.person');
+        $person = $personService->findPersonById($request->get('id'));
+        
+        $form = $this->createForm(new PersonType(), $person);
+
+        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
+            try {
+                $person = $personService->updatePerson($person);
+            } catch (\Exception $e) {
+                $this->get('session')->getFlashBag()->add('error', $e->getMessage());
+            }
+
+            $template = '';
+            if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
+                $template = 'template';
+            }
+
+            return $this->render('PumukitAdminBundle:Person:listrelation'.$template.'.html.twig', 
+                                 array(
+                                       'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
+                                       'role' => $role,
+                                       'mm' => $multimediaObject
+                                       ));
+
+        }
+
+        return array(
+                     'person' => $person,
+                     'role' => $role,
+                     'mm' => $multimediaObject,
+                     'form' => $form->createView()
                      );
     }
 
@@ -292,7 +335,7 @@ class PersonController extends AdminController
     }    
 
     /**
-     * Delete embedded person
+     * Delete relation: EmbeddedPerson in Multimedia Object
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
