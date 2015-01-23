@@ -1,0 +1,21 @@
+<div class="pumukit_mini_mmobjs">
+
+  {% for mm in mmobjects %}
+  <dl class="pumukit_mini_mmobj">
+
+    <dt class="thumbnail">
+      <a href="/video/{{mm.id}}">
+        <img class="play_icon" alt="" src="{{ asset('bundles/pumukitwebtv/images/play_icon.png') }}">
+        <img class="mm_img" src="/uploads/pic/Serial/14/Video/43/10021281033.jpg" width="75 px" height="56 px">
+      </a>
+    </dt> 
+
+    <dd class="info">
+      <div class="title">
+        <a href="/video/{{mm.id}}">{{mm.title}}</a>
+      </div>
+    </dd>
+  </dl>
+  {% endfor %}
+
+</div>
