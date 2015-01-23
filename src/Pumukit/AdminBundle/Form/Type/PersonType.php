@@ -13,21 +13,21 @@ class PersonType extends AbstractType
     {
         $builder
       ->add('i18n_honorific', 'texti18n',
-        array('label' => 'Honorific'))
+            array('required' => false, 'label' => 'Honorific'))
       ->add('name', 'text',
         array('attr' => array('style' => 'width: 420px'), 'label' => 'Name'))
       ->add('i18n_post', 'texti18n',
-        array('attr' => array('style' => 'width: 420px'), 'label' => 'Post'))
+        array('attr' => array('style' => 'width: 420px'), 'required' => false, 'label' => 'Post'))
       ->add('i18n_firm', 'texti18n',
-        array('attr' => array('style' => 'width: 420px'), 'label' => 'Firm'))
+        array('attr' => array('style' => 'width: 420px'), 'required' => false, 'label' => 'Firm'))
       ->add('i18n_bio', 'textareai18n',
-        array('attr' => array('style' => 'width: 420px'), 'label' => 'Bio'))
+        array('attr' => array('style' => 'width: 420px'), 'required' => false, 'label' => 'Bio'))
       ->add('email', 'text',
         array('attr' => array('style' => 'width: 420px'), 'label' => 'Email'))
       ->add('web', 'text',
-        array('attr' => array('style' => 'width: 420px'), 'label' => 'Web'))
+        array('attr' => array('style' => 'width: 420px'), 'required' => false, 'label' => 'Web'))
       ->add('phone', 'text',
-        array('attr' => array('style' => 'width: 420px'), 'label' => 'Phone'));
+        array('attr' => array('style' => 'width: 420px'), 'required' => false, 'label' => 'Phone'));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

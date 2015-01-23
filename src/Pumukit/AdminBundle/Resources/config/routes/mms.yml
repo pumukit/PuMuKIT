@@ -58,7 +58,7 @@ pumukitadmin_mms_copy:
 
 pumukitadmin_mms_show:
     pattern: /{id}/show
-    methods: [GET]
+    methods: [GET, POST]
     defaults:
         _controller: pumukitadmin.controller.mms:showAction
 

@@ -18,6 +18,7 @@ class JobServiceTest extends WebTestCase
     private $jobService;
     //private $profileService;
     //private $cpuService;
+    private $resourcesDir;
 
     public function __construct()
     {
@@ -41,14 +42,14 @@ class JobServiceTest extends WebTestCase
         $inspectionService = $this->getMock('Pumukit\InspectionBundle\Services\InspectionServiceInterface');
         $inspectionService->expects($this->any())->method('getDuration')->will($this->returnValue(5));
         $this->jobService = new JobService($this->dm, $profileService, $cpuService, $inspectionService, null, true);
+        $this->resourcesDir = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR;
     }
     
     public function testAddJob()
     {
         $profiles = $this->getDemoProfiles();
 
-        $pathFile = 'test.txt';
-        $file = $this->createNewFile($pathFile, 'test file');
+        $pathFile = $this->resourcesDir.'test.txt';
 
         $profile = 'MASTER_COPY';
         $priority = 2;
@@ -66,8 +67,7 @@ class JobServiceTest extends WebTestCase
 
         $this->assertEquals(1, count($this->repo->findAll()));
 
-        $pathFile2 = 'test2.txt';
-        $file2 = $this->createNewFile($pathFile2, 'test file 2');
+        $pathFile2 = $this->resourcesDir.'test2.txt';
 
         $profile2 = 'MASTER_VIDEO_H264';
         $priority2 = 3;
@@ -77,9 +77,6 @@ class JobServiceTest extends WebTestCase
         $this->jobService->addJob($pathFile2, $profile2, $priority2, $multimediaObject, $language2, $description2);
 
         $this->assertEquals(2, count($this->repo->findAll()));
-
-        $this->assertTrue($this->deleteFile($pathFile));
-        $this->assertTrue($this->deleteFile($pathFile2));
     }
 
     public function testPauseJob()
@@ -194,8 +191,7 @@ class JobServiceTest extends WebTestCase
      */
     public function testExceptionProfileName()
     {
-        $pathFile = 'test.txt';
-        $file = $this->createNewFile($pathFile, 'test file');
+        $pathFile = $this->resourcesDir.'test.txt';
 
         $profile = 'non_existing';
         $priority = 2;
@@ -207,8 +203,6 @@ class JobServiceTest extends WebTestCase
         $this->dm->flush();
 
         $this->jobService->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description);
-
-        $this->assertTrue($this->deleteFile($pathFile));      
     }
 
     /**
@@ -246,20 +240,6 @@ class JobServiceTest extends WebTestCase
         $this->dm->flush();
 
         return $job;
-    }
-
-    private function createNewFile($pathFile, $contentFile)
-    {
-        $file = fopen($pathFile, 'w');
-        fwrite($file, $contentFile);
-        fclose($file);
-
-        return new File($pathFile);
-    }
-
-    private function deleteFile($pathFile)
-    {
-        return unlink($pathFile);
     }
 
     private function getDemoCpus()

@@ -296,4 +296,43 @@ class PersonServiceTest extends WebTestCase
 
         $this->assertEquals(1, count($mm->getPeopleInMultimediaObjectByRole($roleActor)));
     }
+
+    public function testAutoCompletePeopleByName()
+    {
+        $this->assertEquals(0, count($this->personService->autoCompletePeopleByName('john')));
+
+        $personJohn = new Person();
+        $nameJohn = 'John Smith';
+        $personJohn->setName($nameJohn);
+
+        $personBob = new Person();
+        $nameBob = 'Bob Clark';
+        $personBob->setName($nameBob);
+
+        $personKate = new Person();
+        $nameKate = 'Kate Simmons';
+        $personKate->setName($nameKate);        
+
+        $personBobby = new Person();
+        $nameBobby = 'Bobby Weissmann';
+        $personBobby->setName($nameBobby);
+
+        $this->dm->persist($personJohn);
+        $this->dm->persist($personBob);
+        $this->dm->persist($personKate);
+        $this->dm->persist($personBobby);
+        $this->dm->flush();
+
+        $this->assertEquals(1, count($this->personService->autoCompletePeopleByName('john')));
+        $this->assertEquals($personJohn, $this->personService->autoCompletePeopleByName('john')[0]);
+
+        $this->assertEquals(2, count($this->personService->autoCompletePeopleByName('bob')));
+        $this->assertEquals(array($personBob, $personBobby), $this->personService->autoCompletePeopleByName('bob'));
+
+        $this->assertEquals(1, count($this->personService->autoCompletePeopleByName('kat')));
+        $this->assertEquals($personKate, $this->personService->autoCompletePeopleByName('kat')[0]);
+
+        $this->assertEquals(2, count($this->personService->autoCompletePeopleByName('sm')));
+        $this->assertEquals(array($personJohn, $personBobby), $this->personService->autoCompletePeopleByName('sm'));
+    }
 }

@@ -127,7 +127,7 @@ class Configuration implements ConfigurationInterface
                             ->info('Specifies the user to log in as on the remote encoder host')->end()
                             ->scalarNode('password')
                             ->info('Specifies the user to log in as on the remote encoder host')->end()
-                            ->scalarNode('description')
+                            ->scalarNode('description')->defaultValue('')
                             ->info('Encoder host description')->end()
                         ->end()
                     ->end()

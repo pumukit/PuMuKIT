@@ -19,6 +19,7 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="pumukitencoder.profile"/>
             <argument type="service" id="pumukitencoder.cpu"/>
+            <argument type="service" id="pumukit.inspection"/>
         </service>
     </services>
 

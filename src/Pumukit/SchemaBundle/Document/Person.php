@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Person
 {
     /**
-     * @var int $id
+     * @var string $id
      *
      * @MongoDB\Id
      */

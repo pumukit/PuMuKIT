@@ -57,7 +57,7 @@ pumukit_encoder:
             channels: 1
             audio: false
             bat: |
-                'ffmpeg -y -i "{{input}}" -acodec libfdk_aac -vcodec libx264 -threads 0 "{{output}}"'
+                avconv -y -i "{{input}}" -acodec libvo_aacenc -vcodec libx264 -threads 0 "{{output}}"
             streamserver:
                 name: Localmaster
                 type: store

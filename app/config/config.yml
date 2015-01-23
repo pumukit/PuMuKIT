@@ -114,17 +114,17 @@ pumukit_encoder:
             channels: 1
             audio: false
             bat: |
-                'BitRate=$(/usr/local/bin/ffprobe "{{input}}" -v 0 -show_format -print_format default=nk=1:nw=1 | sed -n 9p)
+                BitRate=$(/usr/local/bin/ffprobe "{{input}}" -v 0 -show_format -print_format default=nk=1:nw=1 | sed -n 9p)
                 [[ "$(( BitRate ))" -gt 6000000 ]] && : $(( BitRate = 6000000 ))
                 FrameRate=$(/usr/local/bin/ffprobe "{{input}}" -v 0 -show_streams -select_streams v -print_format default=nk=1:nw=1 | sed -n 18p) 
                 BufSize=$(( BitRate*20/FrameRate ))
                 AudioSampleRate=$(/usr/local/bin/ffprobe "{{input}}" -v 0 -show_streams -select_streams a -print_format default=nk=1:nw=1 |sed -n 10p)
                 AudioBitRate=$(/usr/local/bin/ffprobe "{{input}}" -v 0 -show_streams -select_streams a -print_format default=nk=1:nw=1 |sed -n 22p)
                 width=$(/usr/local/bin/ffprobe "{{input}}" -v 0 -show_streams -select_streams v  -print_format default=nk=1:nw=1 |sed -n 9p)
-                [[ "$(( width % 2 ))" -ne 0 ]] && : $(( width += 1 ))
+                [[ "$(( width %% 2 ))" -ne 0 ]] && : $(( width += 1 ))
                 height=$(/usr/local/bin/ffprobe "{{input}}" -v 0 -show_streams -select_streams v  -print_format default=nk=1:nw=1 |sed -n 10p)
-                [[ "$(( height % 2 ))" -ne 0 ]] && : $(( height += 1 )) 
-                /usr/local/bin/ffmpeg -y -i "{{input}}" -acodec libfdk_aac -b:a $AudioBitRate -ac 2 -ar $AudioSampleRate -vcodec libx264 -r 25 -preset slow -crf 15 -maxrate $BitRate -bufsize $BufSize -s $width"x"$height -threads 0 "{{output}}"'
+                [[ "$(( height %% 2 ))" -ne 0 ]] && : $(( height += 1 )) 
+                /usr/local/bin/ffmpeg -y -i "{{input}}" -acodec libfdk_aac -b:a $AudioBitRate -ac 2 -ar $AudioSampleRate -vcodec libx264 -r 25 -preset slow -crf 15 -maxrate $BitRate -bufsize $BufSize -s $width"x"$height -threads 0 "{{output}}"
             streamserver:
                 name: Localmaster
                 type: store
