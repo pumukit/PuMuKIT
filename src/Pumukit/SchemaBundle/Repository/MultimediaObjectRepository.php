@@ -114,4 +114,18 @@ class MultimediaObjectRepository extends DocumentRepository
         ->execute();
   }
 
+  /**
+   * Find series by person
+   *
+   * @param string $person
+   * @return ArrayCollection
+   */
+  public function findSeriesFieldByPerson($person)
+  {
+      return $this->createQueryBuilder()
+        ->field('people_in_multimedia_object.people._id')->equals(new \MongoId($person->getId()))
+        ->distinct('series')
+        ->getQuery()
+        ->execute();
+  }
 }
