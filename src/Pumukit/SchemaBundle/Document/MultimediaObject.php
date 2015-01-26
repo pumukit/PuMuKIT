@@ -152,6 +152,13 @@ class MultimediaObject
     private $duration = 0;
 
     /**
+     * @var int $numview
+     *
+     * @MongoDB\Int
+     */
+    private $numview;
+
+    /**
      * @var ArrayCollection $people
      *
      * @MongoDB\EmbedMany(targetDocument="EmbeddedRole")
@@ -1854,6 +1861,26 @@ class MultimediaObject
       } else {
         return "0''";
       }
+    }
+
+    /**
+     * Set numview
+     *
+     * @param integer $numview
+     */
+    public function setNumview($numview)
+    {
+        $this->numview = $numview;
+    }
+
+    /**
+     * Get numview
+     *
+     * @return integer
+     */
+    public function getNumview()
+    {
+        return $this->numview;
     }
 
     /**

@@ -441,6 +441,16 @@ class SeriesRepositoryTest extends WebTestCase
 
         $this->dm->flush();
 
-        $this->assertEquals(2, count($this->repo->findSeriesByPerson($personKate)));
+        $seriesKate = $this->repo->findSeriesByPerson($personKate);
+        $this->assertEquals(2, count($seriesKate));
+        $this->assertEquals(array($series1, $series2), array_values($seriesKate->toArray()));
+
+        $seriesJohn = $this->repo->findSeriesByPerson($personJohn);
+        $this->assertEquals(2, count($seriesJohn));
+        $this->assertEquals(array($series1, $series3), array_values($seriesJohn->toArray()));
+
+        $seriesBob = $this->repo->findSeriesByPerson($personBob);
+        $this->assertEquals(2, count($seriesBob));
+        $this->assertEquals(array($series1, $series3), array_values($seriesBob->toArray()));
     }
 }

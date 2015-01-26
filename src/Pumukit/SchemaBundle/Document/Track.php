@@ -82,6 +82,13 @@ class Track extends Element
   private $height;
 
   /**
+   * @var int $numview
+   *
+   * @MongoDB\Int
+   */
+  private $numview;
+
+  /**
    * Set language
    *
    * @param string $language
@@ -279,5 +286,25 @@ class Track extends Element
   public function getHeight()
   {
       return $this->height;
+  }
+
+  /**
+   * Set numview
+   *
+   * @param integer $numview
+   */
+  public function setNumview($numview)
+  {
+      $this->numview = $numview;
+  }
+
+  /**
+   * Get numview
+   *
+   * @return integer
+   */
+  public function getNumview()
+  {
+      return $this->numview;
   }
 }

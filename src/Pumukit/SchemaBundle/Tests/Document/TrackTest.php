@@ -24,6 +24,7 @@ class TrackTest extends \PHPUnit_Framework_TestCase
         $width = 1920;
         $height = 1080;
         $hide = false;
+        $numview = 3;
 
         $track = new Track();
         $track->setTags($tags);
@@ -42,6 +43,7 @@ class TrackTest extends \PHPUnit_Framework_TestCase
         $track->setWidth($width);
         $track->setHeight($height);
         $track->setHide($hide);
+        $track->setNumview($numview);
 
         $this->assertEquals($tags, $track->getTags());
         $this->assertEquals($language, $track->getLanguage());
@@ -59,6 +61,7 @@ class TrackTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($width, $track->getWidth());
         $this->assertEquals($height, $track->getHeight());
         $this->assertFalse($hide, $track->getHide());
+        $this->assertEquals($numview, $track->getNumview());
     }
 
     public function testMaxSize()
