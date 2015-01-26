@@ -153,7 +153,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         $seriesBenjen = $this->repo->findSeriesFieldByPerson($person_benjen);
         $seriesNed = $this->repo->findSeriesFieldByPerson($person_ned);
-        var_dump(get_class($seriesBenjen));        
         $this->assertEquals(2, count($seriesBenjen));
 
         /*
