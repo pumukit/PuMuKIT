@@ -12,6 +12,7 @@ class PersonServiceTest extends WebTestCase
 {
     private $dm;
     private $repo;
+    private $repoMmobj;
     private $personService;
 
     public function __construct()
@@ -24,6 +25,8 @@ class PersonServiceTest extends WebTestCase
           ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
           ->getRepository('PumukitSchemaBundle:Person');
+        $this->repoMmobj = $this->dm
+          ->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->personService = $kernel->getContainer()
           ->get('pumukitschema.person');
     }
@@ -271,6 +274,9 @@ class PersonServiceTest extends WebTestCase
         $this->assertEquals(array($series1, $series3), $seriesJohn->toArray());
         $this->assertEquals(array($series1, $series3), $seriesBob->toArray());
         $this->assertEquals(array($series1, $series2), $seriesKate->toArray());
+
+        $seriesKate1 = $this->personService->findSeriesWithPerson($personKate, 1);
+        $this->assertEquals(array($series1), $seriesKate1->toArray());
     }
 
     public function testCreateRelationPerson()
@@ -334,5 +340,134 @@ class PersonServiceTest extends WebTestCase
 
         $this->assertEquals(2, count($this->personService->autoCompletePeopleByName('sm')));
         $this->assertEquals(array($personJohn, $personBobby), $this->personService->autoCompletePeopleByName('sm'));
+    }
+
+    public function testBatchDeletePerson()
+    {
+        $personJohn = new Person();
+        $nameJohn = 'John Smith';
+        $personJohn->setName($nameJohn);
+
+        $personBob = new Person();
+        $nameBob = 'Bob Clark';
+        $personBob->setName($nameBob);
+
+        $personJohn = $this->personService->savePerson($personJohn);
+        $personBob = $this->personService->savePerson($personBob);
+
+        $roleActor = new Role();
+        $codActor = 'actor';
+        $roleActor->setCod($codActor);
+
+        $rolePresenter = new Role();
+        $codPresenter = 'presenter';
+        $rolePresenter->setCod($codPresenter);
+
+        $this->dm->persist($roleActor);
+        $this->dm->persist($rolePresenter);
+        $this->dm->flush();
+
+        $mm1 = new MultimediaObject();
+        $title1 = 'Multimedia Object 1';
+        $mm1->setTitle($title1);
+        $mm1->addPersonWithRole($personJohn, $roleActor);
+        $mm1->addPersonWithRole($personBob, $roleActor);
+        $mm1->addPersonWithRole($personJohn, $rolePresenter);
+
+        $mm2 = new MultimediaObject();
+        $title2 = 'Multimedia Object 2';
+        $mm2->setTitle($title2);
+        $mm2->addPersonWithRole($personJohn, $roleActor);
+        $mm2->addPersonWithRole($personBob, $rolePresenter);
+        $mm2->addPersonWithRole($personBob, $roleActor);
+
+        $mm3 = new MultimediaObject();
+        $title3 = 'Multimedia Object 3';
+        $mm3->setTitle($title3);
+        $mm3->addPersonWithRole($personJohn, $roleActor);
+
+        $this->dm->persist($mm1);
+        $this->dm->persist($mm2);
+        $this->dm->persist($mm3);
+        $this->dm->flush();
+
+        $personBobId = $personBob->getId();
+        $personJohnId = $personJohn->getId();
+
+        $this->assertEquals(2, count($this->repoMmobj->findByPersonId($personBobId)));
+        $this->assertEquals(3, count($this->repoMmobj->findByPersonId($personJohnId)));
+        $this->assertEquals($personBob, $this->repo->find($personBobId));
+        $this->assertEquals($personJohn, $this->repo->find($personJohnId));
+
+        $this->personService->batchDeletePerson($personBob);
+
+        $this->assertEquals(0, count($this->repoMmobj->findByPersonId($personBobId)));
+        $this->assertEquals(3, count($this->repoMmobj->findByPersonId($personJohnId)));
+        $this->assertNull($this->repo->find($personBobId));
+        $this->assertEquals($personJohn, $this->repo->find($personJohnId));
+
+        $this->personService->batchDeletePerson($personJohn);
+
+        $this->assertEquals(0, count($this->repoMmobj->findByPersonId($personBobId)));
+        $this->assertEquals(0, count($this->repoMmobj->findByPersonId($personJohnId)));
+        $this->assertNull($this->repo->find($personBobId));
+        $this->assertNull($this->repo->find($personJohnId));
+    }
+
+    public function testUpAndDownPersonWithRole()
+    {
+        $personJohn = new Person();
+        $nameJohn = 'John Smith';
+        $personJohn->setName($nameJohn);
+
+        $personBob = new Person();
+        $nameBob = 'Bob Clark';
+        $personBob->setName($nameBob);
+
+        $personJohn = $this->personService->savePerson($personJohn);
+        $personBob = $this->personService->savePerson($personBob);
+
+        $roleActor = new Role();
+        $codActor = 'actor';
+        $roleActor->setCod($codActor);
+
+        $rolePresenter = new Role();
+        $codPresenter = 'presenter';
+        $rolePresenter->setCod($codPresenter);
+
+        $this->dm->persist($roleActor);
+        $this->dm->persist($rolePresenter);
+        $this->dm->flush();
+
+        $mm1 = new MultimediaObject();
+        $title1 = 'Multimedia Object 1';
+        $mm1->setTitle($title1);
+        $mm1->addPersonWithRole($personJohn, $roleActor);
+        $mm1->addPersonWithRole($personBob, $roleActor);
+        $mm1->addPersonWithRole($personJohn, $rolePresenter);
+
+        $mm2 = new MultimediaObject();
+        $title2 = 'Multimedia Object 2';
+        $mm2->setTitle($title2);
+        $mm2->addPersonWithRole($personJohn, $roleActor);
+        $mm2->addPersonWithRole($personBob, $rolePresenter);
+        $mm2->addPersonWithRole($personBob, $roleActor);
+
+        $mm3 = new MultimediaObject();
+        $title3 = 'Multimedia Object 3';
+        $mm3->setTitle($title3);
+        $mm3->addPersonWithRole($personJohn, $roleActor);
+
+        $this->dm->persist($mm1);
+        $this->dm->persist($mm2);
+        $this->dm->persist($mm3);
+        $this->dm->flush();
+
+        $mm1PeopleActor = $mm1->getPeopleInMultimediaObjectByRole($roleActor);
+        $this->assertEquals($personJohn->getId(), $mm1PeopleActor[0]->getId());
+        $this->assertEquals($personBob->getId(), $mm1PeopleActor[1]->getId());
+
+        // TODO
+        //$this->personService->upPersonWithRole(
     }
 }

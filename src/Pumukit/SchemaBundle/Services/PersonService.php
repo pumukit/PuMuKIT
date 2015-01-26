@@ -189,6 +189,53 @@ class PersonService
     }
 
     /**
+     * Delete Person
+     */
+    public function deletePerson(Person $person)
+    {
+        if ($person){
+            if (empty($this->repoMmobj->findByPersonId($person->getId()))){
+                throw new \Exception("Couldn't remove Person with id ".$person->getId().". There are multimedia objects with this person");
+            }
+            $this->dm->remove($person);
+            $this->dm->flush();
+        }
+    }
+
+    /**
+     * Batch delete person
+     *
+     * @param Person
+     */
+    public function batchDeletePerson(Person $person)
+    {
+        foreach($this->repoMmobj->findByPersonId($person->getId()) as $mmobj){
+            foreach($mmobj->getRoles() as $embeddedRole){
+                if ($mmobj->containsPersonWithRole($person, $embeddedRole)){
+                    if (!($mmobj->removePersonWithRole($person, $embeddedRole))){
+                        throw new \Expection('There was an error removing person '.$person->getId().' with role '.$role->getCod().' in multimedia object '.$multimediaObject->getId());
+                    }
+                }
+            }
+            $this->dm->persist($mmobj);
+        }
+
+        $this->dm->remove($person);
+        $this->dm->flush();
+    }
+
+    /**
+     * Count multimedia objects with person
+     *
+     * @param Person $person
+     * @return array
+     */
+    public function countMultimediaObjectsWithPerson($person)
+    {
+        return count($this->repoMmobj->findByPersonId($person->getId()));
+    }
+
+    /**
      * Update embedded person
      *
      * @param Person $person

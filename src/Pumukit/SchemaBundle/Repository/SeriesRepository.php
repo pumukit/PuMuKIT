@@ -233,4 +233,19 @@ class SeriesRepository extends DocumentRepository
       ->getQuery()
       ->getSingleResult();
   }
+
+  /**
+   *
+   */
+  public function findSeriesByPerson($person)
+  {
+      $repoMmobj = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject');
+
+      $referencedSeries = $repoMmobj->findSeriesFieldByPerson($person);
+
+      return $this->createQueryBuilder()
+        ->field('id')->in($referencedSeries->toArray())
+        ->getQuery()
+        ->execute();
+  }
 }

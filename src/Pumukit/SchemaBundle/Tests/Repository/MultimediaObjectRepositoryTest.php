@@ -150,6 +150,20 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(2, count($mmobj_series_main));
         $this->assertEquals(1, count($mmobj_series_wall));
         $this->assertEquals(1, count($mmobj_series_lhazar));
+
+        $seriesBenjen = $this->repo->findSeriesFieldByPerson($person_benjen);
+        $seriesNed = $this->repo->findSeriesFieldByPerson($person_ned);
+        var_dump(get_class($seriesBenjen));        
+        $this->assertEquals(2, count($seriesBenjen));
+
+        /*
+        $this->assertEquals($series_main->getId(), $seriesBenjen[0]->getId());
+        $this->assertEquals($series_wall->getId(), $seriesBenjen[1]->getId());
+
+        $this->assertEquals(2, count($seriesNed));
+        $this->assertEquals($series_main->getId(), $seriesNed->toArray()[0]->getId());
+        $this->assertEquals($series_lhazar->getId(), $seriesNed->toArray()[1]->getId());
+        */
     }
 
     public function testPeopleInMultimediaObjectCollection()

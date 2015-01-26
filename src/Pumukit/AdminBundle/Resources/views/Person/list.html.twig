@@ -18,7 +18,7 @@
       </td>
     </tr>
   {% endif %}
-  {# TODO COUNT MM PERSONS <?php $i = 1; foreach ($sf_data->getRaw('people') as $person): $odd = fmod(++$i, 2); $numV = $person->countMmPersons()?> #}
+
   {% for person in people %}
     <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ loop.index % 2 }} {{ person.id == app.session.get('admin/person/id')?'tv_admin_row_this':'' }}" >
       <td>
@@ -28,6 +28,8 @@
         <a title="{% trans %}Edit Person{% endtrans %} {{ person.getHName() }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_person_update', {'id': person.id}) }}"><img alt="{% trans %}edit{% endtrans %}" title="{% trans %}edit{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a>
       </td>
       <td>
+        {#
+        {% if countMmPeople[person.id] == 0 %}
           <form action="{{ path('pumukitadmin_person_delete', {'id': person.id}) }}" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}Are you sure you want to delete the data of{% endtrans %} {{ person.getHName() }}')">
               <input type="hidden" name="_method" value="DELETE">
               <input type="hidden" name="confirmed" value="true">
@@ -35,6 +37,15 @@
                   <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
               </button>
           </form>
+        {% else %}
+          <a href="#" onclick="window.show('{% trans %}Can not delete the data of{% endtrans %} {{ person.getHName() }}. {% trans %}There are{% endtrans %} {{ countMmPeople[person.id] }} {% trans %}multimedia objects with this person{% endtrans %}.'); return false;">
+             <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
+          </a>
+        {% endif %}
+       #}
+        <a href="#" onclick="window.submit_delete_person('{{ person.id }}', '{{ countMmPeople[person.id] }}', '{{ person.getHName() }}'); return false;">
+           <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
+        </a>
       </td>
       <td>
         <form action="{{ path('pumukitadmin_person_copy', {'id': person.id}) }}" method="post" class="delete-action-form" novalidate="">
@@ -56,7 +67,7 @@
         {{ person.getPhone() }}
       </td>
       <td onclick="click_fila_url('person', this, '{{ path('pumukitadmin_person_show', {'id': person.id}) }}');">
-        TODO {# valor pasado por el controlador de person, calculado en el servicio de person <?php echo $numV  ?> #}
+        {{ countMmPeople[person.id] }}
       </td>
     </tr>
   {% endfor %}

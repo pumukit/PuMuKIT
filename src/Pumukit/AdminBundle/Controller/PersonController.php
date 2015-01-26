@@ -18,6 +18,7 @@ class PersonController extends AdminController
      * Index
      *
      * TODO with Symfony Controller
+     * @Template("PumukitAdminBundle:Person:index.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -26,16 +27,16 @@ class PersonController extends AdminController
         $criteria = $this->getCriteria($config);
         $resources = $this->getResources($request, $config, $criteria);
 
-        $pluralName = $config->getPluralResourceName();
+        $personService = $this->get('pumukitschema.person');
+        $countMmPeople = array();
+        foreach($resources as $person){
+            $countMmPeople[$person->getId()] = $personService->countMultimediaObjectsWithPerson($person);
+        }
 
-        $view = $this
-            ->view()
-            ->setTemplate($config->getTemplate('index.html'))
-            ->setTemplateVar($pluralName)
-            ->setData($resources)
-        ;
-
-        return $this->handleView($view);
+        return array(
+                     'people' => $resources,
+                     'countMmPeople' => $countMmPeople,
+                     );
     }
 
     /**
@@ -120,12 +121,20 @@ class PersonController extends AdminController
     public function listAction(Request $request)
     {
         $config = $this->getConfiguration();
-        $pluralName = $config->getPluralResourceName();
 
         $criteria = $this->getCriteria($config);
         $resources = $this->getResources($request, $config, $criteria);
 
-        return array('people' => $resources);
+        $personService = $this->get('pumukitschema.person');
+        $countMmPeople = array();
+        foreach($resources as $person){
+            $countMmPeople[$person->getId()] = $personService->countMultimediaObjectsWithPerson($person);
+        }
+
+        return array(
+                     'people' => $resources,
+                     'countMmPeople' => $countMmPeople
+                     );
     }
 
     /**  
@@ -357,6 +366,26 @@ class PersonController extends AdminController
                                    'role' => $role,
                                    'mm' => $multimediaObject
                                    ));
+    }
+
+    /**
+     * Delete Person
+     *
+     * @Template("PumukitAdminBundle:Person:list.html")
+     */
+    public function deleteAction(Request $request)
+    {
+        $personService = $this->get('pumukitschema.person');
+        $person = $personService->findPersonById($request->get('id'));
+        try{
+            if (0 === $personService->countMultimediaObjectsWithPerson($person)){
+                $personService->deletePerson($person);
+            }
+        }catch (\Exception $e){
+            $this->get('session')->getFlashBag()->add('error', $e->getMessage());          
+        }
+
+        return $this->redirect($this->generateUrl('pumukitadmin_person_list'));
     }
 
     /**

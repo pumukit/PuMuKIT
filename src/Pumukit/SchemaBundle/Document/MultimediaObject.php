@@ -2180,6 +2180,16 @@ class MultimediaObject
         throw new \InvalidArgumentException('Only Role or EmbeddedRole are allowed.');
     }
 
+    /**
+     * Get Roles
+     *
+     * @return ArrayCollection
+     */
+    public function getRoles()
+    {
+        return $this->people_in_multimedia_object;
+    }
+
      // End of people_in_multimedia_object section
 
      /**

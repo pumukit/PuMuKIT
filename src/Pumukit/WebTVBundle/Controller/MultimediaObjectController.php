@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 
 class MultimediaObjectController extends Controller
 {
@@ -15,6 +16,9 @@ class MultimediaObjectController extends Controller
      */
     public function indexAction(MultimediaObject $multimediaObject)
     {
-        return array('multimediaObject' => $multimediaObject);
+
+    	$Serie = $multimediaObject->getSeries();
+    	$mmobjects = $Serie->getMultimediaObjects();
+        return array('multimediaObject' => $multimediaObject, 'mmobjects' => $mmobjects);
     }
 }
