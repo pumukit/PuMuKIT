@@ -235,7 +235,10 @@ class SeriesRepository extends DocumentRepository
   }
 
   /**
+   * Find series by person
    *
+   * @param Person
+   * @return ArrayCollection
    */
   public function findSeriesByPerson($person)
   {
@@ -243,8 +246,13 @@ class SeriesRepository extends DocumentRepository
 
       $referencedSeries = $repoMmobj->findSeriesFieldByPerson($person);
 
+      $mongoIds = array();
+      foreach($referencedSeries->toArray() as $element){
+          $mongoIds[]= $element['$id'];
+      }
+
       return $this->createQueryBuilder()
-        ->field('id')->in($referencedSeries->toArray())
+        ->field('id')->in($mongoIds)
         ->getQuery()
         ->execute();
   }
