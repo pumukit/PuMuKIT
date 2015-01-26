@@ -30,6 +30,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
 			Luke Skywalker: He told me enough! He told me you killed him!
 			Darth Vader: No. I am your father.
 			Luke Skywalker: No... that's not true! That's impossible!";
+        $numview = 2;
 
         $tag1 = new Tag();
         $tag2 = new Tag();
@@ -56,6 +57,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $mm->addTag($tag2);
         $mm->addTag($tag3);
         $mm->setBroadcast($broadcast);
+        $mm->setNumview($numview);
 
         $this->assertEquals($series, $mm->getSeries());
         $this->assertEquals($rank, $mm->getRank());
@@ -67,7 +69,8 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($subtitle, $mm->getSubtitle());
         $this->assertEquals($description, $mm->getDescription());
         // TODO $this->assertEquals($mm_tags, $mm->getTags()->toArray());
-    $this->assertEquals($broadcast, $mm->getBroadcast());
+        $this->assertEquals($broadcast, $mm->getBroadcast());
+        $this->assertEquals($numview, $mm->getNumview());
     }
 
     public function testDefaultState()
