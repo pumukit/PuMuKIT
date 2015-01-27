@@ -1,0 +1,47 @@
+ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,body,html,p,blockquote,fieldset,input
+{
+  margin: 0;
+  padding: 0; 
+}
+
+a img,:link img,:visited img 
+{ 
+  border: none; 
+  color: #000000;
+}
+
+a
+{
+  text-decoration: none;
+  color: #000000;
+}
+
+a:hover
+{
+  text-decoration: underline;
+  color: #000000;
+}
+
+body, td
+{
+  margin: 0;
+  padding: 0;
+  font-family: "Lucida Grande", Arial, Verdana, sans-serif;
+  font-size: 11px;
+}
+
+body
+{ 
+  background-color: #fff;
+}
+
+#body_div
+{
+  padding: 10px 20px;
+  /*min-height: 400px;*/
+}
+
+a
+{ 
+  outline-style: none;
+}

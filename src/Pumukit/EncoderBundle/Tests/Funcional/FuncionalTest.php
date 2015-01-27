@@ -59,6 +59,10 @@ class FuncionalTest extends WebTestCase
         
         dump($job);
         
+        $this->jobService->execute($job);
+
+        $this->assertEquals(1, count($mm->getTracks()));
+        $this->assertEquals($job->getDuration(), $mm->getDuration());
     }
 
 

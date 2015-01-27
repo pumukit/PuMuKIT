@@ -17,6 +17,8 @@ class LocalExecutor
           throw new \RuntimeException($process->getErrorOutput());
       }
 
+      //TODO $process->getErrorOutput();
+
       return $process->getOutput();
   }
 }

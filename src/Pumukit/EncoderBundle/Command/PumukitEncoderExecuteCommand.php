@@ -41,9 +41,12 @@ EOT
             throw new \RuntimeException("Not job found with id $id.");
         }
 
+        //TODO STATUS is executing when this command is executed. Must be waiting.
+        /*
         if ((!$input->getOption('force')) && (JOB::STATUS_WAITING != $job->getStatus())) {
             throw new \RuntimeException("The job is not in the waiting state");        
         }
+        */
 
         //TODO Add log.
         $jobService->execute($job);

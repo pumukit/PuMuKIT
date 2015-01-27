@@ -15,6 +15,10 @@ interface InspectionServiceInterface
 
     /**
      * Completes track information from a given path.
+     *
+     * The information is: mimetype, bitrate, duration, size, acodec, vcodec, 
+     * framerate, channels, width, height
+     *
      * @param Track $track
      */
     public function autocompleteTrack(Track $track);
