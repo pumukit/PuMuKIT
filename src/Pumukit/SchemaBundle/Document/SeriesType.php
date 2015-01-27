@@ -45,7 +45,7 @@ class SeriesType
   /**
    * @var ArrayCollection $series
    *
-   * @MongoDB\ReferenceMany(targetDocument="Series", mappedBy="series_type")
+   * @MongoDB\ReferenceMany(targetDocument="Series", mappedBy="series_type", repositoryMethod="findBySeriesType", simple=true)
    */
   private $series;
 
@@ -216,6 +216,7 @@ class SeriesType
    *
    * @param Series $series
    */
+  /* TODO may be useful in future versions
   public function addSeries(Series $series)
   {
       $this->series[] = $series;
@@ -223,16 +224,19 @@ class SeriesType
     // Extra verification
     $series->setSeriesType($this);
   }
+  */
 
   /**
    * Remove series
    *
    * @param Series $series
    */
+  /* TODO may be useful in future versions
   public function removeSeries(Series $series)
   {
       $this->series->removeElement($series);
   }
+  */
 
   /**
    * Contains series
@@ -257,30 +261,36 @@ class SeriesType
   }
 
   /**
-   * Add series
+   * To string
    *
-   * @param Series $series
-   * @return SeriesType
+   * @return string
    */
-  public function addSerie(Series $series)
+  public function __toString()
   {
-      $this->series[] = $series;
-
-      return $this;
+      return $this->name($this->locale);
   }
 
-  /**
-   * Remove series
-   *
-   * @param Series $series
-   */
-  public function removeSerie(Series $series)
-  {
-      $this->series->removeElement($series);
-  }
-
-    public function __toString()
+    /**
+     * Add series
+     *
+     * @param Pumukit\SchemaBundle\Document\Series $series
+     */
+    /* TODO may be useful in future versions
+    public function addSeries(\Pumukit\SchemaBundle\Document\Series $series)
     {
-        return $this->name($this->locale);
+        $this->series[] = $series;
     }
+    */
+
+    /**
+     * Remove series
+     *
+     * @param Pumukit\SchemaBundle\Document\Series $series
+     */
+    /* TODO may be useful in future versions
+    public function removeSeries(\Pumukit\SchemaBundle\Document\Series $series)
+    {
+        $this->series->removeElement($series);
+    }
+    */
 }

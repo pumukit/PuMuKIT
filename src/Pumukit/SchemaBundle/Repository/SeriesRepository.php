@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
+use Pumukit\SchemaBundle\Document\SeriesType;
 
 /**
  * SeriesRepository
@@ -235,24 +236,42 @@ class SeriesRepository extends DocumentRepository
   }
 
   /**
-   * Find series by person
+   * Find series by person id
    *
-   * @param Person
+   * @param string $personId
    * @return ArrayCollection
    */
-  public function findSeriesByPerson($person)
+  public function findSeriesByPersonId($personId)
   {
       $repoMmobj = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject');
 
-      $referencedSeries = $repoMmobj->findSeriesFieldByPerson($person);
+      $referencedSeries = $repoMmobj->findSeriesFieldByPersonId($personId);
 
+      /*
       $mongoIds = array();
       foreach($referencedSeries->toArray() as $element){
           $mongoIds[]= $element['$id'];
       }
+      */
+      
+      return $this->createQueryBuilder()
+        ->field('id')->in($referencedSeries)
+        ->getQuery()
+        ->execute();
+  }
+
+  /**
+   * Find series with given series type
+   *
+   * @param SeriesType $series_type
+   * @return ArrayCollection
+   */
+  public function findBySeriesType(SeriesType $series_type)
+  {
+      var_dump('findBySeriesType');
 
       return $this->createQueryBuilder()
-        ->field('id')->in($mongoIds)
+        ->field('series_type')->references($series_type)
         ->getQuery()
         ->execute();
   }

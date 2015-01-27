@@ -56,12 +56,19 @@ class MultimediaObjectRepository extends DocumentRepository
    */
   public function findWithoutPrototype(Series $series)
   {
-      return $this->createQueryBuilder()
+      var_dump('findWithoutPrototype');
+    
+      $aux = $this->createQueryBuilder()
       ->field('series')->references($series)
       ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
       ->getQuery()
       ->execute()
       ->sort(array('rank', 'desc'));
+
+      var_dump("-----------------");
+      var_dump(count($aux));
+
+      return $aux;
   }
 
   /**
@@ -115,15 +122,15 @@ class MultimediaObjectRepository extends DocumentRepository
   }
 
   /**
-   * Find series by person
+   * Find series by person id
    *
-   * @param string $person
+   * @param string $personId
    * @return ArrayCollection
    */
-  public function findSeriesFieldByPerson($person)
+  public function findSeriesFieldByPersonId($personId)
   {
       return $this->createQueryBuilder()
-        ->field('people_in_multimedia_object.people._id')->equals(new \MongoId($person->getId()))
+        ->field('people_in_multimedia_object.people._id')->equals(new \MongoId($personId))
         ->distinct('series')
         ->getQuery()
         ->execute();

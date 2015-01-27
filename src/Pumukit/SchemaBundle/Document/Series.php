@@ -16,14 +16,14 @@ class Series
   protected $id;
 
   /**
-   * @MongoDB\ReferenceOne(targetDocument="SeriesType", inversedBy="id")
+   * @MongoDB\ReferenceOne(targetDocument="SeriesType", inversedBy="series", simple=true)
    */
   private $series_type;
 
   /**
    * @var ArrayCollection $multimedia_objects
    *
-   * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="series", repositoryMethod="findWithoutPrototype")
+   * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="series", repositoryMethod="findWithoutPrototype", simple=true)
    */
   private $multimedia_objects;
 
@@ -152,6 +152,7 @@ class Series
    *
    * @param MultimediaObject $multimedia_object
    */
+  /* TODO may be useful in future versions
   public function addMultimediaObject(MultimediaObject $multimedia_object)
   {
       $this->multimedia_objects[] = $multimedia_object;
@@ -159,6 +160,7 @@ class Series
 
       //$multimedia_object->setRank(count($this->multimedia_objects));
   }
+  */
 
   /**
    * Remove multimedia_object

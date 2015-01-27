@@ -14,6 +14,7 @@ class SeriesRepositoryTest extends WebTestCase
     private $dm;
     private $repo;
     private $personService;
+    private $factoryService;
 
     public function __construct()
     {
@@ -25,6 +26,7 @@ class SeriesRepositoryTest extends WebTestCase
         $this->repo = $this->dm
             ->getRepository('PumukitSchemaBundle:Series');
         $this->personService = $kernel->getContainer()->get('pumukitschema.person');
+        $this->factoryService = $kernel->getContainer()->get('pumukitschema.factory');
     }
 
     public function setUp()
@@ -267,79 +269,17 @@ class SeriesRepositoryTest extends WebTestCase
 
     }*/
 
-    private function createSeriesType($name)
+    public function testFindSeriesByPersonId()
     {
-        $description = 'description';
-        $series_type = new SeriesType();
-
-        $series_type->setName($name);
-        $series_type->setDescription($description);
-
-        $this->em->persist($series_type);
-
-        return $series_type;
-    }
-
-    private function createSeries($title)
-    {
-        $subtitle = 'subtitle';
-        $description = 'description';
-        $test_date = new \DateTime("now");
-        $serie = new Series();
-
-        $serie->setTitle($title);
-        $serie->setSubtitle($subtitle);
-        $serie->setDescription($description);
-        $serie->setPublicDate($test_date);
-
-        $this->em->persist($serie);
-
-        return $serie;
-    }
-
-    private function createMultimediaObjectAssignedToSeries($title, Series $series)
-    {
-        $status = MultimediaObject::STATUS_NORMAL;
-        $record_date = new \DateTime();
-        $public_date = new \DateTime();
-        $subtitle = 'Subtitle';
-        $description = "Description";
-        $duration = 123;
-
-        $mm = new MultimediaObject();
-        $series->addMultimediaObject($mm);
-
-        // $mm->addTag($tag1);
-        // $mm->addTrack($track1);
-        // $mm->addPic($pic1);
-        // $mm->addMaterial($material1);
-
-        $mm->setStatus($status);
-        $mm->setRecordDate($record_date);
-        $mm->setPublicDate($public_date);
-        $mm->setTitle($title);
-        $mm->setSubtitle($subtitle);
-        $mm->setDescription($description);
-        $mm->setDuration($duration);
-        // $this->em->persist($track1);
-        // $this->em->persist($pic1);
-        // $this->em->persist($material1);
-        $this->em->persist($mm);
-
-        return $mm;
-    }
-
-    public function testFindSeriesByPerson()
-    {
-        $series1 = new Series();
+        $series1 = $this->factoryService->createSeries();
         $title1 = 'Series 1';
         $series1->setTitle($title1);
 
-        $series2 = new Series();
+        $series2 = $this->factoryService->createSeries();
         $title2 = 'Series 2';
         $series2->setTitle($title2);
 
-        $series3 = new Series();
+        $series3 = $this->factoryService->createSeries();
         $title3 = 'Series 3';
         $series3->setTitle($title3);
 
@@ -357,7 +297,7 @@ class SeriesRepositoryTest extends WebTestCase
 
         $personKate = new Person();
         $nameKate = 'Kate Simmons';
-        $personKate->setName($nameKate);        
+        $personKate->setName($nameKate);
 
         $this->dm->persist($personJohn);
         $this->dm->persist($personBob);
@@ -375,82 +315,172 @@ class SeriesRepositoryTest extends WebTestCase
         $this->dm->persist($rolePresenter);
         $this->dm->flush();
 
-        $mm11 = new MultimediaObject();
+        $mm11 = $this->factoryService->createMultimediaObject($series1);
         $title11 = 'Multimedia Object 11';
         $mm11->setTitle($title11);
         $mm11->addPersonWithRole($personJohn, $roleActor);
         $mm11->addPersonWithRole($personBob, $roleActor);
         $mm11->addPersonWithRole($personJohn, $rolePresenter);
 
-        $mm12 = new MultimediaObject();
+        $mm12 = $this->factoryService->createMultimediaObject($series1);
         $title12 = 'Multimedia Object 12';
         $mm12->setTitle($title12);
         $mm12->addPersonWithRole($personBob, $roleActor);
         $mm12->addPersonWithRole($personBob, $rolePresenter);
 
-        $mm13 = new MultimediaObject();
+        $mm13 = $this->factoryService->createMultimediaObject($series1);
         $title13 = 'Multimedia Object 13';
         $mm13->setTitle($title13);
         $mm13->addPersonWithRole($personKate, $roleActor);
 
-        $mm21 = new MultimediaObject();
+        $mm21 = $this->factoryService->createMultimediaObject($series2);
         $title21 = 'Multimedia Object 21';
         $mm21->setTitle($title21);
         $mm21->addPersonWithRole($personKate, $rolePresenter);
         $mm21->addPersonWithRole($personKate, $roleActor);
 
-        $mm31 = new MultimediaObject();
+        $mm31 = $this->factoryService->createMultimediaObject($series3);
         $title31 = 'Multimedia Object 31';
         $mm31->setTitle($title31);
         $mm31->addPersonWithRole($personJohn, $rolePresenter);
 
-        $mm32 = new MultimediaObject();
-        $title32 = 'Multimedia Object 32';
+        $mm32 = $this->factoryService->createMultimediaObject($series3);
+        $title32 = 'Multimedia Object 3212312';
         $mm32->setTitle($title32);
         $mm32->addPersonWithRole($personJohn, $roleActor);
         $mm32->addPersonWithRole($personBob, $roleActor);
         $mm32->addPersonWithRole($personJohn, $rolePresenter);
 
+
+
+
         $this->dm->persist($mm11);
         $this->dm->persist($mm12);
         $this->dm->persist($mm13);
         $this->dm->persist($mm21);
         $this->dm->persist($mm31);
         $this->dm->persist($mm32);
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->persist($series3);
         $this->dm->flush();
 
-        $series1->addMultimediaObject($mm11);
-        $series1->addMultimediaObject($mm12);
-        $series1->addMultimediaObject($mm13);
+        $seriesKate = $this->repo->findSeriesByPersonId($personKate->getId());
+        $this->assertEquals(2, count($seriesKate));
+        $this->assertEquals(array($series1, $series2), array_values($seriesKate->toArray()));
 
-        $series2->addMultimediaObject($mm21);
+        $seriesJohn = $this->repo->findSeriesByPersonId($personJohn->getId());
+        $this->assertEquals(2, count($seriesJohn));
+        $this->assertEquals(array($series1, $series3), array_values($seriesJohn->toArray()));
 
-        $series3->addMultimediaObject($mm31);
-        $series3->addMultimediaObject($mm32);
+        $seriesBob = $this->repo->findSeriesByPersonId($personBob->getId());
+        $this->assertEquals(2, count($seriesBob));
+        $this->assertEquals(array($series1, $series3), array_values($seriesBob->toArray()));
+    }
+
+    public function testFindBySeriesType()
+    {
+        $seriesType1 = $this->createSeriesType('Series Type 1');
+        $seriesType2 = $this->createSeriesType('Series Type 2');
+        $seriesType3 = $this->createSeriesType('Series Type 3');
+
+        $series1 = $this->factoryService->createSeries();
+        $series2 = $this->factoryService->createSeries();
+        $series3 = $this->factoryService->createSeries();
+        $series4 = $this->factoryService->createSeries();
+        $series5 = $this->factoryService->createSeries();
+
+        $series1->setSeriesType($seriesType1);
+        $series2->setSeriesType($seriesType1);
+        $series3->setSeriesType($seriesType2);
+        $series4->setSeriesType($seriesType3);
+        $series5->setSeriesType($seriesType3);
 
         $this->dm->persist($series1);
         $this->dm->persist($series2);
         $this->dm->persist($series3);
-
-        $this->dm->persist($mm11);
-        $this->dm->persist($mm12);
-        $this->dm->persist($mm13);
-        $this->dm->persist($mm21);
-        $this->dm->persist($mm31);
-        $this->dm->persist($mm32);
+        $this->dm->persist($series4);
+        $this->dm->persist($series5);
+        $this->dm->persist($seriesType1);
+        $this->dm->persist($seriesType2);
+        $this->dm->persist($seriesType3);
 
         $this->dm->flush();
 
-        $seriesKate = $this->repo->findSeriesByPerson($personKate);
-        $this->assertEquals(2, count($seriesKate));
-        $this->assertEquals(array($series1, $series2), array_values($seriesKate->toArray()));
+        $this->assertEquals(2, count($this->repo->findBySeriesType($seriesType1)));
+        $this->assertEquals(1, count($this->repo->findBySeriesType($seriesType2)));
+        $this->assertEquals(2, count($this->repo->findBySeriesType($seriesType3)));
 
-        $seriesJohn = $this->repo->findSeriesByPerson($personJohn);
-        $this->assertEquals(2, count($seriesJohn));
-        $this->assertEquals(array($series1, $series3), array_values($seriesJohn->toArray()));
-
-        $seriesBob = $this->repo->findSeriesByPerson($personBob);
-        $this->assertEquals(2, count($seriesBob));
-        $this->assertEquals(array($series1, $series3), array_values($seriesBob->toArray()));
+        /*
+        $this->assertEquals(2, count($seriesType1->getSeries()));
+        $this->assertEquals(1, count($seriesType2->getSeries()));
+        $this->assertEquals(2, count($seriesType3->getSeries()));
+        $this->assertEquals(array($series1, $series2), $seriesType1->getSeries());
+        $this->assertEquals(array($series3), $seriesType2->getSeries());
+        $this->assertEquals(array($series4, $series5), $seriesType3->getSeries());
+        */
     }
+
+    private function createSeriesType($name)
+    {
+        $description = 'description';
+        $series_type = new SeriesType();
+
+        $series_type->setName($name);
+        $series_type->setDescription($description);
+
+        $this->dm->persist($series_type);
+        $this->dm->flush();
+
+        return $series_type;
+    }
+
+    private function createSeries($title)
+    {
+        $subtitle = 'subtitle';
+        $description = 'description';
+        $test_date = new \DateTime("now");
+
+        $series = $this->factoryService->createSeries();
+
+        $series->setTitle($title);
+        $series->setSubtitle($subtitle);
+        $series->setDescription($description);
+        $series->setPublicDate($test_date);
+
+        $this->dm->persist($series);
+
+        return $series;
+    }
+
+    private function createMultimediaObjectAssignedToSeries($title, Series $series)
+    {
+        $status = MultimediaObject::STATUS_NORMAL;
+        $record_date = new \DateTime();
+        $public_date = new \DateTime();
+        $subtitle = 'Subtitle';
+        $description = "Description";
+        $duration = 123;
+
+        $mm = $this->factoryService->createMultimediaObject($series);
+
+        // $mm->addTag($tag1);
+        // $mm->addTrack($track1);
+        // $mm->addPic($pic1);
+        // $mm->addMaterial($material1);
+
+        $mm->setStatus($status);
+        $mm->setRecordDate($record_date);
+        $mm->setPublicDate($public_date);
+        $mm->setTitle($title);
+        $mm->setSubtitle($subtitle);
+        $mm->setDescription($description);
+        $mm->setDuration($duration);
+        // $this->dm->persist($track1);
+        // $this->dm->persist($pic1);
+        // $this->dm->persist($material1);
+        $this->dm->persist($mm);
+
+        return $mm;
+    }    
 }

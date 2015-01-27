@@ -27,7 +27,7 @@ class MultimediaObject
     private $id;
     
     /**
-     * @MongoDB\ReferenceOne(targetDocument="Series", inversedBy="multimedia_objects")
+     * @MongoDB\ReferenceOne(targetDocument="Series", inversedBy="multimedia_objects", simple=true)
      * // TODO SortableGroup
      */
     private $series;
@@ -2218,19 +2218,6 @@ class MultimediaObject
     }
 
      // End of people_in_multimedia_object section
-
-     /**
-      * Clone Multimedia Object
-      *
-      * @return
-      */
-     public function cloneResource()
-     {
-       $aux = clone $this;
-       $aux->id = null;
-
-       return $aux;
-     }
 
      /**
       * Update duration

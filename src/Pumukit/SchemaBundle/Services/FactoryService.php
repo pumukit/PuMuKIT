@@ -32,121 +32,149 @@ class FactoryService
         return $this->locales;
     }
 
-  /**
-   * Create a new series with default values
-   *
-   * @return Series
-   */
-  public function createSeries()
-  {
-      $series = new Series();
+    /**
+     * Create a new series with default values
+     *
+     * @return Series
+     */
+    public function createSeries()
+    {
+        $series = new Series();
 
-      $series->setPublicDate(new \DateTime("now"));
-      $series->setCopyright('UdN-TV');
-      foreach ($this->locales as $locale) {
-          $title = $this->translator->trans(self::DEFAULT_SERIES_TITLE, array(), null, $locale);
-          $series->setTitle($title, $locale);
-      }
+        $series->setPublicDate(new \DateTime("now"));
+        $series->setCopyright('UdN-TV');
+        foreach ($this->locales as $locale) {
+            $title = $this->translator->trans(self::DEFAULT_SERIES_TITLE, array(), null, $locale);
+            $series->setTitle($title, $locale);
+        }
 
-      $this->dm->persist($series);
-      $this->dm->flush();
+        $mm = $this->createMultimediaObjectTemplate($series);
 
-      $mm = $this->createMultimediaObjectTemplate($series);
+        $this->dm->persist($mm);
+        $this->dm->persist($series);
+        $this->dm->flush();
 
-      return $series;
-  }
+        return $series;
+    }
 
-  /**
-   * Create a new Multimedia Object Template
-   *
-   * @return MultimediaObject
-   */
-  public function createMultimediaObjectTemplate($series)
-  {
-      $mm = new MultimediaObject();
-      $mm->setStatus(MultimediaObject::STATUS_PROTOTYPE);
-      $broadcast = $this->getDefaultBroadcast();
-      if (null !== $broadcast) {
-          $mm->setBroadcast($broadcast);
-      }
-      $mm->setPublicDate(new \DateTime("now"));
-      $mm->setRecordDate($mm->getPublicDate());
-      foreach ($this->locales as $locale) {
-          $title = $this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE, array(), null, $locale);
-          $mm->setTitle($title, $locale);
-      }
+    /**
+     * Create a new Multimedia Object Template
+     *
+     * @return MultimediaObject
+     */
+    public function createMultimediaObjectTemplate($series)
+    {
+        $mm = new MultimediaObject();
+        $mm->setStatus(MultimediaObject::STATUS_PROTOTYPE);
+        try{
+            $broadcast = $this->getDefaultBroadcast();
+            $mm->setBroadcast($broadcast);
+        }catch (\Exception $e){
+            // TODO message? Broadcast can't be null?
+        }            
+        $mm->setPublicDate(new \DateTime("now"));
+        $mm->setRecordDate($mm->getPublicDate());
+        foreach ($this->locales as $locale) {
+            $title = $this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE, array(), null, $locale);
+            $mm->setTitle($title, $locale);
+        }
 
-      // TODO change to series addMultimediaObject(mm) and test it works
-      $mm->setSeries($series);
+        $mm->setSeries($series);
 
-      $this->dm->persist($mm);
-      $this->dm->persist($series);
-      $this->dm->flush();
+        return $mm;
+    }
 
-      return $mm;
-  }
+    /**
+     * Create a new Multimedia Object from Template
+     *
+     * @return MultimediaObject
+     */
+    public function createMultimediaObject($series)
+    {
+        $prototype = $this->dm
+          ->getRepository('PumukitSchemaBundle:MultimediaObject')
+          ->findPrototype($series);
 
-  /**
-   * Create a new Multimedia Object from Template
-   *
-   * @return MultimediaObject
-   */
-  public function createMultimediaObject($series)
-  {
-      $prototype = $this->dm
-    ->getRepository('PumukitSchemaBundle:MultimediaObject')
-    ->findPrototype($series);
+        if (null !== $prototype) {
+            $mm = $this->createMultimediaObjectFromPrototype($prototype);
+        }else{
+            $mm = new MultimediaObject();
+            foreach ($this->locales as $locale) {
+                $title = $this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE, array(), null, $locale);
+                $mm->setTitle($title, $locale);
+            }
+        }
+        try{
+            $broadcast = $this->getDefaultBroadcast();
+            $mm->setBroadcast($broadcast);
+        }catch (\Exception $e){
+            // TODO message?
+        }            
+        $mm->setPublicDate(new \DateTime("now"));
+        $mm->setRecordDate($mm->getPublicDate());
+        $mm->setStatus(MultimediaObject::STATUS_NEW);
 
-      if (null != $prototype) {
-          $mm = $prototype->cloneResource();
-      } else {
-          $mm = new MultimediaObject();
-          $broadcast = $this->getDefaultBroadcast();
-          if (null !== $broadcast) {
-              $mm->setBroadcast($broadcast);
-          }
-          $mm->setPublicDate(new \DateTime("now"));
-          $mm->setRecordDate($mm->getPublicDate());
-          foreach ($this->locales as $locale) {
-              $title = $this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE, array(), null, $locale);
-              $mm->setTitle($title, $locale);
-          }
-      }
+        $mm->setSeries($series);
 
-      $mm->setStatus(MultimediaObject::STATUS_NEW);
+        $this->dm->persist($mm);
+        $this->dm->persist($series);
+        $this->dm->flush();
 
-      //$series->addMultimediaObject($mm);
-      $mm->setSeries($series);
+        return $mm;
+    }
 
-      $this->dm->persist($mm);
-      $this->dm->persist($series);
-      $this->dm->flush();
+    /**
+     * Gets default broadcast or public one
+     *
+     * @return Broadcast
+     */
+    public function getDefaultBroadcast()
+    {
+        $repoBroadcast = $this->dm->getRepository('PumukitSchemaBundle:Broadcast');
 
-      return $mm;
-  }
+        $broadcast = $repoBroadcast->findDefaultSel();
 
-  /**
-   * Gets default broadcast or public one
-   *
-   * @return Broadcast
-   */
-  public function getDefaultBroadcast()
-  {
-      $broadcast = $this->dm
-    ->getRepository('PumukitSchemaBundle:Broadcast')
-    ->findDefaultSel();
+        if (null == $broadcast) {
+            $broadcast = $repoBroadcast->findPublicBroadcast();
+        }
 
-      if (null == $broadcast) {
-          $broadcast = $this->dm
-      ->getRepository('PumukitSchemaBundle:Broadcast')
-      ->findPublicBroadcast();
-      }
+        if (null == $broadcast) {
+            throw new \Exception('There is no default selected broadcast neither public broadcast.');
+        }
 
-      if (null == $broadcast) {
-          // TODO throw exception
-      return;
-      }
+        return $broadcast;
+    }
 
-      return $broadcast;
-  }
+    /**
+     * Create multimedia object from prototype
+     *
+     * @param MultimediaObject $prototype
+     * @return MultimediaObject
+     */
+    private function createMultimediaObjectFromPrototype(MultimediaObject $prototype)
+    {
+        $new = new MultimediaObject();
+
+        //$new->setRank($prototype->getRank()); //SortablePosition
+        $new->setI18nTitle($prototype->getI18nTitle());
+        $new->setI18nSubtitle($prototype->getI18nSubtitle());
+        $new->setI18nDescription($prototype->getI18nDescription());
+        $new->setI18nLine2($prototype->getI18nLine2());
+        $new->setI18nCopyright($prototype->getI18nCopyright());
+        $new->setI18nKeyword($prototype->getI18nKeyword());
+        $new->setDuration($prototype->getDuration());
+        $new->setNumview($prototype->getNumview());
+
+        foreach($prototype->getTags() as $tag) {
+            $new->addTag($tag);
+        }
+
+        foreach($prototype->getRoles() as $embeddedRole){
+            foreach($embeddedRole->getPeople() as $embeddedPerson){
+                $new->addPersonWithRole($embeddedPerson, $embeddedRole);
+            }
+        }
+
+        return $new;
+    }
 }

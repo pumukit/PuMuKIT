@@ -22,6 +22,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
     private $dm;
     private $repo;
     private $qb;
+    private $factoryService;
 
     public function __construct()
     {
@@ -32,6 +33,8 @@ class MultimediaObjectRepositoryTest extends WebTestCase
             ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
             ->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->factoryService = $kernel->getContainer()
+            ->get('pumukitschema.factory');
     }
 
     public function setUp()
@@ -92,14 +95,22 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $series_wall = $this->createSeries("The Wall");
         $series_lhazar = $this->createSeries("A quiet life");
 
+        $series_main->setSeriesType($series_type);
+        $series_wall->setSeriesType($series_type);
+        $series_lhazar->setSeriesType($series_type);
+
+        $this->dm->persist($series_main);
+        $this->dm->persist($series_wall);
+        $this->dm->persist($series_lhazar);
+        $this->dm->persist($series_type);        
+        $this->dm->flush();
+
         $person_ned = $this->createPerson('Ned');
         $person_benjen = $this->createPerson('Benjen');
 
         $role_lord = $this->createRole("Lord");
         $role_ranger = $this->createRole("Ranger");
         $role_hand = $this->createRole("Hand");
-
-        $series_type->addSeries($series_main);
 
         $mm1 = $this->createMultimediaObjectAssignedToSeries('MmObject 1', $series_main);
         $mm2 = $this->createMultimediaObjectAssignedToSeries('MmObject 2', $series_wall);
@@ -118,12 +129,10 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mm4);
         $this->dm->flush();
         // DB setup END.
-        
-        // Test find by person
 
+        // Test find by person
         $mmobj_ned = $this->repo->findByPersonId($person_ned->getId());
         $this->assertEquals(3, count($mmobj_ned));
-
 
         // Test find by person and role
         $mmobj_benjen_ranger = $this->repo->findByPersonIdWithRoleCod($person_benjen->getId(), $role_ranger->getCod());
@@ -142,17 +151,8 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         //$this->assertEquals(0, count($mmobj_ned_ranger));
         $this->assertEquals(0, count($mmobj_benjen_hand));
 
-        // Test find by series
-        $mmobj_series_main = $this->getMultimediaObjectsWithSeries($series_main);
-        $mmobj_series_wall = $this->getMultimediaObjectsWithSeries($series_wall);
-        $mmobj_series_lhazar = $this->getMultimediaObjectsWithSeries($series_lhazar);
-
-        $this->assertEquals(2, count($mmobj_series_main));
-        $this->assertEquals(1, count($mmobj_series_wall));
-        $this->assertEquals(1, count($mmobj_series_lhazar));
-
-        $seriesBenjen = $this->repo->findSeriesFieldByPerson($person_benjen);
-        $seriesNed = $this->repo->findSeriesFieldByPerson($person_ned);
+        $seriesBenjen = $this->repo->findSeriesFieldByPersonId($person_benjen->getId());
+        $seriesNed = $this->repo->findSeriesFieldByPersonId($person_ned->getId());
         $this->assertEquals(2, count($seriesBenjen));
 
         /*
@@ -370,9 +370,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
     {
         $series = $this->createSeries('Serie prueba status');
 
-        $mmPrototype = $this->createMultimediaObjectAssignedToSeries('Status prototype', $series);
-        $mmPrototype->setStatus(MultimediaObject::STATUS_PROTOTYPE);
-
         $mmNew = $this->createMultimediaObjectAssignedToSeries('Status new', $series);
         $mmNew->setStatus(MultimediaObject::STATUS_NEW);
 
@@ -385,7 +382,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mmNormal = $this->createMultimediaObjectAssignedToSeries('Status normal', $series);
         $mmNormal->setStatus(MultimediaObject::STATUS_NORMAL);
 
-        $this->dm->persist($mmPrototype);
         $this->dm->persist($mmNew);
         $this->dm->persist($mmHide);
         $this->dm->persist($mmBloq);
@@ -400,8 +396,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(2, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PROTOTYPE, MultimediaObject::STATUS_NEW))));
         $this->assertEquals(3, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NORMAL, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDE))));
 
-        $mmArray = array($mmPrototype->getId() => $mmPrototype);
-        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PROTOTYPE))->toArray());
         $mmArray = array($mmNew->getId() => $mmNew);
         $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NEW))->toArray());
         $mmArray = array($mmHide->getId() => $mmHide);
@@ -410,8 +404,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_BLOQ))->toArray());
         $mmArray = array($mmNormal->getId() => $mmNormal);
         $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NORMAL))->toArray());
-        $mmArray = array($mmPrototype->getId() => $mmPrototype, $mmNew->getId() => $mmNew);
-        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PROTOTYPE, MultimediaObject::STATUS_NEW))->toArray());
         $mmArray = array($mmNormal->getId() => $mmNormal, $mmNew->getId() => $mmNew, $mmHide->getId() => $mmHide);
         $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NORMAL, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDE))->toArray());
     }
@@ -420,9 +412,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
     {
         $series = $this->createSeries('Serie prueba status');
 
-        $mmPrototype = $this->createMultimediaObjectAssignedToSeries('Status prototype', $series);
-        $mmPrototype->setStatus(MultimediaObject::STATUS_PROTOTYPE);
-
         $mmNew = $this->createMultimediaObjectAssignedToSeries('Status new', $series);
         $mmNew->setStatus(MultimediaObject::STATUS_NEW);
 
@@ -435,7 +424,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mmNormal = $this->createMultimediaObjectAssignedToSeries('Status normal', $series);
         $mmNormal->setStatus(MultimediaObject::STATUS_NORMAL);
 
-        $this->dm->persist($mmPrototype);
         $this->dm->persist($mmNew);
         $this->dm->persist($mmHide);
         $this->dm->persist($mmBloq);
@@ -443,15 +431,15 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->flush();
 
         $this->assertEquals(1, count($this->repo->findPrototype($series)));
-        $this->assertEquals($mmPrototype, $this->repo->findPrototype($series));
+        $this->assertNotEquals($mmNew, $this->repo->findPrototype($series));
+        $this->assertNotEquals($mmHide, $this->repo->findPrototype($series));
+        $this->assertNotEquals($mmBloq, $this->repo->findPrototype($series));
+        $this->assertNotEquals($mmNormal, $this->repo->findPrototype($series));
     }
 
     public function testFindWithoutPrototype()
     {
         $series = $this->createSeries('Serie prueba status');
-
-        $mmPrototype = $this->createMultimediaObjectAssignedToSeries('Status prototype', $series);
-        $mmPrototype->setStatus(MultimediaObject::STATUS_PROTOTYPE);
 
         $mmNew = $this->createMultimediaObjectAssignedToSeries('Status new', $series);
         $mmNew->setStatus(MultimediaObject::STATUS_NEW);
@@ -465,7 +453,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mmNormal = $this->createMultimediaObjectAssignedToSeries('Status normal', $series);
         $mmNormal->setStatus(MultimediaObject::STATUS_NORMAL);
 
-        $this->dm->persist($mmPrototype);
         $this->dm->persist($mmNew);
         $this->dm->persist($mmHide);
         $this->dm->persist($mmBloq);
@@ -723,14 +710,14 @@ class MultimediaObjectRepositoryTest extends WebTestCase
     private function createMultimediaObjectAssignedToSeries($title, Series $series)
     {
         $rank = 1;
-        $status = MultimediaObject::STATUS_NORMAL;
+        $status = MultimediaObject::STATUS_NEW;
         $record_date = new \DateTime();
         $public_date = new \DateTime();
         $subtitle = 'Subtitle';
         $description = "Description";
         $duration = 123;
 
-        $mm = new MultimediaObject();
+        $mm = $this->factoryService->createMultimediaObject($series);
 
         $mm->setStatus($status);
         $mm->setRecordDate($record_date);
@@ -739,8 +726,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mm->setSubtitle($subtitle);
         $mm->setDescription($description);
         $mm->setDuration($duration);
-
-        $mm->setSeries($series);
 
         $this->dm->persist($mm);
         $this->dm->persist($series);
@@ -755,17 +740,17 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $description = 'description';
         $test_date = new \DateTime("now");
 
-        $serie = new Series();
+        $series = $this->factoryService->createSeries();
 
-        $serie->setTitle($title);
-        $serie->setSubtitle($subtitle);
-        $serie->setDescription($description);
-        $serie->setPublicDate($test_date);
+        $series->setTitle($title);
+        $series->setSubtitle($subtitle);
+        $series->setDescription($description);
+        $series->setPublicDate($test_date);
 
-        $this->dm->persist($serie);
+        $this->dm->persist($series);
         $this->dm->flush();
 
-        return $serie;
+        return $series;
     }
 
     private function createSeriesType($name)
@@ -780,18 +765,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->flush();
 
         return $series_type;
-    }
-
-    private function getMultimediaObjectsWithSeries(Series $series)
-    {
-        $series_object = $this->dm
-                ->find('PumukitSchemaBundle:Series', $series->getId());
-        $mmobj_series = $this->dm
-                    ->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
-                    ->field('series')->references($series_object)
-                    ->getQuery()->execute();
-
-        return $mmobj_series;
     }
 
     private function createBroadcast($broadcastTypeId)

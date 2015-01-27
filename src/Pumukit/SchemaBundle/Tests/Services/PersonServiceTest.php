@@ -14,6 +14,7 @@ class PersonServiceTest extends WebTestCase
     private $repo;
     private $repoMmobj;
     private $personService;
+    private $factoryService;
 
     public function __construct()
     {
@@ -29,6 +30,8 @@ class PersonServiceTest extends WebTestCase
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->personService = $kernel->getContainer()
           ->get('pumukitschema.person');
+        $this->factoryService = $kernel->getContainer()
+          ->get('pumukitschema.factory');
     }
 
     public function setUp()
@@ -197,36 +200,36 @@ class PersonServiceTest extends WebTestCase
         $this->dm->persist($rolePresenter);
         $this->dm->flush();
 
-        $mm11 = new MultimediaObject();
+        $mm11 = $this->factoryService->createMultimediaObject($series1);
         $title11 = 'Multimedia Object 11';
         $mm11->setTitle($title11);
         $mm11->addPersonWithRole($personJohn, $roleActor);
         $mm11->addPersonWithRole($personBob, $roleActor);
         $mm11->addPersonWithRole($personJohn, $rolePresenter);
 
-        $mm12 = new MultimediaObject();
+        $mm12 = $this->factoryService->createMultimediaObject($series1);
         $title12 = 'Multimedia Object 12';
         $mm12->setTitle($title12);
         $mm12->addPersonWithRole($personBob, $roleActor);
         $mm12->addPersonWithRole($personBob, $rolePresenter);
 
-        $mm13 = new MultimediaObject();
+        $mm13 = $this->factoryService->createMultimediaObject($series1);
         $title13 = 'Multimedia Object 13';
         $mm13->setTitle($title13);
         $mm13->addPersonWithRole($personKate, $roleActor);
 
-        $mm21 = new MultimediaObject();
+        $mm21 = $this->factoryService->createMultimediaObject($series2);
         $title21 = 'Multimedia Object 21';
         $mm21->setTitle($title21);
         $mm21->addPersonWithRole($personKate, $rolePresenter);
         $mm21->addPersonWithRole($personKate, $roleActor);
 
-        $mm31 = new MultimediaObject();
+        $mm31 = $this->factoryService->createMultimediaObject($series3);
         $title31 = 'Multimedia Object 31';
         $mm31->setTitle($title31);
         $mm31->addPersonWithRole($personJohn, $rolePresenter);
 
-        $mm32 = new MultimediaObject();
+        $mm32 = $this->factoryService->createMultimediaObject($series3);
         $title32 = 'Multimedia Object 32';
         $mm32->setTitle($title32);
         $mm32->addPersonWithRole($personJohn, $roleActor);
@@ -239,27 +242,10 @@ class PersonServiceTest extends WebTestCase
         $this->dm->persist($mm21);
         $this->dm->persist($mm31);
         $this->dm->persist($mm32);
-        $this->dm->flush();
-
-        $series1->addMultimediaObject($mm11);
-        $series1->addMultimediaObject($mm12);
-        $series1->addMultimediaObject($mm13);
-
-        $series2->addMultimediaObject($mm21);
-
-        $series3->addMultimediaObject($mm31);
-        $series3->addMultimediaObject($mm32);
 
         $this->dm->persist($series1);
         $this->dm->persist($series2);
         $this->dm->persist($series3);
-
-        $this->dm->persist($mm11);
-        $this->dm->persist($mm12);
-        $this->dm->persist($mm13);
-        $this->dm->persist($mm21);
-        $this->dm->persist($mm31);
-        $this->dm->persist($mm32);
 
         $this->dm->flush();
 
