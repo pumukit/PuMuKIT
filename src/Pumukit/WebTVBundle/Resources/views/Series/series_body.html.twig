@@ -6,10 +6,10 @@
 {% for mm in mmobjs %}
 
   {% if mm.getRecordDate() != lastDate %}
-  <div class="serial_date">
-    {{ mm.getRecordDate()|date("d/m/Y")}}
-  </div>
-{% endif %}
+    <div class="serial_date">
+      {{ mm.getRecordDate()|date("d/m/Y")}}
+    </div>
+  {% endif %}
 
 
   <div class="serial_mm">
@@ -28,14 +28,21 @@
               <div class="title">{{mm.title}}</div>
               <div class="subtitle">{{mm.subtitle}}</div>
               <div class="file_video">
+                <!--Falta obtener el tipo de objeto multimedia y el icono-->
                 <a href="/video/{{mm.id}}">Video</a>&nbsp;|&nbsp;&nbsp;
                 <span class="lenguage" style="font-weight: bold;">Castellano</span>&nbsp;({{mm.getDuration()}}")&nbsp;|&nbsp;Visto: <span class="numView" style="font-weight: bold;">{{mm.getNumview()}}</span>
                 {% if mm.getNumview == 1 %} vez{% else %} veces{% endif %}
               </div>
+              {% for material in mm.materials %}
+              <!--Falta obtener el tipo de material, el icono y la URL del material-->
+                <div id="material">
+                  <a href="/">{{material.getName()}}</a>
+                </div>
+              {% endfor %}
             </div>
           </td>
 
-        </tr>  
+        </tr> 
       </tbody>
     </table>
   </div>
@@ -44,6 +51,7 @@
 
 {% set lastDate = mm.getRecordDate() %}
 {% set lastSubserialTitle = mm.getSubtitle() %}
+
 
 {% endfor %}
 
