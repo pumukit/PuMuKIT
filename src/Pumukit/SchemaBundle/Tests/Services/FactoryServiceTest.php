@@ -66,8 +66,6 @@ class FactoryServiceTest extends WebTestCase
         $series = $this->factory->createSeries();
         $mmobj = $this->factory->createMultimediaObject($series);
 
-        //exit;
-
         $this->assertEquals(1, count($this->seriesRepo->findAll()));
         $this->assertEquals($series, $this->seriesRepo->findAll()[0]);
         $this->assertEquals(2, count($this->mmobjRepo->findAll()));
@@ -75,19 +73,10 @@ class FactoryServiceTest extends WebTestCase
         $this->assertEquals($series, $this->mmobjRepo->findAll()[0]->getSeries());
         $this->assertEquals(1, count($this->mmobjRepo->find($mmobj->getId())->getSeries()));
         $this->assertEquals($series, $this->mmobjRepo->find($mmobj->getId())->getSeries());
-        //$this->assertEquals(1, count($this->seriesRepo->findAll()[0]->getMultimediaObjects()));
-        //$this->assertEquals($mmobj, $this->seriesRepo->findAll()[0]->getMultimediaObjects()->toArray()[0]);
-        var_dump("START---");
 
-        foreach($series->getMultimediaObjects() as $k){
-          var_dump($k);
-        }
-        var_dump(count($series->getMultimediaObjects()));
-        var_dump(2);
-        var_dump(count($this->mmobjRepo->findWithoutPrototype($series)));
-
-        //exit;
         $this->assertEquals(1, count($this->mmobjRepo->findWithoutPrototype($series)));
+        $this->assertEquals(1, count($this->seriesRepo->findAll()[0]->getMultimediaObjects()));
+        $this->assertEquals($mmobj, $this->seriesRepo->findAll()[0]->getMultimediaObjects()->toArray()[0]);
     }
 
     public function testUpdateMultimediaObjectTemplate()

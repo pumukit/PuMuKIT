@@ -56,17 +56,12 @@ class MultimediaObjectRepository extends DocumentRepository
    */
   public function findWithoutPrototype(Series $series)
   {
-      var_dump('findWithoutPrototype');
-    
       $aux = $this->createQueryBuilder()
       ->field('series')->references($series)
       ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
       ->getQuery()
       ->execute()
       ->sort(array('rank', 'desc'));
-
-      var_dump("-----------------");
-      var_dump(count($aux));
 
       return $aux;
   }
