@@ -55,9 +55,8 @@ class FactoryService
         $this->dm->flush();
 
         //Workaround to fix reference method initialization.
-        $this->dm->clear();
+        $this->dm->clear(get_class($series));
         return $this->dm->find('PumukitSchemaBundle:Series', $series->getId());
-        //return $series;
     }
 
     /**
