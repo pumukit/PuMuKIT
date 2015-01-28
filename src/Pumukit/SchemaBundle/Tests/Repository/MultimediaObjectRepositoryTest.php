@@ -50,6 +50,8 @@ class MultimediaObjectRepositoryTest extends WebTestCase
             ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
             ->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')
+            ->remove(array());
         $this->dm->flush();
     }
 
@@ -89,6 +91,12 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
     public function testCreateMultimediaObjectAndFindByCriteria()
     {
+        $broadcast = new Broadcast();
+        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
+        $broadcast->setDefaultSel(true);
+        $this->dm->persist($broadcast);
+        $this->dm->flush();
+
         $series_type = $this->createSeriesType("Medieval Fantasy Sitcom");
 
         $series_main = $this->createSeries("Stark's growing pains");
@@ -368,6 +376,12 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
     public function testFindWithStatus()
     {
+        $broadcast = new Broadcast();
+        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
+        $broadcast->setDefaultSel(true);
+        $this->dm->persist($broadcast);
+        $this->dm->flush();
+
         $series = $this->createSeries('Serie prueba status');
 
         $mmNew = $this->createMultimediaObjectAssignedToSeries('Status new', $series);
@@ -410,6 +424,12 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
     public function testFindPrototype()
     {
+        $broadcast = new Broadcast();
+        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
+        $broadcast->setDefaultSel(true);
+        $this->dm->persist($broadcast);
+        $this->dm->flush();
+
         $series = $this->createSeries('Serie prueba status');
 
         $mmNew = $this->createMultimediaObjectAssignedToSeries('Status new', $series);
@@ -439,6 +459,12 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
     public function testFindWithoutPrototype()
     {
+        $broadcast = new Broadcast();
+        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
+        $broadcast->setDefaultSel(true);
+        $this->dm->persist($broadcast);
+        $this->dm->flush();
+
         $series = $this->createSeries('Serie prueba status');
 
         $mmNew = $this->createMultimediaObjectAssignedToSeries('Status new', $series);

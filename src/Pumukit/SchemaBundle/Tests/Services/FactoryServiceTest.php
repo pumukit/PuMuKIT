@@ -36,11 +36,11 @@ class FactoryServiceTest extends WebTestCase
 
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
       ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')
-      ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
       ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
+      ->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')
       ->remove(array());
         $this->dm->flush();
     }
@@ -108,7 +108,7 @@ class FactoryServiceTest extends WebTestCase
         }
     }
 
-    /*
+    /**
      * @expectedException Exception
      * @expectedExceptionMessage There is no default selected broadcast neither public broadcast
      */
@@ -127,6 +127,8 @@ class FactoryServiceTest extends WebTestCase
 
     public function testSeriesType()
     {
+        $this->createBroadcasts();
+
         $series_type1 = new SeriesType();
         $name_type1 = 'Series type 1';
         $series_type1->setName($name_type1);

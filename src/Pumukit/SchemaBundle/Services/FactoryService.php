@@ -72,7 +72,7 @@ class FactoryService
             $broadcast = $this->getDefaultBroadcast();
             $mm->setBroadcast($broadcast);
         }catch (\Exception $e){
-            // TODO message? Broadcast can't be null?
+            throw new \Exception($e->getMessage());
         }            
         $mm->setPublicDate(new \DateTime("now"));
         $mm->setRecordDate($mm->getPublicDate());
@@ -110,7 +110,7 @@ class FactoryService
             $broadcast = $this->getDefaultBroadcast();
             $mm->setBroadcast($broadcast);
         }catch (\Exception $e){
-            // TODO message?
+            throw new \Exception($e->getMessage());
         }            
         $mm->setPublicDate(new \DateTime("now"));
         $mm->setRecordDate($mm->getPublicDate());
