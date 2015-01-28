@@ -54,7 +54,10 @@ class FactoryService
         $this->dm->persist($series);
         $this->dm->flush();
 
-        return $series;
+        //Workaround to fix reference method initialization.
+        $this->dm->clear();
+        return $this->dm->find('PumukitSchemaBundle:Series', $series->getId());
+        //return $series;
     }
 
     /**
@@ -62,7 +65,7 @@ class FactoryService
      *
      * @return MultimediaObject
      */
-    public function createMultimediaObjectTemplate($series)
+    private function createMultimediaObjectTemplate($series)
     {
         $mm = new MultimediaObject();
         $mm->setStatus(MultimediaObject::STATUS_PROTOTYPE);
