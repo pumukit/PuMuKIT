@@ -37,6 +37,8 @@ class PersonServiceTest extends WebTestCase
     public function setUp()
     {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Person')->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
         $this->dm->flush();
     }
 
@@ -89,21 +91,23 @@ class PersonServiceTest extends WebTestCase
         $this->dm->persist($rolePresenter);
         $this->dm->flush();
 
-        $mm1 = new MultimediaObject();
+        $series = $this->factoryService->createSeries();
+
+        $mm1 = $this->factoryService->createMultimediaObject($series);
         $title1 = 'Multimedia Object 1';
         $mm1->setTitle($title1);
         $mm1->addPersonWithRole($personJohn, $roleActor);
         $mm1->addPersonWithRole($personBob, $roleActor);
         $mm1->addPersonWithRole($personJohn, $rolePresenter);
 
-        $mm2 = new MultimediaObject();
+        $mm2 = $this->factoryService->createMultimediaObject($series);
         $title2 = 'Multimedia Object 2';
         $mm2->setTitle($title2);
         $mm2->addPersonWithRole($personJohn, $roleActor);
         $mm2->addPersonWithRole($personBob, $rolePresenter);
         $mm2->addPersonWithRole($personJohn, $rolePresenter);
 
-        $mm3 = new MultimediaObject();
+        $mm3 = $this->factoryService->createMultimediaObject($series);
         $title3 = 'Multimedia Object 3';
         $mm3->setTitle($title3);
         $mm3->addPersonWithRole($personJohn, $roleActor);
@@ -156,15 +160,15 @@ class PersonServiceTest extends WebTestCase
 
     public function testFindSeriesWithPerson()
     {
-        $series1 = new Series();
+        $series1 = $this->factoryService->createSeries();
         $title1 = 'Series 1';
         $series1->setTitle($title1);
 
-        $series2 = new Series();
+        $series2 = $this->factoryService->createSeries();
         $title2 = 'Series 2';
         $series2->setTitle($title2);
 
-        $series3 = new Series();
+        $series3 = $this->factoryService->createSeries();
         $title3 = 'Series 3';
         $series3->setTitle($title3);
 
@@ -274,7 +278,9 @@ class PersonServiceTest extends WebTestCase
         $this->dm->persist($roleActor);
         $this->dm->flush();
 
-        $mm = new MultimediaObject();
+        $series = $this->factoryService->createSeries();
+
+        $mm = $this->factoryService->createMultimediaObject($series);
         $title = 'Multimedia Object';
         $mm->setTitle($title);
 
@@ -353,21 +359,23 @@ class PersonServiceTest extends WebTestCase
         $this->dm->persist($rolePresenter);
         $this->dm->flush();
 
-        $mm1 = new MultimediaObject();
+        $series = $this->factoryService->createSeries();
+
+        $mm1 = $this->factoryService->createMultimediaObject($series);  
         $title1 = 'Multimedia Object 1';
         $mm1->setTitle($title1);
         $mm1->addPersonWithRole($personJohn, $roleActor);
         $mm1->addPersonWithRole($personBob, $roleActor);
         $mm1->addPersonWithRole($personJohn, $rolePresenter);
 
-        $mm2 = new MultimediaObject();
+        $mm2 = $this->factoryService->createMultimediaObject($series);
         $title2 = 'Multimedia Object 2';
         $mm2->setTitle($title2);
         $mm2->addPersonWithRole($personJohn, $roleActor);
         $mm2->addPersonWithRole($personBob, $rolePresenter);
         $mm2->addPersonWithRole($personBob, $roleActor);
 
-        $mm3 = new MultimediaObject();
+        $mm3 = $this->factoryService->createMultimediaObject($series);
         $title3 = 'Multimedia Object 3';
         $mm3->setTitle($title3);
         $mm3->addPersonWithRole($personJohn, $roleActor);
@@ -425,21 +433,23 @@ class PersonServiceTest extends WebTestCase
         $this->dm->persist($rolePresenter);
         $this->dm->flush();
 
-        $mm1 = new MultimediaObject();
+        $series = $this->factoryService->createSeries();
+
+        $mm1 = $this->factoryService->createMultimediaObject($series);
         $title1 = 'Multimedia Object 1';
         $mm1->setTitle($title1);
         $mm1->addPersonWithRole($personJohn, $roleActor);
         $mm1->addPersonWithRole($personBob, $roleActor);
         $mm1->addPersonWithRole($personJohn, $rolePresenter);
 
-        $mm2 = new MultimediaObject();
+        $mm2 = $this->factoryService->createMultimediaObject($series);
         $title2 = 'Multimedia Object 2';
         $mm2->setTitle($title2);
         $mm2->addPersonWithRole($personJohn, $roleActor);
         $mm2->addPersonWithRole($personBob, $rolePresenter);
         $mm2->addPersonWithRole($personBob, $roleActor);
 
-        $mm3 = new MultimediaObject();
+        $mm3 = $this->factoryService->createMultimediaObject($series);
         $title3 = 'Multimedia Object 3';
         $mm3->setTitle($title3);
         $mm3->addPersonWithRole($personJohn, $roleActor);
