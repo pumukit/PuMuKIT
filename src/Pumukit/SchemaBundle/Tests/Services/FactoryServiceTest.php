@@ -23,25 +23,25 @@ class FactoryServiceTest extends WebTestCase
         $kernel = static::createKernel($options);
         $kernel->boot();
         $this->dm = $kernel->getContainer()
-      ->get('doctrine_mongodb')->getManager();
+          ->get('doctrine_mongodb')->getManager();
         $this->seriesRepo = $this->dm
-     ->getRepository('PumukitSchemaBundle:Series');
+          ->getRepository('PumukitSchemaBundle:Series');
         $this->mmobjRepo = $this->dm
-     ->getRepository('PumukitSchemaBundle:MultimediaObject');
+          ->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->translator = $kernel->getContainer()
-      ->get('translator');
+          ->get('translator');
         $this->factory = $kernel->getContainer()
-      ->get('pumukitschema.factory');
+          ->get('pumukitschema.factory');
         $this->locales = $this->factory->getLocales();
 
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
-      ->remove(array());
+          ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
-      ->remove(array());
+          ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
-      ->remove(array());
+          ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')
-      ->remove(array());
+          ->remove(array());
         $this->dm->flush();
     }
 
@@ -54,10 +54,11 @@ class FactoryServiceTest extends WebTestCase
         $this->assertEquals(1, count($this->seriesRepo->findAll()));
         $this->assertEquals(1, count($this->mmobjRepo->findAll()));
         $this->assertEquals(1, count($this->mmobjRepo->findAll()[0]->getSeries()));
-        // getMultimediaObjects gives us all multimedia objects in the series except prototype
+        //NOTE getMultimediaObjects gives us all multimedia objects in the series except prototype
         $this->assertEquals(0, count($this->seriesRepo->findAll()[0]->getMultimediaObjects()));
         $this->assertEquals($series, $this->seriesRepo->findAll()[0]);
-        //TODO series.multimedia_objects have diferent internal initialized value.
+
+        //NOTE series.multimedia_objects have diferent internal initialized value.
         //$this->assertEquals($series, $this->mmobjRepo->findAll()[0]->getSeries());
         $this->assertEquals($series->getId(), $this->mmobjRepo->findAll()[0]->getSeries()->getId());
         $this->assertEquals(MultimediaObject::STATUS_PROTOTYPE, $this->mmobjRepo->findAll()[0]->getStatus());
