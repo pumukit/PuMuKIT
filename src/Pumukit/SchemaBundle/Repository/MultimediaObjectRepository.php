@@ -67,7 +67,10 @@ class MultimediaObjectRepository extends DocumentRepository
   }
 
   /**
-   * TODO DOC.
+   * Find multimedia objects by pic id
+   *
+   * @param string $picId
+   * @return MultimediaObject
    */
   public function findByPicId($picId)
   {
@@ -101,7 +104,7 @@ class MultimediaObjectRepository extends DocumentRepository
    */
   public function findByPersonIdWithRoleCod($personId, $roleCod)
   {
-      /* TODO - Fails in this case -> MultimediaObject with:
+      /* TODO - Fails in this case -> MultimediaObject with: #6100
          Person 1 with Role 1
          Person 2 with Role 2
 

@@ -13,7 +13,7 @@ use Pumukit\SchemaBundle\Document\SeriesType;
  */
 class SeriesRepository extends DocumentRepository
 {
-    //TODO funciona?
+    //TODO #6101
     public function findWithTag(Tag $tag)
     {
         $dm = $kernel->getContainer()->get('doctrine_mongodb')->getManager();
@@ -226,7 +226,10 @@ class SeriesRepository extends DocumentRepository
   }
 
   /**
-   * TODO DOC.
+   * Find series by pic id
+   *
+   * @param string $picId
+   * @return Series
    */
   public function findByPicId($picId)
   {
