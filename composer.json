@@ -18,7 +18,7 @@
         "sensio/distribution-bundle": "~3.0",
         "sensio/framework-extra-bundle": "~3.0",
         "incenteev/composer-parameter-handler": "~2.0",
-	"friendsofsymfony/user-bundle": "~1.3",
+        "friendsofsymfony/user-bundle": "~1.3",
         "sylius/resource-bundle": "*",
         "knplabs/knp-menu-bundle": "~2.0",
         "gedmo/doctrine-extensions": "dev-master"
