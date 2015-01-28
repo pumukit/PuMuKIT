@@ -68,7 +68,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEquals($title."2", $mm->getTitle());
         $this->assertEquals($subtitle, $mm->getSubtitle());
         $this->assertEquals($description, $mm->getDescription());
-        // TODO $this->assertEquals($mm_tags, $mm->getTags()->toArray());
+        $this->assertEquals(count($mm_tags), count($mm->getTags()));
         $this->assertEquals($broadcast, $mm->getBroadcast());
         $this->assertEquals($numview, $mm->getNumview());
     }
@@ -525,126 +525,5 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($mm->containsAllTags(array($tag1)));
         $this->assertFalse($mm->containsAllTags(array($tag0, $tag2)));
         $this->assertFalse($mm->containsAllTags(array($tag0, $tag1, $tag2, $tag3)));
-    }
-
-    public function testEmbeddedPersonAndEmbeddedRole()
-    {
-        // Person
-        $emailPerson = 'email@email.com';
-        $namePerson = 'name';
-        $webPerson = 'web';
-        $phonePerson = 'phone';
-        $honorificPerson = 'Mr';
-        $firmPerson = 'firm';
-        $postPerson = 'post';
-        $bioPerson = 'Biography of this person';
-
-        $person = new Person();
-
-        $person->setEmail($emailPerson);
-        $person->setName($namePerson);
-        $person->setWeb($webPerson);
-        $person->setPhone($phonePerson);
-        $person->setHonorific($honorificPerson);
-        $person->setFirm($firmPerson);
-        $person->setPost($postPerson);
-        $person->setBio($bioPerson);
-
-        // Role
-        $localeRole = 'en';
-        $codRole = 'rol1'; //String - max length = 5
-        $xmlRole = 'string <xml>';
-        $displayRole = true;
-        $nameRole = 'Presenter';
-        $textRole = 'Presenter Role 1';
-
-        $role = new Role();
-
-        $role->setLocale($localeRole);
-        $role->setCod($codRole);
-        $role->setXml($xmlRole);
-        $role->setDisplay($displayRole);
-        $role->setName($nameRole);
-        $role->setText($textRole);
-
-        // MultimediaObject
-        $mm = new MultimediaObject();
-        $mm->addPersonWithRole($person, $role);
-
-        // TEST GETTERS
-        /* TODO CHECK
-        $roleInMultimediaObject = $mm->getPeopleInMultimediaObject()[0];
-        $personInMultimediaObject = $roleInMultimediaObject->getPeople()[0];
-
-        $this->assertEquals($localeRole, $roleInMultimediaObject->getLocale());
-        $this->assertEquals($codRole, $roleInMultimediaObject->getCod());
-        $this->assertEquals($xmlRole, $roleInMultimediaObject->getXml());
-        $this->assertEquals($displayRole, $roleInMultimediaObject->getDisplay());
-        $this->assertEquals($nameRole, $roleInMultimediaObject->getName());
-        $this->assertEquals($textRole, $roleInMultimediaObject->getText());
-
-        $this->assertEquals($emailPerson, $personInMultimediaObject->getEmail());
-        $this->assertEquals($namePerson, $personInMultimediaObject->getName());
-        $this->assertEquals($webPerson, $personInMultimediaObject->getWeb());
-        $this->assertEquals($phonePerson, $personInMultimediaObject->getPhone());
-        $this->assertEquals($honorificPerson, $personInMultimediaObject->getHonorific());
-        $this->assertEquals($firmPerson, $personInMultimediaObject->getFirm());
-        $this->assertEquals($postPerson, $personInMultimediaObject->getPost());
-        $this->assertEquals($bioPerson, $personInMultimediaObject->getBio());
-
-        // TEST SETTERS
-        // Person
-        $emailPerson = 'another@email.com';
-        $namePerson = 'John Smith';
-        $webPerson = 'http://johnsmith.com';
-        $phonePerson = '555-365214';
-        $honorificPerson = 'Mrs';
-        $firmPerson = 'Smith firm';
-        $postPerson = 'Smith post';
-        $bioPerson = 'Biography of John Smith';
-
-        $personInMultimediaObject->setEmail($emailPerson);
-        $personInMultimediaObject->setName($namePerson);
-        $personInMultimediaObject->setWeb($webPerson);
-        $personInMultimediaObject->setPhone($phonePerson);
-        $personInMultimediaObject->setHonorific($honorificPerson);
-        $personInMultimediaObject->setFirm($firmPerson);
-        $personInMultimediaObject->setPost($postPerson);
-        $personInMultimediaObject->setBio($bioPerson);
-
-        // Role
-        $localeRole = 'es';
-        $codRole = 'rol2'; //String - max length = 5
-        $xmlRole = 'string2 <xml>';
-        $displayRole = false;
-        $nameRole = 'Actor';
-        $textRole = 'Actor Rol 2';
-
-        $roleInEmbeddedPerson->setLocale($localeRole);
-        $roleInEmbeddedPerson->setCod($codRole);
-        $roleInEmbeddedPerson->setXml($xmlRole);
-        $roleInEmbeddedPerson->setDisplay($displayRole);
-        $roleInEmbeddedPerson->setName($nameRole);
-        $roleInEmbeddedPerson->setText($textRole);
-
-        $roleInMultimediaObject = $mm->getPeopleInMultimediaObject()->toArray()[0];
-        $personInMultimediaObject = $roleInMultimediaObject->getPeople()[0];
-
-        $this->assertEquals($emailPerson, $personInMultimediaObject->getEmail());
-        $this->assertEquals($namePerson, $personInMultimediaObject->getName());
-        $this->assertEquals($webPerson, $personInMultimediaObject->getWeb());
-        $this->assertEquals($phonePerson, $personInMultimediaObject->getPhone());
-        $this->assertEquals($honorificPerson, $personInMultimediaObject->getHonorific());
-        $this->assertEquals($firmPerson, $personInMultimediaObject->getFirm());
-        $this->assertEquals($postPerson, $personInMultimediaObject->getPost());
-        $this->assertEquals($bioPerson, $personInMultimediaObject->getBio());
-
-        $this->assertEquals($localeRole, $roleInEmbeddedPerson->getLocale());
-        $this->assertEquals($codRole, $roleInEmbeddedPerson->getCod());
-        $this->assertEquals($xmlRole, $roleInEmbeddedPerson->getXml());
-        $this->assertEquals($displayRole, $roleInEmbeddedPerson->getDisplay());
-        $this->assertEquals($nameRole, $roleInEmbeddedPerson->getName());
-        $this->assertEquals($textRole, $roleInEmbeddedPerson->getText());
-        */
     }
 }
