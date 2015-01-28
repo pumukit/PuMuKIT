@@ -68,12 +68,12 @@ class FactoryService
     {
         $mm = new MultimediaObject();
         $mm->setStatus(MultimediaObject::STATUS_PROTOTYPE);
-        try{
+        try {
             $broadcast = $this->getDefaultBroadcast();
             $mm->setBroadcast($broadcast);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
-        }            
+        }
         $mm->setPublicDate(new \DateTime("now"));
         $mm->setRecordDate($mm->getPublicDate());
         foreach ($this->locales as $locale) {
@@ -99,19 +99,19 @@ class FactoryService
 
         if (null !== $prototype) {
             $mm = $this->createMultimediaObjectFromPrototype($prototype);
-        }else{
+        } else {
             $mm = new MultimediaObject();
             foreach ($this->locales as $locale) {
                 $title = $this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE, array(), null, $locale);
                 $mm->setTitle($title, $locale);
             }
         }
-        try{
+        try {
             $broadcast = $this->getDefaultBroadcast();
             $mm->setBroadcast($broadcast);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
-        }            
+        }
         $mm->setPublicDate(new \DateTime("now"));
         $mm->setRecordDate($mm->getPublicDate());
         $mm->setStatus(MultimediaObject::STATUS_NEW);
@@ -167,12 +167,12 @@ class FactoryService
         $new->setDuration($prototype->getDuration());
         $new->setNumview($prototype->getNumview());
 
-        foreach($prototype->getTags() as $tag) {
+        foreach ($prototype->getTags() as $tag) {
             $new->addTag($tag);
         }
 
-        foreach($prototype->getRoles() as $embeddedRole){
-            foreach($embeddedRole->getPeople() as $embeddedPerson){
+        foreach ($prototype->getRoles() as $embeddedRole) {
+            foreach ($embeddedRole->getPeople() as $embeddedPerson) {
                 $new->addPersonWithRole($embeddedPerson, $embeddedRole);
             }
         }

@@ -261,7 +261,7 @@ class SeriesRepository extends DocumentRepository
    */
   public function findBySeriesType(SeriesType $series_type)
   {
-    return $this->createQueryBuilder()
+      return $this->createQueryBuilder()
         ->field('series_type')->references($series_type)
         ->getQuery()
         ->execute();

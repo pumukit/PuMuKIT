@@ -384,7 +384,7 @@ class Person
      *
      * Returns person name with his/her honorific
      *
-     * @return string 
+     * @return string
      */
     public function getHName()
     {

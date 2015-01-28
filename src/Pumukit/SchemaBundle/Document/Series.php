@@ -669,11 +669,11 @@ class Series
   {
       foreach ($this->multimedia_objects as $mmo) {
           if ($mmo->containsTag($tag)) {
-              return TRUE;
+              return true;
           }
       }
 
-      return FALSE;
+      return false;
   }
 
   /**

@@ -14,10 +14,10 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class MultimediaObject
 {
   const STATUS_NORMAL = 0;
-  const STATUS_BLOQ = 1;
-  const STATUS_HIDE = 2;
-  const STATUS_NEW = -1;
-  const STATUS_PROTOTYPE = -2;
+    const STATUS_BLOQ = 1;
+    const STATUS_HIDE = 2;
+    const STATUS_NEW = -1;
+    const STATUS_PROTOTYPE = -2;
 
     /**
      * @var int $id
@@ -257,7 +257,7 @@ class MultimediaObject
     public function addTag($tag)
     {
         if (!($this->containsTag($tag))) {
-            $embedTag = EmbeddedTag::getEmbeddedTag($this->tags, $tag);        
+            $embedTag = EmbeddedTag::getEmbeddedTag($this->tags, $tag);
             $this->tags[] = $embedTag;
         }
     }
@@ -271,13 +271,13 @@ class MultimediaObject
      */
     public function removeTag($tagToRemove)
     {
-        foreach($this->tags as $tag) {
-           if($tag->getCod() == $tagToRemove->getCod()) {
-              return $this->tags->removeElement($tag);
-           }
+        foreach ($this->tags as $tag) {
+            if ($tag->getCod() == $tagToRemove->getCod()) {
+                return $this->tags->removeElement($tag);
+            }
         }
         
-        return false;    
+        return false;
     }
 
     /**
@@ -289,10 +289,10 @@ class MultimediaObject
      */
     public function containsTag($tagToCheck)
     {
-        foreach($this->tags as $tag) {
-           if($tag->getCod() == $tagToCheck->getCod()) {
-               return true;
-           }
+        foreach ($this->tags as $tag) {
+            if ($tag->getCod() == $tagToCheck->getCod()) {
+                return true;
+            }
         }
         
         return false;
@@ -364,7 +364,7 @@ class MultimediaObject
      */
     public function removePicById($picId)
     {
-      $this->pics = $this->pics->filter(function ($pic) use ($picId) {
+        $this->pics = $this->pics->filter(function ($pic) use ($picId) {
           return $pic->getId() !== $picId;
         });
     }
@@ -376,7 +376,7 @@ class MultimediaObject
      */
     public function upPicById($picId)
     {
-      $this->reorderPicById($picId, true);
+        $this->reorderPicById($picId, true);
     }
 
     /**
@@ -386,7 +386,7 @@ class MultimediaObject
      */
     public function downPicById($picId)
     {
-      $this->reorderPicById($picId, false);
+        $this->reorderPicById($picId, false);
     }
 
     //TODO move out
@@ -398,22 +398,22 @@ class MultimediaObject
      */
     private function reorderPicById($picId, $up = true)
     {
-      $snapshot = array_values($this->pics->toArray());
-      $this->pics->clear();
+        $snapshot = array_values($this->pics->toArray());
+        $this->pics->clear();
 
-      $out = array();
-      foreach ($snapshot as $key => $pic) {
-        if ($pic->getId() === $picId) {
-          $out[($key * 10) + ($up ? -11 : 11) ] = $pic;
-        } else {
-          $out[$key * 10] = $pic;
+        $out = array();
+        foreach ($snapshot as $key => $pic) {
+            if ($pic->getId() === $picId) {
+                $out[($key * 10) + ($up ? -11 : 11) ] = $pic;
+            } else {
+                $out[$key * 10] = $pic;
+            }
         }
-      }
 
-      ksort($out);
-      foreach ($out as $pic) {
-        $this->pics->add($pic);
-      }
+        ksort($out);
+        foreach ($out as $pic) {
+            $this->pics->add($pic);
+        }
     }
 
     /**
@@ -425,7 +425,7 @@ class MultimediaObject
      */
     public function containsPic(Pic $pic)
     {
-      return $this->pics->contains($pic);
+        return $this->pics->contains($pic);
     }
 
     /**
@@ -435,7 +435,7 @@ class MultimediaObject
      */
     public function getPics()
     {
-      return $this->pics;
+        return $this->pics;
     }
 
     /**
@@ -447,13 +447,13 @@ class MultimediaObject
      */
     public function getPicById($picId)
     {
-      foreach ($this->pics as $pic) {
-        if ($pic->getId() == $picId) {
-          return $pic;
+        foreach ($this->pics as $pic) {
+            if ($pic->getId() == $picId) {
+                return $pic;
+            }
         }
-      }
 
-      return;
+        return;
     }
 
     /**
@@ -465,15 +465,15 @@ class MultimediaObject
      */
     public function getPicsByTag($tag)
     {
-      $r = array();
+        $r = array();
 
-      foreach ($this->pics as $pic) {
-        if ($pic->containsTag($tag)) {
-          $r[] = $pic;
+        foreach ($this->pics as $pic) {
+            if ($pic->containsTag($tag)) {
+                $r[] = $pic;
+            }
         }
-      }
 
-      return $r;
+        return $r;
     }
 
     /**
@@ -485,13 +485,13 @@ class MultimediaObject
      */
     public function getPicByTag($tag)
     {
-      foreach ($this->pics as $pic) {
-        if ($pic->containsTag($tag)) {
-          return $pic;
+        foreach ($this->pics as $pic) {
+            if ($pic->containsTag($tag)) {
+                return $pic;
+            }
         }
-      }
 
-      return;
+        return;
     }
 
     /**
@@ -503,15 +503,15 @@ class MultimediaObject
      */
     public function getPicsWithAllTags(array $tags)
     {
-      $r = array();
+        $r = array();
 
-      foreach ($this->pics as $pic) {
-        if ($pic->containsAllTags($tags)) {
-          $r[] = $pic;
+        foreach ($this->pics as $pic) {
+            if ($pic->containsAllTags($tags)) {
+                $r[] = $pic;
+            }
         }
-      }
 
-      return $r;
+        return $r;
     }
 
     /**
@@ -523,13 +523,13 @@ class MultimediaObject
      */
     public function getPicWithAllTags(array $tags)
     {
-      foreach ($this->pics as $pic) {
-        if ($pic->containsAllTags($tags)) {
-          return $pic;
+        foreach ($this->pics as $pic) {
+            if ($pic->containsAllTags($tags)) {
+                return $pic;
+            }
         }
-      }
 
-      return;
+        return;
     }
 
     /**
@@ -541,15 +541,15 @@ class MultimediaObject
      */
     public function getPicsWithAnyTag(array $tags)
     {
-      $r = array();
+        $r = array();
 
-      foreach ($this->pics as $pic) {
-        if ($pic->containsAnyTag($tags)) {
-          $r[] = $pic;
+        foreach ($this->pics as $pic) {
+            if ($pic->containsAnyTag($tags)) {
+                $r[] = $pic;
+            }
         }
-      }
 
-      return $r;
+        return $r;
     }
 
     /**
@@ -561,13 +561,13 @@ class MultimediaObject
      */
     public function getPicWithAnyTag(array $tags)
     {
-      foreach ($this->pics as $pic) {
-        if ($pic->containsAnyTag($tags)) {
-          return $pic;
+        foreach ($this->pics as $pic) {
+            if ($pic->containsAnyTag($tags)) {
+                return $pic;
+            }
         }
-      }
 
-      return;
+        return;
     }
 
     /**
@@ -586,26 +586,26 @@ class MultimediaObject
                                           array $not_any_tags = array(),
                                           array $not_all_tags = array())
     {
-      $r = array();
+        $r = array();
 
-      foreach ($this->pics as $pic) {
-        if ($any_tags && !$pic->containsAnyTag($any_tags)) {
-          continue;
-        }
-        if ($all_tags && !$pic->containsAllTags($all_tags)) {
-          continue;
-        }
-        if ($not_any_tags && $pic->containsAnyTag($not_any_tags)) {
-          continue;
-        }
-        if ($not_all_tags && $pic->containsAllTags($not_all_tags)) {
-          continue;
+        foreach ($this->pics as $pic) {
+            if ($any_tags && !$pic->containsAnyTag($any_tags)) {
+                continue;
+            }
+            if ($all_tags && !$pic->containsAllTags($all_tags)) {
+                continue;
+            }
+            if ($not_any_tags && $pic->containsAnyTag($not_any_tags)) {
+                continue;
+            }
+            if ($not_all_tags && $pic->containsAllTags($not_all_tags)) {
+                continue;
+            }
+
+            $r[] = $pic;
         }
 
-        $r[] = $pic;
-      }
-
-      return $r;
+        return $r;
     }
 
     // End of Pic getter - setter etc methods section
@@ -617,11 +617,11 @@ class MultimediaObject
      */
     public function addTrack(Track $track)
     {
-      $this->tracks->add($track);
+        $this->tracks->add($track);
 
-      if ($track->getDuration() > $this->getDuration()) {
-        $this->setDuration($track->getDuration());
-      }
+        if ($track->getDuration() > $this->getDuration()) {
+            $this->setDuration($track->getDuration());
+        }
     }
 
     /**
@@ -631,9 +631,9 @@ class MultimediaObject
      */
     public function removeTrack(Track $track)
     {
-      $this->tracks->removeElement($track);
+        $this->tracks->removeElement($track);
 
-      $this->updateDuration();
+        $this->updateDuration();
     }
 
     /**
@@ -643,11 +643,11 @@ class MultimediaObject
      */
     public function removeTrackById($trackId)
     {
-      $this->tracks = $this->tracks->filter(function ($track) use ($trackId) {
+        $this->tracks = $this->tracks->filter(function ($track) use ($trackId) {
           return $track->getId() !== $trackId;
         });
 
-      $this->updateDuration();
+        $this->updateDuration();
     }
 
     /**
@@ -657,7 +657,7 @@ class MultimediaObject
      */
     public function upTrackById($trackId)
     {
-      $this->reorderTrackById($trackId, true);
+        $this->reorderTrackById($trackId, true);
     }
 
     /**
@@ -667,7 +667,7 @@ class MultimediaObject
      */
     public function downTrackById($trackId)
     {
-      $this->reorderTrackById($trackId, false);
+        $this->reorderTrackById($trackId, false);
     }
 
     //TODO move out
@@ -679,22 +679,22 @@ class MultimediaObject
      */
     private function reorderTrackById($trackId, $up = true)
     {
-      $snapshot = array_values($this->tracks->toArray());
-      $this->tracks->clear();
+        $snapshot = array_values($this->tracks->toArray());
+        $this->tracks->clear();
 
-      $out = array();
-      foreach ($snapshot as $key => $track) {
-        if ($track->getId() === $trackId) {
-          $out[($key * 10) + ($up ? -11 : 11) ] = $track;
-        } else {
-          $out[$key * 10] = $track;
+        $out = array();
+        foreach ($snapshot as $key => $track) {
+            if ($track->getId() === $trackId) {
+                $out[($key * 10) + ($up ? -11 : 11) ] = $track;
+            } else {
+                $out[$key * 10] = $track;
+            }
         }
-      }
 
-      ksort($out);
-      foreach ($out as $track) {
-        $this->tracks->add($track);
-      }
+        ksort($out);
+        foreach ($out as $track) {
+            $this->tracks->add($track);
+        }
     }
 
     /**
@@ -706,7 +706,7 @@ class MultimediaObject
      */
     public function containsTrack(Track $track)
     {
-      return $this->tracks->contains($track);
+        return $this->tracks->contains($track);
     }
 
     /**
@@ -716,7 +716,7 @@ class MultimediaObject
      */
     public function getTracks()
     {
-      return $this->tracks;
+        return $this->tracks;
     }
 
     /**
@@ -728,13 +728,13 @@ class MultimediaObject
      */
     public function getTrackById($trackId)
     {
-      foreach ($this->tracks as $track) {
-        if ($track->getId() == $trackId) {
-          return $track;
+        foreach ($this->tracks as $track) {
+            if ($track->getId() == $trackId) {
+                return $track;
+            }
         }
-      }
 
-      return;
+        return;
     }
 
     /**
@@ -746,15 +746,15 @@ class MultimediaObject
      */
     public function getTracksByTag($tag)
     {
-      $r = array();
+        $r = array();
 
-      foreach ($this->tracks as $track) {
-        if ($track->containsTag($tag)) {
-          $r[] = $track;
+        foreach ($this->tracks as $track) {
+            if ($track->containsTag($tag)) {
+                $r[] = $track;
+            }
         }
-      }
 
-      return $r;
+        return $r;
     }
 
     /**
@@ -766,13 +766,13 @@ class MultimediaObject
      */
     public function getTrackByTag($tag)
     {
-      foreach ($this->tracks as $track) {
-        if ($track->containsTag($tag)) {
-          return $track;
+        foreach ($this->tracks as $track) {
+            if ($track->containsTag($tag)) {
+                return $track;
+            }
         }
-      }
 
-      return;
+        return;
     }
 
     /**
@@ -784,15 +784,15 @@ class MultimediaObject
      */
     public function getTracksWithAllTags(array $tags)
     {
-      $r = array();
+        $r = array();
 
-      foreach ($this->tracks as $track) {
-        if ($track->containsAllTags($tags)) {
-          $r[] = $track;
+        foreach ($this->tracks as $track) {
+            if ($track->containsAllTags($tags)) {
+                $r[] = $track;
+            }
         }
-      }
 
-      return $r;
+        return $r;
     }
 
     /**
@@ -804,13 +804,13 @@ class MultimediaObject
      */
     public function getTrackWithAllTags(array $tags)
     {
-      foreach ($this->tracks as $track) {
-        if ($track->containsAllTags($tags)) {
-          return $track;
+        foreach ($this->tracks as $track) {
+            if ($track->containsAllTags($tags)) {
+                return $track;
+            }
         }
-      }
 
-      return;
+        return;
     }
 
     /**
@@ -822,15 +822,15 @@ class MultimediaObject
      */
     public function getTracksWithAnyTag(array $tags)
     {
-      $r = array();
+        $r = array();
 
-      foreach ($this->tracks as $track) {
-        if ($track->containsAnyTag($tags)) {
-          $r[] = $track;
+        foreach ($this->tracks as $track) {
+            if ($track->containsAnyTag($tags)) {
+                $r[] = $track;
+            }
         }
-      }
 
-      return $r;
+        return $r;
     }
 
     /**
@@ -842,13 +842,13 @@ class MultimediaObject
      */
     public function getTrackWithAnyTag(array $tags)
     {
-      foreach ($this->tracks as $track) {
-        if ($track->containsAnyTag($tags)) {
-          return $track;
+        foreach ($this->tracks as $track) {
+            if ($track->containsAnyTag($tags)) {
+                return $track;
+            }
         }
-      }
 
-      return;
+        return;
     }
 
     /**
@@ -867,26 +867,26 @@ class MultimediaObject
                                             array $not_any_tags = array(),
                                             array $not_all_tags = array())
     {
-      $r = array();
+        $r = array();
 
-      foreach ($this->tracks as $track) {
-        if ($any_tags && !$track->containsAnyTag($any_tags)) {
-          continue;
-        }
-        if ($all_tags && !$track->containsAllTags($all_tags)) {
-          continue;
-        }
-        if ($not_any_tags && $track->containsAnyTag($not_any_tags)) {
-          continue;
-        }
-        if ($not_all_tags && $track->containsAllTags($not_all_tags)) {
-          continue;
+        foreach ($this->tracks as $track) {
+            if ($any_tags && !$track->containsAnyTag($any_tags)) {
+                continue;
+            }
+            if ($all_tags && !$track->containsAllTags($all_tags)) {
+                continue;
+            }
+            if ($not_any_tags && $track->containsAnyTag($not_any_tags)) {
+                continue;
+            }
+            if ($not_all_tags && $track->containsAllTags($not_all_tags)) {
+                continue;
+            }
+
+            $r[] = $track;
         }
 
-        $r[] = $track;
-      }
-
-      return $r;
+        return $r;
     }
     
     // End of Track getter - setter etc methods section
@@ -898,7 +898,7 @@ class MultimediaObject
      */
     public function addMaterial(Material $material)
     {
-      $this->materials->add($material);
+        $this->materials->add($material);
     }
 
     /**
@@ -908,7 +908,7 @@ class MultimediaObject
      */
     public function removeMaterial(Material $material)
     {
-      $this->materials->removeElement($material);
+        $this->materials->removeElement($material);
     }
 
     /**
@@ -918,7 +918,7 @@ class MultimediaObject
      */
     public function removeMaterialById($materialId)
     {
-      $this->materials = $this->materials->filter(function ($material) use ($materialId) {
+        $this->materials = $this->materials->filter(function ($material) use ($materialId) {
           return $material->getId() !== $materialId;
         });
     }
@@ -930,7 +930,7 @@ class MultimediaObject
      */
     public function upMaterialById($materialId)
     {
-      $this->reorderMaterialById($materialId, true);
+        $this->reorderMaterialById($materialId, true);
     }
 
     /**
@@ -940,7 +940,7 @@ class MultimediaObject
      */
     public function downMaterialById($materialId)
     {
-      $this->reorderMaterialById($materialId, false);
+        $this->reorderMaterialById($materialId, false);
     }
 
     //TODO move out
@@ -952,22 +952,22 @@ class MultimediaObject
      */
     private function reorderMaterialById($materialId, $up = true)
     {
-      $snapshot = array_values($this->materials->toArray());
-      $this->materials->clear();
+        $snapshot = array_values($this->materials->toArray());
+        $this->materials->clear();
 
-      $out = array();
-      foreach ($snapshot as $key => $material) {
-        if ($material->getId() === $materialId) {
-          $out[($key * 10) + ($up ? -11 : 11) ] = $material;
-        } else {
-          $out[$key * 10] = $material;
+        $out = array();
+        foreach ($snapshot as $key => $material) {
+            if ($material->getId() === $materialId) {
+                $out[($key * 10) + ($up ? -11 : 11) ] = $material;
+            } else {
+                $out[$key * 10] = $material;
+            }
         }
-      }
 
-      ksort($out);
-      foreach ($out as $material) {
-        $this->materials->add($material);
-      }
+        ksort($out);
+        foreach ($out as $material) {
+            $this->materials->add($material);
+        }
     }
 
     /**
@@ -979,7 +979,7 @@ class MultimediaObject
      */
     public function containsMaterial(Material $material)
     {
-      return $this->materials->contains($material);
+        return $this->materials->contains($material);
     }
 
     /**
@@ -989,7 +989,7 @@ class MultimediaObject
      */
     public function getMaterials()
     {
-      return $this->materials;
+        return $this->materials;
     }
 
     /**
@@ -1001,13 +1001,13 @@ class MultimediaObject
      */
     public function getMaterialById($materialId)
     {
-      foreach ($this->materials as $material) {
-        if ($material->getId() == $materialId) {
-          return $material;
+        foreach ($this->materials as $material) {
+            if ($material->getId() == $materialId) {
+                return $material;
+            }
         }
-      }
 
-      return;
+        return;
     }
 
     /**
@@ -1019,15 +1019,15 @@ class MultimediaObject
      */
     public function getMaterialsByTag($tag)
     {
-      $r = array();
+        $r = array();
 
-      foreach ($this->materials as $material) {
-        if ($material->containsTag($tag)) {
-          $r[] = $material;
+        foreach ($this->materials as $material) {
+            if ($material->containsTag($tag)) {
+                $r[] = $material;
+            }
         }
-      }
 
-      return $r;
+        return $r;
     }
 
     /**
@@ -1039,13 +1039,13 @@ class MultimediaObject
      */
     public function getMaterialByTag($tag)
     {
-      foreach ($this->materials as $material) {
-        if ($material->containsTag($tag)) {
-          return $material;
+        foreach ($this->materials as $material) {
+            if ($material->containsTag($tag)) {
+                return $material;
+            }
         }
-      }
 
-      return;
+        return;
     }
 
     /**
@@ -1057,15 +1057,15 @@ class MultimediaObject
      */
     public function getMaterialsWithAllTags(array $tags)
     {
-      $r = array();
+        $r = array();
 
-      foreach ($this->materials as $material) {
-        if ($material->containsAllTags($tags)) {
-          $r[] = $material;
+        foreach ($this->materials as $material) {
+            if ($material->containsAllTags($tags)) {
+                $r[] = $material;
+            }
         }
-      }
 
-      return $r;
+        return $r;
     }
 
     /**
@@ -1077,13 +1077,13 @@ class MultimediaObject
      */
     public function getMaterialWithAllTags(array $tags)
     {
-      foreach ($this->materials as $material) {
-        if ($material->containsAllTags($tags)) {
-          return $material;
+        foreach ($this->materials as $material) {
+            if ($material->containsAllTags($tags)) {
+                return $material;
+            }
         }
-      }
 
-      return;
+        return;
     }
 
     /**
@@ -1095,15 +1095,15 @@ class MultimediaObject
      */
     public function getMaterialsWithAnyTag(array $tags)
     {
-      $r = array();
+        $r = array();
 
-      foreach ($this->materials as $material) {
-        if ($material->containsAnyTag($tags)) {
-          $r[] = $material;
+        foreach ($this->materials as $material) {
+            if ($material->containsAnyTag($tags)) {
+                $r[] = $material;
+            }
         }
-      }
 
-      return $r;
+        return $r;
     }
 
     /**
@@ -1115,13 +1115,13 @@ class MultimediaObject
      */
     public function getMaterialWithAnyTag(array $tags)
     {
-      foreach ($this->materials as $material) {
-        if ($material->containsAnyTag($tags)) {
-          return $material;
+        foreach ($this->materials as $material) {
+            if ($material->containsAnyTag($tags)) {
+                return $material;
+            }
         }
-      }
 
-      return;
+        return;
     }
 
     /**
@@ -1140,26 +1140,26 @@ class MultimediaObject
                                                array $not_any_tags = array(),
                                                array $not_all_tags = array())
     {
-      $r = array();
+        $r = array();
 
-      foreach ($this->materials as $material) {
-        if ($any_tags && !$material->containsAnyTag($any_tags)) {
-          continue;
-        }
-        if ($all_tags && !$material->containsAllTags($all_tags)) {
-          continue;
-        }
-        if ($not_any_tags && $material->containsAnyTag($not_any_tags)) {
-          continue;
-        }
-        if ($not_all_tags && $material->containsAllTags($not_all_tags)) {
-          continue;
+        foreach ($this->materials as $material) {
+            if ($any_tags && !$material->containsAnyTag($any_tags)) {
+                continue;
+            }
+            if ($all_tags && !$material->containsAllTags($all_tags)) {
+                continue;
+            }
+            if ($not_any_tags && $material->containsAnyTag($not_any_tags)) {
+                continue;
+            }
+            if ($not_all_tags && $material->containsAllTags($not_all_tags)) {
+                continue;
+            }
+
+            $r[] = $material;
         }
 
-        $r[] = $material;
-      }
-
-      return $r;
+        return $r;
     }
 
     // End of Material getter - setter etc methods section
@@ -1171,7 +1171,7 @@ class MultimediaObject
      */
     public function addLink(Link $link)
     {
-      $this->links->add($link);
+        $this->links->add($link);
     }
 
     /**
@@ -1181,7 +1181,7 @@ class MultimediaObject
      */
     public function removeLink(Link $link)
     {
-      $this->links->removeElement($link);
+        $this->links->removeElement($link);
     }
 
     /**
@@ -1191,7 +1191,7 @@ class MultimediaObject
      */
     public function removeLinkById($linkId)
     {
-      $this->links = $this->links->filter(function ($link) use ($linkId) {
+        $this->links = $this->links->filter(function ($link) use ($linkId) {
           return $link->getId() !== $linkId;
         });
     }
@@ -1203,7 +1203,7 @@ class MultimediaObject
      */
     public function upLinkById($linkId)
     {
-      $this->reorderLinkById($linkId, true);
+        $this->reorderLinkById($linkId, true);
     }
 
     /**
@@ -1213,7 +1213,7 @@ class MultimediaObject
      */
     public function downLinkById($linkId)
     {
-      $this->reorderLinkById($linkId, false);
+        $this->reorderLinkById($linkId, false);
     }
 
     //TODO move out
@@ -1225,22 +1225,22 @@ class MultimediaObject
      */
     private function reorderLinkById($linkId, $up = true)
     {
-      $snapshot = array_values($this->links->toArray());
-      $this->links->clear();
+        $snapshot = array_values($this->links->toArray());
+        $this->links->clear();
 
-      $out = array();
-      foreach ($snapshot as $key => $link) {
-        if ($link->getId() === $linkId) {
-          $out[($key * 10) + ($up ? -11 : 11) ] = $link;
-        } else {
-          $out[$key * 10] = $link;
+        $out = array();
+        foreach ($snapshot as $key => $link) {
+            if ($link->getId() === $linkId) {
+                $out[($key * 10) + ($up ? -11 : 11) ] = $link;
+            } else {
+                $out[$key * 10] = $link;
+            }
         }
-      }
 
-      ksort($out);
-      foreach ($out as $link) {
-        $this->links->add($link);
-      }
+        ksort($out);
+        foreach ($out as $link) {
+            $this->links->add($link);
+        }
     }
 
     /**
@@ -1252,7 +1252,7 @@ class MultimediaObject
      */
     public function containsLink(Link $link)
     {
-      return $this->links->contains($link);
+        return $this->links->contains($link);
     }
 
     /**
@@ -1262,7 +1262,7 @@ class MultimediaObject
      */
     public function getLinks()
     {
-      return $this->links;
+        return $this->links;
     }
 
     /**
@@ -1274,13 +1274,13 @@ class MultimediaObject
      */
     public function getLinkById($linkId)
     {
-      foreach ($this->links as $link) {
-        if ($link->getId() == $linkId) {
-          return $link;
+        foreach ($this->links as $link) {
+            if ($link->getId() == $linkId) {
+                return $link;
+            }
         }
-      }
 
-      return;
+        return;
     }
 
     /**
@@ -1292,15 +1292,15 @@ class MultimediaObject
      */
     public function getLinksByTag($tag)
     {
-      $r = array();
+        $r = array();
 
-      foreach ($this->links as $link) {
-        if ($link->containsTag($tag)) {
-          $r[] = $link;
+        foreach ($this->links as $link) {
+            if ($link->containsTag($tag)) {
+                $r[] = $link;
+            }
         }
-      }
 
-      return $r;
+        return $r;
     }
 
     /**
@@ -1312,13 +1312,13 @@ class MultimediaObject
      */
     public function getLinkByTag($tag)
     {
-      foreach ($this->links as $link) {
-        if ($link->containsTag($tag)) {
-          return $link;
+        foreach ($this->links as $link) {
+            if ($link->containsTag($tag)) {
+                return $link;
+            }
         }
-      }
 
-      return;
+        return;
     }
 
     /**
@@ -1330,15 +1330,15 @@ class MultimediaObject
      */
     public function getLinksWithAllTags(array $tags)
     {
-      $r = array();
+        $r = array();
 
-      foreach ($this->links as $link) {
-        if ($link->containsAllTags($tags)) {
-          $r[] = $link;
+        foreach ($this->links as $link) {
+            if ($link->containsAllTags($tags)) {
+                $r[] = $link;
+            }
         }
-      }
 
-      return $r;
+        return $r;
     }
 
     /**
@@ -1350,13 +1350,13 @@ class MultimediaObject
      */
     public function getLinkWithAllTags(array $tags)
     {
-      foreach ($this->links as $link) {
-        if ($link->containsAllTags($tags)) {
-          return $link;
+        foreach ($this->links as $link) {
+            if ($link->containsAllTags($tags)) {
+                return $link;
+            }
         }
-      }
 
-      return;
+        return;
     }
 
     /**
@@ -1368,15 +1368,15 @@ class MultimediaObject
      */
     public function getLinksWithAnyTag(array $tags)
     {
-      $r = array();
+        $r = array();
 
-      foreach ($this->links as $link) {
-        if ($link->containsAnyTag($tags)) {
-          $r[] = $link;
+        foreach ($this->links as $link) {
+            if ($link->containsAnyTag($tags)) {
+                $r[] = $link;
+            }
         }
-      }
 
-      return $r;
+        return $r;
     }
 
     /**
@@ -1388,13 +1388,13 @@ class MultimediaObject
      */
     public function getLinkWithAnyTag(array $tags)
     {
-      foreach ($this->links as $link) {
-        if ($link->containsAnyTag($tags)) {
-          return $link;
+        foreach ($this->links as $link) {
+            if ($link->containsAnyTag($tags)) {
+                return $link;
+            }
         }
-      }
 
-      return;
+        return;
     }
 
     /**
@@ -1413,26 +1413,26 @@ class MultimediaObject
                                            array $not_any_tags = array(),
                                            array $not_all_tags = array())
     {
-      $r = array();
+        $r = array();
 
-      foreach ($this->links as $link) {
-        if ($any_tags && !$link->containsAnyTag($any_tags)) {
-          continue;
-        }
-        if ($all_tags && !$link->containsAllTags($all_tags)) {
-          continue;
-        }
-        if ($not_any_tags && $link->containsAnyTag($not_any_tags)) {
-          continue;
-        }
-        if ($not_all_tags && $link->containsAllTags($not_all_tags)) {
-          continue;
-        }
+        foreach ($this->links as $link) {
+            if ($any_tags && !$link->containsAnyTag($any_tags)) {
+                continue;
+            }
+            if ($all_tags && !$link->containsAllTags($all_tags)) {
+                continue;
+            }
+            if ($not_any_tags && $link->containsAnyTag($not_any_tags)) {
+                continue;
+            }
+            if ($not_all_tags && $link->containsAllTags($not_all_tags)) {
+                continue;
+            }
 
-        $r[] = $link;
-      }
+            $r[] = $link;
+        }
       
-      return $r;
+        return $r;
     }
 
     // End of Link getter - setter etc methods section
@@ -1444,7 +1444,7 @@ class MultimediaObject
      */
     public function setRank($rank)
     {
-      $this->rank = $rank;
+        $this->rank = $rank;
     }
 
     /**
@@ -1454,7 +1454,7 @@ class MultimediaObject
      */
     public function getRank()
     {
-      return $this->rank;
+        return $this->rank;
     }
 
     /**
@@ -1464,7 +1464,7 @@ class MultimediaObject
      */
     public function setStatus($status)
     {
-      $this->status = $status;
+        $this->status = $status;
     }
 
     /**
@@ -1474,7 +1474,7 @@ class MultimediaObject
      */
     public function getStatus()
     {
-      return $this->status;
+        return $this->status;
     }
 
     /**
@@ -1484,7 +1484,7 @@ class MultimediaObject
      */
     public function setRecordDate($recordDate)
     {
-      $this->record_date = $recordDate;
+        $this->record_date = $recordDate;
     }
 
     /**
@@ -1494,7 +1494,7 @@ class MultimediaObject
      */
     public function getRecordDate()
     {
-      return $this->record_date;
+        return $this->record_date;
     }
 
     /**
@@ -1504,7 +1504,7 @@ class MultimediaObject
      */
     public function setPublicDate($publicDate)
     {
-      $this->public_date = $publicDate;
+        $this->public_date = $publicDate;
     }
 
     /**
@@ -1514,7 +1514,7 @@ class MultimediaObject
      */
     public function getPublicDate()
     {
-      return $this->public_date;
+        return $this->public_date;
     }
 
     /**
@@ -1524,10 +1524,10 @@ class MultimediaObject
      */
     public function setTitle($title, $locale = null)
     {
-      if ($locale == null) {
-        $locale = $this->locale;
-      }
-      $this->title[$locale] = $title;
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        $this->title[$locale] = $title;
     }
 
     /**
@@ -1537,14 +1537,14 @@ class MultimediaObject
      */
     public function getTitle($locale = null)
     {
-      if ($locale == null) {
-        $locale = $this->locale;
-      }
-      if (!isset($this->title[$locale])) {
-        return;
-      }
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        if (!isset($this->title[$locale])) {
+            return;
+        }
 
-      return $this->title[$locale];
+        return $this->title[$locale];
     }
 
     /**
@@ -1554,7 +1554,7 @@ class MultimediaObject
      */
     public function setI18nTitle(array $title)
     {
-      $this->title = $title;
+        $this->title = $title;
     }
 
     /**
@@ -1564,7 +1564,7 @@ class MultimediaObject
      */
     public function getI18nTitle()
     {
-      return $this->title;
+        return $this->title;
     }
 
     /**
@@ -1574,10 +1574,10 @@ class MultimediaObject
      */
     public function setSubtitle($subtitle, $locale = null)
     {
-      if ($locale == null) {
-        $locale = $this->locale;
-      }
-      $this->subtitle[$locale] = $subtitle;
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        $this->subtitle[$locale] = $subtitle;
     }
 
     /**
@@ -1587,14 +1587,14 @@ class MultimediaObject
      */
     public function getSubtitle($locale = null)
     {
-      if ($locale == null) {
-        $locale = $this->locale;
-      }
-      if (!isset($this->subtitle[$locale])) {
-        return;
-      }
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        if (!isset($this->subtitle[$locale])) {
+            return;
+        }
 
-      return $this->subtitle[$locale];
+        return $this->subtitle[$locale];
     }
 
     /**
@@ -1604,7 +1604,7 @@ class MultimediaObject
      */
     public function setI18nSubtitle(array $subtitle)
     {
-      $this->subtitle = $subtitle;
+        $this->subtitle = $subtitle;
     }
 
     /**
@@ -1614,7 +1614,7 @@ class MultimediaObject
      */
     public function getI18nSubtitle()
     {
-      return $this->subtitle;
+        return $this->subtitle;
     }
 
     /**
@@ -1624,10 +1624,10 @@ class MultimediaObject
      */
     public function setDescription($description, $locale = null)
     {
-      if ($locale == null) {
-        $locale = $this->locale;
-      }
-      $this->description[$locale] = $description;
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        $this->description[$locale] = $description;
     }
 
     /**
@@ -1637,14 +1637,14 @@ class MultimediaObject
      */
     public function getDescription($locale = null)
     {
-      if ($locale == null) {
-        $locale = $this->locale;
-      }
-      if (!isset($this->description[$locale])) {
-        return;
-      }
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        if (!isset($this->description[$locale])) {
+            return;
+        }
 
-      return $this->description[$locale];
+        return $this->description[$locale];
     }
 
     /**
@@ -1654,7 +1654,7 @@ class MultimediaObject
      */
     public function setI18nDescription(array $description)
     {
-      $this->description = $description;
+        $this->description = $description;
     }
 
     /**
@@ -1664,7 +1664,7 @@ class MultimediaObject
      */
     public function getI18nDescription()
     {
-      return $this->description;
+        return $this->description;
     }
 
     /**
@@ -1674,10 +1674,10 @@ class MultimediaObject
      */
     public function setLine2($line2, $locale = null)
     {
-      if ($locale == null) {
-        $locale = $this->locale;
-      }
-      $this->line2[$locale] = $line2;
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        $this->line2[$locale] = $line2;
     }
 
     /**
@@ -1687,14 +1687,14 @@ class MultimediaObject
      */
     public function getLine2($locale = null)
     {
-      if ($locale == null) {
-        $locale = $this->locale;
-      }
-      if (!isset($this->line2[$locale])) {
-        return;
-      }
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        if (!isset($this->line2[$locale])) {
+            return;
+        }
 
-      return $this->line2[$locale];
+        return $this->line2[$locale];
     }
 
     /**
@@ -1704,7 +1704,7 @@ class MultimediaObject
      */
     public function setI18nLine2(array $line2)
     {
-      $this->line2 = $line2;
+        $this->line2 = $line2;
     }
 
     /**
@@ -1714,7 +1714,7 @@ class MultimediaObject
      */
     public function getI18nLine2()
     {
-      return $this->line2;
+        return $this->line2;
     }
 
     /**
@@ -1724,10 +1724,10 @@ class MultimediaObject
      */
     public function setCopyright($copyright, $locale = null)
     {
-      if ($locale == null) {
-        $locale = $this->locale;
-      }
-      $this->copyright[$locale] = $copyright;
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        $this->copyright[$locale] = $copyright;
     }
 
     /**
@@ -1737,14 +1737,14 @@ class MultimediaObject
      */
     public function getCopyright($locale = null)
     {
-      if ($locale == null) {
-        $locale = $this->locale;
-      }
-      if (!isset($this->copyright[$locale])) {
-        return;
-      }
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        if (!isset($this->copyright[$locale])) {
+            return;
+        }
 
-      return $this->copyright[$locale];
+        return $this->copyright[$locale];
     }
 
     /**
@@ -1754,7 +1754,7 @@ class MultimediaObject
      */
     public function setI18nCopyright(array $copyright)
     {
-      $this->copyright = $copyright;
+        $this->copyright = $copyright;
     }
 
     /**
@@ -1764,7 +1764,7 @@ class MultimediaObject
      */
     public function getI18nCopyright()
     {
-      return $this->copyright;
+        return $this->copyright;
     }
 
     /**
@@ -1774,10 +1774,10 @@ class MultimediaObject
      */
     public function setKeyword($keyword, $locale = null)
     {
-      if ($locale == null) {
-        $locale = $this->locale;
-      }
-      $this->keyword[$locale] = $keyword;
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        $this->keyword[$locale] = $keyword;
     }
 
     /**
@@ -1787,14 +1787,14 @@ class MultimediaObject
      */
     public function getKeyword($locale = null)
     {
-      if ($locale == null) {
-        $locale = $this->locale;
-      }
-      if (!isset($this->keyword[$locale])) {
-        return;
-      }
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        if (!isset($this->keyword[$locale])) {
+            return;
+        }
 
-      return $this->keyword[$locale];
+        return $this->keyword[$locale];
     }
 
     /**
@@ -1804,7 +1804,7 @@ class MultimediaObject
      */
     public function setI18nKeyword(array $keyword)
     {
-      $this->keyword = $keyword;
+        $this->keyword = $keyword;
     }
 
     /**
@@ -1814,7 +1814,7 @@ class MultimediaObject
      */
     public function getI18nKeyword()
     {
-      return $this->keyword;
+        return $this->keyword;
     }
 
     /**
@@ -1824,7 +1824,7 @@ class MultimediaObject
      */
     public function setDuration($duration)
     {
-      $this->duration = $duration;
+        $this->duration = $duration;
     }
 
     /**
@@ -1834,7 +1834,7 @@ class MultimediaObject
      */
     public function getDuration()
     {
-      return $this->duration;
+        return $this->duration;
     }
 
     /**
@@ -1844,24 +1844,24 @@ class MultimediaObject
      */
     public function getDurationString()
     {
-      if ($this->duration > 0) {
-        $min =  floor($this->duration / 60);
-        $seg = $this->duration %60;
+        if ($this->duration > 0) {
+            $min =  floor($this->duration / 60);
+            $seg = $this->duration %60;
 
-        if ($seg < 10) {
-          $seg = '0'.$seg;
-        }
+            if ($seg < 10) {
+                $seg = '0'.$seg;
+            }
 
-        if ($min == 0) {
-          $aux = $seg."''";
+            if ($min == 0) {
+                $aux = $seg."''";
+            } else {
+                $aux = $min."' ".$seg."''";
+            }
+
+            return $aux;
         } else {
-          $aux = $min."' ".$seg."''";
+            return "0''";
         }
-
-        return $aux;
-      } else {
-        return "0''";
-      }
     }
 
     /**
@@ -1891,7 +1891,7 @@ class MultimediaObject
      */
     public function setLocale($locale)
     {
-      $this->locale = $locale;
+        $this->locale = $locale;
     }
 
     /**
@@ -1901,7 +1901,7 @@ class MultimediaObject
      */
     public function getLocale()
     {
-      return $this->locale;
+        return $this->locale;
     }
 
     // End of basic setter & getters
@@ -1917,9 +1917,9 @@ class MultimediaObject
     {
         $aux = array();
         
-        foreach ($this->people_in_multimedia_object as $role){
-            foreach ($role->getPeople() as $person){
-                if (!in_array($person, $aux)){
+        foreach ($this->people_in_multimedia_object as $role) {
+            foreach ($role->getPeople() as $person) {
+                if (!in_array($person, $aux)) {
                     $aux[] = $person;
                 }
             }
@@ -1938,9 +1938,9 @@ class MultimediaObject
     {
         $aux = array();
         
-        foreach ($this->people_in_multimedia_object as $role){
-            foreach ($role->getPeople() as $embeddedPerson){
-                if ($embeddedPerson->getId() === $person->getId()){
+        foreach ($this->people_in_multimedia_object as $role) {
+            foreach ($role->getPeople() as $embeddedPerson) {
+                if ($embeddedPerson->getId() === $person->getId()) {
                     $aux[] = $embeddedPerson;
                 }
             }
@@ -1958,8 +1958,8 @@ class MultimediaObject
      */
     public function containsPerson($person)
     {
-        foreach($this->getPeopleInMultimediaObject() as $embeddedPerson){
-            if ($person->getId() == $embeddedPerson->getId()){
+        foreach ($this->getPeopleInMultimediaObject() as $embeddedPerson) {
+            if ($person->getId() == $embeddedPerson->getId()) {
                 return true;
             }
         }
@@ -1977,11 +1977,10 @@ class MultimediaObject
      */
     public function containsPersonWithRole($person, $role)
     {
-        foreach($this->getPeopleInMultimediaObjectByRole($role, true) as $embeddedPerson){
-            if ($person->getId() == $embeddedPerson->getId()){
+        foreach ($this->getPeopleInMultimediaObjectByRole($role, true) as $embeddedPerson) {
+            if ($person->getId() == $embeddedPerson->getId()) {
                 return true;
             }
-            
         }
 
         return false;
@@ -1997,8 +1996,8 @@ class MultimediaObject
      */
     public function containsPersonWithAllRoles($person, array $roles)
     {
-        foreach($roles as $role){
-            if (!($this->containsPersonWithRole($person, $role))){
+        foreach ($roles as $role) {
+            if (!($this->containsPersonWithRole($person, $role))) {
                 return false;
             }
         }
@@ -2016,8 +2015,8 @@ class MultimediaObject
      */
     public function containsPersonWithAnyRole($person, array $roles)
     {
-        foreach($roles as $role){
-            if ($this->containsPersonWithRole($person, $role)){
+        foreach ($roles as $role) {
+            if ($this->containsPersonWithRole($person, $role)) {
                 return true;
             }
         }
@@ -2034,32 +2033,32 @@ class MultimediaObject
      */
     public function getPeopleInMultimediaObjectByRole($role = null, $always = false)
     {
-      $aux = array();
+        $aux = array();
 
-      if (null !== $role){
-          foreach ($this->people_in_multimedia_object as $embeddedRole){
-              if ($role->getCod() == $embeddedRole->getCod()){
-                  if ($always || $embeddedRole->getDisplay()){
-                      foreach ($embeddedRole->getPeople() as $embeddedPerson){
-                          $aux[] = $embeddedPerson;
-                      }
-                  }
-                  break;
-              }
-          }
-      }else{
-          foreach ($this->people_in_multimedia_object as $embeddedRole){
-              if ($always || $embeddedRole->getDisplay()){
-                  foreach ($embeddedRole->getPeople() as $embeddedPerson){
-                      if (!in_array($embeddedPerson, $aux)){
-                          $aux[] = $embeddedPerson;
-                      }
-                  }
-              }
-          }
-      }
+        if (null !== $role) {
+            foreach ($this->people_in_multimedia_object as $embeddedRole) {
+                if ($role->getCod() == $embeddedRole->getCod()) {
+                    if ($always || $embeddedRole->getDisplay()) {
+                        foreach ($embeddedRole->getPeople() as $embeddedPerson) {
+                            $aux[] = $embeddedPerson;
+                        }
+                    }
+                    break;
+                }
+            }
+        } else {
+            foreach ($this->people_in_multimedia_object as $embeddedRole) {
+                if ($always || $embeddedRole->getDisplay()) {
+                    foreach ($embeddedRole->getPeople() as $embeddedPerson) {
+                        if (!in_array($embeddedPerson, $aux)) {
+                            $aux[] = $embeddedPerson;
+                        }
+                    }
+                }
+            }
+        }
 
-      return $aux;
+        return $aux;
     }
 
     /**
@@ -2070,10 +2069,10 @@ class MultimediaObject
      */
     public function addPersonWithRole($person, $role)
     {
-        if (!($this->containsPersonWithRole($person, $role))){
-            if ($embeddedRole = $this->getEmbeddedRole($role)){
+        if (!($this->containsPersonWithRole($person, $role))) {
+            if ($embeddedRole = $this->getEmbeddedRole($role)) {
                 $embeddedRole->addPerson($person);
-            }else{
+            } else {
                 $embeddedRole = $this->createEmbeddedRole($role);
                 $embeddedRole->addPerson($person);
                 $this->people_in_multimedia_object[] = $embeddedRole;
@@ -2090,7 +2089,7 @@ class MultimediaObject
      */
     public function removePersonWithRole($person, $role)
     {
-        if (!($this->containsPersonWithRole($person, $role))){
+        if (!($this->containsPersonWithRole($person, $role))) {
             return false;
         }
 
@@ -2098,12 +2097,12 @@ class MultimediaObject
 
         $hasRemoved = $embeddedRole->removePerson($person);
 
-        if (0 === count($embeddedRole->getPeople())){
+        if (0 === count($embeddedRole->getPeople())) {
             $this->people_in_multimedia_object->removeElement($embeddedRole);
         }
 
         return $hasRemoved;
-     }
+    }
 
      /**
       * Get person with role
@@ -2115,7 +2114,7 @@ class MultimediaObject
       */
      public function getPersonWithRole($person, $role)
      {
-         if ($this->containsPersonWithRole($person, $role)){
+         if ($this->containsPersonWithRole($person, $role)) {
              return $this->getEmbeddedRole($role)->getEmbeddedPerson($person);
          }
 
@@ -2157,16 +2156,16 @@ class MultimediaObject
          $this->getEmbeddedRole($role)->getPeople()->clear();
 
          $out = array();
-         foreach ($people as $key => $embeddedPerson){
-           if ($person->getId() == $embeddedPerson->getId()) {
-             $out[($key * 10) + ($up ? -11 : 11)] = $embeddedPerson;
-           }else{
-             $out[($key * 10)] = $embeddedPerson;
-           }
+         foreach ($people as $key => $embeddedPerson) {
+             if ($person->getId() == $embeddedPerson->getId()) {
+                 $out[($key * 10) + ($up ? -11 : 11)] = $embeddedPerson;
+             } else {
+                 $out[($key * 10)] = $embeddedPerson;
+             }
          }
 
          ksort($out);
-         foreach ($out as $embeddedPerson){
+         foreach ($out as $embeddedPerson) {
              $this->getEmbeddedRole($role)->addPerson($embeddedPerson);
          }
      }
@@ -2186,7 +2185,7 @@ class MultimediaObject
          }
 
          return false;
-    }
+     }
 
     /**
      * Create embedded role
@@ -2197,9 +2196,9 @@ class MultimediaObject
      */
     public function createEmbeddedRole($role)
     {
-        if ($role instanceof EmbeddedRole){
+        if ($role instanceof EmbeddedRole) {
             return $role;
-        }elseif ($role instanceof Role){
+        } elseif ($role instanceof Role) {
             $embeddedRole = new EmbeddedRole($role);
             
             return $embeddedRole;
@@ -2225,16 +2224,16 @@ class MultimediaObject
       */
      private function updateDuration()
      {
-       $maxDuration = $this->getDuration();
+         $maxDuration = $this->getDuration();
 
-       foreach ($this->tracks as $mmTrack) {
-         if ($mmTrack->getDuration() > $this->getDuration()) {
-           $maxDuration = $mmTrack->getDuration();
+         foreach ($this->tracks as $mmTrack) {
+             if ($mmTrack->getDuration() > $this->getDuration()) {
+                 $maxDuration = $mmTrack->getDuration();
+             }
          }
-       }
 
-       if ($maxDuration !== $this->getDuration()) {
-         $this->setDuration($maxDuration);
-       }
+         if ($maxDuration !== $this->getDuration()) {
+             $this->setDuration($maxDuration);
+         }
      }
 }

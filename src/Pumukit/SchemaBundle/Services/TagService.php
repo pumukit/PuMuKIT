@@ -30,26 +30,25 @@ class TagService
 
         $tag = $this->repository->find($tagId);
         if (!$tag) {
-          // TODO throw exception tag not found
+            // TODO throw exception tag not found
           return $tagAdded;
         }
 
         do {
-          if (!$mmobj->containsTag($tag)) {
-            $tagAdded[] = $tag;
-            $mmobj->addTag($tag);
-            $tag->increaseNumberMultimediaObjects();
-            $this->dm->persist($tag);
-          }
-
-        } while($tag = $tag->getParent());
+            if (!$mmobj->containsTag($tag)) {
+                $tagAdded[] = $tag;
+                $mmobj->addTag($tag);
+                $tag->increaseNumberMultimediaObjects();
+                $this->dm->persist($tag);
+            }
+        } while ($tag = $tag->getParent());
 
         
         $this->dm->persist($mmobj);
         $this->dm->flush();
         
         return $tagAdded;
-  }
+    }
 
   /**
    * Remove Tag from Multimedia Object
@@ -64,20 +63,20 @@ class TagService
 
       $tag = $this->repository->find($tagId);
       if (!$tag) {
-        //TODO throw exception tag not found
+          //TODO throw exception tag not found
         return $removeTags;
       }
 
       do {
-        $children = $tag->getChildren();
-        if (!($mmobj->containsAnyTag($children->toArray()))) {
-          $removeTags[] = $tag;
-          $mmobj->removeTag($tag);
-          $tag->decreaseNumberMultimediaObjects();
-          $this->dm->persist($tag);
-        } else {
-          break;
-        }
+          $children = $tag->getChildren();
+          if (!($mmobj->containsAnyTag($children->toArray()))) {
+              $removeTags[] = $tag;
+              $mmobj->removeTag($tag);
+              $tag->decreaseNumberMultimediaObjects();
+              $this->dm->persist($tag);
+          } else {
+              break;
+          }
       } while ($tag = $tag->getParent());
 
       $this->dm->persist($mmobj);

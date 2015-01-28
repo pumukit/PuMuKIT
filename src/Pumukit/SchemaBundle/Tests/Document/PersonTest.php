@@ -62,6 +62,6 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
         $bio = '';
         $person->setBio($bio);
-        $this->assertEquals($post.', '.$firm, $person->getInfo());        
+        $this->assertEquals($post.', '.$firm, $person->getInfo());
     }
 }

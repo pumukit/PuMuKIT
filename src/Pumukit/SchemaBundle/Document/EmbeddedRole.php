@@ -263,7 +263,7 @@ class EmbeddedRole
      */
     public function __construct(Role $role)
     {
-        if (null !== $role){
+        if (null !== $role) {
             $this->id = $role->getId();
             $this->cod = $role->getCod();
             $this->xml = $role->getXml();
@@ -288,9 +288,9 @@ class EmbeddedRole
      * @param Person|EmbeddedPerson $person
      */
     public function addPerson($person)
-    {      
+    {
         if (!($this->containsPerson($person))) {
-             $this->people[] = $this->createEmbeddedPerson($person);
+            $this->people[] = $this->createEmbeddedPerson($person);
         }
     }
 
@@ -323,8 +323,8 @@ class EmbeddedRole
      */
     public function containsPerson($person)
     {
-        foreach($this->people as $embeddedPerson){
-            if ($person->getId() === $embeddedPerson->getId()){
+        foreach ($this->people as $embeddedPerson) {
+            if ($person->getId() === $embeddedPerson->getId()) {
                 return true;
             }
         }
@@ -375,9 +375,9 @@ class EmbeddedRole
      */
     public function createEmbeddedPerson($person)
     {
-        if ($person instanceof EmbeddedPerson){
+        if ($person instanceof EmbeddedPerson) {
             return $person;
-        }elseif ($person instanceof Person){
+        } elseif ($person instanceof Person) {
             $embedPerson = new EmbeddedPerson($person);
             
             return $embedPerson;
@@ -401,5 +401,5 @@ class EmbeddedRole
         }
         
         return false;
-    }    
+    }
 }

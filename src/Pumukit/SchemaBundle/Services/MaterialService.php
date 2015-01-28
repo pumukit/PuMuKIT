@@ -112,13 +112,13 @@ class MaterialService
      */
     private function saveFormData(Material $material, $formData)
     {
-        if (array_key_exists('i18n_name', $formData)){
+        if (array_key_exists('i18n_name', $formData)) {
             $material->setI18nName($formData['i18n_name']);
         }
-        if (array_key_exists('hide', $formData)){
+        if (array_key_exists('hide', $formData)) {
             $material->setHide($formData['hide']);
         }
-        if (array_key_exists('mime_type', $formData)){
+        if (array_key_exists('mime_type', $formData)) {
             $material->setMimeType($formData['mime_type']);
         }
 

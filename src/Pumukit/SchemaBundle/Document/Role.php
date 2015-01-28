@@ -305,7 +305,7 @@ class Role
     public function getNumberPeopleInMultimediaObject()
     {
         return $this->number_people_in_multimedia_object;
-    }    
+    }
     
     /**
      * Clone Role

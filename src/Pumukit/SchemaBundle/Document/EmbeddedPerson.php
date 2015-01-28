@@ -90,7 +90,7 @@ class EmbeddedPerson
      */
     public function __construct(Person $person)
     {
-        if (null !== $person){
+        if (null !== $person) {
             $this->id = $person->getId();
             $this->name = $person->getName();
             $this->email = $person->getEmail();
@@ -375,7 +375,7 @@ class EmbeddedPerson
     public function getI18nBio()
     {
         return $this->bio;
-    }    
+    }
 
     /**
      * Set locale
@@ -402,7 +402,7 @@ class EmbeddedPerson
      *
      * Returns person name with his/her honorific
      *
-     * @return string 
+     * @return string
      */
     public function getHName()
     {

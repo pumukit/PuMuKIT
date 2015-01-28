@@ -59,11 +59,11 @@ class PersonService
      * @return Person
      */
     public function updatePerson(Person $person)
-    {       
+    {
         $person = $this->savePerson($person);
 
-        foreach($this->repoMmobj->findByPersonId($person->getId()) as $mmobj){
-            foreach($mmobj->getAllEmbeddedPeopleByPerson($person) as $embeddedPerson){
+        foreach ($this->repoMmobj->findByPersonId($person->getId()) as $mmobj) {
+            foreach ($mmobj->getAllEmbeddedPeopleByPerson($person) as $embeddedPerson) {
                 $embeddedPerson = $this->updateEmbeddedPerson($person, $embeddedPerson);
             }
             $this->dm->persist($mmobj);
@@ -86,14 +86,14 @@ class PersonService
 
         $seriesCollection = new ArrayCollection();
         $count = 0;
-        foreach($mmobjs as $mmobj){
-            if ($limit !== 0){
-                if ($count === $limit){
+        foreach ($mmobjs as $mmobj) {
+            if ($limit !== 0) {
+                if ($count === $limit) {
                     break;
                 }
             }
             $oneseries = $mmobj->getSeries();
-            if (!$seriesCollection->contains($oneseries)){
+            if (!$seriesCollection->contains($oneseries)) {
                 $seriesCollection->add($oneseries);
             }
             ++$count;
@@ -112,7 +112,7 @@ class PersonService
      */
     public function createRelationPerson(Person $person, Role $role, MultimediaObject $multimediaObject)
     {
-        if ($person && $role && $multimediaObject){
+        if ($person && $role && $multimediaObject) {
             $this->dm->persist($person);
             $this->dm->flush();
             $multimediaObject->addPersonWithRole($person, $role);
@@ -193,8 +193,8 @@ class PersonService
      */
     public function deletePerson(Person $person)
     {
-        if (null !== $person){
-            if (0 !== count($this->repoMmobj->findByPersonId($person->getId()))){
+        if (null !== $person) {
+            if (0 !== count($this->repoMmobj->findByPersonId($person->getId()))) {
                 throw new \Exception("Couldn't remove Person with id ".$person->getId().". There are multimedia objects with this person");
             }
             $this->dm->remove($person);
@@ -209,10 +209,10 @@ class PersonService
      */
     public function batchDeletePerson(Person $person)
     {
-        foreach($this->repoMmobj->findByPersonId($person->getId()) as $mmobj){
-            foreach($mmobj->getRoles() as $embeddedRole){
-                if ($mmobj->containsPersonWithRole($person, $embeddedRole)){
-                    if (!($mmobj->removePersonWithRole($person, $embeddedRole))){
+        foreach ($this->repoMmobj->findByPersonId($person->getId()) as $mmobj) {
+            foreach ($mmobj->getRoles() as $embeddedRole) {
+                if ($mmobj->containsPersonWithRole($person, $embeddedRole)) {
+                    if (!($mmobj->removePersonWithRole($person, $embeddedRole))) {
                         throw new \Expection('There was an error removing person '.$person->getId().' with role '.$role->getCod().' in multimedia object '.$multimediaObject->getId());
                     }
                 }
@@ -244,7 +244,7 @@ class PersonService
      */
     private function updateEmbeddedPerson(Person $person, EmbeddedPerson $embeddedPerson)
     {
-        if (null !== $person){
+        if (null !== $person) {
             $embeddedPerson->setName($person->getName());
             $embeddedPerson->setEmail($person->getEmail());
             $embeddedPerson->setWeb($person->getWeb());

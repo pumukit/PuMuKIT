@@ -200,7 +200,7 @@ class PersonServiceTest extends WebTestCase
 
         $personKate = new Person();
         $nameKate = 'Kate Simmons';
-        $personKate->setName($nameKate);        
+        $personKate->setName($nameKate);
 
         $this->dm->persist($personJohn);
         $this->dm->persist($personBob);
@@ -329,7 +329,7 @@ class PersonServiceTest extends WebTestCase
 
         $personKate = new Person();
         $nameKate = 'Kate Simmons';
-        $personKate->setName($nameKate);        
+        $personKate->setName($nameKate);
 
         $personBobby = new Person();
         $nameBobby = 'Bobby Weissmann';
@@ -387,7 +387,7 @@ class PersonServiceTest extends WebTestCase
 
         $series = $this->factoryService->createSeries();
 
-        $mm1 = $this->factoryService->createMultimediaObject($series);  
+        $mm1 = $this->factoryService->createMultimediaObject($series);
         $title1 = 'Multimedia Object 1';
         $mm1->setTitle($title1);
         $mm1->addPersonWithRole($personJohn, $roleActor);

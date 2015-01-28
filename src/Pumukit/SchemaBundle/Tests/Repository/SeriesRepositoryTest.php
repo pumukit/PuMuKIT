@@ -497,5 +497,5 @@ class SeriesRepositoryTest extends WebTestCase
         $this->dm->persist($mm);
 
         return $mm;
-    }    
+    }
 }

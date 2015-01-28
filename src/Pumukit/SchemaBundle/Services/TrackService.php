@@ -104,7 +104,7 @@ class TrackService
      */
     private function saveFormData(Track $track, $formData)
     {
-        if (array_key_exists('i18n_description', $formData)){
+        if (array_key_exists('i18n_description', $formData)) {
             $track->setI18nDescription($formData['i18n_description']);
         }
         /*
@@ -131,16 +131,16 @@ class TrackService
                       'description' => array()
                       );
         
-        if (array_key_exists('profile', $formData)){
+        if (array_key_exists('profile', $formData)) {
             $data['profile'] = $formData['profile'];
         }
-        if (array_key_exists('priority', $formData)){
+        if (array_key_exists('priority', $formData)) {
             $data['priority'] = $formData['priority'];
         }
-        if (array_key_exists('language', $formData)){
+        if (array_key_exists('language', $formData)) {
             $data['language'] = $formData['language'];
         }
-        if (array_key_exists('i18n_description', $formData)){
+        if (array_key_exists('i18n_description', $formData)) {
             $data['description'] = $formData['i18n_description'];
         }
         
