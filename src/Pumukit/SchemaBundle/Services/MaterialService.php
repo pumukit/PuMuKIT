@@ -56,7 +56,6 @@ class MaterialService
         $material = new Material();
         $material = $this->saveFormData($material, $formData);
 
-        //TODO check file is mimetype
         $path = $materialFile->move($this->targetPath."/".$multimediaObject->getId(), $materialFile->getClientOriginalName());
 
         $material->setPath($path);
