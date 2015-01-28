@@ -59,7 +59,7 @@ class Tag
    * @Assert\Regex("/^\w*$/")
    * @Gedmo\TreePathSource
    *
-   * TODO Unique Index
+   * TODO Unique Index #6098
    */
   private $cod = "";
 
