@@ -133,4 +133,219 @@ class MultimediaObjectRepository extends DocumentRepository
           ->getQuery()
           ->execute();
     }
+
+    /**
+     * Find series with tag
+     *
+     * @param string $tagId
+     * @return ArrayCollection
+     */
+    public function findSeriesFieldByTagId($tagId)
+    {
+        return $this->createQueryBuilder()
+          ->field('tags._id')->equals(new \MongoId($tagId))
+          ->distinct('series')
+          ->getQuery()
+          ->execute();
+    }
+
+    /**
+     * Find one series with tag
+     *
+     * @param string $tagId
+     * @return Series
+     */
+    public function findOneSeriesFieldByTagId($tagId)
+    {
+        return $this->createQueryBuilder()
+          ->field('tags._id')->equals(new \MongoId($tagId))
+          ->distinct('series')
+          ->getQuery()
+          ->getSingleResult()
+          ->execute();
+    }
+
+    /**
+     * Find series with any tag
+     *
+     * @param array $tags
+     * @return ArrayCollection
+     */
+    public function findSeriesFieldWithAnyTag($tags)
+    {
+      // TODO
+    }
+
+    /**
+     * Find series with all tags
+     *
+     * @param array $tags
+     * @return ArrayCollection
+     */
+    public function findSeriesFieldWithAllTags($tags)
+    {
+      // TODO
+    }
+
+    /**
+     * Find one series with all tags
+     *
+     * @param array $tags
+     * @return Series
+     */
+    public function findOneSeriesFieldWithAllTags($tags)
+    {
+      // TODO
+    }
+
+    /**
+     * Find series without tag id
+     *
+     * @param string $tagId
+     * @return ArrayCollection
+     */
+    public function findSeriesFieldWithouthTagId($tagId)
+    {
+      // TODO
+    }
+
+    /**
+     * Find one series without tag id
+     *
+     * @param string $tagId
+     * @return Series
+     */
+    public function findOneSeriesFieldWithoutTag($tagId)
+    {
+      // TODO
+    }
+
+    /**
+     * Find series without all tags
+     *
+     * @param array tags
+     * @return ArrayCollection
+     */
+    public function findSeriesFieldWithoutAllTags($tags)
+    {
+      // TODO
+    }
+
+    /**
+     * Find series without some tags
+     *
+     * @param array $tags
+     * @return ArrayCollection
+     */
+    public function findSeriesFieldWithoutSomeTags($tags)
+    {
+      // TODO
+    }
+
+    /**
+     * Find multimedia objects by tag id
+     *
+     * @param string $tagId
+     * @return ArrayCollection
+     */
+    public function findByTagId($tagId)
+    {
+        return $this->createQueryBuilder()
+          ->field('tags._id')->equals(new \MongoId($tagId))
+          ->getQuery()
+          ->execute();
+    }
+
+    /**
+     * Find one multimedia object by tag id
+     *
+     * @param string $tagId
+     * @return MultimediaObject
+     */
+    public function findOneByTagId($tagId)
+    {
+        return $this->createQueryBuilder()
+          ->field('tags._id')->equals(new \MongoId($tagId))
+          ->getQuery()
+          ->getSingleResult()
+          ->execute();
+    }
+
+    /**
+     * Find multimedia objects with any tag
+     *
+     * @param array $tags
+     * @return ArrayCollection
+     */
+    public function findWithAnyTag($tags)
+    {
+      // TODO
+    }
+
+    /**
+     * Find multimedia objects with all tags
+     *
+     * @param array $tags
+     * @return ArrayCollection
+     */
+    public function findWithAllTags($tags)
+    {
+      // TODO
+    }
+
+    /**
+     * Find one multimedia object with all tags
+     *
+     * @param array $tags
+     * @return MultimediaObject
+     */
+    public function findOneWithAllTags($tags)
+    {
+      // TODO
+    }
+
+    /**
+     * Find multimedia objects without tag id
+     *
+     * @param string $tagId
+     * @return ArrayCollection
+     */
+    public function findWithouthTagId($tagId)
+    {
+      // TODO
+    }
+
+    /**
+     * Find one multimedia object without tag id
+     *
+     * @param string $tagId
+     * @return MultimediaObject
+     */
+    public function findOneWithoutTag($tagId)
+    {
+      // TODO
+    }
+
+    /**
+     * Find multimedia objects without all tags
+     *
+     * @param array tags
+     * @return ArrayCollection
+     */
+    public function findWithoutAllTags($tags)
+    {
+      // TODO
+    }
+
+    /**
+     * Find multimedia objects without some tags
+     *
+     * @param array $tags
+     * @return ArrayCollection
+     */
+    public function findWithoutSomeTags($tags)
+    {
+      // TODO
+    }
+
 }

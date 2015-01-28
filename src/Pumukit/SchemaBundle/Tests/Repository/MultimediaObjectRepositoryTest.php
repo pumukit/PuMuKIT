@@ -13,6 +13,7 @@ use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\Tag;
 
 class MultimediaObjectRepositoryTest extends WebTestCase
 {
@@ -48,6 +49,8 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
             ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')
+            ->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')
             ->remove(array());
         $this->dm->flush();
     }
@@ -678,6 +681,70 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         $tracksArray = array($track1, $track3);
         $this->assertEquals($tracksArray, array_values($this->repo->find($mm->getId())->getTracks()->toArray()));
+    }
+
+    public function testFindByTags()
+    {
+        $tag1 = new Tag();
+        $tag1->setCod('tag1');
+        $tag2 = new Tag();
+        $tag2->setCod('tag2');
+        $tag3 = new Tag();
+        $tag3->setCod('tag3');
+        
+        $this->dm->persist($tag1);
+        $this->dm->persist($tag2);
+        $this->dm->persist($tag3);
+        $this->dm->flush();
+
+        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
+        $series1 = $this->createSeries('Series 1');
+        $mm11 = $this->factoryService->createMultimediaObject($series1);
+        $mm12 = $this->factoryService->createMultimediaObject($series1);
+        $mm13 = $this->factoryService->createMultimediaObject($series1);
+
+        $series2 = $this->createSeries('Series 2');
+        $mm21 = $this->factoryService->createMultimediaObject($series2);
+        $mm22 = $this->factoryService->createMultimediaObject($series2);
+        $mm23 = $this->factoryService->createMultimediaObject($series2);
+
+        $series3 = $this->createSeries('Series 3');
+        $mm31 = $this->factoryService->createMultimediaObject($series3);
+        $mm32 = $this->factoryService->createMultimediaObject($series3);
+        $mm33 = $this->factoryService->createMultimediaObject($series3);
+        $mm34 = $this->factoryService->createMultimediaObject($series3);
+
+        $mm11->addTag($tag1);
+        $mm11->addTag($tag2);
+
+        $mm12->addTag($tag1);
+
+        $mm21->addTag($tag2);
+
+        $mm22->addTag($tag1);
+
+        $mm33->addTag($tag1);
+
+        $mm34->addTag($tag1);
+
+        $this->dm->persist($mm11);
+        $this->dm->persist($mm12);
+        $this->dm->persist($mm21);
+        $this->dm->persist($mm22);
+        $this->dm->persist($mm33);
+        $this->dm->persist($mm34);
+        $this->dm->flush();
+
+        //exit;
+
+        var_dump($tag1->getId());
+        var_dump($tag2->getId());
+        var_dump($mm11->getTags()->toArray()[0]->getId());
+        var_dump($mm11->getTags()->toArray()[1]->getId());
+        //dump($this->repo->find($mm11->getId()));
+
+        $this->assertEquals(5, count($this->repo->findByTagId($tag1->getId())));
+        $this->assertEquals(2, count($this->repo->findByTagId($tag2->getId())));
     }
 
     private function createPerson($name)
