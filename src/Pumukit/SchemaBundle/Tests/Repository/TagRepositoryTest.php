@@ -13,11 +13,10 @@ class TagRepositoryTest extends WebTestCase
     public function setUp()
     {
         //INIT TEST SUITE
-    $options = array(
-        'environment' => 'test',
-    );
+        $options = array(
+            'environment' => 'test',
+         );
         $kernel = static::createKernel($options);
-    //$kernel = static::createKernel();
         $kernel->boot();
         $this->dm = $kernel->getContainer()
             ->get('doctrine_mongodb')->getManager();
@@ -137,11 +136,9 @@ class TagRepositoryTest extends WebTestCase
     public function testGetChildrenFromDocument()
     {
         $this->createTestTree();
+        $this->dm->clear();
 
-      //TODO FIXME Clear DocumentManager to reset document.children array.
-      //$this->dm->clear();
-
-      $tag = $this->repo->findOneByCod("ROOT");
+        $tag = $this->repo->findOneByCod("ROOT");
         $this->assertEquals(2, count($tag->getChildren()));
     }
 
@@ -156,21 +153,21 @@ class TagRepositoryTest extends WebTestCase
         $tagB = $this->repo->findOneByCod("B");
         $tagB2A = $this->repo->findOneByCod("B2A");
 
-    //Test rename
+        //Test rename
         $tag->setCod("ROOT2");
         $this->dm->persist($tag);
         $this->dm->flush();
         $this->assertEquals(4, $tagB2A->getLevel());
         $this->assertEquals(6, count($this->repo->findAll()));
 
-    //Test move
+        //Test move
         $tagB->setParent($tagA);
         $this->dm->persist($tag);
         $this->dm->flush();
         $this->assertEquals(5, $tagB2A->getLevel());
         $this->assertEquals(6, count($this->repo->findAll()));
-
-    //Test delete
+        
+        //Test delete
         $this->dm->remove($tagB);
         $this->dm->flush();
         $this->assertEquals(2, count($this->repo->findAll())); //When a parent is deleted all the descendant.
