@@ -35,6 +35,7 @@ class MultimediaObject
     /**
      * @var Broadcast $broadcast
      * @MongoDB\EmbedOne(targetDocument="Broadcast")
+     * //TODO is EmbedOne but broadcast is a Document.
      */
     private $broadcast;
     
