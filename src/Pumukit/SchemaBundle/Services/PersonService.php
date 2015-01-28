@@ -193,8 +193,8 @@ class PersonService
      */
     public function deletePerson(Person $person)
     {
-        if ($person){
-            if (empty($this->repoMmobj->findByPersonId($person->getId()))){
+        if (null !== $person){
+            if (0 !== count($this->repoMmobj->findByPersonId($person->getId()))){
                 throw new \Exception("Couldn't remove Person with id ".$person->getId().". There are multimedia objects with this person");
             }
             $this->dm->remove($person);
