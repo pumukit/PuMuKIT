@@ -38,6 +38,8 @@ class FactoryServiceTest extends WebTestCase
       ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')
       ->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
+      ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
       ->remove(array());
         $this->dm->flush();
@@ -55,7 +57,9 @@ class FactoryServiceTest extends WebTestCase
         // getMultimediaObjects gives us all multimedia objects in the series except prototype
         $this->assertEquals(0, count($this->seriesRepo->findAll()[0]->getMultimediaObjects()));
         $this->assertEquals($series, $this->seriesRepo->findAll()[0]);
-        $this->assertEquals($series, $this->mmobjRepo->findAll()[0]->getSeries());
+        //TODO series.multimedia_objects have diferent internal initialized value.
+        //$this->assertEquals($series, $this->mmobjRepo->findAll()[0]->getSeries());
+        $this->assertEquals($series->getId(), $this->mmobjRepo->findAll()[0]->getSeries()->getId());
         $this->assertEquals(MultimediaObject::STATUS_PROTOTYPE, $this->mmobjRepo->findAll()[0]->getStatus());
     }
 
@@ -70,9 +74,9 @@ class FactoryServiceTest extends WebTestCase
         $this->assertEquals($series, $this->seriesRepo->findAll()[0]);
         $this->assertEquals(2, count($this->mmobjRepo->findAll()));
         $this->assertEquals(1, count($this->mmobjRepo->findAll()[0]->getSeries()));
-        $this->assertEquals($series, $this->mmobjRepo->findAll()[0]->getSeries());
+        $this->assertEquals($series->getId(), $this->mmobjRepo->findAll()[0]->getSeries()->getId());
         $this->assertEquals(1, count($this->mmobjRepo->find($mmobj->getId())->getSeries()));
-        $this->assertEquals($series, $this->mmobjRepo->find($mmobj->getId())->getSeries());
+        $this->assertEquals($series->getId(), $this->mmobjRepo->find($mmobj->getId())->getSeries()->getId());
 
         $this->assertEquals(1, count($this->mmobjRepo->findWithoutPrototype($series)));
         $this->assertEquals(1, count($this->seriesRepo->findAll()[0]->getMultimediaObjects()));
@@ -126,35 +130,49 @@ class FactoryServiceTest extends WebTestCase
         $series_type1 = new SeriesType();
         $name_type1 = 'Series type 1';
         $series_type1->setName($name_type1);
-        $this->dm->persist($series_type1);
 
         $series_type2 = new SeriesType();
         $name_type2 = 'Series type 2';
         $series_type2->setName($name_type2);
+
+        $this->dm->persist($series_type1);
         $this->dm->persist($series_type2);
+        $this->dm->flush();
+
+        // TODO this souldn't be in a test. This should be executed when creating the SeriesType
+        //Workaround to fix reference method initialization.
+        $this->dm->clear(get_class($series_type1));
+        $series_type1 = $this->dm->find('PumukitSchemaBundle:SeriesType', $series_type1->getId());
+        $series_type2 = $this->dm->find('PumukitSchemaBundle:SeriesType', $series_type2->getId());
 
         $series1 = $this->factory->createSeries();
         $name1 = "Series 1";
         $series1->setTitle($name1);
-        $series1->setSeriesType($series_type1);
-        $this->dm->persist($series1);
 
         $series2 = $this->factory->createSeries();
         $name2 = "Series 2";
         $series2->setTitle($name2);
-        $series2->setSeriesType($series_type1);
-        $this->dm->persist($series2);
 
         $series3 = $this->factory->createSeries();
         $name3 = "Series 3";
         $series3->setTitle($name3);
-        $series3->setSeriesType($series_type2);
+
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
         $this->dm->persist($series3);
+        $this->dm->flush();
 
+        $series1->setSeriesType($series_type1);
+        $series2->setSeriesType($series_type1);
+        $series3->setSeriesType($series_type2);
 
-        var_dump(count($series_type1->getSeries()));
-        var_dump(count($this->dm->getRepository('PumukitSchemaBundle:Series')->findBySeriesType($series_type1)));
-        
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->persist($series3);
+        $this->dm->flush();
+
+        $this->assertEquals(2, count($series_type1->getSeries()));
+        $this->assertEquals(1, count($series_type2->getSeries()));
     }
 
     private function createBroadcasts()
