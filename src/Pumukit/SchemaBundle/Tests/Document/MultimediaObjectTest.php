@@ -33,8 +33,11 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $numview = 2;
 
         $tag1 = new Tag();
+        $tag1->setCod('tag1');
         $tag2 = new Tag();
+        $tag2->setCod('tag2');
         $tag3 = new Tag();
+        $tag3->setCod('tag3');
         $mm_tags = array($tag1, $tag2, $tag3);
 
         $broadcast = new Broadcast();
