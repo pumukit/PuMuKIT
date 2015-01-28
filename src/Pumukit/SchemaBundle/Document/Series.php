@@ -23,7 +23,7 @@ class Series
   /**
    * @var ArrayCollection $multimedia_objects
    *
-   * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="series", repositoryMethod="findWithoutPrototype", simple=true)
+   * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="series", repositoryMethod="findWithoutPrototype", simple=true, orphanRemoval=false)
    */
   private $multimedia_objects;
 

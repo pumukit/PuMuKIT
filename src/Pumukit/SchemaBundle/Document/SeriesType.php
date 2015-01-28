@@ -16,7 +16,6 @@ class SeriesType
     /**
    * @var int $id
    *
-   * @MongoDB\Int
    * @MongoDB\Id
    */
   private $id;
@@ -45,7 +44,7 @@ class SeriesType
   /**
    * @var ArrayCollection $series
    *
-   * @MongoDB\ReferenceMany(targetDocument="Series", mappedBy="series_type", repositoryMethod="findBySeriesType", simple=true)
+   * @MongoDB\ReferenceMany(targetDocument="Series", mappedBy="series_type", repositoryMethod="findBySeriesType", simple=true, orphanRemoval=false)
    */
   private $series;
 
