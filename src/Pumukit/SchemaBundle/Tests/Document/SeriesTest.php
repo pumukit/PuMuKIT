@@ -87,7 +87,7 @@ class SeriesTest extends \PHPUnit_Framework_TestCase
 
     // TODO
     /*
-    public function testGetMultimediaObjectsByTag()
+    public function testGetMultimediaObjectsWithTag()
     {
         $s = new Series();
 
@@ -125,9 +125,9 @@ class SeriesTest extends \PHPUnit_Framework_TestCase
         $s->addMultimediaObject($mm4);
         $s->addMultimediaObject($mm5);
 
-        $this->assertEquals(array($mm3, $mm2, $mm1), $s->getMultimediaObjectsByTag($tag1));
-        $this->assertEquals($mm3, $s->getMultimediaObjectByTag($tag1));
-        $this->assertEquals(null, $s->getMultimediaObjectByTag($tag8));
+        $this->assertEquals(array($mm3, $mm2, $mm1), $s->getMultimediaObjectsWithTag($tag1));
+        $this->assertEquals($mm3, $s->getMultimediaObjectWithTag($tag1));
+        $this->assertEquals(null, $s->getMultimediaObjectWithTag($tag8));
         $this->assertEquals($mm3, $s->getMultimediaObjectWithAnyTag(array($tag1, $tag8)));
         $this->assertEquals(array($mm2), $s->getMultimediaObjectsWithAllTags(array($tag1, $tag2, $tag3)));
         $this->assertTrue(in_array($s->getMultimediaObjectWithAllTags(array($tag2,$tag1)),array($mm3, $mm2)));
@@ -136,13 +136,13 @@ class SeriesTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, count($s->getMultimediaObjectWithAnyTag(array($tag1))));
         $this->assertEquals(null, $s->getMultimediaObjectWithAnyTag(array($tag8)));
 
-        $this->assertEquals(5, count($s->getFilteredMultimediaObjectsByTags()));
-        $this->assertEquals(3, count($s->getFilteredMultimediaObjectsByTags(array($tag1))));
-        $this->assertEquals(1, count($s->getFilteredMultimediaObjectsByTags(array($tag1), array($tag2, $tag3))));
-        $this->assertEquals(0, count($s->getFilteredMultimediaObjectsByTags(array(), array($tag2, $tag3), array($tag1))));
-        $this->assertEquals(3, count($s->getFilteredMultimediaObjectsByTags(array(), array(), array($tag4))));
-        $this->assertEquals(0, count($s->getFilteredMultimediaObjectsByTags(array(), array(), array($tag4, $tag1))));
-        $this->assertEquals(5, count($s->getFilteredMultimediaObjectsByTags(array(), array(), array(), array($tag4, $tag1))));
-        $this->assertEquals(1, count($s->getFilteredMultimediaObjectsByTags(array($tag2, $tag3), array(), array(), array($tag3))));
+        $this->assertEquals(5, count($s->getFilteredMultimediaObjectsWithTags()));
+        $this->assertEquals(3, count($s->getFilteredMultimediaObjectsWithTags(array($tag1))));
+        $this->assertEquals(1, count($s->getFilteredMultimediaObjectsWithTags(array($tag1), array($tag2, $tag3))));
+        $this->assertEquals(0, count($s->getFilteredMultimediaObjectsWithTags(array(), array($tag2, $tag3), array($tag1))));
+        $this->assertEquals(3, count($s->getFilteredMultimediaObjectsWithTags(array(), array(), array($tag4))));
+        $this->assertEquals(0, count($s->getFilteredMultimediaObjectsWithTags(array(), array(), array($tag4, $tag1))));
+        $this->assertEquals(5, count($s->getFilteredMultimediaObjectsWithTags(array(), array(), array(), array($tag4, $tag1))));
+        $this->assertEquals(1, count($s->getFilteredMultimediaObjectsWithTags(array($tag2, $tag3), array(), array(), array($tag3))));
     }*/
 }

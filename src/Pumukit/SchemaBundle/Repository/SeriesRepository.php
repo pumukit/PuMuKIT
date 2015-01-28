@@ -13,7 +13,8 @@ use Pumukit\SchemaBundle\Document\SeriesType;
  */
 class SeriesRepository extends DocumentRepository
 {
-    public function findByTag(Tag $tag)
+    //TODO funciona?
+    public function findWithTag(Tag $tag)
     {
         $dm = $kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->equals($tag)->sort('public_date', 'desc');
@@ -32,7 +33,7 @@ class SeriesRepository extends DocumentRepository
     return $results;
     }
 
-    public function findOneByTag(Tag $tag)
+    public function findOneWithTag(Tag $tag)
     {
         $dm = $this->$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->equals($tag)->sort('public_date', 'desc');

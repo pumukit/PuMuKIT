@@ -70,7 +70,7 @@ class SeriesRepositoryTest extends WebTestCase
 
     // TO DO: test proper time sorting
     /*
-    public function testFindSeriesByTags()
+    public function testFindSeriesWithTags()
     {
         // Only one SeriesType at the moment.
         $series_type = $this->createSeriesType("Medieval Fantasy Sitcom");
@@ -178,29 +178,29 @@ class SeriesRepositoryTest extends WebTestCase
 
         $this->em->flush();
 
-        $this->assertEquals(0, count($this->repo->findByTag($tag_g_unused)));
+        $this->assertEquals(0, count($this->repo->findWithTag($tag_g_unused)));
 
-        // findOneByTag uses query->getSingleResult and throws an exception
+        // findOneWithTag uses query->getSingleResult and throws an exception
         // if no result is found. See "Manual de Symfony2, Release 2.0.1" p.124
         try {
-            $testNoResultException = $this->repo->findOneByTag($tag_g_unused);
+            $testNoResultException = $this->repo->findOneWithTag($tag_g_unused);
         } catch (\Doctrine\ORM\NoResultException $e) {
             $testNoResultException = true;
         }
         $this->assertTrue($testNoResultException);
         unset ($testNoResultException);
 
-        $this->assertEquals(1, count($this->repo->findOneByTag($tag_r_north)));
-        $this->assertEquals(1, count($this->repo->findOneByTag($tag_r_essos)));
-        $this->assertEquals($series_main, $this->repo->findOneByTag($tag_r_north));
+        $this->assertEquals(1, count($this->repo->findOneWithTag($tag_r_north)));
+        $this->assertEquals(1, count($this->repo->findOneWithTag($tag_r_essos)));
+        $this->assertEquals($series_main, $this->repo->findOneWithTag($tag_r_north));
 
-        // Test findByTag
-        $this->assertEquals(2, count($this->repo->findByTag($tag_r_north)));
-        $this->assertEquals(2, count($this->repo->findByTag($tag_r_essos)));
-        $this->assertEquals(2, count($this->repo->findByTag($tag_h_night)));
-        $this->assertEquals(2, count($this->repo->findByTag($tag_h_khalasar)));
-        $this->assertEquals(2, count($this->repo->findByTag($tag_g_defence)));
-        $this->assertEquals(3, count($this->repo->findByTag($tag_g_raven)));
+        // Test findWithTag
+        $this->assertEquals(2, count($this->repo->findWithTag($tag_r_north)));
+        $this->assertEquals(2, count($this->repo->findWithTag($tag_r_essos)));
+        $this->assertEquals(2, count($this->repo->findWithTag($tag_h_night)));
+        $this->assertEquals(2, count($this->repo->findWithTag($tag_h_khalasar)));
+        $this->assertEquals(2, count($this->repo->findWithTag($tag_g_defence)));
+        $this->assertEquals(3, count($this->repo->findWithTag($tag_g_raven)));
 
         // Test findWithAnyTag
         $this->assertEquals (2,count($this->repo->findWithAnyTag(array($tag_g_defence))));

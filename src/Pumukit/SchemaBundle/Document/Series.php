@@ -682,7 +682,7 @@ class Series
    * @param Tag $tag
    * @return ArrayCollection
    */
-  public function getMultimediaObjectsByTag(Tag $tag)
+  public function getMultimediaObjectsWithTag(Tag $tag)
   {
       $r = array();
 
@@ -701,7 +701,7 @@ class Series
    * @param Tag $tag
    * @return MultimediaObject
    */
-  public function getMultimediaObjectByTag(Tag $tag)
+  public function getMultimediaObjectWithTag(Tag $tag)
   {
       foreach ($this->multimedia_objects as $mmo) {
           //if ($mmo->tags->contains($tag)) {
@@ -794,7 +794,7 @@ class Series
    * @param array $not_all_tags
    * @return ArrayCollection
    */
-  public function getFilteredMultimediaObjectsByTags(
+  public function getFilteredMultimediaObjectsWithTags(
                              array $any_tags = array(),
                              array $all_tags = array(),
                              array $not_any_tags = array(),
