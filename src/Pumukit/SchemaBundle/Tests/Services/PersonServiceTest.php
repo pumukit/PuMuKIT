@@ -7,6 +7,7 @@ use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Broadcast;
 
 class PersonServiceTest extends WebTestCase
 {
@@ -36,9 +37,10 @@ class PersonServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Person')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:Person')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')->remove(array());
         $this->dm->flush();
     }
 
@@ -89,6 +91,12 @@ class PersonServiceTest extends WebTestCase
 
         $this->dm->persist($roleActor);
         $this->dm->persist($rolePresenter);
+        $this->dm->flush();
+
+        $broadcast = new Broadcast();
+        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
+        $broadcast->setDefaultSel(true);
+        $this->dm->persist($broadcast);
         $this->dm->flush();
 
         $series = $this->factoryService->createSeries();
@@ -160,6 +168,12 @@ class PersonServiceTest extends WebTestCase
 
     public function testFindSeriesWithPerson()
     {
+        $broadcast = new Broadcast();
+        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
+        $broadcast->setDefaultSel(true);
+        $this->dm->persist($broadcast);
+        $this->dm->flush();
+
         $series1 = $this->factoryService->createSeries();
         $title1 = 'Series 1';
         $series1->setTitle($title1);
@@ -278,6 +292,12 @@ class PersonServiceTest extends WebTestCase
         $this->dm->persist($roleActor);
         $this->dm->flush();
 
+        $broadcast = new Broadcast();
+        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
+        $broadcast->setDefaultSel(true);
+        $this->dm->persist($broadcast);
+        $this->dm->flush();
+
         $series = $this->factoryService->createSeries();
 
         $mm = $this->factoryService->createMultimediaObject($series);
@@ -359,6 +379,12 @@ class PersonServiceTest extends WebTestCase
         $this->dm->persist($rolePresenter);
         $this->dm->flush();
 
+        $broadcast = new Broadcast();
+        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
+        $broadcast->setDefaultSel(true);
+        $this->dm->persist($broadcast);
+        $this->dm->flush();
+
         $series = $this->factoryService->createSeries();
 
         $mm1 = $this->factoryService->createMultimediaObject($series);  
@@ -433,6 +459,12 @@ class PersonServiceTest extends WebTestCase
         $this->dm->persist($rolePresenter);
         $this->dm->flush();
 
+        $broadcast = new Broadcast();
+        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
+        $broadcast->setDefaultSel(true);
+        $this->dm->persist($broadcast);
+        $this->dm->flush();
+
         $series = $this->factoryService->createSeries();
 
         $mm1 = $this->factoryService->createMultimediaObject($series);
@@ -463,7 +495,91 @@ class PersonServiceTest extends WebTestCase
         $this->assertEquals($personJohn->getId(), $mm1PeopleActor[0]->getId());
         $this->assertEquals($personBob->getId(), $mm1PeopleActor[1]->getId());
 
-        // TODO
-        //$this->personService->upPersonWithRole(
+        $this->personService->upPersonWithRole($personBob, $roleActor, $mm1);
+
+        $mm1PeopleActor = $mm1->getPeopleInMultimediaObjectByRole($roleActor);
+        $this->assertEquals($personBob->getId(), $mm1PeopleActor[0]->getId());
+        $this->assertEquals($personJohn->getId(), $mm1PeopleActor[1]->getId());
+
+        $personKate = new Person();
+        $nameKate = 'Kate Simmons';
+        $personKate->setName($nameKate);
+        $personKate = $this->personService->savePerson($personKate);
+
+        $mm1->addPersonWithRole($personKate, $roleActor);
+        $this->dm->persist($mm1);
+        $this->dm->flush();
+
+        $mm1PeopleActor = $mm1->getPeopleInMultimediaObjectByRole($roleActor);
+        $this->assertEquals($personBob->getId(), $mm1PeopleActor[0]->getId());
+        $this->assertEquals($personJohn->getId(), $mm1PeopleActor[1]->getId());
+        $this->assertEquals($personKate->getId(), $mm1PeopleActor[2]->getId());
+        
+        $this->personService->downPersonWithRole($personBob, $roleActor, $mm1);
+
+        $mm1PeopleActor = $mm1->getPeopleInMultimediaObjectByRole($roleActor);
+        $this->assertEquals($personJohn->getId(), $mm1PeopleActor[0]->getId());
+        $this->assertEquals($personBob->getId(), $mm1PeopleActor[1]->getId());
+        $this->assertEquals($personKate->getId(), $mm1PeopleActor[2]->getId());
+
+        $this->personService->downPersonWithRole($personBob, $roleActor, $mm1);
+
+        $mm1PeopleActor = $mm1->getPeopleInMultimediaObjectByRole($roleActor);
+        $this->assertEquals($personJohn->getId(), $mm1PeopleActor[0]->getId());
+        $this->assertEquals($personKate->getId(), $mm1PeopleActor[1]->getId());
+        $this->assertEquals($personBob->getId(), $mm1PeopleActor[2]->getId());
+    }
+
+    /**
+     * @expectedException Exception
+     * @expectedExceptionMessage remove Person with id
+     */
+    public function testDeletePerson()
+    {
+        $this->assertEquals(0, count($this->repo->findAll()));
+
+        $person = new Person();
+        $person->setName('Person');
+        $this->dm->persist($person);
+        $this->dm->flush();
+
+        $this->assertEquals(1, count($this->repo->findAll()));
+
+        $this->personService->deletePerson($person);
+
+        $this->assertEquals(0, count($this->repo->findAll()));
+
+        $personBob = new Person();
+        $personBob->setName('Bob');
+
+        $roleActor = new Role();
+        $codActor = 'actor';
+        $roleActor->setCod($codActor);
+
+        $this->dm->persist($personBob);
+        $this->dm->persist($roleActor);
+        $this->dm->flush();
+
+        $broadcast = new Broadcast();
+        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
+        $broadcast->setDefaultSel(true);
+        $this->dm->persist($broadcast);
+        $this->dm->flush();
+
+        $series = $this->factoryService->createSeries();
+
+        $mm = $this->factoryService->createMultimediaObject($series);
+        $mm->setTitle('Multimedia Object');
+        $mm->addPersonWithRole($personBob, $roleActor);
+
+        $this->dm->persist($mm);
+        $this->dm->persist($series);
+        $this->dm->flush();
+
+        $this->assertEquals(1, count($this->repo->findAll()));
+
+        $this->personService->deletePerson($personBob);
+
+        $this->assertEquals(1, count($this->repo->findAll()));
     }
 }
