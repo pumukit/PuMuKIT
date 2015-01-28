@@ -11,11 +11,6 @@ pumukit_encoder:
 pumukitadmin:
     resource: @PumukitAdminBundle/Resources/config/routing.yml
 
-pumukit_schema:
-    resource: "@PumukitSchemaBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 

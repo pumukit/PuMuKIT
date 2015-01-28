@@ -1,5 +1,5 @@
 <?php
-namespace Pumukit\SchemaBundle\Test\Document;
+namespace Pumukit\SchemaBundle\Tests\Repository;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
