@@ -211,33 +211,6 @@ class SeriesType
   }
 
   /**
-   * Add series
-   *
-   * @param Series $series
-   */
-  /* TODO may be useful in future versions
-  public function addSeries(Series $series)
-  {
-      $this->series[] = $series;
-    // $this->series = array_unique($this->tags);
-    // Extra verification
-    $series->setSeriesType($this);
-  }
-  */
-
-  /**
-   * Remove series
-   *
-   * @param Series $series
-   */
-  /* TODO may be useful in future versions
-  public function removeSeries(Series $series)
-  {
-      $this->series->removeElement($series);
-  }
-  */
-
-  /**
    * Contains series
    *
    * @param Series $series
@@ -268,28 +241,4 @@ class SeriesType
   {
       return $this->name($this->locale);
   }
-
-    /**
-     * Add series
-     *
-     * @param Pumukit\SchemaBundle\Document\Series $series
-     */
-    /* TODO may be useful in future versions
-    public function addSeries(\Pumukit\SchemaBundle\Document\Series $series)
-    {
-        $this->series[] = $series;
-    }
-    */
-
-    /**
-     * Remove series
-     *
-     * @param Pumukit\SchemaBundle\Document\Series $series
-     */
-    /* TODO may be useful in future versions
-    public function removeSeries(\Pumukit\SchemaBundle\Document\Series $series)
-    {
-        $this->series->removeElement($series);
-    }
-    */
 }

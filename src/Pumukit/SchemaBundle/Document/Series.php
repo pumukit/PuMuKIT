@@ -147,30 +147,6 @@ class Series
       return $this->series_type;
   }
 
-  /**
-   * Add multimedia_object
-   *
-   * @param MultimediaObject $multimedia_object
-   */
-  /* TODO may be useful in future versions
-  public function addMultimediaObject(MultimediaObject $multimedia_object)
-  {
-      $this->multimedia_objects[] = $multimedia_object;
-      $multimedia_object->setSeries($this);
-
-      //$multimedia_object->setRank(count($this->multimedia_objects));
-  }
-  */
-
-  /**
-   * Remove multimedia_object
-   *
-   * @param MultimediaObject $multimedia_object
-   */
-  public function removeMultimediaObject(MultimediaObject $multimedia_object)
-  {
-      $this->multimedia_objects->removeElement($multimedia_object);
-  }
 
   /**
    * Contains multimedia_object
@@ -704,7 +680,7 @@ class Series
   public function getMultimediaObjectWithTag(Tag $tag)
   {
       foreach ($this->multimedia_objects as $mmo) {
-          //if ($mmo->tags->contains($tag)) {
+      //if ($mmo->tags->contains($tag)) {
       //FIXME no pasa el test phpunit cuando se llama desde seriestest
       if ($mmo->containsTag($tag)) {
           return $mmo;
@@ -786,7 +762,7 @@ class Series
   }
 
   /**
-   * Get tracks ...
+   * Get filtered multimedia objects with tags
    *
    * @param array $any_tags
    * @param array $all_tags
@@ -874,7 +850,6 @@ class Series
       $this->reorderPicById($picId, false);
   }
 
-  //TODO move out
   /**
    * Reorder pic by id
    *
