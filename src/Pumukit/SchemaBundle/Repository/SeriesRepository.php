@@ -246,16 +246,9 @@ class SeriesRepository extends DocumentRepository
       $repoMmobj = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject');
 
       $referencedSeries = $repoMmobj->findSeriesFieldByPersonId($personId);
-
-      /*
-      $mongoIds = array();
-      foreach($referencedSeries->toArray() as $element){
-          $mongoIds[]= $element['$id'];
-      }
-      */
-      
+     
       return $this->createQueryBuilder()
-        ->field('id')->in($referencedSeries)
+        ->field('id')->in($referencedSeries->toArray())
         ->getQuery()
         ->execute();
   }
@@ -268,9 +261,7 @@ class SeriesRepository extends DocumentRepository
    */
   public function findBySeriesType(SeriesType $series_type)
   {
-      var_dump('findBySeriesType');
-
-      return $this->createQueryBuilder()
+    return $this->createQueryBuilder()
         ->field('series_type')->references($series_type)
         ->getQuery()
         ->execute();
