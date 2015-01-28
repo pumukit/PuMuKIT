@@ -176,16 +176,15 @@ class PersonService
      * @param  Person           $person
      * @param  Role             $role
      * @param  MultimediaObject $multimediaObject
-     * @return MultimediaObject
+     * @return boolean          TRUE if this multimedia_object contained the specified person_in_multimedia_object, FALSE otherwise.
      */
     public function deleteRelation(Person $person, Role $role, MultimediaObject $multimediaObject)
     {
-        // TODO flag exception
         $flag = $multimediaObject->removePersonWithRole($person, $role);
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
-        return $multimediaObject;
+        return $flag;
     }
 
     /**
