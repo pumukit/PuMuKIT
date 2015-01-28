@@ -8,14 +8,7 @@ use Pumukit\SchemaBundle\Document\Pic;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
-/**
- TODO:
- 
- [ ] Resize images?
- [x] Configure paths
- [ ] Global configuration paths
- 
- */
+
 class MultimediaObjectPicService
 {
     private $dm;
@@ -37,8 +30,7 @@ class MultimediaObjectPicService
       $offset = ($page - 1) * $limit;
       $total = 0;
 
-      //TODO paginate..
-      //TODO Execute RAW mongo query.
+      //TODO paginate... Execute RAW mongo query. #6104
 
       $list = new ArrayCollection();
       foreach ($series->getMultimediaObjects() as $mmobj) {
@@ -55,8 +47,7 @@ class MultimediaObjectPicService
    */
   public function addPicUrl(MultimediaObject $multimediaObject, $picUrl)
   {
-      //TODO check URL is valid and a image.
-    $pic = new Pic();
+      $pic = new Pic();
       $pic->setUrl($picUrl);
 
       $multimediaObject->addPic($pic);
@@ -71,9 +62,7 @@ class MultimediaObjectPicService
    */
   public function addPicFile(MultimediaObject $multimediaObject, File $picFile)
   {
-      //TODO check file is a image
-    //TODO delete double slash "//"
-    $path = $picFile->move($this->targetPath."/".$multimediaObject->getId(), $picFile->getClientOriginalName());
+      $path = $picFile->move($this->targetPath."/".$multimediaObject->getId(), $picFile->getClientOriginalName());
 
       $pic = new Pic();
       $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
