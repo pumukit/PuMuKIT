@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Series
 {
-    /**
+  /**
    * @MongoDB\Id
    */
   protected $id;

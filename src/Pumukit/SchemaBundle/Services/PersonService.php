@@ -14,7 +14,7 @@ class PersonService
     private $dm;
     private $repo;
     private $repoMmobj;
-    
+
     /**
      * Constructor
      *
@@ -30,21 +30,21 @@ class PersonService
     /**
      * Save Person
      *
-     * @param Person $person
+     * @param  Person $person
      * @return Person
      */
     public function savePerson(Person $person)
     {
         $this->dm->persist($person);
         $this->dm->flush();
-        
+
         return $person;
     }
 
     /**
      * Find person
      *
-     * @param string $id
+     * @param  string $id
      * @return Person
      */
     public function findPersonById($id)
@@ -55,7 +55,7 @@ class PersonService
     /**
      * Update update person
      *
-     * @param Person $person
+     * @param  Person $person
      * @return Person
      */
     public function updatePerson(Person $person)
@@ -76,8 +76,8 @@ class PersonService
     /**
      * Find series with person
      *
-     * @param Person $person
-     * @param int $limit Number of series, all by default
+     * @param  Person $person
+     * @param  int    $limit  Number of series, all by default
      * @return array
      */
     public function findSeriesWithPerson(Person $person, $limit = 0)
@@ -105,9 +105,9 @@ class PersonService
     /**
      * Create relation person
      *
-     * @param Person $person
-     * @param Role $role
-     * @param MultimediaObject $multimediaObject
+     * @param  Person           $person
+     * @param  Role             $role
+     * @param  MultimediaObject $multimediaObject
      * @return MultimediaObject
      */
     public function createRelationPerson(Person $person, Role $role, MultimediaObject $multimediaObject)
@@ -128,7 +128,7 @@ class PersonService
      *
      * Returns people with partial name in it
      *
-     * @param string $name
+     * @param  string          $name
      * @return ArrayCollection
      */
     public function autoCompletePeopleByName($name)
@@ -139,9 +139,9 @@ class PersonService
     /**
      * Up person with role
      *
-     * @param Person $person
-     * @param Role $role
-     * @param MultimediaObject $multimediaObject
+     * @param  Person           $person
+     * @param  Role             $role
+     * @param  MultimediaObject $multimediaObject
      * @return MultimediaObject
      */
     public function upPersonWithRole(Person $person, Role $role, MultimediaObject $multimediaObject)
@@ -156,9 +156,9 @@ class PersonService
     /**
      * Down person with role
      *
-     * @param Person $person
-     * @param Role $role
-     * @param MultimediaObject $multimediaObject
+     * @param  Person           $person
+     * @param  Role             $role
+     * @param  MultimediaObject $multimediaObject
      * @return MultimediaObject
      */
     public function downPersonWithRole(Person $person, Role $role, MultimediaObject $multimediaObject)
@@ -173,9 +173,9 @@ class PersonService
     /**
      * Delete relation of embedded person with role in multimedia object
      *
-     * @param Person $person
-     * @param Role $role
-     * @param MultimediaObject $multimediaObject
+     * @param  Person           $person
+     * @param  Role             $role
+     * @param  MultimediaObject $multimediaObject
      * @return MultimediaObject
      */
     public function deleteRelation(Person $person, Role $role, MultimediaObject $multimediaObject)
@@ -227,7 +227,7 @@ class PersonService
     /**
      * Count multimedia objects with person
      *
-     * @param Person $person
+     * @param  Person $person
      * @return array
      */
     public function countMultimediaObjectsWithPerson($person)
@@ -238,8 +238,8 @@ class PersonService
     /**
      * Update embedded person
      *
-     * @param Person $person
-     * @param EmbeddedPerson $embeddedPerson
+     * @param  Person         $person
+     * @param  EmbeddedPerson $embeddedPerson
      * @return EmbeddedPerson
      */
     private function updateEmbeddedPerson(Person $person, EmbeddedPerson $embeddedPerson)

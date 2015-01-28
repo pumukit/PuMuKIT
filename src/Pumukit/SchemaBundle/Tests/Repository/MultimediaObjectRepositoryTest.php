@@ -9,13 +9,10 @@ use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\Link;
-use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Broadcast;
-use Doctrine\ODM\MongoDB\Cursor;
-use Doctrine\Common\Collections\ArrayCollection;
 
 class MultimediaObjectRepositoryTest extends WebTestCase
 {
@@ -124,7 +121,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mm2 = $this->createMultimediaObjectAssignedToSeries('MmObject 2', $series_wall);
         $mm3 = $this->createMultimediaObjectAssignedToSeries('MmObject 3', $series_main);
         $mm4 = $this->createMultimediaObjectAssignedToSeries('MmObject 4', $series_lhazar);
-        
+
         $mm1->addPersonWithRole($person_ned, $role_lord);
         $mm2->addPersonWithRole($person_benjen, $role_ranger);
         $mm3->addPersonWithRole($person_ned, $role_lord);
@@ -153,7 +150,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(2, count($mmobj_benjen_ranger));
         $this->assertEquals(2, count($mmobj_ned_lord));
         $this->assertEquals(1, count($mmobj_ned_hand));
-        
+
         // TODO - FAILS
         //$this->assertEquals(0, count($mmobj_benjen_lord));
         //$this->assertEquals(0, count($mmobj_ned_ranger));

@@ -11,7 +11,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  */
 class Pic extends Element
 {
-    /**
+  /**
    * @var int $width
    *
    * @MongoDB\Int

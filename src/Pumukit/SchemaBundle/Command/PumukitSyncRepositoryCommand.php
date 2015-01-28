@@ -2,11 +2,8 @@
 
 namespace Pumukit\SchemaBundle\Command;
 
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Finder\Finder;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Pumukit\SchemaBundle\Document\Tag;
 
@@ -31,7 +28,6 @@ EOT
         $this->syncNumberMultimediaObjectsOnTags($input, $output);
     }
 
-
     private function syncNumberMultimediaObjectsOnTags(InputInterface $input, OutputInterface $output)
     {
         $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
@@ -41,7 +37,7 @@ EOT
         $tags = $tagRepo->findAll();
         foreach ($tags as $tag) {
             $mms = $mmRepo->findBy(array("tags.cod" => $tag->getCod()));
-            $output->writeln($tag->getCod() . ": " . $tag->getNumberMultimediaObjects(). " -> " . count($mms));
+            $output->writeln($tag->getCod().": ".$tag->getNumberMultimediaObjects()." -> ".count($mms));
             $tag->setNumberMultimediaObjects(count($mms));
             $dm->persist($tag);
         }

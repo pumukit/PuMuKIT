@@ -360,9 +360,6 @@ class SeriesRepositoryTest extends WebTestCase
         $mm32->addPersonWithRole($personBob, $roleActor);
         $mm32->addPersonWithRole($personJohn, $rolePresenter);
 
-
-
-
         $this->dm->persist($mm11);
         $this->dm->persist($mm12);
         $this->dm->persist($mm13);

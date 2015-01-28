@@ -3,7 +3,6 @@
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Pumukit\SchemaBundle\Document\Element
@@ -12,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Element
 {
-    /**
+  /**
    * @var int $id
    *
    * @MongoDB\Id

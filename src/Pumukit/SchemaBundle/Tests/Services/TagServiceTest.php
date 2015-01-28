@@ -25,7 +25,7 @@ class TagServiceTest extends WebTestCase
         $this->mmobjRepo = $this->dm
       ->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->tagService = $kernel->getContainer()->get('pumukitschema.tag');
-    
+
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
       ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')
@@ -121,7 +121,6 @@ class TagServiceTest extends WebTestCase
         $this->assertEquals(0, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
         $this->assertEquals(0, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
     }
-
 
     private function createMultimediaObject($title)
     {

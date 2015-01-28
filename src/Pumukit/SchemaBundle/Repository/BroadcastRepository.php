@@ -12,7 +12,7 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
  */
 class BroadcastRepository extends DocumentRepository
 {
-    /**
+  /**
    * Find default selected broadcast
    *
    * @return Broadcast
@@ -25,7 +25,7 @@ class BroadcastRepository extends DocumentRepository
       ->getSingleResult();
   }
 
- /**
+  /**
    * Find public broadcast
    *
    * @return Broadcast

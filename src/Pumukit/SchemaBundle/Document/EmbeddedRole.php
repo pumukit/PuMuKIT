@@ -4,7 +4,6 @@ namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Pumukit\SchemaBundle\Document\EmbeddedRole
@@ -34,40 +33,40 @@ class EmbeddedRole
      * @MongoDB\String
      */
     private $xml;
-    
+
     /**
      * @var boolean $display
      *
      * @MongoDB\Boolean
      */
     private $display = true;
-    
+
     /**
      * @var string $name
      *
      * @MongoDB\Raw
      */
     private $name = array('en' => '');
-    
+
     /**
      * @var string $text
      *
      * @MongoDB\Raw
      */
     private $text = array('en' => '');
-    
+
     /**
      * @var ArrayCollection $people
      *
      * @MongoDB\EmbedMany(targetDocument="EmbeddedPerson")
      */
     private $people;
-    
+
     /**
      * @var locale $locale
      */
     private $locale = 'en';
-    
+
     /**
      * Get id
      *
@@ -77,7 +76,7 @@ class EmbeddedRole
     {
         return $this->id;
     }
-    
+
     /**
      * Set cod
      *
@@ -87,7 +86,7 @@ class EmbeddedRole
     {
         $this->cod = $cod;
     }
-    
+
     /**
      * Get cod
      *
@@ -107,7 +106,7 @@ class EmbeddedRole
     {
         $this->xml = $xml;
     }
-    
+
     /**
      * Get xml
      *
@@ -117,7 +116,7 @@ class EmbeddedRole
     {
         return $this->xml;
     }
-    
+
     /**
      * Set display
      *
@@ -127,7 +126,7 @@ class EmbeddedRole
     {
         $this->display = $display;
     }
-    
+
     /**
      * Get display
      *
@@ -137,7 +136,7 @@ class EmbeddedRole
     {
         return $this->display;
     }
-    
+
     /**
      * Set name
      *
@@ -150,7 +149,7 @@ class EmbeddedRole
         }
         $this->name[$locale] = $name;
     }
-    
+
     /**
      * Get name
      *
@@ -164,7 +163,7 @@ class EmbeddedRole
         if (!isset($this->name[$locale])) {
             return;
         }
-        
+
         return $this->name[$locale];
     }
 
@@ -200,7 +199,7 @@ class EmbeddedRole
         }
         $this->text[$locale] = $text;
     }
-    
+
     /**
      * Get text
      *
@@ -214,10 +213,10 @@ class EmbeddedRole
         if (!isset($this->text[$locale])) {
             return;
         }
-        
+
         return $this->text[$locale];
     }
-    
+
     /**
      * Set I18n text
      *
@@ -227,7 +226,7 @@ class EmbeddedRole
     {
         $this->text = $text;
     }
-    
+
     /**
      * Get i18n text
      *
@@ -281,7 +280,7 @@ class EmbeddedRole
     {
         return $this->people;
     }
-    
+
     /**
      * Add person
      *
@@ -297,8 +296,8 @@ class EmbeddedRole
     /**
      * Remove person
      *
-     * @param Person|EmbeddedPerson $person
-     * @return boolean TRUE if this embedded person contained the specified person, FLASE otherwise.
+     * @param  Person|EmbeddedPerson $person
+     * @return boolean               TRUE if this embedded person contained the specified person, FLASE otherwise.
      */
     public function removePerson($person)
     {
@@ -318,7 +317,7 @@ class EmbeddedRole
     /**
      * Contains person
      *
-     * @param Person|EmbeddedPerson $person
+     * @param  Person|EmbeddedPerson  $person
      * @return EmbeddedPerson|boolean EmbeddedPerson if found, FALSE otherwise.
      */
     public function containsPerson($person)
@@ -328,14 +327,14 @@ class EmbeddedRole
                 return true;
             }
         }
-            
+
         return false;
     }
 
     /**
      * Contains all people
      *
-     * @param array $people
+     * @param  array   $people
      * @return boolean TRUE if this embedded role contains all people, FLASE otherwise.
      */
     public function containsAllPeople(array $people)
@@ -345,14 +344,14 @@ class EmbeddedRole
                 return false;
             }
         }
-        
+
         return true;
     }
-    
+
     /**
      * Contains any person
      *
-     * @param array $people
+     * @param  array   $people
      * @return boolean TRUE if this embedded person contains any person of the list, FLASE otherwise.
      */
     public function containsAnyPerson(array $people)
@@ -362,10 +361,10 @@ class EmbeddedRole
                 return true;
             }
         }
-        
+
         return false;
     }
-    
+
     /**
      * Create embedded person
      *
@@ -379,17 +378,17 @@ class EmbeddedRole
             return $person;
         } elseif ($person instanceof Person) {
             $embedPerson = new EmbeddedPerson($person);
-            
+
             return $embedPerson;
         }
-        
+
         throw new \InvalidArgumentException('Only Person or EmbeddedPerson are allowed.');
     }
 
     /**
      * Contained embed person
      *
-     * @param Person|EmbeddedPerson $person
+     * @param  Person|EmbeddedPerson  $person
      * @return EmbeddedPerson|boolean EmbeddedPerson if found, FALSE otherwise:
      */
     public function getEmbeddedPerson($person)
@@ -399,7 +398,7 @@ class EmbeddedRole
                 return $embeddedPerson;
             }
         }
-        
+
         return false;
     }
 }

@@ -566,7 +566,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $role->setDisplay($displayRole);
         $role->setName($nameRole);
         $role->setText($textRole);
-        
+
         // MultimediaObject
         $mm = new MultimediaObject();
         $mm->addPersonWithRole($person, $role);

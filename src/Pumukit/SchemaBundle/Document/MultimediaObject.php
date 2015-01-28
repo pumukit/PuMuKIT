@@ -25,55 +25,55 @@ class MultimediaObject
      * @MongoDB\Id
      */
     private $id;
-    
+
     /**
      * @MongoDB\ReferenceOne(targetDocument="Series", inversedBy="multimedia_objects", simple=true)
      * // TODO SortableGroup
      */
     private $series;
-    
+
     /**
      * @var Broadcast $broadcast
      * @MongoDB\EmbedOne(targetDocument="Broadcast")
-     * //TODO is EmbedOne but broadcast is a Document.
+     *                //TODO is EmbedOne but broadcast is a Document.
      */
     private $broadcast;
-    
+
     /**
      * @var ArrayCollection $tags
      *
      * @MongoDB\EmbedMany(targetDocument="EmbeddedTag")
      */
     private $tags;
-    
+
     /**
      * @var ArrayCollection $tracks
      *
      * @MongoDB\EmbedMany(targetDocument="Track")
      */
     private $tracks;
-    
+
     /**
      * @var ArrayCollection $pics
      *
      * @MongoDB\EmbedMany(targetDocument="Pic")
      */
     private $pics;
-    
+
     /**
      * @var ArrayCollection $materials
      *
      * @MongoDB\EmbedMany(targetDocument="Material")
      */
     private $materials;
-    
+
     /**
      * @var ArrayCollection $links
      *
      * @MongoDB\EmbedMany(targetDocument="Link")
      */
     private $links;
-    
+
     /**
      * @var int $rank
      *
@@ -81,21 +81,21 @@ class MultimediaObject
      * @Gedmo\SortablePosition
      */
     private $rank;
-    
+
     /**
      * @var int $status
      *
      * @MongoDB\Int
      */
     private $status = self::STATUS_NEW;
-    
+
     /**
      * @var date $record_date
      *
      * @MongoDB\Date
      */
     private $record_date;
-    
+
     /**
      * @var date $public_date
      *
@@ -266,8 +266,8 @@ class MultimediaObject
      * Remove tag
      * The original string tag logic used array_search to seek the tag element in array.
      * This function uses doctrine2 arrayCollection contains function instead.
-     * @param Tag|EmbeddedTag $tag
-     * @return boolean TRUE if this multimedia_object contained the specified tag, FALSE otherwise.
+     * @param  Tag|EmbeddedTag $tag
+     * @return boolean         TRUE if this multimedia_object contained the specified tag, FALSE otherwise.
      */
     public function removeTag($tagToRemove)
     {
@@ -276,7 +276,7 @@ class MultimediaObject
                 return $this->tags->removeElement($tag);
             }
         }
-        
+
         return false;
     }
 
@@ -284,8 +284,8 @@ class MultimediaObject
      * Contains tag
      * The original string tag logic used in_array to check it.
      * This function uses doctrine2 arrayCollection contains function instead.
-     * @param Tag|EmbeddedTag $tag
-     * @return boolean TRUE if this multimedia_object contained the specified tag, FALSE otherwise.
+     * @param  Tag|EmbeddedTag $tag
+     * @return boolean         TRUE if this multimedia_object contained the specified tag, FALSE otherwise.
      */
     public function containsTag($tagToCheck)
     {
@@ -294,15 +294,15 @@ class MultimediaObject
                 return true;
             }
         }
-        
+
         return false;
     }
-    
+
     /**
      * Contains all tags
      * The original string tag logic used array_intersect and count to check it.
      * This function uses doctrine2 arrayCollection contains function instead.
-     * @param array $tags
+     * @param  array   $tags
      * @return boolean TRUE if this multimedia_object contained all tags, FALSE otherwise.
      */
     public function containsAllTags(array $tags)
@@ -312,7 +312,7 @@ class MultimediaObject
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -320,7 +320,7 @@ class MultimediaObject
      * Contains any tags
      * The original string tag logic used array_intersect and count to check it.
      * This function uses doctrine2 arrayCollection contains function instead.
-     * @param array $tags
+     * @param  array   $tags
      * @return boolean TRUE if this multimedia_object contained any tag of the list, FALSE otherwise.
      */
     public function containsAnyTag(array $tags)
@@ -330,7 +330,7 @@ class MultimediaObject
                 return true;
             }
         }
-        
+
         return false;
     }
 
@@ -393,7 +393,7 @@ class MultimediaObject
     /**
      * Reorder pic by id
      *
-     * @param string $picId
+     * @param string  $picId
      * @param boolean $up
      */
     private function reorderPicById($picId, $up = true)
@@ -459,9 +459,9 @@ class MultimediaObject
     /**
      * Get pics by Tag
      *
-     * @param string $tag
+     * @param  string          $tag
      * @return ArrayCollection
-     * TODO
+     *                             TODO
      */
     public function getPicsByTag($tag)
     {
@@ -479,9 +479,9 @@ class MultimediaObject
     /**
      * Get pic by tag
      *
-     * @param string $tag
+     * @param  string $tag
      * @return Pic
-     * TODO
+     *                    TODO
      */
     public function getPicByTag($tag)
     {
@@ -497,9 +497,9 @@ class MultimediaObject
     /**
      * Get pics ...
      *
-     * @param array $tags
+     * @param  array           $tags
      * @return ArrayCollection
-     * TODO
+     *                              TODO
      */
     public function getPicsWithAllTags(array $tags)
     {
@@ -517,9 +517,9 @@ class MultimediaObject
     /**
      * Get pics ...
      *
-     * @param array $tags
+     * @param  array $tags
      * @return Pic
-     * TODO
+     *                    TODO
      */
     public function getPicWithAllTags(array $tags)
     {
@@ -535,9 +535,9 @@ class MultimediaObject
     /**
      * Get pics ...
      *
-     * @param array $tags
+     * @param  array           $tags
      * @return ArrayCollection
-     * TODO
+     *                              TODO
      */
     public function getPicsWithAnyTag(array $tags)
     {
@@ -555,9 +555,9 @@ class MultimediaObject
     /**
      * Get pic ...
      *
-     * @param array $tags
+     * @param  array $tags
      * @return Pic
-     * TODO
+     *                    TODO
      */
     public function getPicWithAnyTag(array $tags)
     {
@@ -573,12 +573,12 @@ class MultimediaObject
     /**
      * Get pics ...
      *
-     * @param array $any_tags
-     * @param array $all_tags
-     * @param array $not_any_tags
-     * @param array $not_all_tags
+     * @param  array           $any_tags
+     * @param  array           $all_tags
+     * @param  array           $not_any_tags
+     * @param  array           $not_all_tags
      * @return ArrayCollection
-     * TODO
+     *                                      TODO
      */
     public function getFilteredPicsByTags(
                                           array $any_tags = array(),
@@ -674,7 +674,7 @@ class MultimediaObject
     /**
      * Reorder track by id
      *
-     * @param string $trackId
+     * @param string  $trackId
      * @param boolean $up
      */
     private function reorderTrackById($trackId, $up = true)
@@ -740,9 +740,9 @@ class MultimediaObject
     /**
      * Get tracks ...
      *
-     * @param string $tag
+     * @param  string          $tag
      * @return ArrayCollection
-     * TODO
+     *                             TODO
      */
     public function getTracksByTag($tag)
     {
@@ -760,9 +760,9 @@ class MultimediaObject
     /**
      * Get track ...
      *
-     * @param string $tag
+     * @param  string $tag
      * @return Track
-     * TODO
+     *                    TODO
      */
     public function getTrackByTag($tag)
     {
@@ -778,9 +778,9 @@ class MultimediaObject
     /**
      * Get tracks ...
      *
-     * @param array $tags
+     * @param  array           $tags
      * @return ArrayCollection
-     * TODO
+     *                              TODO
      */
     public function getTracksWithAllTags(array $tags)
     {
@@ -798,9 +798,9 @@ class MultimediaObject
     /**
      * Get tracks ...
      *
-     * @param array $tags
+     * @param  array $tags
      * @return Track
-     * TODO
+     *                    TODO
      */
     public function getTrackWithAllTags(array $tags)
     {
@@ -816,9 +816,9 @@ class MultimediaObject
     /**
      * Get tracks ...
      *
-     * @param array $tags
+     * @param  array           $tags
      * @return ArrayCollection
-     * TODO
+     *                              TODO
      */
     public function getTracksWithAnyTag(array $tags)
     {
@@ -836,9 +836,9 @@ class MultimediaObject
     /**
      * Get track ...
      *
-     * @param array $tags
+     * @param  array $tags
      * @return Track
-     * TODO
+     *                    TODO
      */
     public function getTrackWithAnyTag(array $tags)
     {
@@ -854,12 +854,12 @@ class MultimediaObject
     /**
      * Get tracks ...
      *
-     * @param array $any_tags
-     * @param array $all_tags
-     * @param array $not_any_tags
-     * @param array $not_all_tags
+     * @param  array           $any_tags
+     * @param  array           $all_tags
+     * @param  array           $not_any_tags
+     * @param  array           $not_all_tags
      * @return ArrayCollection
-     * TODO
+     *                                      TODO
      */
     public function getFilteredTracksByTags(
                                             array $any_tags = array(),
@@ -888,7 +888,7 @@ class MultimediaObject
 
         return $r;
     }
-    
+
     // End of Track getter - setter etc methods section
 
     /**
@@ -947,7 +947,7 @@ class MultimediaObject
     /**
      * Reorder material by id
      *
-     * @param string $materialId
+     * @param string  $materialId
      * @param boolean $up
      */
     private function reorderMaterialById($materialId, $up = true)
@@ -1013,9 +1013,9 @@ class MultimediaObject
     /**
      * Get materials ...
      *
-     * @param string $tag
+     * @param  string          $tag
      * @return ArrayCollection
-     * TODO
+     *                             TODO
      */
     public function getMaterialsByTag($tag)
     {
@@ -1033,9 +1033,9 @@ class MultimediaObject
     /**
      * Get material ...
      *
-     * @param string $tag
+     * @param  string   $tag
      * @return Material
-     * TODO
+     *                      TODO
      */
     public function getMaterialByTag($tag)
     {
@@ -1051,9 +1051,9 @@ class MultimediaObject
     /**
      * Get materials ...
      *
-     * @param array $tags
+     * @param  array           $tags
      * @return ArrayCollection
-     * TODO
+     *                              TODO
      */
     public function getMaterialsWithAllTags(array $tags)
     {
@@ -1071,9 +1071,9 @@ class MultimediaObject
     /**
      * Get materials ...
      *
-     * @param array $tags
+     * @param  array    $tags
      * @return Material
-     * TODO
+     *                       TODO
      */
     public function getMaterialWithAllTags(array $tags)
     {
@@ -1089,9 +1089,9 @@ class MultimediaObject
     /**
      * Get materials ...
      *
-     * @param array $tags
+     * @param  array           $tags
      * @return ArrayCollection
-     * TODO
+     *                              TODO
      */
     public function getMaterialsWithAnyTag(array $tags)
     {
@@ -1109,9 +1109,9 @@ class MultimediaObject
     /**
      * Get material ...
      *
-     * @param array $tags
+     * @param  array    $tags
      * @return Material
-     * TODO
+     *                       TODO
      */
     public function getMaterialWithAnyTag(array $tags)
     {
@@ -1127,12 +1127,12 @@ class MultimediaObject
     /**
      * Get materials ...
      *
-     * @param array $any_tags
-     * @param array $all_tags
-     * @param array $not_any_tags
-     * @param array $not_all_tags
+     * @param  array           $any_tags
+     * @param  array           $all_tags
+     * @param  array           $not_any_tags
+     * @param  array           $not_all_tags
      * @return ArrayCollection
-     * TODO
+     *                                      TODO
      */
     public function getFilteredMaterialsByTags(
                                                array $any_tags = array(),
@@ -1220,7 +1220,7 @@ class MultimediaObject
     /**
      * Reorder link by id
      *
-     * @param string $linkId
+     * @param string  $linkId
      * @param boolean $up
      */
     private function reorderLinkById($linkId, $up = true)
@@ -1286,9 +1286,9 @@ class MultimediaObject
     /**
      * Get links ...
      *
-     * @param string $tag
+     * @param  string          $tag
      * @return ArrayCollection
-     * TODO
+     *                             TODO
      */
     public function getLinksByTag($tag)
     {
@@ -1306,9 +1306,9 @@ class MultimediaObject
     /**
      * Get link ...
      *
-     * @param string $tag
+     * @param  string $tag
      * @return Link
-     * TODO
+     *                    TODO
      */
     public function getLinkByTag($tag)
     {
@@ -1324,9 +1324,9 @@ class MultimediaObject
     /**
      * Get links ...
      *
-     * @param array $tags
+     * @param  array           $tags
      * @return ArrayCollection
-     * TODO
+     *                              TODO
      */
     public function getLinksWithAllTags(array $tags)
     {
@@ -1344,9 +1344,9 @@ class MultimediaObject
     /**
      * Get links ...
      *
-     * @param array $tags
+     * @param  array $tags
      * @return Link
-     * TODO
+     *                    TODO
      */
     public function getLinkWithAllTags(array $tags)
     {
@@ -1362,9 +1362,9 @@ class MultimediaObject
     /**
      * Get links ...
      *
-     * @param array $tags
+     * @param  array           $tags
      * @return ArrayCollection
-     * TODO
+     *                              TODO
      */
     public function getLinksWithAnyTag(array $tags)
     {
@@ -1382,9 +1382,9 @@ class MultimediaObject
     /**
      * Get link ...
      *
-     * @param array $tags
+     * @param  array $tags
      * @return Link
-     * TODO
+     *                    TODO
      */
     public function getLinkWithAnyTag(array $tags)
     {
@@ -1400,12 +1400,12 @@ class MultimediaObject
     /**
      * Get links ...
      *
-     * @param array $any_tags
-     * @param array $all_tags
-     * @param array $not_any_tags
-     * @param array $not_all_tags
+     * @param  array           $any_tags
+     * @param  array           $all_tags
+     * @param  array           $not_any_tags
+     * @param  array           $not_all_tags
      * @return ArrayCollection
-     * TODO
+     *                                      TODO
      */
     public function getFilteredLinksByTags(
                                            array $any_tags = array(),
@@ -1431,7 +1431,7 @@ class MultimediaObject
 
             $r[] = $link;
         }
-      
+
         return $r;
     }
 
@@ -1916,7 +1916,7 @@ class MultimediaObject
     public function getPeopleInMultimediaObject()
     {
         $aux = array();
-        
+
         foreach ($this->people_in_multimedia_object as $role) {
             foreach ($role->getPeople() as $person) {
                 if (!in_array($person, $aux)) {
@@ -1931,13 +1931,13 @@ class MultimediaObject
     /**
      * Get all embedded people in multimedia object by person id
      *
-     * @param Person $person
+     * @param  Person $person
      * @return array
      */
     public function getAllEmbeddedPeopleByPerson($person)
     {
         $aux = array();
-        
+
         foreach ($this->people_in_multimedia_object as $role) {
             foreach ($role->getPeople() as $embeddedPerson) {
                 if ($embeddedPerson->getId() === $person->getId()) {
@@ -1948,13 +1948,13 @@ class MultimediaObject
 
         return $aux;
     }
-    
+
     /**
      * Contains EmbeddedPerson without mattering the role
      * Use containsPersonWithRole instead.
      *
-     * @param Person|EmbbededPerson $person
-     * @return boolean TRUE if this multimedia_object contains the specified person, FALSE otherwise.
+     * @param  Person|EmbbededPerson $person
+     * @return boolean               TRUE if this multimedia_object contains the specified person, FALSE otherwise.
      */
     public function containsPerson($person)
     {
@@ -1971,7 +1971,7 @@ class MultimediaObject
      * Contains person with role
      *
      * @param Person|EmbeddedPerson $person
-     * @param Role|EmbeddedRole $role
+     * @param Role|EmbeddedRole     $role
      *
      * @return boolean
      */
@@ -1990,7 +1990,7 @@ class MultimediaObject
      * Contains person with all roles
      *
      * @param Person|EmbeddedPerson $person
-     * @param array $roles
+     * @param array                 $roles
      *
      * @return boolean
      */
@@ -2009,7 +2009,7 @@ class MultimediaObject
      * Contains person with any role
      *
      * @param Person|EmbeddedPerson $person
-     * @param array $roles
+     * @param array                 $roles
      *
      * @return boolean
      */
@@ -2027,8 +2027,8 @@ class MultimediaObject
     /**
      * Get people in multimedia object by role
      *
-     * @param Role|EmbeddedRole $role
-     * @param boolean $always
+     * @param  Role|EmbeddedRole $role
+     * @param  boolean           $always
      * @return array
      */
     public function getPeopleInMultimediaObjectByRole($role = null, $always = false)
@@ -2065,7 +2065,7 @@ class MultimediaObject
      * Add Person with Role
      *
      * @param Person|EmbeddedPerson $person
-     * @param Role|EmbeddedRole $role
+     * @param Role|EmbeddedRole     $role
      */
     public function addPersonWithRole($person, $role)
     {
@@ -2083,9 +2083,9 @@ class MultimediaObject
     /**
      * Remove Person With Role
      *
-     * @param Person|EmbeddedPerson $person
-     * @param Role|EmbeddedRole $role
-     * @return boolean TRUE if this multimedia_object contained the specified person_in_multimedia_object, FALSE otherwise.
+     * @param  Person|EmbeddedPerson $person
+     * @param  Role|EmbeddedRole     $role
+     * @return boolean               TRUE if this multimedia_object contained the specified person_in_multimedia_object, FALSE otherwise.
      */
     public function removePersonWithRole($person, $role)
     {
@@ -2200,10 +2200,10 @@ class MultimediaObject
             return $role;
         } elseif ($role instanceof Role) {
             $embeddedRole = new EmbeddedRole($role);
-            
+
             return $embeddedRole;
         }
-        
+
         throw new \InvalidArgumentException('Only Role or EmbeddedRole are allowed.');
     }
 

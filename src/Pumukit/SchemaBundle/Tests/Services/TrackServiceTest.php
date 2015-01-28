@@ -38,10 +38,10 @@ class TrackServiceTest extends WebTestCase
         $multimediaObject = new MultimediaObject();
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
-        
+
         /*
         $file = new File('');
-        
+
         $formData = $this->createFormData(1);
 
         $track = $this->trackService->addTrackToMultimediaObject($multimediaObject, $file, $formData);
@@ -49,7 +49,7 @@ class TrackServiceTest extends WebTestCase
         $this->assertEquals(1, count($this->repo->findAll()));
 
         $file2 = new File('http://www.boe.es/boe/dias/2014/11/26/pdfs/BOE-A-2014-12286.pdf');
-        
+
         $formData2 = $this->createFormData(2);
 
         $track2 = $this->trackService->addTrackToMultimediaObject($multimediaObject, $file2, $formData2);
@@ -63,8 +63,8 @@ class TrackServiceTest extends WebTestCase
         $formData = array(
                           'i18n_description' => array(
                                                       'en' => 'track description '.$number,
-                                                      'es' => 'descripción del archivo '.$number
-                                                      )
+                                                      'es' => 'descripción del archivo '.$number,
+                                                      ),
                           );
 
         return $formData;

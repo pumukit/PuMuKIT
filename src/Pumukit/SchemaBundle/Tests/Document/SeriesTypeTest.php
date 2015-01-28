@@ -2,7 +2,6 @@
 
 namespace Pumukit\SchemaBundle\Tests\Document;
 
-use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\SeriesType;
 
 class SeriesTypeTest extends \PHPUnit_Framework_TestCase

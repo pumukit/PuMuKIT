@@ -47,7 +47,7 @@ class PersonServiceTest extends WebTestCase
     public function testSavePerson()
     {
         $person = new Person();
-        
+
         $name = 'John Smith';
         $person->setName($name);
 
@@ -62,7 +62,7 @@ class PersonServiceTest extends WebTestCase
 
         $name = 'John Smith';
         $person->setName($name);
-        
+
         $person = $this->personService->savePerson($person);
 
         $this->assertEquals($person, $this->personService->findPersonById($person->getId()));
@@ -124,7 +124,7 @@ class PersonServiceTest extends WebTestCase
         $this->dm->persist($mm2);
         $this->dm->persist($mm3);
         $this->dm->flush();
-      
+
         $this->assertNull($this->personService->findPersonById($personJohn->getId())->getEmail());
         $this->assertNull($this->personService->findPersonById($personBob->getId())->getEmail());
         $this->assertNull($mm1->getPersonWithRole($personJohn, $roleActor)->getEmail());
@@ -134,7 +134,7 @@ class PersonServiceTest extends WebTestCase
         $this->assertNull($mm2->getPersonWithRole($personBob, $rolePresenter)->getEmail());
         $this->assertNull($mm2->getPersonWithRole($personJohn, $rolePresenter)->getEmail());
         $this->assertNull($mm3->getPersonWithRole($personJohn, $roleActor)->getEmail());
-        
+
         $emailJohn = 'johnsmith@mail.com';
         $personJohn->setEmail($emailJohn);
 
@@ -514,7 +514,7 @@ class PersonServiceTest extends WebTestCase
         $this->assertEquals($personBob->getId(), $mm1PeopleActor[0]->getId());
         $this->assertEquals($personJohn->getId(), $mm1PeopleActor[1]->getId());
         $this->assertEquals($personKate->getId(), $mm1PeopleActor[2]->getId());
-        
+
         $this->personService->downPersonWithRole($personBob, $roleActor, $mm1);
 
         $mm1PeopleActor = $mm1->getPeopleInMultimediaObjectByRole($roleActor);

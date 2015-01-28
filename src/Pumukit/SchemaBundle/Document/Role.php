@@ -3,7 +3,6 @@
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
@@ -31,7 +30,7 @@ class Role
      * @Gedmo\SortablePosition
      */
     private $rank;
-    
+
     /**
      * @var int $number_people_in_multimedia_object
      *
@@ -46,33 +45,33 @@ class Role
      * @MongoDB\String
      */
     private $xml;
-    
+
     /**
      * @var boolean $display
      *
      * @MongoDB\Boolean
      */
     private $display = true;
-    
+
     /**
      * @var string $name
      *
      * @MongoDB\Raw
      */
     private $name = array('en' => '');
-    
+
     /**
      * @var string $text
      *
      * @MongoDB\Raw
      */
     private $text = array('en' => '');
-    
+
     /**
      * @var locale $locale
      */
     private $locale = 'en';
-    
+
     /**
      * Get id
      *
@@ -82,7 +81,7 @@ class Role
     {
         return $this->id;
     }
-    
+
     /**
      * Set cod
      *
@@ -92,7 +91,7 @@ class Role
     {
         $this->cod = $cod;
     }
-    
+
     /**
      * Get cod
      *
@@ -132,7 +131,7 @@ class Role
     {
         $this->xml = $xml;
     }
-    
+
     /**
      * Get xml
      *
@@ -142,7 +141,7 @@ class Role
     {
         return $this->xml;
     }
-    
+
     /**
      * Set display
      *
@@ -152,7 +151,7 @@ class Role
     {
         $this->display = $display;
     }
-    
+
     /**
      * Get display
      *
@@ -162,7 +161,7 @@ class Role
     {
         return $this->display;
     }
-    
+
     /**
      * Set name
      *
@@ -175,7 +174,7 @@ class Role
         }
         $this->name[$locale] = $name;
     }
-    
+
     /**
      * Get name
      *
@@ -189,7 +188,7 @@ class Role
         if (!isset($this->name[$locale])) {
             return;
         }
-        
+
         return $this->name[$locale];
     }
 
@@ -225,7 +224,7 @@ class Role
         }
         $this->text[$locale] = $text;
     }
-    
+
     /**
      * Get text
      *
@@ -239,10 +238,10 @@ class Role
         if (!isset($this->text[$locale])) {
             return;
         }
-        
+
         return $this->text[$locale];
     }
-    
+
     /**
      * Set I18n text
      *
@@ -252,7 +251,7 @@ class Role
     {
         $this->text = $text;
     }
-    
+
     /**
      * Get i18n text
      *
@@ -290,7 +289,7 @@ class Role
     {
         ++$this->number_people_in_multimedia_object;
     }
-    
+
     /**
      * Decrease number_people_in_multimedia_object
      */
@@ -298,7 +297,7 @@ class Role
     {
         --$this->number_people_in_multimedia_object;
     }
-    
+
     /**
      * Get number_people_in_multimedia_object
      */
@@ -306,7 +305,7 @@ class Role
     {
         return $this->number_people_in_multimedia_object;
     }
-    
+
     /**
      * Clone Role
      *
@@ -317,7 +316,7 @@ class Role
         $aux = clone $this;
         $aux->id = null;
         $aux->rank = null;
-        
+
         return $aux;
     }
 }

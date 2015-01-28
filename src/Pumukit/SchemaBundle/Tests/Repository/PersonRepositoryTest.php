@@ -61,7 +61,7 @@ class PersonRepositoryTest extends WebTestCase
 
         $this->dm->persist($person);
         $this->dm->flush();
-        
+
         return $person;
     }
 }

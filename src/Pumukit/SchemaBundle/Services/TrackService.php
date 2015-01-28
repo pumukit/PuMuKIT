@@ -39,7 +39,7 @@ class TrackService
         $track = $this->saveFormData($track, $formData);
 
         $path = $trackFile->move($this->targetPath."/".$multimediaObject->getId(), $trackFile->getClientOriginalName());
-        
+
         $track->setPath($path);
         $track->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
 
@@ -128,9 +128,9 @@ class TrackService
                       'profile' => array('name' => null),
                       'priority' => 2,
                       'language' => null,
-                      'description' => array()
+                      'description' => array(),
                       );
-        
+
         if (array_key_exists('profile', $formData)) {
             $data['profile'] = $formData['profile'];
         }
@@ -143,7 +143,7 @@ class TrackService
         if (array_key_exists('i18n_description', $formData)) {
             $data['description'] = $formData['i18n_description'];
         }
-        
+
         return $data;
     }
 }

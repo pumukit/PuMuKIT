@@ -39,7 +39,7 @@ class RoleTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($display, $role->getDisplay());
         $this->assertEquals($name, $role->getName());
         $this->assertEquals($text, $role->getText());
-        
+
         $nameEs = 'Presentador';
         $textEs = 'Rol de presentador 1';
 

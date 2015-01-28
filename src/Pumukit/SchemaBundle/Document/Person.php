@@ -4,7 +4,6 @@ namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Pumukit\SchemaBundle\Document\Person
@@ -26,7 +25,7 @@ class Person
      * @MongoDB\String
      */
     protected $name;
-    
+
     /**
      * @var string $email
      *
@@ -94,7 +93,7 @@ class Person
     {
         return $this->id;
     }
-    
+
     /**
      * Set name
      *
@@ -201,7 +200,7 @@ class Person
         if (!isset($this->honorific[$locale])) {
             return;
         }
-        
+
         return $this->honorific[$locale];
     }
 
@@ -247,10 +246,10 @@ class Person
         if (!isset($this->firm[$locale])) {
             return;
         }
-        
+
         return $this->firm[$locale];
     }
-    
+
     /**
      * Set i18n firm
      */
@@ -279,7 +278,7 @@ class Person
         }
         $this->post[$locale] = $post;
     }
-    
+
     /**
      * Get post
      *
@@ -293,7 +292,7 @@ class Person
         if (!isset($this->post[$locale])) {
             return;
         }
-        
+
         return $this->post[$locale];
     }
 
@@ -339,7 +338,7 @@ class Person
         if (!isset($this->bio[$locale])) {
             return;
         }
-        
+
         return $this->bio[$locale];
     }
 
@@ -415,6 +414,7 @@ class Person
     {
         $aux = array($this->getPost(), $this->getFirm(), $this->getBio());
         $aux = array_filter($aux, create_function('$a', 'return (!is_null($a)&&(""!=$a));'));
+
         return implode(', ', $aux);
     }
 
@@ -427,7 +427,7 @@ class Person
     {
         $aux = clone $this;
         $aux->id = null;
-        
+
         return $aux;
     }
 }

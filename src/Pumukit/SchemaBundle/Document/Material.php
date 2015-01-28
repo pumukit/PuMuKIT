@@ -44,10 +44,10 @@ class Material extends Element
         if (!isset($this->name[$locale])) {
             return;
         }
-        
+
         return $this->name[$locale];
     }
-    
+
     /**
      * Set I18n name
      *

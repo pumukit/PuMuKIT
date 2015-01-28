@@ -9,14 +9,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
 /**
-   TODO:
-
-   [ ] Resize images?
-   [x] Configure paths
-   [ ] Global configuration paths
-
+ TODO:
+ 
+ [ ] Resize images?
+ [x] Configure paths
+ [ ] Global configuration paths
+ 
  */
-
 class SeriesPicService
 {
     private $dm;

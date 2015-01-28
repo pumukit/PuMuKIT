@@ -14,7 +14,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Tag
 {
-    /**
+  /**
    * @var integer $id
    *
    * @MongoDB\Id

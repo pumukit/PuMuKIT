@@ -56,6 +56,7 @@ class FactoryService
 
         //Workaround to fix reference method initialization.
         $this->dm->clear(get_class($series));
+
         return $this->dm->find('PumukitSchemaBundle:Series', $series->getId());
     }
 
@@ -150,7 +151,7 @@ class FactoryService
     /**
      * Create multimedia object from prototype
      *
-     * @param MultimediaObject $prototype
+     * @param  MultimediaObject $prototype
      * @return MultimediaObject
      */
     private function createMultimediaObjectFromPrototype(MultimediaObject $prototype)

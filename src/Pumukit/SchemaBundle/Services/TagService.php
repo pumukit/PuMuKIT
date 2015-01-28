@@ -20,9 +20,9 @@ class TagService
     /**
      * Add Tag to Multimedia Object
      *
-     * @param MultimediaObject $mmobj
-     * @param string $tagId
-     * @return Array[Tag] addded tags
+     * @param  MultimediaObject $mmobj
+     * @param  string           $tagId
+     * @return Array[Tag]       addded tags
      */
     public function addTagToMultimediaObject(MultimediaObject $mmobj, $tagId)
     {
@@ -43,10 +43,9 @@ class TagService
             }
         } while ($tag = $tag->getParent());
 
-        
         $this->dm->persist($mmobj);
         $this->dm->flush();
-        
+
         return $tagAdded;
     }
 
@@ -81,7 +80,7 @@ class TagService
 
       $this->dm->persist($mmobj);
       $this->dm->flush();
-      
+
       return $removeTags;
   }
 }

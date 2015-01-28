@@ -246,7 +246,7 @@ class SeriesRepository extends DocumentRepository
       $repoMmobj = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject');
 
       $referencedSeries = $repoMmobj->findSeriesFieldByPersonId($personId);
-     
+
       return $this->createQueryBuilder()
         ->field('id')->in($referencedSeries->toArray())
         ->getQuery()

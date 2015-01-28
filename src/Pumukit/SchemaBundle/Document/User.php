@@ -12,7 +12,7 @@ use FOS\UserBundle\Document\User as BaseUser;
  */
 class User extends BaseUser
 {
-    /**
+  /**
    * @var int $id
    *
    * @MongoDB\Id(strategy="auto")

@@ -4,7 +4,6 @@ namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Pumukit\SchemaBundle\Document\EmbeddedPerson
@@ -26,7 +25,7 @@ class EmbeddedPerson
      * @MongoDB\String
      */
     protected $name;
-    
+
     /**
      * @var string $email
      *
@@ -35,7 +34,7 @@ class EmbeddedPerson
      * //@Assert\NotEmpty
      */
     protected $email;
-    
+
     /**
      * @var string $web
      *
@@ -43,48 +42,48 @@ class EmbeddedPerson
      * //@Assert\Url('http', 'https', 'ftp')
      */
     protected $web;
-    
+
     /**
      * @var string $phone
      *
      * @MongoDB\String
      */
     protected $phone;
-    
+
     /**
      * @var string $honorific
      *
      * @MongoDB\Raw
      */
     protected $honorific = array('en' => '');
-    
+
     /**
      * @var string $firm
      *
      * @MongoDB\Raw
      */
     protected $firm = array('en' => '');
-    
+
     /**
      * @var string $post
      *
      * @MongoDB\Raw
      */
     protected $post = array('en' => '');
-    
+
     /**
      * @var string $bio
      *
      * @MongoDB\Raw
      */
     protected $bio = array('en' => '');
-    
+
     /**
      * Locale
      * @var locale $locale
      */
     protected $locale = 'en';
-    
+
     /**
      * Construct
      */
@@ -102,7 +101,7 @@ class EmbeddedPerson
             $this->setI18nBio($person->getI18nBio());
         }
     }
-    
+
     /**
      * Get id
      *
@@ -112,7 +111,7 @@ class EmbeddedPerson
     {
         return $this->id;
     }
-    
+
     /**
      * Set name
      *
@@ -132,7 +131,7 @@ class EmbeddedPerson
     {
         return $this->name;
     }
-    
+
     /**
      * Set email
      *
@@ -142,7 +141,7 @@ class EmbeddedPerson
     {
         $this->email = $email;
     }
-    
+
     /**
      * Get email
      *
@@ -152,7 +151,7 @@ class EmbeddedPerson
     {
         return $this->email;
     }
-    
+
     /**
      * Set web
      *
@@ -162,7 +161,7 @@ class EmbeddedPerson
     {
         $this->web = $web;
     }
-    
+
     /**
      * Get web
      *
@@ -172,7 +171,7 @@ class EmbeddedPerson
     {
         return $this->web;
     }
-    
+
     /**
      * Set phone
      *
@@ -182,7 +181,7 @@ class EmbeddedPerson
     {
         $this->phone = $phone;
     }
-    
+
     /**
      * Get phone
      *
@@ -192,7 +191,7 @@ class EmbeddedPerson
     {
         return $this->phone;
     }
-    
+
     /**
      * Set honorific
      *
@@ -205,7 +204,7 @@ class EmbeddedPerson
         }
         $this->honorific[$locale] = $honorific;
     }
-    
+
     /**
      * Get honorific
      *
@@ -219,10 +218,10 @@ class EmbeddedPerson
         if (!isset($this->honorific[$locale])) {
             return;
         }
-        
+
         return $this->honorific[$locale];
     }
-    
+
     /**
      * Set i18n honorific
      */
@@ -230,7 +229,7 @@ class EmbeddedPerson
     {
         $this->honorific = $honorific;
     }
-    
+
     /**
      * Get i18n honorific
      */
@@ -238,7 +237,7 @@ class EmbeddedPerson
     {
         return $this->honorific;
     }
-    
+
     /**
      * Set firm
      *
@@ -251,7 +250,7 @@ class EmbeddedPerson
         }
         $this->firm[$locale] = $firm;
     }
-    
+
     /**
      * Get firm
      *
@@ -265,10 +264,10 @@ class EmbeddedPerson
         if (!isset($this->firm[$locale])) {
             return;
         }
-        
+
         return $this->firm[$locale];
     }
-    
+
     /**
      * Set i18n firm
      */
@@ -276,7 +275,7 @@ class EmbeddedPerson
     {
         $this->firm = $firm;
     }
-    
+
     /**
      * Get i18n firm
      */
@@ -284,7 +283,7 @@ class EmbeddedPerson
     {
         return $this->firm;
     }
-    
+
     /**
      * Set post
      *
@@ -297,7 +296,7 @@ class EmbeddedPerson
         }
         $this->post[$locale] = $post;
     }
-    
+
     /**
      * Get post
      *
@@ -311,10 +310,10 @@ class EmbeddedPerson
         if (!isset($this->post[$locale])) {
             return;
         }
-        
+
         return $this->post[$locale];
     }
-    
+
     /**
      * Set i18n post
      */
@@ -322,7 +321,7 @@ class EmbeddedPerson
     {
         $this->post = $post;
     }
-    
+
     /**
      * Get i18n post
      */
@@ -330,7 +329,7 @@ class EmbeddedPerson
     {
         return $this->post;
     }
-    
+
     /**
      * Set bio
      *
@@ -343,7 +342,7 @@ class EmbeddedPerson
         }
         $this->bio[$locale] = $bio;
     }
-    
+
     /**
      * Get bio
      *
@@ -357,10 +356,10 @@ class EmbeddedPerson
         if (!isset($this->bio[$locale])) {
             return;
         }
-        
+
         return $this->bio[$locale];
     }
-    
+
     /**
      * Set i18n bio
      */
@@ -368,7 +367,7 @@ class EmbeddedPerson
     {
         $this->bio = $bio;
     }
-    
+
     /**
      * Get i18n bio
      */
@@ -433,6 +432,7 @@ class EmbeddedPerson
     {
         $aux = array($this->getPost(), $this->getFirm(), $this->getBio());
         $aux = array_filter($aux, create_function('$a', 'return (!is_null($a)&&(""!=$a));'));
+
         return implode(', ', $aux);
     }
 }

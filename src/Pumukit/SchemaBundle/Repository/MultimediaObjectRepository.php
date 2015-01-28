@@ -14,7 +14,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
  */
 class MultimediaObjectRepository extends DocumentRepository
 {
-    /**
+  /**
    * Find all multimedia objects in a series with given status
    *
    * @param Series $series
@@ -104,7 +104,7 @@ class MultimediaObjectRepository extends DocumentRepository
       /* TODO - Fails in this case -> MultimediaObject with:
          Person 1 with Role 1
          Person 2 with Role 2
-        
+
          findByPersonIdWithRoleCode(Person 1, Role 2)
          -> returns this MultimediaObject because it has a person
          with id 1 and has a person with role 2

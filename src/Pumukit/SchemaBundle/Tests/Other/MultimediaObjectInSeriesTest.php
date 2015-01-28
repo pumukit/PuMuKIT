@@ -7,7 +7,6 @@
  * -      $series->addMultimediaObject($mm);
  *
  */
-
 namespace Pumukit\SchemaBundle\Tests\Other;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -43,7 +42,7 @@ class MultimediaObjectInSeriesTest extends WebTestCase
 
         $series = $this->factoryService->createSeries();
         $id = $series->getId();
-        
+
         $this->dm->clear();
 
         $series = $this->seriesRepo->find($id);
