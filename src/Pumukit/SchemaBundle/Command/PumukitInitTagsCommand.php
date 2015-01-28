@@ -21,11 +21,12 @@ class PumukitInitTagsCommand extends ContainerAwareCommand
     {
         $this
             ->setName('pumukit:init:tags')
-            ->setDescription('Pumukit test command')
+            ->setDescription('Load Pumukit data fixtures to your database')
             ->addArgument('file', InputArgument::OPTIONAL, 'Input CSV path')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
             ->setHelp(<<<EOT
-TODO
+
+Command to load a controlled set of data into a database. Useful for init Pumukit environment.
 
 The --force parameter has to be used to actually drop the database.
 
@@ -148,7 +149,7 @@ EOT
             $tag->setParent($tag_parent);
         }
         $tag->setTitle($csv_array[5], 'es');
-      // TODO Take care of csv language order!
+      // NOTE Take care of csv language order!
       if (isset($csv_array[6])) {
           $tag->setTitle($csv_array[6], 'gl');
       }
