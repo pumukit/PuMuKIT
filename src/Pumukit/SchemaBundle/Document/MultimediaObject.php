@@ -13,7 +13,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class MultimediaObject
 {
-  const STATUS_NORMAL = 0;
+    const STATUS_NORMAL = 0;
     const STATUS_BLOQ = 1;
     const STATUS_HIDE = 2;
     const STATUS_NEW = -1;
@@ -2103,89 +2103,89 @@ class MultimediaObject
 
         return $hasRemoved;
     }
+    
+    /**
+     * Get person with role
+     *
+     * @param Person|EmbeddedPerson $person
+     * @param Role|EmbeddedRole $role
+     *
+     * @return EmbeddedPerson|boolean EmbeddedPerson if found, FALSE otherwise
+     */
+    public function getPersonWithRole($person, $role)
+    {
+        if ($this->containsPersonWithRole($person, $role)) {
+            return $this->getEmbeddedRole($role)->getEmbeddedPerson($person);
+        }
+      
+        return false;
+    }
 
-     /**
-      * Get person with role
-      *
-      * @param Person|EmbeddedPerson $person
-      * @param Role|EmbeddedRole $role
-      *
-      * @return EmbeddedPerson|boolean EmbeddedPerson if found, FALSE otherwise
-      */
-     public function getPersonWithRole($person, $role)
-     {
-         if ($this->containsPersonWithRole($person, $role)) {
-             return $this->getEmbeddedRole($role)->getEmbeddedPerson($person);
-         }
+    /**
+     * Up person with role
+     *
+     * @param Person|EmbeddedPerson $person
+     * @param Role|EmbeddedRole $role
+     */
+    public function upPersonWithRole($person, $role)
+    {
+        $this->reorderPersonWithRole($person, $role, true);
+    }
 
-         return false;
-     }
+    /**
+     * Down person with role
+     *
+     * @param Person|EmbeddedPerson $person
+     * @param Role|EmbeddedRole $role
+     */
+    public function downPersonWithRole($person, $role)
+    {
+        $this->reorderPersonWithRole($person, $role, false);
+    }
 
-     /**
-      * Up person with role
-      *
-      * @param Person|EmbeddedPerson $person
-      * @param Role|EmbeddedRole $role
-      */
-     public function upPersonWithRole($person, $role)
-     {
-         $this->reorderPersonWithRole($person, $role, true);
-     }
+    /**
+     * Reorder person with role
+     *
+     * @param Person|EmbeddedRole $person
+     * @param Role\EmbeddedRole $role
+     * @param boolean $up
+     */
+    public function reorderPersonWithRole($person, $role, $up = true)
+    {
+        $people = array_values($this->getPeopleInMultimediaObjectByRole($role, true));
+        $this->getEmbeddedRole($role)->getPeople()->clear();
 
-     /**
-      * Down person with role
-      *
-      * @param Person|EmbeddedPerson $person
-      * @param Role|EmbeddedRole $role
-      */
-     public function downPersonWithRole($person, $role)
-     {
-         $this->reorderPersonWithRole($person, $role, false);
-     }
+        $out = array();
+        foreach ($people as $key => $embeddedPerson) {
+            if ($person->getId() == $embeddedPerson->getId()) {
+                $out[($key * 10) + ($up ? -11 : 11)] = $embeddedPerson;
+            } else {
+                $out[($key * 10)] = $embeddedPerson;
+            }
+        }
 
-     /**
-      * Reorder person with role
-      *
-      * @param Person|EmbeddedRole $person
-      * @param Role\EmbeddedRole $role
-      * @param boolean $up
-      */
-     public function reorderPersonWithRole($person, $role, $up = true)
-     {
-         $people = array_values($this->getPeopleInMultimediaObjectByRole($role, true));
-         $this->getEmbeddedRole($role)->getPeople()->clear();
+        ksort($out);
+        foreach ($out as $embeddedPerson) {
+            $this->getEmbeddedRole($role)->addPerson($embeddedPerson);
+        }
+    }
 
-         $out = array();
-         foreach ($people as $key => $embeddedPerson) {
-             if ($person->getId() == $embeddedPerson->getId()) {
-                 $out[($key * 10) + ($up ? -11 : 11)] = $embeddedPerson;
-             } else {
-                 $out[($key * 10)] = $embeddedPerson;
-             }
-         }
+    /**
+     * Get embedded role
+     *
+     * @param Role|EmbeddedRole
+     * @return EmbeddedRole|boolean EmbeddedRole if found, FALSE otherwise.
+     */
+    public function getEmbeddedRole($role)
+    {
+        foreach ($this->people_in_multimedia_object as $embeddedRole) {
+            if ($role->getCod() === $embeddedRole->getCod()) {
+                return $embeddedRole;
+            }
+        }
 
-         ksort($out);
-         foreach ($out as $embeddedPerson) {
-             $this->getEmbeddedRole($role)->addPerson($embeddedPerson);
-         }
-     }
-
-     /**
-      * Get embedded role
-      *
-      * @param Role|EmbeddedRole
-      * @return EmbeddedRole|boolean EmbeddedRole if found, FALSE otherwise.
-      */
-     public function getEmbeddedRole($role)
-     {
-         foreach ($this->people_in_multimedia_object as $embeddedRole) {
-             if ($role->getCod() === $embeddedRole->getCod()) {
-                 return $embeddedRole;
-             }
-         }
-
-         return false;
-     }
+        return false;
+    }
 
     /**
      * Create embedded role
@@ -2217,23 +2217,23 @@ class MultimediaObject
         return $this->people_in_multimedia_object;
     }
 
-     // End of people_in_multimedia_object section
+    // End of people_in_multimedia_object section
 
-     /**
-      * Update duration
-      */
-     private function updateDuration()
-     {
-         $maxDuration = $this->getDuration();
+    /**  
+     * Update duration
+     */
+    private function updateDuration()
+    {
+        $maxDuration = $this->getDuration();
 
-         foreach ($this->tracks as $mmTrack) {
-             if ($mmTrack->getDuration() > $this->getDuration()) {
-                 $maxDuration = $mmTrack->getDuration();
-             }
-         }
+        foreach ($this->tracks as $mmTrack) {
+            if ($mmTrack->getDuration() > $this->getDuration()) {
+                $maxDuration = $mmTrack->getDuration();
+            }
+        }
 
-         if ($maxDuration !== $this->getDuration()) {
-             $this->setDuration($maxDuration);
-         }
-     }
+        if ($maxDuration !== $this->getDuration()) {
+            $this->setDuration($maxDuration);
+        }
+    }
 }
