@@ -166,6 +166,7 @@ class Role
      * Set name
      *
      * @param string $name
+     * @param string|null $locale
      */
     public function setName($name, $locale = null)
     {
@@ -178,6 +179,7 @@ class Role
     /**
      * Get name
      *
+     * @param string|null $locale
      * @return string
      */
     public function getName($locale = null)
@@ -216,6 +218,7 @@ class Role
      * Set text
      *
      * @param string $text
+     * @param string|null $locale
      */
     public function setText($text, $locale = null)
     {
@@ -228,6 +231,7 @@ class Role
     /**
      * Get text
      *
+     * @param string|null $locale
      * @return string
      */
     public function getText($locale = null)

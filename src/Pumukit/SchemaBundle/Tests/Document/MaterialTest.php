@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\SchemaBundle\Document\Document;
+namespace Pumukit\SchemaBundle\Tests\Document;
 
 use Pumukit\SchemaBundle\Document\Material;
 

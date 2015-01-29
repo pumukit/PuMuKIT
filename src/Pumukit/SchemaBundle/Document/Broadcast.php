@@ -76,6 +76,7 @@ class Broadcast
    * Set name
    *
    * @param string $name
+   * @param string|null $locale
    */
   public function setName($name, $locale = null)
   {
@@ -88,6 +89,7 @@ class Broadcast
   /**
    * Get name
    *
+   * @param string|null $locale
    * @return string
    */
   public function getName($locale = null)
@@ -186,6 +188,7 @@ class Broadcast
    * Set description
    *
    * @param string $description
+   * @param string|null $locale
    */
   public function setDescription($description, $locale = null)
   {
@@ -198,6 +201,7 @@ class Broadcast
   /**
    * Get description
    *
+   * @param string|null $locale
    * @return string
    */
   public function getDescription($locale = null)

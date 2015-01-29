@@ -22,6 +22,7 @@ class Link extends Element
    * Set name
    *
    * @param string $name
+   * @param string|null $locale
    */
   public function setName($name, $locale = null)
   {
@@ -34,6 +35,7 @@ class Link extends Element
   /**
    * Get name
    *
+   * @param string|null $locale
    * @return string
    */
   public function getName($locale = null)

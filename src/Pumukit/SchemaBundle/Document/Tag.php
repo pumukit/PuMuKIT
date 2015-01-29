@@ -146,6 +146,7 @@ class Tag
    * Set title
    *
    * @param string $title
+   * @param string|null $locale
    */
   public function setTitle($title, $locale = null)
   {
@@ -158,6 +159,7 @@ class Tag
   /**
    * Get title
    *
+   * @param string|null $locale
    * @return string
    */
   public function getTitle($locale = null)
@@ -196,6 +198,7 @@ class Tag
    * Set description
    *
    * @param string $description
+   * @param string|null $locale
    */
   public function setDescription($description, $locale = null)
   {
@@ -208,6 +211,7 @@ class Tag
   /**
    * Get description
    *
+   * @param string|null $locale
    * @return string
    */
   public function getDescription($locale = null)

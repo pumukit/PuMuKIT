@@ -330,6 +330,7 @@ class Element
    * Set description
    *
    * @param text $description
+   * @param string|null $locale
    */
   public function setDescription($description, $locale = null)
   {
@@ -342,6 +343,7 @@ class Element
   /**
    * Get description
    *
+   * @param string|null $locale
    * @return text
    */
   public function getDescription($locale = null)

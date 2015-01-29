@@ -141,6 +141,7 @@ class EmbeddedRole
      * Set name
      *
      * @param string $name
+     * @param string|null $locale
      */
     public function setName($name, $locale = null)
     {
@@ -153,6 +154,7 @@ class EmbeddedRole
     /**
      * Get name
      *
+     * @param string|null $locale
      * @return string
      */
     public function getName($locale = null)
@@ -191,6 +193,7 @@ class EmbeddedRole
      * Set text
      *
      * @param string $text
+     * @param string|null $locale
      */
     public function setText($text, $locale = null)
     {
@@ -203,6 +206,7 @@ class EmbeddedRole
     /**
      * Get text
      *
+     * @param string|null $locale
      * @return string
      */
     public function getText($locale = null)
