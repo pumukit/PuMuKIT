@@ -302,6 +302,7 @@ class MultimediaObject
      * Set title
      *
      * @param string $title
+     * @param string|null $locale 
      */
     public function setTitle($title, $locale = null)
     {
@@ -352,6 +353,7 @@ class MultimediaObject
      * Set subtitle
      *
      * @param string $subtitle
+     * @param string|null $locale 
      */
     public function setSubtitle($subtitle, $locale = null)
     {
@@ -402,6 +404,7 @@ class MultimediaObject
      * Set description
      *
      * @param string $description
+     * @param string|null $locale 
      */
     public function setDescription($description, $locale = null)
     {
@@ -452,6 +455,7 @@ class MultimediaObject
      * Set line2
      *
      * @param string $line2
+     * @param string|null $locale 
      */
     public function setLine2($line2, $locale = null)
     {
@@ -502,6 +506,7 @@ class MultimediaObject
      * Set copyright
      *
      * @param string $copyright
+     * @param string|null $locale 
      */
     public function setCopyright($copyright, $locale = null)
     {
@@ -552,6 +557,7 @@ class MultimediaObject
      * Set keyword
      *
      * @param string $keyword
+     * @param string|null $locale 
      */
     public function setKeyword($keyword, $locale = null)
     {
@@ -720,7 +726,9 @@ class MultimediaObject
 
     /**
      * Add tag
+     *
      * The original string tag logic used array_unique to avoid tag duplication.
+     *
      * @param Tag|EmbeddedTag $tag
      */
     public function addTag($tag)
@@ -733,9 +741,11 @@ class MultimediaObject
 
     /**
      * Remove tag
+     *
      * The original string tag logic used array_search to seek the tag element in array.
      * This function uses doctrine2 arrayCollection contains function instead.
-     * @param  Tag|EmbeddedTag $tag
+     *
+     * @param  Tag|EmbeddedTag $tagToRemove
      * @return boolean         TRUE if this multimedia_object contained the specified tag, FALSE otherwise.
      */
     public function removeTag($tagToRemove)
@@ -751,9 +761,11 @@ class MultimediaObject
 
     /**
      * Contains tag
+     *
      * The original string tag logic used in_array to check it.
      * This function uses doctrine2 arrayCollection contains function instead.
-     * @param  Tag|EmbeddedTag $tag
+     *
+     * @param  Tag|EmbeddedTag $tagToCheck
      * @return boolean         TRUE if this multimedia_object contained the specified tag, FALSE otherwise.
      */
     public function containsTag($tagToCheck)
@@ -771,6 +783,7 @@ class MultimediaObject
      * Contains all tags
      * The original string tag logic used array_intersect and count to check it.
      * This function uses doctrine2 arrayCollection contains function instead.
+     *
      * @param  array   $tags
      * @return boolean TRUE if this multimedia_object contained all tags, FALSE otherwise.
      */
@@ -789,6 +802,7 @@ class MultimediaObject
      * Contains any tags
      * The original string tag logic used array_intersect and count to check it.
      * This function uses doctrine2 arrayCollection contains function instead.
+     *
      * @param  array   $tags
      * @return boolean TRUE if this multimedia_object contained any tag of the list, FALSE otherwise.
      */
