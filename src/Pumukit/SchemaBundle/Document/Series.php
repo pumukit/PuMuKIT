@@ -214,6 +214,7 @@ class Series
    * Set title
    *
    * @param string $title
+   * @param string|null $locale 
    */
   public function setTitle($title, $locale = null)
   {
@@ -226,6 +227,7 @@ class Series
   /**
    * Get title
    *
+   * @param string|null $locale 
    * @return string
    */
   public function getTitle($locale = null)
@@ -264,6 +266,7 @@ class Series
    * Set subtitle
    *
    * @param string $subtitle
+   * @param string|null $locale 
    */
   public function setSubtitle($subtitle, $locale = null)
   {
@@ -276,6 +279,7 @@ class Series
   /**
    * Get subtitle
    *
+   * @param string|null $locale 
    * @return string
    */
   public function getSubtitle($locale = null)
@@ -314,6 +318,7 @@ class Series
    * Set description
    *
    * @param text $description
+   * @param string|null $locale 
    */
   public function setDescription($description, $locale = null)
   {
@@ -326,6 +331,7 @@ class Series
   /**
    * Get description
    *
+   * @param string|null $locale 
    * @return text
    */
   public function getDescription($locale = null)
@@ -364,6 +370,7 @@ class Series
    * Set header
    *
    * @param text $header
+   * @param string|null $locale 
    */
   public function setHeader($header, $locale = null)
   {
@@ -376,6 +383,7 @@ class Series
   /**
    * Get header
    *
+   * @param string|null $locale 
    * @return text
    */
   public function getHeader($locale = null)
@@ -414,6 +422,7 @@ class Series
    * Set footer
    *
    * @param text $footer
+   * @param string|null $locale 
    */
   public function setFooter($footer, $locale = null)
   {
@@ -426,6 +435,7 @@ class Series
   /**
    * Get footer
    *
+   * @param string|null $locale 
    * @return text
    */
   public function getFooter($locale = null)
@@ -464,6 +474,7 @@ class Series
    * Set copyright
    *
    * @param string $copyright
+   * @param string|null $locale 
    */
   public function setCopyright($copyright, $locale = null)
   {
@@ -476,6 +487,7 @@ class Series
   /**
    * Get copyright
    *
+   * @param string|null $locale 
    * @return string
    */
   public function getCopyright($locale = null)
@@ -514,6 +526,7 @@ class Series
    * Set keyword
    *
    * @param string $keyword
+   * @param string|null $locale 
    */
   public function setKeyword($keyword, $locale = null)
   {
@@ -526,6 +539,7 @@ class Series
   /**
    * Get keyword
    *
+   * @param string|null $locale 
    * @return string
    */
   public function getKeyword($locale = null)
@@ -564,6 +578,7 @@ class Series
    * Set line2
    *
    * @param string $line2
+   * @param string|null $locale 
    */
   public function setLine2($line2, $locale = null)
   {
@@ -576,6 +591,7 @@ class Series
   /**
    * Get line2
    *
+   * @param string|null $locale 
    * @return string
    */
   public function getLine2($locale = null)

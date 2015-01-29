@@ -127,6 +127,7 @@ class EmbeddedTag
    * Set title
    *
    * @param string $title
+   * @param string|null $locale
    */
   public function setTitle($title, $locale = null)
   {
@@ -139,6 +140,7 @@ class EmbeddedTag
   /**
    * Get title
    *
+   * @param string|null $locale
    * @return string
    */
   public function getTitle($locale = null)
@@ -177,6 +179,7 @@ class EmbeddedTag
    * Set description
    *
    * @param string $description
+   * @param string|null $locale
    */
   public function setDescription($description, $locale = null)
   {
@@ -189,6 +192,7 @@ class EmbeddedTag
   /**
    * Get description
    *
+   * @param string|null $locale
    * @return string
    */
   public function getDescription($locale = null)
