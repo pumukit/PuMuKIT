@@ -69,208 +69,139 @@ class SeriesRepositoryTest extends WebTestCase
     }
 
     // TO DO: test proper time sorting
-    /*
+
     public function testFindSeriesWithTags()
     {
-        // Only one SeriesType at the moment.
-        $series_type = $this->createSeriesType("Medieval Fantasy Sitcom");
+        $tag1 = new Tag();
+        $tag1->setCod('tag1');
+        $tag2 = new Tag();
+        $tag2->setCod('tag2');
+        $tag3 = new Tag();
+        $tag3->setCod('tag3');
+        
+        $this->dm->persist($tag1);
+        $this->dm->persist($tag2);
+        $this->dm->persist($tag3);
+        $this->dm->flush();
 
-        $series_main = $this->createSeries("Stark's growing pains");
-        $series_white = $this->createSeries("White Walkers adventures");
-        $series_wall = $this->createSeries("The Wall");
-        $series_lhazar = $this->createSeries("A quiet life in Lhazar");
-        $series_type->addSeries($series_main);
-        $series_type->addSeries($series_white);
-        $series_type->addSeries($series_wall);
-        $series_type->addSeries($series_lhazar);
+        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
 
-        $this->em->persist($series_type);
-        $this->em->persist($series_main);
-        $this->em->persist($series_white);
-        $this->em->persist($series_wall);
-        $this->em->persist($series_lhazar);
+        $series1 = $this->createSeries('Series 1');
+        $mm11 = $this->factoryService->createMultimediaObject($series1);
+        $mm12 = $this->factoryService->createMultimediaObject($series1);
+        $mm13 = $this->factoryService->createMultimediaObject($series1);
 
-        $tag_root = new Tag("Game of Matterhorns");
+        $series2 = $this->createSeries('Series 2');
+        $mm21 = $this->factoryService->createMultimediaObject($series2);
+        $mm22 = $this->factoryService->createMultimediaObject($series2);
+        $mm23 = $this->factoryService->createMultimediaObject($series2);
 
-        $tag_r_metatag = new Tag("Regions metatag");
-        $tag_r_wall = new Tag("The Wall region");
-        $tag_r_north = new Tag("The North region");
-        $tag_r_essos = new Tag("Essos region");
-        $tag_r_metatag->setMetatag(true);
-        $tag_r_metatag->setParent($tag_root);
-        $tag_r_wall->setParent($tag_r_metatag);
-        $tag_r_north->setParent($tag_r_metatag);
-        $tag_r_essos->setParent($tag_r_metatag);
+        $series3 = $this->createSeries('Series 3');
+        $mm31 = $this->factoryService->createMultimediaObject($series3);
+        $mm32 = $this->factoryService->createMultimediaObject($series3);
+        $mm33 = $this->factoryService->createMultimediaObject($series3);
+        $mm34 = $this->factoryService->createMultimediaObject($series3);
 
-        $tag_h_metatag = new Tag("Great Houses metatag");
-        $tag_h_stark = new Tag("Stark House");
-        $tag_h_night = new Tag("Night's Watch House");
-        $tag_h_khalasar = new Tag("Dhrogo Khalasar House");
+        $mm11->addTag($tag1);
+        $mm11->addTag($tag2);
 
-        $tag_h_metatag->setMetatag(true);
-        $tag_h_metatag->setParent($tag_root);
-        $tag_h_stark->setParent($tag_h_metatag);
-        $tag_h_night->setParent($tag_h_metatag);
-        $tag_h_khalasar->setParent($tag_h_metatag);
+        $mm12->addTag($tag1);
+        $mm12->addTag($tag2);
 
-        $tag_g_metatag = new Tag("Genres metatag");
-        $tag_g_defence = new Tag("Defense proceeding genre");
-        $tag_g_raven = new Tag("Carrier raven reading genre");
-        $tag_g_unused = new Tag("Unused genre");
+        $mm13->addTag($tag1);
+        $mm13->addTag($tag2);
 
-        $tag_g_metatag->setMetatag(true);
-        $tag_g_metatag->setParent($tag_root);
-        $tag_g_defence->setParent($tag_g_metatag);
-        $tag_g_raven->setParent($tag_g_metatag);
-        $tag_g_unused->setParent($tag_g_metatag);
+        $mm21->addTag($tag2);
 
-        $this->em->persist($tag_root);
-        $this->em->persist($tag_r_metatag);
-        $this->em->persist($tag_h_metatag);
-        $this->em->persist($tag_g_metatag);
-        $this->em->persist($tag_r_wall);
-        $this->em->persist($tag_r_north);
-        $this->em->persist($tag_r_essos);
-        $this->em->persist($tag_h_stark);
-        $this->em->persist($tag_h_night);
-        $this->em->persist($tag_h_khalasar);
-        $this->em->persist($tag_g_defence);
-        $this->em->persist($tag_g_raven);
-        $this->em->persist($tag_g_unused);
+        $mm22->addTag($tag1);
+        $mm22->addTag($tag2);
 
-        $mm1=$this->createMultimediaObjectAssignedToSeries ('MmObject 1', $series_main);
-        $mm2=$this->createMultimediaObjectAssignedToSeries ('MmObject 2', $series_main);
+        $mm23->addTag($tag1);
 
-        $mm3=$this->createMultimediaObjectAssignedToSeries ('MmObject 3', $series_white);
-        $mm4=$this->createMultimediaObjectAssignedToSeries ('MmObject 4', $series_white);
+        $mm31->addTag($tag1);
 
-        $mm5=$this->createMultimediaObjectAssignedToSeries ('MmObject 5', $series_wall);
-        $mm6=$this->createMultimediaObjectAssignedToSeries ('MmObject 6', $series_wall);
+        $mm32->addTag($tag2);
+        $mm32->addTag($tag3);
 
-        $mm7=$this->createMultimediaObjectAssignedToSeries ('MmObject 7', $series_lhazar);
-        $mm8=$this->createMultimediaObjectAssignedToSeries ('MmObject 8', $series_lhazar);
+        $mm33->addTag($tag1);
 
-        $mm1->setTags(array($tag_r_wall, $tag_r_north, $tag_r_essos,
-                    $tag_h_stark, $tag_h_night, $tag_h_khalasar,
-                    $tag_g_defence, $tag_g_raven));
+        $mm34->addTag($tag1);
 
-        $mm2->addTag($tag_r_north);
-        $mm2->addTag($tag_h_stark);
-        $mm2->addTag($tag_g_raven);
+        $this->dm->persist($mm11);
+        $this->dm->persist($mm12);
+        $this->dm->persist($mm13);
+        $this->dm->persist($mm21);
+        $this->dm->persist($mm22);
+        $this->dm->persist($mm23);
+        $this->dm->persist($mm31);
+        $this->dm->persist($mm32);
+        $this->dm->persist($mm33);
+        $this->dm->persist($mm34);
+        $this->dm->flush();
 
-        $mm3->addTag($tag_r_wall);
+        // FIND SERIES WITH TAG
+        $this->assertEquals(3, count($this->repo->findWithTag($tag1)));
+        $limit = 2;
+        $this->assertEquals(2, $this->repo->findWithTag($tag1, $limit)->count(true));
+        $page = 0;
+        $this->assertEquals(2, $this->repo->findWithTag($tag1, $limit, $page)->count(true));
+        $page = 1;
+        $this->assertEquals(1, $this->repo->findWithTag($tag1, $limit, $page)->count(true));
 
-        $mm5->setTags(array($tag_r_wall, $tag_r_north, $tag_h_stark, $tag_h_night,
-                    $tag_g_raven));
-        $mm6->setTags(array($tag_r_wall, $tag_h_night, $tag_g_defence));
+        $this->assertEquals(1, $this->repo->findWithTag($tag3)->count(true));
 
-        $mm7->setTags(array($tag_r_essos, $tag_h_khalasar, $tag_g_raven));
-        $mm8->setTags(array($tag_r_essos, $tag_h_khalasar));
+        // FIND ONE SERIES WITH TAG ID
+        $this->assertEquals(1, count($this->repo->findOneWithTag($tag2)));
+        $this->assertEquals(1, count($this->repo->findOneWithTag($tag3)));
+        $this->assertEquals($series3, $this->repo->findOneWithTag($tag3));
 
-        $this->em->persist($mm1);
-        $this->em->persist($mm2);
-        $this->em->persist($mm3);
-        $this->em->persist($mm4);
-        $this->em->persist($mm5);
-        $this->em->persist($mm6);
-        $this->em->persist($mm7);
-        $this->em->persist($mm8);
+        // FIND SERIES WITH ANY TAG
+        $arrayTags = array($tag1, $tag2);
+        $this->assertEquals(3, $this->repo->findWithAnyTag($arrayTags)->count(true));
+        $limit = 2;
+        $this->assertEquals(2, $this->repo->findWithAnyTag($arrayTags, $limit)->count(true));
+        $page = 0;
+        $this->assertEquals(2, $this->repo->findWithAnyTag($arrayTags, $limit, $page)->count(true));
+        $page = 1;
+        $this->assertEquals(1, $this->repo->findWithAnyTag($arrayTags, $limit, $page)->count(true));
 
-        $this->em->flush();
+        $arrayTags = array($tag3);
+        $this->assertEquals(1, $this->repo->findWithAnyTag($arrayTags)->count(true));
 
-        $this->assertEquals(0, count($this->repo->findWithTag($tag_g_unused)));
+        // FIND SERIES WITH ALL TAGS
+        $arrayTags = array($tag1, $tag2);
+        $this->assertEquals(2, $this->repo->findWithAllTags($arrayTags)->count(true));
+        $limit = 1;
+        $this->assertEquals(1, $this->repo->findWithAllTags($arrayTags, $limit)->count(true));
+        $page = 0;
+        $this->assertEquals(1, $this->repo->findWithAllTags($arrayTags, $limit, $page)->count(true));
+        $page = 1;
+        $this->assertEquals(1, $this->repo->findWithAllTags($arrayTags, $limit, $page)->count(true));
 
-        // findOneWithTag uses query->getSingleResult and throws an exception
-        // if no result is found. See "Manual de Symfony2, Release 2.0.1" p.124
-        try {
-            $testNoResultException = $this->repo->findOneWithTag($tag_g_unused);
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            $testNoResultException = true;
-        }
-        $this->assertTrue($testNoResultException);
-        unset ($testNoResultException);
+        $arrayTags = array($tag2, $tag3);
+        $this->assertEquals(1, $this->repo->findWithAllTags($arrayTags)->count(true));
 
-        $this->assertEquals(1, count($this->repo->findOneWithTag($tag_r_north)));
-        $this->assertEquals(1, count($this->repo->findOneWithTag($tag_r_essos)));
-        $this->assertEquals($series_main, $this->repo->findOneWithTag($tag_r_north));
+        // FIND ONE SERIES WITH ALL TAGS
+        $arrayTags = array($tag1, $tag2);
+        $this->assertEquals(1, count($this->repo->findOneWithAllTags($arrayTags)));
 
-        // Test findWithTag
-        $this->assertEquals(2, count($this->repo->findWithTag($tag_r_north)));
-        $this->assertEquals(2, count($this->repo->findWithTag($tag_r_essos)));
-        $this->assertEquals(2, count($this->repo->findWithTag($tag_h_night)));
-        $this->assertEquals(2, count($this->repo->findWithTag($tag_h_khalasar)));
-        $this->assertEquals(2, count($this->repo->findWithTag($tag_g_defence)));
-        $this->assertEquals(3, count($this->repo->findWithTag($tag_g_raven)));
+        $arrayTags = array($tag2, $tag3);
+        $this->assertEquals(1, count($this->repo->findOneWithAllTags($arrayTags)));
+        $this->assertEquals($series3, $this->repo->findOneWithAllTags($arrayTags));
 
-        // Test findWithAnyTag
-        $this->assertEquals (2,count($this->repo->findWithAnyTag(array($tag_g_defence))));
-        $this->assertEquals (3,count($this->repo->findWithAnyTag(array(
-                            $tag_g_defence, $tag_g_raven))));
+        // FIND SERIES WITHOUT TAG ID
+        $this->assertEquals(2, $this->repo->findWithoutTag($tag3)->count(true));
+        $limit = 1;
+        $this->assertEquals(1, $this->repo->findWithoutTag($tag3, $limit)->count(true));
+        $page = 0;
+        $this->assertEquals(1, $this->repo->findWithoutTag($tag3, $limit, $page)->count(true));
+        $page = 1;
+        $this->assertEquals(1, $this->repo->findWithoutTag($tag3, $limit, $page)->count(true));
 
-        // Test findWithAllTags
-        $this->assertEquals (3,count($this->repo->findWithAllTags(array(
-                            $tag_g_raven))));
-        $this->assertEquals (1,count($this->repo->findWithAllTags(array(
-                            $tag_g_defence, $tag_g_raven))));
-        $this->assertEquals (2,count($this->repo->findWithAllTags(array(
-                            $tag_r_essos, $tag_h_khalasar, $tag_g_raven))));
-        $this->assertEquals (0, count($this->repo->findWithAllTags(array(
-                            $tag_r_essos, $tag_h_khalasar, $tag_g_raven, $tag_g_unused))));
-        $this->assertEquals (1,count($this->repo->findWithAllTags(array(
-                            $tag_r_north, $tag_r_wall, $tag_r_essos,
-                            $tag_h_stark, $tag_h_night, $tag_h_khalasar,
-                            $tag_g_defence, $tag_g_raven))));
-        $this->assertEquals (2,count($this->repo->findWithAllTags(array(
-                            $tag_r_wall, $tag_h_night, $tag_g_defence))));
+        // FIND ONE SERIES WITHOUT TAG ID
+        $this->assertEquals(1, count($this->repo->findOneWithoutTag($tag3)));
 
-        // Test findOneWithAllTags
-        $this->assertEquals ($series_main, $this->repo->findOneWithAllTags(array(
-                        $tag_g_defence, $tag_g_raven)));
-
-        try {
-            $testNoResultException = $this->repo->findOneWithAllTags(array(
-                        $tag_g_unused));
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            $testNoResultException = true;
-        }
-        $this->assertTrue($testNoResultException);
-        unset ($testNoResultException);
-
-        // Test findOneWithoutTag
-        $this->assertEquals (1, count($this->repo->findOneWithoutTag($tag_g_raven)));
-
-        // Test findWithoutTag
-        $prueba = $this->repo->findWithoutTag($tag_g_raven);
-        $this->assertEquals (1, count($prueba));
-        $this->assertEquals ($series_white, $prueba[0]);
-        unset($prueba);
-        $prueba2 = $this->repo->findWithoutTag($tag_h_night);
-        $this->assertEquals (2, count($prueba2));
-        $this->assertTrue (in_array($series_white, $prueba2));
-        $this->assertTrue (in_array($series_lhazar, $prueba2));
-        unset($prueba2);
-        $this->assertEquals (4, count($this->repo->findWithoutTag($tag_g_unused)));
-
-        // Test findWithoutSomeTags
-        $prueba = $this->repo->findWithoutSomeTags(array($tag_g_raven, $tag_g_unused));
-        $this->assertEquals ($series_white, $prueba[0]);
-        $this->assertEquals (1, count($prueba));
-        unset($prueba);
-        $prueba2 = $this->repo->findWithoutSomeTags(array($tag_r_essos, $tag_h_khalasar));
-        $this->assertEquals (2, count($prueba2));
-        $this->assertTrue (in_array($series_white, $prueba2));
-        $this->assertTrue (in_array($series_wall, $prueba2));
-        unset($prueba2);
-
-        // Test findWithoutAllTags
-        $prueba2 = $this->repo->findWithoutAllTags(array(
-                    $tag_r_wall, $tag_h_night, $tag_g_defence));
-        $this->assertEquals (2, count($prueba2));
-        $this->assertTrue (in_array($series_white, $prueba2));
-        $this->assertTrue (in_array($series_lhazar, $prueba2));
-        unset($prueba2);
-
-    }*/
+    }
 
     public function testFindSeriesByPersonId()
     {
@@ -494,5 +425,24 @@ class SeriesRepositoryTest extends WebTestCase
         $this->dm->persist($mm);
 
         return $mm;
+    }
+
+    private function createBroadcast($broadcastTypeId)
+    {
+        $broadcast = new Broadcast();
+        $broadcast->setName(ucfirst($broadcastTypeId));
+        $broadcast->setBroadcastTypeId($broadcastTypeId);
+        $broadcast->setPasswd('password');
+        if (0 === strcmp(Broadcast::BROADCAST_TYPE_PRI, $broadcastTypeId)) {
+            $broadcast->setDefaultSel(true);
+        } else {
+            $broadcast->setDefaultSel(false);
+        }
+        $broadcast->setDescription(ucfirst($broadcastTypeId).' broadcast');
+
+        $this->dm->persist($broadcast);
+        $this->dm->flush();
+
+        return $broadcast;
     }
 }

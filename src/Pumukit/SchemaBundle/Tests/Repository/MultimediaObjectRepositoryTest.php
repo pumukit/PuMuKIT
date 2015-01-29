@@ -683,7 +683,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals($tracksArray, array_values($this->repo->find($mm->getId())->getTracks()->toArray()));
     }
 
-    public function testFindByTags()
+    public function testFindMultimediaObjectsWithTags()
     {
         $tag1 = new Tag();
         $tag1->setCod('tag1');
@@ -723,28 +723,254 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         $mm22->addTag($tag1);
 
+        $mm23->addTag($tag1);
+
+        $mm31->addTag($tag1);
+
+        $mm33->addTag($tag1);
+
+        $mm34->addTag($tag1);
+
+        $mm11->setTitle('mm11');
+        $mm12->setTitle('mm12');
+        $mm13->setTitle('mm13');
+        $mm21->setTitle('mm21');
+        $mm22->setTitle('mm22');
+        $mm23->setTitle('mm23');
+        $mm31->setTitle('mm31');
+        $mm32->setTitle('mm32');
+        $mm33->setTitle('mm33');
+        $mm34->setTitle('mm34');
+
+        $this->dm->persist($mm11);
+        $this->dm->persist($mm12);
+        $this->dm->persist($mm21);
+        $this->dm->persist($mm22);
+        $this->dm->persist($mm23);
+        $this->dm->persist($mm31);
+        $this->dm->persist($mm33);
+        $this->dm->persist($mm34);
+        $this->dm->flush();
+
+        // FIND WITH TAG
+        $this->assertEquals(7, count($this->repo->findWithTag($tag1)));
+        $limit = 3;
+        $this->assertEquals(3, $this->repo->findWithTag($tag1, $limit)->count(true));
+        $page = 0;
+        $this->assertEquals(3, $this->repo->findWithTag($tag1, $limit, $page)->count(true));
+        $page = 1;
+        $this->assertEquals(3, $this->repo->findWithTag($tag1, $limit, $page)->count(true));
+        $page = 2;
+        $this->assertEquals(1, $this->repo->findWithTag($tag1, $limit, $page)->count(true));
+        $page = 3;
+        $this->assertEquals(0, $this->repo->findWithTag($tag1, $limit, $page)->count(true));
+
+
+        $page = 1;
+        $arrayAsc = array($mm23, $mm31, $mm33);
+        $this->assertEquals($arrayAsc, array_values($this->repo->findWithTag($tag1, $limit, $page, array('rank' => 'asc'))->toArray()));
+        $arrayDesc = array($mm23, $mm22, $mm12);
+        $this->assertEquals($arrayDesc, array_values($this->repo->findWithTag($tag1, $limit, $page, array('rank' => 'desc'))->toArray()));
+
+
+        $this->assertEquals(2, count($this->repo->findWithTag($tag2)));
+        $limit = 1;
+        $this->assertEquals(1, $this->repo->findWithTag($tag2, $limit)->count(true));
+        $page = 0;
+        $this->assertEquals(1, $this->repo->findWithTag($tag2, $limit, $page)->count(true));
+        $page = 1;
+        $this->assertEquals(1, $this->repo->findWithTag($tag2, $limit, $page)->count(true));
+
+        // FIND ONE WITH TAG
+        $this->assertEquals(1, count($this->repo->findOneWithTag($tag1)));
+
+        // FIND WITH ANY TAG
+        $arrayTags = array($tag1, $tag2, $tag3);
+        $this->assertEquals(8, $this->repo->findWithAnyTag($arrayTags)->count(true));
+        $limit = 3;
+        $this->assertEquals(3, $this->repo->findWithAnyTag($arrayTags, $limit)->count(true));
+        $page = 0;
+        $this->assertEquals(3, $this->repo->findWithAnyTag($arrayTags, $limit, $page)->count(true));
+        $page = 1;
+        $this->assertEquals(3, $this->repo->findWithAnyTag($arrayTags, $limit, $page)->count(true));
+        $page = 2;
+        $this->assertEquals(2, $this->repo->findWithAnyTag($arrayTags, $limit, $page)->count(true));
+
+        $mm32->addTag($tag3);
+        $this->dm->persist($mm32);
+        $this->dm->flush();
+        $this->assertEquals(9, $this->repo->findWithAnyTag($arrayTags)->count(true));
+
+        $arrayTags = array($tag2, $tag3);
+        $this->assertEquals(3, $this->repo->findWithAnyTag($arrayTags)->count(true));
+
+        // FIND WITH ALL TAGS
+        $mm32->addTag($tag2);
+
+        $mm13->addTag($tag1);
+        $mm13->addTag($tag2);
+
+        $this->dm->persist($mm13);
+        $this->dm->persist($mm32);
+        $this->dm->flush();
+
+        $arrayTags = array($tag1, $tag2);
+        $this->assertEquals(2, $this->repo->findWithAllTags($arrayTags)->count(true));
+
+        $mm12->addTag($tag2);
+        $mm22->addTag($tag2);
+        $this->dm->persist($mm12);
+        $this->dm->persist($mm22);
+        $this->dm->flush();
+
+        $this->assertEquals(4, $this->repo->findWithAllTags($arrayTags)->count(true));
+        $limit = 3;
+        $this->assertEquals(3, $this->repo->findWithAllTags($arrayTags, $limit)->count(true));
+        $page = 0;
+        $this->assertEquals(3, $this->repo->findWithAllTags($arrayTags, $limit, $page)->count(true));
+        $page = 1;
+        $this->assertEquals(1, $this->repo->findWithAllTags($arrayTags, $limit, $page)->count(true));
+
+        $arrayTags = array($tag2, $tag3);
+        $this->assertEquals(1, $this->repo->findWithAllTags($arrayTags)->count(true));
+
+        // FIND ONE WITH ALL TAGS
+        $arrayTags = array($tag1, $tag2);
+        $this->assertEquals(1, count($this->repo->findOneWithAllTags($arrayTags)));
+
+        // FIND WITHOUT TAG ID
+        $this->assertEquals(9, $this->repo->findWithoutTag($tag3)->count(true));
+        $limit = 4;
+        $this->assertEquals(4, $this->repo->findWithoutTag($tag3, $limit)->count(true));
+        $page = 0;
+        $this->assertEquals(4, $this->repo->findWithoutTag($tag3, $limit, $page)->count(true));
+        $page = 1;
+        $this->assertEquals(4, $this->repo->findWithoutTag($tag3, $limit, $page)->count(true));
+        $page = 2;
+        $this->assertEquals(1, $this->repo->findWithoutTag($tag3, $limit, $page)->count(true));
+        $page = 3;
+        $this->assertEquals(0, $this->repo->findWithoutTag($tag3, $limit, $page)->count(true));
+
+        // FIND ONE WITHOUT TAG
+        $this->assertEquals(1, count($this->repo->findOneWithoutTag($tag2)));
+
+        // FIND WITH ALL TAGS
+        // TODO
+
+        // FIND WITHOUT SOME TAGS
+        $arrayTags = array($tag2, $tag3);
+        $this->assertEquals(4, $this->repo->findWithoutSomeTags($arrayTags)->count(true));
+        $limit = 3;
+        $this->assertEquals(3, $this->repo->findWithoutSomeTags($arrayTags, $limit)->count(true));
+        $page = 0;
+        $this->assertEquals(3, $this->repo->findWithoutSomeTags($arrayTags, $limit, $page)->count(true));
+        $page = 1;
+        $this->assertEquals(1, $this->repo->findWithoutSomeTags($arrayTags, $limit, $page)->count(true));
+
+        $arrayTags = array($tag1, $tag3);
+        $this->assertEquals(1, $this->repo->findWithoutSomeTags($arrayTags)->count(true));
+
+        $arrayTags = array($tag1, $tag2);
+        $this->assertEquals(0, $this->repo->findWithoutSomeTags($arrayTags)->count(true));
+
+    }
+
+    public function testFindSeriesFieldWithTags()
+    {
+        $tag1 = new Tag();
+        $tag1->setCod('tag1');
+        $tag2 = new Tag();
+        $tag2->setCod('tag2');
+        $tag3 = new Tag();
+        $tag3->setCod('tag3');
+        
+        $this->dm->persist($tag1);
+        $this->dm->persist($tag2);
+        $this->dm->persist($tag3);
+        $this->dm->flush();
+
+        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
+        $series1 = $this->createSeries('Series 1');
+        $mm11 = $this->factoryService->createMultimediaObject($series1);
+        $mm12 = $this->factoryService->createMultimediaObject($series1);
+        $mm13 = $this->factoryService->createMultimediaObject($series1);
+
+        $series2 = $this->createSeries('Series 2');
+        $mm21 = $this->factoryService->createMultimediaObject($series2);
+        $mm22 = $this->factoryService->createMultimediaObject($series2);
+        $mm23 = $this->factoryService->createMultimediaObject($series2);
+
+        $series3 = $this->createSeries('Series 3');
+        $mm31 = $this->factoryService->createMultimediaObject($series3);
+        $mm32 = $this->factoryService->createMultimediaObject($series3);
+        $mm33 = $this->factoryService->createMultimediaObject($series3);
+        $mm34 = $this->factoryService->createMultimediaObject($series3);
+
+        $mm11->addTag($tag1);
+        $mm11->addTag($tag2);
+
+        $mm12->addTag($tag1);
+        $mm12->addTag($tag2);
+
+        $mm13->addTag($tag1);
+        $mm13->addTag($tag2);
+
+        $mm21->addTag($tag2);
+
+        $mm22->addTag($tag1);
+        $mm22->addTag($tag2);
+
+        $mm23->addTag($tag1);
+
+        $mm31->addTag($tag1);
+
+        $mm32->addTag($tag2);
+        $mm32->addTag($tag3);
+
         $mm33->addTag($tag1);
 
         $mm34->addTag($tag1);
 
         $this->dm->persist($mm11);
         $this->dm->persist($mm12);
+        $this->dm->persist($mm13);
         $this->dm->persist($mm21);
         $this->dm->persist($mm22);
+        $this->dm->persist($mm23);
+        $this->dm->persist($mm31);
+        $this->dm->persist($mm32);
         $this->dm->persist($mm33);
         $this->dm->persist($mm34);
         $this->dm->flush();
 
-        //exit;
+        // FIND SERIES FIELD WITH TAG
+        $this->assertEquals(3, count($this->repo->findSeriesFieldWithTag($tag1)));
+        $this->assertEquals(1, count($this->repo->findSeriesFieldWithTag($tag3)));
 
-        var_dump($tag1->getId());
-        var_dump($tag2->getId());
-        var_dump($mm11->getTags()->toArray()[0]->getId());
-        var_dump($mm11->getTags()->toArray()[1]->getId());
-        //dump($this->repo->find($mm11->getId()));
+        // FIND ONE SERIES FIELD WITH TAG
+        $this->assertEquals($series3->getId(), $this->repo->findOneSeriesFieldWithTag($tag3));
 
-        $this->assertEquals(5, count($this->repo->findByTagId($tag1->getId())));
-        $this->assertEquals(2, count($this->repo->findByTagId($tag2->getId())));
+        // FIND SERIES FIELD WITH ANY TAG
+        $arrayTags = array($tag1, $tag2);
+        $this->assertEquals(3, $this->repo->findSeriesFieldWithAnyTag($arrayTags)->count(true));
+
+        $arrayTags = array($tag3);
+        $this->assertEquals(1, $this->repo->findSeriesFieldWithAnyTag($arrayTags)->count(true));
+
+        // FIND SERIES FIELD WITH ALL TAGS
+        $arrayTags = array($tag1, $tag2);
+        $this->assertEquals(2, $this->repo->findSeriesFieldWithAllTags($arrayTags)->count(true));
+
+        $arrayTags = array($tag2, $tag3);
+        $this->assertEquals(1, $this->repo->findSeriesFieldWithAllTags($arrayTags)->count(true));
+
+        // FIND ONE SERIES FIELD WITH ALL TAGS
+        $arrayTags = array($tag1, $tag2);
+        $this->assertEquals(1, count($this->repo->findOneSeriesFieldWithAllTags($arrayTags)));
+
+        $arrayTags = array($tag2, $tag3);
+        $this->assertEquals(1, count($this->repo->findOneSeriesFieldWithAllTags($arrayTags)));
+        $this->assertEquals($series3->getId(), $this->repo->findOneSeriesFieldWithAllTags($arrayTags));
     }
 
     private function createPerson($name)

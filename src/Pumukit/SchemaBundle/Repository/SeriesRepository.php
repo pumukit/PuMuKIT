@@ -14,260 +14,248 @@ use Pumukit\SchemaBundle\Document\SeriesType;
 class SeriesRepository extends DocumentRepository
 {
     //TODO #6101
-    public function findWithTag(Tag $tag)
+    /**
+     * Find series with tag
+     *
+     * @param Tag|EmbeddedTag $tag
+     * @param int $limit
+     * @param int $page
+     * @return ArrayCollection
+     */
+    public function findWithTag($tag, $limit = null, $page = 0)
     {
-        $dm = $kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->equals($tag)->sort('public_date', 'desc');
-        $query = $qb->getQuery();
-        $results = $query->execute();
-    /*
-      $query = $dm->createQuery('SELECT s
-      FROM PumukitSchemaBundle:Series s
-      JOIN s.multimedia_objects mm
-      JOIN mm.tags t
-      WHERE t = :tag
-      ORDER BY s.public_date DESC')
-      ->setParameter('tag', $tag);
+        $referencedSeries = $this->getDocumentManager()
+            ->getRepository('PumukitSchemaBundle:MultimediaObject')
+            ->findSeriesFieldWithTag($tag);
+        
+        $qb = $this->createQueryBuilder()
+            ->field('id')->in($referencedSeries->toArray());
+        
+        if (null !== $limit){
+            $qb->limit($limit)->skip($limit * $page);
+        }
 
-      return $query->getResult();*/
-    return $results;
+        return $qb->getQuery()->execute();
+    }
+ 
+    /**
+     * Find one series with tag
+     *
+     * @param Tag|EmbeddedTag $tag
+     * @return Series
+     */
+    public function findOneWithTag($tag)
+    {
+        $referencedOneSeries = $this->getDocumentManager()
+            ->getRepository('PumukitSchemaBundle:MultimediaObject')
+            ->findOneSeriesFieldWithTag($tag);
+
+        return $this->createQueryBuilder()
+            ->field('id')->equals($referencedOneSeries)
+            ->getQuery()
+            ->getSingleResult();
     }
 
-    public function findOneWithTag(Tag $tag)
+    /**
+     * Find series with any tag
+     *
+     * @param array $tags
+     * @param int $limit
+     * @param int $page
+     * @return ArrayCollection
+     */
+    public function findWithAnyTag($tags, $limit = null, $page = 0)
     {
-        $dm = $this->$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->equals($tag)->sort('public_date', 'desc');
-        $query = $qb->getQuery()->getSingleResult();
-        $results = $query->execute();
-    /*
-      $query = $dm->createQuery('SELECT s
-      FROM PumukitSchemaBundle:Series s
-      JOIN s.multimedia_objects mm
-      JOIN mm.tags t
-      WHERE t = :tag
-      ORDER BY s.public_date DESC')
-      ->setParameter('tag', $tag)
-      ->setMaxResults(1);
+        $referencedSeries = $this->getDocumentManager()
+            ->getRepository('PumukitSchemaBundle:MultimediaObject')
+            ->findSeriesFieldWithAnyTag($tags);
 
-      return $query->getSingleResult();
-    */
-    return $results;
+        $qb = $this->createQueryBuilder()
+            ->field('id')->in($referencedSeries->toArray());
+
+        if (null !== $limit){
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
+        return $qb->getQuery()->execute();
     }
 
-    public function findWithAnyTag(array $tags)
+    /**
+     * Find series with all tags
+     *
+     * @param array $tags
+     * @param int $limit
+     * @param int $page
+     * @return ArrayCollection
+     */
+    public function findWithAllTags($tags, $limit = null, $page = 0)
     {
-        $dm = $this->$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->in($tags)->sort('public_date', 'desc');
-        $query = $qb->getQuery();
-        $results = $query->execute();
-    /*
-      $query = $dm->createQuery('SELECT s
-      FROM PumukitSchemaBundle:Series s
-      JOIN s.multimedia_objects mm
-      JOIN mm.tags t
-      WHERE t IN (:tags)
-      ORDER BY s.public_date DESC')
-      ->setParameter('tags', $tags);
+        $referencedSeries = $this->getDocumentManager()
+            ->getRepository('PumukitSchemaBundle:MultimediaObject')
+            ->findSeriesFieldWithAllTags($tags);
 
-      return $query->getResult();*/
-    return $results;
+        $qb = $this->createQueryBuilder()
+            ->field('id')->in($referencedSeries->toArray());
+
+        if (null !== $limit){
+            $qb->limit($limit)->skip($limit * $page);
+        }
+        
+        return $qb->getQuery()->execute();
     }
 
-    public function findWithAllTags(array $tags)
+    /**
+     * Find one series with all tags
+     *
+     * @param array $tags
+     * @return Series
+     */
+    public function findOneWithAllTags($tags)
     {
-        $dm = $this->$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->all($tags)->sort('public_date', 'desc');
-        $query = $qb->getQuery();
-        $results = $query->execute();
-    /*
-      $query = $dm->createQuery('SELECT s
-      FROM PumukitSchemaBundle:Series s
-      JOIN s.multimedia_objects mm
-      JOIN mm.tags t
-      WHERE t IN (:tags)
-      GROUP BY mm
-      HAVING COUNT(t) = :numtags
-      ORDER BY s.public_date DESC')
-      ->setParameter('numtags', count($tags))
-      ->setParameter('tags', $tags);
+        $referencedOneSeries = $this->getDocumentManager()
+            ->getRepository('PumukitSchemaBundle:MultimediaObject')
+            ->findOneSeriesFieldWithAllTags($tags);
 
-      return $query->getResult();*/
-    return $results;
+        return $this->createQueryBuilder()
+            ->field('id')->equals($referencedOneSeries)
+            ->getQuery()
+            ->getSingleResult();
     }
 
-    public function findOneWithAllTags(array $tags)
+    /**
+     * Find series without tag
+     *
+     * @param Tag|EmbeddedTag $tag
+     * @param int $limit
+     * @param int $page
+     * @return ArrayCollection
+     */
+    public function findWithoutTag($tag, $limit = null, $page = 0)
     {
-        $dm = $this->$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->all($tags)->sort('public_date', 'desc');
-        $query = $qb->getQuery()->getSingleResult();
-        $results = $query->execute();
-    /*
-      $query = $dm->createQuery('SELECT s
-      FROM PumukitSchemaBundle:Series s
-      JOIN s.multimedia_objects mm
-      JOIN mm.tags t
-      WHERE t IN (:tags)
-      GROUP BY mm
-      HAVING COUNT(t) = :numtags
-      ORDER BY s.public_date DESC')
-      ->setParameter('numtags', count($tags))
-      ->setParameter('tags', $tags)
-      ->setMaxResults(1);
-
-      return $query->getSingleResult();*/
-    return $results;
+        $referencedSeries = $this->getDocumentManager()
+            ->getRepository('PumukitSchemaBundle:MultimediaObject')
+            ->findSeriesFieldWithTag($tag);
+        
+        $qb = $this->createQueryBuilder()
+            ->field('id')->notIn($referencedSeries->toArray());
+        
+        if (null !== $limit){
+            $qb->limit($limit)->skip($limit * $page);
+        }
+        
+        return $qb->getQuery()->execute();
     }
 
-    public function findWithoutTag(Tag $tag)
+    /**
+     * Find one series without tag
+     *
+     * @param Tag|EmbeddedTag $tag
+     * @return Series
+     */
+    public function findOneWithoutTag($tag)
     {
-        $dm = $this->kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->equals($tag)->sort('public_date', 'desc');
-        $query = $qb->getQuery();
-        $results = $query->execute();
-    /*
-      $query = $dm->createQuery('SELECT s
-      FROM PumukitSchemaBundle:Series s
-      WHERE s NOT IN(SELECT se
-      FROM PumukitSchemaBundle:Series se
-      JOIN se.multimedia_objects mm
-      JOIN mm.tags t
-      WHERE t = :tag
-      GROUP BY se
-      ORDER BY se.public_date DESC)')
-      ->setParameter('tag', $tag);
+        $referencedSeries = $this->getDocumentManager()
+            ->getRepository('PumukitSchemaBundle:MultimediaObject')
+            ->findSeriesFieldWithTag($tag);
 
-      return $query->getResult();*/
-    return $results;
+        return $this->createQueryBuilder()
+            ->field('id')->notIn($referencedSeries->toArray())
+            ->getQuery()
+            ->getSingleResult();
     }
 
-    public function findOneWithoutTag(Tag $tag)
+    /**
+     * Find series without all tags
+     *
+     * @param array tags
+     * @return ArrayCollection
+     */
+    public function findWithoutAllTags($tags)
     {
-        $dm = $this->$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->equals($tag)->sort('public_date', 'desc');
-        $query = $qb->getQuery()->getSingleResult();
-        $results = $query->execute();
-    /*
-      $query = $dm->createQuery('SELECT s
-      FROM PumukitSchemaBundle:Series s
-      WHERE s NOT IN(SELECT se
-      FROM PumukitSchemaBundle:Series se
-      JOIN se.multimedia_objects mm
-      JOIN mm.tags t
-      WHERE t = :tag
-      GROUP BY se
-      ORDER BY se.public_date DESC)')
-      ->setParameter('tag', $tag)
-      ->setMaxResults(1);
+      // TODO
+      /*
+        $query = $dm->createQuery('SELECT se
+        FROM PumukitSchemaBundle:Series se
+        WHERE se NOT IN(SELECT s
+        FROM PumukitSchemaBundle:Series s
+        JOIN s.multimedia_objects mm
+        JOIN mm.tags t
+        WHERE t IN (:tags)
+        GROUP BY mm
+        HAVING COUNT(t) = :numtags
+        ORDER BY s.public_date DESC)')
+        ->setParameter('numtags', count($tags))
+        ->setParameter('tags', $tags);
 
-      return $query->getSingleResult();*/
-    return $results;
+        return $query->getResult();*/
     }
 
-  // Note: Maybe a "Find without metatag (category) and children" would be useful
-  /**
-   * Find series that do not contain SIMULTANEOUSLY all the given tags.
-   * Series containing a subset of given tags would be returned.
-   *
-   * @param Array (Tag) $tags
-   * @return Array
-   */
-  public function findWithoutAllTags(array $tags)
-  {
-      $dm = $this->$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-      $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->notIn($tags)->sort('public_date', 'desc');
-      $query = $qb->getQuery();
-      $results = $query->execute();
-    /*
-      $query = $dm->createQuery('SELECT se
-      FROM PumukitSchemaBundle:Series se
-      WHERE se NOT IN(SELECT s
-      FROM PumukitSchemaBundle:Series s
-      JOIN s.multimedia_objects mm
-      JOIN mm.tags t
-      WHERE t IN (:tags)
-      GROUP BY mm
-      HAVING COUNT(t) = :numtags
-      ORDER BY s.public_date DESC)')
-      ->setParameter('numtags', count($tags))
-      ->setParameter('tags', $tags);
+    /**
+     * Find series without some tags
+     *
+     * @param array $tags
+     * @return ArrayCollection
+     */
+    public function findWithoutSomeTags($tags)
+    {
+      // TODO
+      /*
+        $query = $dm->createQuery('SELECT se
+        FROM PumukitSchemaBundle:Series se
+        WHERE se NOT IN(SELECT s
+        FROM PumukitSchemaBundle:Series s
+        JOIN s.multimedia_objects mm
+        JOIN mm.tags t
+        WHERE t IN (:tags)
+        ORDER BY s.public_date DESC)')
+        ->setParameter('tags', $tags);
 
-      return $query->getResult();*/
-    return $results;
-  }
+        return $query->getResult();*/
+    }
 
-  // TO DO: check if LEFT JOIN will miss mmo without tags (null)
-  // If it does not, it would be possible to make a simpler query.
-  /**
-   * Find series that do not contain any of the given tags.
-   * Series containing a subset of given tags would NOT be returned.
-   *
-   * @param Array (Tag) $tags
-   * @return Array
-   */
-  public function findWithoutSomeTags(array $tags)
-  {
-      $dm = $this->$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-      $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Series')->field('multimedia_objects')->field('tags')->in($tags)->sort('public_date', 'desc');
-      $query = $qb->getQuery();
-      $results = $query->execute();
-    /*
-      $query = $dm->createQuery('SELECT se
-      FROM PumukitSchemaBundle:Series se
-      WHERE se NOT IN(SELECT s
-      FROM PumukitSchemaBundle:Series s
-      JOIN s.multimedia_objects mm
-      JOIN mm.tags t
-      WHERE t IN (:tags)
-      ORDER BY s.public_date DESC)')
-      ->setParameter('tags', $tags);
-
-      return $query->getResult();*/
-    return $results;
-  }
-
-  /**
-   * Find series by pic id
-   *
-   * @param string $picId
-   * @return Series
-   */
-  public function findByPicId($picId)
-  {
+    /**
+     * Find series by pic id
+     *
+     * @param string $picId
+     * @return Series
+     */
+    public function findByPicId($picId)
+    {
       return $this->createQueryBuilder()
-      ->field('pics._id')->equals(new \MongoId($picId))
-      ->getQuery()
-      ->getSingleResult();
-  }
+          ->field('pics._id')->equals(new \MongoId($picId))
+          ->getQuery()
+          ->getSingleResult();
+    }
 
-  /**
-   * Find series by person id
-   *
-   * @param string $personId
-   * @return ArrayCollection
-   */
-  public function findSeriesByPersonId($personId)
-  {
-      $repoMmobj = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject');
+    /**
+     * Find series by person id
+     *
+     * @param string $personId
+     * @return ArrayCollection
+     */
+    public function findSeriesByPersonId($personId)
+    {
+        $repoMmobj = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject');
+        
+        $referencedSeries = $repoMmobj->findSeriesFieldByPersonId($personId);
+        
+        return $this->createQueryBuilder()
+            ->field('id')->in($referencedSeries->toArray())
+            ->getQuery()
+            ->execute();
+    }
 
-      $referencedSeries = $repoMmobj->findSeriesFieldByPersonId($personId);
-
-      return $this->createQueryBuilder()
-        ->field('id')->in($referencedSeries->toArray())
-        ->getQuery()
-        ->execute();
-  }
-
-  /**
-   * Find series with given series type
-   *
-   * @param SeriesType $series_type
-   * @return ArrayCollection
-   */
-  public function findBySeriesType(SeriesType $series_type)
-  {
-      return $this->createQueryBuilder()
-        ->field('series_type')->references($series_type)
-        ->getQuery()
-        ->execute();
-  }
+    /**
+     * Find series with given series type
+     *
+     * @param SeriesType $series_type
+     * @return ArrayCollection
+     */
+    public function findBySeriesType(SeriesType $series_type)
+    {
+        return $this->createQueryBuilder()
+            ->field('series_type')->references($series_type)
+            ->getQuery()
+            ->execute();
+    }
 }

@@ -134,163 +134,87 @@ class MultimediaObjectRepository extends DocumentRepository
           ->execute();
     }
 
-    /**
-     * Find series with tag
-     *
-     * @param string $tagId
-     * @return ArrayCollection
-     */
-    public function findSeriesFieldByTagId($tagId)
-    {
-        return $this->createQueryBuilder()
-          ->field('tags._id')->equals(new \MongoId($tagId))
-          ->distinct('series')
-          ->getQuery()
-          ->execute();
-    }
-
-    /**
-     * Find one series with tag
-     *
-     * @param string $tagId
-     * @return Series
-     */
-    public function findOneSeriesFieldByTagId($tagId)
-    {
-        return $this->createQueryBuilder()
-          ->field('tags._id')->equals(new \MongoId($tagId))
-          ->distinct('series')
-          ->getQuery()
-          ->getSingleResult()
-          ->execute();
-    }
-
-    /**
-     * Find series with any tag
-     *
-     * @param array $tags
-     * @return ArrayCollection
-     */
-    public function findSeriesFieldWithAnyTag($tags)
-    {
-      // TODO
-    }
-
-    /**
-     * Find series with all tags
-     *
-     * @param array $tags
-     * @return ArrayCollection
-     */
-    public function findSeriesFieldWithAllTags($tags)
-    {
-      // TODO
-    }
-
-    /**
-     * Find one series with all tags
-     *
-     * @param array $tags
-     * @return Series
-     */
-    public function findOneSeriesFieldWithAllTags($tags)
-    {
-      // TODO
-    }
-
-    /**
-     * Find series without tag id
-     *
-     * @param string $tagId
-     * @return ArrayCollection
-     */
-    public function findSeriesFieldWithouthTagId($tagId)
-    {
-      // TODO
-    }
-
-    /**
-     * Find one series without tag id
-     *
-     * @param string $tagId
-     * @return Series
-     */
-    public function findOneSeriesFieldWithoutTag($tagId)
-    {
-      // TODO
-    }
-
-    /**
-     * Find series without all tags
-     *
-     * @param array tags
-     * @return ArrayCollection
-     */
-    public function findSeriesFieldWithoutAllTags($tags)
-    {
-      // TODO
-    }
-
-    /**
-     * Find series without some tags
-     *
-     * @param array $tags
-     * @return ArrayCollection
-     */
-    public function findSeriesFieldWithoutSomeTags($tags)
-    {
-      // TODO
-    }
+    // Find Multimedia Objects with Tags
 
     /**
      * Find multimedia objects by tag id
      *
-     * @param string $tagId
+     * @param Tag|EmbeddedTag $tag
+     * @param array $sort
+     * @param int $limit
+     * @param int $page
      * @return ArrayCollection
      */
-    public function findByTagId($tagId)
+    public function findWithTag($tag, $limit = 0, $page = 0, $sort = array())
     {
-        return $this->createQueryBuilder()
-          ->field('tags._id')->equals(new \MongoId($tagId))
-          ->getQuery()
-          ->execute();
+        $qb = $this->createStandardQueryBuilder()
+            ->field('tags._id')->equals(new \MongoId($tag->getId()));
+
+        if (0 !== count($sort) ){
+            $qb->sort($sort);
+        }        
+
+        if ($limit > 0){
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
+        return $qb->getQuery()->execute();
     }
 
     /**
      * Find one multimedia object by tag id
      *
-     * @param string $tagId
+     * @param Tag|EmbeddedTag $tag
      * @return MultimediaObject
      */
-    public function findOneByTagId($tagId)
+    public function findOneWithTag($tag)
     {
-        return $this->createQueryBuilder()
-          ->field('tags._id')->equals(new \MongoId($tagId))
+        return $this->createStandardQueryBuilder()
+          ->field('tags._id')->equals(new \MongoId($tag->getId()))
           ->getQuery()
-          ->getSingleResult()
-          ->execute();
+          ->getSingleResult();
     }
 
     /**
      * Find multimedia objects with any tag
      *
      * @param array $tags
+     * @param int $limit
+     * @param int $page
      * @return ArrayCollection
      */
-    public function findWithAnyTag($tags)
+    public function findWithAnyTag($tags, $limit = null, $page = 0)
     {
-      // TODO
+        $mongoIds = $this->getMongoIds($tags);
+        $qb =  $this->createStandardQueryBuilder()
+          ->field('tags._id')->in($mongoIds);
+        
+        if (null !== $limit){
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
+        return $qb->getQuery()->execute();
     }
 
     /**
      * Find multimedia objects with all tags
      *
      * @param array $tags
+     * @param int $limit
+     * @param int $page
      * @return ArrayCollection
      */
-    public function findWithAllTags($tags)
+    public function findWithAllTags($tags, $limit = null, $page = 0)
     {
-      // TODO
+        $mongoIds = $this->getMongoIds($tags);
+        $qb =  $this->createStandardQueryBuilder()
+          ->field('tags._id')->all($mongoIds);
+        
+        if (null !== $limit){
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
+        return $qb->getQuery()->execute();
     }
 
     /**
@@ -301,38 +225,56 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function findOneWithAllTags($tags)
     {
-      // TODO
+        $mongoIds = $this->getMongoIds($tags);
+        $qb =  $this->createStandardQueryBuilder()
+          ->field('tags._id')->all($mongoIds);
+        
+        return $qb->getQuery()->getSingleResult();
     }
 
     /**
      * Find multimedia objects without tag id
      *
-     * @param string $tagId
+     * @param Tag|EmbeddedTag $tag
+     * @param int $limit
+     * @param int $page
      * @return ArrayCollection
      */
-    public function findWithouthTagId($tagId)
+    public function findWithoutTag($tag, $limit = null, $page = 0)
     {
-      // TODO
+        $qb =  $this->createStandardQueryBuilder()
+          ->field('tags._id')->notEqual(new \MongoId($tag->getId()));
+        
+        if (null !== $limit){
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
+        return $qb->getQuery()->execute();
     }
 
     /**
      * Find one multimedia object without tag id
      *
-     * @param string $tagId
+     * @param Tag|EmbeddedTag $tag
      * @return MultimediaObject
      */
-    public function findOneWithoutTag($tagId)
+    public function findOneWithoutTag($tag)
     {
-      // TODO
+        return $this->createStandardQueryBuilder()
+          ->field('tags._id')->notEqual(new \MongoId($tag->getId()))
+          ->getQuery()
+          ->getSingleResult();
     }
 
     /**
      * Find multimedia objects without all tags
      *
      * @param array tags
+     * @param int $limit
+     * @param int $page
      * @return ArrayCollection
      */
-    public function findWithoutAllTags($tags)
+    public function findWithoutAllTags($tags, $limit = null, $page = 0)
     {
       // TODO
     }
@@ -341,11 +283,136 @@ class MultimediaObjectRepository extends DocumentRepository
      * Find multimedia objects without some tags
      *
      * @param array $tags
+     * @param int $limit
+     * @param int $page
      * @return ArrayCollection
      */
-    public function findWithoutSomeTags($tags)
+    public function findWithoutSomeTags($tags, $limit = null, $page = 0)
     {
-      // TODO
+        $mongoIds = $this->getMongoIds($tags);
+        $qb =  $this->createStandardQueryBuilder()
+          ->field('tags._id')->notIn($mongoIds);
+        
+        if (null !== $limit){
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
+        return $qb->getQuery()->execute();
     }
 
+    // End of find Multimedia Objects with Tags
+
+    // Find Series Field with Tags
+
+    /**
+     * Find series with tag
+     *
+     * @param Tag|EmbeddedTag $tag
+     * @return ArrayCollection
+     */
+    public function findSeriesFieldWithTag($tag)
+    {
+        return $this->createStandardQueryBuilder()
+            ->field('tags._id')->equals(new \MongoId($tag->getId()))
+            ->distinct('series')
+            ->getQuery()->execute();
+    }
+
+    /**
+     * Find one series with tag
+     *
+     * @param Tag|EmbeddedTag $tag
+     * @return Series
+     */
+    public function findOneSeriesFieldWithTag($tag)
+    {
+        return $this->createStandardQueryBuilder()
+          ->field('tags._id')->equals(new \MongoId($tag->getId()))
+          ->distinct('series')
+          ->getQuery()
+          ->getSingleResult();
+    }
+
+    /**
+     * Find series with any tag
+     *
+     * @param array $tags
+     * @return ArrayCollection
+     */
+    public function findSeriesFieldWithAnyTag($tags)
+    {
+        $mongoIds = $this->getMongoIds($tags);
+
+        return $this->createStandardQueryBuilder()
+            ->field('tags._id')->in($mongoIds)
+            ->distinct('series')
+            ->getQuery()->execute();
+    }
+
+    /**
+     * Find series with all tags
+     *
+     * @param array $tags
+     * @return ArrayCollection
+     */
+    public function findSeriesFieldWithAllTags($tags)
+    {
+        $mongoIds = $this->getMongoIds($tags);
+
+        return  $this->createStandardQueryBuilder()
+            ->field('tags._id')->all($mongoIds)
+            ->distinct('series')
+            ->getQuery()->execute();
+    }
+
+    /**
+     * Find one series with all tags
+     *
+     * @param array $tags
+     * @return Series
+     */
+    public function findOneSeriesFieldWithAllTags($tags)
+    {
+        $mongoIds = $this->getMongoIds($tags);
+
+        return  $this->createStandardQueryBuilder()
+            ->field('tags._id')->all($mongoIds)
+            ->distinct('series')
+            ->getQuery()
+            ->getSingleResult();
+    }
+
+    // End of find Series with Tags
+
+    /**
+     * Get mongo ids
+     *
+     * @param array $documents
+     * @return array
+     */
+    private function getMongoIds($documents)
+    {
+        $mongoIds = array();
+        foreach($documents as $document){
+            $mongoIds[] = new \MongoId($document->getId());
+        }
+
+        return $mongoIds;
+    }
+
+    /**
+     * Create standard query builder
+     *
+     * Creates a query builder with all multimedia objects
+     * having status different than PROTOTYPE.
+     * These are the multimedia objects we need to show
+     * in series.
+     * 
+     * @return QueryBuilder
+     */
+    private function createStandardQueryBuilder()
+    {
+        return $this->createQueryBuilder()
+          ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE);
+    }
 }
