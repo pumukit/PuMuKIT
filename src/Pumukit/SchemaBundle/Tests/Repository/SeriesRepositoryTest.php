@@ -158,26 +158,30 @@ class SeriesRepositoryTest extends WebTestCase
         // FIND SERIES WITH TAG (SORT)
         $arrayAsc = array($series1, $series2, $series3);
         $arrayAscResult = array_values($this->repo->findWithTag($tag1, $sortAsc)->toArray());
-        $this->assertEquals($arrayAsc[0]->getTitle(), $arrayAscResult[0]->getTitle());
-        $this->assertEquals($arrayAsc[1]->getTitle(), $arrayAscResult[1]->getTitle());
-        $this->assertEquals($arrayAsc[2]->getTitle(), $arrayAscResult[2]->getTitle());
+        foreach($arrayAsc as $i => $series){
+            $this->assertEquals($series->getId(), $arrayAscResult[$i]->getId());
+        }
         $limit = 2;
         $page = 1;
         $arrayAsc = array($series3);
         $arrayAscResult = array_values($this->repo->findWithTag($tag1, $sortAsc, $limit, $page)->toArray());
         $this->assertEquals(1, $this->repo->findWithTag($tag1, $sortAsc, $limit, $page)->count(true));
-        $this->assertEquals($arrayAsc[0]->getTitle(), $arrayAscResult[0]->getTitle());
+        foreach($arrayAsc as $i => $series){
+            $this->assertEquals($series->getId(), $arrayAscResult[$i]->getId());
+        }
 
         $arrayDesc = array($series3, $series2, $series1);
         $arrayDescResult = array_values($this->repo->findWithTag($tag1, $sortDesc)->toArray());
-        $this->assertEquals($arrayDesc[0]->getTitle(), $arrayDescResult[0]->getTitle());
-        $this->assertEquals($arrayDesc[1]->getTitle(), $arrayDescResult[1]->getTitle());
-        $this->assertEquals($arrayDesc[2]->getTitle(), $arrayDescResult[2]->getTitle());
+        foreach($arrayDesc as $i => $series){
+            $this->assertEquals($series->getId(), $arrayDescResult[$i]->getId());
+        }
         $limit = 2;
         $page = 1;
-        $arrayAsc = array($series1);
-        $arrayAscResult = array_values($this->repo->findWithTag($tag1, $sortDesc, $limit, $page)->toArray());
-        $this->assertEquals($arrayAsc[0]->getTitle(), $arrayAscResult[0]->getTitle());
+        $arrayDesc = array($series1);
+        $arrayDescResult = array_values($this->repo->findWithTag($tag1, $sortDesc, $limit, $page)->toArray());
+        foreach($arrayDesc as $i => $series){
+            $this->assertEquals($series->getId(), $arrayDescResult[$i]->getId());
+        }
 
         // FIND ONE SERIES WITH TAG
         $this->assertEquals(1, count($this->repo->findOneWithTag($tag2)));
@@ -197,6 +201,36 @@ class SeriesRepositoryTest extends WebTestCase
         $arrayTags = array($tag3);
         $this->assertEquals(1, $this->repo->findWithAnyTag($arrayTags)->count(true));
 
+        // FIND SERIES WITH ANY TAG (SORT)
+        $arrayTags = array($tag1, $tag2);
+        $arrayAsc = array($series1, $series2, $series3);
+        $query = $this->repo->findWithAnyTag($arrayTags, $sortAsc);
+        $arrayAscResult = array_values($query->toArray());
+        foreach($arrayAsc as $i => $series){
+            $this->assertEquals($series->getId(), $arrayAscResult[$i]->getId());
+        }
+        $limit = 2;
+        $arrayAsc = array($series1, $series2);
+        $query = $this->repo->findWithAnyTag($arrayTags, $sortAsc, $limit);
+        $arrayAscResult = array_values($query->toArray());
+        foreach($arrayAsc as $i => $series){
+            $this->assertEquals($series->getId(), $arrayAscResult[$i]->getId());
+        }
+
+        $arrayDesc = array($series3, $series2, $series1);
+        $query = $this->repo->findWithAnyTag($arrayTags, $sortDesc);
+        $arrayDescResult = array_values($query->toArray());
+        foreach($arrayDesc as $i => $series){
+            $this->assertEquals($series->getId(), $arrayDescResult[$i]->getId());
+        }
+        $limit = 2;
+        $arrayDesc = array($series3, $series2);
+        $query = $this->repo->findWithAnyTag($arrayTags, $sortDesc, $limit);
+        $arrayDescResult = array_values($query->toArray());
+        foreach($arrayDesc as $i => $series){
+            $this->assertEquals($series->getId(), $arrayDescResult[$i]->getId());
+        }
+
         // FIND SERIES WITH ALL TAGS
         $arrayTags = array($tag1, $tag2);
         $this->assertEquals(2, $this->repo->findWithAllTags($arrayTags)->count(true));
@@ -209,6 +243,38 @@ class SeriesRepositoryTest extends WebTestCase
 
         $arrayTags = array($tag2, $tag3);
         $this->assertEquals(1, $this->repo->findWithAllTags($arrayTags)->count(true));
+
+        // FIND SERIES WITH ALL TAGS (SORT)
+        $arrayTags = array($tag1, $tag2);
+        $arrayAsc = array($series1, $series2);
+        $query = $this->repo->findWithAllTags($arrayTags, $sortAsc);
+        $arrayAscResult = array_values($query->toArray());
+        foreach($arrayAsc as $i => $series){
+            $this->assertEquals($series->getId(), $arrayAscResult[$i]->getId());
+        }
+        $limit = 1;
+        $page = 1;
+        $arrayAsc = array($series2);
+        $query = $this->repo->findWithAllTags($arrayTags, $sortAsc, $limit, $page);
+        $arrayAscResult = array_values($query->toArray());
+        foreach($arrayAsc as $i => $series){
+            $this->assertEquals($series->getId(), $arrayAscResult[$i]->getId());
+        }
+
+        $arrayDesc = array($series2, $series1);
+        $query = $this->repo->findWithAllTags($arrayTags, $sortDesc);
+        $arrayDescResult = array_values($query->toArray());
+        foreach($arrayDesc as $i => $series){
+            $this->assertEquals($series->getId(), $arrayDescResult[$i]->getId());
+        }
+        $limit = 1;
+        $page = 1;
+        $arrayDesc = array($series1);
+        $query = $this->repo->findWithAllTags($arrayTags, $sortDesc, $limit, $page);
+        $arrayDescResult = array_values($query->toArray());
+        foreach($arrayDesc as $i => $series){
+            $this->assertEquals($series->getId(), $arrayDescResult[$i]->getId());
+        }
 
         // FIND ONE SERIES WITH ALL TAGS
         $arrayTags = array($tag1, $tag2);
@@ -227,9 +293,83 @@ class SeriesRepositoryTest extends WebTestCase
         $page = 1;
         $this->assertEquals(1, $this->repo->findWithoutTag($tag3, $sort, $limit, $page)->count(true));
 
+        // FIND SERIES WITHOUT TAG (SORT)
+        $arrayAsc = array($series1, $series2);
+        $query = $this->repo->findWithoutTag($tag3, $sortAsc);
+        $arrayAscResult = array_values($query->toArray());
+        foreach($arrayAsc as $i => $series){
+            $this->assertEquals($series->getId(), $arrayAscResult[$i]->getId());
+        }
+        $limit = 1;
+        $page = 1;
+        $arrayAsc = array($series2);
+        $query = $this->repo->findWithoutTag($tag3, $sortAsc, $limit, $page);
+        $arrayAscResult = array_values($query->toArray());
+        foreach($arrayAsc as $i => $series){
+            $this->assertEquals($series->getId(), $arrayAscResult[$i]->getId());
+        }
+
+        $arrayDesc = array($series2, $series1);
+        $query = $this->repo->findWithoutTag($tag3, $sortDesc);
+        $arrayDescResult = array_values($query->toArray());
+        foreach($arrayDesc as $i => $series){
+            $this->assertEquals($series->getId(), $arrayDescResult[$i]->getId());
+        }
+        $limit = 1;
+        $page = 1;
+        $arrayDesc = array($series1);
+        $query = $this->repo->findWithoutTag($tag3, $sortDesc, $limit, $page);
+        $arrayDescResult = array_values($query->toArray());
+        foreach($arrayDesc as $i => $series){
+            $this->assertEquals($series->getId(), $arrayDescResult[$i]->getId());
+        }        
+
         // FIND ONE SERIES WITHOUT TAG
         $this->assertEquals(1, count($this->repo->findOneWithoutTag($tag3)));
 
+        // FIND SERIES WITHOUT ALL TAGS
+        $mm11->addTag($tag3);
+        $mm12->addTag($tag3);
+
+        $this->dm->persist($mm11);
+        $this->dm->persist($mm12);
+        $this->dm->flush();
+
+        $arrayTags = array($tag1, $tag2, $tag3);
+        $this->assertEquals(2, $this->repo->findWithoutAllTags($arrayTags)->count(true));
+        $limit = 1;
+        $this->assertEquals(1, $this->repo->findWithoutAllTags($arrayTags, $sort, $limit)->count(true));
+        $page = 1;
+        $this->assertEquals(1, $this->repo->findWithoutAllTags($arrayTags, $sort, $limit, $page)->count(true));
+
+        // FIND SERIES WITHOUT ALL TAGS (SORT)        
+        $arrayAsc = array($series2, $series3);
+        $query = $this->repo->findWithoutAllTags($arrayTags, $sortAsc);
+        $arrayAscResult = array_values($query->toArray());
+        foreach($arrayAsc as $i => $series){
+            $this->assertEquals($series->getId(), $arrayAscResult[$i]->getId());
+        }
+        $limit = 1;
+        $arrayAsc = array($series2);
+        $query = $this->repo->findWithoutAllTags($arrayTags, $sortAsc, $limit);
+        $arrayAscResult = array_values($query->toArray());
+        foreach($arrayAsc as $i => $series){
+            $this->assertEquals($series->getId(), $arrayAscResult[$i]->getId());
+        }
+
+        $arrayDesc = array($series3, $series2);
+        $query = $this->repo->findWithoutAllTags($arrayTags, $sortDesc);
+        $arrayDescResult = array_values($query->toArray());
+        foreach($arrayDesc as $i => $series){
+            $this->assertEquals($series->getId(), $arrayDescResult[$i]->getId());
+        }
+        $limit = 1;
+        $arrayDesc = array($series3);
+        $query = $this->repo->findWithoutAllTags($arrayTags, $sortDesc, $limit);
+        $arrayDescResult = array_values($query->toArray());
+        foreach($arrayDesc as $i => $series){
+            $this->assertEquals($series->getId(), $arrayDescResult[$i]->getId());
+        }
     }
 
     public function testFindSeriesByPersonId()

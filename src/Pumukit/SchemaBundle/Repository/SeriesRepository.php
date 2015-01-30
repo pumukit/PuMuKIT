@@ -191,47 +191,24 @@ class SeriesRepository extends DocumentRepository
      * @param array $sort
      * @return ArrayCollection
      */
-    public function findWithoutAllTags($tags, $sort = array())
+    public function findWithoutAllTags($tags, $sort = array(), $limit = 0, $page = 0)
     {
-      // TODO
-      /*
-        $query = $dm->createQuery('SELECT se
-        FROM PumukitSchemaBundle:Series se
-        WHERE se NOT IN(SELECT s
-        FROM PumukitSchemaBundle:Series s
-        JOIN s.multimedia_objects mm
-        JOIN mm.tags t
-        WHERE t IN (:tags)
-        GROUP BY mm
-        HAVING COUNT(t) = :numtags
-        ORDER BY s.public_date DESC)')
-        ->setParameter('numtags', count($tags))
-        ->setParameter('tags', $tags);
+        $referencedSeries = $this->getDocumentManager()
+            ->getRepository('PumukitSchemaBundle:MultimediaObject')
+            ->findSeriesFieldWithAllTags($tags);
 
-        return $query->getResult();*/
-    }
+        $qb = $this->createQueryBuilder()
+            ->field('id')->notIn($referencedSeries->toArray());
 
-    /**
-     * Find series without some tags
-     *
-     * @param array $tags
-     * @return ArrayCollection
-     */
-    public function findWithoutSomeTags($tags)
-    {
-      // TODO
-      /*
-        $query = $dm->createQuery('SELECT se
-        FROM PumukitSchemaBundle:Series se
-        WHERE se NOT IN(SELECT s
-        FROM PumukitSchemaBundle:Series s
-        JOIN s.multimedia_objects mm
-        JOIN mm.tags t
-        WHERE t IN (:tags)
-        ORDER BY s.public_date DESC)')
-        ->setParameter('tags', $tags);
+        if (0 !== count($sort) ){
+            $qb->sort($sort);
+        }
 
-        return $query->getResult();*/
+        if ($limit > 0){
+            $qb->limit($limit)->skip($limit * $page);
+        }
+        
+        return $qb->getQuery()->execute();
     }
 
     /**
