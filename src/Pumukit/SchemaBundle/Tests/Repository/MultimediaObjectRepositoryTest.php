@@ -752,34 +752,38 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mm34);
         $this->dm->flush();
 
+        // SORT
+        $sort = array();
+        $sortAsc =  array('rank' => 'asc');
+        $sortDesc = array('rank' => 'desc');
+
         // FIND WITH TAG
         $this->assertEquals(7, count($this->repo->findWithTag($tag1)));
         $limit = 3;
-        $this->assertEquals(3, $this->repo->findWithTag($tag1, $limit)->count(true));
+        $this->assertEquals(3, $this->repo->findWithTag($tag1, $sort, $limit)->count(true));
         $page = 0;
-        $this->assertEquals(3, $this->repo->findWithTag($tag1, $limit, $page)->count(true));
+        $this->assertEquals(3, $this->repo->findWithTag($tag1, $sort, $limit, $page)->count(true));
         $page = 1;
-        $this->assertEquals(3, $this->repo->findWithTag($tag1, $limit, $page)->count(true));
+        $this->assertEquals(3, $this->repo->findWithTag($tag1, $sort, $limit, $page)->count(true));
         $page = 2;
-        $this->assertEquals(1, $this->repo->findWithTag($tag1, $limit, $page)->count(true));
+        $this->assertEquals(1, $this->repo->findWithTag($tag1, $sort, $limit, $page)->count(true));
         $page = 3;
-        $this->assertEquals(0, $this->repo->findWithTag($tag1, $limit, $page)->count(true));
+        $this->assertEquals(0, $this->repo->findWithTag($tag1, $sort, $limit, $page)->count(true));
 
-
+        // FIND WITH TAG (SORT)
         $page = 1;
         $arrayAsc = array($mm23, $mm31, $mm33);
-        $this->assertEquals($arrayAsc, array_values($this->repo->findWithTag($tag1, $limit, $page, array('rank' => 'asc'))->toArray()));
+        $this->assertEquals($arrayAsc, array_values($this->repo->findWithTag($tag1, $sortAsc, $limit, $page)->toArray()));
         $arrayDesc = array($mm23, $mm22, $mm12);
-        $this->assertEquals($arrayDesc, array_values($this->repo->findWithTag($tag1, $limit, $page, array('rank' => 'desc'))->toArray()));
-
+        $this->assertEquals($arrayDesc, array_values($this->repo->findWithTag($tag1, $sortDesc, $limit, $page)->toArray()));
 
         $this->assertEquals(2, count($this->repo->findWithTag($tag2)));
         $limit = 1;
-        $this->assertEquals(1, $this->repo->findWithTag($tag2, $limit)->count(true));
+        $this->assertEquals(1, $this->repo->findWithTag($tag2, $sort, $limit)->count(true));
         $page = 0;
-        $this->assertEquals(1, $this->repo->findWithTag($tag2, $limit, $page)->count(true));
+        $this->assertEquals(1, $this->repo->findWithTag($tag2, $sort, $limit, $page)->count(true));
         $page = 1;
-        $this->assertEquals(1, $this->repo->findWithTag($tag2, $limit, $page)->count(true));
+        $this->assertEquals(1, $this->repo->findWithTag($tag2, $sort, $limit, $page)->count(true));
 
         // FIND ONE WITH TAG
         $this->assertEquals(1, count($this->repo->findOneWithTag($tag1)));
@@ -788,14 +792,41 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $arrayTags = array($tag1, $tag2, $tag3);
         $this->assertEquals(8, $this->repo->findWithAnyTag($arrayTags)->count(true));
         $limit = 3;
-        $this->assertEquals(3, $this->repo->findWithAnyTag($arrayTags, $limit)->count(true));
+        $this->assertEquals(3, $this->repo->findWithAnyTag($arrayTags, $sort, $limit)->count(true));
         $page = 0;
-        $this->assertEquals(3, $this->repo->findWithAnyTag($arrayTags, $limit, $page)->count(true));
+        $this->assertEquals(3, $this->repo->findWithAnyTag($arrayTags, $sort, $limit, $page)->count(true));
         $page = 1;
-        $this->assertEquals(3, $this->repo->findWithAnyTag($arrayTags, $limit, $page)->count(true));
+        $this->assertEquals(3, $this->repo->findWithAnyTag($arrayTags, $sort, $limit, $page)->count(true));
         $page = 2;
-        $this->assertEquals(2, $this->repo->findWithAnyTag($arrayTags, $limit, $page)->count(true));
+        $this->assertEquals(2, $this->repo->findWithAnyTag($arrayTags, $sort, $limit, $page)->count(true));
 
+        // FIND WITH ANY TAG (SORT)
+        $arrayAsc = array($mm11, $mm12, $mm21, $mm22, $mm23, $mm31, $mm33, $mm34);
+        $this->assertEquals($arrayAsc, array_values($this->repo->findWithAnyTag($arrayTags, $sortAsc)->toArray()));
+        $limit = 3;
+        $arrayAsc = array($mm11, $mm12, $mm21);
+        $this->assertEquals($arrayAsc, array_values($this->repo->findWithAnyTag($arrayTags, $sortAsc, $limit)->toArray()));
+        $page = 0;
+        $arrayAsc = array($mm11, $mm12, $mm21);
+        $this->assertEquals($arrayAsc, array_values($this->repo->findWithAnyTag($arrayTags, $sortAsc, $limit, $page)->toArray()));
+        $page = 1;
+        $arrayAsc = array($mm22, $mm23, $mm31);
+        $this->assertEquals($arrayAsc, array_values($this->repo->findWithAnyTag($arrayTags, $sortAsc, $limit, $page)->toArray()));
+        $page = 2;
+        $arrayAsc = array($mm33, $mm34);
+        $this->assertEquals($arrayAsc, array_values($this->repo->findWithAnyTag($arrayTags, $sortAsc, $limit, $page)->toArray()));
+        
+        $arrayDesc = array($mm34, $mm33, $mm31, $mm23, $mm22, $mm21, $mm12, $mm11);
+        $this->assertEquals($arrayDesc, array_values($this->repo->findWithAnyTag($arrayTags, $sortDesc)->toArray()));
+        $limit = 5;
+        $page = 0;
+        $arrayDesc = array($mm34, $mm33, $mm31, $mm23, $mm22);
+        $this->assertEquals($arrayDesc, array_values($this->repo->findWithAnyTag($arrayTags, $sortDesc, $limit, $page)->toArray()));
+        $page = 1;
+        $arrayDesc = array($mm21, $mm12, $mm11);
+        $this->assertEquals($arrayDesc, array_values($this->repo->findWithAnyTag($arrayTags, $sortDesc, $limit, $page)->toArray()));
+
+        // Add more tags
         $mm32->addTag($tag3);
         $this->dm->persist($mm32);
         $this->dm->flush();
@@ -825,31 +856,62 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         $this->assertEquals(4, $this->repo->findWithAllTags($arrayTags)->count(true));
         $limit = 3;
-        $this->assertEquals(3, $this->repo->findWithAllTags($arrayTags, $limit)->count(true));
+        $this->assertEquals(3, $this->repo->findWithAllTags($arrayTags, $sort, $limit)->count(true));
         $page = 0;
-        $this->assertEquals(3, $this->repo->findWithAllTags($arrayTags, $limit, $page)->count(true));
+        $this->assertEquals(3, $this->repo->findWithAllTags($arrayTags, $sort, $limit, $page)->count(true));
         $page = 1;
-        $this->assertEquals(1, $this->repo->findWithAllTags($arrayTags, $limit, $page)->count(true));
+        $this->assertEquals(1, $this->repo->findWithAllTags($arrayTags, $sort, $limit, $page)->count(true));
 
         $arrayTags = array($tag2, $tag3);
         $this->assertEquals(1, $this->repo->findWithAllTags($arrayTags)->count(true));
+
+        // FIND WITH ALL TAGS (SORT)
+        $arrayTags = array($tag1, $tag2);
+        $arrayAsc = array($mm11, $mm12, $mm13, $mm22);
+        $this->assertEquals($arrayAsc, array_values($this->repo->findWithAllTags($arrayTags, $sortAsc)->toArray()));
+        $arrayDesc = array($mm22, $mm13, $mm12, $mm11);
+        $this->assertEquals($arrayDesc, array_values($this->repo->findWithAllTags($arrayTags, $sortDesc)->toArray()));
+        $limit = 3;
+        $arrayAsc = array($mm11, $mm12, $mm13);
+        $this->assertEquals($arrayAsc, array_values($this->repo->findWithAllTags($arrayTags, $sortAsc, $limit)->toArray()));
+        $page = 1;
+        $arrayAsc = array($mm22);
+        $this->assertEquals($arrayAsc, array_values($this->repo->findWithAllTags($arrayTags, $sortAsc, $limit, $page)->toArray()));
+
+        $limit = 2;
+        $page = 1;
+        $arrayDesc = array($mm12, $mm11);
+        $this->assertEquals($arrayDesc, array_values($this->repo->findWithAllTags($arrayTags, $sortDesc, $limit, $page)->toArray()));
 
         // FIND ONE WITH ALL TAGS
         $arrayTags = array($tag1, $tag2);
         $this->assertEquals(1, count($this->repo->findOneWithAllTags($arrayTags)));
 
-        // FIND WITHOUT TAG ID
+        // FIND WITHOUT TAG
         $this->assertEquals(9, $this->repo->findWithoutTag($tag3)->count(true));
         $limit = 4;
-        $this->assertEquals(4, $this->repo->findWithoutTag($tag3, $limit)->count(true));
+        $this->assertEquals(4, $this->repo->findWithoutTag($tag3, $sort, $limit)->count(true));
         $page = 0;
-        $this->assertEquals(4, $this->repo->findWithoutTag($tag3, $limit, $page)->count(true));
+        $this->assertEquals(4, $this->repo->findWithoutTag($tag3, $sort, $limit, $page)->count(true));
         $page = 1;
-        $this->assertEquals(4, $this->repo->findWithoutTag($tag3, $limit, $page)->count(true));
+        $this->assertEquals(4, $this->repo->findWithoutTag($tag3, $sort, $limit, $page)->count(true));
         $page = 2;
-        $this->assertEquals(1, $this->repo->findWithoutTag($tag3, $limit, $page)->count(true));
+        $this->assertEquals(1, $this->repo->findWithoutTag($tag3, $sort, $limit, $page)->count(true));
         $page = 3;
-        $this->assertEquals(0, $this->repo->findWithoutTag($tag3, $limit, $page)->count(true));
+        $this->assertEquals(0, $this->repo->findWithoutTag($tag3, $sort, $limit, $page)->count(true));
+
+        // FIND WITHOUT TAG (SORT)
+        $arrayAsc = array($mm11, $mm12, $mm13, $mm21, $mm22, $mm23, $mm31, $mm33, $mm34);
+        $this->assertEquals($arrayAsc, array_values($this->repo->findWithoutTag($tag3, $sortAsc)->toArray()));
+        $limit = 6;
+        $arrayAsc = array($mm11, $mm12, $mm13, $mm21, $mm22, $mm23);
+        $this->assertEquals($arrayAsc, array_values($this->repo->findWithoutTag($tag3, $sortAsc, $limit)->toArray()));
+        $page = 1;
+        $arrayAsc = array($mm31, $mm33, $mm34);
+        $this->assertEquals($arrayAsc, array_values($this->repo->findWithoutTag($tag3, $sortAsc, $limit, $page)->toArray()));
+
+        $arrayDesc = array($mm13, $mm12, $mm11);
+        $this->assertEquals($arrayDesc, array_values($this->repo->findWithoutTag($tag3, $sortDesc, $limit, $page)->toArray()));
 
         // FIND ONE WITHOUT TAG
         $this->assertEquals(1, count($this->repo->findOneWithoutTag($tag2)));
@@ -857,22 +919,34 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         // FIND WITH ALL TAGS
         // TODO
 
-        // FIND WITHOUT SOME TAGS
+        // FIND WITHOUT ALL TAGS
         $arrayTags = array($tag2, $tag3);
-        $this->assertEquals(4, $this->repo->findWithoutSomeTags($arrayTags)->count(true));
+        $this->assertEquals(4, $this->repo->findWithoutAllTags($arrayTags)->count(true));
         $limit = 3;
-        $this->assertEquals(3, $this->repo->findWithoutSomeTags($arrayTags, $limit)->count(true));
+        $this->assertEquals(3, $this->repo->findWithoutAllTags($arrayTags, $sort, $limit)->count(true));
         $page = 0;
-        $this->assertEquals(3, $this->repo->findWithoutSomeTags($arrayTags, $limit, $page)->count(true));
+        $this->assertEquals(3, $this->repo->findWithoutAllTags($arrayTags, $sort, $limit, $page)->count(true));
         $page = 1;
-        $this->assertEquals(1, $this->repo->findWithoutSomeTags($arrayTags, $limit, $page)->count(true));
+        $this->assertEquals(1, $this->repo->findWithoutAllTags($arrayTags, $sort, $limit, $page)->count(true));
 
         $arrayTags = array($tag1, $tag3);
-        $this->assertEquals(1, $this->repo->findWithoutSomeTags($arrayTags)->count(true));
+        $this->assertEquals(1, $this->repo->findWithoutAllTags($arrayTags)->count(true));
 
         $arrayTags = array($tag1, $tag2);
-        $this->assertEquals(0, $this->repo->findWithoutSomeTags($arrayTags)->count(true));
+        $this->assertEquals(0, $this->repo->findWithoutAllTags($arrayTags)->count(true));
 
+        // FIND WITHOUT ALL TAGS (SORT)
+        $arrayTags = array($tag2, $tag3);
+        $arrayAsc = array($mm23, $mm31, $mm33, $mm34);
+        $this->assertEquals($arrayAsc, array_values($this->repo->findWithoutAllTags($arrayTags, $sortAsc)->toArray()));
+        $limit = 3;
+        $page = 1;
+        $arrayAsc = array($mm34);
+        $this->assertEquals($arrayAsc, array_values($this->repo->findWithoutAllTags($arrayTags, $sortAsc, $limit, $page)->toArray()));
+
+        $page = 0;
+        $arrayDesc = array($mm34, $mm33, $mm31);
+        $this->assertEquals($arrayDesc, array_values($this->repo->findWithoutAllTags($arrayTags, $sortDesc, $limit, $page)->toArray()));
     }
 
     public function testFindSeriesFieldWithTags()

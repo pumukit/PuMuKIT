@@ -18,11 +18,12 @@ class SeriesRepository extends DocumentRepository
      * Find series with tag
      *
      * @param Tag|EmbeddedTag $tag
+     * @param array $sort
      * @param int $limit
      * @param int $page
      * @return ArrayCollection
      */
-    public function findWithTag($tag, $limit = null, $page = 0)
+    public function findWithTag($tag, $sort = array(), $limit = 0, $page = 0)
     {
         $referencedSeries = $this->getDocumentManager()
             ->getRepository('PumukitSchemaBundle:MultimediaObject')
@@ -30,8 +31,12 @@ class SeriesRepository extends DocumentRepository
         
         $qb = $this->createQueryBuilder()
             ->field('id')->in($referencedSeries->toArray());
-        
-        if (null !== $limit){
+
+        if (0 !== count($sort) ){
+            $qb->sort($sort);
+        }
+
+        if ($limit > 0){
             $qb->limit($limit)->skip($limit * $page);
         }
 
@@ -60,11 +65,12 @@ class SeriesRepository extends DocumentRepository
      * Find series with any tag
      *
      * @param array $tags
+     * @param array $sort
      * @param int $limit
      * @param int $page
      * @return ArrayCollection
      */
-    public function findWithAnyTag($tags, $limit = null, $page = 0)
+    public function findWithAnyTag($tags, $sort = array(), $limit = 0, $page = 0)
     {
         $referencedSeries = $this->getDocumentManager()
             ->getRepository('PumukitSchemaBundle:MultimediaObject')
@@ -73,7 +79,11 @@ class SeriesRepository extends DocumentRepository
         $qb = $this->createQueryBuilder()
             ->field('id')->in($referencedSeries->toArray());
 
-        if (null !== $limit){
+        if (0 !== count($sort) ){
+            $qb->sort($sort);
+        }
+
+        if ($limit > 0){
             $qb->limit($limit)->skip($limit * $page);
         }
 
@@ -84,11 +94,12 @@ class SeriesRepository extends DocumentRepository
      * Find series with all tags
      *
      * @param array $tags
+     * @param array $sort
      * @param int $limit
      * @param int $page
      * @return ArrayCollection
      */
-    public function findWithAllTags($tags, $limit = null, $page = 0)
+    public function findWithAllTags($tags, $sort = array(), $limit = 0, $page = 0)
     {
         $referencedSeries = $this->getDocumentManager()
             ->getRepository('PumukitSchemaBundle:MultimediaObject')
@@ -97,7 +108,11 @@ class SeriesRepository extends DocumentRepository
         $qb = $this->createQueryBuilder()
             ->field('id')->in($referencedSeries->toArray());
 
-        if (null !== $limit){
+        if (0 !== count($sort) ){
+            $qb->sort($sort);
+        }
+
+        if ($limit > 0){
             $qb->limit($limit)->skip($limit * $page);
         }
         
@@ -126,11 +141,12 @@ class SeriesRepository extends DocumentRepository
      * Find series without tag
      *
      * @param Tag|EmbeddedTag $tag
+     * @param array $sort
      * @param int $limit
      * @param int $page
      * @return ArrayCollection
      */
-    public function findWithoutTag($tag, $limit = null, $page = 0)
+    public function findWithoutTag($tag, $sort = array(), $limit = 0, $page = 0)
     {
         $referencedSeries = $this->getDocumentManager()
             ->getRepository('PumukitSchemaBundle:MultimediaObject')
@@ -138,8 +154,12 @@ class SeriesRepository extends DocumentRepository
         
         $qb = $this->createQueryBuilder()
             ->field('id')->notIn($referencedSeries->toArray());
+
+        if (0 !== count($sort) ){
+            $qb->sort($sort);
+        }
         
-        if (null !== $limit){
+        if ($limit > 0){
             $qb->limit($limit)->skip($limit * $page);
         }
         
@@ -168,9 +188,10 @@ class SeriesRepository extends DocumentRepository
      * Find series without all tags
      *
      * @param array tags
+     * @param array $sort
      * @return ArrayCollection
      */
-    public function findWithoutAllTags($tags)
+    public function findWithoutAllTags($tags, $sort = array())
     {
       // TODO
       /*

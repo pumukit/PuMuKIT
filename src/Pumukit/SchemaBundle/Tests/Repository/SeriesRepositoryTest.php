@@ -139,18 +139,47 @@ class SeriesRepositoryTest extends WebTestCase
         $this->dm->persist($mm34);
         $this->dm->flush();
 
+        // SORT
+        $sort = array();
+        $sortAsc =  array('title' => 'asc');
+        $sortDesc = array('title' => 'desc');
+
         // FIND SERIES WITH TAG
         $this->assertEquals(3, count($this->repo->findWithTag($tag1)));
         $limit = 2;
-        $this->assertEquals(2, $this->repo->findWithTag($tag1, $limit)->count(true));
+        $this->assertEquals(2, $this->repo->findWithTag($tag1, $sort, $limit)->count(true));
         $page = 0;
-        $this->assertEquals(2, $this->repo->findWithTag($tag1, $limit, $page)->count(true));
+        $this->assertEquals(2, $this->repo->findWithTag($tag1, $sort, $limit, $page)->count(true));
         $page = 1;
-        $this->assertEquals(1, $this->repo->findWithTag($tag1, $limit, $page)->count(true));
+        $this->assertEquals(1, $this->repo->findWithTag($tag1, $sort, $limit, $page)->count(true));
 
         $this->assertEquals(1, $this->repo->findWithTag($tag3)->count(true));
 
-        // FIND ONE SERIES WITH TAG ID
+        // FIND SERIES WITH TAG (SORT)
+        $arrayAsc = array($series1, $series2, $series3);
+        $arrayAscResult = array_values($this->repo->findWithTag($tag1, $sortAsc)->toArray());
+        $this->assertEquals($arrayAsc[0]->getTitle(), $arrayAscResult[0]->getTitle());
+        $this->assertEquals($arrayAsc[1]->getTitle(), $arrayAscResult[1]->getTitle());
+        $this->assertEquals($arrayAsc[2]->getTitle(), $arrayAscResult[2]->getTitle());
+        $limit = 2;
+        $page = 1;
+        $arrayAsc = array($series3);
+        $arrayAscResult = array_values($this->repo->findWithTag($tag1, $sortAsc, $limit, $page)->toArray());
+        $this->assertEquals(1, $this->repo->findWithTag($tag1, $sortAsc, $limit, $page)->count(true));
+        $this->assertEquals($arrayAsc[0]->getTitle(), $arrayAscResult[0]->getTitle());
+
+        $arrayDesc = array($series3, $series2, $series1);
+        $arrayDescResult = array_values($this->repo->findWithTag($tag1, $sortDesc)->toArray());
+        $this->assertEquals($arrayDesc[0]->getTitle(), $arrayDescResult[0]->getTitle());
+        $this->assertEquals($arrayDesc[1]->getTitle(), $arrayDescResult[1]->getTitle());
+        $this->assertEquals($arrayDesc[2]->getTitle(), $arrayDescResult[2]->getTitle());
+        $limit = 2;
+        $page = 1;
+        $arrayAsc = array($series1);
+        $arrayAscResult = array_values($this->repo->findWithTag($tag1, $sortDesc, $limit, $page)->toArray());
+        $this->assertEquals($arrayAsc[0]->getTitle(), $arrayAscResult[0]->getTitle());
+
+        // FIND ONE SERIES WITH TAG
         $this->assertEquals(1, count($this->repo->findOneWithTag($tag2)));
         $this->assertEquals(1, count($this->repo->findOneWithTag($tag3)));
         $this->assertEquals($series3, $this->repo->findOneWithTag($tag3));
@@ -159,11 +188,11 @@ class SeriesRepositoryTest extends WebTestCase
         $arrayTags = array($tag1, $tag2);
         $this->assertEquals(3, $this->repo->findWithAnyTag($arrayTags)->count(true));
         $limit = 2;
-        $this->assertEquals(2, $this->repo->findWithAnyTag($arrayTags, $limit)->count(true));
+        $this->assertEquals(2, $this->repo->findWithAnyTag($arrayTags, $sort, $limit)->count(true));
         $page = 0;
-        $this->assertEquals(2, $this->repo->findWithAnyTag($arrayTags, $limit, $page)->count(true));
+        $this->assertEquals(2, $this->repo->findWithAnyTag($arrayTags, $sort, $limit, $page)->count(true));
         $page = 1;
-        $this->assertEquals(1, $this->repo->findWithAnyTag($arrayTags, $limit, $page)->count(true));
+        $this->assertEquals(1, $this->repo->findWithAnyTag($arrayTags, $sort, $limit, $page)->count(true));
 
         $arrayTags = array($tag3);
         $this->assertEquals(1, $this->repo->findWithAnyTag($arrayTags)->count(true));
@@ -172,11 +201,11 @@ class SeriesRepositoryTest extends WebTestCase
         $arrayTags = array($tag1, $tag2);
         $this->assertEquals(2, $this->repo->findWithAllTags($arrayTags)->count(true));
         $limit = 1;
-        $this->assertEquals(1, $this->repo->findWithAllTags($arrayTags, $limit)->count(true));
+        $this->assertEquals(1, $this->repo->findWithAllTags($arrayTags, $sort, $limit)->count(true));
         $page = 0;
-        $this->assertEquals(1, $this->repo->findWithAllTags($arrayTags, $limit, $page)->count(true));
+        $this->assertEquals(1, $this->repo->findWithAllTags($arrayTags, $sort, $limit, $page)->count(true));
         $page = 1;
-        $this->assertEquals(1, $this->repo->findWithAllTags($arrayTags, $limit, $page)->count(true));
+        $this->assertEquals(1, $this->repo->findWithAllTags($arrayTags, $sort, $limit, $page)->count(true));
 
         $arrayTags = array($tag2, $tag3);
         $this->assertEquals(1, $this->repo->findWithAllTags($arrayTags)->count(true));
@@ -189,16 +218,16 @@ class SeriesRepositoryTest extends WebTestCase
         $this->assertEquals(1, count($this->repo->findOneWithAllTags($arrayTags)));
         $this->assertEquals($series3, $this->repo->findOneWithAllTags($arrayTags));
 
-        // FIND SERIES WITHOUT TAG ID
+        // FIND SERIES WITHOUT TAG
         $this->assertEquals(2, $this->repo->findWithoutTag($tag3)->count(true));
         $limit = 1;
-        $this->assertEquals(1, $this->repo->findWithoutTag($tag3, $limit)->count(true));
+        $this->assertEquals(1, $this->repo->findWithoutTag($tag3, $sort, $limit)->count(true));
         $page = 0;
-        $this->assertEquals(1, $this->repo->findWithoutTag($tag3, $limit, $page)->count(true));
+        $this->assertEquals(1, $this->repo->findWithoutTag($tag3, $sort, $limit, $page)->count(true));
         $page = 1;
-        $this->assertEquals(1, $this->repo->findWithoutTag($tag3, $limit, $page)->count(true));
+        $this->assertEquals(1, $this->repo->findWithoutTag($tag3, $sort, $limit, $page)->count(true));
 
-        // FIND ONE SERIES WITHOUT TAG ID
+        // FIND ONE SERIES WITHOUT TAG
         $this->assertEquals(1, count($this->repo->findOneWithoutTag($tag3)));
 
     }

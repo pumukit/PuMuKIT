@@ -145,11 +145,11 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param int $page
      * @return ArrayCollection
      */
-    public function findWithTag($tag, $limit = 0, $page = 0, $sort = array())
+    public function findWithTag($tag, $sort = array(), $limit = 0, $page = 0)
     {
         $qb = $this->createStandardQueryBuilder()
             ->field('tags._id')->equals(new \MongoId($tag->getId()));
-
+        
         if (0 !== count($sort) ){
             $qb->sort($sort);
         }        
@@ -179,17 +179,22 @@ class MultimediaObjectRepository extends DocumentRepository
      * Find multimedia objects with any tag
      *
      * @param array $tags
+     * @param array $sort
      * @param int $limit
      * @param int $page
      * @return ArrayCollection
      */
-    public function findWithAnyTag($tags, $limit = null, $page = 0)
+    public function findWithAnyTag($tags, $sort = array(), $limit = 0, $page = 0)
     {
         $mongoIds = $this->getMongoIds($tags);
         $qb =  $this->createStandardQueryBuilder()
           ->field('tags._id')->in($mongoIds);
         
-        if (null !== $limit){
+        if (0 !== count($sort) ){
+            $qb->sort($sort);
+        }        
+        
+        if ($limit > 0){
             $qb->limit($limit)->skip($limit * $page);
         }
 
@@ -200,17 +205,22 @@ class MultimediaObjectRepository extends DocumentRepository
      * Find multimedia objects with all tags
      *
      * @param array $tags
+     * @param array $sort
      * @param int $limit
      * @param int $page
      * @return ArrayCollection
      */
-    public function findWithAllTags($tags, $limit = null, $page = 0)
+    public function findWithAllTags($tags, $sort = array(), $limit = 0, $page = 0)
     {
         $mongoIds = $this->getMongoIds($tags);
         $qb =  $this->createStandardQueryBuilder()
           ->field('tags._id')->all($mongoIds);
         
-        if (null !== $limit){
+        if (0 !== count($sort) ){
+            $qb->sort($sort);
+        }        
+
+        if ($limit > 0){
             $qb->limit($limit)->skip($limit * $page);
         }
 
@@ -236,16 +246,21 @@ class MultimediaObjectRepository extends DocumentRepository
      * Find multimedia objects without tag id
      *
      * @param Tag|EmbeddedTag $tag
+     * @param array $sort
      * @param int $limit
      * @param int $page
      * @return ArrayCollection
      */
-    public function findWithoutTag($tag, $limit = null, $page = 0)
+    public function findWithoutTag($tag, $sort = array(), $limit = 0, $page = 0)
     {
         $qb =  $this->createStandardQueryBuilder()
           ->field('tags._id')->notEqual(new \MongoId($tag->getId()));
         
-        if (null !== $limit){
+        if (0 !== count($sort) ){
+            $qb->sort($sort);
+        }        
+
+        if ($limit > 0){
             $qb->limit($limit)->skip($limit * $page);
         }
 
@@ -269,31 +284,23 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find multimedia objects without all tags
      *
-     * @param array tags
-     * @param int $limit
-     * @param int $page
-     * @return ArrayCollection
-     */
-    public function findWithoutAllTags($tags, $limit = null, $page = 0)
-    {
-      // TODO
-    }
-
-    /**
-     * Find multimedia objects without some tags
-     *
      * @param array $tags
+     * @param array $sort
      * @param int $limit
      * @param int $page
      * @return ArrayCollection
      */
-    public function findWithoutSomeTags($tags, $limit = null, $page = 0)
+    public function findWithoutAllTags($tags, $sort = array(), $limit = 0, $page = 0)
     {
         $mongoIds = $this->getMongoIds($tags);
         $qb =  $this->createStandardQueryBuilder()
           ->field('tags._id')->notIn($mongoIds);
         
-        if (null !== $limit){
+        if (0 !== count($sort) ){
+            $qb->sort($sort);
+        }        
+
+        if ($limit > 0){
             $qb->limit($limit)->skip($limit * $page);
         }
 
