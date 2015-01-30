@@ -1,0 +1,49 @@
+<div class="library">
+
+{% if sort == 'alphabetically' %}
+
+	{% set lastChar = '--' %}
+
+	{% for serie in series %}
+		{% if serie.title|slice(0,1)|title != lastChar %}
+    	<div class="name">
+      		<div>{{serie.title|slice(0,1)|title}}</div>
+    	</div>
+    	{% endif %}
+    	<div class="list">
+      	<ul>      
+        	<li>
+        		<a href="/series/{{serie.id}}">{{serie.getTitle()}}</a> [{{serie.getMultimediaObjects()|length}} videos]
+        	</li>
+      	</ul>
+    	</div>
+
+	{% set lastChar = serie.title|slice(0,1)|title %}
+
+	{% endfor %}
+
+{% else %}
+
+	{% set lastDate = '--' %}
+
+	{% for serie in series %}
+		{% if serie.getPublicDate()|date("d/m/Y") != lastDate %}
+    	<div class="name">
+      		<div>{{ serie.getPublicDate()|date("d/m/Y") }}</div>
+    	</div>
+    	{% endif %}
+    	<div class="list">
+      	<ul>      
+        	<li>
+        		<a href="/series/{{serie.id}}">{{serie.getTitle()}}</a> [{{serie.getMultimediaObjects()|length}} videos]
+        	</li>
+      	</ul>
+    	</div>
+
+	{% set lastDate = serie.getPublicDate()|date("d/m/Y") %}
+
+	{% endfor %}
+
+{% endif %}
+
+</div>
