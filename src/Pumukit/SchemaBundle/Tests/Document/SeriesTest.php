@@ -11,138 +11,82 @@ class SeriesTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetterAndSetter()
     {
+        $series_type = new SeriesType();
+        $announce = true;
+        $publicDate = new \DateTime("now");
         $title = 'title';
         $subtitle = 'subtitle';
         $description = 'description';
-        $test_date = new \DateTime("now");
-        $serie_type = new SeriesType();
+        $header = 'header';
+        $footer = 'footer';
+        $copyright = 'copyright';
+        $keyword = 'keyword';
+        $line2 = 'line2';
+        $locale = 'en';
 
-        $serie = new Series();
-
-        $serie->setTitle($title);
-        $serie->setSubtitle($subtitle);
-        $serie->setDescription($description);
-        $serie->setPublicDate($test_date);
-        $serie->setSeriesType($serie_type);
-
-        $this->assertEquals($title, $serie->getTitle());
-        $this->assertEquals($subtitle, $serie->getSubtitle());
-        $this->assertEquals($description, $serie->getDescription());
-        $this->assertEquals($test_date, $serie->getPublicDate());
-        $this->assertEquals($serie_type, $serie->getSeriesType());
-    }
-
-    /*
-    public function testMultimediaObjectsInSeries()
-    {
         $series = new Series();
-        $mm1 = new MultimediaObject();
-        $mm2 = new MultimediaObject();
-        $mm3 = new MultimediaObject();
 
-        $this->assertEquals(0, count($series->getMultimediaObjects()));
+        $series->setSeriesType($series_type);
+        $series->setAnnounce($announce);
+        $series->setPublicDate($publicDate);
+        $series->setTitle($title);
+        $series->setSubtitle($subtitle);
+        $series->setDescription($description);
+        $series->setHeader($header);
+        $series->setFooter($footer);
+        $series->setCopyright($copyright);
+        $series->setKeyword($keyword);
+        $series->setLine2($line2);
+        $series->setLocale($locale);
 
+        $this->assertEquals($series_type, $series->getSeriesType());
+        $this->assertEquals($announce, $series->getAnnounce());
+        $this->assertEquals($publicDate, $series->getPublicDate());
+        $this->assertEquals($title, $series->getTitle());
+        $this->assertEquals($subtitle, $series->getSubtitle());
+        $this->assertEquals($description, $series->getDescription());
+        $this->assertEquals($header, $series->getHeader());
+        $this->assertEquals($footer, $series->getFooter());
+        $this->assertEquals($copyright, $series->getCopyright());
+        $this->assertEquals($keyword, $series->getKeyword());
+        $this->assertEquals($line2, $series->getLine2());
+        $this->assertEquals($locale, $series->getLocale());
 
-        // TODO non existing function. Do it in the repository with factory service
-        //$series->addMultimediaObject($mm1);
-        //$series->addMultimediaObject($mm2);
-        //$series->addMultimediaObject($mm3);
+        $titleEs = 'título';
+        $subtitleEs = 'subtítulo';
+        $descriptionEs = 'descripción';
+        $headerEs = 'cabecera';
+        $footerEs = 'pie';
+        $copyrightEs = 'derechos de copia';
+        $keywordEs = 'palabra clave';
+        $line2Es = 'línea 2';
+        $localeEs = 'es';
 
+        $titleI18n = array($locale => $title, $localeEs => $titleEs);
+        $subtitleI18n = array($locale => $subtitle, $localeEs => $subtitleEs);
+        $descriptionI18n = array($locale => $description, $localeEs => $descriptionEs);
+        $headerI18n = array($locale => $header, $localeEs => $headerEs);
+        $footerI18n = array($locale => $footer, $localeEs => $footerEs);
+        $copyrightI18n = array($locale => $copyright, $localeEs => $copyrightEs);
+        $keywordI18n = array($locale => $keyword, $localeEs => $keywordEs);
+        $line2I18n = array($locale => $line2, $localeEs => $line2Es);
 
-        $this->assertEquals(3, count($series->getMultimediaObjects()));
+        $series->setI18nTitle($titleI18n);
+        $series->setI18nSubtitle($subtitleI18n);
+        $series->setI18nDescription($descriptionI18n);
+        $series->setI18nHeader($headerI18n);
+        $series->setI18nFooter($footerI18n);
+        $series->setI18nCopyright($copyrightI18n);
+        $series->setI18nKeyword($keywordI18n);
+        $series->setI18nLine2($line2I18n);
 
-        $series->removeMultimediaObject($mm2);
-        $this->assertEquals(2, count($series->getMultimediaObjects()));
-
-        $this->assertTrue($series->containsMultimediaObject($mm1));
-        $this->assertFalse($series->containsMultimediaObject($mm2));
+        $this->assertEquals($titleI18n, $series->getI18nTitle());
+        $this->assertEquals($subtitleI18n, $series->getI18nSubtitle());
+        $this->assertEquals($descriptionI18n, $series->getI18nDescription());
+        $this->assertEquals($headerI18n, $series->getI18nHeader());
+        $this->assertEquals($footerI18n, $series->getI18nFooter());
+        $this->assertEquals($copyrightI18n, $series->getI18nCopyright());
+        $this->assertEquals($keywordI18n, $series->getI18nKeyword());
+        $this->assertEquals($line2I18n, $series->getI18nLine2());
     }
-    */
-
-    // TODO
-    /*
-    public function testRankInAddMultimediaObject()
-    {
-        $serie = new Series();
-
-        $mm1 = new MultimediaObject();
-        $mm2 = new MultimediaObject();
-        $mm3 = new MultimediaObject();
-        $mm4 = new MultimediaObject();
-        $mm5 = new MultimediaObject();
-
-        $serie->addMultimediaObject($mm1);
-        $serie->addMultimediaObject($mm2);
-        $serie->addMultimediaObject($mm3);
-        $serie->addMultimediaObject($mm4);
-        $serie->addMultimediaObject($mm5);
-
-        $this->assertEquals(1, $mm1->getRank());
-        $this->assertEquals(2, $mm2->getRank());
-        $this->assertEquals(3, $mm3->getRank());
-        $this->assertEquals(4, $mm4->getRank());
-        $this->assertEquals(5, $mm5->getRank());
-    }
-    */
-
-    // TODO
-    /*
-    public function testGetMultimediaObjectsWithTag()
-    {
-        $s = new Series();
-
-        $tag0 = new Tag();
-        $tag1 = new Tag();
-        $tag2 = new Tag();
-        $tag3 = new Tag();
-        $tag4 = new Tag();
-        $tag5 = new Tag();
-        $tag6 = new Tag();
-        $tag7 = new Tag();
-        $tag8 = new Tag();
-
-        $mm1 = new MultimediaObject();
-        $mm1->setRank(3);
-        //$mm1->setTags(array($tag1));
-        $mm1->addTag($tag1);
-
-        $mm2 = new MultimediaObject();
-        $mm2->setRank(2);
-        $mm2->setTags(array($tag2, $tag1, $tag3));
-        $mm3 = new MultimediaObject();
-        $mm3->setRank(1);
-        $mm3->setTags(array($tag1, $tag2));
-        $mm4 = new MultimediaObject();
-        $mm4->setRank(4);
-        $mm4->setTags(array($tag4, $tag5, $tag6));
-        $mm5 = new MultimediaObject();
-        $mm5->setRank(5);
-        $mm5->setTags(array($tag4, $tag7));
-
-        $s->addMultimediaObject($mm3);
-        $s->addMultimediaObject($mm2);
-        $s->addMultimediaObject($mm1);
-        $s->addMultimediaObject($mm4);
-        $s->addMultimediaObject($mm5);
-
-        $this->assertEquals(array($mm3, $mm2, $mm1), $s->getMultimediaObjectsWithTag($tag1));
-        $this->assertEquals($mm3, $s->getMultimediaObjectWithTag($tag1));
-        $this->assertEquals(null, $s->getMultimediaObjectWithTag($tag8));
-        $this->assertEquals($mm3, $s->getMultimediaObjectWithAnyTag(array($tag1, $tag8)));
-        $this->assertEquals(array($mm2), $s->getMultimediaObjectsWithAllTags(array($tag1, $tag2, $tag3)));
-        $this->assertTrue(in_array($s->getMultimediaObjectWithAllTags(array($tag2,$tag1)),array($mm3, $mm2)));
-        $this->assertEquals(null, $s->getMultimediaObjectWithAllTags(array($tag2,$tag1,$tag8)));
-        $this->assertEquals(4, count($s->getMultimediaObjectsWithAnyTag(array($tag1,$tag7))));
-        $this->assertEquals(1, count($s->getMultimediaObjectWithAnyTag(array($tag1))));
-        $this->assertEquals(null, $s->getMultimediaObjectWithAnyTag(array($tag8)));
-
-        $this->assertEquals(5, count($s->getFilteredMultimediaObjectsWithTags()));
-        $this->assertEquals(3, count($s->getFilteredMultimediaObjectsWithTags(array($tag1))));
-        $this->assertEquals(1, count($s->getFilteredMultimediaObjectsWithTags(array($tag1), array($tag2, $tag3))));
-        $this->assertEquals(0, count($s->getFilteredMultimediaObjectsWithTags(array(), array($tag2, $tag3), array($tag1))));
-        $this->assertEquals(3, count($s->getFilteredMultimediaObjectsWithTags(array(), array(), array($tag4))));
-        $this->assertEquals(0, count($s->getFilteredMultimediaObjectsWithTags(array(), array(), array($tag4, $tag1))));
-        $this->assertEquals(5, count($s->getFilteredMultimediaObjectsWithTags(array(), array(), array(), array($tag4, $tag1))));
-        $this->assertEquals(1, count($s->getFilteredMultimediaObjectsWithTags(array($tag2, $tag3), array(), array(), array($tag3))));
-    }*/
 }

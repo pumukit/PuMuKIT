@@ -68,8 +68,6 @@ class SeriesRepositoryTest extends WebTestCase
         $this->assertEquals($series, $this->repo->find($series->getId()));
     }
 
-    // TO DO: test proper time sorting
-
     public function testFindSeriesWithTags()
     {
         $tag1 = new Tag();
@@ -533,6 +531,150 @@ class SeriesRepositoryTest extends WebTestCase
         */
     }
 
+    public function testMultimediaObjectsInSeries()
+    {
+        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
+
+        $series1 = $this->createSeries('Series 1');
+        $series2 = $this->createSeries('Series 2');
+
+        // NOTE: After creation we must take the initialized document
+        $series1 = $this->repo->find($series1->getId());
+        $series2 = $this->repo->find($series2->getId());
+
+        $this->assertEquals(0, count($series1->getMultimediaObjects()));
+        $this->assertEquals(0, count($series2->getMultimediaObjects()));
+
+        $mm11 = $this->factoryService->createMultimediaObject($series1);
+        $mm12 = $this->factoryService->createMultimediaObject($series1);
+        $mm13 = $this->factoryService->createMultimediaObject($series1);
+
+        $mm21 = $this->factoryService->createMultimediaObject($series2);
+        $mm22 = $this->factoryService->createMultimediaObject($series2);
+
+        $this->assertEquals(3, count($series1->getMultimediaObjects()));
+        $this->assertEquals(2, count($series2->getMultimediaObjects()));
+
+        $this->dm->remove($mm11);
+        $this->dm->flush();
+
+        $this->assertEquals(2, count($series1->getMultimediaObjects()));
+        $this->assertEquals(2, count($series2->getMultimediaObjects()));
+
+        $this->assertTrue($series1->containsMultimediaObject($mm12));
+        $this->assertFalse($series1->containsMultimediaObject($mm11));
+    }
+
+    public function testRankInAddMultimediaObject()
+    {
+        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
+
+        $series1 = $this->createSeries('Series 1');
+        $this->assertEquals(0, count($series1->getMultimediaObjects()));
+
+        $mm1 = $this->factoryService->createMultimediaObject($series1);
+        $mm2 = $this->factoryService->createMultimediaObject($series1);
+        $mm3 = $this->factoryService->createMultimediaObject($series1);
+        $mm4 = $this->factoryService->createMultimediaObject($series1);
+        $mm5 = $this->factoryService->createMultimediaObject($series1);
+
+        $this->assertEquals(1, $mm1->getRank());
+        $this->assertEquals(2, $mm2->getRank());
+        $this->assertEquals(3, $mm3->getRank());
+        $this->assertEquals(4, $mm4->getRank());
+        $this->assertEquals(5, $mm5->getRank());
+
+        // TODO Solve rank in MultimediaObjects in different Series #6110
+    }
+
+    public function testMultimediaObjectsWithTags()
+    {
+        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
+
+        $series = $this->createSeries('Series 1');
+        $this->assertEquals(0, count($series->getMultimediaObjects()));
+
+        $mm1 = $this->factoryService->createMultimediaObject($series);
+        $mm2 = $this->factoryService->createMultimediaObject($series);
+        $mm3 = $this->factoryService->createMultimediaObject($series);
+        $mm4 = $this->factoryService->createMultimediaObject($series);
+        $mm5 = $this->factoryService->createMultimediaObject($series);
+
+        $tag0 = new Tag();
+        $tag1 = new Tag();
+        $tag2 = new Tag();
+        $tag3 = new Tag();
+        $tag4 = new Tag();
+        $tag5 = new Tag();
+        $tag6 = new Tag();
+        $tag7 = new Tag();
+        $tag8 = new Tag();
+
+        $tag0->setCod('tag0');
+        $tag1->setCod('tag1');
+        $tag2->setCod('tag2');
+        $tag3->setCod('tag3');
+        $tag4->setCod('tag4');
+        $tag5->setCod('tag5');
+        $tag6->setCod('tag6');
+        $tag7->setCod('tag7');
+        $tag8->setCod('tag8');
+
+        $this->dm->persist($tag0);
+        $this->dm->persist($tag1);
+        $this->dm->persist($tag2);
+        $this->dm->persist($tag3);
+        $this->dm->persist($tag4);
+        $this->dm->persist($tag5);
+        $this->dm->persist($tag6);
+        $this->dm->persist($tag7);
+        $this->dm->persist($tag8);
+        $this->dm->flush();
+
+        $mm1->addTag($tag1);
+
+        $mm2->addTag($tag2);
+        $mm2->addTag($tag1);
+        $mm2->addTag($tag3);
+
+        $mm3->addTag($tag1);
+        $mm3->addTag($tag2);
+
+        $mm4->addTag($tag4);
+        $mm4->addTag($tag5);
+        $mm4->addTag($tag6);
+
+        $mm5->addTag($tag4);
+        $mm5->addTag($tag7);
+
+        $this->dm->persist($mm1);
+        $this->dm->persist($mm2);
+        $this->dm->persist($mm3);
+        $this->dm->persist($mm4);
+        $this->dm->persist($mm5);
+        $this->dm->flush();
+
+        $this->assertEquals(array($mm1, $mm2, $mm3), $series->getMultimediaObjectsWithTag($tag1));
+        $this->assertEquals($mm1, $series->getMultimediaObjectWithTag($tag1));
+        $this->assertNull($series->getMultimediaObjectWithTag($tag8));
+        $this->assertEquals($mm1, $series->getMultimediaObjectWithAnyTag(array($tag1, $tag8)));
+        $this->assertEquals(array($mm2), $series->getMultimediaObjectsWithAllTags(array($tag1, $tag2, $tag3)));
+        $this->assertEquals($mm2, $series->getMultimediaObjectWithAllTags(array($tag2,$tag1)));
+        $this->assertNull($series->getMultimediaObjectWithAllTags(array($tag2,$tag1,$tag8)));
+        $this->assertEquals(4, count($series->getMultimediaObjectsWithAnyTag(array($tag1,$tag7))));
+        $this->assertEquals(array($mm1, $mm2, $mm3, $mm5), $series->getMultimediaObjectsWithAnyTag(array($tag1,$tag7)));
+        $this->assertEquals(1, count($series->getMultimediaObjectWithAnyTag(array($tag1))));
+        $this->assertNull($series->getMultimediaObjectWithAnyTag(array($tag8)));
+        $this->assertEquals(5, count($series->getFilteredMultimediaObjectsWithTags()));
+        $this->assertEquals(3, count($series->getFilteredMultimediaObjectsWithTags(array($tag1))));
+        $this->assertEquals(1, count($series->getFilteredMultimediaObjectsWithTags(array($tag1), array($tag2, $tag3))));
+        $this->assertEquals(0, count($series->getFilteredMultimediaObjectsWithTags(array(), array($tag2, $tag3), array($tag1))));
+        $this->assertEquals(3, count($series->getFilteredMultimediaObjectsWithTags(array(), array(), array($tag4))));
+        $this->assertEquals(0, count($series->getFilteredMultimediaObjectsWithTags(array(), array(), array($tag4, $tag1))));
+        $this->assertEquals(5, count($series->getFilteredMultimediaObjectsWithTags(array(), array(), array(), array($tag4, $tag1))));
+        $this->assertEquals(1, count($series->getFilteredMultimediaObjectsWithTags(array($tag2, $tag3), array(), array(), array($tag3))));
+    }
+
     private function createSeriesType($name)
     {
         $description = 'description';
@@ -576,11 +718,6 @@ class SeriesRepositoryTest extends WebTestCase
 
         $mm = $this->factoryService->createMultimediaObject($series);
 
-        // $mm->addTag($tag1);
-        // $mm->addTrack($track1);
-        // $mm->addPic($pic1);
-        // $mm->addMaterial($material1);
-
         $mm->setStatus($status);
         $mm->setRecordDate($record_date);
         $mm->setPublicDate($public_date);
@@ -588,9 +725,6 @@ class SeriesRepositoryTest extends WebTestCase
         $mm->setSubtitle($subtitle);
         $mm->setDescription($description);
         $mm->setDuration($duration);
-        // $this->dm->persist($track1);
-        // $this->dm->persist($pic1);
-        // $this->dm->persist($material1);
         $this->dm->persist($mm);
 
         return $mm;
