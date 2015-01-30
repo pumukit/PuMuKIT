@@ -654,6 +654,9 @@ class SeriesRepositoryTest extends WebTestCase
         $this->dm->persist($mm5);
         $this->dm->flush();
 
+        $this->assertTrue($series->containsMultimediaObjectWithTag($tag4));
+        $this->assertFalse($series->containsMultimediaObjectWithTag($tag8));
+
         $this->assertEquals(array($mm1, $mm2, $mm3), $series->getMultimediaObjectsWithTag($tag1));
         $this->assertEquals($mm1, $series->getMultimediaObjectWithTag($tag1));
         $this->assertNull($series->getMultimediaObjectWithTag($tag8));
