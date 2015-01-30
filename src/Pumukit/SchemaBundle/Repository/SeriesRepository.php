@@ -13,7 +13,6 @@ use Pumukit\SchemaBundle\Document\SeriesType;
  */
 class SeriesRepository extends DocumentRepository
 {
-    //TODO #6101
     /**
      * Find series with tag
      *
