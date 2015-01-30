@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
+        <!--Block with CSS files-->
         {% block stylesheets %}
             <link href="{{ asset('bundles/pumukitwebtv/css/main.css') }}" type="text/css" rel="stylesheet" media="screen"/>
             <link href="{{ asset('bundles/pumukitwebtv/css/default.css') }}" type="text/css" rel="stylesheet" media="screen"/>
@@ -10,6 +11,7 @@
             <link href="{{ asset('bundles/pumukitwebtv/css/960.css') }}" type="text/css" rel="stylesheet" media="screen"/>
             <link href="{{ asset('bundles/pumukitwebtv/css/AdminLTE.css') }}" type="text/css" rel="stylesheet" media="screen"/>
         {% endblock %}
+        <!--Block with Javascript files-->
         {% block javascripts %}
 
         {% endblock %}
@@ -33,6 +35,12 @@
 
             <div id="footerbar">
                 {% include 'PumukitWebTVBundle::footer.html.twig'%}
+            </div>
+            <div style="clear:both; text-align: right; padding: 10px 0px 0px 10px; font-size: 11px; ">
+                <img alt="Icono de Pumukit" src="{{ asset('bundles/pumukitwebtv/images/favicon.ico') }}" style="width: 10px;">
+                <a href="http://pumukit.org" style="color:#000; text-decoration: none; ">
+                    Powered by <span style="font-style: italic">PumuKIT V 2.00</span>
+                </a>
             </div>
         </div>
     </body>

@@ -1,0 +1,25 @@
+<div class="lib_menu">
+  <div style="float: right" class="lib_menu_view">
+    <a href="#" id="search_flecha" onclick="
+          Effect.toggle('search_div', 'blind'); 
+          this.childNodes[0].innerHTML = (this.childNodes[0].innerHTML == '&#9662;')?'&#9666;':'&#9662;';
+          return false;"></a><a href="#">Filtrar</a>
+  </div>
+  <div class="lib_menu_sort">
+    <span>Ordenar por:</span>  
+    <a href="<?php //echo url_for('library/date' . $more) ?>">Date</a>,
+    <a href="<?php //echo url_for('library/abc' . $more) ?>">Alphabetically</a>,
+    <a href="<?php //echo url_for('library/channel' . $more) ?>">Categories</a>.
+  </div>
+  <div style="clear: right"></div>
+</div>
+
+<div id="search_div" style="text-align:center;">
+  <form action="" 
+        method="post" 
+        style="width: 95%; margin: 10px; padding: 5px 0px; border: 2px solid #999999; background-color: #eee; ">
+    Filtrar:&nbsp;&nbsp;&nbsp;
+    <input type="text" id="search" name="search" value="" />
+    <input type="submit" value="OK" />
+  </form>
+</div>
