@@ -67,8 +67,7 @@ class JobService
             $job->setLanguageId($language);
         }
         if (!empty($description)){
-            // TODO - DEFINE SET DESCRIPTION (i18n)
-            //$job->setDescription($description);
+            $job->setI18nDescription($description);
         }
         $job->setTimeini(new \DateTime('now'));
         $this->dm->persist($job);
