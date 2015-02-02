@@ -3,13 +3,13 @@
     <a href="#" id="search_flecha" onclick="
           Effect.toggle('search_div', 'blind'); 
           this.childNodes[0].innerHTML = (this.childNodes[0].innerHTML == '&#9662;')?'&#9666;':'&#9662;';
-          return false;"></a><a href="#">Filtrar</a>
+          return false;"></a><a href="#">Filter</a>
   </div>
   <div class="lib_menu_sort">
-    <span>Ordenar por:</span>  
-    <a href="<?php //echo url_for('library/date' . $more) ?>">Date</a>,
-    <a href="<?php //echo url_for('library/abc' . $more) ?>">Alphabetically</a>,
-    <a href="<?php //echo url_for('library/channel' . $more) ?>">Categories</a>.
+    <span>Sort by:</span>  
+    <a href="/mediateca/date">Date</a>,
+    <a href="/mediateca/alphabetically">Alphabetically</a>.
+    <!--<a href="<?php //echo url_for('library/channel' . $more) ?>">Categories</a>.-->
   </div>
   <div style="clear: right"></div>
 </div>
