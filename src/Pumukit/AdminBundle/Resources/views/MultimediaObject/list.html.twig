@@ -65,16 +65,16 @@
       <td>
 	{% if mms.getCurrentPage() != 1 or not loop.first %}
 	  {% spaceless %}
-	    <a href="{{ path('pumukitadmin_mms_up', {'id': mm.id}) }}" title="{% trans %}Move one position up{% endtrans %}">&#8593;</a>
-	    <a href="{{ path('pumukitadmin_mms_top', {'id': mm.id}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}">&#8657;</a>
+	    <a href="{{ path('pumukitadmin_mms_down', {'id': mm.id}) }}" title="{% trans %}Move one position up{% endtrans %}">&#8593;</a>
+	    <a href="{{ path('pumukitadmin_mms_bottom', {'id': mm.id}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}">&#8657;</a>
 	  {% endspaceless %}
 	{% endif %}
       </td>
       <td>
 	{% if mms.getCurrentPage() == mms.getNbPages() and not loop.last %}
 	  {% spaceless %}
- 	    <a href="{{ path('pumukitadmin_mms_down', {'id': mm.id}) }}" title="{% trans %}Move one position down{% endtrans %}">&#8595;</a>
-	    <a href="{{ path('pumukitadmin_mms_bottom', {'id': mm.id}) }}" title="{% trans %}Move to the end of the list{% endtrans %}">&#8659;</a>
+ 	    <a href="{{ path('pumukitadmin_mms_up', {'id': mm.id}) }}" title="{% trans %}Move one position down{% endtrans %}">&#8595;</a>
+	    <a href="{{ path('pumukitadmin_mms_top', {'id': mm.id}) }}" title="{% trans %}Move to the end of the list{% endtrans %}">&#8659;</a>
 	  {% endspaceless %}
 	{% endif %}
       </td>
