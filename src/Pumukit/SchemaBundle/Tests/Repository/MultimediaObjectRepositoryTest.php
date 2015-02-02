@@ -21,6 +21,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
     private $repo;
     private $qb;
     private $factoryService;
+    private $mmsPicService;
 
     public function __construct()
     {
@@ -33,6 +34,8 @@ class MultimediaObjectRepositoryTest extends WebTestCase
             ->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->factoryService = $kernel->getContainer()
             ->get('pumukitschema.factory');
+        $this->mmsPicService = $kernel->getContainer()
+            ->get('pumukitschema.mmspic');
     }
 
     public function setUp()
@@ -1045,6 +1048,86 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $arrayTags = array($tag2, $tag3);
         $this->assertEquals(1, count($this->repo->findOneSeriesFieldWithAllTags($arrayTags)));
         $this->assertEquals($series3->getId(), $this->repo->findOneSeriesFieldWithAllTags($arrayTags));
+    }
+
+    public function testFindDistinctPics()
+    {
+        $pic1 = new Pic();
+        $url1 = 'http://domain.com/pic1.png';
+        $pic1->setUrl($url1);
+
+        $pic2 = new Pic();
+        $url2 = 'http://domain.com/pic2.png';
+        $pic2->setUrl($url2);
+
+        $pic3 = new Pic();
+        $url3 = 'http://domain.com/pic3.png';
+        $pic3->setUrl($url3);
+
+        $pic4 = new Pic();
+        $pic4->setUrl($url3);
+
+        $pic5 = new Pic();
+        $url5 = 'http://domain.com/pic5.png';
+        $pic5->setUrl($url5);
+
+        $this->dm->persist($pic1);
+        $this->dm->persist($pic2);
+        $this->dm->persist($pic3);
+        $this->dm->persist($pic4);
+        $this->dm->persist($pic5);
+        $this->dm->flush();
+
+        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
+
+        $series1 = $this->createSeries('Series 1');
+        $series2 = $this->createSeries('Series 2');
+
+        $series1 = $this->dm->find('PumukitSchemaBundle:Series', $series1->getId());
+        $series2 = $this->dm->find('PumukitSchemaBundle:Series', $series2->getId());
+
+        $mm11 = $this->factoryService->createMultimediaObject($series1);
+        $mm12 = $this->factoryService->createMultimediaObject($series1);
+
+        $mm21 = $this->factoryService->createMultimediaObject($series2);
+
+        $mm11 = $this->mmsPicService->addPicUrl($mm11, $pic1);
+        $mm11 = $this->mmsPicService->addPicUrl($mm11, $pic2);
+        $mm11 = $this->mmsPicService->addPicUrl($mm11, $pic4);
+
+        $mm12 = $this->mmsPicService->addPicUrl($mm12, $pic3);
+
+        $mm21 = $this->mmsPicService->addPicUrl($mm21, $pic5);
+
+        $this->dm->persist($mm11);
+        $this->dm->persist($mm12);
+        $this->dm->persist($mm21);
+        $this->dm->flush();
+
+        $this->assertEquals(3, count($mm11->getPics()));
+        $this->assertEquals(3, count($this->repo->find($mm11->getId())->getPics()));
+        $this->assertEquals(1, count($mm12->getPics()));
+        $this->assertEquals(1, count($this->repo->find($mm12->getId())->getPics()));
+        $this->assertEquals(1, count($mm21->getPics()));
+        $this->assertEquals(1, count($this->repo->find($mm21->getId())->getPics()));
+
+        $this->assertEquals(3, count($this->repo->findDistinctUrlPicsInSeries($series1)));
+
+        $this->assertEquals(4, count($this->repo->findDistinctUrlPics()));
+
+        $mm11->setPublicDate(new \DateTime('now'));
+        $mm12->setPublicDate(new \DateTime('now'));
+        $mm21->setPublicDate(new \DateTime('now'));
+
+        $this->dm->persist($mm11);
+        $this->dm->persist($mm12);
+        $this->dm->persist($mm21);
+        $this->dm->flush();
+
+        /* TODO Check sort
+        $arrayPics = array($pic1->getUrl(), $pic2->getUrl(), $pic4->getUrl(), $pic5->getUrl());
+        $this->assertEquals($arrayPics, $this->repo->findDistinctUrlPics()->toArray());
+        */     
     }
 
     private function createPerson($name)
