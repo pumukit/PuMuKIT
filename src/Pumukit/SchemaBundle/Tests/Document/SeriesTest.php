@@ -5,7 +5,7 @@ namespace Pumukit\SchemaBundle\Tests\Document;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\Pic;
 
 class SeriesTest extends \PHPUnit_Framework_TestCase
 {
@@ -88,5 +88,34 @@ class SeriesTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($copyrightI18n, $series->getI18nCopyright());
         $this->assertEquals($keywordI18n, $series->getI18nKeyword());
         $this->assertEquals($line2I18n, $series->getI18nLine2());
+    }
+
+    public function testPicsInSeries()
+    {
+        $url = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'logo.png';
+        $pic = new Pic();
+        $pic->setUrl($url);
+
+        $series = new Series();
+        
+        $this->assertEquals(0, count($series->getPics()));
+
+        $series->addPic($pic);
+
+        $this->assertEquals(1, count($series->getPics()));
+        $this->assertTrue($series->containsPic($pic));
+
+        $series->removePic($pic);
+
+        $this->assertEquals(0, count($series->getPics()));
+        $this->assertFalse($series->containsPic($pic));
+
+        $picWithoutUrl = new Pic();
+
+        $series->addPic($picWithoutUrl);
+        $series->addPic($pic);
+
+        $this->assertEquals(2, count($series->getPics()));
+        $this->assertEquals($url, $series->getFirstUrlPic());
     }
 }
