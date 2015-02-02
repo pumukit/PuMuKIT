@@ -104,19 +104,14 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function findByPersonIdWithRoleCod($personId, $roleCod)
     {
-        /* TODO - Fails in this case -> MultimediaObject with: #6100
-           Person 1 with Role 1
-           Person 2 with Role 2
-           
-           findByPersonIdWithRoleCode(Person 1, Role 2)
-           -> returns this MultimediaObject because it has a person
-           with id 1 and has a person with role 2
-        */
-        return $this->createQueryBuilder()
-          ->field('people_in_multimedia_object.people._id')->equals(new \MongoId($personId))
-          ->field('people_in_multimedia_object.cod')->equals($roleCod)
-          ->getQuery()
-          ->execute();
+        $qb = $this->createQueryBuilder();
+        $eqb = $this->dm->createQueryBuilder('PumukitSchemaBundle:EmbeddedPerson');
+        $qb->field('people_in_multimedia_object')->elemMatch(
+            $eqb->expr()->field('people._id')->equals(new \MongoId($personId))
+                ->field('cod')->equals($roleCod)
+        );
+
+        return $qb->getQuery()->execute();
     }
 
     /**
