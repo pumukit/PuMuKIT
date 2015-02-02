@@ -64,4 +64,14 @@ class Pic extends Element
   {
       return $this->height;
   }
+
+  /**
+   * To string
+   *
+   * @return string
+   */
+  public function __toString()
+  {
+      return $this->getUrl();
+  }
 }
