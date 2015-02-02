@@ -5,95 +5,92 @@ namespace Pumukit\AdminBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Pagerfanta\Adapter\DoctrineCollectionAdapter;
+use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\Series;
 
 class SeriesPicController extends Controller
 {
     /**
-   *
-   * @Template("PumukitAdminBundle:Pic:create.html.twig")
-   */
-  public function createAction(Series $series, Request $request)
-  {
+     *
+     * @Template("PumukitAdminBundle:Pic:create.html.twig")
+     */
+    public function createAction(Series $series, Request $request)
+    {
       $picService = $this->get('pumukitschema.seriespic');
 
-    // TODO search in picservice according to page (in criteria)
-    if ($request->get('page', null)) {
-        $this->get('session')->set('admin/seriespic/page', $request->get('page', 1));
-    }
-      $page = $this->get('session')->get('admin/seriespic/page', 1);
+      // TODO search in picservice according to page (in criteria)
+      if ($request->get('page', null)) {
+          $this->get('session')->set('admin/seriespic/page', $request->get('page', 1));
+      }
+      $page = intval($this->get('session')->get('admin/seriespic/page', 1));
       $limit = 12;
 
-      list($collPics, $total) = $picService->getRecomendedPics($series, $page, $limit);
+      $urlPics = $picService->getRecommendedPics($series);
 
-      $pics = $collPics;
+      $total = intval(ceil(count($urlPics) / $limit));
 
-    /*
-    $adapter = new DoctrineCollectionAdapter($collPics);
-    $pics = new Pagerfanta($adapter);
+      $pics = $this->getPaginatedPics($urlPics, $limit, $page);
 
-    $pics
-      ->setCurrentPage($page, true, true)
-      ->setMaxPerPage($limit);
-    */
-
-    return array(
-      'resource' => $series,
-      'resource_name' => 'series',
-      'pics' => $pics,
-      'page' => $page,
-      'total' => $total, );
-  }
-
-  /**
-   *
-   * @Template("PumukitAdminBundle:Pic:list.html.twig")
-   */
-  public function listAction(Series $series)
-  {
       return array(
-         'resource' => $series,
-         'resource_name' => 'series',
-         );
-  }
+                   'resource' => $series,
+                   'resource_name' => 'series',
+                   'pics' => $pics,
+                   'page' => $page,
+                   'total' => $total
+                   );
+    }
 
-  /**
-   * Assign a picture from an url or from an existing one to the series
-   *
-   * @Template("PumukitAdminBundle:Pic:list.html.twig")
-   */
-  public function updateAction(Series $series, Request $request)
-  {
+    /**
+     *
+     * @Template("PumukitAdminBundle:Pic:list.html.twig")
+     */
+    public function listAction(Series $series)
+    {
+      return array(
+                   'resource' => $series,
+                   'resource_name' => 'series',
+                   );
+    }
+
+    /**
+     * Assign a picture from an url or from an existing one to the series
+     *
+     * @Template("PumukitAdminBundle:Pic:list.html.twig")
+     */
+    public function updateAction(Series $series, Request $request)
+    {
       if (($url = $request->get('url')) || ($url = $request->get('picUrl'))) {
-          $picService = $this->get('pumukitschema.seriespic');
-          $series = $picService->addPicUrl($series, $url);
+        $picService = $this->get('pumukitschema.seriespic');
+        $series = $picService->addPicUrl($series, $url);
       }
 
       return array(
-         'resource' => $series,
-         'resource_name' => 'series',
-         );
-  }
+                   'resource' => $series,
+                   'resource_name' => 'series',
+                   );
+    }
 
-  /**
-   *
-   * @Template("PumukitAdminBundle:Pic:upload.html.twig")
-   */
-  public function uploadAction(Series $series, Request $request)
-  {
+    /**
+     *
+     * @Template("PumukitAdminBundle:Pic:upload.html.twig")
+     */
+    public function uploadAction(Series $series, Request $request)
+    {
       if ($request->files->has("file")) {
-          $picService = $this->get('pumukitschema.seriespic');
-          $media = $picService->addPicFile($series, $request->files->get("file"));
+        $picService = $this->get('pumukitschema.seriespic');
+        $media = $picService->addPicFile($series, $request->files->get("file"));
       }
 
       return array(
-         'resource' => $series,
-         'resource_name' => 'series',
-         );
-  }
+                   'resource' => $series,
+                   'resource_name' => 'series',
+                   );
+    }
 
+    /**
+     * Delete pic
+     */
     public function deleteAction(Request $request)
     {
         $picId = $this->getRequest()->get('id');
@@ -114,6 +111,9 @@ class SeriesPicController extends Controller
         return $this->redirect($this->generateUrl('pumukitadmin_seriespic_list', array('id' => $series->getId())));
     }
 
+    /**
+     * Up pic
+     */
     public function upAction(Request $request)
     {
         $picId = $this->getRequest()->get('id');
@@ -134,6 +134,9 @@ class SeriesPicController extends Controller
         return $this->redirect($this->generateUrl('pumukitadmin_seriespic_list', array('id' => $series->getId())));
     }
 
+    /**
+     * Down pic
+     */
     public function downAction(Request $request)
     {
         $picId = $this->getRequest()->get('id');
@@ -152,5 +155,25 @@ class SeriesPicController extends Controller
         $dm->flush();
 
         return $this->redirect($this->generateUrl('pumukitadmin_seriespic_list', array('id' => $series->getId())));
+    }
+
+    /**
+     * Get paginated pics
+     *
+     * @param array $urlPics
+     * @param int $limit
+     * @param int $page
+     * @return Pagerfanta
+     */
+    private function getPaginatedPics($urlPics, $limit, $page)
+    {
+        $adapter = new ArrayAdapter($urlPics->toArray());
+        $pics = new Pagerfanta($adapter);
+
+        $pics
+          ->setCurrentPage($page, true, true)
+          ->setMaxPerPage($limit);
+
+        return $pics;
     }
 }
