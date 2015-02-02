@@ -387,6 +387,39 @@ class MultimediaObjectRepository extends DocumentRepository
     // End of find Series with Tags
 
     /**
+     * Find distinct url pics in series
+     *
+     * TODO Limit and sort
+     *
+     * @param Series $series
+     * @return ArrayCollection
+     */
+    public function findDistinctUrlPicsInSeries(Series $series)
+    {
+        return $this->createStandardQueryBuilder()
+          ->field('series')->references($series)
+          ->distinct('pics.url')
+          ->getQuery()
+          ->execute();
+    }
+
+    /**
+     * Find distinct url pics
+     *
+     * TODO Limit and sort
+     *
+     * @return ArrayCollection
+     */
+    public function findDistinctUrlPics()
+    {
+        return $this->createStandardQueryBuilder()
+          ->distinct('pics.url')
+          ->sort(array('public_date' => 'asc'))
+          ->getQuery()
+          ->execute();
+    }
+
+    /**
      * Get mongo ids
      *
      * @param array $documents
