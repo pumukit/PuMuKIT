@@ -28,6 +28,7 @@ class MultimediaObject
 
     /**
      * @MongoDB\ReferenceOne(targetDocument="Series", inversedBy="multimedia_objects", simple=true)
+     * @Gedmo\SortableGroup
      * // TODO SortableGroup #5623
      */
     private $series;
