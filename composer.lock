@@ -1098,12 +1098,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rubenrua/DoctrineExtensions.git",
-                "reference": "261b390edc3504bd4375ce600029eb078512aeba"
+                "reference": "938a12260fbe54896230545f182b21e86802a9f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rubenrua/DoctrineExtensions/zipball/261b390edc3504bd4375ce600029eb078512aeba",
-                "reference": "261b390edc3504bd4375ce600029eb078512aeba",
+                "url": "https://api.github.com/repos/rubenrua/DoctrineExtensions/zipball/938a12260fbe54896230545f182b21e86802a9f3",
+                "reference": "938a12260fbe54896230545f182b21e86802a9f3",
                 "shasum": ""
             },
             "require": {
@@ -1172,7 +1172,7 @@
                 "wiki": "https://github.com/Atlantic18/DoctrineExtensions/tree/master/doc",
                 "source": "https://github.com/rubenrua/DoctrineExtensions/tree/master"
             },
-            "time": "2015-02-02 15:37:00"
+            "time": "2015-02-02 16:10:56"
         },
         {
             "name": "incenteev/composer-parameter-handler",
