@@ -105,9 +105,8 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findByPersonIdWithRoleCod($personId, $roleCod)
     {
         $qb = $this->createQueryBuilder();
-        $eqb = $this->dm->createQueryBuilder('PumukitSchemaBundle:EmbeddedPerson');
         $qb->field('people_in_multimedia_object')->elemMatch(
-            $eqb->expr()->field('people._id')->equals(new \MongoId($personId))
+            $qb->expr()->field('people._id')->equals(new \MongoId($personId))
                 ->field('cod')->equals($roleCod)
         );
 
