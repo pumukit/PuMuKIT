@@ -116,7 +116,7 @@ class MultimediaObjectRankTest extends WebTestCase
         $this->dm->persist($mm1);
         $this->dm->flush();
 
-        $this->assertEquals(5, $mm1->getRank());
+        $this->assertEquals(4, $mm1->getRank());
         $this->assertEquals(1, $mm2->getRank());
         $this->assertEquals(2, $mm3->getRank());
         $this->assertEquals(3, $mm4->getRank());
