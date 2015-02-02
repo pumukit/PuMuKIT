@@ -11,6 +11,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 class SeriesPicService
 {
     private $dm;
+    private $repoMmobj;
     private $targetPath;
     private $targetUrl;
 
@@ -19,26 +20,15 @@ class SeriesPicService
         $this->dm = $documentManager;
         $this->targetPath = $targetPath;
         $this->targetUrl = $targetUrl;
+        $this->repoMmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
     }
 
   /**
    * Get pics from series or multimedia object
    */
-  public function getRecomendedPics($series, $page, $limit)
+  public function getRecommendedPics($series)
   {
-      $offset = ($page - 1) * $limit;
-      $total = 0;
-
-      //TODO Execute RAW mongo query. #6104
-
-      $list = new ArrayCollection();
-      foreach ($series->getMultimediaObjects() as $mmobj) {
-          foreach ($mmobj->getPics() as $pic) {
-              $list->add($pic);
-          }
-      }
-
-      return array($list, 0);
+      return $this->repoMmobj->findDistinctUrlPicsInSeries($series);
   }
 
   /**
@@ -61,7 +51,7 @@ class SeriesPicService
    */
   public function addPicFile(Series $series, File $picFile)
   {
-      $path = $picFile->move($this->targetPath."/".$series->getId(), $picFile->getClientOriginalName());
+      $path = $picFile->move($this->targetPath."/".$series->getId(), $picFile->getBasename());
 
       $pic = new Pic();
       $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
