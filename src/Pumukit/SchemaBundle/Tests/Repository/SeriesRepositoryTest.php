@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\Pic;
 
 class SeriesRepositoryTest extends WebTestCase
 {
@@ -676,6 +677,57 @@ class SeriesRepositoryTest extends WebTestCase
         $this->assertEquals(0, count($series->getFilteredMultimediaObjectsWithTags(array(), array(), array($tag4, $tag1))));
         $this->assertEquals(5, count($series->getFilteredMultimediaObjectsWithTags(array(), array(), array(), array($tag4, $tag1))));
         $this->assertEquals(1, count($series->getFilteredMultimediaObjectsWithTags(array($tag2, $tag3), array(), array(), array($tag3))));
+    }
+
+    public function testPicsInSeries()
+    {
+        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
+
+        $series = $this->createSeries('Series');
+
+        $pic1 = new Pic();
+        $pic1->setUrl('http://domain.com/pic1.png');
+
+        $pic2 = new Pic();
+        $pic2->setUrl('http://domain.com/pic2.png');
+
+        $pic3 = new Pic();
+        $pic3->setUrl('http://domain.com/pic3.png');
+
+        $series->addPic($pic1);
+        $series->addPic($pic2);
+        $series->addPic($pic3);
+
+        $this->dm->persist($series);
+        $this->dm->flush();
+
+        $this->assertEquals(3, count($this->repo->find($series->getId())->getPics()));
+        $this->assertEquals($pic2, $this->repo->find($series->getId())->getPicById($pic2->getId()));
+
+        $arrayPics = array($pic1, $pic2, $pic3);
+        $this->assertEquals($arrayPics, $this->repo->find($series->getId())->getPics()->toArray());
+
+        $series->upPicById($pic2->getId());
+
+        $this->dm->persist($series);
+        $this->dm->flush();
+
+        $arrayPics = array($pic2, $pic1, $pic3);
+        $this->assertEquals($arrayPics, $this->repo->find($series->getId())->getPics()->toArray());
+
+        $series->downPicById($pic1->getId());
+
+        $this->dm->persist($series);
+        $this->dm->flush();
+
+        $arrayPics = array($pic2, $pic3, $pic1);
+        $this->assertEquals($arrayPics, $this->repo->find($series->getId())->getPics()->toArray());
+
+        $this->assertTrue($series->containsPic($pic3));
+
+        $series->removePicById($pic3->getId());
+
+        $this->assertFalse($series->containsPic($pic3));
     }
 
     private function createSeriesType($name)
