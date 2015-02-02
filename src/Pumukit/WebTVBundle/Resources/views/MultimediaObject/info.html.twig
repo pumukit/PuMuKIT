@@ -1,29 +1,17 @@
 <div>
   <div style="margin-bottom: 10px; overflow: hidden;">
     <div style="width: 440px;">
-      <!--<ul>
-                  <li style="list-style:none; float: left; margin: 5px;">
-            <div title="UNED" class="label-categories label-info">
-              <a style="text-decoration: none" href="/educa/allMmsByDate?id=1080">UNED</a>
-            </div>
-          </li>
-                  <li style="list-style:none; float: left; margin: 5px;">
-            <div title="UNED Institucional" class="label-categories label-info">
-              <a style="text-decoration: none" href="/educa/allMmsByDate?id=1081">UNED Institucional</a>
-            </div>
-          </li>
-                  <li style="list-style:none; float: left; margin: 5px;">
-            <div title="Sto. Tomás/Patrón" class="label-categories label-info">
-              <a style="text-decoration: none" href="/educa/allMmsByDate?id=1084">Sto. Tomás/Patrón</a>
-            </div>
-          </li>
-                  <li style="list-style:none; float: left; margin: 5px;">
-            <div title="Honoris Causa" class="label-categories label-info">
-              <a style="text-decoration: none" href="/educa/allMmsByDate?id=1089">Honoris Causa</a>
-            </div>
-          </li>
-         
-      </ul>-->
+
+    <ul>
+      {% for tag in multimediaObject.getTags() %}
+        <li style="list-style:none; float: left; margin: 5px;">
+          <div title="{{ tag.getTitle() }}" class="label-categories label-info">
+            <a style="text-decoration: none" href="/multimediaobjects/tag/{{tag.getId()}}">{{ tag.getTitle() }}</a>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+
     </div>
     <div class="num_view" style="margin-left: 440px; float: right;">
       <div style="float:right; font-size: 0.90rem;">{{multimediaObject.getRecordDate().format("d/m/Y")}}</div>
