@@ -36,4 +36,14 @@ class JobRepository extends DocumentRepository
           ->getSingleResult();
     }
 
+    /**
+     * Find all jobs with given multimedia object id
+     */
+    public function findByMultimediaObjectId($mmId)
+    {
+        return $this->createQueryBuilder()
+          ->field('mm_id')->equals($mmId)
+          ->getQuery()
+          ->execute();
+    }
 }
