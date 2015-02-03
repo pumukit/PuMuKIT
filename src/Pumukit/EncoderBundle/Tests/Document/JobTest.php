@@ -29,6 +29,7 @@ class JobTest extends \PHPUnit_Framework_TestCase
         $status = Job::STATUS_WAITING;
         $priority = 1;
         $name = 'video1';
+        $description = 'description1';
         $timeini = new \DateTime('now');
         $timestart = new \DateTime('now');
         $timeend = new \DateTime('now');
@@ -51,6 +52,7 @@ class JobTest extends \PHPUnit_Framework_TestCase
         $job->setStatus($status);
         $job->setPriority($priority);
         $job->setName($name);
+        $job->setDescription($description);
         $job->setTimeini($timeini);
         $job->setTimestart($timestart);
         $job->setTimeend($timeend);
@@ -71,6 +73,7 @@ class JobTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($status, $job->getStatus());
         $this->assertEquals($priority, $job->getPriority());
         $this->assertEquals($name, $job->getName());
+        $this->assertEquals($description, $job->getDescription());
         $this->assertEquals($timeini, $job->getTimeini());
         $this->assertEquals($timestart, $job->getTimestart());
         $this->assertEquals($timeend, $job->getTimeend());
@@ -83,5 +86,14 @@ class JobTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($size, $job->getSize());
         $this->assertEquals($email, $job->getEmail());
         $this->assertEquals($locale, $job->getLocale());
+
+        $descriptionI18n = array('en' => 'description', 'es' => 'descripción');
+        $nameI18n = array('en' => 'name', 'es' => 'nombre');
+
+        $job->setI18nDescription($descriptionI18n);
+        $job->setI18nName($nameI18n);
+
+        $this->assertEquals($descriptionI18n, $job->getI18nDescription());
+        $this->assertEquals($nameI18n, $job->getI18nName());
     }
 }
