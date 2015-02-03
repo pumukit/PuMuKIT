@@ -1,7 +1,8 @@
 {% for node in nodes %}
+  {% set children_length = node.getChildren()|length %}
   <li draggable="false" id="tag_li_children_{{ node.id }}" class="notload
                                                            tag_li_parent_{{ parent }}
-                                                           {{ (node.getChildren()|length)?'collapsed':'element' }}
+                                                           {{ (children_length)?'collapsed':'element' }}
                                                            {{ node.getMetatag()?'metatag' }}
                                                            {{ (node.getNumberMultimediaObjects()==0)?'nomm' }}">
     <span class="icon" onclick="javascript:toggle_tree_tag(this, '{{ node.id }}', '{{ mmId }}', '{{ block_tag }}')">&nbsp;</span>
@@ -9,7 +10,7 @@
       {{ node.getCod() }} - {{ node.getTitle() }}
       {% if not node.getMetatag() %}(<span id="info_num_mm_{{ node.id }}">{{ node.getNumberMultimediaObjects() }}</span>){% endif %}
     </span>
-    {% if (0 != node.getChildren()|length) %}
+    {% if (0 != children_length) %}
       <ul id="tag_ul_children_{{ node.id }}" class="tag_tree"></ul>
     {% endif %}
   </li>
