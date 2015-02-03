@@ -1,25 +1,25 @@
 <table><tdody>
   {% if true %} {# TODO (sfConfig::get('app_transcoder_use')) #}
-    {% for transcoding in transcodings %}
+    {% for job in jobs %}
       <tr>
         <td><ul><li></li><ul></td>
         <td colspan="9">
-          {{ transcoding.getStatusText() }}
-          {% if false %} {# TODO (transcoding.getStatusId() == TranscodingPeer::STATUS_ERROR) #}
-          <a href="#" onclick="new Ajax.Updater('tracks_mms', '{# TODO path transcoders/retrans?id= $transcoding->getId(). &mm='.$mmId.'&preview=true #}', {asynchronous:true, evalScripts:true}); return false;">
+          {{ job.getStatusText() }}
+          {% if false %} {# TODO (job.getStatusId() == JobPeer::STATUS_ERROR) #}
+          <a href="#" onclick="new Ajax.Updater('tracks_mms', '{# TODO path transcoders/retrans?id= $job->getId(). &mm='.$mmId.'&preview=true #}', {asynchronous:true, evalScripts:true}); return false;">
             <img alt="{% trans %}retranscode{% endtrans %}" title="{% trans %}retranscode{% endtrans %}" src="/legacy/images/admin/mbuttons/use_inline.gif">
           </a>
           {% endif %}
-          {% if false %} {# TODO (transcoding.getStatusId() == TranscodingPeer::STATUS_ERROR) #}
-          <a href="#" onclick="new Ajax.Updater('tracks_mms', '{# TODO path delete transcoders/deletefromfile?id='.$transcoding->getId().'&mm='.$mmId.'&preview=true #}, {asynchronous:true, evalScripts:true}); return false;">
+          {% if false %} {# TODO (job.getStatusId() == JobPeer::STATUS_ERROR) #}
+          <a href="#" onclick="new Ajax.Updater('tracks_mms', '{# TODO path delete transcoders/deletefromfile?id='.$job->getId().'&mm='.$mmId.'&preview=true #}, {asynchronous:true, evalScripts:true}); return false;">
             <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
           </a>
           {% endif %}
         </td>
         <td>
-          &nbsp; TODO {# {{ transcoding.getId() }} - <strong>{{ transcoding.getPerfil().getName() }}</strong>
-	  - {{ basename(transcoding.getPathini()) }}
-          - {{ transcoding.getDurationString() }} #}
+          &nbsp; TODO {# {{ job.getId() }} - <strong>{{ job.getPerfil().getName() }}</strong>
+	  - {{ basename(job.getPathini()) }}
+          - {{ job.getDurationString() }} #}
         </td>
       </tr>
     {% endfor %}

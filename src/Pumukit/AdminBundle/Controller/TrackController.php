@@ -134,10 +134,12 @@ class TrackController extends Controller
      */
     public function listAction(MultimediaObject $multimediaObject)
     {
+        $jobs = $this->get('pumukitencoder.job')->getJobsByMultimediaObjectId($multimediaObject->getId());
+
         return array(
                      'mmId' => $multimediaObject->getId(),
                      'tracks' => $multimediaObject->getTracks(),
-                     'transcodings' => '',
+                     'jobs' => $jobs,
                      'oc' => ''
                      );
     }
