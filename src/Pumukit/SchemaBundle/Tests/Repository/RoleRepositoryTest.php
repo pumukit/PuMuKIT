@@ -102,10 +102,7 @@ class RoleRepositoryTest extends WebTestCase
         $this->assertEquals(0, $roleFirst->getRank());
         $this->assertEquals(3, $role4->getRank());
         $this->assertEquals(4, $roleLast->getRank());
-
-        //TODO #5623 FIX in the lib
-        //$this->assertEquals(5, $role1->getRank());
-        $this->assertEquals(6, $role1->getRank());
+        $this->assertEquals(5, $role1->getRank());
     }
 
     private function getRole()
