@@ -228,6 +228,28 @@ class JobServiceTest extends WebTestCase
         $this->jobService->cancelJob($job->getId());
     }
 
+    public function testGetJobsByMultimediaObjectId()
+    {
+        $mm_id1 = '54ad3f5e6e4cd68a278b4573';
+        $mm_id2 = '54ad3f5e6e4cd68a278b4574';
+
+        $job1 = $this->createNewJob(Job::STATUS_EXECUTING);
+        $job2 = $this->createNewJob(Job::STATUS_WAITING);
+        $job3 = $this->createNewJob(Job::STATUS_WAITING);
+
+        $job1->setMmId($mm_id1);
+        $job2->setMmId($mm_id2);
+        $job3->setMmId($mm_id1);
+
+        $this->dm->persist($job1);
+        $this->dm->persist($job2);
+        $this->dm->persist($job3);
+        $this->dm->flush();
+
+        $this->assertEquals(2, count($this->jobService->getJobsByMultimediaObjectId($mm_id1)));
+        $this->assertEquals(1, count($this->jobService->getJobsByMultimediaObjectId($mm_id2)));
+    }
+
     private function createNewJob($status = null, $priority = null)
     {
         $job = new Job();

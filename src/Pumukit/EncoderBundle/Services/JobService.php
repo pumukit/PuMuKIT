@@ -377,6 +377,17 @@ class JobService
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
     }
+
+    /**
+     * Get jobs with multimedia object id
+     *
+     * @param string $mmId
+     * @return ArrayCollection $jobs with mmId
+     */
+    public function getJobsByMultimediaObjectId($mmId)
+    {
+        return $this->repo->findByMultimediaObjectId($mmId);
+    }
     
     private function getExecutor($app, $cpuType)
     {
