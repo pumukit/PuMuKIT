@@ -53,8 +53,11 @@ class JobService
             throw new \Exception("Given null multimedia object");
         }
 
-        //TODO catch exception.
-        $duration = $this->inspectionService->getDuration($pathFile);
+        try{
+            $duration = $this->inspectionService->getDuration($pathFile);
+        }catch (\Exception $e){
+            throw new \Exception($e->getMessage());
+        }
         
         $job = new Job();
         $job->setMmId($multimediaObject->getId());
@@ -72,6 +75,7 @@ class JobService
         $job->setTimeini(new \DateTime('now'));
         $this->dm->persist($job);
         $this->dm->flush();
+
         $this->setPathEndAndExtensions($job);
 
         $this->executeNextJob();
@@ -125,7 +129,7 @@ class JobService
             throw new \Exception("Trying to cancel job ".$id." that is not paused or waiting");
         }
         $this->dm->remove($job);
-        $this->dm->flush();         
+        $this->dm->flush();
     }
 
     /**
@@ -248,14 +252,10 @@ class JobService
             dump($e->getMessage());            
         }
 
-
         $this->dm->persist($job);
         $this->dm->flush();
 
-
         $this->executeNextJob();
-
-
     }
 
 
@@ -320,7 +320,7 @@ class JobService
     public function setPathEndAndExtensions($job)
     {
         if (!file_exists($job->getPathIni())) {
-            throw new \Exception('Error input file not exits when setting the path_end');
+            throw new \Exception('Error input file does not exist when setting the path_end');
         }
 
         if (!$job->getMmId()) {
@@ -337,7 +337,10 @@ class JobService
         $finalExtension = isset($profile['extension'])?$profile['extension']:$extension;
 
         $mmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
-        //TODO if mmobj doesn't exists
+        if (!$mmobj){
+            throw new \Exception('Error getting multimedia object from id: '.$job->getMmId());
+        }
+
         $tempDir = $profile['streamserver']['dir_out'] . '/' . $mmobj->getSeries()->getId();
 
         //TODO repeat mkdir (see this->execute)
@@ -373,8 +376,6 @@ class JobService
      
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
-
-        
     }
     
     private function getExecutor($app, $cpuType)
