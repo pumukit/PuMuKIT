@@ -18,9 +18,9 @@ class SortableAdminController extends AdminController
         $this->addFlash('success', 'up');
 
         return $this->redirectToRoute(
-        $config->getRedirectRoute('index'),
-    $config->getRedirectParameters()
-    );
+            $config->getRedirectRoute('index'),
+            $config->getRedirectParameters()
+        );
     }
 
     public function downAction(Request $request)
@@ -35,9 +35,9 @@ class SortableAdminController extends AdminController
         $this->addFlash('success', 'up');
 
         return $this->redirectToRoute(
-        $config->getRedirectRoute('index'),
-    $config->getRedirectParameters()
-    );
+            $config->getRedirectRoute('index'),
+            $config->getRedirectParameters()
+        );
     }
 
     public function topAction(Request $request)
@@ -52,9 +52,9 @@ class SortableAdminController extends AdminController
         $this->addFlash('success', 'up');
 
         return $this->redirectToRoute(
-        $config->getRedirectRoute('index'),
-    $config->getRedirectParameters()
-    );
+            $config->getRedirectRoute('index'),
+            $config->getRedirectParameters()
+        );
     }
 
     public function bottomAction(Request $request)
@@ -69,8 +69,8 @@ class SortableAdminController extends AdminController
         $this->addFlash('success', 'up');
 
         return $this->redirectToRoute(
-        $config->getRedirectRoute('index'),
-    $config->getRedirectParameters()
-    );
+            $config->getRedirectRoute('index'),
+            $config->getRedirectParameters()
+        );
     }
 }

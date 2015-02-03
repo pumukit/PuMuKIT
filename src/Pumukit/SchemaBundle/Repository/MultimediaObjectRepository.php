@@ -59,9 +59,9 @@ class MultimediaObjectRepository extends DocumentRepository
         $aux = $this->createQueryBuilder()
           ->field('series')->references($series)
           ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
+          ->sort('rank', 'asc')
           ->getQuery()
-          ->execute()
-          ->sort(array('rank', 'desc'));
+          ->execute();
         
         return $aux;
     }

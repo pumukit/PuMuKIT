@@ -61,5 +61,9 @@
         "branch-alias": {
             "dev-master": "2.5-dev"
         }
-    }
+    },
+    "repositories": [{
+        "type": "vcs",
+        "url": "https://github.com/rubenrua/doctrineextensions"
+    }]
 }

@@ -455,4 +455,26 @@ class MultimediaObjectController extends SortableAdminController
 
     return $mms;
   }
+
+
+    /**
+     * {@inheritdoc}
+     */
+    public function bottomAction(Request $request)
+    {
+        $config = $this->getConfiguration();
+        $resource = $this->findOr404($request);
+
+        //rank zero is the template
+        $new_rank = 1;
+        $resource->setRank($new_rank);
+        $this->domainManager->update($resource);
+
+        $this->addFlash('success', 'up');
+
+        return $this->redirectToRoute(
+            $config->getRedirectRoute('index'),
+            $config->getRedirectParameters()
+        );
+    }
 }
