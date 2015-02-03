@@ -116,6 +116,112 @@ class TrackServiceTest extends WebTestCase
         unlink($filePath);
     }
 
+    public function testUpdateTrackInMultimediaObject()
+    {
+        $this->createBroadcasts();
+
+        $series = $this->factoryService->createSeries();
+        $multimediaObject = $this->factoryService->createMultimediaObject($series);
+
+        $url = 'uploads/tracks/track.mp4';
+
+        $track = new Track();
+        $track->setUrl($url);
+
+        $multimediaObject->addTrack($track);
+
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        $multimediaObject = $this->repoMmobj->find($multimediaObject->getId());
+        $track = $multimediaObject->getTracks()[0];
+        $this->assertEquals($url, $track->getUrl());
+
+        $newUrl = 'uploads/tracks/track2.mp4';
+        $track->setUrl($newUrl);
+
+        $this->trackService->updateTrackInMultimediaObject($multimediaObject);
+        $multimediaObject = $this->repoMmobj->find($multimediaObject->getId());
+        $track = $multimediaObject->getTracks()[0];
+        $this->assertEquals($newUrl, $track->getUrl());
+    }
+
+    public function testRemoveTrackFromMultimediaObject()
+    {
+        $this->createBroadcasts();
+
+        $series = $this->factoryService->createSeries();
+        $multimediaObject = $this->factoryService->createMultimediaObject($series);
+
+        $this->assertEquals(0, count($multimediaObject->getTracks()));
+
+        $track = new Track();
+
+        $multimediaObject->addTrack($track);
+
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        $this->assertEquals(1, count($multimediaObject->getTracks()));
+
+        $multimediaObject = $this->repoMmobj->find($multimediaObject->getId());
+        $track = $multimediaObject->getTracks()[0];
+
+        $this->trackService->removeTrackFromMultimediaObject($multimediaObject, $track->getId());
+
+        $this->assertEquals(0, count($multimediaObject->getTracks()));
+    }
+
+    public function testUpAndDownTrackInMultimediaObject()
+    {
+        $this->createBroadcasts();
+
+        $series = $this->factoryService->createSeries();
+        $multimediaObject = $this->factoryService->createMultimediaObject($series);
+
+        $this->assertEquals(0, count($multimediaObject->getTracks()));
+
+        $track1 = new Track();
+        $track2 = new Track();
+        $track3 = new Track();
+        $track4 = new Track();
+        $track5 = new Track();
+
+        $multimediaObject->addTrack($track1);
+        $multimediaObject->addTrack($track2);
+        $multimediaObject->addTrack($track3);
+        $multimediaObject->addTrack($track4);
+        $multimediaObject->addTrack($track5);
+
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        $multimediaObject = $this->repoMmobj->find($multimediaObject->getId());
+        $tracks = $multimediaObject->getTracks();
+        $track1 = $tracks[0];
+        $track2 = $tracks[1];
+        $track3 = $tracks[2];
+        $track4 = $tracks[3];
+        $track5 = $tracks[4];
+
+        $this->assertEquals(5, count($multimediaObject->getTracks()));
+
+        $arrayTracks = array($track1, $track2, $track3, $track4, $track5);
+        $this->assertEquals($arrayTracks, $multimediaObject->getTracks()->toArray());
+
+        $multimediaObject = $this->trackService->upTrackInMultimediaObject($multimediaObject, $track3->getId());
+        $multimediaObject = $this->repoMmobj->find($multimediaObject->getId());
+
+        $arrayTracks = array($track1, $track3, $track2, $track4, $track5);
+        $this->assertEquals($arrayTracks, $multimediaObject->getTracks()->toArray());
+
+        $multimediaObject = $this->trackService->downTrackInMultimediaObject($multimediaObject, $track4->getId());
+        $multimediaObject = $this->repoMmobj->find($multimediaObject->getId());
+
+        $arrayTracks = array($track1, $track3, $track2, $track5, $track4);
+        $this->assertEquals($arrayTracks, $multimediaObject->getTracks()->toArray());
+    }
+
     private function createBroadcasts()
     {
         $locale = 'en';
