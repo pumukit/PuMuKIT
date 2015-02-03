@@ -32,7 +32,7 @@ class SeriesRepository extends DocumentRepository
             ->field('id')->in($referencedSeries->toArray());
 
         if (0 !== count($sort) ){
-            $qb->sort($sort);
+            $qb->sort($sort['fieldName'], $sort['order']);
         }
 
         if ($limit > 0){
@@ -79,7 +79,7 @@ class SeriesRepository extends DocumentRepository
             ->field('id')->in($referencedSeries->toArray());
 
         if (0 !== count($sort) ){
-            $qb->sort($sort);
+            $qb->sort($sort['fieldName'], $sort['order']);
         }
 
         if ($limit > 0){
@@ -108,7 +108,7 @@ class SeriesRepository extends DocumentRepository
             ->field('id')->in($referencedSeries->toArray());
 
         if (0 !== count($sort) ){
-            $qb->sort($sort);
+            $qb->sort($sort['fieldName'], $sort['order']);
         }
 
         if ($limit > 0){
@@ -155,7 +155,7 @@ class SeriesRepository extends DocumentRepository
             ->field('id')->notIn($referencedSeries->toArray());
 
         if (0 !== count($sort) ){
-            $qb->sort($sort);
+            $qb->sort($sort['fieldName'], $sort['order']);
         }
         
         if ($limit > 0){
@@ -200,7 +200,7 @@ class SeriesRepository extends DocumentRepository
             ->field('id')->notIn($referencedSeries->toArray());
 
         if (0 !== count($sort) ){
-            $qb->sort($sort);
+            $qb->sort($sort['fieldName'], $sort['order']);
         }
 
         if ($limit > 0){

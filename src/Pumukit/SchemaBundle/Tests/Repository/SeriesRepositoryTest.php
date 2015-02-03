@@ -140,8 +140,8 @@ class SeriesRepositoryTest extends WebTestCase
 
         // SORT
         $sort = array();
-        $sortAsc =  array('title' => 'asc');
-        $sortDesc = array('title' => 'desc');
+        $sortAsc =  array('fieldName' => 'title', 'order' => 1);
+        $sortDesc = array('fieldName' => 'title', 'order' => -1);
 
         // FIND SERIES WITH TAG
         $this->assertEquals(3, count($this->repo->findWithTag($tag1)));

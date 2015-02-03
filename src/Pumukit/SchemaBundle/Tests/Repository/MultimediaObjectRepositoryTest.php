@@ -745,20 +745,33 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mm33->setTitle('mm33');
         $mm34->setTitle('mm34');
 
+        $mm11->setPublicDate(new \DateTime('2015-01-03 15:05:16'));
+        $mm12->setPublicDate(new \DateTime('2015-01-04 15:05:16'));
+        $mm13->setPublicDate(new \DateTime('2015-01-05 15:05:16'));
+        $mm21->setPublicDate(new \DateTime('2015-01-06 15:05:16'));
+        $mm22->setPublicDate(new \DateTime('2015-01-07 15:05:16'));
+        $mm23->setPublicDate(new \DateTime('2015-01-08 15:05:16'));
+        $mm31->setPublicDate(new \DateTime('2015-01-09 15:05:16'));
+        $mm32->setPublicDate(new \DateTime('2015-01-10 15:05:16'));
+        $mm33->setPublicDate(new \DateTime('2015-01-11 15:05:16'));
+        $mm34->setPublicDate(new \DateTime('2015-01-12 15:05:16'));
+
         $this->dm->persist($mm11);
         $this->dm->persist($mm12);
+        $this->dm->persist($mm13);
         $this->dm->persist($mm21);
         $this->dm->persist($mm22);
         $this->dm->persist($mm23);
         $this->dm->persist($mm31);
+        $this->dm->persist($mm32);
         $this->dm->persist($mm33);
         $this->dm->persist($mm34);
         $this->dm->flush();
 
         // SORT
         $sort = array();
-        $sortAsc =  array('rank' => 'asc');
-        $sortDesc = array('rank' => 'desc');
+        $sortAsc =  array('fieldName' => 'public_date', 'order' => 1);
+        $sortDesc = array('fieldName' => 'public_date', 'order' => -1);
 
         // FIND WITH TAG
         $this->assertEquals(7, count($this->repo->findWithTag($tag1)));
