@@ -23,9 +23,9 @@
       <div class="form-row" id="pumukitadmin_track_profile">
         <label for="profile" class="required">{% trans %}Profile{% endtrans %}</label>        
         <div class="content" style="overflow: hidden">
-          {% for profile in profiles %}
+          {% for key in profiles|keys %}
           <span style="display: block; float: left; width: 30%; overflow: hidden">
-            <input type="radio" name="master" id="master_{{ profile.name }}" value="{{ profile.name }}" checked="checked" class="MB_focusable" />{{ profile.name }}
+            <input type="radio" name="master" id="master_{{ key }}" value="{{ key }}" checked="checked" class="MB_focusable" />{{ key }}
           </span>
           {% endfor %}
         </div>
@@ -40,7 +40,6 @@
         </div>
       </div>
 
-      {# TODO check language_id in transcoder, language in track #}
       {% for child in form if child.vars.id in ['pumukitadmin_track_language'] %}
           {{ form_row(child) }}
       {% endfor %}      
@@ -69,9 +68,7 @@
           <input onclick="Effect.toggle('explorer_videoserv','blind', { afterFinish:function(){ Modalbox.resizeToContent() }}); return false;" type="button" value="{% trans %}explore{% endtrans %}" class="MB_focusable">
           <div id="explorer_videoserv" class="videoserv" style="display:none;">            
             <ul class="videoserv_tree">
-              {# TODO remove this definition of dirs #}
-              {% set dirs = ['/tmp/test/1', '/tmp/test/2'] %}
-              {% for dir in dirs %} {# TODO (sfConfig::get('app_transcoder_inbox') as $dir) #}
+              {% for dir in dirs %}
               <li class="collapsed">
                 {# TODO define fileServerTree #}
                 <span onclick="fileServerTree(this, 'file', '{{ dir }}', 0, 'explorer_videoserv')">{{ dir }}</span>

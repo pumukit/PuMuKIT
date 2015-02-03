@@ -48,8 +48,8 @@
 
         <service id="pumukitschema.track" class="Pumukit\SchemaBundle\Services\TrackService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
-            <argument type="expression">parameter('kernel.root_dir') ~ '/../web/uploads/track'</argument>
-            <argument>/uploads/track</argument>
+            <argument type="service" id="pumukitencoder.job"/>
+            <argument type="service" id="pumukitencoder.profile"/>
         </service>
 
         <service id="pumukitschema.person" class="Pumukit\SchemaBundle\Services\PersonService">

@@ -5,48 +5,75 @@ namespace Pumukit\SchemaBundle\Services;
 use Symfony\Component\HttpFoundation\File\File;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\EncoderBundle\Services\JobService;
+use Pumukit\EncoderBundle\Services\ProfileService;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
 class TrackService
 {
     private $dm;
-    private $targetPath;
-    private $targetUrl;
+    private $tmpPath;
     private $jobService;
+    private $profileService;
 
-    public function __construct(DocumentManager $documentManager, $targetPath, $targetUrl)
+    public function __construct(DocumentManager $documentManager, JobService $jobService, ProfileService $profileService, $tmpPath=null)
     {
         $this->dm = $documentManager;
-        $this->targetPath = $targetPath;
-        $this->targetUrl = $targetUrl;
-        //TODO inject service $this->jobService = $jobService;
+        $this->jobService = $jobService;
+        $this->profileService = $profileService;
+        $this->tmpPath = $tmpPath ? $tmpPath : sys_get_temp_dir();
     }
 
     /**
-     * Add Track to Multimedia Object
+     * Create track from file with job service
+     * 
+     * @param MultimediaObject $multimediaObject
+     * @param File $file
+     * @param array $formData
+     * @return MultimediaObject
      */
-    public function addTrackToMultimediaObject(MultimediaObject $multimediaObject, File $trackFile, $formData)
+    public function createTrackFromFile(MultimediaObject $multimediaObject, File $trackFile, $formData)
     {
-        // TODO - Move file to temp dir
-
-        // TODO - Call JobService to encode the track
         $data = $this->getArrayData($formData);
-        //$this->jobService->addJob($trackFile, $data['profile'], $data['priority'], $multimediaObject, $data['language'], $data['description']);
 
-        /*
-        // TODO - redo
-        $track = new Track();
-        $track = $this->saveFormData($track, $formData);
+        if (null === $this->profileService->getProfile($data['profile'])){
+            throw new \Exception("Can't find given profile with name ".$data['profile']);
+        }
 
-        $path = $trackFile->move($this->targetPath."/".$multimediaObject->getId(), $trackFile->getClientOriginalName());
+        if (!is_file($trackFile->getPathname())) {
+            throw new FileNotFoundException($trackFile->getPathname());
+        }
 
-        $track->setPath($path);
-        $track->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
+        $pathFile = $trackFile->move($this->tmpPath."/".$multimediaObject->getId(), $trackFile->getBasename());
 
-        $multimediaObject->addTrack($track);
-        $this->dm->persist($multimediaObject);
-        $this->dm->flush();
-        */
+        $this->jobService->addJob($pathFile, $data['profile'], $data['priority'], $multimediaObject, $data['language'], $data['description']);
+
+        return $multimediaObject;
+    }
+
+    /**
+     * Create track from url with job service
+     * 
+     * @param MultimediaObject $multimediaObject
+     * @param string $trackUrl
+     * @param array $formData
+     * @return MultimediaObject
+     */
+    public function createTrackFromUrl(MultimediaObject $multimediaObject, $trackUrl, $formData)
+    {
+        $data = $this->getArrayData($formData);
+
+        if (null === $this->profileService->getProfile($data['profile'])){
+            throw new \Exception("Can't find given profile with name ".$data['profile']);
+        }
+
+        if (!is_file($trackUrl)) {
+            throw new FileNotFoundException($trackUrl);
+        }
+
+        $this->jobService->addJob($trackUrl, $data['profile'], $data['priority'], $multimediaObject, $data['language'], $data['description']);
+
         return $multimediaObject;
     }
 
@@ -98,31 +125,17 @@ class TrackService
     }
 
     /**
-     * Save form data of Track
-     *
-     * @return Track $track
+     * Get temp directories
      */
-    private function saveFormData(Track $track, $formData)
+    public function getTempDirs()
     {
-        if (array_key_exists('i18n_description', $formData)) {
-            $track->setI18nDescription($formData['i18n_description']);
-        }
-        /*
-        if (array_key_exists('hide', $formData)){
-            $track->setHide($formData['hide']);
-        }
-        if (array_key_exists('mime_type', $formData)){
-            $track->setMimeType($formData['mime_type']);
-        }
-        */
-
-        return $track;
+        return array($this->tmpPath);
     }
 
     /**
      * Get data in array or default values
      */
-    private function getFormData($formData)
+    private function getArrayData($formData)
     {
         $data = array(
                       'profile' => array('name' => null),

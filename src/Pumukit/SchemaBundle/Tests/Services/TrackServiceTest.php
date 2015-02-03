@@ -3,15 +3,23 @@
 namespace Pumukit\SchemaBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\HttpFoundation\File\File;
+use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\TrackService;
+use Pumukit\EncoderBundle\Services\ProfileService;
+use Pumukit\EncoderBundle\Services\CpuService;
+use Pumukit\EncoderBundle\Services\JobService;
 
 class TrackServiceTest extends WebTestCase
 {
     private $dm;
-    private $repo;
+    private $repoJobs;
+    private $repoMmobj;
     private $trackService;
+    private $factoryService;
+    private $resourcesDir;
 
     public function __construct()
     {
@@ -21,46 +29,127 @@ class TrackServiceTest extends WebTestCase
 
         $this->dm = $kernel->getContainer()
           ->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm
-          ->getRepository('PumukitSchemaBundle:Track');
-        $this->trackService = $kernel->getContainer()
-          ->get('pumukitschema.track');
+        $this->repoJobs = $this->dm
+          ->getRepository('PumukitEncoderBundle:Job');
+        $this->repoMmobj = $this->dm
+          ->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->factoryService = $kernel->getContainer()
+          ->get('pumukitschema.factory');
+
+        $this->resourcesDir = realpath(__DIR__.'/../Resources');
     }
 
     public function setUp()
     {
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Track')->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
+          ->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
+          ->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
+          ->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')
+          ->remove(array());
+        $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')
+          ->remove(array());
         $this->dm->flush();
+        
+        $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
+        $cpuService = new CpuService($this->getDemoCpus(), $this->dm);
+        $inspectionService = $this->getMock('Pumukit\InspectionBundle\Services\InspectionServiceInterface');
+        $inspectionService->expects($this->any())->method('getDuration')->will($this->returnValue(5));
+        $jobService = new JobService($this->dm, $profileService, $cpuService, $inspectionService, null, true);
+        $this->trackService = new TrackService($this->dm, $jobService, $profileService, null);
+
+        $this->tmpDir = $this->trackService->getTempDirs()[0];
     }
 
-    public function testAddTrackToMultimediaObject()
+    public function testCreateTrackFromFile()
     {
-        $multimediaObject = new MultimediaObject();
-        $this->dm->persist($multimediaObject);
+        $this->createBroadcasts();
+
+        $series = $this->factoryService->createSeries();
+        $multimediaObject = $this->factoryService->createMultimediaObject($series);
+
+        $this->assertEquals(0, count($multimediaObject->getTracks()));
+        $this->assertEquals(0, count($this->repoJobs->findAll()));
+
+        $originalFile = $this->resourcesDir.DIRECTORY_SEPARATOR.'camera.mp4';
+
+        $filePath = $this->resourcesDir.DIRECTORY_SEPARATOR.'cameraCopy.mp4';
+        if (copy($originalFile, $filePath)){
+          $file = new File($filePath);
+          
+          $formData = $this->createFormData(1);
+          
+          $multimediaObject = $this->trackService->createTrackFromFile($multimediaObject, $file, $formData);
+          
+          $this->assertEquals(0, count($multimediaObject->getTracks()));
+          $this->assertEquals(1, count($this->repoJobs->findAll()));
+        }
+
+        $this->deleteCreatedFiles();
+    }
+
+    public function testCreateTrackFromUrl()
+    {
+        $this->createBroadcasts();
+
+        $series = $this->factoryService->createSeries();
+        $multimediaObject = $this->factoryService->createMultimediaObject($series);
+
+        $this->assertEquals(0, count($multimediaObject->getTracks()));
+        $this->assertEquals(0, count($this->repoJobs->findAll()));
+
+        $originalFile = $this->resourcesDir.DIRECTORY_SEPARATOR.'camera.mp4';
+
+        $filePath = $this->resourcesDir.DIRECTORY_SEPARATOR.'cameraCopy.mp4';
+        if (copy($originalFile, $filePath)){
+          $formData = $this->createFormData(1);
+          
+          $multimediaObject = $this->trackService->createTrackFromUrl($multimediaObject, $filePath, $formData);
+          
+          $this->assertEquals(0, count($multimediaObject->getTracks()));
+          $this->assertEquals(1, count($this->repoJobs->findAll()));
+        }
+
+        $this->deleteCreatedFiles();
+        unlink($filePath);
+    }
+
+    private function createBroadcasts()
+    {
+        $locale = 'en';
+
+        $broadcastPrivate = new Broadcast();
+        $broadcastPrivate->setLocale($locale);
+        $broadcastPrivate->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PRI);
+        $broadcastPrivate->setDefaultSel(true);
+        $broadcastPrivate->setName('Private');
+
+        $broadcastPublic = new Broadcast();
+        $broadcastPublic->setLocale($locale);
+        $broadcastPublic->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
+        $broadcastPublic->setDefaultSel(false);
+        $broadcastPublic->setName('Public');
+
+        $broadcastCorporative = new Broadcast();
+        $broadcastCorporative->setLocale($locale);
+        $broadcastCorporative->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_COR);
+        $broadcastCorporative->setDefaultSel(false);
+        $broadcastCorporative->setName('Corporative');
+
+        $this->dm->persist($broadcastPrivate);
+        $this->dm->persist($broadcastPublic);
+        $this->dm->persist($broadcastCorporative);
         $this->dm->flush();
-
-        /*
-        $file = new File('');
-
-        $formData = $this->createFormData(1);
-
-        $track = $this->trackService->addTrackToMultimediaObject($multimediaObject, $file, $formData);
-
-        $this->assertEquals(1, count($this->repo->findAll()));
-
-        $file2 = new File('http://www.boe.es/boe/dias/2014/11/26/pdfs/BOE-A-2014-12286.pdf');
-
-        $formData2 = $this->createFormData(2);
-
-        $track2 = $this->trackService->addTrackToMultimediaObject($multimediaObject, $file2, $formData2);
-
-        $this->assertEquals(2, count($this->repo->findAll()));
-        */
     }
 
     private function createFormData($number)
     {
         $formData = array(
+                          'profile' => 'MASTER_COPY',
+                          'priority' => 2,
+                          'language' => 'en',
                           'i18n_description' => array(
                                                       'en' => 'track description '.$number,
                                                       'es' => 'descripción del archivo '.$number,
@@ -68,5 +157,144 @@ class TrackServiceTest extends WebTestCase
                           );
 
         return $formData;
+    }
+
+    private function getDemoCpus()
+    {
+        $cpus = array(
+                      'CPU_LOCAL' => array(
+                                           'id' => 1,
+                                           'host' => '127.0.0.1',
+                                           'max' => 1,
+                                           'number' => 1,
+                                           'type' => CpuService::TYPE_LINUX,
+                                           'user' => 'transco1',
+                                           'password' => 'PUMUKIT',
+                                           'description' => 'Pumukit transcoder'
+                                           ),
+                      'CPU_REMOTE' => array(
+                                            'id' => 2,
+                                            'host' => '192.168.5.123',
+                                            'max' => 2,
+                                            'number' => 1,
+                                            'type' => CpuService::TYPE_LINUX,
+                                            'user' => 'transco2',
+                                            'password' => 'PUMUKIT',
+                                            'description' => 'Pumukit transcoder'
+                                            )
+                      );
+        
+        return $cpus;
+    }
+
+    private function getDemoProfiles()
+    {
+        $profiles = array(
+                          'MASTER_COPY' => array(
+                                                 'id' => 1,
+                                                 'name' => 'master_copy',
+                                                 'rank' => 1,
+                                                 'display' => false,
+                                                 'wizard' => true,
+                                                 'master' => true,
+                                                 'format' => '???',
+                                                 'codec' => '??',
+                                                 'mime_type' => '??',
+                                                 'extension' => '???',
+                                                 'resolution_hor' => 0,
+                                                 'resolution_ver' => 0,
+                                                 'bitrate' => '??',
+                                                 'framerate' => 0,
+                                                 'channels' => 1,
+                                                 'audio' => false,
+                                                 'bat' => 'cp "{{input}}" "{{output}}"',
+                                                 'file_cfg' => '??',
+                                                 'streamserver' => array(
+                                                                         'streamserver_type' => ProfileService::STREAMSERVER_STORE,
+                                                                         'ip' => '127.0.0.1',
+                                                                         'name' => 'Localmaster',
+                                                                         'description' => 'Local masters server',
+                                                                         'dir_out' => '/mnt/nas/storage/masters',
+                                                                         'url_out' => ''
+                                                                         ),
+                                                 'app' => 'cp',
+                                                 'rel_duration_size' => 1,
+                                                 'rel_duration_trans' => 1,
+                                                 'prescript' => '?????'
+                                                 ),
+                          'MASTER_VIDEO_H264' => array(
+                                                       'id' => 2,
+                                                       'name' => 'master_video_h264',
+                                                       'rank' => 2,
+                                                       'display' => false,
+                                                       'wizard' => true,
+                                                       'master' => true,
+                                                       'format' => 'mp4',
+                                                       'codec' => 'h264',
+                                                       'mime_type' => 'video/x-mp4',
+                                                       'extension' => 'mp4',
+                                                       'resolution_hor' => 0,
+                                                       'resolution_ver' => 0,
+                                                       'bitrate' => '1 Mbps',
+                                                       'framerate' => 25,
+                                                       'channels' => 1,
+                                                       'audio' => false,
+                                                       'bat' => 'BitRate=$(/usr/local/bin/ffprobe "{{input}}" -v 0 -show_format -print_format default=nk=1:nw=1 | sed -n 9p)
+                                                                     [[ "$(( BitRate ))" -gt 6000000 ]] && : $(( BitRate = 6000000 ))
+
+                                                                     FrameRate=$(/usr/local/bin/ffprobe "{{input}}" -v 0 -show_streams -select_streams v -print_format default=nk=1:nw=1 | sed -n 18p)
+
+                                                                     BufSize=$(( BitRate*20/FrameRate ))
+
+                                                                     AudioSampleRate=$(/usr/local/bin/ffprobe "{{input}}" -v 0 -show_streams -select_streams a -print_format default=nk=1:nw=1 |sed -n 10p)
+
+                                                                     AudioBitRate=$(/usr/local/bin/ffprobe "{{input}}" -v 0 -show_streams -select_streams a -print_format default=nk=1:nw=1 |sed -n 22p)
+
+                                                                     width=$(/usr/local/bin/ffprobe "{{input}}" -v 0 -show_streams -select_streams v  -print_format default=nk=1:nw=1 |sed -n 9p)
+
+                                                                     [[ "$(( width % 2 ))" -ne 0 ]] && : $(( width += 1 ))
+
+                                                                     height=$(/usr/local/bin/ffprobe "{{input}}" -v 0 -show_streams -select_streams v  -print_format default=nk=1:nw=1 |sed -n 10p)
+
+                                                                     [[ "$(( height % 2 ))" -ne 0 ]] && : $(( height += 1 ))
+
+                                                                     /usr/local/bin/ffmpeg -y -i "{{input}}" -acodec libfdk_aac -b:a $AudioBitRate -ac 2 -ar $AudioSampleRate -vcodec libx264 -r 25 -preset slow -crf 15 -maxrate $BitRate -bufsize $BufSize -s $width"x"$height -threads 0 "{{output}}"',
+                                                       'file_cfg' => '',
+                                                       'streamserver' => array(
+                                                                               'streamserver_type' => ProfileService::STREAMSERVER_STORE,
+                                                                               'ip' => '192.168.5.125',
+                                                                               'name' => 'Download',
+                                                                               'description' => 'Download server',
+                                                                               'dir_out' => '/mnt/nas/storage/downloads',
+                                                                               'url_out' => 'http://localhost:8000/downloads/'
+                                                                               ),
+                                                       'app' => 'ffmpeg',
+                                                       'rel_duration_size' => 1,
+                                                       'rel_duration_trans' => 1,
+                                                       'prescript' => '?????'
+                                                       )
+                          );
+
+        return $profiles;
+    }
+
+    private function deleteCreatedFiles()
+    {
+        $mmobjs = $this->repoMmobj->findAll();
+
+        foreach($mmobjs as $mm){
+            $mmDir = $this->getDemoProfiles()['MASTER_COPY']['streamserver']['dir_out'].DIRECTORY_SEPARATOR.$mm->getSeries()->getId().DIRECTORY_SEPARATOR;
+
+            if (is_dir($mmDir)){
+                $files = glob($mmDir.'*', GLOB_MARK);
+                foreach ($files as $file) {
+                    if (is_writable($file)){
+                      unlink($file);
+                    }
+                }
+
+                rmdir($mmDir);
+            }
+        }
     }
 }
