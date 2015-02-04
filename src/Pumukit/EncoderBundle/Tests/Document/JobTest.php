@@ -100,5 +100,7 @@ class JobTest extends \PHPUnit_Framework_TestCase
 
         $job->setDuration(70);
         $this->assertEquals("1' 10''", $job->getDurationString());
+
+        $this->assertEquals(basename($path_ini), $job->getBasenamePathIni());
     }
 }

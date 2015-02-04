@@ -747,4 +747,14 @@ class Job
 
       return $aux;
   }
+
+    /**
+     * Get basename path_ini
+     *
+     * @return string
+     */
+    public function getBasenamePathIni()
+    {
+        return basename($this->path_ini);
+    }
 }
