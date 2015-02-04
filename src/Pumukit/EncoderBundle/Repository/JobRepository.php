@@ -3,6 +3,7 @@
 namespace Pumukit\EncoderBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
+use Pumukit\EncoderBundle\Document\Job;
 
 /**
  * JobRepository
@@ -43,6 +44,7 @@ class JobRepository extends DocumentRepository
     {
         return $this->createQueryBuilder()
           ->field('mm_id')->equals($mmId)
+          ->field('status')->notEqual(Job::STATUS_FINISHED)
           ->getQuery()
           ->execute();
     }
