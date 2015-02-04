@@ -17,9 +17,7 @@
           {% endif %}
         </td>
         <td>
-          &nbsp; {{ job.getId() }} - <strong>{{ job.getProfile() }}</strong>
-	  - {{ job.getPathIni() }} {# TODO basename(job.getPathIni()) #}
-          - {{ job.getDurationString() }}
+          &nbsp; {{ job.getId() }} - <strong>{{ job.getProfile() }}</strong> - {{ job.getPathIni()|basename }} - {{ job.getDuration()|duration_string }}
         </td>
       </tr>
     {% endfor %}
@@ -128,13 +126,13 @@
       </td>
 
       <td>
-        &nbsp;{{ track.id }} - <strong>TODO {# {{ track.getPerfil().getName() }} #}</strong>
+        &nbsp;{{ track.id }} - <strong>TODO profile {# {{ track.getProfile() }} #}</strong>
         {{ track.getDescription() }}
-        (TODO {# {{ basename(track.getFile()) }}/{{ track.getLanguage().getName() }} #})
-         - {{ track.getDurationString() }}
+        ({{ track.getUrl()|basename }}/{{ track.getLanguage() }})
+         - {{ track.getDuration()|duration_string }}
          - TODO {# printf("%.2f", ($file->getSize() / 1048576)) #} MB
-         - {{ track.getResolutionHor() }}x{{ track.getResolutionVer() }}
-         {% if track.getDisplay() %}{% else %}({% trans %}Hidden{% endtrans %}){% endif %}
+         - {# {{ track.getResolutionHor() }}x{{ track.getResolutionVer() }}
+         {% if track.getDisplay() %}{% else %}({% trans %}Hidden{% endtrans %}){% endif %} #}
       </td>
     </tr>
   {% endfor %}
