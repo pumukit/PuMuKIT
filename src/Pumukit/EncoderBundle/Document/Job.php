@@ -697,64 +697,13 @@ class Job
         return $this->locale;
     }
 
-  /**
-   * Get status text
-   *
-   * @return string
-   */
-  public function getStatusText()
-  {
-      return self::$statusTexts[$this->getStatus()];
-  }
-
-  /**
-   * Get duration string
-   * Returns text representing duration of
-   * multimedia file, format 1' 32''
-   *
-   * @return string duration
-   */
-  public function getDurationString()
-  {
-      $min = $this->getDurationInMinutes();
-      if ($min == 0 ) $aux = $this->getDurationInSeconds() ."''";
-      else $aux = $min . "' ". $this->getDurationInSeconds() ."''";
-
-      return $aux;
-  }
-
-  /**
-   * Get duration in minutes
-   * Returns duration file in minutes
-   *
-   * @return integer minutes
-   */
-  private function getDurationInMinutes()
-  {
-      return floor($this->getDuration() / 60);
-  }
-
-  /**
-   * Get duration in seconds
-   * Returns duration file in seconds
-   *
-   * @return integer seconds
-   */
-  private function getDurationInSeconds()
-  {
-      $aux = $this->getDuration() %60;
-      if ($aux < 10 ) $aux= '0' . $aux;
-
-      return $aux;
-  }
-
     /**
-     * Get basename path_ini
+     * Get status text
      *
      * @return string
      */
-    public function getBasenamePathIni()
+    public function getStatusText()
     {
-        return basename($this->path_ini);
+        return self::$statusTexts[$this->getStatus()];
     }
 }

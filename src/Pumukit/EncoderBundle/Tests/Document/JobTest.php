@@ -97,10 +97,5 @@ class JobTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($nameI18n, $job->getI18nName());
 
         $this->assertEquals("Waiting", $job->getStatusText());
-
-        $job->setDuration(70);
-        $this->assertEquals("1' 10''", $job->getDurationString());
-
-        $this->assertEquals(basename($path_ini), $job->getBasenamePathIni());
     }
 }
