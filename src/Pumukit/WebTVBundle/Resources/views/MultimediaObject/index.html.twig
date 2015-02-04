@@ -7,6 +7,9 @@
 		{% include 'PumukitWebTVBundle:MultimediaObject:player.html.twig' %}
 		<br />
 		{% include 'PumukitWebTVBundle:MultimediaObject:info.html.twig' %}
+		<div style="clear: left;">
+       		<span style="font-weight: bold">Serie:</span> <a href="/series/{{multimediaObject.getSeries().getId()}}">{{multimediaObject.getSeries().getTitle()}}</a>
+    	</div>
 	</div>
 	<div class="grid_5">
 		{% include 'PumukitWebTVBundle:MultimediaObject:other_mmobjs.html.twig' %}
