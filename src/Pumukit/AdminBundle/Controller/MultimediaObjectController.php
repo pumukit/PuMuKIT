@@ -114,6 +114,7 @@ class MultimediaObjectController extends SortableAdminController
     $pubDecisionsTags = $this->getTagsByCod('PUBDECISIONS', true);
 
     $jobs = $this->get('pumukitencoder.job')->getJobsByMultimediaObjectId($resource->getId());
+    $jobStatusError = $this->get('pumukitencoder.job')->getStatusError();
 
     $view = $this
       ->view()
@@ -127,7 +128,8 @@ class MultimediaObjectController extends SortableAdminController
                       'pub_channels'  => $pubChannelTags,
                       'pub_decisions' => $pubDecisionsTags,
                       'parent_tags'   => $parentTags,
-                      'jobs'          => $jobs
+                      'jobs'          => $jobs,
+                      'status_error'  => $jobStatusError,
                       ))
       ;
 
