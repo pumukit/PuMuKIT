@@ -2,7 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
-use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\EncoderBundle\Services\JobService;
@@ -29,14 +29,14 @@ class TrackService
      * Create track from local hard drive with job service
      * 
      * @param MultimediaObject $multimediaObject
-     * @param File $file
+     * @param UploadedFile $file
      * @param string $profile
      * @param int $priority
      * @param string $language
      * @param array $description
      * @return MultimediaObject
      */
-    public function createTrackFromLocalHardDrive(MultimediaObject $multimediaObject, File $trackFile, $profile, $priority, $language, $description)
+    public function createTrackFromLocalHardDrive(MultimediaObject $multimediaObject, UploadedFile $trackFile, $profile, $priority, $language, $description)
     {
         if (null === $this->profileService->getProfile($profile)){
             throw new \Exception("Can't find given profile with name ".$profile);
@@ -46,7 +46,7 @@ class TrackService
             throw new FileNotFoundException($trackFile->getPathname());
         }
 
-        $pathFile = $trackFile->move($this->tmpPath."/".$multimediaObject->getId(), $trackFile->getBasename());
+        $pathFile = $trackFile->move($this->tmpPath."/".$multimediaObject->getId(), $trackFile->getClientOriginalName());
 
         $this->jobService->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description);
 

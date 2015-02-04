@@ -5,7 +5,7 @@ namespace Pumukit\SchemaBundle\Tests\Services;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Broadcast;
-use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MultimediaObjectPicServiceTest extends WebTestCase
 {
@@ -128,7 +128,7 @@ class MultimediaObjectPicServiceTest extends WebTestCase
 
         $picPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'picCopy.png';
         if (copy($this->originalPicPath, $picPath)){
-            $picFile = new File($picPath);
+            $picFile = new UploadedFile($picPath, 'pic.png', null, null, null, true);
             $mm = $this->mmsPicService->addPicFile($mm, $picFile);
             $mm = $this->repo->find($mm->getId());
 
@@ -137,7 +137,7 @@ class MultimediaObjectPicServiceTest extends WebTestCase
             $pic = $mm->getPics()[0];
             $this->assertTrue($mm->containsPic($pic));
 
-            $uploadedPic = '/uploads/pic/'.$mm->getId().DIRECTORY_SEPARATOR.$picFile->getBasename();
+            $uploadedPic = '/uploads/pic/'.$mm->getId().DIRECTORY_SEPARATOR.$picFile->getClientOriginalName();
             $this->assertEquals($uploadedPic, $pic->getUrl());
         }
 

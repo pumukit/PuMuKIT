@@ -5,7 +5,7 @@ namespace Pumukit\SchemaBundle\Tests\Services;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\Broadcast;
-use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MaterialServiceTest extends WebTestCase
 {
@@ -109,7 +109,7 @@ class MaterialServiceTest extends WebTestCase
 
         $filePath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'fileCopy.pdf';
         if (copy($this->originalFilePath, $filePath)){
-            $file = new File($filePath);
+            $file = new UploadedFile($filePath, 'file.pdf', null, null, null, true);
             
             $formData['i18n_name'] = array('en' => 'Material');
             $formData['hide'] = false;
@@ -123,7 +123,7 @@ class MaterialServiceTest extends WebTestCase
             $material = $mm->getMaterials()[0];
             $this->assertTrue($mm->containsMaterial($material));
 
-            $uploadedFile = '/uploads/material/'.$mm->getId().DIRECTORY_SEPARATOR.$file->getBasename();
+            $uploadedFile = '/uploads/material/'.$mm->getId().DIRECTORY_SEPARATOR.$file->getClientOriginalName();
             $this->assertEquals($uploadedFile, $material->getUrl());
         }
         

@@ -2,7 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
-use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Pic;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -49,9 +49,9 @@ class SeriesPicService
   /**
    * Set a pic from an url into the series
    */
-  public function addPicFile(Series $series, File $picFile)
+  public function addPicFile(Series $series, UploadedFile $picFile)
   {
-      $path = $picFile->move($this->targetPath."/".$series->getId(), $picFile->getBasename());
+      $path = $picFile->move($this->targetPath."/".$series->getId(), $picFile->getClientOriginalName());
 
       $pic = new Pic();
       $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));

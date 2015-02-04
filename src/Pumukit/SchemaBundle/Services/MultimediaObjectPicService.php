@@ -2,7 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
-use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -50,9 +50,9 @@ class MultimediaObjectPicService
   /**
    * Set a pic from an url into the multimediaObject
    */
-  public function addPicFile(MultimediaObject $multimediaObject, File $picFile)
+  public function addPicFile(MultimediaObject $multimediaObject, UploadedFile $picFile)
   {
-      $path = $picFile->move($this->targetPath."/".$multimediaObject->getId(), $picFile->getBasename());
+      $path = $picFile->move($this->targetPath."/".$multimediaObject->getId(), $picFile->getClientOriginalName());
 
       $pic = new Pic();
       $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));

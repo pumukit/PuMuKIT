@@ -5,7 +5,7 @@ namespace Pumukit\SchemaBundle\Tests\Services;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Broadcast;
-use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class SeriesPicServiceTest extends WebTestCase
 {
@@ -130,7 +130,7 @@ class SeriesPicServiceTest extends WebTestCase
 
         $picPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'picCopy.png';
         if (copy($this->originalPicPath, $picPath)){
-            $picFile = new File($picPath);
+            $picFile = new UploadedFile($picPath, 'pic.png', null, null, null, true);
             $series = $this->seriesPicService->addPicFile($series, $picFile);
             $series = $this->repo->find($series->getId());
 
@@ -139,7 +139,7 @@ class SeriesPicServiceTest extends WebTestCase
             $pic = $series->getPics()[0];
             $this->assertTrue($series->containsPic($pic));
 
-            $uploadedPic = '/uploads/pic/'.$series->getId().DIRECTORY_SEPARATOR.$picFile->getBasename();
+            $uploadedPic = '/uploads/pic/'.$series->getId().DIRECTORY_SEPARATOR.$picFile->getClientOriginalName();
             $this->assertEquals($uploadedPic, $pic->getUrl());
         }
 

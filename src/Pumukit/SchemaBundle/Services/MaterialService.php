@@ -2,7 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
-use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Material;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -51,12 +51,12 @@ class MaterialService
     /**
      * Add a material from a file into the multimediaObject
      */
-    public function addMaterialFile(MultimediaObject $multimediaObject, File $materialFile, $formData)
+    public function addMaterialFile(MultimediaObject $multimediaObject, UploadedFile $materialFile, $formData)
     {
         $material = new Material();
         $material = $this->saveFormData($material, $formData);
 
-        $path = $materialFile->move($this->targetPath."/".$multimediaObject->getId(), $materialFile->getBasename());
+        $path = $materialFile->move($this->targetPath."/".$multimediaObject->getId(), $materialFile->getClientOriginalName());
 
         $material->setPath($path);
         $material->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));

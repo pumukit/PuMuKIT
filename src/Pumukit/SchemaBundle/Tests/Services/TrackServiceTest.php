@@ -3,7 +3,7 @@
 namespace Pumukit\SchemaBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Services\FactoryService;
@@ -77,7 +77,7 @@ class TrackServiceTest extends WebTestCase
 
         $filePath = $this->resourcesDir.DIRECTORY_SEPARATOR.'cameraCopy.mp4';
         if (copy($originalFile, $filePath)){
-          $file = new File($filePath);
+          $file = new UploadedFile($filePath, 'camera.mp4', null, null, null, true);
           
           $profile = 'MASTER_COPY';
           $priority = 2;
