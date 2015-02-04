@@ -696,4 +696,14 @@ class Job
     {
         return $this->locale;
     }
+
+  /**
+   * Get status text
+   *
+   * @return string
+   */
+  public function getStatusText()
+  {
+      return self::$statusTexts[$this->getStatus()];
+  }
 }
