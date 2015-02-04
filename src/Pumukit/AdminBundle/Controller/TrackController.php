@@ -40,13 +40,17 @@ class TrackController extends Controller
      */
     public function uploadAction(MultimediaObject $multimediaObject, Request $request)
     {
+        $profile = $request->get('profile');
+        $priority = $request->get('priority', 2);
         $formData = $request->get('pumukitadmin_track', array());
+        list($language, $description) = $this->getArrayData($formData);
 
         $trackService = $this->get('pumukitschema.track');
-        if (($request->files->has('file')) && (!$request->get('url', null))) {
-            $multimediaObject = $trackService->createTrackFromFile($multimediaObject, $request->files->get('file'), $formData);
-        } elseif ($request->get('url', null)) {
-            $multimediaObject = $trackService->createTrackFromUrl($multimediaObject, $request->get('url'), $formData);
+
+        if (($request->files->has('resource')) && ("file" == $request->get('file_type'))) {
+            $multimediaObject = $trackService->createTrackFromLocalHardDrive($multimediaObject, $request->files->get('resource'), $profile, $priority, $language, $description);
+        } elseif (($request->get('file', null)) && ("inbox" == $request->get('file_type'))) {
+            $multimediaObject = $trackService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description);
         }
 
         return array('mm' => $multimediaObject);
@@ -142,5 +146,23 @@ class TrackController extends Controller
                      'jobs' => $jobs,
                      'oc' => ''
                      );
+    }
+
+    /**
+     * Get data in array or default values
+     */
+    private function getArrayData($formData)
+    {
+        $language = null;
+        $description = array();
+
+        if (array_key_exists('language', $formData)) {
+            $language = $formData['language'];
+        }
+        if (array_key_exists('i18n_description', $formData)) {
+            $description = $formData['i18n_description'];
+        }
+
+        return array($language, $description);
     }
 }
