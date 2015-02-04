@@ -1,22 +1,25 @@
 <div>
   <div style="margin-bottom: 10px; overflow: hidden;">
+
+    <!--Multimedia object tags-->
     <div style="width: 440px;">
-
-    <ul>
-      {% for tag in multimediaObject.getTags() %}
-        <li style="list-style:none; float: left; margin: 5px;">
-          <div title="{{ tag.getTitle() }}" class="label-categories label-info">
-            <a style="text-decoration: none" href="/multimediaobjects/tag/{{tag.getId()}}">{{ tag.getTitle() }}</a>
-          </div>
-        </li>
-      {% endfor %}
-    </ul>
-
+      <ul>
+        {% for tag in multimediaObject.getTags() %}
+          <li style="list-style:none; float: left; margin: 5px;">
+            <div title="{{ tag.getTitle() }}" class="label-categories label-info">
+              <a style="text-decoration: none" href="/multimediaobjects/tag/{{tag.getId()}}">{{ tag.getTitle() }}</a>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
     </div>
+
+    <!--Number of views of multimedia object-->
     <div class="num_view" style="margin-left: 440px; float: right;">
       <div style="float:right; font-size: 0.90rem;">{{multimediaObject.getRecordDate().format("d/m/Y")}}</div>
-      <div style="margin-top: 5px; font-size: 0.90rem;">Visto<span class="num_view_number"> 0 </span>veces</div>
+      <div style="margin-top: 5px; font-size: 0.90rem;">Visto<span class="num_view_number"> {{multimediaObject.getNumview()}} </span>veces</div>
     </div>
+
   </div>
  
   <table style="margin-bottom: 10px;">
@@ -25,29 +28,43 @@
       		<td style="width: 65%; border-right: 1px solid #ddd; padding-right: 10px;">
         		<p>{{multimediaObject.getDescription()}}</p>
       		</td>
+
+          <!--Downloads and share section-->
       		<td style="padding: 5px 0 0 10px; width:217px;">
-            	<div class="download" style="height: 30px; margin-left: 5px;">
-            		<a style="margin-left: 20px" href="">Descargar este vídeo</a>
-            		<span class="size">722.08MB</span>
-          		</div>
-              <div style="clear:both;"></div>
-              <div class="share_mmobj" style="overflow: hidden;">
-                <div id="social" style="overflow:hidden;">
-                  <div style="overflow: hidden; padding: 5px 0px;"> 
-                    <div style="width: 84px; height: 19px; float: left;">
+
+            <!--Download associated materials to multimedia object-->
+            <div class="download" style="height: 30px; margin-left: 5px;">
+            	<a style="margin-left: 20px" href="">Descargar este vídeo</a><span class="size"> MB</span>
+          	</div>
+
+            <!--Download associated materials to multimedia object-->
+            {% for material in multimediaObject.getMaterials() %}
+              <div class="download" style="height: 30px; margin-left: 5px;">
+                <a style="margin-left: 20px" href="">{{material.getName()}}</a>
+              </div>
+            {% endfor %}
+            <div style="clear:both;"></div>
+
+            <!--Share multimedia object in facebook, google+ and twitter-->
+            <div class="share_mmobj" style="overflow: hidden;">
+              <div id="social" style="overflow:hidden;">
+                <div style="overflow: hidden; padding: 5px 0px;"> 
+                  <div style="width: 84px; height: 19px; float: left;">
                     <!--Añadir url del objeto multimedia a compartir-->
-                      <a onclick="return Popup.open({url:this.href});" href="http://www.facebook.com/sharer.php?u=" title="Compartir en Facebook" class="facebook"><img src="{{ asset('bundles/pumukitwebtv/images/compartir_facebook.jpg')}}"></a>
-                    </div>
-                    <div style="width: 58px; height: 19px; float: left;">
-                      <a onclick="return Popup.open({url:this.href});" href="https://plus.google.com/share?url=" title="Compartir en Google +" class="facebook"><img src="{{ asset('bundles/pumukitwebtv/images/gplus_button.png')}}"></a>
-                    </div>
-                    <div style="width: 58px; height: 19px; float: left;">
-                      <a onclick="return Popup.open({url:this.href});" href="https://twitter.com/intent/tweet?text=" title="Compartir en Twitter" class="facebook"><img src="{{ asset('bundles/pumukitwebtv/images/twit_button.png')}}"></a>
-                    </div>
+                    <a onclick="return Popup.open({url:this.href});" href="http://www.facebook.com/sharer.php?u=" title="Compartir en Facebook" class="facebook"><img src="{{ asset('bundles/pumukitwebtv/images/compartir_facebook.jpg')}}"></a>
+                  </div>
+                  <div style="width: 58px; height: 19px; float: left;">
+                    <a onclick="return Popup.open({url:this.href});" href="https://plus.google.com/share?url=" title="Compartir en Google +" class="facebook"><img src="{{ asset('bundles/pumukitwebtv/images/gplus_button.png')}}"></a>
+                  </div>
+                  <div style="width: 58px; height: 19px; float: left;">
+                    <a onclick="return Popup.open({url:this.href});" href="https://twitter.com/intent/tweet?text=" title="Compartir en Twitter" class="facebook"><img src="{{ asset('bundles/pumukitwebtv/images/twit_button.png')}}"></a>
                   </div>
                 </div>
               </div>
+            </div>
+            
         	</td>
+
        	</tr>
     </tbody>
    </table>
