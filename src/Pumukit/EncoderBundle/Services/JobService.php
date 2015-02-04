@@ -187,12 +187,15 @@ class JobService
 
     public function executeInBackground(Job $job)
     {
+
         $pb = new ProcessBuilder();
         // PHP wraps the process in "sh -c" by default, but we need to control
         // the process directly.
+        /*
         if ( ! defined('PHP_WINDOWS_VERSION_MAJOR')) {
           $pb->add('exec');
         }
+        */
 
         //TODO
         //$console = $this->getContainer()->getParameter('kernel.root_dir').'/console';
@@ -214,8 +217,16 @@ class JobService
           ;
 
         $process = $pb->getProcess();
-        $process->disableOutput();
-        $process->start();
+
+        $command = $process->getCommandLine();
+        shell_exec("nohup $command 1> /dev/null 2> /dev/null & echo $!");
+
+        //$process->disableOutput();
+        //$process->start();
+        //$process->run();
+        //dump($process->getOutput());
+        //dump($process->getErrorOutput());
+        //dump($process->getCommandLine());
     }
 
     public function execute(Job $job)
@@ -234,11 +245,11 @@ class JobService
             $out = $executor->execute($commandLine);        
             $duration = $this->inspectionService->getDuration($job->getPathEnd());
 
-            dump($commandLine);
-            dump($profile['app']);
-            dump($out);
-            dump($job->getDuration());
-            dump($duration);
+            var_dump($commandLine);
+            var_dump($profile['app']);
+            var_dump($out);
+            var_dump($job->getDuration());
+            var_dump($duration);
     
             $job->setTimeend(new \DateTime('now'));
             $this->searchError($profile['app'], $out, $job->getDuration(), $duration);
@@ -248,8 +259,8 @@ class JobService
             $this->createFile($job);
         }catch (\Exception $e){
             $job->setStatus(Job::STATUS_ERROR);
-            dump("ERROR");
-            dump($e->getMessage());            
+            var_dump("ERROR");
+            var_dump($e->getMessage());            
         }
 
         $this->dm->persist($job);
