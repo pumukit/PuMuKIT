@@ -25,7 +25,7 @@
         <div class="content" style="overflow: hidden">
           {% for key in profiles|keys %}
           <span style="display: block; float: left; width: 30%; overflow: hidden">
-            <input type="radio" name="master" id="master_{{ key }}" value="{{ key }}" checked="checked" class="MB_focusable" />{{ key }}
+            <input type="radio" name="profile" id="profile_{{ key }}" value="{{ key }}" checked="checked" class="MB_focusable" />{{ key }}
           </span>
           {% endfor %}
         </div>
@@ -47,22 +47,22 @@
       <div class="form-row">
         <label for="file_type" class="required">{% trans %}Mode{% endtrans %}</label>        
         <div class="content">
-          <input type="radio" name="file_type" value="file" onclick="$('pumukitadmin_track_url').hide();$('pumukitadmin_track_file').show();"/> Inbox 
-          <input type="radio" name="file_type" value="url" checked="checked" onclick="$('pumukitadmin_track_file').hide();$('pumukitadmin_track_url').show();"/> {% trans %}File{% endtrans %}
+          <input type="radio" name="file_type" value="inbox" onclick="$('pumukitadmin_track_file').hide();$('pumukitadmin_track_inbox').show();"/> {% trans %}Inbox on server{% endtrans %}
+          <input type="radio" name="file_type" value="file" checked="checked" onclick="$('pumukitadmin_track_inbox').hide();$('pumukitadmin_track_file').show();"/> {% trans %}Local hard drive{% endtrans %}
         </div>
       </div>
       
-      <div class="form-row" id="pumukitadmin_track_url">
-        <label for="url" class="required">{% trans %}URL{% endtrans %}:</label>
+      <div class="form-row" id="pumukitadmin_track_file">
+        <label for="url" class="required">{% trans %}Resource{% endtrans %}:</label>
         <div class="content">
-          <input type="file" name="video" id="video" value="" size="70" class="MB_focusable">
+          <input type="file" name="resource" id="resource" value="" size="70" class="MB_focusable">
           <span style="color: blue">({% trans %}Under 2GB{% endtrans %})</span>
           <span id="file_upload_progress" style="color:blue; display:none;">{% trans %}Progress{% endtrans %}...</span>
         </div>
       </div>
       
-      <div class="form-row" id="pumukitadmin_track_file" style="display: none">
-        <label for="file" class="required">{% trans %}File{% endtrans %}:</label>
+      <div class="form-row" id="pumukitadmin_track_inbox" style="display: none">
+        <label for="file" class="required">{% trans %}Resource{% endtrans %}:</label>
         <div class="content">
           <input type="text" name="file" id="file" value="//172.20..." size="80" class="MB_focusable" style="width: 420px">
           <input onclick="Effect.toggle('explorer_videoserv','blind', { afterFinish:function(){ Modalbox.resizeToContent() }}); return false;" type="button" value="{% trans %}explore{% endtrans %}" class="MB_focusable">
