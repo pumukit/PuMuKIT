@@ -5,9 +5,10 @@
 
 {% for mm in mmobjs %}
 
-  {% if mm.getRecordDate() != lastDate %}
+  {% if mm.getRecordDate()|date("d/m/Y") != lastDate %}
+    <br />
     <div class="serial_date">
-      {{ mm.getRecordDate()|date("d/m/Y")}}
+      <div>{{ mm.getRecordDate()|date("d/m/Y") }}</div>
     </div>
   {% endif %}
 
@@ -25,11 +26,11 @@
 
           <td>
             <div class="serial_mm_info">
-              <div class="title">{{mm.title}}</div>
+              <div class="title">"{{mm.title}}"</div>
               <div class="subtitle">{{mm.subtitle}}</div>
-              <div class="file_video">
-                <!--Falta obtener el tipo de objeto multimedia y el icono-->
-                <a href="/video/{{mm.id}}">Video</a>&nbsp;|&nbsp;&nbsp;
+              <div class="video" style="height: 30px; margin-left: 5px;">
+                <!--Falta obtener el tipo de objeto multimedia-->
+                <a href="/video/{{mm.id}}" style="margin-left:26px;">Video</a>&nbsp;|&nbsp;&nbsp;
                 <span class="lenguage" style="font-weight: bold;">Castellano</span>&nbsp;({{mm.getDuration()}}")&nbsp;|&nbsp;Visto: <span class="numView" style="font-weight: bold;">{{mm.getNumview()}}</span>
                 {% if mm.getNumview == 1 %} vez{% else %} veces{% endif %}
               </div>
@@ -47,9 +48,7 @@
     </table>
   </div>
 
-
-
-{% set lastDate = mm.getRecordDate() %}
+{% set lastDate = mm.getRecordDate()|date("d/m/Y") %}
 {% set lastSubserialTitle = mm.getSubtitle() %}
 
 
