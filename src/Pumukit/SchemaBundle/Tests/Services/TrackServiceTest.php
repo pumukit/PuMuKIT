@@ -63,7 +63,7 @@ class TrackServiceTest extends WebTestCase
         $this->tmpDir = $this->trackService->getTempDirs()[0];
     }
 
-    public function testCreateTrackFromFile()
+    public function testCreateTrackFromLocalHardDrive()
     {
         $this->createBroadcasts();
 
@@ -79,9 +79,15 @@ class TrackServiceTest extends WebTestCase
         if (copy($originalFile, $filePath)){
           $file = new File($filePath);
           
-          $formData = $this->createFormData(1);
+          $profile = 'MASTER_COPY';
+          $priority = 2;
+          $language = 'en';
+          $description = array(
+                                    'en' => 'local track description',
+                                    'es' => 'descripción del archivo local',
+                                    );
           
-          $multimediaObject = $this->trackService->createTrackFromFile($multimediaObject, $file, $formData);
+          $multimediaObject = $this->trackService->createTrackFromLocalHardDrive($multimediaObject, $file, $profile, $priority, $language, $description);
           
           $this->assertEquals(0, count($multimediaObject->getTracks()));
           $this->assertEquals(1, count($this->repoJobs->findAll()));
@@ -90,7 +96,7 @@ class TrackServiceTest extends WebTestCase
         $this->deleteCreatedFiles();
     }
 
-    public function testCreateTrackFromUrl()
+    public function testCreateTrackFromInboxOnServer()
     {
         $this->createBroadcasts();
 
@@ -104,9 +110,15 @@ class TrackServiceTest extends WebTestCase
 
         $filePath = $this->resourcesDir.DIRECTORY_SEPARATOR.'cameraCopy.mp4';
         if (copy($originalFile, $filePath)){
-          $formData = $this->createFormData(1);
+          $profile = 'MASTER_COPY';
+          $priority = 2;
+          $language = 'en';
+          $description = array(
+                               'en' => 'track description inbox',
+                               'es' => 'descripción del archivo inbox',
+                               );
           
-          $multimediaObject = $this->trackService->createTrackFromUrl($multimediaObject, $filePath, $formData);
+          $multimediaObject = $this->trackService->createTrackFromInboxOnServer($multimediaObject, $filePath, $profile, $priority, $language, $description);
           
           $this->assertEquals(0, count($multimediaObject->getTracks()));
           $this->assertEquals(1, count($this->repoJobs->findAll()));
