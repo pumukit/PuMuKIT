@@ -250,6 +250,11 @@ class JobServiceTest extends WebTestCase
         $this->assertEquals(1, count($this->jobService->getJobsByMultimediaObjectId($mm_id2)));
     }
 
+    public function testGetStatusError()
+    {
+        $this->assertEquals(Job::STATUS_ERROR, $this->jobService->getStatusError());
+    }
+
     private function createNewJob($status = null, $priority = null)
     {
         $job = new Job();

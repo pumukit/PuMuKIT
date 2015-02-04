@@ -388,6 +388,16 @@ class JobService
     {
         return $this->repo->findByMultimediaObjectId($mmId);
     }
+
+    /**
+     * Get status error
+     *
+     * @return integer Job status error
+     */
+    public function getStatusError()
+    {
+        return Job::STATUS_ERROR;
+    }
     
     private function getExecutor($app, $cpuType)
     {
