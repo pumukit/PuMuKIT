@@ -13,7 +13,9 @@ class Builder extends ContainerAware
 
         $menu->addChild('Dashboard', array('route' => 'pumukit_admin_dashboard_index'));
 
-        $menu->addChild('Multimedia Series', array('route' => 'pumukitadmin_series_index'));
+        $series = $menu->addChild('Multimedia Series', array('route' => 'pumukitadmin_series_index'));
+        $series->addChild('Multimedia', array('route' => 'pumukitadmin_mms_index'));
+        $series->setDisplayChildren(false);
 
         $menu->addChild('Unesco Cataloger');
 
