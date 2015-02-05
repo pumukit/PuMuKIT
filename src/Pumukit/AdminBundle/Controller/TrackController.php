@@ -8,7 +8,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\AdminBundle\Form\Type\TrackType;
+use Pumukit\AdminBundle\Form\Type\TrackUpdateType;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\EncoderBundle\Document\Job;
 
 class TrackController extends Controller
 {
@@ -21,7 +23,7 @@ class TrackController extends Controller
         $track = new Track();
         $form = $this->createForm(new TrackType(), $track);
 
-        $profiles = $this->get('pumukitencoder.profile')->getProfiles();
+        $masterProfiles = $this->get('pumukitencoder.profile')->getMasterProfiles(true);
 
         $dirs = $this->get('pumukitschema.track')->getTempDirs();
 
@@ -29,7 +31,7 @@ class TrackController extends Controller
                      'track' => $track,
                      'form' => $form->createView(),
                      'mm' => $multimediaObject,
-                     'profiles' => $profiles,
+                     'master_profiles' => $masterProfiles,
                      'dirs' => $dirs
                      );
     }
@@ -65,6 +67,8 @@ class TrackController extends Controller
         $track = $multimediaObject->getTrackById($request->get('id'));
         $form = $this->createForm(new TrackUpdateType(), $track);
 
+        $profiles = $this->get('pumukitencoder.profile')->getProfiles();
+
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
             try {
                 $multimediaObject = $this->get('pumukitadmin.track')->updateTrackInMultimediaObject($multimediaObject);
@@ -77,9 +81,10 @@ class TrackController extends Controller
 
         return $this->render('PumukitAdminBundle:Track:update.html.twig',
                              array(
-                                   'track' => $track,
-                                   'form' => $form->createView(),
-                                   'mmId' => $multimediaObject->getId()
+                                   'track'    => $track,
+                                   'form'     => $form->createView(),
+                                   'mmId'     => $multimediaObject->getId(),
+                                   'profiles' => $profiles
                                    ));
     }
 
@@ -141,13 +146,53 @@ class TrackController extends Controller
         $jobs = $this->get('pumukitencoder.job')->getJobsByMultimediaObjectId($multimediaObject->getId());
         $jobStatusError = $this->get('pumukitencoder.job')->getStatusError();
 
+        $notMasterProfiles = $this->get('pumukitencoder.profile')->getMasterProfiles(false);
+
         return array(
                      'mmId' => $multimediaObject->getId(),
                      'tracks' => $multimediaObject->getTracks(),
                      'jobs' => $jobs,
                      'status_error'  => $jobStatusError,
+                     'not_master_profiles' => $notMasterProfiles,
                      'oc' => ''
                      );
+    }
+
+    /**
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("job", class="PumukitEncoderBundle:Job", options={"id" = "jobId"})
+     */
+    public function retryJobAction(MultimediaObject $multimediaObject, Job $job, Request $request)
+    {
+        $flashMessage = $this->get('pumukitencoder.job')->retryJob($job);
+        $this->addFlash('success', $flashMessage);
+
+        return $this->redirect($this->generateUrl('pumukitadmin_track_list', array('id' => $multimediaObject->getId())));
+    }
+
+    /**
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     */
+    public function deleteJobAction(MultimediaObject $multimediaObject, Request $request)
+    {
+        $this->get('pumukitencoder.job')->deleteJob($request->get('jobId'));
+
+        $this->addFlash('success', 'delete job');
+
+        return $this->redirect($this->generateUrl('pumukitadmin_track_list', array('id' => $multimediaObject->getId())));
+    }
+
+    /**
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     */
+    public function autocompleteAction(MultimediaObject $multimediaObject, Request $request)
+    {
+        $track = $multimediaObject->getTrackById($request->get('id'));
+
+        $this->get('pumukit.inspection')->autocompleteTrack($track);
+        $this->get('pumukitschema.track')->updateTrackInMultimediaObject($multimediaObject);
+
+        return $this->redirect($this->generateUrl('pumukitadmin_track_list', array('id' => $multimediaObject->getId())));
     }
 
     /**

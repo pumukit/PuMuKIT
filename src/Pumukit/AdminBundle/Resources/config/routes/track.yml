@@ -45,3 +45,27 @@ pumukitadmin_track_info:
     methods: [GET, PUT, POST]
     defaults:
         _controller: pumukitadmin.controller.track:infoAction
+
+pumukitadmin_track_retry_job:
+    pattern: /{mmId}/retry/{jobId}
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitadmin.controller.track:retryJobAction
+
+pumukitadmin_track_retry_track:
+    pattern: /{mmId}/retry/{id}
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitadmin.controller.track:retryTrackAction
+
+pumukitadmin_track_delete_job:
+    pattern: /{mmId}/deletejob
+    methods: [DELETE, POST]
+    defaults:
+        _controller: pumukitadmin.controller.track:deleteJobAction
+
+pumukitadmin_track_autocomplete:
+    pattern: /{id}/autocomplete/{mmId}
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitadmin.controller.track:autocompleteAction

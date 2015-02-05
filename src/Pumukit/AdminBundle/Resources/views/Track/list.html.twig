@@ -6,12 +6,12 @@
         <td colspan="9">
           {{ job.getStatusText() }}
           {% if status_error == job.getStatus() %}
-          <a href="#" onclick="new Ajax.Updater('tracks_mms', '{# TODO path transcoders/retrans?id= $job->getId(). &mm='.$mmId.'&preview=true #}', {asynchronous:true, evalScripts:true}); return false;">
+          <a href="#" onclick="new Ajax.Updater('tracks_mms', '{{ path('pumukitadmin_track_retry_job', {'mmId': mmId, 'jobId': job.id, 'preview': 1}) }}', {asynchronous:true, evalScripts:true}); return false;">
             <img alt="{% trans %}retranscode{% endtrans %}" title="{% trans %}retranscode{% endtrans %}" src="/legacy/images/admin/mbuttons/use_inline.gif">
           </a>
           {% endif %}
           {% if status_error == job.getStatus() %}
-          <a href="#" onclick="new Ajax.Updater('tracks_mms', '{# TODO path delete transcoders/deletefromfile?id='.$job->getId().'&mm='.$mmId.'&preview=true #}, {asynchronous:true, evalScripts:true}); return false;">
+          <a href="#" onclick="new Ajax.Updater('tracks_mms', '{{ path('pumukitadmin_track_delete_job', {'mmId': mmId, 'jobId': job.id, 'preview': 1}) }}', {asynchronous:true, evalScripts:true}); return false;">
             <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
           </a>
           {% endif %}
@@ -35,7 +35,7 @@
       </td>
       {% if true %} {# TODO (sfConfig::get('app_videoserv_browser')) #}
         <td>
-          <a href="#" onclick="new Ajax.Updater('tracks_mms', '{# TODO path autocomplete /editar.php/files/autocomplete/id/41835/mm/14588/preview/true/mod/mm #}', {asynchronous:true, evalScripts:true}); return false;">
+          <a href="#" onclick="new Ajax.Updater('tracks_mms', '{{ path('pumukitadmin_track_autocomplete', {'id': track.id, 'mmId': mmId, 'preview': 1, 'mod': 'mm'}) }}', {asynchronous:true, evalScripts:true}); return false;">
             <img alt="{% trans %}autocomplete{% endtrans %}" title="{% trans %}autocomplete{% endtrans %}" src="/legacy/images/admin/mbuttons/auto_inline.gif">
           </a>
         </td>
@@ -84,9 +84,8 @@
         
           <div class="list_options">
             <ul style="">
-              {% set profile = '' %}
-              {% for per in profile %} {# TODO (PerfilPeer::doSelectToWizard(false) as $per) #}
-                <li><a href="#" onclick="new Ajax.Updater('tracks_mms', '{# TODO 'files/retrans?id='.$file->getId().'&mm='.$file->getMmId().'&profile='.$per->getId() #}, {asynchronous:true, evalScripts:true}); return false;">{{ per.getName() }}</a></li>
+              {% for key in not_master_profiles|keys %}
+                <li><a href="#" onclick="new Ajax.Updater('tracks_mms', '{# TODO 'files/retrans?id='.$file->getId().'&mm='.$file->getMmId().'&profile='.$per->getId() #}, {asynchronous:true, evalScripts:true}); return false;">{{ key }}</a></li>
               {% endfor %}
               <li class="cancel"><a href="#" onclick="return false;">{% trans %}Cancel{% endtrans %}...</a></li>
             </ul>        
@@ -126,11 +125,12 @@
       </td>
 
       <td>
-        &nbsp;{{ track.id }} - <strong>TODO profile {# {{ track.getProfile() }} #}</strong>
+        &nbsp;{{ track.id }} - <strong>{{ track.getTags()|profile }}</strong>
         {{ track.getDescription() }}
-        ({{ track.getUrl()|basename }}/{{ track.getLanguage() }})
+        ({{ track.getUrl()|basename }}/{{ track.getLanguage()|language_name }})
          - {{ track.getDuration()|duration_string }}
-         - TODO {# printf("%.2f", ($file->getSize() / 1048576)) #} MB
+         {# - TODO printf("%.2f", ($file->getSize() / 1048576)) MB #}
+         - {{ (track.getSize() / 1048576)|number_format(2) }} MB
          - {# {{ track.getResolutionHor() }}x{{ track.getResolutionVer() }}
          {% if track.getDisplay() %}{% else %}({% trans %}Hidden{% endtrans %}){% endif %} #}
       </td>

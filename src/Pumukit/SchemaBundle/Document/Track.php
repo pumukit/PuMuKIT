@@ -307,4 +307,55 @@ class Track extends Element
   {
       return $this->numview;
   }
+
+  /**
+   * Get Resolution
+   *
+   * @return array
+   */
+  public function getResolution()
+  {
+      return array('width' => $this->width,
+         'height' => $this->height, );
+  }
+
+  /**
+   * Set Resolution
+   *
+   * @param array
+   */
+  public function setResolution($resolution)
+  {
+      if ((!empty($resolution['width'])) && (!empty($resolution['height']))) {
+          $this->width = $resolution['width'];
+          $this->height = $resolution['height'];
+      }
+  }
+
+  /**
+   * Get duration in minutes and seconds
+   *
+   * @return array
+   */
+  public function getDurationInMinutesAndSeconds()
+  {
+      $minutes = floor($this->getDuration() / 60);
+
+      $seconds = $this->getDuration() % 60;
+      //if ($seconds < 10 ) $minutes = '0' . $seconds;
+
+      return array('minutes' => $minutes, 'seconds' => $seconds);
+  }
+
+  /**
+   * Set duration in minutes and seconds
+   *
+   * @param array
+   */
+  public function setDurationInMinutesAndSeconds($durationInMinutesAndSeconds)
+  {
+      if ((!empty($durationInMinutesAndSeconds['minutes'])) && (!empty($durationInMinutesAndSeconds['seconds']))) {
+          $this->duration = ($durationInMinutesAndSeconds['minutes'] * 60) + $durationInMinutesAndSeconds['seconds'];
+      }
+  }
 }
