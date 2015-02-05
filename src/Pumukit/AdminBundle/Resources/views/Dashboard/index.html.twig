@@ -1,0 +1,90 @@
+{% extends 'PumukitAdminBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" type="text/css" media="screen" href="/legacy/css/admin/dashboard.css" />
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script type="text/javascript" src="http://static.simile.mit.edu/timeline/api-2.2.0/timeline-api.js"></script>
+{% endblock %}
+
+   
+
+{% block body %}
+<h3 class="cab_body_div"><img src="/legacy/images/admin/cab/serial_ico.png"/>{% trans %}Dashboard{% endtrans %}</h3>
+
+
+<div style="text-align: center"> 
+  <div id="my-timeline" style="height: 300px; border: 1px solid #aaa"></div>
+  <br />
+  <br />
+  <noscript>
+     {% trans %}This page uses Javascript to show you a Timeline.{% endtrans %}
+     {% trans %}Please enable Javascript in your browser to see the full page.{% endtrans %}
+     {% trans %}Thank you.{% endtrans %}
+  </noscript>
+</div>
+
+
+<script type="text/javascript">
+
+
+Event.observe(window, 'load', function() { 
+  var eventSource = new Timeline.DefaultEventSource();
+  var bandInfos = [
+    Timeline.createBandInfo({
+      eventSource:    eventSource,
+      width: '70%',
+      intervalUnit:   Timeline.DateTime.DAY, 
+      intervalPixels: 100
+    }),
+    Timeline.createBandInfo({
+      eventSource:    eventSource,
+      overview: true,
+      width: '30%',
+      intervalUnit:   Timeline.DateTime.MONTH, 
+      intervalPixels: 200
+    })
+  ];  
+
+  bandInfos[1].syncWith = 0;
+  bandInfos[1].highlight = true;
+ 
+  tl = Timeline.create(document.getElementById('my-timeline'), bandInfos);
+  Timeline.loadXML('/admin/dashboard/series/timeline.xml', function(xml, url) { eventSource.loadXML(xml, url); });
+
+});
+
+{# Sobrecargo la función que pinta la burbuja y sólo pinto el título y la fecha traducida al español #}
+var oldFillInfoBubble = Timeline.DefaultEventSource.Event.prototype.fillInfoBubble;
+Timeline.DefaultEventSource.Event.prototype.fillInfoBubble = function(elmt, theme, labeller) {
+    var eventObject = this;
+    
+    // oldFillInfoBubble.call(this, elmt, theme, labeller); {# antigua función para crear el html de la burbuja #}
+
+    var start = new Date(eventObject._start);
+    var div_title = document.createElement("div");
+    div_title.className = "timeline-event-bubble-title";
+    var a_title = document.createElement("a");
+    a_title.setAttribute('href', eventObject._link);
+    a_title.innerHTML = eventObject._text;
+    div_title.appendChild(a_title);
+    var div_time = document.createElement("div");
+    div_time.className = "timeline-event-bubble-time";
+    div_time.innerText = start;
+    elmt.appendChild(div_title);
+    elmt.appendChild(div_time);
+    var link_frontend = eventObject._link;
+    var a_frontend = document.createElement("a");
+    a_frontend.setAttribute('href', link_frontend);
+    a_frontend.innerHTML = "{% trans %}Go to series WebTV page{% endtrans %}";
+    elmt.appendChild(a_frontend);
+}
+</script>
+<br />
+<br />
+
+
+{% endblock %}
