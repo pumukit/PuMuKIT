@@ -116,6 +116,8 @@ class MultimediaObjectController extends SortableAdminController
     $jobs = $this->get('pumukitencoder.job')->getJobsByMultimediaObjectId($resource->getId());
     $jobStatusError = $this->get('pumukitencoder.job')->getStatusError();
 
+    $notMasterProfiles = $this->get('pumukitencoder.profile')->getMasterProfiles(false);
+
     $view = $this
       ->view()
       ->setTemplate($config->getTemplate('edit.html'))
@@ -130,6 +132,7 @@ class MultimediaObjectController extends SortableAdminController
                       'parent_tags'   => $parentTags,
                       'jobs'          => $jobs,
                       'status_error'  => $jobStatusError,
+                      'not_master_profiles' => $notMasterProfiles
                       ))
       ;
 
