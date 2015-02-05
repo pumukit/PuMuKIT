@@ -38,6 +38,13 @@ class ProfileServiceTest extends WebTestCase
         $this->assertEquals(count($profiles), count($this->profileService->getProfiles()));
     }
 
+    public function testGetMasterProfiles()
+    {
+        $profiles = $this->getDemoProfiles();
+        $this->assertEquals(count($profiles), count($this->profileService->getMasterProfiles(true)));
+        $this->assertEquals(0, count($this->profileService->getMasterProfiles(false)));
+    }
+
     public function testGetProfile()
     {
         $profiles = $this->getDemoProfiles();

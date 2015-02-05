@@ -36,6 +36,19 @@ class ProfileService
     }
 
     /**
+     * Get master profiles
+     *
+     * @param boolean $master
+     * @return array $profiles only master if true, only not master if false
+     */
+    public function getMasterProfiles($master)
+    {
+        return array_filter($this->profiles, function ($profile) use ($master) {
+              return $profile['master'] === $master;
+          });
+    }
+
+    /**
      * Get given profile
      * @param string the profile name (case sensitive)
      */
