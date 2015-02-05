@@ -19,6 +19,7 @@ class PumukitAdminExtension extends \Twig_Extension
     {
         return array(
                      new \Twig_SimpleFilter('basename', array($this, 'getBasename')),
+                     new \Twig_SimpleFilter('profile', array($this, 'getProfile')),
                      new \Twig_SimpleFilter('duration_string', array($this, 'getDurationString')),
                      );
     }
@@ -32,6 +33,25 @@ class PumukitAdminExtension extends \Twig_Extension
     public function getBasename($path)
     {
         return basename($path);
+    }
+
+    /**
+     * Get profile
+     *
+     * @param Collection $tags
+     * @return string
+     */
+    public function getProfile($tags)
+    {
+        $profile = '';
+
+        foreach($tags as $tag){
+            if (false !== strpos($tag, 'profile:' )) {
+                return substr($tag, strlen('profile:'), strlen($tag)-1);
+            }
+        }
+
+        return $profile;
     }
 
     /**
