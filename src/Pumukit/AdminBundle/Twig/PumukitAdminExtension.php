@@ -2,8 +2,20 @@
 
 namespace Pumukit\AdminBundle\Twig;
 
+use Symfony\Component\Intl\Intl;
+
 class PumukitAdminExtension extends \Twig_Extension
 {
+    private $languages;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+      $this->languages = Intl::getLanguageBundle()->getLanguageNames();
+    }
+  
     /**
      * Get name
      */
@@ -21,6 +33,7 @@ class PumukitAdminExtension extends \Twig_Extension
                      new \Twig_SimpleFilter('basename', array($this, 'getBasename')),
                      new \Twig_SimpleFilter('profile', array($this, 'getProfile')),
                      new \Twig_SimpleFilter('duration_string', array($this, 'getDurationString')),
+                     new \Twig_SimpleFilter('language_name', array($this, 'getLanguageName')),
                      );
     }
 
@@ -67,6 +80,17 @@ class PumukitAdminExtension extends \Twig_Extension
         else $aux = $min . "' ". $this->getDurationInSeconds($duration) ."''";
         
         return $aux;
+    }
+
+    /**
+     * Get language name
+     *
+     * @param string $code
+     * @return string
+     */
+    public function getLanguageName($code)
+    {
+        return $this->languages[$code];
     }
 
     /**
