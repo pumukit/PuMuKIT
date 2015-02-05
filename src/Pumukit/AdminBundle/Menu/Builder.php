@@ -11,7 +11,7 @@ class Builder extends ContainerAware
     {
         $menu = $factory->createItem('root');
 
-        $menu->addChild('Dashboard');
+        $menu->addChild('Dashboard', array('route' => 'pumukit_admin_dashboard_index'));
 
         $menu->addChild('Multimedia Series', array('route' => 'pumukitadmin_series_index'));
 
