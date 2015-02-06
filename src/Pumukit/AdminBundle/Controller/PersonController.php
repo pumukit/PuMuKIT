@@ -151,11 +151,12 @@ class PersonController extends AdminController
         
         $criteria = $this->getCriteria($config);
         $resources = $this->getResources($request, $config, $criteria);
-        
+
         return array(
                      'people' => $resources,
                      'mm' => $multimediaObject,
                      'role' => $role,
+                     'prototypeStatus' => MultimediaObject::STATUS_PROTOTYPE
                      );
     }
 
@@ -172,6 +173,11 @@ class PersonController extends AdminController
         $person->setName(preg_replace('/\d+ - /', '', $request->get('name')));
         
         $form = $this->createForm(new PersonType(), $person);
+        
+        $template = '';
+        if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
+            $template = '_template';
+        }
 
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
             try {
@@ -181,16 +187,12 @@ class PersonController extends AdminController
                 $this->get('session')->getFlashBag()->add('error', $e->getMessage());
             }
 
-            $template = '';
-            if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
-                $template = 'template';
-            }
-
-            return $this->render('PumukitAdminBundle:Person:listrelation'.$template.'.html.twig', 
+            return $this->render('PumukitAdminBundle:Person:listrelation.html.twig', 
                                  array(
                                        'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
                                        'role' => $role,
-                                       'mm' => $multimediaObject
+                                       'mm' => $multimediaObject,
+                                       'template' => $template
                                        ));
         }
 
@@ -199,6 +201,7 @@ class PersonController extends AdminController
                      'role' => $role,
                      'mm' => $multimediaObject,
                      'form' => $form->createView(),
+                     'template' => $template
                      );
     }
 
@@ -225,14 +228,15 @@ class PersonController extends AdminController
 
             $template = '';
             if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
-                $template = 'template';
+                $template = '_template';
             }
 
-            return $this->render('PumukitAdminBundle:Person:listrelation'.$template.'.html.twig', 
+            return $this->render('PumukitAdminBundle:Person:listrelation.html.twig', 
                                  array(
                                        'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
                                        'role' => $role,
-                                       'mm' => $multimediaObject
+                                       'mm' => $multimediaObject,
+                                       'template' => $template
                                        ));
 
         }
@@ -250,7 +254,7 @@ class PersonController extends AdminController
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
-     *
+     * @Template("PumukitAdminBundle:Person:listrelation.html.twig")
      */
     public function linkAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
@@ -268,15 +272,15 @@ class PersonController extends AdminController
 
         $template = '';
         if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
-            $template = 'template';
+            $template = '_template';
         }
         
-        return $this->render('PumukitAdminBundle:Person:listrelation'.$template.'.html.twig', 
-                             array(
-                                   'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
-                                   'role' => $role,
-                                   'mm' => $multimediaObject
-                                   ));
+        return array(
+                     'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
+                     'role' => $role,
+                     'mm' => $multimediaObject,
+                     'template' => $template
+                     );
     }
 
     /**
@@ -298,6 +302,7 @@ class PersonController extends AdminController
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
+     * @Template("PumukitAdminBundle:Person:listrelation.html.twig")
      */
     public function upAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
@@ -307,15 +312,15 @@ class PersonController extends AdminController
 
         $template = '';
         if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
-            $template = 'template';
+            $template = '_template';
         }
         
-        return $this->render('PumukitAdminBundle:Person:listrelation'.$template.'.html.twig', 
-                             array(
-                                   'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
-                                   'role' => $role,
-                                   'mm' => $multimediaObject
-                                   ));        
+        return array(
+                     'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
+                     'role' => $role,
+                     'mm' => $multimediaObject,
+                     'template' => $template
+                     );        
     }
 
     /**
@@ -323,6 +328,7 @@ class PersonController extends AdminController
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
+     * @Template("PumukitAdminBundle:Person:listrelation.html.twig")
      */
     public function downAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
@@ -332,22 +338,23 @@ class PersonController extends AdminController
 
         $template = '';
         if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
-            $template = 'template';
+            $template = '_template';
         }
         
-        return $this->render('PumukitAdminBundle:Person:listrelation'.$template.'.html.twig', 
-                             array(
-                                   'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
-                                   'role' => $role,
-                                   'mm' => $multimediaObject
-                                   ));
-    }    
+        return array(
+                     'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
+                     'role' => $role,
+                     'mm' => $multimediaObject,
+                     'template' => $template
+                     );
+    }
 
     /**
      * Delete relation: EmbeddedPerson in Multimedia Object
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
+     * @Template("PumukitAdminBundle:Person:listrelation.html.twig")
      */
     public function deleteRelationAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
@@ -357,15 +364,15 @@ class PersonController extends AdminController
 
         $template = '';
         if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
-            $template = 'template';
+            $template = '_template';
         }
         
-        return $this->render('PumukitAdminBundle:Person:listrelation'.$template.'.html.twig', 
-                             array(
-                                   'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
-                                   'role' => $role,
-                                   'mm' => $multimediaObject
-                                   ));
+        return array(
+                     'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
+                     'role' => $role,
+                     'mm' => $multimediaObject,
+                     'template' => $template
+                     );
     }
 
     /**

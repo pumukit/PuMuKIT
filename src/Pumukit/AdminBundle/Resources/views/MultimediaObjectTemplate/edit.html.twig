@@ -1,4 +1,4 @@
-{% if mmtemplate is not empty %}
+{% if mmtemplate %}
 
   <div style="text-align:right;">
     <a href="#" onclick="$('edit_series').innerHTML=''; return false"><img src="/legacy/images/admin/buttons/close.png" alt="{% trans %}CLOSE{% endtrans %}" /></a>
@@ -32,7 +32,7 @@
   </div>
 
   <div id="personMmTemplateDiv" style="display:none;">
-    {% include 'PumukitAdminBundle:MultimediaObjectTemplate:updatepeople.html.twig' with {'mm': mmtemplate, 'roles': roles} %}
+    {% include 'PumukitAdminBundle:MultimediaObject:updateperson.html.twig' with {'mm': mmtemplate, 'roles': roles} %}
   </div>
 
   <script type="text/javascript">
@@ -40,3 +40,17 @@
   </script>
 
 {% endif %}
+
+<script type="text/javascript">
+window.submit_delete_person_template = function(id, roleId, mmId, hName)
+{
+    if (window.confirm("{% trans %}Are you sure you want to delete the relation of{% endtrans %} "+hName+"?")){
+        var tag_person_id = roleId+'_person_mms_template';
+        var url = "{{ path('pumukitadmin_person_delete_relation', {'id': '__id__', 'roleId': '__roleId__','mmId': '__mmId__'}) }}";
+        url = url.replace('__id__', id);
+        url = url.replace('__roleId__', roleId);
+        url = url.replace('__mmId__', mmId);
+        new Ajax.Updater(tag_person_id, url, {asynchronous:true, evalScripts:true, method:'POST', parameters: {'_method': 'DELETE'}});
+    }
+}
+</script>
