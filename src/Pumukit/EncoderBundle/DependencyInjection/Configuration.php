@@ -26,6 +26,7 @@ class Configuration implements ConfigurationInterface
         //Doc in http://symfony.com/doc/current/components/config/definition.html
         $this->addCpusSection($rootNode);
         $this->addProfilesSection($rootNode);
+        $this->addThumbnailSection($rootNode);
 
         return $treeBuilder;
     }
@@ -130,6 +131,28 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('description')->defaultValue('')
                             ->info('Encoder host description')->end()
                         ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
+    /**
+     * Adds `thumbnail` section.
+     *
+     * @param ArrayNodeDefinition $node
+     */
+    public function addThumbnailSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('thumbnail')
+                    ->canBeUnset()
+                    ->children()
+                        ->integerNode('width')->defaultValue(304)
+                            ->info('Width resolution of thumbnail')->end()
+                        ->integerNode('height')->defaultValue(242)
+                            ->info('Height resolution of thumbnail')->end()
                     ->end()
                 ->end()
             ->end()

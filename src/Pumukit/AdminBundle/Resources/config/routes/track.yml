@@ -69,3 +69,9 @@ pumukitadmin_track_autocomplete:
     methods: [GET, PUT, POST]
     defaults:
         _controller: pumukitadmin.controller.track:autocompleteAction
+
+pumukitadmin_track_pic:
+    pattern: /{mmId}/{id}/pic
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitadmin.controller.track:picAction

@@ -196,6 +196,29 @@ class TrackController extends Controller
     }
 
     /**
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @Template("PumukitAdminBundle:Pic:list.html.twig")
+     */
+    public function picAction(MultimediaObject $multimediaObject, Request $request)
+    {
+        $track = $multimediaObject->getTrackById($request->get('id'));
+        $numframe = $request->get('numframe');
+
+        $flagTrue = $this->get('pumukitencoder.picextractor')->extractPic($multimediaObject, $track, $numframe);
+        if ($flagTrue) {
+            $this->get('pumukitschema.track')->updateTrackInMultimediaObject($multimediaObject);
+        }
+
+
+        // render mms pics
+        //return $this->redirect($this->generateUrl('pumukitadmin_track_list', array('id' => $multimediaObject->getId())));
+        return array(
+                     'resource'      => $multimediaObject,
+                     'resource_name' => 'mms'
+                     );
+    }
+
+    /**
      * Get data in array or default values
      */
     private function getArrayData($formData)

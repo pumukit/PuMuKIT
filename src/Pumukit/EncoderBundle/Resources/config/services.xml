@@ -21,6 +21,14 @@
             <argument type="service" id="pumukitencoder.cpu"/>
             <argument type="service" id="pumukit.inspection"/>
         </service>
+        <service id="pumukitencoder.picextractor" class="Pumukit\EncoderBundle\Services\PicExtractorService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="pumukitschema.mmspic"/>
+            <argument>%pumukitencode.thumbnail.width%</argument>
+            <argument>%pumukitencode.thumbnail.height%</argument>
+	        <argument type="expression">parameter('kernel.root_dir') ~ '/../web/uploads/pic/'</argument>
+	        <argument>/uploads/pic</argument>
+        </service>
     </services>
 
 </container>
