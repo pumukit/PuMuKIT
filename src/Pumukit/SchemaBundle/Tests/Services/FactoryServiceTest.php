@@ -7,6 +7,8 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\Tag;
 
 class FactoryServiceTest extends WebTestCase
 {
@@ -41,6 +43,10 @@ class FactoryServiceTest extends WebTestCase
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
           ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')
+          ->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:Role')
+          ->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')
           ->remove(array());
         $this->dm->flush();
     }
@@ -176,6 +182,81 @@ class FactoryServiceTest extends WebTestCase
 
         $this->assertEquals(2, count($series_type1->getSeries()));
         $this->assertEquals(1, count($series_type2->getSeries()));
+    }
+
+    public function testGetRoles()
+    {
+        $role1 = new Role();
+        $role1->setCod('role1');
+
+        $role2 = new Role();
+        $role2->setCod('role2');
+
+        $role3 = new Role();
+        $role3->setCod('role3');
+
+        $this->dm->persist($role1);
+        $this->dm->persist($role2);
+        $this->dm->persist($role3);
+        $this->dm->flush();
+
+        $this->assertEquals(3, count($this->factory->getRoles()));
+    }
+
+    public function testFindSeriesById()
+    {
+        $this->createBroadcasts();
+
+        $series = $this->factory->createSeries();
+
+        $this->assertEquals($series, $this->factory->findSeriesById($series->getId(), null));
+    }
+
+    public function testGetParentTags()
+    {
+        $tag = new Tag();
+        $tag->setCod("ROOT");
+
+        $this->dm->persist($tag);
+        $this->dm->flush();
+
+        $tagA = new Tag();
+        $tagA->setCod("A");
+        $tagA->setParent($tag);
+        $this->dm->persist($tagA);
+
+        $tagB = new Tag();
+        $tagB->setCod("B");
+        $tagB->setParent($tag);
+        $this->dm->persist($tagB);
+
+        $tagB1 = new Tag();
+        $tagB1->setCod("B1");
+        $tagB1->setParent($tagB);
+        $this->dm->persist($tagB1);
+
+        $tagB2 = new Tag();
+        $tagB2->setCod("B2");
+        $tagB2->setParent($tagB);
+        $this->dm->persist($tagB2);
+
+        $tagB2A = new Tag();
+        $tagB2A->setCod("B2A");
+        $tagB2A->setParent($tagB2);
+        $this->dm->persist($tagB2A);
+
+        $this->dm->flush();
+
+        $this->assertEquals(2, count($this->factory->getParentTags()));
+    }
+
+    public function testGetMultimediaObjectTemplate()
+    {
+        $this->createBroadcasts();
+
+        $series = $this->factory->createSeries();
+
+        $this->assertEquals(MultimediaObject::STATUS_PROTOTYPE, $this->factory->getMultimediaObjectTemplate($series)->getStatus());
     }
 
     private function createBroadcasts()
