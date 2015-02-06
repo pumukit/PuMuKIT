@@ -3,7 +3,7 @@
     {% for job in jobs %}
       <tr>
         <td><ul><li></li><ul></td>
-        <td colspan="9">
+        <td colspan="11">
           {{ job.getStatusText() }}
           {% if status_error == job.getStatus() %}
           <a href="#" onclick="new Ajax.Updater('tracks_mms', '{{ path('pumukitadmin_track_retry_job', {'mmId': mmId, 'jobId': job.id, 'preview': 1}) }}', {asynchronous:true, evalScripts:true}); return false;">
@@ -71,7 +71,7 @@
          <td><a href="{{ path('pumukitadmin_track_download', {'id': track.id, 'mmId': mmId}) }}" download><img alt="{% trans %}download{% endtrans %}" title="{% trans %}download{% endtrans %}" src="/legacy/images/admin/mbuttons/download_inline.gif"></a></td>
       {% endif %}     
 
-      {% if true %} {# TODO (track.getPerfil().getDisplay()) #}
+      {% if track.getTags()|profile|display %}
       <td>
         <span class="trans_button" onclick="$('list_perfiles_{{ track.id }}').toggle()"><img src="/legacy/images/admin/mbuttons/use_inline.gif" alt="X" />
         <div class="trans_menu" id="list_perfiles_{{ track.id }}" style="display:none">
@@ -84,7 +84,7 @@
           <div class="list_options">
             <ul style="">
               {% for key in not_master_profiles|keys %}
-                <li><a href="#" onclick="new Ajax.Updater('tracks_mms', '{# TODO 'files/retrans?id='.$file->getId().'&mm='.$file->getMmId().'&profile='.$per->getId() #}, {asynchronous:true, evalScripts:true}); return false;">{{ key }}</a></li>
+                <li><a href="#" onclick="new Ajax.Updater('tracks_mms', '{{ path('pumukitadmin_track_retranscode', {'id': track.id, 'mmId': mmId, 'profile': key}) }}', {asynchronous:true, evalScripts:true}); return false;">{{ key }}</a></li>
               {% endfor %}
               <li class="cancel"><a href="#" onclick="return false;">{% trans %}Cancel{% endtrans %}...</a></li>
             </ul>        
@@ -126,9 +126,8 @@
       <td>
         &nbsp;{{ track.id }} - <strong>{{ track.getTags()|profile }}</strong>
         {{ track.getDescription() }}
-        ({{ track.getUrl()|basename }}/{{ track.getLanguage()|language_name }})
+        ({{ track.getPath()|basename }}/{{ track.getLanguage()|language_name }})
          - {{ track.getDuration()|duration_string }}
-         {# - TODO printf("%.2f", ($file->getSize() / 1048576)) MB #}
          - {{ (track.getSize() / 1048576)|number_format(2) }} MB
          - {# {{ track.getResolutionHor() }}x{{ track.getResolutionVer() }}
          {% if track.getDisplay() %}{% else %}({% trans %}Hidden{% endtrans %}){% endif %} #}

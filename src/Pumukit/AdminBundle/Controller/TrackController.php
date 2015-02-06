@@ -236,6 +236,22 @@ class TrackController extends Controller
     }
 
     /**
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     */
+    public function retranscodeAction(MultimediaObject $multimediaObject, Request $request)
+    {
+        $track = $multimediaObject->getTrackById($request->get('id'));
+        $profile = $request->get('profile');
+        $priority = 2;
+
+        $trackService = $this->get('pumukitschema.track');
+
+        $this->get('pumukitencoder.job')->addJob($track->getPath(), $profile, $priority, $multimediaObject, $track->getLanguage(), $track->getI18nDescription());
+
+        return $this->redirect($this->generateUrl('pumukitadmin_track_list', array('id' => $multimediaObject->getId())));
+    }
+
+    /**
      * Get data in array or default values
      */
     private function getArrayData($formData)

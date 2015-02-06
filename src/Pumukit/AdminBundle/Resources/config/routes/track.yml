@@ -81,3 +81,9 @@ pumukitadmin_track_download:
     methods: [GET, PUT, POST]
     defaults:
         _controller: pumukitadmin.controller.track:downloadAction
+
+pumukitadmin_track_retranscode:
+    pattern: /{mmId}/{id}/{profile}/retranscode
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitadmin.controller.track:retranscodeAction
