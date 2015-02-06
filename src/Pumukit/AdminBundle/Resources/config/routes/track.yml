@@ -75,3 +75,9 @@ pumukitadmin_track_pic:
     methods: [GET, PUT, POST]
     defaults:
         _controller: pumukitadmin.controller.track:picAction
+
+pumukitadmin_track_download:
+    pattern: /{mmId}/{id}/download
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitadmin.controller.track:downloadAction

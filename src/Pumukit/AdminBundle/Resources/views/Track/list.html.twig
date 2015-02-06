@@ -60,16 +60,15 @@
               <li><a href="#" onclick="new Ajax.Updater('pic_mms', '{{ path('pumukitadmin_track_pic', {'id': track.id, 'mmId': mmId, 'preview': 1, 'numframe': '90%'}) }}', {asynchronous:true, evalScripts:true, onLoading:function(request, json){$('pic_mms_load').show()}}); return false;">{% trans %}90%{% endtrans %}</a></li>
               <li class="cancel"><a href="#" onclick="return false;">{% trans %}Cancel{% endtrans %}...</a></li>
             </ul>
-        
-        
           </div>
+
         </div>
         </span>
       </td>
       {% endif %}
       
       {% if true %} {# TODO (sfConfig::get('app_videoserv_browser')) #}
-         <td><a target="_blank" href="{# TODO 'files/download?id='.$file->getId() #}"><img alt="{% trans %}download{% endtrans %}" title="{% trans %}download{% endtrans %}" src="/legacy/images/admin/mbuttons/download_inline.gif"></a></td>
+         <td><a href="{{ path('pumukitadmin_track_download', {'id': track.id, 'mmId': mmId}) }}" download><img alt="{% trans %}download{% endtrans %}" title="{% trans %}download{% endtrans %}" src="/legacy/images/admin/mbuttons/download_inline.gif"></a></td>
       {% endif %}     
 
       {% if true %} {# TODO (track.getPerfil().getDisplay()) #}

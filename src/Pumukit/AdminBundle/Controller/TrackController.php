@@ -4,6 +4,8 @@ namespace Pumukit\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Pumukit\SchemaBundle\Document\Track;
@@ -209,13 +211,28 @@ class TrackController extends Controller
             $this->get('pumukitschema.track')->updateTrackInMultimediaObject($multimediaObject);
         }
 
-
-        // render mms pics
-        //return $this->redirect($this->generateUrl('pumukitadmin_track_list', array('id' => $multimediaObject->getId())));
         return array(
                      'resource'      => $multimediaObject,
                      'resource_name' => 'mms'
                      );
+    }
+
+    /**
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     */
+    public function downloadAction(MultimediaObject $multimediaObject, Request $request)
+    {
+        $track = $multimediaObject->getTrackById($request->get('id'));
+
+        $response = new BinaryFileResponse($track->getPath());
+        $response->trustXSendfileTypeHeader();
+        $response->setContentDisposition(
+                                         ResponseHeaderBag::DISPOSITION_INLINE,
+                                         basename($track->getPath()),
+                                         iconv('UTF-8', 'ASCII//TRANSLIT', basename($track->getPath()))
+                                         );
+
+        return $response;
     }
 
     /**
