@@ -259,6 +259,22 @@ class FactoryServiceTest extends WebTestCase
         $this->assertEquals(MultimediaObject::STATUS_PROTOTYPE, $this->factory->getMultimediaObjectTemplate($series)->getStatus());
     }
 
+    public function testDeleteSeries()
+    {
+        $this->createBroadcasts();
+
+        $series = $this->factory->createSeries();
+        $mmobj = $this->factory->createMultimediaObject($series);
+
+        $this->assertEquals(1, count($this->seriesRepo->findAll()));
+        $this->assertEquals(2, count($this->mmobjRepo->findAll()));
+
+        $this->factory->deleteSeries($series);
+
+        $this->assertEquals(0, count($this->seriesRepo->findAll()));
+        $this->assertEquals(0, count($this->mmobjRepo->findAll()));
+    }
+
     private function createBroadcasts()
     {
         $locale = 'en';

@@ -175,6 +175,19 @@ class FactoryService
     }
 
     /**
+     * Get multimediaObject by id
+     *
+     * @param string $id
+     * @return Multimedia Object
+     */
+    public function findMultimediaObjectById($id)
+    {
+        $repo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+
+        return $repo->find($id);
+    }
+
+    /**
      * Get parent tags
      */
     public function getParentTags()
@@ -215,6 +228,25 @@ class FactoryService
         }
 
         return $tags;
+    }
+
+    /**
+     * Delete Series
+     *
+     * @param Series $series
+     */
+    public function deleteSeries(Series $series)
+    {      
+         $repoMmobjs = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+         
+         $multimediaObjects = $repoMmobjs->findBySeries($series);
+         foreach($multimediaObjects as $mm){
+             $this->dm->remove($mm);
+         }
+         
+         $this->dm->remove($series);
+
+         $this->dm->flush();
     }
 
     /**
