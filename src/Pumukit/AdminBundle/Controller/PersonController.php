@@ -5,6 +5,7 @@ namespace Pumukit\AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\Person;
@@ -76,6 +77,9 @@ class PersonController extends AdminController
     {
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
+        if (!$person) {
+            throw new NotFoundHttpException('Requested Person does not exist with this id: '.$request->get('id').'.');
+        }
         
         $form = $this->createForm(new PersonType(), $person);
 
@@ -104,6 +108,10 @@ class PersonController extends AdminController
     {
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
+        if (!$person) {
+            throw new NotFoundHttpException('Requested Person does not exist with this id: '.$request->get('id').'.');
+        }
+
         $limit = 5;
         $series = $personService->findSeriesWithPerson($person, $limit);
 
@@ -171,6 +179,9 @@ class PersonController extends AdminController
     {
         $person = new Person();
         $person->setName(preg_replace('/\d+ - /', '', $request->get('name')));
+        if (!$person) {
+            throw new NotFoundHttpException('Requested Person does not exist with this id: '.$request->get('id').'.');
+        }
         
         $form = $this->createForm(new PersonType(), $person);
         
@@ -216,6 +227,9 @@ class PersonController extends AdminController
     {
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
+        if (!$person) {
+            throw new NotFoundHttpException('Requested Person does not exist with this id: '.$request->get('id').'.');
+        }
         
         $form = $this->createForm(new PersonType(), $person);
 
@@ -260,6 +274,10 @@ class PersonController extends AdminController
     {
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
+        if (!$person) {
+            throw new NotFoundHttpException('Requested Person does not exist with this id: '.$request->get('id').'.');
+        }
+
         try{
             $multimediaObject = $personService->createRelationPerson($person, $role, $multimediaObject);
             // TODO
@@ -308,6 +326,10 @@ class PersonController extends AdminController
     {
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
+        if (!$person) {
+            throw new NotFoundHttpException('Requested Person does not exist with this id: '.$request->get('id').'.');
+        }
+
         $multimediaObject = $personService->upPersonWithRole($person, $role, $multimediaObject);
 
         $template = '';
@@ -334,6 +356,10 @@ class PersonController extends AdminController
     {
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
+        if (!$person) {
+            throw new NotFoundHttpException('Requested Person does not exist with this id: '.$request->get('id').'.');
+        }
+
         $multimediaObject = $personService->downPersonWithRole($person, $role, $multimediaObject);
 
         $template = '';
@@ -360,6 +386,10 @@ class PersonController extends AdminController
     {
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
+        if (!$person) {
+            throw new NotFoundHttpException('Requested Person does not exist with this id: '.$request->get('id').'.');
+        }
+
         $multimediaObject = $personService->deleteRelation($person, $role, $multimediaObject);
 
         $template = '';
@@ -384,6 +414,10 @@ class PersonController extends AdminController
     {
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
+        if (!$person) {
+            throw new NotFoundHttpException('Requested Person does not exist with this id: '.$request->get('id').'.');
+        }
+
         try{
             if (0 === $personService->countMultimediaObjectsWithPerson($person)){
                 $personService->deletePerson($person);
