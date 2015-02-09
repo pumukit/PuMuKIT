@@ -33,6 +33,8 @@
       {% for child in form if child.vars.id not in ['pumukitadmin_track_update_i18n_description'] %}
         {{ form_row(child) }}
       {% endfor %}
+
+      {{ form_rest(form) }}
       
     </fieldset>
 
