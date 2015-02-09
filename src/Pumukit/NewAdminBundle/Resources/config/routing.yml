@@ -1,0 +1,3 @@
+pumukitnewadmin_person:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/person.yml
+    prefix: /admin/person

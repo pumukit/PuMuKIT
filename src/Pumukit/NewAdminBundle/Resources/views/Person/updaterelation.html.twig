@@ -1,0 +1,31 @@
+{% form_theme form 'PumukitAdminBundle:Themes:fields.html.twig' %}
+
+<div id="tv_admin_container">
+
+  <form onsubmit="Modalbox.hide();
+                  new Ajax.Updater('{{ role.id }}_person_mms', 
+                  '{{ path('pumukitadmin_person_update_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}', 
+                  {
+		          asynchronous:true, evalScripts:true, method:'POST',
+		          parameters:Form.serialize(this)
+                  });
+		          return false;"
+	    action="{{ path('pumukitadmin_person_update_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}" method="POST">
+
+    <input type="hidden" name="id" id="id" value="{{ person.id }}">
+
+    <fieldset>
+
+      {% for child in form %}
+        {{ form_row(child) }}
+      {% endfor %}
+      
+    </fieldset>
+    
+    <ul class="tv_admin_actions">
+      <li><input type="submit" name="OK" value="{% trans %}OK{% endtrans %}" class="tv_admin_action_save MB_focusable"></li> {# TODO CHECK MAIL AND WEB #}
+      <li><input class="tv_admin_action_delete MB_focusable" onclick="Modalbox.hide(); return false;" type="button" value="{% trans %}Cancel{% endtrans %}"></li>
+    </ul>
+
+  </form>
+</div>

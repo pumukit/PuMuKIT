@@ -1,0 +1,109 @@
+pumukitnewadmin_person_index:
+    pattern: /
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.person:indexAction
+        _sylius:
+            filterable: true
+
+pumukitnewadmin_person_create:
+    pattern: /create
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.person:createAction
+        _sylius:
+            redirect: pumukitnewadmin_person_index
+
+pumukitnewadmin_person_update:
+    pattern: /{id}/update
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.person:updateAction
+
+pumukitnewadmin_person_batch_delete:
+    pattern: /delete
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.person:batchDeleteAction
+        _sylius:
+            redirect: pumukitnewadmin_person_index
+
+pumukitnewadmin_person_delete:
+    pattern: /{id}
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.person:deleteAction
+        _sylius:
+            redirect: pumukitnewadmin_person_index
+
+pumukitnewadmin_person_copy:
+    pattern: /{id}/copy
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.person:copyAction
+        _sylius:
+            redirect: pumukitnewadmin_person_index
+
+pumukitnewadmin_person_show:
+    pattern: /{id}/show
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.person:showAction
+
+pumukitnewadmin_person_up:
+    pattern: /{id}/{roleId}/{mmId}/up
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.person:upAction
+        _sylius:
+            redirect: pumukitnewadmin_person_index
+
+pumukitnewadmin_person_down:
+    pattern: /{id}/{roleId}/{mmId}/down
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.person:downAction
+        _sylius:
+            redirect: pumukitnewadmin_person_index
+
+pumukitnewadmin_person_list_autocomplete:
+    pattern: /{mmId}/{roleId}/listautocomplete
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.person:listAutocompleteAction
+
+pumukitnewadmin_person_list:
+    pattern: /list
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.person:listAction
+
+pumukitnewadmin_person_create_relation:
+    pattern: /{mmId}/{roleId}/createrelation
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.person:createRelationAction
+
+pumukitnewadmin_person_update_relation:
+    pattern: /{id}/{roleId}/{mmId}/updaterelation
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.person:updateRelationAction
+
+pumukitnewadmin_person_delete_relation:
+    pattern: /{id}/{roleId}/{mmId}/delete_relation
+    methods: [POST, DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.person:deleteRelationAction
+
+pumukitnewadmin_person_link:
+    pattern: /{mmId}/{roleId}/{id}/link
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.person:linkAction
+
+pumukitnewadmin_person_auto_complete:
+    pattern: /autocomplete
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.person:autoCompleteAction

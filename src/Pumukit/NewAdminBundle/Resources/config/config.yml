@@ -1,0 +1,8 @@
+sylius_resource:
+    resources:
+        pumukitnewadmin.person:
+            driver: doctrine/mongodb-odm
+            templates: PumukitNewAdminBundle:Person
+            classes:
+                model: Pumukit\SchemaBundle\Document\Person
+                controller: Pumukit\NewAdminBundle\Controller\PersonController

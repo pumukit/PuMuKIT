@@ -1,0 +1,80 @@
+<!-- Filter -->
+<div class="tv_admin_filters">
+  <form id="filter_people" onsubmit="$('filters_letter').value=null; new Ajax.Updater('list_people', '{{ path('pumukitadmin_person_list') }}', {method:'POST', asynchronous:true, evalScripts:true, parameters:Form.serialize(this)}); return false;" action="{{ path('pumukitadmin_person_list') }}" method="post">
+  <fieldset>
+    <h2>{% trans %}Search{% endtrans %}</h2>
+
+    <div class="form-row">
+      <label for="name">{% trans %}Name{% endtrans %}:</label>
+      <div class="content">
+        {# TODO culture #}
+        {% set criteria = app.session.get('admin/person/criteria') %}
+        <input type="text" name="criteria[name]" id="filters_name" value="{{ criteria['name']|default("") }}">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label for="other">{% trans %}Other{% endtrans %}:</label>
+      <div class="content">
+        <input type="text" name="criteria[other.en]" id="filters_other" value="{{ criteria['other']|default("") }}">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label for="letter">{% trans %}Letter{% endtrans %}:</label>
+      <div class="content">
+        <input id="filters_letter" type="hidden" value="" name="criteria[letter]">
+        <a href="#" onclick="window.filter_click_letter('A')">A</a> 
+        <a href="#" onclick="window.filter_click_letter('B')">B</a> 
+        <a href="#" onclick="window.filter_click_letter('C')">C</a> 
+        <a href="#" onclick="window.filter_click_letter('D')">D</a> 
+        <a href="#" onclick="window.filter_click_letter('E')">E</a> 
+        <a href="#" onclick="window.filter_click_letter('F')">F</a> 
+        <a href="#" onclick="window.filter_click_letter('G')">G</a> 
+        <a href="#" onclick="window.filter_click_letter('H')">H</a> 
+        <a href="#" onclick="window.filter_click_letter('I')">I</a> 
+        <a href="#" onclick="window.filter_click_letter('J')">J</a> 
+        <a href="#" onclick="window.filter_click_letter('K')">K</a> 
+        <a href="#" onclick="window.filter_click_letter('L')">L</a> 
+        <a href="#" onclick="window.filter_click_letter('M')">M</a> 
+        <a href="#" onclick="window.filter_click_letter('N')">N</a> 
+        <a href="#" onclick="window.filter_click_letter('O')">O</a> 
+        <a href="#" onclick="window.filter_click_letter('P')">P</a> 
+        <a href="#" onclick="window.filter_click_letter('Q')">Q</a> 
+        <a href="#" onclick="window.filter_click_letter('R')">R</a> 
+        <a href="#" onclick="window.filter_click_letter('S')">S</a> 
+        <a href="#" onclick="window.filter_click_letter('T')">T</a> 
+        <a href="#" onclick="window.filter_click_letter('U')">U</a> 
+        <a href="#" onclick="window.filter_click_letter('V')">V</a> 
+        <a href="#" onclick="window.filter_click_letter('W')">W</a> 
+        <a href="#" onclick="window.filter_click_letter('X')">X</a> 
+        <a href="#" onclick="window.filter_click_letter('Y')">Y</a> 
+        <a href="#" onclick="window.filter_click_letter('Z')">Z</a> 
+      </div>
+    </div>
+
+  </fieldset>
+
+  <ul class="tv_admin_actions">
+    <li>
+      <input class="tv_admin_action_reset_filter" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
+    </li>
+    <li>
+      <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="tv_admin_action_filter">
+    </li>
+  </ul>
+</form>
+</div>
+
+<script type="text/javascript">
+  window.filter_click_letter = function(letter)
+  {
+    $('filters_letter').value= letter; 
+    new Ajax.Updater('list_people', '{{ path('pumukitadmin_person_list') }}', {
+                      asynchronous:true, 
+                      evalScripts: true,
+                      method: 'POST',
+                      parameters: Form.serialize($('filter_people'))}
+    );
+  }
+</script>
