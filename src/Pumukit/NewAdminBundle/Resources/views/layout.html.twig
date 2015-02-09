@@ -6,14 +6,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!-- Twitter Bootstrap -->
-        <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="{{ asset('/bundles/pumukitnewadmin/css/bootstrap.min.css') }}" rel="stylesheet">
 
         <!-- Material Design for Bootstrap -->
-        <link href="//fezvrasta.github.io/bootstrap-material-design/dist/css/material-wfont.min.css" rel="stylesheet">
-        <link href="//fezvrasta.github.io/bootstrap-material-design/dist/css/ripples.min.css" rel="stylesheet">
+        <link href="{{ asset('/bundles/pumukitnewadmin/css/material-wfont.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('/bundles/pumukitnewadmin/css/ripples.min.css') }}" rel="stylesheet">
 
         <!-- Dropdown.js -->
-        <link href="//cdn.rawgit.com/FezVrasta/dropdown.js/master/jquery.dropdown.css" rel="stylesheet">
+        <link href="{{ asset('/bundles/pumukitnewadmin/css/jquery.dropdown.css') }}" rel="stylesheet">
 
         <style>
       * {
@@ -42,12 +42,12 @@
         </div>
         {% block javascripts %}
 
-        <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-        <script src="//fezvrasta.github.io/bootstrap-material-design/dist/js/ripples.min.js"></script>
-        <script src="//fezvrasta.github.io/bootstrap-material-design/dist/js/material.min.js"></script>
-        <script src="//fezvrasta.github.io/snackbarjs/dist/snackbar.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/noUiSlider/6.2.0/jquery.nouislider.min.js"></script>
+        <script src="{{ asset('/bundles/pumukitnewadmin/js/jquery-1.10.2.min.js') }}"></script>
+        <script src="{{ asset('/bundles/pumukitnewadmin/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('/bundles/pumukitnewadmin/js/ripples.min.js') }}"></script>
+        <script src="{{ asset('/bundles/pumukitnewadmin/js/material.min.js') }}"></script>
+        <script src="{{ asset('/bundles/pumukitnewadmin/js/snackbar.min.js') }}"></script>
+        <script src="{{ asset('/bundles/pumukitnewadmin/js/jquery.nouislider.min.js') }}"></script>
         <script>
             $(function() {
                 $.material.init();
