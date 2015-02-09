@@ -19,21 +19,26 @@ class MultimediaObjectTemplateController extends MultimediaObjectController
     {
         $config = $this->getConfiguration();
         
-        // TODO VALIDATE SERIES AND ROLES
         $factoryService = $this->get('pumukitschema.factory');
 
         $roles = $factoryService->getRoles();
+        if (null === $roles){
+            throw new \Exception('Not found any role.');
+        }
 
         $sessionId = $this->get('session')->get('admin/series/id', null);
         $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
+        if (null === $series){
+            throw new \Exception('Series with id '.$request->get('id').' or with session id '.$sessionId.' not found.');
+        }
         $this->get('session')->set('admin/series/id', $series->getId());
-        
+  
         $parentTags = $factoryService->getParentTags();
         $mmtemplate = $factoryService->getMultimediaObjectTemplate($series);
         
         $formMeta = $this->createForm($config->getFormType().'_meta', $mmtemplate);
 
-        $pubDecisionsTags = $this->getTagsByCod('PUBDECISIONS', true);
+        $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
 
         $template = '';
         if (MultimediaObject::STATUS_PROTOTYPE === $mmtemplate->getStatus()){
@@ -52,7 +57,6 @@ class MultimediaObjectTemplateController extends MultimediaObjectController
           ;
     }
     
-    // TODO
     /**
      * Display the form for editing or update the resource.
      */
@@ -60,13 +64,18 @@ class MultimediaObjectTemplateController extends MultimediaObjectController
     {
         $config = $this->getConfiguration();
 
-        //  TODO VALIDATE SERIES and roles
         $factoryService = $this->get('pumukitschema.factory');
 
         $roles = $factoryService->getRoles();
+        if (null === $roles){
+            throw new \Exception('Not found any role.');
+        }
 
         $sessionId = $this->get('session')->get('admin/series/id', null);
         $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
+        if (null === $series){
+            throw new \Exception('Series with id '.$request->get('id').' or with session id '.$sessionId.' not found.');
+        }
         $this->get('session')->set('admin/series/id', $series->getId());
 
         $parentTags = $factoryService->getParentTags();
@@ -74,8 +83,7 @@ class MultimediaObjectTemplateController extends MultimediaObjectController
 
         $formMeta = $this->createForm($config->getFormType().'_meta', $mmtemplate);
 
-        //$pubChannelsTags = $this->getTagsByCod('PUBCHANNELS', true);
-        $pubDecisionsTags = $this->getTagsByCod('PUBDECISIONS', true);
+        $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
 
         $method = $request->getMethod();
         if (in_array($method, array('POST', 'PUT', 'PATCH')) &&

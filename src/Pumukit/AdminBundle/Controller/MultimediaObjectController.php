@@ -106,56 +106,63 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function editAction(Request $request)
     {
-      $config = $this->getConfiguration();
+        $config = $this->getConfiguration();
 
-      // TODO VALIDATE SERIES and roles
-      $factoryService = $this->get('pumukitschema.factory');
+        $factoryService = $this->get('pumukitschema.factory');
+        
+        $roles = $factoryService->getRoles();
+        if (null === $roles){
+            throw new \Exception('Not found any role.');
+        }
 
-      $sessionId = $this->get('session')->get('admin/series/id', null);
-      $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
-      $this->get('session')->set('admin/series/id', $series->getId());
+        $sessionId = $this->get('session')->get('admin/series/id', null);
+        $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
+        $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
+        if (null === $series){
+            throw new \Exception('Series with id '.$request->get('id').' or with session id '.$sessionId.' not found.');
+        }
+        $this->get('session')->set('admin/series/id', $series->getId());
 
-      $roles = $factoryService->getRoles();
-      $parentTags = $factoryService->getParentTags();
+        $parentTags = $factoryService->getParentTags();
 
-      $resource = $this->findOr404($request);
+        $resource = $this->findOr404($request);
 
-      $formMeta = $this->createForm($config->getFormType().'_meta', $resource);
-      $formPub = $this->createForm($config->getFormType().'_pub', $resource);
+        $formMeta = $this->createForm($config->getFormType().'_meta', $resource);
+        $formPub = $this->createForm($config->getFormType().'_pub', $resource);
 
-      $pubChannelTags = $this->getTagsByCod('PUBCHANNELS', true);
-      $pubDecisionsTags = $this->getTagsByCod('PUBDECISIONS', true);
+        $pubChannelTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
+        $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
 
-      $jobs = $this->get('pumukitencoder.job')->getJobsByMultimediaObjectId($resource->getId());
-      $jobStatusError = $this->get('pumukitencoder.job')->getStatusError();
+        $jobs = $this->get('pumukitencoder.job')->getJobsByMultimediaObjectId($resource->getId());
+        $jobStatusError = $this->get('pumukitencoder.job')->getStatusError();
 
-      $notMasterProfiles = $this->get('pumukitencoder.profile')->getMasterProfiles(false);
+        $notMasterProfiles = $this->get('pumukitencoder.profile')->getMasterProfiles(false);
 
-      $template = '';      
-      if (MultimediaObject::STATUS_PROTOTYPE === $resource->getStatus()){
-          $template = '_template';
-      }
+        $template = '';      
+        if (MultimediaObject::STATUS_PROTOTYPE === $resource->getStatus()){
+            $template = '_template';
+        }
+        
+        $view = $this
+          ->view()
+          ->setTemplate($config->getTemplate('edit.html'))
+          ->setData(array(
+                          'mm'            => $resource,
+                          'form_meta'     => $formMeta->createView(),
+                          'form_pub'      => $formPub->createView(),
+                          'series'        => $series,
+                          'roles'         => $roles,
+                          'pub_channels'  => $pubChannelTags,
+                          'pub_decisions' => $pubDecisionsTags,
+                          'parent_tags'   => $parentTags,
+                          'jobs'          => $jobs,
+                          'status_error'  => $jobStatusError,
+                          'not_master_profiles' => $notMasterProfiles,
+                          'template' => $template
+                          ))
+          ;
 
-      $view = $this
-        ->view()
-        ->setTemplate($config->getTemplate('edit.html'))
-        ->setData(array(
-                        'mm'            => $resource,
-                        'form_meta'     => $formMeta->createView(),
-                        'form_pub'      => $formPub->createView(),
-                        'series'        => $series,
-                        'roles'         => $roles,
-                        'pub_channels'  => $pubChannelTags,
-                        'pub_decisions' => $pubDecisionsTags,
-                        'parent_tags'   => $parentTags,
-                        'jobs'          => $jobs,
-                        'status_error'  => $jobStatusError,
-                        'not_master_profiles' => $notMasterProfiles,
-                        'template' => $template
-                        ))
-        ;
-
-      return $this->handleView($view);
+        return $this->handleView($view);
     }
 
     // TODO
@@ -164,74 +171,80 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function updatemetaAction(Request $request)
     {
-      $config = $this->getConfiguration();
+        $config = $this->getConfiguration();
 
-      // TODO VALIDATE SERIES and roles
-      $factoryService = $this->get('pumukitschema.factory');
+        $factoryService = $this->get('pumukitschema.factory');
 
-      $sessionId = $this->get('session')->get('admin/series/id', null);
-      $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
-      $this->get('session')->set('admin/series/id', $series->getId());
-
-      $roles = $factoryService->getRoles();
-      $parentTags = $factoryService->getParentTags();
-
-      $resource = $this->findOr404($request);
-
-      $formMeta = $this->createForm($config->getFormType().'_meta', $resource);
-      $formPub = $this->createForm($config->getFormType().'_pub', $resource);
-
-      $pubChannelsTags = $this->getTagsByCod('PUBCHANNELS', true);
-      $pubDecisionsTags = $this->getTagsByCod('PUBDECISIONS', true);
-
-      $method = $request->getMethod();
-      if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
-          $formMeta->submit($request, !$request->isMethod('PATCH'))->isValid()) {
-        $this->domainManager->update($resource);
-
-        if ($config->isApiRequest()) {
-          return $this->handleView($this->view($formMeta));
+        $roles = $factoryService->getRoles();
+        if (null === $roles){
+            throw new \Exception('Not found any role.');
         }
 
-        /*
-          $criteria = $this->getCriteria($config);
-          $resources = $this->getResources($request, $config, $criteria);
-        */
+        $sessionId = $this->get('session')->get('admin/series/id', null);
+        $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
+        if (null === $series){
+            throw new \Exception('Series with id '.$request->get('id').' or with session id '.$sessionId.' not found.');
+        }
+        $this->get('session')->set('admin/series/id', $series->getId());
 
-        $mms = $this->getListMultimediaObjects($series);
+        $parentTags = $factoryService->getParentTags();
+
+        $resource = $this->findOr404($request);
+
+        $formMeta = $this->createForm($config->getFormType().'_meta', $resource);
+        $formPub = $this->createForm($config->getFormType().'_pub', $resource);
+
+        $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
+        $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
+
+        $method = $request->getMethod();
+        if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
+            $formMeta->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+          $this->domainManager->update($resource);
+
+          if ($config->isApiRequest()) {
+            return $this->handleView($this->view($formMeta));
+          }
+          
+          /*
+            $criteria = $this->getCriteria($config);
+            $resources = $this->getResources($request, $config, $criteria);
+          */
+          
+          $mms = $this->getListMultimediaObjects($series);
+
+          $view = $this
+            ->view()
+            ->setTemplate($this->getConfiguration()->getTemplate('list.html'))
+            ->setData(array(
+                            'series' => $series,
+                            'mms' => $mms,
+                            ))
+            ;
+          
+          return $this->handleView($view);
+        }
+
+        if ($config->isApiRequest()) {
+            return $this->handleView($this->view($formMeta));
+        }
 
         $view = $this
           ->view()
-          ->setTemplate($this->getConfiguration()->getTemplate('list.html'))
+          ->setTemplate($config->getTemplate('edit.html'))
           ->setData(array(
-                          'series' => $series,
-                          'mms' => $mms,
+                          'mm'            => $resource,
+                          'form_meta'     => $formMeta->createView(),
+                          'form_pub'      => $formPub->createView(),
+                          'series'        => $series,
+                          'roles'         => $roles,
+                          'pub_channels'  => $pubChannelsTags,
+                          'pub_decisions' => $pubDecisionsTags,
+                          'parent_tags'   => $parentTags,
                           ))
           ;
 
         return $this->handleView($view);
-      }
-
-      if ($config->isApiRequest()) {
-        return $this->handleView($this->view($formMeta));
-      }
-
-      $view = $this
-        ->view()
-        ->setTemplate($config->getTemplate('edit.html'))
-        ->setData(array(
-                        'mm'            => $resource,
-                        'form_meta'     => $formMeta->createView(),
-                        'form_pub'      => $formPub->createView(),
-                        'series'        => $series,
-                        'roles'         => $roles,
-                        'pub_channels'  => $pubChannelsTags,
-                        'pub_decisions' => $pubDecisionsTags,
-                        'parent_tags'   => $parentTags,
-                        ))
-        ;
-
-      return $this->handleView($view);
     }
 
     // TODO
@@ -240,72 +253,78 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function updatepubAction(Request $request)
     {
-      $config = $this->getConfiguration();
+        $config = $this->getConfiguration();
 
-      // TODO VALIDATE SERIES and roles
-      $factoryService = $this->get('pumukitschema.factory');
+        $factoryService = $this->get('pumukitschema.factory');
 
-      $sessionId = $this->get('session')->get('admin/series/id', null);
-      $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
-      $this->get('session')->set('admin/series/id', $series->getId());
-
-      $roles = $factoryService->getRoles();
-      $parentTags = $factoryService->getParentTags();
-
-      $resource = $this->findOr404($request);
-
-      $formMeta = $this->createForm($config->getFormType().'_meta', $resource);
-      $formPub = $this->createForm($config->getFormType().'_pub', $resource);
-
-      $pubChannelsTags = $this->getTagsByCod('PUBCHANNELS', true);
-      $pubDecisionsTags = $this->getTagsByCod('PUBDECISIONS', true);
-
-      $method = $request->getMethod();
-      if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
-          $formPub->submit($request, !$request->isMethod('PATCH'))->isValid()) {
-        $resource = $this->updateTags($request->get('pub_channels', null), "PUCH", $resource);
-        $resource = $this->updateTags($request->get('pub_decisions', null), "PUDE", $resource);
-
-        $this->domainManager->update($resource);
-
-        if ($config->isApiRequest()) {
-          return $this->handleView($this->view($formPub));
+        $roles = $factoryService->getRoles();
+        if (null === $roles){
+            throw new \Exception('Not found any role.');
         }
 
-        $mms = $this->getListMultimediaObjects($series);
+        $sessionId = $this->get('session')->get('admin/series/id', null);
+        $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
+        if (null === $series){
+            throw new \Exception('Series with id '.$request->get('id').' or with session id '.$sessionId.' not found.');
+        }
+        $this->get('session')->set('admin/series/id', $series->getId());
+
+        $parentTags = $factoryService->getParentTags();
+
+        $resource = $this->findOr404($request);
+
+        $formMeta = $this->createForm($config->getFormType().'_meta', $resource);
+        $formPub = $this->createForm($config->getFormType().'_pub', $resource);
+
+        $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
+        $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
+
+        $method = $request->getMethod();
+        if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
+            $formPub->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+          $resource = $this->updateTags($request->get('pub_channels', null), "PUCH", $resource);
+          $resource = $this->updateTags($request->get('pub_decisions', null), "PUDE", $resource);
+
+          $this->domainManager->update($resource);
+
+          if ($config->isApiRequest()) {
+              return $this->handleView($this->view($formPub));
+          }
+
+          $mms = $this->getListMultimediaObjects($series);
+
+          $view = $this
+            ->view()
+            ->setTemplate($this->getConfiguration()->getTemplate('list.html'))
+            ->setData(array(
+                            'series' => $series,
+                            'mms' => $mms,
+                            ))
+            ;
+
+          return $this->handleView($view);
+        }
+
+        if ($config->isApiRequest()) {
+            return $this->handleView($this->view($formPub));
+        }
 
         $view = $this
           ->view()
-          ->setTemplate($this->getConfiguration()->getTemplate('list.html'))
+          ->setTemplate($config->getTemplate('edit.html'))
           ->setData(array(
-                          'series' => $series,
-                          'mms' => $mms,
+                          'mm'            => $resource,
+                          'form_meta'     => $formMeta->createView(),
+                          'form_pub'      => $formPub->createView(),
+                          'series'        => $series,
+                          'roles'         => $roles,
+                          'pub_channels'  => $pubChannelsTags,
+                          'pub_decisions' => $pubDecisionsTags,
+                          'parent_tags'   => $parentTags,
                           ))
           ;
 
         return $this->handleView($view);
-      }
-
-      if ($config->isApiRequest()) {
-        return $this->handleView($this->view($formPub));
-      }
-
-      $view = $this
-        ->view()
-        ->setTemplate($config->getTemplate('edit.html'))
-        ->setData(array(
-                        'mm'            => $resource,
-                        'form_meta'     => $formMeta->createView(),
-                        'form_pub'      => $formPub->createView(),
-                        'series'        => $series,
-                        'roles'         => $roles,
-                        'pub_channels'  => $pubChannelsTags,
-                        'pub_decisions' => $pubDecisionsTags,
-                        'parent_tags'   => $parentTags,
-                        ))
-        ;
-
-      return $this->handleView($view);
     }
 
 
@@ -314,21 +333,20 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function getChildrenTagAction(Tag $tag, Request $request)
     {
-      $config = $this->getConfiguration();
+        $config = $this->getConfiguration();
 
-      $view = $this
-        ->view()
-        ->setTemplate($config->getTemplate('listtagsajax.html'))
-        ->setData(array(
-                        'nodes' => $tag->getChildren(),
-                        'parent' => $tag->getId(),
-                        'mmId' => $request->get('mm_id'),
-                        'block_tag' => $request->get('tag_id'),
-                        ))
-        ;
+        $view = $this
+          ->view()
+          ->setTemplate($config->getTemplate('listtagsajax.html'))
+          ->setData(array(
+                          'nodes' => $tag->getChildren(),
+                          'parent' => $tag->getId(),
+                          'mmId' => $request->get('mm_id'),
+                          'block_tag' => $request->get('tag_id'),
+                          ))
+          ;
 
-      return $this->handleView($view);
-    
+        return $this->handleView($view);
     }
 
     /**
@@ -336,70 +354,51 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function addTagAction(Request $request)
     {
-      $config = $this->getConfiguration();
+        $config = $this->getConfiguration();
 
-      $resource = $this->findOr404($request);
+        $resource = $this->findOr404($request);
 
-      $tagService = $this->get('pumukitschema.tag');
+        $tagService = $this->get('pumukitschema.tag');
 
-      $addedTags = $tagService->addTagToMultimediaObject($resource, $request->get('tagId'));
+        $addedTags = $tagService->addTagToMultimediaObject($resource, $request->get('tagId'));
 
-      $json = array('added' => array(), 'recommended' => array());
-      foreach($addedTags as $n){
-        $json['added'][] = array(
-                                 'id' => $n->getId(),
-                                 'cod' => $n->getCod(),
-                                 'name' => $n->getTitle(),
-                                 'group' => $n->getPath()
-                                 );
-      }
+        $json = array('added' => array(), 'recommended' => array());
+        foreach($addedTags as $n){
+            $json['added'][] = array(
+                                     'id' => $n->getId(),
+                                     'cod' => $n->getCod(),
+                                     'name' => $n->getTitle(),
+                                     'group' => $n->getPath()
+                                     );
+        }
 
-      return new JsonResponse($json);
+        return new JsonResponse($json);
     }
-
-
 
     /**
      * Delete Tag
      */
     public function deleteTagAction(Request $request)
     {
-      $config = $this->getConfiguration();
+        $config = $this->getConfiguration();
 
-      $resource = $this->findOr404($request);
+        $resource = $this->findOr404($request);
 
-      $tagService = $this->get('pumukitschema.tag');
+        $tagService = $this->get('pumukitschema.tag');
 
-      $deletedTags = $tagService->removeTagFromMultimediaObject($resource, $request->get('tagId'));
+        $deletedTags = $tagService->removeTagFromMultimediaObject($resource, $request->get('tagId'));
 
-      $json = array('deleted' => array(), 'recommended' => array());
-      foreach($deletedTags as $n){
-        $json['deleted'][] = array(
-                                   'id' => $n->getId(),
-                                   'cod' => $n->getCod(),
-                                   'name' => $n->getTitle(),
-                                   'group' => $n->getPath()
-                                   );
-      }
+        $json = array('deleted' => array(), 'recommended' => array());
+        foreach($deletedTags as $n){
+            $json['deleted'][] = array(
+                                       'id' => $n->getId(),
+                                       'cod' => $n->getCod(),
+                                       'name' => $n->getTitle(),
+                                       'group' => $n->getPath()
+                                       );
+        }
 
-      return new JsonResponse($json);
-    }
-
-    /**
-     * Get tags by cod
-     */
-    public function getTagsByCod($cod, $getChildren)
-    {
-      $dm = $this->get('doctrine_mongodb.odm.document_manager');
-      $repository = $dm->getRepository('PumukitSchemaBundle:Tag');
-
-      $tags = $repository->findOneByCod($cod);
-
-      if ($tags && $getChildren) {
-        return $tags->getChildren();
-      }
-
-      return $tags;
+        return new JsonResponse($json);
     }
 
     /**
@@ -407,25 +406,25 @@ class MultimediaObjectController extends SortableAdminController
      */
     private function updateTags($checkedTags, $codStart, $resource)
     {
-      if (null !== $checkedTags) {
-        foreach ($resource->getTags() as $tag) {
-          if ((0 == strpos($tag->getCod(), $codStart)) && (false !== strpos($tag->getCod(), $codStart)) && (!in_array($tag->getCod(), $checkedTags))) {
-            $resource->removeTag($tag);
+        if (null !== $checkedTags) {
+          foreach ($resource->getTags() as $tag) {
+              if ((0 == strpos($tag->getCod(), $codStart)) && (false !== strpos($tag->getCod(), $codStart)) && (!in_array($tag->getCod(), $checkedTags))) {
+                  $resource->removeTag($tag);
+              }
           }
-        }
-        foreach ($checkedTags as $cod => $checked) {
-          $tag = $this->getTagsByCod($cod, false);
-          $resource->addTag($tag);
-        }
-      } else {
-        foreach ($resource->getTags() as $tag) {
-          if ((0 == strpos($tag->getCod(), $codStart)) && (false !== strpos($tag->getCod(), $codStart))) {
-            $resource->removeTag($tag);
+          foreach ($checkedTags as $cod => $checked) {
+            $tag = $this->get('pumukitschema.factory')->getTagsByCod($cod, false);
+              $resource->addTag($tag);
           }
+        } else {
+            foreach ($resource->getTags() as $tag) {
+                if ((0 == strpos($tag->getCod(), $codStart)) && (false !== strpos($tag->getCod(), $codStart))) {
+                    $resource->removeTag($tag);
+                }
+            }
         }
-      }
 
-      return $resource;
+        return $resource;
     }
 
     /**
@@ -434,23 +433,22 @@ class MultimediaObjectController extends SortableAdminController
      */
     private function getListMultimediaObjects(Series $series)
     {
-      $page = $this->get('session')->get('admin/mms/page', 1);
+        $page = $this->get('session')->get('admin/mms/page', 1);
 
-      $coll_mms = $series->getMultimediaObjects();
+        $coll_mms = $series->getMultimediaObjects();
 
-      $adapter = new DoctrineCollectionAdapter($coll_mms);
-      $mms = new Pagerfanta($adapter);
+        $adapter = new DoctrineCollectionAdapter($coll_mms);
+        $mms = new Pagerfanta($adapter);
 
-      $mms
-        ->setCurrentPage($page, true, true)
-        ->setMaxPerPage(12)
-        ;
+        $mms
+          ->setCurrentPage($page, true, true)
+          ->setMaxPerPage(12)
+          ;
 
-      // TODO get criteria
+        // TODO get criteria
 
-      return $mms;
+        return $mms;
     }
-
 
     /**
      * {@inheritdoc}

@@ -198,6 +198,26 @@ class FactoryService
     }
 
     /**
+     * Get tags by cod
+     *
+     * @param string $cod
+     * @param boolean $getChildren
+     * @return ArrayCollection $tags
+     */
+    public function getTagsByCod($cod, $getChildren)
+    {
+        $repository = $this->dm->getRepository('PumukitSchemaBundle:Tag');
+
+        $tags = $repository->findOneByCod($cod);
+
+        if ($tags && $getChildren) {
+            return $tags->getChildren();
+        }
+
+        return $tags;
+    }
+
+    /**
      * Create multimedia object from prototype
      *
      * @param  MultimediaObject $prototype
