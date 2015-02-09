@@ -16,6 +16,10 @@ class SeriesAdminController extends AdminController
       $criteria = $this->getCriteria($config);
       $resources = $this->getResources($request, $config, $criteria);
 
+      if ((0 === count($resources)) && (null !== $this->get('session')->get('admin/series/id'))){
+          $this->get('session')->remove('admin/series/id');
+      }
+
       $pluralName = $config->getPluralResourceName();
 
       $view = $this

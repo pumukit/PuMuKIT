@@ -22,6 +22,10 @@ class MultimediaObjectController extends SortableAdminController
        $criteria = $this->getCriteria($config);
        $resources = $this->getResources($request, $config, $criteria);
 
+       if ((1 === count($resources)) && (null !== $this->get('session')->get('admin/mms/id'))){
+           $this->get('session')->remove('admin/mms/id');
+       }
+
        $pluralName = $config->getPluralResourceName();
 
        $factoryService = $this->get('pumukitschema.factory');
@@ -117,7 +121,6 @@ class MultimediaObjectController extends SortableAdminController
 
         $sessionId = $this->get('session')->get('admin/series/id', null);
         $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
-        $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
         if (null === $series){
             throw new \Exception('Series with id '.$request->get('id').' or with session id '.$sessionId.' not found.');
         }
@@ -130,7 +133,7 @@ class MultimediaObjectController extends SortableAdminController
         $formMeta = $this->createForm($config->getFormType().'_meta', $resource);
         $formPub = $this->createForm($config->getFormType().'_pub', $resource);
 
-        $pubChannelTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
+        $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
 
         $jobs = $this->get('pumukitencoder.job')->getJobsByMultimediaObjectId($resource->getId());
@@ -142,27 +145,23 @@ class MultimediaObjectController extends SortableAdminController
         if (MultimediaObject::STATUS_PROTOTYPE === $resource->getStatus()){
             $template = '_template';
         }
-        
-        $view = $this
-          ->view()
-          ->setTemplate($config->getTemplate('edit.html'))
-          ->setData(array(
-                          'mm'            => $resource,
-                          'form_meta'     => $formMeta->createView(),
-                          'form_pub'      => $formPub->createView(),
-                          'series'        => $series,
-                          'roles'         => $roles,
-                          'pub_channels'  => $pubChannelTags,
-                          'pub_decisions' => $pubDecisionsTags,
-                          'parent_tags'   => $parentTags,
-                          'jobs'          => $jobs,
-                          'status_error'  => $jobStatusError,
-                          'not_master_profiles' => $notMasterProfiles,
-                          'template' => $template
-                          ))
-          ;
 
-        return $this->handleView($view);
+        return $this->render('PumukitAdminBundle:MultimediaObject:edit.html.twig',
+                             array(
+                                   'mm'            => $resource,
+                                   'form_meta'     => $formMeta->createView(),
+                                   'form_pub'      => $formPub->createView(),
+                                   'series'        => $series,
+                                   'roles'         => $roles,
+                                   'pub_channels'  => $pubChannelsTags,
+                                   'pub_decisions' => $pubDecisionsTags,
+                                   'parent_tags'   => $parentTags,
+                                   'jobs'          => $jobs,
+                                   'status_error'  => $jobStatusError,
+                                   'not_master_profiles' => $notMasterProfiles,
+                                   'template' => $template
+                                   )
+                             );
     }
 
     // TODO
@@ -213,40 +212,32 @@ class MultimediaObjectController extends SortableAdminController
           
           $mms = $this->getListMultimediaObjects($series);
 
-          $view = $this
-            ->view()
-            ->setTemplate($this->getConfiguration()->getTemplate('list.html'))
-            ->setData(array(
-                            'series' => $series,
-                            'mms' => $mms,
-                            ))
-            ;
-          
-          return $this->handleView($view);
+          return $this->render('PumukitAdminBundle:MultimediaObject:list.html.twig',
+                               array(
+                                     'series' => $series,
+                                     'mms' => $mms
+                                     )
+                               );         
         }
 
         if ($config->isApiRequest()) {
             return $this->handleView($this->view($formMeta));
         }
 
-        $view = $this
-          ->view()
-          ->setTemplate($config->getTemplate('edit.html'))
-          ->setData(array(
-                          'mm'            => $resource,
-                          'form_meta'     => $formMeta->createView(),
-                          'form_pub'      => $formPub->createView(),
-                          'series'        => $series,
-                          'roles'         => $roles,
-                          'pub_channels'  => $pubChannelsTags,
-                          'pub_decisions' => $pubDecisionsTags,
-                          'parent_tags'   => $parentTags,
-                          ))
-          ;
-
-        return $this->handleView($view);
+        return $this->render('PumukitAdminBundle:MultimediaObject:edit.html.twig',
+                             array(
+                                   'mm'            => $resource,
+                                   'form_meta'     => $formMeta->createView(),
+                                   'form_pub'      => $formPub->createView(),
+                                   'series'        => $series,
+                                   'roles'         => $roles,
+                                   'pub_channels'  => $pubChannelsTags,
+                                   'pub_decisions' => $pubDecisionsTags,
+                                   'parent_tags'   => $parentTags
+                                   )
+                             );
     }
-
+    
     // TODO
     /**
      * Display the form for editing or update the resource.
@@ -282,51 +273,42 @@ class MultimediaObjectController extends SortableAdminController
         $method = $request->getMethod();
         if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
             $formPub->submit($request, !$request->isMethod('PATCH'))->isValid()) {
-          $resource = $this->updateTags($request->get('pub_channels', null), "PUCH", $resource);
-          $resource = $this->updateTags($request->get('pub_decisions', null), "PUDE", $resource);
+            $resource = $this->updateTags($request->get('pub_channels', null), "PUCH", $resource);
+            $resource = $this->updateTags($request->get('pub_decisions', null), "PUDE", $resource);
 
-          $this->domainManager->update($resource);
+            $this->domainManager->update($resource);
 
-          if ($config->isApiRequest()) {
-              return $this->handleView($this->view($formPub));
-          }
+            if ($config->isApiRequest()) {
+                return $this->handleView($this->view($formPub));
+            }
 
-          $mms = $this->getListMultimediaObjects($series);
+            $mms = $this->getListMultimediaObjects($series);
 
-          $view = $this
-            ->view()
-            ->setTemplate($this->getConfiguration()->getTemplate('list.html'))
-            ->setData(array(
-                            'series' => $series,
-                            'mms' => $mms,
-                            ))
-            ;
-
-          return $this->handleView($view);
+            return $this->render('PumukitAdminBundle:MultimediaObject:list.html.twig',
+                                 array(
+                                       'series' => $series,
+                                       'mms' => $mms
+                                       )
+                                 );
         }
 
         if ($config->isApiRequest()) {
             return $this->handleView($this->view($formPub));
         }
 
-        $view = $this
-          ->view()
-          ->setTemplate($config->getTemplate('edit.html'))
-          ->setData(array(
-                          'mm'            => $resource,
-                          'form_meta'     => $formMeta->createView(),
-                          'form_pub'      => $formPub->createView(),
-                          'series'        => $series,
-                          'roles'         => $roles,
-                          'pub_channels'  => $pubChannelsTags,
-                          'pub_decisions' => $pubDecisionsTags,
-                          'parent_tags'   => $parentTags,
-                          ))
-          ;
-
-        return $this->handleView($view);
+        return $this->render('PumukitAdminBundle:MultimediaObject:edit.html.twig',
+                             array(
+                                   'mm'            => $resource,
+                                   'form_meta'     => $formMeta->createView(),
+                                   'form_pub'      => $formPub->createView(),
+                                   'series'        => $series,
+                                   'roles'         => $roles,
+                                   'pub_channels'  => $pubChannelsTags,
+                                   'pub_decisions' => $pubDecisionsTags,
+                                   'parent_tags'   => $parentTags
+                                   )
+                             );
     }
-
 
     /**
      * 
