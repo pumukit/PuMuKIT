@@ -373,7 +373,22 @@ class MultimediaObjectRepositoryTest extends WebTestCase
     public function testFindBySeries()
     {
         $this->assertEquals(0, count($this->repo->findAll()));
-      //$this->assertEquals(4,count($this->repo->findBySeries($series_main)));
+
+        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
+        $series1 = $this->createSeries('Series 1');
+        $mm11 = $this->factoryService->createMultimediaObject($series1);
+        $mm12 = $this->factoryService->createMultimediaObject($series1);
+        $mm13 = $this->factoryService->createMultimediaObject($series1);
+
+        $series2 = $this->createSeries('Series 2');
+        $mm21 = $this->factoryService->createMultimediaObject($series2);
+        $mm22 = $this->factoryService->createMultimediaObject($series2);
+
+        $series1 = $this->dm->find('PumukitSchemaBundle:Series', $series1->getId());
+        $series2 = $this->dm->find('PumukitSchemaBundle:Series', $series2->getId());
+
+        $this->assertEquals(4, count($this->repo->findBySeries($series1)));
+        $this->assertEquals(3, count($this->repo->findBySeries($series2)));
     }
 
     public function testFindWithStatus()

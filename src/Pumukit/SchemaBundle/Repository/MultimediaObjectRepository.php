@@ -419,6 +419,20 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
+     * Find by series
+     *
+     * @param Series $series
+     * @return ArrayCollection
+     */
+    public function findBySeries(Series $series)
+    {
+        return $this->createQueryBuilder()
+          ->field('series')->references($series)
+          ->getQuery()
+          ->execute();
+    }
+
+    /**
      * Get mongo ids
      *
      * @param array $documents
