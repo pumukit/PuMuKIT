@@ -5,6 +5,7 @@ namespace Pumukit\SchemaBundle\Repository;
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Broadcast;
 
 /**
  * MultimediaObjectRepository
@@ -428,6 +429,20 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         return $this->createQueryBuilder()
           ->field('series')->references($series)
+          ->getQuery()
+          ->execute();
+    }
+
+    /**
+     * Find by broadcast
+     *
+     * @param Broadcast $broadcast
+     * @return ArrayCollection
+     */
+    public function findByBroadcast(Broadcast $broadcast)
+    {
+        return $this->createQueryBuilder()
+          ->field('broadcast')->references($broadcast)
           ->getQuery()
           ->execute();
     }

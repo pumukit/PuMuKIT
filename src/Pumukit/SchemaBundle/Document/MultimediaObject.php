@@ -35,8 +35,8 @@ class MultimediaObject
 
     /**
      * @var Broadcast $broadcast
-     * @MongoDB\EmbedOne(targetDocument="Broadcast")
-     * //TODO is EmbedOne but broadcast is a Document. #6097
+     *
+     * @MongoDB\ReferenceOne(targetDocument="Broadcast", inversedBy="multimedia_object", simple=true)
      */
     private $broadcast;
 
