@@ -153,7 +153,7 @@ window.submit_delete_track = function(id, mmId)
     }
 }
 
-window.submit_delete_person = function(id, roleId, mmId, hName, template)
+window.submit_delete_person_relation = function(id, roleId, mmId, hName, template)
 {
     if (window.confirm("{% trans %}Are you sure you want to delete the relation of{% endtrans %} "+hName+"?")){
         if ('_template' === template){

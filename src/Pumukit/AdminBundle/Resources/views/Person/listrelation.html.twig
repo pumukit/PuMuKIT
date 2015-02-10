@@ -5,7 +5,7 @@
       <td><ul><li></li><ul></td>
       <td><a title="{% trans %}Edit Person{% endtrans %} '{{ person.getHName() }}'" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_person_update_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}"><img alt="{% trans %}edit{% endtrans %}" title="{% trans %}edit{% endtrans %}" class="miniTag" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a></td>
       <td>
-          <a href="#" onclick="window.submit_delete_person{{ template }}('{{ person.id }}', '{{ role.id }}', '{{ mm.id }}', '{{ person.getHName() }}'); return false;">
+          <a href="#" onclick="window.submit_delete_person_relation{{ template }}('{{ person.id }}', '{{ role.id }}', '{{ mm.id }}', '{{ person.getHName() }}'); return false;">
              <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
           </a>
       </td>

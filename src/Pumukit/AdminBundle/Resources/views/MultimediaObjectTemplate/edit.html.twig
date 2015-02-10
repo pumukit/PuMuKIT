@@ -42,7 +42,7 @@
 {% endif %}
 
 <script type="text/javascript">
-window.submit_delete_person_template = function(id, roleId, mmId, hName)
+window.submit_delete_person_relation_template = function(id, roleId, mmId, hName)
 {
     if (window.confirm("{% trans %}Are you sure you want to delete the relation of{% endtrans %} "+hName+"?")){
         var tag_person_id = roleId+'_person_mms_template';
