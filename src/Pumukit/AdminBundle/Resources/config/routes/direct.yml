@@ -47,7 +47,13 @@ pumukitadmin_direct_copy:
             redirect: pumukitadmin_direct_index
 
 pumukitadmin_direct_show:
-    pattern: /{id}
+    pattern: /{id}/show
     methods: [GET]
     defaults:
         _controller: pumukitadmin.controller.direct:showAction
+
+pumukitadmin_direct_list:
+    pattern: /list
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitadmin.controller.direct:listAction

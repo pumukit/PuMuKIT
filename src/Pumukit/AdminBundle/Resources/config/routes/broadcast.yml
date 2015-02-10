@@ -47,7 +47,7 @@ pumukitadmin_broadcast_copy:
             redirect: pumukitadmin_broadcast_index
 
 pumukitadmin_broadcast_show:
-    pattern: /{id}
+    pattern: /{id}/show
     methods: [GET]
     defaults:
         _controller: pumukitadmin.controller.broadcast:showAction
@@ -59,3 +59,9 @@ pumukitadmin_broadcast_default:
         _controller: pumukitadmin.controller.broadcast:defaultAction
         _sylius:
             redirect: pumukitadmin_broadcast_index
+
+pumukitadmin_broadcast_list:
+    pattern: /list
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitadmin.controller.broadcast:listAction

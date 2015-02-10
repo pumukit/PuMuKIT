@@ -72,6 +72,41 @@ class AdminController extends ResourceController
     }
 
     /**
+     * Delete action
+     */
+    public function deleteAction(Request $request)
+    {
+        $config = $this->getConfiguration();
+        $resource = $this->findOr404($request);
+        $resourceId = $resource->getId();
+        $resourceName = $config->getResourceName();
+
+        $this->get('pumukitschema.factory')->deleteResource($resource);
+        if ($resourceId === $this->get('session')->get('admin/'.$resourceName.'/id')){
+            $this->get('session')->remove('admin/'.$resourceName.'/id');
+        }
+
+        return $this->redirect($this->generateUrl('pumukitadmin_'.$resourceName.'_list'));
+    }
+
+    /**
+     * List action
+     */
+    public function listAction(Request $request)
+    {
+        $config = $this->getConfiguration();
+        $pluralName = $config->getPluralResourceName();
+        $resourceName = $config->getResourceName();
+
+        $criteria = $this->getCriteria($config);
+        $resources = $this->getResources($request, $config, $criteria);
+
+        return $this->render('PumukitAdminBundle:'.ucfirst($resourceName).':list.html.twig',
+                             array($pluralName => $resources)
+                             );
+    }
+
+    /**
      * Overwrite to update the session.
      */
     public function delete($resource)

@@ -49,3 +49,9 @@ pumukitadmin_series_show:
     methods: [GET]
     defaults:
         _controller: pumukitadmin.controller.series:showAction
+
+pumukitadmin_series_list:
+    pattern: /list
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitadmin.controller.series:listAction
