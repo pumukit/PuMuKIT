@@ -30,8 +30,7 @@ class TagService
 
         $tag = $this->repository->find($tagId);
         if (!$tag) {
-          // TODO throw exception tag not found #6106
-          return $tagAdded;
+            throw new \Exception("Tag with id ".$tagId." not found.");
         }
 
         do {
@@ -62,8 +61,7 @@ class TagService
 
       $tag = $this->repository->find($tagId);
       if (!$tag) {
-        //TODO throw exception tag not found #6106
-        return $removeTags;
+          throw new \Exception("Tag with id ".$tagId." not found.");
       }
 
       do {

@@ -342,7 +342,11 @@ class MultimediaObjectController extends SortableAdminController
 
         $tagService = $this->get('pumukitschema.tag');
 
-        $addedTags = $tagService->addTagToMultimediaObject($resource, $request->get('tagId'));
+        try{
+            $addedTags = $tagService->addTagToMultimediaObject($resource, $request->get('tagId'));
+        }catch (\Exception $e){
+            $this->addFlash('success', $e->getMessage());
+        }
 
         $json = array('added' => array(), 'recommended' => array());
         foreach($addedTags as $n){
@@ -368,7 +372,11 @@ class MultimediaObjectController extends SortableAdminController
 
         $tagService = $this->get('pumukitschema.tag');
 
-        $deletedTags = $tagService->removeTagFromMultimediaObject($resource, $request->get('tagId'));
+        try{
+            $deletedTags = $tagService->removeTagFromMultimediaObject($resource, $request->get('tagId'));
+        }catch (\Exception $e){
+            $this->addFlash('success', $e->getMessage());
+        }
 
         $json = array('deleted' => array(), 'recommended' => array());
         foreach($deletedTags as $n){
