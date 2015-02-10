@@ -10,7 +10,6 @@ class MaterialType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        // TODO - check form is completed
         $builder
       ->add('i18n_name', 'texti18n', array('required' => false, 'attr' => array('style' => 'width: 420px'), 'label' => 'Name'))
       ->add('hide', 'checkbox', array('required' => false, 'label' => 'Hide'))
