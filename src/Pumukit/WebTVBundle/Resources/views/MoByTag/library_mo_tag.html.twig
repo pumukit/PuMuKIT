@@ -1,17 +1,30 @@
 <div id="serial_body">
 
+{% set lastDate = '--' %}
+{% set lastSubserialTitle = 0 %}
+
 {% for mm in mmobjs %}
 
-  <div class="pumukit_mmobjs" style="width:50%; float:left;">
-    <div class="pumukit_mmobj">
-      <figure class="album" style="margin:2px 20px 2px 2px">  
-        <a href="/video/{{mm.getId()}}">
-          <div class="picture">
-            <img src="{{ mm|first_url_pic(true) }}"></img>
-          </div>
-        </a>
-      </figure>
+  {% if mm.getRecordDate()|date("d/m/Y") != lastDate %}
+    <br />
+    <div class="serial_date">
+      {{ mm.getRecordDate()|date("d/m/Y") }}
+    </div>
+  {% endif %}
 
+  <!--Objeto multimedia-->
+  <div class="pumukit_mmobjs" style="width:50%;">
+    <div class="pumukit_mmobj">
+      <div class="picture" style="position: relative;
+        width: 130px;
+        height: 110px;
+        float: left;
+        margin: 10px;
+        margin-right: 20px;">
+        <a href="/video/{{mm.getId()}}">
+          <img src="{{ mm|first_url_pic(true) }}"></img>
+        </a>
+      </div>
       <div class="info">
         <div class="title">
           <a href="/video/{{mm.getId()}}">{{mm.getTitle()}}</a>
@@ -25,6 +38,9 @@
       </div>
     </div>
   </div>
+
+  {% set lastDate = mm.getRecordDate()|date("d/m/Y") %}
+  {% set lastSubserialTitle = mm.getSubtitle() %}
 
 {% endfor %}
 </div>
