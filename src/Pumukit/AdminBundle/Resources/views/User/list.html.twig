@@ -32,13 +32,9 @@
 	<a title="{% trans %}Edit User{% endtrans %} {{ user.fullname }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_user_update', {'id': user.id}) }}"><img alt="edit" title="edit" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a>
       </td>
       <td>
-	<form action="{{ path('pumukitadmin_user_delete', {'id': user.id}) }}" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}Are you sure you want to delete the user{% endtrans %} {{ user.fullname }}?')">
-              <input type="hidden" name="_method" value="DELETE">
-              <input type="hidden" name="confirmed" value="true">
-              <button type="submit" class="tv_admin_row_post">
-                  <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
-              </button>
-          </form>
+        <a href="#" onclick="window.submit_delete_user('{{ user.id }}', '{{ user.fullname }}'); return false;">
+          <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
+        </a>
       </td>
       <td onclick="click_fila_no_preview('user', this, '{{ user.id }}');">
 	{{ user.id }}

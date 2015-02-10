@@ -67,9 +67,6 @@ class BroadcastAdminController extends AdminController
             }
             $this->domainManager->update($resource);
         }
-    // TODO fix show flash message after change default broadcast on click
-    //$this->get('session')->getFlashBag()->add('success', 'default');
-    //return $this->redirect($this->generateUrl('pumukitadmin_broadcast_index'));
 
         $this->addFlash('success', 'default');
 

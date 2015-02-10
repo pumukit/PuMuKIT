@@ -529,4 +529,31 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($mm->containsAllTags(array($tag0, $tag2)));
         $this->assertFalse($mm->containsAllTags(array($tag0, $tag1, $tag2, $tag3)));
     }
+
+    public function testIsOnlyAudio()
+    {
+        $mm = new MultimediaObject();
+
+        $t1 = new Track();
+        $t1->setOnlyAudio(true);
+        $t2 = new Track();
+        $t2->setOnlyAudio(true);
+        $t3 = new Track();
+        $t3->setOnlyAudio(true);
+        $t4 = new Track();
+        $t4->setOnlyAudio(true);
+        $t5 = new Track();
+        $t5->setOnlyAudio(true);
+
+        $mm->addTrack($t3);
+        $mm->addTrack($t2);
+        $mm->addTrack($t1);
+        $mm->addTrack($t4);
+        $mm->addTrack($t5);
+
+        $this->assertTrue($mm->isOnlyAudio());
+
+        $t5->setOnlyAudio(false);
+        $this->assertFalse($mm->isOnlyAudio());
+    }
 }

@@ -41,7 +41,7 @@ pumukitadmin_mms_batch_delete:
             redirect: pumukitadmin_mms_index
 
 pumukitadmin_mms_delete:
-    pattern: /{id}
+    pattern: /{id}/delete
     methods: [DELETE]
     defaults:
         _controller: pumukitadmin.controller.mms:deleteAction
@@ -113,3 +113,9 @@ pumukitadmin_mms_getchildrentag:
     methods: [GET]
     defaults:
         _controller: pumukitadmin.controller.mms:getChildrenTagAction
+
+pumukitadmin_mms_list:
+    pattern: /list
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitadmin.controller.mms:listAction

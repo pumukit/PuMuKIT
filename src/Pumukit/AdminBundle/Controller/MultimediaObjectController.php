@@ -452,4 +452,52 @@ class MultimediaObjectController extends SortableAdminController
             $config->getRedirectParameters()
         );
     }
+
+    /**
+     * Delete action
+     * Overwrite to pass series parameter
+     */
+    public function deleteAction(Request $request)
+    {
+        $resource = $this->findOr404($request);
+        $resourceId = $resource->getId();
+        $seriesId = $resource->getSeries()->getId();
+
+        $this->get('pumukitschema.factory')->deleteResource($resource);
+        if ($resourceId === $this->get('session')->get('admin/mms/id')){
+            $this->get('session')->remove('admin/mms/id');
+        }
+
+        return $this->redirect($this->generateUrl('pumukitadmin_mms_list', 
+                                                  array('seriesId' => $seriesId)));
+    }
+
+    /**
+     * List action
+     * Overwrite to pass series parameter
+     */
+    public function listAction(Request $request)
+    {
+        $config = $this->getConfiguration();
+
+        $criteria = $this->getCriteria($config);
+        $resources = $this->getResources($request, $config, $criteria);
+
+        if ((1 === count($resources)) && (null !== $this->get('session')->get('admin/mms/id'))){
+            $this->get('session')->remove('admin/mms/id');
+        }
+
+        $factoryService = $this->get('pumukitschema.factory');
+        $sessionId = $this->get('session')->get('admin/series/id', null);
+        $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
+
+        $mms = $this->getListMultimediaObjects($series);
+
+        return $this->render('PumukitAdminBundle:MultimediaObject:list.html.twig',
+                             array(
+                                   'series' => $series,
+                                   'mms' => $mms
+                                   )
+                             );
+    }
 }

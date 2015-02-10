@@ -172,6 +172,6 @@ class SeriesAdminController extends AdminController
             return $this->handleView($this->view());
         }
 
-        return $this->redirect($this->generateUrl('pumukitadmin_series_index', array()));
+        return $this->redirect($this->generateUrl('pumukitadmin_series_list', array()));
     }
 }

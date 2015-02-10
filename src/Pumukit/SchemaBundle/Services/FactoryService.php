@@ -237,16 +237,25 @@ class FactoryService
      */
     public function deleteSeries(Series $series)
     {      
-         $repoMmobjs = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $repoMmobjs = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
          
-         $multimediaObjects = $repoMmobjs->findBySeries($series);
-         foreach($multimediaObjects as $mm){
-             $this->dm->remove($mm);
-         }
+        $multimediaObjects = $repoMmobjs->findBySeries($series);
+        foreach($multimediaObjects as $mm){
+            $this->dm->remove($mm);
+        }
          
-         $this->dm->remove($series);
+        $this->dm->remove($series);
 
-         $this->dm->flush();
+        $this->dm->flush();
+    }
+
+    /**
+     * Delete resource
+     */
+    public function deleteResource($resource)
+    {
+        $this->dm->remove($resource);
+        $this->dm->flush();
     }
 
     /**

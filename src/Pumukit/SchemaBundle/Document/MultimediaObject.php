@@ -2226,4 +2226,22 @@ class MultimediaObject
             $this->setDuration($maxDuration);
         }
     }
+
+    /**
+     * Is only audio
+     *
+     * @return boolean TRUE if all tracks in multimedia object are only audio, FALSE otherwise
+     */
+    public function isOnlyAudio()
+    {
+      if(0 == count($this->tracks)) return false;
+
+      foreach($this->tracks as $track) {
+        if(!$track->getOnlyAudio()) {
+          return false;
+        }
+      }
+
+      return true;
+    }
 }
