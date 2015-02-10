@@ -6,6 +6,7 @@
 {% for mm in mmobjs %}
 
   {% if mm.getRecordDate()|date("d/m/Y") != lastDate %}
+    <div style="clear:both;"></div>
     <br />
     <div class="serial_date">
       {{ mm.getRecordDate()|date("d/m/Y") }}
@@ -13,8 +14,9 @@
   {% endif %}
 
   <!--Objeto multimedia-->
-  <div class="pumukit_mmobjs" style="width:50%;">
-    <div class="pumukit_mmobj">
+  <a href="/video/{{mm.getId()}}">
+  <div class="pumukit_mmobjs" style="width:50%; float:left;">
+    <div class="pumukit_mmobj" style="float:left;">
       <div class="picture" style="position: relative;
         width: 130px;
         height: 110px;
@@ -38,6 +40,7 @@
       </div>
     </div>
   </div>
+  </a>
 
   {% set lastDate = mm.getRecordDate()|date("d/m/Y") %}
   {% set lastSubserialTitle = mm.getSubtitle() %}
