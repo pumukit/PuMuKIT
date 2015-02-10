@@ -3,6 +3,8 @@
 {% set lastDate = '--' %}
 {% set lastSubserialTitle = 0 %}
 
+<div style="overflow:hidden">
+
 {% for mm in mmobjs %}
 
   {% if mm.getRecordDate()|date("d/m/Y") != lastDate %}
@@ -46,4 +48,12 @@
   {% set lastSubserialTitle = mm.getSubtitle() %}
 
 {% endfor %}
+
+</div>
+
+<!--<div class="pagerfanta">-->
+<div class="pagination" style="float:right;">
+    {{ pagerfanta(mmobjs, 'twitter_bootstrap') }}
+</div>
+
 </div>
