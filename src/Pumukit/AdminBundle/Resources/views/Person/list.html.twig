@@ -28,21 +28,6 @@
         <a title="{% trans %}Edit Person{% endtrans %} {{ person.getHName() }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_person_update', {'id': person.id}) }}"><img alt="{% trans %}edit{% endtrans %}" title="{% trans %}edit{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a>
       </td>
       <td>
-        {#
-        {% if countMmPeople[person.id] == 0 %}
-          <form action="{{ path('pumukitadmin_person_delete', {'id': person.id}) }}" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}Are you sure you want to delete the data of{% endtrans %} {{ person.getHName() }}')">
-              <input type="hidden" name="_method" value="DELETE">
-              <input type="hidden" name="confirmed" value="true">
-              <button type="submit" class="tv_admin_row_post">
-                  <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
-              </button>
-          </form>
-        {% else %}
-          <a href="#" onclick="window.show('{% trans %}Can not delete the data of{% endtrans %} {{ person.getHName() }}. {% trans %}There are{% endtrans %} {{ countMmPeople[person.id] }} {% trans %}multimedia objects with this person{% endtrans %}.'); return false;">
-             <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
-          </a>
-        {% endif %}
-       #}
         <a href="#" onclick="window.submit_delete_person('{{ person.id }}', '{{ countMmPeople[person.id] }}', '{{ person.getHName() }}'); return false;">
            <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
         </a>
