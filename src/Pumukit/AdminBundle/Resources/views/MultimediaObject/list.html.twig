@@ -75,7 +75,7 @@
 	{% endif %}
       </td>
       <td>
-         {# TODO <span>{{ mm.audio ? 'Audio':'Video' }}</span> #}
+         <span>{{ mm.isOnlyAudio() ? 'Audio':'Video' }}</span>
       </td>
       <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitadmin_mms_edit', {'id': mm.id}) }}')" >
         {% set url_set = false %}
