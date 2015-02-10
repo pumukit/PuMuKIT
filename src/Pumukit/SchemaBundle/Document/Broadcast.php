@@ -26,7 +26,7 @@ class Broadcast
   /**
    * @var ArrayCollection $multimedia_objects
    *
-   * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="broadcast", repositoryMethod="findByBroadcast", simple=true, orphanRemoval=false)
+   * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="broadcast", simple=true, orphanRemoval=false)
    */
   private $multimedia_objects;
 
