@@ -1,4 +1,18 @@
+<div id="serial_body">
+
+{% set lastDate = '--' %}
+
+
 {% for serie in series %}
+
+  {% if serie.getPublicDate()|date("d/m/Y") != lastDate %}
+    <div style="clear:both;"></div>
+    <br />
+    <div class="serial_date">
+      {{ serie.getPublicDate()|date("d/m/Y") }}
+    </div>
+  {% endif %}
+
 <div class="pumukit_mmobjs" style="width:50%; float:left;">
   <div class="pumukit_mmobj">
     <figure class="album" style="margin:2px 20px 2px 2px">  
@@ -28,4 +42,8 @@
     </div>
   </div>
 </div>
+
+{% set lastDate = serie.getPublicDate()|date("d/m/Y") %}
+
 {% endfor %}
+</div>
