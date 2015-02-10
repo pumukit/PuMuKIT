@@ -1119,12 +1119,15 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         $mm21 = $this->factoryService->createMultimediaObject($series2);
 
+        $mm11->setTitle('mm11');
         $mm11 = $this->mmsPicService->addPicUrl($mm11, $pic1);
         $mm11 = $this->mmsPicService->addPicUrl($mm11, $pic2);
         $mm11 = $this->mmsPicService->addPicUrl($mm11, $pic4);
 
+        $mm12->setTitle('mm12');
         $mm12 = $this->mmsPicService->addPicUrl($mm12, $pic3);
 
+        $mm21->setTitle('mm21');
         $mm21 = $this->mmsPicService->addPicUrl($mm21, $pic5);
 
         $this->dm->persist($mm11);
@@ -1143,19 +1146,30 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         $this->assertEquals(4, count($this->repo->findDistinctUrlPics()));
 
-        $mm11->setPublicDate(new \DateTime('now'));
-        $mm12->setPublicDate(new \DateTime('now'));
-        $mm21->setPublicDate(new \DateTime('now'));
+        // TODO Check sort by public date #6104
+        $mm11->setPublicDate(new \DateTime('2015-01-03 15:05:16'));
+        $mm12->setPublicDate(new \DateTime('2015-01-03 15:05:20'));
+        $mm21->setPublicDate(new \DateTime('2015-01-03 15:05:25'));
 
         $this->dm->persist($mm11);
         $this->dm->persist($mm12);
         $this->dm->persist($mm21);
         $this->dm->flush();
 
-        /* TODO Check sort
-        $arrayPics = array($pic1->getUrl(), $pic2->getUrl(), $pic4->getUrl(), $pic5->getUrl());
+        $arrayPics = array($pic1->getUrl(), $pic2->getUrl(), $pic3->getUrl(), $pic5->getUrl());
         $this->assertEquals($arrayPics, $this->repo->findDistinctUrlPics()->toArray());
-        */     
+
+        $mm11->setPublicDate(new \DateTime('2015-01-13 15:05:16'));
+        $mm12->setPublicDate(new \DateTime('2015-01-23 15:05:20'));
+        $mm21->setPublicDate(new \DateTime('2015-01-03 15:05:25'));
+
+        $this->dm->persist($mm11);
+        $this->dm->persist($mm12);
+        $this->dm->persist($mm21);
+        $this->dm->flush();
+
+        $arrayPics = array($pic5->getUrl(), $pic1->getUrl(), $pic3->getUrl(), $pic3->getUrl());
+        //$this->assertEquals($arrayPics, $this->repo->findDistinctUrlPics()->toArray());
     }
 
     private function createPerson($name)
