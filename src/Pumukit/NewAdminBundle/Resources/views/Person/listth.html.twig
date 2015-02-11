@@ -1,56 +1,39 @@
-{# TODO paths and sort by id, name, phone, email #}
-
-{# <?php if ($sf_user->getAttribute('sort', null, 'tv_admin/person') == 'id'): ?> #}
-{% if true %}
+{% if 'id' == app.session.get('admin/person/sort') %}
   <th width="1%">
-    {# TODO ternarios & path a sort <?php echo link_to_remote(__('Id') . ($sf_user->getAttribute('type', 'asc', 'tv_admin/person') == 'asc' ? '&nbsp;&#x25BE;' : '&nbsp;&#x25B4;'), array('update' => 'list_people', 'url' => 'people/list?sort=id&type='.($sf_user->getAttribute('type', 'asc', 'tv_admin/person') == 'asc' ? 'desc' : 'asc'), 'script' => 'true')) ?> #}
-    <a href="#" onclick="new Ajax.Updater('list_people', '/editar.php/people/list/sort/id/type/{{ true?'desc':'asc' }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Id{% endtrans %}{{ true?'&nbsp;&#x25BE;':'&nbsp;&#x25B4;' }}</a>
+    <a href="#" onclick="$('#list_people').load('{{ path('pumukitnewadmin_person_list', {'sorting': {'id': app.session.get('admin/person/type')=='asc'?'desc':'asc'}}) }}'); return false;">{% trans %}Id{% endtrans %}{{ app.session.get('admin/person/type')=='asc'?'&nbsp;&#x25BE;':'&nbsp;&#x25B4;' }}</a>
   </th>
 {% else %}
   <th width="1%">
-    {# <?php echo link_to_remote(__('Id'), array('update' => 'list_people', 'url' => 'people/list?sort=id&type=asc', 'script' => 'true')) ?> #}
-    <a href="#" onclick="new Ajax.Updater('list_people', '/editar.php/people/list/sort/id/type/asc', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Id{% endtrans %}</a>
+    <a href="#" onclick="$('#list_people').load('{{ path('pumukitnewadmin_person_list', {'sorting': {'id': 'asc'}}) }}'); return false;">{% trans %}Id{% endtrans %}</a>
   </th>
 {% endif %}
 
-{# <?php if ($sf_user->getAttribute('sort', null, 'tv_admin/person') == 'name'): ?> #}
-{% if true %}
+{% if 'name' == app.session.get('admin/person/sort') %}
   <th>
-    {# <?php echo link_to_remote(__('Nombre') . ($sf_user->getAttribute('type', 'asc', 'tv_admin/person') == 'asc' ? '&nbsp;&#x25BE;' : '&nbsp;&#x25B4;'), array('update' => 'list_people', 'url' => 'people/list?sort=name&type='.($sf_user->getAttribute('type', 'asc', 'tv_admin/person') == 'asc' ? 'desc' : 'asc'), 'script' => 'true')) ?> #}
-    <a href="#" onclick="new Ajax.Updater('list_people', '/editar.php/people/list/sort/name/type/{{ true?'desc':'asc'}}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Name{% endtrans %}{{ true?'&nbsp;&#x25BE;':'&nbsp;&#x25B4;' }}</a>
+    <a href="#" onclick="$('#list_people').load('{{ path('pumukitnewadmin_person_list', {'sorting': {'name': app.session.get('admin/person/type')=='asc'?'desc':'asc'}}) }}'); return false;">{% trans %}Name{% endtrans %}{{ app.session.get('admin/person/type')=='asc'?'&nbsp;&#x25BE;':'&nbsp;&#x25B4;' }}</a>
   </th>
 {% else %}
   <th>
-    {# <?php echo link_to_remote(__('Nombre'), array('update' => 'list_people', 'url' => 'people/list?sort=name&type=asc', 'script' => 'true')) ?> #}
-    <a href="#" onclick="new Ajax.Updater('list_people', '/editar.php/people/list/sort/name/type/asc', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Name{% endtrans %}</a>
+    <a href="#" onclick="$('#list_people').load('{{ path('pumukitnewadmin_person_list', {'sorting': {'name': 'asc'}}) }}'); return false;">{% trans %}Name{% endtrans %}</a>
   </th>
 {% endif %}
 
-
-{# <?php if ($sf_user->getAttribute('sort', null, 'tv_admin/person') == 'email'): ?> #}
-{% if true %}
+{% if 'email' == app.session.get('admin/person/sort') %}
   <th>
-    {# <?php echo link_to_remote(__('Email') . ($sf_user->getAttribute('type', 'asc', 'tv_admin/person') == 'asc' ? '&nbsp;&#x25BE;' : '&nbsp;&#x25B4;'), array('update' => 'list_people', 'url' => 'people/list?sort=email&type='.($sf_user->getAttribute('type', 'asc', 'tv_admin/person') == 'asc' ? 'desc' : 'asc'), 'script' => 'true')) ?> #}
-    <a href="#" onclick="new Ajax.Updater('list_people', '/editar.php/people/list/sort/email/type/{{ true?'desc':'asc'}}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Email{% endtrans %}{{ true?'&nbsp;&#x25BE;':'&nbsp;&#x25B4;' }}</a>
+    <a href="#" onclick="$('#list_people').load('{{ path('pumukitnewadmin_person_list', {'sorting': {'email': app.session.get('admin/person/type')=='asc'?'desc':'asc'}}) }}'); return false;">{% trans %}Email{% endtrans %}{{ app.session.get('admin/person/type')=='asc'?'&nbsp;&#x25BE;':'&nbsp;&#x25B4;' }}</a>
   </th>
 {% else %}
   <th>
-    {# <?php echo link_to_remote(__('Email'), array('update' => 'list_people', 'url' => 'people/list?sort=email&type=asc', 'script' => 'true')) ?> #}
-    <a href="#" onclick="new Ajax.Updater('list_people', '/editar.php/people/list/sort/email/type/asc', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Email{% endtrans %}</a>
+    <a href="#" onclick="$('#list_people').load('{{ path('pumukitnewadmin_person_list', {'sorting': {'email': 'asc'}}) }}'); return false;">{% trans %}Email{% endtrans %}</a>
   </th>
 {% endif %}
 
-{# <?php if ($sf_user->getAttribute('sort', null, 'tv_admin/person') == 'phone'): ?> #}
-{% if true %}
+{% if 'phone' == app.session.get('admin/person/sort') %}
   <th>
-    {# <?php echo link_to_remote(__('Tel&eacute;fono') . ($sf_user->getAttribute('type', 'asc', 'tv_admin/person') == 'asc' ? '&nbsp;&#x25BE;' : '&nbsp;&#x25B4;'), array('update' => 'list_people', 'url' => 'people/list?sort=phone&type='.($sf_user->getAttribute('type', 'asc', 'tv_admin/person') == 'asc' ? 'desc' : 'asc'), 'script' => 'true')) ?> #}
-    <a href="#" onclick="new Ajax.Updater('list_people', '/editar.php/people/list/sort/phone/type/{{ true?'desc':'asc'}}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Phone{% endtrans %}{{ true?'&nbsp;&#x25BE;':'&nbsp;&#x25B4;' }}</a>
+    <a href="#" onclick="$('#list_people').load('{{ path('pumukitnewadmin_person_list', {'sorting': {'phone': app.session.get('admin/person/type')=='asc'?'desc':'asc'}}) }}'); return false;">{% trans %}Phone{% endtrans %}{{ app.session.get('admin/person/type')=='asc'?'&nbsp;&#x25BE;':'&nbsp;&#x25B4;' }}</a>
   </th>
   {% else %}
   <th>
-    {# <?php echo link_to_remote(__('Tel&eacute;fono'), array('update' => 'list_people', 'url' => 'people/list?sort=phone&type=asc', 'script' => 'true')) ?> #}
-    <a href="#" onclick="new Ajax.Updater('list_people', '/editar.php/people/list/sort/phone/type/asc', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Phone{% endtrans %}</a>
+    <a href="#" onclick="$('#list_people').load('{{ path('pumukitnewadmin_person_list', {'sorting': {'phone': 'asc'}}) }}'); return false;">{% trans %}Phone{% endtrans %}</a>
   </th>
 {% endif %}
-
-

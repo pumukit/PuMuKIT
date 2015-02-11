@@ -1,3 +1,11 @@
 pumukitnewadmin_person:
     resource: @PumukitNewAdminBundle/Resources/config/routes/person.yml
     prefix: /admin/person
+
+pumukit_js:
+    pattern: /admin/pumukit2.js
+    methods: [GET]
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'PumukitNewAdminBundle::pumukit2.js.twig'
+        _format: js

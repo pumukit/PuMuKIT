@@ -5,7 +5,7 @@
     {{ person.getHName() }}
   </p>
 
-  <p style="overflow:hidden; padding:5px; border:solid 1px #DDD; background:#DDD" >
+  <p>
     {% trans %}INFO{% endtrans %}:
       {{ person.getOther() }}
       <br />
@@ -13,7 +13,7 @@
       {% for oneseries in series %}
         {{ oneseries.id }} ({{ oneseries.getTitle() }})
       {% endfor %}
-      {% if series|length == 5 %}
+      {% if series|length > 4 %}
         <strong>...</strong>
       {% endif %}
   </p>

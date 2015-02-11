@@ -122,6 +122,12 @@ class PersonController extends AdminController
     {
         $config = $this->getConfiguration();
 
+        $sorting = $request->get('sorting');
+        if (null !== $sorting){
+            $this->get('session')->set('admin/person/type', $sorting[key($sorting)]);
+            $this->get('session')->set('admin/person/sort', key($sorting));
+        }
+
         $criteria = $this->getCriteria($config);
         $resources = $this->getResources($request, $config, $criteria);
 
