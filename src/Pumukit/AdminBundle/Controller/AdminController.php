@@ -98,6 +98,12 @@ class AdminController extends ResourceController
         $pluralName = $config->getPluralResourceName();
         $resourceName = $config->getResourceName();
 
+        $sorting = $request->get('sorting');
+        if ((null !== $sorting) && ('series' === $resourceName)){
+            $this->get('session')->set('admin/'.$resourceName.'/type', $sorting[key($sorting)]);
+            $this->get('session')->set('admin/'.$resourceName.'/sort', key($sorting));
+        }
+
         $criteria = $this->getCriteria($config);
         $resources = $this->getResources($request, $config, $criteria);
 

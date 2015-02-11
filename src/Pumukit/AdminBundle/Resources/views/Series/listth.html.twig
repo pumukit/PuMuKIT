@@ -1,52 +1,43 @@
-{# TODO paths and sort by type #}
-
-{# <?php if ($sf_user->getAttribute('sort', 'id', 'tv_admin/serial') == 'id'): ?> #}
-{% if false %}
+{% if 'id' == app.session.get('admin/series/sort') %}
   <th width="1%">
     {# ($sf_user->getAttribute('type', 'asc', 'tv_admin/serial') == 'asc' #}
-    <a href="#" onclick="new Ajax.Updater('list_serials', '/editar.php/serials/list/sort/id/type/{{ true?'desc':'asc'}}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Id{% endtrans %}&nbsp;{{ true?'&#x25BE;':'&#x25B4;' }}</a>
+    <a href="#" onclick="new Ajax.Updater('list_series', '{{ path('pumukitadmin_series_list', {'sorting': {'id': app.session.get('admin/series/type')=='asc'?'desc':'asc'}}) }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Id{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25BE;':'&#x25B4;' }}</a>
   </th>
 {% else %}
   <th width="1%">
-    <a href="#" onclick="new Ajax.Updater('list_serials', '/editar.php/serials/list/sort/id/type/asc', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Id{% endtrans %}</a>
+    <a href="#" onclick="new Ajax.Updater('list_series', '{{ path('pumukitadmin_series_list', {'sorting': {'id': 'asc'}}) }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Id{% endtrans %}</a>
   </th>
 {% endif %}
 
-
-{# <?php if ($sf_user->getAttribute('sort', 'id', 'tv_admin/serial') == 'title'): ?> #}
-{% if false %}
+{% if 'title' == app.session.get('admin/series/sort') %}
   <th>
     {# ($sf_user->getAttribute('type', 'asc', 'tv_admin/serial') == 'asc' #}
-    <a href="#" onclick="new Ajax.Updater('list_serials', '/editar.php/serials/list/sort/title/type/{{ true?'desc':'asc'}}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Title{% endtrans %}&nbsp;{{ true?'&#x25BE;':'&#x25B4;' }}</a>
+    <a href="#" onclick="new Ajax.Updater('list_series', '{{ path('pumukitadmin_series_list', {'sorting': {'title': app.session.get('admin/series/type')=='asc'?'desc':'asc'}}) }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Title{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25BE;':'&#x25B4;' }}</a>
   </th>
 {% else %}
   <th>
-    <a href="#" onclick="new Ajax.Updater('list_serials', '/editar.php/serials/list/sort/title/type/asc', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Tittle{% endtrans %}</a>
+    <a href="#" onclick="new Ajax.Updater('list_series', '{{ path('pumukitadmin_series_list', {'sorting': {'title': 'asc'}}) }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Tittle{% endtrans %}</a>
   </th>
 {% endif %}
 
-
-{# <?php if ($sf_user->getAttribute('sort', 'id', 'tv_admin/serial') == 'publicDate'): ?> #}
-{% if false %}
+{% if 'date' == app.session.get('admin/series/sort') %}
   <th width="1%">
     {# ($sf_user->getAttribute('type', 'asc', 'tv_admin/serial') == 'asc' #}
-    <a href="#" onclick="new Ajax.Updater('list_serials', '/editar.php/serials/list/sort/public_date/type/{{ true?'desc':'asc'}}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Date{% endtrans %}&nbsp;{{ true?'&#x25BE;':'&#x25B4;' }}</a>
+    <a href="#" onclick="new Ajax.Updater('list_series', '{{ path('pumukitadmin_series_list', {'sorting': {'public_date': app.session.get('admin/series/type')=='asc'?'desc':'asc'}}) }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Date{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25BE;':'&#x25B4;' }}</a>
   </th>
 {% else %}
   <th width="1%">
-    <a href="#" onclick="new Ajax.Updater('list_serials', '/editar.php/serials/list/sort/public_date/type/asc', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Date{% endtrans %}</a>
+    <a href="#" onclick="new Ajax.Updater('list_series', '{{ path('pumukitadmin_series_list', {'sorting': {'public_date': 'asc'}}) }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Date{% endtrans %}</a>
   </th>
 {% endif %}
 
-
-{# <?php if ($sf_user->getAttribute('sort', 'id', 'tv_admin/serial') == 'num_videos'): ?> #}
-{% if false %}
+{% if 'mmobj' == app.session.get('admin/series/sort') %}
   <th width="1%">
     {# ($sf_user->getAttribute('type', 'asc', 'tv_admin/serial') == 'asc' #}
-    <a href="#" onclick="new Ajax.Updater('list_serials', '/editar.php/serials/list/sort/num_videos/type/{{ true?'desc':'asc'}}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Mm.Obj.{% endtrans %}&nbsp;{{ true?'&#x25BE;':'&#x25B4;' }}</a>
+    <a href="#" onclick="new Ajax.Updater('list_series', '{{ path('pumukitadmin_series_list', {'sorting': {'multimedia_objects': app.session.get('admin/series/type')=='asc'?'desc':'asc'}}) }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Mm.Obj.{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25BE;':'&#x25B4;' }}</a>
   </th>  
 {% else %}
   <th width="1%">
-    <a href="#" onclick="new Ajax.Updater('list_serials', '/editar.php/serials/list/sort/num_videos/type/asc', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Mm.Obj.{% endtrans %}</a>
+    <a href="#" onclick="new Ajax.Updater('list_series', '{{ path('pumukitadmin_series_list', {'sorting': {'multimedia_objects': 'asc'}}) }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Mm.Obj.{% endtrans %}</a>
   </th>
 {% endif %}
