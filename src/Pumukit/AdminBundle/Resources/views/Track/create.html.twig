@@ -23,7 +23,7 @@
       <div class="form-row" id="pumukitadmin_track_profile">
         <label for="profile" class="required">{% trans %}Profile{% endtrans %}</label>        
         <div class="content" style="overflow: hidden">
-          {% for key in profiles|keys %}
+          {% for key in master_profiles|keys %}
           <span style="display: block; float: left; width: 30%; overflow: hidden">
             <input type="radio" name="profile" id="profile_{{ key }}" value="{{ key }}" checked="checked" class="MB_focusable" />{{ key }}
           </span>

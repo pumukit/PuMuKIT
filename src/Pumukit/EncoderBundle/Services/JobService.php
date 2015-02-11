@@ -132,6 +132,20 @@ class JobService
         $this->dm->flush();
     }
 
+    public function deleteJob($id)
+    {
+        $job = $this->repo->find($id);
+
+        if (null === $job){
+            throw new \Exception("Can't find job with id ".$id);
+        }
+        if (Job::STATUS_ERROR !== $job->getStatus()){
+            throw new \Exception("Trying to cancel job ".$id." that is not paused or waiting");
+        }
+        $this->dm->remove($job);
+        $this->dm->flush();
+    }
+
     /**
      * Get all jobs status
      */
@@ -203,9 +217,12 @@ class JobService
 
         $pb
           ->add('php')
-          ->add($console)
+          ->add($console);
+        /*
+        //TODO master_copy_h264 only works with --env=dev
           ->add('--env=prod')
           ;
+        */
 
         if (false) {
           $pb->add('--verbose');
@@ -369,12 +386,17 @@ class JobService
 
     public function createFile($job)
     {
+
+        $profile = $this->getProfile($job);
+
         $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
         //TODO if mmobj doesn't exists
         $track = new Track();
         $track->addTag('profile:' . $job->getProfile());
         $track->setLanguage($job->getLanguageId());
-        $track->setUrl($job->getPathEnd());
+        if(isset($profile['streamserver']['url_out'])) {
+          $track->setUrl(str_replace($profile['streamserver']['dir_out'], $profile['streamserver']['url_out'], $job->getPathEnd()));
+        }
         $track->setPath($job->getPathEnd());
 
         $this->inspectionService->autocompleteTrack($track);
@@ -409,7 +431,32 @@ class JobService
     {
         return Job::STATUS_ERROR;
     }
-    
+
+    /**
+     * Retry job
+     */
+    public function retryJob($job)
+    {
+        if (Job::STATUS_ERROR === $job->getStatus()){
+            return 'The job is right';
+        }
+
+        $profile = $this->getProfile($job);
+        $tempDir = $profile['streamserver']['dir_out'] . '/' . $mmobj->getSeries()->getId();
+        //TODO repeat mkdir (see this->execute)
+        @mkdir($tempDir, 0777, true);
+
+        $job->setStatus(Job::STATUS_WAITING);
+        $job->setPriority(2);
+        $job->setTimeIni(new \DateTime('now'));
+        $this->dm->persist($job);
+        $this->dm->flush();
+
+        $this->execNext();
+
+        return 'Retranscoding job';
+    }
+
     private function getExecutor($app, $cpuType)
     {
         //TODO

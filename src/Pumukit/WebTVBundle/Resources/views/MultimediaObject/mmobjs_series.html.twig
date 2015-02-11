@@ -1,7 +1,7 @@
 <div class="pumukit_mini_mmobjs">
 
   {% for mm in mmobjects %}
-  <dl class="pumukit_mini_mmobj">
+  <dl class="pumukit_mini_mmobj" style="cursor:pointer;" onclick="window.location='/video/{{mm.getId()}}'">
 
     <dt class="thumbnail">
       <a href="/video/{{mm.id}}">

@@ -25,7 +25,7 @@ class SeriesByTagController extends Controller
     		$series = $repo->findWithTag($tag, array('alphabetically.' . $request->getLocale() => +1));
         }
         else{
-        	$series = $repo->findWithTag($tag, array('date' => +1));
+        	$series = $repo->findWithTag($tag, array('public_date' => +1));
         	dump($series);
         }
 

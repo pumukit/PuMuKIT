@@ -5,6 +5,7 @@ namespace Pumukit\AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\Person;
@@ -76,6 +77,9 @@ class PersonController extends AdminController
     {
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
+        if (!$person) {
+            throw new NotFoundHttpException('Requested Person does not exist with this id: '.$request->get('id').'.');
+        }
         
         $form = $this->createForm(new PersonType(), $person);
 
@@ -104,6 +108,10 @@ class PersonController extends AdminController
     {
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
+        if (!$person) {
+            throw new NotFoundHttpException('Requested Person does not exist with this id: '.$request->get('id').'.');
+        }
+
         $limit = 5;
         $series = $personService->findSeriesWithPerson($person, $limit);
 
@@ -121,6 +129,12 @@ class PersonController extends AdminController
     public function listAction(Request $request)
     {
         $config = $this->getConfiguration();
+
+        $sorting = $request->get('sorting');
+        if (null !== $sorting){
+            $this->get('session')->set('admin/person/type', $sorting[key($sorting)]);
+            $this->get('session')->set('admin/person/sort', key($sorting));
+        }
 
         $criteria = $this->getCriteria($config);
         $resources = $this->getResources($request, $config, $criteria);
@@ -151,11 +165,12 @@ class PersonController extends AdminController
         
         $criteria = $this->getCriteria($config);
         $resources = $this->getResources($request, $config, $criteria);
-        
+
         return array(
                      'people' => $resources,
                      'mm' => $multimediaObject,
                      'role' => $role,
+                     'prototypeStatus' => MultimediaObject::STATUS_PROTOTYPE
                      );
     }
 
@@ -170,8 +185,16 @@ class PersonController extends AdminController
     {
         $person = new Person();
         $person->setName(preg_replace('/\d+ - /', '', $request->get('name')));
+        if (!$person) {
+            throw new NotFoundHttpException('Requested Person does not exist with this id: '.$request->get('id').'.');
+        }
         
         $form = $this->createForm(new PersonType(), $person);
+        
+        $template = '';
+        if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
+            $template = '_template';
+        }
 
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
             try {
@@ -181,16 +204,12 @@ class PersonController extends AdminController
                 $this->get('session')->getFlashBag()->add('error', $e->getMessage());
             }
 
-            $template = '';
-            if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
-                $template = 'template';
-            }
-
-            return $this->render('PumukitAdminBundle:Person:listrelation'.$template.'.html.twig', 
+            return $this->render('PumukitAdminBundle:Person:listrelation.html.twig', 
                                  array(
                                        'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
                                        'role' => $role,
-                                       'mm' => $multimediaObject
+                                       'mm' => $multimediaObject,
+                                       'template' => $template
                                        ));
         }
 
@@ -199,6 +218,7 @@ class PersonController extends AdminController
                      'role' => $role,
                      'mm' => $multimediaObject,
                      'form' => $form->createView(),
+                     'template' => $template
                      );
     }
 
@@ -213,6 +233,9 @@ class PersonController extends AdminController
     {
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
+        if (!$person) {
+            throw new NotFoundHttpException('Requested Person does not exist with this id: '.$request->get('id').'.');
+        }
         
         $form = $this->createForm(new PersonType(), $person);
 
@@ -225,14 +248,15 @@ class PersonController extends AdminController
 
             $template = '';
             if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
-                $template = 'template';
+                $template = '_template';
             }
 
-            return $this->render('PumukitAdminBundle:Person:listrelation'.$template.'.html.twig', 
+            return $this->render('PumukitAdminBundle:Person:listrelation.html.twig', 
                                  array(
                                        'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
                                        'role' => $role,
-                                       'mm' => $multimediaObject
+                                       'mm' => $multimediaObject,
+                                       'template' => $template
                                        ));
 
         }
@@ -250,12 +274,16 @@ class PersonController extends AdminController
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
-     *
+     * @Template("PumukitAdminBundle:Person:listrelation.html.twig")
      */
     public function linkAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
+        if (!$person) {
+            throw new NotFoundHttpException('Requested Person does not exist with this id: '.$request->get('id').'.');
+        }
+
         try{
             $multimediaObject = $personService->createRelationPerson($person, $role, $multimediaObject);
             // TODO
@@ -268,15 +296,15 @@ class PersonController extends AdminController
 
         $template = '';
         if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
-            $template = 'template';
+            $template = '_template';
         }
         
-        return $this->render('PumukitAdminBundle:Person:listrelation'.$template.'.html.twig', 
-                             array(
-                                   'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
-                                   'role' => $role,
-                                   'mm' => $multimediaObject
-                                   ));
+        return array(
+                     'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
+                     'role' => $role,
+                     'mm' => $multimediaObject,
+                     'template' => $template
+                     );
     }
 
     /**
@@ -298,24 +326,29 @@ class PersonController extends AdminController
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
+     * @Template("PumukitAdminBundle:Person:listrelation.html.twig")
      */
     public function upAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
+        if (!$person) {
+            throw new NotFoundHttpException('Requested Person does not exist with this id: '.$request->get('id').'.');
+        }
+
         $multimediaObject = $personService->upPersonWithRole($person, $role, $multimediaObject);
 
         $template = '';
         if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
-            $template = 'template';
+            $template = '_template';
         }
         
-        return $this->render('PumukitAdminBundle:Person:listrelation'.$template.'.html.twig', 
-                             array(
-                                   'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
-                                   'role' => $role,
-                                   'mm' => $multimediaObject
-                                   ));        
+        return array(
+                     'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
+                     'role' => $role,
+                     'mm' => $multimediaObject,
+                     'template' => $template
+                     );        
     }
 
     /**
@@ -323,49 +356,59 @@ class PersonController extends AdminController
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
+     * @Template("PumukitAdminBundle:Person:listrelation.html.twig")
      */
     public function downAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
+        if (!$person) {
+            throw new NotFoundHttpException('Requested Person does not exist with this id: '.$request->get('id').'.');
+        }
+
         $multimediaObject = $personService->downPersonWithRole($person, $role, $multimediaObject);
 
         $template = '';
         if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
-            $template = 'template';
+            $template = '_template';
         }
         
-        return $this->render('PumukitAdminBundle:Person:listrelation'.$template.'.html.twig', 
-                             array(
-                                   'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
-                                   'role' => $role,
-                                   'mm' => $multimediaObject
-                                   ));
-    }    
+        return array(
+                     'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
+                     'role' => $role,
+                     'mm' => $multimediaObject,
+                     'template' => $template
+                     );
+    }
 
     /**
      * Delete relation: EmbeddedPerson in Multimedia Object
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
+     * @Template("PumukitAdminBundle:Person:listrelation.html.twig")
      */
     public function deleteRelationAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
+        if (!$person) {
+            throw new NotFoundHttpException('Requested Person does not exist with this id: '.$request->get('id').'.');
+        }
+
         $multimediaObject = $personService->deleteRelation($person, $role, $multimediaObject);
 
         $template = '';
         if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
-            $template = 'template';
+            $template = '_template';
         }
         
-        return $this->render('PumukitAdminBundle:Person:listrelation'.$template.'.html.twig', 
-                             array(
-                                   'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
-                                   'role' => $role,
-                                   'mm' => $multimediaObject
-                                   ));
+        return array(
+                     'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
+                     'role' => $role,
+                     'mm' => $multimediaObject,
+                     'template' => $template
+                     );
     }
 
     /**
@@ -377,6 +420,10 @@ class PersonController extends AdminController
     {
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
+        if (!$person) {
+            throw new NotFoundHttpException('Requested Person does not exist with this id: '.$request->get('id').'.');
+        }
+
         try{
             if (0 === $personService->countMultimediaObjectsWithPerson($person)){
                 $personService->deletePerson($person);

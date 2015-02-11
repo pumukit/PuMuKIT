@@ -1,0 +1,47 @@
+{% form_theme form 'PumukitAdminBundle:Themes:fields.html.twig' %}
+
+<div id="tv_admin_container">
+  
+  <form onsubmit="Modalbox.hide();
+                  new Ajax.Updater('tracks_mms', '{{ path('pumukitadmin_track_update', {'id': track.id, 'mmId': mmId}) }}', {
+                  method:'POST', asynchronous:true, evalScripts:true,
+                  parameters:Form.seralize(this)});
+                  return false;"
+        action="{{ path('pumukitadmin_track_update', {'id': track.id, 'mmId': mmId}) }}" method="POST">
+    
+    <input type="hidden" name="track" id="track" value="{{ track.id }}" />
+    <input type="hidden" name="mmId" id="mmId" value="{{ mmId }}" />
+    <input type="hidden" name="preview" id="preview" value="true" />
+    
+    <fieldset>
+      
+      {% for child in form if child.vars.id in ['pumukitadmin_track_update_i18n_description'] %}
+        {{ form_row(child) }}
+      {% endfor %}
+      
+      <div class="form-row" id="pumukitadmin_track_update_profile">
+        <label for="profile" class="required">{% trans %}Profile{% endtrans %}</label>        
+        <div class="content" style="overflow: hidden">
+          <select name="profile" id="profile" class="MB_focusable">
+            {% for key in profiles|keys %}
+              <option value="{{ key }}" id="" {{ track.getTags()|profile == key ?'checked="checked"' :'' }}>{{ key }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      {% for child in form if child.vars.id not in ['pumukitadmin_track_update_i18n_description'] %}
+        {{ form_row(child) }}
+      {% endfor %}
+
+      {{ form_rest(form) }}
+      
+    </fieldset>
+
+    <ul class="tv_admin_actions">
+      <li><input type="submit" name="OK" value="{% trans %}OK{% endtrans %}" class="tv_admin_action_save MB_focusable"></li>
+      <li><input class="tv_admin_action_delete MB_focusable" onclick="Modalbox.hide(); return false;" type="button" value="{% trans %}Cancel{% endtrans %}"> </li>
+    </ul>
+    
+  </form>
+</div>

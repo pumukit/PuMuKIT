@@ -65,3 +65,11 @@ pumukitadmin_material:
 pumukitadmin_track:
     resource: @PumukitAdminBundle/Resources/config/routes/track.yml
     prefix: /admin/track
+
+pumukit_js:
+    pattern: /admin/pumukit2.js
+    methods: [GET]
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'PumukitAdminBundle::pumukit2.js.twig'
+        _format: js

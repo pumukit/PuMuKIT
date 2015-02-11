@@ -41,13 +41,9 @@
 	<img alt="{% trans %}status{% endtrans %}" title="{% trans %}status{% endtrans %}" id="table_serials_status_{{ oneseries.id }}" src="/legacy/images/admin/bbuttons/mm11{# TODO {{ oneseries.getMmStatusMax() }} #}_inline.gif">
       </td> 
       <td  style="width:12px">
-        <form action="{{ path('pumukitadmin_series_delete', {'id': oneseries.id}) }}" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}Are you sure you want to delete the series{% endtrans %} {{ oneseries.getTitle() }}? {% trans %}This series has{% endtrans %} {{ oneseries.getMultimediaObjects()|length }} {% trans %}multimedia objects{% endtrans %}.')">
-          <input type="hidden" name="_method" value="DELETE">
-          <input type="hidden" name="confirmed" value="true">
-          <button type="submit" class="tv_admin_row_post">
-            <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
-          </button>
-        </form>
+        <a href="#" onclick="window.submit_delete_series('{{ oneseries.id }}', '{{ oneseries.getTitle() }}', '{{ oneseries.getMultimediaObjects()|length }}'); return false;">
+          <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
+        </a>
       </td>
       <td style="width:12px">
 	{% include 'PumukitAdminBundle:Series:updatemenu.html.twig' with {'oneseries': oneseries, 'numV': oneseries.getMultimediaObjects()|length } %}

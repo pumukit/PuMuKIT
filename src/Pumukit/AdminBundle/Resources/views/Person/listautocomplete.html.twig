@@ -33,7 +33,7 @@
            onclick="if(/^\w+ -/.test($('name').value.strip())) {
                         var route = '{{ path('pumukitadmin_person_link', {'id': '__personId__', 'roleId': role.id, 'mmId': mm.id} ) }}';
                         var personId = $('name').value.strip().split(' - ')[0];
-                        new Ajax.Updater('{{ role.id }}_person_mms', route.replace('__personId__', personId), {asynchronous:true, evalScripts:true});
+                        new Ajax.Updater('{{ role.id }}_person_mms{{ prototypeStatus==mm.getStatus()?'_template':'' }}', route.replace('__personId__', personId), {asynchronous:true, evalScripts:true});
                         new Ajax.Updater('preview_mm', '{{ path('pumukitadmin_mms_show', {'id': mm.id}) }}', {asynchronous:true, evalScripts:true});
                         Modalbox.hide();
                     }else{

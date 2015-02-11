@@ -573,19 +573,34 @@ class SeriesRepositoryTest extends WebTestCase
         $series1 = $this->createSeries('Series 1');
         $this->assertEquals(0, count($series1->getMultimediaObjects()));
 
-        $mm1 = $this->factoryService->createMultimediaObject($series1);
-        $mm2 = $this->factoryService->createMultimediaObject($series1);
-        $mm3 = $this->factoryService->createMultimediaObject($series1);
-        $mm4 = $this->factoryService->createMultimediaObject($series1);
-        $mm5 = $this->factoryService->createMultimediaObject($series1);
+        $mm11 = $this->factoryService->createMultimediaObject($series1);
+        $mm12 = $this->factoryService->createMultimediaObject($series1);
+        $mm13 = $this->factoryService->createMultimediaObject($series1);
+        $mm14 = $this->factoryService->createMultimediaObject($series1);
+        $mm15 = $this->factoryService->createMultimediaObject($series1);
 
-        $this->assertEquals(1, $mm1->getRank());
-        $this->assertEquals(2, $mm2->getRank());
-        $this->assertEquals(3, $mm3->getRank());
-        $this->assertEquals(4, $mm4->getRank());
-        $this->assertEquals(5, $mm5->getRank());
+        $this->assertEquals(1, $mm11->getRank());
+        $this->assertEquals(2, $mm12->getRank());
+        $this->assertEquals(3, $mm13->getRank());
+        $this->assertEquals(4, $mm14->getRank());
+        $this->assertEquals(5, $mm15->getRank());
 
-        // TODO Solve rank in MultimediaObjects in different Series #6110
+        $series2 = $this->createSeries('Series 2');
+        $this->assertEquals(0, count($series2->getMultimediaObjects()));
+
+        $mm21 = $this->factoryService->createMultimediaObject($series2);
+        $mm22 = $this->factoryService->createMultimediaObject($series2);
+        $mm23 = $this->factoryService->createMultimediaObject($series2);
+        $mm24 = $this->factoryService->createMultimediaObject($series2);
+        $mm25 = $this->factoryService->createMultimediaObject($series2);
+
+        $this->assertEquals(1, $mm21->getRank());
+        $this->assertEquals(2, $mm22->getRank());
+        $this->assertEquals(3, $mm23->getRank());
+        $this->assertEquals(4, $mm24->getRank());
+        $this->assertEquals(5, $mm25->getRank());
+
+
     }
 
     public function testMultimediaObjectsWithTags()

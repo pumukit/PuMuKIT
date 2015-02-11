@@ -1,49 +1,54 @@
-<div class="library">
+<div id="serial_body">
 
-{% if sort == 'alphabetically' %}
+{% set lastDate = '--' %}
 
-	{% set lastChar = '--' %}
+  <div style="overflow:hidden">
 
-	{% for serie in series %}
-		{% if serie.title|slice(0,1)|title != lastChar %}
-    	<div class="name">
-      		<div>{{serie.title|slice(0,1)|title}}</div>
-    	</div>
-    	{% endif %}
-    	<div class="list">
-      	<ul>      
-        	<li>
-        		<a href="/series/{{serie.id}}">{{serie.getTitle()}}</a> [{{serie.getMultimediaObjects()|length}} videos]
-        	</li>
-      	</ul>
-    	</div>
+  {% for serie in series %}
 
-	{% set lastChar = serie.title|slice(0,1)|title %}
+    {% if serie.getPublicDate()|date("d/m/Y") != lastDate %}
+      <div style="clear:both;"></div>
+      <br />
+      <div class="serial_date">
+        {{ serie.getPublicDate()|date("d/m/Y") }}
+      </div>
+    {% endif %}
 
-	{% endfor %}
+  <div style="cursor:pointer;" onclick="window.location='/series/{{serie.getId()}}'">
+    <div class="pumukit_mmobjs" style="width:50%; float:left;">
+      <div class="pumukit_mmobj">
+        <figure class="album" style="margin:2px 20px 2px 2px">  
+          <a href="/series/{{serie.getId()}}">
+            <div class="picture">
+              <img src="{{ asset('bundles/pumukitwebtv/images/folder.png') }}"></img>
+            </div>
+            <div class="picture">
+              <img src="{{ asset('bundles/pumukitwebtv/images/folder.png') }}"></img>
+            </div>
+            <div class="picture">
+              <img src="{{ asset('bundles/pumukitwebtv/images/folder.png') }}"></img>
+            </div>
+          </a>
+        </figure>
 
-{% else %}
+        <div class="info">
+          <div class="title">
+            <a href="/series/{{serie.getId()}}">{{serie.getTitle()}}</a>
+          </div>
 
-	{% set lastDate = '--' %}
+          <div class="serial_title">
+            <abbr title="{{serie.getTitle()}}">{{serie.getLine2()}}</abbr>
+          </div>
 
-	{% for serie in series %}
-		{% if serie.getPublicDate()|date("d/m/Y") != lastDate %}
-    	<div class="name">
-      		<div>{{ serie.getPublicDate()|date("d/m/Y") }}</div>
-    	</div>
-    	{% endif %}
-    	<div class="list">
-      	<ul>      
-        	<li>
-        		<a href="/series/{{serie.id}}">{{serie.getTitle()}}</a> [{{serie.getMultimediaObjects()|length}} videos]
-        	</li>
-      	</ul>
-    	</div>
+          <div class="mmobj_bottom">{{serie.getPublicDate()|date("d/m/Y")}} - {{serie.getMultimediaObjects()|length}} videos</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-	{% set lastDate = serie.getPublicDate()|date("d/m/Y") %}
 
-	{% endfor %}
+{% set lastDate = serie.getPublicDate()|date("d/m/Y") %}
 
-{% endif %}
-
+{% endfor %}
+</div>
 </div>

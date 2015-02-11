@@ -94,9 +94,7 @@ class FactoryService
      */
     public function createMultimediaObject($series)
     {
-        $prototype = $this->dm
-          ->getRepository('PumukitSchemaBundle:MultimediaObject')
-          ->findPrototype($series);
+        $prototype = $this->getMultimediaObjectTemplate($series);
 
         if (null !== $prototype) {
             $mm = $this->createMultimediaObjectFromPrototype($prototype);
@@ -146,6 +144,118 @@ class FactoryService
         }
 
         return $broadcast;
+    }
+
+    /**
+     * Get all roles
+     */
+    public function getRoles()
+    {
+        return $this->dm->getRepository('PumukitSchemaBundle:Role')->findAll();
+    }
+
+    /**
+     * Get series by id
+     *
+     * @param string $id
+     * @param string $sessionId
+     * @return Series
+     */
+    public function findSeriesById($id, $sessionId=null)
+    {
+        $repo = $this->dm->getRepository('PumukitSchemaBundle:Series');
+
+        if (null !== $sessionId) {
+            $series = $repo->find($sessionId);
+        } else {
+            $series = $repo->find($id);
+        }
+        
+        return $series;
+    }
+
+    /**
+     * Get multimediaObject by id
+     *
+     * @param string $id
+     * @return Multimedia Object
+     */
+    public function findMultimediaObjectById($id)
+    {
+        $repo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+
+        return $repo->find($id);
+    }
+
+    /**
+     * Get parent tags
+     */
+    public function getParentTags()
+    {
+        $repo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
+
+        return $repo->findOneByCod('ROOT')->getChildren();
+    }
+
+    /**
+     * Get multimedia object template
+     *
+     * @param Series $series
+     * @return MultimediaObject
+     */
+    public function getMultimediaObjectTemplate(Series $series=null)
+    {
+        return $this->dm
+          ->getRepository('PumukitSchemaBundle:MultimediaObject')
+          ->findPrototype($series);
+    }
+
+    /**
+     * Get tags by cod
+     *
+     * @param string $cod
+     * @param boolean $getChildren
+     * @return ArrayCollection $tags
+     */
+    public function getTagsByCod($cod, $getChildren)
+    {
+        $repository = $this->dm->getRepository('PumukitSchemaBundle:Tag');
+
+        $tags = $repository->findOneByCod($cod);
+
+        if ($tags && $getChildren) {
+            return $tags->getChildren();
+        }
+
+        return $tags;
+    }
+
+    /**
+     * Delete Series
+     *
+     * @param Series $series
+     */
+    public function deleteSeries(Series $series)
+    {      
+        $repoMmobjs = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+         
+        $multimediaObjects = $repoMmobjs->findBySeries($series);
+        foreach($multimediaObjects as $mm){
+            $this->dm->remove($mm);
+        }
+         
+        $this->dm->remove($series);
+
+        $this->dm->flush();
+    }
+
+    /**
+     * Delete resource
+     */
+    public function deleteResource($resource)
+    {
+        $this->dm->remove($resource);
+        $this->dm->flush();
     }
 
     /**

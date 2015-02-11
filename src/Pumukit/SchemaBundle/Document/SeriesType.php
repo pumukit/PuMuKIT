@@ -44,7 +44,7 @@ class SeriesType
   /**
    * @var ArrayCollection $series
    *
-   * @MongoDB\ReferenceMany(targetDocument="Series", mappedBy="series_type", repositoryMethod="findBySeriesType", simple=true, orphanRemoval=false)
+   * @MongoDB\ReferenceMany(targetDocument="Series", mappedBy="series_type", simple=true, orphanRemoval=false)
    */
   private $series;
 

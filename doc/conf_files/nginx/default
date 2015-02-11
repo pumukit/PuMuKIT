@@ -1,0 +1,46 @@
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server ipv6only=on;
+
+    server_name localhost;
+    root /var/www/pumukit2/web;
+
+    location / {
+        # try to serve file directly, fallback to app.php
+        try_files $uri /app.php$is_args$args;
+    }
+
+    # DEV
+    # This rule should only be placed on your development environment
+    # In production, don't include this and don't deploy app_dev.php or config.php
+    location ~ ^/(app_dev|config)\.php(/|$) {
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param   SCRIPT_FILENAME       $document_root$fastcgi_script_name;
+        fastcgi_param   HTTPS                 off;
+        fastcgi_param   HTTP_X_REAL_IP        $remote_addr;
+        fastcgi_param   HTTP_X_FORWARDED_FOR  $proxy_add_x_forwarded_for;
+    }
+
+    # PROD
+    location ~ ^/app\.php(/|$) {
+        proxy_set_header   X-Real-IP        $remote_addr;
+        proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param   SCRIPT_FILENAME       $document_root$fastcgi_script_name;
+        fastcgi_param   HTTPS                 off;
+        fastcgi_param   HTTP_X_REAL_IP        $remote_addr;
+        fastcgi_param   HTTP_X_FORWARDED_FOR  $proxy_add_x_forwarded_for;
+        # Prevents URIs that include the front controller. This will 404:
+        # http://domain.tld/app.php/some-path
+        # Remove the internal directive to allow URIs like this
+        internal;
+    }
+
+    error_log /var/log/nginx/pumukit2_error.log;
+    access_log /var/log/nginx/pumukit2_access.log;
+}

@@ -16,6 +16,10 @@ class SeriesAdminController extends AdminController
       $criteria = $this->getCriteria($config);
       $resources = $this->getResources($request, $config, $criteria);
 
+      if ((0 === count($resources)) && (null !== $this->get('session')->get('admin/series/id'))){
+          $this->get('session')->remove('admin/series/id');
+      }
+
       $pluralName = $config->getPluralResourceName();
 
       $view = $this
@@ -135,4 +139,39 @@ class SeriesAdminController extends AdminController
 
       return $new_criteria;
   }
+
+    /**
+     * @param Request $request
+     *
+     * @return RedirectResponse
+     */
+    public function deleteAction(Request $request)
+    {
+        $config = $this->getConfiguration();
+
+        $series = $this->findOr404($request);
+        $seriesId = $series->getId();
+
+        $factoryService = $this->get('pumukitschema.factory');
+        $factoryService->deleteSeries($series);
+
+        $seriesSessionId = $this->get('session')->get('admin/mms/id');
+        if ($seriesId === $seriesSessionId){
+            $this->get('session')->remove('admin/series/id');
+        }
+
+        $mmSessionId = $this->get('session')->get('admin/mms/id');
+        if ($mmSessionId){
+            $mm = $factoryService->findMultimediaObjectById($mmSessionId);
+            if ($seriesId === $mm->getSeries()->getId()){
+                $this->get('session')->remove('admin/mms/id');
+            }
+        }
+
+        if ($config->isApiRequest()) {
+            return $this->handleView($this->view());
+        }
+
+        return $this->redirect($this->generateUrl('pumukitadmin_series_list', array()));
+    }
 }

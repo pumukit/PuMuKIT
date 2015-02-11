@@ -184,7 +184,7 @@ class PersonService
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
-        return $flag;
+        return $multimediaObject;
     }
 
     /**

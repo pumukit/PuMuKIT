@@ -70,6 +70,7 @@
 
         <service id="pumukitadmin.twig_extension" class="Pumukit\AdminBundle\Twig\PumukitAdminExtension">
             <tag name="twig.extension"/>
+            <argument type="service" id="pumukitencoder.profile"/>
         </service>
     </services>
 </container>

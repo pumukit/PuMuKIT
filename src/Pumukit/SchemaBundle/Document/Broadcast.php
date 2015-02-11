@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Pumukit\SchemaBundle\Document\Broadcast
@@ -21,6 +22,13 @@ class Broadcast
    * @MongoDB\Id
    */
   private $id;
+
+  /**
+   * @var ArrayCollection $multimedia_objects
+   *
+   * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="broadcast", simple=true, orphanRemoval=false)
+   */
+  private $multimedia_objects;
 
   /**
    * @var string $name
@@ -63,6 +71,14 @@ class Broadcast
   private $locale = 'en';
 
   /**
+   *
+   */
+  public function __construct()
+  {
+      $this->multimedia_objects = new ArrayCollection();
+  }
+
+  /**
    * Get id
    *
    * @return int
@@ -70,6 +86,28 @@ class Broadcast
   public function getId()
   {
       return $this->id;
+  }
+
+  /**
+   * Contains multimedia_object
+   *
+   * @param MultimediaObject $multimedia_object
+   *
+   * @return boolean
+   */
+  public function containsMultimediaObject(MultimediaObject $multimedia_object)
+  {
+      return $this->multimedia_objects->contains($multimedia_object);
+  }
+
+  /**
+   * Get multimedia_objects
+   *
+   * @return ArrayCollection
+   */
+  public function getMultimediaObjects()
+  {
+      return $this->multimedia_objects;
   }
 
   /**

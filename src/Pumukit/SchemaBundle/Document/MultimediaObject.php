@@ -35,8 +35,8 @@ class MultimediaObject
 
     /**
      * @var Broadcast $broadcast
-     * @MongoDB\EmbedOne(targetDocument="Broadcast")
-     * //TODO is EmbedOne but broadcast is a Document. #6097
+     *
+     * @MongoDB\ReferenceOne(targetDocument="Broadcast", inversedBy="multimedia_object", simple=true)
      */
     private $broadcast;
 
@@ -2225,5 +2225,23 @@ class MultimediaObject
         if ($maxDuration !== $this->getDuration()) {
             $this->setDuration($maxDuration);
         }
+    }
+
+    /**
+     * Is only audio
+     *
+     * @return boolean TRUE if all tracks in multimedia object are only audio, FALSE otherwise
+     */
+    public function isOnlyAudio()
+    {
+      if(0 == count($this->tracks)) return false;
+
+      foreach($this->tracks as $track) {
+        if(!$track->getOnlyAudio()) {
+          return false;
+        }
+      }
+
+      return true;
     }
 }
