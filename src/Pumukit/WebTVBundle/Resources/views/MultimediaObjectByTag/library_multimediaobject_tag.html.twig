@@ -16,7 +16,7 @@
   {% endif %}
 
   <!--Objeto multimedia-->
-  <a href="/video/{{mm.getId()}}">
+  <div style="cursor:pointer;" onclick="window.location='/video/{{mm.getId()}}'">
   <div class="pumukit_mmobjs" style="width:50%; float:left;">
     <div class="pumukit_mmobj" style="float:left;">
       <div class="picture" style="position: relative;
@@ -42,7 +42,7 @@
       </div>
     </div>
   </div>
-  </a>
+  </div>
 
   {% set lastDate = mm.getRecordDate()|date("d/m/Y") %}
   {% set lastSubserialTitle = mm.getSubtitle() %}
