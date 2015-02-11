@@ -3,57 +3,52 @@
 {% set lastDate = '--' %}
 {% set lastSubserialTitle = 0 %}
 
-<div style="overflow:hidden">
+  <div style="overflow:hidden">
 
-{% for mm in mmobjs %}
+  {% for mm in mmobjs %}
 
-  {% if mm.getRecordDate()|date("d/m/Y") != lastDate %}
-    <div style="clear:both;"></div>
-    <br />
-    <div class="serial_date">
-      {{ mm.getRecordDate()|date("d/m/Y") }}
-    </div>
-  {% endif %}
-
-  <!--Objeto multimedia-->
-  <div style="cursor:pointer;" onclick="window.location='/video/{{mm.getId()}}'">
-  <div class="pumukit_mmobjs" style="width:50%; float:left;">
-    <div class="pumukit_mmobj" style="float:left;">
-      <div class="picture" style="position: relative;
-        width: 130px;
-        height: 110px;
-        float: left;
-        margin: 10px;
-        margin-right: 20px;">
-        <a href="/video/{{mm.getId()}}">
-          <img src="{{ mm|first_url_pic(true) }}"></img>
-        </a>
+    {% if mm.getRecordDate()|date("d/m/Y") != lastDate %}
+      <div style="clear:both;"></div>
+      <br />
+      <div class="serial_date">
+        {{ mm.getRecordDate()|date("d/m/Y") }}
       </div>
-      <div class="info">
-        <div class="title">
-          <a href="/video/{{mm.getId()}}">{{mm.getTitle()}}</a>
-        </div>
+    {% endif %}
 
-        <div class="subtitle">
-          <abbr title="{{mm.getSubtitle()}}">{{mm.getSubtitle()}}</abbr>
-        </div>
+    <!--Objeto multimedia-->
+    <div style="cursor:pointer;" onclick="window.location='/video/{{mm.getId()}}'">
+      <div class="pumukit_mmobjs" style="width:50%; float:left;">
+        <div class="pumukit_mmobj" style="float:left;">
+          <div class="picture" style="position: relative;
+            width: 130px;
+            height: 110px;
+            float: left;
+            margin: 10px;
+            margin-right: 20px;">
+            <a href="/video/{{mm.getId()}}">
+              <img src="{{ mm|first_url_pic(true) }}"></img>
+            </a>
+          </div>
+          <div class="info">
+            <div class="title">
+              <a href="/video/{{mm.getId()}}">{{mm.getTitle()}}</a>
+            </div>
 
-        <div class="mmobj_bottom">{{mm.getRecordDate()|date("d/m/Y")}}</div>
+            <div class="subtitle">
+              <abbr title="{{mm.getSubtitle()}}">{{mm.getSubtitle()}}</abbr>
+            </div>
+
+            <div class="mmobj_bottom">{{mm.getRecordDate()|date("d/m/Y")}}</div>
+          </div>
+        </div>
       </div>
     </div>
+
+    {% set lastDate = mm.getRecordDate()|date("d/m/Y") %}
+    {% set lastSubserialTitle = mm.getSubtitle() %}
+
+  {% endfor %}
+
   </div>
-  </div>
-
-  {% set lastDate = mm.getRecordDate()|date("d/m/Y") %}
-  {% set lastSubserialTitle = mm.getSubtitle() %}
-
-{% endfor %}
-
-</div>
-
-<!--<div class="pagerfanta">-->
-<div class="pagination" style="float:right;">
-    {{ pagerfanta(mmobjs, 'twitter_bootstrap') }}
-</div>
 
 </div>
