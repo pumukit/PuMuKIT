@@ -3,6 +3,8 @@
 {% set lastDate = '--' %}
 {% set lastSubserialTitle = 0 %}
 
+<div style="overflow:hidden">
+
 {% for mm in mmobjs %}
 
   {% if mm.getRecordDate()|date("d/m/Y") != lastDate %}
@@ -13,13 +15,18 @@
   {% endif %}
 
 
-  <div class="serial_mm">
+  <div class="serial_mm" style="cursor:pointer;" onclick="window.location='/video/{{mm.getId()}}'">
     <table>
       <tbody>
         <tr>
 
           <td style="width:1%; valign:top;">
-            <div class="serial_mm_pics">
+            <div class="picture" style="position: relative;
+              width: 130px;
+              height: 110px;
+              float: left;
+              margin: 10px;
+              margin-right: 20px;">
               <a href="/video/{{mm.id}}"><img src="{{mm|first_url_pic(true)}}" class="serial"/></a>
             </div>
           </td>
@@ -48,10 +55,11 @@
     </table>
   </div>
 
+
 {% set lastDate = mm.getRecordDate()|date("d/m/Y") %}
 {% set lastSubserialTitle = mm.getSubtitle() %}
 
 
 {% endfor %}
-
+</div>
 </div>
