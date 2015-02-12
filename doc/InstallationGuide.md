@@ -21,12 +21,12 @@ Setup a development environment on Ubuntu 14.04:
 
 1. Install dependencies of PuMuKIT-2 (see requirements):
 
-```
-sudo apt-get install git php5-fpm php5-cli nginx-full
-sudo apt-get install php5-intl php5-xdebug php5-curl
-sudo apt-get install mongodb php5-mongo 
-sudo apt-get install mediainfo libav-tools
-```
+    ```
+    sudo apt-get install git php5-fpm php5-cli nginx-full
+    sudo apt-get install php5-intl php5-xdebug php5-curl
+    sudo apt-get install mongodb php5-mongo 
+    sudo apt-get install mediainfo libav-tools
+    ```
 
 2. Download the last version of PuMuKIT-2:
 
@@ -77,6 +77,7 @@ service nginx restart
 
 Installation a development environment
 -------------------------------------
+
 To quick develop you could use the PHP built-in web server.
 
 ```
