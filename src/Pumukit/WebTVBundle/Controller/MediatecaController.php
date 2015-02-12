@@ -21,10 +21,10 @@ class MediatecaController extends Controller
         dump($request->getLocale());
 
         if($sort == "alphabetically"){
-    		$series = $repo->findBy(array(), array('alphabetically.' . $request->getLocale() => +1));
+    		$series = $repo->findBy(array(), array('title.' . $request->getLocale() => +1));
         }
         else{
-        	$series = $repo->findBy(array(), array('date' => +1));
+        	$series = $repo->findBy(array(), array('public_date' => +1));
         	dump($series);
         }
 
