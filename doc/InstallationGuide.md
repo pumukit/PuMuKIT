@@ -29,6 +29,7 @@ sudo apt-get install mediainfo libav-tools
 ```
 
 2. Download the last version of PuMuKIT-2:
+
 ```
 git clone http://gitlab.teltek.es/pumukit/pumukit2.git /var/www/pumukit2
 cd /var/www/pumukit2
@@ -36,20 +37,25 @@ git checkout 2.0.0
 ```
 
 3. Add NGINX config file.
+
 ```
 cp doc/conf_files/nginx/default /etc/nginx/sites-available/default
 ```
+
 4. Install [composer](https://getcomposer.org/).
+
 ```
 curl -sS https://getcomposer.org/installer | php
 ```
 
 5. Install dependencies
+
 ```
 php composer.phar install
 ```
 
 6. Prepare environment (check requirements, init mongo db, clear cache)
+
 ```
 php app/check.php
 php app/console doctrine:mongodb:schema:create
@@ -57,11 +63,13 @@ php app/console cache:clear
 ```
 
 7. Create the admin user
+
 ```
 php app/console fos:user:create admin --super-admin
 ```
 
 8. Restart server
+
 ```
 service nginx restart 
 ```
