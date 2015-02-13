@@ -9,3 +9,11 @@ pumukit_js:
         _controller: FrameworkBundle:Template:template
         template: 'PumukitNewAdminBundle::pumukit2.js.twig'
         _format: js
+
+pumukit_css:
+    pattern: /admin/pumukit2.css
+    methods: [GET]
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'PumukitNewAdminBundle::pumukit2.css.twig'
+        _format: css
