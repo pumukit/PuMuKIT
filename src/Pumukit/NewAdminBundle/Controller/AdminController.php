@@ -90,18 +90,20 @@ class AdminController extends ResourceController
     {
         $ids = $this->getRequest()->get('ids');
 
+        if ('string' === gettype($ids)){
+            $ids = json_decode($ids, true);
+        }
+
         foreach ($ids as $id) {
             $resource = $this->find($id);
             $this->domainManager->delete($resource);
         }
         $config = $this->getConfiguration();
+        $resourceName = $config->getResourceName();
 
         $this->addFlash('success', 'delete');
 
-        return $this->redirectToRoute(
-        $config->getRedirectRoute('index'),
-        $config->getRedirectParameters()
-    );
+        return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
     }
 
     public function find($id)

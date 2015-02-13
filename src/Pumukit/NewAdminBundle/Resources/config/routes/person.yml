@@ -21,15 +21,15 @@ pumukitnewadmin_person_update:
         _controller: pumukitnewadmin.controller.person:updateAction
 
 pumukitnewadmin_person_batch_delete:
-    pattern: /delete
-    methods: [DELETE]
+    pattern: /batchdelete
+    methods: [GET]
     defaults:
         _controller: pumukitnewadmin.controller.person:batchDeleteAction
         _sylius:
-            redirect: pumukitnewadmin_person_index
+            redirect: pumukitnewadmin_person_list
 
 pumukitnewadmin_person_delete:
-    pattern: /{id}
+    pattern: /{id}/delete
     methods: [DELETE]
     defaults:
         _controller: pumukitnewadmin.controller.person:deleteAction
@@ -77,6 +77,8 @@ pumukitnewadmin_person_list:
     methods: [GET, POST]
     defaults:
         _controller: pumukitnewadmin.controller.person:listAction
+        _sylius:
+            filterable: true
 
 pumukitnewadmin_person_create_relation:
     pattern: /{mmId}/{roleId}/createrelation
