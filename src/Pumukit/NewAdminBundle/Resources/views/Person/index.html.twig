@@ -4,31 +4,40 @@
 
 <h1>{% trans %}People{% endtrans %}</h1>
 
-<div class="row">
-
-  <div class="col-md-10">
-    <div class="well">
-      <div id="list_people">
-        {% include 'PumukitNewAdminBundle:Person:list.html.twig' %}
-      </div>
+<div class="col-md-10">
+  <div class="well">
+    <div id="list_people">
+      {% include 'PumukitNewAdminBundle:Person:list.html.twig' %}
     </div>
   </div>
 
-  <div class="col-md-2">
-    {% include 'PumukitNewAdminBundle:Person:filters.html.twig' %}
-    <div id="preview_person" class="well">
-      {% if(app.session.has('admin/person/id')) %}
-      {{ render_hinclude(url('pumukitnewadmin_person_show', {'id': app.session.get('admin/person/id')})) }}
-      {% else %}
-      {% trans %}Select any person.{% endtrans %}
-      {% endif %}
+  <div class="row">
+    <div class="col-md-2">
+      <select id="options_people" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('person', $(this))">
+        <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
+        <option disabled="">---</option>
+        <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
+        <option value="create">{% trans %}Create new{% endtrans %}</option>
+        <option value="hono_person_sel">{% trans %}Separate selected honors{% endtrans %}</option>
+        <option value="hono_person_all">{% trans %}Separate all honors{% endtrans %}</option>
+        <option value="merge_person_sel">{% trans %}Unify some people{% endtrans %}</option>
+      </select>
+    </div>
+
+    <div class="col-md-2 col-md-offset-8" align="right">
+      <a href="{{ path('pumukitnewadmin_person_create') }}" class="btn btn-warning" data-toggle="modal" data-target="#myModal">{% trans %}create{% endtrans %}</a>
     </div>
   </div>
 </div>
 
-<div class="row">
-  <div class="col-md-1 col-md-offset-9">
-    <a href="{{ path('pumukitnewadmin_person_create') }}" class="btn btn-warning" data-toggle="modal" data-target="#myModal">{% trans %}create{% endtrans %}</a>
+<div class="col-md-2">
+  {% include 'PumukitNewAdminBundle:Person:filters.html.twig' %}
+  <div id="preview_person" class="well">
+    {% if(app.session.has('admin/person/id')) %}
+    {{ render_hinclude(url('pumukitnewadmin_person_show', {'id': app.session.get('admin/person/id')})) }}
+    {% else %}
+    {% trans %}Select any person.{% endtrans %}
+    {% endif %}
   </div>
 </div>
 
@@ -38,48 +47,5 @@
     </div>
   </div>
 </div>
-
-
-{#
-<div id="tv_admin_container">
-  <div id="tv_admin_bar">
-    {% include 'PumukitNewAdminBundle:Person:filters.html.twig' %}
-    <div id="preview_person" style="padding:5px; border: solid 1px #DDD; background: #8eb0bc url(/legacy/images/admin/cab/cab.gif) repeat-x scroll 0% 0%">
-      {% if(app.session.has('admin/person/id')) %}
-        {{ render_hinclude(url('pumukitnewadmin_person_show', {'id': app.session.get('admin/person/id')})) }}
-      {% else %}
-        {% trans %}Select any person.{% endtrans %}
-      {% endif %}      
-    </div>
-  </div>
-
-  <div id="tv_admin_content" >
-    <div id="list_people" name="list_people" act="/people/list">
-      {% include 'PumukitNewAdminBundle:Person:list.html.twig' %}
-    </div>
-
-    <div style="float:right; width:50%">
-      <ul class="tv_admin_actions">
-        <!-- Falta -->
-        <li>
-          <input class="tv_admin_action_create" onclick="Modalbox.show('{{ path('pumukitadmin_person_create') }}', {title:'{% trans %}Create new person{% endtrans %}', width:800}); return false;" type="button" value="{% trans %}create{% endtrans %}">
-        </li>
-      </ul>
-    </div>
-
-    <select id="options_people" style="margin: 10px 0px; width: 33%" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('person', $('options_people'))">
-      <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
-      <option disabled="">---</option>
-      <option value="delete_sel">{% trans %}Delete selected{% endtrans %}</option>
-      <option value="create">{% trans %}Create new{% endtrans %}</option>
-      <option value="hono_person_sel">{% trans %}Separate selected honors{% endtrans %}</option>
-      <option value="hono_person_all">{% trans %}Separate all honors{% endtrans %}</option>
-      <option value="merge_person_sel">{% trans %}Unify some people{% endtrans %}</option>
-    </select>
-    
-  </div>
-</div>
-
-#}
 
 {% endblock %}
