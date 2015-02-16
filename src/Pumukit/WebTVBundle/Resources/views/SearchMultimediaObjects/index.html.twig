@@ -1,62 +1,7 @@
 {% extends 'PumukitWebTVBundle::layout.html.twig' %}
 
 {% block body %}
-<h1 id="index_h1">Search</h1>
-
-<div style="width:92px; float:left; ">
-    <div>&nbsp;Video / Audio</div>
-    <select name="only" id="only" style="width:85px;" onchange="Javascript:this.form.submit();">
-    	<option selected="selected">All</option>
-		<option>Video</option>
-		<option>Audio</option>
-	</select>
-</div>
-
-<!--Selected DURATION-->
-<div style="width:85px; float:left">
-    <div>&nbsp;Duration:</div>
-    <select name="duration" id="duration" style="width:78px;" onchange="Javascript:this.form.submit();">
-    	<option selected="selected">All</option>
-		<option>Up to 5 minutes</option>
-		<option>Up to 10 minutes</option>
-		<option>Up to 30 minutes</option>
-		<option>Up to 60 minutes</option>
-		<option>More than 60 minutes</option>
-	</select>
-</div>
-
-<!--Selected DAY-->
-<div style="width:54px; float:left">
-    <div>&nbsp;Day:</div>
-	<select name="day" id="day" style="width:52px;" onchange="Javascript:this.form.submit();">
-		<option selected="selected">All</option>
-		{% for i in 1..31 %}
-    		<option>{{ i }}</option>
-		{% endfor %}
-	</select>
-</div>
-
-<!--Selected MONTH-->
-<div style="width:54px; float:left">
-    <div>&nbsp;Month:</div>
-	<select name="month" id="month" style="width:52px;" onchange="Javascript:this.form.submit();">
-		<option selected="selected">All</option>
-		{% for i in 1..12 %}
-    		<option>{{ i }}</option>
-		{% endfor %}
-	</select>
-</div>
-
-<!--Selected YEAR-->
-<div style="width:54px; float:left">
-    <div>&nbsp;Year:</div>
-	<select name="year" id="year" style="width:52px;" onchange="Javascript:this.form.submit();">
-		<option selected="selected">All</option>
-		{% for i in 2015..1950 %}
-    		<option>{{ i }}</option>
-		{% endfor %}
-	</select>
-</div>
-
-
+	<h1 id="index_h1">Search</h1>
+	{% include 'PumukitWebTVBundle:SearchMultimediaObjects:filters_multimedia_objects.html.twig' %}
+	{% include 'PumukitWebTVBundle:SearchMultimediaObjects:multimedia_objects_found.html.twig' %}
 {% endblock %}

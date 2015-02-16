@@ -1,0 +1,55 @@
+<div id="serial_body" style="display:block;">
+
+{% set lastDate = '--' %}
+{% set lastSubserialTitle = 0 %}
+
+  	<div style="overflow:hidden">
+
+  	{% for serie in series %}
+  	{% for multimediaObject in serie.getMultimediaObjects() %}
+
+    	{% if multimediaObject.getRecordDate()|date("d/m/Y") != lastDate %}
+      		<div style="clear:both;"></div>
+      		<br />
+      		<div class="serial_date">
+        		{{ multimediaObject.getRecordDate()|date("d/m/Y") }}
+      		</div>
+    	{% endif %}
+
+    	<!--Objeto multimedia-->
+    	<div style="cursor:pointer;" onclick="window.location='/video/{{multimediaObject.getId()}}'">
+      		<div class="pumukit_mmobjs" style="width:50%; float:left;">
+        		<div class="pumukit_mmobj" style="float:left;">
+          			<div class="picture" style="position: relative;
+            			width: 130px;
+            			height: 110px;
+            			float: left;
+            			margin: 10px;
+            			margin-right: 20px;">
+            			<a href="/video/{{multimediaObject.getId()}}">
+              				<img src="{{ multimediaObject|first_url_pic(true) }}"></img>
+            			</a>
+          			</div>
+          			<div class="info">
+            			<div class="title">
+              				<a href="/video/{{multimediaObject.getId()}}">{{multimediaObject.getTitle()}}</a>
+            			</div>
+
+            			<div class="subtitle">
+              				<abbr title="{{multimediaObject.getSubtitle()}}">{{multimediaObject.getSubtitle()}}</abbr>
+            			</div>
+
+            			<div class="mmobj_bottom">{{multimediaObject.getRecordDate()|date("d/m/Y")}}</div>
+          			</div>
+        		</div>
+      		</div>
+    	</div>
+
+    	{% set lastDate = multimediaObject.getRecordDate()|date("d/m/Y") %}
+    	{% set lastSubserialTitle = multimediaObject.getSubtitle() %}
+
+    {% endfor %}
+  	{% endfor %}
+
+  	</div>
+</div>
