@@ -97,6 +97,22 @@ php app/console server:run
 F.A.Q.
 -------------------------------------
 
+**Configure max upload filesize**
+
+1.- If you get a 413 response status code (request entity too large) and get "client intended to send too large body" in NGINX log. Check the NGINX conf file (/etc/nginx/sites-available/default)
+
+```
+client_max_body_size 2000m;
+client_body_buffer_size 128k;
+```
+
+2.- If you get a message like "The file XXXX.avi exceeds your upload_max_filesize ini directive". Check the php-fpm conf file (/etc/php5/fpm/php.ini)
+
+```
+upload_max_filesize = 2000M
+```
+
+
 **Setting up Permissions?**
 
  * http://symfony.com/doc/current/book/installation.html#checking-symfony-application-configuration-and-setup
