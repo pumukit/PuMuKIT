@@ -22,7 +22,7 @@ class TrackService
         $this->dm = $documentManager;
         $this->jobService = $jobService;
         $this->profileService = $profileService;
-        $this->tmpPath = $tmpPath ? $tmpPath : sys_get_temp_dir();
+        $this->tmpPath = $tmpPath ? realpath($tmpPath) : sys_get_temp_dir();
     }
 
     /**

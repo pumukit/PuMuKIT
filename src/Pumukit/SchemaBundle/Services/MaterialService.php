@@ -16,7 +16,7 @@ class MaterialService
     public function __construct(DocumentManager $documentManager, $targetPath, $targetUrl)
     {
         $this->dm = $documentManager;
-        $this->targetPath = $targetPath;
+        $this->targetPath = realpath($targetPath);
         $this->targetUrl = $targetUrl;
     }
 

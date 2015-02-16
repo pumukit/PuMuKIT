@@ -32,7 +32,7 @@ class JobService
         $this->profileService = $profileService;
         $this->cpuService = $cpuService;
         $this->inspectionService = $inspectionService;
-        $this->tmp_path = $tmp_path ? $tmp_path : sys_get_temp_dir();
+        $this->tmp_path = $tmp_path ? realpath($tmp_path) : sys_get_temp_dir();
         $this->test = $test;
     }
 
@@ -369,7 +369,7 @@ class JobService
             throw new \Exception('Error getting multimedia object from id: '.$job->getMmId());
         }
 
-        $tempDir = $profile['streamserver']['dir_out'] . '/' . $mmobj->getSeries()->getId();
+        $tempDir = realpath($profile['streamserver']['dir_out'] . '/' . $mmobj->getSeries()->getId());
 
         //TODO repeat mkdir (see this->execute)
         @mkdir($tempDir, 0777, true);
