@@ -38,11 +38,6 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% include 'PumukitNewAdminBundle::menu.html.twig' %}
-
-        <div class="container-fluid main">
-            {% block body %}{% endblock %}
-        </div>
         {% block javascripts %}
 
         <script src="{{ asset('/bundles/pumukitnewadmin/js/jquery-1.10.2.min.js') }}"></script>
@@ -58,5 +53,11 @@
         </script>
         <script type="text/javascript" src="{{ path('pumukit_js') }}"></script>
         {% endblock %}
+
+        {% include 'PumukitNewAdminBundle::menu.html.twig' %}
+
+        <div class="container-fluid main">
+            {% block body %}{% endblock %}
+        </div>
     </body>
 </html>
