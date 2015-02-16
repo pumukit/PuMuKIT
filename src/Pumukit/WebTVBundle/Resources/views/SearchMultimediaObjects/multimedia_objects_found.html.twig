@@ -5,8 +5,7 @@
 
   	<div style="overflow:hidden">
 
-  	{% for serie in series %}
-  	{% for multimediaObject in serie.getMultimediaObjects() %}
+  	{% for multimediaObject in multimediaObjects %}
 
     	{% if multimediaObject.getRecordDate()|date("d/m/Y") != lastDate %}
       		<div style="clear:both;"></div>
@@ -49,7 +48,6 @@
     	{% set lastSubserialTitle = multimediaObject.getSubtitle() %}
 
     {% endfor %}
-  	{% endfor %}
 
   	</div>
 </div>
