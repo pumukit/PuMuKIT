@@ -53,6 +53,15 @@ class MaterialService
      */
     public function addMaterialFile(MultimediaObject $multimediaObject, UploadedFile $materialFile, $formData)
     {
+
+        if(UPLOAD_ERR_OK != $materialFile->getError()) {
+           throw new \Exception($materialFile->getErrorMessage());
+        }
+
+        if (!is_file($materialFile->getPathname())) {
+            throw new FileNotFoundException($materialFile->getPathname());
+        }
+
         $material = new Material();
         $material = $this->saveFormData($material, $formData);
 
