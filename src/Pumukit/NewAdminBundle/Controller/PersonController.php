@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
-use Pumukit\AdminBundle\Form\Type\PersonType;
+use Pumukit\NewAdminBundle\Form\Type\PersonType;
 
 class PersonController extends AdminController
 {
