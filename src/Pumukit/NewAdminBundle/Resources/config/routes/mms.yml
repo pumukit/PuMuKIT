@@ -1,0 +1,121 @@
+pumukitnewadmin_mms_index:
+    pattern: /series
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:indexAction
+        _sylius:
+            filterable: true
+
+pumukitnewadmin_mms_create:
+    pattern: /{id}/create
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:createAction
+        _sylius:
+            redirect: pumukitnewadmin_mms_index
+
+pumukitnewadmin_mms_edit:
+    pattern: /{id}/edit
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:editAction
+
+pumukitnewadmin_mms_update_meta:
+    pattern: /{id}/update/meta
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:updatemetaAction
+
+pumukitnewadmin_mms_update_pub:
+    pattern: /{id}/update/pub
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:updatepubAction
+
+pumukitnewadmin_mms_batch_delete:
+    pattern: /delete
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:batchDeleteAction
+        _sylius:
+            redirect: pumukitnewadmin_mms_index
+
+pumukitnewadmin_mms_delete:
+    pattern: /{id}/delete
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:deleteAction
+        _sylius:
+            redirect: pumukitnewadmin_mms_index
+
+pumukitnewadmin_mms_copy:
+    pattern: /{id}/copy
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:copyAction
+        _sylius:
+            redirect: pumukitnewadmin_mms_index
+
+pumukitnewadmin_mms_show:
+    pattern: /{id}/show
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:showAction
+
+pumukitnewadmin_mms_up:
+    pattern: /{id}/up
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:upAction
+        _sylius:
+            redirect: pumukitnewadmin_mms_index
+
+pumukitnewadmin_mms_down:
+    pattern: /{id}/down
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:downAction
+        _sylius:
+            redirect: pumukitnewadmin_mms_index
+
+pumukitnewadmin_mms_top:
+    pattern: /{id}/top
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:topAction
+        _sylius:
+            redirect: pumukitnewadmin_mms_index
+
+pumukitnewadmin_mms_bottom:
+    pattern: /{id}/bottom
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:bottomAction
+        _sylius:
+            redirect: pumukitnewadmin_mms_index
+
+pumukitnewadmin_mms_addtag:
+    pattern: /{id}/addtag/
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:addTagAction
+        _sylius:
+            redirect: pumukitnewadmin_mms_edit
+
+pumukitnewadmin_mms_deletetag:
+    pattern: /{id}/deletetag/{tagId}
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:deleteTagAction
+
+pumukitnewadmin_mms_getchildrentag:
+    pattern: /{id}/getchildrentag/
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:getChildrenTagAction
+
+pumukitnewadmin_mms_list:
+    pattern: /list
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:listAction

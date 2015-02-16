@@ -14,7 +14,7 @@ class Builder extends ContainerAware
 
         $menu->addChild('Dashboard', array('route' => 'pumukit_newadmin_dashboard_index'));
 
-        $series = $menu->addChild('Multimedia Series', array('route' => 'pumukitadmin_series_index'));
+        $series = $menu->addChild('Multimedia Series', array('route' => 'pumukitnewadmin_series_index'));
         $series->addChild('Multimedia', array('route' => 'pumukitadmin_mms_index'));
         $series->setDisplayChildren(false);
 

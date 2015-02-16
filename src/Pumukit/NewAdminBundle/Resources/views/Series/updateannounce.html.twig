@@ -1,0 +1,41 @@
+<span class="trans_button" onclick="$('list_announces_{{ oneseries.id }}').toggle()">
+<img alt="{% trans %}options{% endtrans %}" title="{% trans %}options{% endtrans %}" src="/legacy/images/admin/mbuttons/email_inline.gif">
+<div class="trans_menu" id="list_announces_{{ oneseries.id }}" style="display:none">
+
+  <div class="mas_info" style="">
+    <div class="trans_button_up"><img src="/legacy/images/admin/mbuttons/email_inline.gif" alt="{% trans %}options{% endtrans %}" /></div>
+    <div class="trans_button_info">{% trans %}Options{% endtrans %}:</div>
+  </div>
+
+  <div class="list_options">
+    <ul style="">
+      <!-- TODO en actions -->
+      {# TODO <?php $announces = AnnounceChannelPeer::doSelect(new Criteria());  if(count($announces) == 0):?> #}
+      {% set announces = '' %}
+      {% if announces|length == 0 %}
+        <li class="normal"> {% trans %}There is no personal channel.{% endtrans %}</li>
+      {% else %}
+        <li class="normal">
+         {# <?php echo link_to_remote(__('Todos'), array(
+          'update' => 'list_serials', 
+          'url' => 'serials/announcech?type=all&id='.$serial['id'], 
+          'script' => 'true', 
+          'confirm' => __('Seguro que desea anunciar la serie "') . $serial['title'] . '"', )); ?> #}
+	 <a href="#" onclick="if (return window.confirm('{% trans %}Are you sure you want to announce the series{% endtrans %} {{ oneseries.getTitle() }}?')) new Ajax.Updater('list_serials', 'serials/announcech?type=all&id={{ oneseries.id }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}All{% endtrans %}</a>
+       </li>
+    
+       {% for announce in announces %}
+         <li class="normal">
+	   <a href="#" onclick="if (return widnow.confirm('{% trans %}Are you sure you want to announce the series{% endtrans %} {{ oneseries.getTitle() }}?')) new Ajax.Updater('list_serials', 'serials/announcech?type={# TODO {{ announce.id }} #}&id={{ oneseries.id }}', {asynchronous:true, evalScripts:true}); return false;">TODO{# {{ announce.getName() }} #}</a>
+         </li>
+      {% endfor %}
+      {% endif %}
+      <li class="cancel"><a href="#" onclick="return false;">{% trans %}Cancel{% endtrans %}...</a></li>
+
+    </ul>
+
+
+  </div>
+</div>
+</span>
+

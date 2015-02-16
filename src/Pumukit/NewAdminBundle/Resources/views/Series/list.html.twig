@@ -1,0 +1,121 @@
+{# TODO dblclick_fila #}
+
+<script type="text/javascript">
+$(document).ready(function(){$.material.init();});
+</script>
+
+<div class="table-responsive">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th width="1%">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" onclick="window.click_checkbox_all('series', this.checked)">
+            </label>
+          </div>
+        </th>
+        <th colspan="5" width="5%"></th>
+        {# TODO <?php if(sfConfig::get('app_mail_use')):?> #}
+        {% if true %}
+        <th width="2%"></th>
+        {% endif %}
+        <th width="1%">{% trans %}Img{% endtrans %}</th>
+        {% include 'PumukitNewAdminBundle:Series:listth.html.twig' %}
+      </tr>
+    </thead>
+
+    <tbody>
+      {% if series|length == 0 %}
+      <tr>
+        <td colspan="13">
+          {% trans %}There are no series with those values.{% endtrans %}
+        </td>
+      </tr>
+      {% endif %}
+      {% for oneseries in series %}
+      <tr>
+        <td>
+          <div class="checkbox">
+            <label>
+              <input id="{{ oneseries.id }}" class="serial_checkbox" type="checkbox">
+            </label>
+          </div>
+        </td>
+        <td>
+          {{ oneseries.announce?'<span style="color: blue">A</span>':'' }}
+	      {# TODO field in Series with mm_announce
+          <?php echo ($series['mm_announce']?'<span style="color: grey">A</span>':'') ?>
+          <?php echo (($series['mm_announce'])||($series['announce'])?'':'&nbsp;') ?>
+	      #}
+        </td> 
+        <td>
+          {# TODO <?php echo image_tag('admin/bbuttons/mm'.$series['mm_status_max'].'_inline.gif', array('alt' => __('estado'), 'title'=>__('estado'), 'id'=>'table_series_status_' . $series['id'])) ?> #}
+	      <i class="mdi-device-signal-wifi-off"></i> {# TODO multimedia object status implies different class image #}
+        </td>
+        <td>
+          <a href="#" onclick="window.submit_delete_series('{{ oneseries.id }}', '{{ oneseries.getTitle() }}', '{{ oneseries.getMultimediaObjects()|length }}'); return false;">
+            <i class="mdi-content-clear"></i>
+          </a>
+        </td>
+        <td>
+	      {% include 'PumukitNewAdminBundle:Series:updatemenu.html.twig' with {'oneseries': oneseries, 'numV': oneseries.getMultimediaObjects()|length } %}
+        </td>
+        {# TODO <?php if(sfConfig::get('app_mail_use')):?> #}
+        {% if true %}
+        <td>
+	      {% include 'PumukitNewAdminBundle:Series:updateannounce.html.twig' with {'oneseries': oneseries} %}
+        </td>
+        {% endif %}
+        <td>
+	      <a href="{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}">{% trans %}videos{% endtrans %}</a>
+        </td>
+        <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
+          {% if oneseries.getFirstUrlPic() is not empty %}
+          <img src="{{ oneseries.getFirstUrlPic() }}" height="23" width="23" />
+          {% else %}
+          <i class="mini mdi-file-folder" height="23" width="23"></i>
+          {% endif %}
+        </td>
+        <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
+          <span style="font-weight: bold; ">{{ oneseries.id }}</span>
+        </td>
+        <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
+	      {{ oneseries.getTitle() }}
+        </td>
+        <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
+	      {{ oneseries.getPublicDate()|date('Y-m-d') }}
+        </td>
+        <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
+          {{ oneseries.getMultimediaObjects()|length }}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="13">
+          <div class="col-md-8">
+            {{ series.getNbResults }}
+            {% transchoice series.getNbResults %}
+	        {0} series|{1} series|]1,Inf] series
+	        {% endtranschoice %}
+	        {% if app.session.get('admin/series/criteria')|length != 0%}
+            <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
+	        {% endif %}
+          </div>
+          <div class="col-md-4" align="right">
+            <div class="pagerfanta">
+              {% set sorting = {('sorting[' ~ (app.session.get('admin/series/sort')) ~ ']') : (app.session.get('admin/series/type')) } %}
+              {{ pagerfanta(series, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_series_index", "routeParams": sorting}) }}
+            </div>
+          </div>
+        </th>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+{# TODO
+<?php if (isset($msg_alert)) echo m_msg_alert($msg_alert) ?>
+#}

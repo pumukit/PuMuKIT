@@ -1,0 +1,65 @@
+{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+
+{% block body %}
+
+<h3> {% trans %}Multimedia Series{% endtrans %}</h3>
+
+<div class="col-md-10">
+  <div class="well" >
+    <div id="list_series">
+      {% include 'PumukitNewAdminBundle:Series:list.html.twig' %}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <select id="options_series" style="margin: 10px 0px; width: 33%" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('series', $('options_series'))">
+        <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
+        <option disabled="">---</option>
+        <option value="delete_sel">{% trans %}Delete selected{% endtrans %}</option>
+        <!-- <option value="inv_announce_sel">{% trans %}Anunciar/Desanunciar selecionados{% endtrans %}</option> -->
+        <!-- <option value="inv_working_sel">{% trans %}Ocultar/Desocultar selecionados{% endtrans %}</option> Ocultarlos todos -->
+      </select>
+    </div>
+    <div class="col-md-2">
+      {# TODO wizard and path #}
+	  <a class="btn btn-default" href="#" onclick="Modalbox.show('/editar.php/wizard/serial',{width:800, title:'{% trans %}STEP I: Serie{% endtrans %}'}); return false;">{% trans %}Wizard{% endtrans %}</a>
+    </div>
+    <div class="col-md-2" align="right">
+      {# TODO check route with filter /editar.php/serials/create/filter/filter #}
+	  <a title="{% trans %}Create new series{% endtrans %}" class="btn btn-warning" href="{{ path('pumukitnewadmin_series_create') }}" data-toggle="modal" data-target="#myModal">{% trans %}Create{% endtrans %}</a>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-2">
+  <div id="preview_series" class="well">
+    {% if(app.session.has('admin/series/id')) %}
+    {{ render_hinclude(url('pumukitnewadmin_series_show', {'id': app.session.get('admin/series/id')})) }}
+    {% else %}
+    {% trans %}Select any series.{% endtrans %}
+    {% endif %}
+  </div>
+  {# TODO define $broadcasts and $seriestypes #}
+  {% include 'PumukitNewAdminBundle:Series:acordeon.html.twig' with {'name': 'series', 'broadcasts': 'broadcasts', 'seriestypes': 'seriestypes'} %}
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>
+
+<div style="clear:both"></div>
+
+{# HACK: Cierro div del layout. Para que el formulario de editar series no tenga el margen por defecto de body_div #}
+</div>
+
+
+<!-- div editar -->
+<div id="edit_series" class="tv_admin_edit">
+  {% if(app.session.has('admin/series/id')) %}
+    {{ render(url('pumukitnewadmin_series_update', {'id': app.session.get('admin/series/id')})) }}
+  {% endif %}
+
+{% endblock %}

@@ -1,0 +1,57 @@
+pumukitnewadmin_series_index:
+    pattern: /
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.series:indexAction
+        _sylius:
+            filterable: true
+
+pumukitnewadmin_series_create:
+    pattern: /create
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.series:createAction
+        _sylius:
+            redirect: pumukitnewadmin_series_index
+
+pumukitnewadmin_series_update:
+    pattern: /{id}/update
+    methods: [GET, POST, DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.series:updateAction
+
+pumukitnewadmin_series_batch_delete:
+    pattern: /delete
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.series:batchDeleteAction
+        _sylius:
+            redirect: pumukitnewadmin_series_index
+
+pumukitnewadmin_series_delete:
+    pattern: /{id}
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.series:deleteAction
+        _sylius:
+            redirect: pumukitnewadmin_series_index
+
+pumukitnewadmin_series_copy:
+    pattern: /{id}/copy
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.series:copyAction
+        _sylius:
+            redirect: pumukitnewadmin_series_index
+
+pumukitnewadmin_series_show:
+    pattern: /{id}/show
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.series:showAction
+
+pumukitnewadmin_series_list:
+    pattern: /list
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.series:listAction

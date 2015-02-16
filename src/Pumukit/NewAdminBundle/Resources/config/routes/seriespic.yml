@@ -1,0 +1,70 @@
+pumukitnewadmin_seriespic_index:
+    pattern: /
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.seriespic:indexAction
+        _sylius:
+            filterable: true
+
+pumukitnewadmin_seriespic_create:
+    pattern: /create/{id}
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.seriespic:createAction
+        _sylius:
+            redirect: pumukitnewadmin_series_index
+
+pumukitnewadmin_seriespic_update:
+    pattern: /{id}/update
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.seriespic:updateAction
+
+pumukitnewadmin_seriespic_batch_delete:
+    pattern: /delete
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.seriespic:batchDeleteAction
+        _sylius:
+            redirect: pumukitnewadmin_series_index
+
+pumukitnewadmin_seriespic_delete:
+    pattern: /{id}
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.seriespic:deleteAction
+
+
+pumukitnewadmin_seriespic_up:
+    pattern: /{id}/up
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.seriespic:upAction
+
+
+pumukitnewadmin_seriespic_down:
+    pattern: /{id}/down
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.seriespic:downAction
+
+
+pumukitnewadmin_seriespic_list:
+    pattern: /{id}
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.seriespic:listAction
+
+
+pumukitnewadmin_seriespic_show:
+    pattern: /{id}/show
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.seriespic:showAction
+
+
+pumukitnewadmin_seriespic_upload:
+    pattern: /{id}/upload
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.seriespic:uploadAction

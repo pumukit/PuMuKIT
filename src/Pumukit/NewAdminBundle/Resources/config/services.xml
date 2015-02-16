@@ -4,13 +4,24 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
-    <services>
-        <service id="pumukit_new_admin.example" class="Pumukit\NewAdminBundle\Example">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
-        </service>
-    </services>
-    -->
+  <services>
+    <service id="pumukitnewadmin.form.type.person" class="Pumukit\NewAdminBundle\Form\Type\PersonType">
+      <tag name="form.type" alias="pumukitnewadmin_person" />
+    </service>
+
+    <service id="pumukitnewadmin.form.type.series" class="Pumukit\NewAdminBundle\Form\Type\SeriesType">
+      <tag name="form.type" alias="pumukitnewadmin_series" />
+    </service>
+
+    <service id="pumukitnewadmin.form.type.mmtemplate.meta" class="Pumukit\NewAdminBundle\Form\Type\MultimediaObjectTemplateMetaType">
+      <tag name="form.type" alias="pumukitnewadmin_mmtemplate_meta" />
+    </service>
+
+    <service id="pumukitnewadmin.form.type.mms.meta" class="Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType">
+      <tag name="form.type" alias="pumukitnewadmin_mms_meta" />
+    </service>
+    <service id="pumukitnewadmin.form.type.mms.pub" class="Pumukit\NewAdminBundle\Form\Type\MultimediaObjectPubType">
+      <tag name="form.type" alias="pumukitnewadmin_mms_pub" />
+    </service>
+  </services>
 </container>

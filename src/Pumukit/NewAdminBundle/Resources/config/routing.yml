@@ -1,7 +1,3 @@
-pumukitnewadmin_person:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/person.yml
-    prefix: /admin/person
-
 pumukit_js:
     pattern: /admin/pumukit2.js
     methods: [GET]
@@ -17,3 +13,27 @@ pumukit_css:
         _controller: FrameworkBundle:Template:template
         template: 'PumukitNewAdminBundle::pumukit2.css.twig'
         _format: css
+
+pumukitnewadmin_person:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/person.yml
+    prefix: /admin/person
+
+pumukitnewadmin_series:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/series.yml
+    prefix: /admin/series
+
+pumukitnewadmin_mmtemplate:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/mmtemplate.yml
+    prefix: /admin/mmtemplate
+
+pumukitnewadmin_mms:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/mms.yml
+    prefix: /admin/mms
+
+pumukitnewadmin_seriespic:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/seriespic.yml
+    prefix: /admin/seriespic
+
+pumukitnewadmin_mmspic:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/mmspic.yml
+    prefix: /admin/mmspic
