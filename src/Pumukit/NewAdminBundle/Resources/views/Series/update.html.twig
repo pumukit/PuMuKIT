@@ -1,6 +1,6 @@
-{% form_theme form 'PumukitAdminBundle:Themes:fields.html.twig' %}
+{% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
 
-<div id="tv_admin_container">
+<div id="tv_admin_container" class="well">
 
   <div class="background_id">
     {{ series.id }}
@@ -8,102 +8,127 @@
   <br />
 
   <form onsubmit="$.ajax({
-                          url: '{{ path('pumukitadmin_series_update', {'id': series.id}) }}',
+                          url: '{{ path('pumukitnewadmin_series_update', {'id': series.id}) }}',
                           type: 'POST',
-                          data: {'form': $(this).serialize()},
-                          error: function(request, json){new Effect.Opacity('series_save_error', {duration:3.0, from:1.0, to:0.0});},
+                          data: $(this).serialize(),
+                          error: function(request, json){$('#series_save_error').show(2500);$('#series_save_error').hide(2500);},
                           success: function(response){
                                             $('#list_series').html(response);
-                                            new Effect.Opacity('series_save_ok', {duration:3.0, from:1.0, to:0.0});
-                                    		$('#preview_series').get('{{ path('pumukitadmin_series_show', {'id': series.id}) }}');
+                                            $.ajax({
+                                                    url: '{{ path('pumukitnewadmin_series_show', {'id': series.id}) }}',
+                                                    type: 'GET',
+                                                    success: function(response){$('#preview_series').html(response);}
+                                                    });
+                                            $('#series_save_ok').show(1500);
+                                            $('#series_save_ok').hide(1500);
                                             }
                           });
 		          return false;"
-	action="{{ path('pumukitadmin_series_update', {'id': series.id}) }}" method="POST">
+	action="{{ path('pumukitnewadmin_series_update', {'id': series.id}) }}" method="POST" class="form-horizontal">
 
 	<input type="hidden" name="id" id="id" value="{{ series.id }}">
-	<div id="remember_save_series" style="display: none; position: absolute; color:red; border: 1px solid red; padding: 5px; background-color:#fdc; font-weight:bold;">
-	  {% trans %}Press OK for the change to take effect{% endtrans %} </div>
 
-	<ul class="tv_admin_actions">
-	  <span id="series_save_error" style="color:red; opacity: 0.0; filter: alpha(opacity=0); ZOOM:1">{% trans %}Saved ERROR{% endtrans %}</span>
-	  <span id="series_save_ok" style="color:blue; opacity: 0.0; filter: alpha(opacity=0);ZOOM:1">{% trans %}Saved OK{% endtrans %}</span>
-	  <li><input type="submit" name="OK" value="{% trans %}OK{% endtrans %}" class="tv_admin_action_save" onclick="$('remember_save_series').hide();" ></li>
-	  {# TODO onclick="if(comprobar_form_series($('public_date').value, /^(\d+)\/(\d+)\/(\d+) (\d+):(\d+)(:(\d+))?$/)){$('remember_save_series').hide();}else{return false}" #}
-	  <li><input type="reset" name="reset" value="{% trans %}Reset{% endtrans %}" class="tv_admin_action_delete" onclick="$('remember_save_series').hide()"></li>
-	</ul>
+	<div class="row">
+      <div class="col-md-3">
+        <div id="remember_save_series" class="alert alert-dismissable alert-danger" style="display:none;">
+          {% trans %}Press OK for the change to take effect{% endtrans %}
+        </div>
+      </div>
 
+      <div class="col-md-2 col-md-offset-3">
+        <span id="series_save_error" style="display:none; color:red;">{% trans %}Saved ERROR{% endtrans %}</span>
+      </div>
+      <div class="col-md-2">
+        <span id="series_save_ok" style="display:none; color:indigo;">{% trans %}Saved OK{% endtrans %}</span>
+      </div>
+
+      <div class="col-md-2">
+        <div class="col-md-6">
+          <button type="submit" class="btn btn-primary" onclick="$('#remember_save_series').hide();">{% trans %}OK{% endtrans %}</button>
+        </div>
+	    {# TODO onclick="if(comprobar_form_series($('public_date').value, /^(\d+)\/(\d+)\/(\d+) (\d+):(\d+)(:(\d+))?$/)){$('#remember_save_series').hide();}else{return false}" #}
+        <div class="col-md-6">
+          <button type="button" class="btn btn-default" onclick="$('#remember_save_series').hide();">{% trans %}Reset{% endtrans %}</button>
+        </div>
+      </div>
+	</div>
+
+    <div class="well">
       <fieldset>
+        <div class="col-md-5">
 
-	{% for child in form if (child.vars.id not in ['pumukitadmin_series_i18n_header', 'pumukitadmin_series_i18n_footer', 'pumukitadmin_series_i18n_line2']) %}
+	      {% for child in form if (child.vars.id not in ['pumukitnewadmin_series_i18n_header', 'pumukitnewadmin_series_i18n_footer', 'pumukitnewadmin_series_i18n_line2']) %}
           {{ form_row(child) }}
-	{% endfor %}
+	      {% endfor %}
 
-	<div class="form-row">
-	   <dl style="margin: 0px">
-	     <dt>{% trans %}Images{% endtrans %}</dt>
-	     <dd>
-               <div id="pic_series">
-		 {% include 'PumukitAdminBundle:Pic:list.html.twig' with {'resource': series, 'resource_name': 'series'} %}
-               </div>
-	     </dd>
-	   </dl>
-	</div>
+	      <div class="form-group">
+	        <dl>
+	          <dt>{% trans %}Images{% endtrans %}</dt>
+	          <dd>
+                <div id="pic_series">
+		          {% include 'PumukitNewAdminBundle:Pic:list.html.twig' with {'resource': series, 'resource_name': 'series'} %}
+                </div>
+	          </dd>
+	        </dl>
+	      </div>
 
-	<div class="form-row">
-	  <a style="color:#666; text-decoration:underline" href="#"
-	     onclick="$('pumukitadmin_series_i18n_header', 'pumukitadmin_series_i18n_footer', 'html_text_arr_1' ,'html_text_arr_2').invoke('toggle'); return false;">
-	    <span id="html_text_arr_1">&#9654;</span> <span style="display:none" id="html_text_arr_2">&#9660;</span>
-	    {% trans %}Show configuration{% endtrans %} <strong>HTML</strong> {% trans %}Texts.{% endtrans %}
-	  </a>
-	</div>
+	      <div class="form-group">
+	        <a style="color:#666; text-decoration:underline" href="#"
+	           onclick="$('#pumukitnewadmin_series_i18n_header').toggle(); $('#pumukitnewadmin_series_i18n_footer').toggle(); $('#html_text_arr_1').toggle(); $('#html_text_arr_2').toggle(); return false;">
+	          <span id="html_text_arr_1">&#9654;</span> <span style="display:none" id="html_text_arr_2">&#9660;</span>
+	          {% trans %}Show configuration{% endtrans %} <strong>HTML</strong> {% trans %}Texts.{% endtrans %}
+	        </a>
+	      </div>
 
-	{% for child in form if (child.vars.id in ['pumukitadmin_series_i18n_header', 'pumukitadmin_series_i18n_footer']) %}
-	<div class="form-row" style="display:none" id="{{ child.vars.id }}">
-	  <label for="header" class="long">{{ child.vars.label }} <br><strong>HTML</strong></label>
-	  <diV class="content content_long">
-            {{ form_widget(child) }}
-	  </div>
-	</div>
-        {% endfor %}
+	      {% for child in form if (child.vars.id in ['pumukitnewadmin_series_i18n_header', 'pumukitnewadmin_series_i18n_footer']) %}
+	      <div class="form-group" style="display:none" id="{{ child.vars.id }}">
+	        <label for="header" class="control-label">{{ child.vars.label }}</label>
+	        <diV>
+              {{ form_widget(child) }}
+	        </div>
+	      </div>
+          {% endfor %}
 
-	{% for child in form if (child.vars.id in ['pumukitadmin_series_i18n_line2']) %}
-	  {{ form_row(child) }}
-	{% endfor %}
+	      {% for child in form if (child.vars.id in ['pumukitnewadmin_series_i18n_line2']) %}
+	      {{ form_row(child) }}
+	      {% endfor %}
 
-        {# TODO with tags
-	<div class="form-row" id="pumukitadmin_series_structure">
-	  <label for="series_template_id" class="long">{% trans %}Structure{% endtrans %}:</label>
-	  <div class="content content_long">
-	    <select name="serial_template_id" id="series_template_id" onchange="$('remember_save_series').show()"><option value="1" selected="selected">date</option>
-	      <option value="2">date_all</option>
-	      <option value="3">date_subserial</option>
-	      <option value="4">subserial</option>
-	    </select> #}
+          {# TODO with tags
+	      <div class="form-group" id="pumukitnewadmin_series_structure">
+	        <label for="series_template_id" class="control-label">{% trans %}Structure{% endtrans %}:</label>
+	        <div>
+	          <select name="serial_template_id" id="series_template_id" onchange="$('remember_save_series').show()"><option value="1" selected="selected">date</option>
+	            <option value="2">date_all</option>
+	            <option value="3">date_subserial</option>
+	            <option value="4">subserial</option>
+	          </select> #}
 
-	    {#
-	    <?php $value = object_select_tag($serial, 'getSerialTemplateId', array(
-          'related_class' => 'SerialTemplate',
-            'control_name' => 'serial_template_id',
-            'peer_method' => 'doSelect',
-            'include_blank' => false,
-            'onchange' => "$('remember_save_series').show()",
-        )); echo $value ? $value : '&nbsp;' ?>
-	    #}
-         {#
-	  </div>
-	</div>#}
+	          {#
+	          <?php $value = object_select_tag($serial, 'getSerialTemplateId', array(
+                    'related_class' => 'SerialTemplate',
+              'control_name' => 'serial_template_id',
+              'peer_method' => 'doSelect',
+              'include_blank' => false,
+              'onchange' => "$('remember_save_series').show()",
+              )); echo $value ? $value : '&nbsp;' ?>
+	          #}
+              {#
+	        </div>
+	      </div>#}
 
-    {{ form_rest(form) }}
+          {{ form_rest(form) }}
 
+        </div>
       </fieldset>
-  </Form>
+    </div>
+
+  </form>
 </div>
 
 <script type="text/javascript">
-$(window).load(function() {
-    $("*[id^='pumukitadmin_series_']").on('change', function(){
-        $('remember_save_series').show();
+$(document).ready(function() {
+    $("*[id^='pumukitnewadmin_series_']").on('change', function(){
+        $('#remember_save_series').show();
     });
 });
 </script>
