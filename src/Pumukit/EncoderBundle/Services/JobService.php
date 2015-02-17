@@ -260,7 +260,7 @@ class JobService
         
         try{
             $out = $executor->execute($commandLine);        
-            $job->setOut($out);
+            $job->setOutput($out);
             $duration = $this->inspectionService->getDuration($job->getPathEnd());
             $job->setNewDuration($duration);
 
