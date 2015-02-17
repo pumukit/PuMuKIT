@@ -7,17 +7,19 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Pumukit\EncoderBundle\Document\Job;
       
-class PumukitEncoderInfoCommand extends ContainerAwareCommand
+class PumukitEncoderInfoCommand extends BasePumukitEncoderCommand
 {
     protected function configure()
     {
         $this
             ->setName('pumukit:encoder:info')
             ->setDescription('Pumukit show job info')
-            ->addArgument('id', InputArgument::REQUIRED, 'Job identifier to execute')
+            ->setDefinition(array(
+                new InputArgument('id', InputArgument::REQUIRED, 'Job identifier to execute'),
+                new InputOption('format', null, InputOption::VALUE_REQUIRED, 'To output description in other formats', 'txt'),
+            ))
             ->setHelp(<<<EOT
 TODO
 
@@ -43,20 +45,23 @@ EOT
             throw new \RuntimeException("Not job found with id $id.");
         }
 
-        $output->writeln("id: " . $job->getId());
-        $output->writeln("status:" . Job::$statusTexts[$job->getStatus()]);                
-        $output->writeln("mm: ". $job->getMmId());
-        $output->writeln("profile: " . $job->getProfile());
-        $output->writeln("cpu: " . $job->getCpu());
-        $output->writeln("priority: " . $job->getPriority());
-        $output->writeln("duration: " . $job->getDuration());
-        $output->writeln("new_duration: " . $job->getNewDuration());
-        $output->writeln("timeini: " . $job->getTimeini('Y-m-d H:i:s'));
-        $output->writeln("timestart: " . $job->getTimestart('Y-m-d H:i:s'));
-        $output->writeln("timeend: " . $job->getTimeend('Y-m-d H:i:s'));
-        $output->writeln("command: ");
+
+        //$description[] = sprintf('<comment>Scope</comment>            %s', $definition->getScope());
+        $output->writeln("<comment>Id</comment>                " . $job->getId());
+        $output->writeln("<comment>Status</comment>            " . $this->formatStatus($job->getStatus()));
+        $output->writeln("<comment>Mm</comment>                " . $job->getMmId());
+        $output->writeln("<comment>Profile</comment>           " . $job->getProfile());
+        $output->writeln("<comment>Cpu</comment>               " . $job->getCpu());
+        $output->writeln("<comment>Priority</comment>          " . $job->getPriority());
+        $output->writeln("<comment>Duration</comment>          " . $job->getDuration());
+        $output->writeln("<comment>New Duration</comment>      " . $job->getNewDuration());
+        $output->writeln("<comment>Timeini</comment>           " . $job->getTimeini('Y-m-d H:i:s'));
+        $output->writeln("<comment>Timestart</comment>         " . $job->getTimestart('Y-m-d H:i:s'));
+        $output->writeln("<comment>Timeend</comment>           " . $job->getTimeend('Y-m-d H:i:s'));
+        $output->writeln("<comment>Command</comment>");
         $output->writeln($jobService->renderBat($job));
-        $output->writeln("out: ");
+        $output->writeln("<comment>Out</comment>");
         $output->writeln($job->getOutput());
     }
+
 }
