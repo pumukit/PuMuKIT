@@ -11,8 +11,8 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-8">
-      <select id="options_series" style="margin: 10px 0px; width: 33%" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('series', $('options_series'))">
+    <div class="col-md-2">
+      <select id="options_series" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('series', $('options_series'))">
         <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
         <option disabled="">---</option>
         <option value="delete_sel">{% trans %}Delete selected{% endtrans %}</option>
@@ -20,13 +20,13 @@
         <!-- <option value="inv_working_sel">{% trans %}Ocultar/Desocultar selecionados{% endtrans %}</option> Ocultarlos todos -->
       </select>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-1 col-md-offset-8">
       {# TODO wizard and path #}
 	  <a class="btn btn-default" href="#" onclick="Modalbox.show('/editar.php/wizard/serial',{width:800, title:'{% trans %}STEP I: Serie{% endtrans %}'}); return false;">{% trans %}Wizard{% endtrans %}</a>
     </div>
-    <div class="col-md-2" align="right">
+    <div class="col-md-1" align="right">
       {# TODO check route with filter /editar.php/serials/create/filter/filter #}
-	  <a title="{% trans %}Create new series{% endtrans %}" class="btn btn-warning" href="{{ path('pumukitnewadmin_series_create') }}" data-toggle="modal" data-target="#myModal">{% trans %}Create{% endtrans %}</a>
+	  <a title="{% trans %}Create new series{% endtrans %}" class="btn btn-warning" href="#" onclick="$('#filter_series').reset(); $('#list_series').load('{{ path('pumukitadmin_series_create') }}'); return false;">{% trans %}Create{% endtrans %}</a>
     </div>
   </div>
 </div>
@@ -34,9 +34,9 @@
 <div class="col-md-2">
   <div id="preview_series" class="well">
     {% if(app.session.has('admin/series/id')) %}
-    {{ render_hinclude(url('pumukitnewadmin_series_show', {'id': app.session.get('admin/series/id')})) }}
+      {{ render_hinclude(url('pumukitnewadmin_series_show', {'id': app.session.get('admin/series/id')})) }}
     {% else %}
-    {% trans %}Select any series.{% endtrans %}
+      {% trans %}Select any series.{% endtrans %}
     {% endif %}
   </div>
   {# TODO define $broadcasts and $seriestypes #}
@@ -57,7 +57,7 @@
 
 
 <!-- div editar -->
-<div id="edit_series" class="tv_admin_edit">
+<div id="edit_series" class="row col-md-12">
   {% if(app.session.has('admin/series/id')) %}
     {{ render(url('pumukitnewadmin_series_update', {'id': app.session.get('admin/series/id')})) }}
   {% endif %}
