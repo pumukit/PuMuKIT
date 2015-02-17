@@ -376,12 +376,13 @@ class JobService
             throw new \Exception('Error getting multimedia object from id: '.$job->getMmId());
         }
 
-        $tempDir = realpath($profile['streamserver']['dir_out'] . '/' . $mmobj->getSeries()->getId());
+        $tempDir = $profile['streamserver']['dir_out'] . '/' . $mmobj->getSeries()->getId();
 
         //TODO repeat mkdir (see this->execute)
         @mkdir($tempDir, 0777, true);
 
-        $pathEnd = $tempDir.'/'.$job->getId().'.'.$finalExtension;
+        $pathEnd = realpath($tempDir) . '/' . $job->getId() . '.' . $finalExtension;
+
         $job->setPathEnd($pathEnd);
         $job->setExtIni($extension);
         $job->setExtEnd($finalExtension);
