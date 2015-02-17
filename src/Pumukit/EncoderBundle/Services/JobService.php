@@ -268,14 +268,17 @@ class JobService
             var_dump($job->getDuration());
             var_dump($duration);
     
-            $job->setTimeend(new \DateTime('now'));
+
             $this->searchError($profile['app'], $out, $job->getDuration(), $duration);
 
+            $job->setTimeend(new \DateTime('now'));
             $job->setStatus(Job::STATUS_FINISHED);
 
             $this->createFile($job);
         }catch (\Exception $e){
+            $job->setTimeend(new \DateTime('now'));
             $job->setStatus(Job::STATUS_ERROR);
+
             var_dump("ERROR");
             var_dump($e->getMessage());            
         }
