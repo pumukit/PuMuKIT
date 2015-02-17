@@ -48,7 +48,9 @@ EOT
         $output->writeln("mm: ". $job->getMmId());
         $output->writeln("profile: " . $job->getProfile());
         $output->writeln("cpu: " . $job->getCpu());
-        $output->writeln("priority: " . $job->getPriority());                
+        $output->writeln("priority: " . $job->getPriority());
+        $output->writeln("duration: " . $job->getDuration());
+        $output->writeln("new_duration: " . $job->getNewDuration());
         $output->writeln("timeini: " . $job->getTimeini('Y-m-d H:i:s'));
         $output->writeln("timestart: " . $job->getTimestart('Y-m-d H:i:s'));
         $output->writeln("timeend: " . $job->getTimeend('Y-m-d H:i:s'));

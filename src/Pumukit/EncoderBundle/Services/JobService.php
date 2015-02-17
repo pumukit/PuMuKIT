@@ -261,6 +261,7 @@ class JobService
         try{
             $out = $executor->execute($commandLine);        
             $duration = $this->inspectionService->getDuration($job->getPathEnd());
+            $job->setNewDuration($duration);
 
             var_dump($commandLine);
             var_dump($profile['app']);
