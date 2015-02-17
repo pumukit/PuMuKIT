@@ -5,24 +5,24 @@
     <h2>{% trans %}Search{% endtrans %}</h2>
 
     <div class="form-group">
-      <label for="name" class="col-sm-2 control-label">{% trans %}Name{% endtrans %}:</label>
+      <label for="name" class="col-md-2 control-label">{% trans %}Name{% endtrans %}:</label>
       {# TODO culture #}
       {% set criteria = app.session.get('admin/person/criteria') %}
-      <div class="col-sm-10">
+      <div class="col-md-10">
         <input type="text" class="form-control" name="criteria[name]" id="filters_name" value="{{ criteria['name']|default("") }}">
       </div>
     </div>
 
     <div class="form-group">
-      <label for="other" class="col-sm-2 control-label">{% trans %}Other{% endtrans %}:</label>
-      <div class="col-sm-10">
+      <label for="other" class="col-md-2 control-label">{% trans %}Other{% endtrans %}:</label>
+      <div class="col-md-10">
         <input type="text" class="form-control" name="criteria[other.en]" id="filters_other" value="{{ criteria['other']|default("") }}">
       </div>
     </div>
 
     <div class="form-group">
-      <label for="letter" class="col-sm-2 control-label">{% trans %}Letter{% endtrans %}:</label>
-      <div class="col-sm-10">
+      <label for="letter" class="col-md-2 control-label">{% trans %}Letter{% endtrans %}:</label>
+      <div class="col-md-10">
         <input id="filters_letter" class="form-control" type="hidden" value="" name="criteria[letter]">
         <a href="#" onclick="window.filter_click_letter('A')">A</a>
         <a href="#" onclick="window.filter_click_letter('B')">B</a>
