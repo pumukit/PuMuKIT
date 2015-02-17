@@ -24,6 +24,11 @@ class SearchMultimediaObjectsController extends Controller
 
     	//Recogemos los campos de búsqueda de los filtros
     	$tag_found = $request->query->get('tags');
+    	$type_found = $request->query->get('type');
+    	$duration_found = $request->query->get('duration');
+    	$day_found = $request->query->get('day');
+    	$month_found = $request->query->get('month');
+    	$year_found = $request->query->get('year');
 
     	//Información proporcionada al paginador
     	$limit = 2;
@@ -59,6 +64,7 @@ class SearchMultimediaObjectsController extends Controller
         $pagerfanta->setMaxPerPage($limit); // 10 by default
         $pagerfanta->setCurrentPage($page); // 1 by default
 
-        return array('multimediaObjects' => $pagerfanta, 'tags' => $tags);
+        return array('multimediaObjects' => $pagerfanta, 'tags' => $tags, 'tag_found' => $tag_found, 'type_found' => $type_found,
+        	'duration_found' => $duration_found, 'day_found' => $day_found, 'month_found' => $month_found, 'year_found' => $year_found);
     }
 }
