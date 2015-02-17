@@ -199,6 +199,13 @@ class Job
     private $email;
 
     /**
+     * @var string $output
+     *
+     * @MongoDB\String
+     */
+    private $output = '';
+
+    /**
      * @var locale $locale
      */
     private $locale = 'en';
@@ -702,6 +709,26 @@ class Job
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * Set output
+     *
+     * @param string $output
+     */
+    public function setOutput($output)
+    {
+        $this->output = $output;
+    }
+
+    /**
+     * Get output
+     *
+     * @return string
+     */
+    public function getOutput()
+    {
+        return $this->output;
     }
 
     /**

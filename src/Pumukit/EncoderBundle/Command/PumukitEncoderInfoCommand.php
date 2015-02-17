@@ -54,9 +54,9 @@ EOT
         $output->writeln("timeini: " . $job->getTimeini('Y-m-d H:i:s'));
         $output->writeln("timestart: " . $job->getTimestart('Y-m-d H:i:s'));
         $output->writeln("timeend: " . $job->getTimeend('Y-m-d H:i:s'));
-        $output->writeln("command: ");        
-
-
+        $output->writeln("command: ");
         $output->writeln($jobService->renderBat($job));
+        $output->writeln("out: ");
+        $output->writeln($job->getOutput());
     }
 }

@@ -260,6 +260,7 @@ class JobService
         
         try{
             $out = $executor->execute($commandLine);        
+            $job->setOut($out);
             $duration = $this->inspectionService->getDuration($job->getPathEnd());
             $job->setNewDuration($duration);
 
@@ -280,8 +281,10 @@ class JobService
             $job->setTimeend(new \DateTime('now'));
             $job->setStatus(Job::STATUS_ERROR);
 
-            var_dump("ERROR");
-            var_dump($e->getMessage());            
+            var_dump("ERROR--");
+            $job->setOutput($e->getMessage());
+            var_dump($job->getOutput());
+            var_dump("ERROR--");
         }
 
         $this->dm->persist($job);
