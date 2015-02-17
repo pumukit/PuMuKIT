@@ -393,6 +393,9 @@ class JobService
         //TODO if mmobj doesn't exists
         $track = new Track();
         $track->addTag('profile:' . $job->getProfile());
+        if ($profile['master']) $track->addTag('master');
+        if ($profile['display']) $track->addTag('display');
+
         $track->setLanguage($job->getLanguageId());
         if(isset($profile['streamserver']['url_out'])) {
           $track->setUrl(str_replace($profile['streamserver']['dir_out'], $profile['streamserver']['url_out'], $job->getPathEnd()));
