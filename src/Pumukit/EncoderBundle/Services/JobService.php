@@ -378,7 +378,7 @@ class JobService
 
         $tempDir = $profile['streamserver']['dir_out'] . '/' . $mmobj->getSeries()->getId();
 
-        //TODO repeat mkdir (see this->execute)
+        //TODO repeat mkdir (see this->execute) and check error
         @mkdir($tempDir, 0777, true);
 
         $pathEnd = realpath($tempDir) . '/' . $job->getId() . '.' . $finalExtension;
@@ -406,7 +406,7 @@ class JobService
 
         $track->setLanguage($job->getLanguageId());
         if(isset($profile['streamserver']['url_out'])) {
-          $track->setUrl(str_replace($profile['streamserver']['dir_out'], $profile['streamserver']['url_out'], $job->getPathEnd()));
+          $track->setUrl(str_replace(realpath($profile['streamserver']['dir_out']), $profile['streamserver']['url_out'], $job->getPathEnd()));
         }
         $track->setPath($job->getPathEnd());
 
@@ -454,7 +454,7 @@ class JobService
 
         $profile = $this->getProfile($job);
         $tempDir = $profile['streamserver']['dir_out'] . '/' . $mmobj->getSeries()->getId();
-        //TODO repeat mkdir (see this->execute)
+        //TODO repeat mkdir (see this->execute) and check errors
         @mkdir($tempDir, 0777, true);
 
         $job->setStatus(Job::STATUS_WAITING);
