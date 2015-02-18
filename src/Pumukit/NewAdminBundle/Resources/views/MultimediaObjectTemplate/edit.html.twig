@@ -1,44 +1,44 @@
 {% if mmtemplate %}
+<div class="well">
 
   <div style="text-align:right;">
-    <a href="#" onclick="$('edit_series').innerHTML=''; return false"><img src="/legacy/images/admin/buttons/close.png" alt="{% trans %}CLOSE{% endtrans %}" /></a>
+    <a href="#" onclick="$('#edit_series').innerHTML=''; return false"><img src="/legacy/images/admin/buttons/close.png" alt="{% trans %}CLOSE{% endtrans %}" /></a>
   </div>
 
+  <div role="tabpanel">
+    <!-- actualizar vistaPrevia -->
+    <ul id="menuTab" class="nav nav-tab" role="tablist">
+      <li role="presentation" class="active">
+        <a href="#metadata" aria-controls="metaMmTemplateDiv" role="tab" data-toggle="tab">{% trans %}Metadata{% endtrans %}</a>
+      </li>
+      <li role="presentation">
+        <a href="#tags" aria-controls="tagMmTemplateDiv" role="tab" data-toggle="tab">{% trans %}Tags{% endtrans %}</a>
+      </li>
+      <li role="presentation">
+        <a href="#people" aria-controls="personMmTemplateDiv" role="tab" data-toggle="tab">{% trans %}People{% endtrans %}</a>
+      </li>
+    </ul>
 
-  <!-- actualizar vistaPrevia -->
-  <ul id="menuTab">
-    <li id="metaMmTemplate"   class="noSelMmTemplate" >
-      <a href="#" onclick="menuTabTemplate.select('metaMmTemplate'); return false;" >{% trans %}Metadata{% endtrans %}</a>
-    </li>
-    <li id="tagMmTemplate" class="noSelMmTemplate" >
-      <a href="#" onclick="menuTabTemplate.select('tagMmTemplate'); return false;" >{% trans %}Tags{% endtrans %}</a>
-    </li>
-    <li id="personMmTemplate" class="noSelMmTemplate" >
-      <a href="#" onclick="menuTabTemplate.select('personMmTemplate'); return false;" >{% trans %}People{% endtrans %}</a>
-    </li>
-  </ul>
+    <div class="background_id">
+      {% trans %}Default values for series{% endtrans %} {{ mmtemplate.getSeries().getId() }}
+    </div>
 
-  <div class="background_id">
-    {% trans %}Default values for series{% endtrans %} {{ mmtemplate.getSeries().getId() }}
+    <div class="tab-content">
+      <div id="metaMmTemplateDiv" role="tabpanel" class="tab-pane active">
+        {% include 'PumukitNewAdminBundle:MultimediaObjectTemplate:updatemeta.html.twig' with {'mm': mmtemplate} %}
+      </div>
+      
+      <div id="tagMmTemplateDiv" role="tabpanel" class="tab-pane active">
+        {% include 'PumukitNewAdminBundle:MultimediaObjectTemplate:updatetags.html.twig' with {'mm': mmtemplate, 'parent_tags': parent_tags} %}
+      </div>
+      
+      <div id="personMmTemplateDiv" role="tabpanel" class="tab-pane active">
+        {% include 'PumukitNewAdminBundle:MultimediaObject:updateperson.html.twig' with {'mm': mmtemplate, 'roles': roles} %}
+      </div>
+    </div>
   </div>
-
-
-  <div id="metaMmTemplateDiv"  style="display:none;">
-    {% include 'PumukitNewAdminBundle:MultimediaObjectTemplate:updatemeta.html.twig' with {'mm': mmtemplate} %}
-  </div>
-
-  <div id="tagMmTemplateDiv" class="virtual_edit"  style="display:none;">
-    {% include 'PumukitNewAdminBundle:MultimediaObjectTemplate:updatetags.html.twig' with {'mm': mmtemplate, 'parent_tags': parent_tags} %}
-  </div>
-
-  <div id="personMmTemplateDiv" style="display:none;">
-    {% include 'PumukitNewAdminBundle:MultimediaObject:updateperson.html.twig' with {'mm': mmtemplate, 'roles': roles} %}
-  </div>
-
-  <script type="text/javascript">
-    window.menuTabTemplate = new menuTab2Class(document.location.hash);
-  </script>
-
+  
+</div>
 {% endif %}
 
 <script type="text/javascript">

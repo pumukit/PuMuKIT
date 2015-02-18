@@ -1,0 +1,37 @@
+{% form_theme form_meta 'PumukitAdminBundle:Themes:fields.html.twig' %}
+
+<div id="tv_admin_container" style="padding: 4px 20px 20px">
+
+  <form onsubmit="new Ajax.Updater('nothing__nothing', '{{ path('pumukitadmin_mmtemplate_update_meta', {'id': mm.id}) }}', {
+                  asynchronous:true, evalScripts:true, method:'POST',
+                  onFailure:function(request, json){new Effect.Opacity('mm_save_error', {duration:3.0, from:1.0, to:0.0});},
+                  onSuccess:function(request, json){new Effect.Opacity('mm_save_ok', {duration:3.0, from:1.0, to:0.0});},
+                  parameters:Form.serialize(this)}); return false;"
+        action="{{ path('pumukitadmin_mmtemplate_update_meta', {'id': mm.id}) }}" method="POST">
+
+    <input type="hidden" name="id" id="id" value="{{ mm.id }}">
+    <input type="hidden" name="series_id" id="series_id" value="{{ mm.getSeries().getId() }}">
+
+    <div id="remember_save_mm" style="display: none; position: absolute; color:red; border: 1px solid red; padding: 5px; background-color:#fdc; font-weight:bold;">
+      {% trans %}Press OK for changes to take effect{% endtrans %}
+    </div>
+
+    <ul class="tv_admin_actions" style="width: 100%">
+      <span id="mm_save_error" style="color:red; opacity:0.0; filter: alpha(opacity=0); ZOOM:1">{% trans %}Saved ERROR{% endtrans %}</span>
+      <span id="mm_save_ok" style="color:blue; opacity:0.0; filter: alpha(opacity=0); ZOOM:1">{% trans %}Saved OK{% endtrans %}</span>
+
+      <li><input type="submit" name="OK" value="{% trans %}OK{% endtrans %}" class="tv_admin_action_save" onclick="$('remember_save_mm').hide();" ></li>
+      {# TODO  get_js_regexp_timedate culture onclick="if(comprobar_form_mm($('public_date').value, /^(\d+)\/(\d+)\/(\d+) (\d+):(\d+)(:(\d+))?$/)){$('remember_save_mm').hide();}else{return false}" #}
+      <li><input type="reset" name="reset" value="{% trans %}Reset{% endtrans %}" class="tv_admin_action_delete" onclick="$('remember_save_mm').hide();"></li>
+    </ul>
+
+    <fieldset id="tv_fieldset_none" class="">
+
+      {% for child in form_meta %}
+        {{ form_row(child) }}
+      {% endfor %}
+
+    </fieldset>
+
+  </form>
+</div>
