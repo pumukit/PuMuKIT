@@ -24,7 +24,7 @@
                                             }
                           });
 		          return false;"
-	action="{{ path('pumukitnewadmin_series_update', {'id': series.id}) }}" method="POST" class="form-horizontal">
+	    action="{{ path('pumukitnewadmin_series_update', {'id': series.id}) }}" method="POST" class="form-horizontal">
 
 	<input type="hidden" name="id" id="id" value="{{ series.id }}">
 
@@ -46,7 +46,6 @@
         <div class="col-md-6">
           <button type="submit" class="btn btn-primary" onclick="$('#remember_save_series').hide();">{% trans %}OK{% endtrans %}</button>
         </div>
-	    {# TODO onclick="if(comprobar_form_series($('public_date').value, /^(\d+)\/(\d+)\/(\d+) (\d+):(\d+)(:(\d+))?$/)){$('#remember_save_series').hide();}else{return false}" #}
         <div class="col-md-6">
           <button type="button" class="btn btn-default" onclick="$('#remember_save_series').hide();">{% trans %}Reset{% endtrans %}</button>
         </div>
@@ -74,7 +73,11 @@
 
 	      <div class="form-group">
 	        <a style="color:#666; text-decoration:underline" href="#"
-	           onclick="$('#pumukitnewadmin_series_i18n_header').toggle(); $('#pumukitnewadmin_series_i18n_footer').toggle(); $('#html_text_arr_1').toggle(); $('#html_text_arr_2').toggle(); return false;">
+	           onclick="$('#pumukitnewadmin_series_i18n_header').toggle();
+                        $('#pumukitnewadmin_series_i18n_footer').toggle();
+                        $('#html_text_arr_1').toggle();
+                        $('#html_text_arr_2').toggle();
+                        return false;">
 	          <span id="html_text_arr_1">&#9654;</span> <span style="display:none" id="html_text_arr_2">&#9660;</span>
 	          {% trans %}Show configuration{% endtrans %} <strong>HTML</strong> {% trans %}Texts.{% endtrans %}
 	        </a>
