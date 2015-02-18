@@ -91,26 +91,41 @@ class SeriesController extends AdminController
    */
   public function getCriteria($config)
   {
-      $criteria = $config->getCriteria();
+      //$criteria = $config->getCriteria();
+      $criteria = $this->getRequest()->get('criteria', array());
 
       if (array_key_exists('reset', $criteria)) {
-          $this->get('session')->remove('admin/'.$config->getResourceName().'/criteria');
+          $this->get('session')->remove('admin/series/criteria');
       } elseif ($criteria) {
-          $this->get('session')->set('admin/'.$config->getResourceName().'/criteria', $criteria);
+          $this->get('session')->set('admin/series/criteria', $criteria);
       }
-      $criteria = $this->get('session')->get('admin/'.$config->getResourceName().'/criteria', array());
+      $criteria = $this->get('session')->get('admin/series/criteria', array());
 
-    //TODO: do upstream
-    $new_criteria = array();
+      //TODO: do upstream & locale
+      $new_criteria = array();
       foreach ($criteria as $property => $value) {
           //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
-      if (('' !== $value) && ('date' !== $property)) {
-          $new_criteria[$property] = new \MongoRegex('/'.$value.'/i');
-      } elseif (('' !== $value) && ('date' == $property)) {
-          $date_from = new \DateTime($value['from']);
-          $date_to = new \DateTime($value['to']);
-          $new_criteria[$property] = array('$gte' => $date_from, '$lt' => $date_to);
-      }
+          if (('' !== $value) && ('title.en' === $property)) {
+              $new_criteria[$property] = new \MongoRegex('/'.$value.'/i');
+          } elseif (('' !== $value) && ('date' == $property)) {
+              if ('' !== $value['from']) $date_from = new \DateTime($value['from']);
+              if ('' !== $value['to']) $date_to = new \DateTime($value['to']);
+              if (('' !== $value['from']) && ('' !== $value['to']))
+                  $new_criteria['public_date'] = array('$gte' => $date_from, '$lt' => $date_to);
+              elseif ('' !== $value['from'])
+                  $new_criteria['public_date'] = array('$gte' => $date_from);
+              elseif ('' !== $value['to'])
+                  $new_criteria['public_date'] = array('$lt' => $date_to);
+          } elseif (('' !== $value) && ('announce' === $property)) {
+              // TODO translate
+              if ('true' === $value) {
+                  $new_criteria[$property] = true;
+              } elseif ('false' === $value){
+                  $new_criteria[$property] = false;
+              }
+          } elseif(('' !== $value) && ('status' === $property)) {
+            // TODO
+          }
       }
 
       return $new_criteria;
