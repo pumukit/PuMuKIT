@@ -22,7 +22,7 @@ pumukitadmin_series_update:
 
 pumukitadmin_series_batch_delete:
     pattern: /delete
-    methods: [DELETE, POST]
+    methods: [DELETE]
     defaults:
         _controller: pumukitadmin.controller.series:batchDeleteAction
         _sylius:
