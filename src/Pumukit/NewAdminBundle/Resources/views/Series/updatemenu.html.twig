@@ -1,35 +1,33 @@
-<span class="trans_button" onclick="$('list_pics_{{ oneseries.id }}').toggle()">
-  <i class="mdi-editor-mode-edit"></i>
-  <div class="trans_menu" id="list_pics_{{ oneseries.id }}" style="display:none">
+<div class="dropdown">
+  <i class="mdi-editor-mode-edit" id="list_pics_{{ oneseries.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="list_pics_{{ oneseries.id }}">
+    <li>
+      <a href="#" onclick="window.submit_delete_series('{{ oneseries.id }}', '{{ oneseries.getTitle() }}', '{{ oneseries.getMultimediaObjects()|length }}'); return false;">
+        <i class="mdi-content-clear"></i> {% trans %}Delete the series{% endtrans %}
+      </a>
+    </li>
+    <li>
+      <a href="# TODO">{# TODO route, template and image according to broadcast status #}
+        <i class="mdi-device-signal-wifi-off"></i> {% trans %}Modify broadcast status of multimedia objects{% endtrans %}
+      </a>
+    </li>
+    <li>
+      <a href="#" onclick="$('#edit_series').load('{{ path('pumukitnewadmin_mmtemplate_edit', {'id': oneseries.id}) }}'); return false;">
+        <i class="mdi-editor-border-color"></i> {% trans %}Modify default values from multimedia objects{% endtrans %}
+      </a>
+    </li>
 
-    <div class="mas_info" style="">
-      <div class="trans_button_up"><img src="/legacy/images/admin/mbuttons/edit_inline.gif" alt="{% trans %}options{% endtrans %}" /></div>
-      <div class="trans_button_info">{% trans %}Options{% endtrans %}:</div>
-    </div>
-    
-    <div class="list_options">
-      <ul style="">
 
-        <li class="normal">
-          <form action="{{ path('pumukitnewadmin_series_delete', {'id': oneseries.id}) }}" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}Are you sure you want to delete the series{% endtrans %} '{{ oneseries.getTitle()|trans }}'? {% trans %}This series has{% endtrans %} {{ oneseries.getMultimediaObjects()|length }} {% trans %}multimedia objects{% endtrans %}.')">
-            <input type="hidden" name="_method" value="DELETE">
-            <input type="hidden" name="confirmed" value="true">
-            <button type="submit" class="tv_admin_row_post">
-              <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}Delete the series{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">{% trans %}Delete the series{% endtrans %}
-            </button>
-          </form>
-        </li>
-        <li class="normal">
-          <form action="{{ path('pumukitnewadmin_series_copy', {'id': oneseries.id}) }}" method="post" class="delete-action-form" novalidate="">
-            <button type="submit" class="tv_admin_row_post">
-	          <img alt="{% trans %}clone{% endtrans %}" title="{% trans %}Clone the series{% endtrans %}" src="/legacy/images/admin/mbuttons/copy_inline.gif">{% trans %}Clone the series{% endtrans %}
-	        </button>
-	      </form>
-        </li>
+  </ul>
+</div>
 
-        <li class="normal">
-          {# TODO PATH SERIES CHANGEPUB #}
-	      <a title="{% trans %}Modify broadcast status of multimedia objects{% endtrans %}" onclick="Modalbox.show(this.href, {title:this.title, width:925}); return false;" href="/editar.php/serials/changePub/serial/{{ oneseries.id }}"><img alt="??" title="{% trans %}status{% endtrans %}" id="table_serials_status_{{ oneseries.id }}" src="/legacy/images/admin/bbuttons/{# TODO {{ oneseries.getStatusMin() }}{{ oneseries.getStatusMax() }} #}11_inline.gif"> {% trans %}Modify broadcast status of multimedia objects{% endtrans %}</a>
+
+
+{#
+
+        <li class="normal"> 
+#}          {# TODO PATH SERIES CHANGEPUB #}{#
+	      <a title="{% trans %}Modify broadcast status of multimedia objects{% endtrans %}" onclick="Modalbox.show(this.href, {title:this.title, width:925}); return false;" href="/editar.php/serials/changePub/serial/{{ oneseries.id }}"><img alt="??" title="{% trans %}status{% endtrans %}" id="table_serials_status_{{ oneseries.id }}" src="/legacy/images/admin/bbuttons/#}{# TODO {{ oneseries.getStatusMin() }}{{ oneseries.getStatusMax() }} #}{# 11_inline.gif"> {% trans %}Modify broadcast status of multimedia objects{% endtrans %}</a>
         </li>
 
         <li class="normal">
@@ -37,14 +35,9 @@
         </li>
 
         <li class="normal">
-	      {# TODO PATH SERIES INFO #}
+#}	      {# TODO PATH SERIES INFO #}{#
 	      <a title="{% trans %}Series information{% endtrans %}" onclick="Modalbox.show(this.href, {title:this.title, width:925}); return false;" href="/editar.php/serials/info/id/{{ oneseries.id }}"><img alt="{% trans %}info{% endtrans %}" title="{% trans %}info{% endtrans %}" src="/legacy/images/admin/mbuttons/info_inline.gif"> {% trans %}Series information{% endtrans %}</a>
         </li>
         <li class="cancel"><a href="#" onclick="return false;">{% trans %}Cancel{% endtrans %}...</a></li>
 
-      </ul>
-
-
-    </div>
-  </div>
-</span>
+#}
