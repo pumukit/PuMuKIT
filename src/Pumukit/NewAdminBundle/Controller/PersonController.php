@@ -431,14 +431,14 @@ class PersonController extends AdminController
             }
         }
 
-        // TODO locale
+        // TODO locale and find or
         if (array_key_exists('other.en', $criteria)){
             if ('' !== $criteria['other.en']){
                 $other = explode(' ', $criteria['other.en']);
                 $value = implode('|', array_filter($other));
-                $new_criteria['post.en'] = new \MongoRex('/'.$value.'/i');
-                $new_criteria['firm.en'] = new \MongoRex('/'.$value.'/i');
-                $new_criteria['bio.en'] = new \MongoRex('/'.$value.'/i');
+                $new_criteria['post.en'] = new \MongoRegex('/'.$value.'/i');
+                //$new_criteria['firm.en'] = new \MongoRegex('/'.$value.'/i');
+                //$new_criteria['bio.en'] = new \MongoRegex('/'.$value.'/i');
             }
         }
 
