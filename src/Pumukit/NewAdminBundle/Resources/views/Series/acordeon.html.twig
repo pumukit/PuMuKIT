@@ -1,5 +1,7 @@
 <div class="well">
-  <form id="filter_series" class="form-horizontal" onsubmit="" action="{{ path('pumukitadmin_series_index') }}" method="GET">
+  <form id="filter_series" class="form-horizontal" 
+        onsubmit="$('#list_series').load('{{ path('pumukitnewadmin_series_list') }}', $(this).serialize()); return false;"
+        action="{{ path('pumukitnewadmin_series_list') }}" method="GET">
     <fieldset>
       <div id="accordion" class="panel-group" role="tablist" arirole="tablist" aria-multiselectable="true">
 
@@ -102,4 +104,4 @@
   }
 </script>
 
-{# FALTA VER OCULTOS Y ANUNCIADOS #}
+{# TODO FALTA VER OCULTOS Y ANUNCIADOS #}
