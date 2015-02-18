@@ -15,11 +15,7 @@ $(document).ready(function(){$.material.init();});
             </label>
           </div>
         </th>
-        <th colspan="5" width="5%"></th>
-        {# TODO <?php if(sfConfig::get('app_mail_use')):?> #}
-        {% if true %}
-        <th width="2%"></th>
-        {% endif %}
+        <th colspan="4" width="4%"></th>
         <th width="1%">{% trans %}Img{% endtrans %}</th>
         {% include 'PumukitNewAdminBundle:Series:listth.html.twig' %}
       </tr>
@@ -44,29 +40,20 @@ $(document).ready(function(){$.material.init();});
         </td>
         <td>
           {{ oneseries.announce?'<span style="color: blue">A</span>':'' }}
-	      {# TODO field in Series with mm_announce
+
+	      {# TODO field in Series with mm_announce or field announce in MultimediaObject
           <?php echo ($series['mm_announce']?'<span style="color: grey">A</span>':'') ?>
           <?php echo (($series['mm_announce'])||($series['announce'])?'':'&nbsp;') ?>
 	      #}
+
         </td> 
         <td>
           {# TODO <?php echo image_tag('admin/bbuttons/mm'.$series['mm_status_max'].'_inline.gif', array('alt' => __('estado'), 'title'=>__('estado'), 'id'=>'table_series_status_' . $series['id'])) ?> #}
 	      <i class="mdi-device-signal-wifi-off"></i> {# TODO multimedia object status implies different class image #}
         </td>
         <td>
-          <a href="#" onclick="window.submit_delete_series('{{ oneseries.id }}', '{{ oneseries.getTitle() }}', '{{ oneseries.getMultimediaObjects()|length }}'); return false;">
-            <i class="mdi-content-clear"></i>
-          </a>
-        </td>
-        <td>
 	      {% include 'PumukitNewAdminBundle:Series:updatemenu.html.twig' with {'oneseries': oneseries, 'numV': oneseries.getMultimediaObjects()|length } %}
         </td>
-        {# TODO <?php if(sfConfig::get('app_mail_use')):?> #}
-        {% if true %}
-        <td>
-	      {% include 'PumukitNewAdminBundle:Series:updateannounce.html.twig' with {'oneseries': oneseries} %}
-        </td>
-        {% endif %}
         <td>
 	      <a href="{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}">{% trans %}videos{% endtrans %}</a>
         </td>
