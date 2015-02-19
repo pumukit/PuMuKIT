@@ -48,7 +48,7 @@ class Builder extends ContainerAware
 
         $management = $menu->addChild('Management');
         $management->addChild('Admin users', array('route' => 'pumukitadmin_user_index'));
-        $management->addChild('Tags', array('route' => 'pumukitadmin_tag_index'));
+        $management->addChild('Tags', array('route' => 'pumukitnewadmin_tag_index'));
         $management->addChild('Genres');
         $management->addChild('Material types');
         $management->addChild('Series types');

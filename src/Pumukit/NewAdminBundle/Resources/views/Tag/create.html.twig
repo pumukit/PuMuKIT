@@ -4,11 +4,11 @@ $(document).ready(function(){$.material.init();});
 
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <h4 class="modal-title" id="myModalLabel">{% trans %}create new person{% endtrans %}</h4>
+  <h4 class="modal-title" id="myModalLabel">{% trans %}create new tag{% endtrans %}</h4>
 </div>
 <div class="modal-body">
   {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
-  <form action="{{ path('pumukitnewadmin_person_create') }}" method="POST">
+  <form action="{{ path('pumukitnewadmin_tag_create', {'parent': tag.parent.id}) }}" method="POST">
     <fieldset>
       {% for child in form %}
         {{ form_row(child) }}

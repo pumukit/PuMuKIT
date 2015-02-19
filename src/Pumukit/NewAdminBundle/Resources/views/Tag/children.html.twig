@@ -1,0 +1,56 @@
+{% for tag in children %}
+  {% set has_children = tag.children|length %}
+
+  <tr class="tv_admin_row_0 c_{{ tag.path|replace({ ("|" ~ tag.cod ~ "|"): '', '|': ' c_'}) }} d_{{ tag.parent.cod|default("")}}" id="row_tag_{{ tag.id }}" data-level="{{ tag.level}}">
+      <td>
+        <div class="checkbox">
+          <label>
+            <input id="{{ tag.id }}" class="tag_checkbox" type="checkbox">
+          </label>
+        </div>
+      </td>
+      <td>
+          <a href="#" title="{% trans %}delete{% endtrans %}" onclick="return tag_delete('{{ tag.id }}', '{{ tag.cod }}', '{{ tag.parent.id }}')">
+            <i class="mdi-content-clear"></i>
+          </a>
+      </td>
+      <td>
+          <a title="{% trans %}Edit tag {% endtrans %} {{tag.cod}}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;"
+             href="{{ path('pumukitadmin_tag_update', {'id': tag.id}) }}">
+              <i class="mdi-editor-mode-edit"></i>
+          </a>
+      </td>
+	  <td>
+        <a title="{% trans %}Create child tag for{% endtrans %} {{tag.cod}}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;"
+           href="{{ path('pumukitadmin_tag_create', {'parent': tag.id}) }}">
+          <i class="mdi-image-add-to-photos"></i>
+	    </a>
+	  </td>
+	  <td>
+	    {{ tag.id }}
+	  </td>
+      <td class="{{ has_children?'collapsed noload':'element' }}">
+        <span style="padding-left:{{ 10 * tag.level}}px" onclick="javascript:toggle_section_tag('{{ tag.id }}', this, {{ tag.level }}, '{{ tag.cod }}')">
+          <i class="mdi-image-add-to-photos"></i>
+        </span>
+        {{ tag.cod}} - {{ tag.title}}
+        {#
+          <ul class="tag_tree" >
+              {% for i in  2..tag.level %}
+                  <ul class="tag_tree" ><li class="element" >
+              {% endfor%}
+              <li class="{{ has_children?'collapsed noload':'element' }}" >
+              <span class="icon" onclick="javascript:toggle_section_tag('{{ tag.id }}', this, {{ tag.level }}, '{{ tag.cod }}')">&nbsp;</span>
+              <span id="info_tag_{{ tag.id }}">{{ tag.cod}} - {{ tag.title}} </span>
+              </li>
+              {% for i in  2..tag.level %}
+                  </li></ul>
+              {% endfor%}
+          </ul>
+          #}
+      </td>
+      <td>
+          {{ tag.getNumberMultimediaObjects() }}
+      </td>
+  </tr>
+{% endfor %}
