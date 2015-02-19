@@ -33,7 +33,7 @@
   </div>
   
   <div style="text-align : center">
-    <a title="{% trans %}New Image{% endtrans %}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitnewadmin_'~resource_name~'pic_create', {'id': resource.id}) }}">{% trans %}new image{% endtrans %}...</a>
+    <a href="{{ path('pumukitnewadmin_'~resource_name~'pic_create', {'id': resource.id}) }}" data-toggle="modal" data-target="#myModal">{% trans %}new image{% endtrans %}...</a>
   </div>
 </div>
 
