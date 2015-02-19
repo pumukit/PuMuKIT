@@ -203,7 +203,7 @@ class AdminController extends ResourceController
 
           $resources
     ->setCurrentPage($this->get('session')->get('admin/'.$config->getResourceName().'/page', 1), true, true)
-    ->setMaxPerPage($config->getPaginationMaxPerPage())
+    ->setMaxPerPage(12)
     ;
       } else {
           $resources = $this
