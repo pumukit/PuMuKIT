@@ -4,7 +4,7 @@
 $(document).ready(function(){$.material.init();});
 </script>
 
-<div class="table-responsive">
+<div class="table-responsive" style="overflow:visible;">
   <table class="table table-striped table-hover">
     <thead>
       <tr>
@@ -49,7 +49,9 @@ $(document).ready(function(){$.material.init();});
         </td> 
         <td>
           {# TODO <?php echo image_tag('admin/bbuttons/mm'.$series['mm_status_max'].'_inline.gif', array('alt' => __('estado'), 'title'=>__('estado'), 'id'=>'table_series_status_' . $series['id'])) ?> #}
-	      <i class="mdi-device-signal-wifi-off"></i> {# TODO multimedia object status implies different class image #}
+          <a href="# TODO">{# TODO MOVE TO OUTSIDE BUTTON route, template and image according to broadcast status MODAL /editar.php/serials/changePub/serial/{{ oneseries.id }} #}
+            <i class="mdi-device-signal-wifi-off"></i> {# TODO multimedia object status implies different class image #}
+          </a>
         </td>
         <td>
 	      {% include 'PumukitNewAdminBundle:Series:updatemenu.html.twig' with {'oneseries': oneseries, 'numV': oneseries.getMultimediaObjects()|length } %}
@@ -78,6 +80,22 @@ $(document).ready(function(){$.material.init();});
         </td>
       </tr>
       {% endfor %}
+      {% if (series|length - (series.getMaxPerPage() * (series.getCurrentPage() - 1))) < 11 %}
+      {% for i in 0..(11-(series|length - (series.getMaxPerPage() * (series.getCurrentPage() - 1)))) %}
+      <tr style="height: 37px;"> {# TODO make it responsive #}
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      {% endfor %}
+      {% endif %}
     </tbody>
     <tfoot>
       <tr>
