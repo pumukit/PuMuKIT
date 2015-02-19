@@ -1,5 +1,5 @@
 <div class="dropdown">
-  <i class="mdi-editor-mode-edit" id="list_pics_{{ oneseries.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+  <i class="mdi-navigation-menu" id="list_pics_{{ oneseries.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
   <ul class="dropdown-menu" role="menu" aria-labelledby="list_pics_{{ oneseries.id }}">
     <li>
       <a href="#" onclick="window.submit_delete_series('{{ oneseries.id }}', '{{ oneseries.getTitle() }}', '{{ oneseries.getMultimediaObjects()|length }}'); return false;">
@@ -7,37 +7,19 @@
       </a>
     </li>
     <li>
-      <a href="# TODO">{# TODO route, template and image according to broadcast status #}
-        <i class="mdi-device-signal-wifi-off"></i> {% trans %}Modify broadcast status of multimedia objects{% endtrans %}
+      <a href="#" onclick="$('#edit_series').load('{{ path('pumukitnewadmin_mmtemplate_edit', {'id': oneseries.id}) }}'); return false;">
+        <i class="mdi-editor-border-color"></i> {% trans %}Modify default template for multimedia objects{% endtrans %}
       </a>
     </li>
     <li>
-      <a href="#" onclick="$('#edit_series').load('{{ path('pumukitnewadmin_mmtemplate_edit', {'id': oneseries.id}) }}'); return false;">
-        <i class="mdi-editor-border-color"></i> {% trans %}Modify default values from multimedia objects{% endtrans %}
+      <a href="# TODO"> {# TODO route, template MODAL /editar.php/serials/info/id/{{ oneseries.id }} #}
+        <i class="mdi-action-info"></i> {% trans %}Series information{% endtrans %}
       </a>
     </li>
-
-
+    <li>
+      <a href="#" onclick="return false;">
+        <strong>{% trans %}Cancel{% endtrans %}...</strong>
+      </a>
+    </li>
   </ul>
 </div>
-
-
-
-{#
-
-        <li class="normal"> 
-#}          {# TODO PATH SERIES CHANGEPUB #}{#
-	      <a title="{% trans %}Modify broadcast status of multimedia objects{% endtrans %}" onclick="Modalbox.show(this.href, {title:this.title, width:925}); return false;" href="/editar.php/serials/changePub/serial/{{ oneseries.id }}"><img alt="??" title="{% trans %}status{% endtrans %}" id="table_serials_status_{{ oneseries.id }}" src="/legacy/images/admin/bbuttons/#}{# TODO {{ oneseries.getStatusMin() }}{{ oneseries.getStatusMax() }} #}{# 11_inline.gif"> {% trans %}Modify broadcast status of multimedia objects{% endtrans %}</a>
-        </li>
-
-        <li class="normal">
-	      <a href="#" onclick="new Ajax.Updater('edit_series', '{{ path('pumukitnewadmin_mmtemplate_edit', {'id': oneseries.id}) }}', {asynchronous:true, evalScripts:true, method:'GET'}); return false;"><img alt="{% trans %}edit{% endtrans %}" title="{% trans %}edit{% endtrans %}" class="miniTag" src="/legacy/images/admin/mbuttons/edit_template_inline.gif"> {% trans %}Modify default values from multimedia objects{% endtrans %}</a>
-        </li>
-
-        <li class="normal">
-#}	      {# TODO PATH SERIES INFO #}{#
-	      <a title="{% trans %}Series information{% endtrans %}" onclick="Modalbox.show(this.href, {title:this.title, width:925}); return false;" href="/editar.php/serials/info/id/{{ oneseries.id }}"><img alt="{% trans %}info{% endtrans %}" title="{% trans %}info{% endtrans %}" src="/legacy/images/admin/mbuttons/info_inline.gif"> {% trans %}Series information{% endtrans %}</a>
-        </li>
-        <li class="cancel"><a href="#" onclick="return false;">{% trans %}Cancel{% endtrans %}...</a></li>
-
-#}
