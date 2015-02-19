@@ -2,6 +2,14 @@
 <table style="width:100%;">
 	<tbody>
 	<tr>
+	
+		<!--SEARCH by term-->
+		<td style="width:100%; float:left;">
+        	<input class="box_lupa" style="width: 95%; height: 24px" placeholder="Búsqueda..." name="search" value="" maxlength="100" type="text">
+        	<input type="image" src="{{asset('/bundles/pumukitwebtv/images/lupa_buscador.png')}}" alt="Enviar parámetros de búsqueda" style="position: relative; top: 1px; right: 22px;" name="startsearch">
+      		<noscript>&lt;input type="submit" name="commit" value="go" /&gt;</noscript>
+  		</td>
+
 		<!--Selected TAGs-->
 		<td style="width:20%; float:left">
     	<div>&nbsp;Tags</div>
@@ -18,8 +26,8 @@
     	<div>&nbsp;Video / Audio</div>
     	<select name="type" style="width: 90%" onchange="Javascript:this.form.submit();">
     		<option {% if type_found == "" %} selected="selected" {% endif %}>All</option>
-			<option>Video</option>
-			<option>Audio</option>
+			<option {% if type_found == "Video" %} selected="selected" {% endif %}>Video</option>
+			<option {% if type_found == "Audio" %} selected="selected" {% endif %}>Audio</option>
 		</select>
 		</td>
 
@@ -28,11 +36,11 @@
     	<div>&nbsp;Duration:</div>
     	<select name="duration" style="width: 90%" onchange="Javascript:this.form.submit();">
     		<option {% if duration_found == "" %} selected="selected" {% endif %}>All</option>
-			<option>Up to 5 minutes</option>
-			<option>Up to 10 minutes</option>
-			<option>Up to 30 minutes</option>
-			<option>Up to 60 minutes</option>
-			<option>More than 60 minutes</option>
+			<option {% if duration_found == "Up to 5 minutes" %} selected="selected" {% endif %}>Up to 5 minutes</option>
+			<option {% if duration_found == "Up to 10 minutes" %} selected="selected" {% endif %}>Up to 10 minutes</option>
+			<option {% if duration_found == "Up to 30 minutes" %} selected="selected" {% endif %}>Up to 30 minutes</option>
+			<option {% if duration_found == "Up to 60 minutes" %} selected="selected" {% endif %}>Up to 60 minutes</option>
+			<option {% if duration_found == "More than 60 minutes" %} selected="selected" {% endif %}>More than 60 minutes</option>
 		</select>
 		</td>
 
@@ -74,6 +82,7 @@
     		<div>Eliminar filtros</div>
       		<input type="button" onclick="window.location.href=window.location.pathname" name="filter" value="Reset" class="btn">
   		</td>
+
 	</tr>
 </tbody>
 </table>
