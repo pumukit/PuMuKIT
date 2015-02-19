@@ -1,0 +1,127 @@
+{% if mm is not empty %}
+
+
+<!------------------------------------->
+
+<!-- DATE -->
+<div style="background-color:#006699; color:#FFFFFF; font-weight:bold; margin-bottom:11px; text-align:center;">
+   {{ mm.getRecordDate()|date('d F Y') }}
+</div>
+
+<!-- SUBSERIAL_TITLE-->
+{# TODO define getSubseriesTitle, getPrecinctId and getPlace.getName functions
+{% if (mm.getSubseriesTitle() is not empty) %}
+  <div style="background-color:#006699; color:#FFFFFF; font-weight:bold; margin-bottom:11px; text-align:center;">
+    {{ mm.getSubseriesTitle() }}
+  </div>
+<!-- PALCE-->
+{% elseif (mm.getPrecinctId() > 1) %}
+  <div style="background-color:#DFDFFF; color:#660000; font-weight:bold; margin-bottom:11px; padding-right:5px; text-align:right;">
+    {{ mm.getPlace().getName() }}
+  </div>
+{% endif %} #}
+
+
+<!-- PIC -->
+<div id="serial_mm" class="serial_mm_{{ mm.getStatus()?'1':'0' }}" style="background-color:transparent">
+  <table>
+   <tbody>
+    <tr>
+     <td width="1%" valign="top"  style="background-color:transparent"> <!-- hack-->
+       TODO {# <?php $pics = $mm->getUrlPics(false, 3) ?> #}
+       {% set pics = '' %}
+       <div id="serial_mm_pics">
+         {% for url in pics %}<img style="border:1px solid #000000; height:82px; width:100px;" src="{{ url }}" class="serial">{% endfor %}
+       </div>
+
+     </td>
+     <td style="background-color:transparent">
+       <div id="serial_mm_info" style="background-color:transparent; padding-left:2%; padding-right:2%; text-align:left; width:95%; ">
+
+  <!-- TITLE & SUBTITLE -->
+
+        {% if mm.getTitle() is not empty %}
+          <div id="title" style="font-size:13px; font-weight:bold">"{{ mm.getTitle() }}"</div>
+        {% endif %}
+        {% if mm.getSubtitle() is not empty %}
+          <div id="subtitle" style="color:#660000;">{{ mm.getSubtitle() }}</div>
+        {% endif %}
+
+        <div id="objects">
+  <!-- FILES -->
+        {# TODO all file functions {% set files = mm.getFiles() %} #}
+        {% set files = '' %}
+          {% for file in files if file.getPerfil().getDisplay() %}
+            <div id="file" class="{{ file.getAudio()?'audio':'mm' }}">
+               <a title="{% trans %}play{% endtrans %}" href="#" onclick=" Shadowbox.open({
+                  title:      '{% trans %}Preview{% endtrans %}',
+                  content:    '{{ file.getUrl() }}',
+                  type:       'wmp',
+                  height:     {{ file.getPerfil().getResolutionVer }},
+                  width:      {{ file.getPerfil().getResolutionHor() }}
+                 }); return false;">
+                 {{ file.getAudio()?'{% trans %}Audio{% endtrans %}':'{% trans %}Video{% endtrans %}' }}
+               </a>
+               {% if file.getDescription() is not empty %}
+                 &nbsp;|&nbsp;&nbsp;<strong>( {{ file.getDescription() }} )</strong>
+               {% endif %}
+               &nbsp;|&nbsp;&nbsp;<span id="language">{{ file.getLanguage().getName() }}</span>
+
+               &nbsp;( {{ file.getDurationString() }} )
+               &nbsp;|&nbsp;'{% trans %}Seen{% endtrans %}: <span id="numView">{{ file.getNumView() }}</span>{{ ((file.getNumView() == 1)?' time':' times') }}
+               {# TODO <?php //include_partial('global/voteMm', array('file' => $file)) ?> #}</span>
+            </div>
+
+          {% endfor %}
+
+
+  <!-- MATERIAL -->
+    	  {% for material in mm.getMaterials() %}
+            <div id="material" class="{{ material.getMimeType() }}">
+              <a href="{{ material.getUrl() }}">{{ material.getName() }}</a>
+            </div>
+          {% endfor %}
+
+  <!-- LINK -->
+          {# TODO define link, getLinks...
+          {% for link in mm.getLinks() %}
+            <div id="link" class="link">
+              <a target="_blank" href="{{ link.getUrl() }}">{{ link.getName() }}</a>
+            </div>
+          {% endfor %} #}
+        </div>
+        <br />
+
+  <!-- PERSONS PRESENT -->
+        {% for role in roles if role.getDisplay() %}
+	  {% for act in mm.getPeopleInMultimediaObjectByRole(role) %}
+            <div>
+              <div class="person" style="color:#000099; font-weight:bold;">
+	        {{ role.getText() }}
+	        {% if act.getWeb() is not empty %}
+	          <a href="{{ act.getWeb() }}">{{ act.getHName() }}</a>
+          	{% else %}
+                  {{ act.getHName() }}
+                {% endif %}
+              </div>
+              {{ act.getInfo() }}
+            </div>
+          {% endfor %}
+        {% endfor %}
+
+
+       </div>
+     </td>
+   </tr>
+  </tbody>
+ </table>
+</div>
+<!------------------------------------->
+
+
+
+{% else %}
+<p>
+  {% trans %}Select any multimedia object.{% endtrans %}
+</p>
+{% endif %}
