@@ -11,7 +11,7 @@
                           url: '{{ path('pumukitnewadmin_series_update', {'id': series.id}) }}',
                           type: 'POST',
                           data: $(this).serialize(),
-                          error: function(request, json){$('#series_save_error').show(2500);$('#series_save_error').hide(2500);},
+                          error: function(request, json){var message = '{% trans %}Saved ERROR{% endtrans %}'; no_success(message);},
                           success: function(response){
                                             $('#list_series').html(response);
                                             $.ajax({
@@ -19,8 +19,8 @@
                                                     type: 'GET',
                                                     success: function(response){$('#preview_series').html(response);}
                                                     });
-                                            $('#series_save_ok').show(1500);
-                                            $('#series_save_ok').hide(1500);
+                                            var message = '{% trans %}Saved OK{% endtrans %}'; 
+                                            success(message);
                                             }
                           });
 		          return false;"
@@ -44,10 +44,10 @@
 
       <div class="col-md-2">
         <div class="col-md-6">
-          <button type="submit" class="btn btn-primary" onclick="$('#remember_save_series').hide();">{% trans %}OK{% endtrans %}</button>
+          <button type="button" class="btn btn-default btn-raised" onclick="$('#remember_save_series').hide();">{% trans %}Cancel{% endtrans %}</button>
         </div>
         <div class="col-md-6">
-          <button type="button" class="btn btn-default" onclick="$('#remember_save_series').hide();">{% trans %}Reset{% endtrans %}</button>
+          <button type="submit" class="btn btn-warning btn-raised" onclick="$('#remember_save_series').hide();">{% trans %}OK{% endtrans %}</button>
         </div>
       </div>
 	</div>
