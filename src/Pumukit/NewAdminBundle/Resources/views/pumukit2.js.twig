@@ -67,10 +67,16 @@ window.submit_delete_series = function(id, seriesTitle, countMm)
     }
 }
 
-function success(message){
-    $('#div_messages_span_info').innerHTML = message;
+success = function(message){
+    $('#div_messages_span_info').html(message);
     $('#div_messages_span_info').show(3500);
     $('#div_messages_span_info').hide(3500);
+}
+
+no_success = function(message){
+    $('#div_messages_span_error').innerHTML = message;
+    $('#div_messages_span_error').show(3500);
+    $('#div_messages_span_error').hide(3500);
 }
 
 window.update_preview = function(id) {
