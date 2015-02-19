@@ -37,3 +37,7 @@ pumukitnewadmin_seriespic:
 pumukitnewadmin_mmspic:
     resource: @PumukitNewAdminBundle/Resources/config/routes/mmspic.yml
     prefix: /admin/mmspic
+
+pumukitnewadmin_tag:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/tag.yml
+    prefix: /admin/tag
