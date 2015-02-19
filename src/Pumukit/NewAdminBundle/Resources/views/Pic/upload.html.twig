@@ -1,0 +1,15 @@
+<script type="text/javascript">
+//<![CDATA[
+
+  $('#myModal').hide();
+
+  $('#pic_{{ resource_name }}').load('{{ path('pumukitadmin_'~resource_name~'pic_list', {'id': resource.id}) }}');
+  $('#pic_{{ resource_name }}').parent().html('Actualice el vídeo para que se muestren las imágenes.');
+
+  var message = 'Nueva imagen subida e insertada.';
+  $('#div_messages_span_info').parent().html(message);
+  $('#div_messages_span_info').show(7000);
+  $('#div_messages_span_info').hide();
+
+//]]>
+</script>
