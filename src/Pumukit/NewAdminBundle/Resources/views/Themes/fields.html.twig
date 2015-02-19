@@ -304,5 +304,5 @@
 
 {# HTML5 Date Widget #}
 {% block html5date_widget -%}
-  <input type="datetime-local" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value|date('Y-m-d\\TH:i:s') }}" {% endif %}/>
+  <input type="datetime-local" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value|date('Y-m-d\\TH:i:s') }}" {% endif %} class="form-control"/>
 {% endblock %}
