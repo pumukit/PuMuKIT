@@ -22,11 +22,11 @@
     </div>
     <div class="col-md-1 col-md-offset-8">
       {# TODO wizard and path #}
-	  <a class="btn btn-default" href="#" onclick="Modalbox.show('/editar.php/wizard/serial',{width:800, title:'{% trans %}STEP I: Serie{% endtrans %}'}); return false;">{% trans %}Wizard{% endtrans %}</a>
+	  <a class="btn btn-primary btn-raised" href="#" onclick="Modalbox.show('/editar.php/wizard/serial',{width:800, title:'{% trans %}STEP I: Serie{% endtrans %}'}); return false;">{% trans %}Wizard{% endtrans %}</a>
     </div>
     <div class="col-md-1" align="right">
       {# TODO check route with filter /editar.php/serials/create/filter/filter #}
-	  <a title="{% trans %}Create new series{% endtrans %}" class="btn btn-warning" href="#" onclick="$('#filter_series').reset(); $('#list_series').load('{{ path('pumukitadmin_series_create') }}'); return false;">{% trans %}Create{% endtrans %}</a>
+	  <a title="{% trans %}Create new series{% endtrans %}" class="btn btn-warning btn-raised" href="#" onclick="$('#filter_series')[0].reset(); $('#list_series').load('{{ path('pumukitnewadmin_series_create') }}'); return false;">{% trans %}Create{% endtrans %}</a>
     </div>
   </div>
 </div>
