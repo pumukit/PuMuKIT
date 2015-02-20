@@ -15,14 +15,12 @@
           </a>
       </td>
       <td>
-          <a title="{% trans %}Edit tag {% endtrans %} {{tag.cod}}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;"
-             href="{{ path('pumukitadmin_tag_update', {'id': tag.id}) }}">
+          <a title="{% trans %}Edit tag {% endtrans %} {{tag.cod}}" href="{{ path('pumukitnewadmin_tag_update', {'id': tag.id}) }}" data-toggle="modal" data-target="#myModal">
               <i class="mdi-editor-mode-edit"></i>
           </a>
       </td>
 	  <td>
-        <a title="{% trans %}Create child tag for{% endtrans %} {{tag.cod}}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;"
-           href="{{ path('pumukitadmin_tag_create', {'parent': tag.id}) }}">
+        <a title="{% trans %}Create child tag for{% endtrans %} {{tag.cod}}" href="{{ path('pumukitnewadmin_tag_create', {'parent': tag.id}) }}" data-toggle="modal" data-target="#myModal">
           <i class="mdi-image-add-to-photos"></i>
 	    </a>
 	  </td>
@@ -31,7 +29,7 @@
 	  </td>
       <td class="{{ has_children?'collapsed noload':'element' }}">
         <span style="padding-left:{{ 10 * tag.level}}px" onclick="javascript:toggle_section_tag('{{ tag.id }}', this, {{ tag.level }}, '{{ tag.cod }}')">
-          <i class="mdi-image-add-to-photos"></i>
+          <i class="mdi- tag_icon"></i>
         </span>
         {{ tag.cod}} - {{ tag.title}}
         {#

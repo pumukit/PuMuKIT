@@ -73,7 +73,7 @@ class TagController extends Controller
             $dm->persist($tag);
             $dm->flush();
 
-            return $this->redirect($this->generateUrl('pumukitadmin_tag_index'));
+            return $this->redirect($this->generateUrl('pumukitnewadmin_tag_index'));
         }
 
         return array('tag' => $tag, 'form' => $form->createView());
@@ -101,7 +101,7 @@ class TagController extends Controller
                 $this->get('session')->getFlashBag()->add('error', $e->getMessage());
             }
 
-            return $this->redirect($this->generateUrl('pumukitadmin_tag_index'));
+            return $this->redirect($this->generateUrl('pumukitnewadmin_tag_index'));
         }
 
         return array('tag' => $tag, 'form' => $form->createView());
