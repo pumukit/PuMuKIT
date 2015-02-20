@@ -9,11 +9,13 @@ use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class MultimediaObjectController extends SortableAdminController
 {
     /**
      * Overwrite to search criteria with date
+     * @Template
      */
     public function indexAction(Request $request)
     {
@@ -26,8 +28,6 @@ class MultimediaObjectController extends SortableAdminController
            $this->get('session')->remove('admin/mms/id');
        }
 
-       $pluralName = $config->getPluralResourceName();
-
        $factoryService = $this->get('pumukitschema.factory');
 
        $sessionId = $this->get('session')->get('admin/series/id', null);
@@ -36,20 +36,15 @@ class MultimediaObjectController extends SortableAdminController
 
        $mms = $this->getListMultimediaObjects($series);
 
-       $view = $this
-         ->view()
-         ->setTemplate($config->getTemplate('index.html'))
-         ->setData(array(
-                         'series' => $series,
-                         'mms' => $mms,
-                         ))
-         ;
-
-       return $this->handleView($view);
+       return array(
+                     'series' => $series,
+                     'mms' => $mms
+                     );
     }
 
     /**
      * Create new resource
+     * @Template("PumukitNewAdminBundle:MultimediaObject:list.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -68,20 +63,15 @@ class MultimediaObjectController extends SortableAdminController
 
        $mms = $this->getListMultimediaObjects($series);
 
-       $view = $this
-         ->view()
-         ->setTemplate($config->getTemplate('list.html'))
-         ->setData(array(
-                         'series' => $series,
-                         'mms' => $mms,
-                         ))
-         ;
-
-       return $this->handleView($view);
+       return array(
+                    'series' => $series,
+                    'mms' => $mms
+                    );
     }
 
     /**
      * Overwrite to update the session.
+     * @Template
      */
     public function showAction(Request $request)
     {
@@ -92,21 +82,16 @@ class MultimediaObjectController extends SortableAdminController
 
       $roles = $this->get('pumukitschema.factory')->getRoles();
 
-      $view = $this
-        ->view()
-        ->setTemplate($config->getTemplate('show.html'))
-        ->setData(array(
-                        'mm' => $data,
-                        'roles' => $roles,
-                        ))
-        ;
-      
-      return $this->handleView($view);
+      return array(
+                   'mm' => $data,
+                   'roles' => $roles
+                   );
     }
 
     // TODO
     /**
      * Display the form for editing or update the resource.
+     * @Template
      */
     public function editAction(Request $request)
     {
@@ -146,22 +131,20 @@ class MultimediaObjectController extends SortableAdminController
             $template = '_template';
         }
 
-        return $this->render('PumukitNewAdminBundle:MultimediaObject:edit.html.twig',
-                             array(
-                                   'mm'            => $resource,
-                                   'form_meta'     => $formMeta->createView(),
-                                   'form_pub'      => $formPub->createView(),
-                                   'series'        => $series,
-                                   'roles'         => $roles,
-                                   'pub_channels'  => $pubChannelsTags,
-                                   'pub_decisions' => $pubDecisionsTags,
-                                   'parent_tags'   => $parentTags,
-                                   'jobs'          => $jobs,
-                                   'status_error'  => $jobStatusError,
-                                   'not_master_profiles' => $notMasterProfiles,
-                                   'template' => $template
-                                   )
-                             );
+        return array(
+                     'mm'            => $resource,
+                     'form_meta'     => $formMeta->createView(),
+                     'form_pub'      => $formPub->createView(),
+                     'series'        => $series,
+                     'roles'         => $roles,
+                     'pub_channels'  => $pubChannelsTags,
+                     'pub_decisions' => $pubDecisionsTags,
+                     'parent_tags'   => $parentTags,
+                     'jobs'          => $jobs,
+                     'status_error'  => $jobStatusError,
+                     'not_master_profiles' => $notMasterProfiles,
+                     'template' => $template
+                     );
     }
 
     // TODO
