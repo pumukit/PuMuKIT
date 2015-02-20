@@ -82,17 +82,17 @@ $(document).ready(function(){$.material.init();});
       {% endfor %}
       {% if (series|length - (series.getMaxPerPage() * (series.getCurrentPage() - 1))) < 11 %}
       {% for i in 0..(11-(series|length - (series.getMaxPerPage() * (series.getCurrentPage() - 1)))) %}
-      <tr style="height: 37px;"> {# TODO make it responsive #}
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
       </tr>
       {% endfor %}
       {% endif %}
