@@ -165,10 +165,12 @@ class FactoryService
     {
         $repo = $this->dm->getRepository('PumukitSchemaBundle:Series');
 
-        if (null !== $sessionId) {
+        if (null !== $id) {
+            $series = $repo->find($id);
+        } elseif (null !== $sessionId) {
             $series = $repo->find($sessionId);
         } else {
-            $series = $repo->find($id);
+          return null;
         }
         
         return $series;
