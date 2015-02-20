@@ -1,10 +1,18 @@
+{# test snackbar toast <span class="btn btn-material-teal" onclick="javascript:$.snackbar({content: 'This is a JS generated snackbar, it rocks!', style: 'toast'});">Create and show a toast.</span> #}
+
 <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 
 <! --- MESSAGES ALERT --- !>
-<div id="div_messages_error">
+{# test snackbar toast
+<span id="div_messages_span_error" data-toggle="snackbar" data-style="toast" data-content="Error in here" data-timeout="0" data-snackbar-id="div_messages_span_error">error</span>
+
+<span id="div_messages_span_info" data-toggle="snackbar" data-style="toast" data-content="Information" data-timeout="0" data-snackbar-id="div_messages_span_info">{% trans %}Info{% endtrans %}</span>
+#}
+
+{# TODO snackbar toast #}
+<div id="div_messages_error" class="div_messages">
   <span id="div_messages_span_error" style="display:none;">{% trans %}Error{% endtrans %}</span>
 </div>
-
 
 <div id="div_messages_info" class="div_messages">
   <span id="div_messages_span_info" style="display:none;">{% trans %}Info{% endtrans %}</span>
