@@ -14,7 +14,9 @@ $(document).ready(function(){$.material.init();});
       <tr>
         <th width="1%">
           <div class="checkbox">
-            <input type="checkbox" onclick="window.click_checkbox_all('mm', this.checked)">
+            <label>
+              <input type="checkbox" onclick="window.click_checkbox_all('mm', this.checked)">
+            </label>
           </div>
         </th>
         <th colspan="6" width="5%"></th>
@@ -42,7 +44,11 @@ $(document).ready(function(){$.material.init();});
       {% for mm in mms %}
       <tr>
         <td>
-          <input id="{{ mm.id }}" class="mm_checkbox" type="checkbox">
+          <div class="checkbox">
+            <label>
+              <input id="{{ mm.id }}" class="mm_checkbox" type="checkbox">
+            </label>
+          </div>
         </td>
         <td>
 	      <img alt="{{ mm.status }}" title="{% trans %}status{% endtrans %}" class="miniTag" id="table_mms_status_{{ mm.id }}" {# TODO src="/legacy/images/admin/bbuttons/mm{{ mm.status }}_inline.gif" #}>
