@@ -2,10 +2,34 @@
 
 <div id="tv_admin_container" class="well">
 
-  <div class="background_id">
-    {{ series.id }}
+  <div class="row">
+    <div class="background_id col-md-6">
+      <form class="form-horizontal">
+        
+        <fieldset>
+          <legend>Info</legend>
+          <div class="form-group">
+            <label for="inputROId" class="col-lg-2 control-label">Id:</label>
+            <div class="col-lg-10 input-group">
+              <input type="text" class="form-control" id="inputROId" readonly value="{{ series.id }}">
+            </div>
+            <label for="inputROId" class="col-lg-2 control-label">Url:</label>
+            <div class="col-lg-10 input-group">
+              <input type="text" class="form-control" id="inputROId" readonly value="{{ url('pumukit_webtv_series_index', {id: series.id}) }}">
+              <span class="input-group-addon"><a href="{{ url('pumukit_webtv_series_index', {id: series.id}) }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
+            </div>
+            <label for="inputROId" class="col-lg-2 control-label">Secret Url:</label>
+            <div class="col-lg-10 input-group">
+              <input type="text" class="form-control" id="inputROId" readonly value="{{ url('pumukit_webtv_series_index', {id: series.id}) }}"> {#TODO#}
+              <span class="input-group-addon"><a href="{{ url('pumukit_webtv_series_index', {id: series.id}) }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
+            </div>
+          </div>
+        </fieldset>
+        
+      </form>
+      
+    </div>
   </div>
-  <br />
 
   <form onsubmit="$.ajax({
                           url: '{{ path('pumukitnewadmin_series_update', {'id': series.id}) }}',
@@ -24,14 +48,14 @@
                                             }
                           });
 		          return false;"
-	    action="{{ path('pumukitnewadmin_series_update', {'id': series.id}) }}" method="POST" class="form-horizontal">
+	    action="{{ path('pumukitnewadmin_series_update', {'id': series.id}) }}" method="POST" class="well">
 
 	<input type="hidden" name="id" id="id" value="{{ series.id }}">
 
 	<div class="row">
       <div class="col-md-3">
-        <div id="remember_save_series" class="alert alert-dismissable alert-danger" style="display:none;">
-          {% trans %}Press OK for the change to take effect{% endtrans %}
+        <div>
+          <span id="remember_save_series" class="alert alert-dismissable alert-danger" style="display:none;">{% trans %}Press OK for the change to take effect{% endtrans %}</span> &nbsp;
         </div>
       </div>
 
@@ -43,9 +67,9 @@
       </div>
 	</div>
 
-    <div class="well">
+    <div>
       <fieldset>
-        <div class="col-md-5">
+        <div class="col-md-7">
 
 	      {% for child in form if (child.vars.id not in ['pumukitnewadmin_series_i18n_header', 'pumukitnewadmin_series_i18n_footer', 'pumukitnewadmin_series_i18n_line2']) %}
           {{ form_row(child) }}
