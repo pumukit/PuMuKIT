@@ -1,59 +1,74 @@
-<div id="tv_admin_container">
-
+<div class="modal-header">
 <p>
 {% trans %}Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and{% endtrans %} <strong>{% trans %}use him/her{% endtrans %}</strong>. {% trans %}If he/she doesn't exist in the database{% endtrans %}, <strong>{% trans %}create{% endtrans %}</strong> {% trans %}a new entrance with the written name{% endtrans %}.
 </p>
-
-<fieldset>
-
-  <div class="form-row">
-    <label for="name" class="required">{% trans %}Name{% endtrans %}:</label>
-    <div class="content">
-      <input type="text" name="name" id="name" value="{% trans %}name to search for{% endtrans %}" autocomplete="on" size="80" />
-      <span id="indicator1" style="display: none"><img alt="{% trans %}working{% endtrans %}..." src="/legacy/images/admin/load/spinner.gif" height="18" width="18"></span>
-      <div id="name_auto_complete" class="auto_complete" style="display:none"></div>
+</div>
+<div class="modal-body">
+  <fieldset>
+    <div class="form-group">
+      <label for="name" class="control-label">{% trans %}Name{% endtrans %}:</label>
+      <div class="input-group">
+        <input type="text" name="name" id="name" value="{% trans %}name to search for{% endtrans %}" autocomplete="on"/>
+        <span id="indicator1" style="display: none" class="input-group-addon"><img alt="{% trans %}working{% endtrans %}..." src="/legacy/images/admin/load/spinner.gif" height="18" width="18"></span>
+        <div id="name_auto_complete" class="auto_complete" style="display:none"></div>
+      </div>
     </div>
+  </fieldset>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+    <button type="button" class="btn btn-primary btn-raised"
+            onclick="if(/^\w+ -/.test($.trim($('#name').val()))) {
+                                                        var route = '{{ path('pumukitnewadmin_person_link', {'id': '__personId__', 'roleId': role.id, 'mmId': mm.id} ) }}';
+                                                        var personId = $('#name').value.strip().split(' - ')[0];
+                                                        $.ajax({url:route.replace('__personId__', personId), type:'POST', success: function(response){$('#{{ role.id }}_person_mms').html(response);}});
+                                                        $.ajax({url:'{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', type:'POST', success: function(response){$('#preview_mm').html(response);}});
+                                                        $('#myModal').modal('hide');
+                     }else{
+                           alert('{% trans %}Select before a person{% endtrans %}');
+                     }
+                     return false;">
+      {% trans %}Use{% endtrans %}
+    </button>
+
+
+{#
+            onclick="var aux = $('#name').val();
+	                 if (aux == '{% trans %}name to search for{% endtrans %}') aux='';
+                     var route = '{{ path('pumukitnewadmin_person_create_relation', {'mmId': mm.id, 'roleId': role.id, 'name': '__aux__'}) }}';
+                     $('#myModal').modal('hide');
+                     $('#myModal').find('.modal-content').load(route.replace('__aux__', aux));
+                     $('#myModal').modal('show');
+                     return false;"
+
+            href="javascript: function(){var route='{{ path('pumukitnewadmin_person_create_relation', {'mmId': mm.id, 'roleId': role.id, 'name': '__name__'}) }}'; 
+                              return route.replace('__name__',  $('#name').val());}"
+#}
+    <button type="button" class="btn btn-pumukit btn-raised" data-toggle="modal" data-dismiss="modal" data-target="#myAuxModal"
+            id="create_relation" href="#"
+            onclick="var aux = $('#name').val();
+	                 if (aux == '{% trans %}name to search for{% endtrans %}') aux='';
+                     var route = '{{ path('pumukitnewadmin_person_create_relation', {'mmId': mm.id, 'roleId': role.id, 'name': '__aux__'}) }}';
+                     $('#create_relation').attr('href', route.replace('__aux__', aux)); return true;">
+      {% trans %}New{% endtrans %}
+    </button>
   </div>
-
-</fieldset>
-
-
-<ul class="tv_admin_actions">
-  <li>
-    <input class="tv_admin_action_create MB_focusable" 
-           onclick="var aux=$('name').value;
-	                if (aux == '{% trans %}name to search for{% endtrans %}') aux='';
-                    var route = '{{ path('pumukitadmin_person_create_relation', {'mmId': mm.id, 'roleId': role.id, 'name': '__aux__'}) }}';
-	                Modalbox.show(route.replace('__aux__', aux), {title:'{% trans %}Edit New Person{% endtrans %}', width:800}); 
-                    return false;" 
-           type="button" value="{% trans %}New{% endtrans %}">
-  </li>
-  <li>
-    <input class="tv_admin_action_create" 
-           onclick="if(/^\w+ -/.test($('name').value.strip())) {
-                        var route = '{{ path('pumukitadmin_person_link', {'id': '__personId__', 'roleId': role.id, 'mmId': mm.id} ) }}';
-                        var personId = $('name').value.strip().split(' - ')[0];
-                        new Ajax.Updater('{{ role.id }}_person_mms', route.replace('__personId__', personId), {asynchronous:true, evalScripts:true});
-                        new Ajax.Updater('preview_mm', '{{ path('pumukitadmin_mms_show', {'id': mm.id}) }}', {asynchronous:true, evalScripts:true});
-                        Modalbox.hide();
-                    }else{
-                        alert('{% trans %}Select before a person{% endtrans %}');
-                    }
-                    return false;"
-           type="button" value="{% trans %}Use{% endtrans %}" />
-  </li>
-
-  <li>
-    <input class="tv_admin_action_delete MB_focusable" onclick="Modalbox.hide(); return false;" type="button" value="{% trans %}Cancel{% endtrans %}">
-  </li>
-</ul>
-
 </div>
 
 <div style="clear:right"></div>
 
 <script type="text/javascript">
-  if($('MB_content')) $('MB_content').setStyle({ 'position' : 'static' });
-  new Ajax.Autocompleter('name', 'name_auto_complete', '{{ path('pumukitadmin_person_auto_complete') }}', {minChars: 2, indicator: 'indicator1'});
-  $('name').focus();  $('name').select();
+  //if($('MB_content')) $('MB_content').setStyle({ 'position' : 'static' });
+
+  //new Ajax.Autocompleter('#name', 'name_auto_complete', '{{ path('pumukitnewadmin_person_auto_complete') }}', {minChars: 2, indicator: 'indicator1'});
+  
+  // TODO make it work
+
+  $("#myModal").on("show.bs.modal", function(e){
+      $("#name").autocomplete({
+          appendTo: $("#name_auto_complete"),
+          source: "{{ path('pumukitnewadmin_person_auto_complete') }}"
+      });
+      $("#name").focus();
+      $("#name").select();
+  });
 </script>
