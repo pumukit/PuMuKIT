@@ -18,7 +18,7 @@ class MultimediaObjectByTagController extends Controller
      */
     public function indexAction(Tag $tag, Request $request)
     {
-        $limit = 4;
+        $limit = 2;
         $page =  $request->get("page", 1);
 
         dump($page);
@@ -28,13 +28,8 @@ class MultimediaObjectByTagController extends Controller
         dump($tag);
         dump($request->getLocale());
 
-        /*if($sort == "alphabetically"){
-    		$mmobjs = $repo->findWithTag($tag, array('alphabetically.' . $request->getLocale() => +1));
-        }
-        else{*/
-        	$mmobjs = $repo->createBuilderWithTag($tag, array('record_date' => 1));
-        	dump($mmobjs);
-       // }
+        $mmobjs = $repo->createBuilderWithTag($tag, array('record_date' => 1));
+        dump($mmobjs);
 
         $adapter = new DoctrineODMMongoDBAdapter($mmobjs);
         $pagerfanta = new Pagerfanta($adapter);

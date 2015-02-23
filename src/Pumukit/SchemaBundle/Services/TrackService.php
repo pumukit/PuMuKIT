@@ -22,7 +22,7 @@ class TrackService
         $this->dm = $documentManager;
         $this->jobService = $jobService;
         $this->profileService = $profileService;
-        $this->tmpPath = $tmpPath ? $tmpPath : sys_get_temp_dir();
+        $this->tmpPath = $tmpPath ? realpath($tmpPath) : sys_get_temp_dir();
     }
 
     /**
@@ -38,8 +38,13 @@ class TrackService
      */
     public function createTrackFromLocalHardDrive(MultimediaObject $multimediaObject, UploadedFile $trackFile, $profile, $priority, $language, $description)
     {
+
         if (null === $this->profileService->getProfile($profile)){
             throw new \Exception("Can't find given profile with name ".$profile);
+        }
+
+        if(UPLOAD_ERR_OK != $trackFile->getError()) {
+           throw new \Exception($trackFile->getErrorMessage());
         }
 
         if (!is_file($trackFile->getPathname())) {

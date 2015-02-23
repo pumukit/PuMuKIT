@@ -32,7 +32,7 @@ class JobService
         $this->profileService = $profileService;
         $this->cpuService = $cpuService;
         $this->inspectionService = $inspectionService;
-        $this->tmp_path = $tmp_path ? $tmp_path : sys_get_temp_dir();
+        $this->tmp_path = $tmp_path ? realpath($tmp_path) : sys_get_temp_dir();
         $this->test = $test;
     }
 
@@ -260,7 +260,9 @@ class JobService
         
         try{
             $out = $executor->execute($commandLine);        
+            $job->setOutput($out);
             $duration = $this->inspectionService->getDuration($job->getPathEnd());
+            $job->setNewDuration($duration);
 
             var_dump($commandLine);
             var_dump($profile['app']);
@@ -268,16 +270,21 @@ class JobService
             var_dump($job->getDuration());
             var_dump($duration);
     
-            $job->setTimeend(new \DateTime('now'));
+
             $this->searchError($profile['app'], $out, $job->getDuration(), $duration);
 
+            $job->setTimeend(new \DateTime('now'));
             $job->setStatus(Job::STATUS_FINISHED);
 
             $this->createFile($job);
         }catch (\Exception $e){
+            $job->setTimeend(new \DateTime('now'));
             $job->setStatus(Job::STATUS_ERROR);
-            var_dump("ERROR");
-            var_dump($e->getMessage());            
+
+            var_dump("ERROR--");
+            $job->setOutput($e->getMessage());
+            var_dump($job->getOutput());
+            var_dump("ERROR--");
         }
 
         $this->dm->persist($job);
@@ -371,10 +378,11 @@ class JobService
 
         $tempDir = $profile['streamserver']['dir_out'] . '/' . $mmobj->getSeries()->getId();
 
-        //TODO repeat mkdir (see this->execute)
+        //TODO repeat mkdir (see this->execute) and check error
         @mkdir($tempDir, 0777, true);
 
-        $pathEnd = $tempDir.'/'.$job->getId().'.'.$finalExtension;
+        $pathEnd = realpath($tempDir) . '/' . $job->getId() . '.' . $finalExtension;
+
         $job->setPathEnd($pathEnd);
         $job->setExtIni($extension);
         $job->setExtEnd($finalExtension);
@@ -393,9 +401,12 @@ class JobService
         //TODO if mmobj doesn't exists
         $track = new Track();
         $track->addTag('profile:' . $job->getProfile());
+        if ($profile['master']) $track->addTag('master');
+        if ($profile['display']) $track->addTag('display');
+
         $track->setLanguage($job->getLanguageId());
         if(isset($profile['streamserver']['url_out'])) {
-          $track->setUrl(str_replace($profile['streamserver']['dir_out'], $profile['streamserver']['url_out'], $job->getPathEnd()));
+          $track->setUrl(str_replace(realpath($profile['streamserver']['dir_out']), $profile['streamserver']['url_out'], $job->getPathEnd()));
         }
         $track->setPath($job->getPathEnd());
 
@@ -443,7 +454,7 @@ class JobService
 
         $profile = $this->getProfile($job);
         $tempDir = $profile['streamserver']['dir_out'] . '/' . $mmobj->getSeries()->getId();
-        //TODO repeat mkdir (see this->execute)
+        //TODO repeat mkdir (see this->execute) and check errors
         @mkdir($tempDir, 0777, true);
 
         $job->setStatus(Job::STATUS_WAITING);
