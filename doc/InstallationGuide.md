@@ -71,7 +71,7 @@ Setup a development environment on Ubuntu 14.04:
 8. Load default values.
 
     ```
-    php app/console pumukit:init:tags
+    php app/console pumukit:init:tags --force
     ```
     
 9. Restart server
