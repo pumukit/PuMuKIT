@@ -67,8 +67,14 @@ Setup a development environment on Ubuntu 14.04:
     ```
     php app/console fos:user:create admin --super-admin
     ```
+    
+8. Load default values.
 
-8. Restart server
+    ```
+    php app/console pumukit:init:tags
+    ```
+    
+9. Restart server
 
     ```
     service nginx restart 
