@@ -177,6 +177,13 @@ class Job
     private $duration = 0;
 
     /**
+     * @var int $duration
+     *
+     * @MongoDB\Int
+     */
+    private $new_duration = 0;
+
+    /**
      * @var string $size
      *
      * @MongoDB\String
@@ -190,6 +197,13 @@ class Job
      * @Assert\Email
      */
     private $email;
+
+    /**
+     * @var string $output
+     *
+     * @MongoDB\String
+     */
+    private $output = '';
 
     /**
      * @var locale $locale
@@ -638,6 +652,26 @@ class Job
     }
 
     /**
+     * Set new_duration
+     *
+     * @param int $new_duration
+     */
+    public function setNewDuration($new_duration)
+    {
+        $this->new_duration = $new_duration;
+    }
+
+    /**
+     * Get new_duration
+     *
+     * @return int
+     */
+    public function getNewDuration()
+    {
+        return $this->new_duration;
+    }
+
+    /**
      * Set size
      *
      * @param string $size
@@ -675,6 +709,26 @@ class Job
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * Set output
+     *
+     * @param string $output
+     */
+    public function setOutput($output)
+    {
+        $this->output = $output;
+    }
+
+    /**
+     * Get output
+     *
+     * @return string
+     */
+    public function getOutput()
+    {
+        return $this->output;
     }
 
     /**

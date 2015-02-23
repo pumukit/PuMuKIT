@@ -170,7 +170,7 @@ window.submit_delete_person = function(id, countMm, personHName)
     if (countMm == 0){
         if (window.confirm("{% trans %}Are you sure you want to delete the data of{% endtrans %} "+personHName+"?")){
             var url = "{{ path('pumukitnewadmin_person_delete', {'id': '__id__'}) }}";
-            $('#list_people').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){$.material.init();});
+            $('#list_people').load(url.replace('__id__', id), {'_method': 'DELETE'});
     }
     }else{
         window.alert('{% trans %}Cannot delete the data of{% endtrans %} '+personHName+'. '+ countMm+' {% trans %}multimedia object(s) contain(s) this person{% endtrans %}.');
@@ -588,3 +588,10 @@ procesaReset = function(){
      $('broadcast_password').hide();
   } #} */
 }
+
+/**
+ * Ajax proxied
+ */
+$(document).ajaxSuccess(function() {
+  $.material.init();
+});

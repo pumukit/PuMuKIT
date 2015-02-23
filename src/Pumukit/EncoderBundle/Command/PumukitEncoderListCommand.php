@@ -8,10 +8,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Pumukit\EncoderBundle\Document\Job;
 
-class PumukitEncoderListCommand extends ContainerAwareCommand
+class PumukitEncoderListCommand extends BasePumukitEncoderCommand
 {
     protected function configure()
     {
@@ -84,7 +83,7 @@ EOT
         foreach($jobs as $name => $job) {
             $table->addRow(array(
                 $job->getId(),
-                Job::$statusTexts[$job->getStatus()],
+                $this->formatStatus($job->getStatus()),
                 $job->getMmId(),
                 $job->getProfile(),
                 $job->getCpu(),

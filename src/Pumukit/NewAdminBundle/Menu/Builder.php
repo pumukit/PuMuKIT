@@ -18,21 +18,24 @@ class Builder extends ContainerAware
         $series->addChild('Multimedia', array('route' => 'pumukitadmin_mms_index'));
         $series->setDisplayChildren(false);
 
-        $menu->addChild('Unesco Cataloger');
-
         
+        //$menu->addChild('Unesco Cataloger');
+
+        /*
         $portal_design = $menu->addChild('WebTV Portal Design');
         $portal_design->addChild('Design');
         $portal_design->addChild('Templates');
         $portal_design->addChild('FileManager');
         $portal_design->addChild('Tags');
         $portal_design->addChild('News');
+        */
         
 
-        
+        /*
         $live = $menu->addChild('Live');
         $live->addChild('Live Channels', array('route' => 'pumukitadmin_direct_index'));
         $live->addChild('Live Events', array('route' => 'pumukitadmin_event_index'));
+        */
         
 
         $transcoding = $menu->addChild('Transcoding');
@@ -40,14 +43,13 @@ class Builder extends ContainerAware
         $transcoding->addChild('Task list');
         $transcoding->addChild('Transcoders');
 
-        
-        $menu->addChild('Temporized Publishing');
+        //$menu->addChild('Temporized Publishing');
 
         $tables = $menu->addChild('Tables');
         $tables->addChild('People', array('route' => 'pumukitnewadmin_person_index'));
 
         $management = $menu->addChild('Management');
-        $management->addChild('Admin users', array('route' => 'pumukitadmin_user_index'));
+        $management->addChild('Admin users', array('route' => 'pumukitnewadmin_user_index'));
         $management->addChild('Tags', array('route' => 'pumukitnewadmin_tag_index'));
         $management->addChild('Genres');
         $management->addChild('Material types');

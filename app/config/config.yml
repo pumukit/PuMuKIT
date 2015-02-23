@@ -120,6 +120,31 @@ pumukit_encoder:
             bat: |
                 ffmpeg -y -i "{{input}}" -acodec libfdk_aac -vcodec libx264 -preset slow -crf 15 -threads 0 "{{output}}"
             streamserver:
+                name: Localmaster
+                type: store
+                host: 127.0.0.1
+                description: Local master server
+                dir_out: "%kernel.root_dir%/../web/storage/masters"
+            app: ffmpeg
+            rel_duration_size: 1
+            rel_duration_trans: 1
+        video_h264:
+            display: true
+            wizard: true
+            master: false
+            format: mp4
+            codec: h264
+            mime_type: 'video/x-mp4'
+            extension: mp4
+            resolution_hor: 0
+            resolution_ver: 0
+            bitrate: 1 Mbps
+            framerate: 25
+            channels: 1
+            audio: false
+            bat: |
+                ffmpeg -y -i "{{input}}" -acodec libfdk_aac -vcodec libx264 -preset slow -crf 15 -threads 0 "{{output}}"
+            streamserver:
                 name: Localhost
                 type: download
                 host: 127.0.0.1

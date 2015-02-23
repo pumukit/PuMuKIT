@@ -9,14 +9,14 @@
     	<div class="name">
       		<div>{{serie.title|slice(0,1)|title}}</div>
     	</div>
-    	{% endif %}
-    	<div class="list">
-      	<ul>      
-        	<li>
-        		<a href="/series/{{serie.id}}">{{serie.getTitle()}}</a> [{{serie.getMultimediaObjects()|length}} videos]
-        	</li>
-      	</ul>
-    	</div>
+    {% endif %}
+    <div class="list">
+      <ul>      
+        <li>
+        	<a href="/series/{{serie.id}}">{{serie.getTitle()}}</a> [{{serie.getMultimediaObjects()|length}} videos]
+        </li>
+      </ul>
+    </div>
 
 	{% set lastChar = serie.title|slice(0,1)|title %}
 
