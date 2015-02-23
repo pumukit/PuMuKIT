@@ -20,7 +20,7 @@
 
         <div class="form-box" id="login-box">
 
-                <div class="header">
+                <div class="header" style="background: #ED6D00">
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                         {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
                         <a class="header" href="{{ path('fos_user_security_logout') }}">
