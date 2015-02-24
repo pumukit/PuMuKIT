@@ -115,6 +115,8 @@ window.submit_delete_person_relation = function(id, roleId, mmId, hName, templat
         url = url.replace('__roleId__', roleId);
         url = url.replace('__mmId__', mmId);
         $(tag_id).load(url, {parameters: {'_method': 'DELETE'}});
+        var url = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'}) }}";
+        $('#preview_mm').load(url.replace('__mmId__', mmId));
     }
 }
 
