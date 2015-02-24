@@ -119,7 +119,7 @@
       {% endfor %}
       {% if mms|length < 11 %}
       {% for i in 0..(11-mms|length) %}
-      <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ (loop.index + mms|length) % 2 }}">
+      <tr class="tv_admin_row_{{ (loop.index + mms|length) % 2 }}">
 	    <td style="height: 23px; padding: 0.2%;"></td>
         <td style="padding: 0.2%;"></td>
         <td style="padding: 0.2%;"></td>
