@@ -33,9 +33,12 @@
   <tr>
     <td><ul><li></li><ul></td>
     <td colspan="6">
-      <a title="{% trans %}Create{% endtrans %} {{ role.getName() }}" href="{{ path('pumukitnewadmin_person_list_autocomplete', {'roleId': role.id, 'mmId': mm.id}) }}" data-toggle="modal" data-target="#myModal">{% trans %}new{% endtrans %}...</a>
+      <a title="{% trans %}Create{% endtrans %} {{ role.getName() }}" 
+         href="{{ path('pumukitnewadmin_person_list_autocomplete', {'roleId': role.id, 'mmId': mm.id}) }}" 
+         data-toggle="modal" data-target="#myModal">
+        {% trans %}new{% endtrans %}...
+      </a>
     </td>
-
   </tr>
  </tbody>
 </table>
