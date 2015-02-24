@@ -26,9 +26,8 @@ class SearchMultimediaObjectsController extends Controller
     	$tag_found = $request->query->get('tags');
     	$type_found = $request->query->get('type');
     	$duration_found = $request->query->get('duration');
-    	$day_found = $request->query->get('day');
-    	$month_found = $request->query->get('month');
-    	$year_found = $request->query->get('year');
+    	$start_found = $request->query->get('start');
+    	$end_found = $request->query->get('end');
 
     	//Información proporcionada al paginador
     	$limit = 6;
@@ -36,15 +35,13 @@ class SearchMultimediaObjectsController extends Controller
 
         //Accedemos al repositorio de los objetos multimedia y de los tags
     	$repository_multimediaObjects = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
-    	dump($repository_multimediaObjects);
     	$repository_tags = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
-    	dump($repository_tags);
+    	//dump($repository_tags);
 
     	//Obtenemos del repositorio todos los objetos multimedia y todos los tags
 		$multimediaObjects = $repository_multimediaObjects->createBuilder();
-		dump($multimediaObjects);
 		$tags = $repository_tags->findall();
-		dump($tags);
+		//dump($tags);
 
 		//Buscamos coincidencia del Tag si se modifica el campo del filtro: <Tags>
 		for ($i=0;$i<count($tags);$i++){
@@ -67,39 +64,37 @@ class SearchMultimediaObjectsController extends Controller
 		//Obtenemos todos los objetos multimedia del repositorio que contengan <$type_found>
 		if($type_found != "All"){
 			$queryBuilder->field('tracks.only_audio')->equals($type_found == "Audio");
-			//$queryBuilder->field('tracks.only_audio')->equals($type_found == "Video");
 		}
 
 		//Obtenemos todos los objetos multimedia del repositorio que contengan <$duration_found>
 		if($duration_found != "All"){
 			if($duration_found == "Up to 5 minutes"){
-				$queryBuilder->field('tracks.duration')->lte(5);
+				$queryBuilder->field('tracks.duration')->lt(5);
 			}
 			if($duration_found == "Up to 10 minutes"){
-				$queryBuilder->field('tracks.duration')->range(6, 10);;
+				$queryBuilder->field('tracks.duration')->range(5, 10);
 			}
 			if($duration_found == "Up to 30 minutes"){
-				$queryBuilder->field('tracks.duration')->range(11, 30);;
+				$queryBuilder->field('tracks.duration')->range(10, 30);
 			}
 			if($duration_found == "Up to 60 minutes"){
-				$queryBuilder->field('tracks.duration')->range(31, 60);;
+				$queryBuilder->field('tracks.duration')->range(30, 60);
 			}
 			if($duration_found == "More than 60 minutes"){
 				$queryBuilder->field('tracks.duration')->gt(60);
 			}
 		}
 
-		//Obtenemos todos los objetos multimedia del repositorio que contengan <$day_found>
-		if($day_found != "All"){
-			$multimediaObjects = $repository_multimediaObjects->CreateBuilder();
+		//Obtenemos todos los objetos multimedia con fecha superior o igual a <$start_found>
+		if($start_found != "All"){
+			$start = \DateTime::createFromFormat("d/m/Y", $start_found);
+			$queryBuilder->field('record_date')->gt($start);
 		}
 
-		//Obtenemos todos los objetos multimedia del repositorio que contengan <$month_found>
-		if($month_found != "All"){
-		}
-
-		//Obtenemos todos los objetos multimedia del repositorio que contengan <$year_found>
-		if($year_found != "All"){
+		//Obtenemos todos los objetos multimedia con fecha inferior o igual a <$end_found>
+		if($end_found != "All"){
+			$end = \DateTime::createFromFormat("d/m/Y", $end_found);
+			$queryBuilder->field('record_date')->lt($end);
 		}
 
 		//Creamos el paginador
@@ -109,6 +104,6 @@ class SearchMultimediaObjectsController extends Controller
         $pagerfanta->setCurrentPage($page); // 1 by default
 
         return array('multimediaObjects' => $pagerfanta, 'tags' => $tags, 'tag_found' => $tag_found, 'type_found' => $type_found,
-        	'duration_found' => $duration_found, 'day_found' => $day_found, 'month_found' => $month_found, 'year_found' => $year_found);
+        	'duration_found' => $duration_found, 'start_found' => $start_found, 'end_found' => $end_found);
     }
 }
