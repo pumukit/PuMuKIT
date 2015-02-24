@@ -4,12 +4,12 @@
     <tr>
       <td><ul><li></li><ul></td>
       <td>
-        <a title="{% trans %}Edit Person{% endtrans %} '{{ person.getHName() }}'" href="{{ path('pumukitnewadmin_person_update_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}" data-toggle="modal" data-target="#myModal">
+        <a title="{% trans %}Edit Person{% endtrans %} '{{ person.getHName() }}'" href="{{ path('pumukitnewadmin_person_update_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}" data-toggle="modal" data-dismiss="modal" data-target="#myModal">
           <i class="mdi-editor-mode-edit"></i>
         </a>
       </td>
       <td>
-        <a href="#" onclick="window.submit_delete_person('{{ person.id }}', '{{ role.id }}', '{{ mm.id }}', '{{ person.getHName() }}', 'false'); return false;">
+        <a href="#" onclick="window.submit_delete_person_relation('{{ person.id }}', '{{ role.id }}', '{{ mm.id }}', '{{ person.getHName() }}', 'false'); return false;">
           <i class="mdi-content-clear"></i>
         </a>
       </td>
@@ -24,7 +24,7 @@
 	{% if loop.last %}
           &nbsp;
 	{% else %}
-	  <a href="#" onclick="$('#{{ role.id }}_person_mms').('{{ path('pumukitnewadmin_person_down', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}'); return false;">&#8595;</a>
+	  <a href="#" onclick="$('#{{ role.id }}_person_mms').load('{{ path('pumukitnewadmin_person_down', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}'); return false;">&#8595;</a>
 	{% endif %}
       </td>
       <td>&nbsp;{{ person.id }} - {{ person.getHName() }}</td>
