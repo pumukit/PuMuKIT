@@ -2,7 +2,7 @@
  <tdody>
   {% for person in people %}
     <tr>
-      <td><ul><li></li><ul></td>
+      <td><ul><li></li></ul></td>
       <td>
         <a title="{% trans %}Edit Person{% endtrans %} '{{ person.getHName() }}'" href="{{ path('pumukitnewadmin_person_update_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}" data-toggle="modal" data-dismiss="modal" data-target="#myModal">
           <i class="mdi-editor-mode-edit"></i>
@@ -31,7 +31,7 @@
     </tr>
   {% endfor %}
   <tr>
-    <td><ul><li></li><ul></td>
+    <td><ul><li></li></ul></td>
     <td colspan="6">
       <a title="{% trans %}Create{% endtrans %} {{ role.getName() }}" 
          href="{{ path('pumukitnewadmin_person_list_autocomplete', {'roleId': role.id, 'mmId': mm.id}) }}" 
