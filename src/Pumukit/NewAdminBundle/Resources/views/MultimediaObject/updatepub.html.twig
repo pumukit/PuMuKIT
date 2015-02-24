@@ -1,0 +1,347 @@
+{% form_theme form_pub 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
+
+<div id="tv_admin_container" class="well">
+  <form onsubmit="$.ajax({
+                          url: '{{ path('pumukitnewadmin_mms_update_pub', {'id': mm.id}) }}',
+                          type: 'POST',
+                          data: $(this).serialize(),
+                          error: function(request, json){var message = '{% trans %}Saved ERROR{% endtrans %}'; no_success(message);},
+                          success: function(response){
+                                                      $('#list_mms').html(response);
+                                                      $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}');
+                                                      var message = '{% trans %}Saved OK{% endtrans %}';
+                                                      success(message);
+                                                      }
+                  });
+		          return false;"
+	    action="{{ path('pumukitnewadmin_mms_update_pub', {'id': mm.id}) }}" method="POST">
+    
+	<input type="hidden" name="id" id="id" value="{{ mm.id }}">
+	<input type="hidden" name="series_id" id="series_id" value="{{ series.id }}">
+
+    <div class="row">
+      <div class="col-md-3">
+	    <div id="remember_save_mm" class="alert alert-dismissable alert-danger" style="display:none;">
+          {% trans %}Press OK for changes to take effect{% endtrans %}
+        </div>
+      </div>
+      <div class="col-md-2 col-md-offset-3">
+        <span id="mm_save_error" style="display:none; color:red;">{% trans %}Saved ERROR{% endtrans %}</span>
+      </div>
+      <div class="col-md-2">
+        <span id="mm_save_ok" style="display:none; color:indigo;">{% trans %}Saved OK{% endtrans %}</span>
+      </div>
+      <div class="col-md-2 text-right">
+        <button type="button" class="btn btn-default btn-raised" onclick="return procesaReset();">{% trans %}Cancel{% endtrans %}</button>
+        <button type="submit" class="btn btn-pumukit btn-raised" onclick="return procesaOk();">{% trans %}OK{% endtrans %}</button>
+      </div>
+    </div>
+
+	<fieldset>
+      <div class="col-md-5">
+        {% for child in form_pub if child.vars.id in ['pumukitnewadmin_mms_pub_status'] %}
+	    {{ form_row(child) }}
+        {% endfor %}
+	    <div class="form-group" id="pumukitnewadmin_mms_pub_channel" {{ (mm.getStatus() == 1)?'style="background-color: #f2f2f2"':'' }}>
+	      <label for="pub" class="control-label">{% trans %}Publication Channels{% endtrans %}:</label>
+	      <div id="list_pub_{{ mm.id }}">
+	        {% include 'PumukitNewAdminBundle:MultimediaObject:listpub.html.twig' with {'mm': mm, 'pubs': pub_channels, 'pub_type': 'channels'} %}
+	      </div>
+        </div>
+	    <div class="form-group" id="pumukitnewadmin_mms_pub_decision">
+	      <label for="announce_label" class="control-label">{% trans %}Publishing Decisions{% endtrans %}:</label>
+	      <div id="list_pubdecisions_{{ mm.id }}">
+	        {% include 'PumukitNewAdminBundle:MultimediaObject:listpub.html.twig' with {'mm': mm, 'pubs': pub_decisions, 'pub_type': 'decisions'} %}
+	      </div>
+        </div>
+        {% for child in form_pub if child.vars.id in ['pumukitnewadmin_mms_pub_broadcast'] %}
+	    {{ form_row(child) }}
+        {% endfor %}
+        {{ form_rest(form_pub) }}
+      </div>
+    </fieldset>
+  </form>
+</div>
+
+<script  type="text/javascript">
+$(document).ready(rememberSaveMmPub);
+
+function rememberSaveMmPub(){
+  var inputs = document.querySelectorAll("*[id^='pumukitnewadmin_mms_pub_']");
+  [].forEach.call(inputs, function(el, i){
+      el.addEventListener("change", function(){
+        $('remember_save_mm_pub').show();
+      });
+  });
+}
+
+sombreaCalendarios = function(id){
+  $('calendarios'+id).style.opacity="0.5";
+  $('error_start' + id).hide();
+  $('error_end' + id).hide();
+  $('intervalo' + id).innerHTML = "";
+  $('intervalo' + id).hide();
+}
+sombreaRadiosYCalendarios = function(id){
+  $('radios'+id).style.opacity="0.5";
+  sombreaCalendarios(id);
+}
+descubreRadiosMarcaEditorial = function(id){
+  $('radios'+id).style.opacity="1";
+  $('editorial'+id).checked=true;
+}
+procesaEditorial = function(id){
+  if ($('editorial'+id).checked){
+    $('radios'+id).style.opacity="1";
+    if ($('temporizada' + id + '_temporizada').checked==true){
+      procesaTemporizada(id);
+    }
+  } else {
+    //En chrome no actualiza hasta que no se pincha en otro checkbox de editorial ¿?
+    sombreaRadiosYCalendarios(id);
+  }
+  $('remember_save_mm_pub').show();
+}
+procesaPermanente = function(id){
+  descubreRadiosMarcaEditorial(id);
+  sombreaCalendarios(id);
+}
+procesaTemporizada = function(id){
+  descubreRadiosMarcaEditorial(id);
+  $('calendarios'+id).style.opacity="1";
+  muestraPasadoActivoFuturo(id);
+}
+
+procesaTimestart = function(id){
+  $('temporizada' + id + '_temporizada').checked = true;
+  procesaTemporizada(id);
+  $('error_start' + id).hide();
+  $('remember_save_mm_pub').show();
+}
+procesaTimeend = function(id){
+  $('temporizada' + id + '_temporizada').checked = true;
+  procesaTemporizada(id);
+  $('error_end' + id).hide();
+  $('remember_save_mm_pub').show();
+}
+borraFechasSiInactivas = function() {
+  if (!$('temporizada1_temporizada').checked){
+    $('timestart1').value="";
+    $('timeend1').value="";
+  }
+  if (!$('temporizada2_temporizada').checked){
+    $('timestart2').value="";
+    $('timeend2').value="";
+  }
+}
+dmy2ymd = function(date){
+  var fecha = date.strip(); // prototype trim
+  var separa = fecha.split(" ");
+  var parts = separa[0].split("/");
+  var ymd = parts[2] + '/' + parts[1] + '/'+parts[0];
+  if (separa.length > 1){
+    ymd += ' ' + separa[1];
+  }
+  return ymd;
+}
+compruebaIntervaloEditorial = function(id){
+  var dstart = new Date(Date.parse(dmy2ymd($('timestart'+id).value)));
+  var dend   = new Date(Date.parse(dmy2ymd($('timeend'+id).value)));
+  var today  = new Date();
+  var value  = false;
+  var error  = '';
+  if ($('timestart'+id).value === '' || $('timeend'+id).value === ''){
+    error = '{% trans %}Incomplete dates{% endtrans %}';
+  } else if (dstart > dend){
+    error = 'Error: Start > End';
+  } else if (dend < today){
+    value = -1;
+  } else if (dstart > today){
+    value = +1;
+  } else if (dstart < today && today < dend){
+    value = 0;
+  }
+
+  return [value, error];
+}
+
+mensajeIntervalo = function(array_value_error, id){
+  value = parseInt(array_value_error[0],10);
+  var span_id = 'intervalo' + id;
+  $(span_id).innerHTML = "";
+  if (isNaN(value)){
+    mensaje = array_value_error[1];
+    $(span_id).style.color = "red";
+  } else if (value == -1){
+    mensaje = '{% trans %}Past event{% endtrans %}';
+    $(span_id).style.color = "grey";
+  } else if (value == +1){
+    mensaje = '{% trans %}Future event{% endtrans %}';
+    $(span_id).style.color = "grey";
+  } else if (value == 0){
+    mensaje = '{% trans %}Active event{% endtrans %}';
+    $(span_id).style.color = "green";
+  } else {
+    mensaje = '';
+  }
+  $(span_id).appendChild(document.createTextNode(mensaje));
+  $(span_id).style.margin = "0px 10px";
+  $(span_id).show();
+  return;
+}
+muestraPasadoActivoFuturo = function(id){
+  mensajeIntervalo(compruebaIntervaloEditorial(id),id);
+  return;
+}
+</script>
+
+
+{# TODO editoriales temporizadas dentro del div anterior
+<?php // Fila para decision editorial 1?>
+<div class="content content_long" style="overflow:hidden;" >
+  <span class="editorial_fija" style="float:left; margin: 3px 0 0 0; width:115px;">
+	<?php echo checkbox_tag('editorial1', 1, ($mm->getEditorial1() || isset($timeframe1)), array(
+    'onchange' => "procesaEditorial(1);",
+                      'style' => 'float:left',
+      ));?>&nbsp; Decisión editorial 1
+  </span>
+  <span class="temporizada" id="temporizada1" style="float:left;" >
+	<span id="radios1" style="margin-top:6px;<?php if (!$mm->getEditorial1() && !isset($timeframe1)) {
+                              echo "opacity:0.5;"//ojo, necesito algún caracter dentro de este span?>">&nbsp;
+	  <?php echo radiobutton_tag('temporizada1', 'permanente', (!isset($timeframe1)),
+            array('style' => 'margin:3px;float:left;',
+      'onchange' => 'procesaPermanente(1)', ));
+      }?>
+	  <label for ="temporizada1_permanente" style="position:relative;padding:3px;margin-right:3px;color:black;width:auto;"> Permanente</label>
+	  <?php echo radiobutton_tag('temporizada1', 'temporizada',    (isset($timeframe1)),
+            array('style' => 'margin:3px;float:left;',
+      'onchange' => 'procesaTemporizada(1)', )); ?>
+	  <label for ="temporizada1_temporizada" style="position:relative;padding:3px 0 3px 3px;color:black;width:auto;"> Temporizado</label>
+	</span>
+	<span id="calendarios1" style="<?php if (!isset($timeframe1)) {
+                                   echo "opacity:0.5;"?>">
+	  <span>del: </span>
+	  <?php // ---- INICIALIZACIÓN VARIABLES DECISION EDITORIAL 1 ----
+            if (!isset($timeframe1)) { // variable a retornar por el formulario
+            // timeframe inicializado para poder pintar el textbox y calendario
+            $timeframe1 = new CategoryMmTimeframe();
+            }
+            }?>
+	  <?php $value = object_input_date_tag($timeframe1, 'getTimestart', array(
+            'rich' => true,
+      'withtime' => true,
+      'calendar_button_img' => '/images/admin/buttons/date.png',
+      'control_name' => 'timestart1',
+      'onchange' => "procesaTimestart(1);",
+      'size' => 14, //por defecto es 17
+      )); echo $value ? $value : '&nbsp;' ?>
+	  <span id="error_start1" style="display:none" class="error"><?php echo __('Formato de fecha no v&aacute;lido')?></span>
+	  <?php //echo label_for('timeend1', 'al:', 'class="required long" ') ?>
+	  <span style="margin-left:5px;" >al: </span>
+	  <?php $value = object_input_date_tag($timeframe1, 'getTimeend', array(
+            'rich' => true,
+      'withtime' => true,
+      'calendar_button_img' => '/images/admin/buttons/date.png',
+      'control_name' => 'timeend1',
+      'onchange' => "procesaTimeend(1);",
+      'size' => 14, //por defecto es 17
+      )); echo $value ? $value : '&nbsp;' ?>
+	  <span id="intervalo1" style="display:none"></span>
+	  <?php if (isset($interval1cmp) && $interval1cmp !== ''):?>
+	  <script type="text/javascript">mensajeIntervalo ([<?php echo $interval1cmp;?>,''], 1) </script>
+	  <?php endif?>
+	  <span id="error_end1" style="display:none" class="error"><?php echo __('Formato de fecha no v&aacute;lido')?></span>
+	</span>
+  </span> <!-- fin temporizada -->
+</div>
+
+<?php // Fila para decision editorial 2?>
+<div class="content content_long" style="overflow:hidden;" >
+  <span class="editorial_fija" style="float:left; margin: 3px 0px 0px 0px; width:115px;">
+	<?php $value = object_checkbox_tag($mm, 'getEditorial2', array(
+          'control_name' => 'editorial2',
+    'onchange' => "procesaEditorial(2);",
+    )); echo $value ? $value : '&nbsp;' ?>&nbsp; Decisión editorial 2
+  </span>
+  <span class="temporizada" id="temporizada2" style="float:left;" >
+	<span id="radios2" style="<?php if (!$mm->getEditorial2() && !isset($timeframe2)) {
+                              echo "opacity:0.5;"//ojo, necesito algún caracter dentro de este span?>">&nbsp;
+	  <?php echo radiobutton_tag('temporizada2', 'permanente', (!isset($timeframe2)), array('style' => 'margin:3px;float:left;', 'onchange' => 'procesaPermanente(2)'));
+      }?><label for ="temporizada2_permanente" style="position:relative;padding:3px;margin-right:3px;color:black;width:auto;"><?php echo __(' Permanente')?></label>
+	  <?php echo radiobutton_tag('temporizada2', 'temporizada',    (isset($timeframe2)), array('style' => 'margin:3px;float:left;', 'onchange' => 'procesaTemporizada(2)')); ?><label for ="temporizada2_temporizada" style="position:relative;padding:3px 0 3px 3px;color:black;width:auto;"><?php echo __('Temporizado')?></label>
+	</span>
+	<span id="calendarios2" style="<?php if (!isset($timeframe2)) {
+                                   echo "opacity:0.5;"?>">
+	  <span>del: </span>
+	  <?php // ---- INICIALIZACIÓN VARIABLES DECISION EDITORIAL 2 ----
+            if (!isset($timeframe2)) { // variable a retornar por el formulario
+            // timeframe inicializado para poder pintar el textbox y calendario
+            $timeframe2 = new CategoryMmTimeframe();
+            }
+            }?>
+	  <?php $value = object_input_date_tag($timeframe2, 'getTimestart', array(
+            'rich' => true,
+      'withtime' => true,
+      'calendar_button_img' => '/images/admin/buttons/date.png',
+      'control_name' => 'timestart2',
+      'onchange' => "procesaTimestart(2)",
+      'size' => 14, //por defecto es 17
+      )); echo $value ? $value : '&nbsp;' ?>      
+	  <span id="error_start2" style="display:none" class="error"><?php echo __('Formato de fecha no v&aacute;lido')?></span>
+	  <span style="margin-left:5px;" >al: </span>
+	  <?php $value = object_input_date_tag($timeframe2, 'getTimeend', array(
+            'rich' => true,
+      'withtime' => true,
+      'calendar_button_img' => '/images/admin/buttons/date.png',
+      'control_name' => 'timeend2',
+      'onchange' => "procesaTimeend(2);",
+      'size' => 14, //por defecto es 17
+      )); echo $value ? $value : '&nbsp;' ?>
+	  <span id="intervalo2" style="display:none"></span>
+	  <?php if (isset($interval2cmp) && $interval2cmp !== ''):?>
+	  <script type="text/javascript">mensajeIntervalo([<?php echo $interval2cmp;?>,''], 2) </script>
+	  <?php endif?>
+	  <span id="error_end2" style="display:none" class="error"><?php echo __('Formato de fecha no v&aacute;lido')?></span>
+	</span>
+  </span> <!-- fin temporizada -->
+</div>
+</div>
+
+<div class="form-row">
+  <?php echo label_for('broadcast_id', 'Perfil de distribución:', 'class="required long"') ?>
+  <div class="content content_long">
+    <select name="broadcast_id" id="broadcast_id" onchange="$('remember_save_mm_pub').show(); change_pass(this);">
+      <option <?php echo(($mm->getBroadcastId() == 1) ? 'selected="selected"' : ''); ?>value="1" >pub</option>
+<option <?php echo(($mm->getBroadcastId() != 1) ? 'selected="selected"' : ''); ?>value="2" >pri</option><!-- Mostramos pri pero se guarda como cor -->
+</select>
+<span id="broadcast_password" style="<?php echo(($mm->getBroadcastId() != 1) ? 'display:inline;' : 'display:none;'); ?>">
+  <?php $broadcast = BroadcastPeer::retrieveByPk($mm->getBroadcastId());?>
+  <input onchange="check_pass($('pass1'), $('pass2'), $('broadcast_id').value); $('remember_save_mm_pub').show()" type="password" placeholder="Introduce una contraseña..." size="25" maxlength="256" style="margin: 5px;" name="pass1" id="pass1" value="<?php echo(($broadcast != NULL) ? $broadcast->getPasswd() : '');?>" />
+  <input onchange="check_pass($('pass1'), $('pass2'), $('broadcast_id').value); $('remember_save_mm_pub').show()" value="<?php echo(($broadcast != NULL) ? $broadcast->getPasswd() : '');?>" type="password"  placeholder="Repite la contraseña..." size="25" maxlength="256" name="pass2" id="pass2" />
+  <input type="text" value="" placeholder="Nombre" size="25" maxlength="256" name="pri" id ="pri" />
+  <input type="button" style="background-color: #ffc; border-right: 1px solid #ddd !important; padding-left: 20px;" class="tv_admin_action_save" id="view_passwd" onclick="toggleName(this); replaceType(pass1); replaceType(pass2); return false;" value="Ver contraseña" />
+  <input type="button" style="background-color: #ffc; border-right: 1px solid #ddd !important; padding-left: 20px;" class="tv_admin_action_save" id="gen_passwd" onclick="genpasswd($('pass1'),$('pass2')); return false;" title="Genera una contraseña aletaoria" value="Generar contraseña" />
+  <span id="passwdFail" style="display: none; color: red; margin: 0px 10px;">Las contraseñas deben ser iguales.</span>
+</span>
+</div>
+</div>
+
+<div class="form-row">
+  <?php echo label_for('itunesu', __('iTunes U:'), 'class="required long" ') ?>
+  <div class="content content_long">
+    <?php if (count($mm->getSerial()->getSerialItuness()) == 0):?>
+    <a href="#" onclick="
+                         new Ajax.Updater('itunes_mm_info', '<?php echo url_for('mms/ituneson?id='.$mm->getId())?>', {asynchronous:true, evalScripts:true}); return false;
+                         "><?php echo __('Publicar en itunes U.')?></a>
+    <?php else:?>
+    <a href="#" onclick="
+                         new Ajax.Updater('itunes_mm_info', '<?php echo url_for('mms/ituneson?id='.$mm->getId())?>', {asynchronous:true, evalScripts:true}); return false;
+                         "><?php echo __('Quitar de itunes U.')?></a>
+    <?php endif?>
+
+  </div>
+  <div id="itunes_mm_info" style="width: 99%; padding:10px;">
+    <?php include_partial('mms/itunes_list', array('itunes' => $mm->getSerial()->getSerialItuness()))?>
+  </div>
+</div>
+#}

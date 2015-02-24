@@ -105,7 +105,8 @@ class MultimediaObjectController extends SortableAdminController
         }
 
         $sessionId = $this->get('session')->get('admin/series/id', null);
-        $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
+        $series = $factoryService->findSeriesById($request->get('seriesId'), $sessionId);
+
         if (null === $series){
             throw new \Exception('Series with id '.$request->get('id').' or with session id '.$sessionId.' not found.');
         }
@@ -163,7 +164,7 @@ class MultimediaObjectController extends SortableAdminController
         }
 
         $sessionId = $this->get('session')->get('admin/series/id', null);
-        $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
+        $series = $factoryService->findSeriesById(null, $sessionId);
         if (null === $series){
             throw new \Exception('Series with id '.$request->get('id').' or with session id '.$sessionId.' not found.');
         }
@@ -237,7 +238,7 @@ class MultimediaObjectController extends SortableAdminController
         }
 
         $sessionId = $this->get('session')->get('admin/series/id', null);
-        $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
+        $series = $factoryService->findSeriesById(null, $sessionId);
         if (null === $series){
             throw new \Exception('Series with id '.$request->get('id').' or with session id '.$sessionId.' not found.');
         }
@@ -480,7 +481,7 @@ class MultimediaObjectController extends SortableAdminController
 
         $factoryService = $this->get('pumukitschema.factory');
         $sessionId = $this->get('session')->get('admin/series/id', null);
-        $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
+        $series = $factoryService->findSeriesById(null, $sessionId);
 
         $mms = $this->getListMultimediaObjects($series);
 

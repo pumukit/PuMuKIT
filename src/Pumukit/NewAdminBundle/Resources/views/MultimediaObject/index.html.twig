@@ -4,91 +4,81 @@
 
 <h3 class="cab_body_div">
   <ul class="breadcrumb" style="margin-bottom: 5px;">
-    <li><a href="{{ path('pumukitnewadmin_series_index') }}">Series</a></li>
+    <li><a href="{{ path('pumukitnewadmin_series_index') }}">Series ({{ series.getTitle() }})</a></li>
     <li class="active">Multimedia Objects</li>
   </ul>
-
-  <h3>{% trans %}Multimedia Objects{% endtrans %}</h3>
-  <span style="font-size:72%">({{ series.id }}-{{ series.getTitle() }})</span>
   <input type="hidden" name="series_id" id="mms_series_id" value="{{ series.id }}" />
 </h3>
 
+<div class="row">
+  <div id="tv_admin_content" class="col-md-10">
+    <div class="well">
+      <div id="list_mms">
+        {% include 'PumukitNewAdminBundle:MultimediaObject:list.html.twig' %}
+      </div>      
+      <div class="row">
+        <div class="col-md-2">
+          <select id="options_mms" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('mm', $('options_mms'))">
+            <option value="default" selected="selected">{% trans %}Select an action{% endtrans %}...</option>
+            <option disabled="">---</option>
+            <option value="delete_sel">{% trans %}Delete selected{% endtrans %}</option>
+            <option value="inv_announce_sel">{% trans %}Announce/Deannounce selected{% endtrans %}</option>
+            <option disabled="">---</option>
+            <option disabled="" value="set_status_0_sel">{% trans %}Block selected{% endtrans %}</option> 
+            <option disabled="" value="set_status_1_sel">{% trans %}Hide selected{% endtrans %}</option> 
+            <option disabled="" value="set_status_2_sel">{% trans %}Publish selected{% endtrans %}</option> 
+            <option disabled="" value="set_status_3_sel">{% trans %}Fully publish selected{% endtrans %}</option>
+            <option disabled="">---</option>
+            <option value="set_order_pub_des">{% trans %}Ordenar objetos multimedia por fecha de publicación de forma descendente{% endtrans %}</option> 
+            <option value="set_order_pub_asc">{% trans %}Ordenar objetos multimedia por fecha de publicación de forma ascendente{% endtrans %}</option> 
+            <option value="set_order_rec_des">{% trans %}Ordenar objetos multimedia por fecha de grabación de forma descendente{% endtrans %}</option> 
+            <option value="set_order_rec_asc">{% trans %}Ordenar objetos multimedia por fecha de grabación de forma ascendente{% endtrans %}</option> 
+            <option disabled="">---</option>
+            <option value="cut_mm">{% trans %}Cortar objetos multimedia{% endtrans %}</option> 
+            {# TODO <?php if($sf_user->hasAttribute('cut_mms')): ?> #}
+            {% if true %}
+            <option value="paste_mm">
+              {% trans %}Pegar objetos multimedia{% endtrans %} ({# TODO <?php echo implode(',', $sf_user->getAttribute('cut_mms')->getRawValue())?> #})
+            </option>
+            {% endif %}
+            <option disabled="">---</option>
+            <option value="serial_preview">{% trans %}Preview show of the series{% endtrans %}</option> 
+            <!-- <option value="serial_master">{% trans %}Crear obj. mm. con brutos de cámara{% endtrans %}</option>  -->
+          </select>          
+        </div>
+        <div class="col-md-10 text-right">
+	      {# TODO mmwizard and path with series id #}
+	      <a class="btn btn-primary btn-raised" href="#" onclick="Modalbox.show('/editar.php/mmwizard/index/mod/mms/serial_id/782',{width: 800, title:'{% trans %}STEP II: MM.OBJ.{% endtrans %}'}); return false;">Wizard</a>
+	      {# TODO Path create with page number #}
+	      <a title="{% trans %}Create new multimedia object{% endtrans %}" class="btn btn-pumukit btn-raised" href="#" onclick="$('#list_mms').load('{{ path('pumukitnewadmin_mms_create', {'id': series.id}) }}'); return false;">{% trans %}Create{% endtrans %}</a>
+        </div>
+      </div>
+    </div>
+    <div id="edit_mm">
+      {% if(app.session.has('admin/series/id') and app.session.has('admin/mms/id')) %}
+      {{ render(url('pumukitnewadmin_mms_edit', {'id': app.session.get('admin/mms/id'), 'seriesId': app.session.get('admin/series/id')})) }}
+      {% endif %}
+    </div>
+  </div>
 
-<div id="tv_admin_container">
-  <div id="tv_admin_bar">
-    <div id="preview_mm" style="padding:5px; border: solid 1px #DDD; background: #8eb0bc url(/legacy/images/admin/cab/cab.gif) repeat-x scroll 0% 0%; margin-bottom: 10px">
+  <div id="tv_admin_bar" class="col-md-2">
+    <div id="preview_mm" class="well">
       {% if(app.session.has('admin/mms/id')) %}
-        {{ render_hinclude(url('pumukitnewadmin_mms_show', {'id': app.session.get('admin/mms/id')})) }}
+      {{ render_hinclude(url('pumukitnewadmin_mms_show', {'id': app.session.get('admin/mms/id')})) }}
       {% endif %}
     </div>
   </div>
+</div>
 
-
-
-  <div id="tv_admin_content" >
-    <div id="list_mms" name="list_mms" act="/mms/list" style="min-width: 690px;">
-      {% include 'PumukitNewAdminBundle:MultimediaObject:list.html.twig' %}
+<div class="modal fade" id="myAuxModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
     </div>
-
-    <div style="float:right; width:50%">
-      <ul class="tv_admin_actions">
-        <!-- Falta -->
-        <li>
-	 {# TODO mmwizard and path with series id #}
-	 <a class="tv_admin_action_next" href="#" onclick="Modalbox.show('/editar.php/mmwizard/index/mod/mms/serial_id/782',{width: 800, title:'{% trans %}STEP II: MM.OBJ.{% endtrans %}'}); return false;">Wizard</a>
-        </li>
-        <li>
-	  {# TODO Path create with page number #}
-	  <a title="{% trans %}Create new multimedia object{% endtrans %}" class="tv_admin_action_create" href="#" onclick="new Ajax.Updater('list_mms', '{{ path('pumukitnewadmin_mms_create', {'id': series.id}) }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Create{% endtrans %}</a>
-        </li>
-      </ul>
-    </div>
-
-    <select id="options_mms" style="margin: 10px 0px; width: 33%; float: left" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('mm', $('options_mms'))">
-      <option value="default" selected="selected">{% trans %}Select an action{% endtrans %}...</option>
-      <option disabled="">---</option>
-
-      <option value="delete_sel">{% trans %}Delete selected{% endtrans %}</option>
-      <option value="inv_announce_sel">{% trans %}Announce/Deannounce selected{% endtrans %}</option>
-      <option disabled="">---</option>
-      <option disabled=""value="set_status_0_sel">{% trans %}Block selected{% endtrans %}</option> 
-      <option disabled=""value="set_status_1_sel">{% trans %}Hide selected{% endtrans %}</option> 
-      <option disabled=""value="set_status_2_sel">{% trans %}Publish selected{% endtrans %}</option> 
-      <option disabled=""value="set_status_3_sel">{% trans %}Fully publish selected{% endtrans %}</option>
-      <option disabled="">---</option>
-      <option value="set_order_pub_des">{% trans %}Ordenar objetos multimedia por fecha de publicación de forma descendente{% endtrans %}</option> 
-      <option value="set_order_pub_asc">{% trans %}Ordenar objetos multimedia por fecha de publicación de forma ascendente{% endtrans %}</option> 
-      <option value="set_order_rec_des">{% trans %}Ordenar objetos multimedia por fecha de grabación de forma descendente{% endtrans %}</option> 
-      <option value="set_order_rec_asc">{% trans %}Ordenar objetos multimedia por fecha de grabación de forma ascendente{% endtrans %}</option> 
-      <option disabled="">---</option>
-      <option value="cut_mm">{% trans %}Cortar objetos multimedia{% endtrans %}</option> 
-      {# TODO <?php if($sf_user->hasAttribute('cut_mms')): ?> #}
-      {% if true %}
-        <option value="paste_mm">
-          {% trans %}Pegar objetos multimedia{% endtrans %} ({# TODO <?php echo implode(',', $sf_user->getAttribute('cut_mms')->getRawValue())?> #})
-        </option>
-      {% endif %}
-      <option disabled="">---</option>
-      <option value="serial_preview">{% trans %}Preview show of the series{% endtrans %}</option> 
-      <!-- <option value="serial_master">{% trans %}Crear obj. mm. con brutos de cámara{% endtrans %}</option>  -->
-    </select>
-    
   </div>
-  <div style="clear:both"></div>
 </div>
-
-
-</div>
-
-<!-- div editar -->
-<div id="edit_mm" class="tv_admin_edit" >  
-  {% if(app.session.has('admin/series/id') and app.session.has('admin/mms/id')) %}
-    {{ render(url('pumukitnewadmin_mms_edit', {'id': app.session.get('admin/mms/id')})) }}
-  {% endif %}
-
-
 
 <script type="text/javascript">
+/* TODO
 var update_file;
 window.onload = function(){
   Shadowbox.init({
@@ -101,8 +91,15 @@ window.onload = function(){
                 }
   });
 };
-window.update_preview = function(id) {
-  new Ajax.Updater('preview_mm', '" . url_for("mms/preview") . "/id/' + id, {asynchronous:true, evalScripts:true});
+*/
+
+window.update_preview_mms = function(id) {
+  var route = "{{ path('pumukitnewadmin_mms_show', {id: '__id__'}) }}";
+  $.ajax({
+          url: route.replace('__id__', id),
+          type: 'POST',
+          success: function(response){$('#preview').html(response);}
+         });
 }
 
 </script>

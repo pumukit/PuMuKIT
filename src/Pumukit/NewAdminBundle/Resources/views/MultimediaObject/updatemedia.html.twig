@@ -1,0 +1,59 @@
+{# TODO path files list and twig templates #}
+
+<div id="tv_admin_container" style="padding: 4px 20px 20px">
+
+<div style="height:41px"></div>
+
+<fieldset id="tv_fieldset_none" class="">
+  <dl style="margin: 0px">
+    <div class="form-row">
+      <dt>{% trans %}Images{% endtrans %}:</dt>
+      <dd>
+        <div id="pic_mms">
+	  {% include 'PumukitAdminBundle:Pic:list.html.twig' with {'resource': mm, 'resource_name': 'mms'} %}
+        </div>
+      </dd>
+    </div>
+
+    <div class="form-row">
+      <dt>{% trans %}Video Files{% endtrans %}:</dt>
+      <dd>
+        <div id="tracks_mms">
+	      {% include 'PumukitAdminBundle:Track:list.html.twig' with {'mmId': mm.id, 'tracks': mm.getTracks(), 'oc': ''} %}
+        </div>
+      </dd>
+    </div>
+
+    {# TODO FILES PATH
+    <script type="text/javascript">
+        if (typeof update_file == 'object') update_file.stop();
+        update_file = new Ajax.PeriodicalUpdater('tracks_mms', '/editar.php/files/list/mm/" + {{ mm.id }} + "', {
+          method: 'get', frequency: 8, decay: 1
+        });
+        if (document.location.hash != '#mediaMmHash') update_file.stop();
+     </script>
+     #}
+
+
+    <div class="form-row">
+      <dt>{% trans %}Materials{% endtrans %}:</dt>
+      <dd>
+        <div id="materials_mms">
+	  {% include 'PumukitAdminBundle:Material:list.html.twig' with {'mmId': mm.id, 'materials': mm.getMaterials()} %}
+        </div>
+      </dd>
+    </div>
+
+    <div class="form-row">
+      <dt>{% trans %}Links{% endtrans %}:</dt>
+      <dd>
+        <div id="links_mms">
+	  {% include 'PumukitAdminBundle:Link:list.html.twig' with {'mmId': mm.id, 'links': mm.getLinks()} %}
+        </div>
+      </dd>
+    </div>
+  </dl>
+</fieldset>
+
+
+</div>
