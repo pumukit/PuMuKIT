@@ -8,7 +8,10 @@
                           url: '{{ path('pumukitnewadmin_person_update_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}',
                           type: 'POST',
                           data: $(this).serialize(),
-                          success: function(response){$('#{{ role.id }}_person_mms').html(response);}
+                          success: function(response){
+                                                      $('#{{ role.id }}_person_mms').html(response);
+                                                      $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}');
+                                                      }
                   });
 		          return false;"
 	    action="{{ path('pumukitnewadmin_person_update_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}" method="POST">
