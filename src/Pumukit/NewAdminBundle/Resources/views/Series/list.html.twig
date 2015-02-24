@@ -68,7 +68,7 @@
         <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
 	      {{ oneseries.getTitle() }}
         </td>
-        <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
+        <td class="text-nowrap" onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
 	      {{ oneseries.getPublicDate()|date('Y-m-d') }}
         </td>
         <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
