@@ -1,0 +1,42 @@
+<table><tdody>
+  {% for link in links %}
+    <tr>
+      <td><ul><li></li><ul></td>
+      <td><a title="{% trans %}Edit file of multimedia object{% endtrans %} {{ link.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_link_update', {'id': link.id, 'mmId': mmId}) }}"><img alt="{% trans %}edit{% endtrans %}" title="{% trans %}edit{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a></td>
+      <td>
+          <a href="#" onclick="window.submit_delete_link('{{ link.id }}', '{{ mmId }}'); return false;">
+             <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
+          </a>
+      </td>
+      <td>
+        {% if loop.first %}
+	  &nbsp;
+	{% else %}
+	  <a href="#" onclick="new Ajax.Updater('links_mms', '{{ path('pumukitadmin_link_up', {'id': link.id, 'mmId': mmId}) }}', {asynchronous:true, evalScripts:true}); return false;">&#8593;</a>
+	{% endif %}
+      </td>
+      <td>
+	{% if loop.last %}
+          &nbsp;
+	{% else %}
+	  <a href="#" onclick="new Ajax.Updater('links_mms', '{{ path('pumukitadmin_link_down', {'id': link.id, 'mmId': mmId}) }}', {asynchronous:true, evalScripts:true}); return false;">&#8595;</a>
+	{% endif %}
+      </td>
+      <td>&nbsp;{{ link.id }} - {{ link.getUrl() }}</td>
+    </tr>
+  {% endfor %}
+  <tr>
+    <td><ul><li></li><ul></td>
+    <td colspan="6"><a title="{% trans %}Create Link{% endtrans %}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_link_create', {'id': mmId}) }}">{% trans %}create{% endtrans %}...</a></td>
+  </tr>
+</tbody></table>
+
+{# TODO
+<?php 
+if ($sf_request->getParameter('preview')){
+  echo javascript_tag("update_preview(" . $mm . ");");
+}
+
+if (isset($msg_alert)) echo m_msg_alert($msg_alert)
+?>
+#}

@@ -1,0 +1,300 @@
+<table><tdody>
+  {% if true %} {# TODO (sfConfig::get('app_transcoder_use')) #}
+    {% for job in jobs %}
+      <tr>
+        <td><ul><li></li><ul></td>
+        <td colspan="11">
+          {{ job.getStatusText() }}
+          {% if status_error == job.getStatus() %}
+          <a href="#" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_retry_job', {'mmId': mmId, 'jobId': job.id, 'preview': 1}) }}'); return false;">
+            <i class="mdi-navigation-refresh"></i>
+          </a>
+          {% endif %}
+          {% if status_error == job.getStatus() %}
+          <a href="#" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_delete_job', {'mmId': mmId, 'jobId': job.id, 'preview': 1}) }}'); return false;">
+            <i class="mdi-content-clear"></i>
+          </a>
+          {% endif %}
+        </td>
+        <td>
+          &nbsp; {{ job.getId() }} - <strong>{{ job.getProfile() }}</strong> - {{ job.getPathIni()|basename }} - {{ job.getDuration()|duration_string }}
+        </td>
+      </tr>
+    {% endfor %}
+  {% endif %}
+
+  {% for track in tracks %}
+    <tr>
+      <td><ul><li></li><ul></td>
+      <td>
+        <a title="{% trans %}Edit file of multimedia object{% endtrans %} {{ track.id }}"
+           data-toggle="modal" data-dismiss="modal" data-target="#myModal"
+           href="{{ path('pumukitnewadmin_track_update', {'id': track.id, 'mmId': mmId}) }}">
+          <i class="mdi-editor-mode-edit"></i>
+        </a>
+      <td>
+      <td>
+        <a title="{% trans %}File info of multimedia object{% endtrans %} {{ track.id }}"
+           data-toggle="modal" data-dismiss="modal" data-target="#myModal"
+           href="{{ path('pumukitnewadmin_track_info', {'id': track.id, 'mmId': mmId}) }}">
+          <i class="mdi-action-info"></i>
+        </a>
+      <td>
+      <td>
+          <a href="#" onclick="window.submit_delete_track('{{ track.id }}', '{{ mmId }}'); return false;">
+             <i class="mdi-content-clear"></i>
+          </a>
+      </td>
+      {% if true %} {# TODO (sfConfig::get('app_videoserv_browser')) #}
+        <td>
+          <a href="#" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_autocomplete', {'id': track.id, 'mmId': mmId, 'preview': 1, 'mod': 'mm'}) }}'); return false;">
+            <i class="mdi-hardware-keyword-return"></i>
+          </a>
+        </td>
+      {% endif %}                                                                                                                                                                                                            
+      {% if true %} {# TODO (sfConfig::get('app_videoserv_browser')) #}
+      <td>
+        <span class="trans_button" onclick="$('#list_picts_{{ track.id}}').toggle()"><i class="mdi-image-camera-alt"></i>
+        <div class="trans_menu" id="list_picts_{{ track.id }}" style="display:none">
+        
+          <div class="mas_info" style="">
+            <div class="trans_button_up"><i class="mdi-image-camera-alt"></i></div>
+            <div class="trans_button_info">{% trans %}Capture frame from{% endtrans %}:</div>
+          </div>
+        
+          <div class="list_options">
+            <ul style="">
+              <li>
+                <a href="#" onclick="$.ajax({
+                                             url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mmId, 'preview': 1, 'numframe': 0}) }}',
+                                             type: 'POST',
+                                             beforeSend: function(){$('#pic_mms_load').show();},
+                                             success: function(response){
+                                                                         $('#pic_mms_load').hide();
+                                                                         $('#pic_mms').html(response);
+                                             }
+                                     });
+                                     return false;">
+                  {% trans %}Auto{% endtrans %}
+                </a>
+              </li>
+              <li>
+                <a href="#" onclick="$.ajax({
+                                             url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mmId, 'preview': 1, 'numframe': '10%'}) }}',
+                                             type: 'POST',
+                                             beforeSend: function(){$('#pic_mms_load').show();},
+                                             success: function(response){
+                                                                         $('#pic_mms_load').hide();
+                                                                         $('#pic_mms').html(response);
+                                             }
+                                     });
+                                     return false;">
+                  {% trans %}10%{% endtrans %}
+                </a>
+              </li>
+              <li>
+                <a href="#" onclick="$.ajax({
+                                             url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mmId, 'preview': 1, 'numframe': '25%'}) }}',
+                                             type: 'POST',
+                                             beforeSend: function(){$('#pic_mms_load').show();},
+                                             success: function(response){
+                                                                         $('#pic_mms_load').hide();
+                                                                         $('#pic_mms').html(response);
+                                             }
+                                     });
+                                     return false;">
+                  {% trans %}25%{% endtrans %}
+                </a>
+              </li>
+              <li>
+                <a href="#" onclick="$.ajax({
+                                             url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mmId, 'preview': 1, 'numframe': '50%'}) }}',
+                                             type: 'POST',
+                                             beforeSend: function(){$('#pic_mms_load').show();},
+                                             success: function(response){
+                                                                         $('#pic_mms_load').hide();
+                                                                         $('#pic_mms').html(response);
+                                             }
+                                     });
+                                     return false;">
+                  {% trans %}50%{% endtrans %}
+                </a>
+              </li>
+              <li>
+                <a href="#" onclick="$.ajax({
+                                             url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mmId, 'preview': 1, 'numframe': '75%'}) }}',
+                                             type: 'POST',
+                                             beforeSend: function(){$('#pic_mms_load').show();},
+                                             success: function(response){
+                                                                         $('#pic_mms_load').hide();
+                                                                         $('#pic_mms').html(response);
+                                             }
+                                     });
+                                     return false;">
+                  {% trans %}75%{% endtrans %}
+                </a>
+              </li>
+              <li>
+                <a href="#" onclick="$.ajax({
+                                             url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mmId, 'preview': 1, 'numframe': '90%'}) }}',
+                                             type: 'POST',
+                                             beforeSend: function(){$('#pic_mms_load').show();},
+                                             success: function(response){
+                                                                         $('#pic_mms_load').hide();
+                                                                         $('#pic_mms').html(response);
+                                             }
+                                     });
+                                     return false;">
+                  {% trans %}90%{% endtrans %}
+                </a>
+              </li>
+              <li class="cancel"><a href="#" onclick="return false;">{% trans %}Cancel{% endtrans %}...</a></li>
+            </ul>
+          </div>
+
+        </div>
+        </span>
+      </td>
+      {% endif %}
+      
+      {% if true %} {# TODO (sfConfig::get('app_videoserv_browser')) #}
+         <td><a href="{{ path('pumukitnewadmin_track_download', {'id': track.id, 'mmId': mmId}) }}" download><img alt="{% trans %}download{% endtrans %}" title="{% trans %}download{% endtrans %}" src="/legacy/images/admin/mbuttons/download_inline.gif"></a></td>
+      {% endif %}     
+
+      {% if track.getTags()|profile|display %}
+      <td>
+        <span class="trans_button" onclick="$('list_perfiles_{{ track.id }}').toggle()"><i class="mdi-navigation-refresh"></i>
+        <div class="trans_menu" id="list_perfiles_{{ track.id }}" style="display:none">
+        
+          <div class="mas_info" style="">
+            <div class="trans_button_up"><i class="mdi-navigation-refresh"></i></div>
+            <div class="trans_button_info">{% trans %}Transcode to profile{% endtrans %}:</div>
+          </div>
+        
+          <div class="list_options">
+            <ul style="">
+              {% for key in not_master_profiles|keys %}
+                <li><a href="#" onclick="new Ajax.Updater('tracks_mms', '{{ path('pumukitnewadmin_track_retranscode', {'id': track.id, 'mmId': mmId, 'profile': key}) }}', {asynchronous:true, evalScripts:true}); return false;">{{ key }}</a></li>
+              {% endfor %}
+              <li class="cancel"><a href="#" onclick="return false;">{% trans %}Cancel{% endtrans %}...</a></li>
+            </ul>        
+          </div>
+
+        </div>
+        </span>
+      </td>
+
+      {% else %}
+
+      <td>        
+        <a title="{% trans %}play{% endtrans %}" href="#" onclick="Shadowbox.open({
+            title:      '{% trans %}Preview{% endtrans %}',
+            content:    '{{ track.getUrl() }}',
+            type:       'flv',
+            height:     480,
+            width:      640
+          }); return false;">
+          <img alt="{% trans %}play{% endtrans %}" title="{% trans %}play{% endtrans %}" src="/legacy/images/admin/mbuttons/play_inline.gif">
+        </a>
+      </td>
+      {% endif %}
+      <td>
+      {% if loop.first %}
+        &nbsp;
+      {% else %}
+        <a href="#" onclick="new Ajax.Updater('tracks_mms', '{# TODO 'files/up?id='.$file->getId().'&mm='.$mmId.'&preview=true' #}', {asynchronous:true, evalScripts:true}); return false;">&#8593;</a>
+      {% endif %}
+      </td>
+      <td>
+      {% if loop.last %}
+        &nbsp;
+      {% else %}
+        <a href="#" onclick="new Ajax.Updater('tracks_mms', '{# TODO 'files/down?id='.$file->getId().'&mm='.$mmId.'&preview=true' #}', {asynchronous:true, evalScripts:true}); return false;">&#8595;</a>
+      {% endif %}
+      </td>
+
+      <td>
+        &nbsp;{{ track.id }} - <strong>{{ track.getTags()|profile }}</strong>
+        {{ track.getDescription() }}
+        ({{ track.getPath()|basename }}/{{ track.getLanguage()|language_name }})
+         - {{ track.getDuration()|duration_string }}
+         - {{ (track.getSize() / 1048576)|number_format(2) }} MB
+         - {# {{ track.getResolutionHor() }}x{{ track.getResolutionVer() }}
+         {% if track.getDisplay() %}{% else %}({% trans %}Hidden{% endtrans %}){% endif %} #}
+      </td>
+    </tr>
+  {% endfor %}
+  <!-- MATTERHORN -->
+  {% if false %} {# TODO (sfConfig::get('app_matterhorn_use') && $oc) #}
+      <tr>
+        <td><ul><li></li><ul></td>
+        <td><a title="{% trans %}Edit Matterhorn video of multimedia object{% endtrans %} {{ oc.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{# TODO 'matterhorn/edit?id=' oc.getId() #}"><img alt="{% trans %}edit{% endtrans %}" title="{% trans %}edit{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif" /></a></td>
+        <td><a title="{% trans %}Information of Matterhorn video from multimedia object{% endtrans %} {{ oc.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{# TODO matterhorn/infomp?id=' oc.id #}"><img alt="{% trans %}info{% endtrans %}" title="{% trans %}info{% endtrans %}" src="/legacy/images/admin/mbuttons/info_inline.gif" /></a></td>
+        <td>
+	      <span class="trans_button" onclick="$('list_picts_{{ oc.id }}').toggle()"><img alt="{% trans %}frame{% endtrans %}" title="{% trans %}frame{% endtrans %}" src="/legacy/images/admin/mbuttons/frame_inline.gif" />
+            <div class="trans_menu" id="list_picts_{{ oc.id }}" style="display:none">
+              <div class="mas_info" style="">
+                <div class="trans_button_up"><img src="/legacy/images/admin/mbuttons/frame_inline.gif" alt="{% trans %}frame{% endtrans %}" /></div>
+	            <div class="trans_button_info">{% trans %}Capture frame from{% endtrans %}:</div>
+              </div>
+              
+              <div class="list_options">
+                <ul style="">
+	              <li><a href="#" onclick="new Ajax.Updater('pic_mms', 'TODO {# 'matterhorn/pic?id='. oc.id .'&preview=true' #}', {onLoading:$("pic_mms_load").show(), asynchronous:true, evalScripts:true}); return false;">{% trans %}Auto{% endtrans %}</a></li>
+	              <li><a href="#" onclick="new Ajax.Updater('pic_mms', 'TODO {# 'matterhorn/pic?id='. oc.id .'&preview=true&numframe=10%' #}', {onLoading:$("pic_mms_load").show(), asynchronous:true, evalScripts:true}); return false;">{% trans %}10%{% endtrans %}</a></li>
+	              <li><a href="#" onclick="new Ajax.Updater('pic_mms', 'TODO {# 'matterhorn/pic?id='. oc.id .'&preview=true&numframe=25%' #}', {onLoading:$("pic_mms_load").show(), asynchronous:true, evalScripts:true}); return false;">{% trans %}25%{% endtrans %}</a></li>
+	              <li><a href="#" onclick="new Ajax.Updater('pic_mms', 'TODO {# 'matterhorn/pic?id='. oc.id .'&preview=true&numframe=50%' #}', {onLoading:$("pic_mms_load").show(), asynchronous:true, evalScripts:true}); return false;">{% trans %}50%{% endtrans %}</a></li>
+	              <li><a href="#" onclick="new Ajax.Updater('pic_mms', 'TODO {# 'matterhorn/pic?id='. oc.id .'&preview=true&numframe=75%' #}', {onLoading:$("pic_mms_load").show(), asynchronous:true, evalScripts:true}); return false;">{% trans %}75%{% endtrans %}</a></li>
+	              <li><a href="#" onclick="new Ajax.Updater('pic_mms', 'TODO {# 'matterhorn/pic?id='. oc.id .'&preview=true&numframe=90%' #}', {onLoading:$("pic_mms_load").show(), asynchronous:true, evalScripts:true}); return false;">{% trans %}90%{% endtrans %}</a></li>
+                  <li class="cancel"><a href="#" onclick="return false;">{% trans %}Cancel{% endtrans %}...</a></li>
+                </ul>
+              </div>
+            </div>
+          </span>
+        </td>
+        
+	    {% if true %} {# TODO (sfConfig::get('app_videoserv_browser')) #}
+	    <td><a target="_blank" href="TODO {# 'matterhorn/download?id='. oc.id #}"><img alt="{% trans %}download{% endtrans %}" title="{% trans %}download{% endtrans %}" src="/legacy/images/admin/mbuttons/download_inline.gif" /></a></td>
+	    <td><a href="#" onclick="new Ajax.Updater('tracks_mms', 'TODO {# 'matterhorn/sbs?id='. oc.id .'&mm='.$mmId.'&preview=true' #}', {asynchronous:true, evalScripts:true}); return false;"><img alt="SbS" title="SbS" src="/legacy/images/admin/mbuttons/use_inline.gif" /></a></td>
+	    {% endif %}
+	    {# deberia ser colspan=4 #}
+	    <td colspan="2">&nbsp;<td>
+        <td>
+          
+        <td>
+          &nbsp;{{ oc.id }} - <strong>Opencast Matterhorn Recording</strong>
+          <a target="_blank" href="{{ oc.getUrl() }}">{{ oc.getMhId() }}</a>
+        </td>
+      </tr>
+    
+  {% endif %}
+  <!-- <tr>
+    <td><ul><li></li><ul></td>
+    <td colspan="9"><?php echo m_link_to(__('nuevo...'), 'files/create?mm='.$mmId, array('title' => __('Crear File')), array('width' => '800')) ?></td>
+  </tr>-->
+  {% if true %} {# TODO (sfConfig::get('app_transcoder_use')) #}
+  <tr>
+    <td><ul><li></li><ul></td>
+    {# TODO real path href 'transcoders/edit?mm='.$mmId #}
+    <td colspan="9"><a title="{% trans %}New master{% endtrans %}" data-toggle="modal" data-dismiss="modal" data-target="myModal" href="{{ path('pumukitnewadmin_track_create', {'id': mmId}) }}">{% trans %}new master{% endtrans %}...</a></td>
+  </tr>
+  {% endif %}
+</tbody></table>
+
+{% if false %} {# TODO ($sf_request->getParameter('preview')) #} {# define update_preview #}
+<script type="text/javascript">
+  update_preview('{{ mmId }}');
+</script>
+{% endif %}
+
+{% if false %} {# TODO (isset($reload_pub_channel)) #}
+<script type="text/javascript">
+    new Ajax.Updater('list_pub_{{ mmId }}', ' TODO {# " . url_for('mms/updatelistpub?id=' . $mmId) . " #}')
+</script>
+{% endif %}
+
+{# TODO
+<?php 
+if (isset($msg_alert)) echo m_msg_alert($msg_alert);
+?>
+#}
