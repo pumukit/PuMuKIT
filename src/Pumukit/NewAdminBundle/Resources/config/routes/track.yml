@@ -1,0 +1,89 @@
+pumukitnewadmin_track_create:
+    pattern: /create/{id}
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.track:createAction
+
+pumukitnewadmin_track_update:
+    pattern: /{id}/update/{mmId}
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.track:updateAction
+
+pumukitnewadmin_track_upload:
+    pattern: /{id}/upload
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.track:uploadAction
+
+pumukitnewadmin_track_delete:
+    pattern: /{id}/delete/{mmId}
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.track:deleteAction
+
+pumukitnewadmin_track_up:
+    pattern: /{id}/up/{mmId}
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.track:upAction
+
+pumukitnewadmin_track_down:
+    pattern: /{id}/down/{mmId}
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.track:downAction
+
+pumukitnewadmin_track_list:
+    pattern: /{id}/list
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.track:listAction
+
+pumukitnewadmin_track_info:
+    pattern: /{id}/info/{mmId}
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.track:infoAction
+
+pumukitnewadmin_track_retry_job:
+    pattern: /{mmId}/retry/{jobId}
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.track:retryJobAction
+
+pumukitnewadmin_track_retry_track:
+    pattern: /{mmId}/retry/{id}
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.track:retryTrackAction
+
+pumukitnewadmin_track_delete_job:
+    pattern: /{mmId}/deletejob
+    methods: [DELETE, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.track:deleteJobAction
+
+pumukitnewadmin_track_autocomplete:
+    pattern: /{id}/autocomplete/{mmId}
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.track:autocompleteAction
+
+pumukitnewadmin_track_pic:
+    pattern: /{mmId}/{id}/pic
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.track:picAction
+
+pumukitnewadmin_track_download:
+    pattern: /{mmId}/{id}/download
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.track:downloadAction
+
+pumukitnewadmin_track_retranscode:
+    pattern: /{mmId}/{id}/{profile}/retranscode
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.track:retranscodeAction

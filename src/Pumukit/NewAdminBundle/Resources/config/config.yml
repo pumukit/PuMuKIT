@@ -42,3 +42,21 @@ sylius_resource:
             classes:
                 model: Pumukit\SchemaBundle\Document\Pic
                 controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectPicController
+        pumukitnewadmin.link:
+            driver: doctrine/mongodb-odm
+            templates: PumukitNewAdminBundle:Link
+            classes:
+                model: Pumukit\SchemaBundle\Document\Link
+                controller: Pumukit\NewAdminBundle\Controller\LinkController
+        pumukitnewadmin.material:
+            driver: doctrine/mongodb-odm
+            templates: PumukitNewAdminBundle:Material
+            classes:
+                model: Pumukit\SchemaBundle\Document\Material
+                controller: Pumukit\NewAdminBundle\Controller\MaterialController
+        pumukitnewadmin.track:
+            driver: doctrine/mongodb-odm
+            templates: PumukitNewAdminBundle:Track
+            classes:
+                model: Pumukit\SchemaBundle\Document\Track
+                controller: Pumukit\NewAdminBundle\Controller\TrackController

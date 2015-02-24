@@ -66,7 +66,7 @@ pumukitadmin_track:
     resource: @PumukitAdminBundle/Resources/config/routes/track.yml
     prefix: /admin/track
 
-pumukit_js:
+pumukitadmin_js:
     pattern: /admin/pumukit2.js
     methods: [GET]
     defaults:

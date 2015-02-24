@@ -1,4 +1,4 @@
-pumukit_js:
+pumukitnewadmin_js:
     pattern: /admin/pumukit2.js
     methods: [GET]
     defaults:
@@ -6,7 +6,7 @@ pumukit_js:
         template: 'PumukitNewAdminBundle::pumukit2.js.twig'
         _format: js
 
-pumukit_css:
+pumukitnewadmin_css:
     pattern: /admin/pumukit2.css
     methods: [GET]
     defaults:
@@ -45,3 +45,15 @@ pumukitnewadmin_mmspic:
 pumukitnewadmin_tag:
     resource: @PumukitNewAdminBundle/Resources/config/routes/tag.yml
     prefix: /admin/tag
+
+pumukitnewadmin_link:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/link.yml
+    prefix: /admin/link
+
+pumukitnewadmin_material:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/material.yml
+    prefix: /admin/material
+
+pumukitnewadmin_track:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/track.yml
+    prefix: /admin/track

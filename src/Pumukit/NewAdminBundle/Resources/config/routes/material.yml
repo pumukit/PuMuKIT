@@ -1,0 +1,41 @@
+pumukitnewadmin_material_create:
+    pattern: /create/{id}
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.material:createAction
+
+pumukitnewadmin_material_update:
+    pattern: /{id}/update/{mmId}
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.material:updateAction
+
+pumukitnewadmin_material_upload:
+    pattern: /{id}/upload
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.material:uploadAction
+
+pumukitnewadmin_material_delete:
+    pattern: /{id}/delete/{mmId}
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.material:deleteAction
+
+pumukitnewadmin_material_up:
+    pattern: /{id}/up/{mmId}
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.material:upAction
+
+pumukitnewadmin_material_down:
+    pattern: /{id}/down/{mmId}
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.material:downAction
+
+pumukitnewadmin_material_list:
+    pattern: /{id}/list
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.material:listAction
