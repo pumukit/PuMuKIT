@@ -21,17 +21,13 @@
 
     <div class="row">
       <div class="col-md-3">
-	    <div id="remember_save_mm" class="alert alert-dismissable alert-danger" style="display:none;">
-          {% trans %}Press OK for changes to take effect{% endtrans %}
+	    <div>
+          <span id="remember_save_mm" class="alert alert-dismissable alert-danger" style="display:none;">{% trans %}Press OK for changes to take effect{% endtrans %}</span> &nbsp;
         </div>
       </div>
-      <div class="col-md-2 col-md-offset-3">
+      <div class="col-md-9 text-right">
         <span id="mm_save_error" style="display:none; color:red;">{% trans %}Saved ERROR{% endtrans %}</span>
-      </div>
-      <div class="col-md-2">
         <span id="mm_save_ok" style="display:none; color:indigo;">{% trans %}Saved OK{% endtrans %}</span>
-      </div>
-      <div class="col-md-2 text-right">
         <button type="button" class="btn btn-default btn-raised" onclick="return procesaReset();">{% trans %}Cancel{% endtrans %}</button>
         <button type="submit" class="btn btn-pumukit btn-raised" onclick="return procesaOk();">{% trans %}OK{% endtrans %}</button>
       </div>
