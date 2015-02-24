@@ -105,7 +105,7 @@ class Tag
   private $parent;
 
   /**
-   * @MongoDB\ReferenceMany(targetDocument="Tag", mappedBy="parent")
+   * @MongoDB\ReferenceMany(targetDocument="Tag", mappedBy="parent", sort={"cod": 1})
    */
   private $children = array();
 
