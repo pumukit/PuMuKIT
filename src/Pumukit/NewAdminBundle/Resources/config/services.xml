@@ -5,6 +5,11 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
   <services>
+
+    <service id="pumukitnewadmin.kernelexception.listener" class="Pumukit\NewAdminBundle\Listener\ExceptionListener">
+      <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" priority="255" />
+    </service>
+
     <service id="pumukitnewadmin.form.type.person" class="Pumukit\NewAdminBundle\Form\Type\PersonType">
       <tag name="form.type" alias="pumukitnewadmin_person" />
     </service>

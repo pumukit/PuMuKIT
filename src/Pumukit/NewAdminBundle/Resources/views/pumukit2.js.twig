@@ -566,3 +566,9 @@ function comprobar_date(date, re){
 $(document).ajaxSuccess(function() {
   $.material.init();
 });
+
+$(document).ajaxError(function(event, xhr, settings) {
+  if (403 == xhr.status) {
+    window.location.href = "{{ path('fos_user_security_login') }}";
+  }
+});
