@@ -28,18 +28,16 @@
       </fieldset>
 
       <div class="modal-footer">
-        <button type="submit" class="btn btn-pumukit btn-raised" onclick="return comprobar_form_url($('url').value)">{% trans %}Save changes{% endtrans %}</button>
+        <button type="submit" class="btn btn-pumukit btn-raised" onclick="return test_form_url($('#url').val())">{% trans %}Save changes{% endtrans %}</button>
       </div>
     </form>
   </div>
   <div style="clear:both"></div>
 
   <div id="tv_admin_container">
-
     <form method="post" enctype="multipart/form-data" target="iframeUpload" action="{{ path('pumukitnewadmin_'~resource_name~'pic_upload', {'id': resource.id}) }}">
       <input type="hidden" name="type" id="type" value="url">
       <input type="hidden" name="{{ resource_name }}" id="{{ resource_name }}" value="{{ resource.id }}">
-
       <fieldset>
         <div class="form-group">
 	      <label for="file">{% trans %}Add a file{% endtrans %}:</label>
@@ -49,9 +47,8 @@
         </div>
         <iframe name="iframeUpload" style="display:none" src=""></iframe>
       </fieldset>
-
       <div class="modal-footer">
-        <button type="submit" class="btn btn-pumukit btn-raised" onclick="if($('file').value=='') { alert('{% trans %}Select a file on first place. Thank you.{% endtrans %}');return false; }">{% trans %}Add{% endtrans %}</button>
+        <button type="submit" class="btn btn-pumukit btn-raised" onclick="if($('#file').val()==''){window.alert('{% trans %}Select a file on first place. Thank you.{% endtrans %}');return false;}">{% trans %}Add{% endtrans %}</button>
       </div>
     </form>
   </div>
@@ -74,10 +71,10 @@
               <div class="wrap1">
                 <div class="wrap2">
                   <div class="wrap3">
-		            <a href="#" datat-dismiss="modal" onclick="$.ajax({
-                                                                       url: '{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id, 'picUrl': pic_url}) }}',
-                                                                       type: 'GET',
-                                                                       success: function(response){$('#pic_{{ resource_name }}').html(response);}
+		            <a href="#" data-dismiss="modal" onclick="$.ajax({
+                                                                      url: '{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id, 'picUrl': pic_url}) }}',
+                                                                      type: 'GET',
+                                                                      success: function(response){$('#pic_{{ resource_name }}').html(response);}
                                                                });
                                                                return false;">
                       <img src="{{ pic_url }}" alt="{{ pic_url|split('/')|last }}" height="82" width="100"/>

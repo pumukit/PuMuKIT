@@ -642,3 +642,22 @@ $(function() {
 
 });
 
+/**
+ * Test from URL
+ */
+test_form_url = function(url){
+    if (test_url_generation(url)){
+        window.alert('{% trans %}The given URL is not valid{% endtrans %}.');
+        return false;
+    }
+    $('#myModal').modal('hide');
+    return true;
+}
+
+/**
+ * Test URL generation
+ */
+test_url_generation = function(url){
+    var re=/^\w+:\/\/\w+(\.\w+)*/;
+    return !re.test(url);
+}
