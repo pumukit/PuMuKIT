@@ -158,35 +158,29 @@
       {% endif %}
       
       {% if true %} {# TODO (sfConfig::get('app_videoserv_browser')) #}
-         <td><a href="{{ path('pumukitnewadmin_track_download', {'id': track.id, 'mmId': mmId}) }}" download><img alt="{% trans %}download{% endtrans %}" title="{% trans %}download{% endtrans %}" src="/legacy/images/admin/mbuttons/download_inline.gif"></a></td>
-      {% endif %}     
+         <td>
+           <a href="{{ path('pumukitnewadmin_track_download', {'id': track.id, 'mmId': mmId}) }}" download>
+             <i class="mdi-file-file-download"></i>
+           </a>
+         </td>
+      {% endif %}
 
       {% if track.getTags()|profile|display %}
       <td>
-        <span class="trans_button" onclick="$('list_perfiles_{{ track.id }}').toggle()"><i class="mdi-navigation-refresh"></i>
-        <div class="trans_menu" id="list_perfiles_{{ track.id }}" style="display:none">
-        
-          <div class="mas_info" style="">
-            <div class="trans_button_up"><i class="mdi-navigation-refresh"></i></div>
-            <div class="trans_button_info">{% trans %}Transcode to profile{% endtrans %}:</div>
-          </div>
-        
-          <div class="list_options">
-            <ul style="">
-              {% for key in not_master_profiles|keys %}
-                <li><a href="#" onclick="new Ajax.Updater('tracks_mms', '{{ path('pumukitnewadmin_track_retranscode', {'id': track.id, 'mmId': mmId, 'profile': key}) }}', {asynchronous:true, evalScripts:true}); return false;">{{ key }}</a></li>
-              {% endfor %}
-              <li class="cancel"><a href="#" onclick="return false;">{% trans %}Cancel{% endtrans %}...</a></li>
-            </ul>        
-          </div>
-
+        <div class="dropdown">
+          <i class="mdi-navigation-refresh" id="list_profiles_{{ track.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="list_profiles_{{ track.id }}">
+            <li><strong>{% trans %}Transcode to profile{% endtrans %}:</strong></li>
+            {% for key in not_master_profiles|keys %}
+            <li><a href="#" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_retranscode', {'id': track.id, 'mmId': mmId, 'profile': key}) }}'); return false;">{{ key }}</a></li>
+            {% endfor %}
+            <li class="cancel"><a href="#" onclick="return false;">{% trans %}Cancel{% endtrans %}...</a></li>
+          </ul>        
         </div>
-        </span>
       </td>
-
       {% else %}
-
-      <td>        
+      <td>
+        {# TODO shadowbox
         <a title="{% trans %}play{% endtrans %}" href="#" onclick="Shadowbox.open({
             title:      '{% trans %}Preview{% endtrans %}',
             content:    '{{ track.getUrl() }}',
@@ -195,6 +189,10 @@
             width:      640
           }); return false;">
           <img alt="{% trans %}play{% endtrans %}" title="{% trans %}play{% endtrans %}" src="/legacy/images/admin/mbuttons/play_inline.gif">
+        </a>
+        #}
+        <a data-toggle="modal" data-target="myModal" href="{{ path('pumukitnewadmin_track_play', {'id': track.id, 'mmId': mmId}) }}">
+          <i class="mdi-av-play-arrow"></i>
         </a>
       </td>
       {% endif %}
@@ -276,7 +274,7 @@
   <tr>
     <td><ul><li></li><ul></td>
     {# TODO real path href 'transcoders/edit?mm='.$mmId #}
-    <td colspan="9"><a title="{% trans %}New master{% endtrans %}" data-toggle="modal" data-dismiss="modal" data-target="myModal" href="{{ path('pumukitnewadmin_track_create', {'id': mmId}) }}">{% trans %}new master{% endtrans %}...</a></td>
+    <td colspan="9"><a data-toggle="modal" data-target="#myModal" href="{{ path('pumukitnewadmin_track_create', {'id': mmId}) }}">{% trans %}new master{% endtrans %}...</a></td>
   </tr>
   {% endif %}
 </tbody></table>
