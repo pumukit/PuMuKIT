@@ -47,7 +47,14 @@ window.submit_delete_mms = function(id)
     if (window.confirm("{% trans %}Are you sure you want to delete this multimedia object?{% endtrans %}")){
         var url = "{{ path('pumukitnewadmin_mms_delete', {'id': '__id__'})|raw }}";
         var message = '{% trans %}Multimedia Object deleted.{% endtrans %}';
-        $('#list_mms').load(url.replace('__id__', id), {parameters: {'_method': 'DELETE'}}, success(message));
+        $.ajax({
+                url: url.replace('__id__', id),
+                type: 'POST',
+                success: function(response){
+                                            $('#list_mms').html(response);
+                                            success(message);
+                }
+        });
     }
 }
 
@@ -642,3 +649,22 @@ $(function() {
 
 });
 
+/**
+ * Test from URL
+ */
+test_form_url = function(url){
+    if (test_url_generation(url)){
+        window.alert('{% trans %}The given URL is not valid{% endtrans %}.');
+        return false;
+    }
+    $('#myModal').modal('hide');
+    return true;
+}
+
+/**
+ * Test URL generation
+ */
+test_url_generation = function(url){
+    var re=/^\w+:\/\/\w+(\.\w+)*/;
+    return !re.test(url);
+}

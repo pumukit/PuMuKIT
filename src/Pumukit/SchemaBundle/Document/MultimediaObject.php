@@ -787,6 +787,23 @@ class MultimediaObject
     }
 
     /**
+     * Contains tag with cod
+     *
+     * @param  string  $tagCod
+     * @return boolean TRUE if this multimedia_object contained the specified tag, FALSE otherwise.
+     */
+    public function containsTagWithCod($tagCod)
+    {
+        foreach ($this->tags as $tag) {
+            if ($tag->getCod() == $tagCod) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Contains all tags
      * The original string tag logic used array_intersect and count to check it.
      * This function uses doctrine2 arrayCollection contains function instead.
