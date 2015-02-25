@@ -5,6 +5,7 @@
         <title>{% block title %}Pumukit2 admin{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        {% block stylesheets %}
         <!-- Twitter Bootstrap -->
         <link href="{{ asset('/bundles/pumukitnewadmin/css/bootstrap.min.css') }}" rel="stylesheet">
 
@@ -17,34 +18,15 @@
 
         <!-- Pumukit CSS modifications -->
         <link href="{{ path('pumukitnewadmin_css') }}" rel="stylesheet">
-
-        <style>
-      * {
-        box-sizing: border-box;
-      }
-      .header-panel {
-        background-color: #ff5722;
-        z-index: 3;
-      }        
-        </style>
-
-
-        {% block stylesheets %}
-
         {% endblock %}
-        {% block javascripts %}
 
+        {% block javascripts %}
         <script src="{{ asset('/bundles/pumukitnewadmin/js/jquery-1.10.2.min.js') }}"></script>
         <script src="{{ asset('/bundles/pumukitnewadmin/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('/bundles/pumukitnewadmin/js/ripples.min.js') }}"></script>
         <script src="{{ asset('/bundles/pumukitnewadmin/js/material.min.js') }}"></script>
         <script src="{{ asset('/bundles/pumukitnewadmin/js/snackbar.min.js') }}"></script>
         <script src="{{ asset('/bundles/pumukitnewadmin/js/jquery.nouislider.min.js') }}"></script>
-        <script>
-            $(function() {
-                $.material.init();
-            });
-        </script>
         <script type="text/javascript" src="{{ path('pumukitnewadmin_js') }}"></script>
         <script src="{{ asset('/bundles/pumukitnewadmin/js/hinclude.js') }}"></script>
         {% endblock %}

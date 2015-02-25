@@ -35,7 +35,7 @@ TODO <?php //include_partial('search', array('years' => $sf_data->getRaw('years'
       {% endif %}
 
       {% for mm in mms %}
-      <tr>
+      <tr style="cursor: pointer" {% if(app.session.get('admin/mms/id') == mm.id ) %} class="success" {% endif %}>
         <td>
           <div class="checkbox">
             <label>
