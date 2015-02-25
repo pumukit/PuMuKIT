@@ -94,7 +94,7 @@ pumukitnewadmin_person_update_relation:
 
 pumukitnewadmin_person_delete_relation:
     pattern: /{id}/{roleId}/{mmId}/delete_relation
-    methods: [POST, DELETE]
+    methods: [DELETE]
     defaults:
         _controller: pumukitnewadmin.controller.person:deleteRelationAction
 

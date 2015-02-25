@@ -30,7 +30,7 @@ pumukitnewadmin_mmspic_batch_delete:
 
 pumukitnewadmin_mmspic_delete:
     pattern: /{id}/delete
-    methods: [DELETE, POST]
+    methods: [DELETE]
     defaults:
         _controller: pumukitnewadmin.controller.mmspic:deleteAction
 

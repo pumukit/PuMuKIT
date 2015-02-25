@@ -42,11 +42,9 @@ pumukitnewadmin_mms_batch_delete:
 
 pumukitnewadmin_mms_delete:
     pattern: /{id}/delete
-    methods: [DELETE, POST]
+    methods: [DELETE]
     defaults:
         _controller: pumukitnewadmin.controller.mms:deleteAction
-        _sylius:
-            redirect: pumukitnewadmin_mms_index
 
 pumukitnewadmin_mms_copy:
     pattern: /{id}/copy

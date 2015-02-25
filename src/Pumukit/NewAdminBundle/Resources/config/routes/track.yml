@@ -60,7 +60,7 @@ pumukitnewadmin_track_retry_track:
 
 pumukitnewadmin_track_delete_job:
     pattern: /{mmId}/deletejob
-    methods: [DELETE, POST]
+    methods: [DELETE]
     defaults:
         _controller: pumukitnewadmin.controller.track:deleteJobAction
 
@@ -87,3 +87,9 @@ pumukitnewadmin_track_retranscode:
     methods: [GET, PUT, POST]
     defaults:
         _controller: pumukitnewadmin.controller.track:retranscodeAction
+
+pumukitnewadmin_track_play:
+    pattern: /{id}/play/{mmId}
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.track:playAction
