@@ -7,8 +7,28 @@
   </div>
   #}
 
-  <div class="background_id">
-    {% trans %}Multimedia Object{% endtrans %} {{ mm.getId() }}
+  <div class="row">
+    <div class="background_id col-md-6">
+      <form class="form-horizontal">
+        <fieldset>
+          <legend>Info</legend>
+          <div class="form-group">
+            <label for="inputMMId" class="col-lg-2 control-label">Id:</label>
+            <div class="col-lg-10 input-group">
+              <input type="text" class="form-control" id="inputMMId" readonly onclick="select()" value="{{ mm.id }}">
+            </div>
+          </div>
+          {# TODO add info: iframe, url...
+          <div class="form-group">
+            <label for="inputMMId" class="col-lg-2 control-label">IFRAME:</label>
+            <div class="col-lg-10 input-group">
+              <input type="text" class="form-control" id="inputMMId" readonly onclick="select()" value="TODO">
+            </div>
+          </div>
+          #}
+        </fieldset>
+      </form>
+    </div>
   </div>
 
   <div role="tabpanel">
