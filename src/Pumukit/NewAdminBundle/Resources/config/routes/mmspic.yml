@@ -21,7 +21,7 @@ pumukitnewadmin_mmspic_update:
         _controller: pumukitnewadmin.controller.mmspic:updateAction
 
 pumukitnewadmin_mmspic_batch_delete:
-    pattern: /delete
+    pattern: /batch_delete
     methods: [DELETE]
     defaults:
         _controller: pumukitnewadmin.controller.mmspic:batchDeleteAction
@@ -29,8 +29,8 @@ pumukitnewadmin_mmspic_batch_delete:
             redirect: pumukitnewadmin_mms_index
 
 pumukitnewadmin_mmspic_delete:
-    pattern: /{id}
-    methods: [DELETE]
+    pattern: /{id}/delete
+    methods: [DELETE, POST]
     defaults:
         _controller: pumukitnewadmin.controller.mmspic:deleteAction
 
@@ -50,7 +50,7 @@ pumukitnewadmin_mmspic_down:
 
 
 pumukitnewadmin_mmspic_list:
-    pattern: /{id}
+    pattern: /{id}/list
     methods: [GET]
     defaults:
         _controller: pumukitnewadmin.controller.mmspic:listAction
