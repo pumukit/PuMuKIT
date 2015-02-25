@@ -655,3 +655,11 @@ test_url_generation = function(url){
     var re=/^\w+:\/\/\w+(\.\w+)*/;
     return !re.test(url);
 }
+
+comprobar_form_file_nmb = function(file){
+    if (file == ""){
+	$('#error_file').show();
+	return false;
+    }
+    return true;
+}
