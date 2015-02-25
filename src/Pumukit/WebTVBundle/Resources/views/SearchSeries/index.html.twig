@@ -1,0 +1,9 @@
+{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+
+{% block body %}
+	<h1 id="index_h1">Search</h1>
+	{% include 'PumukitWebTVBundle:SearchSeries:filters_series.html.twig' %}
+	<a href="/searchmultimediaobjects">Search by multimedia objects</a>
+	{% include 'PumukitWebTVBundle:SearchSeries:series_found.html.twig' %}
+	{% include 'PumukitWebTVBundle:SearchSeries:pager.html.twig' %}
+{% endblock %}

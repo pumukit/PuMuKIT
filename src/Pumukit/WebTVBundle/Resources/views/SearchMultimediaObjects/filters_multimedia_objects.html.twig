@@ -4,57 +4,60 @@
 	<tr>
 	
 		<!--SEARCH by term-->
-		<td style="width:100%; float:left;">
-        	<input class="box_lupa" style="width: 95%; height: 30px" placeholder="Búsqueda..." name="search" value="" maxlength="100" type="text">
+		<td style="width:33%; float:left;">
+			<div>&nbsp;Search:</div>
+        	<input class="box_lupa" style="width: 90%; height: 30px" placeholder="" name="search" value="" maxlength="100" type="text">
         	<input type="image" src="{{asset('/bundles/pumukitwebtv/images/lupa_buscador.png')}}" alt="Enviar parámetros de búsqueda" style="position: relative; top: 1px; right: 22px;">
       		<noscript>&lt;input type="submit" name="commit" value="go" /&gt;</noscript>
   		</td>
 
-		<!--Selected TAGs-->
-		<td style="width:20%; float:left">
-    	<div>&nbsp;Tags</div>
-    	<select name="tags" style="width: 90%" onchange="Javascript:this.form.submit();">
-    		<option {% if tag_found == "" %} selected="selected" {% endif %}>All</option>
-			{% for tag in tags %}
-    			<option {% if tag_found == tag.getTitle() %} selected="selected" {% endif %}>{{ tag.getTitle() }}</option>
-			{% endfor %}
-		</select>
-		</td>
-
-		<!--Selected TYPE-->
-		<td style="width:20%; float:left">
-    	<div>&nbsp;Video / Audio</div>
-    	<select name="type" style="width: 90%" onchange="Javascript:this.form.submit();">
-    		<option {% if type_found == "" %} selected="selected" {% endif %}>All</option>
-			<option {% if type_found == "Video" %} selected="selected" {% endif %}>Video</option>
-			<option {% if type_found == "Audio" %} selected="selected" {% endif %}>Audio</option>
-		</select>
-		</td>
-
-		<!--Selected DURATION-->
-		<td style="width:20%; float:left">
-    	<div>&nbsp;Duration:</div>
-    	<select name="duration" style="width: 90%" onchange="Javascript:this.form.submit();">
-    		<option {% if duration_found == "" %} selected="selected" {% endif %}>All</option>
-			<option {% if duration_found == "Up to 5 minutes" %} selected="selected" {% endif %}>Up to 5 minutes</option>
-			<option {% if duration_found == "Up to 10 minutes" %} selected="selected" {% endif %}>Up to 10 minutes</option>
-			<option {% if duration_found == "Up to 30 minutes" %} selected="selected" {% endif %}>Up to 30 minutes</option>
-			<option {% if duration_found == "Up to 60 minutes" %} selected="selected" {% endif %}>Up to 60 minutes</option>
-			<option {% if duration_found == "More than 60 minutes" %} selected="selected" {% endif %}>More than 60 minutes</option>
-		</select>
-		</td>
-
-		<!--Input START DATE-->
-		<td style="width:20%; float:left">
+  		<!--Input START DATE-->
+		<td style="width:33%; float:left">
 			<div>&nbsp;Start date:</div>
-        	<input name="start" type='text' class="form-control" id='datetimepicker1' style="width: 90%; height: 30px;" {% if start_found is not empty %} value="{{ start_found }}" {% endif %}/>
+        	<input name="start" type='text' class="form-control" id='datetimepicker1' style="width: 90%; height: 30px; font-size: inherit; border-radius: 4px;" {% if start_found is not empty %} value="{{ start_found }}" {% endif %}/>
     	</td>
 
     	<!--Input END DATE-->
-    	<td style="width:20%; float:left">
+    	<td style="width:33%; float:left">
 			<div>&nbsp;Finish date:</div>
-        	<input name="end" type='text' class="form-control" id='datetimepicker2' style="width: 90%; height: 30px;" {% if end_found is not empty %} value="{{ end_found }}" {% endif %}/>
+        	<input name="end" type='text' class="form-control" id='datetimepicker2' style="width: 90%; height: 30px; font-size: inherit; border-radius: 4px;" {% if end_found is not empty %} value="{{ end_found }}" {% endif %}/>
     	</td>
+
+		<!--Selected TAGs-->
+		<td style="width:33%; float:left">
+    		<div>&nbsp;Tags</div>
+    		<select name="tags" style="width: 90%; margin-bottom: 10px;" onchange="Javascript:this.form.submit();">
+    			<option {% if tag_found == "" %} selected="selected" {% endif %}>All</option>
+				{% for tag in tags %}
+					<!--{% if tag.getTitle() != ""  %}-->
+    					<option {% if tag_found == tag.getTitle() %} selected="selected" {% endif %}>{{ tag.getTitle() }}</option>
+					<!--{% endif %}-->
+				{% endfor %}
+			</select>
+		</td>
+
+		<!--Selected TYPE-->
+		<td style="width:33%; float:left">
+    		<div>&nbsp;Video / Audio</div>
+    		<select name="type" style="width: 90%; margin-bottom: 10px;" onchange="Javascript:this.form.submit();">
+    			<option {% if type_found == "" %} selected="selected" {% endif %}>All</option>
+				<option {% if type_found == "Video" %} selected="selected" {% endif %}>Video</option>
+				<option {% if type_found == "Audio" %} selected="selected" {% endif %}>Audio</option>
+			</select>
+		</td>
+
+		<!--Selected DURATION-->
+		<td style="width:33%; float:left">
+    		<div>&nbsp;Duration:</div>
+    		<select name="duration" style="width: 90%; margin-bottom: 10px;" onchange="Javascript:this.form.submit();">
+    			<option {% if duration_found == "" %} selected="selected" {% endif %}>All</option>
+				<option {% if duration_found == "Up to 5 minutes" %} selected="selected" {% endif %}>Up to 5 minutes</option>
+				<option {% if duration_found == "Up to 10 minutes" %} selected="selected" {% endif %}>Up to 10 minutes</option>
+				<option {% if duration_found == "Up to 30 minutes" %} selected="selected" {% endif %}>Up to 30 minutes</option>
+				<option {% if duration_found == "Up to 60 minutes" %} selected="selected" {% endif %}>Up to 60 minutes</option>
+				<option {% if duration_found == "More than 60 minutes" %} selected="selected" {% endif %}>More than 60 minutes</option>
+			</select>
+		</td>
 
 		<!--RESET los filtros a los valores por defecto y actualizamos los objetos multimedia-->
 		<td style="width:90px; float:left">

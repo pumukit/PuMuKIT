@@ -1,0 +1,45 @@
+<form id="form_buscador" name="busqueda" method="get" action="/searchseries">
+<table style="width:100%;">
+	<tbody>
+	<tr>
+	
+		<!--SEARCH by term-->
+		<td style="width:33%; float:left;">
+			<div>&nbsp;Search:</div>
+        	<input class="box_lupa" style="width: 90%; height: 30px" placeholder="" name="search" value="" maxlength="100" type="text">
+        	<input type="image" src="{{asset('/bundles/pumukitwebtv/images/lupa_buscador.png')}}" alt="Enviar parámetros de búsqueda" style="position: relative; top: 1px; right: 22px;">
+      		<noscript>&lt;input type="submit" name="commit" value="go" /&gt;</noscript>
+  		</td>
+
+  		<!--Input START DATE-->
+		<td style="width:33%; float:left">
+			<div>&nbsp;Start date:</div>
+        	<input name="start" type='text' class="form-control" id='datetimepicker1' style="width: 90%; height: 30px; font-size: inherit; border-radius: 4px;" {% if start_found is not empty %} value="{{ start_found }}" {% endif %}/>
+    	</td>
+
+    	<!--Input END DATE-->
+    	<td style="width:33%; float:left">
+			<div>&nbsp;Finish date:</div>
+        	<input name="end" type='text' class="form-control" id='datetimepicker2' style="width: 90%; height: 30px; font-size: inherit; border-radius: 4px;" {% if end_found is not empty %} value="{{ end_found }}" {% endif %}/>
+    	</td>
+
+		<!--RESET los filtros a los valores por defecto y actualizamos los objetos multimedia-->
+		<td style="width:90px; float:left">
+    		<div>Eliminar filtros</div>
+      		<input type="button" onclick="window.location.href=window.location.pathname" name="filter" value="Reset" class="btn" />
+  		</td>
+
+    	<script type="text/javascript">
+      	$(function() {
+        	$( "#datetimepicker1" ).datetimepicker({viewMode: 'years', format: 'DD/MM/YYYY'});
+        	$( "#datetimepicker1" ).val("All");
+        	$( "#datetimepicker2" ).datetimepicker({viewMode: 'years', format: 'DD/MM/YYYY'});
+        	$( "#datetimepicker2" ).val("All");
+     	});
+    	</script>
+
+	</tr>
+
+</tbody>
+</table>
+</form>
