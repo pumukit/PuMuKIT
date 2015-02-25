@@ -508,6 +508,12 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $mm->removeTag($tag1);
         $this->assertFalse($mm->containsTag($tag1));
 
+        $this->assertFalse($mm->containsTagWithCod($tag1->getCod()));
+        $mm->addTag($tag1);
+        $this->assertTrue($mm->containsTagWithCod($tag1->getCod()));
+        $mm->removeTag($tag1);
+        $this->assertFalse($mm->containsTagWithCod($tag1->getCod()));
+
         //Repeat Tag
         $this->assertFalse($mm->containsTag($tag1));
         $mm->addTag($tag1);

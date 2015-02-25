@@ -1,8 +1,9 @@
+{#
 <div id="faceted_search" style="width: 100%">
-{# TODO <?php //include_partial('search', array('years' => $sf_data->getRaw('years'),
+TODO <?php //include_partial('search', array('years' => $sf_data->getRaw('years'),
       //                                'genres' => $sf_data->getRaw('genres'))) ?>
-#}
 </div>
+#}
 
 <div class="table-responsive well" style="overflow:visible;">
   <table class="table table-striped table-hover">
@@ -16,10 +17,6 @@
           </div>
         </th>
         <th colspan="6" width="5%"></th>
-        {# TODO <?php if(sfConfig::get('app_mail_use')):?> #}
-        {% if false %}
-        <th width="2%"></th>
-        {% endif %}
         <th width="1%">{% trans %}Audio/Video{% endtrans %}</th>
         <th width="1%">{% trans %}Img{% endtrans %}</th>
         <th width="1%">{% trans %}Id{% endtrans %}</th>
@@ -31,9 +28,9 @@
     </thead>
 
     <tbody>
-      {% if (0 == mms|length) %} {# TODO style of centered text #}
+      {% if (0 == mms|length) %} {# TODO style of centered text, better way to do it? #}
       <div style="position: absolute; top: 310px; left: 30%; font-size: 20px; width: 30%; font-weight: bold;">
-        {% trans %}There are no multimedia objects with those values.{% endtrans %}
+         {% trans %}There are no multimedia objects with those values.{% endtrans %}
       </div>
       {% endif %}
 
@@ -47,11 +44,10 @@
           </div>
         </td>
         <td>
-	      <img alt="{{ mm.status }}" title="{% trans %}status{% endtrans %}" class="miniTag" id="table_mms_status_{{ mm.id }}" {# TODO src="/legacy/images/admin/bbuttons/mm{{ mm.status }}_inline.gif" #}>
+          <i id="table_mms_status_{{ mm.id }}" class="{{ mm.status|status_icon }}"></i>
         </td>
         <td>
-	      {# TODO define mm.announce #}
-	      {{ true?'<span style="color: blue" title="">A</span>':'&nbsp;' }}
+	      {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-editor-format-color-text">':'&nbsp;' }}
         </td> 
         <td>
           <a href="#" onclick="window.submit_delete_mms('{{ mm.id }}'); return false;">
@@ -61,17 +57,11 @@
         <td>
 	      {% include 'PumukitNewAdminBundle:MultimediaObject:updatemenu.html.twig' with {'mm': mm} %}
         </td>
-        {# TODO <?php if(sfConfig::get('app_mail_use')):?> #}
-        {% if false %}
-        <td>
-          {# TODO <?php include_partial("mms/edit_announce", array('mm' => $mm))?> #}
-        </td>
-        {% endif %}
         <td>
 	      {% if mms.getCurrentPage() != 1 or not loop.first %}
 	      {% spaceless %}
 	      <a href="{{ path('pumukitnewadmin_mms_down', {'id': mm.id}) }}" title="{% trans %}Move one position up{% endtrans %}">&#8593;</a>
-	      <a href="{{ path('pumukitnewadmin_mms_bottom', {'id': mm.id}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}">&#8657;</a>
+	      <a href="{{ path('pumukitnewadmin_mms_bottom', {'id': mm.id}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}"><i class="mdi-editor-vertical-align-top"></i></a>
 	      {% endspaceless %}
 	      {% endif %}
         </td>
@@ -79,7 +69,7 @@
 	      {% if mms.getCurrentPage() == mms.getNbPages() and not loop.last %}
 	      {% spaceless %}
  	    <a href="{{ path('pumukitnewadmin_mms_up', {'id': mm.id}) }}" title="{% trans %}Move one position down{% endtrans %}">&#8595;</a>
-	    <a href="{{ path('pumukitnewadmin_mms_top', {'id': mm.id}) }}" title="{% trans %}Move to the end of the list{% endtrans %}">&#8659;</a>
+	    <a href="{{ path('pumukitnewadmin_mms_top', {'id': mm.id}) }}" title="{% trans %}Move to the end of the list{% endtrans %}"><i class="mdi-editor-vertical-align-bottom"></i></a>
 	    {% endspaceless %}
 	    {% endif %}
         </td>
@@ -119,21 +109,21 @@
       {% endfor %}
       {% if mms|length < 11 %}
       {% for i in 0..(11-mms|length) %}
-      <tr class="tv_admin_row_{{ (loop.index + mms|length) % 2 }}">
-	    <td style="height: 23px; padding: 0.2%;"></td>
-        <td style="padding: 0.2%;"></td>
-        <td style="padding: 0.2%;"></td>
-        <td style="padding: 0.2%;"></td>
-        <td style="padding: 0.2%;"></td>
-        <td style="padding: 0.2%;"></td>
-        <td style="padding: 0.2%;"></td>
-        <td style="padding: 0.2%;"></td>
-        <td style="padding: 0.2%;"></td>
-        <td style="padding: 0.2%;"></td>
-        <td style="padding: 0.2%;"></td>
-        <td style="padding: 0.2%;"></td>
-        <td style="padding: 0.2%;"></td>
-        <td style="padding: 0.2%;"></td>
+      <tr>
+	    <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
       </tr>
     {% endfor %}
   {% endif %}

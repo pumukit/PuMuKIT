@@ -4,6 +4,7 @@ namespace Pumukit\NewAdminBundle\Twig;
 
 use Symfony\Component\Intl\Intl;
 use Pumukit\EncoderBundle\Services\ProfileService;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class PumukitAdminExtension extends \Twig_Extension
 {
@@ -38,6 +39,7 @@ class PumukitAdminExtension extends \Twig_Extension
                      new \Twig_SimpleFilter('display', array($this, 'getDisplay')),
                      new \Twig_SimpleFilter('duration_string', array($this, 'getDurationString')),
                      new \Twig_SimpleFilter('language_name', array($this, 'getLanguageName')),
+                     new \Twig_SimpleFilter('status_icon', array($this, 'getStatusIcon')),
                      );
     }
 
@@ -113,6 +115,37 @@ class PumukitAdminExtension extends \Twig_Extension
     public function getLanguageName($code)
     {
         return $this->languages[$code];
+    }
+
+    /**
+     * Get status icon
+     *
+     * @param integer $status
+     * @return string
+     */
+    public function getStatusIcon($status)
+    {
+        $iconClass = "mdi-alert-warning";
+
+        switch ($status) {
+            case MultimediaObject::STATUS_NORMAL:
+                $iconClass = "mdi-device-gps-fixed";
+                break;
+            case MultimediaObject::STATUS_BLOQ:
+                $iconClass = "mdi-device-signal-wifi-off";
+                break;
+            case MultimediaObject::STATUS_HIDE:
+                $iconClass = "mdi-device-wifi-lock";
+                break;
+            case MultimediaObject::STATUS_NEW:
+                $iconClass = "mdi-device-wifi-tethering";
+                break;
+            case MultimediaObject::STATUS_PROTOTYPE:
+                $iconClass = "mdi-device-storage";
+                break;
+        }
+
+        return $iconClass;
     }
 
     /**
