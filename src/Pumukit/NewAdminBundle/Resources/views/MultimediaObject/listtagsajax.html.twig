@@ -1,9 +1,7 @@
 {% for node in nodes %}
   {% set children_length = node.getChildren()|length %}
-  
-   
    <a href="#" 
-      onclick="javascript:return false;" 
+      onclick="javascript:return select_tree_tag(this);" 
       {% if not node.getMetatag() %} ondblclick="javascript:add_tree_tag('{{ node.id }}', '{{ mmId }}', '{{ block_tag }}');" {% endif %}
       class="list-group-item notload
              tag_li_parent_{{ parent }}

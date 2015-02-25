@@ -403,6 +403,13 @@ window.change_select = function(element, selector)
 /**
  * Tag tree functions
  */
+
+function select_tree_tag(element)
+{
+  $(element).siblings(".active").removeClass("active").end().addClass("active");
+  return false;
+}
+
 function toggle_tree_tag(element, id, mm_id, tag_id, tag_cod) 
 {
   parent = $(element.parentElement);
@@ -463,7 +470,7 @@ function toggle_show_all()
 
 function create_element_in_select(tag, block_tag_id, mm_id) {
   var $ul = $("#select_ul_tag_cod_" + block_tag_id);
-  $ul.append('<a href="#" ondblclick="javascript:del_tree_tag(\'' + tag.id + '\', \'' + mm_id +'\');" onclick="javascript: return false;" class="list-group-item" id="select_li_' + tag.id + '">' + tag.cod + ' - ' + tag.name +'</a>');
+  $ul.append('<a href="#" ondblclick="javascript:del_tree_tag(\'' + tag.id + '\', \'' + mm_id +'\');" onclick="return select_tree_tag(this);" class="list-group-item" id="select_li_' + tag.id + '">' + tag.cod + ' - ' + tag.name +'</a>');
 }
 
 function inc_num_mm(tag_id, num)

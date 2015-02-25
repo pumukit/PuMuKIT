@@ -15,8 +15,8 @@
 	    </div>
 
 	    <div style="float: left; padding: 150px 5px 0px">
-	      <a href="#" onclick="if ( $$('.clicked_tag_left')[0] != undefined ) { $$('.clicked_tag_left')[0].ondblclick() } return false;">&#8592;</a>
-	      <a href="#" onclick="if ( $$('.clicked_tag_right')[0] != undefined ) { $$('.clicked_tag_right')[0].ondblclick() } return false;">&#8594;</a>
+	      <a href="#" onclick="$('#select_ul_tag_cod_UNESCO > a.active').trigger('dblclick'); return false;">&#8592;</a>
+	      <a href="#" onclick="$('#all_tag_54be1edfbc3f95562e8b4571 > a.active').trigger('dblclick'); return false;">&#8594;</a>
 	    </div>
 
         {# Added tags#}
@@ -24,7 +24,7 @@
 	      <div class="tag_tree list-group" id="select_ul_tag_cod_{{ parent.cod }}" >
 	        {% for embedded_tag in mm.getTags() if embedded_tag.isDescendantOf(parent) %}
               <a href="#" class="list-group-item" id="select_li_{{ embedded_tag.id }}"
-                 onclick="javascript:return false;"
+                 onclick="javascript:return select_tree_tag(this);"
                  ondblclick="javascript:del_tree_tag('{{ embedded_tag.id }}', '{{ mm.id }}');">
                 {{ embedded_tag.getCod() }} - {{ embedded_tag.getTitle() }}
               </a>
