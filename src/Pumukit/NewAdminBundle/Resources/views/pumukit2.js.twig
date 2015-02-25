@@ -610,7 +610,7 @@ procesaReset = function(){
 }
 
 /**
- * Ajax proxied
+ * Global Ajax Event Handlers
  */
 $(document).ajaxSuccess(function() {
   $.material.init();
@@ -620,4 +620,12 @@ $(document).ajaxError(function(event, xhr, settings) {
   if (403 == xhr.status) {
     window.location.href = "{{ path('fos_user_security_login') }}";
   }
+});
+
+
+/**
+ * Init material on load
+ */
+$(function() {
+  $.material.init();
 });
