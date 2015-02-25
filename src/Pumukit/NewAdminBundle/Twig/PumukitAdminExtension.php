@@ -40,6 +40,8 @@ class PumukitAdminExtension extends \Twig_Extension
                      new \Twig_SimpleFilter('duration_string', array($this, 'getDurationString')),
                      new \Twig_SimpleFilter('language_name', array($this, 'getLanguageName')),
                      new \Twig_SimpleFilter('status_icon', array($this, 'getStatusIcon')),
+                     new \Twig_SimpleFilter('profile_width', array($this, 'getProfileWidth')),
+                     new \Twig_SimpleFilter('profile_height', array($this, 'getProfileHeight')),
                      );
     }
 
@@ -146,6 +148,59 @@ class PumukitAdminExtension extends \Twig_Extension
         }
 
         return $iconClass;
+    }
+
+    /**
+     * Get track profile width resolution
+     *
+     * @param Collection $tags
+     * @return string
+     */
+    public function getProfileWidth($tags)
+    {
+        $profileName = $this->getProfileFromTags($tags);
+        $profile = $this->profileService->getProfile($profileName);
+        if (null !== $profile) {
+            return $profile['resolution_hor'];          
+        }
+      
+        return '0';
+    }
+
+    /**
+     * Get track profile height resolution
+     *
+     * @param Collection $tags
+     * @return string
+     */
+    public function getProfileHeight($tags)
+    {
+        $profileName = $this->getProfileFromTags($tags);
+        $profile = $this->profileService->getProfile($profileName);
+        if (null !== $profile) {
+            return $profile['resolution_ver'];
+        }
+
+        return '0';
+    }    
+
+    /**
+     * Get profile
+     *
+     * @param Collection $tags
+     * @return string
+     */
+    private function getProfileFromTags($tags)
+    {
+        $profile = '';
+
+        foreach($tags as $tag){
+            if (false !== strpos($tag, 'profile:' )) {
+                return substr($tag, strlen('profile:'), strlen($tag)-1);
+            }
+        }
+
+        return $profile;
     }
 
     /**
