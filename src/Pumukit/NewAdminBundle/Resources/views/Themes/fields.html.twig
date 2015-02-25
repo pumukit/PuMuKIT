@@ -306,3 +306,14 @@
 {% block html5date_widget -%}
   <input type="datetime-local" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value|date('Y-m-d\\TH:i:s') }}" {% endif %} class="form-control"/>
 {% endblock %}
+
+{# Track Widgets #}
+{% block trackresolution_widget -%}
+  <input style="margin-top: 5px;" type="number" size="6" value="{{ value['width']|default("") }}" id="{{ id }}_width" name="{{ full_name }}[width]" readonly="true"> x
+  <input style="margin-top: 5px;" type="number" size="6" value="{{ value['height']|default("") }}" id="{{ id }}_height" name="{{ full_name }}[height]" readonly="true">
+{%- endblock trackresolution_widget %}
+
+{% block trackduration_widget -%}
+  <input style="margin-top: 5px;" type="text" size="6" value="{{ value['minutes']|default("") }}" id="{{ id }}_minutes" name="{{ full_name }}[minutes]" readonly="true"> min &nbsp;
+  <input style="margin-top: 5px;" type="text" size="6" value="{{ value['seconds']|default("") }}" id="{{ id }}_seconds" name="{{ full_name }}[seconds]" readonly="true"> sec &nbsp;&nbsp;
+{%- endblock trackduration_widget %}
