@@ -628,4 +628,10 @@ $(document).ajaxError(function(event, xhr, settings) {
  */
 $(function() {
   $.material.init();
+
+  $('body').on('hidden.bs.modal', '.modal', function () {
+    $(this).removeData('bs.modal');
+  });
+
 });
+
