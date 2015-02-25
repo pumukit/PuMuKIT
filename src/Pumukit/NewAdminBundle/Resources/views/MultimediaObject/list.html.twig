@@ -38,7 +38,7 @@
       {% endif %}
 
       {% for mm in mms %}
-      <tr>
+      <tr style="cursor: pointer" {% if(app.session.get('admin/mms/id') == mm.id ) %} class="success" {% endif %}>
         <td>
           <div class="checkbox">
             <label>
@@ -119,21 +119,21 @@
       {% endfor %}
       {% if mms|length < 11 %}
       {% for i in 0..(11-mms|length) %}
-      <tr class="tv_admin_row_{{ (loop.index + mms|length) % 2 }}">
-	    <td style="height: 23px; padding: 0.2%;"></td>
-        <td style="padding: 0.2%;"></td>
-        <td style="padding: 0.2%;"></td>
-        <td style="padding: 0.2%;"></td>
-        <td style="padding: 0.2%;"></td>
-        <td style="padding: 0.2%;"></td>
-        <td style="padding: 0.2%;"></td>
-        <td style="padding: 0.2%;"></td>
-        <td style="padding: 0.2%;"></td>
-        <td style="padding: 0.2%;"></td>
-        <td style="padding: 0.2%;"></td>
-        <td style="padding: 0.2%;"></td>
-        <td style="padding: 0.2%;"></td>
-        <td style="padding: 0.2%;"></td>
+      <tr>
+	    <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
       </tr>
     {% endfor %}
   {% endif %}
