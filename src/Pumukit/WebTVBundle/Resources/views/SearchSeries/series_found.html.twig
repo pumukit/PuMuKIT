@@ -17,34 +17,35 @@
 
     	<!--Serie-->
     	<div style="cursor:pointer;" onclick="window.location='/video/{{serie.getId()}}'">
-      		<div class="pumukit_mmobjs" style="width:50%; float:left;">
-        		<div class="pumukit_mmobj" style="float:left;">
-          			<figure class="album" style="margin:2px 20px 2px 2px">  
-          <a href="/series/{{serie.getId()}}">
-            <div class="picture">
-              <img src="{{ asset('bundles/pumukitwebtv/images/folder.png') }}"></img>
-            </div>
-            <div class="picture">
-              <img src="{{ asset('bundles/pumukitwebtv/images/folder.png') }}"></img>
-            </div>
-            <div class="picture">
-              <img src="{{ asset('bundles/pumukitwebtv/images/folder.png') }}"></img>
-            </div>
-          </a>
-        </figure>
-          			<div class="info">
-            			<div class="title">
-              				<a href="/series/{{serie.getId()}}">{{serie.getTitle()}}</a>
-            			</div>
+      	<div class="pumukit_mmobjs" style="width:50%; float:left;">
+        	<div class="pumukit_mmobj" style="float:left;">
+          
+          	<figure class="album" style="margin:2px 20px 2px 2px">  
+              <a href="/series/{{serie.getId()}}">
+                <div class="picture">
+                  <img src="{{ asset('bundles/pumukitwebtv/images/folder.png') }}"></img>
+                </div>
+                <div class="picture">
+                  <img src="{{ asset('bundles/pumukitwebtv/images/folder.png') }}"></img>
+                </div>
+                <div class="picture">
+                  <img src="{{ asset('bundles/pumukitwebtv/images/folder.png') }}"></img>
+                </div>
+              </a>
+            </figure>
 
-            			<div class="subtitle">
-              				<abbr title="{{serie.getSubtitle()}}">{{serie.getSubtitle()}}</abbr>
-            			</div>
+          	<div class="info">
+            	<div class="title">
+              	<a href="/series/{{serie.getId()}}">{{serie.getTitle()}}</a>
+            	</div>
+            	<div class="subtitle">
+              	<abbr title="{{serie.getSubtitle()}}">{{serie.getSubtitle()}}</abbr>
+            	</div>
+            	<div class="mmobj_bottom">{{serie.getPublicDate()|date("d/m/Y")}}</div>
+          	</div>
 
-            			<div class="mmobj_bottom">{{serie.getPublicDate()|date("d/m/Y")}}</div>
-          			</div>
-        		</div>
-      		</div>
+        	</div>
+      	</div>
     	</div>
 
     	{% set lastDate = serie.getPublicDate()|date("d/m/Y") %}

@@ -39,7 +39,7 @@ class SearchMultimediaObjectsController extends Controller
     	//dump($repository_tags);
 
     	//Obtenemos del repositorio todos los objetos multimedia y todos los tags
-		$multimediaObjects = $repository_multimediaObjects->createBuilder();
+		//$multimediaObjects = $repository_multimediaObjects->createBuilder();
 		$tags = $repository_tags->findall();
 		//dump($tags);
 
@@ -56,18 +56,18 @@ class SearchMultimediaObjectsController extends Controller
 		/*------------------Aplicamos los FILTROS y nos quedamos con los objetos multimedia deseados ----------------------*/
 
 		//Obtenemos todos los objetos multimedia del repositorio que contengan <$tag_found>
-		if($tag_found != "All"){	
+		if($tag_found != "All" && $tag_found != ""){	
 			$queryBuilder->field('tags._id')->equals(new \MongoId($tag_search->getId()));
 			
 		}
 
 		//Obtenemos todos los objetos multimedia del repositorio que contengan <$type_found>
-		if($type_found != "All"){
+		if($type_found != "All" && $type_found != ""){
 			$queryBuilder->field('tracks.only_audio')->equals($type_found == "Audio");
 		}
 
 		//Obtenemos todos los objetos multimedia del repositorio que contengan <$duration_found>
-		if($duration_found != "All"){
+		if($duration_found != "All" && $duration_found != ""){
 			if($duration_found == "Up to 5 minutes"){
 				$queryBuilder->field('tracks.duration')->lt(5);
 			}
@@ -86,13 +86,13 @@ class SearchMultimediaObjectsController extends Controller
 		}
 
 		//Obtenemos todos los objetos multimedia con fecha superior o igual a <$start_found>
-		if($start_found != "All"){
+		if($start_found != "All" && $start_found != ""){
 			$start = \DateTime::createFromFormat("d/m/Y", $start_found);
 			$queryBuilder->field('record_date')->gt($start);
 		}
 
 		//Obtenemos todos los objetos multimedia con fecha inferior o igual a <$end_found>
-		if($end_found != "All"){
+		if($end_found != "All" && $end_found != ""){
 			$end = \DateTime::createFromFormat("d/m/Y", $end_found);
 			$queryBuilder->field('record_date')->lt($end);
 		}

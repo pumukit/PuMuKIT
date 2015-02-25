@@ -34,18 +34,19 @@ class SearchSeriesController extends Controller
 		//$series = $repository_series->createBuilder();
 
 		$queryBuilder = $repository_series->createQueryBuilder();
+		dump($queryBuilder);
+
 
 		/*------------------Aplicamos los FILTROS y nos quedamos con las series deseadas ----------------------*/
 
-
 		//Obtenemos todos los objetos multimedia con fecha superior o igual a <$start_found>
-		if($start_found != "All"){
+		if($start_found != "All" && $start_found != ""){
 			$start = \DateTime::createFromFormat("d/m/Y", $start_found);
 			$queryBuilder->field('public_date')->gt($start);
 		}
 
 		//Obtenemos todos los objetos multimedia con fecha inferior o igual a <$end_found>
-		if($end_found != "All"){
+		if($end_found != "All" && $end_found != ""){
 			$end = \DateTime::createFromFormat("d/m/Y", $end_found);
 			$queryBuilder->field('public_date')->lt($end);
 		}
