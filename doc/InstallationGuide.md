@@ -8,7 +8,7 @@ Requirements
 
 PuMuKIT-2 is a LAMP application, created with the Symfony2 framework. It uses ffmpeg (or libav-tools) to analyze the audiovisual data, as well as to transcode them.
 
-The requirements for installation are linux, ngonx, mongo, ffmpeg, php5. You must have installed a version of ffmpeg encoding to h264 and aac. Also the following modules are required php5: php5-ffmpeg, php5-cli, php5-mongo, php5-ldap, php5-curl and php5-intl.
+The requirements for installation are linux, nginx, mongo, ffmpeg, php5. You must have installed a version of ffmpeg encoding to h264 and aac. Also the following modules are required php5: php5-ffmpeg, php5-cli, php5-mongo, php5-ldap, php5-curl and php5-intl.
 
 Use [composer](https://getcomposer.org/) to check and install the dependencies
 
