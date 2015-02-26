@@ -16,9 +16,7 @@ class MultimediaObjectPubType extends AbstractType
         array('choices' => array(
                   MultimediaObject::STATUS_NORMAL => 'Normal',
                   MultimediaObject::STATUS_BLOQ => 'Blocked',
-                  MultimediaObject::STATUS_HIDE => 'Hidden',
-                  MultimediaObject::STATUS_NEW => 'New',
-                  MultimediaObject::STATUS_PROTOTYPE => 'Prototype',
+                  MultimediaObject::STATUS_HIDE => 'Hidden'
             ),
           'label' => 'Status', ))
       ->add('broadcast', null, array('label' => 'Broadcast'));
