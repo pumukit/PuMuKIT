@@ -527,7 +527,7 @@ window.click_fila_edit_urls = function(element, tr, show_url, update_url)
 {
     $('#preview_'+element).load(show_url);
 
-    $('#edit_'+element).load(update_url);
+    $('#edit_'+element).load(update_url, function(){init_mm_tab();});
 
     $('.success').removeClass('success');
     $(tr.parentNode).addClass('success');
@@ -647,7 +647,29 @@ $(function() {
     $(this).removeData('bs.modal');
   });
 
+  init_mm_tab();
+
 });
+
+/**
+ * Tab
+ */
+function init_mm_tab()
+{
+  $tab = $('#menuTab');
+  if($tab) {
+    $tab.on('show.bs.tab', function (e) {
+      where = e.target.href.split('#')[1];
+      localStorage.setItem('lastTab', where);
+    });
+
+    var lastTab = localStorage.getItem('lastTab');
+    if (lastTab) {
+      $('#menuTab a[href="#' + lastTab+ '"]').tab('show')
+    }
+  }
+}
+
 
 /**
  * Test from URL
