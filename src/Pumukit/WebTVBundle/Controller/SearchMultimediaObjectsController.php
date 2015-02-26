@@ -21,8 +21,10 @@ class SearchMultimediaObjectsController extends Controller
     public function indexAction(Request $request)
     {
     	$tag_search = new Tag();
+    	$multimediaObject_search = new MultimediaObject();
 
     	//Recogemos los campos de búsqueda de los filtros
+    	$search_found = $request->query->get('search');
     	$tag_found = $request->query->get('tags');
     	$type_found = $request->query->get('type');
     	$duration_found = $request->query->get('duration');
@@ -36,10 +38,9 @@ class SearchMultimediaObjectsController extends Controller
         //Accedemos al repositorio de los objetos multimedia y de los tags
     	$repository_multimediaObjects = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
     	$repository_tags = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
-    	//dump($repository_tags);
 
     	//Obtenemos del repositorio todos los objetos multimedia y todos los tags
-		//$multimediaObjects = $repository_multimediaObjects->createBuilder();
+		$multimediaObjects = $repository_multimediaObjects->findall();
 		$tags = $repository_tags->findall();
 		//dump($tags);
 
@@ -50,15 +51,26 @@ class SearchMultimediaObjectsController extends Controller
 			}
 		}
 
+		//Buscamos coincidencia del Objeto Multimedia si se modifica el campo del filtro: <Search>
+		foreach ($multimediaObjects as $multimediaObject) {
+			if($multimediaObject->getTitle() == $search_found){
+				$multimediaObject_search = $multimediaObject;
+			}
+		}
 
 		$queryBuilder = $repository_multimediaObjects->createStandardQueryBuilder();
 
+
 		/*------------------Aplicamos los FILTROS y nos quedamos con los objetos multimedia deseados ----------------------*/
+
+		//Obtenemos todos los objetos multimedia del repositorio que su titulo coincida con <$search_found>
+		if($search_found != ""){
+			$queryBuilder->field('title.en')->equals($multimediaObject_search->getTitle());
+		}
 
 		//Obtenemos todos los objetos multimedia del repositorio que contengan <$tag_found>
 		if($tag_found != "All" && $tag_found != ""){	
 			$queryBuilder->field('tags._id')->equals(new \MongoId($tag_search->getId()));
-			
 		}
 
 		//Obtenemos todos los objetos multimedia del repositorio que contengan <$type_found>
@@ -69,16 +81,16 @@ class SearchMultimediaObjectsController extends Controller
 		//Obtenemos todos los objetos multimedia del repositorio que contengan <$duration_found>
 		if($duration_found != "All" && $duration_found != ""){
 			if($duration_found == "Up to 5 minutes"){
-				$queryBuilder->field('tracks.duration')->lt(5);
+				$queryBuilder->field('tracks.duration')->lte(5);
 			}
 			if($duration_found == "Up to 10 minutes"){
-				$queryBuilder->field('tracks.duration')->range(5, 10);
+				$queryBuilder->field('tracks.duration')->lte(10);
 			}
 			if($duration_found == "Up to 30 minutes"){
-				$queryBuilder->field('tracks.duration')->range(10, 30);
+				$queryBuilder->field('tracks.duration')->lte(30);
 			}
 			if($duration_found == "Up to 60 minutes"){
-				$queryBuilder->field('tracks.duration')->range(30, 60);
+				$queryBuilder->field('tracks.duration')->lte(60);
 			}
 			if($duration_found == "More than 60 minutes"){
 				$queryBuilder->field('tracks.duration')->gt(60);
@@ -102,6 +114,8 @@ class SearchMultimediaObjectsController extends Controller
         $pagerfanta = new Pagerfanta($adapter);
         $pagerfanta->setMaxPerPage($limit); // 10 by default
         $pagerfanta->setCurrentPage($page); // 1 by default
+
+        dump(date_default_timezone_get());
 
         return array('multimediaObjects' => $pagerfanta, 'tags' => $tags, 'tag_found' => $tag_found, 'type_found' => $type_found,
         	'duration_found' => $duration_found, 'start_found' => $start_found, 'end_found' => $end_found);
