@@ -363,4 +363,14 @@ class Track extends Element
           $this->duration = ($durationInMinutesAndSeconds['minutes'] * 60) + $durationInMinutesAndSeconds['seconds'];
       }
   }
+
+  /**
+   * Return true if track is a master.
+   *
+   * @return boolean
+   */
+  public function isMaster()
+  {
+      return $this->containsTag("master");
+  }
 }
