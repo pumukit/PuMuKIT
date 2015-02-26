@@ -53,13 +53,13 @@
 	<input type="hidden" name="id" id="id" value="{{ series.id }}">
 
 	<div class="row">
-      <div class="col-md-3">
+      <div class="col-md-5">
         <div>
           <span id="remember_save_series" class="alert alert-dismissable alert-danger" style="display:none;">{% trans %}Press OK for the change to take effect{% endtrans %}</span> &nbsp;
         </div>
       </div>
 
-      <div class="col-md-9 text-right">
+      <div class="col-md-7 text-right">
         <span id="series_save_error" style="display:none; color:red;">{% trans %}Saved ERROR{% endtrans %}</span>
         <span id="series_save_ok" style="display:none; color:indigo;">{% trans %}Saved OK{% endtrans %}</span>
         <button type="button" class="btn btn-default btn-raised" onclick="$('#remember_save_series').hide();">{% trans %}Cancel{% endtrans %}</button>

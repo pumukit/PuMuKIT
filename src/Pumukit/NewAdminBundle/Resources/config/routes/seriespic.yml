@@ -30,7 +30,7 @@ pumukitnewadmin_seriespic_batch_delete:
 
 pumukitnewadmin_seriespic_delete:
     pattern: /{id}/delete
-    methods: [DELETE, POST]
+    methods: [DELETE]
     defaults:
         _controller: pumukitnewadmin.controller.seriespic:deleteAction
 

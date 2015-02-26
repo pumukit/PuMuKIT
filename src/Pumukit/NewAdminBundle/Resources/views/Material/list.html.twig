@@ -30,6 +30,6 @@
   {% endfor %}
   <tr>
     <td><ul><li></li><ul></td>
-    <td colspan="6"><a title="{% trans %}Create Material{% endtrans %}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitnewadmin_material_create', {'id': mmId}) }}">{% trans %}create{% endtrans %}...</a></td>
+    <td colspan="6"><a title="{% trans %}Create Material{% endtrans %}" data-toggle="modal" data-target="#myModal" href="{{ path('pumukitnewadmin_material_create', {'id': mmId}) }}">{% trans %}create{% endtrans %}...</a></td>
   </tr>
 </tbody></table>

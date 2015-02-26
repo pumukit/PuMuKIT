@@ -4,7 +4,7 @@ window.submit_delete_role = function(id, countMm)
         if (window.confirm("{% trans %}Are you sure you want to delete this role?{% endtrans %}")){
             var url = "{{ path('pumukitadmin_role_delete', {'id': '__id__'})|raw }}";
             var message = "{% trans %}Deleted Role{% endtrans %}";
-            $('#list_roles').load(url.replace('__id__', id), {parameters: {'_method': 'DELETE'}}, success(message));
+            $('#list_roles').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
         }
     }else{
         window.alert("{% trans %}Impossible to delete, role with{% endtrans %} "+countMm+" {% trans %}people{% endtrans %}");
@@ -47,14 +47,8 @@ window.submit_delete_mms = function(id)
     if (window.confirm("{% trans %}Are you sure you want to delete this multimedia object?{% endtrans %}")){
         var url = "{{ path('pumukitnewadmin_mms_delete', {'id': '__id__'})|raw }}";
         var message = '{% trans %}Multimedia Object deleted.{% endtrans %}';
-        $.ajax({
-                url: url.replace('__id__', id),
-                type: 'POST',
-                success: function(response){
-                                            $('#list_mms').html(response);
-                                            success(message);
-                }
-        });
+        // TODO if deleted when selected, update edit and show views
+        $('#list_mms').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
     }
 }
 
@@ -63,14 +57,7 @@ window.submit_delete_series = function(id, seriesTitle, countMm)
     if (window.confirm('{% trans %}Are you sure you want to delete the series{% endtrans %} "'+seriesTitle+'"? {% trans %}This series has{% endtrans %} '+countMm+' {% trans %}multimedia object(s){% endtrans %}.')){
         var url = "{{ path('pumukitnewadmin_series_delete', {'id': '__id__'})|raw }}";
         var message = '{% trans %}Deleted Series{% endtrans %} "'+seriesTitle+'".';
-        $.ajax({
-            url: url.replace('__id__', id),
-            type: 'POST',
-            success: function(response){
-                $('#list_series').html(response);
-                success(message);
-            }
-        });
+        $('#list_series').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message);});
     }
 }
 
@@ -95,7 +82,7 @@ window.update_preview = function(id) {
 window.delete_seriespic = function(id) {
     if (window.confirm('{% trans %}Are you sure you want to delete this picture?{% endtrans %}')) {
         var url = '{{ path('pumukitnewadmin_seriespic_delete', {'id': '___id___'}) }}';
-        $('#pic_series').load(url.replace('___id___', id), {parameters: {'_method': 'DELETE'}});
+        $('#pic_series').load(url.replace('___id___', id), {'_method': 'DELETE'});
     }
 }
 
@@ -121,7 +108,7 @@ window.submit_delete_person_relation = function(id, roleId, mmId, hName, templat
         url = url.replace('__id__', id);
         url = url.replace('__roleId__', roleId);
         url = url.replace('__mmId__', mmId);
-        $(tag_id).load(url, {parameters: {'_method': 'DELETE'}});
+        $(tag_id).load(url, {'_method': 'DELETE'});
         var url = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'}) }}";
         $('#preview_mm').load(url.replace('__mmId__', mmId));
     }
@@ -130,17 +117,17 @@ window.submit_delete_person_relation = function(id, roleId, mmId, hName, templat
 window.submit_delete_link = function(id, mmId)
 {
     if (window.confirm('{% trans %}Are you sure you want to delete this link?{% endtrans %}')){
-        var url = "{{ path('pumukitadmin_link_delete', {'id': 'PLACEHOLDER_ID', 'mmId': 'PLACEHOLDER_MMID'}) }}";
-        url = url.replace('PLACEHOLDER_ID', id);
-        url = url.replace('PLACEHOLDER_MMID', mmId);
-        $('#links_mms').load(url, {parameters: {'_method': 'DELETE'}});
+        var url = "{{ path('pumukitnewadmin_link_delete', {'id': '__id__', 'mmId': '__mmId__'}) }}";
+        url = url.replace('__id__', id);
+        url = url.replace('__mmId__', mmId);
+        $('#links_mms').load(url, {'_method': 'DELETE'});
     }
 }
 
 window.delete_mmspic = function(id) {
     if (window.confirm('{% trans %}Are you sure you want to delete this picture?{% endtrans %}')) {
         var url = '{{ path('pumukitnewadmin_mmspic_delete', {'id': '___id___'}) }}';
-        $('#pic_mms').load(url.replace('___id___', id), {parameters: {'_method': 'DELETE'}});
+        $('#pic_mms').load(url.replace('___id___', id), {'_method': 'DELETE'});
     }
 }
 
@@ -157,20 +144,20 @@ window.down_mmspic = function(id) {
 window.submit_delete_material = function(id, mmId)
 {
     if (window.confirm('{% trans %}Are you sure you want to delete this material?{% endtrans %}')){
-        var url = "{{ path('pumukitadmin_material_delete', {'id': 'PLACEHOLDER_ID', 'mmId': 'PLACEHOLDER_MMID'}) }}";
-        url = url.replace('PLACEHOLDER_ID', id);
-        url = url.replace('PLACEHOLDER_MMID', mmId);
-        $('#materials_mms').load(url, {parameters: {'_method': 'DELETE'}});
+        var url = "{{ path('pumukitnewadmin_material_delete', {'id': '__id__', 'mmId': '__mmId__'}) }}";
+        url = url.replace('__id__', id);
+        url = url.replace('__mmId__', mmId);
+        $('#materials_mms').load(url, {'_method': 'DELETE'});
     }
 }
 
 window.submit_delete_track = function(id, mmId)
 {
     if (window.confirm('{% trans %}Are you sure you want to delete this track?{% endtrans %}')){
-        var url = "{{ path('pumukitadmin_track_delete', {'id': 'PLACEHOLDER_ID', 'mmId': 'PLACEHOLDER_MMID'}) }}";
-        url = url.replace('PLACEHOLDER_ID', id);
-        url = url.replace('PLACEHOLDER_MMID', mmId);
-        $('#tracks_mms').load(url, {parameters: {'_method': 'DELETE'}});
+        var url = "{{ path('pumukitnewadmin_track_delete', {'id': '__id__', 'mmId': '__mmId__'}) }}";
+        url = url.replace('__id__', id);
+        url = url.replace('__mmId__', mmId);
+        $('#tracks_mms').load(url, {'_method': 'DELETE'});
     }
 }
 
@@ -689,4 +676,12 @@ test_form_url = function(url){
 test_url_generation = function(url){
     var re=/^\w+:\/\/\w+(\.\w+)*/;
     return !re.test(url);
+}
+
+comprobar_form_file_nmb = function(file){
+    if (file == ""){
+	$('#error_file').show();
+	return false;
+    }
+    return true;
 }

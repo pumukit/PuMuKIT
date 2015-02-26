@@ -460,7 +460,7 @@ class MultimediaObjectController extends SortableAdminController
             $this->get('session')->remove('admin/mms/id');
         }
 
-        return $this->redirect($this->generateUrl('pumukitadmin_mms_list', 
+        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list', 
                                                   array('seriesId' => $seriesId)));
     }
 
@@ -480,8 +480,9 @@ class MultimediaObjectController extends SortableAdminController
         }
 
         $factoryService = $this->get('pumukitschema.factory');
+        $seriesId = $request->get('seriesId', null);
         $sessionId = $this->get('session')->get('admin/series/id', null);
-        $series = $factoryService->findSeriesById(null, $sessionId);
+        $series = $factoryService->findSeriesById($seriesId, $sessionId);
 
         $mms = $this->getListMultimediaObjects($series);
 

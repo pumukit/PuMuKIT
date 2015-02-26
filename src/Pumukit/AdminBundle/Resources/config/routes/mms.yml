@@ -33,7 +33,7 @@ pumukitadmin_mms_update_pub:
         _controller: pumukitadmin.controller.mms:updatepubAction
 
 pumukitadmin_mms_batch_delete:
-    pattern: /delete
+    pattern: /batch_delete
     methods: [DELETE]
     defaults:
         _controller: pumukitadmin.controller.mms:batchDeleteAction
