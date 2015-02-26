@@ -7,22 +7,20 @@
   <fieldset>
     <div class="form-group">
       <label for="name" class="control-label">{% trans %}Name{% endtrans %}:</label>
-      <div class="input-group">
-        <input type="text" name="name" id="name" value="{% trans %}name to search for{% endtrans %}" autocomplete="on"/>
-        <span id="indicator1" style="display: none" class="input-group-addon"><img alt="{% trans %}working{% endtrans %}..." src="/legacy/images/admin/load/spinner.gif" height="18" width="18"></span>
-        <div id="name_auto_complete" class="auto_complete" style="display:none"></div>
-      </div>
+      <input type="text" name="name" id="name" value="{% trans %}name to search for{% endtrans %}" class="form-control"/>
+      <span id="indicator1" style="display: none" class="input-group-addon"><img alt="{% trans %}working{% endtrans %}..." src="/legacy/images/admin/load/spinner.gif" height="18" width="18"></span>
+      <input type="hidden" name="person_id" value="0" id="person_id"/>
     </div>
   </fieldset>
   <div class="modal-footer">
     <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
     <button type="button" class="btn btn-primary btn-raised"
-            onclick="if(/^\w+ -/.test($.trim($('#name').val()))) {
-                                                        var route = '{{ path('pumukitnewadmin_person_link', {'id': '__personId__', 'roleId': role.id, 'mmId': mm.id} ) }}';
-                                                        var personId = $('#name').value.strip().split(' - ')[0];
-                                                        $.ajax({url:route.replace('__personId__', personId), type:'POST', success: function(response){$('#{{ role.id }}_person_mms').html(response);}});
-                                                        $.ajax({url:'{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', type:'POST', success: function(response){$('#preview_mm').html(response);}});
-                                                        $('#myModal').modal('hide');
+            onclick="if('' != $('#person_id').val()){
+                                                     var route = '{{ path('pumukitnewadmin_person_link', {'id': '__personId__', 'roleId': role.id, 'mmId': mm.id} ) }}';
+                                                     var personId = $('#person_id').val();
+                                                     $('#{{ role.id }}_person_mms').load(route.replace('__personId__', personId), {'_method':'POST'});
+                                                     $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', {'_method':'POST'});
+                                                     $('#myModal').modal('hide');
                      }else{
                            alert('{% trans %}Select before a person{% endtrans %}');
                      }
@@ -44,20 +42,25 @@
 <div style="clear:right"></div>
 
 <script type="text/javascript">
-  //if($('MB_content')) $('MB_content').setStyle({ 'position' : 'static' });
+// TODO WITH PLACEHOLDER
+$("#name").on("click", function(){
+    if ('{% trans %}name to search for{% endtrans %}' == $("#name").val()) $("#name").val("");
+});
 
-  //new Ajax.Autocompleter('#name', 'name_auto_complete', '{{ path('pumukitnewadmin_person_auto_complete') }}', {minChars: 2, indicator: 'indicator1'});
-  
-  // TODO make it work
+$("#name").autocomplete({
+    source: "{{ path('pumukitnewadmin_person_auto_complete') }}",
+    delay: 250,
+    minLength: 2,
+    select: function(event, ui) {
+        $("#person_id").val(ui.item.id)
+    }
+    }).autocomplete("instance")._renderItem = function( ul, item ) {
+        return $("<li>")
+        .append("<a>"+item.id+" - "+item.label+"<br><span class='form-control'>"+item.desc+"</span></a>")
+        .appendTo(ul);
+};
 
-  $("#myModal").on("show.bs.modal", function(e){
-      /*
-      $("#name").autocomplete({
-          appendTo: $("#name_auto_complete"),
-          source: "{{ path('pumukitnewadmin_person_auto_complete') }}"
-      });
-      */
-      $("#name").focus();
-      $("#name").select();
-  });
+$("#name").on("input", function(){
+    $("#person_id").val(0);
+});
 </script>
