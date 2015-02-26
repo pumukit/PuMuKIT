@@ -157,11 +157,11 @@ class PersonController extends AdminController
         
         $criteria = $this->getCriteria($config);
         $resources = $this->getResources($request, $config, $criteria);
-        
+
         return array(
                      'people' => $resources,
                      'mm' => $multimediaObject,
-                     'role' => $role,
+                     'role' => $role
                      );
     }
 
@@ -287,16 +287,25 @@ class PersonController extends AdminController
 
     /**
      * Auto complete
-     *
-     * @Template("PumukitNewAdminBundle:Person:autocomplete.html.twig")
      */
     public function autoCompleteAction(Request $request)
     {
         $personService = $this->get('pumukitschema.person');
-        $name = $request->get('name');
+        $name = $request->get('term');
         $people = $personService->autoCompletePeopleByName($name);
 
-        return array('people' => $people, 'name' => $name);
+        $out = [];
+        foreach($people as $p){
+            $out[] = array(
+                           "id"=> $p->getId(),
+                           "label"=> $p->getName(),
+                           "desc" => $p->getPost()." ". $p->getFirm(),
+                           "value" => $p->getName()
+                           );
+
+        }
+
+        return new JsonResponse($out);
     }
 
     /**
