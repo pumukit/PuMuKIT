@@ -200,14 +200,14 @@
       {% if loop.first %}
         &nbsp;
       {% else %}
-        <a href="#" onclick="new Ajax.Updater('tracks_mms', '{# TODO 'files/up?id='.$file->getId().'&mm='.$mmId.'&preview=true' #}', {asynchronous:true, evalScripts:true}); return false;">&#8593;</a>
+        <a href="#" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_up', {'id': track.id, 'mmId': mmId, 'preview': 1}) }}', {'_method': 'POST'}); return false;">&#8593;</a>
       {% endif %}
       </td>
       <td>
       {% if loop.last %}
         &nbsp;
       {% else %}
-        <a href="#" onclick="new Ajax.Updater('tracks_mms', '{# TODO 'files/down?id='.$file->getId().'&mm='.$mmId.'&preview=true' #}', {asynchronous:true, evalScripts:true}); return false;">&#8595;</a>
+        <a href="#" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_down', {'id': track.id, 'mmId': mmId, 'preview': 1}) }}', {'_method': 'POST'}); return false;">&#8595;</a>
       {% endif %}
       </td>
 
