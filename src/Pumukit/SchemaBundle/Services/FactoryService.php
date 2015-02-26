@@ -113,7 +113,7 @@ class FactoryService
         }
         $mm->setPublicDate(new \DateTime("now"));
         $mm->setRecordDate($mm->getPublicDate());
-        $mm->setStatus(MultimediaObject::STATUS_NEW);
+        $mm->setStatus(MultimediaObject::STATUS_BLOQ);
 
         $mm->setSeries($series);
 
