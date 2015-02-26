@@ -88,6 +88,11 @@ class Track extends Element
    */
   private $numview;
 
+  public function __construct()
+  {
+      $this->language = \Locale::getDefault();
+  }
+
   /**
    * Set language
    *
