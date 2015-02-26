@@ -55,12 +55,12 @@ class LinkService
      * Remove Link from Multimedia Object
      *
      * @param MultimediaObject $multimediaObject
-     * @param Link $link
+     * @param string $linkId
      * @return MultimediaObject
      */
-    public function removeLinkFromMultimediaObject(MultimediaObject $multimediaObject, Link $link)
+    public function removeLinkFromMultimediaObject(MultimediaObject $multimediaObject, $linkId)
     {
-        $multimediaObject->removeLinkById($link->getId());
+        $multimediaObject->removeLinkById($linkId);
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
@@ -74,12 +74,12 @@ class LinkService
      * Up Link in Multimedia Object
      *
      * @param MultimediaObject $multimediaObject
-     * @param Link $link
+     * @param string $linkId
      * @return MultimediaObject
      */
-    public function upLinkInMultimediaObject(MultimediaObject $multimediaObject, Link $link)
+    public function upLinkInMultimediaObject(MultimediaObject $multimediaObject, $linkId)
     {
-        $multimediaObject->upLinkById($link->getId());
+        $multimediaObject->upLinkById($linkId);
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
@@ -93,12 +93,12 @@ class LinkService
      * Down Link in Multimedia Object
      *
      * @param MultimediaObject $multimediaObject
-     * @param Link $link
+     * @param string $linkId
      * @return MultimediaObject
      */
-    public function downLinkInMultimediaObject(MultimediaObject $multimediaObject, Link $link)
+    public function downLinkInMultimediaObject(MultimediaObject $multimediaObject, $linkId)
     {
-        $multimediaObject->downLinkById($link->getId());
+        $multimediaObject->downLinkById($linkId);
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 

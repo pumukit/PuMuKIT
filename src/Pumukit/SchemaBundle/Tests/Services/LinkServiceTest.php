@@ -100,12 +100,12 @@ class LinkServiceTest extends WebTestCase
 
         $this->assertEquals(2, count($mm->getLinks()));
 
-        $mm = $this->linkService->removeLinkFromMultimediaObject($mm, $link1);
+        $mm = $this->linkService->removeLinkFromMultimediaObject($mm, $link1->getId());
         $mm = $this->repoMmobj->find($mm->getId());
 
         $this->assertEquals(1, count($mm->getLinks()));
 
-        $mm = $this->linkService->removeLinkFromMultimediaObject($mm, $link2);
+        $mm = $this->linkService->removeLinkFromMultimediaObject($mm, $link2->getId());
         $mm = $this->repoMmobj->find($mm->getId());
 
         $this->assertEquals(0, count($mm->getLinks()));
@@ -132,17 +132,17 @@ class LinkServiceTest extends WebTestCase
 
         $mm = $this->repoMmobj->find($mm->getId());
 
-        $this->linkService->upLinkInMultimediaObject($mm, $link2);
+        $this->linkService->upLinkInMultimediaObject($mm, $link2->getId());
         $links = array($link2, $link1, $link3);
         $this->assertEquals($links, $mm->getLinks()->toArray());
 
         $mm = $this->repoMmobj->find($mm->getId());
-        $this->linkService->upLinkInMultimediaObject($mm, $link3);
+        $this->linkService->upLinkInMultimediaObject($mm, $link3->getId());
         $links = array($link2, $link3, $link1);
         $this->assertEquals($links, $mm->getLinks()->toArray());
 
         $mm = $this->repoMmobj->find($mm->getId());
-        $this->linkService->downLinkInMultimediaObject($mm, $link2);
+        $this->linkService->downLinkInMultimediaObject($mm, $link2->getId());
         $links = array($link3, $link2, $link1);
         $this->assertEquals($links, $mm->getLinks()->toArray());
         
