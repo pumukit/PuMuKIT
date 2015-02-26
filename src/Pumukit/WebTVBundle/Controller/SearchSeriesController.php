@@ -19,7 +19,10 @@ class SearchSeriesController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $serie_search = new Series();
+
     	//Recogemos los campos de búsqueda de los filtros
+        $search_found = $request->query->get('search');
     	$start_found = $request->query->get('start');
     	$end_found = $request->query->get('end');
 
@@ -31,13 +34,25 @@ class SearchSeriesController extends Controller
     	$repository_series = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
 
     	//Obtenemos del repositorio todas las series
-		//$series = $repository_series->createBuilder();
+		$series = $repository_series->findall();
+
+        //Buscamos coincidencia del Objeto Multimedia si se modifica el campo del filtro: <Search>
+        foreach ($series as $serie) {
+            if($serie->getTitle() == $search_found){
+                $serie_search = $serie;
+            }
+        }
 
 		$queryBuilder = $repository_series->createQueryBuilder();
-		dump($queryBuilder);
+		//dump($queryBuilder);
 
 
 		/*------------------Aplicamos los FILTROS y nos quedamos con las series deseadas ----------------------*/
+
+        //Obtenemos todas las series del repositorio que su titulo coincida con <$search_found>
+        if($search_found != ""){
+            $queryBuilder->field('title.en')->equals($serie_search->getTitle());
+        }
 
 		//Obtenemos todos los objetos multimedia con fecha superior o igual a <$start_found>
 		if($start_found != "All" && $start_found != ""){
