@@ -165,7 +165,7 @@
          </td>
       {% endif %}
 
-      {% if track.getTags()|profile|display %}
+      {% if track.isMaster() %}
       <td>
         <div class="dropdown">
           <i class="mdi-navigation-refresh" id="list_profiles_{{ track.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>

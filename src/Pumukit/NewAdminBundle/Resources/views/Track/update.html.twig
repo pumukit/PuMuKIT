@@ -17,9 +17,9 @@
     <input type="hidden" name="mmId" id="mmId" value="{{ mmId }}" />
     <input type="hidden" name="preview" id="preview" value="true" />
     <fieldset>
-      {% for child in form if child.vars.id in ['pumukitnewadmin_track_update_i18n_description'] %}
-        {{ form_row(child) }}
-      {% endfor %}
+
+      {{ form_row(form['i18n_description']) }}
+
       <div class="form-group" id="pumukitnewadmin_track_update_profile">
         <label for="profile" class="control-label">{% trans %}Profile{% endtrans %}</label>        
         <select name="profile" id="profile" class="form-control" disabled>
