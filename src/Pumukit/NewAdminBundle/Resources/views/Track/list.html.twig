@@ -2,7 +2,7 @@
   {% if true %} {# TODO (sfConfig::get('app_transcoder_use')) #}
     {% for job in jobs %}
       <tr>
-        <td><ul><li></li><ul></td>
+        <td><ul><li></li></ul></td>
         <td colspan="11">
           {{ job.getStatusText() }}
           {% if status_error == job.getStatus() %}
@@ -25,7 +25,7 @@
 
   {% for track in tracks %}
     <tr>
-      <td><ul><li></li><ul></td>
+      <td><ul><li></li></ul></td>
       <td>
         <a title="{% trans %}Edit file of multimedia object{% endtrans %} {{ track.id }}"
            data-toggle="modal" data-dismiss="modal" data-target="#myModal"
@@ -225,7 +225,7 @@
   <!-- MATTERHORN -->
   {% if false %} {# TODO (sfConfig::get('app_matterhorn_use') && $oc) #}
       <tr>
-        <td><ul><li></li><ul></td>
+        <td><ul><li></li></ul></td>
         <td><a title="{% trans %}Edit Matterhorn video of multimedia object{% endtrans %} {{ oc.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{# TODO 'matterhorn/edit?id=' oc.getId() #}"><img alt="{% trans %}edit{% endtrans %}" title="{% trans %}edit{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif" /></a></td>
         <td><a title="{% trans %}Information of Matterhorn video from multimedia object{% endtrans %} {{ oc.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{# TODO matterhorn/infomp?id=' oc.id #}"><img alt="{% trans %}info{% endtrans %}" title="{% trans %}info{% endtrans %}" src="/legacy/images/admin/mbuttons/info_inline.gif" /></a></td>
         <td>
@@ -272,7 +272,7 @@
   </tr>-->
   {% if true %} {# TODO (sfConfig::get('app_transcoder_use')) #}
   <tr>
-    <td><ul><li></li><ul></td>
+    <td><ul><li></li></ul></td>
     {# TODO real path href 'transcoders/edit?mm='.$mmId #}
     <td colspan="9"><a data-toggle="modal" data-target="#myModal" href="{{ path('pumukitnewadmin_track_create', {'id': mmId}) }}">{% trans %}new master{% endtrans %}...</a></td>
   </tr>
