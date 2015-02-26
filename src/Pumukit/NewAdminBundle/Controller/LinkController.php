@@ -23,11 +23,10 @@ class LinkController extends Controller
 
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
             try {
-                $multimediaObject = $this->get('pumukitschema.link')->addLinkToMultimediaObject($multimediaObject);
+                $multimediaObject = $this->get('pumukitschema.link')->addLinkToMultimediaObject($multimediaObject, $link);
             } catch (\Exception $e) {
                 $this->get('session')->getFlashBag()->add('error', $e->getMessage());
             }
-
             return $this->render('PumukitNewAdminBundle:Link:list.html.twig',
                  array(
                        'links' => $multimediaObject->getLinks(),
