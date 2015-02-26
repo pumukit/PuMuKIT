@@ -107,9 +107,7 @@
 	      </div>
           {% endfor %}
 
-	      {% for child in form if (child.vars.id in ['pumukitnewadmin_series_i18n_line2']) %}
-	      {{ form_row(child) }}
-	      {% endfor %}
+	      {{ form_row(form['i18n_line2']) }}
 
           {# TODO with tags
 	      <div class="form-group" id="pumukitnewadmin_series_structure">

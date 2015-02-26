@@ -35,9 +35,8 @@
 
 	<fieldset>
       <div class="col-md-5">
-        {% for child in form_pub if child.vars.id in ['pumukitnewadmin_mms_pub_status'] %}
-	    {{ form_row(child) }}
-        {% endfor %}
+	    {{ form_row(form_pub['status']) }}
+
 	    <div class="form-group" id="pumukitnewadmin_mms_pub_channel" {{ (mm.getStatus() == 1)?'style="background-color: #f2f2f2"':'' }}>
 	      <label for="pub" class="control-label">{% trans %}Publication Channels{% endtrans %}:</label>
 	      <div id="list_pub_{{ mm.id }}">
@@ -50,9 +49,7 @@
 	        {% include 'PumukitNewAdminBundle:MultimediaObject:listpub.html.twig' with {'mm': mm, 'pubs': pub_decisions, 'pub_type': 'decisions'} %}
 	      </div>
         </div>
-        {% for child in form_pub if child.vars.id in ['pumukitnewadmin_mms_pub_broadcast'] %}
-	    {{ form_row(child) }}
-        {% endfor %}
+	    {{ form_row(form_pub['broadcast']) }}
         {{ form_rest(form_pub) }}
       </div>
     </fieldset>

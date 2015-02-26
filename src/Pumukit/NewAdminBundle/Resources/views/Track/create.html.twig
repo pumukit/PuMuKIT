@@ -19,9 +19,7 @@
     
     <fieldset>
       
-      {% for child in form if child.vars.id in ['pumukitnewadmin_track_i18n_description'] %}
-          {{ form_row(child) }}
-      {% endfor %}      
+      {{ form_row(form["i18n_description"]) }}
       
       <div class="form-group" id="pumukitnewadmin_track_profile">
         <label for="profile" class="control-label">{% trans %}Profile{% endtrans %}</label>        
@@ -45,9 +43,7 @@
         </div>
       </div>
 
-      {% for child in form if child.vars.id in ['pumukitnewadmin_track_i18n_description'] %}
-          {{ form_row(child) }}
-      {% endfor %} 
+      {{ form_row(form["language"]) }}
 
       <div class="form-group">
         <label for="file_type" class="control-label">{% trans %}Mode{% endtrans %}</label>        
