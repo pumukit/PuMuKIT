@@ -18,6 +18,11 @@
 
         <!-- Pumukit CSS modifications -->
         <link href="{{ path('pumukitnewadmin_css') }}" rel="stylesheet">
+
+        <!-- jQuery UI custom (autocomplete) -->
+        <link href="{{ asset('/bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('/bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom.structure.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('/bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom.theme.min.css') }}" rel="stylesheet">
         {% endblock %}
 
         {% block javascripts %}
@@ -29,6 +34,7 @@
         <script src="{{ asset('/bundles/pumukitnewadmin/js/jquery.nouislider.min.js') }}"></script>
         <script type="text/javascript" src="{{ path('pumukitnewadmin_js') }}"></script>
         <script src="{{ asset('/bundles/pumukitnewadmin/js/hinclude.js') }}"></script>
+        <script src="{{ asset('/bundles/pumukitnewadmin/js/jquery-ui-1.11.3.custom.min.js') }}"></script>
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
