@@ -276,7 +276,7 @@
   <tr>
     <td><ul><li></li></ul></td>
     {# TODO real path href 'transcoders/edit?mm='.$mmId #}
-    <td colspan="9"><a data-toggle="modal" data-target="#myModal" href="{{ path('pumukitnewadmin_track_create', {'id': mmId}) }}">{% trans %}New master{% endtrans %}...</a></td>
+    <td colspan="11"><a data-toggle="modal" data-target="#myModal" href="{{ path('pumukitnewadmin_track_create', {'id': mmId}) }}">{% trans %}New master{% endtrans %}...</a></td>
   </tr>
   {% endif %}
 </tbody></table>
@@ -298,3 +298,9 @@
 if (isset($msg_alert)) echo m_msg_alert($msg_alert);
 ?>
 #}
+
+{% if jobs|length != 0 %}
+<script type="text/javascript">
+  setTimeout(function(){$('#tracks_mms').load('{{ url('pumukitnewadmin_track_list', {'id': mmId})}}')}, 20000);
+</script>
+{% endif %}
