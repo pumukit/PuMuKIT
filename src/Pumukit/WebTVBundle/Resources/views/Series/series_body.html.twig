@@ -5,17 +5,17 @@
 
 <div style="overflow:hidden">
 
-{% for mm in mmobjs %}
+{% for multimediaObject in multimediaObjects %}
 
-  {% if mm.getRecordDate()|date("d/m/Y") != lastDate %}
+  {% if multimediaObject.getRecordDate()|date("d/m/Y") != lastDate %}
     <br />
     <div class="serial_date">
-      <div>{{ mm.getRecordDate()|date("d/m/Y") }}</div>
+      <div>{{ multimediaObject.getRecordDate()|date("d/m/Y") }}</div>
     </div>
   {% endif %}
 
 
-  <div class="serial_mm" style="cursor:pointer;" onclick="window.location='/video/{{mm.getId()}}'">
+  <div class="serial_mm" style="cursor:pointer;" onclick="window.location='/video/{{multimediaObject.getId()}}'">
     <table>
       <tbody>
         <tr>
@@ -27,21 +27,21 @@
               float: left;
               margin: 10px;
               margin-right: 20px;">
-              <a href="/video/{{mm.id}}"><img src="{{mm|first_url_pic(true)}}" class="serial"/></a>
+              <a href="/video/{{multimediaObject.id}}"><img src="{{multimediaObject|first_url_pic(true)}}" class="serial"/></a>
             </div>
           </td>
 
           <td>
             <div class="serial_mm_info">
-              <div class="title">"{{mm.title}}"</div>
-              <div class="subtitle">{{mm.subtitle}}</div>
+              <div class="title">"{{multimediaObject.title}}"</div>
+              <div class="subtitle">{{multimediaObject.subtitle}}</div>
               <div class="video" style="height: 30px; margin-left: 5px;">
                 <!--Falta obtener el tipo de objeto multimedia-->
-                <a href="/video/{{mm.id}}" style="margin-left:26px;">Video</a>&nbsp;|&nbsp;&nbsp;
-                <span class="lenguage" style="font-weight: bold;">Castellano</span>&nbsp;({{mm.getDuration()}}")&nbsp;|&nbsp;Visto: <span class="numView" style="font-weight: bold;">{{mm.getNumview()}}</span>
-                {% if mm.getNumview == 1 %} vez{% else %} veces{% endif %}
+                <a href="/video/{{multimediaObject.id}}" style="margin-left:26px;">Video</a>&nbsp;|&nbsp;&nbsp;
+                <span class="lenguage" style="font-weight: bold;">Castellano</span>&nbsp;({{multimediaObject.getDuration()}}")&nbsp;|&nbsp;Visto: <span class="numView" style="font-weight: bold;">{{multimediaObject.getNumview()}}</span>
+                {% if multimediaObject.getNumview == 1 %} vez{% else %} veces{% endif %}
               </div>
-              {% for material in mm.materials %}
+              {% for material in multimediaObject.materials %}
               <!--Falta obtener el tipo de material, el icono y la URL del material-->
                 <div id="material">
                   <a href="/">{{material.getName()}}</a>
@@ -56,8 +56,8 @@
   </div>
 
 
-{% set lastDate = mm.getRecordDate()|date("d/m/Y") %}
-{% set lastSubserialTitle = mm.getSubtitle() %}
+{% set lastDate = multimediaObject.getRecordDate()|date("d/m/Y") %}
+{% set lastSubserialTitle = multimediaObject.getSubtitle() %}
 
 
 {% endfor %}
