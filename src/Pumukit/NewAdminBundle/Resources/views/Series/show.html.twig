@@ -3,20 +3,19 @@
   <table class="table">
    <tbody>
    <tr>
-    <td style="background-color:transparent" height="53" valign="top" width="15%">
+    <td height="53" valign="top" width="15%" style="border:none;">
       {% if series.getFirstUrlPic() is not empty %}
-        <img src="{{ series.getFirstUrlPic() }}" style="border:3px solid #000000;" height="51" width="60" />
+        <img src="{{ series.getFirstUrlPic() }}" style="border:3px double #ED6D00;" height="51" width="60" />
       {% else %}
-	    <img class="mini" src="/legacy/images/folder.png" style="border:3px solid #000000;" height="51" width="60" />
-        {# TODO too small <i class="mdi-file-folder" style="border:3px solid #000000;" height="51" width="60" ></i> #}
+	    <img class="mini" src="/legacy/images/folder.png" style="border:3px double #ED6D00;" height="51" width="60" />
       {% endif %}
     </td>
 
-    <td style="background-color:transparent" valign="top" width="85%">
+    <td valign="top" width="85%" style="border:none;">
 
     <!-- TITLE -->
       <div style="padding-left:5px">
-        <a href="#">{{ series.getTitle() }}</a> <br />
+        <a target="_blank" href="{{ url('pumukit_webtv_series_index', {id: series.id}) }}">{{ series.getTitle() }}</a> <br />
     <!-- LINE2 (PLACE) -->
         <strong>{{ series.getLine2() }}</strong><br />
     <!-- DATE -->
