@@ -1,7 +1,6 @@
 <div id="serial_body" style="display:block;">
 
 {% set lastDate = '--' %}
-{% set lastSubserialTitle = 0 %}
 
   	<div style="overflow:hidden">
 
@@ -16,7 +15,7 @@
     	{% endif %}
 
     	<!--Serie-->
-    	<div style="cursor:pointer;" onclick="window.location='/video/{{serie.getId()}}'">
+    	<div style="cursor:pointer;" onclick="window.location='/series/{{serie.getId()}}'">
       	<div class="pumukit_mmobjs" style="width:50%; float:left;">
         	<div class="pumukit_mmobj" style="float:left;">
           
@@ -49,7 +48,6 @@
     	</div>
 
     	{% set lastDate = serie.getPublicDate()|date("d/m/Y") %}
-    	{% set lastSubserialTitle = serie.getSubtitle() %}
 
     {% endfor %}
 
