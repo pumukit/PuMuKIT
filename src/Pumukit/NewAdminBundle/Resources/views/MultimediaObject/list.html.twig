@@ -19,7 +19,6 @@ TODO <?php //include_partial('search', array('years' => $sf_data->getRaw('years'
         <th colspan="6" width="5%"></th>
         <th width="1%">{% trans %}Audio/Video{% endtrans %}</th>
         <th width="1%">{% trans %}Img{% endtrans %}</th>
-        <th width="1%">{% trans %}Id{% endtrans %}</th>
         <th>{% trans %}Title{% endtrans %}</th>
         <th width="1%">{% trans %}Duration{% endtrans %}</th>
         <th width="1%">{% trans %}RecDate{% endtrans %}</th>
@@ -90,9 +89,6 @@ TODO <?php //include_partial('search', array('years' => $sf_data->getRaw('years'
         <img class="mini" src="/legacy/images/sin_foto.jpg" alt="{% trans %}No_pic{% endtrans %}" height="23" width="30">
 	    {% endif %}
         </td>
-      <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
-        {{ mm.id }}
-      </td>
         <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
           {{ mm.getTitle() }}
         </td>
@@ -110,8 +106,7 @@ TODO <?php //include_partial('search', array('years' => $sf_data->getRaw('years'
       {% if mms|length < 11 %}
       {% for i in 0..(11-mms|length) %}
       <tr>
-	    <td>&nbsp;</td>
-        <td>&nbsp;</td>
+  	    <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
@@ -130,7 +125,7 @@ TODO <?php //include_partial('search', array('years' => $sf_data->getRaw('years'
   </tbody>
   <tfoot>
     <tr>
-      <th colspan="14">
+      <th colspan="13">
         <div class="row">
           <div class="col-md-6">
             {{ mms.getNbResults }} {% trans %}Mm. Obj.{% endtrans %}
