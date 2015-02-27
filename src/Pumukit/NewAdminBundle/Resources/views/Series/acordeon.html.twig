@@ -1,3 +1,4 @@
+{% set criteria = app.session.get('admin/series/criteria') %}
 <div class="well">
   <form id="filter_series" class="form-horizontal" 
         onsubmit="$('#list_series').load('{{ path('pumukitnewadmin_series_list') }}', $(this).serialize()); return false;"
@@ -19,7 +20,6 @@
                 <label for="title" class="col-md-3 control-label">{% trans %}Title{% endtrans %}:</label>
                 <div class="col-md-9">
                   {# TODO culture #}
-                  {% set criteria = app.session.get('admin/series/criteria') %}
                   <input type="text" class="form-control" name="criteria[title.en]" id="filters_title" value="{{ criteria['title.en']|default("") }}">
                 </div>
               </div>
@@ -28,7 +28,6 @@
                 <div class="col-md-9">
                   {# TODO person name, comes from multimedia object in series #}
                   {# TODO culture #}
-                  {% set criteria = app.session.get('admin/series/criteria') %}
                   <input type="text" class="form-control" name="criteria[person]" id="filters_person" value="{{ criteria['person']|default("") }}">
                 </div>
               </div>
