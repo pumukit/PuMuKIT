@@ -131,13 +131,27 @@ TODO <?php //include_partial('search', array('years' => $sf_data->getRaw('years'
   <tfoot>
     <tr>
       <th colspan="14">
-        <div class="float-right">
-{#          {{ include('PumukitNewAdminBundle:Macros:pager_ajax.html.twig', {'name': 'mms', 'page': mms.getCurrentPage, 'total':mms.getNbPages}) }} #}
+        <div class="row">
+          <div class="col-md-6">
+            {{ mms.getNbResults }} {% trans %}Mm. Obj.{% endtrans %}
+	          {% if app.session.get('admin/mms/criteria')|length != 0%}
+              <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
+	          {% endif %}
+          </div>
+            <div class="col-md-6 text-right">
+              <div class="pagerfanta">
+                {% set sorting = {('sorting[' ~ (app.session.get('admin/mms/sort')) ~ ']') : (app.session.get('admin/mms/type')) } %}
+                {{ pagerfanta(mms, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_mms_index", "routeParams": sorting}) }}
+
+                <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_mms_index') }}' + '?page=1&paginate=' + this.value">
+                  <option {% if app.session.get('admin/mms/paginate') == 10 %}selected{% endif %} value="10">10</option>
+                  <option {% if app.session.get('admin/mms/paginate') == 20 %}selected{% endif %} value="20">20</option>
+                  <option {% if app.session.get('admin/mms/paginate') == 50 %}selected{% endif %} value="50">50</option>
+                </select>
+
+              </div>
+            </div>          
         </div>
-        {{ mms.getNbResults }} {% trans %}Mm. Obj.{% endtrans %}
-	{% if app.session.get('admin/mms/criteria')|length != 0%}
-          <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
-	{% endif %}
       </th>
     </tr>
   </tfoot>
