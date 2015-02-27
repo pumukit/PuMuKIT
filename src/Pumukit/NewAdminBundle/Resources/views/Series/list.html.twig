@@ -96,28 +96,30 @@
     <tfoot>
       <tr>
         <th colspan="13">
-          <div class="col-md-6">
-            {{ series.getNbResults }}
-            {% transchoice series.getNbResults %}
-	            {0} series|{1} series|]1,Inf] series
-	          {% endtranschoice %}
-	          {% if app.session.get('admin/series/criteria')|length != 0%}
-              <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
-	          {% endif %}
-          </div>
-          <div class="col-md-6 text-right">
-            <div class="pagerfanta">
-              {% set sorting = {('sorting[' ~ (app.session.get('admin/series/sort')) ~ ']') : (app.session.get('admin/series/type')) } %}
-              {{ pagerfanta(series, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_series_index", "routeParams": sorting}) }}
-
-              <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_series_index') }}' + '?page=1&paginate=' + this.value">
-                <option {% if app.session.get('admin/series/paginate') == 10 %}selected{% endif %} value="10">10</option>
-                <option {% if app.session.get('admin/series/paginate') == 20 %}selected{% endif %} value="20">20</option>
-                <option {% if app.session.get('admin/series/paginate') == 50 %}selected{% endif %} value="50">50</option>
-              </select>
-
+          <div class="row">
+            <div class="col-md-6">
+              {{ series.getNbResults }}
+              {% transchoice series.getNbResults %}
+	              {0} series|{1} series|]1,Inf] series
+	            {% endtranschoice %}
+	            {% if app.session.get('admin/series/criteria')|length != 0%}
+                <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
+	            {% endif %}
             </div>
-          </div>
+            <div class="col-md-6 text-right">
+              <div class="pagerfanta">
+                {% set sorting = {('sorting[' ~ (app.session.get('admin/series/sort')) ~ ']') : (app.session.get('admin/series/type')) } %}
+                {{ pagerfanta(series, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_series_index", "routeParams": sorting}) }}
+
+                <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_series_index') }}' + '?page=1&paginate=' + this.value">
+                  <option {% if app.session.get('admin/series/paginate') == 10 %}selected{% endif %} value="10">10</option>
+                  <option {% if app.session.get('admin/series/paginate') == 20 %}selected{% endif %} value="20">20</option>
+                  <option {% if app.session.get('admin/series/paginate') == 50 %}selected{% endif %} value="50">50</option>
+                </select>
+
+              </div>
+            </div>
+          </div>            
         </th>
       </tr>
     </tfoot>
