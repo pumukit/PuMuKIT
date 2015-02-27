@@ -27,6 +27,13 @@ class MultimediaObject
     private $id;
 
     /**
+     * @var string $secret
+     *
+     * @MongoDB\String
+     */
+    private $secret;
+
+    /**
      * @MongoDB\ReferenceOne(targetDocument="Series", inversedBy="multimedia_objects", simple=true)
      * @Gedmo\SortableGroup
      * // TODO SortableGroup #5623
@@ -176,6 +183,7 @@ class MultimediaObject
 
     public function __construct()
     {
+        $this->secret = new \MongoId();
         $this->tracks = new ArrayCollection();
         $this->pics = new ArrayCollection();
         $this->materials = new ArrayCollection();
@@ -197,6 +205,16 @@ class MultimediaObject
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get secret
+     *
+     * @return string
+     */
+    public function getSecret()
+    {
+        return $this->secret;
     }
 
     /**

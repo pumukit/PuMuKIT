@@ -16,6 +16,13 @@ class Series
   protected $id;
 
   /**
+   * @var string $secret
+   *
+   * @MongoDB\String
+   */
+  private $secret;
+
+  /**
    * @MongoDB\ReferenceOne(targetDocument="SeriesType", inversedBy="series", simple=true)
    */
   private $series_type;
@@ -111,11 +118,12 @@ class Series
    */
   private $locale = 'en';
 
-    public function __construct()
-    {
-        $this->multimedia_objects = new ArrayCollection();
-        $this->pics = new ArrayCollection();
-    }
+  public function __construct()
+  {
+      $this->secret = new \MongoId();  
+      $this->multimedia_objects = new ArrayCollection();
+      $this->pics = new ArrayCollection();
+  }
 
   /**
    * Get id
@@ -125,6 +133,16 @@ class Series
   public function getId()
   {
       return $this->id;
+  }
+
+  /**
+   * Get secret
+   *
+   * @return string
+   */
+  public function getSecret()
+  {
+      return $this->secret;
   }
 
   /**
