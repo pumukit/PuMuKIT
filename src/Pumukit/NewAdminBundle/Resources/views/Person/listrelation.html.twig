@@ -17,14 +17,14 @@
         {% if loop.first %}
 	  &nbsp;
 	{% else %}
-	  <a href="#" onclick="$('#{{ role.id }}_person_mms').load('{{ path('pumukitnewadmin_person_up', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}'); return false;">&#8593;</a>
+	  <a href="#" onclick="$('#{{ role.id }}_person_mms{{ template }}').load('{{ path('pumukitnewadmin_person_up', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}'); return false;">&#8593;</a>
 	{% endif %}
       </td>
       <td>
 	{% if loop.last %}
           &nbsp;
 	{% else %}
-	  <a href="#" onclick="$('#{{ role.id }}_person_mms').load('{{ path('pumukitnewadmin_person_down', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}'); return false;">&#8595;</a>
+	  <a href="#" onclick="$('#{{ role.id }}_person_mms{{ template }}').load('{{ path('pumukitnewadmin_person_down', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}'); return false;">&#8595;</a>
 	{% endif %}
       </td>
       <td>&nbsp;{{ person.id }} - {{ person.getHName() }}</td>

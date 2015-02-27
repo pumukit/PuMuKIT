@@ -158,10 +158,16 @@ class PersonController extends AdminController
         $criteria = $this->getCriteria($config);
         $resources = $this->getResources($request, $config, $criteria);
 
+        $template = '';
+        if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
+            $template = '_template';
+        }
+
         return array(
                      'people' => $resources,
                      'mm' => $multimediaObject,
-                     'role' => $role
+                     'role' => $role,
+                     'template' => $template
                      );
     }
 
