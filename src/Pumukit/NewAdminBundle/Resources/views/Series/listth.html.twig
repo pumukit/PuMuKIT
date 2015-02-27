@@ -1,13 +1,3 @@
-{% if 'id' == app.session.get('admin/series/sort') %}
-  <th width="1%">
-    <a href="#" onclick="$('#list_series').load('{{ path('pumukitnewadmin_series_list', {'sorting': {'id': app.session.get('admin/series/type')=='asc'?'desc':'asc'}}) }}'); return false;">{% trans %}Id{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25BE;':'&#x25B4;' }}</a>
-  </th>
-{% else %}
-  <th width="1%">
-    <a href="#" onclick="$('#list_series').load('{{ path('pumukitnewadmin_series_list', {'sorting': {'id': 'asc'}}) }}'); return false;">{% trans %}Id{% endtrans %}</a>
-  </th>
-{% endif %}
-
 {% if 'title' == app.session.get('admin/series/sort') %}
   <th>
     <a href="#" onclick="$('#list_series').load('{{ path('pumukitnewadmin_series_list', {'sorting': {'title': app.session.get('admin/series/type')=='asc'?'desc':'asc'}}) }}'); return false;">{% trans %}Title{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25BE;':'&#x25B4;' }}</a>

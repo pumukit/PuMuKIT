@@ -10,7 +10,7 @@ class TrackType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-          ->add('i18n_description', 'texti18n', array('required' => true, 'label' => 'Description'))
+          ->add('i18n_description', 'texti18n', array('required' => false, 'label' => 'Description'))
           ->add('language', 'language', array(
                                               'required' => true,
                                               'label' => 'Language'
