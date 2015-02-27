@@ -4,6 +4,7 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class SeriesController extends AdminController
 {
@@ -78,10 +79,37 @@ class SeriesController extends AdminController
           return $this->handleView($this->view($form));
       }
 
+      // EDIT MULTIMEDIA OBJECT TEMPLATE CONTROLLER SOURCE CODE
+      $factoryService = $this->get('pumukitschema.factory');
+
+      $roles = $factoryService->getRoles();
+      if (null === $roles){
+          throw new \Exception('Not found any role.');
+      }
+
+      $parentTags = $factoryService->getParentTags();
+      $mmtemplate = $factoryService->getMultimediaObjectTemplate($resource);
+
+      $formMeta = $this->createForm('pumukitnewadmin_mmtemplate_meta', $mmtemplate);
+
+      $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
+
+      $template = '';
+      if (MultimediaObject::STATUS_PROTOTYPE === $mmtemplate->getStatus()){
+          $template = '_template';
+      }
+      // end of getting data for multimedia object template in series
+
       return $this->render('PumukitNewAdminBundle:Series:update.html.twig',
                            array(
-                                 'series' => $resource,
-                                 'form'   => $form->createView()
+                                 'series'        => $resource,
+                                 'form'          => $form->createView(),
+                                 'mmtemplate'    => $mmtemplate,
+                                 'form_meta'     => $formMeta->createView(),
+                                 'roles'         => $roles,
+                                 'pub_decisions' => $pubDecisionsTags,
+                                 'parent_tags'   => $parentTags,
+                                 'template'      => $template
                                  )
                            );
   }

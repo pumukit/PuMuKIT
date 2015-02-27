@@ -11,53 +11,6 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 class MultimediaObjectTemplateController extends MultimediaObjectController
 {
     /**
-     * Edit Multimedia Object Template
-     *
-     * @Template("PumukitNewAdminBundle:MultimediaObjectTemplate:edit.html.twig")
-     */
-    public function editAction(Request $request)
-    {
-        $config = $this->getConfiguration();
-        
-        $factoryService = $this->get('pumukitschema.factory');
-
-        $roles = $factoryService->getRoles();
-        if (null === $roles){
-            throw new \Exception('Not found any role.');
-        }
-
-        $sessionId = $this->get('session')->get('admin/series/id', null);
-        $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
-        if (null === $series){
-            throw new \Exception('Series with id '.$request->get('id').' or with session id '.$sessionId.' not found.');
-        }
-        $this->get('session')->set('admin/series/id', $series->getId());
-  
-        $parentTags = $factoryService->getParentTags();
-        $mmtemplate = $factoryService->getMultimediaObjectTemplate($series);
-        
-        $formMeta = $this->createForm($config->getFormType().'_meta', $mmtemplate);
-
-        $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
-
-        $template = '';
-        if (MultimediaObject::STATUS_PROTOTYPE === $mmtemplate->getStatus()){
-            $template = '_template';
-        }
-        
-        return array(
-                     'mmtemplate'    => $mmtemplate,
-                     'form_meta'     => $formMeta->createView(),
-                     'series'        => $series,
-                     'roles'         => $roles,
-                     'pub_decisions' => $pubDecisionsTags,
-                     'parent_tags'   => $parentTags,
-                     'template'      => $template
-                     )
-          ;
-    }
-    
-    /**
      * Display the form for editing or update the resource.
      */
     public function updatemetaAction(Request $request)
@@ -72,9 +25,10 @@ class MultimediaObjectTemplateController extends MultimediaObjectController
         }
 
         $sessionId = $this->get('session')->get('admin/series/id', null);
-        $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
+        $series = $factoryService->findSeriesById($request->get('seriesId'), $sessionId);
+
         if (null === $series){
-            throw new \Exception('Series with id '.$request->get('id').' or with session id '.$sessionId.' not found.');
+            throw new \Exception('Series with id '.$request->get('seriesId').' or with session id '.$sessionId.' not found.');
         }
         $this->get('session')->set('admin/series/id', $series->getId());
 
