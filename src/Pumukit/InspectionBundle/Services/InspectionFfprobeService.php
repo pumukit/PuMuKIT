@@ -34,7 +34,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
                 "nor audio tracks\n" . $file);
         }
 
-        $duration = ceil($json->File->track->Duration / 1000); // in ms (using mediainfo -f)
+        $duration = ceil(intval((string)$json->format->duration));
 
         return $duration;
     }
