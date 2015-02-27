@@ -46,9 +46,9 @@ class AdminController extends ResourceController
         $config = $this->getConfiguration();
 
         return $this->redirectToRoute(
-       $config->getRedirectRoute('index'),
-       $config->getRedirectParameters()
-    );
+            $config->getRedirectRoute('index'),
+            $config->getRedirectParameters()
+        );
     }
 
     /**
@@ -108,8 +108,8 @@ class AdminController extends ResourceController
         $resources = $this->getResources($request, $config, $criteria);
 
         return $this->render('PumukitNewAdminBundle:'.ucfirst($resourceName).':list.html.twig',
-                             array($pluralName => $resources)
-                             );
+            array($pluralName => $resources)
+        );
     }
 
     /**
@@ -157,64 +157,64 @@ class AdminController extends ResourceController
         return $this->resourceResolver->getResource($repository, 'findOneBy', array($criteria));
     }
 
-  /**
-   * Gets the criteria values
-   */
-  public function getCriteria($config)
-  {
-      $criteria = $config->getCriteria();
+    /**
+     * Gets the criteria values
+     */
+    public function getCriteria($config)
+    {
+        $criteria = $config->getCriteria();
 
-      if (array_key_exists('reset', $criteria)) {
-          $this->get('session')->remove('admin/'.$config->getResourceName().'/criteria');
-      } elseif ($criteria) {
-          $this->get('session')->set('admin/'.$config->getResourceName().'/criteria', $criteria);
-      }
-      $criteria = $this->get('session')->get('admin/'.$config->getResourceName().'/criteria', array());
+        if (array_key_exists('reset', $criteria)) {
+            $this->get('session')->remove('admin/'.$config->getResourceName().'/criteria');
+        } elseif ($criteria) {
+            $this->get('session')->set('admin/'.$config->getResourceName().'/criteria', $criteria);
+        }
+        $criteria = $this->get('session')->get('admin/'.$config->getResourceName().'/criteria', array());
 
-    //TODO: do upstream
-    $new_criteria = array();
-      foreach ($criteria as $property => $value) {
-          //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
-      if ('' !== $value) {
-          $new_criteria[$property] = new \MongoRegex('/'.$value.'/i');
-      }
-      }
+        //TODO: do upstream
+        $new_criteria = array();
+        foreach ($criteria as $property => $value) {
+            //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
+            if ('' !== $value) {
+                $new_criteria[$property] = new \MongoRegex('/'.$value.'/i');
+            }
+        }
 
-      return $new_criteria;
-  }
+        return $new_criteria;
+    }
 
-  /**
-   * Gets the list of resources according to a criteria
-   */
-  public function getResources(Request $request, $config, $criteria)
-  {
-      $sorting = $config->getSorting();
-      $repository = $this->getRepository();
-      $session = $this->get('session');
-      $session_namespace = 'admin/' . $config->getResourceName();
+    /**
+     * Gets the list of resources according to a criteria
+     */
+    public function getResources(Request $request, $config, $criteria)
+    {
+        $sorting = $config->getSorting();
+        $repository = $this->getRepository();
+        $session = $this->get('session');
+        $session_namespace = 'admin/' . $config->getResourceName();
 
-      if ($config->isPaginated()) {
-          $resources = $this
-              ->resourceResolver
-              ->getResource($repository, 'createPaginator', array($criteria, $sorting));
+        if ($config->isPaginated()) {
+            $resources = $this
+                ->resourceResolver
+                ->getResource($repository, 'createPaginator', array($criteria, $sorting));
 
-          if ($request->get('page', null)) {
-              $session->set($session_namespace.'/page', $request->get('page', 1));
-          }
+            if ($request->get('page', null)) {
+                $session->set($session_namespace.'/page', $request->get('page', 1));
+            }
 
-          if ($request->get('paginate', null)) {
-              $session->set($session_namespace.'/paginate', $request->get('paginate', 10));
-          }
+            if ($request->get('paginate', null)) {
+                $session->set($session_namespace.'/paginate', $request->get('paginate', 10));
+            }
 
-          $resources
-              ->setCurrentPage($session->get($session_namespace.'/page', 1), true, true)
-              ->setMaxPerPage($session->get($session_namespace.'/paginate', 10));
-      } else {
-          $resources = $this
-              ->resourceResolver
-              ->getResource($repository, 'findBy', array($criteria, $sorting, $config->getLimit()));
-      }
+            $resources
+                ->setCurrentPage($session->get($session_namespace.'/page', 1), true, true)
+                ->setMaxPerPage($session->get($session_namespace.'/paginate', 10));
+        } else {
+            $resources = $this
+                ->resourceResolver
+                ->getResource($repository, 'findBy', array($criteria, $sorting, $config->getLimit()));
+        }
 
-      return $resources;
-  }
+        return $resources;
+    }
 }
