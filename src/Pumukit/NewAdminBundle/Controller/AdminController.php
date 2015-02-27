@@ -190,26 +190,29 @@ class AdminController extends ResourceController
   {
       $sorting = $config->getSorting();
       $repository = $this->getRepository();
+      $session = $this->get('session');
+      $session_namespace = 'admin/' . $config->getResourceName();
 
       if ($config->isPaginated()) {
           $resources = $this
-    ->resourceResolver
-    ->getResource($repository, 'createPaginator', array($criteria, $sorting))
-    ;
+              ->resourceResolver
+              ->getResource($repository, 'createPaginator', array($criteria, $sorting));
 
           if ($request->get('page', null)) {
-              $this->get('session')->set('admin/'.$config->getResourceName().'/page', $request->get('page', 1));
+              $session->set($session_namespace.'/page', $request->get('page', 1));
+          }
+
+          if ($request->get('paginate', null)) {
+              $session->set($session_namespace.'/paginate', $request->get('paginate', 12));
           }
 
           $resources
-    ->setCurrentPage($this->get('session')->get('admin/'.$config->getResourceName().'/page', 1), true, true)
-    ->setMaxPerPage(12)
-    ;
+              ->setCurrentPage($session->get($session_namespace.'/page', 1), true, true)
+              ->setMaxPerPage($session->get($session_namespace.'/paginate', 12));
       } else {
           $resources = $this
-    ->resourceResolver
-    ->getResource($repository, 'findBy', array($criteria, $sorting, $config->getLimit()))
-    ;
+              ->resourceResolver
+              ->getResource($repository, 'findBy', array($criteria, $sorting, $config->getLimit()));
       }
 
       return $resources;
