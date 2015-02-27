@@ -4,16 +4,18 @@
       <tr>
         <td><ul><li></li></ul></td>
         <td colspan="11">
-          {{ job.getStatusText() }}
-          {% if status_error == job.getStatus() %}
-          <a href="#" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_retry_job', {'mmId': mmId, 'jobId': job.id, 'preview': 1}) }}'); return false;">
-            <i class="mdi-navigation-refresh"></i>
-          </a>
-          {% endif %}
-          {% if status_error == job.getStatus() %}
-          <a href="#" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_delete_job', {'mmId': mmId, 'jobId': job.id, 'preview': 1}) }}'); return false;">
-            <i class="mdi-content-clear"></i>
-          </a>
+          {% if status_error == job.getStatus() %}    
+              <a href="#" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_retry_job', {'mmId': mmId, 'jobId': job.id, 'preview': 1}) }}'); return false;">
+                <i class="mdi-navigation-refresh"></i>
+              </a>
+    
+              <a href="#" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_delete_job', {'mmId': mmId, 'jobId': job.id, 'preview': 1}) }}'); return false;">
+                <i class="mdi-content-clear"></i>
+              </a>
+              <small style="color:red">{{ job.getStatusText() }}</small>              
+          {% else %}
+              <i class="mdi-navigation-refresh pmk-job-animate"></i>          
+              <small>{{ job.getStatusText() }}</small>              
           {% endif %}
         </td>
         <td>
