@@ -77,15 +77,16 @@
  * Icons for tag tree
  */
 .pmk-tag-tree .collapsed i.tag_icon:before {
-    content: "\e89e"; /*mdi-navigation-expand-more*/
+    content: "\e89b"; /*mdi-navigation-chevron-right*/    
 }
 
 .pmk-tag-tree .expanded i.tag_icon:before {
-    content: "\e89d"; /*mdi-navigation-expand-less*/
+    content: "\e89e"; /*mdi-navigation-expand-more*/
+
 }
 
-.pmk-tag-tree .element i.tag_icon:before {
-    content: "\e89b"; /*mdi-navigation-chevron-right*/
+.pmk-tag-tree .element i.tag_icon {
+    padding-left: 18px; /*Same space of content: "\e89e"; */
 }
 
 /**
