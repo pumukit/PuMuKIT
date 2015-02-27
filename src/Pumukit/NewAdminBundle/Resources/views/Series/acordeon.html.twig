@@ -17,12 +17,20 @@
           <div id="collapseSearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSearch">
             <div class="panel-body">
               <div class="form-group">
+                <label for="id" class="col-md-3 control-label">{% trans %}Id{% endtrans %}:</label>
+                <div class="col-md-9">
+                  {# TODO culture #}
+                  <input type="text" class="form-control" name="criteria[_id]" id="filters_id" value="{{ criteria['_id']|default("") }}">
+                </div>
+              </div>
+              <div class="form-group">
                 <label for="title" class="col-md-3 control-label">{% trans %}Title{% endtrans %}:</label>
                 <div class="col-md-9">
                   {# TODO culture #}
                   <input type="text" class="form-control" name="criteria[title.en]" id="filters_title" value="{{ criteria['title.en']|default("") }}">
                 </div>
               </div>
+              
               <div class="form-group">
                 <label for="person" class="col-md-3 control-label">{% trans %}Person{% endtrans %}:</label>
                 <div class="col-md-9">

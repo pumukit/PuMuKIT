@@ -101,6 +101,7 @@ class SeriesController extends AdminController
       }
       $criteria = $this->get('session')->get('admin/series/criteria', array());
 
+
       //TODO: do upstream & locale
       $new_criteria = array();
       foreach ($criteria as $property => $value) {
@@ -125,6 +126,8 @@ class SeriesController extends AdminController
               }
           } elseif(('' !== $value) && ('status' === $property)) {
             // TODO
+          } elseif(('' !== $value) && ('_id' === $property)) {
+              $new_criteria['_id'] = $value;
           }
       }
 
