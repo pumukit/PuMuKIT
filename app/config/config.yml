@@ -132,6 +132,7 @@ pumukit_encoder:
             display: true
             wizard: true
             master: false
+            tags: html5
             format: mp4
             codec: h264
             mime_type: 'video/x-mp4'

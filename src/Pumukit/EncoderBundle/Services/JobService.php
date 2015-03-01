@@ -403,6 +403,9 @@ class JobService
         $track->addTag('profile:' . $job->getProfile());
         if ($profile['master']) $track->addTag('master');
         if ($profile['display']) $track->addTag('display');
+        foreach(explode(",", $profile['tags']) as $tag) {
+            $track->addTag(trim($tag));
+        }
 
         $track->setLanguage($job->getLanguageId());
         if(isset($profile['streamserver']['url_out'])) {

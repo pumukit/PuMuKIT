@@ -51,6 +51,7 @@ class Configuration implements ConfigurationInterface
                                 ->info('Shown in wizard')->end()
                             ->booleanNode('master')->defaultValue(true)
                                 ->info('The track is master copy')->end()
+                            ->scalarNode('tags')->defaultValue('')->info('Tags used in tracks created with this profiles')->end()
                             ->scalarNode('format')->info('Format of the track')->end()
                             ->scalarNode('codec')->info('Codec of the track')->end()
                             ->scalarNode('mime_type')->info('Mime Type of the track')->end()
