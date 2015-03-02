@@ -1,5 +1,3 @@
-{# TODO path files list and twig templates #}
-
 <div class="well">
   <fieldset>
     <dl>
@@ -20,17 +18,6 @@
           </div>
         </dd>
       </div>
-
-      {# TODO FILES PATH
-      <script type="text/javascript">
-        if (typeof update_file == 'object') update_file.stop();
-        update_file = new Ajax.PeriodicalUpdater('tracks_mms', '/editar.php/files/list/mm/" + {{ mm.id }} + "', {
-        method: 'get', frequency: 8, decay: 1
-        });
-        if (document.location.hash != '#mediaMmHash') update_file.stop();
-      </script>
-      #}
-
 
       <div class="form-row">
         <dt>{% trans %}Materials{% endtrans %}:</dt>

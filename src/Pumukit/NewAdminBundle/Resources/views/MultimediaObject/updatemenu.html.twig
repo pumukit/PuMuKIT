@@ -1,29 +1,14 @@
 <div class="dropdown">
   <i class="mdi-navigation-menu" id="list_pics_mm_{{ mm.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-  <ul class="dropdown-menu" role="menu" aria-labelledby="list_pics_mm_{{ mm.id }}">
-    {# TODO ADD OR NOT
-    <div class="mas_info" style="">
-      <div class="trans_button_up"><img src="/legacy/images/admin/mbuttons/edit_inline.gif" alt="{% trans %}options{% endtrans %}" /></div>
-      <div class="trans_button_info">{% trans %}Options{% endtrans %}:</div>
-    </div>
-    #}
-    
+  <ul class="dropdown-menu" role="menu" aria-labelledby="list_pics_mm_{{ mm.id }}">  
     <li>
       <a href="#" onclick="window.submit_delete_mms('{{ mm.id }}'); return false;">
         <i class="mdi-content-clear"></i>{% trans %}Delete multimedia object{% endtrans %}
+    </li>   
+    <li>
+      <a href="#" onclick="return false;">
+        <strong>{% trans %}Cancel{% endtrans %}...</strong>
+      </a>
     </li>
-
-    {# TODO info in edit muktimedia object 
-    <li class="normal">  #}
-	  {# TODO PATH INFO #} {#
-	  <a title="{% trans %}File information of multimedia object{% endtrans %} {{ mm.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="/editar.php/mms/info/id/14575"><img alt="{% trans %}info{% endtrans %}" src="/legacy/images/admin/mbuttons/info_inline.gif">{% trans %}Multimedia object information{% endtrans %}</a>
-    </li>
-    #}
-    
-      <li>
-        <a href="#" onclick="return false;">
-          <strong>{% trans %}Cancel{% endtrans %}...</strong>
-        </a>
-      </li>
-    </ul>
+  </ul>
 </div>

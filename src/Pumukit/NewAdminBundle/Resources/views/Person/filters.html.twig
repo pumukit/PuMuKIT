@@ -6,7 +6,6 @@
 
     <div class="form-group">
       <label for="name" class="col-md-2 control-label">{% trans %}Name{% endtrans %}:</label>
-      {# TODO culture #}
       {% set criteria = app.session.get('admin/person/criteria') %}
       <div class="col-md-10">
         <input type="text" class="form-control" name="criteria[name]" id="filters_name" value="{{ criteria['name']|default("") }}">

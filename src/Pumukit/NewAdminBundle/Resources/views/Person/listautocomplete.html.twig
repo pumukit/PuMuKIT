@@ -7,7 +7,7 @@
   <fieldset>
     <div class="form-group">
       <label for="name" class="control-label">{% trans %}Name{% endtrans %}:</label>
-      <input type="text" name="name" id="name" value="{% trans %}name to search for{% endtrans %}" class="form-control"/>
+      <input type="text" name="name" id="name" placeholder="{% trans %}name to search for{% endtrans %}" class="form-control"/>
       <span id="indicator1" style="display: none" class="input-group-addon"><img alt="{% trans %}working{% endtrans %}..." src="/legacy/images/admin/load/spinner.gif" height="18" width="18"></span>
       <input type="hidden" name="person_id" value="0" id="person_id"/>
     </div>
@@ -42,11 +42,6 @@
 <div style="clear:right"></div>
 
 <script type="text/javascript">
-// TODO WITH PLACEHOLDER
-$("#name").on("click", function(){
-    if ('{% trans %}name to search for{% endtrans %}' == $("#name").val()) $("#name").val("");
-});
-
 $("#name").autocomplete({
     source: "{{ path('pumukitnewadmin_person_auto_complete') }}",
     delay: 250,

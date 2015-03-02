@@ -4,7 +4,6 @@
   parent.$('#tracks_mms').load('{{ path('pumukitnewadmin_track_list', {'id': mm.id}) }}');
   parent.$('#tracks_mms').html('{% trans %}Update the web page to show master videos{% endtrans %}.');
 
-  // TODO snackbar
   var message = '{% trans %}New master uploaded{% endtrans %}.';
   parent.$('#div_messages_span_info').snackbar({content: message, style: 'toast'});
 </script>

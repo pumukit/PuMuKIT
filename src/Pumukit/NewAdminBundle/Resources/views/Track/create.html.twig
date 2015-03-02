@@ -8,15 +8,7 @@
         action="{{ path('pumukitnewadmin_track_upload', {'id': mm.id}) }}" 
         enctype="multipart/form-data" name="formulario">
     <iframe name="iframeUpload" style="display:none" src=""></iframe> 
-    
-    <input type="hidden" name="num_video" id="num_video" value="{{ mm.id }}" />
-    <input type="hidden" name="num_serie" id="num_serie" value="{{ mm.getSeries().getId() }}" />
-    <input type="hidden" name="proveedor" id="proveedor" value="{# TODO sfConfig::get('app_transcoder_proveedor') #}" />  <!-- ojo  -->
-    <input type="hidden" name="titulo" id="titulo" value="{# TODO  $sf_data->getRaw('mm')->getTitle() {{ mm.getI18nTitle() }} #}" />
-    <input type="hidden" name="tit_serie" id="tit_serie" value="{# TODO sf_data->getRaw('mm')->getSerialWithI18n()->getTitle()  {{ mm.getSeries().getI18nTitle() }} #}" />
-    <input type="hidden" name="fecha_acto" id="fecha_acto" value="{{ mm.getRecorddate('ymd')|date('ymd') }}" />
-    <input type="hidden" name="copiar" id="copiar" value="1" />
-    
+      
     <fieldset>
       
       {{ form_row(form["i18n_description"]) }}
@@ -73,7 +65,6 @@
             <ul class="videoserv_tree">
               {% for dir in dirs %}
               <li class="collapsed">
-                {# TODO define fileServerTree #}
                 <span onclick="fileServerTree(this, 'file', '{{ dir }}', 0, 'explorer_videoserv')">{{ dir }}</span>
                 <ul></ul>
               </li>
