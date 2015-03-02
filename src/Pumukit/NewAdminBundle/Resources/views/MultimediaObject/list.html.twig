@@ -27,10 +27,12 @@ TODO <?php //include_partial('search', array('years' => $sf_data->getRaw('years'
     </thead>
 
     <tbody>
-      {% if (0 == mms|length) %} {# TODO style of centered text, better way to do it? #}
-      <div style="position: absolute; top: 310px; left: 30%; font-size: 20px; width: 30%; font-weight: bold;">
-         {% trans %}There are no multimedia objects with those values.{% endtrans %}
-      </div>
+      {% if (0 == mms|length) %}
+      <tr>
+        <td colspan="13">
+          {% trans %}There are no multimedia objects with those values.{% endtrans %}
+        </td>
+      </tr>
       {% endif %}
 
       {% for mm in mms %}
