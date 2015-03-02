@@ -383,6 +383,15 @@ window.change_select = function(element, selector, pluralName)
             var route = '{{ path('pumukitnewadmin_mms_invert_announce', {'ids': '__ids__'}) }}';
             $('#list_'+pluralName).load(route.replace('__ids__', JSON.stringify(ids)));
         }
+        for (var i = 0; i < ids.length; i++) {
+            id = ids[i];
+            var puDeNew = $("#list_pubdecisions_"+id+" #pub_decisions_PUDENEW");
+            if (1 == puDeNew.length){
+                var checkedValue = puDeNew[0].checked;
+                if (checkedValue) puDeNew[0].checked = false;
+                else puDeNew[0].checked = true;
+            }
+        }
         break;
 /* TODO
     case 'inv_announce_virtualserial_sel':
