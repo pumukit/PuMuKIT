@@ -98,8 +98,9 @@
         </td>
       </tr>
       {% endfor %}
-      {% if mms|length < 11 %}
-      {% for i in 0..(11-mms|length) %}
+
+      {% if (mms|length - (mms.getMaxPerPage() * (mms.getCurrentPage() - 1))) < (mms.maxPerPage-1) %}
+      {% for i in (mms|length - (mms.getMaxPerPage() * (mms.getCurrentPage() - 1)))..(mms.maxPerPage-1) %}
       <tr>
   	    <td>&nbsp;</td>
         <td>&nbsp;</td>
@@ -134,9 +135,9 @@
                 {{ pagerfanta(mms, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_mms_index", "routeParams": sorting}) }}
 
                 <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_mms_index') }}' + '?page=1&paginate=' + this.value">
-                  <option {% if app.session.get('admin/mms/paginate') == 10 %}selected{% endif %} value="10">10</option>
-                  <option {% if app.session.get('admin/mms/paginate') == 20 %}selected{% endif %} value="20">20</option>
-                  <option {% if app.session.get('admin/mms/paginate') == 50 %}selected{% endif %} value="50">50</option>
+                  <option {% if mms.maxPerPage == 10 %}selected{% endif %} value="10">10</option>
+                  <option {% if mms.maxPerPage == 20 %}selected{% endif %} value="20">20</option>
+                  <option {% if mms.maxPerPage == 50 %}selected{% endif %} value="50">50</option>
                 </select>
 
               </div>
