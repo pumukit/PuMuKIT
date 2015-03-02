@@ -193,7 +193,7 @@ window.filter_click_letter = function(letter)
 }
 
 // TODO complete todos
-window.change_select = function(element, selector)
+window.change_select = function(element, selector, pluralName)
 {
     var i = selector.val();
     switch(i){
@@ -248,12 +248,12 @@ window.change_select = function(element, selector)
         });
         if (ids.length == 0) break;
         if (confirm('{% trans %}Are you sure?{% endtrans %}')) {
-            var route = '{{ path('pumukitnewadmin_person_batch_delete', {'ids': '__ids__'}) }}';
-            $('#list_people').load(route.replace('__ids__', JSON.stringify(ids)));
+            var route = get_batch_delete_route(element, ids);
+            $('#list_'+pluralName).load(route, {'_method':'DELETE'});
         }
         break;
     case 'create':
-        $('.modal-content').load("{{ path('pumukitnewadmin_person_create') }}");
+        $('.modal-content').load(get_create_route(element));
         $('#myModal').modal('show');
         selector.selectedIndex = 0;
         break;
@@ -692,3 +692,45 @@ comprobar_form_file_nmb = function(file){
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
+
+/**
+ * Get batch delete route according to element
+ */
+get_batch_delete_route = function(element, ids)
+{
+    var route = ids;
+
+    switch (element) {
+        case 'person':
+            route = '{{ path('pumukitnewadmin_person_batch_delete', {'ids': '__ids__'}) }}';
+            break;
+        case 'series':   
+            route = '{{ path('pumukitnewadmin_series_batch_delete', {'ids': '__ids__'}) }}';
+            break;
+    }
+
+    return route.replace('__ids__', JSON.stringify(ids)) ;
+}
+
+/**
+ * Get create route according to element
+ */
+get_create_route = function(element)
+{
+    var route = '';
+
+    switch (element) {
+        case 'person':
+            route = '{{ path('pumukitnewadmin_person_create') }}';
+            break;
+        case 'user':
+            route = '{{ path('pumukitnewadmin_user_create') }}';
+            break;
+        case 'tag':
+            // TODO complete with id parent parameter
+            route = '{{ path('pumukitnewadmin_tag_create', {'parent': '__id__'}) }}';
+            break;
+    }
+
+    return route;
+}
