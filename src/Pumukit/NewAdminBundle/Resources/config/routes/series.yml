@@ -21,12 +21,12 @@ pumukitnewadmin_series_update:
         _controller: pumukitnewadmin.controller.series:updateAction
 
 pumukitnewadmin_series_batch_delete:
-    pattern: /batch_delete
+    pattern: /batchdelete
     methods: [DELETE]
     defaults:
         _controller: pumukitnewadmin.controller.series:batchDeleteAction
         _sylius:
-            redirect: pumukitnewadmin_series_index
+            redirect: pumukitnewadmin_series_list
 
 pumukitnewadmin_series_delete:
     pattern: /{id}/delete

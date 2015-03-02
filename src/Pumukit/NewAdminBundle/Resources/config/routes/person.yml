@@ -22,7 +22,7 @@ pumukitnewadmin_person_update:
 
 pumukitnewadmin_person_batch_delete:
     pattern: /batchdelete
-    methods: [GET]
+    methods: [DELETE]
     defaults:
         _controller: pumukitnewadmin.controller.person:batchDeleteAction
         _sylius:
