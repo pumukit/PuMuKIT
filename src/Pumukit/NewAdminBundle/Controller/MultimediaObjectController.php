@@ -88,7 +88,6 @@ class MultimediaObjectController extends SortableAdminController
                    );
     }
 
-    // TODO
     /**
      * Display the form for editing or update the resource.
      * @Template
@@ -148,7 +147,6 @@ class MultimediaObjectController extends SortableAdminController
                      );
     }
 
-    // TODO
     /**
      * Display the form for editing or update the resource.
      */
@@ -222,7 +220,6 @@ class MultimediaObjectController extends SortableAdminController
                              );
     }
     
-    // TODO
     /**
      * Display the form for editing or update the resource.
      */
@@ -418,9 +415,6 @@ class MultimediaObjectController extends SortableAdminController
           ->setCurrentPage($page, true, true)
           ->setMaxPerPage(12)
           ;
-
-        // TODO get criteria
-
         return $mms;
     }
 

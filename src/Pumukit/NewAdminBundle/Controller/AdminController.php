@@ -171,7 +171,6 @@ class AdminController extends ResourceController
         }
         $criteria = $this->get('session')->get('admin/'.$config->getResourceName().'/criteria', array());
 
-        //TODO: do upstream
         $new_criteria = array();
         foreach ($criteria as $property => $value) {
             //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)

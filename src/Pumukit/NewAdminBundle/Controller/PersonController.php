@@ -17,7 +17,6 @@ class PersonController extends AdminController
     /**
      * Index
      *
-     * TODO with Symfony Controller
      * @Template("PumukitNewAdminBundle:Person:index.html.twig")
      */
     public function indexAction(Request $request)
@@ -69,7 +68,6 @@ class PersonController extends AdminController
 
     /**
      * Update person
-     * // TODO WITH symfony CONTROLLER @ParamConverter("person", class="PumukitSchemaBundle:Person")
      * @Template("PumukitNewAdminBundle:Person:update.html.twig")
      */
     public function updateAction(Request $request)
@@ -272,7 +270,7 @@ class PersonController extends AdminController
         $person = $personService->findPersonById($request->get('id'));
         try{
             $multimediaObject = $personService->createRelationPerson($person, $role, $multimediaObject);
-            // TODO
+            // TODO Snackbars and toasts
             //$message = sprintf($this->getContext()->getI18N()->__("Persona asociada correctamente a la plantilla con el rol \"%s\"."), $this->role->getName());
             //$msg_alert = array('info', $message);
         }catch(\Excepction $e){
@@ -429,13 +427,12 @@ class PersonController extends AdminController
         }
         $criteria = $this->get('session')->get('admin/person/criteria', array());
         
-        //TODO: do upstream
         $new_criteria = array();
 
         if (array_key_exists('name', $criteria) && array_key_exists('letter', $criteria)){
             if (('' !== $criteria['name']) && ('' !== $criteria['letter'])){
                 // TODO - regex multiple conditions with and
-                $new_criteria['name'] = new \MongoRegex('/'.$criteria['name'].'|^'.$criteria['letter'].'/i');
+                $new_criteria['name'] = new \MongoRegex('/^'.$criteria['letter'].'.*'.$criteria['name'].'|^/i');
             }elseif('' !== $criteria['name']){
                 $new_criteria['name'] = new \MongoRegex('/'.$criteria['name'].'/i');
             }elseif('' !== $criteria['letter']){

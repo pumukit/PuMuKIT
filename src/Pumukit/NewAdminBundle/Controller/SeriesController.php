@@ -46,7 +46,7 @@ class SeriesController extends AdminController
       return array('series' => $resources);
   }
 
-  // TODO
+
   /**
    * Display the form for editing or update the resource.
    */
@@ -129,8 +129,6 @@ class SeriesController extends AdminController
       }
       $criteria = $this->get('session')->get('admin/series/criteria', array());
 
-
-      //TODO: do upstream & locale
       $new_criteria = array();
       foreach ($criteria as $property => $value) {
           //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
@@ -146,14 +144,12 @@ class SeriesController extends AdminController
               elseif ('' !== $value['to'])
                   $new_criteria['public_date'] = array('$lt' => $date_to);
           } elseif (('' !== $value) && ('announce' === $property)) {
-              // TODO translate
               if ('true' === $value) {
                   $new_criteria[$property] = true;
               } elseif ('false' === $value){
                   $new_criteria[$property] = false;
               }
           } elseif(('' !== $value) && ('status' === $property)) {
-            // TODO
           } elseif(('' !== $value) && ('_id' === $property)) {
               $new_criteria['_id'] = $value;
           }
