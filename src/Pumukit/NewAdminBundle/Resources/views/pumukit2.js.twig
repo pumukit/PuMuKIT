@@ -380,7 +380,10 @@ window.change_select = function(element, selector, pluralName)
         });
         if (ids.length == 0) break;
         if (confirm('{% trans %}Are you sure?{% endtrans %}')) {
-            var route = '{{ path('pumukitnewadmin_mms_invert_announce', {'ids': '__ids__'}) }}';
+            if ('series' == element)
+                var route = '{{ path('pumukitnewadmin_series_invert_announce', {'ids': '__ids__'}) }}';
+            else
+                var route = '{{ path('pumukitnewadmin_mms_invert_announce', {'ids': '__ids__'}) }}';
             $('#list_'+pluralName).load(route.replace('__ids__', JSON.stringify(ids)));
         }
         for (var i = 0; i < ids.length; i++) {
