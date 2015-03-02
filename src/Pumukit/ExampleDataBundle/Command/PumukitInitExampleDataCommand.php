@@ -109,16 +109,50 @@ EOT
             $dm->persist($series);
             $dm->flush();
 
+            $tags = array('tag_a', 'tag_b');
+            $language = 'portuñol';
+            $url = '/74638.flv';
+            $path = '/74638.flv';
+            $mime = 'video/flv';
+            $duration = 5000;
+            $acodec = 'aac';
+            $vcodec = 'mpeg4-HP';
+            $bitrate = 10000;
+            $framerate = 25;
+            $only_audio = false;
+            $channels = 1;
+            $duration = 66666;
+            $width = 1920;
+            $height = 1080;
+            $hide = false;
+            $numview = 3;
+
+            $track = new Track();
+            $track->setTags($tags);
+            $track->setLanguage($language);
+            $track->setUrl($url);
+            $track->setPath($path);
+            $track->setMimeType($mime);
+            $track->setDuration($duration);
+            $track->setAcodec($acodec);
+            $track->setVcodec($vcodec);
+            $track->setBitrate($bitrate);
+            $track->setFramerate($framerate);
+            $track->setOnlyAudio($only_audio);
+            $track->setChannels($channels);
+            $track->setDuration($duration);
+            $track->setWidth($width);
+            $track->setHeight($height);
+            $track->setHide($hide);
+            $track->setNumview($numview);
+
             $rank = 3;
             $status = MultimediaObject::STATUS_NORMAL;
             $record_date = new \DateTime();
             $public_date = new \DateTime();
-            $title = 'Star Wars';
-            $subtitle = 'Spoiler';
-            $description = "Darth Vader: Obi-Wan never told you what happened to your father.
-                Luke Skywalker: He told me enough! He told me you killed him!
-                Darth Vader: No. I am your father.
-                Luke Skywalker: No... that's not true! That's impossible!";
+            $title = 'Introduction';
+            $subtitle = 'Subtitle';
+            $description = "Description";
             $numview = 2;
 
             $tag1 = new Tag();
@@ -142,6 +176,8 @@ EOT
             $multimediaObject->addTag($tag2);
             $multimediaObject->addTag($tag3);
             $multimediaObject->setNumview($numview);
+
+            $multimediaObject->addTrack($track);
 
             $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
             $dm->persist($multimediaObject);
