@@ -196,4 +196,41 @@ class SeriesController extends AdminController
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_series_list', array()));
     }
+
+    /**
+     * Batch delete action
+     * Overwrite to delete multimedia objects inside series
+     */
+    public function batchDeleteAction(Request $request)
+    {
+        $ids = $this->getRequest()->get('ids');
+
+        if ('string' === gettype($ids)){
+            $ids = json_decode($ids, true);
+        }
+
+        foreach ($ids as $id) {
+            $series = $this->find($id);
+            $seriesId = $series->getId();
+
+            $factoryService = $this->get('pumukitschema.factory');
+            $factoryService->deleteSeries($series);
+
+            $seriesSessionId = $this->get('session')->get('admin/mms/id');
+            if ($seriesId === $seriesSessionId){
+                $this->get('session')->remove('admin/series/id');
+            }
+
+            $mmSessionId = $this->get('session')->get('admin/mms/id');
+            if ($mmSessionId){
+                $mm = $factoryService->findMultimediaObjectById($mmSessionId);
+                if ($seriesId === $mm->getSeries()->getId()){
+                    $this->get('session')->remove('admin/mms/id');
+                }
+            }
+        }
+        $this->addFlash('success', 'delete');
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_series_list', array()));
+    }
 }
