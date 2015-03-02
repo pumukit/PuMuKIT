@@ -18,11 +18,11 @@
       </div>      
       <div class="row">
         <div class="col-md-2">
-          <select id="options_mms" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('mm', $('options_mms'))">
+          <select id="options_mms" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('mm', $(this), 'mms'); $(this).val('default');">
             <option value="default" selected="selected">{% trans %}Select an action{% endtrans %}...</option>
             <option disabled="">---</option>
-            <option value="delete_sel">{% trans %}Delete selected{% endtrans %}</option>
-            <option value="inv_announce_sel">{% trans %}Announce/Deannounce selected{% endtrans %}</option>
+            <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
+            <option value="invert_announce_selected">{% trans %}Announce/Deannounce selected{% endtrans %}</option>
             <option disabled="">---</option>
             <option disabled="" value="set_status_0_sel">{% trans %}Block selected{% endtrans %}</option> 
             <option disabled="" value="set_status_1_sel">{% trans %}Hide selected{% endtrans %}</option> 
