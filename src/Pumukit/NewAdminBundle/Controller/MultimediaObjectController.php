@@ -460,6 +460,32 @@ class MultimediaObjectController extends SortableAdminController
     }
 
     /**
+     * Batch invert announce selected
+     */
+    public function invertAnnounceAction(Request $request)
+    {
+        $ids = $this->getRequest()->get('ids');
+
+        if ('string' === gettype($ids)){
+            $ids = json_decode($ids, true);
+        }
+
+        $tagService = $this->get('pumukitschema.tag');
+        $tagNew = $this->get('doctrine_mongodb.odm.document_manager')
+          ->getRepository('PumukitSchemaBundle:Tag')->findOneByCod('PUDENEW');
+        foreach ($ids as $id){
+            $resource = $this->find($id);
+            if ($resource->containsTagWithCod('PUDENEW')){
+                $addedTags = $tagService->removeTagFromMultimediaObject($resource, $tagNew->getId());
+            }else{
+                $addedTags = $tagService->addTagToMultimediaObject($resource, $tagNew->getId());
+            }
+        }
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));
+    }
+
+    /**
      * List action
      * Overwrite to pass series parameter
      */

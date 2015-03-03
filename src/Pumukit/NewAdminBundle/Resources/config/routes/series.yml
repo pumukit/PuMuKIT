@@ -55,3 +55,9 @@ pumukitnewadmin_series_list:
     methods: [GET, POST]
     defaults:
         _controller: pumukitnewadmin.controller.series:listAction
+
+pumukitnewadmin_series_invert_announce:
+    pattern: /invertannounce
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.series:invertAnnounceAction

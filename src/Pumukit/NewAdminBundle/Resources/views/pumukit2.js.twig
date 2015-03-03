@@ -371,14 +371,32 @@ window.change_select = function(element, selector, pluralName)
 	    parameters: 'ids='+$$('.'+element+'_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
 			);
         break;
-    case 'inv_announce_sel':
-        new Ajax.Updater('list_'+element+'s', '/editar.php/'+element+'s/inv/field/announce', {
-	    asynchronous: true,
-	    evalScripts: true,
-            onSuccess:  selector.selectedIndex = 0,
-	    parameters: 'ids='+$$('.'+element+'_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
-			);
+*/
+    case 'invert_announce_selected':
+        var ids = [];
+        $('.' + element + '_checkbox:checked').each(function(){
+            var $this = $(this);
+            ids.push($this.attr("id"));
+        });
+        if (ids.length == 0) break;
+        if (confirm('{% trans %}Are you sure?{% endtrans %}')) {
+            if ('series' == element)
+                var route = '{{ path('pumukitnewadmin_series_invert_announce', {'ids': '__ids__'}) }}';
+            else
+                var route = '{{ path('pumukitnewadmin_mms_invert_announce', {'ids': '__ids__'}) }}';
+            $('#list_'+pluralName).load(route.replace('__ids__', JSON.stringify(ids)));
+        }
+        for (var i = 0; i < ids.length; i++) {
+            id = ids[i];
+            var puDeNew = $("#list_pubdecisions_"+id+" #pub_decisions_PUDENEW");
+            if (1 == puDeNew.length){
+                var checkedValue = puDeNew[0].checked;
+                if (checkedValue) puDeNew[0].checked = false;
+                else puDeNew[0].checked = true;
+            }
+        }
         break;
+/* TODO
     case 'inv_announce_virtualserial_sel':
         new Ajax.Updater('list_mms', '/editar.php/virtualserial/inv/field/announce', {
             asynchronous: true,
@@ -706,6 +724,9 @@ get_batch_delete_route = function(element, ids)
             break;
         case 'series':   
             route = '{{ path('pumukitnewadmin_series_batch_delete', {'ids': '__ids__'}) }}';
+            break;
+        case 'mm':
+            route = '{{ path('pumukitnewadmin_mms_batch_delete', {'ids': '__ids__'}) }}';
             break;
     }
 

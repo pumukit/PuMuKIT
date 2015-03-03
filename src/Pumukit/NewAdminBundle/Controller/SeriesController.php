@@ -229,4 +229,30 @@ class SeriesController extends AdminController
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_series_list', array()));
     }
+
+    /**
+     * Batch invert announce selected
+     */
+    public function invertAnnounceAction(Request $request)
+    {
+        $ids = $this->getRequest()->get('ids');
+
+        if ('string' === gettype($ids)){
+            $ids = json_decode($ids, true);
+        }
+
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        foreach ($ids as $id){
+            $resource = $this->find($id);
+            if ($resource->getAnnounce()){
+                $resource->setAnnounce(false);
+            }else{
+                $resource->setAnnounce(true);
+            }
+            $dm->persist($resource);
+        }
+        $dm->flush();
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_series_list'));
+    }
 }

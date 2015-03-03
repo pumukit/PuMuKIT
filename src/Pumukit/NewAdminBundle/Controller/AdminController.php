@@ -135,12 +135,20 @@ class AdminController extends ResourceController
             $ids = json_decode($ids, true);
         }
 
-        foreach ($ids as $id) {
-            $resource = $this->find($id);
-            $this->domainManager->delete($resource);
-        }
         $config = $this->getConfiguration();
         $resourceName = $config->getResourceName();
+        if ('multimediaobject' === $resourceName){
+            $resourceName = 'mms';
+        }
+
+        $factory = $this->get('pumukitschema.factory');
+        foreach ($ids as $id) {
+            $resource = $this->find($id);
+            $factory->deleteResource($resource);
+            if ($id === $this->get('session')->get('admin/'.$resourceName.'/id')){
+                $this->get('session')->remove('admin/'.$resourceName.'/id');
+            }
+        }
 
         $this->addFlash('success', 'delete');
 
