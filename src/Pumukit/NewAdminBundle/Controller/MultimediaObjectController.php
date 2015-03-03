@@ -532,4 +532,53 @@ class MultimediaObjectController extends SortableAdminController
                                    )
                              );
     }
+
+    /**
+     * Cut multimedia objects
+     */
+    public function cutAction(Request $request)
+    {
+        $ids = $this->getRequest()->get('ids');
+        if ('string' === gettype($ids)){
+            $ids = json_decode($ids, true);
+        }
+        $this->get('session')->set('admin/mms/cut', $ids);
+
+        return new JsonResponse($ids);
+    }
+
+    /**
+     * Paste multimedia objects
+     */
+    public function pasteAction(Request $request)
+    {
+        if (!($this->get('session')->has('admin/mms/cut'))){
+            throw new \Exception('Not found any multimedia object to paste.');
+        }
+
+        $ids = $this->get('session')->get('admin/mms/cut');
+
+        $factoryService = $this->get('pumukitschema.factory');
+        $seriesId = $request->get('seriesId', null);
+        $sessionId = $this->get('session')->get('admin/series/id', null);
+        $series = $factoryService->findSeriesById($seriesId, $sessionId);
+
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        foreach($ids as $id){
+            $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')
+              ->find($id);
+            $mmSeriesId = $multimediaObject->getSeries()->getId();
+            if ($id === $this->get('session')->get('admin/mms/id')){
+                $this->get('session')->remove('admin/mms/id');
+            }
+            $multimediaObject->setSeries($series);
+            $dm->persist($multimediaObject);
+        }
+        $dm->persist($series);
+        $dm->flush();
+
+        $this->get('session')->remove('admin/mms/cut');
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));
+    }
 }

@@ -123,3 +123,15 @@ pumukitnewadmin_mms_invert_announce:
     methods: [GET, POST]
     defaults:
         _controller: pumukitnewadmin.controller.mms:invertAnnounceAction
+
+pumukitnewadmin_mms_cut:
+    pattern: /cut
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:cutAction
+
+pumukitnewadmin_mms_paste:
+    pattern: /paste
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:pasteAction
