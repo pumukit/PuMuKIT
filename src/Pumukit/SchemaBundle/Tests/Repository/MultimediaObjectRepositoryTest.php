@@ -1198,10 +1198,10 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->flush();
 
         $sort = array();
-        $sortPubDateAsc =  array('fieldName' => 'public_date', 'order' => 1);
-        $sortPubDateDesc = array('fieldName' => 'public_date', 'order' => -1);
-        $sortRecDateAsc =  array('fieldName' => 'record_date', 'order' => 1);
-        $sortRecDateDesc = array('fieldName' => 'record_date', 'order' => -1);
+        $sortPubDateAsc =  array('fieldName' => 'public_date', 'order' => 'asc');
+        $sortPubDateDesc = array('fieldName' => 'public_date', 'order' => 'desc');
+        $sortRecDateAsc =  array('fieldName' => 'record_date', 'order' => 'asc');
+        $sortRecDateDesc = array('fieldName' => 'record_date', 'order' => 'desc');
 
         $this->assertEquals(3, $this->repo->findOrderedBy($series, $sort)->count(true));
         $this->assertEquals(3, $this->repo->findOrderedBy($series, $sortPubDateAsc)->count(true));
