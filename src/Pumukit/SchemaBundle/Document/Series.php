@@ -963,11 +963,13 @@ class Series
   /**
    * Get first pic url
    *
+   * @param $default string url returned if series without pics.
+   *
    * @return string
    */
-  public function getFirstUrlPic()
+  public function getFirstUrlPic($default='')
   {
-      $url = '';
+      $url = $default;
       foreach ($this->pics as $pic) {
           if (null !== $pic->getUrl()) {
               $url = $pic->getUrl();
