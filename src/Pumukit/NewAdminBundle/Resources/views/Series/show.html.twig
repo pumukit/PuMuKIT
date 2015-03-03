@@ -1,30 +1,29 @@
 {% if series is not null %}
-<div class="table-responsive">
-  <table class="table">
-   <tbody>
-   <tr>
-    <td height="53" valign="top" width="15%" style="border:none;">
-      {% if series.getFirstUrlPic() is not empty %}
-        <img src="{{ series.getFirstUrlPic() }}" style="border:3px double #ED6D00;" height="51" width="60" />
-      {% else %}
-	    <img class="mini" src="/legacy/images/folder.png" style="border:3px double #ED6D00;" height="51" width="60" />
-      {% endif %}
-    </td>
 
-    <td valign="top" width="85%" style="border:none;">
+<p>
+  <a target="_black" href="{{ url('pumukit_webtv_series_index', {id: series.id}) }}"> {{ series.title}} </a>.
+</p>
 
-    <!-- TITLE -->
-      <div style="padding-left:5px">
-        <a target="_blank" href="{{ url('pumukit_webtv_series_index', {id: series.id}) }}">{{ series.getTitle() }}</a> <br />
-    <!-- LINE2 (PLACE) -->
-        <strong>{{ series.getLine2() }}</strong><br />
-    <!-- DATE -->
-        <span style="color:#990000"><strong>{{ series.getPublicDate()|date('d/m/Y') }}</strong></span>
+<div>
+  <div class="pmk-preview">
+    <div class="pmk-picture">
+      <div class="pmk-img" style="max-width: 172px;">
+        <img src="{{ series.getFirstUrlPic('/images/folder.png') }}">
       </div>
-    </td>
-   </tr>
-   </tbody>
-  </table>
+    </div>
+    <div class="pmk-picture">
+      <div class="pmk-img" style="max-width: 172px;">
+        <img src="{{ series.getFirstUrlPic('/images/folder.png') }}">
+      </div>
+    </div>
+    <div class="pmk-picture">
+      <div class="pmk-img" style="max-width: 172px;">
+        <img src="{{ series.getFirstUrlPic('/images/folder.png') }}">
+      </div>
+    </div>
+  </div>
+</div>
+
 {% else %}
 <p>
   {% trans %}Select any series.{% endtrans %}
