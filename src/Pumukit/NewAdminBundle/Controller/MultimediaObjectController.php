@@ -20,7 +20,8 @@ class MultimediaObjectController extends SortableAdminController
     public function indexAction(Request $request)
     {
         $config = $this->getConfiguration();
-
+        $criteria = $this->getCriteria($config);
+        $resources = $this->getResources($request, $config, $criteria);
         $sorting = $request->get('sorting');
         if (null !== $sorting){
             $this->get('session')->set('admin/mms/type', $sorting[key($sorting)]);
@@ -508,6 +509,8 @@ class MultimediaObjectController extends SortableAdminController
     public function listAction(Request $request)
     {
         $config = $this->getConfiguration();
+        $criteria = $this->getCriteria($config);
+        $resources = $this->getResources($request, $config, $criteria);
 
         $sorting = $request->get('sorting');
         if (null !== $sorting){
