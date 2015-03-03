@@ -933,6 +933,16 @@ class Series
   }
 
   /**
+   * Get first pic, null if none.
+   *
+   * @return Pic
+   */
+  public function getPic()
+  {
+      return $this->pics->get(0);
+  }
+
+  /**
    * Get pic by id
    *
    * @param $picId
@@ -953,11 +963,13 @@ class Series
   /**
    * Get first pic url
    *
+   * @param $default string url returned if series without pics.
+   *
    * @return string
    */
-  public function getFirstUrlPic()
+  public function getFirstUrlPic($default='')
   {
-      $url = '';
+      $url = $default;
       foreach ($this->pics as $pic) {
           if (null !== $pic->getUrl()) {
               $url = $pic->getUrl();

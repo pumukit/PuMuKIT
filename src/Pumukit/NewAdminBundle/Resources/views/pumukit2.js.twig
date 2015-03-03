@@ -515,6 +515,8 @@ function add_tree_tag(tag_id, mm_id, block_tag_id)
       var aux = c.group.split("|");
       if(aux[1] && aux.length > 3) create_element_in_select(c, aux[1], mm_id);
     }
+    var url = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'}) }}";
+    $('#preview_mm').load(url.replace('__mmId__', mm_id));
   });
 }
 

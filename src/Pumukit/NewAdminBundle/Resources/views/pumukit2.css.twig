@@ -24,6 +24,68 @@
   width: 30px;
 }
 
+.pmk-preview {
+    position: relative;
+    width: 172px; 
+    margin: auto;
+    height: 130px;
+    padding: 0px 0px 10px;
+}
+
+
+.pmk-picture {
+    -webkit-box-shadow: 1px 1px 2px #666;
+    -moz-box-shadow: 1px 1px 2px #666;
+    -o-box-shadow: 1px 1px 2px #666;
+    box-shadow: 1px 1px 2px #666;
+    margin: auto;
+    width: 180px;
+    height: 105px;
+    padding: 4px;
+    background-color: #FFF !important;
+    position: absolute;
+}
+
+
+.pmk-picture:nth-child(1)  {
+    z-index: 3;
+}
+
+.pmk-picture:nth-child(2)  {
+    left: 7px;
+    top: 3px;
+    z-index: 2;
+    -webkit-transform: scale(0.97);
+    -moz-transform: scale(0.97);
+    -o-transform: scale(0.97);
+    transform: scale(0.97);
+}
+
+.pmk-picture:nth-child(3) {
+    left: 13px;
+    top: 6px;
+    z-index: 1;
+    -webkit-transform: scale(0.94);
+    -moz-transform: scale(0.94);
+    -o-transform: scale(0.94);
+    transform: scale(0.94);
+}
+
+.pmk-picture .pmk-img {
+    background-color: #000;
+    position: absolute;
+    width: 100%;
+    height: 99px;
+    text-align: center;
+}
+
+.pmk-picture img {
+    height: 100%;
+    width: auto;
+    max-width: 172px;
+}
+
+
 .input-group .input-group-addon {
   padding: 0px;
   vertical-align: bottom;
