@@ -284,40 +284,28 @@ window.change_select = function(element, selector, pluralName)
 	    parameters: 'all=1'}
 			);
         break;
-    //order mm
-    case 'set_order_rec_asc':
-        new Ajax.Updater('list_'+element+'s', '/editar.php/'+element+'s/orderby/type/rec_asc', {
-	    asynchronous: true,
-	    evalScripts: true,
-            onSuccess:  selector.selectedIndex = 0,
-	    parameters: 'serial=' + $('mms_serial_id').value}
-			);
+*/
+    case 'order_rec_date_asc':
+        var route = '{{ path('pumukitnewadmin_mms_list', {'seriesId': '__seriesId__', 'sorting': {'record_date': 'asc'}}) }}';
+        var seriesId = '{{ app.session.get('admin/series/id') }}';
+        $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId));
         break;
-    //order mm
-    case 'set_order_rec_des':
-        new Ajax.Updater('list_'+element+'s', '/editar.php/'+element+'s/orderby/type/rec_des', {
-	    asynchronous: true,
-	    evalScripts: true,
-            onSuccess:  selector.selectedIndex = 0,
-	    parameters: 'serial=' + $('mms_serial_id').value}
-			);
-        break;    //order mm
-    case 'set_order_pub_asc':
-        new Ajax.Updater('list_'+element+'s', '/editar.php/'+element+'s/orderby/type/pub_asc', {
-	    asynchronous: true,
-	    evalScripts: true,
-            onSuccess:  selector.selectedIndex = 0,
-	    parameters: 'serial=' + $('mms_serial_id').value}
-			);
-        break;    //order mm
-    case 'set_order_pub_des':
-        new Ajax.Updater('list_'+element+'s', '/editar.php/'+element+'s/orderby/type/pub_des', {
-	    asynchronous: true,
-	    evalScripts: true,
-            onSuccess:  selector.selectedIndex = 0,
-	    parameters: 'serial=' + $('mms_serial_id').value}
-			);
+    case 'order_rec_date_desc':
+        var route = '{{ path('pumukitnewadmin_mms_list', {'seriesId': '__seriesId__', 'sorting': {'record_date': 'desc'}}) }}';
+        var seriesId = '{{ app.session.get('admin/series/id') }}';
+        $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId));
         break;
+    case 'order_pub_date_asc':
+        var route = '{{ path('pumukitnewadmin_mms_list', {'seriesId': '__seriesId__', 'sorting': {'public_date': 'asc'}}) }}';
+        var seriesId = '{{ app.session.get('admin/series/id') }}';
+        $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId));
+        break;
+    case 'order_pub_date_desc':
+        var route = '{{ path('pumukitnewadmin_mms_list', {'seriesId': '__seriesId__', 'sorting': {'public_date': 'desc'}}) }}';
+        var seriesId = '{{ app.session.get('admin/series/id') }}';
+        $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId));
+        break;
+/* TODO
     case 'cut_mm':
         selected = $$('.mm_checkbox:checked');
         if (selected.length == 0) break;
