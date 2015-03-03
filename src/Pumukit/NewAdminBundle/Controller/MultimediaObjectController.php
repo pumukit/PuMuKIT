@@ -4,7 +4,7 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Pagerfanta\Adapter\DoctrineCollectionAdapter;
+use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
@@ -21,15 +21,18 @@ class MultimediaObjectController extends SortableAdminController
     {
         $config = $this->getConfiguration();
 
-        $criteria = $this->getCriteria($config);
-        $resources = $this->getResources($request, $config, $criteria);
+        $sorting = $request->get('sorting');
+        if (null !== $sorting){
+            $this->get('session')->set('admin/mms/type', $sorting[key($sorting)]);
+            $this->get('session')->set('admin/mms/sort', key($sorting));
+        }
 
         $factoryService = $this->get('pumukitschema.factory');
-        
+
         $sessionId = $this->get('session')->get('admin/series/id', null);
         $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
         $this->get('session')->set('admin/series/id', $series->getId());
-        
+
         $mms = $this->getListMultimediaObjects($series);
 
         $update_session = true;
@@ -415,9 +418,15 @@ class MultimediaObjectController extends SortableAdminController
         $page = $session->get('admin/mms/page', 1);
         $maxPerPage = $session->get('admin/mms/paginate', 10);
 
-        $coll_mms = $series->getMultimediaObjects();
+        $sorting = array();
+        if ($this->get('session')->has('admin/mms/type') && $this->get('session')->has('admin/mms/sort')){
+          $sorting['fieldName'] = $this->get('session')->get('admin/mms/sort');
+          $sorting['order'] = $this->get('session')->get('admin/mms/type');
+        }
+        $coll_mms = $this->get('doctrine_mongodb.odm.document_manager')
+          ->getRepository('PumukitSchemaBundle:MultimediaObject')->findOrderedBy($series, $sorting);
 
-        $adapter = new DoctrineCollectionAdapter($coll_mms);
+        $adapter = new ArrayAdapter($coll_mms->toArray());
         $mms = new Pagerfanta($adapter);
 
         $mms
@@ -500,11 +509,10 @@ class MultimediaObjectController extends SortableAdminController
     {
         $config = $this->getConfiguration();
 
-        $criteria = $this->getCriteria($config);
-        $resources = $this->getResources($request, $config, $criteria);
-
-        if ((1 === count($resources)) && (null !== $this->get('session')->get('admin/mms/id'))){
-            $this->get('session')->remove('admin/mms/id');
+        $sorting = $request->get('sorting');
+        if (null !== $sorting){
+            $this->get('session')->set('admin/mms/type', $sorting[key($sorting)]);
+            $this->get('session')->set('admin/mms/sort', key($sorting));
         }
 
         $factoryService = $this->get('pumukitschema.factory');
@@ -513,6 +521,17 @@ class MultimediaObjectController extends SortableAdminController
         $series = $factoryService->findSeriesById($seriesId, $sessionId);
 
         $mms = $this->getListMultimediaObjects($series);
+
+        $update_session = true;
+        foreach($mms as $mm) {
+            if($mm->getId() == $this->get('session')->get('admin/mms/id')){
+                $update_session = false;
+            }
+        }
+ 
+        if($update_session){
+            $this->get('session')->remove('admin/mms/id');
+        }
 
         return $this->render('PumukitNewAdminBundle:MultimediaObject:list.html.twig',
                              array(
