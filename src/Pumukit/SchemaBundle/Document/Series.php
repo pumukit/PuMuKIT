@@ -933,6 +933,16 @@ class Series
   }
 
   /**
+   * Get first pic, null if none.
+   *
+   * @return Pic
+   */
+  public function getPic()
+  {
+      return $this->pics->get(0);
+  }
+
+  /**
    * Get pic by id
    *
    * @param $picId
