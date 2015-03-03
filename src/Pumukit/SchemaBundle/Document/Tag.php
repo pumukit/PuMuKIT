@@ -477,11 +477,11 @@ class Tag
   /**
    * Returns true if given node is children of tag
    *
-   * @param Tag $tag
+   * @param EmbeddedTag|Tag $tag
    *
    * @return bool
    */
-  public function isChildrenOf(Tag $tag)
+  public function isChildrenOf($tag)
   {
       return $tag == $this->getParent();
   }
@@ -489,11 +489,11 @@ class Tag
   /**
    * Returns true if given node is descendant of tag
    *
-   * @param Tag $tag
+   * @param EmbeddedTag|Tag $tag
    *
    * @return bool
    */
-  public function isDescendantOf(Tag $tag)
+  public function isDescendantOf($tag)
   {
       if ($tag == $this) {
           return false;
