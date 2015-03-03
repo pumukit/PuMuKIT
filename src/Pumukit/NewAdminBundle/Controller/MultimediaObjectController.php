@@ -24,8 +24,16 @@ class MultimediaObjectController extends SortableAdminController
         $criteria = $this->getCriteria($config);
         $resources = $this->getResources($request, $config, $criteria);
 
+        $factoryService = $this->get('pumukitschema.factory');
+        
+        $sessionId = $this->get('session')->get('admin/series/id', null);
+        $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
+        $this->get('session')->set('admin/series/id', $series->getId());
+        
+        $mms = $this->getListMultimediaObjects($series);
+
         $update_session = true;
-        foreach($resources as $mm) {
+        foreach($mms as $mm) {
             if($mm->getId() == $this->get('session')->get('admin/mms/id')){
                 $update_session = false;
             }
@@ -34,15 +42,6 @@ class MultimediaObjectController extends SortableAdminController
         if($update_session){
             $this->get('session')->remove('admin/mms/id');
         }
-
-
-        $factoryService = $this->get('pumukitschema.factory');
-        
-        $sessionId = $this->get('session')->get('admin/series/id', null);
-        $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
-        $this->get('session')->set('admin/series/id', $series->getId());
-        
-        $mms = $this->getListMultimediaObjects($series);
 
         return array(
                      'series' => $series,
