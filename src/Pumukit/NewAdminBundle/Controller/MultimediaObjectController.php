@@ -19,24 +19,32 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function indexAction(Request $request)
     {
-       $config = $this->getConfiguration();
+        $config = $this->getConfiguration();
 
-       $criteria = $this->getCriteria($config);
-       $resources = $this->getResources($request, $config, $criteria);
+        $criteria = $this->getCriteria($config);
+        $resources = $this->getResources($request, $config, $criteria);
 
-       if ((1 === count($resources)) && (null !== $this->get('session')->get('admin/mms/id'))){
-           $this->get('session')->remove('admin/mms/id');
-       }
+        $update_session = true;
+        foreach($resources as $mm) {
+            if($mm->getId() == $this->get('session')->get('admin/mms/id')){
+                $update_session = false;
+            }
+        }
+ 
+        if($update_session){
+            $this->get('session')->remove('admin/mms/id');
+        }
 
-       $factoryService = $this->get('pumukitschema.factory');
 
-       $sessionId = $this->get('session')->get('admin/series/id', null);
-       $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
-       $this->get('session')->set('admin/series/id', $series->getId());
+        $factoryService = $this->get('pumukitschema.factory');
+        
+        $sessionId = $this->get('session')->get('admin/series/id', null);
+        $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
+        $this->get('session')->set('admin/series/id', $series->getId());
+        
+        $mms = $this->getListMultimediaObjects($series);
 
-       $mms = $this->getListMultimediaObjects($series);
-
-       return array(
+        return array(
                      'series' => $series,
                      'mms' => $mms
                      );

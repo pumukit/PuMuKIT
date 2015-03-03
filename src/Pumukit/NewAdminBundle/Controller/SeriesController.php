@@ -19,7 +19,14 @@ class SeriesController extends AdminController
       $criteria = $this->getCriteria($config);
       $resources = $this->getResources($request, $config, $criteria);
 
-      if ((0 === count($resources)) && (null !== $this->get('session')->get('admin/series/id'))){
+      $update_session = true;
+      foreach($resources as $series) {
+          if($series->getId() == $this->get('session')->get('admin/series/id')){
+              $update_session = false;
+          }
+      }
+ 
+      if($update_session){
           $this->get('session')->remove('admin/series/id');
       }
 
