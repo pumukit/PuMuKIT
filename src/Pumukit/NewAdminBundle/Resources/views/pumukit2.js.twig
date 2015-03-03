@@ -74,25 +74,25 @@ no_success = function(message){
 }
 
 window.update_preview = function(id) {
-  var route = '{{ path('pumukitnewadmin_series_show', {'id': 'PLACEHOLDER'}) }}';
+  var route = '{{ path('pumukitnewadmin_series_show', {'id': 'PLACEHOLDER'})|raw }}';
   route.replace('PLACEHOLDER', id);
   $('#preview_series').load(route, {method:'POST'});
 }
 
 window.delete_seriespic = function(id) {
     if (window.confirm('{% trans %}Are you sure you want to delete this picture?{% endtrans %}')) {
-        var url = '{{ path('pumukitnewadmin_seriespic_delete', {'id': '___id___'}) }}';
+        var url = '{{ path('pumukitnewadmin_seriespic_delete', {'id': '___id___'})|raw }}';
         $('#pic_series').load(url.replace('___id___', id), {'_method': 'DELETE'});
     }
 }
 
 window.up_seriespic = function(id) {
-    var url = '{{ path('pumukitnewadmin_seriespic_up', {'id': '___id___'}) }}';
+    var url = '{{ path('pumukitnewadmin_seriespic_up', {'id': '___id___'})|raw }}';
     $('#pic_series').load(url.replace('___id___', id), {method:'POST'});
 }
 
 window.down_seriespic = function(id) {
-    var url = '{{ path('pumukitnewadmin_seriespic_down', {'id': '___id___'}) }}';
+    var url = '{{ path('pumukitnewadmin_seriespic_down', {'id': '___id___'})|raw }}';
     $('#pic_series').load(url.replace('___id___', id), {method:'POST'});
 }
 
@@ -104,12 +104,12 @@ window.submit_delete_person_relation = function(id, roleId, mmId, hName, templat
         }else{
             var tag_id = '#'+roleId+'_person_mms';
         }
-        var url = "{{ path('pumukitnewadmin_person_delete_relation', {'id': '__id__', 'roleId': '__roleId__','mmId': '__mmId__'}) }}";
+        var url = "{{ path('pumukitnewadmin_person_delete_relation', {'id': '__id__', 'roleId': '__roleId__','mmId': '__mmId__'})|raw }}";
         url = url.replace('__id__', id);
         url = url.replace('__roleId__', roleId);
         url = url.replace('__mmId__', mmId);
         $(tag_id).load(url, {'_method': 'DELETE'});
-        var url = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'}) }}";
+        var url = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'})|raw }}";
         $('#preview_mm').load(url.replace('__mmId__', mmId));
     }
 }
@@ -117,7 +117,7 @@ window.submit_delete_person_relation = function(id, roleId, mmId, hName, templat
 window.submit_delete_link = function(id, mmId)
 {
     if (window.confirm('{% trans %}Are you sure you want to delete this link?{% endtrans %}')){
-        var url = "{{ path('pumukitnewadmin_link_delete', {'id': '__id__', 'mmId': '__mmId__'}) }}";
+        var url = "{{ path('pumukitnewadmin_link_delete', {'id': '__id__', 'mmId': '__mmId__'})|raw }}";
         url = url.replace('__id__', id);
         url = url.replace('__mmId__', mmId);
         $('#links_mms').load(url, {'_method': 'DELETE'});
@@ -126,25 +126,25 @@ window.submit_delete_link = function(id, mmId)
 
 window.delete_mmspic = function(id) {
     if (window.confirm('{% trans %}Are you sure you want to delete this picture?{% endtrans %}')) {
-        var url = '{{ path('pumukitnewadmin_mmspic_delete', {'id': '___id___'}) }}';
+        var url = '{{ path('pumukitnewadmin_mmspic_delete', {'id': '___id___'})|raw }}';
         $('#pic_mms').load(url.replace('___id___', id), {'_method': 'DELETE'});
     }
 }
 
 window.up_mmspic = function(id) {
-    var url = '{{ path('pumukitnewadmin_mmspic_up', {'id': '___id___'}) }}';
+    var url = '{{ path('pumukitnewadmin_mmspic_up', {'id': '___id___'})|raw }}';
     $('#pic_mms').load(url.replace('___id___', id), {method:'POST'});
 }
 
 window.down_mmspic = function(id) {
-    var url = '{{ path('pumukitnewadmin_mmspic_down', {'id': '___id___'}) }}';
+    var url = '{{ path('pumukitnewadmin_mmspic_down', {'id': '___id___'})|raw }}';
     $('#pic_mms').load(url.replace('___id___', id), {method:'POST'});
 }
 
 window.submit_delete_material = function(id, mmId)
 {
     if (window.confirm('{% trans %}Are you sure you want to delete this material?{% endtrans %}')){
-        var url = "{{ path('pumukitnewadmin_material_delete', {'id': '__id__', 'mmId': '__mmId__'}) }}";
+        var url = "{{ path('pumukitnewadmin_material_delete', {'id': '__id__', 'mmId': '__mmId__'})|raw }}";
         url = url.replace('__id__', id);
         url = url.replace('__mmId__', mmId);
         $('#materials_mms').load(url, {'_method': 'DELETE'});
@@ -154,7 +154,7 @@ window.submit_delete_material = function(id, mmId)
 window.submit_delete_track = function(id, mmId)
 {
     if (window.confirm('{% trans %}Are you sure you want to delete this track?{% endtrans %}')){
-        var url = "{{ path('pumukitnewadmin_track_delete', {'id': '__id__', 'mmId': '__mmId__'}) }}";
+        var url = "{{ path('pumukitnewadmin_track_delete', {'id': '__id__', 'mmId': '__mmId__'})|raw }}";
         url = url.replace('__id__', id);
         url = url.replace('__mmId__', mmId);
         $('#tracks_mms').load(url, {'_method': 'DELETE'});
@@ -165,7 +165,7 @@ window.submit_delete_person = function(id, countMm, personHName)
 {
     if (countMm == 0){
         if (window.confirm("{% trans %}Are you sure you want to delete the data of{% endtrans %} "+personHName+"?")){
-            var url = "{{ path('pumukitnewadmin_person_delete', {'id': '__id__'}) }}";
+            var url = "{{ path('pumukitnewadmin_person_delete', {'id': '__id__'})|raw }}";
             $('#list_people').load(url.replace('__id__', id), {'_method': 'DELETE'});
     }
     }else{
@@ -189,7 +189,7 @@ window.click_checkbox_all = function(element, value)
 window.filter_click_letter = function(letter)
 {
   $('#filters_letter').val(letter);
-  $('#list_people').load('{{ path('pumukitnewadmin_person_list') }}', $('#filter_people').serialize());
+  $('#list_people').load('{{ path('pumukitnewadmin_person_list')|raw }}', $('#filter_people').serialize());
 }
 
 // TODO complete todos
@@ -286,46 +286,68 @@ window.change_select = function(element, selector, pluralName)
         break;
 */
     case 'order_rec_date_asc':
-        var route = '{{ path('pumukitnewadmin_mms_list', {'seriesId': '__seriesId__', 'sorting': {'record_date': 'asc'}}) }}';
+        var route = '{{ path('pumukitnewadmin_mms_list', {'seriesId': '__seriesId__', 'sorting': {'record_date': 'asc'}})|raw }}';
         var seriesId = '{{ app.session.get('admin/series/id') }}';
         $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId));
         break;
     case 'order_rec_date_desc':
-        var route = '{{ path('pumukitnewadmin_mms_list', {'seriesId': '__seriesId__', 'sorting': {'record_date': 'desc'}}) }}';
+        var route = '{{ path('pumukitnewadmin_mms_list', {'seriesId': '__seriesId__', 'sorting': {'record_date': 'desc'}})|raw }}';
         var seriesId = '{{ app.session.get('admin/series/id') }}';
         $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId));
         break;
     case 'order_pub_date_asc':
-        var route = '{{ path('pumukitnewadmin_mms_list', {'seriesId': '__seriesId__', 'sorting': {'public_date': 'asc'}}) }}';
+        var route = '{{ path('pumukitnewadmin_mms_list', {'seriesId': '__seriesId__', 'sorting': {'public_date': 'asc'}})|raw }}';
         var seriesId = '{{ app.session.get('admin/series/id') }}';
         $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId));
         break;
     case 'order_pub_date_desc':
-        var route = '{{ path('pumukitnewadmin_mms_list', {'seriesId': '__seriesId__', 'sorting': {'public_date': 'desc'}}) }}';
+        var route = '{{ path('pumukitnewadmin_mms_list', {'seriesId': '__seriesId__', 'sorting': {'public_date': 'desc'}})|raw }}';
         var seriesId = '{{ app.session.get('admin/series/id') }}';
         $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId));
         break;
-/* TODO
     case 'cut_mm':
-        selected = $$('.mm_checkbox:checked');
-        if (selected.length == 0) break;
-        new Ajax.Updater('list_'+element+'s', '/editar.php/'+element+'s/cut', {
-	    asynchronous: true,
-	    evalScripts: true,
-            onSuccess:  selector.selectedIndex = 0,
-	    parameters: 'ids='+selected.invoke('getAttribute', 'id').toJSON()}
-			);
+        var ids = [];
+        $('.' + element + '_checkbox:checked').each(function(){
+            var $this = $(this);
+            ids.push($this.attr("id"));
+        });
+        if (ids.length == 0) break;
+        var route = '{{ path('pumukitnewadmin_mms_cut', {'ids': '__ids__'})|raw }}';
+        $.ajax({
+                url: route.replace('__ids__', JSON.stringify(ids)),
+                type: 'GET',
+                success: function(response){
+                            var paste_mm_text = '{% trans %}Paste multimedia objects{% endtrans %} (';
+                            for (var i = 0; i < response.length; i++) {
+                                paste_mm_text += response[i];
+                                if (i == (response.length - 1)) paste_mm_text += ')';
+                                else paste_mm_text += ', ';
+                            }
+                            $('#options_mms #paste_mm').html(paste_mm_text);
+                            $('.' + element + '_checkbox:checked').each(function(){
+                                var $this = $(this);
+                                $this[0].checked = false;
+                            });
+                            if (ids.length == 1) var message = '{% trans %}Multimedia Object cut. Paste it in the desire Series.{% endtrans %}';
+                            else var message = '{% trans %}Multimedia Objects cut. Paste them in the desire Series.{% endtrans %}';
+                            success(message);
+                }
+        });
         break;
     case 'paste_mm':
-        if (confirm('Pegar objeto multimedia')) {
-            new Ajax.Updater('list_'+element+'s', '/editar.php/'+element+'s/paste', {
-		asynchronous: true,
-		evalScripts: true,
-		onSuccess:  selector.selectedIndex = 0,
-		parameters: 'serial=' + $('mms_serial_id').value}
-			    );
-	}
+        if (confirm('{% trans %}Paste multimedia object(s) in this series?{% endtrans %}')) {
+            var route = '{{ path('pumukitnewadmin_mms_paste', {'seriesId': '__seriesId__'})|raw }}';
+            var seriesId = '{{ app.session.get('admin/series/id') }}';
+            $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId), {'_method':'POST'}, function(){
+                var paste_mm_text = '{% trans %}Paste multimedia objects{% endtrans %} ()';
+                $('#options_mms #paste_mm').html(paste_mm_text);
+
+                var message = '{% trans %}Multimedia Object(s) pasted in the Series.{% endtrans %}';
+                success(message);
+            });
+        }
         break;
+/* TODO
       //status mm
     case 'set_status_0_sel':
         new Ajax.Updater('list_'+element+'s', '/editar.php/'+element+'s/change/status/0', {
@@ -369,9 +391,9 @@ window.change_select = function(element, selector, pluralName)
         if (ids.length == 0) break;
         if (confirm('{% trans %}Are you sure?{% endtrans %}')) {
             if ('series' == element)
-                var route = '{{ path('pumukitnewadmin_series_invert_announce', {'ids': '__ids__'}) }}';
+                var route = '{{ path('pumukitnewadmin_series_invert_announce', {'ids': '__ids__'})|raw }}';
             else
-                var route = '{{ path('pumukitnewadmin_mms_invert_announce', {'ids': '__ids__'}) }}';
+                var route = '{{ path('pumukitnewadmin_mms_invert_announce', {'ids': '__ids__'})|raw }}';
             $('#list_'+pluralName).load(route.replace('__ids__', JSON.stringify(ids)));
         }
         for (var i = 0; i < ids.length; i++) {
@@ -416,7 +438,7 @@ function toggle_tree_tag(element, id, mm_id, tag_id, tag_cod)
   if (parent.hasClass("notload")) {
     parent.removeClass("notload");
   
-    var route = "{{ path('pumukitnewadmin_mms_getchildrentag', {'id': 'PLACEHOLDER_TAG_ID'}) }}";
+    var route = "{{ path('pumukitnewadmin_mms_getchildrentag', {'id': 'PLACEHOLDER_TAG_ID'})|raw }}";
     route = route.replace('PLACEHOLDER_MM_ID', mm_id).replace('PLACEHOLDER_TAG_ID', id);
 
     $.get(route + "?tag_id=" + tag_id + "&mm_id=" + mm_id, function(responseText, textStatus, jqXHR){
@@ -484,7 +506,7 @@ function inc_num_mm(tag_id, num)
 
 function add_tree_tag(tag_id, mm_id, block_tag_id) 
 {
-  var route = "{{ path('pumukitadmin_mms_addtag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' }) }}";
+  var route = "{{ path('pumukitadmin_mms_addtag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' })|raw }}";
   route = route.replace('PLACEHOLDER_MM_ID', mm_id).replace('PLACEHOLDER_TAG_ID', tag_id);
   $.post(route, {"tag": tag_id}, function(data, textStatus, jqXHR){
     for (var i=0; i < data.added.length; i++) {
@@ -499,7 +521,7 @@ function add_tree_tag(tag_id, mm_id, block_tag_id)
 
 function del_tree_tag(tag_id, mm_id) 
 {
-  var route = "{{ path('pumukitadmin_mms_deletetag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' }) }}";
+  var route = "{{ path('pumukitadmin_mms_deletetag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' })|raw }}";
   route = route.replace('PLACEHOLDER_TAG_ID', tag_id).replace('PLACEHOLDER_MM_ID', mm_id);
   $.ajax({
     url: route, 
@@ -708,13 +730,13 @@ get_batch_delete_route = function(element, ids)
 
     switch (element) {
         case 'person':
-            route = '{{ path('pumukitnewadmin_person_batch_delete', {'ids': '__ids__'}) }}';
+            route = '{{ path('pumukitnewadmin_person_batch_delete', {'ids': '__ids__'})|raw }}';
             break;
         case 'series':   
-            route = '{{ path('pumukitnewadmin_series_batch_delete', {'ids': '__ids__'}) }}';
+            route = '{{ path('pumukitnewadmin_series_batch_delete', {'ids': '__ids__'})|raw }}';
             break;
         case 'mm':
-            route = '{{ path('pumukitnewadmin_mms_batch_delete', {'ids': '__ids__'}) }}';
+            route = '{{ path('pumukitnewadmin_mms_batch_delete', {'ids': '__ids__'})|raw }}';
             break;
     }
 
@@ -730,14 +752,14 @@ get_create_route = function(element)
 
     switch (element) {
         case 'person':
-            route = '{{ path('pumukitnewadmin_person_create') }}';
+            route = '{{ path('pumukitnewadmin_person_create')|raw }}';
             break;
         case 'user':
-            route = '{{ path('pumukitnewadmin_user_create') }}';
+            route = '{{ path('pumukitnewadmin_user_create')|raw }}';
             break;
         case 'tag':
             // TODO complete with id parent parameter
-            route = '{{ path('pumukitnewadmin_tag_create', {'parent': '__id__'}) }}';
+            route = '{{ path('pumukitnewadmin_tag_create', {'parent': '__id__'})|raw }}';
             break;
     }
 
