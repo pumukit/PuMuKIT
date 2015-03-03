@@ -24,16 +24,15 @@
             <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
             <option value="invert_announce_selected">{% trans %}Announce/Deannounce selected{% endtrans %}</option>
             <option disabled="">---</option>
-            <option value="order_pub_date_desc">{% trans %}Ordenar objetos multimedia por fecha de publicación de forma descendente{% endtrans %}</option>
-            <option value="order_pub_date_asc">{% trans %}Ordenar objetos multimedia por fecha de publicación de forma ascendente{% endtrans %}</option>
-            <option value="order_rec_date_desc">{% trans %}Ordenar objetos multimedia por fecha de grabación de forma descendente{% endtrans %}</option>
-            <option value="order_rec_date_asc">{% trans %}Ordenar objetos multimedia por fecha de grabación de forma ascendente{% endtrans %}</option>
+            <option value="order_pub_date_desc">{% trans %}List multimedia objects in descending order of publication date{% endtrans %}</option>
+            <option value="order_pub_date_asc">{% trans %}List multimedia objects in ascending order of publication date{% endtrans %}</option>
+            <option value="order_rec_date_desc">{% trans %}List multimedia objects in descending order of recording date{% endtrans %}</option>
+            <option value="order_rec_date_asc">{% trans %}List multimedia objects in ascending order of recording date{% endtrans %}</option>
             <option disabled="">---</option>
-            <option value="cut_mm">{% trans %}Cortar objetos multimedia{% endtrans %}</option> 
-            {# TODO <?php if($sf_user->hasAttribute('cut_mms')): ?> #}
-            {% if true %}
-            <option value="paste_mm">
-              {% trans %}Pegar objetos multimedia{% endtrans %} ({# TODO <?php echo implode(',', $sf_user->getAttribute('cut_mms')->getRawValue())?> #})
+            <option value="cut_mm">{% trans %}Cut multimedia objects{% endtrans %}</option>
+            {% if app.session.has('admin/mms/cut') %}
+            <option value="paste_mm" id="paste_mm">
+              {% trans %}Paste multimedia objects{% endtrans %} ({% for id in app.session.get('admin/mms/cut') %}{{ id }}{% if not loop.last %},&nbsp;{% endif %}{% endfor %})
             </option>
             {% endif %}
             <option disabled="">---</option>
