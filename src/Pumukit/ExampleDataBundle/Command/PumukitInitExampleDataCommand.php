@@ -34,6 +34,7 @@ class PumukitInitExampleDataCommand extends ContainerAwareCommand
             ->setName('pumukit:init:example')
             ->setDescription('Load Pumukit expample data fixtures to your database')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
+            ->addOption('append', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
             ->setHelp(<<<EOT
 
 Command to load a data set of data into a database. Useful for init a demo Pumukit environment.
@@ -50,6 +51,8 @@ EOT
         $this->repo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:Tag");
 
         if ($input->getOption('force')) {
+
+            //$this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
 	       
             $announce = true;
             $publicDate = new \DateTime("now");
@@ -110,9 +113,9 @@ EOT
             $dm->flush();
 
             $tags = array('tag_a', 'tag_b');
-            $language = 'portuñol';
-            $url = '/74638.flv';
-            $path = '/74638.flv';
+            $language = 'en';
+            $url = '/bundles/pumukitexampledata/videos/74638.flv';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/videos/74638.flv');
             $mime = 'video/flv';
             $duration = 5000;
             $acodec = 'aac';
@@ -146,6 +149,27 @@ EOT
             $track->setHide($hide);
             $track->setNumview($numview);
 
+            $tags = array('tag_a', 'tag_b');
+            $url = '/bundles/pumukitexampledata/images/74638.jpg';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/images/74638.jpg');
+            $mime = 'image/jpg';
+
+            $size = 3456;
+            $width = 800;
+            $height = 600;
+            $hide = true; // Change assertTrue accordingly.
+
+            $pic = new Pic();
+
+            $pic->setTags($tags);
+            $pic->setUrl($url);
+            $pic->setPath($path);
+            $pic->setMimeType($mime);
+            $pic->setSize($size);
+            $pic->setWidth($width);
+            $pic->setHeight($height);
+            $pic->setHide($hide);
+
             $rank = 3;
             $status = MultimediaObject::STATUS_NORMAL;
             $record_date = new \DateTime();
@@ -176,6 +200,8 @@ EOT
             $multimediaObject->addTag($tag2);
             $multimediaObject->addTag($tag3);
             $multimediaObject->setNumview($numview);
+
+            $multimediaObject->addPic($pic);
 
             $multimediaObject->addTrack($track);
 
