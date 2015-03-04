@@ -37,7 +37,7 @@ class TrackUpdateType extends AbstractType
                                          'read_only' => true,
                                          'label' => 'File'))
 
-          ->add('url', 'text', array(
+          ->add('url', 'url', array(
                                          'required' => true,
                                          'read_only' => true,
                                          'label' => 'URL'))

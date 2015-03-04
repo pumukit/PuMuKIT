@@ -22,9 +22,9 @@ class PersonType extends AbstractType
         array('required' => false, 'label' => 'Firm'))
       ->add('i18n_bio', 'textareai18n',
         array('required' => false, 'label' => 'Bio'))
-      ->add('email', 'text',
+      ->add('email', 'email',
         array('label' => 'Email'))
-      ->add('web', 'text',
+      ->add('web', 'url',
         array('required' => false, 'label' => 'Web'))
       ->add('phone', 'text',
         array('required' => false, 'label' => 'Phone'));
