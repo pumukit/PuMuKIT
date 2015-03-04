@@ -18,7 +18,7 @@
       </div>      
       <div class="row">
         <div class="col-md-2">
-          <select id="options_mms" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('mm', $(this), 'mms'); $(this).val('default');">
+          <select id="options_mms" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('mm', $(this), 'mms');">
             <option value="default" selected="selected">{% trans %}Select an action{% endtrans %}...</option>
             <option disabled="">---</option>
             <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
@@ -36,9 +36,8 @@
             </option>
             {% endif %}
             <option disabled="">---</option>
-            <option value="serial_preview">{% trans %}Preview show of the series{% endtrans %}</option> 
-            <!-- <option value="serial_master">{% trans %}Crear obj. mm. con brutos de cámara{% endtrans %}</option>  -->
-          </select>          
+            <option value="series_preview" id="{{ series.secret }}">{% trans %}Preview show of the series{% endtrans %}</option>
+          </select>
         </div>
         <div class="col-md-10 text-right">
 	      {# TODO mmwizard and path with series id #}

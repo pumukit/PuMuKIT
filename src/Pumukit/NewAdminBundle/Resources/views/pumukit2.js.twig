@@ -255,13 +255,13 @@ window.change_select = function(element, selector, pluralName)
     case 'create':
         $('.modal-content').load(get_create_route(element));
         $('#myModal').modal('show');
-        selector.selectedIndex = 0;
+        break;
+    case 'series_preview':
+        var url = "{{ url('pumukit_webtv_series_index', {id: '__mmSecret__'}) }}";
+        var secret = selector.find(':selected').attr('id');
+        if (secret !== '') window.open(url.replace('__mmSecret__', secret));
         break;
 /* TODO
-    case 'serial_preview':
-        window.open('/editar.php/serials/previewall');
-        selector.selectedIndex = 0;
-        break;
     case 'serial_master':
 	Modalbox.show('/editar.php/transcoders/masterserial', {title:'Master Multimedia', width:800});
         selector.selectedIndex = 0;
@@ -417,8 +417,7 @@ window.change_select = function(element, selector, pluralName)
         break;
 */
     }
-  selector.selectedIndex = 0;
-
+    selector.val('default');
 }
 
 
