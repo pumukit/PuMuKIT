@@ -42,8 +42,7 @@
 
         </td> 
         <td>
-          {# TODO <?php echo image_tag('admin/bbuttons/mm'.$series['mm_status_max'].'_inline.gif', array('alt' => __('estado'), 'title'=>__('estado'), 'id'=>'table_series_status_' . $series['id'])) ?> #}
-          <a href="# TODO">{# TODO MOVE TO OUTSIDE BUTTON route, template and image according to broadcast status MODAL /editar.php/serials/changePub/serial/{{ oneseries.id }} #}
+          <a href="{{ path('pumukitnewadmin_series_changepub', {'id': oneseries.id}) }}" data-toggle="modal" data-target="#myModal">
             <i class="{{ oneseries|series_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|series_text }}"></i>
           </a>
         </td>

@@ -61,3 +61,15 @@ pumukitnewadmin_series_invert_announce:
     methods: [GET, POST]
     defaults:
         _controller: pumukitnewadmin.controller.series:invertAnnounceAction
+
+pumukitnewadmin_series_changepub:
+    pattern: /changepub
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.series:changePubAction
+
+pumukitnewadmin_series_updatepub:
+    pattern: /updatepub
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.series:updatePubAction

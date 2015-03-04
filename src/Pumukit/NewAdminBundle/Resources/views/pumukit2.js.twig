@@ -186,6 +186,22 @@ window.click_checkbox_all = function(element, value)
   $('input.'+element+'_checkbox').prop('checked', value);
 }
 
+window.click_checkbox_changepub_all = function(element, value)
+{
+  $('input.change_pub_mms').prop('checked', value);
+}
+
+window.click_changepub_selection = function(element, value)
+{
+    $('input.change_pub_mms_all').each(function(){$(this)[0].checked=value});
+    $('input.change_pub_mms').each(function(){$(this)[0].checked=value});
+    return false;
+}
+window.click_checkbox_channel_changepub_all = function(channelId, value)
+{
+    $('input.pub_channel_input_checkbox.pub_channel_change_pub_'+channelId).prop('checked', value);
+}
+
 window.filter_click_letter = function(letter)
 {
   $('#filters_letter').val(letter);

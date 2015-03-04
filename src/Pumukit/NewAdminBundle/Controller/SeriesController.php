@@ -262,4 +262,39 @@ class SeriesController extends AdminController
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_series_list'));
     }
+
+    /**
+     * Change publication form
+     * @Template("PumukitNewAdminBundle:Series:changepub.html.twig")
+     */
+    public function changePubAction(Request $request)
+    {
+        $series = $this->findOr404($request);
+
+        $mmStatus = array(
+                        'published' => MultimediaObject::STATUS_NORMAL,
+                        'blocked' => MultimediaObject::STATUS_BLOQ,
+                        'hidden' => MultimediaObject::STATUS_HIDE
+                        );
+
+        $pubChannels = $this->get('pumukitschema.factory')->getTagsByCod('PUBCHANNELS', true);
+
+        return array(
+                     'series' => $series,
+                     'mm_status' => $mmStatus,
+                     'pub_channels' => $pubChannels
+                     );
+    }
+
+    /**
+     * Update publication form
+     */
+    public function updatePubAction(Request $request)
+    {
+        $series = $this->findOr404($request);
+
+        // TODO save changes of the form
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_series_list'));
+    }
 }
