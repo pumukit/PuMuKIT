@@ -40,6 +40,9 @@ class PumukitAdminExtension extends \Twig_Extension
                      new \Twig_SimpleFilter('duration_string', array($this, 'getDurationString')),
                      new \Twig_SimpleFilter('language_name', array($this, 'getLanguageName')),
                      new \Twig_SimpleFilter('status_icon', array($this, 'getStatusIcon')),
+                     new \Twig_SimpleFilter('status_text', array($this, 'getStatusText')),
+                     new \Twig_SimpleFilter('series_icon', array($this, 'getSeriesIcon')),
+                     new \Twig_SimpleFilter('series_text', array($this, 'getSeriesText')),
                      new \Twig_SimpleFilter('profile_width', array($this, 'getProfileWidth')),
                      new \Twig_SimpleFilter('profile_height', array($this, 'getProfileHeight')),
                      );
@@ -131,23 +134,124 @@ class PumukitAdminExtension extends \Twig_Extension
 
         switch ($status) {
             case MultimediaObject::STATUS_NORMAL:
-                $iconClass = "mdi-device-gps-fixed";
-                break;
-            case MultimediaObject::STATUS_BLOQ:
-                $iconClass = "mdi-device-signal-wifi-off";
+                $iconClass = "mdi-device-signal-wifi-4-bar";
                 break;
             case MultimediaObject::STATUS_HIDE:
+                $iconClass = "mdi-device-signal-wifi-0-bar";
+                break;
+            case MultimediaObject::STATUS_BLOQ:
                 $iconClass = "mdi-device-wifi-lock";
-                break;
-            case MultimediaObject::STATUS_NEW:
-                $iconClass = "mdi-device-wifi-tethering";
-                break;
-            case MultimediaObject::STATUS_PROTOTYPE:
-                $iconClass = "mdi-device-storage";
                 break;
         }
 
         return $iconClass;
+    }
+
+    /**
+     * Get status text
+     *
+     * @param integer $status
+     * @return string
+     */
+    public function getStatusText($status)
+    {
+        $iconText = "New";
+
+        switch ($status) {
+            case MultimediaObject::STATUS_NORMAL:
+                $iconText = "Normal: is listed in the Series and can be played with normal URL";
+                break;
+            case MultimediaObject::STATUS_HIDE:
+                $iconText = "Hidden: is not listed in the Series but can be played with normal URL";
+                break;
+            case MultimediaObject::STATUS_BLOQ:
+                $iconText = "Blocked: is not listed in the Series but can be played with magic URL";
+                break;
+        }
+
+        return $iconText;
+    }
+
+    /**
+     * Get series icon
+     *
+     * @param string $series
+     * @return string
+     */
+    public function getSeriesIcon($series)
+    {
+        $mmobjsNormal = 0;
+        $mmobjsHidden = 0;
+        $mmobjsBlocked = 0;
+
+        foreach($series->getMultimediaObjects() as $mmobj){
+            switch ($mmobj->getStatus()) {
+                case MultimediaObject::STATUS_NORMAL:
+                    ++$mmobjsNormal;
+                    break;
+                case MultimediaObject::STATUS_HIDE:
+                    ++$mmobjsHidden;
+                    break;
+                case MultimediaObject::STATUS_BLOQ:
+                    ++$mmobjsBlocked;
+                    break;
+            }
+
+        }
+
+        $iconClass = "mdi-alert-warning";
+
+        if ((0 === $mmobjsNormal) && (0 === $mmobjsHidden) && (0 === $mmobjsBlocked)){
+            $iconClass = "mdi-device-signal-wifi-off pumukit-none";
+        }elseif (($mmobjsNormal > $mmobjsHidden) && ($mmobjsNormal > $mmobjsBlocked)){
+            $iconClass = "mdi-device-signal-wifi-4-bar pumukit-normal";
+        }elseif (($mmobjsNormal === $mmobjsHidden) && ($mmobjsNormal > $mmobjsBlocked)){
+            $iconClass = "mdi-device-signal-wifi-0-bar pumukit-hidden-normal";
+        }elseif (($mmobjsHidden > $mmobjsNormal) && ($mmobjsHidden > $mmobjsBlocked)){
+            $iconClass = "mdi-device-signal-wifi-0-bar pumukit-hidden";
+        }elseif (($mmobjsNormal === $mmobjsBlocked) && ($mmobjsNormal > $mmobjsHidden)){
+            $iconClass = "mdi-device-wifi-lock pumukit-blocked-normal";
+        }elseif (($mmobjsBlocked === $mmobjsHidden) && ($mmobjsBlocked > $mmobjsNormal)){
+            $iconClass = "mdi-device-wifi-lock pumukit-blocked-hidden";
+        }elseif (($mmobjsNormal === $mmobjsBlocked) && ($mmobjsNormal === $mmobjsHidden)){
+            $iconClass = "mdi-device-wifi-lock pumukit-blocked-hidden-normal";
+        }elseif (($mmobjsBlocked > $mmobjsNormal) && ($mmobjsBlocked > $mmobjsHidden)){
+            $iconClass = "mdi-device-wifi-lock pumukit-blocked";
+        }
+
+        return $iconClass;
+    }
+
+    /**
+     * Get series text
+     *
+     * @param integer $series
+     * @return string
+     */
+    public function getSeriesText($series)
+    {
+        $mmobjsNormal = 0;
+        $mmobjsHidden = 0;
+        $mmobjsBlocked = 0;
+
+        foreach($series->getMultimediaObjects() as $mmobj){
+            switch ($mmobj->getStatus()) {
+                case MultimediaObject::STATUS_NORMAL:
+                    ++$mmobjsNormal;
+                    break;
+                case MultimediaObject::STATUS_HIDE:
+                    ++$mmobjsHidden;
+                    break;
+                case MultimediaObject::STATUS_BLOQ:
+                    ++$mmobjsBlocked;
+                    break;
+            }
+
+        }
+
+        $iconText = $mmobjsNormal." Normal Multimedia Object(s),\n".$mmobjsHidden." Hidden Multimedia Object(s),\n".$mmobjsBlocked." Blocked Multimedia Object(s)";
+
+        return $iconText;
     }
 
     /**

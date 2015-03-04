@@ -38,7 +38,7 @@
           </div>
         </td>
         <td>
-          <i id="table_mms_status_{{ mm.id }}" class="{{ mm.status|status_icon }}"></i>
+          <i id="table_mms_status_{{ mm.id }}" class="{{ mm.status|status_icon }}" data-toggle="tooltip" data-placement="right" title="{{ mm.status|status_text }}"></i>
         </td>
         <td>
 	      {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-editor-format-color-text">':'&nbsp;' }}
