@@ -41,6 +41,8 @@ Command to load a data set of data into a database. Useful for init a demo Pumuk
 
 The --force parameter has to be used to actually drop the database.
 
+The --append paramenter has to be used to add examples to database without deleting.
+
 EOT
           );
     }
@@ -51,9 +53,13 @@ EOT
         $this->repo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:Tag");
 
         if ($input->getOption('force')) {
+            
+            if ($input->getOption('append') != 1){
+               $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array()); 
+               $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
+               $this->dm->getDocumentCollection('PumukitSchemaBundle:Person')->remove(array());
+            }
 
-            //$this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
-	       
             $announce = true;
             $publicDate = new \DateTime("now");
             $title = 'Title';
