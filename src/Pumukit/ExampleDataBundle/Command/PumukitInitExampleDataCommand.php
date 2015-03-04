@@ -374,6 +374,7 @@ EOT
             $dm->persist($multimediaObject_example_2);
             $dm->flush();
 
+            
             //Series example 3
 
             $announce = true;
@@ -532,7 +533,8 @@ EOT
             $dm->persist($multimediaObject_example_3);
             $dm->flush();
 
-            //Example Series 4
+
+            //Series example 4
 
             $announce = true;
             $publicDate = new \DateTime("now");
@@ -688,6 +690,47 @@ EOT
 
             $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
             $dm->persist($multimediaObject_example_4);
+            $dm->flush();
+
+            //Person example
+
+            $email = 'email@email.com';
+            $name = 'Peter';
+            $web = 'web';
+            $phone = 'phone';
+            $honorific = 'Mr';
+            $firm = 'firm';
+            $post = 'post';
+            $bio = 'Biography of this person';
+
+            $person = new Person();
+
+            $person->setEmail($email);
+            $person->setName($name);
+            $person->setWeb($web);
+            $person->setPhone($phone);
+            $person->setHonorific($honorific);
+            $person->setFirm($firm);
+            $person->setPost($post);
+            $person->setBio($bio);
+
+            $honorificEs = 'Don';
+            $firmEs = 'Firma de esta persona';
+            $postEs = 'Post de esta persona';
+            $bioEs = 'Biografía de esta persona';
+
+            $i18nHonorific = array('en' => $honorific, 'es' => $honorificEs);
+            $i18nFirm = array('en' => $firm, 'es' => $firmEs);
+            $i18nPost = array('en' => $post, 'es' => $postEs);
+            $i18nBio = array('en' => $bio, 'es' => $bioEs);
+
+            $person->setI18nHonorific($i18nHonorific);
+            $person->setI18nFirm($i18nFirm);
+            $person->setI18nPost($i18nPost);
+            $person->setI18nBio($i18nBio);
+
+            $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+            $dm->persist($person);
             $dm->flush();
 
         } else {
