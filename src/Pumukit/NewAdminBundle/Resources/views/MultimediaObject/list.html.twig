@@ -97,10 +97,17 @@
           {{ mm.getPublicDate()|date('d-m-Y') }}
         </td>
       </tr>
-      {% endfor %}
+    {% endfor %}
 
-      {% if (mms|length - (mms.getMaxPerPage() * (mms.getCurrentPage() - 1))) < (mms.maxPerPage-1) %}
-      {% for i in (mms|length - (mms.getMaxPerPage() * (mms.getCurrentPage() - 1)))..(mms.maxPerPage-1) %}
+    {% if 0 == mms|length%}
+        {% set range = 1..9 %}
+    {% elseif (mms|length - (mms.getMaxPerPage() * (mms.getCurrentPage() - 1))) < (mms.maxPerPage-1) %}
+        {% set range = (mms|length - (mms.getMaxPerPage() * (mms.getCurrentPage() - 1)))..(mms.maxPerPage-1) %}
+    {% else %}
+        {% set range = [] %}
+    {% endif %}
+
+    {% for i in range %}
       <tr>
   	    <td>&nbsp;</td>
         <td>&nbsp;</td>
@@ -117,7 +124,6 @@
         <td>&nbsp;</td>
       </tr>
     {% endfor %}
-  {% endif %}
   </tbody>
   <tfoot>
     <tr>

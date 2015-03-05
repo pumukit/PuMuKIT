@@ -1,6 +1,6 @@
 {% set criteria = app.session.get('admin/series/criteria') %}
 <div class="well">
-  <form id="filter_series" class="form-horizontal" 
+  <form id="filter_series" class="form" 
         onsubmit="$('#list_series').load('{{ path('pumukitnewadmin_series_list') }}', $(this).serialize()); return false;"
         action="{{ path('pumukitnewadmin_series_list') }}" method="GET">
     <fieldset>
@@ -17,31 +17,31 @@
           <div id="collapseSearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSearch">
             <div class="panel-body">
               <div class="form-group">
-                <label for="id" class="col-md-3 control-label">{% trans %}Id{% endtrans %}:</label>
-                <div class="col-md-9">
+                <label for="id" class="control-label">{% trans %}Id{% endtrans %}:</label>
+                <div>
                   <input type="text" class="form-control" name="criteria[_id]" id="filters_id" value="{{ criteria['_id']|default("") }}">
                 </div>
               </div>
               <div class="form-group">
-                <label for="title" class="col-md-3 control-label">{% trans %}Title{% endtrans %}:</label>
-                <div class="col-md-9">
+                <label for="title" class="control-label">{% trans %}Title{% endtrans %}:</label>
+                <div>
                   {# TODO culture #}
                   <input type="text" class="form-control" name="criteria[title.en]" id="filters_title" value="{{ criteria['title.en']|default("") }}">
                 </div>
               </div>
               
               <div class="form-group">
-                <label for="person" class="col-md-3 control-label">{% trans %}Person{% endtrans %}:</label>
-                <div class="col-md-9">
+                <label for="person" class="control-label">{% trans %}Person{% endtrans %}:</label>
+                <div>
                   {# TODO person name, comes from multimedia object in series #}
                   {# TODO culture #}
                   <input type="text" class="form-control" name="criteria[person]" id="filters_person" value="{{ criteria['person']|default("") }}">
                 </div>
               </div>
 	          <div class="form-group">
-	            <label for="publicdate" class="col-md-3 control-label">{% trans %}Date{% endtrans %}:</label>
+	            <label for="publicdate" class="control-label">{% trans %}Date{% endtrans %}:</label>
                 <div class="row">
-	              <div class="col-md-10 col-md-offset-1">
+	              <div class="col-md-11 col-md-offset-1">
 	                {% trans %}From{% endtrans %}:&nbsp;<input type="datetime-local" class="form-control" name="criteria[date][from]" id="filters_date_from" value="{{ criteria['date']['from']|default("") }}">
                     <br/>
 	                {% trans %}To{% endtrans %}:&nbsp;&nbsp;<input type="datetime-local" class="form-control" name="criteria[date][to]" id="filters_date_to" value="{{ criteria['date']['to']|default("") }}">
@@ -61,10 +61,10 @@
             </h2>
           </div>
           <div id="collapseOthers" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOthers">
-            <div class="panel-body">
+            <div class="panel-body container-fluid">
               <div class="form-group">
- 	            <label for="announce" class="col-md-4 control-label">{% trans %}Announced{% endtrans %}:</label>
-                <div class="col-md-8">
+ 	            <label for="announce" class="control-label">{% trans %}Announced{% endtrans %}:</label>
+                <div>
 	              <select class="form-control" name="criteria[announce]" id="filters_announce"><option value="diff" selected="selected">{% trans %}Indifferent{% endtrans %}</option>
 		            <option value="true">{% trans %}Yes{% endtrans %}</option>
 		            <option value="false">{% trans %}No{% endtrans %}</option>
@@ -72,8 +72,8 @@
                 </div>
               </div>
               <div class="form-group">
- 	            <label for="status" class="col-md-4 control-label">{% trans %}Hidden{% endtrans %}:</label>
-                <div class="col-md-8">
+ 	            <label for="status" class="control-label">{% trans %}Hidden{% endtrans %}:</label>
+                <div>
 	              <select class="form-control" name="criteria[status]" id="filters_status"><option value="all" selected="selected">{% trans %}All{% endtrans %}</option>
 		            <option value="false">{% trans %}No{% endtrans %}</option>
 		            <option value="true">{% trans %}Yes{% endtrans %}</option>
