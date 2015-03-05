@@ -3,7 +3,15 @@
     <tr>
       <td><ul><li></li></ul></td>
       <td colspan="11">
-        {% if status_error == job.getStatus() %}    
+        {% if status_error == job.getStatus() %}
+            <a title="{% trans %}Encoder Job info{% endtrans %}" 
+               style="color:red"
+               data-toggle="modal" data-dismiss="modal" data-target="#myModal"
+               href="{{ path('pumukitnewadmin_track_info_job', {'mmId': mmId, 'jobId': job.id, 'preview': 1}) }}">
+                <i class="mdi-action-info"></i>
+            </a>
+
+{#
             <a href="#" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_retry_job', {'mmId': mmId, 'jobId': job.id, 'preview': 1}) }}'); return false;">
               <i class="mdi-navigation-refresh"></i>
             </a>
@@ -11,6 +19,8 @@
             <a href="#" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_delete_job', {'mmId': mmId, 'jobId': job.id, 'preview': 1}) }}'); return false;">
               <i class="mdi-content-clear"></i>
             </a>
+#}
+
             <small style="color:red">{{ job.getStatusText() }}</small>              
         {% else %}
             <i class="mdi-navigation-refresh pmk-job-animate"></i>          

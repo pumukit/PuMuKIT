@@ -451,9 +451,11 @@ class JobService
      */
     public function retryJob($job)
     {
-        if (Job::STATUS_ERROR === $job->getStatus()){
-            return 'The job is right';
+        if (Job::STATUS_ERROR !== $job->getStatus()){
+            return false;
         }
+        
+        $mmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
 
         $profile = $this->getProfile($job);
         $tempDir = $profile['streamserver']['dir_out'] . '/' . $mmobj->getSeries()->getId();
@@ -466,9 +468,9 @@ class JobService
         $this->dm->persist($job);
         $this->dm->flush();
 
-        $this->execNext();
+        $this->executeNextJob();
 
-        return 'Retranscoding job';
+        return true;
     }
 
     private function getExecutor($app, $cpuType)

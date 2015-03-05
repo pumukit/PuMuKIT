@@ -185,6 +185,17 @@ class TrackController extends Controller
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("job", class="PumukitEncoderBundle:Job", options={"id" = "jobId"})
+     * @Template
+     */
+    public function infoJobAction(MultimediaObject $multimediaObject, Job $job, Request $request)
+    {
+        $command = $this->get('pumukitencoder.job')->renderBat($job);
+        return array('multimediaObject'=> $multimediaObject, 'job' => $job, 'command' => $command);
+    }
+
+    /**
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      */
     public function deleteJobAction(MultimediaObject $multimediaObject, Request $request)
     {
