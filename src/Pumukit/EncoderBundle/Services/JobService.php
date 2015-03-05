@@ -451,8 +451,8 @@ class JobService
      */
     public function retryJob($job)
     {
-        if (Job::STATUS_ERROR === $job->getStatus()){
-            return 'The job is right';
+        if (Job::STATUS_ERROR !== $job->getStatus()){
+            return false;
         }
 
         $profile = $this->getProfile($job);
@@ -468,7 +468,7 @@ class JobService
 
         $this->execNext();
 
-        return 'Retranscoding job';
+        return true;
     }
 
     private function getExecutor($app, $cpuType)
