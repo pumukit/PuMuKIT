@@ -1,6 +1,6 @@
 <!-- Filter -->
 <div class="well">
-  <form class="form-horizontal" id="filter_people" onsubmit="$('filters_letter').value=null; $('#list_people').load('{{ path('pumukitnewadmin_person_list') }}', $(this).serialize()); return false;" action="{{ path('pumukitnewadmin_person_list') }}" method="post">
+  <form class="form-horizontal" id="filter_people" onsubmit="$('#list_people').load('{{ path('pumukitnewadmin_person_list') }}', $(this).serialize()); return false;" action="{{ path('pumukitnewadmin_person_list') }}" method="post">
   <fieldset>
     <h2>{% trans %}Search{% endtrans %}</h2>
 
@@ -8,47 +8,24 @@
       <label for="name" class="col-md-2 control-label">{% trans %}Name{% endtrans %}:</label>
       {% set criteria = app.session.get('admin/person/criteria') %}
       <div class="col-md-10">
-        <input type="text" class="form-control" name="criteria[name]" id="filters_name" value="{{ criteria['name']|default("") }}">
+        <input type="text" class="reset form-control" name="criteria[name]" id="filters_name" value="{{ criteria['name']|default("") }}">
       </div>
     </div>
 
     <div class="form-group">
-      <label for="other" class="col-md-2 control-label">{% trans %}Other{% endtrans %}:</label>
+      <label for="post" class="col-md-2 control-label">{% trans %}Post{% endtrans %}:</label>
       <div class="col-md-10">
-        <input type="text" class="form-control" name="criteria[other.en]" id="filters_other" value="{{ criteria['other']|default("") }}">
+        <input type="text" class="reset form-control" name="criteria[post.{{ app.request.locale }}]" id="filters_post" value="{{ criteria['post']|default("") }}">
       </div>
     </div>
 
     <div class="form-group">
       <label for="letter" class="col-md-2 control-label">{% trans %}Letter{% endtrans %}:</label>
       <div class="col-md-10">
-        <input id="filters_letter" class="form-control" type="hidden" value="" name="criteria[letter]">
-        <a href="#" onclick="window.filter_click_letter('A')">A</a>
-        <a href="#" onclick="window.filter_click_letter('B')">B</a>
-        <a href="#" onclick="window.filter_click_letter('C')">C</a>
-        <a href="#" onclick="window.filter_click_letter('D')">D</a>
-        <a href="#" onclick="window.filter_click_letter('E')">E</a>
-        <a href="#" onclick="window.filter_click_letter('F')">F</a>
-        <a href="#" onclick="window.filter_click_letter('G')">G</a>
-        <a href="#" onclick="window.filter_click_letter('H')">H</a>
-        <a href="#" onclick="window.filter_click_letter('I')">I</a>
-        <a href="#" onclick="window.filter_click_letter('J')">J</a>
-        <a href="#" onclick="window.filter_click_letter('K')">K</a>
-        <a href="#" onclick="window.filter_click_letter('L')">L</a>
-        <a href="#" onclick="window.filter_click_letter('M')">M</a>
-        <a href="#" onclick="window.filter_click_letter('N')">N</a>
-        <a href="#" onclick="window.filter_click_letter('O')">O</a>
-        <a href="#" onclick="window.filter_click_letter('P')">P</a>
-        <a href="#" onclick="window.filter_click_letter('Q')">Q</a>
-        <a href="#" onclick="window.filter_click_letter('R')">R</a>
-        <a href="#" onclick="window.filter_click_letter('S')">S</a>
-        <a href="#" onclick="window.filter_click_letter('T')">T</a>
-        <a href="#" onclick="window.filter_click_letter('U')">U</a>
-        <a href="#" onclick="window.filter_click_letter('V')">V</a>
-        <a href="#" onclick="window.filter_click_letter('W')">W</a>
-        <a href="#" onclick="window.filter_click_letter('X')">X</a>
-        <a href="#" onclick="window.filter_click_letter('Y')">Y</a>
-        <a href="#" onclick="window.filter_click_letter('Z')">Z</a>
+        <input id="filters_letter" class="reset form-control" type="hidden" value="{{ criteria['letter']|default("") }}" name="criteria[letter]">
+        {% for letter in "A".."Z" %}
+            <a href="#" id="pmk-person-letter-{{letter}}" class="pmk-person-letter {% if criteria['letter']|default("") == letter%}text-pumukit{% endif %}" onclick="window.filter_click_letter('{{letter}}')">{{letter}}</a>
+        {% endfor %}
       </div>
     </div>
       
@@ -56,7 +33,7 @@
 
   <div class="row">
     <div class="col-md-2">
-      <input class="btn btn-default btn-raised" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
+      <input class="btn btn-default btn-raised" onclick="$('.pmk-person-letter.text-pumukit').removeClass('text-pumukit'); $('#filter_people input.reset').val(''); $('#list_people').load('{{ path('pumukitnewadmin_person_list') }}?criteria[reset]=true'); return false;" type="button" value="{% trans %}reset{% endtrans %}">
     </div>
     <div class="col-md-2 col-md-offset-3">
       <input class="btn btn-pumukit btn-raised" type="submit" name="filter" value="{% trans %}filter{% endtrans %}">
