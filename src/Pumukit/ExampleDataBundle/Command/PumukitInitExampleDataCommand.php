@@ -18,6 +18,7 @@ use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Person;
 
+define("URL_VIDEOS", "http://static.campusdomar.es/pumukit_videos.zip");
 
 class PumukitInitExampleDataCommand extends ContainerAwareCommand
 {
@@ -47,15 +48,13 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $file = 'http://static.campusdomar.es/pumukit_videos.zip';
         $newFile = 'tmp_file.zip';
 
-        if (!copy($file, $newFile)) {
-            echo "failed to copy $file...\n";
+        if (!copy(URL_VIDEOS, $newFile)) {
+            echo "Failed to copy $file...\n";
         }
 
         $zip = new ZipArchive();
-        //echo $zip->open('http://static.campusdomar.es/pumukit_videos.zip');
         if ($zip->open($newFile, ZIPARCHIVE::CREATE)==TRUE) {
             $zip->extractTo(realpath(dirname(__FILE__) . '/../Resources/public/'));
             $zip->close();
