@@ -1,61 +1,69 @@
-{# TODO
-<table cellspacing="0" class="tv_admin_list">
-  <thead>
-    <tr>
-      <th width="1%">
-        <input type="checkbox" onclick="window.click_checkbox_all('direct', this.checked)">
-      </th>
-      <th colspan="3" width="5%"></th>
-      <th width="1%">{% trans %}Id{% endtrans %}</th>
-      <th>{% trans %}Name{% endtrans %}</th>
-      <th>{% trans %}URL{% endtrans %}</th>
-      <th width="1%">{% trans %}Resolution{% endtrans %}</th>
-      <th width="8%">{% trans %}Type{% endtrans %}</th>
-    </tr>
-  </thead>
-  
-  <tbody>
-  {% if lifes|length == 0 %}
-    <tr class="tv_admin_row_1">
-      <td colspan="9" >
-       {% trans %}There are no live channels with those values.{% endtrans %}
-      </td>
-    </tr>
-  {% else %}
-    {% for direct in lifes %}
-      <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ loop.index % 2 }} {{  direct.id == app.session.get('admin/direct/id')?'tv_admin_row_this':'' }}" >
+<div class="table-responsive well" style="overflow:visible;">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+	<th width="1%">
+	  <div class="checkbox">
+	    <label>
+              <input type="checkbox" onclick="window.click_checkbox_all('live', this.checked)">
+	    </label>
+	  </div>
+	</th>
+	<th colspan="3" width="5%"></th>
+	<th>{% trans %}Name{% endtrans %}</th>
+	<th>{% trans %}URL{% endtrans %}</th>
+	<th width="1%">{% trans %}Resolution{% endtrans %}</th>
+	<th width="8%">{% trans %}Type{% endtrans %}</th>
+      </tr>
+    </thead>  
+    <tbody>
+      {% if lives|length == 0 %}
+      <tr>
+	<td colspan="9">
+	  {% trans %}There are no live channels with those values.{% endtrans %}
+	</td>
+      </tr>
+      {% else %}
+      {% for live in lives %}
+      <tr style="cursor:pointer;" {% if (app.session.get('admin/live/id') == live.id) %} class="success" {% endif %}>
         <td>
-          <input id="{{ direct.id }}" class="direct_checkbox" type="checkbox">
-        </td>
-        <td onclick="click_fila_url('direct', this, '{{ path('pumukitadmin_direct_show', {'id': direct.id}) }}');">
-    	<a title="{% trans %}Edit live channel {% endtrans %}{{ direct.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_direct_update', {'id': direct.id}) }}"><img alt="{% trans %}edit{% endtrans %}" title="{% trans %}edit{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a>    
+	  <div class="checkbox">
+	    <label>
+              <input id="{{ live.id }}" class="live_checkbox" type="checkbox">
+	    </label>
+	  </div>
         </td>
         <td>
-          <a href="#" onclick="window.submit_delete_direct('{{ direct.id }}'); return false;">
-            <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
+    	  <a title="{% trans %}Edit live channel{% endtrans %} {{ live.id }}" href="{{ path('pumukitnewadmin_live_update', {'id': live.id}) }}" data-toggle="modal" data-target="#myModal">
+	    <i class="mdi-editor-mode-edit"></i>
+	  </a>
+        </td>
+        <td>
+          <a href="#" onclick="window.submit_delete_live('{{ live.id }}'); return false;">
+	    <i class="mdi-content-clear"></i>
           </a>
         </td>
         <td>
-          <form action="{{ path('pumukitadmin_direct_copy', {'id': direct.id}) }}" method="post" class="delete-action-form" novalidate="">
+          <form action="{{ path('pumukitadmin_live_copy', {'id': live.id}) }}" method="post" class="delete-action-form" novalidate="">
               <button type="submit" class="tv_admin_row_post">
 		<img alt="{% trans %}clone{% endtrans %}" title="{% trans %}clone{% endtrans %}" src="/legacy/images/admin/mbuttons/copy_inline.gif">
 	      </button>
 	  </form>
         </td>
-        <td onclick="click_fila_url('direct', this, '{{ path('pumukitadmin_direct_show', {'id': direct.id}) }}');">
-          {{ direct.id }}
+        <td onclick="click_fila_url('live', this, '{{ path('pumukitadmin_live_show', {'id': live.id}) }}');">
+          {{ live.id }}
         </td>
-        <td onclick="click_fila_url('direct', this, '{{ path('pumukitadmin_direct_show', {'id': direct.id}) }}');">
-	  {{ direct.name }}
+        <td onclick="click_fila_url('live', this, '{{ path('pumukitadmin_live_show', {'id': live.id}) }}');">
+	  {{ live.name }}
         </td>
-        <td onclick="click_fila_url('direct', this, '{{ path('pumukitadmin_direct_show', {'id': direct.id}) }}');">
-	  {{ direct.url }}
+        <td onclick="click_fila_url('live', this, '{{ path('pumukitadmin_live_show', {'id': live.id}) }}');">
+	  {{ live.url }}
         </td>
-        <td onclick="click_fila_url('direct', this, '{{ path('pumukitadmin_direct_show', {'id': direct.id}) }}');">
-	  {{ direct.getWidth }}x{{ direct.getHeight }}
+        <td onclick="click_fila_url('live', this, '{{ path('pumukitadmin_live_show', {'id': live.id}) }}');">
+	  {{ live.getWidth }}x{{ live.getHeight }}
         </td>
-        <td onclick="click_fila_url('direct', this, '{{ path('pumukitadmin_direct_show', {'id': direct.id}) }}');">
-	  {{ direct.getDirectType }}
+        <td onclick="click_fila_url('live', this, '{{ path('pumukitadmin_live_show', {'id': live.id}) }}');">
+	  {{ live.getLiveType }}
         </td>
       </tr>
     {% endfor %}
@@ -66,20 +74,20 @@
     <tr>
       <th colspan="9">
         <div class="float-right">
-          {{ include('PumukitAdminBundle:Macros:pager_ajax.html.twig', {'name': 'direct', 'page': lifes.getCurrentPage, 'total':lifes.getNbPages}) }}
+          {{ include('PumukitAdminBundle:Macros:pager_ajax.html.twig', {'name': 'live', 'page': lives.getCurrentPage, 'total':lives.getNbPages}) }}
         </div>
-        {{ lifes.getNbResults }} 
-        {% transchoice lifes.getNbResults %}
+        {{ lives.getNbResults }} 
+        {% transchoice lives.getNbResults %}
 	      {0} channels|{1} channel|]1,Inf] channels
 	{% endtranschoice %}
-	{% if app.session.get('admin/direct/criteria')|length != 0%}
+	{% if app.session.get('admin/live/criteria')|length != 0%}
           <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
 	{% endif %}
       </th>
     </tr>
   </tfoot>
 </table>
-#}
+</div>
 {# TODO
 <?php if (isset($msg_alert)) echo m_msg_alert($msg_alert) ?>
 #}
