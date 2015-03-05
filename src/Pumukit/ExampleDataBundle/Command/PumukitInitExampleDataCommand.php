@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use ZipArchive;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
@@ -46,6 +47,20 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $file = 'http://static.campusdomar.es/pumukit_videos.zip';
+        $newFile = 'tmp_file.zip';
+
+        if (!copy($file, $newFile)) {
+            echo "failed to copy $file...\n";
+        }
+
+        $zip = new ZipArchive();
+        //echo $zip->open('http://static.campusdomar.es/pumukit_videos.zip');
+        if ($zip->open($newFile, ZIPARCHIVE::CREATE)==TRUE) {
+            $zip->extractTo(realpath(dirname(__FILE__) . '/../Resources/public/'));
+            $zip->close();
+        }
+
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:Tag");
 
