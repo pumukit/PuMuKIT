@@ -454,6 +454,8 @@ class JobService
         if (Job::STATUS_ERROR !== $job->getStatus()){
             return false;
         }
+        
+        $mmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
 
         $profile = $this->getProfile($job);
         $tempDir = $profile['streamserver']['dir_out'] . '/' . $mmobj->getSeries()->getId();
