@@ -111,11 +111,8 @@ class TrackController extends Controller
     public function playAction(MultimediaObject $multimediaObject, Request $request)
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
-        
-        return array(
-                     'track' => $track,
-                     'mm' => $multimediaObject
-                     );
+
+        return array('track' => $track);
     }
 
     /**

@@ -90,6 +90,6 @@ pumukitnewadmin_track_retranscode:
 
 pumukitnewadmin_track_play:
     pattern: /{id}/play/{mmId}
-    methods: [GET, PUT, POST]
+    methods: [GET]
     defaults:
         _controller: pumukitnewadmin.controller.track:playAction
