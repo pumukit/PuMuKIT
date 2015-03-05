@@ -248,6 +248,8 @@ class JobService
 
     public function execute(Job $job)
     {
+        set_time_limit(0);
+
         $profile = $this->getProfile($job);
         $cpu = $this->cpuService->getCpuByName($job->getCpu());
         $commandLine = $this->renderBat($job);
