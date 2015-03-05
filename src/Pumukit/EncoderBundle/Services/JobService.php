@@ -468,7 +468,7 @@ class JobService
         $this->dm->persist($job);
         $this->dm->flush();
 
-        $this->execNext();
+        $this->executeNextJob();
 
         return true;
     }
