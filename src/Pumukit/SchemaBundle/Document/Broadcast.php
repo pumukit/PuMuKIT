@@ -295,9 +295,9 @@ class Broadcast
   }
 
   /**
-   * Clone Direct
+   * Clone Broadcast
    *
-   * @return Direct
+   * @return Broadcast
    */
   public function cloneResource()
   {
