@@ -13,7 +13,7 @@
       <div class="form-row">
         <dt>{% trans %}Video Files{% endtrans %}:</dt>
         <dd>
-          <div id="tracks_mms">
+          <div id="tracks_mms" style="overflow:visible;">
 	        {% include 'PumukitNewAdminBundle:Track:list.html.twig' with {'mmId': mm.id, 'tracks': mm.getTracks(), 'oc': ''} %}
           </div>
         </dd>
