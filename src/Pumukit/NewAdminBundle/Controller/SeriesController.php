@@ -3,6 +3,7 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
@@ -291,10 +292,43 @@ class SeriesController extends AdminController
      */
     public function updatePubAction(Request $request)
     {
-        $series = $this->findOr404($request);
+        if ('POST' === $request->getMethod()){
+            $values = $request->get('values');
+            if ('string' === gettype($values)){
+                $values = json_decode($values, true);
+            }
 
-        // TODO save changes of the form
+            $this->modifyMultimediaObjectsStatus($values);
+        }
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_series_list'));
+    }
+
+    /**
+     * Modify Multimedia Objects status
+     */
+    private function modifyMultimediaObjectsStatus($values)
+    {
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $repo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $repoTags = $dm->getRepository('PumukitSchemaBundle:Tag');
+        $tagService = $this->get('pumukitschema.tag');
+
+        foreach ($values as $id => $value){
+            $mm = $repo->find($id);
+            if ($mm){
+                foreach($value['channels'] as $channelId => $mustContainsTag){
+                    $tag = $repoTags->find($channelId);
+                    if ($mustContainsTag && (!($mm->containsTag($tag)))) {
+                        $tagAdded = $tagService->addTagToMultimediaObject($mm, $tag->getId());
+                    }elseif ((!($mustContainsTag)) && $mm->containsTag($tag)) {
+                        $tagAdded = $tagService->removeTagFromMultimediaObject($mm, $tag->getId());
+                    }
+                }
+                $mm->setStatus($value['status']);
+                $dm->persist($mm);
+            }
+        }
+        $dm->flush();
     }
 }

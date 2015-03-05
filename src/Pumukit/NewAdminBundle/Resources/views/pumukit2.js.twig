@@ -188,7 +188,7 @@ window.click_checkbox_all = function(element, value)
 
 window.click_checkbox_changepub_all = function(element, value)
 {
-  $('input.change_pub_mms').prop('checked', value);
+  $('input.checkbox_change_pub_mms').prop('checked', value);
 }
 
 window.click_changepub_selection = function(element, value)
@@ -197,9 +197,56 @@ window.click_changepub_selection = function(element, value)
     $('input.change_pub_mms').each(function(){$(this)[0].checked=value});
     return false;
 }
+
+window.check_checkbox_all = function(value)
+{
+    var checkbox_all = $('input.checkbox_change_pub_mms_all');
+    if (checkbox_all.prop('checked') && (!value)){
+        checkbox_all.prop('checked', value);
+    }
+}
+
+window.check_checkbox_channel_all = function(channelId, value)
+{
+    var checkbox_channels = $('input.checkbox_change_pub_channel_'+channelId);
+    if (checkbox_channels.prop('checked') && (!value)){
+        checkbox_channels.prop('checked', value);
+    }
+}
+
 window.click_checkbox_channel_changepub_all = function(channelId, value)
 {
     $('input.pub_channel_input_checkbox.pub_channel_change_pub_'+channelId).prop('checked', value);
+}
+
+window.submit_series_change_pub = function()
+{
+    $('#myModal').modal('hide');
+
+    var channelsId = [];
+    $('input.checkbox_all_channels').each(function(){
+        channelsId.push($(this).attr("id"));
+    });
+
+    var values = {};
+    $('.checkbox_change_pub_mms:checked').each(function(){
+        var $this = $(this);
+        var mmId = $this.attr("id");
+        var channelValues = [];
+        var channels = {};
+        for (var i = 0; i < channelsId.length; i++){
+            var channel = $('#pub_channel_change_pub_'+channelsId[i]+'_mm_'+mmId);
+            channels[channelsId[i]] = channel.prop('checked')
+        }
+        values[mmId] = {'status': $('#status_change_pub_'+mmId+' option:selected').val(), 'channels': channels};        
+    });
+    if (values.size == 0) return false;
+
+    var route = '{{ path('pumukitnewadmin_series_updatepub', {'id': '__seriesId__', 'values': '__values__'}) }}';
+    route = route.replace('__values__', JSON.stringify(values));
+    $('#list_series').load(route, {'_method':'POST'});
+
+    return false;
 }
 
 window.filter_click_letter = function(letter)
