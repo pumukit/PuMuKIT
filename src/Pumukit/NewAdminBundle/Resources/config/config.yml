@@ -60,3 +60,9 @@ sylius_resource:
             classes:
                 model: Pumukit\SchemaBundle\Document\Track
                 controller: Pumukit\NewAdminBundle\Controller\TrackController
+        pumukitnewadmin.live:
+            driver: doctrine/mongodb-odm
+            templates: PumukitNewAdminBundle:Live
+            classes:
+                model: Pumukit\LiveBundle\Document\Live
+                controller: Pumukit\NewAdminBundle\Controller\AdminController

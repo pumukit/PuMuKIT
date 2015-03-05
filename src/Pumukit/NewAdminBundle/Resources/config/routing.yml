@@ -57,3 +57,7 @@ pumukitnewadmin_material:
 pumukitnewadmin_track:
     resource: @PumukitNewAdminBundle/Resources/config/routes/track.yml
     prefix: /admin/track
+
+pumukitnewadmin_live:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/live.yml
+    prefix: /admin/live

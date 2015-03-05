@@ -1,0 +1,37 @@
+<!-- Vista previa -->
+{% if direct is not null %}
+
+<h3>{{ direct.name }}</h3>
+{{ direct.description }}
+
+<div style="overflow:hidden; padding:5px; border:solid 1px #DDD; background:#DDD" >
+  <div>
+    {% trans %}URL{% endtrans %}: <a href="TODO: /direct/index/id/{{ direct.id }}">
+      "TODO: /directo/index/id/{{ direct.id }}"
+      </a>
+  </div>
+  <div>
+    {% trans %}Source IP{% endtrans %}: <span style="font-style:italic"> {{ direct.getIpSource() }}</span>
+  </div>
+  <div>
+    {% trans %}Show player at homepage{% endtrans %}: <span style="font-style:italic">{% if direct.getIndexPlay() %}{% trans %}Activated{% endtrans %}{% else %}{% trans %}Deactivated{% endtrans %}{% endif %}</span>
+  </div>
+  <div>
+    {% trans %}Status{% endtrans %}: <span style="font-style:italic">{% if not direct.broadcasting %}{% trans %}On hold{% endtrans %}{% else %}{% trans %}Live broadcasting{% endtrans %}{% endif %}</span>
+  </div>
+</div>
+
+
+<br />
+<a href="#" onclick="Effect.toggle('player','appear'); return false">{% trans %}Preview{% endtrans %}</a>
+
+
+<div id="player" style="display: none;">
+  {{ include('PumukitAdminBundle:Direct/Players:'~direct.getDirectType()~'.html.twig') }}
+</div>
+
+{% else %}
+<p>
+  {% trans %}Select any live channel.{% endtrans %}
+</p>
+{% endif %}

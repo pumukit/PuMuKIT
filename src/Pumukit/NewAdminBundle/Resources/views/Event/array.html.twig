@@ -1,0 +1,79 @@
+<table cellspacing="0" class="tv_admin_list">
+  <thead>
+    <tr>
+      <th width="1%">
+        <input type="checkbox" onclick="window.click_checkbox_all('event', this.checked)">
+      </th>
+      <th colspan="2" width="5%"></th>
+      <th width="1%">{% trans %}Id{% endtrans %}</th>
+      <th width="7%">{% trans %}Date{% endtrans %}</th>
+      <th>{% trans %}Text{% endtrans %}</th>
+      <th width="1%">{% trans %}Public{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+  {% if events|length == 0 %}
+    <tr>
+      <td colspan="7">
+       {% trans %}There are no events with those values.{% endtrans %}
+      </td>
+    </tr>
+  {% endif %}
+  {% for event in events %}
+    <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ loop.index % 2 }} {{ event.id == app.session.get('admin/event/id')?'tv_admin_row_this':'' }}" >
+      <td>
+        <input id="{{ event.id }}" class="event_checkbox" type="checkbox">
+      </td>
+      <td onclick="click_fila_url('event', this, '{{ path('pumukitadmin_event_show', {'id': event.id}) }}');">
+	<a title="{% trans %}Edit Event {% endtrans %}{{ event.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_event_update', {'id': event.id}) }}"><img alt="{% trans %}edit{% endtrans %}" title="{% trans %}edit{% endtrans %}" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a>
+      </td>
+      <td>
+        <form action="{{ path('pumukitadmin_event_delete', {'id': event.id}) }}" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}Are you sure you want to delete the event with date {% endtrans %}{{ event.date|date('Y-m-d H:i') }}?')">
+          <input type="hidden" name="_method" value="DELETE">
+          <input type="hidden" name="confirmed" value="true">
+          <button type="submit" class="tv_admin_row_post">
+            <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
+          </button>
+        </form>
+      </td>
+      <td onclick="click_fila_url('event', this, '{{ path('pumukitadmin_event_show', {'id': event.id}) }}');">
+	{{ event.id }}
+      </td>
+      <td onclick="click_fila_url('event', this, '{{ path('pumukitadmin_event_show', {'id': event.id}) }}');">
+	{{ event.date|date('d/m/Y-H:i') }}
+      </td>
+      <td onclick="click_fila_url('event', this, '{{ path('pumukitadmin_event_show', {'id': event.id}) }}');">
+	{{ event.name }}
+      </td>
+      <td onclick="click_fila_url('event', this, '{{ path('pumukitadmin_event_show', {'id': event.id}) }}');">
+	{{ event.display }}
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+  <tfoot>
+    <tr>
+      <th colspan="7">        
+        <div class="float-left" style="padding-right: 5px">
+          <a class="azul" style="color:grey" title="{% trans %}List{% endtrans %}" href="#" onclick="new Ajax.Updater('full_body', '{{ path('pumukitadmin_event_index', {'cal': 'list'}) }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}List{% endtrans %}</a>
+          <a class="azul" style="color:blue" title="{% trans %}Calendar{% endtrans %}" href="#" onclick="new Ajax.Updater('full_body', '{{ path('pumukitadmin_event_index', {'cal': 'cal'}) }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Calendar{% endtrans %}</a>
+        </div>
+        <div class="float-right">
+          {{ include('PumukitAdminBundle:Macros:pager_ajax.html.twig', {'name': 'event', 'page': events.getCurrentPage, 'total':events.getNbPages}) }}
+        </div>
+        {{ events.getNbResults }} 
+        {% transchoice events.getNbResults %}
+	      {0} events|{1} event|]1,Inf] events
+	{% endtranschoice %}
+	{% if app.session.get('admin/event/criteria')|length != 0%}
+          <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
+	{% endif %}
+      </th>
+    </tr>
+  </tfoot>
+</table>
+
+{# TODO
+<?php if (isset($msg_alert)) echo m_msg_alert($msg_alert) ?>
+#}

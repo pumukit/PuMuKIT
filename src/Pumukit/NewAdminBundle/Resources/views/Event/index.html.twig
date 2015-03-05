@@ -1,0 +1,51 @@
+{% extends 'PumukitAdminBundle::layout.html.twig' %}
+
+{% block body %}
+
+<h3 class="cab_body_div">
+  {% trans %}Live broadcastings{% endtrans %}
+</h3>
+
+<div id="tv_admin_container">
+  <div id="tv_admin_bar">
+    {% include 'PumukitAdminBundle:Event:filters.html.twig' %}
+    <div id="preview_event" style="padding:5px; border: solid 1px #DDD; background: #8eb0bc url(/legacy/images/admin/cab/cab.gif) repeat-x scroll 0% 0%">
+    {% if(app.session.has('admin/event/id')) %}
+      {{ render_hinclude(url('pumukitadmin_event_show', {'id': app.session.get('admin/event/id')})) }}
+    {% else %}
+      {% trans %}Select any event.{% endtrans %}
+    {% endif %}
+    </div>
+  </div>
+
+  <div id="tv_admin_content" >
+    <div id="list_events" name="list_events" act="/events/list">
+    {% if app.session.has('admin/event/cal') %}
+      {% set div_url = 'cal' %}
+      {% include 'PumukitAdminBundle:Event:calendar.html.twig' %}
+    {% else %}
+      {% set div_url = '' %}
+      {% include 'PumukitAdminBundle:Event:array.html.twig' %}
+    {% endif %}
+    </div>
+
+    <div style="float:right; width:50%">
+      <ul class="tv_admin_actions">
+        {# TODO <li><input class="tv_admin_action_create" onclick="Modalbox.show('{{ path('pumukitadmin_event_createseveral', {'cal': div_url}) }}', {title:{% trans %}Create series of New Events{% endtrans %}, width:800}); return false;" type="button" value="{% trans %}Nueva Serie{% endtrans %}"></li> #}
+        <li><input class="tv_admin_action_create" onclick="Modalbox.show('{{ path('pumukitadmin_event_create', {'cal': div_url}) }}', {title:'{% trans %}Create New Event{% endtrans %}', width:800}); return false;" type="button" value="{% trans %}New Event{% endtrans %}"></li>
+      </ul>
+    </div>
+
+    <select id="options_events" style="margin: 10px 0px; width: 33%" title={% trans %}"Actions on selected items"{% endtrans %} onchange="window.change_select('event', $('options_events'))">
+      <option value="default" selected="selected">{% trans %}Select any action...{% endtrans %}</option>
+      <option disabled="">---</option>
+      <option value="delete_sel">{% trans %}Delete selected{% endtrans %}</option>
+      <option value="create">{% trans %}Create new{% endtrans %}</option>
+      <!--<option value="inv_working_sel"><?php echo __('Ocultar/Mostrar seleccionados')?></option>
+      <option value="inv_working_all"><?php echo __('Ocultar/Mostrar todos')?></option> -->
+    </select>
+
+  </div>
+</div>
+
+{% endblock %}

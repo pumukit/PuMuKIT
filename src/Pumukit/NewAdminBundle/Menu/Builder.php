@@ -31,9 +31,10 @@ class Builder extends ContainerAware
         */
         
 
-        /*
+        
         $live = $menu->addChild('Live');
-        $live->addChild('Live Channels', array('route' => 'pumukitadmin_direct_index'));
+        $live->addChild('Live Channels', array('route' => 'pumukitnewadmin_live_index'));
+        /*
         $live->addChild('Live Events', array('route' => 'pumukitadmin_event_index'));
         */
         

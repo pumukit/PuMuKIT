@@ -1,0 +1,59 @@
+pumukitnewadmin_live_index:
+    pattern: /
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.live:indexAction
+        _sylius:
+            filterable: true
+
+pumukitnewadmin_live_create:
+    pattern: /create
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.live:createAction
+        _sylius:
+            redirect: pumukitnewadmin_live_index
+
+pumukitnewadmin_live_update:
+    pattern: /{id}/update
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.live:updateAction
+        _sylius:
+            redirect: pumukitnewadmin_live_index
+
+pumukitnewadmin_live_batch_delete:
+    pattern: /batchdelete
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.live:batchDeleteAction
+        _sylius:
+            redirect: pumukitnewadmin_live_index
+
+pumukitnewadmin_live_delete:
+    pattern: /{id}/delete
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.live:deleteAction
+        _sylius:
+            redirect: pumukitnewadmin_live_index
+
+pumukitnewadmin_live_copy:
+    pattern: /{id}/copy
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.live:copyAction
+        _sylius:
+            redirect: pumukitnewadmin_live_index
+
+pumukitnewadmin_live_show:
+    pattern: /{id}/show
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.live:showAction
+
+pumukitnewadmin_live_list:
+    pattern: /list
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.live:listAction

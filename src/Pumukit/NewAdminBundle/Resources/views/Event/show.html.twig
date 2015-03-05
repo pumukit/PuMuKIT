@@ -1,0 +1,16 @@
+<!-- Vista previa -->
+{% if event is not null %}
+<div>
+  <p style="text-align:center; font-weight: bolder; font-size: large;">
+    {{ event.name }}
+  </p>
+  <p style="overflow:hidden; padding:5px; border:solid 1px #DDD; background: {{ event.display ? '#FFEAD6' : '#DDD' }}" >
+    {{ event.date|date('Y-m-d H:i') }} {{ event.duration }} {% trans %}min.{% endtrans %}
+  </p>
+</div>
+
+{% else %}
+<p>
+  {% trans %}Select or create any live event.{% endtrans %}
+</p>
+{% endif %}

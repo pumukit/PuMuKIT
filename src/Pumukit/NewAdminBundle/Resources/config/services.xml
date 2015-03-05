@@ -41,6 +41,10 @@
       <tag name="form.type" alias="pumukitnewadmin_track" />
     </service>
 
+    <service id="pumukitnewadmin.form.type.live" class="Pumukit\AdminBundle\Form\Type\LiveType">
+      <tag name="form.type" alias="pumukitnewadmin_live" />
+    </service>
+
     <service id="pumukitnewadmin.twig_extension" class="Pumukit\NewAdminBundle\Twig\PumukitAdminExtension">
       <tag name="twig.extension"/>
       <argument type="service" id="pumukitencoder.profile"/>

@@ -1,0 +1,84 @@
+<table cellspacing="0" class="tv_admin_list">
+  <thead>
+    <tr>
+      <th width="14%">{% trans %}MONDAY{% endtrans %}</th>
+      <th width="14%">{% trans %}TUESDAY{% endtrans %}</th>
+      <th width="14%">{% trans %}WEDNESDAY{% endtrans %}</th>
+      <th width="14%">{% trans %}THURSDAY{% endtrans %}</th>
+      <th width="14%">{% trans %}FRIDAY{% endtrans %}</th>
+      <th width="14%">{% trans %}SATURDAY{% endtrans %}</th>
+      <th width="14%">{% trans %}SUNDAY{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+  {% set total_event = 0 %}
+  {% for key,dweek in calendar %}
+    <tr>
+    {# {% for dkey,d in dweek %} #}
+    {% for dkey in range(0, 6) %} 
+      {% if dweek[dkey] is defined %} 
+        {% set d = dweek[dkey] %}
+      {% else %} 
+        {% set d = '' %}
+      {% endif %}
+      <td style="cursor: auto; {{ ((d == 'now'|date('d')) and (m == 'now'|date('m')) and (y == 'now'|date('Y')))?"border:3px solid #000":"" }}">
+          <div style="overflow: hidden; position: relative; height: 70px;">
+          {% if d is not empty %}
+            <span style="position:absolute; top:0px; right:0px">{{ d }}</span>
+	     {% set calendar_events = [] %}
+	     {% for event in events %}
+	       {% if ((y == event.date|date('Y')) and (m == event.date|date('m')) and (d == event.date|date('d'))) %}
+	         {% set calendar_events = calendar_events|merge([event]) %}
+               {% endif %}
+	     {% endfor %}
+             <ul style="padding-left: 6px; list-style-type: none; ">
+               {% for day_event in calendar_events %}
+	         {% set total_event = total_event + 1 %}
+                 <li>
+		   <form action="{{ path('pumukitadmin_event_delete', {'id': day_event.id}) }}" method="post" class="delete-action-form" novalidate="" onsubmit="return window.confirm('{% trans %}Are you sure you want to delete the event with date {% endtrans %}{{ day_event.date|date('Y-m-d H:i') }}?')">
+		     <input type="hidden" name="_method" value="DELETE">
+		     <input type="hidden" name="confirmed" value="true">
+		     <button type="submit" class="tv_admin_row_post">
+		       <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
+		     </button>
+		   </form>
+		   <a title="{% trans %}Edit Event{% endtrans %} {{ day_event.id }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitadmin_event_update', {'id': day_event.id, 'cal': 'cal'}) }}">{{ day_event.name }}</a>
+                 </li>
+               {% endfor %}
+             </ul>
+          {% endif %}
+        </div>
+      </td>
+    {% endfor %}
+    </tr>
+  {% endfor %}
+  </tbody>
+  <tfoot>
+    <tr>
+      <th colspan="7">        
+        <div class="float-left" style="padding-right: 5px">
+          <a class="azul" style="color:blue" href="#" onclick="new Ajax.Updater('full_body', '{{ path('pumukitadmin_event_index', {'cal': 'list'}) }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}List{% endtrans %}</a>
+          <a class="azul" style="color:grey" href="#" onclick="new Ajax.Updater('full_body', '{{ path('pumukitadmin_event_index', {'cal': 'cal'}) }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Calendar{% endtrans %}</a>
+        </div>
+        <div class="float-right">
+	  <a class="azul" style="color:blue" href="#" onclick="new Ajax.Updater('full_body', '{{ path('pumukitadmin_event_index', {'month': 'previous'}) }}', {asynchronous:true, evalScripts:true}); return false;">&laquo;{% trans %}Previous{% endtrans %}</a>
+          &nbsp;{{ m ~'-'~y }}&nbsp;
+	  <a class="azul" style="color:blue" href="#" onclick="new Ajax.Updater('full_body', '{{ path('pumukitadmin_event_index', {'month': 'today'}) }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}TODAY{% endtrans %}</a>
+	  <a class="azul" style="color:blue" href="#" onclick="new Ajax.Updater('full_body', '{{ path('pumukitadmin_event_index', {'month': 'next'}) }}', {asynchronous:true, evalScripts:true}); return false;">{% trans %}Next{% endtrans %}&raquo;</a>
+        </div>
+        {{ events.getNbResults }} 
+        {% transchoice events.getNbResults %}
+	      {0} events|{1} event|]1,Inf] events
+	{% endtranschoice %}
+	{% if app.session.get('admin/event/criteria')|length != 0%}
+          <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
+	{% endif %}
+     </th>
+    </tr>
+  </tfoot>
+</table>
+
+{# TODO
+<?php if (isset($msg_alert)) echo m_msg_alert($msg_alert) ?>
+#}

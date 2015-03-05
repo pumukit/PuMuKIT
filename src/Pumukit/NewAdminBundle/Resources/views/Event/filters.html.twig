@@ -1,0 +1,37 @@
+<!-- Filter -->
+<div class="tv_admin_filters">
+<form id="filter_events" onsubmit="" action="{{ path('pumukitadmin_event_index') }}" method="GET">
+  <fieldset>
+    <h2>{% trans %}Search{% endtrans %}</h2>
+
+    <div class="form-row">
+      <label for="name">{% trans %}Name{% endtrans %}:</label>
+      <div class="content">
+        {# TODO culture #}
+        {% set criteria = app.session.get('admin/event/criteria') %}
+	<input type="text" size="37" name="criteria[name.en]" id="filters_name" value="{{ criteria['name.en']|default("") }}">
+      </div>
+    </div>
+
+
+    <div class="form-row">
+      <label for="date">{% trans %}Date{% endtrans %}:</label>
+      <div class="content">
+	{% trans %}From{% endtrans %}:&nbsp;<input type="datetime-local" size="11" name="criteria[date][from]" id="filters_date_from" value="{{ criteria['date']['from']|default("") }}">
+        <br/>
+	{% trans %}To{% endtrans %}:&nbsp;&nbsp;<input type="datetime-local" size="11" name="criteria[date][to]" id="filters_date_to" value="{{ criteria['date']['to']|default("") }}">
+      </div>
+    </div>
+
+  </fieldset>
+
+  <ul class="tv_admin_actions">
+    <li>
+      <input class="tv_admin_action_reset_filter" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
+    </li>
+    <li>
+      <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="tv_admin_action_filter">
+    </li>
+  </ul>
+</form>
+</div>
