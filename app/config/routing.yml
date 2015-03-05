@@ -1,3 +1,8 @@
+pumukit_live:
+    resource: "@PumukitLiveBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 pumukit_new_admin_tmp:
     resource: "@PumukitNewAdminBundle/Controller/"
     type:     annotation
