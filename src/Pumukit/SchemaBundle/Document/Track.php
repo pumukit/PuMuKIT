@@ -91,6 +91,7 @@ class Track extends Element
   public function __construct()
   {
       $this->language = \Locale::getDefault();
+      parent::__construct();
   }
 
   /**
