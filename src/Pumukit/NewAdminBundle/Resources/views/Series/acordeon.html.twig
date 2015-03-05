@@ -26,7 +26,7 @@
                 <label for="title" class="control-label">{% trans %}Title{% endtrans %}:</label>
                 <div>
                   {# TODO culture #}
-                  <input type="text" class="form-control" name="criteria[title.en]" id="filters_title" value="{{ criteria['title.en']|default("") }}">
+                  <input type="text" class="form-control" name="criteria[title.{{ app.request.locale }}]" id="filters_title" value="{{ criteria['title.{{ app.request.locale }}']|default("") }}">
                 </div>
               </div>
               

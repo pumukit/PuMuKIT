@@ -431,8 +431,8 @@ class PersonController extends AdminController
 
         if (array_key_exists('name', $criteria) && array_key_exists('letter', $criteria)){
             if (('' !== $criteria['name']) && ('' !== $criteria['letter'])){
-                // TODO - regex multiple conditions with and
-                $new_criteria['name'] = new \MongoRegex('/^'.$criteria['letter'].'.*'.$criteria['name'].'|^/i');
+                $more = strtoupper($criteria['name'][0]) == strtoupper($criteria['letter']) ? "|^" . $criteria['name'] . ".*" : "";
+                $new_criteria['name'] = new \MongoRegex('/^'.$criteria['letter'].'.*'.$criteria['name'].'.*'.$more.'/i');
             }elseif('' !== $criteria['name']){
                 $new_criteria['name'] = new \MongoRegex('/'.$criteria['name'].'/i');
             }elseif('' !== $criteria['letter']){

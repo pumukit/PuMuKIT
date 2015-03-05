@@ -251,6 +251,8 @@ window.submit_series_change_pub = function()
 
 window.filter_click_letter = function(letter)
 {
+  $(".pmk-person-letter.text-pumukit").removeClass("text-pumukit");
+  $("#pmk-person-letter-" + letter).addClass("text-pumukit");
   $('#filters_letter').val(letter);
   $('#list_people').load('{{ path('pumukitnewadmin_person_list')|raw }}', $('#filter_people').serialize());
 }
