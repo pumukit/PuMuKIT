@@ -181,17 +181,6 @@
       </td>
       {% else %}
       <td>
-        {# TODO shadowbox
-        <a title="{% trans %}play{% endtrans %}" href="#" onclick="Shadowbox.open({
-            title:      '{% trans %}Preview{% endtrans %}',
-            content:    '{{ track.getUrl() }}',
-            type:       'flv',
-            height:     480,
-            width:      640
-          }); return false;">
-          <i class="mdi-av-play-arrow"></i>
-        </a>
-        #}
          <a data-toggle="modal" data-target="#myModal" href="{{ path('pumukitnewadmin_track_play', {'id': track.id, 'mmId': mmId}) }}">
           <i class="mdi-av-play-arrow"></i>
         </a>
