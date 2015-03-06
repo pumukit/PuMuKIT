@@ -22,7 +22,7 @@ use Pumukit\SchemaBundle\Document\Person;
 class PumukitInitExampleDataCommand extends ContainerAwareCommand
 {
     //const $URL_VIDEO = "http://static.campusdomar.es/pumukit_videos.zip";
-    const PATH_VIDEO = "/home/aaron/Escritorio/examples.zip";
+    const PATH_VIDEO = "http://static.campusdomar.es/pumukit_videos.zip";
 
     private $dm = null;
     private $repo = null;
@@ -219,9 +219,6 @@ EOT
             $dm->flush();
 
             //----------------------------------------------------------------------------
-            
-
-
 
             //Series Uvigo----------------------------------------------------------
 
@@ -369,8 +366,6 @@ EOT
             $dm->flush();
 
             //----------------------------------------------------------------------------
-
-          
 
             //Series Robots----------------------------------------------------------
 
