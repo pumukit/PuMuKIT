@@ -38,12 +38,6 @@ class Builder extends ContainerAware
         $live->addChild('Live Events', array('route' => 'pumukitadmin_event_index'));
         */
         
-
-        $transcoding = $menu->addChild('Transcoding');
-        $transcoding->addChild('Transcoder Profile');
-        $transcoding->addChild('Task list');
-        $transcoding->addChild('Transcoders');
-
         //$menu->addChild('Temporized Publishing');
 
         $tables = $menu->addChild('Tables');
