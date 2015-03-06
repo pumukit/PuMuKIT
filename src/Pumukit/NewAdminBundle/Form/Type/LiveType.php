@@ -14,14 +14,12 @@ class LiveType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-      ->add('i18n_name', 'texti18n',
-        array('attr' => array('style' => 'width: 420px'), 'label' => 'Name'))
+      ->add('i18n_name', 'texti18n', array('label' => 'Name'))
       ->add('i18n_description', 'textareai18n',
-        array('required' => false, 'attr' => array('style' => 'width: 420px'), 'label' => 'Description'))
-      ->add('url', 'url',
-        array('attr' => array('style' => 'width: 420px'), 'label' => 'URL'))
+        array('required' => false, 'label' => 'Description'))
+      ->add('url', 'url', array('label' => 'URL'))
       ->add('broadcasting', 'choice',
-        array('choices'   => array('0'   => 'On hold', '1' => 'Live Broadcasting'),
+        array('choices'   => array('0' => 'On hold', '1' => 'Live Broadcasting'),
           'label' => 'Status', ))
       ->add('live_type', 'choice',
         array('choices'   => array(Live::LIVE_TYPE_FMS => 'FMS', Live::LIVE_TYPE_WMS => 'WMS'),
