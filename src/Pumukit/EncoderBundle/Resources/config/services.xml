@@ -26,8 +26,9 @@
             <argument type="service" id="pumukitschema.mmspic"/>
             <argument>%pumukitencode.thumbnail.width%</argument>
             <argument>%pumukitencode.thumbnail.height%</argument>
-	        <argument type="expression">parameter('kernel.root_dir') ~ '/../web/uploads/pic/'</argument>
-	        <argument>/uploads/pic</argument>
+            <argument type="expression">parameter('kernel.root_dir') ~ '/../web/uploads/pic/'</argument>
+            <argument>/uploads/pic</argument>
+            <argument>ffmpeg -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"</argument>
         </service>
     </services>
 
