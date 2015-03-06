@@ -804,6 +804,9 @@ get_batch_delete_route = function(element, ids)
         case 'mm':
             route = '{{ path('pumukitnewadmin_mms_batch_delete', {'ids': '__ids__'})|raw }}';
             break;
+        case 'live':
+            route = '{{ path('pumukitnewadmin_live_batch_delete', {'ids': '__ids__'})|raw }}';
+            break;
     }
 
     return route.replace('__ids__', JSON.stringify(ids)) ;
@@ -826,6 +829,9 @@ get_create_route = function(element)
         case 'tag':
             // TODO complete with id parent parameter
             route = '{{ path('pumukitnewadmin_tag_create', {'parent': '__id__'})|raw }}';
+            break;
+        case 'live':
+            route = '{{ path('pumukitnewadmin_live_create')|raw }}';
             break;
     }
 
