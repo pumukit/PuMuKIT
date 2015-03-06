@@ -1,35 +1,36 @@
-<!-- Vista previa -->
-{% if direct is not null %}
+{% if live is not null %}
+<h3>{{ live.name }}</h3>
+{{ live.description }}
 
-<h3>{{ direct.name }}</h3>
-{{ direct.description }}
-
-<div style="overflow:hidden; padding:5px; border:solid 1px #DDD; background:#DDD" >
+<div>
   <div>
-    {% trans %}URL{% endtrans %}: <a href="TODO: /direct/index/id/{{ direct.id }}">
-      "TODO: /directo/index/id/{{ direct.id }}"
+    {% trans %}URL{% endtrans %}: <a href="TODO: /live/index/id/{{ live.id }}">
+      "TODO: /live/index/id/{{ live.id }}"
       </a>
   </div>
   <div>
-    {% trans %}Source IP{% endtrans %}: <span style="font-style:italic"> {{ direct.getIpSource() }}</span>
+    {% trans %}Source IP{% endtrans %}: <span style="font-style:italic"> {{ live.getIpSource() }}</span>
   </div>
   <div>
-    {% trans %}Show player at homepage{% endtrans %}: <span style="font-style:italic">{% if direct.getIndexPlay() %}{% trans %}Activated{% endtrans %}{% else %}{% trans %}Deactivated{% endtrans %}{% endif %}</span>
+    {% trans %}Show player at homepage{% endtrans %}: <span style="font-style:italic">{% if live.getIndexPlay() %}{% trans %}Activated{% endtrans %}{% else %}{% trans %}Deactivated{% endtrans %}{% endif %}</span>
   </div>
   <div>
-    {% trans %}Status{% endtrans %}: <span style="font-style:italic">{% if not direct.broadcasting %}{% trans %}On hold{% endtrans %}{% else %}{% trans %}Live broadcasting{% endtrans %}{% endif %}</span>
+    {% trans %}Status{% endtrans %}: <span style="font-style:italic">{% if not live.broadcasting %}{% trans %}On hold{% endtrans %}{% else %}{% trans %}Live broadcasting{% endtrans %}{% endif %}</span>
   </div>
 </div>
 
 
 <br />
-<a href="#" onclick="Effect.toggle('player','appear'); return false">{% trans %}Preview{% endtrans %}</a>
-
-
-<div id="player" style="display: none;">
-  {{ include('PumukitAdminBundle:Direct/Players:'~direct.getDirectType()~'.html.twig') }}
+<a class="btn btn-primary" data-toggle="collapse" href="#livePlayer" aria-expanded="false" aria-controls="livePlayer">
+<i class="mdi-av-play-arrow"></i>&nbsp;&nbsp;{% trans %}Preview{% endtrans %}
+</a>
+<div class="collapse" id="livePlayer">
+  <div class="well">
+      {# {{ include('PumukitAdminBundle:Live/Players:'~live.getLiveType()~'.html.twig') }} #}
+      <video id="player" src="{{ live.url  }}" controls="" style="background: black; width: 100%;">
+      </video>
+  </div>
 </div>
-
 {% else %}
 <p>
   {% trans %}Select any live channel.{% endtrans %}

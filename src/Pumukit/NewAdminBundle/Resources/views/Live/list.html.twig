@@ -24,70 +24,75 @@
 	</td>
       </tr>
       {% else %}
-      {% for live in lives %}
-      <tr style="cursor:pointer;" {% if (app.session.get('admin/live/id') == live.id) %} class="success" {% endif %}>
-        <td>
-	  <div class="checkbox">
-	    <label>
-              <input id="{{ live.id }}" class="live_checkbox" type="checkbox">
-	    </label>
-	  </div>
-        </td>
-        <td>
-    	  <a title="{% trans %}Edit live channel{% endtrans %} {{ live.id }}" href="{{ path('pumukitnewadmin_live_update', {'id': live.id}) }}" data-toggle="modal" data-target="#myModal">
-	    <i class="mdi-editor-mode-edit"></i>
-	  </a>
-        </td>
-        <td>
-          <a href="#" onclick="window.submit_delete_live('{{ live.id }}'); return false;">
-	    <i class="mdi-content-clear"></i>
-          </a>
-        </td>
-        <td>
-          <form action="{{ path('pumukitadmin_live_copy', {'id': live.id}) }}" method="post" class="delete-action-form" novalidate="">
-              <button type="submit" class="tv_admin_row_post">
-		<img alt="{% trans %}clone{% endtrans %}" title="{% trans %}clone{% endtrans %}" src="/legacy/images/admin/mbuttons/copy_inline.gif">
-	      </button>
-	  </form>
-        </td>
-        <td onclick="click_fila_url('live', this, '{{ path('pumukitadmin_live_show', {'id': live.id}) }}');">
-          {{ live.id }}
-        </td>
-        <td onclick="click_fila_url('live', this, '{{ path('pumukitadmin_live_show', {'id': live.id}) }}');">
-	  {{ live.name }}
-        </td>
-        <td onclick="click_fila_url('live', this, '{{ path('pumukitadmin_live_show', {'id': live.id}) }}');">
-	  {{ live.url }}
-        </td>
-        <td onclick="click_fila_url('live', this, '{{ path('pumukitadmin_live_show', {'id': live.id}) }}');">
-	  {{ live.getWidth }}x{{ live.getHeight }}
-        </td>
-        <td onclick="click_fila_url('live', this, '{{ path('pumukitadmin_live_show', {'id': live.id}) }}');">
-	  {{ live.getLiveType }}
-        </td>
-      </tr>
-    {% endfor %}
-  {% endif %}
-
-  </tbody>
-  <tfoot>
+        {% for live in lives %}
+          <tr style="cursor:pointer;" {% if (app.session.get('admin/live/id') == live.id) %} class="success" {% endif %}>
+            <td>
+	          <div class="checkbox">
+	            <label>
+                  <input id="{{ live.id }}" class="live_checkbox" type="checkbox">
+	            </label>
+	          </div>
+            </td>
+            <td>
+    	      <a title="{% trans %}Edit live channel{% endtrans %} {{ live.id }}" href="{{ path('pumukitnewadmin_live_update', {'id': live.id}) }}" data-toggle="modal" data-target="#myModal">
+	            <i class="mdi-editor-mode-edit"></i>
+	          </a>
+            </td>
+            <td>
+              <a href="#" onclick="window.submit_delete_live('{{ live.id }}'); return false;">
+	            <i class="mdi-content-clear"></i>
+              </a>
+            </td>
+            <td>
+              {# TODO DELETE OR CHANGE THE WAY OF DOING THE COPY??
+              <form action="{{ path('pumukitnewadmin_live_copy', {'id': live.id}) }}" method="post" class="delete-action-form" novalidate="">
+                <button type="submit" class="tv_admin_row_post">
+		          <img alt="{% trans %}clone{% endtrans %}" title="{% trans %}clone{% endtrans %}" src="/legacy/images/admin/mbuttons/copy_inline.gif">
+	            </button>
+	          </form> #}
+            </td>
+            <td onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
+	          {{ live.name }}
+            </td>
+            <td onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
+	          {{ live.url }}
+            </td>
+            <td onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
+	          {{ live.getWidth }}x{{ live.getHeight }}
+            </td>
+            <td onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
+	          {{ live.getLiveType }}
+            </td>
+          </tr>
+        {% endfor %}
+      {% endif %}
+    </tbody>
+    <tfoot>
     <tr>
       <th colspan="9">
-        <div class="float-right">
-          {{ include('PumukitAdminBundle:Macros:pager_ajax.html.twig', {'name': 'live', 'page': lives.getCurrentPage, 'total':lives.getNbPages}) }}
-        </div>
-        {{ lives.getNbResults }} 
-        {% transchoice lives.getNbResults %}
-	      {0} channels|{1} channel|]1,Inf] channels
-	{% endtranschoice %}
-	{% if app.session.get('admin/live/criteria')|length != 0%}
+        {# TODO review column size to be responsive #}
+        {% set column = ((lives.getNbPages/5)|round(0, 'floor')) %}
+        <div class="col-md-8">
+          {{ lives.getNbResults }} 
+          {% transchoice lives.getNbResults %}
+	      {0} live channels|{1} live channel|]1,Inf] live channels
+	      {% endtranschoice %}
+	      {% if app.session.get('admin/live/criteria')|length != 0%}
           <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
-	{% endif %}
+	      {% endif %}
+        </div>
+        <div class="col-md-4 text-right">
+          <div class="pagerfanta">
+            {% set sorting = {('sorting[' ~ (app.session.get('admin/live/sort')) ~ ']') : (app.session.get('admin/live/type')) } %}
+            {{ pagerfanta(lives, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_live_index", "routeParams": sorting}) }}
+          </div>
+        </div>
       </th>
     </tr>
   </tfoot>
 </table>
 </div>
+
 {# TODO
 <?php if (isset($msg_alert)) echo m_msg_alert($msg_alert) ?>
 #}

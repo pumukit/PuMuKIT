@@ -1,28 +1,27 @@
-<!-- Filter -->
-<div class="tv_admin_filters">
-<form id="filter_directs" onsubmit="" action="{{ path('pumukitadmin_direct_index') }}" method="GET">
-  <fieldset>
-    <h2>{% trans %}Search{% endtrans %}</h2>
-
-    <div class="form-row">
-      <label for="name">{% trans %}Name{% endtrans %}:</label>
-      <div class="content">
-        {# TODO culture #}
-        {% set criteria = app.session.get('admin/direct/criteria') %}
-	<input type="text" name="criteria[name.en]" id="filters_name" value="{{ criteria['name.en']|default("") }}">
+<div class="well">
+  <form id="filter_lives" class="form"
+        onsubmit="$('#list_lives').load('{{ path('pumukitnewadmin_live_list') }}', $(this).serialize()); return false;"
+        action="{{ path('pumukitnewadmin_live_list') }}" method="GET">
+    <fieldset>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2 class="panel-title">{% trans %}Search{% endtrans %}</h2>
+        </div>
+        <div class="panel-body">
+          <div class="form-group">
+            <label for="name" class="control-label">{% trans %}Name{% endtrans %}:</label>
+            <div>
+              {# TODO culture #}
+              {% set criteria = app.session.get('admin/live/criteria') %}
+	          <input type="text" class="form-control" name="criteria[name.en]" id="filters_name" value="{{ criteria['name.en']|default("") }}">
+            </div>
+          </div>
+        </div>
       </div>
+    </fieldset>
+    <div class="text-right">
+	  <input type="button" class="btn btn-default btn-raised" onclick="window.location.href='?criteria[reset]=true'" value="{% trans %}reset{% endtrans %}">
+	  <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="btn btn-pumukit btn-raised">
     </div>
-
-
-  </fieldset>
-
-  <ul class="tv_admin_actions">
-    <li>
-      <input class="tv_admin_action_reset_filter" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
-    </li>
-    <li>
-      <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="tv_admin_action_filter">
-    </li>
-  </ul>
-</form>
+  </form>
 </div>
