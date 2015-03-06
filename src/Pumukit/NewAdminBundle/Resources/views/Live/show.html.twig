@@ -4,7 +4,7 @@
 
 <div>
   <div>
-    {% trans %}URL{% endtrans %}: <a href="TODO: /live/index/id/{{ live.id }}">
+    {% trans %}URL{% endtrans %}: <a href="{# TODO: /live/index/id/{{ live.id }} #}">
       "TODO: /live/index/id/{{ live.id }}"
       </a>
   </div>
@@ -27,7 +27,7 @@
 <div class="collapse" id="livePlayer">
   <div class="well">
       {# {{ include('PumukitAdminBundle:Live/Players:'~live.getLiveType()~'.html.twig') }} #}
-      <video id="player" src="{{ live.url  }}" controls="" style="background: black; width: 100%;">
+      <video id="player" src="{# TODO {{ live.url  }} #}" controls="" style="background: black; width: 100%;">
       </video>
   </div>
 </div>
