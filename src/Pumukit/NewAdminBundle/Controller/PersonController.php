@@ -23,7 +23,7 @@ class PersonController extends AdminController
     {
         $config = $this->getConfiguration();
 
-        $criteria = $this->getCriteria($config);
+        $criteria = $this->getCriteria($config, $request->getLocale());
         $resources = $this->getResources($request, $config, $criteria);
 
         $personService = $this->get('pumukitschema.person');
@@ -126,7 +126,7 @@ class PersonController extends AdminController
             $this->get('session')->set('admin/person/sort', key($sorting));
         }
 
-        $criteria = $this->getCriteria($config);
+        $criteria = $this->getCriteria($config, $request->getLocale());
         $resources = $this->getResources($request, $config, $criteria);
 
         $personService = $this->get('pumukitschema.person');
@@ -153,7 +153,7 @@ class PersonController extends AdminController
         $config = $this->getConfiguration();
         $pluralName = $config->getPluralResourceName();
         
-        $criteria = $this->getCriteria($config);
+        $criteria = $this->getCriteria($config, $request->getLocale());
         $resources = $this->getResources($request, $config, $criteria);
 
         $template = '';
@@ -416,7 +416,7 @@ class PersonController extends AdminController
     /**
      * Gets the criteria values
      */
-    public function getCriteria($config)
+    public function getCriteria($config, $locale="en")
     {
         $criteria = $config->getCriteria();
 
@@ -449,9 +449,8 @@ class PersonController extends AdminController
             }
         }
 
-        // TODO LOCALE
-        if (array_key_exists('post.en', $criteria)){
-            $new_criteria['post.en'] = new \MongoRegex('/'.$criteria['post.en'].'/i');
+        if (array_key_exists('post', $criteria)){
+            $new_criteria['post.' . $locale] = new \MongoRegex('/'.$criteria['post'].'/i');
         }
 
         return $new_criteria;

@@ -10,9 +10,11 @@ class InspectionFfprobeService implements InspectionServiceInterface
 {
 
     private $logger;
+    private $command;
 
-    public function __construct(LoggerInterface $logger = null)
+    public function __construct($command = null, LoggerInterface $logger = null)
     {
+        $this->command = $command ?: 'ffprobe -v quiet -print_format json -show_format -show_streams "{{file}}"';
         $this->logger = $logger;
     }
 
@@ -100,7 +102,8 @@ class InspectionFfprobeService implements InspectionServiceInterface
 
     private function getMediaInfo($file)
     {
-        $process = new Process('ffprobe -v quiet -print_format json -show_format -show_streams \'' . $file . '\'');
+        $command = str_replace('{{file}}', $file, $this->command);
+        $process = new Process($command);
         $process->setTimeout(60);
         $process->run();
         if (!$process->isSuccessful()) {
