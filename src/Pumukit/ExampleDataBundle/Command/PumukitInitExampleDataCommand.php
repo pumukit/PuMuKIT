@@ -18,10 +18,12 @@ use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Person;
 
-define("URL_VIDEOS", "http://static.campusdomar.es/pumukit_videos.zip");
 
 class PumukitInitExampleDataCommand extends ContainerAwareCommand
 {
+    //const $URL_VIDEO = "http://static.campusdomar.es/pumukit_videos.zip";
+    const PATH_VIDEO = "/home/aaron/Escritorio/examples.zip";
+
     private $dm = null;
     private $repo = null;
 
@@ -48,17 +50,17 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        //Unzipping videos in folder
         $newFile = 'tmp_file.zip';
-
-        if (!copy(URL_VIDEOS, $newFile)) {
+        if (!copy(self::PATH_VIDEO, $newFile)) {
             echo "Failed to copy $file...\n";
         }
-
         $zip = new ZipArchive();
         if ($zip->open($newFile, ZIPARCHIVE::CREATE)==TRUE) {
             $zip->extractTo(realpath(dirname(__FILE__) . '/../Resources/public/'));
             $zip->close();
         }
+
 
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:Tag");
@@ -71,41 +73,41 @@ EOT
                $this->dm->getDocumentCollection('PumukitSchemaBundle:Person')->remove(array());
             }
 
-            //Series example 1
+            //Series Access grid----------------------------------------------------------
 
             $announce = true;
             $publicDate = new \DateTime("now");
-            $title = 'Series example 1';
-            $subtitle = 'Series';
-            $description = 'This is a description of series example 1';
-            $header = 'Header of series example 1';
-            $footer = 'Footer of series example 1';
-            $copyright = 'Copyright';
-            $keyword = 'Keyword';
-            $line2 = 'Line2';
+            $title = 'Access grid';
+            $subtitle = '';
+            $description = '';
+            $header = '';
+            $footer = '';
+            $copyright = 'UdN-TV';
+            $keyword = '';
+            $line2 = '';
             $locale = 'en';
 
-            $series_example_1 = new Series();
-            $series_example_1->setAnnounce($announce);
-            $series_example_1->setPublicDate($publicDate);
-            $series_example_1->setTitle($title);
-            $series_example_1->setSubtitle($subtitle);
-            $series_example_1->setDescription($description);
-            $series_example_1->setHeader($header);
-            $series_example_1->setFooter($footer);
-            $series_example_1->setCopyright($copyright);
-            $series_example_1->setKeyword($keyword);
-            $series_example_1->setLine2($line2);
-            $series_example_1->setLocale($locale);
+            $series = new Series();
+            $series->setAnnounce($announce);
+            $series->setPublicDate($publicDate);
+            $series->setTitle($title);
+            $series->setSubtitle($subtitle);
+            $series->setDescription($description);
+            $series->setHeader($header);
+            $series->setFooter($footer);
+            $series->setCopyright($copyright);
+            $series->setKeyword($keyword);
+            $series->setLine2($line2);
+            $series->setLocale($locale);
 
-            $titleEs = 'Serie de ejemplo 1';
-            $subtitleEs = 'Serie';
-            $descriptionEs = 'Esta es la descripción de la serie de ejemplo 1';
-            $headerEs = 'Cabecera de la serie de ejemplo 1';
-            $footerEs = 'Pie de la serie de ejemplo 1';
-            $copyrightEs = 'Derechos de copia';
-            $keywordEs = 'Palabra clave';
-            $line2Es = 'Línea 2';
+            $titleEs = 'Access grid';
+            $subtitleEs = '';
+            $descriptionEs = '';
+            $headerEs = '';
+            $footerEs = '';
+            $copyrightEs = 'UdN-TV';
+            $keywordEs = '';
+            $line2Es = '';
             $localeEs = 'es';
 
             $titleI18n = array($locale => $title, $localeEs => $titleEs);
@@ -117,27 +119,30 @@ EOT
             $keywordI18n = array($locale => $keyword, $localeEs => $keywordEs);
             $line2I18n = array($locale => $line2, $localeEs => $line2Es);
 
-            $series_example_1->setI18nTitle($titleI18n);
-            $series_example_1->setI18nSubtitle($subtitleI18n);
-            $series_example_1->setI18nDescription($descriptionI18n);
-            $series_example_1->setI18nHeader($headerI18n);
-            $series_example_1->setI18nFooter($footerI18n);
-            $series_example_1->setI18nCopyright($copyrightI18n);
-            $series_example_1->setI18nKeyword($keywordI18n);
-            $series_example_1->setI18nLine2($line2I18n);
+            $series->setI18nTitle($titleI18n);
+            $series->setI18nSubtitle($subtitleI18n);
+            $series->setI18nDescription($descriptionI18n);
+            $series->setI18nHeader($headerI18n);
+            $series->setI18nFooter($footerI18n);
+            $series->setI18nCopyright($copyrightI18n);
+            $series->setI18nKeyword($keywordI18n);
+            $series->setI18nLine2($line2I18n);
+
+            $url = '/bundles/pumukitexampledata/images/39.jpg';
+            $pic = new Pic();
+            $pic->setUrl($url);
+            $series->addPic($pic);
 
             $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-            $dm->persist($series_example_1);
+            $dm->persist($series);
             $dm->flush();
-
-            //Track example 1
 
             $tags = array('tag_a', 'tag_b');
             $language = 'en';
-            $url = '/bundles/pumukitexampledata/videos/74638.flv';
-            $path = realpath(dirname(__FILE__) . '/../Resources/public/videos/74638.flv');
-            $mime = 'video/flv';
-            $duration = 5000;
+            $url = '/bundles/pumukitexampledata/videos/8/24.mp4';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/videos/8/24.mp4');
+            $mime = 'video/mpeg4-HP';
+            $duration = 31000;
             $acodec = 'aac';
             $vcodec = 'mpeg4-HP';
             $bitrate = 10000;
@@ -150,121 +155,109 @@ EOT
             $hide = false;
             $numview = 3;
 
-            $track_example_1 = new Track();
-            $track_example_1->setTags($tags);
-            $track_example_1->setLanguage($language);
-            $track_example_1->setUrl($url);
-            $track_example_1->setPath($path);
-            $track_example_1->setMimeType($mime);
-            $track_example_1->setDuration($duration);
-            $track_example_1->setAcodec($acodec);
-            $track_example_1->setVcodec($vcodec);
-            $track_example_1->setBitrate($bitrate);
-            $track_example_1->setFramerate($framerate);
-            $track_example_1->setOnlyAudio($only_audio);
-            $track_example_1->setChannels($channels);
-            $track_example_1->setDuration($duration);
-            $track_example_1->setWidth($width);
-            $track_example_1->setHeight($height);
-            $track_example_1->setHide($hide);
-            $track_example_1->setNumview($numview);
-
-            //Pic example 1
+            $track = new Track();
+            $track->setTags($tags);
+            $track->setLanguage($language);
+            $track->setUrl($url);
+            $track->setPath($path);
+            $track->setMimeType($mime);
+            $track->setDuration($duration);
+            $track->setAcodec($acodec);
+            $track->setVcodec($vcodec);
+            $track->setBitrate($bitrate);
+            $track->setFramerate($framerate);
+            $track->setOnlyAudio($only_audio);
+            $track->setChannels($channels);
+            $track->setDuration($duration);
+            $track->setWidth($width);
+            $track->setHeight($height);
+            $track->setHide($hide);
+            $track->setNumview($numview);
 
             $tags = array('tag_a', 'tag_b');
-            $url = '/bundles/pumukitexampledata/images/74638.jpg';
-            $path = realpath(dirname(__FILE__) . '/../Resources/public/images/74638.jpg');
+            $url = '/bundles/pumukitexampledata/images/17.jpg';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/images/17.jpg');
             $mime = 'image/jpg';
             $size = 3456;
             $width = 800;
             $height = 600;
             $hide = true;
 
-            $pic_example_1 = new Pic();
-            $pic_example_1->setTags($tags);
-            $pic_example_1->setUrl($url);
-            $pic_example_1->setPath($path);
-            $pic_example_1->setMimeType($mime);
-            $pic_example_1->setSize($size);
-            $pic_example_1->setWidth($width);
-            $pic_example_1->setHeight($height);
-            $pic_example_1->setHide($hide);
-
-            //Multimedia object example 1
+            $pic = new Pic();
+            $pic->setTags($tags);
+            $pic->setUrl($url);
+            $pic->setPath($path);
+            $pic->setMimeType($mime);
+            $pic->setSize($size);
+            $pic->setWidth($width);
+            $pic->setHeight($height);
+            $pic->setHide($hide);
 
             $rank = 3;
             $status = MultimediaObject::STATUS_NORMAL;
             $record_date = new \DateTime();
             $public_date = new \DateTime();
-            $title = 'Introduction';
-            $subtitle = 'Intro';
-            $description = "Introduction to video of Vigo university";
-            $numview = 2;
-            $tag1 = new Tag();
-            $tag1->setCod('tag1');
-            $tag2 = new Tag();
-            $tag2->setCod('tag2');
-            $tag3 = new Tag();
-            $tag3->setCod('tag3');
-            $mm_tags = array($tag1, $tag2, $tag3);
+            $title = 'Access Grid';
+            $subtitle = '';
+            $description = "";
 
-            $multimediaObject_example_1 = new MultimediaObject();
-            $multimediaObject_example_1->setRank($rank);
-            $multimediaObject_example_1->setStatus($status);
-            $multimediaObject_example_1->setSeries($series_example_1);
-            $multimediaObject_example_1->setRecordDate($record_date);
-            $multimediaObject_example_1->setPublicDate($public_date);
-            $multimediaObject_example_1->setTitle($title);
-            $multimediaObject_example_1->setSubtitle($subtitle);
-            $multimediaObject_example_1->setDescription($description);
-            $multimediaObject_example_1->addTag($tag1);
-            $multimediaObject_example_1->addTag($tag2);
-            $multimediaObject_example_1->addTag($tag3);
-            $multimediaObject_example_1->setNumview($numview);
+            $multimediaObject = new MultimediaObject();
+            $multimediaObject->setRank($rank);
+            $multimediaObject->setStatus($status);
+            $multimediaObject->setSeries($series);
+            $multimediaObject->setRecordDate($record_date);
+            $multimediaObject->setPublicDate($public_date);
+            $multimediaObject->setTitle($title);
+            $multimediaObject->setSubtitle($subtitle);
+            $multimediaObject->setDescription($description);
 
-            $multimediaObject_example_1->addPic($pic_example_1);
-            $multimediaObject_example_1->addTrack($track_example_1);
+            $multimediaObject->addPic($pic);
+            $multimediaObject->addTrack($track);
 
             $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-            $dm->persist($multimediaObject_example_1);
+            $dm->persist($multimediaObject);
             $dm->flush();
 
+            //----------------------------------------------------------------------------
             
-            //Series example 2
+
+
+
+            //Series Uvigo----------------------------------------------------------
 
             $announce = true;
             $publicDate = new \DateTime("now");
-            $title = 'Series example 2';
-            $subtitle = 'Series';
-            $description = 'This is a description of series example 2';
-            $header = 'Header of series example 2';
-            $footer = 'Footer of series example 2';
-            $copyright = 'Copyright';
-            $keyword = 'Keyword';
-            $line2 = 'Line2';
+            $title = 'Uvigo';
+            $subtitle = '';
+            $description = '';
+            $header = '';
+            $footer = '';
+            $copyright = 'UdN-TV';
+            $keyword = '';
+            $line2 = '';
             $locale = 'en';
 
-            $series_example_2 = new Series();
-            $series_example_2->setAnnounce($announce);
-            $series_example_2->setPublicDate($publicDate);
-            $series_example_2->setTitle($title);
-            $series_example_2->setSubtitle($subtitle);
-            $series_example_2->setDescription($description);
-            $series_example_2->setHeader($header);
-            $series_example_2->setFooter($footer);
-            $series_example_2->setCopyright($copyright);
-            $series_example_2->setKeyword($keyword);
-            $series_example_2->setLine2($line2);
-            $series_example_2->setLocale($locale);
+            $series = new Series();
+            $series->setAnnounce($announce);
+            $series->setPublicDate($publicDate);
+            $series->setTitle($title);
+            $series->setSubtitle($subtitle);
+            $series->setDescription($description);
+            $series->setHeader($header);
+            $series->setFooter($footer);
+            $series->setCopyright($copyright);
+            $series->setKeyword($keyword);
+            $series->setLine2($line2);
+            $series->setLocale($locale);
 
-            $titleEs = 'Serie de ejemplo 2';
-            $subtitleEs = 'Serie';
-            $descriptionEs = 'Esta es la descripción de la serie de ejemplo 2';
-            $headerEs = 'Cabecera de la serie de ejmeplo 2';
-            $footerEs = 'Pie de la serie de ejemplo 2';
-            $copyrightEs = 'Derechos de copia';
-            $keywordEs = 'Palabra clave';
-            $line2Es = 'Línea 2';
+            $titleEs = 'Uvigo';
+            $subtitleEs = '';
+            $descriptionEs = '';
+            $headerEs = '';
+            $footerEs = '';
+            $copyrightEs = 'UdN-TV';
+            $keywordEs = '';
+            $line2Es = '';
             $localeEs = 'es';
 
             $titleI18n = array($locale => $title, $localeEs => $titleEs);
@@ -276,27 +269,30 @@ EOT
             $keywordI18n = array($locale => $keyword, $localeEs => $keywordEs);
             $line2I18n = array($locale => $line2, $localeEs => $line2Es);
 
-            $series_example_2->setI18nTitle($titleI18n);
-            $series_example_2->setI18nSubtitle($subtitleI18n);
-            $series_example_2->setI18nDescription($descriptionI18n);
-            $series_example_2->setI18nHeader($headerI18n);
-            $series_example_2->setI18nFooter($footerI18n);
-            $series_example_2->setI18nCopyright($copyrightI18n);
-            $series_example_2->setI18nKeyword($keywordI18n);
-            $series_example_2->setI18nLine2($line2I18n);
+            $series->setI18nTitle($titleI18n);
+            $series->setI18nSubtitle($subtitleI18n);
+            $series->setI18nDescription($descriptionI18n);
+            $series->setI18nHeader($headerI18n);
+            $series->setI18nFooter($footerI18n);
+            $series->setI18nCopyright($copyrightI18n);
+            $series->setI18nKeyword($keywordI18n);
+            $series->setI18nLine2($line2I18n);
+
+            $url = '/bundles/pumukitexampledata/images/7.jpg';
+            $pic = new Pic();
+            $pic->setUrl($url);
+            $series->addPic($pic);
 
             $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-            $dm->persist($series_example_2);
+            $dm->persist($series);
             $dm->flush();
-
-            //Track example 2
 
             $tags = array('tag_a', 'tag_b');
             $language = 'en';
-            $url = '/bundles/pumukitexampledata/videos/Invasiones Biológicas. Mejillón cebra. (Dreissena polymorpha).mp4';
-            $path = realpath(dirname(__FILE__) . '/../Resources/public/videos/Invasiones Biológicas. Mejillón cebra. (Dreissena polymorpha).mp4');
+            $url = '/bundles/pumukitexampledata/videos/9/26.mp4';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/videos/9/26.mp4');
             $mime = 'video/mpeg4-HP';
-            $duration = 5000;
+            $duration = 64100;
             $acodec = 'aac';
             $vcodec = 'mpeg4-HP';
             $bitrate = 10000;
@@ -309,121 +305,108 @@ EOT
             $hide = false;
             $numview = 3;
 
-            $track_example_2 = new Track();
-            $track_example_2->setTags($tags);
-            $track_example_2->setLanguage($language);
-            $track_example_2->setUrl($url);
-            $track_example_2->setPath($path);
-            $track_example_2->setMimeType($mime);
-            $track_example_2->setDuration($duration);
-            $track_example_2->setAcodec($acodec);
-            $track_example_2->setVcodec($vcodec);
-            $track_example_2->setBitrate($bitrate);
-            $track_example_2->setFramerate($framerate);
-            $track_example_2->setOnlyAudio($only_audio);
-            $track_example_2->setChannels($channels);
-            $track_example_2->setDuration($duration);
-            $track_example_2->setWidth($width);
-            $track_example_2->setHeight($height);
-            $track_example_2->setHide($hide);
-            $track_example_2->setNumview($numview);
-
-            //Pic example 2
+            $track = new Track();
+            $track->setTags($tags);
+            $track->setLanguage($language);
+            $track->setUrl($url);
+            $track->setPath($path);
+            $track->setMimeType($mime);
+            $track->setDuration($duration);
+            $track->setAcodec($acodec);
+            $track->setVcodec($vcodec);
+            $track->setBitrate($bitrate);
+            $track->setFramerate($framerate);
+            $track->setOnlyAudio($only_audio);
+            $track->setChannels($channels);
+            $track->setDuration($duration);
+            $track->setWidth($width);
+            $track->setHeight($height);
+            $track->setHide($hide);
+            $track->setNumview($numview);
 
             $tags = array('tag_a', 'tag_b');
-            $url = '/bundles/pumukitexampledata/images/Invasiones Biológicas. Mejillón cebra. (Dreissena polymorpha).jpg';
-            $path = realpath(dirname(__FILE__) . '/../Resources/public/images/Invasiones Biológicas. Mejillón cebra. (Dreissena polymorpha).jpg');
+            $url = '/bundles/pumukitexampledata/images/19.jpg';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/images/19.jpg');
             $mime = 'image/jpg';
             $size = 3456;
             $width = 800;
             $height = 600;
             $hide = true;
 
-            $pic_example_2 = new Pic();
-            $pic_example_2->setTags($tags);
-            $pic_example_2->setUrl($url);
-            $pic_example_2->setPath($path);
-            $pic_example_2->setMimeType($mime);
-            $pic_example_2->setSize($size);
-            $pic_example_2->setWidth($width);
-            $pic_example_2->setHeight($height);
-            $pic_example_2->setHide($hide);
-
-            //Multimedia object example 2
+            $pic = new Pic();
+            $pic->setTags($tags);
+            $pic->setUrl($url);
+            $pic->setPath($path);
+            $pic->setMimeType($mime);
+            $pic->setSize($size);
+            $pic->setWidth($width);
+            $pic->setHeight($height);
+            $pic->setHide($hide);
 
             $rank = 3;
             $status = MultimediaObject::STATUS_NORMAL;
             $record_date = new \DateTime();
             $public_date = new \DateTime();
-            $title = 'Mejillón cebra';
-            $subtitle = 'Invasiones biológicas';
-            $description = "Description";
-            $numview = 2;
-            $tag1 = new Tag();
-            $tag1->setCod('tag1');
-            $tag2 = new Tag();
-            $tag2->setCod('tag2');
-            $tag3 = new Tag();
-            $tag3->setCod('tag3');
-            $mm_tags = array($tag1, $tag2, $tag3);
+            $title = 'Uvigo';
+            $subtitle = '';
+            $description = "";
 
-            $multimediaObject_example_2 = new MultimediaObject();
-            $multimediaObject_example_2->setRank($rank);
-            $multimediaObject_example_2->setStatus($status);
-            $multimediaObject_example_2->setSeries($series_example_2);
-            $multimediaObject_example_2->setRecordDate($record_date);
-            $multimediaObject_example_2->setPublicDate($public_date);
-            $multimediaObject_example_2->setTitle($title);
-            $multimediaObject_example_2->setSubtitle($subtitle);
-            $multimediaObject_example_2->setDescription($description);
-            $multimediaObject_example_2->addTag($tag1);
-            $multimediaObject_example_2->addTag($tag2);
-            $multimediaObject_example_2->addTag($tag3);
-            $multimediaObject_example_2->setNumview($numview);
+            $multimediaObject = new MultimediaObject();
+            $multimediaObject->setRank($rank);
+            $multimediaObject->setStatus($status);
+            $multimediaObject->setSeries($series);
+            $multimediaObject->setRecordDate($record_date);
+            $multimediaObject->setPublicDate($public_date);
+            $multimediaObject->setTitle($title);
+            $multimediaObject->setSubtitle($subtitle);
+            $multimediaObject->setDescription($description);
 
-            $multimediaObject_example_2->addPic($pic_example_2);
-            $multimediaObject_example_2->addTrack($track_example_2);
+            $multimediaObject->addPic($pic);
+            $multimediaObject->addTrack($track);
 
             $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-            $dm->persist($multimediaObject_example_2);
+            $dm->persist($multimediaObject);
             $dm->flush();
 
-            
-            //Series example 3
+            //----------------------------------------------------------------------------
+
+          
+
+            //Series Robots----------------------------------------------------------
 
             $announce = true;
             $publicDate = new \DateTime("now");
-            $title = 'Series example 3';
-            $subtitle = 'Series';
-            $description = 'This is a description of series example 3';
-            $header = 'Header of series example 3';
-            $footer = 'Footer of series example 3';
-            $copyright = 'Copyright';
-            $keyword = 'Keyword';
-            $line2 = 'Line2';
+            $title = 'Robots';
+            $subtitle = '';
+            $description = '';
+            $header = '';
+            $footer = '';
+            $copyright = 'UdN-TV';
+            $keyword = '';
+            $line2 = '';
             $locale = 'en';
 
-            $series_example_3 = new Series();
-            $series_example_3->setAnnounce($announce);
-            $series_example_3->setPublicDate($publicDate);
-            $series_example_3->setTitle($title);
-            $series_example_3->setSubtitle($subtitle);
-            $series_example_3->setDescription($description);
-            $series_example_3->setHeader($header);
-            $series_example_3->setFooter($footer);
-            $series_example_3->setCopyright($copyright);
-            $series_example_3->setKeyword($keyword);
-            $series_example_3->setLine2($line2);
-            $series_example_3->setLocale($locale);
+            $series = new Series();
+            $series->setAnnounce($announce);
+            $series->setPublicDate($publicDate);
+            $series->setTitle($title);
+            $series->setSubtitle($subtitle);
+            $series->setDescription($description);
+            $series->setHeader($header);
+            $series->setFooter($footer);
+            $series->setCopyright($copyright);
+            $series->setKeyword($keyword);
+            $series->setLine2($line2);
+            $series->setLocale($locale);
 
-            $titleEs = 'Serie de ejemplo 3';
-            $subtitleEs = 'Serie';
-            $descriptionEs = 'Esta es la descripción de la serie de ejemplo 3';
-            $headerEs = 'Cabecera de la serie de ejmplo 3';
-            $footerEs = 'Pie de la serie de ejemplo 3';
-            $copyrightEs = 'Derechos de copia';
-            $keywordEs = 'Palabra clave';
-            $line2Es = 'Línea 2';
+            $titleEs = 'Robots';
+            $subtitleEs = '';
+            $descriptionEs = '';
+            $headerEs = '';
+            $footerEs = '';
+            $copyrightEs = 'UdN-TV';
+            $keywordEs = '';
+            $line2Es = '';
             $localeEs = 'es';
 
             $titleI18n = array($locale => $title, $localeEs => $titleEs);
@@ -435,27 +418,30 @@ EOT
             $keywordI18n = array($locale => $keyword, $localeEs => $keywordEs);
             $line2I18n = array($locale => $line2, $localeEs => $line2Es);
 
-            $series_example_3->setI18nTitle($titleI18n);
-            $series_example_3->setI18nSubtitle($subtitleI18n);
-            $series_example_3->setI18nDescription($descriptionI18n);
-            $series_example_3->setI18nHeader($headerI18n);
-            $series_example_3->setI18nFooter($footerI18n);
-            $series_example_3->setI18nCopyright($copyrightI18n);
-            $series_example_3->setI18nKeyword($keywordI18n);
-            $series_example_3->setI18nLine2($line2I18n);
+            $series->setI18nTitle($titleI18n);
+            $series->setI18nSubtitle($subtitleI18n);
+            $series->setI18nDescription($descriptionI18n);
+            $series->setI18nHeader($headerI18n);
+            $series->setI18nFooter($footerI18n);
+            $series->setI18nCopyright($copyrightI18n);
+            $series->setI18nKeyword($keywordI18n);
+            $series->setI18nLine2($line2I18n);
+
+            $url = '/bundles/pumukitexampledata/images/22.jpg';
+            $pic = new Pic();
+            $pic->setUrl($url);
+            $series->addPic($pic);
 
             $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-            $dm->persist($series_example_3);
+            $dm->persist($series);
             $dm->flush();
-
-            //Track example 3
 
             $tags = array('tag_a', 'tag_b');
             $language = 'en';
-            $url = '/bundles/pumukitexampledata/videos/The introduction of cats in islands ecosystems.flv';
-            $path = realpath(dirname(__FILE__) . '/../Resources/public/videos/The introduction of cats in islands ecosystems.flv');
+            $url = '/bundles/pumukitexampledata/videos/10/38.mp4';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/videos/10/38.mp4');
             $mime = 'video/mpeg4-HP';
-            $duration = 5000;
+            $duration = 64100;
             $acodec = 'aac';
             $vcodec = 'mpeg4-HP';
             $bitrate = 10000;
@@ -468,153 +454,76 @@ EOT
             $hide = false;
             $numview = 3;
 
-            $track_example_3 = new Track();
-            $track_example_3->setTags($tags);
-            $track_example_3->setLanguage($language);
-            $track_example_3->setUrl($url);
-            $track_example_3->setPath($path);
-            $track_example_3->setMimeType($mime);
-            $track_example_3->setDuration($duration);
-            $track_example_3->setAcodec($acodec);
-            $track_example_3->setVcodec($vcodec);
-            $track_example_3->setBitrate($bitrate);
-            $track_example_3->setFramerate($framerate);
-            $track_example_3->setOnlyAudio($only_audio);
-            $track_example_3->setChannels($channels);
-            $track_example_3->setDuration($duration);
-            $track_example_3->setWidth($width);
-            $track_example_3->setHeight($height);
-            $track_example_3->setHide($hide);
-            $track_example_3->setNumview($numview);
-
-            //Pic example 3
+            $track = new Track();
+            $track->setTags($tags);
+            $track->setLanguage($language);
+            $track->setUrl($url);
+            $track->setPath($path);
+            $track->setMimeType($mime);
+            $track->setDuration($duration);
+            $track->setAcodec($acodec);
+            $track->setVcodec($vcodec);
+            $track->setBitrate($bitrate);
+            $track->setFramerate($framerate);
+            $track->setOnlyAudio($only_audio);
+            $track->setChannels($channels);
+            $track->setDuration($duration);
+            $track->setWidth($width);
+            $track->setHeight($height);
+            $track->setHide($hide);
+            $track->setNumview($numview);
 
             $tags = array('tag_a', 'tag_b');
-            $url = '/bundles/pumukitexampledata/images/The introduction of cats in islands ecosystems.jpg';
-            $path = realpath(dirname(__FILE__) . '/../Resources/public/images/The introduction of cats in islands ecosystems.jpg');
+            $url = '/bundles/pumukitexampledata/images/21.jpg';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/images/21.jpg');
             $mime = 'image/jpg';
             $size = 3456;
             $width = 800;
             $height = 600;
             $hide = true;
 
-            $pic_example_3 = new Pic();
-            $pic_example_3->setTags($tags);
-            $pic_example_3->setUrl($url);
-            $pic_example_3->setPath($path);
-            $pic_example_3->setMimeType($mime);
-            $pic_example_3->setSize($size);
-            $pic_example_3->setWidth($width);
-            $pic_example_3->setHeight($height);
-            $pic_example_3->setHide($hide);
-
-            //Multimedia object example 3
+            $pic = new Pic();
+            $pic->setTags($tags);
+            $pic->setUrl($url);
+            $pic->setPath($path);
+            $pic->setMimeType($mime);
+            $pic->setSize($size);
+            $pic->setWidth($width);
+            $pic->setHeight($height);
+            $pic->setHide($hide);
 
             $rank = 3;
             $status = MultimediaObject::STATUS_NORMAL;
             $record_date = new \DateTime();
             $public_date = new \DateTime();
-            $title = 'The introduction of cats in islands ecosystems';
-            $subtitle = 'Protection in islands ecosystems';
-            $description = "Description";
-            $numview = 2;
-            $tag1 = new Tag();
-            $tag1->setCod('tag1');
-            $tag2 = new Tag();
-            $tag2->setCod('tag2');
-            $tag3 = new Tag();
-            $tag3->setCod('tag3');
-            $mm_tags = array($tag1, $tag2, $tag3);
+            $title = 'AIBO';
+            $subtitle = '';
+            $description = "";
 
-            $multimediaObject_example_3 = new MultimediaObject();
-            $multimediaObject_example_3->setRank($rank);
-            $multimediaObject_example_3->setStatus($status);
-            $multimediaObject_example_3->setSeries($series_example_3);
-            $multimediaObject_example_3->setRecordDate($record_date);
-            $multimediaObject_example_3->setPublicDate($public_date);
-            $multimediaObject_example_3->setTitle($title);
-            $multimediaObject_example_3->setSubtitle($subtitle);
-            $multimediaObject_example_3->setDescription($description);
-            $multimediaObject_example_3->addTag($tag1);
-            $multimediaObject_example_3->addTag($tag2);
-            $multimediaObject_example_3->addTag($tag3);
-            $multimediaObject_example_3->setNumview($numview);
+            $multimediaObject = new MultimediaObject();
+            $multimediaObject->setRank($rank);
+            $multimediaObject->setStatus($status);
+            $multimediaObject->setSeries($series);
+            $multimediaObject->setRecordDate($record_date);
+            $multimediaObject->setPublicDate($public_date);
+            $multimediaObject->setTitle($title);
+            $multimediaObject->setSubtitle($subtitle);
+            $multimediaObject->setDescription($description);
 
-            $multimediaObject_example_3->addPic($pic_example_3);
-            $multimediaObject_example_3->addTrack($track_example_3);
+            $multimediaObject->addPic($pic);
+            $multimediaObject->addTrack($track);
 
             $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-            $dm->persist($multimediaObject_example_3);
+            $dm->persist($multimediaObject);
             $dm->flush();
 
-
-            //Series example 4
-
-            $announce = true;
-            $publicDate = new \DateTime("now");
-            $title = 'Series example 4';
-            $subtitle = 'Series';
-            $description = 'This is a description of series example 4';
-            $header = 'Header of series example 4';
-            $footer = 'Footer of series example 4';
-            $copyright = 'Copyright';
-            $keyword = 'Keyword';
-            $line2 = 'Line2';
-            $locale = 'en';
-
-            $series_example_4 = new Series();
-            $series_example_4->setAnnounce($announce);
-            $series_example_4->setPublicDate($publicDate);
-            $series_example_4->setTitle($title);
-            $series_example_4->setSubtitle($subtitle);
-            $series_example_4->setDescription($description);
-            $series_example_4->setHeader($header);
-            $series_example_4->setFooter($footer);
-            $series_example_4->setCopyright($copyright);
-            $series_example_4->setKeyword($keyword);
-            $series_example_4->setLine2($line2);
-            $series_example_4->setLocale($locale);
-
-            $titleEs = 'Serie de ejemplo 4';
-            $subtitleEs = 'Serie';
-            $descriptionEs = 'Esta es la descripción de la serie de ejemplo 4';
-            $headerEs = 'Cabecera de la serie de ejmplo 4';
-            $footerEs = 'Pie de la serie de ejemplo 4';
-            $copyrightEs = 'Derechos de copia';
-            $keywordEs = 'Palabra clave';
-            $line2Es = 'Línea 2';
-            $localeEs = 'es';
-
-            $titleI18n = array($locale => $title, $localeEs => $titleEs);
-            $subtitleI18n = array($locale => $subtitle, $localeEs => $subtitleEs);
-            $descriptionI18n = array($locale => $description, $localeEs => $descriptionEs);
-            $headerI18n = array($locale => $header, $localeEs => $headerEs);
-            $footerI18n = array($locale => $footer, $localeEs => $footerEs);
-            $copyrightI18n = array($locale => $copyright, $localeEs => $copyrightEs);
-            $keywordI18n = array($locale => $keyword, $localeEs => $keywordEs);
-            $line2I18n = array($locale => $line2, $localeEs => $line2Es);
-
-            $series_example_4->setI18nTitle($titleI18n);
-            $series_example_4->setI18nSubtitle($subtitleI18n);
-            $series_example_4->setI18nDescription($descriptionI18n);
-            $series_example_4->setI18nHeader($headerI18n);
-            $series_example_4->setI18nFooter($footerI18n);
-            $series_example_4->setI18nCopyright($copyrightI18n);
-            $series_example_4->setI18nKeyword($keywordI18n);
-            $series_example_4->setI18nLine2($line2I18n);
-
-            $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-            $dm->persist($series_example_4);
-            $dm->flush();
-
-            //Track example 4
 
             $tags = array('tag_a', 'tag_b');
             $language = 'en';
-            $url = '/bundles/pumukitexampledata/videos/What is the Campus do Mar_.webm';
-            $path = realpath(dirname(__FILE__) . '/../Resources/public/videos/What is the Campus do Mar_.webm');
+            $url = '/bundles/pumukitexampledata/videos/10/36.mp4';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/videos/10/36.mp4');
             $mime = 'video/mpeg4-HP';
-            $duration = 5000;
+            $duration = 64100;
             $acodec = 'aac';
             $vcodec = 'mpeg4-HP';
             $bitrate = 10000;
@@ -627,125 +536,1651 @@ EOT
             $hide = false;
             $numview = 3;
 
-            $track_example_4 = new Track();
-            $track_example_4->setTags($tags);
-            $track_example_4->setLanguage($language);
-            $track_example_4->setUrl($url);
-            $track_example_4->setPath($path);
-            $track_example_4->setMimeType($mime);
-            $track_example_4->setDuration($duration);
-            $track_example_4->setAcodec($acodec);
-            $track_example_4->setVcodec($vcodec);
-            $track_example_4->setBitrate($bitrate);
-            $track_example_4->setFramerate($framerate);
-            $track_example_4->setOnlyAudio($only_audio);
-            $track_example_4->setChannels($channels);
-            $track_example_4->setDuration($duration);
-            $track_example_4->setWidth($width);
-            $track_example_4->setHeight($height);
-            $track_example_4->setHide($hide);
-            $track_example_4->setNumview($numview);
-
-            //Pic example 4
+            $track = new Track();
+            $track->setTags($tags);
+            $track->setLanguage($language);
+            $track->setUrl($url);
+            $track->setPath($path);
+            $track->setMimeType($mime);
+            $track->setDuration($duration);
+            $track->setAcodec($acodec);
+            $track->setVcodec($vcodec);
+            $track->setBitrate($bitrate);
+            $track->setFramerate($framerate);
+            $track->setOnlyAudio($only_audio);
+            $track->setChannels($channels);
+            $track->setDuration($duration);
+            $track->setWidth($width);
+            $track->setHeight($height);
+            $track->setHide($hide);
+            $track->setNumview($numview);
 
             $tags = array('tag_a', 'tag_b');
-            $url = '/bundles/pumukitexampledata/images/What is the Campus do Mar_.jpg';
-            $path = realpath(dirname(__FILE__) . '/../Resources/public/images/What is the Campus do Mar_.jpg');
+            $url = '/bundles/pumukitexampledata/images/22.jpg';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/images/22.jpg');
             $mime = 'image/jpg';
             $size = 3456;
             $width = 800;
             $height = 600;
             $hide = true;
 
-            $pic_example_4 = new Pic();
-            $pic_example_4->setTags($tags);
-            $pic_example_4->setUrl($url);
-            $pic_example_4->setPath($path);
-            $pic_example_4->setMimeType($mime);
-            $pic_example_4->setSize($size);
-            $pic_example_4->setWidth($width);
-            $pic_example_4->setHeight($height);
-            $pic_example_4->setHide($hide);
-
-            //Multimedia object example 4
+            $pic = new Pic();
+            $pic->setTags($tags);
+            $pic->setUrl($url);
+            $pic->setPath($path);
+            $pic->setMimeType($mime);
+            $pic->setSize($size);
+            $pic->setWidth($width);
+            $pic->setHeight($height);
+            $pic->setHide($hide);
 
             $rank = 3;
             $status = MultimediaObject::STATUS_NORMAL;
             $record_date = new \DateTime();
             $public_date = new \DateTime();
-            $title = 'The introduction of cats in islands ecosystems';
-            $subtitle = 'Protection in islands ecosystems';
-            $description = "Description";
-            $numview = 2;
-            $tag1 = new Tag();
-            $tag1->setCod('tag1');
-            $tag2 = new Tag();
-            $tag2->setCod('tag2');
-            $tag3 = new Tag();
-            $tag3->setCod('tag3');
-            $mm_tags = array($tag1, $tag2, $tag3);
+            $title = 'Movil';
+            $subtitle = '';
+            $description = "";
 
-            $multimediaObject_example_4 = new MultimediaObject();
-            $multimediaObject_example_4->setRank($rank);
-            $multimediaObject_example_4->setStatus($status);
-            $multimediaObject_example_4->setSeries($series_example_4);
-            $multimediaObject_example_4->setRecordDate($record_date);
-            $multimediaObject_example_4->setPublicDate($public_date);
-            $multimediaObject_example_4->setTitle($title);
-            $multimediaObject_example_4->setSubtitle($subtitle);
-            $multimediaObject_example_4->setDescription($description);
-            $multimediaObject_example_4->addTag($tag1);
-            $multimediaObject_example_4->addTag($tag2);
-            $multimediaObject_example_4->addTag($tag3);
-            $multimediaObject_example_4->setNumview($numview);
+            $multimediaObject = new MultimediaObject();
+            $multimediaObject->setRank($rank);
+            $multimediaObject->setStatus($status);
+            $multimediaObject->setSeries($series);
+            $multimediaObject->setRecordDate($record_date);
+            $multimediaObject->setPublicDate($public_date);
+            $multimediaObject->setTitle($title);
+            $multimediaObject->setSubtitle($subtitle);
+            $multimediaObject->setDescription($description);
 
-            $multimediaObject_example_4->addPic($pic_example_4);
-            $multimediaObject_example_4->addTrack($track_example_4);
+            $multimediaObject->addPic($pic);
+            $multimediaObject->addTrack($track);
 
             $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-            $dm->persist($multimediaObject_example_4);
+            $dm->persist($multimediaObject);
             $dm->flush();
 
-            //Person example
+            $tags = array('tag_a', 'tag_b');
+            $language = 'en';
+            $url = '/bundles/pumukitexampledata/videos/10/28.mp4';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/videos/10/28.mp4');
+            $mime = 'video/mpeg4-HP';
+            $duration = 64100;
+            $acodec = 'aac';
+            $vcodec = 'mpeg4-HP';
+            $bitrate = 10000;
+            $framerate = 25;
+            $only_audio = false;
+            $channels = 1;
+            $duration = 66666;
+            $width = 1920;
+            $height = 1080;
+            $hide = false;
+            $numview = 3;
 
-            $email = 'email@email.com';
-            $name = 'Peter';
-            $web = 'web';
-            $phone = 'phone';
-            $honorific = 'Mr';
-            $firm = 'firm';
-            $post = 'post';
-            $bio = 'Biography of this person';
+            $track = new Track();
+            $track->setTags($tags);
+            $track->setLanguage($language);
+            $track->setUrl($url);
+            $track->setPath($path);
+            $track->setMimeType($mime);
+            $track->setDuration($duration);
+            $track->setAcodec($acodec);
+            $track->setVcodec($vcodec);
+            $track->setBitrate($bitrate);
+            $track->setFramerate($framerate);
+            $track->setOnlyAudio($only_audio);
+            $track->setChannels($channels);
+            $track->setDuration($duration);
+            $track->setWidth($width);
+            $track->setHeight($height);
+            $track->setHide($hide);
+            $track->setNumview($numview);
 
-            $person = new Person();
+            $tags = array('tag_a', 'tag_b');
+            $url = '/bundles/pumukitexampledata/images/23.jpg';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/images/23.jpg');
+            $mime = 'image/jpg';
+            $size = 3456;
+            $width = 800;
+            $height = 600;
+            $hide = true;
 
-            $person->setEmail($email);
-            $person->setName($name);
-            $person->setWeb($web);
-            $person->setPhone($phone);
-            $person->setHonorific($honorific);
-            $person->setFirm($firm);
-            $person->setPost($post);
-            $person->setBio($bio);
+            $pic = new Pic();
+            $pic->setTags($tags);
+            $pic->setUrl($url);
+            $pic->setPath($path);
+            $pic->setMimeType($mime);
+            $pic->setSize($size);
+            $pic->setWidth($width);
+            $pic->setHeight($height);
+            $pic->setHide($hide);
 
-            $honorificEs = 'Don';
-            $firmEs = 'Firma de esta persona';
-            $postEs = 'Post de esta persona';
-            $bioEs = 'Biografía de esta persona';
+            $rank = 3;
+            $status = MultimediaObject::STATUS_NORMAL;
+            $record_date = new \DateTime();
+            $public_date = new \DateTime();
+            $title = 'Fanuc';
+            $subtitle = '';
+            $description = "";
 
-            $i18nHonorific = array('en' => $honorific, 'es' => $honorificEs);
-            $i18nFirm = array('en' => $firm, 'es' => $firmEs);
-            $i18nPost = array('en' => $post, 'es' => $postEs);
-            $i18nBio = array('en' => $bio, 'es' => $bioEs);
+            $multimediaObject = new MultimediaObject();
+            $multimediaObject->setRank($rank);
+            $multimediaObject->setStatus($status);
+            $multimediaObject->setSeries($series);
+            $multimediaObject->setRecordDate($record_date);
+            $multimediaObject->setPublicDate($public_date);
+            $multimediaObject->setTitle($title);
+            $multimediaObject->setSubtitle($subtitle);
+            $multimediaObject->setDescription($description);
 
-            $person->setI18nHonorific($i18nHonorific);
-            $person->setI18nFirm($i18nFirm);
-            $person->setI18nPost($i18nPost);
-            $person->setI18nBio($i18nBio);
+            $multimediaObject->addPic($pic);
+            $multimediaObject->addTrack($track);
 
             $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-            $dm->persist($person);
+            $dm->persist($multimediaObject);
             $dm->flush();
+
+            $tags = array('tag_a', 'tag_b');
+            $language = 'en';
+            $url = '/bundles/pumukitexampledata/videos/10/30.mp4';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/videos/10/30.mp4');
+            $mime = 'video/mpeg4-HP';
+            $duration = 64100;
+            $acodec = 'aac';
+            $vcodec = 'mpeg4-HP';
+            $bitrate = 10000;
+            $framerate = 25;
+            $only_audio = false;
+            $channels = 1;
+            $duration = 66666;
+            $width = 1920;
+            $height = 1080;
+            $hide = false;
+            $numview = 3;
+
+            $track = new Track();
+            $track->setTags($tags);
+            $track->setLanguage($language);
+            $track->setUrl($url);
+            $track->setPath($path);
+            $track->setMimeType($mime);
+            $track->setDuration($duration);
+            $track->setAcodec($acodec);
+            $track->setVcodec($vcodec);
+            $track->setBitrate($bitrate);
+            $track->setFramerate($framerate);
+            $track->setOnlyAudio($only_audio);
+            $track->setChannels($channels);
+            $track->setDuration($duration);
+            $track->setWidth($width);
+            $track->setHeight($height);
+            $track->setHide($hide);
+            $track->setNumview($numview);
+
+            $tags = array('tag_a', 'tag_b');
+            $url = '/bundles/pumukitexampledata/images/27.jpg';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/images/27.jpg');
+            $mime = 'image/jpg';
+            $size = 3456;
+            $width = 800;
+            $height = 600;
+            $hide = true;
+
+            $pic = new Pic();
+            $pic->setTags($tags);
+            $pic->setUrl($url);
+            $pic->setPath($path);
+            $pic->setMimeType($mime);
+            $pic->setSize($size);
+            $pic->setWidth($width);
+            $pic->setHeight($height);
+            $pic->setHide($hide);
+
+            $rank = 3;
+            $status = MultimediaObject::STATUS_NORMAL;
+            $record_date = new \DateTime();
+            $public_date = new \DateTime();
+            $title = 'Concurso';
+            $subtitle = '';
+            $description = "";
+
+            $multimediaObject = new MultimediaObject();
+            $multimediaObject->setRank($rank);
+            $multimediaObject->setStatus($status);
+            $multimediaObject->setSeries($series);
+            $multimediaObject->setRecordDate($record_date);
+            $multimediaObject->setPublicDate($public_date);
+            $multimediaObject->setTitle($title);
+            $multimediaObject->setSubtitle($subtitle);
+            $multimediaObject->setDescription($description);
+
+            $multimediaObject->addPic($pic);
+            $multimediaObject->addTrack($track);
+
+            $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+            $dm->persist($multimediaObject);
+            $dm->flush();
+
+            $tags = array('tag_a', 'tag_b');
+            $language = 'en';
+            $url = '/bundles/pumukitexampledata/videos/10/35.mp4';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/videos/10/35.mp4');
+            $mime = 'video/mpeg4-HP';
+            $duration = 64100;
+            $acodec = 'aac';
+            $vcodec = 'mpeg4-HP';
+            $bitrate = 10000;
+            $framerate = 25;
+            $only_audio = false;
+            $channels = 1;
+            $duration = 66666;
+            $width = 1920;
+            $height = 1080;
+            $hide = false;
+            $numview = 3;
+
+            $track = new Track();
+            $track->setTags($tags);
+            $track->setLanguage($language);
+            $track->setUrl($url);
+            $track->setPath($path);
+            $track->setMimeType($mime);
+            $track->setDuration($duration);
+            $track->setAcodec($acodec);
+            $track->setVcodec($vcodec);
+            $track->setBitrate($bitrate);
+            $track->setFramerate($framerate);
+            $track->setOnlyAudio($only_audio);
+            $track->setChannels($channels);
+            $track->setDuration($duration);
+            $track->setWidth($width);
+            $track->setHeight($height);
+            $track->setHide($hide);
+            $track->setNumview($numview);
+
+            $tags = array('tag_a', 'tag_b');
+            $url = '/bundles/pumukitexampledata/images/20.jpg';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/images/20.jpg');
+            $mime = 'image/jpg';
+            $size = 3456;
+            $width = 800;
+            $height = 600;
+            $hide = true;
+
+            $pic = new Pic();
+            $pic->setTags($tags);
+            $pic->setUrl($url);
+            $pic->setPath($path);
+            $pic->setMimeType($mime);
+            $pic->setSize($size);
+            $pic->setWidth($width);
+            $pic->setHeight($height);
+            $pic->setHide($hide);
+
+            $rank = 3;
+            $status = MultimediaObject::STATUS_NORMAL;
+            $record_date = new \DateTime();
+            $public_date = new \DateTime();
+            $title = 'Robonova';
+            $subtitle = '';
+            $description = "";
+
+            $multimediaObject = new MultimediaObject();
+            $multimediaObject->setRank($rank);
+            $multimediaObject->setStatus($status);
+            $multimediaObject->setSeries($series);
+            $multimediaObject->setRecordDate($record_date);
+            $multimediaObject->setPublicDate($public_date);
+            $multimediaObject->setTitle($title);
+            $multimediaObject->setSubtitle($subtitle);
+            $multimediaObject->setDescription($description);
+
+            $multimediaObject->addPic($pic);
+            $multimediaObject->addTrack($track);
+
+            $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+            $dm->persist($multimediaObject);
+            $dm->flush();
+
+            //----------------------------------------------------------------------------
+
+            //Series Polimedia----------------------------------------------------------
+
+            $announce = true;
+            $publicDate = new \DateTime("now");
+            $title = 'Polimedia';
+            $subtitle = '';
+            $description = '';
+            $header = '';
+            $footer = '';
+            $copyright = 'UdN-TV';
+            $keyword = '';
+            $line2 = '';
+            $locale = 'en';
+
+            $series = new Series();
+            $series->setAnnounce($announce);
+            $series->setPublicDate($publicDate);
+            $series->setTitle($title);
+            $series->setSubtitle($subtitle);
+            $series->setDescription($description);
+            $series->setHeader($header);
+            $series->setFooter($footer);
+            $series->setCopyright($copyright);
+            $series->setKeyword($keyword);
+            $series->setLine2($line2);
+            $series->setLocale($locale);
+
+            $titleEs = 'Polimedia';
+            $subtitleEs = '';
+            $descriptionEs = '';
+            $headerEs = '';
+            $footerEs = '';
+            $copyrightEs = 'UdN-TV';
+            $keywordEs = '';
+            $line2Es = '';
+            $localeEs = 'es';
+
+            $titleI18n = array($locale => $title, $localeEs => $titleEs);
+            $subtitleI18n = array($locale => $subtitle, $localeEs => $subtitleEs);
+            $descriptionI18n = array($locale => $description, $localeEs => $descriptionEs);
+            $headerI18n = array($locale => $header, $localeEs => $headerEs);
+            $footerI18n = array($locale => $footer, $localeEs => $footerEs);
+            $copyrightI18n = array($locale => $copyright, $localeEs => $copyrightEs);
+            $keywordI18n = array($locale => $keyword, $localeEs => $keywordEs);
+            $line2I18n = array($locale => $line2, $localeEs => $line2Es);
+
+            $series->setI18nTitle($titleI18n);
+            $series->setI18nSubtitle($subtitleI18n);
+            $series->setI18nDescription($descriptionI18n);
+            $series->setI18nHeader($headerI18n);
+            $series->setI18nFooter($footerI18n);
+            $series->setI18nCopyright($copyrightI18n);
+            $series->setI18nKeyword($keywordI18n);
+            $series->setI18nLine2($line2I18n);
+
+            $url = '/bundles/pumukitexampledata/images/37.jpg';
+            $pic = new Pic();
+            $pic->setUrl($url);
+            $series->addPic($pic);
+
+            $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+            $dm->persist($series);
+            $dm->flush();
+
+            $tags = array('tag_a', 'tag_b');
+            $language = 'en';
+            $url = '/bundles/pumukitexampledata/videos/11/34.mp4';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/videos/11/34.mp4');
+            $mime = 'video/mpeg4-HP';
+            $duration = 64100;
+            $acodec = 'aac';
+            $vcodec = 'mpeg4-HP';
+            $bitrate = 10000;
+            $framerate = 25;
+            $only_audio = false;
+            $channels = 1;
+            $duration = 66666;
+            $width = 1920;
+            $height = 1080;
+            $hide = false;
+            $numview = 3;
+
+            $track = new Track();
+            $track->setTags($tags);
+            $track->setLanguage($language);
+            $track->setUrl($url);
+            $track->setPath($path);
+            $track->setMimeType($mime);
+            $track->setDuration($duration);
+            $track->setAcodec($acodec);
+            $track->setVcodec($vcodec);
+            $track->setBitrate($bitrate);
+            $track->setFramerate($framerate);
+            $track->setOnlyAudio($only_audio);
+            $track->setChannels($channels);
+            $track->setDuration($duration);
+            $track->setWidth($width);
+            $track->setHeight($height);
+            $track->setHide($hide);
+            $track->setNumview($numview);
+
+            $tags = array('tag_a', 'tag_b');
+            $url = '/bundles/pumukitexampledata/images/38.jpg';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/images/38.jpg');
+            $mime = 'image/jpg';
+            $size = 3456;
+            $width = 800;
+            $height = 600;
+            $hide = true;
+
+            $pic = new Pic();
+            $pic->setTags($tags);
+            $pic->setUrl($url);
+            $pic->setPath($path);
+            $pic->setMimeType($mime);
+            $pic->setSize($size);
+            $pic->setWidth($width);
+            $pic->setHeight($height);
+            $pic->setHide($hide);
+
+            $rank = 3;
+            $status = MultimediaObject::STATUS_NORMAL;
+            $record_date = new \DateTime();
+            $public_date = new \DateTime();
+            $title = 'Armesto';
+            $subtitle = '';
+            $description = "";
+
+            $multimediaObject = new MultimediaObject();
+            $multimediaObject->setRank($rank);
+            $multimediaObject->setStatus($status);
+            $multimediaObject->setSeries($series);
+            $multimediaObject->setRecordDate($record_date);
+            $multimediaObject->setPublicDate($public_date);
+            $multimediaObject->setTitle($title);
+            $multimediaObject->setSubtitle($subtitle);
+            $multimediaObject->setDescription($description);
+
+            $multimediaObject->addPic($pic);
+            $multimediaObject->addTrack($track);
+
+            $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+            $dm->persist($multimediaObject);
+            $dm->flush();
+
+            //------------------------------------------------------------------
+
+            //Serie Energia de materiales y medio ambiente  ------------------------------
+
+            $announce = true;
+            $publicDate = new \DateTime("now");
+            $title = 'Energy materials and environment';
+            $subtitle = '';
+            $description = '';
+            $header = '';
+            $footer = '';
+            $copyright = 'UdN-TV';
+            $keyword = '';
+            $line2 = '';
+            $locale = 'en';
+
+            $series = new Series();
+            $series->setAnnounce($announce);
+            $series->setPublicDate($publicDate);
+            $series->setTitle($title);
+            $series->setSubtitle($subtitle);
+            $series->setDescription($description);
+            $series->setHeader($header);
+            $series->setFooter($footer);
+            $series->setCopyright($copyright);
+            $series->setKeyword($keyword);
+            $series->setLine2($line2);
+            $series->setLocale($locale);
+
+            $titleEs = 'Energía de materiales y medio ambiente';
+            $subtitleEs = '';
+            $descriptionEs = '';
+            $headerEs = '';
+            $footerEs = '';
+            $copyrightEs = 'UdN-TV';
+            $keywordEs = '';
+            $line2Es = '';
+            $localeEs = 'es';
+
+            $titleI18n = array($locale => $title, $localeEs => $titleEs);
+            $subtitleI18n = array($locale => $subtitle, $localeEs => $subtitleEs);
+            $descriptionI18n = array($locale => $description, $localeEs => $descriptionEs);
+            $headerI18n = array($locale => $header, $localeEs => $headerEs);
+            $footerI18n = array($locale => $footer, $localeEs => $footerEs);
+            $copyrightI18n = array($locale => $copyright, $localeEs => $copyrightEs);
+            $keywordI18n = array($locale => $keyword, $localeEs => $keywordEs);
+            $line2I18n = array($locale => $line2, $localeEs => $line2Es);
+
+            $series->setI18nTitle($titleI18n);
+            $series->setI18nSubtitle($subtitleI18n);
+            $series->setI18nDescription($descriptionI18n);
+            $series->setI18nHeader($headerI18n);
+            $series->setI18nFooter($footerI18n);
+            $series->setI18nCopyright($copyrightI18n);
+            $series->setI18nKeyword($keywordI18n);
+            $series->setI18nLine2($line2I18n);
+
+            $url = '/bundles/pumukitexampledata/images/32.jpg';
+            $pic = new Pic();
+            $pic->setUrl($url);
+            $series->addPic($pic);
+
+            $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+            $dm->persist($series);
+            $dm->flush();
+
+            $tags = array('tag_a', 'tag_b');
+            $language = 'en';
+            $url = '/bundles/pumukitexampledata/videos/12/40.mp4';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/videos/12/40.mp4');
+            $mime = 'video/mpeg4-HP';
+            $duration = 64100;
+            $acodec = 'aac';
+            $vcodec = 'mpeg4-HP';
+            $bitrate = 10000;
+            $framerate = 25;
+            $only_audio = false;
+            $channels = 1;
+            $duration = 66666;
+            $width = 1920;
+            $height = 1080;
+            $hide = false;
+            $numview = 3;
+
+            $track = new Track();
+            $track->setTags($tags);
+            $track->setLanguage($language);
+            $track->setUrl($url);
+            $track->setPath($path);
+            $track->setMimeType($mime);
+            $track->setDuration($duration);
+            $track->setAcodec($acodec);
+            $track->setVcodec($vcodec);
+            $track->setBitrate($bitrate);
+            $track->setFramerate($framerate);
+            $track->setOnlyAudio($only_audio);
+            $track->setChannels($channels);
+            $track->setDuration($duration);
+            $track->setWidth($width);
+            $track->setHeight($height);
+            $track->setHide($hide);
+            $track->setNumview($numview);
+
+            $tags = array('tag_a', 'tag_b');
+            $url = '/bundles/pumukitexampledata/images/28.jpg';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/images/28.jpg');
+            $mime = 'image/jpg';
+            $size = 3456;
+            $width = 800;
+            $height = 600;
+            $hide = true;
+
+            $pic = new Pic();
+            $pic->setTags($tags);
+            $pic->setUrl($url);
+            $pic->setPath($path);
+            $pic->setMimeType($mime);
+            $pic->setSize($size);
+            $pic->setWidth($width);
+            $pic->setHeight($height);
+            $pic->setHide($hide);
+
+            $rank = 3;
+            $status = MultimediaObject::STATUS_NORMAL;
+            $record_date = new \DateTime();
+            $public_date = new \DateTime();
+            $title = 'Energy materials and environment';
+            $subtitle = '';
+            $description = "";
+
+            $multimediaObject = new MultimediaObject();
+            $multimediaObject->setRank($rank);
+            $multimediaObject->setStatus($status);
+            $multimediaObject->setSeries($series);
+            $multimediaObject->setRecordDate($record_date);
+            $multimediaObject->setPublicDate($public_date);
+            $multimediaObject->setTitle($title);
+            $multimediaObject->setSubtitle($subtitle);
+            $multimediaObject->setDescription($description);
+
+            $multimediaObject->addPic($pic);
+            $multimediaObject->addTrack($track);
+
+            $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+            $dm->persist($multimediaObject);
+            $dm->flush();
+
+            //--------------------------------------------------------------------------------
+
+            //Serie Marine sciences  ------------------------------
+
+            $announce = true;
+            $publicDate = new \DateTime("now");
+            $title = 'Marine science';
+            $subtitle = '';
+            $description = '';
+            $header = '';
+            $footer = '';
+            $copyright = 'UdN-TV';
+            $keyword = '';
+            $line2 = '';
+            $locale = 'en';
+
+            $series = new Series();
+            $series->setAnnounce($announce);
+            $series->setPublicDate($publicDate);
+            $series->setTitle($title);
+            $series->setSubtitle($subtitle);
+            $series->setDescription($description);
+            $series->setHeader($header);
+            $series->setFooter($footer);
+            $series->setCopyright($copyright);
+            $series->setKeyword($keyword);
+            $series->setLine2($line2);
+            $series->setLocale($locale);
+
+            $titleEs = 'Ciencias del mar';
+            $subtitleEs = '';
+            $descriptionEs = '';
+            $headerEs = '';
+            $footerEs = '';
+            $copyrightEs = 'UdN-TV';
+            $keywordEs = '';
+            $line2Es = '';
+            $localeEs = 'es';
+
+            $titleI18n = array($locale => $title, $localeEs => $titleEs);
+            $subtitleI18n = array($locale => $subtitle, $localeEs => $subtitleEs);
+            $descriptionI18n = array($locale => $description, $localeEs => $descriptionEs);
+            $headerI18n = array($locale => $header, $localeEs => $headerEs);
+            $footerI18n = array($locale => $footer, $localeEs => $footerEs);
+            $copyrightI18n = array($locale => $copyright, $localeEs => $copyrightEs);
+            $keywordI18n = array($locale => $keyword, $localeEs => $keywordEs);
+            $line2I18n = array($locale => $line2, $localeEs => $line2Es);
+
+            $series->setI18nTitle($titleI18n);
+            $series->setI18nSubtitle($subtitleI18n);
+            $series->setI18nDescription($descriptionI18n);
+            $series->setI18nHeader($headerI18n);
+            $series->setI18nFooter($footerI18n);
+            $series->setI18nCopyright($copyrightI18n);
+            $series->setI18nKeyword($keywordI18n);
+            $series->setI18nLine2($line2I18n);
+
+            $url = '/bundles/pumukitexampledata/images/28.jpg';
+            $pic = new Pic();
+            $pic->setUrl($url);
+            $series->addPic($pic);
+
+            $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+            $dm->persist($series);
+            $dm->flush();
+
+            $tags = array('tag_a', 'tag_b');
+            $language = 'en';
+            $url = '/bundles/pumukitexampledata/videos/13/45.mp4';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/videos/13/45.mp4');
+            $mime = 'video/mpeg4-HP';
+            $duration = 64100;
+            $acodec = 'aac';
+            $vcodec = 'mpeg4-HP';
+            $bitrate = 10000;
+            $framerate = 25;
+            $only_audio = false;
+            $channels = 1;
+            $duration = 66666;
+            $width = 1920;
+            $height = 1080;
+            $hide = false;
+            $numview = 3;
+
+            $track = new Track();
+            $track->setTags($tags);
+            $track->setLanguage($language);
+            $track->setUrl($url);
+            $track->setPath($path);
+            $track->setMimeType($mime);
+            $track->setDuration($duration);
+            $track->setAcodec($acodec);
+            $track->setVcodec($vcodec);
+            $track->setBitrate($bitrate);
+            $track->setFramerate($framerate);
+            $track->setOnlyAudio($only_audio);
+            $track->setChannels($channels);
+            $track->setDuration($duration);
+            $track->setWidth($width);
+            $track->setHeight($height);
+            $track->setHide($hide);
+            $track->setNumview($numview);
+
+            $tags = array('tag_a', 'tag_b');
+            $url = '/bundles/pumukitexampledata/images/29.jpg';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/images/29.jpg');
+            $mime = 'image/jpg';
+            $size = 3456;
+            $width = 800;
+            $height = 600;
+            $hide = true;
+
+            $pic = new Pic();
+            $pic->setTags($tags);
+            $pic->setUrl($url);
+            $pic->setPath($path);
+            $pic->setMimeType($mime);
+            $pic->setSize($size);
+            $pic->setWidth($width);
+            $pic->setHeight($height);
+            $pic->setHide($hide);
+
+            $rank = 3;
+            $status = MultimediaObject::STATUS_NORMAL;
+            $record_date = new \DateTime();
+            $public_date = new \DateTime();
+            $title = 'Toralla';
+            $subtitle = '';
+            $description = "";
+
+            $multimediaObject = new MultimediaObject();
+            $multimediaObject->setRank($rank);
+            $multimediaObject->setStatus($status);
+            $multimediaObject->setSeries($series);
+            $multimediaObject->setRecordDate($record_date);
+            $multimediaObject->setPublicDate($public_date);
+            $multimediaObject->setTitle($title);
+            $multimediaObject->setSubtitle($subtitle);
+            $multimediaObject->setDescription($description);
+
+            $multimediaObject->addPic($pic);
+            $multimediaObject->addTrack($track);
+
+            $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+            $dm->persist($multimediaObject);
+            $dm->flush();
+
+            //--------------------------------------------------------------------------------
+
+            //Serie NOS register  ------------------------------
+
+            $announce = true;
+            $publicDate = new \DateTime("now");
+            $title = 'NOS register';
+            $subtitle = '';
+            $description = '';
+            $header = '';
+            $footer = '';
+            $copyright = 'UdN-TV';
+            $keyword = '';
+            $line2 = '';
+            $locale = 'en';
+
+            $series = new Series();
+            $series->setAnnounce($announce);
+            $series->setPublicDate($publicDate);
+            $series->setTitle($title);
+            $series->setSubtitle($subtitle);
+            $series->setDescription($description);
+            $series->setHeader($header);
+            $series->setFooter($footer);
+            $series->setCopyright($copyright);
+            $series->setKeyword($keyword);
+            $series->setLine2($line2);
+            $series->setLocale($locale);
+
+            $titleEs = 'Registro de NOS';
+            $subtitleEs = '';
+            $descriptionEs = '';
+            $headerEs = '';
+            $footerEs = '';
+            $copyrightEs = 'UdN-TV';
+            $keywordEs = '';
+            $line2Es = '';
+            $localeEs = 'es';
+
+            $titleI18n = array($locale => $title, $localeEs => $titleEs);
+            $subtitleI18n = array($locale => $subtitle, $localeEs => $subtitleEs);
+            $descriptionI18n = array($locale => $description, $localeEs => $descriptionEs);
+            $headerI18n = array($locale => $header, $localeEs => $headerEs);
+            $footerI18n = array($locale => $footer, $localeEs => $footerEs);
+            $copyrightI18n = array($locale => $copyright, $localeEs => $copyrightEs);
+            $keywordI18n = array($locale => $keyword, $localeEs => $keywordEs);
+            $line2I18n = array($locale => $line2, $localeEs => $line2Es);
+
+            $series->setI18nTitle($titleI18n);
+            $series->setI18nSubtitle($subtitleI18n);
+            $series->setI18nDescription($descriptionI18n);
+            $series->setI18nHeader($headerI18n);
+            $series->setI18nFooter($footerI18n);
+            $series->setI18nCopyright($copyrightI18n);
+            $series->setI18nKeyword($keywordI18n);
+            $series->setI18nLine2($line2I18n);
+
+            $url = '/bundles/pumukitexampledata/images/41.jpg';
+            $pic = new Pic();
+            $pic->setUrl($url);
+            $series->addPic($pic);
+
+            $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+            $dm->persist($series);
+            $dm->flush();
+
+            $tags = array('tag_a', 'tag_b');
+            $language = 'en';
+            $url = '/bundles/pumukitexampledata/videos/14/46.mp4';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/videos/14/46.mp4');
+            $mime = 'video/mpeg4-HP';
+            $duration = 64100;
+            $acodec = 'aac';
+            $vcodec = 'mpeg4-HP';
+            $bitrate = 10000;
+            $framerate = 25;
+            $only_audio = false;
+            $channels = 1;
+            $duration = 66666;
+            $width = 1920;
+            $height = 1080;
+            $hide = false;
+            $numview = 3;
+
+            $track = new Track();
+            $track->setTags($tags);
+            $track->setLanguage($language);
+            $track->setUrl($url);
+            $track->setPath($path);
+            $track->setMimeType($mime);
+            $track->setDuration($duration);
+            $track->setAcodec($acodec);
+            $track->setVcodec($vcodec);
+            $track->setBitrate($bitrate);
+            $track->setFramerate($framerate);
+            $track->setOnlyAudio($only_audio);
+            $track->setChannels($channels);
+            $track->setDuration($duration);
+            $track->setWidth($width);
+            $track->setHeight($height);
+            $track->setHide($hide);
+            $track->setNumview($numview);
+
+            $tags = array('tag_a', 'tag_b');
+            $url = '/bundles/pumukitexampledata/images/31.jpg';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/images/31.jpg');
+            $mime = 'image/jpg';
+            $size = 3456;
+            $width = 800;
+            $height = 600;
+            $hide = true;
+
+            $pic = new Pic();
+            $pic->setTags($tags);
+            $pic->setUrl($url);
+            $pic->setPath($path);
+            $pic->setMimeType($mime);
+            $pic->setSize($size);
+            $pic->setWidth($width);
+            $pic->setHeight($height);
+            $pic->setHide($hide);
+
+            $rank = 3;
+            $status = MultimediaObject::STATUS_NORMAL;
+            $record_date = new \DateTime();
+            $public_date = new \DateTime();
+            $title = 'Isaac Díaz Pardo';
+            $subtitle = '';
+            $description = "";
+
+            $multimediaObject = new MultimediaObject();
+            $multimediaObject->setRank($rank);
+            $multimediaObject->setStatus($status);
+            $multimediaObject->setSeries($series);
+            $multimediaObject->setRecordDate($record_date);
+            $multimediaObject->setPublicDate($public_date);
+            $multimediaObject->setTitle($title);
+            $multimediaObject->setSubtitle($subtitle);
+            $multimediaObject->setDescription($description);
+
+            $multimediaObject->addPic($pic);
+            $multimediaObject->addTrack($track);
+
+            $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+            $dm->persist($multimediaObject);
+            $dm->flush();
+
+            $tags = array('tag_a', 'tag_b');
+            $language = 'en';
+            $url = '/bundles/pumukitexampledata/videos/14/47.mp4';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/videos/14/47.mp4');
+            $mime = 'video/mpeg4-HP';
+            $duration = 64100;
+            $acodec = 'aac';
+            $vcodec = 'mpeg4-HP';
+            $bitrate = 10000;
+            $framerate = 25;
+            $only_audio = false;
+            $channels = 1;
+            $duration = 66666;
+            $width = 1920;
+            $height = 1080;
+            $hide = false;
+            $numview = 3;
+
+            $track = new Track();
+            $track->setTags($tags);
+            $track->setLanguage($language);
+            $track->setUrl($url);
+            $track->setPath($path);
+            $track->setMimeType($mime);
+            $track->setDuration($duration);
+            $track->setAcodec($acodec);
+            $track->setVcodec($vcodec);
+            $track->setBitrate($bitrate);
+            $track->setFramerate($framerate);
+            $track->setOnlyAudio($only_audio);
+            $track->setChannels($channels);
+            $track->setDuration($duration);
+            $track->setWidth($width);
+            $track->setHeight($height);
+            $track->setHide($hide);
+            $track->setNumview($numview);
+
+            $tags = array('tag_a', 'tag_b');
+            $url = '/bundles/pumukitexampledata/images/30.jpg';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/images/30.jpg');
+            $mime = 'image/jpg';
+            $size = 3456;
+            $width = 800;
+            $height = 600;
+            $hide = true;
+
+            $pic = new Pic();
+            $pic->setTags($tags);
+            $pic->setUrl($url);
+            $pic->setPath($path);
+            $pic->setMimeType($mime);
+            $pic->setSize($size);
+            $pic->setWidth($width);
+            $pic->setHeight($height);
+            $pic->setHide($hide);
+
+            $rank = 3;
+            $status = MultimediaObject::STATUS_NORMAL;
+            $record_date = new \DateTime();
+            $public_date = new \DateTime();
+            $title = 'Promo';
+            $subtitle = '';
+            $description = "";
+
+            $multimediaObject = new MultimediaObject();
+            $multimediaObject->setRank($rank);
+            $multimediaObject->setStatus($status);
+            $multimediaObject->setSeries($series);
+            $multimediaObject->setRecordDate($record_date);
+            $multimediaObject->setPublicDate($public_date);
+            $multimediaObject->setTitle($title);
+            $multimediaObject->setSubtitle($subtitle);
+            $multimediaObject->setDescription($description);
+
+            $multimediaObject->addPic($pic);
+            $multimediaObject->addTrack($track);
+
+            $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+            $dm->persist($multimediaObject);
+            $dm->flush();
+
+            //--------------------------------------------------------------------------------
+
+            //Serie Zigzag  ------------------------------
+
+            $announce = true;
+            $publicDate = new \DateTime("now");
+            $title = 'Zigzag';
+            $subtitle = '';
+            $description = '';
+            $header = '';
+            $footer = '';
+            $copyright = 'UdN-TV';
+            $keyword = '';
+            $line2 = '';
+            $locale = 'en';
+
+            $series = new Series();
+            $series->setAnnounce($announce);
+            $series->setPublicDate($publicDate);
+            $series->setTitle($title);
+            $series->setSubtitle($subtitle);
+            $series->setDescription($description);
+            $series->setHeader($header);
+            $series->setFooter($footer);
+            $series->setCopyright($copyright);
+            $series->setKeyword($keyword);
+            $series->setLine2($line2);
+            $series->setLocale($locale);
+
+            $titleEs = 'Zigzag';
+            $subtitleEs = '';
+            $descriptionEs = '';
+            $headerEs = '';
+            $footerEs = '';
+            $copyrightEs = 'UdN-TV';
+            $keywordEs = '';
+            $line2Es = '';
+            $localeEs = 'es';
+
+            $titleI18n = array($locale => $title, $localeEs => $titleEs);
+            $subtitleI18n = array($locale => $subtitle, $localeEs => $subtitleEs);
+            $descriptionI18n = array($locale => $description, $localeEs => $descriptionEs);
+            $headerI18n = array($locale => $header, $localeEs => $headerEs);
+            $footerI18n = array($locale => $footer, $localeEs => $footerEs);
+            $copyrightI18n = array($locale => $copyright, $localeEs => $copyrightEs);
+            $keywordI18n = array($locale => $keyword, $localeEs => $keywordEs);
+            $line2I18n = array($locale => $line2, $localeEs => $line2Es);
+
+            $series->setI18nTitle($titleI18n);
+            $series->setI18nSubtitle($subtitleI18n);
+            $series->setI18nDescription($descriptionI18n);
+            $series->setI18nHeader($headerI18n);
+            $series->setI18nFooter($footerI18n);
+            $series->setI18nCopyright($copyrightI18n);
+            $series->setI18nKeyword($keywordI18n);
+            $series->setI18nLine2($line2I18n);
+
+            $url = '/bundles/pumukitexampledata/images/40.jpg';
+            $pic = new Pic();
+            $pic->setUrl($url);
+            $series->addPic($pic);
+
+            $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+            $dm->persist($series);
+            $dm->flush();
+
+            $tags = array('tag_a', 'tag_b');
+            $language = 'en';
+            $url = '/bundles/pumukitexampledata/videos/15/48.mp4';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/videos/15/48.mp4');
+            $mime = 'video/mpeg4-HP';
+            $duration = 64100;
+            $acodec = 'aac';
+            $vcodec = 'mpeg4-HP';
+            $bitrate = 10000;
+            $framerate = 25;
+            $only_audio = false;
+            $channels = 1;
+            $duration = 66666;
+            $width = 1920;
+            $height = 1080;
+            $hide = false;
+            $numview = 3;
+
+            $track = new Track();
+            $track->setTags($tags);
+            $track->setLanguage($language);
+            $track->setUrl($url);
+            $track->setPath($path);
+            $track->setMimeType($mime);
+            $track->setDuration($duration);
+            $track->setAcodec($acodec);
+            $track->setVcodec($vcodec);
+            $track->setBitrate($bitrate);
+            $track->setFramerate($framerate);
+            $track->setOnlyAudio($only_audio);
+            $track->setChannels($channels);
+            $track->setDuration($duration);
+            $track->setWidth($width);
+            $track->setHeight($height);
+            $track->setHide($hide);
+            $track->setNumview($numview);
+
+            $tags = array('tag_a', 'tag_b');
+            $url = '/bundles/pumukitexampledata/images/40.jpg';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/images/40.jpg');
+            $mime = 'image/jpg';
+            $size = 3456;
+            $width = 800;
+            $height = 600;
+            $hide = true;
+
+            $pic = new Pic();
+            $pic->setTags($tags);
+            $pic->setUrl($url);
+            $pic->setPath($path);
+            $pic->setMimeType($mime);
+            $pic->setSize($size);
+            $pic->setWidth($width);
+            $pic->setHeight($height);
+            $pic->setHide($hide);
+
+            $rank = 3;
+            $status = MultimediaObject::STATUS_NORMAL;
+            $record_date = new \DateTime();
+            $public_date = new \DateTime();
+            $title = 'Episode I';
+            $subtitle = 'Zigzag';
+            $description = "";
+
+            $multimediaObject = new MultimediaObject();
+            $multimediaObject->setRank($rank);
+            $multimediaObject->setStatus($status);
+            $multimediaObject->setSeries($series);
+            $multimediaObject->setRecordDate($record_date);
+            $multimediaObject->setPublicDate($public_date);
+            $multimediaObject->setTitle($title);
+            $multimediaObject->setSubtitle($subtitle);
+            $multimediaObject->setDescription($description);
+
+            $multimediaObject->addPic($pic);
+            $multimediaObject->addTrack($track);
+
+            $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+            $dm->persist($multimediaObject);
+            $dm->flush();
+
+            //--------------------------------------------------------------------------------
+
+            //Serie Quijote  ------------------------------
+
+            $announce = true;
+            $publicDate = new \DateTime("now");
+            $title = 'Quijote';
+            $subtitle = '';
+            $description = '';
+            $header = '';
+            $footer = '';
+            $copyright = 'UdN-TV';
+            $keyword = '';
+            $line2 = '';
+            $locale = 'en';
+
+            $series = new Series();
+            $series->setAnnounce($announce);
+            $series->setPublicDate($publicDate);
+            $series->setTitle($title);
+            $series->setSubtitle($subtitle);
+            $series->setDescription($description);
+            $series->setHeader($header);
+            $series->setFooter($footer);
+            $series->setCopyright($copyright);
+            $series->setKeyword($keyword);
+            $series->setLine2($line2);
+            $series->setLocale($locale);
+
+            $titleEs = 'Quijote';
+            $subtitleEs = '';
+            $descriptionEs = '';
+            $headerEs = '';
+            $footerEs = '';
+            $copyrightEs = 'UdN-TV';
+            $keywordEs = '';
+            $line2Es = '';
+            $localeEs = 'es';
+
+            $titleI18n = array($locale => $title, $localeEs => $titleEs);
+            $subtitleI18n = array($locale => $subtitle, $localeEs => $subtitleEs);
+            $descriptionI18n = array($locale => $description, $localeEs => $descriptionEs);
+            $headerI18n = array($locale => $header, $localeEs => $headerEs);
+            $footerI18n = array($locale => $footer, $localeEs => $footerEs);
+            $copyrightI18n = array($locale => $copyright, $localeEs => $copyrightEs);
+            $keywordI18n = array($locale => $keyword, $localeEs => $keywordEs);
+            $line2I18n = array($locale => $line2, $localeEs => $line2Es);
+
+            $series->setI18nTitle($titleI18n);
+            $series->setI18nSubtitle($subtitleI18n);
+            $series->setI18nDescription($descriptionI18n);
+            $series->setI18nHeader($headerI18n);
+            $series->setI18nFooter($footerI18n);
+            $series->setI18nCopyright($copyrightI18n);
+            $series->setI18nKeyword($keywordI18n);
+            $series->setI18nLine2($line2I18n);
+
+            $url = '/bundles/pumukitexampledata/images/35.jpg';
+            $pic = new Pic();
+            $pic->setUrl($url);
+            $series->addPic($pic);
+
+            $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+            $dm->persist($series);
+            $dm->flush();
+
+            $tags = array('tag_a', 'tag_b');
+            $language = 'en';
+            $url = '/bundles/pumukitexampledata/videos/16/53.mp4';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/videos/16/53.mp4');
+            $mime = 'video/mpeg4-HP';
+            $duration = 64100;
+            $acodec = 'aac';
+            $vcodec = 'mpeg4-HP';
+            $bitrate = 10000;
+            $framerate = 25;
+            $only_audio = false;
+            $channels = 1;
+            $duration = 66666;
+            $width = 1920;
+            $height = 1080;
+            $hide = false;
+            $numview = 3;
+
+            $track = new Track();
+            $track->setTags($tags);
+            $track->setLanguage($language);
+            $track->setUrl($url);
+            $track->setPath($path);
+            $track->setMimeType($mime);
+            $track->setDuration($duration);
+            $track->setAcodec($acodec);
+            $track->setVcodec($vcodec);
+            $track->setBitrate($bitrate);
+            $track->setFramerate($framerate);
+            $track->setOnlyAudio($only_audio);
+            $track->setChannels($channels);
+            $track->setDuration($duration);
+            $track->setWidth($width);
+            $track->setHeight($height);
+            $track->setHide($hide);
+            $track->setNumview($numview);
+
+            $tags = array('tag_a', 'tag_b');
+            $url = '/bundles/pumukitexampledata/images/33.jpg';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/images/33.jpg');
+            $mime = 'image/jpg';
+            $size = 3456;
+            $width = 800;
+            $height = 600;
+            $hide = true;
+
+            $pic = new Pic();
+            $pic->setTags($tags);
+            $pic->setUrl($url);
+            $pic->setPath($path);
+            $pic->setMimeType($mime);
+            $pic->setSize($size);
+            $pic->setWidth($width);
+            $pic->setHeight($height);
+            $pic->setHide($hide);
+
+            $rank = 3;
+            $status = MultimediaObject::STATUS_NORMAL;
+            $record_date = new \DateTime();
+            $public_date = new \DateTime();
+            $title = 'First';
+            $subtitle = 'Quijote';
+            $description = "";
+
+            $multimediaObject = new MultimediaObject();
+            $multimediaObject->setRank($rank);
+            $multimediaObject->setStatus($status);
+            $multimediaObject->setSeries($series);
+            $multimediaObject->setRecordDate($record_date);
+            $multimediaObject->setPublicDate($public_date);
+            $multimediaObject->setTitle($title);
+            $multimediaObject->setSubtitle($subtitle);
+            $multimediaObject->setDescription($description);
+
+            $multimediaObject->addPic($pic);
+            $multimediaObject->addTrack($track);
+
+            $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+            $dm->persist($multimediaObject);
+            $dm->flush();
+
+            $tags = array('tag_a', 'tag_b');
+            $language = 'en';
+            $url = '/bundles/pumukitexampledata/videos/16/50.mp4';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/videos/16/50.mp4');
+            $mime = 'video/mpeg4-HP';
+            $duration = 64100;
+            $acodec = 'aac';
+            $vcodec = 'mpeg4-HP';
+            $bitrate = 10000;
+            $framerate = 25;
+            $only_audio = false;
+            $channels = 1;
+            $duration = 66666;
+            $width = 1920;
+            $height = 1080;
+            $hide = false;
+            $numview = 3;
+
+            $track = new Track();
+            $track->setTags($tags);
+            $track->setLanguage($language);
+            $track->setUrl($url);
+            $track->setPath($path);
+            $track->setMimeType($mime);
+            $track->setDuration($duration);
+            $track->setAcodec($acodec);
+            $track->setVcodec($vcodec);
+            $track->setBitrate($bitrate);
+            $track->setFramerate($framerate);
+            $track->setOnlyAudio($only_audio);
+            $track->setChannels($channels);
+            $track->setDuration($duration);
+            $track->setWidth($width);
+            $track->setHeight($height);
+            $track->setHide($hide);
+            $track->setNumview($numview);
+
+            $tags = array('tag_a', 'tag_b');
+            $url = '/bundles/pumukitexampledata/images/34.jpg';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/images/34.jpg');
+            $mime = 'image/jpg';
+            $size = 3456;
+            $width = 800;
+            $height = 600;
+            $hide = true;
+
+            $pic = new Pic();
+            $pic->setTags($tags);
+            $pic->setUrl($url);
+            $pic->setPath($path);
+            $pic->setMimeType($mime);
+            $pic->setSize($size);
+            $pic->setWidth($width);
+            $pic->setHeight($height);
+            $pic->setHide($hide);
+
+            $rank = 3;
+            $status = MultimediaObject::STATUS_NORMAL;
+            $record_date = new \DateTime();
+            $public_date = new \DateTime();
+            $title = 'Second';
+            $subtitle = 'Quijote';
+            $description = "";
+
+            $multimediaObject = new MultimediaObject();
+            $multimediaObject->setRank($rank);
+            $multimediaObject->setStatus($status);
+            $multimediaObject->setSeries($series);
+            $multimediaObject->setRecordDate($record_date);
+            $multimediaObject->setPublicDate($public_date);
+            $multimediaObject->setTitle($title);
+            $multimediaObject->setSubtitle($subtitle);
+            $multimediaObject->setDescription($description);
+
+            $multimediaObject->addPic($pic);
+            $multimediaObject->addTrack($track);
+
+            $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+            $dm->persist($multimediaObject);
+            $dm->flush();
+
+            //--------------------------------------------------------------------------------
+
+            //Serie autonomic  ------------------------------
+
+            $announce = true;
+            $publicDate = new \DateTime("now");
+            $title = 'Financing economic autonomy statutes';
+            $subtitle = '';
+            $description = '';
+            $header = '';
+            $footer = '';
+            $copyright = 'UdN-TV';
+            $keyword = '';
+            $line2 = '';
+            $locale = 'en';
+
+            $series = new Series();
+            $series->setAnnounce($announce);
+            $series->setPublicDate($publicDate);
+            $series->setTitle($title);
+            $series->setSubtitle($subtitle);
+            $series->setDescription($description);
+            $series->setHeader($header);
+            $series->setFooter($footer);
+            $series->setCopyright($copyright);
+            $series->setKeyword($keyword);
+            $series->setLine2($line2);
+            $series->setLocale($locale);
+
+            $titleEs = 'Financiación económica en los estatutos de autonomía';
+            $subtitleEs = '';
+            $descriptionEs = '';
+            $headerEs = '';
+            $footerEs = '';
+            $copyrightEs = 'UdN-TV';
+            $keywordEs = '';
+            $line2Es = '';
+            $localeEs = 'es';
+
+            $titleI18n = array($locale => $title, $localeEs => $titleEs);
+            $subtitleI18n = array($locale => $subtitle, $localeEs => $subtitleEs);
+            $descriptionI18n = array($locale => $description, $localeEs => $descriptionEs);
+            $headerI18n = array($locale => $header, $localeEs => $headerEs);
+            $footerI18n = array($locale => $footer, $localeEs => $footerEs);
+            $copyrightI18n = array($locale => $copyright, $localeEs => $copyrightEs);
+            $keywordI18n = array($locale => $keyword, $localeEs => $keywordEs);
+            $line2I18n = array($locale => $line2, $localeEs => $line2Es);
+
+            $series->setI18nTitle($titleI18n);
+            $series->setI18nSubtitle($subtitleI18n);
+            $series->setI18nDescription($descriptionI18n);
+            $series->setI18nHeader($headerI18n);
+            $series->setI18nFooter($footerI18n);
+            $series->setI18nCopyright($copyrightI18n);
+            $series->setI18nKeyword($keywordI18n);
+            $series->setI18nLine2($line2I18n);
+
+            $url = '/bundles/pumukitexampledata/images/33.jpg';
+            $pic = new Pic();
+            $pic->setUrl($url);
+            $series->addPic($pic);
+
+            $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+            $dm->persist($series);
+            $dm->flush();
+
+            $tags = array('tag_a', 'tag_b');
+            $language = 'en';
+            $url = '/bundles/pumukitexampledata/videos/17/54.mp4';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/videos/17/54.mp4');
+            $mime = 'video/mpeg4-HP';
+            $duration = 64100;
+            $acodec = 'aac';
+            $vcodec = 'mpeg4-HP';
+            $bitrate = 10000;
+            $framerate = 25;
+            $only_audio = false;
+            $channels = 1;
+            $duration = 66666;
+            $width = 1920;
+            $height = 1080;
+            $hide = false;
+            $numview = 3;
+
+            $track = new Track();
+            $track->setTags($tags);
+            $track->setLanguage($language);
+            $track->setUrl($url);
+            $track->setPath($path);
+            $track->setMimeType($mime);
+            $track->setDuration($duration);
+            $track->setAcodec($acodec);
+            $track->setVcodec($vcodec);
+            $track->setBitrate($bitrate);
+            $track->setFramerate($framerate);
+            $track->setOnlyAudio($only_audio);
+            $track->setChannels($channels);
+            $track->setDuration($duration);
+            $track->setWidth($width);
+            $track->setHeight($height);
+            $track->setHide($hide);
+            $track->setNumview($numview);
+
+            $tags = array('tag_a', 'tag_b');
+            $url = '/bundles/pumukitexampledata/images/35.jpg';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/images/35.jpg');
+            $mime = 'image/jpg';
+            $size = 3456;
+            $width = 800;
+            $height = 600;
+            $hide = true;
+
+            $pic = new Pic();
+            $pic->setTags($tags);
+            $pic->setUrl($url);
+            $pic->setPath($path);
+            $pic->setMimeType($mime);
+            $pic->setSize($size);
+            $pic->setWidth($width);
+            $pic->setHeight($height);
+            $pic->setHide($hide);
+
+            $rank = 3;
+            $status = MultimediaObject::STATUS_NORMAL;
+            $record_date = new \DateTime();
+            $public_date = new \DateTime();
+            $title = 'Conference';
+            $subtitle = '';
+            $description = "";
+
+            $multimediaObject = new MultimediaObject();
+            $multimediaObject->setRank($rank);
+            $multimediaObject->setStatus($status);
+            $multimediaObject->setSeries($series);
+            $multimediaObject->setRecordDate($record_date);
+            $multimediaObject->setPublicDate($public_date);
+            $multimediaObject->setTitle($title);
+            $multimediaObject->setSubtitle($subtitle);
+            $multimediaObject->setDescription($description);
+
+            $multimediaObject->addPic($pic);
+            $multimediaObject->addTrack($track);
+
+            $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+            $dm->persist($multimediaObject);
+            $dm->flush();
+
+            //--------------------------------------------------------------------------------
+
+            //Serie HS  ------------------------------
+
+            $announce = true;
+            $publicDate = new \DateTime("now");
+            $title = 'HD';
+            $subtitle = '';
+            $description = '';
+            $header = '';
+            $footer = '';
+            $copyright = 'UdN-TV';
+            $keyword = '';
+            $line2 = '';
+            $locale = 'en';
+
+            $series = new Series();
+            $series->setAnnounce($announce);
+            $series->setPublicDate($publicDate);
+            $series->setTitle($title);
+            $series->setSubtitle($subtitle);
+            $series->setDescription($description);
+            $series->setHeader($header);
+            $series->setFooter($footer);
+            $series->setCopyright($copyright);
+            $series->setKeyword($keyword);
+            $series->setLine2($line2);
+            $series->setLocale($locale);
+
+            $titleEs = 'HD';
+            $subtitleEs = '';
+            $descriptionEs = '';
+            $headerEs = '';
+            $footerEs = '';
+            $copyrightEs = 'UdN-TV';
+            $keywordEs = '';
+            $line2Es = '';
+            $localeEs = 'es';
+
+            $titleI18n = array($locale => $title, $localeEs => $titleEs);
+            $subtitleI18n = array($locale => $subtitle, $localeEs => $subtitleEs);
+            $descriptionI18n = array($locale => $description, $localeEs => $descriptionEs);
+            $headerI18n = array($locale => $header, $localeEs => $headerEs);
+            $footerI18n = array($locale => $footer, $localeEs => $footerEs);
+            $copyrightI18n = array($locale => $copyright, $localeEs => $copyrightEs);
+            $keywordI18n = array($locale => $keyword, $localeEs => $keywordEs);
+            $line2I18n = array($locale => $line2, $localeEs => $line2Es);
+
+            $series->setI18nTitle($titleI18n);
+            $series->setI18nSubtitle($subtitleI18n);
+            $series->setI18nDescription($descriptionI18n);
+            $series->setI18nHeader($headerI18n);
+            $series->setI18nFooter($footerI18n);
+            $series->setI18nCopyright($copyrightI18n);
+            $series->setI18nKeyword($keywordI18n);
+            $series->setI18nLine2($line2I18n);
+
+            $url = '/bundles/pumukitexampledata/images/36.jpg';
+            $pic = new Pic();
+            $pic->setUrl($url);
+            $series->addPic($pic);
+
+            $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+            $dm->persist($series);
+            $dm->flush();
+
+            $tags = array('tag_a', 'tag_b');
+            $language = 'en';
+            $url = '/bundles/pumukitexampledata/videos/18/56.mp4';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/videos/18/56.mp4');
+            $mime = 'video/mpeg4-HP';
+            $duration = 64100;
+            $acodec = 'aac';
+            $vcodec = 'mpeg4-HP';
+            $bitrate = 10000;
+            $framerate = 25;
+            $only_audio = false;
+            $channels = 1;
+            $duration = 66666;
+            $width = 1920;
+            $height = 1080;
+            $hide = false;
+            $numview = 3;
+
+            $track = new Track();
+            $track->setTags($tags);
+            $track->setLanguage($language);
+            $track->setUrl($url);
+            $track->setPath($path);
+            $track->setMimeType($mime);
+            $track->setDuration($duration);
+            $track->setAcodec($acodec);
+            $track->setVcodec($vcodec);
+            $track->setBitrate($bitrate);
+            $track->setFramerate($framerate);
+            $track->setOnlyAudio($only_audio);
+            $track->setChannels($channels);
+            $track->setDuration($duration);
+            $track->setWidth($width);
+            $track->setHeight($height);
+            $track->setHide($hide);
+            $track->setNumview($numview);
+
+            $tags = array('tag_a', 'tag_b');
+            $url = '/bundles/pumukitexampledata/images/36.jpg';
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/images/36.jpg');
+            $mime = 'image/jpg';
+            $size = 3456;
+            $width = 800;
+            $height = 600;
+            $hide = true;
+
+            $pic = new Pic();
+            $pic->setTags($tags);
+            $pic->setUrl($url);
+            $pic->setPath($path);
+            $pic->setMimeType($mime);
+            $pic->setSize($size);
+            $pic->setWidth($width);
+            $pic->setHeight($height);
+            $pic->setHide($hide);
+
+            $rank = 3;
+            $status = MultimediaObject::STATUS_NORMAL;
+            $record_date = new \DateTime();
+            $public_date = new \DateTime();
+            $title = 'Presentation';
+            $subtitle = '';
+            $description = "";
+
+            $multimediaObject = new MultimediaObject();
+            $multimediaObject->setRank($rank);
+            $multimediaObject->setStatus($status);
+            $multimediaObject->setSeries($series);
+            $multimediaObject->setRecordDate($record_date);
+            $multimediaObject->setPublicDate($public_date);
+            $multimediaObject->setTitle($title);
+            $multimediaObject->setSubtitle($subtitle);
+            $multimediaObject->setDescription($description);
+
+            $multimediaObject->addPic($pic);
+            $multimediaObject->addTrack($track);
+
+            $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+            $dm->persist($multimediaObject);
+            $dm->flush();
+
+            //--------------------------------------------------------------------------------
 
         } else {
             $output->writeln('<error>ATTENTION:</error> This operation should not be executed in a production environment.');
