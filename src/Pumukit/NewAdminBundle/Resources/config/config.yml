@@ -1,5 +1,11 @@
 sylius_resource:
     resources:
+        pumukitnewadmin.role:
+            driver: doctrine/mongodb-odm
+            templates: PumukitNewAdminBundle:Role
+            classes:
+                model: Pumukit\SchemaBundle\Document\Role
+                controller: Pumukit\NewAdminBundle\Controller\SortableAdminController    
         pumukitnewadmin.user:
             driver: doctrine/mongodb-odm
             templates: PumukitNewAdminBundle:User
