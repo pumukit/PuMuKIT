@@ -27,7 +27,7 @@ class TrackController extends Controller
 
         $masterProfiles = $this->get('pumukitencoder.profile')->getMasterProfiles(true);
 
-        $dirs = $this->get('pumukitschema.track')->getTempDirs();
+        $dirs = array($this->container->getParameter('pumukit2.inbox'));
 
         return array(
                      'track' => $track,

@@ -58,19 +58,22 @@
       
       <div class="form-group" id="pumukitnewadmin_track_inbox" style="display: none">
         <label for="file" class="control-label">{% trans %}Resource{% endtrans %}:</label>
-        <div class="input-group">
-          <input type="text" name="file" id="file" value="//172.20..." class="form-control">
-          <input onclick="$('#explorer_videoserv').toggle(); return false;" type="button" value="{% trans %}explore{% endtrans %}"/>
-          <div id="explorer_videoserv" class="videoserv" style="display:none;">            
-            <ul class="videoserv_tree">
+        <div class="input-group" style="width: 100%">
+          <input type="hidden" name="file" id="file" value="" placeholder="{% trans %}Select a file on the tree{% endtrans %}" class="form-control">
+          <div id="explorer_videoserv" class="pmk-tag-tree list-group videoserv" style="border: 1px solid #bbb; float: left; overflow-x: hidden; overflow-y: scroll; width: 100%">
               {% for dir in dirs %}
-              <li class="collapsed">
-                <span onclick="fileServerTree(this, 'file', '{{ dir }}', 0, 'explorer_videoserv')">{{ dir }}</span>
-                <ul></ul>
-              </li>
-              {% endfor %}
-            </ul>
+              <a class="list-group-item collapsed noload" href="#"
+                 onclick="javascript:fileServerTree(this, 'file', '{{ dir }}', 0, 'explorer_videoserv'); return false;">
+                <span style="padding-left: 0px">
+                  <i class="mdi- tag_icon"></i>
+                </span>
+                <span>
+                  {{ dir }}
+                </span>                  
+              </a>
+            {% endfor %}
           </div>
+          
         </div>
       </div>      
     </fieldset>
