@@ -1,25 +1,26 @@
 <!-- Filter -->
-<div class="tv_admin_filters">
-<form id="filter_users" onsubmit="" action="{{ path('pumukitnewadmin_user_index') }}" method="GET">
+<div class="well">
+  <form class="form-horizontal" id="filter_users"  action="{{ path('pumukitnewadmin_user_index') }}" method="get">
   <fieldset>
     <h2>{% trans %}Search{% endtrans %}</h2>
 
-    <div class="form-row">
-      <label for="name">{% trans %}Name{% endtrans %}:</label>
-      <div class="content">
-        {% set criteria = app.session.get('admin/user/criteria') %}
-	<input type="text" name="criteria[name.en]" id="filters_name" value="{{ criteria['name.en']|default("") }}">
+    <div class="form-group">
+      <label for="username" class="col-md-2 control-label">{% trans %}Username{% endtrans %}:</label>
+      {% set criteria = app.session.get('admin/user/criteria') %}
+      <div class="col-md-10">
+        <input type="text" class="reset form-control" name="criteria[username]" id="filters_username" value="{{ criteria['username']|default("") }}">
       </div>
     </div>
+
   </fieldset>
 
-  <ul class="tv_admin_actions">
-    <li>
-     <input class="tv_admin_action_reset_filter" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
-    </li>
-    <li>
-      <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="tv_admin_action_filter">
-    </li>
-  </ul>
+  <div class="row">
+    <div class="col-md-2">
+      <input class="btn btn-default btn-raised" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">      
+    </div>
+    <div class="col-md-2 col-md-offset-3">
+      <input class="btn btn-pumukit btn-raised" type="submit" name="filter" value="{% trans %}filter{% endtrans %}">
+    </div>
+  </div>
 </form>
 </div>

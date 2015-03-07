@@ -14,9 +14,9 @@ window.submit_delete_role = function(id, countMm)
 window.submit_delete_user = function(id, userFullname)
 {
     if (window.confirm("{% trans %}Are you sure you want to delete the user{% endtrans %} "+userFullname+"?")){
-        var url = "{{ path('pumukitadmin_user_delete', {'id': '__id__'})|raw }}";
+        var url = "{{ path('pumukitnewadmin_user_delete', {'id': '__id__'})|raw }}";
         var message = '{% trans %}Deleted User{% endtrans %} "'+userFullname+'" OK.';
-        $('#list_users').load(url.replace('__id__', id), {parameters: {'_method': 'DELETE'}}, success(message));
+        $('#list_users').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
     }
 }
 

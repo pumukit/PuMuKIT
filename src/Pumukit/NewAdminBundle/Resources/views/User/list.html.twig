@@ -1,89 +1,105 @@
-<table cellspacing="0" class="tv_admin_list">
-  <thead>
-    <tr>
-      <th width="1%">
-        <input type="checkbox" onclick="window.click_checkbox_all('user', this.checked)">
-      </th>
-      <th colspan="2" width="3%"></th>
-      <th width="1%">{% trans %}Id{% endtrans %}</th>
-      <th>{% trans %}Name{% endtrans %}</th>
-      <th>{% trans %}Login{% endtrans %}</th>
-      <th>{% trans %}Type{% endtrans %}</th>
-      <th>{% trans %}Email{% endtrans %}</th>
-    </tr>
-  </thead>
+<div class="table-responsive well">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th width="1%">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" onclick="window.click_checkbox_all('user', this.checked)">
+              </label>
+            </div>
+          </th>
+          <th colspan="2" width="3%"></th>
+          <th width="1%">{% trans %}Id{% endtrans %}</th>
+          <th>{% trans %}Name{% endtrans %}</th>
+          <th>{% trans %}Login{% endtrans %}</th>
+          <th>{% trans %}Type{% endtrans %}</th>
+          <th>{% trans %}Email{% endtrans %}</th>
+        </tr>
+      </thead>
   
-  <tbody>
+      <tbody>
 
-  {% if users is empty %}
-    <tr>
-      <td colspan="9">
-       {% trans %}There are no users with those values.{% endtrans %}
-      </td>
-    </tr>
-  {% endif %}
+        {% if users is empty %}
+        <tr>
+          <td colspan="9">
+            {% trans %}There are no users with those values.{% endtrans %}
+          </td>
+        </tr>
+        {% endif %}
 
-  {% for user in users %}
-    <tr onmouseover="Element.addClassName(this,'tv_admin_row_over')" onmouseout="Element.removeClassName(this,'tv_admin_row_over')" class="tv_admin_row_{{ loop.index % 2 }} {{ user.id == app.session.get('admin/user/id')?'tv_admin_row_this':'' }}" >
-      <td>
-        <input id="{{ user.id }}" class="user_checkbox" type="checkbox">
-      </td>
-      <td onclick="click_fila_no_preview('user', this, '{{ user.id }}');">
-	<a title="{% trans %}Edit User{% endtrans %} {{ user.fullname }}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitnewadmin_user_update', {'id': user.id}) }}"><img alt="edit" title="edit" src="/legacy/images/admin/mbuttons/edit_inline.gif"></a>
-      </td>
-      <td>
-        <a href="#" onclick="window.submit_delete_user('{{ user.id }}', '{{ user.fullname }}'); return false;">
-          <img alt="{% trans %}delete{% endtrans %}" title="{% trans %}delete{% endtrans %}" src="/legacy/images/admin/mbuttons/delete_inline.gif">
-        </a>
-      </td>
-      <td onclick="click_fila_no_preview('user', this, '{{ user.id }}');">
-	{{ user.id }}
-      </td>
-      <td onclick="click_fila_no_preview('user', this, '{{ user.id }}');">
-	{% if user.fullname is not empty %}{{ user.fullname }}{% endif %}
-      </td>
-      <td onclick="click_fila_no_preview('user', this, '{{ user.id }}');">
-	{% if user.username is not empty %}{{ user.username }}{% endif %}
-      </td>
-      <td onclick="click_fila_no_preview('user', this, '{{ user.id }}');">
-	{% for role in user.roles %}
-	  {% if 'ROLE_SUPER_ADMIN' == role %}
-	    {% trans %}Administrator{% endtrans %}
-	  {% elseif 'ROLE_ADMIN' == role %}
-	    {% trans %}Publisher{% endtrans %}
-	  {% elseif 'ROLE_USER' == role %}
-	    {% trans %}User{% endtrans %}
-	  {% endif %}
-	  {% spaceless %}
-	  {% if not loop.last %}
-	    ,&nbsp;
-          {% endif %} 
-          {% endspaceless %}
-	{% endfor %}
-      </td>
-      <td onclick="click_fila_no_preview('user', this, '{{ user.id }}');">
-	{% if user.email is not empty %}{{ user.email }}{% endif %}
-      </td>
-    </tr>
-  {% endfor %}
-  </tbody>
-  <tfoot>
-    <tr>
-      <th colspan="9">
-        <div class="float-right">
-          {{ include('PumukitNewAdminBundle:Macros:pager_ajax.html.twig', {'name': 'user', 'page': users.getCurrentPage, 'total': users.getNbPages}) }}
-        </div>
-        {{ users.getNbResults }}
-        {% transchoice users.getNbResults %}
-	      {0} users|{1} user|]1,Inf] users
-	{% endtranschoice %}
-	{% if app.session.get('admin/user/criteria')|length != 0%}
-          <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
-	{% endif %}
-      </th>
-    </tr>
-  </tfoot>
-</table>
+        {% for user in users %}
+        <tr style="cursor: pointer">
+          <td>
+            <div class="checkbox">
+              <label>
+                <input id="{{ user.id }}" class="user_checkbox" type="checkbox" size="1">
+              </label>
+            </div>
+          </td>
+          <td>
+            <a title="{% trans %}Edit User{% endtrans %} {{ user.fullname }}" href="{{ path('pumukitnewadmin_user_update', {'id': user.id}) }}" data-toggle="modal" data-target="#myModal">
+              <i class="mdi-editor-mode-edit"></i>
+            </a>
+          </td>
+          <td>
+            <a href="#" onclick="window.submit_delete_user('{{ user.id }}', '{{ user.fullname }}'); return false;">
+              <i class="mdi-content-clear"></i>              
+            </a>
+          </td>
+          <td>
+	          {{ user.id }}
+          </td>
+          <td>
+	          {% if user.fullname is not empty %}{{ user.fullname }}{% endif %}
+          </td>
+          <td>
+	          {% if user.username is not empty %}{{ user.username }}{% endif %}
+          </td>
+          <td>
+            {% for role in user.roles %}
+                {% if 'ROLE_SUPER_ADMIN' == role %}
+                    {% trans %}Administrator{% endtrans %}
+                {% elseif 'ROLE_ADMIN' == role %}
+                    {% trans %}Publisher{% endtrans %}
+                {% elseif 'ROLE_USER' == role %}
+                    {% trans %}User{% endtrans %}
+                {% endif %}
+                {% spaceless %}
+                    {% if not loop.last %}
+                        ,&nbsp;
+                    {% endif %} 
+                {% endspaceless %}
+            {% endfor %}
+          </td>
+          <td>
+	          {% if user.email is not empty %}{{ user.email }}{% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <th colspan="9">
+            <div class="col-md-8">
+              {{ users.getNbResults }}
+              {% transchoice users.getNbResults %}
+	                {0} users|{1} user|]1,Inf] users
+	            {% endtranschoice %}
+	            {% if app.session.get('admin/user/criteria')|length != 0%}
+                <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
+	            {% endif %}
+            </div>
+            <div class="col-md-4 text-right">
+              <div class="pagerfanta">
+                {{ pagerfanta(users, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_user_index"}) }}
+              </div>
+            </div>                
+          </th>
+        </tr>
+      </tfoot>
+    </table>
+</div>
 
 {# TODO
 <?php if (isset($msg_alert)) echo m_msg_alert($msg_alert) ?>
