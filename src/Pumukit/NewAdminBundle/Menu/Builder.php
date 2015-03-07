@@ -29,15 +29,11 @@ class Builder extends ContainerAware
         $portal_design->addChild('Tags');
         $portal_design->addChild('News');
         */
-        
-
-        
+                
         $live = $menu->addChild('Live');
         $live->addChild('Live Channels', array('route' => 'pumukitnewadmin_live_index'));
-        /*
-        $live->addChild('Live Events', array('route' => 'pumukitadmin_event_index'));
-        */
-        
+        $live->addChild('Live Events', array('route' => 'pumukitnewadmin_event_index'));
+
         //$menu->addChild('Temporized Publishing');
 
         $tables = $menu->addChild('Tables');

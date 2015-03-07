@@ -14,7 +14,7 @@
         <div class="col-md-2">
           <select id="options_lives" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('live', $(this), 'lives')">
             <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
-            <option disabled="">---</option> {# TODO review this actions on javascript (rename) #}
+            <option disabled="">---</option>
             <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
             <option value="create">{% trans %}Create new{% endtrans %}</option>
           </select>

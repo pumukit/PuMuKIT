@@ -42,6 +42,15 @@ window.submit_delete_live = function(id)
     }
 }
 
+window.submit_delete_event = function(id)
+{
+    if (window.confirm("{% trans %}Are you sure you want to delete this live event?{% endtrans %}")){
+        var url = "{{ path('pumukitnewadmin_event_delete', {'id': '__id__'})|raw }}";
+        var message = '{% trans %}Live event deleted.{% endtrans %}';
+        $('#list_events').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
+    }
+}
+
 window.submit_delete_mms = function(id)
 {
     if (window.confirm("{% trans %}Are you sure you want to delete this multimedia object?{% endtrans %}")){
@@ -807,6 +816,9 @@ get_batch_delete_route = function(element, ids)
         case 'live':
             route = '{{ path('pumukitnewadmin_live_batch_delete', {'ids': '__ids__'})|raw }}';
             break;
+        case 'event':
+            route = '{{ path('pumukitnewadmin_event_batch_delete', {'ids': '__ids__'})|raw }}';
+            break;
     }
 
     return route.replace('__ids__', JSON.stringify(ids)) ;
@@ -832,6 +844,9 @@ get_create_route = function(element)
             break;
         case 'live':
             route = '{{ path('pumukitnewadmin_live_create')|raw }}';
+            break;
+        case 'event':
+            route = '{{ path('pumukitnewadmin_event_create')|raw }}';
             break;
     }
 
