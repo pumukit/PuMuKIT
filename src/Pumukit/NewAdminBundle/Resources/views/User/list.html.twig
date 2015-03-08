@@ -29,7 +29,7 @@
         {% endif %}
 
         {% for user in users %}
-        <tr style="cursor: pointer">
+        <tr>
           <td>
             <div class="checkbox">
               <label>
@@ -44,7 +44,7 @@
           </td>
           <td>
             <a href="#" onclick="window.submit_delete_user('{{ user.id }}', '{{ user.fullname }}'); return false;">
-              <i class="mdi-content-clear"></i>              
+              <i class="mdi-content-clear"></i>
             </a>
           </td>
           <td>
