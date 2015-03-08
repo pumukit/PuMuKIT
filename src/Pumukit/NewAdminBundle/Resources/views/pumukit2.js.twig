@@ -579,7 +579,7 @@ function inc_num_mm(tag_id, num)
 
 function add_tree_tag(tag_id, mm_id, block_tag_id) 
 {
-  var route = "{{ path('pumukitadmin_mms_addtag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' })|raw }}";
+  var route = "{{ path('pumukitnewadmin_mms_addtag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' })|raw }}";
   route = route.replace('PLACEHOLDER_MM_ID', mm_id).replace('PLACEHOLDER_TAG_ID', tag_id);
   $.post(route, {"tag": tag_id}, function(data, textStatus, jqXHR){
     for (var i=0; i < data.added.length; i++) {
@@ -596,7 +596,7 @@ function add_tree_tag(tag_id, mm_id, block_tag_id)
 
 function del_tree_tag(tag_id, mm_id) 
 {
-  var route = "{{ path('pumukitadmin_mms_deletetag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' })|raw }}";
+  var route = "{{ path('pumukitnewadmin_mms_deletetag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' })|raw }}";
   route = route.replace('PLACEHOLDER_TAG_ID', tag_id).replace('PLACEHOLDER_MM_ID', mm_id);
   $.ajax({
     url: route, 
