@@ -5,6 +5,7 @@ namespace Pumukit\EncoderBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Executor\LocalExecutor;
+use Pumukit\EncoderBundle\Executor\RemoteHTTPExecutor;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -258,10 +259,10 @@ class JobService
         // TODO - Set pathEnd in some point
         @mkdir(dirname($job->getPathEnd()), 0777, true);
         
-        $executor = $this->getExecutor($profile['app'], $cpu['type']);
+        $executor = $this->getExecutor($profile['app'], $cpu);
         
         try{
-            $out = $executor->execute($commandLine);        
+            $out = $executor->execute($commandLine, $cpu);
             $job->setOutput($out);
             $duration = $this->inspectionService->getDuration($job->getPathEnd());
             $job->setNewDuration($duration);
@@ -475,10 +476,10 @@ class JobService
         return true;
     }
 
-    private function getExecutor($app, $cpuType)
+    private function getExecutor($app, $cpu)
     {
-        //TODO
-        $executor = new LocalExecutor();
+        $localhost = array('localhost', '127.0.0.1');
+        $executor = (in_array($cpu['host'], $localhost)) ? new LocalExecutor() : new RemoteHTTPExecutor();
         return $executor;
     }
 

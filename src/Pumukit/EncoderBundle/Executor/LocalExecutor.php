@@ -7,7 +7,7 @@ use Symfony\Component\Process\Process;
 class LocalExecutor
 {
 
-  public function execute($command)
+  public function execute($command, array $cpu=null)
   {
       $process = new Process($command);
       $process->setTimeout(null);
