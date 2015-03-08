@@ -22,6 +22,10 @@ pumukitnewadmin_person:
     resource: @PumukitNewAdminBundle/Resources/config/routes/person.yml
     prefix: /admin/person
 
+pumukitnewadmin_broadcast:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/broadcast.yml
+    prefix: /admin/broadcast
+
 pumukitnewadmin_role:
     resource: @PumukitNewAdminBundle/Resources/config/routes/role.yml
     prefix: /admin/role
