@@ -1,0 +1,43 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <h4 class="modal-title" id="myModalLabel">{% trans %}Job info{% endtrans %}</h4>
+</div>
+<div class="modal-body">
+  <div class="box-body">
+    <dl class="dl-horizontal">
+      <dt>{% trans %}Id{% endtrans %}</dt>
+      <dd>{{ job.id }}</dd>
+      <dt>{% trans %}Status{% endtrans %}</dt>
+      <dd class="job-status-{{ job.status }}">{{ job.statusText }} <small>[{{ job.status }}]</small></dd>
+      <dt>{% trans %}Mm{% endtrans %}</dt>
+      <dd>{{job.getMmId()}}</dd>
+      <dt>{% trans %}Profile{% endtrans %}</dt>
+      <dd>{{job.getProfile()}}</dd>
+      <dt>{% trans %}Cpu{% endtrans %}</dt>
+      <dd>{{job.getCpu()}}</dd>
+      <dt>{% trans %}Priority{% endtrans %}</dt>
+      <dd>{{job.getPriority()}}</dd>
+      <dt>{% trans %}Duration{% endtrans %}</dt>
+      <dd>{% trans %}Before{% endtrans %}: {{ job.duration|duration_string }}, {% trans %}after{% endtrans %}: {{ job.getNewDuration()|duration_string }}</dd>
+      <dt>{% trans %}Times{% endtrans %}</dt>
+      <dd>{% trans %}Created{% endtrans %}: {{ job.getTimeini('Y-m-d H:i:s') }}, {% trans %}started{% endtrans %}: {{ job.getTimestart('Y-m-d H:i:s') }}, {% trans %}finished{% endtrans %}: {{ job.getTimeend('Y-m-d H:i:s') }}</d>
+
+    </dl>
+
+    <div class="shell-wrap">
+        <p class="shell-top-bar">{% trans %}Output Command{% endtrans %}</p>
+        <ul class="shell-body">
+            <li class="command">{{ command }}</li>
+            <li>&nbsp;</li>
+            <li>{{ job.getOutput()|replace({' ':'&nbsp;', '\n': '</li><li>'})|raw }}</li>
+        </ul>
+    </div>
+  </div>
+  <form enctype="multipart/form-data" action="#" method="POST">
+	<div class="modal-footer">
+	  <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+	  <button type="submit" class="btn btn-pumukit btn-raised" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_retry_job', {'mmId': multimediaObject.Id, 'jobId': job.id, 'preview': 1}) }}'); return false;" data-dismiss="modal">{% trans %}RETRY{% endtrans %}</button>
+	  <button type="submit" class="btn btn-danger btn-raised" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_delete_job', {'mmId': multimediaObject.Id, 'jobId': job.id, 'preview': 1}) }}', {'_method': 'DELETE'}); return false;" data-dismiss="modal">{% trans %}DELETE{% endtrans %}</button>
+	</div>
+  </form>
+</div>

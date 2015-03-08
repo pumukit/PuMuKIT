@@ -3,6 +3,7 @@
 namespace Pumukit\EncoderBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Symfony\Component\Process\Process;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
@@ -14,8 +15,9 @@ class PicExtractorService
     private $height;
     private $targetPath;
     private $targetUrl;
+    private $command;
 
-    public function __construct(DocumentManager $documentManager, MultimediaObjectPicService $mmsPicService, $width, $height, $targetPath, $targetUrl)
+    public function __construct(DocumentManager $documentManager, MultimediaObjectPicService $mmsPicService, $width, $height, $targetPath, $targetUrl, $command=null)
     {
         $this->dm = $documentManager;
         $this->mmsPicService = $mmsPicService;
@@ -23,6 +25,7 @@ class PicExtractorService
         $this->height = $height;
         $this->targetPath = $targetPath;
         $this->targetUrl = $targetUrl;
+        $this->command = $command ?: 'ffmpeg -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"';
     }
 
     /**
@@ -33,10 +36,8 @@ class PicExtractorService
      * @param integer $numframe
      * @return string $message
      */
-    public function extractPic(MultimediaObject $multimediaObject, Track $track=null, $numframe)
+    public function extractPic(MultimediaObject $multimediaObject, Track $track, $numframe)
     {
-        if (null === $track) return "KO";
-
         if (!file_exists($track->getPath())){
             return "Error in data autocomplete of multimedia object.";
         }
@@ -83,10 +84,24 @@ class PicExtractorService
             $newHeight = $this->height;
             $newWidth = intval(1.0 * $this->height * $this->getAspect($track));
         }
+
+        $vars = array(
+            "{{ss}}" => intval($frame/25),
+            "{{size}}" => $newWidth . "x" . $newHeight,
+            "{{input}}" => $track->getPath(),
+            "{{output}}" => $absCurrentDir.'/'.$picFileName
+        );
+
         
-        $ffmpeg_path = is_executable('/usr/local/bin/ffmpeg')?'/usr/local/bin/ffmpeg':'ffmpeg';
-        
-        exec($ffmpeg_path." -ss ".intval($frame/25)." -y -i \"".$track->getPath()."\" -r 1 -vframes 1 -s ".$newWidth."x".$newHeight." -f image2 \"".$absCurrentDir.'/'.$picFileName."\"");
+        $commandLine = str_replace(array_keys($vars), array_values($vars), $this->command);
+        $process = new Process($commandLine);
+        $process->setTimeout(60);
+        $process->run();
+        if (!$process->isSuccessful()) {
+            throw new \RuntimeException($process->getErrorOutput());
+        }
+
+        //log $process->getOutput()
         
         if (file_exists($absCurrentDir .'/' . $picFileName)){
             $multimediaObject = $this->mmsPicService->addPicUrl($multimediaObject, $this->targetUrl.'/'.$currentDir.'/'.$picFileName);

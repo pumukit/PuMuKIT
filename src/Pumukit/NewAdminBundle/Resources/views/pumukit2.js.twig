@@ -1,0 +1,876 @@
+window.submit_delete_role = function(id, countMm)
+{
+    if (countMm == 0){
+        if (window.confirm("{% trans %}Are you sure you want to delete this role?{% endtrans %}")){
+            var url = "{{ path('pumukitnewadmin_role_delete', {'id': '__id__'})|raw }}";
+            var message = "{% trans %}Deleted Role{% endtrans %}";
+            $('#list_roles').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
+        }
+    }else{
+        window.alert("{% trans %}Impossible to delete, role with{% endtrans %} "+countMm+" {% trans %}people{% endtrans %}");
+    }
+}
+
+window.submit_delete_user = function(id, userFullname)
+{
+    if (window.confirm("{% trans %}Are you sure you want to delete the user{% endtrans %} "+userFullname+"?")){
+        var url = "{{ path('pumukitnewadmin_user_delete', {'id': '__id__'})|raw }}";
+        var message = '{% trans %}Deleted User{% endtrans %} "'+userFullname+'" OK.';
+        $('#list_users').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
+    }
+}
+
+window.submit_delete_broadcast = function(id, countMm)
+{
+    if (countMm == 0){
+        if (window.confirm("{% trans %}Are you sure you want to delete this broadcast?{% endtrans %}")){
+            var url = "{{ path('pumukitnewadmin_broadcast_delete', {'id': '__id__'})|raw }}";
+            var message = '{% trans %}Deleted Broadcast successfully.{% endtrans %}';
+            $('#list_broadcasts').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
+        }
+    }else{
+        window.alert("{% trans %}Impossible to delete, broadcast with{% endtrans %} "+countMm+" {% trans %}multimedia object(s).{% endtrans %}");
+    }
+}
+
+window.submit_delete_live = function(id)
+{
+    if (window.confirm("{% trans %}Are you sure you want to delete this live channel?{% endtrans %}")){
+        var url = "{{ path('pumukitnewadmin_live_delete', {'id': '__id__'})|raw }}";
+        var message = '{% trans %}Live channel deleted.{% endtrans %}';
+        $('#list_lives').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
+    }
+}
+
+window.submit_delete_event = function(id)
+{
+    if (window.confirm("{% trans %}Are you sure you want to delete this live event?{% endtrans %}")){
+        var url = "{{ path('pumukitnewadmin_event_delete', {'id': '__id__'})|raw }}";
+        var message = '{% trans %}Live event deleted.{% endtrans %}';
+        $('#list_events').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
+    }
+}
+
+window.submit_delete_mms = function(id)
+{
+    if (window.confirm("{% trans %}Are you sure you want to delete this multimedia object?{% endtrans %}")){
+        var url = "{{ path('pumukitnewadmin_mms_delete', {'id': '__id__'})|raw }}";
+        var message = '{% trans %}Multimedia Object deleted.{% endtrans %}';
+        // TODO if deleted when selected, update edit and show views
+        $('#list_mms').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
+    }
+}
+
+window.submit_delete_series = function(id, seriesTitle, countMm)
+{
+    if (window.confirm('{% trans %}Are you sure you want to delete the series{% endtrans %} "'+seriesTitle+'"? {% trans %}This series has{% endtrans %} '+countMm+' {% trans %}multimedia object(s){% endtrans %}.')){
+        var url = "{{ path('pumukitnewadmin_series_delete', {'id': '__id__'})|raw }}";
+        var message = '{% trans %}Deleted Series{% endtrans %} "'+seriesTitle+'".';
+        $('#list_series').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message);});
+    }
+}
+
+success = function(message){
+    $('#div_messages_span_info').html(message);
+    $('#div_messages_span_info').show(3500);
+    $('#div_messages_span_info').hide(3500);
+}
+
+no_success = function(message){
+    $('#div_messages_span_error').innerHTML = message;
+    $('#div_messages_span_error').show(3500);
+    $('#div_messages_span_error').hide(3500);
+}
+
+window.update_preview = function(id) {
+  var route = '{{ path('pumukitnewadmin_series_show', {'id': 'PLACEHOLDER'})|raw }}';
+  route.replace('PLACEHOLDER', id);
+  $('#preview_series').load(route, {method:'POST'});
+}
+
+window.delete_seriespic = function(id) {
+    if (window.confirm('{% trans %}Are you sure you want to delete this picture?{% endtrans %}')) {
+        var url = '{{ path('pumukitnewadmin_seriespic_delete', {'id': '___id___'})|raw }}';
+        $('#pic_series').load(url.replace('___id___', id), {'_method': 'DELETE'});
+    }
+}
+
+window.up_seriespic = function(id) {
+    var url = '{{ path('pumukitnewadmin_seriespic_up', {'id': '___id___'})|raw }}';
+    $('#pic_series').load(url.replace('___id___', id), {method:'POST'});
+}
+
+window.down_seriespic = function(id) {
+    var url = '{{ path('pumukitnewadmin_seriespic_down', {'id': '___id___'})|raw }}';
+    $('#pic_series').load(url.replace('___id___', id), {method:'POST'});
+}
+
+window.submit_delete_person_relation = function(id, roleId, mmId, hName, template)
+{
+    if (window.confirm("{% trans %}Are you sure you want to delete the relation of{% endtrans %} "+hName+"?")){
+        if ('_template' === template){
+            var tag_id = '#'+roleId+'_person_mms'+template;
+        }else{
+            var tag_id = '#'+roleId+'_person_mms';
+        }
+        var url = "{{ path('pumukitnewadmin_person_delete_relation', {'id': '__id__', 'roleId': '__roleId__','mmId': '__mmId__'})|raw }}";
+        url = url.replace('__id__', id);
+        url = url.replace('__roleId__', roleId);
+        url = url.replace('__mmId__', mmId);
+        $(tag_id).load(url, {'_method': 'DELETE'});
+        var url = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'})|raw }}";
+        $('#preview_mm').load(url.replace('__mmId__', mmId));
+    }
+}
+
+window.submit_delete_link = function(id, mmId)
+{
+    if (window.confirm('{% trans %}Are you sure you want to delete this link?{% endtrans %}')){
+        var url = "{{ path('pumukitnewadmin_link_delete', {'id': '__id__', 'mmId': '__mmId__'})|raw }}";
+        url = url.replace('__id__', id);
+        url = url.replace('__mmId__', mmId);
+        $('#links_mms').load(url, {'_method': 'DELETE'});
+    }
+}
+
+window.delete_mmspic = function(id) {
+    if (window.confirm('{% trans %}Are you sure you want to delete this picture?{% endtrans %}')) {
+        var url = '{{ path('pumukitnewadmin_mmspic_delete', {'id': '___id___'})|raw }}';
+        $('#pic_mms').load(url.replace('___id___', id), {'_method': 'DELETE'});
+    }
+}
+
+window.up_mmspic = function(id) {
+    var url = '{{ path('pumukitnewadmin_mmspic_up', {'id': '___id___'})|raw }}';
+    $('#pic_mms').load(url.replace('___id___', id), {method:'POST'});
+}
+
+window.down_mmspic = function(id) {
+    var url = '{{ path('pumukitnewadmin_mmspic_down', {'id': '___id___'})|raw }}';
+    $('#pic_mms').load(url.replace('___id___', id), {method:'POST'});
+}
+
+window.submit_delete_material = function(id, mmId)
+{
+    if (window.confirm('{% trans %}Are you sure you want to delete this material?{% endtrans %}')){
+        var url = "{{ path('pumukitnewadmin_material_delete', {'id': '__id__', 'mmId': '__mmId__'})|raw }}";
+        url = url.replace('__id__', id);
+        url = url.replace('__mmId__', mmId);
+        $('#materials_mms').load(url, {'_method': 'DELETE'});
+    }
+}
+
+window.submit_delete_track = function(id, mmId)
+{
+    if (window.confirm('{% trans %}Are you sure you want to delete this track?{% endtrans %}')){
+        var url = "{{ path('pumukitnewadmin_track_delete', {'id': '__id__', 'mmId': '__mmId__'})|raw }}";
+        url = url.replace('__id__', id);
+        url = url.replace('__mmId__', mmId);
+        $('#tracks_mms').load(url, {'_method': 'DELETE'});
+    }
+}
+
+window.submit_delete_person = function(id, countMm, personHName)
+{
+    if (countMm == 0){
+        if (window.confirm("{% trans %}Are you sure you want to delete the data of{% endtrans %} "+personHName+"?")){
+            var url = "{{ path('pumukitnewadmin_person_delete', {'id': '__id__'})|raw }}";
+            $('#list_people').load(url.replace('__id__', id), {'_method': 'DELETE'});
+    }
+    }else{
+        window.alert('{% trans %}Cannot delete the data of{% endtrans %} '+personHName+'. '+ countMm+' {% trans %}multimedia object(s) contain(s) this person{% endtrans %}.');
+    }
+}
+
+window.click_fila_url = function(element, tr, url)
+{
+  $('#preview_'+element).load(url);
+
+  $('.success').removeClass('success');
+  $(tr.parentNode).addClass('success');
+}
+
+window.click_checkbox_all = function(element, value)
+{
+  $('input.'+element+'_checkbox').prop('checked', value);
+}
+
+window.click_checkbox_changepub_all = function(element, value)
+{
+  $('input.checkbox_change_pub_mms').prop('checked', value);
+}
+
+window.click_changepub_selection = function(element, value)
+{
+    $('input.change_pub_mms_all').each(function(){$(this)[0].checked=value});
+    $('input.change_pub_mms').each(function(){$(this)[0].checked=value});
+    return false;
+}
+
+window.check_checkbox_all = function(value)
+{
+    var checkbox_all = $('input.checkbox_change_pub_mms_all');
+    if (checkbox_all.prop('checked') && (!value)){
+        checkbox_all.prop('checked', value);
+    }
+}
+
+window.check_checkbox_channel_all = function(channelId, value)
+{
+    var checkbox_channels = $('input.checkbox_change_pub_channel_'+channelId);
+    if (checkbox_channels.prop('checked') && (!value)){
+        checkbox_channels.prop('checked', value);
+    }
+}
+
+window.click_checkbox_channel_changepub_all = function(channelId, value)
+{
+    $('input.pub_channel_input_checkbox.pub_channel_change_pub_'+channelId).prop('checked', value);
+}
+
+window.submit_series_change_pub = function()
+{
+    $('#myModal').modal('hide');
+
+    var channelsId = [];
+    $('input.checkbox_all_channels').each(function(){
+        channelsId.push($(this).attr("id"));
+    });
+
+    var values = {};
+    $('.checkbox_change_pub_mms:checked').each(function(){
+        var $this = $(this);
+        var mmId = $this.attr("id");
+        var channelValues = [];
+        var channels = {};
+        for (var i = 0; i < channelsId.length; i++){
+            var channel = $('#pub_channel_change_pub_'+channelsId[i]+'_mm_'+mmId);
+            channels[channelsId[i]] = channel.prop('checked')
+        }
+        values[mmId] = {'status': $('#status_change_pub_'+mmId+' option:selected').val(), 'channels': channels};        
+    });
+    if (values.size == 0) return false;
+
+    var route = '{{ path('pumukitnewadmin_series_updatepub', {'id': '__seriesId__', 'values': '__values__'}) }}';
+    route = route.replace('__values__', JSON.stringify(values));
+    $('#list_series').load(route, {'_method':'POST'});
+
+    return false;
+}
+
+window.filter_click_letter = function(letter)
+{
+  $(".pmk-person-letter.text-pumukit").removeClass("text-pumukit");
+  $("#pmk-person-letter-" + letter).addClass("text-pumukit");
+  $('#filters_letter').val(letter);
+  $('#list_people').load('{{ path('pumukitnewadmin_person_list')|raw }}', $('#filter_people').serialize());
+}
+
+// TODO complete todos
+window.change_select = function(element, selector, pluralName)
+{
+    var i = selector.val();
+    switch(i){
+/* TODO
+    case 'transc_pause':
+        if (confirm('Pausar videos')) {
+            new Ajax.Updater('list_transcoders', '/editar.php/transcoders/pause', {
+		            asynchronous: true,
+		            evalScripts: true,
+                onSuccess:  selector.selectedIndex = 0,
+		            parameters: 'ids='+$$('.transcoder_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
+			    );
+        }
+        break;
+    case 'transc_play':
+        if (confirm('Reanudar videos')) {
+            new Ajax.Updater('list_transcoders', '/editar.php/transcoders/continue', {
+		            asynchronous: true,
+		            evalScripts: true,
+                onSuccess:  selector.selectedIndex = 0,
+		            parameters: 'ids='+$$('.transcoder_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
+			    );
+        }
+        break;
+    case 'transc_borrar':
+        if (confirm('Borrar objetos multimedia')) {
+            new Ajax.Updater('list_transcoders', '/editar.php/transcoders/delete', {
+		asynchronous: true,
+		evalScripts: true,
+                onSuccess:  selector.selectedIndex = 0,
+		parameters: 'ids='+$$('.transcoder_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
+			    );
+        }
+        break;
+    case 'transc_limpiar':
+        if (confirm('Limpiar videos completados del listado')) {
+            new Ajax.Updater('list_transcoders', '/editar.php/transcoders/clean', {
+		            asynchronous: true,
+		            evalScripts: true,
+                onSuccess:  selector.selectedIndex = 0,
+		            parameters: 'ids='+$$('.transcoder_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
+			    );
+        }
+        break;
+*/
+
+    case 'delete_selected':
+        var ids = [];
+        $('.' + element + '_checkbox:checked').each(function(){
+            var $this = $(this);
+            ids.push($this.attr("id"));
+        });
+        if (ids.length == 0) break;
+        if (confirm('{% trans %}Are you sure?{% endtrans %}')) {
+            var route = get_batch_delete_route(element, ids);
+            $('#list_'+pluralName).load(route, {'_method':'DELETE'});
+        }
+        break;
+    case 'create':
+        $('.modal-content').load(get_create_route(element));
+        $('#myModal').modal('show');
+        break;
+    case 'series_preview':
+        var url = "{{ url('pumukit_webtv_series_index', {id: '__mmSecret__'}) }}";
+        var secret = selector.find(':selected').attr('id');
+        if (secret !== '') window.open(url.replace('__mmSecret__', secret));
+        break;
+/* TODO
+    case 'serial_master':
+	Modalbox.show('/editar.php/transcoders/masterserial', {title:'Master Multimedia', width:800});
+        selector.selectedIndex = 0;
+        break;
+      //separar honores sel
+    case 'inv_working_sel':
+        new Ajax.Updater('list_'+element+'s', '/editar.php/'+element+'s/working', {
+	    asynchronous: true,
+	    evalScripts: true,
+            onSuccess:  selector.selectedIndex = 0,
+	    parameters: 'ids='+$$('.'+element+'_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
+			);
+        break;
+      //separar honores sel
+    case 'inv_working_all':
+        new Ajax.Updater('list_'+element+'s', '/editar.php/'+element+'s/working', {
+	    asynchronous: true,
+	    evalScripts: true,
+            onSuccess:  selector.selectedIndex = 0,
+	    parameters: 'all=1'}
+			);
+        break;
+*/
+    case 'order_rec_date_asc':
+        var route = '{{ path('pumukitnewadmin_mms_list', {'seriesId': '__seriesId__', 'sorting': {'record_date': 'asc'}})|raw }}';
+        var seriesId = '{{ app.session.get('admin/series/id') }}';
+        $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId));
+        break;
+    case 'order_rec_date_desc':
+        var route = '{{ path('pumukitnewadmin_mms_list', {'seriesId': '__seriesId__', 'sorting': {'record_date': 'desc'}})|raw }}';
+        var seriesId = '{{ app.session.get('admin/series/id') }}';
+        $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId));
+        break;
+    case 'order_pub_date_asc':
+        var route = '{{ path('pumukitnewadmin_mms_list', {'seriesId': '__seriesId__', 'sorting': {'public_date': 'asc'}})|raw }}';
+        var seriesId = '{{ app.session.get('admin/series/id') }}';
+        $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId));
+        break;
+    case 'order_pub_date_desc':
+        var route = '{{ path('pumukitnewadmin_mms_list', {'seriesId': '__seriesId__', 'sorting': {'public_date': 'desc'}})|raw }}';
+        var seriesId = '{{ app.session.get('admin/series/id') }}';
+        $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId));
+        break;
+    case 'cut_mm':
+        var ids = [];
+        $('.' + element + '_checkbox:checked').each(function(){
+            var $this = $(this);
+            ids.push($this.attr("id"));
+        });
+        if (ids.length == 0) break;
+        var route = '{{ path('pumukitnewadmin_mms_cut', {'ids': '__ids__'})|raw }}';
+        $.ajax({
+                url: route.replace('__ids__', JSON.stringify(ids)),
+                type: 'GET',
+                success: function(response){
+                            var paste_mm_text = '{% trans %}Paste multimedia objects{% endtrans %} (';
+                            for (var i = 0; i < response.length; i++) {
+                                paste_mm_text += response[i];
+                                if (i == (response.length - 1)) paste_mm_text += ')';
+                                else paste_mm_text += ', ';
+                            }
+                            $('#options_mms #paste_mm').html(paste_mm_text);
+                            $('.' + element + '_checkbox:checked').each(function(){
+                                var $this = $(this);
+                                $this[0].checked = false;
+                            });
+                            if (ids.length == 1) var message = '{% trans %}Multimedia Object cut. Paste it in the desire Series.{% endtrans %}';
+                            else var message = '{% trans %}Multimedia Objects cut. Paste them in the desire Series.{% endtrans %}';
+                            success(message);
+                }
+        });
+        break;
+    case 'paste_mm':
+        if (confirm('{% trans %}Paste multimedia object(s) in this series?{% endtrans %}')) {
+            var route = '{{ path('pumukitnewadmin_mms_paste', {'seriesId': '__seriesId__'})|raw }}';
+            var seriesId = '{{ app.session.get('admin/series/id') }}';
+            $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId), {'_method':'POST'}, function(){
+                var paste_mm_text = '{% trans %}Paste multimedia objects{% endtrans %} ()';
+                $('#options_mms #paste_mm').html(paste_mm_text);
+
+                var message = '{% trans %}Multimedia Object(s) pasted in the Series.{% endtrans %}';
+                success(message);
+            });
+        }
+        break;
+/* TODO
+      //status mm
+    case 'set_status_0_sel':
+        new Ajax.Updater('list_'+element+'s', '/editar.php/'+element+'s/change/status/0', {
+	    asynchronous: true,
+	    evalScripts: true,
+            onSuccess:  selector.selectedIndex = 0,
+	    parameters: 'ids='+$$('.'+element+'_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
+			);
+        break;
+    case 'set_status_1_sel':
+        new Ajax.Updater('list_'+element+'s', '/editar.php/'+element+'s/change/status/1', {
+	    asynchronous: true,
+	    evalScripts: true,
+            onSuccess:  selector.selectedIndex = 0,
+	    parameters: 'ids='+$$('.'+element+'_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
+			);
+        break;
+    case 'set_status_2_sel':
+        new Ajax.Updater('list_'+element+'s', '/editar.php/'+element+'s/change/status/2', {
+	    asynchronous: true,
+	    evalScripts: true,
+            onSuccess:  selector.selectedIndex = 0,
+	    parameters: 'ids='+$$('.'+element+'_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
+			);
+        break;
+    case 'set_status_3_sel':
+        new Ajax.Updater('list_'+element+'s', '/editar.php/'+element+'s/change/status/3', {
+	    asynchronous: true,
+	    evalScripts: true,
+            onSuccess:  selector.selectedIndex = 0,
+	    parameters: 'ids='+$$('.'+element+'_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
+			);
+        break;
+*/
+    case 'invert_announce_selected':
+        var ids = [];
+        $('.' + element + '_checkbox:checked').each(function(){
+            var $this = $(this);
+            ids.push($this.attr("id"));
+        });
+        if (ids.length == 0) break;
+        if (confirm('{% trans %}Are you sure?{% endtrans %}')) {
+            if ('series' == element)
+                var route = '{{ path('pumukitnewadmin_series_invert_announce', {'ids': '__ids__'})|raw }}';
+            else
+                var route = '{{ path('pumukitnewadmin_mms_invert_announce', {'ids': '__ids__'})|raw }}';
+            $('#list_'+pluralName).load(route.replace('__ids__', JSON.stringify(ids)));
+        }
+        for (var i = 0; i < ids.length; i++) {
+            id = ids[i];
+            var puDeNew = $("#list_pubdecisions_"+id+" #pub_decisions_PUDENEW");
+            if (1 == puDeNew.length){
+                var checkedValue = puDeNew[0].checked;
+                if (checkedValue) puDeNew[0].checked = false;
+                else puDeNew[0].checked = true;
+            }
+        }
+        break;
+/* TODO
+    case 'inv_announce_virtualserial_sel':
+        new Ajax.Updater('list_mms', '/editar.php/virtualserial/inv/field/announce', {
+            asynchronous: true,
+            evalScripts: true,
+            onSuccess:  selector.selectedIndex = 0,
+            parameters: 'ids='+$$('.'+element+'_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
+                        );
+        break;
+*/
+    }
+    selector.val('default');
+}
+
+
+/**
+ * Tag tree functions
+ */
+
+function select_tree_tag(element)
+{
+  $(element).siblings(".active").removeClass("active").end().addClass("active");
+  return false;
+}
+
+function toggle_tree_tag(element, id, mm_id, tag_id, tag_cod) 
+{
+  parent = $(element.parentElement);
+  if (parent.hasClass("notload")) {
+    parent.removeClass("notload");
+  
+    var route = "{{ path('pumukitnewadmin_mms_getchildrentag', {'id': 'PLACEHOLDER_TAG_ID'})|raw }}";
+    route = route.replace('PLACEHOLDER_MM_ID', mm_id).replace('PLACEHOLDER_TAG_ID', id);
+
+    $.get(route + "?tag_id=" + tag_id + "&mm_id=" + mm_id, function(responseText, textStatus, jqXHR){
+        parent.after(responseText);
+    });
+    parent.addClass("expanded").removeClass("collapsed");
+  } else {
+    if (parent.hasClass("expanded")) {
+      $(".c_" + tag_cod).hide();      
+      $(".c_" + tag_cod+".expanded").removeClass("expanded").addClass("collapsed");
+      parent.removeClass("expanded").addClass("collapsed");
+    } else {
+      $(".tag_li_parent_" + id).show();
+      parent.addClass("expanded").removeClass("collapsed");
+    }
+    
+  }
+
+}
+
+// TODO
+function toggle_show_all()
+{
+  // SHOW - Quito el punto a los nodos que muestran sus hijos al desocultar
+  $$(".expanded.element, .collapsed.element").each(function(e){
+    e.removeClassName("element");
+  });
+
+  // SHOW & HIDE - Oculto/Muestro elementos finales que no tiene objetos multimedia
+  $$(".nomm.element").each(function(e){
+    e.toggleClassName("nodisplayall");
+  });
+
+  // SHOW & HIDE - Oculto/Muestro elementos todos sus hijos son finales sin objetos multimedia
+  $$(".nomm.expanded, .nomm.collapsed").each(function(e){
+    if (e.getElementsBySelector("li.nomm").length == e.getElementsBySelector("li").length) {
+      e.toggleClassName("nodisplayall");
+    }
+  });
+
+  // HIDE - Pongo el punto a los nodos que se quedan sin hijos al ocultar
+  $$(".nomm").each(function(e){
+    p = e.parentElement.parentElement;
+    if (p.getElementsBySelector("li.nodisplayall").length == p.getElementsBySelector("li").length) {
+      p.addClassName("element");
+    }
+  });
+
+}
+
+
+function create_element_in_select(tag, block_tag_id, mm_id) {
+  var $ul = $("#select_ul_tag_cod_" + block_tag_id);
+  $ul.append('<a href="#" ondblclick="javascript:del_tree_tag(\'' + tag.id + '\', \'' + mm_id +'\');" onclick="return select_tree_tag(this);" class="list-group-item" id="select_li_' + tag.id + '">' + tag.cod + ' - ' + tag.name +'</a>');
+}
+
+function inc_num_mm(tag_id, num)
+{
+  var aux = $("#info_num_mm_" + tag_id);
+  if (aux){
+    var nn = (parseInt(aux.text()) + num);
+    aux.text(nn);
+  }
+}
+
+function add_tree_tag(tag_id, mm_id, block_tag_id) 
+{
+  var route = "{{ path('pumukitnewadmin_mms_addtag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' })|raw }}";
+  route = route.replace('PLACEHOLDER_MM_ID', mm_id).replace('PLACEHOLDER_TAG_ID', tag_id);
+  $.post(route, {"tag": tag_id}, function(data, textStatus, jqXHR){
+    for (var i=0; i < data.added.length; i++) {
+      var c = data.added[i];
+      inc_num_mm(c.id, 1);
+      var aux = c.group.split("|");
+      if(aux[1] && aux.length > 3) create_element_in_select(c, aux[1], mm_id);
+    }
+    var url = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'}) }}";
+    $('#preview_mm').load(url.replace('__mmId__', mm_id));
+  });
+}
+
+
+function del_tree_tag(tag_id, mm_id) 
+{
+  var route = "{{ path('pumukitnewadmin_mms_deletetag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' })|raw }}";
+  route = route.replace('PLACEHOLDER_TAG_ID', tag_id).replace('PLACEHOLDER_MM_ID', mm_id);
+  $.ajax({
+    url: route, 
+    type: 'DELETE',
+    parameters: {'_method': 'DELETE'}, 
+    success: function(response){
+      for (var i=0; i<response.deleted.length; i++) {
+        var c = response.deleted[i];
+        var $_element = $("#select_li_" + c.id);
+        if ($_element)  $_element.remove();
+        inc_num_mm(c.id, -1);
+      }
+    }
+  });
+}
+
+window.click_fila_edit_urls = function(element, tr, show_url, update_url)
+{
+    $('#preview_'+element).load(show_url);
+
+    $('#edit_'+element).load(update_url, function(){init_mm_tab();});
+
+    $('.success').removeClass('success');
+    $(tr.parentNode).addClass('success');
+}
+
+window.dblclick_fila_url = function(element, tr, url)
+{
+  document.location.href= (url);
+}
+
+function testDates(init, end, re_date) {
+
+    if ((typeof(init) == 'undefined') || (init ==  null) || (init == "")) {
+        return true;
+    }
+
+    if ((typeof(end) == 'undefined') || (end ==  null) || (end == "")) {
+        return true;
+    }
+
+    var partes = init.split(" ");
+    var fecha = partes[0];
+    var hora = partes[1];
+    var partes_fecha = fecha.split("/");
+    if (typeof(hora) != 'undefined' && hora !=  null) {
+        var partes_hora = hora.split(":");	
+        var ini = new Date(partes_fecha[2], partes_fecha[1] - 1, partes_fecha[0], partes_hora[0], partes_hora[1]);
+    }else{
+        var ini = new Date(partes_fecha[2], partes_fecha[1] - 1, partes_fecha[0]);
+    }
+
+    partes = end.split(" ");
+    fecha = partes[0];
+    hora = partes[1];
+    partes_fecha = fecha.split("/");
+    if (typeof(hora) != 'undefined' && hora !=  null) {
+        partes_hora = hora.split(":");
+        var fi = new Date(partes_fecha[2], partes_fecha[1] - 1 , partes_fecha[0], partes_hora[0], partes_hora[1]);
+    }else{
+        var fi = new Date(partes_fecha[2], partes_fecha[1] - 1 , partes_fecha[0]);
+    }
+
+    if (comprobar_date(init, re_date)){
+        alert ("El formato de la fecha de inicio no es el adecuado. Utilice dd/mm/aaaa hh:mm");
+        return false;
+    }
+  
+    if (comprobar_date(end, re_date)){
+        alert ("El formato de fecha de fin no es el adecuado. Utilice dd/mm/aaaa hh:mm");
+        return false;
+    }
+
+    if (ini.getTime() > fi.getTime()) {
+        alert("La fecha inicial es posterior a la fecha final");
+        return false;
+    }
+
+    //Modalbox.hide();
+    return true;  
+}
+
+function comprobar_date(date, re){
+    return !re.test(date); 
+}
+
+procesaOk = function(){
+  /* TODO get user culture expression for timedate instead of fixed static expression
+  // get_js_regexp_timedate($sf_user->getCulture())
+  if(comprobar_form_pub( $("temporizada1_temporizada").checked, $("timestart1").value, $("timeend1").value,
+                         $("temporizada2_temporizada").checked, $("timestart2").value, $("timeend2").value,
+                         /^(\d+)\/(\d+)\/(\d+) (\d+):(\d+)(:(\d+))?$/
+                         )) {
+    borraFechasSiInactivas();
+    $('remember_save_mm_pub').hide();
+    return true;
+  } else {
+    return false;
+  }*/
+  $('#remember_save_mm_pub').hide();
+  return true;
+}
+procesaReset = function(){
+  $('#remember_save_mm_pub').hide();
+  $('#error_start1').hide();
+  $('#error_end1').hide();
+  $('#error_start2').hide();
+  $('#error_end2').hide();
+  /* {# TODO CHECK BROADCAST EMPTY
+  if ( {{ mm.getBroadcast().id }} != 1 ) {
+     $('broadcast_password').show();
+  } else {
+     $('broadcast_password').hide();
+  } #} */
+}
+
+/**
+ * Global Ajax Event Handlers
+ */
+$(document).ajaxSuccess(function() {
+  $.material.init();
+});
+
+$(document).ajaxError(function(event, xhr, settings) {
+  if (403 == xhr.status) {
+    window.location.href = "{{ path('fos_user_security_login') }}";
+  }
+});
+
+
+/**
+ * Init material on load
+ */
+$(function() {
+  $.material.init();
+
+  $('body').on('hidden.bs.modal', '.modal', function () {
+    $(this).removeData('bs.modal');
+  });
+
+  init_mm_tab();
+
+});
+
+/**
+ * Tab
+ */
+function init_mm_tab()
+{
+  $tab = $('#menuTab');
+  if($tab) {
+    $tab.on('show.bs.tab', function (e) {
+      where = e.target.href.split('#')[1];
+      localStorage.setItem('lastTab', where);
+    });
+
+    var lastTab = localStorage.getItem('lastTab');
+    if (lastTab) {
+      $('#menuTab a[href="#' + lastTab+ '"]').tab('show')
+    }
+  }
+}
+
+
+/**
+ * Test from URL
+ */
+test_form_url = function(url){
+    if (test_url_generation(url)){
+        window.alert('{% trans %}The given URL is not valid{% endtrans %}.');
+        return false;
+    }
+    $('#myModal').modal('hide');
+    return true;
+}
+
+/**
+ * Test URL generation
+ */
+test_url_generation = function(url){
+    var re=/^\w+:\/\/\w+(\.\w+)*/;
+    return !re.test(url);
+}
+
+comprobar_form_file_nmb = function(file){
+    if (file == ""){
+	$('#error_file').show();
+	return false;
+    }
+    return true;
+}
+
+/**
+ * Initialize all tooltips
+ */
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+
+/**
+ * Get batch delete route according to element
+ */
+get_batch_delete_route = function(element, ids)
+{
+    var route = ids;
+
+    switch (element) {
+        case 'person':
+            route = '{{ path('pumukitnewadmin_person_batch_delete', {'ids': '__ids__'})|raw }}';
+            break;
+        case 'series':   
+            route = '{{ path('pumukitnewadmin_series_batch_delete', {'ids': '__ids__'})|raw }}';
+            break;
+        case 'mm':
+            route = '{{ path('pumukitnewadmin_mms_batch_delete', {'ids': '__ids__'})|raw }}';
+            break;
+        case 'live':
+            route = '{{ path('pumukitnewadmin_live_batch_delete', {'ids': '__ids__'})|raw }}';
+            break;
+        case 'event':
+            route = '{{ path('pumukitnewadmin_event_batch_delete', {'ids': '__ids__'})|raw }}';
+            break;
+    }
+
+    return route.replace('__ids__', JSON.stringify(ids)) ;
+}
+
+/**
+ * Get create route according to element
+ */
+get_create_route = function(element)
+{
+    var route = '';
+
+    switch (element) {
+        case 'person':
+            route = '{{ path('pumukitnewadmin_person_create')|raw }}';
+            break;
+        case 'user':
+            route = '{{ path('pumukitnewadmin_user_create')|raw }}';
+            break;
+        case 'tag':
+            // TODO complete with id parent parameter
+            route = '{{ path('pumukitnewadmin_tag_create', {'parent': '__id__'})|raw }}';
+            break;
+        case 'live':
+            route = '{{ path('pumukitnewadmin_live_create')|raw }}';
+            break;
+        case 'event':
+            route = '{{ path('pumukitnewadmin_event_create')|raw }}';
+            break;
+    }
+
+    return route;
+}
+
+window.fileServerSelect = function(element, path)
+{
+    $(element).siblings(".active").removeClass("active").end().addClass("active");
+    $('#file').val(path);
+}
+
+window.fileServerTree = function(element, type, dir, num, input)
+{
+    baseelement = $(element);
+    baseelement.removeClass("collapsed").addClass("expanded");
+    $.get('{{ path('pumukit_newadmin_inbox_dir') }}?dir=' + dir, function(files){
+        links = "";
+        for(var i in files) {
+          var file = files[i];
+          link = '<a class="list-group-item" onclick="fileServerSelect(this, \'' + file.path +'\'); return false;" href="#"><span style="padding-left: 20px"><i class="mdi- tag_icon"></i></span><span>' + file.relativepath + '</span></a>';
+          links += link;
+        }
+        baseelement.after(links);
+    })
+
+}

@@ -448,6 +448,21 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
+     * Find ordered by fieldName: asc/desc
+     *
+     * @param Series $series
+     * @param array $sort
+     * @return ArrayCollection
+     */
+    public function findOrderedBy(Series $series, $sort = array())
+    {
+        $qb = $this->createStandardQueryBuilder()
+          ->field('series')->references($series);
+        if (0 !== count($sort)) $qb->sort($sort['fieldName'], $sort['order']);
+        return $qb->getQuery()->execute();
+    }
+
+    /**
      * Get mongo ids
      *
      * @param array $documents

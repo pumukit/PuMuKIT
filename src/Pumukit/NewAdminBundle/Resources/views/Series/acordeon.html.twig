@@ -1,0 +1,109 @@
+{% set criteria = app.session.get('admin/series/criteria') %}
+<div class="well">
+  <form id="filter_series" class="form" 
+        onsubmit="$('#list_series').load('{{ path('pumukitnewadmin_series_list') }}', $(this).serialize()); return false;"
+        action="{{ path('pumukitnewadmin_series_list') }}" method="GET">
+    <fieldset>
+      <div id="accordion" class="panel-group" role="tablist" arirole="tablist" aria-multiselectable="true">
+
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingSearch">
+            <h2 class="panel-title">
+              <a class="show" data-toggle="collapse" data-parent="#accordion" href="#collapseSearch" aria-expanded="true" aria-controls="collapseSearch">
+                <i class="mdi-navigation-menu pull-right"></i> {% trans %}Search{% endtrans %}
+              </a>
+            </h2>
+          </div>
+          <div id="collapseSearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSearch">
+            <div class="panel-body">
+              <div class="form-group">
+                <label for="id" class="control-label">{% trans %}Id{% endtrans %}:</label>
+                <div>
+                  <input type="text" class="form-control" name="criteria[_id]" id="filters_id" value="{{ criteria['_id']|default("") }}">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="title" class="control-label">{% trans %}Title{% endtrans %}:</label>
+                <div>
+                  {# TODO culture #}
+                  <input type="text" class="form-control" name="criteria[title.{{ app.request.locale }}]" id="filters_title" value="{{ criteria['title.{{ app.request.locale }}']|default("") }}">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="person" class="control-label">{% trans %}Person{% endtrans %}:</label>
+                <div>
+                  {# TODO person name, comes from multimedia object in series #}
+                  {# TODO culture #}
+                  <input type="text" class="form-control" name="criteria[person]" id="filters_person" value="{{ criteria['person']|default("") }}">
+                </div>
+              </div>
+	          <div class="form-group">
+	            <label for="publicdate" class="control-label">{% trans %}Date{% endtrans %}:</label>
+                <div class="row">
+	              <div class="col-md-11 col-md-offset-1">
+	                {% trans %}From{% endtrans %}:&nbsp;<input type="datetime-local" class="form-control" name="criteria[date][from]" id="filters_date_from" value="{{ criteria['date']['from']|default("") }}">
+                    <br/>
+	                {% trans %}To{% endtrans %}:&nbsp;&nbsp;<input type="datetime-local" class="form-control" name="criteria[date][to]" id="filters_date_to" value="{{ criteria['date']['to']|default("") }}">
+	              </div>
+                </div>
+	          </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingOthers">
+            <h2 class="panel-title">
+              <a class="show collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOthers" aria-expanded="false" aria-controls="collapseOthers">
+                <i class="mdi-navigation-menu pull-right show"></i> {% trans %}Others{% endtrans %}
+              </a>
+            </h2>
+          </div>
+          <div id="collapseOthers" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOthers">
+            <div class="panel-body container-fluid">
+              <div class="form-group">
+ 	            <label for="announce" class="control-label">{% trans %}Announced{% endtrans %}:</label>
+                <div>
+	              <select class="form-control" name="criteria[announce]" id="filters_announce"><option value="diff" selected="selected">{% trans %}Indifferent{% endtrans %}</option>
+		            <option value="true">{% trans %}Yes{% endtrans %}</option>
+		            <option value="false">{% trans %}No{% endtrans %}</option>
+	              </select>
+                </div>
+              </div>
+              <div class="form-group">
+ 	            <label for="status" class="control-label">{% trans %}Hidden{% endtrans %}:</label>
+                <div>
+	              <select class="form-control" name="criteria[status]" id="filters_status"><option value="all" selected="selected">{% trans %}All{% endtrans %}</option>
+		            <option value="false">{% trans %}No{% endtrans %}</option>
+		            <option value="true">{% trans %}Yes{% endtrans %}</option>
+	              </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </fieldset>
+
+    <div class="text-right">
+	  <input class="btn btn-default btn-raised" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
+	  <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="btn btn-pumukit btn-raised" onclick="return testDates($('filters_date_from').value, $('filters_date_to').value, /^(\d+)-(\d+)-(\d+)$/)"> {# TODO GET CULTURE DATE FORMAT #}
+    </div>
+  </form>
+</div>
+
+
+<script>
+  function resetSearchForm() {
+    $('filters_title').value = '';
+    $('filters_person').value = '';
+    $('filters_date_from').value = '';
+    $('filters_date_to').value = '';
+    $('filters_announce').value = 'diff';
+    $('filters_status').value = 'all';
+  }
+</script>
+
+{# TODO FALTA VER OCULTOS Y ANUNCIADOS #}

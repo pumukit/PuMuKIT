@@ -1,0 +1,14 @@
+<div class="dropdown">
+  <i class="mdi-navigation-menu" id="list_pics_mm_{{ mm.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="list_pics_mm_{{ mm.id }}">  
+    <li>
+      <a href="#" onclick="window.submit_delete_mms('{{ mm.id }}'); return false;">
+        <i class="mdi-content-clear"></i>{% trans %}Delete multimedia object{% endtrans %}
+    </li>   
+    <li>
+      <a href="#" onclick="return false;">
+        <strong>{% trans %}Cancel{% endtrans %}...</strong>
+      </a>
+    </li>
+  </ul>
+</div>

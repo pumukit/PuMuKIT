@@ -71,7 +71,7 @@
          <td><a href="{{ path('pumukitadmin_track_download', {'id': track.id, 'mmId': mmId}) }}" download><img alt="{% trans %}download{% endtrans %}" title="{% trans %}download{% endtrans %}" src="/legacy/images/admin/mbuttons/download_inline.gif"></a></td>
       {% endif %}     
 
-      {% if track.getTags()|profile|display %}
+      {% if track.isMaster() %}
       <td>
         <span class="trans_button" onclick="$('list_perfiles_{{ track.id }}').toggle()"><img src="/legacy/images/admin/mbuttons/use_inline.gif" alt="X" />
         <div class="trans_menu" id="list_perfiles_{{ track.id }}" style="display:none">

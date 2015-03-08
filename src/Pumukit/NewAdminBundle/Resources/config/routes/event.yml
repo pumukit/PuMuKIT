@@ -1,0 +1,53 @@
+pumukitnewadmin_event_index:
+    pattern: /
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.event:indexAction
+        _sylius:
+            filterable: true
+
+pumukitnewadmin_event_create:
+    pattern: /create
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.event:createAction
+        _sylius:
+            redirect: pumukitnewadmin_event_index
+
+pumukitnewadmin_event_update:
+    pattern: /{id}/update
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.event:updateAction
+        _sylius:
+            redirect: pumukitnewadmin_event_index
+
+pumukitnewadmin_event_batch_delete:
+    pattern: /batchdelete
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.event:batchDeleteAction
+        _sylius:
+            redirect: pumukitnewadmin_event_index
+
+pumukitnewadmin_event_delete:
+    pattern: /{id}/delete
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.event:deleteAction
+        _sylius:
+            redirect: pumukitnewadmin_event_index
+
+pumukitnewadmin_event_show:
+    pattern: /{id}/show
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.event:showAction
+
+pumukitnewadmin_event_list:
+    pattern: /list
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.event:listAction
+        _sylius:
+            filterable: true

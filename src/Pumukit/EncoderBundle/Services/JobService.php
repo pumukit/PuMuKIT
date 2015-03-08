@@ -5,6 +5,7 @@ namespace Pumukit\EncoderBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Executor\LocalExecutor;
+use Pumukit\EncoderBundle\Executor\RemoteHTTPExecutor;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -248,6 +249,8 @@ class JobService
 
     public function execute(Job $job)
     {
+        set_time_limit(0);
+
         $profile = $this->getProfile($job);
         $cpu = $this->cpuService->getCpuByName($job->getCpu());
         $commandLine = $this->renderBat($job);
@@ -256,10 +259,10 @@ class JobService
         // TODO - Set pathEnd in some point
         @mkdir(dirname($job->getPathEnd()), 0777, true);
         
-        $executor = $this->getExecutor($profile['app'], $cpu['type']);
+        $executor = $this->getExecutor($profile['app'], $cpu);
         
         try{
-            $out = $executor->execute($commandLine);        
+            $out = $executor->execute($commandLine, $cpu);
             $job->setOutput($out);
             $duration = $this->inspectionService->getDuration($job->getPathEnd());
             $job->setNewDuration($duration);
@@ -403,6 +406,9 @@ class JobService
         $track->addTag('profile:' . $job->getProfile());
         if ($profile['master']) $track->addTag('master');
         if ($profile['display']) $track->addTag('display');
+        foreach(explode(",", $profile['tags']) as $tag) {
+            $track->addTag(trim($tag));
+        }
 
         $track->setLanguage($job->getLanguageId());
         if(isset($profile['streamserver']['url_out'])) {
@@ -448,9 +454,11 @@ class JobService
      */
     public function retryJob($job)
     {
-        if (Job::STATUS_ERROR === $job->getStatus()){
-            return 'The job is right';
+        if (Job::STATUS_ERROR !== $job->getStatus()){
+            return false;
         }
+        
+        $mmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
 
         $profile = $this->getProfile($job);
         $tempDir = $profile['streamserver']['dir_out'] . '/' . $mmobj->getSeries()->getId();
@@ -463,15 +471,15 @@ class JobService
         $this->dm->persist($job);
         $this->dm->flush();
 
-        $this->execNext();
+        $this->executeNextJob();
 
-        return 'Retranscoding job';
+        return true;
     }
 
-    private function getExecutor($app, $cpuType)
+    private function getExecutor($app, $cpu)
     {
-        //TODO
-        $executor = new LocalExecutor();
+        $localhost = array('localhost', '127.0.0.1');
+        $executor = (in_array($cpu['host'], $localhost)) ? new LocalExecutor() : new RemoteHTTPExecutor();
         return $executor;
     }
 

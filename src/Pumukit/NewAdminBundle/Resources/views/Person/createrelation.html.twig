@@ -1,0 +1,32 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <h4 class="modal-title" id="myAuxModalLabel">{% trans %}edit new person{% endtrans %}</h4>
+</div>
+<div class="modal-body">
+  <form onsubmit="$('#myAuxModal').modal('hide');
+                  $.ajax({
+                          url: '{{ path('pumukitnewadmin_person_create_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}',
+                          type: 'POST',
+                          data: $(this).serialize(),
+                          success: function(response){
+                                                      $('#{{ role.id }}_person_mms').html(response);
+                                                      $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}');
+                                                      }
+                  });
+		          return false;"
+	    action="{{ path('pumukitnewadmin_person_create_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}" method="POST">
+    {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
+    <input type="hidden" name="id" id="id" value="{{ person.id }}">
+    <input type="hidden" name="roleId" id="roleId" value="{{ role.id }}">
+    <input type="hidden" name="mmId" id="mmId" value="{{ mm.id }}">
+    <fieldset>
+      {% for child in form %}
+        {{ form_row(child) }}
+      {% endfor %}
+    </fieldset>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}OK{% endtrans %}</button>
+      <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+    </div>
+  </form>
+</div>

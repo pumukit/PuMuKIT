@@ -1,0 +1,105 @@
+<div class="table-responsive well">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th width="1%">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" onclick="window.click_checkbox_all('broadcast', this.checked)">
+              </label>
+            </div>            
+          </th>
+          <th colspan="4" width="5%"></th>
+          <th width="1%">{% trans %}Id{% endtrans %}</th>
+          <th width="5%">{% trans %}Type{% endtrans %}</th>
+          <th>{% trans %}Name{% endtrans %}</th>
+          <th>{% trans %}Description{% endtrans %}</th>
+          <th>{% trans %}Series{% endtrans %}</th>
+        </tr>
+      </thead>
+      
+      <tbody>
+        {% if broadcasts|length == 0 %}
+        <tr>
+          <td colspan="10">
+            {% trans %}There are no broadcasts with those values.{% endtrans %}
+          </td>
+        </tr>
+        {% endif %}
+        
+        {% for broadcast in broadcasts %}
+        <tr>
+          <td>
+            <div class="checkbox">
+              <label>
+                <input id="{{ broadcast.id }}" class="broadcast_checkbox" type="checkbox" size="1">
+              </label>
+            </div>            
+          </td>
+          <td>
+            <a title="{% trans %}Edit Broadcast{% endtrans %} {{ broadcast.name }}" href="{{ path('pumukitnewadmin_broadcast_update', {'id': broadcast.id}) }}" data-toggle="modal" data-target="#myModal">            
+              <i class="mdi-editor-mode-edit"></i>              
+            </a>
+          </td>
+          <td>
+            <a href="#" onclick="window.submit_delete_broadcast('{{ broadcast.id }}', '{{ broadcast.getMultimediaObjects()|length }}'); return false;">
+              <i class="mdi-content-clear"></i>              
+            </a>
+          </td>
+          <td>
+            <form action="{{ path('pumukitnewadmin_broadcast_copy', {'id': broadcast.id}) }}" method="post" class="delete-action-form" novalidate="">
+              <button type="submit" style="background: transparent; border: none">
+                <i class="mdi-content-content-copy"></i>                
+	            </button>
+	          </form>
+          </td>
+          <td>
+            <input type="radio" name="radio_broadcast" title="{% trans %}Select this broadcast by default{% endtrans %}"
+	                 value="broadcast_{{ broadcast.id }}" {{ broadcast.getDefaultSel()?'checked="checked"':'' }}
+	                 onchange="$.get('{{ path('pumukitnewadmin_broadcast_default', {'id': broadcast.id}) }}')"
+	                 >
+          </td>
+          <td>
+            {{ broadcast.id }}
+          </td>
+          <td>
+            {{ broadcast.getBroadcastTypeId() }}
+          </td>
+          <td>
+            {{ broadcast.getName() }}
+          </td>
+          <td>
+            {{ broadcast.getDescription() }}
+          </td>
+          <td>
+            {{ broadcast.getMultimediaObjects()|length }}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <th colspan="10">
+            <div class="col-md-8">            
+              {{ broadcasts.getNbResults }} 
+              {% transchoice broadcasts.getNbResults %}
+	              {0} broadcasts|{1} broadcast|]1,Inf] broadcasts
+ 	            {% endtranschoice %}
+	            {% if app.session.get('admin/broadcast/criteria')|length != 0 %}
+                <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
+	              {% endif %}
+            </div>
+            <div class="col-md-4 text-right">
+              <div class="pagerfanta">
+                {{ pagerfanta(broadcasts, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_broadcast_index"}) }}
+              </div>
+            </div>                
+          </th>
+        </tr>
+      </tfoot>
+    </table>
+</div>
+
+{# TODO
+<?php if (isset($msg_alert)) echo m_msg_alert($msg_alert) ?>
+#}

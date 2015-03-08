@@ -27,6 +27,13 @@ class MultimediaObject
     private $id;
 
     /**
+     * @var string $secret
+     *
+     * @MongoDB\String
+     */
+    private $secret;
+
+    /**
      * @MongoDB\ReferenceOne(targetDocument="Series", inversedBy="multimedia_objects", simple=true)
      * @Gedmo\SortableGroup
      * // TODO SortableGroup #5623
@@ -176,6 +183,7 @@ class MultimediaObject
 
     public function __construct()
     {
+        $this->secret = new \MongoId();
         $this->tracks = new ArrayCollection();
         $this->pics = new ArrayCollection();
         $this->materials = new ArrayCollection();
@@ -197,6 +205,16 @@ class MultimediaObject
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get secret
+     *
+     * @return string
+     */
+    public function getSecret()
+    {
+        return $this->secret;
     }
 
     /**
@@ -787,6 +805,23 @@ class MultimediaObject
     }
 
     /**
+     * Contains tag with cod
+     *
+     * @param  string  $tagCod
+     * @return boolean TRUE if this multimedia_object contained the specified tag, FALSE otherwise.
+     */
+    public function containsTagWithCod($tagCod)
+    {
+        foreach ($this->tags as $tag) {
+            if ($tag->getCod() == $tagCod) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Contains all tags
      * The original string tag logic used array_intersect and count to check it.
      * This function uses doctrine2 arrayCollection contains function instead.
@@ -928,6 +963,16 @@ class MultimediaObject
     }
 
     /**
+     * Get first pic, null if none.
+     *
+     * @return Pic
+     */
+    public function getPic()
+    {
+        return $this->pics->get(0);
+    }
+
+    /**
      * Get pic by id
      *
      * @param $picId
@@ -945,6 +990,26 @@ class MultimediaObject
         return;
     }
 
+    /**
+     * Get first pic url
+     *
+     * @param $default string url returned if series without pics.
+     *
+     * @return string
+     */
+    public function getFirstUrlPic($default='')
+    {
+        $url = $default;
+        foreach ($this->pics as $pic) {
+            if (null !== $pic->getUrl()) {
+                $url = $pic->getUrl();
+                break;
+            }
+        }
+      
+        return $url;
+    }
+    
     /**
      * Get pics with tag
      *

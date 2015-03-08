@@ -1,0 +1,7 @@
+<ul>
+  {% for person in people %}
+    <li>{{ person.id }} - {{ person.getName()|replace({(name): '<strong>'~name~'</strong>'})|raw }}
+      <span style="font-size: 75%; ">{{ person.getInfo() }}<span>
+    </li>
+  {% endfor %}
+</ul>

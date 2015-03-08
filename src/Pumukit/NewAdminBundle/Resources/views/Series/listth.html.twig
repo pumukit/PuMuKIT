@@ -1,0 +1,29 @@
+{% if 'title' == app.session.get('admin/series/sort') %}
+  <th>
+    <a href="#" onclick="$('#list_series').load('{{ path('pumukitnewadmin_series_list', {'sorting': {'title': app.session.get('admin/series/type')=='asc'?'desc':'asc'}}) }}'); return false;">{% trans %}Title{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25BE;':'&#x25B4;' }}</a>
+  </th>
+{% else %}
+  <th>
+    <a href="#" onclick="$('#list_series').load('{{ path('pumukitnewadmin_series_list', {'sorting': {'title': 'asc'}}) }}'); return false;">{% trans %}Tittle{% endtrans %}</a>
+  </th>
+{% endif %}
+
+{% if 'date' == app.session.get('admin/series/sort') %}
+  <th width="8%">
+    <a href="#" onclick="$('#list_series').load('{{ path('pumukitnewadmin_series_list', {'sorting': {'public_date': app.session.get('admin/series/type')=='asc'?'desc':'asc'}}) }}'); return false;">{% trans %}Date{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25BE;':'&#x25B4;' }}</a>
+  </th>
+{% else %}
+  <th width="8%">
+    <a href="#" onclick="$('#list_series').load('{{ path('pumukitnewadmin_series_list', {'sorting': {'public_date': 'asc'}}) }}'); return false;">{% trans %}Date{% endtrans %}</a>
+  </th>
+{% endif %}
+
+{% if 'mmobj' == app.session.get('admin/series/sort') %}
+  <th width="1%">
+    <a href="#" onclick="$('#list_series').load('{{ path('pumukitnewadmin_series_list', {'sorting': {'multimedia_objects': app.session.get('admin/series/type')=='asc'?'desc':'asc'}}) }}'); return false;">{% trans %}Mm.Obj.{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25BE;':'&#x25B4;' }}</a>
+  </th>  
+{% else %}
+  <th width="1%">
+    <a href="#" onclick="$('#list_series').load('{{ path('pumukitnewadmin_series_list', {'sorting': {'multimedia_objects': 'asc'}}) }}'); return false;">{% trans %}Mm.Obj.{% endtrans %}</a>
+  </th>
+{% endif %}

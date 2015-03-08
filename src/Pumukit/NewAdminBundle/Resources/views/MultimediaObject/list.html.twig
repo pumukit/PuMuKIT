@@ -1,0 +1,197 @@
+<div class="table-responsive well" style="overflow:visible;">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th width="1%">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" onclick="window.click_checkbox_all('mm', this.checked)">
+            </label>
+          </div>
+        </th>
+        <th colspan="6" width="5%"></th>
+        <th width="1%">{% trans %}Audio/Video{% endtrans %}</th>
+        <th width="1%">{% trans %}Img{% endtrans %}</th>
+        <th>{% trans %}Title{% endtrans %}</th>
+        <th width="1%">{% trans %}Duration{% endtrans %}</th>
+        <th width="1%">{% trans %}RecDate{% endtrans %}</th>
+        <th width="1%">{% trans %}PubDate{% endtrans %}</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% if (0 == mms|length) %}
+      <tr>
+        <td colspan="13">
+          {% trans %}There are no multimedia objects with those values.{% endtrans %}
+        </td>
+      </tr>
+      {% endif %}
+
+      {% for mm in mms %}
+      <tr style="cursor: pointer" {% if(app.session.get('admin/mms/id') == mm.id ) %} class="success" {% endif %}>
+        <td>
+          <div class="checkbox">
+            <label>
+              <input id="{{ mm.id }}" class="mm_checkbox" type="checkbox">
+            </label>
+          </div>
+        </td>
+        <td>
+          <i id="table_mms_status_{{ mm.id }}" class="{{ mm.status|status_icon }}" data-toggle="tooltip" data-placement="right" title="{{ mm.status|status_text }}"></i>
+        </td>
+        <td>
+	      {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-editor-format-color-text">':'&nbsp;' }}
+        </td> 
+        <td>
+          <a href="#" onclick="window.submit_delete_mms('{{ mm.id }}'); return false;">
+            <i class="mdi-content-clear"></i>
+          </a>
+        </td>
+        <td>
+	      {% include 'PumukitNewAdminBundle:MultimediaObject:updatemenu.html.twig' with {'mm': mm} %}
+        </td>
+        <td>
+	      {% if mms.getCurrentPage() != 1 or not loop.first %}
+	      {% spaceless %}
+	      <a href="{{ path('pumukitnewadmin_mms_down', {'id': mm.id}) }}" title="{% trans %}Move one position up{% endtrans %}">&#8593;</a>
+	      <a href="{{ path('pumukitnewadmin_mms_bottom', {'id': mm.id}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}"><i class="mdi-editor-vertical-align-top"></i></a>
+	      {% endspaceless %}
+	      {% endif %}
+        </td>
+        <td>
+	      {% if mms.getCurrentPage() == mms.getNbPages() and not loop.last %}
+	      {% spaceless %}
+ 	    <a href="{{ path('pumukitnewadmin_mms_up', {'id': mm.id}) }}" title="{% trans %}Move one position down{% endtrans %}">&#8595;</a>
+	    <a href="{{ path('pumukitnewadmin_mms_top', {'id': mm.id}) }}" title="{% trans %}Move to the end of the list{% endtrans %}"><i class="mdi-editor-vertical-align-bottom"></i></a>
+	    {% endspaceless %}
+	    {% endif %}
+        </td>
+        <td>
+          <span>{{ mm.isOnlyAudio() ? 'Audio':'Video' }}</span>
+        </td>
+        <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
+        {% set url_set = false %}
+	    {% if mm.getPics() is not empty %}
+	    {% for pic in mm.getPics() if not url_set %}
+	    {% if pic.url is not empty %}
+        <img class="mini" src="{{ pic.url }}" alt="{{ pic.size }}" height="23" width="30">
+	    {% set url_set = true %}
+        {% endif %}
+        {% endfor %}
+	    {% endif %}
+	    {% if not url_set %}
+        <img class="mini" src="{{ asset('/bundles/pumukitnewadmin/images/none.jpg') }}" alt="{% trans %}No_pic{% endtrans %}" height="23" width="30">
+	    {% endif %}
+        </td>
+        <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
+          {{ mm.getTitle() }}
+        </td>
+        <td>
+          {{ mm.getDurationString() }}
+        </td>
+        <td class="text-nowrap" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
+          {{ mm.getRecordDate()|date('d-m-Y') }}
+        </td>
+        <td class="text-nowrap" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
+          {{ mm.getPublicDate()|date('d-m-Y') }}
+        </td>
+      </tr>
+    {% endfor %}
+
+    {% if 0 == mms|length%}
+        {% set range = 1..9 %}
+    {% elseif (mms|length - (mms.getMaxPerPage() * (mms.getCurrentPage() - 1))) < (mms.maxPerPage-1) %}
+        {% set range = (mms|length - (mms.getMaxPerPage() * (mms.getCurrentPage() - 1)))..(mms.maxPerPage-1) %}
+    {% else %}
+        {% set range = [] %}
+    {% endif %}
+
+    {% for i in range %}
+      <tr>
+  	    <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+  <tfoot>
+    <tr>
+      <th colspan="13">
+        <div class="row">
+          <div class="col-md-6">
+            {{ mms.getNbResults }} {% trans %}Mm. Obj.{% endtrans %}
+	          {% if app.session.get('admin/mms/criteria')|length != 0%}
+              <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
+	          {% endif %}
+          </div>
+            <div class="col-md-6 text-right">
+              <div class="pagerfanta">
+                {% set sorting = {('sorting[' ~ (app.session.get('admin/mms/sort')) ~ ']') : (app.session.get('admin/mms/type')) } %}
+                {{ pagerfanta(mms, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_mms_index", "routeParams": sorting}) }}
+
+                <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_mms_index') }}' + '?page=1&paginate=' + this.value">
+                  <option {% if mms.maxPerPage == 10 %}selected{% endif %} value="10">10</option>
+                  <option {% if mms.maxPerPage == 20 %}selected{% endif %} value="20">20</option>
+                  <option {% if mms.maxPerPage == 50 %}selected{% endif %} value="50">50</option>
+                </select>
+
+              </div>
+            </div>          
+        </div>
+      </th>
+    </tr>
+  </tfoot>
+</table>
+</div>
+
+{# TODO <?php if (isset($msg_alert)) echo m_msg_alert($msg_alert) ?> #}
+
+
+{# TODO variables
+
+{% if reload_pub_channel %}
+  <script type="text/javascript">
+    new Ajax.Updater('list_pub_{{ mm_sel.id }}', 'TODO path pumukitnewadmin_mms_updatelistpub mms/updatelistpub?id= mm_sel id')
+  </script>
+{% endif %}
+
+{% if reloadEditAndPreview %}
+<script type="text/javascript">
+  new Ajax.Updater('edit_mms', '{{ path('pumukitnewadmin_mms_edit', {'id': mm_sel.id}) }}', {
+      asynchronous: true, 
+      evalScripts: true
+  });
+  new Ajax.Updater('preview_mms', '{{ path('pumukitnewadmin_mms_show', {'id': mm_sel.id}) }}', {
+      asynchronous: true, 
+      evalScripts: true
+  });
+</script>
+{% endif %}
+
+{% if enBloq %}
+  <script type="text/javascript">
+    $('list_pub_channel').setStyle('background-color: #f2f2f2');
+    $$('.pub_channel_input_checkbox').invoke('disable');
+  </script>
+{% endif %}
+
+
+{% if desBloq %}
+  <script type="text/javascript">
+    $('list_pub_channel').setStyle('background-color: transparent');
+    $$('.pub_channel_input_checkbox').invoke('enable');
+  </script>
+{% endif %}
+
+#}

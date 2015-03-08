@@ -1,0 +1,248 @@
+<table><tbody>
+  {% for job in jobs %}
+    <tr>
+      <td><ul><li></li></ul></td>
+      <td colspan="11">
+        {% if status_error == job.getStatus() %}
+            <a title="{% trans %}Encoder Job info{% endtrans %}" 
+               style="color:red"
+               data-toggle="modal" data-dismiss="modal" data-target="#myModal"
+               href="{{ path('pumukitnewadmin_track_info_job', {'mmId': mmId, 'jobId': job.id, 'preview': 1}) }}">
+                <i class="mdi-action-info"></i>
+            </a>
+
+{#
+            <a href="#" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_retry_job', {'mmId': mmId, 'jobId': job.id, 'preview': 1}) }}'); return false;">
+              <i class="mdi-navigation-refresh"></i>
+            </a>
+  
+            <a href="#" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_delete_job', {'mmId': mmId, 'jobId': job.id, 'preview': 1}) }}'); return false;">
+              <i class="mdi-content-clear"></i>
+            </a>
+#}
+
+            <small style="color:red">{{ job.getStatusText() }}</small>              
+        {% else %}
+            <i class="mdi-navigation-refresh pmk-job-animate"></i>          
+            <small>{{ job.getStatusText() }}</small>              
+        {% endif %}
+      </td>
+      <td>
+        &nbsp; {{ job.getId() }} - <strong>{{ job.getProfile() }}</strong> - {{ job.getPathIni()|basename }} - {{ job.getDuration()|duration_string }}
+      </td>
+    </tr>
+  {% endfor %}
+
+
+  {% for track in tracks %}
+    <tr>
+      <td><ul><li></li></ul></td>
+      <td>
+        <a title="{% trans %}Edit file of multimedia object{% endtrans %} {{ track.id }}"
+           data-toggle="modal" data-dismiss="modal" data-target="#myModal"
+           href="{{ path('pumukitnewadmin_track_update', {'id': track.id, 'mmId': mmId}) }}">
+          <i class="mdi-editor-mode-edit"></i>
+        </a>
+      <td>
+      <td>
+        <a title="{% trans %}File info of multimedia object{% endtrans %} {{ track.id }}"
+           data-toggle="modal" data-dismiss="modal" data-target="#myModal"
+           href="{{ path('pumukitnewadmin_track_info', {'id': track.id, 'mmId': mmId}) }}">
+          <i class="mdi-action-info"></i>
+        </a>
+      <td>
+      <td>
+          <a href="#" onclick="window.submit_delete_track('{{ track.id }}', '{{ mmId }}'); return false;">
+             <i class="mdi-content-clear"></i>
+          </a>
+      </td>
+      <td>
+        <a href="#" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_autocomplete', {'id': track.id, 'mmId': mmId, 'preview': 1, 'mod': 'mm'}) }}'); return false;">
+          <i class="mdi-action-spellcheck"></i>
+        </a>
+      </td>
+
+      <td>
+        <div class="dropdown">
+          <i class="mdi-image-camera-alt" id="list_capture_frame_{{ track.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="list_capture_frame_{{ track.id }}">
+            <li>&nbsp;&nbsp;<strong>{% trans %}Capture frame from{% endtrans %}:</strong></li>
+            <li>
+              <a href="#" onclick="$.ajax({
+                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mmId, 'preview': 1, 'numframe': 0}) }}',
+                                           type: 'POST',
+                                           beforeSend: function(){$('#pic_mms_load').show();},
+                                           success: function(response){
+                                                                       $('#pic_mms_load').hide();
+                                                                       $('#pic_mms').html(response);
+                                           }
+                                   });
+                                   return false;">
+                <i class="mdi-image-camera"></i> {% trans %}Auto{% endtrans %}
+              </a>
+            </li>
+            <li>
+              <a href="#" onclick="$.ajax({
+                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mmId, 'preview': 1, 'numframe': '10%'}) }}',
+                                           type: 'POST',
+                                           beforeSend: function(){$('#pic_mms_load').show();},
+                                           success: function(response){
+                                                                       $('#pic_mms_load').hide();
+                                                                       $('#pic_mms').html(response);
+                                           }
+                                   });
+                                   return false;">
+                <i class="mdi-image-camera"></i> {% trans %}10%{% endtrans %}
+              </a>
+            </li>
+            <li>
+              <a href="#" onclick="$.ajax({
+                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mmId, 'preview': 1, 'numframe': '25%'}) }}',
+                                           type: 'POST',
+                                           beforeSend: function(){$('#pic_mms_load').show();},
+                                           success: function(response){
+                                                                       $('#pic_mms_load').hide();
+                                                                       $('#pic_mms').html(response);
+                                           }
+                                   });
+                                   return false;">
+                <i class="mdi-image-camera"></i> {% trans %}25%{% endtrans %}
+              </a>
+            </li>
+            <li>
+              <a href="#" onclick="$.ajax({
+                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mmId, 'preview': 1, 'numframe': '50%'}) }}',
+                                           type: 'POST',
+                                           beforeSend: function(){$('#pic_mms_load').show();},
+                                           success: function(response){
+                                                                       $('#pic_mms_load').hide();
+                                                                       $('#pic_mms').html(response);
+                                           }
+                                   });
+                                   return false;">
+                <i class="mdi-image-camera"></i> {% trans %}50%{% endtrans %}
+              </a>
+            </li>
+            <li>
+              <a href="#" onclick="$.ajax({
+                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mmId, 'preview': 1, 'numframe': '75%'}) }}',
+                                           type: 'POST',
+                                           beforeSend: function(){$('#pic_mms_load').show();},
+                                           success: function(response){
+                                                                       $('#pic_mms_load').hide();
+                                                                       $('#pic_mms').html(response);
+                                           }
+                                   });
+                                   return false;">
+                <i class="mdi-image-camera"></i> {% trans %}75%{% endtrans %}
+              </a>
+            </li>
+            <li>
+              <a href="#" onclick="$.ajax({
+                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mmId, 'preview': 1, 'numframe': '90%'}) }}',
+                                           type: 'POST',
+                                           beforeSend: function(){$('#pic_mms_load').show();},
+                                           success: function(response){
+                                                                       $('#pic_mms_load').hide();
+                                                                       $('#pic_mms').html(response);
+                                           }
+                                   });
+                                   return false;">
+                <i class="mdi-image-camera"></i> {% trans %}90%{% endtrans %}
+              </a>
+            </li>
+            <li class="cancel"><a href="#" onclick="return false;"><strong>{% trans %}Cancel{% endtrans %}...</strong></a></li>
+          </ul>
+        </div>
+      </td>
+
+      <td>
+        <a href="{{ path('pumukitnewadmin_track_download', {'id': track.id, 'mmId': mmId}) }}" download>
+          <i class="mdi-file-file-download"></i>
+        </a>
+      </td>
+
+      {% if track.isMaster() %}
+      <td>
+        <div class="dropdown">
+          <i class="mdi-navigation-refresh" id="list_profiles_{{ track.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="list_profiles_{{ track.id }}">
+            <li>&nbsp;&nbsp;<strong>{% trans %}Transcode to profile{% endtrans %}:</strong></li>
+            {% for key in not_master_profiles|keys %}
+            <li>
+              <a href="#" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_retranscode', {'id': track.id, 'mmId': mmId, 'profile': key}) }}'); return false;">
+                <i class="mdi-image-camera-roll"></i> {{ key }}
+              </a>
+            </li>
+            {% endfor %}
+            <li class="cancel"><a href="#" onclick="return false;"><strong>{% trans %}Cancel{% endtrans %}...</strong></a></li>
+          </ul>        
+        </div>
+      </td>
+      {% else %}
+      <td>
+         <a data-toggle="modal" data-target="#myModal" href="{{ path('pumukitnewadmin_track_play', {'id': track.id, 'mmId': mmId}) }}">
+          <i class="mdi-av-play-arrow"></i>
+        </a>
+      </td>
+      {% endif %}
+      <td>
+      {% if loop.first %}
+        &nbsp;
+      {% else %}
+        <a href="#" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_up', {'id': track.id, 'mmId': mmId, 'preview': 1}) }}', {'_method': 'POST'}); return false;">&#8593;</a>
+      {% endif %}
+      </td>
+      <td>
+      {% if loop.last %}
+        &nbsp;
+      {% else %}
+        <a href="#" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_down', {'id': track.id, 'mmId': mmId, 'preview': 1}) }}', {'_method': 'POST'}); return false;">&#8595;</a>
+      {% endif %}
+      </td>
+
+      <td>
+        &nbsp;{{ track.id }} - <strong>{{ track.getTags()|profile }}</strong>
+        {{ track.getDescription() }}
+        ({{ track.getPath()|basename }}/{{ track.getLanguage()|language_name }})
+         - {{ track.getDuration()|duration_string }}
+         - {{ (track.getSize() / 1048576)|number_format(2) }} MB
+         - {# {{ track.getResolutionHor() }}x{{ track.getResolutionVer() }}
+         {% if track.getDisplay() %}{% else %}({% trans %}Hidden{% endtrans %}){% endif %} #}
+      </td>
+    </tr>
+  {% endfor %}
+
+  <!-- <tr>
+    <td><ul><li></li><ul></td>
+    <td colspan="9"><?php echo m_link_to(__('nuevo...'), 'files/create?mm='.$mmId, array('title' => __('Crear File')), array('width' => '800')) ?></td>
+  </tr>-->
+  <tr>
+    <td><ul><li></li></ul></td>
+    <td colspan="11"><a data-toggle="modal" data-target="#myModal" href="{{ path('pumukitnewadmin_track_create', {'id': mmId}) }}">{% trans %}New master{% endtrans %}...</a></td>
+  </tr>
+</tbody></table>
+
+{% if false %} {# TODO ($sf_request->getParameter('preview')) #} {# define update_preview #}
+<script type="text/javascript">
+  update_preview('{{ mmId }}');
+</script>
+{% endif %}
+
+{% if false %} {# TODO (isset($reload_pub_channel)) #}
+<script type="text/javascript">
+    new Ajax.Updater('list_pub_{{ mmId }}', ' TODO {# " . url_for('mms/updatelistpub?id=' . $mmId) . " #}')
+</script>
+{% endif %}
+
+{# TODO
+<?php 
+if (isset($msg_alert)) echo m_msg_alert($msg_alert);
+?>
+#}
+
+{% if jobs|length != 0 %}
+<script type="text/javascript">
+  setTimeout(function(){$('#tracks_mms').load('{{ url('pumukitnewadmin_track_list', {'id': mmId})}}')}, 8000);
+</script>
+{% endif %}

@@ -1,0 +1,25 @@
+{% for node in nodes %}
+  {% set children_length = node.getChildren()|length %}
+   <a href="#" 
+      onclick="javascript:return select_tree_tag(this);" 
+      {% if not node.getMetatag() %} ondblclick="javascript:add_tree_tag('{{ node.id }}', '{{ mmId }}', '{{ block_tag }}');" {% endif %}
+      class="list-group-item notload
+             tag_li_parent_{{ parent }}
+             c_{{ node.path|replace({ ("|" ~ node.cod ~ "|"): '', '|': ' c_'}) }}
+             {{ (children_length)?'collapsed':'element' }}
+             {{ node.getMetatag()?'metatag' }}
+             {{ (node.getNumberMultimediaObjects()==0)?'nomm' }}">
+
+     {% if not node.getMetatag() %}
+     <span class="badge" id="info_num_mm_{{ node.id }}">{{ node.getNumberMultimediaObjects() }}</span>
+     {% endif %}
+
+     <span style="padding-left:{{ 10 * (node.level - 3)}}px" 
+           {% if children_length %} onclick="javascript:toggle_tree_tag(this, '{{ node.id }}', '{{ mmId }}', '{{ block_tag }}', '{{ node.cod }}')" {% endif %}>
+       <i class="mdi- tag_icon"></i>
+     </span>
+     <span>
+       {{ node.getCod() }} - {{ node.getTitle() }}
+     </span>
+   </a>
+{% endfor %}

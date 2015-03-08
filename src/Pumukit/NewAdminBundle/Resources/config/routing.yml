@@ -1,0 +1,75 @@
+pumukitnewadmin_js:
+    pattern: /admin/pumukit2.js
+    methods: [GET]
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'PumukitNewAdminBundle::pumukit2.js.twig'
+        _format: js
+
+pumukitnewadmin_css:
+    pattern: /admin/pumukit2.css
+    methods: [GET]
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'PumukitNewAdminBundle::pumukit2.css.twig'
+        _format: css
+
+pumukitnewadmin_user:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/user.yml
+    prefix: /admin/user
+
+pumukitnewadmin_person:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/person.yml
+    prefix: /admin/person
+
+pumukitnewadmin_broadcast:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/broadcast.yml
+    prefix: /admin/broadcast
+
+pumukitnewadmin_role:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/role.yml
+    prefix: /admin/role
+
+pumukitnewadmin_series:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/series.yml
+    prefix: /admin/series
+
+pumukitnewadmin_mmtemplate:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/mmtemplate.yml
+    prefix: /admin/mmtemplate
+
+pumukitnewadmin_mms:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/mms.yml
+    prefix: /admin/mms
+
+pumukitnewadmin_seriespic:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/seriespic.yml
+    prefix: /admin/seriespic
+
+pumukitnewadmin_mmspic:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/mmspic.yml
+    prefix: /admin/mmspic
+
+pumukitnewadmin_tag:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/tag.yml
+    prefix: /admin/tag
+
+pumukitnewadmin_link:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/link.yml
+    prefix: /admin/link
+
+pumukitnewadmin_material:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/material.yml
+    prefix: /admin/material
+
+pumukitnewadmin_track:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/track.yml
+    prefix: /admin/track
+
+pumukitnewadmin_live:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/live.yml
+    prefix: /admin/live
+
+pumukitnewadmin_event:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/event.yml
+    prefix: /admin/event
