@@ -129,6 +129,7 @@ class MultimediaObjectRepository extends DocumentRepository
           ->execute();
     }
 
+
     // Find Multimedia Objects with Tags
 
     /**
@@ -142,18 +143,34 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function findWithTag($tag, $sort = array(), $limit = 0, $page = 0)
     {
-        $qb = $this->createStandardQueryBuilder()
-            ->field('tags._id')->equals(new \MongoId($tag->getId()));
-        
-        if (0 !== count($sort) ){
-            $qb->sort($sort['fieldName'], $sort['order']);
-        }        
+        $qb = $this->createBuilderWithTag($tag, $sort);
 
         if ($limit > 0){
             $qb->limit($limit)->skip($limit * $page);
         }
 
         return $qb->getQuery()->execute();
+    }
+
+
+    /**
+     * Create QueryBuilder to find multimedia objects by tag id
+     *
+     * @param Tag|EmbeddedTag $tag
+     * @param array $sort
+     * @return QueryBuilder
+     */
+    public function createBuilderWithTag($tag, $sort = array())
+    {
+        $qb = $this->createStandardQueryBuilder()
+            ->field('tags._id')->equals(new \MongoId($tag->getId()));
+        
+        if (0 !== count($sort) ){
+            //$qb->sort($sort['fieldName'], $sort['order']);
+            $qb->sort($sort);
+        }        
+
+        return $qb;
     }
 
     /**
@@ -473,7 +490,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * 
      * @return QueryBuilder
      */
-    private function createStandardQueryBuilder()
+    public function createStandardQueryBuilder()
     {
         return $this->createQueryBuilder()
           ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE);
