@@ -71,15 +71,13 @@ window.submit_delete_series = function(id, seriesTitle, countMm)
 }
 
 success = function(message){
-    $('#div_messages_span_info').html(message);
-    $('#div_messages_span_info').show(3500);
-    $('#div_messages_span_info').hide(3500);
+    $("#div_messages_span_info").attr("data-content", message);
+    $("#div_messages_span_info").snackbar("show");
 }
 
 no_success = function(message){
-    $('#div_messages_span_error').innerHTML = message;
-    $('#div_messages_span_error').show(3500);
-    $('#div_messages_span_error').hide(3500);
+    $("#div_messages_span_error").attr("data-content", message);
+    $("#div_messages_span_error").snackbar("show");
 }
 
 window.update_preview = function(id) {
@@ -175,7 +173,8 @@ window.submit_delete_person = function(id, countMm, personHName)
     if (countMm == 0){
         if (window.confirm("{% trans %}Are you sure you want to delete the data of{% endtrans %} "+personHName+"?")){
             var url = "{{ path('pumukitnewadmin_person_delete', {'id': '__id__'})|raw }}";
-            $('#list_people').load(url.replace('__id__', id), {'_method': 'DELETE'});
+            var message = '{% trans %}Deleted Person successfully.{% endtrans %}';
+            $('#list_people').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message);});
     }
     }else{
         window.alert('{% trans %}Cannot delete the data of{% endtrans %} '+personHName+'. '+ countMm+' {% trans %}multimedia object(s) contain(s) this person{% endtrans %}.');
