@@ -1,6 +1,12 @@
 /web/bundles/
-/web/uploads/
-/web/storage/
+/web/uploads/material/*
+!/web/uploads/material/.gitignore
+/web/uploads/pic/*
+!/web/uploads/pic/.gitignore
+/web/storage/downloads/*
+!/web/storage/downloads/.gitignore
+/web/storage/masters/*
+!/web/storage/masters/.gitignore
 /app/bootstrap.php.cache
 /app/cache/*
 /app/config/parameters.yml
