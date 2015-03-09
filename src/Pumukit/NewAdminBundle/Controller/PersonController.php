@@ -57,7 +57,7 @@ class PersonController extends AdminController
                 $this->get('session')->getFlashBag()->add('error', $e->getMessage());
             }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_person_index'));
+            return $this->redirect($this->generateUrl('pumukitnewadmin_person_list'));
         }
 
         return array(
@@ -84,7 +84,7 @@ class PersonController extends AdminController
                 $this->get('session')->getFlashBag()->add('error', $e->getMessage());
             }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_person_index'));
+            return $this->redirect($this->generateUrl('pumukitnewadmin_person_list'));
         }
 
         return array(
