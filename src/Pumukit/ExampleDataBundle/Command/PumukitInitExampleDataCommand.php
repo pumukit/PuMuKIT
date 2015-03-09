@@ -50,18 +50,6 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        //Unzipping videos in folder
-        $newFile = 'tmp_file.zip';
-        if (!copy(self::PATH_VIDEO, $newFile)) {
-            echo "Failed to copy $file...\n";
-        }
-        $zip = new ZipArchive();
-        if ($zip->open($newFile, ZIPARCHIVE::CREATE)==TRUE) {
-            $zip->extractTo(realpath(dirname(__FILE__) . '/../Resources/public/'));
-            $zip->close();
-        }
-
-
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:Tag");
 
@@ -71,6 +59,18 @@ EOT
                $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array()); 
                $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
                $this->dm->getDocumentCollection('PumukitSchemaBundle:Person')->remove(array());
+            }
+
+            //Unzipping videos in folder
+            $newFile = 'tmp_file.zip';
+            if (!copy(self::PATH_VIDEO, $newFile)) {
+                  echo "Failed to copy $file...\n";
+            }
+            $zip = new ZipArchive();
+            if ($zip->open($newFile, ZIPARCHIVE::CREATE)==TRUE) {
+                  $zip->extractTo(realpath(dirname(__FILE__) . '/../Resources/public/'));
+                  $zip->close();
+                  //unlink('tmp_file.zip');
             }
 
             //Series Access grid----------------------------------------------------------
@@ -210,6 +210,7 @@ EOT
             $multimediaObject->setTitle($title);
             $multimediaObject->setSubtitle($subtitle);
             $multimediaObject->setDescription($description);
+            $multimediaObject->setNumview($numview);
 
             $multimediaObject->addPic($pic);
             $multimediaObject->addTrack($track);
@@ -357,6 +358,7 @@ EOT
             $multimediaObject->setTitle($title);
             $multimediaObject->setSubtitle($subtitle);
             $multimediaObject->setDescription($description);
+            $multimediaObject->setNumview($numview);
 
             $multimediaObject->addPic($pic);
             $multimediaObject->addTrack($track);
@@ -504,6 +506,7 @@ EOT
             $multimediaObject->setTitle($title);
             $multimediaObject->setSubtitle($subtitle);
             $multimediaObject->setDescription($description);
+            $multimediaObject->setNumview($numview);
 
             $multimediaObject->addPic($pic);
             $multimediaObject->addTrack($track);
@@ -586,6 +589,7 @@ EOT
             $multimediaObject->setTitle($title);
             $multimediaObject->setSubtitle($subtitle);
             $multimediaObject->setDescription($description);
+            $multimediaObject->setNumview($numview);
 
             $multimediaObject->addPic($pic);
             $multimediaObject->addTrack($track);
@@ -667,6 +671,7 @@ EOT
             $multimediaObject->setTitle($title);
             $multimediaObject->setSubtitle($subtitle);
             $multimediaObject->setDescription($description);
+            $multimediaObject->setNumview($numview);
 
             $multimediaObject->addPic($pic);
             $multimediaObject->addTrack($track);
@@ -748,6 +753,7 @@ EOT
             $multimediaObject->setTitle($title);
             $multimediaObject->setSubtitle($subtitle);
             $multimediaObject->setDescription($description);
+            $multimediaObject->setNumview($numview);
 
             $multimediaObject->addPic($pic);
             $multimediaObject->addTrack($track);
@@ -829,6 +835,7 @@ EOT
             $multimediaObject->setTitle($title);
             $multimediaObject->setSubtitle($subtitle);
             $multimediaObject->setDescription($description);
+            $multimediaObject->setNumview($numview);
 
             $multimediaObject->addPic($pic);
             $multimediaObject->addTrack($track);
@@ -976,6 +983,7 @@ EOT
             $multimediaObject->setTitle($title);
             $multimediaObject->setSubtitle($subtitle);
             $multimediaObject->setDescription($description);
+            $multimediaObject->setNumview($numview);
 
             $multimediaObject->addPic($pic);
             $multimediaObject->addTrack($track);
@@ -1123,6 +1131,7 @@ EOT
             $multimediaObject->setTitle($title);
             $multimediaObject->setSubtitle($subtitle);
             $multimediaObject->setDescription($description);
+            $multimediaObject->setNumview($numview);
 
             $multimediaObject->addPic($pic);
             $multimediaObject->addTrack($track);
@@ -1270,6 +1279,7 @@ EOT
             $multimediaObject->setTitle($title);
             $multimediaObject->setSubtitle($subtitle);
             $multimediaObject->setDescription($description);
+            $multimediaObject->setNumview($numview);
 
             $multimediaObject->addPic($pic);
             $multimediaObject->addTrack($track);
@@ -1417,6 +1427,7 @@ EOT
             $multimediaObject->setTitle($title);
             $multimediaObject->setSubtitle($subtitle);
             $multimediaObject->setDescription($description);
+            $multimediaObject->setNumview($numview);
 
             $multimediaObject->addPic($pic);
             $multimediaObject->addTrack($track);
@@ -1645,6 +1656,7 @@ EOT
             $multimediaObject->setTitle($title);
             $multimediaObject->setSubtitle($subtitle);
             $multimediaObject->setDescription($description);
+            $multimediaObject->setNumview($numview);
 
             $multimediaObject->addPic($pic);
             $multimediaObject->addTrack($track);
@@ -1792,6 +1804,7 @@ EOT
             $multimediaObject->setTitle($title);
             $multimediaObject->setSubtitle($subtitle);
             $multimediaObject->setDescription($description);
+            $multimediaObject->setNumview($numview);
 
             $multimediaObject->addPic($pic);
             $multimediaObject->addTrack($track);
@@ -1873,6 +1886,7 @@ EOT
             $multimediaObject->setTitle($title);
             $multimediaObject->setSubtitle($subtitle);
             $multimediaObject->setDescription($description);
+            $multimediaObject->setNumview($numview);
 
             $multimediaObject->addPic($pic);
             $multimediaObject->addTrack($track);
@@ -2020,6 +2034,7 @@ EOT
             $multimediaObject->setTitle($title);
             $multimediaObject->setSubtitle($subtitle);
             $multimediaObject->setDescription($description);
+            $multimediaObject->setNumview($numview);
 
             $multimediaObject->addPic($pic);
             $multimediaObject->addTrack($track);
@@ -2167,6 +2182,7 @@ EOT
             $multimediaObject->setTitle($title);
             $multimediaObject->setSubtitle($subtitle);
             $multimediaObject->setDescription($description);
+            $multimediaObject->setNumview($numview);
 
             $multimediaObject->addPic($pic);
             $multimediaObject->addTrack($track);
@@ -2176,6 +2192,8 @@ EOT
             $dm->flush();
 
             //--------------------------------------------------------------------------------
+
+            unlink('tmp_file.zip');
 
         } else {
             $output->writeln('<error>ATTENTION:</error> This operation should not be executed in a production environment.');
