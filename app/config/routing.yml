@@ -1,3 +1,13 @@
+pumukit_live:
+    resource: "@PumukitLiveBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pumukit_new_admin_tmp:
+    resource: "@PumukitNewAdminBundle/Controller/"
+    type:     annotation
+    prefix:   /admin
+
 pumukit_web_tv:
     resource: "@PumukitWebTVBundle/Controller/"
     type:     annotation
@@ -10,6 +20,11 @@ pumukit_encoder:
 
 pumukitadmin:
     resource: @PumukitAdminBundle/Resources/config/routing.yml
+    prefix:   /old
+
+pumukitnewadmin:
+    resource: @PumukitNewAdminBundle/Resources/config/routing.yml
+    prefix:   /
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"

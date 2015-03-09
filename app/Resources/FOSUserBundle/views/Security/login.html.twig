@@ -1,12 +1,12 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block fos_user_content %}
-{% if error %}
-    <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
-{% endif %}
-
 <form action="{{ path("fos_user_security_check") }}" method="post">
   <div class="body bg-gray">
+    {% if error %}
+      <div class="alert alert-danger alert-error">{{ error|trans({}, 'FOSUserBundle') }}</div>
+    {% endif %}
+
     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
     <div class="form-group">
@@ -26,7 +26,7 @@
   </div>
 
   <div class="footer">
-    <button type="submit" id="_submit" name="_submit" class="btn bg-olive btn-block">
+    <button type="submit" id="_submit" name="_submit" class="btn bg-olive btn-block" style="background-color: #ED6D00 !important">
       {{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}
     </button>
     {#

@@ -1,0 +1,38 @@
+{% if live is not null %}
+<h3>{{ live.name }}</h3>
+{{ live.description }}
+
+<div>
+  <div>
+    {% trans %}URL{% endtrans %}: <a href="{# TODO: /live/index/id/{{ live.id }} #}">
+      {# "TODO: /live/index/id/{{ live.id }}" #}
+      </a>
+  </div>
+  <div>
+    {% trans %}Source IP{% endtrans %}: <span style="font-style:italic"> {{ live.getIpSource() }}</span>
+  </div>
+  <div>
+    {% trans %}Show player at homepage{% endtrans %}: <span style="font-style:italic">{% if live.getIndexPlay() %}{% trans %}Activated{% endtrans %}{% else %}{% trans %}Deactivated{% endtrans %}{% endif %}</span>
+  </div>
+  <div>
+    {% trans %}Status{% endtrans %}: <span style="font-style:italic">{% if not live.broadcasting %}{% trans %}On hold{% endtrans %}{% else %}{% trans %}Live broadcasting{% endtrans %}{% endif %}</span>
+  </div>
+</div>
+
+
+<br />
+<a class="btn btn-primary" data-toggle="collapse" href="#livePlayer" aria-expanded="false" aria-controls="livePlayer">
+<i class="mdi-av-play-arrow"></i>&nbsp;&nbsp;{% trans %}Preview{% endtrans %}
+</a>
+<div class="collapse" id="livePlayer">
+  <div class="well">
+      {# {{ include('PumukitAdminBundle:Live/Players:'~live.getLiveType()~'.html.twig') }} #}
+      <video id="player" src="{# TODO {{ live.url  }} #}" controls="" style="background: black; width: 100%;">
+      </video>
+  </div>
+</div>
+{% else %}
+<p>
+  {% trans %}Select any live channel.{% endtrans %}
+</p>
+{% endif %}

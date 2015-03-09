@@ -1,0 +1,29 @@
+pumukitnewadmin_link_create:
+    pattern: /create/{id}
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.link:createAction
+
+pumukitnewadmin_link_update:
+    pattern: /{id}/update/{mmId}
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.link:updateAction
+
+pumukitnewadmin_link_delete:
+    pattern: /{id}/delete/{mmId}
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.link:deleteAction
+
+pumukitnewadmin_link_up:
+    pattern: /{id}/up/{mmId}
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.link:upAction
+
+pumukitnewadmin_link_down:
+    pattern: /{id}/down/{mmId}
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.link:downAction

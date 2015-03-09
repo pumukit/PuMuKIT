@@ -88,6 +88,12 @@ class Track extends Element
    */
   private $numview;
 
+  public function __construct()
+  {
+      $this->language = \Locale::getDefault();
+      parent::__construct();
+  }
+
   /**
    * Set language
    *
@@ -357,5 +363,15 @@ class Track extends Element
       if ((!empty($durationInMinutesAndSeconds['minutes'])) && (!empty($durationInMinutesAndSeconds['seconds']))) {
           $this->duration = ($durationInMinutesAndSeconds['minutes'] * 60) + $durationInMinutesAndSeconds['seconds'];
       }
+  }
+
+  /**
+   * Return true if track is a master.
+   *
+   * @return boolean
+   */
+  public function isMaster()
+  {
+      return $this->containsTag("master");
   }
 }

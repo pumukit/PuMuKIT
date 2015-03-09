@@ -1,0 +1,11 @@
+id;cod;xml;display;name_es;name_gl;name_en;text_es;text_gl;text_en
+1;"Author";"Author";1;"Autor";"Autor";"Author";"Rol de autor";"Rol de autor";"Author role"
+2;"Participant";"Participant";1;"Participante";"Participante";"Participant";"Rol de participante";"Rol de participante";"Participant role"
+3;"Producer";"Producer";1;"Realizador";"Realizador";"Producer";"Rol de realizador";"Rol de realizador";"Producer role"
+4;"actor";"actor";1;"Actor";"Actor";"Actor";"Rol de actor";"Rol de actor";"Actor role"
+5;"coordinator";"coordinator";1;"Coordinador";"Coordinador";"Coordinator";"Rol de coordinador";"Rol de coordinador";"Coordinator role"
+6;"postproduction";"postproduction";1;"Postproducción";"Postproducción";"Postproduction";"Rol de postproducción";"Rol de postproducción";"Postproduction role"
+7;"publisher";"publisher";1;"Publicador";"Publicador";"Publisher";"Rol de publicador";"Rol de publicador";"Publisher rol"
+8;"presenter";"presenter";1;"Presentador";"Presentador";"Presenter";"Rol de presentador";"Rol de presentador";"Presenter rol"
+9;"lecturer";"lecturer";1;"Conferenciante";"Conferenciante";"Lecturer";"Rol de conferenciante";"Rol de conferenciante";"Lecturer rol"
+10;"writer";"writer";1;"Guión";"Guión";"Writer";"Rol de guión";"Rol de guión";"Writer rol"

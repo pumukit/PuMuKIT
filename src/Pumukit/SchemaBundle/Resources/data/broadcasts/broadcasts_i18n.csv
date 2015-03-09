@@ -1,0 +1,4 @@
+id;name_es;name_gl;name_en;broadcast_type_id;passwd;default_sel;description_es;description_gl;description_en
+1;"Público";"Público";"Public";"public";"123456";0;"Perfil de acceso público";"Perfil de acceso público";"Public access profile"
+2;"Público";"Privado";"Private";"private";"123456";0;"Perfil de acceso privado";"Perfil de acceso privado";"Private access profile"
+3;"Corporativo";"Corporativo";"Corporative";"corporative";"123456";0;"Perfil de acceso corporativo";"Perfil de acceso corporativo";"Corporative access profile"

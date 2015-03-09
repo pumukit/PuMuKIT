@@ -406,11 +406,11 @@ class EmbeddedTag
   /**
    * Returns true if given node is children of tag
    *
-   * @param Tag $tag
+   * @param EmbeddedTag|Tag $tag
    *
    * @return bool
    */
-  public function isChildrenOf(Tag $tag)
+  public function isChildrenOf($tag)
   {
       return $tag->getCod() == $this->getParent()->getCod();
   }
@@ -418,11 +418,11 @@ class EmbeddedTag
   /**
    * Returns true if given node is descendant of tag
    *
-   * @param Tag $tag
+   * @param EmbeddedTag|Tag $tag
    *
    * @return bool
    */
-  public function isDescendantOf(Tag $tag)
+  public function isDescendantOf($tag)
   {
       if ($tag->getCod() == $this->getCod()) {
           return false;

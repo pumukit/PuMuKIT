@@ -1,0 +1,61 @@
+<div class="modal-header">
+<p>
+{% trans %}Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and{% endtrans %} <strong>{% trans %}use him/her{% endtrans %}</strong>. {% trans %}If he/she doesn't exist in the database{% endtrans %}, <strong>{% trans %}create{% endtrans %}</strong> {% trans %}a new entrance with the written name{% endtrans %}.
+</p>
+</div>
+<div class="modal-body">
+  <fieldset>
+    <div class="form-group">
+      <label for="name" class="control-label">{% trans %}Name{% endtrans %}:</label>
+      <input type="text" name="name" id="name" placeholder="{% trans %}name to search for{% endtrans %}" class="form-control"/>
+      <span id="indicator1" style="display: none" class="input-group-addon"><img alt="{% trans %}working{% endtrans %}..." src="{{ asset('/bundles/pumukitnewadmin/images/admin/load/spinner.gif') }}" height="18" width="18"></span>
+      <input type="hidden" name="person_id" value="0" id="person_id"/>
+    </div>
+  </fieldset>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+    <button type="button" class="btn btn-primary btn-raised"
+            onclick="if('' != $('#person_id').val()){
+                                                     var route = '{{ path('pumukitnewadmin_person_link', {'id': '__personId__', 'roleId': role.id, 'mmId': mm.id} ) }}';
+                                                     var personId = $('#person_id').val();
+                                                     $('#{{ role.id }}_person_mms{{ template }}').load(route.replace('__personId__', personId), {'_method':'POST'});
+                                                     $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', {'_method':'POST'});
+                                                     $('#myModal').modal('hide');
+                     }else{
+                           alert('{% trans %}Select before a person{% endtrans %}');
+                     }
+                     return false;">
+      {% trans %}Use{% endtrans %}
+    </button>
+    <button type="button" class="btn btn-pumukit btn-raised" data-toggle="modal" data-dismiss="modal" data-target="#myAuxModal"
+            id="create_relation" href="#"
+            onclick="var aux = $('#name').val();
+                     $('#name').val('{% trans %}name to search for{% endtrans %}');
+	                 if (aux == '{% trans %}name to search for{% endtrans %}') aux='';
+                     var route = '{{ path('pumukitnewadmin_person_create_relation', {'mmId': mm.id, 'roleId': role.id, 'name': '__aux__'}) }}';
+                     $('#create_relation').attr('href', route.replace('__aux__', aux)); return true;">
+      {% trans %}New{% endtrans %}
+    </button>
+  </div>
+</div>
+
+<div style="clear:right"></div>
+
+<script type="text/javascript">
+$("#name").autocomplete({
+    source: "{{ path('pumukitnewadmin_person_auto_complete') }}",
+    delay: 250,
+    minLength: 2,
+    select: function(event, ui) {
+        $("#person_id").val(ui.item.id)
+    }
+    }).autocomplete("instance")._renderItem = function( ul, item ) {
+        return $("<li>")
+        .append("<a>"+item.id+" - "+item.label+"<br><span class='form-control'>"+item.desc+"</span></a>")
+        .appendTo(ul);
+};
+
+$("#name").on("input", function(){
+    $("#person_id").val(0);
+});
+</script>

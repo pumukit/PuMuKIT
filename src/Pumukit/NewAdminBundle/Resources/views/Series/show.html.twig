@@ -1,0 +1,31 @@
+{% if series is not null %}
+
+<p>
+  <a target="_black" href="{{ url('pumukit_webtv_series_index', {id: series.id}) }}"> {{ series.title}} </a>.
+</p>
+
+<div>
+  <div class="pmk-preview">
+    <div class="pmk-picture">
+      <div class="pmk-img" style="max-width: 172px;">
+        <img src="{{ series.getFirstUrlPic('/images/folder.png') }}">
+      </div>
+    </div>
+    <div class="pmk-picture">
+      <div class="pmk-img" style="max-width: 172px;">
+        <img src="{{ series.getFirstUrlPic('/images/folder.png') }}">
+      </div>
+    </div>
+    <div class="pmk-picture">
+      <div class="pmk-img" style="max-width: 172px;">
+        <img src="{{ series.getFirstUrlPic('/images/folder.png') }}">
+      </div>
+    </div>
+  </div>
+</div>
+
+{% else %}
+<p>
+  {% trans %}Select any series.{% endtrans %}
+</p>
+{% endif %}

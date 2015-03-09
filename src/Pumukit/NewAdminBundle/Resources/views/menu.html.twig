@@ -1,0 +1,51 @@
+<div class="header-panel shadow-z-2">
+    <div class="bs-component">
+        <div class="navbar navbar-pumukit">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="javascript:void(0)" style="padding:0px"><img src="{{ asset('/bundles/pumukitnewadmin/images/logo.png') }}"/></a>
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                {{ knp_menu_render('PumukitNewAdminBundle:Builder:mainMenu', {'currentClass': 'active', 'template': 'PumukitNewAdminBundle:Themes:menu.html.twig'}) }}
+                <!-- OLD
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="javascript:void(0)">Active</a></li>
+                    <li><a href="javascript:void(0)">Link</a></li>
+                    <li class="dropdown">
+                        <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="javascript:void(0)">Action</a></li>
+                            <li><a href="javascript:void(0)">Another action</a></li>
+                            <li><a href="javascript:void(0)">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">Dropdown header</li>
+                            <li><a href="javascript:void(0)">Separated link</a></li>
+                            <li><a href="javascript:void(0)">One more separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                -->
+                <form class="navbar-form navbar-left">
+                    <input type="text" class="form-control col-lg-8" placeholder="Search">
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                      <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i style="font-size: 18px; vertical-align: middle" class="mdi-image-timer-auto"></i>{{ app.user.username }} <b class="caret"></b>
+                      </a>
+                      <ul class="dropdown-menu">
+                        <li class="dropdown-header">Login from: {{ app.user.lastLogin|date()  }}</li>
+                        <li class="dropdown-header">{{ app.user.email }}</li>
+                        <li class="divider"></li>
+                        <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
+                      </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
