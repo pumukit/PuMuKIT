@@ -17,6 +17,10 @@ class MaterialService
     {
         $this->dm = $documentManager;
         $this->targetPath = realpath($targetPath);
+        if (!$this->targetPath){
+            throw new \InvalidArgumentException("The path '".$targetPath."' for storing Materials does not exist.");
+        }
+
         $this->targetUrl = $targetUrl;
     }
 

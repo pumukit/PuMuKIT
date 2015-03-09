@@ -332,7 +332,7 @@ class TrackServiceTest extends WebTestCase
                                                                          'ip' => '127.0.0.1',
                                                                          'name' => 'Localmaster',
                                                                          'description' => 'Local masters server',
-                                                                         'dir_out' => '/mnt/nas/storage/masters',
+                                                                         'dir_out' => __DIR__.'/../Resources/dir_out',
                                                                          'url_out' => ''
                                                                          ),
                                                  'app' => 'cp',
@@ -383,7 +383,7 @@ class TrackServiceTest extends WebTestCase
                                                                                'ip' => '192.168.5.125',
                                                                                'name' => 'Download',
                                                                                'description' => 'Download server',
-                                                                               'dir_out' => '/mnt/nas/storage/downloads',
+                                                                               'dir_out' => __DIR__.'/../Resources/dir_out',
                                                                                'url_out' => 'http://localhost:8000/downloads/'
                                                                                ),
                                                        'app' => 'ffmpeg',

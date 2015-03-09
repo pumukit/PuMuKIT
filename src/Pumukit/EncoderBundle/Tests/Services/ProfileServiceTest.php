@@ -54,6 +54,15 @@ class ProfileServiceTest extends WebTestCase
         $this->assertNull($this->profileService->getProfile('master'));
     }
 
+    /**
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage for dir_out of the streamserver
+     */
+    public function testInvalidTargetPath()
+    {
+        $profileService = new ProfileService($this->getDemoProfilesWithNonExistingPath(), $this->dm);
+    }
+
     private function getDemoProfiles()
     {
         $profiles = array(
@@ -81,7 +90,7 @@ class ProfileServiceTest extends WebTestCase
                                                                          'ip' => '127.0.0.1',
                                                                          'name' => 'Localmaster',
                                                                          'description' => 'Local masters server',
-                                                                         'dir_out' => '/mnt/nas/storage/masters',
+                                                                         'dir_out' => __DIR__.'/../Resources/dir_out',
                                                                          'url_out' => ''
                                                                          ),
                                                  'app' => 'cp',
@@ -132,7 +141,7 @@ class ProfileServiceTest extends WebTestCase
                                                                                'ip' => '192.168.5.125',
                                                                                'name' => 'Download',
                                                                                'description' => 'Download server',
-                                                                               'dir_out' => '/mnt/nas/storage/downloads',
+                                                                               'dir_out' => __DIR__.'/../Resources/dir_out',
                                                                                'url_out' => 'http://localhost:8000/downloads/'
                                                                                ),
                                                        'app' => 'ffmpeg',
@@ -140,6 +149,46 @@ class ProfileServiceTest extends WebTestCase
                                                        'rel_duration_trans' => 1,
                                                        'prescript' => '?????'
                                                        )
+                          );
+
+        return $profiles;
+    }
+
+    private function getDemoProfilesWithNonExistingPath()
+    {
+        $profiles = array(
+                          'MASTER_COPY' => array(
+                                                 'id' => 1,
+                                                 'name' => 'master_copy',
+                                                 'rank' => 1,
+                                                 'display' => false,
+                                                 'wizard' => true,
+                                                 'master' => true,
+                                                 'format' => '???',
+                                                 'codec' => '??',
+                                                 'mime_type' => '??',
+                                                 'extension' => '???',
+                                                 'resolution_hor' => 0,
+                                                 'resolution_ver' => 0,
+                                                 'bitrate' => '??',
+                                                 'framerate' => 0,
+                                                 'channels' => 1,
+                                                 'audio' => false,
+                                                 'bat' => 'cp "{{input}}" "{{output}}"',
+                                                 'file_cfg' => '??',
+                                                 'streamserver' => array(
+                                                                         'streamserver_type' => ProfileService::STREAMSERVER_STORE,
+                                                                         'ip' => '127.0.0.1',
+                                                                         'name' => 'Localmaster',
+                                                                         'description' => 'Local masters server',
+                                                                         'dir_out' => '/non/existing/path/storage/masters',
+                                                                         'url_out' => ''
+                                                                         ),
+                                                 'app' => 'cp',
+                                                 'rel_duration_size' => 1,
+                                                 'rel_duration_trans' => 1,
+                                                 'prescript' => '?????'
+                                                 )
                           );
 
         return $profiles;

@@ -19,7 +19,10 @@ class MultimediaObjectPicService
     public function __construct(DocumentManager $documentManager, $targetPath, $targetUrl)
     {
         $this->dm = $documentManager;
-        $this->targetPath = $targetPath;
+        $this->targetPath = realpath($targetPath);
+        if (!$this->targetPath){
+            throw new \InvalidArgumentException("The path '".$targetPath."' for storing Pics does not exist.");
+        }
         $this->targetUrl = $targetUrl;
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
     }

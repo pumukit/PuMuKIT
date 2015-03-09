@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Pumukit\SchemaBundle\Services\MaterialService;
 
 class MaterialServiceTest extends WebTestCase
 {
@@ -213,6 +214,15 @@ class MaterialServiceTest extends WebTestCase
 
         $arrayMaterials = array($material2, $material3, $material1);
         $this->assertEquals($arrayMaterials, $mm->getMaterials()->toArray());
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage for storing Materials does not exist
+     */
+    public function testInvalidTargetPath()
+    {
+        $materialService = new MaterialService($this->dm, "/non/existing/path", "/uploads/material");
     }
 
     private function createBroadcast($broadcastTypeId)

@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
 
 class MultimediaObjectPicServiceTest extends WebTestCase
 {
@@ -142,6 +143,15 @@ class MultimediaObjectPicServiceTest extends WebTestCase
         }
 
         $this->deleteCreatedFiles();
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage for storing Pics does not exist
+     */
+    public function testInvalidTargetPath()
+    {
+        $mmspicService = new MultimediaObjectPicService($this->dm, "/non/existing/path", "/uploads/pic");
     }
 
     private function createBroadcast($broadcastTypeId)
