@@ -322,7 +322,31 @@ window.change_select = function(element, selector, pluralName)
         if (ids.length == 0) break;
         if (confirm('{% trans %}Are you sure?{% endtrans %}')) {
             var route = get_batch_delete_route(element, ids);
-            $('#list_'+pluralName).load(route, {'_method':'DELETE'});
+            if (pluralName.indexOf('mms') != -1){
+                var message = '{% trans %}Multimedia Object(s) deleted successfully.{% endtrans %}';
+            }else{
+                var message = pluralName.charAt(0).toUpperCase()+pluralName.slice(1)+' {% trans %}deleted successfully.{% endtrans %}';
+            }
+            $.ajax({
+                    url: route,
+                    type: 'POST',
+                    data: {'_method': 'DELETE'},
+                    error: function(jqXHR, textStatus, errorThrown){
+                        if (pluralName.indexOf('tags') != -1){
+                            var textError = eval('('+jqXHR.responseText+')');
+                            var statusError = textError.status;
+                            var message = errorThrown+': {% trans %}Tags with children can not be deleted.{% endtrans %} '+statusError;
+                            no_success(message);
+                        }else{
+                            var message = '{% trans %}There was an error in deleting.{% endtrans %}';
+                            no_success(message);
+                        }
+                    },
+                    success: function(response){
+                                        $('#list_'+pluralName).html(response);
+                                        success(message);
+                    }
+            });
         }
         break;
     case 'create':
@@ -806,7 +830,7 @@ get_batch_delete_route = function(element, ids)
         case 'person':
             route = '{{ path('pumukitnewadmin_person_batch_delete', {'ids': '__ids__'})|raw }}';
             break;
-        case 'series':   
+        case 'series':
             route = '{{ path('pumukitnewadmin_series_batch_delete', {'ids': '__ids__'})|raw }}';
             break;
         case 'mm':
@@ -817,6 +841,12 @@ get_batch_delete_route = function(element, ids)
             break;
         case 'event':
             route = '{{ path('pumukitnewadmin_event_batch_delete', {'ids': '__ids__'})|raw }}';
+            break;
+        case 'user':
+            route = '{{ path('pumukitnewadmin_user_batch_delete', {'ids': '__ids__'})|raw }}';
+            break;
+        case 'tag':
+            route = '{{ path('pumukitnewadmin_tag_batch_delete', {'ids': '__ids__'})|raw }}';
             break;
     }
 
@@ -836,10 +866,6 @@ get_create_route = function(element)
             break;
         case 'user':
             route = '{{ path('pumukitnewadmin_user_create')|raw }}';
-            break;
-        case 'tag':
-            // TODO complete with id parent parameter
-            route = '{{ path('pumukitnewadmin_tag_create', {'parent': '__id__'})|raw }}';
             break;
         case 'live':
             route = '{{ path('pumukitnewadmin_live_create')|raw }}';
@@ -873,3 +899,67 @@ window.fileServerTree = function(element, type, dir, num, input)
     })
 
 }
+
+
+// TAG SECTION //
+
+function load_children_tag(id, cod) {
+  $(".c_" + cod).remove();
+  var tr = $('#row_tag_' +id);
+  var level = tr.data('level');
+  var url = '{{ path('pumukitnewadmin_tag_children', {'id': '___id___'}) }}';
+  $.ajax(url.replace('___id___', id) , {
+    type: 'GET',
+    success: function(response) {
+      var t = tr.closest('tbody');
+      var ss = t.children();
+      tr.after(response);
+      if ($('.d_' + cod).length != 0) {
+        $('#row_tag_' + id + ' .collapsed').addClass("expanded").removeClass("collapsed");
+      }
+    }
+  });
+
+}
+
+function toggle_section_tag(id, element, level, cod) {
+
+  if(element.parentElement.classList.contains("expanded")){
+    $(".c_" + cod).hide();
+    $(".c_" + cod + " .expanded").removeClass("expanded").addClass("collapsed");
+  }else{
+    if(element.parentElement.classList.contains("noload")) {
+      element.parentElement.classList.remove("noload");
+      load_children_tag(id, cod);
+    }else {
+      $(".d_" + cod).show();
+    }
+  }
+  element.parentElement.classList.toggle("collapsed");
+  element.parentElement.classList.toggle("expanded");
+}
+
+
+function tag_delete(id, cod, pid) {
+  if (window.confirm('{% trans %}Are you sure you want to delete the tag with code{% endtrans %} ' + cod + '?')) {
+    var url = '{{ path('pumukitnewadmin_tag_delete', {'id': '___id___'}) }}';
+    $.ajax(url.replace('___id___', id), {
+      type: 'DELETE',
+      data:  {'_method': 'DELETE'},
+      error: function() {
+        window.alert('{% trans %}Tags with children can not be deleted.{% endtrans %}')
+      },
+      success: function(response) {
+        $('#row_tag_' +id).remove();
+        if ($('.d_' + pid).length == 0) {
+          $('#row_tag_' + pid + ' .expanded').removeClass("expanded").addClass("element");
+        }
+        var message = '{% trans %}Deleted Tag{% endtrans %} "'+cod+'" OK.';
+        success(message);
+      }
+    });
+  }
+  return false;
+}
+
+// END OF TAG SECTION //

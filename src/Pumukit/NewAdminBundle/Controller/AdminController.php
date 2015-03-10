@@ -31,6 +31,86 @@ class AdminController extends ResourceController
     }
 
     /**
+     * Create Action
+     * Overwrite to return list and not index
+     * and show toast message
+     *
+     * @param Request $request
+     *
+     * @return RedirectResponse|Response
+     */
+    public function createAction(Request $request)
+    {
+        $config = $this->getConfiguration();
+        $resourceName = $config->getResourceName();
+
+        $resource = $this->createNew();
+        $form = $this->getForm($resource);
+
+        if ($form->handleRequest($request)->isValid()) {
+            $resource = $this->domainManager->create($resource);
+
+            if ($this->config->isApiRequest()) {
+                return $this->handleView($this->view($resource, 201));
+            }
+
+            if (null === $resource) {
+              return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+            }
+
+            return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+        }
+
+        if ($this->config->isApiRequest()) {
+            return $this->handleView($this->view($form));
+        }
+
+        return $this->render("PumukitNewAdminBundle:".ucfirst($resourceName).":create.html.twig",
+                             array(
+                                   $resourceName => $resource,
+                                   'form' => $form->createView()
+                                   ));
+    }
+
+    /**
+     * Update Action
+     * Overwrite to return list and not index
+     * and show toast message
+     *
+     * @param Request $request
+     *
+     * @return RedirectResponse|Response
+     */
+    public function updateAction(Request $request)
+    {
+        $config = $this->getConfiguration();
+        $resourceName = $config->getResourceName();
+
+        $resource = $this->findOr404($request);
+        $form     = $this->getForm($resource);
+
+        if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+            $this->domainManager->update($resource);
+
+            if ($this->config->isApiRequest()) {
+                return $this->handleView($this->view($resource, 204));
+            }
+
+            return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+        }
+
+        if ($this->config->isApiRequest()) {
+            return $this->handleView($this->view($form));
+        }
+
+        return $this->render("PumukitNewAdminBundle:".ucfirst($resourceName).":update.html.twig",
+                             array(
+                                   $resourceName => $resource,
+                                   'form' => $form->createView()
+                                   ));
+    }
+
+    /**
      * Clone the given resource
      */
     public function copyAction(Request $request)

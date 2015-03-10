@@ -3,92 +3,29 @@
 {% block body %}
 <h1>{% trans %}Tags{% endtrans %}</h1>
 
-
-<div class="col-md-12">
-  <div class="well">
-    <div id="list_people">
-      {% include 'PumukitNewAdminBundle:Tag:list.html.twig' %}
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-2">
-      <select id="options_people" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('person', $(this))">
-        <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
-        <option disabled="">---</option>
-        <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
-        <option value="create">{% trans %}Create new{% endtrans %}</option>
-      </select>
-    </div>
-
-    <div class="col-md-10 text-right">
-      {% if root %}
-          <a href="{{ path('pumukitnewadmin_tag_create', {'parent': root.id}) }}" class="btn btn-pumukit" data-toggle="modal" data-target="#myModal">{% trans %}New{% endtrans %}</a>
-      {% endif%}
+<div class="row">
+  <div class="col-md-12">
+    <div class="well">
+      <div id="list_tags">
+        {% include 'PumukitNewAdminBundle:Tag:list.html.twig' %}
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <select id="options_tags" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('tag', $(this), 'tags')">
+            <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
+            <option disabled="">---</option>
+            <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
+          </select>
+        </div>
+        <div class="col-md-10 text-right">
+          {% if root %}
+            <a href="{{ path('pumukitnewadmin_tag_create', {'parent': root.id}) }}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-target="#myModal">{% trans %}New{% endtrans %}</a>
+          {% endif%}
+        </div>
+      </div>
     </div>
   </div>
 </div>
-
-
-<script type="text/javascript">
-function load_children_tag(id, cod) {
-  $(".c_" + cod).remove();
-  var tr = $('#row_tag_' +id);
-  var level = tr.data('level');
-  var url = '{{ path('pumukitnewadmin_tag_children', {'id': '___id___'}) }}';
-  $.ajax(url.replace('___id___', id) , {
-    type: 'GET',
-    success: function(response) {
-      var t = tr.closest('tbody');
-      var ss = t.children();
-      tr.after(response);
-      if ($('.d_' + cod).length != 0) {
-    	 $('#row_tag_' + id + ' .collapsed').addClass("expanded").removeClass("collapsed");
-      }
-    }
-  });
-
-}
-
-function toggle_section_tag(id, element, level, cod) {
-
-  if(element.parentElement.classList.contains("expanded")){
-    $(".c_" + cod).hide();
-    $(".c_" + cod + " .expanded").removeClass("expanded").addClass("collapsed");
-  }else{
-    if(element.parentElement.classList.contains("noload")) {
-      element.parentElement.classList.remove("noload");
-      load_children_tag(id, cod);
-    }else {
-      $(".d_" + cod).show();
-    }
-  }
-  element.parentElement.classList.toggle("collapsed");
-  element.parentElement.classList.toggle("expanded");
-}
-
-
-function tag_delete(id, cod, pid) {
-  if (window.confirm('{% trans %}Are you sure you want to delete the tag with code{% endtrans %} ' + cod + '?')) {
-    var url = '{{ path('pumukitnewadmin_tag_delete', {'id': '___id___'}) }}';
-    $.ajax(url.replace('___id___', id), {
-      type: 'DELETE',
-      data:  {'_method': 'DELETE'},
-      error: function() {
-        window.alert('{% trans %}Tags with children can not be deleted.{% endtrans %}')
-      },
-      success: function(response) {
-        $('#row_tag_' +id).remove();
-        if ($('.d_' + pid).length == 0) {
-          $('#row_tag_' + pid + ' .expanded').removeClass("expanded").addClass("element");
-        }
-      }
-    });
-  }
-  return false;
-}
-
-</script>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">

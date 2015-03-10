@@ -73,7 +73,7 @@ class TagController extends Controller
             $dm->persist($tag);
             $dm->flush();
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_tag_index'));
+            return $this->redirect($this->generateUrl('pumukitnewadmin_tag_list'));
         }
 
         return array('tag' => $tag, 'form' => $form->createView());
@@ -101,9 +101,74 @@ class TagController extends Controller
                 $this->get('session')->getFlashBag()->add('error', $e->getMessage());
             }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_tag_index'));
+            return $this->redirect($this->generateUrl('pumukitnewadmin_tag_list'));
         }
 
         return array('tag' => $tag, 'form' => $form->createView());
+    }
+
+    /**
+     * List action
+     * @Template
+     */
+    public function listAction(Request $request)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $repo = $dm->getRepository('PumukitSchemaBundle:Tag');
+
+        $root_name = "ROOT";
+        $root = $repo->findOneByCod($root_name);
+
+        if (null !== $root) {
+            $children = $root->getChildren();
+        } else {
+            $children = array();
+        }
+
+        return array(
+                     'root' => $root,
+                     'children' => $children
+                     );
+    }
+
+    public function batchDeleteAction(Request $request)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $repo = $dm->getRepository('PumukitSchemaBundle:Tag');
+
+        $ids = $this->getRequest()->get('ids');
+
+        if ('string' === gettype($ids)){
+            $ids = json_decode($ids, true);
+        }
+
+        $tags = array();
+        $tagsWithChildren = array();
+        foreach ($ids as $id) {
+            $tag = $repo->find($id);
+            if (0 == count($tag->getChildren())) {
+                $tags[] = $tag;
+            }else{
+                $tagsWithChildren[] = $tag;
+            }
+        }
+
+        if (0 !== count($tagsWithChildren)){
+            $message = '';
+            foreach($tagsWithChildren as $tag){
+                $message .= "Tag '".$tag->getCod()."' with children (".count($tag->getChildren())."). ";
+            }
+
+            return new JsonResponse(array("status" => $message), 404);
+        }else{
+            foreach ($tags as $tag){
+                $dm->remove($tag);
+                $dm->flush();
+            }
+        }
+
+        $this->addFlash('success', 'delete');
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_tag_list'));
     }
 }
