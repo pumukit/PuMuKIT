@@ -18,7 +18,7 @@ class MultimediaObjectController extends Controller
     {
 
     	$Serie = $multimediaObject->getSeries();
-    	$mmobjects = $Serie->getMultimediaObjects();
-        return array('multimediaObject' => $multimediaObject, 'mmobjects' => $mmobjects);
+    	$multimediaObjects = $Serie->getMultimediaObjects();
+        return array('multimediaObject' => $multimediaObject, 'multimediaObjects' => $multimediaObjects);
     }
 }

@@ -1,0 +1,20 @@
+<div class="pumukit_mini_mmobjs">
+
+  {% for multimediaObject in multimediaObjects %}
+  <dl class="pumukit_mini_mmobj" style="cursor:pointer;" onclick="window.location='/video/{{multimediaObject.getId()}}'">
+
+    <dt class="thumbnail">
+      <a href="/video/{{multimediaObject.id}}">
+        <img class="play_icon" alt="" src="{{ asset('bundles/pumukitwebtv/images/play_icon.png') }}">
+        <img class="mm_img" src="{{multimediaObject|first_url_pic(true)}}" width="75 px" height="56 px">
+      </a>
+    </dt> 
+
+    <dd class="info">
+      <div class="title">
+        <a href="/video/{{multimediaObject.id}}">{{multimediaObject.title}}</a>
+      </div>
+    </dd>
+  </dl>
+  {% endfor %}
+</div>
