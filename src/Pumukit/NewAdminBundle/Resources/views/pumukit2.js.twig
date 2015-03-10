@@ -848,6 +848,9 @@ get_batch_delete_route = function(element, ids)
         case 'tag':
             route = '{{ path('pumukitnewadmin_tag_batch_delete', {'ids': '__ids__'})|raw }}';
             break;
+        case 'role':
+            route = '{{ path('pumukitnewadmin_role_batch_delete', {'ids': '__ids__'})|raw }}';
+            break;
     }
 
     return route.replace('__ids__', JSON.stringify(ids)) ;
@@ -872,6 +875,9 @@ get_create_route = function(element)
             break;
         case 'event':
             route = '{{ path('pumukitnewadmin_event_create')|raw }}';
+            break;
+        case 'role':
+            route = '{{ path('pumukitnewadmin_role_create')|raw }}';
             break;
     }
 
