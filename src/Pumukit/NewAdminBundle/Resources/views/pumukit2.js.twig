@@ -3,7 +3,7 @@ window.submit_delete_role = function(id, countMm)
     if (countMm == 0){
         if (window.confirm("{% trans %}Are you sure you want to delete this role?{% endtrans %}")){
             var url = "{{ path('pumukitnewadmin_role_delete', {'id': '__id__'})|raw }}";
-            var message = "{% trans %}Deleted Role{% endtrans %}";
+            var message = "{% trans %}Role successfully deleted.{% endtrans %}";
             $('#list_roles').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
         }
     }else{
@@ -15,7 +15,7 @@ window.submit_delete_user = function(id, userFullname)
 {
     if (window.confirm("{% trans %}Are you sure you want to delete the user{% endtrans %} "+userFullname+"?")){
         var url = "{{ path('pumukitnewadmin_user_delete', {'id': '__id__'})|raw }}";
-        var message = '{% trans %}Deleted User{% endtrans %} "'+userFullname+'" OK.';
+        var message = '{% trans %}User{% endtrans %} "'+userFullname+'" {% trans %}successfully deleted.{% endtrans %}';
         $('#list_users').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
     }
 }
@@ -25,7 +25,7 @@ window.submit_delete_broadcast = function(id, countMm)
     if (countMm == 0){
         if (window.confirm("{% trans %}Are you sure you want to delete this broadcast?{% endtrans %}")){
             var url = "{{ path('pumukitnewadmin_broadcast_delete', {'id': '__id__'})|raw }}";
-            var message = '{% trans %}Deleted Broadcast successfully.{% endtrans %}';
+            var message = '{% trans %}Broadcast successfully deleted.{% endtrans %}';
             $('#list_broadcasts').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
         }
     }else{
@@ -37,7 +37,7 @@ window.submit_delete_live = function(id)
 {
     if (window.confirm("{% trans %}Are you sure you want to delete this live channel?{% endtrans %}")){
         var url = "{{ path('pumukitnewadmin_live_delete', {'id': '__id__'})|raw }}";
-        var message = '{% trans %}Live channel deleted.{% endtrans %}';
+        var message = '{% trans %}Live channel successfully deleted.{% endtrans %}';
         $('#list_lives').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
     }
 }
@@ -46,7 +46,7 @@ window.submit_delete_event = function(id)
 {
     if (window.confirm("{% trans %}Are you sure you want to delete this live event?{% endtrans %}")){
         var url = "{{ path('pumukitnewadmin_event_delete', {'id': '__id__'})|raw }}";
-        var message = '{% trans %}Live event deleted.{% endtrans %}';
+        var message = '{% trans %}Live event successfully deleted.{% endtrans %}';
         $('#list_events').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
     }
 }
@@ -55,7 +55,7 @@ window.submit_delete_mms = function(id)
 {
     if (window.confirm("{% trans %}Are you sure you want to delete this multimedia object?{% endtrans %}")){
         var url = "{{ path('pumukitnewadmin_mms_delete', {'id': '__id__'})|raw }}";
-        var message = '{% trans %}Multimedia Object deleted.{% endtrans %}';
+        var message = '{% trans %}Multimedia Object successfully deleted.{% endtrans %}';
         // TODO if deleted when selected, update edit and show views
         $('#list_mms').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
     }
@@ -65,7 +65,7 @@ window.submit_delete_series = function(id, seriesTitle, countMm)
 {
     if (window.confirm('{% trans %}Are you sure you want to delete the series{% endtrans %} "'+seriesTitle+'"? {% trans %}This series has{% endtrans %} '+countMm+' {% trans %}multimedia object(s){% endtrans %}.')){
         var url = "{{ path('pumukitnewadmin_series_delete', {'id': '__id__'})|raw }}";
-        var message = '{% trans %}Deleted Series{% endtrans %} "'+seriesTitle+'".';
+        var message = '{% trans %}Series{% endtrans %} "'+seriesTitle+'" {% trans %}successfully deleted{% endtrans %}.';
         $('#list_series').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message);});
     }
 }
@@ -173,7 +173,7 @@ window.submit_delete_person = function(id, countMm, personHName)
     if (countMm == 0){
         if (window.confirm("{% trans %}Are you sure you want to delete the data of{% endtrans %} "+personHName+"?")){
             var url = "{{ path('pumukitnewadmin_person_delete', {'id': '__id__'})|raw }}";
-            var message = '{% trans %}Deleted Person successfully.{% endtrans %}';
+            var message = '{% trans %}Person successfully deleted.{% endtrans %}';
             $('#list_people').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message);});
     }
     }else{
@@ -323,9 +323,9 @@ window.change_select = function(element, selector, pluralName)
         if (confirm('{% trans %}Are you sure?{% endtrans %}')) {
             var route = get_batch_delete_route(element, ids);
             if (pluralName.indexOf('mms') != -1){
-                var message = '{% trans %}Multimedia Object(s) deleted successfully.{% endtrans %}';
+                var message = '{% trans %}Multimedia Object(s) successfully deleted.{% endtrans %}';
             }else{
-                var message = pluralName.charAt(0).toUpperCase()+pluralName.slice(1)+' {% trans %}deleted successfully.{% endtrans %}';
+                var message = pluralName.charAt(0).toUpperCase()+pluralName.slice(1)+' {% trans %}successfully deleted.{% endtrans %}';
             }
             $.ajax({
                     url: route,
@@ -966,7 +966,7 @@ function tag_delete(id, cod, pid) {
         if ($('.d_' + pid).length == 0) {
           $('#row_tag_' + pid + ' .expanded').removeClass("expanded").addClass("element");
         }
-        var message = '{% trans %}Deleted Tag{% endtrans %} "'+cod+'" OK.';
+        var message = '{% trans %}Tag{% endtrans %} "'+cod+'" {% trans %}successfully deleted{% endtrans %}.';
         success(message);
       }
     });
