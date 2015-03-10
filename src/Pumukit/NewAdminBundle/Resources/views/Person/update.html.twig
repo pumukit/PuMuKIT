@@ -4,7 +4,29 @@
 </div>
 <div class="modal-body">
   {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
-  <form action="{{ path('pumukitnewadmin_person_update', {'id': person.id}) }}" method="POST">
+  <form onsubmit="$('#myModal').modal('hide');
+                  $.ajax({
+                          url: '{{ path('pumukitnewadmin_person_update', {'id': person.id}) }}',
+                          method: 'POST',
+                          data: $(this).serialize(),
+                          success: function(response, textStatus, jqXHR){
+                                               if (jqXHR.responseText.indexOf('modal-header') != -1){
+                                                     var message = '{% trans %}There was an error in updating the Person.{% endtrans %}';
+                                                     no_success(message);
+                                               }else{
+                                                     $('#list_people').html(response);
+                                                     var message = '{% trans %}Person successfully created.{% endtrans %}';
+                                                     success(message);
+                                               }
+                          },
+                          error: function(jqXHR, textStatus, errorThrown){
+                                               console.log('error');
+                                               console.log(textStatus);
+                                               no_success(errorThrown+': '+textStatus);
+                          }
+                  });
+                  return false;"
+     action="{{ path('pumukitnewadmin_person_update', {'id': person.id}) }}" method="POST">
     <fieldset>
       {% for child in form %}
         {{ form_row(child) }}
