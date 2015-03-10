@@ -29,25 +29,6 @@ class BroadcastAdminController extends AdminController
         return $this->handleView($view);
     }
 
-    public function batchDeleteAction(Request $request)
-    {
-        $ids = $this->getRequest()->get('ids');
-
-        foreach ($ids as $id) {
-            $resource = $this->find($id);
-            $this->domainManager->delete($resource);
-        }
-        $config = $this->getConfiguration();
-
-        $this->addFlash('success', 'delete');
-        $this->get('session')->getFlashBag()->add('default', 'changed');
-
-        return $this->redirectToRoute(
-        $config->getRedirectRoute('index'),
-        $config->getRedirectParameters()
-    );
-    }
-
     /**
      * Change the default broadcast type
      */
