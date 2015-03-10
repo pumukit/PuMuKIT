@@ -155,7 +155,7 @@ window.submit_delete_material = function(id, mmId)
         var url = "{{ path('pumukitnewadmin_material_delete', {'id': '__id__', 'mmId': '__mmId__'})|raw }}";
         url = url.replace('__id__', id);
         url = url.replace('__mmId__', mmId);
-        $('#materials_mms').load(url, {'_method': 'DELETE'});
+        $('#materials_mms').load(url, {'_method': 'DELETE'}, function(){success('{% trans %}Material successfully deleted.{% endtrans %}')});
     }
 }
 

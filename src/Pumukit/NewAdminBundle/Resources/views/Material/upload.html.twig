@@ -4,6 +4,5 @@
   new parent.$('#materials_mms').load('{{ path('pumukitnewadmin_material_list', {'id': mm.id}) }}');
   new parent.$('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}');
 
-  var message = '{% trans %}New material uploaded and embedded{% endtrans %}.';
-  parent.$('#div_messages_span_info').snackbar({content: message, style: 'toast'});
+  parent.success('{% trans %}New Material added.{% endtrans %}');
 </script>
