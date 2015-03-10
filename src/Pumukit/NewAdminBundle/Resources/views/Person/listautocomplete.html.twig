@@ -18,7 +18,7 @@
             onclick="if('' != $('#person_id').val()){
                                                      var route = '{{ path('pumukitnewadmin_person_link', {'id': '__personId__', 'roleId': role.id, 'mmId': mm.id} ) }}';
                                                      var personId = $('#person_id').val();
-                                                     $('#{{ role.id }}_person_mms{{ template }}').load(route.replace('__personId__', personId), {'_method':'POST'});
+                                                     $('#{{ role.id }}_person_mms{{ template }}').load(route.replace('__personId__', personId), {'_method':'POST'}, function(){success('{% trans %}Person successfully associated to Multimedia Object{% endtrans %} *{{ mm.getTitle() }}* {% trans %}with role{% endtrans %} *{{ role.getName() }}*');});
                                                      $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', {'_method':'POST'});
                                                      $('#myModal').modal('hide');
                      }else{

@@ -10,7 +10,10 @@
                             url: '{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id}) }}',
                             type: 'POST',
                             data: $(this).serialize(),
-                            success: function(response){$('#pic_{{ resource_name }}').html(response);}
+                            success: function(response){
+                                                        $('#pic_{{ resource_name }}').html(response);
+                                                        success('{% trans %}New Pic added.{% endtrans %}');
+                                                        }
                           });
                     return false;"
           action="{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id}) }}" method="post">
@@ -71,12 +74,7 @@
               <div class="wrap1">
                 <div class="wrap2">
                   <div class="wrap3">
-		            <a href="#" data-dismiss="modal" onclick="$.ajax({
-                                                                      url: '{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id, 'picUrl': pic_url}) }}',
-                                                                      type: 'GET',
-                                                                      success: function(response){$('#pic_{{ resource_name }}').html(response);}
-                                                               });
-                                                               return false;">
+		            <a href="#" data-dismiss="modal" onclick="$('#pic_{{ resource_name }}').load('{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id, 'picUrl': pic_url}) }}', function(){success('{% trans %}New Pic added.{% endtrans %}');}); return false;">
                       <img src="{{ pic_url }}" alt="{{ pic_url|split('/')|last }}" height="82" width="100"/>
                     </a>
                   </div>

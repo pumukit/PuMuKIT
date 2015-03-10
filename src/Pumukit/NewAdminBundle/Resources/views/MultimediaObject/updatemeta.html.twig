@@ -6,11 +6,11 @@
                           url: '{{ path('pumukitnewadmin_mms_update_meta', {'id': mm.id}) }}',
                           type: 'POST',
                           data: $(this).serialize(),
-                          error: function(request, json){var message = '{% trans %}Saved ERROR{% endtrans %}'; no_success(message);},
+                          error: function(request, json){var message = '{% trans %}Multimedia Object saved ERROR{% endtrans %}'; no_success(message);},
                           success: function(response){
                                                       $('#list_mms').html(response);
                                                       $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}');
-                                                      var message = '{% trans %}Saved OK{% endtrans %}';
+                                                      var message = '{% trans %}Multimedia Object saved OK{% endtrans %}';
                                                       success(message);
                                                       }
                   });
