@@ -43,7 +43,7 @@
 	      {# TODO mmwizard and path with series id #}
 	      <a class="btn btn-primary btn-raised" href="#" onclick="Modalbox.show('/editar.php/mmwizard/index/mod/mms/serial_id/782',{width: 800, title:'{% trans %}STEP II: MM.OBJ.{% endtrans %}'}); return false;">Wizard</a>
 	      {# TODO Path create with page number #}
-	      <a title="{% trans %}Create new multimedia object{% endtrans %}" class="btn btn-pumukit btn-raised" href="#" onclick="$('#list_mms').load('{{ path('pumukitnewadmin_mms_create', {'id': series.id}) }}'); return false;">{% trans %}New{% endtrans %}</a>
+	      <a title="{% trans %}Create new multimedia object{% endtrans %}" class="btn btn-pumukit btn-raised" href="#" onclick="$('#list_mms').load('{{ path('pumukitnewadmin_mms_create', {'id': series.id}) }}', function(){success('{% trans %}Multimedia Object successfully created.{% endtrans %}');}); return false;">{% trans %}New{% endtrans %}</a>
         </div>
       </div>
     </div>
