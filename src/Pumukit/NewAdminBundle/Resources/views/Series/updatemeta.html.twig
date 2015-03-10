@@ -3,15 +3,11 @@
                           url: '{{ path('pumukitnewadmin_series_update', {'id': series.id}) }}',
                           type: 'POST',
                           data: $(this).serialize(),
-                          error: function(request, json){var message = '{% trans %}Saved ERROR{% endtrans %}'; no_success(message);},
+                          error: function(request, json){var message = '{% trans %}Series saved ERROR{% endtrans %}'; no_success(message);},
                           success: function(response){
                                             $('#list_series').html(response);
-                                            $.ajax({
-                                                    url: '{{ path('pumukitnewadmin_series_show', {'id': series.id}) }}',
-                                                    type: 'GET',
-                                                    success: function(response){$('#preview_series').html(response);}
-                                                    });
-                                            var message = '{% trans %}Saved OK{% endtrans %}'; 
+                                            $('#preview_series').load('{{ path('pumukitnewadmin_series_show', {'id': series.id}) }}');
+                                            var message = '{% trans %}Series saved OK{% endtrans %}';
                                             success(message);
                                             }
                           });
@@ -28,8 +24,6 @@
       </div>
 
       <div class="col-md-7 text-right">
-        <span id="series_save_error" style="display:none; color:red;">{% trans %}Saved ERROR{% endtrans %}</span>
-        <span id="series_save_ok" style="display:none; color:indigo;">{% trans %}Saved OK{% endtrans %}</span>
         <button type="button" class="btn btn-default btn-raised" onclick="$('#remember_save_series').hide();">{% trans %}Cancel{% endtrans %}</button>
         <button type="submit" class="btn btn-pumukit btn-raised" onclick="$('#remember_save_series').hide();">{% trans %}OK{% endtrans %}</button>
       </div>

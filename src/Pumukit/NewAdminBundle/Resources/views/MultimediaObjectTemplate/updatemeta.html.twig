@@ -6,8 +6,8 @@
                           url: '{{ path('pumukitnewadmin_mmtemplate_update_meta', {'id': mm.id, 'seriesId': mm.getSeries().getId()}) }}',
                           type: 'POST',
                           data: $(this).serialize(),
-                          error: function(request, json){var message = '{% trans %}Saved ERROR{% endtrans %}'; no_success(message);},
-                          success: function(response){var message = '{% trans %}Saved OK{% endtrans %}'; success(message);}
+                          error: function(request, json){var message = '{% trans %}Mutlimedia Object Template saved ERROR{% endtrans %}'; no_success(message);},
+                          success: function(response){var message = '{% trans %}Mutlimedia Object Template saved OK{% endtrans %}'; success(message);}
                   });
                   return false;"
         action="{{ path('pumukitnewadmin_mmtemplate_update_meta', {'id': mm.id, 'seriesId': mm.getSeries.getId()}) }}" method="POST">

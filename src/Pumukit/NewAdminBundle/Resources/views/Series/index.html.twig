@@ -24,7 +24,7 @@
           {# TODO wizard and path #}
 	      <a class="btn btn-primary btn-raised" href="#" onclick="Modalbox.show('/editar.php/wizard/serial',{width:800, title:'{% trans %}STEP I: Serie{% endtrans %}'}); return false;">{% trans %}Wizard{% endtrans %}</a>
           {# TODO check route with filter /editar.php/serials/create/filter/filter #}
-	      <a title="{% trans %}Create new series{% endtrans %}" class="btn btn-pumukit btn-raised" href="#" onclick="$('#filter_series')[0].reset(); $('#list_series').load('{{ path('pumukitnewadmin_series_create') }}'); return false;">{% trans %}New{% endtrans %}</a>
+	      <a title="{% trans %}Create new series{% endtrans %}" class="btn btn-pumukit btn-raised" href="#" onclick="$('#filter_series')[0].reset(); $('#list_series').load('{{ path('pumukitnewadmin_series_create') }}', function(){success('{% trans %}Series successfully created{% endtrans %}')}); return false;">{% trans %}New{% endtrans %}</a>
         </div>
       </div>
     </div>
