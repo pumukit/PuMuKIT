@@ -21,22 +21,13 @@ class MultimediaObjectByTagController extends Controller
         $limit = 2;
         $page =  $request->get("page", 1);
 
-        dump($page);
-
     	$repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
-
-        dump($tag);
-        dump($request->getLocale());
-
         $mmobjs = $repo->createBuilderWithTag($tag, array('record_date' => 1));
-        dump($mmobjs);
 
         $adapter = new DoctrineODMMongoDBAdapter($mmobjs);
         $pagerfanta = new Pagerfanta($adapter);
         $pagerfanta->setMaxPerPage($limit); // 10 by default
         $pagerfanta->setCurrentPage($page); // 1 by default
-
-        dump($pagerfanta);
 
         return array('mmobjs' => $pagerfanta, 'tag' => $tag);
     }

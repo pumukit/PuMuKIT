@@ -42,7 +42,6 @@ class SearchMultimediaObjectsController extends Controller
     	//Obtenemos del repositorio todos los objetos multimedia y todos los tags
 		$multimediaObjects = $repository_multimediaObjects->findall();
 		$tags = $repository_tags->findall();
-		//dump($tags);
 
 		//Buscamos coincidencia del Tag si se modifica el campo del filtro: <Tags>
 		for ($i=0;$i<count($tags);$i++){
@@ -59,7 +58,6 @@ class SearchMultimediaObjectsController extends Controller
 		}
 
 		$queryBuilder = $repository_multimediaObjects->createStandardQueryBuilder();
-
 
 		/*------------------Aplicamos los FILTROS y nos quedamos con los objetos multimedia deseados ----------------------*/
 
@@ -112,10 +110,8 @@ class SearchMultimediaObjectsController extends Controller
 		//Creamos el paginador
 		$adapter = new DoctrineODMMongoDBAdapter($queryBuilder);
         $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage($limit); // 10 by default
-        $pagerfanta->setCurrentPage($page); // 1 by default
-
-        dump(date_default_timezone_get());
+        $pagerfanta->setMaxPerPage($limit);
+        $pagerfanta->setCurrentPage($page);
 
         return array('multimediaObjects' => $pagerfanta, 'tags' => $tags, 'tag_found' => $tag_found, 'type_found' => $type_found,
         	'duration_found' => $duration_found, 'start_found' => $start_found, 'end_found' => $end_found);

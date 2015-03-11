@@ -22,18 +22,12 @@ class SeriesByTagController extends Controller
         $page =  $request->get("page", 1);
 
     	$repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
-
-        dump($repo);
-        //dump($tag);
-        //dump($request->getLocale());
-
         $series = $repo->createBuilderWithTag($tag, array('public_date' => +1));
-        dump($series);
 
         $adapter = new DoctrineODMMongoDBAdapter($series);
         $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage($limit); // 10 by default
-        $pagerfanta->setCurrentPage($page); // 1 by default
+        $pagerfanta->setMaxPerPage($limit);
+        $pagerfanta->setCurrentPage($page);
 
         return array('series' => $pagerfanta, 'tag' => $tag);
     }
