@@ -1,3 +1,13 @@
+pumukit_cmar_web_tv:
+    resource: "@PumukitCmarWebTVBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pumukit_web_tv:
+    resource: "@PumukitWebTVBundle/Controller/"
+    type:     annotation
+    prefix:   /webtvtmp/
+
 pumukit_live:
     resource: "@PumukitLiveBundle/Controller/"
     type:     annotation
@@ -7,11 +17,6 @@ pumukit_new_admin_tmp:
     resource: "@PumukitNewAdminBundle/Controller/"
     type:     annotation
     prefix:   /admin
-
-pumukit_web_tv:
-    resource: "@PumukitWebTVBundle/Controller/"
-    type:     annotation
-    prefix:   /
 
 pumukit_encoder:
     resource: "@PumukitEncoderBundle/Controller/"
