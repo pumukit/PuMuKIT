@@ -1,3 +1,5 @@
+/src/Pumukit/ExampleDataBundle/Resources/public/images
+/src/Pumukit/ExampleDataBundle/Resources/public/videos
 /web/bundles/
 /web/uploads/material/*
 !/web/uploads/material/.gitignore
