@@ -12,18 +12,26 @@
             <link href="{{ asset('bundles/pumukitcmarwebtv/css/serial.css') }}" type="text/css" rel="stylesheet" media="screen"/>
             <link href="{{ asset('bundles/pumukitcmarwebtv/css/usctv.css') }}" type="text/css" rel="stylesheet" media="screen"/>
             <link href="{{ asset('bundles/pumukitcmarwebtv/css/usctv.orig.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+            <link href="{{ asset('bundles/pumukitcmarwebtv/css/960.css') }}" type="text/css" rel="stylesheet" media="screen"/>
         {% endblock %}
 
         {% block javascripts %}
         {% endblock %}
 
-        <link rel="icon" type="image/x-icon" href="{{ asset('bundles/pumukitcmarwebtv/images/favicon.ico') }}" />
     </head>
     <body>
-    	<div style="overflow:hidden; background:#005268 url({{ asset('bundles/pumukitcmarwebtv/images/usc/cmartvL.jpg') }}) no-repeat 50% 50%">
-    		<div class="container_15" style="">
-        		{% include 'PumukitCmarWebTVBundle::header.html.twig' %}
-      		</div>
+        <div id="headerbar">
+    		<div style="overflow:hidden; background:#005268 url({{ asset('bundles/pumukitcmarwebtv/images/usc/cmartvL.jpg') }}) no-repeat 50% 50%">
+    			<div class="container_15">
+    				{% include 'PumukitCmarWebTVBundle::cab.html.twig' %}
+				</div>
+			</div>
 		</div>	
+
+		<div id="body">
+		<div class="container15" id="tvusc">
+
+		</div>
+		</div>
     </body>
 </html>
