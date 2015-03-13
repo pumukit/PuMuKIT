@@ -5,7 +5,6 @@
         <title>{% block title %}CAMPUS DO MAR TV{% endblock %}</title>
         <!--Block with CSS files-->
         {% block stylesheets %}
-        	<link href="{{ asset('bundles/pumukitcmarwebtv/css/main.css') }}" type="text/css" rel="stylesheet" media="screen"/>
             <link href="{{ asset('bundles/pumukitcmarwebtv/css/estilos.css') }}" type="text/css" rel="stylesheet" media="screen"/>
             <link href="{{ asset('bundles/pumukitcmarwebtv/css/iefix.css') }}" type="text/css" rel="stylesheet" media="screen"/>
             <link href="{{ asset('bundles/pumukitcmarwebtv/css/matterhorn.css') }}" type="text/css" rel="stylesheet" media="screen"/>
@@ -35,7 +34,11 @@
 					{% include 'PumukitCmarWebTVBundle::cab_pan.html.twig' %}
 				</div>
 				<div class="">
-
+					<div class="grid_3">
+						{% include 'PumukitCmarWebTVBundle::bar.html.twig' %}
+					</div>
+					<div class="grid_12">
+					</div>
 				</div>
 			</div>
 		</div>
