@@ -17,6 +17,8 @@
         {% block javascripts %}
         {% endblock %}
 
+        <link rel="icon" type="image/x-icon" href="{{ asset('bundles/pumukitcmarwebtv/images/favicon.ico') }}" />
+
     </head>
     <body>
         <div id="headerbar">
@@ -29,10 +31,12 @@
 
 		<div id="body">
 			<div class="container_15" id="tvusc">
+
 				<div class="usctv_cab">
 					{% include 'PumukitCmarWebTVBundle::cab_menu.html.twig' %}
 					{% include 'PumukitCmarWebTVBundle::cab_pan.html.twig' %}
 				</div>
+
 				<div class="">
 					<div class="grid_3">
 						{% include 'PumukitCmarWebTVBundle::bar.html.twig' %}
@@ -40,7 +44,11 @@
 					<div class="grid_12">
 					</div>
 				</div>
+
+				{% include 'PumukitCmarWebTVBundle::pie.html.twig' %}
+
 			</div>
 		</div>
+	
     </body>
 </html>
