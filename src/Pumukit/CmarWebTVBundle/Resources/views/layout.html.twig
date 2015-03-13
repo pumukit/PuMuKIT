@@ -22,16 +22,22 @@
     <body>
         <div id="headerbar">
     		<div style="overflow:hidden; background:#005268 url({{ asset('bundles/pumukitcmarwebtv/images/usc/cmartvL.jpg') }}) no-repeat 50% 50%">
-    			<div class="container_15">
-    				{% include 'PumukitCmarWebTVBundle::cab.html.twig' %}
-				</div>
+    		<div class="container_15">
+    			{% include 'PumukitCmarWebTVBundle::cab.html.twig' %}
+			</div>
 			</div>
 		</div>	
 
 		<div id="body">
-		<div class="container15" id="tvusc">
+			<div class="container_15" id="tvusc">
+				<div class="usctv_cab">
+					{% include 'PumukitCmarWebTVBundle::cab_menu.html.twig' %}
+					{% include 'PumukitCmarWebTVBundle::cab_pan.html.twig' %}
+				</div>
+				<div class="">
 
-		</div>
+				</div>
+			</div>
 		</div>
     </body>
 </html>
