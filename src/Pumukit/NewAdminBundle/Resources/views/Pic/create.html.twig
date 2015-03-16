@@ -48,7 +48,7 @@
 	        <input type="file" name="file" id="file" value="" size="66" class="file">
           </div>
         </div>
-        <iframe name="iframeUpload" style="display:none" src=""></iframe>
+        <iframe id="iframeUpload" name="iframeUpload" style="display:none" src=""></iframe>
       </fieldset>
       <div class="modal-footer">
         <button type="submit" class="btn btn-pumukit btn-raised" onclick="if($('#file').val()==''){window.alert('{% trans %}Select a file on first place. Thank you.{% endtrans %}');return false;}">{% trans %}Add{% endtrans %}</button>

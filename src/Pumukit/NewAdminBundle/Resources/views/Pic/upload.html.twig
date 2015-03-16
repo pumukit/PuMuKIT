@@ -5,6 +5,8 @@
   parent.$('#pic_{{ resource_name }}').load('{{ path('pumukitnewadmin_'~resource_name~'pic_list', {'id': resource.id}) }}');
   parent.$('#pic_{{ resource_name }}').html('{% trans %}Update the video to show the images{% endtrans %}.');
 
-  parent.success('{% trans %}New Pic added.{% endtrans %}');
+  var uploaded = '{{ uploaded }}';
 
+  if ('success' == uploaded) parent.success('{% trans %}New Pic added.{% endtrans %}');
+  else parent.no_success('{{ message }}');
 </script>
