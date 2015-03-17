@@ -983,7 +983,7 @@ $(document).ready(function(){
             var message = $('#iframeUpload').contents().find('title');
             if (message.length != 0) message = message[0].innerHTML;
             message = $.trim(message);
-            if (2 < parseInt(message.charAt(0))){
+            if ('4' == message.charAt(0)){
                 $('#myModal').modal('hide');
                 no_success('NGINX ERROR: '+message);
             }
