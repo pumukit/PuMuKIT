@@ -4,13 +4,18 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
+
     <services>
-        <service id="pumukit_matterhorn.example" class="Pumukit\MatterhornBundle\Example">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <service id="pumukit_matterhorn.client" class="Pumukit\MatterhornBundle\Services\ClientService">
+<!--            <argument>http://demo.opencast.org:8080</argument>
+            <argument>matterhorn_system_account</argument>
+            <argument>CHANGE_ME</argument>
+        -->
+
+                   <argument>engage14.campusdomar.es</argument>
+            <argument></argument>
+            <argument></argument>
         </service>
     </services>
-    -->
+
 </container>
