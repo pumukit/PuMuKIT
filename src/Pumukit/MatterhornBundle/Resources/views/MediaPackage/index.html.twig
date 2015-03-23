@@ -10,19 +10,6 @@
       <div id="list_users">
         {% include 'PumukitMatterhornBundle:MediaPackage:list.html.twig' %}
       </div>
-      <div class="row">
-        <div class="col-md-2">
-          <select id="options_users" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('user', $(this), 'users');">
-            <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
-            <option disabled="">---</option>
-            <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
-            <option value="create">{% trans %}Create new{% endtrans %}</option>
-          </select>
-        </div>
-        <div class="col-md-10 text-right">
-          <a href="{{ path('pumukitnewadmin_user_create') }}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-target="#myModal">{% trans %}New{% endtrans %}</a>
-        </div>
-      </div>
     </div>
   </div>
   <div class="col-md-2">

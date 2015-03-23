@@ -11,6 +11,7 @@
             </div>
           </th>
           <th colspan="2" width="3%"></th>
+          <th width="1%">{% trans %}Img{% endtrans %}</th>
           <th width="1%">{% trans %}Id{% endtrans %}</th>
           <th>{% trans %}Name{% endtrans %}</th>
           <th>{% trans %}Series{% endtrans %}</th>
@@ -21,7 +22,6 @@
       </thead>
   
       <tbody>
-
         {% if mediaPackages is empty %}
         <tr>
           <td colspan="9">
@@ -41,6 +41,10 @@
           </td> 
           <td colspan="2" width="3%"></td>   
           <td>
+            <img class="mini" src="{{ mediaPackage.attachments.attachment.0.url }}" height="23" width="30">
+            <!--<img class="mini" src="{{ asset('/bundles/pumukitnewadmin/images/none.jpg') }}" alt="{% trans %}No_pic{% endtrans %}" height="23" width="30">-->
+          </td>
+          <td>
             {{ mediaPackage.id }}
           </td>
           <td>
@@ -55,7 +59,7 @@
             {{ mediaPackage.start|date("d/m/Y") }}
           </td>
         </tr>
-      {% endfor %}
+        {% endfor %}
       </tbody>
 
       <tfoot>
@@ -66,7 +70,7 @@
               {% transchoice mediaPackages.getNbResults %}
                   {0} users|{1} mediaPackages|]1,Inf] mediaPackages
               {% endtranschoice %}
-              {% if app.session.get('admin/user/criteria')|length != 0%}
+              {% if app.session.get('admin/mediapackage/criteria')|length != 0 %}
                 <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
               {% endif %}
             </div>

@@ -1,14 +1,15 @@
 <!-- Filter -->
 <div class="well">
-  <form class="form-horizontal" id="filter_users"  action="{{ path('pumukitnewadmin_ingester_index') }}" method="get">
+  <form class="form-horizontal" id="filter_users" onsubmit="" action="{{ path('pumukitnewadmin_ingester_index') }}" method="get">
+  
   <fieldset>
     <h2>{% trans %}Search{% endtrans %}</h2>
 
     <div class="form-group">
-      <label for="title" class="col-md-2 control-label">{% trans %}Title{% endtrans %}:</label>
-      {% set criteria = app.session.get('admin/user/criteria') %}
+      <label for="name" class="col-md-2 control-label">{% trans %}Name{% endtrans %}:</label>
+      {% set criteria = app.session.get('admin/person/criteria') %}
       <div class="col-md-10">
-        <input type="text" class="reset form-control" name="criteria[username]" id="filters_username" value="{{ criteria['username']|default("") }}">
+        <input type="text" class="reset form-control" name="criteria[name]" id="filters_name" value="{{ criteria['name']|default("") }}">
       </div>
     </div>
 
@@ -22,5 +23,6 @@
       <input class="btn btn-pumukit btn-raised" type="submit" name="filter" value="{% trans %}filter{% endtrans %}">
     </div>
   </div>
+  
 </form>
 </div>
