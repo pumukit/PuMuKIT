@@ -52,6 +52,7 @@ EOT
     {
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:Tag");
+        $factoryService = $this->getContainer()->get('pumukitschema.factory');
 
         if ($input->getOption('force')) {
             
@@ -87,7 +88,7 @@ EOT
             $line2 = '';
             $locale = 'en';
 
-            $series = new Series();
+            $series = $factoryService->createSeries();
             $series->setAnnounce($announce);
             $series->setPublicDate($publicDate);
             $series->setTitle($title);
@@ -201,7 +202,7 @@ EOT
             $subtitle = '';
             $description = "";
 
-            $multimediaObject = new MultimediaObject();
+            $multimediaObject = $factoryService->createMultimediaObject($series);
             $multimediaObject->setRank($rank);
             $multimediaObject->setStatus($status);
             $multimediaObject->setSeries($series);
@@ -235,7 +236,7 @@ EOT
             $line2 = '';
             $locale = 'en';
 
-            $series = new Series();
+            $series = $factoryService->createSeries();
             $series->setAnnounce($announce);
             $series->setPublicDate($publicDate);
             $series->setTitle($title);
@@ -349,7 +350,7 @@ EOT
             $subtitle = '';
             $description = "";
 
-            $multimediaObject = new MultimediaObject();
+            $multimediaObject = $factoryService->createMultimediaObject($series);
             $multimediaObject->setRank($rank);
             $multimediaObject->setStatus($status);
             $multimediaObject->setSeries($series);
@@ -383,7 +384,7 @@ EOT
             $line2 = '';
             $locale = 'en';
 
-            $series = new Series();
+            $series = $factoryService->createSeries();
             $series->setAnnounce($announce);
             $series->setPublicDate($publicDate);
             $series->setTitle($title);
@@ -497,7 +498,7 @@ EOT
             $subtitle = '';
             $description = "";
 
-            $multimediaObject = new MultimediaObject();
+            $multimediaObject = $factoryService->createMultimediaObject($series);
             $multimediaObject->setRank($rank);
             $multimediaObject->setStatus($status);
             $multimediaObject->setSeries($series);
@@ -580,7 +581,7 @@ EOT
             $subtitle = '';
             $description = "";
 
-            $multimediaObject = new MultimediaObject();
+            $multimediaObject = $factoryService->createMultimediaObject($series);
             $multimediaObject->setRank($rank);
             $multimediaObject->setStatus($status);
             $multimediaObject->setSeries($series);
@@ -662,7 +663,7 @@ EOT
             $subtitle = '';
             $description = "";
 
-            $multimediaObject = new MultimediaObject();
+            $multimediaObject = $factoryService->createMultimediaObject($series);
             $multimediaObject->setRank($rank);
             $multimediaObject->setStatus($status);
             $multimediaObject->setSeries($series);
@@ -744,7 +745,7 @@ EOT
             $subtitle = '';
             $description = "";
 
-            $multimediaObject = new MultimediaObject();
+            $multimediaObject = $factoryService->createMultimediaObject($series);
             $multimediaObject->setRank($rank);
             $multimediaObject->setStatus($status);
             $multimediaObject->setSeries($series);
@@ -826,7 +827,7 @@ EOT
             $subtitle = '';
             $description = "";
 
-            $multimediaObject = new MultimediaObject();
+            $multimediaObject = $factoryService->createMultimediaObject($series);
             $multimediaObject->setRank($rank);
             $multimediaObject->setStatus($status);
             $multimediaObject->setSeries($series);
@@ -860,7 +861,7 @@ EOT
             $line2 = '';
             $locale = 'en';
 
-            $series = new Series();
+            $series = $factoryService->createSeries();
             $series->setAnnounce($announce);
             $series->setPublicDate($publicDate);
             $series->setTitle($title);
@@ -974,7 +975,7 @@ EOT
             $subtitle = '';
             $description = "";
 
-            $multimediaObject = new MultimediaObject();
+            $multimediaObject = $factoryService->createMultimediaObject($series);
             $multimediaObject->setRank($rank);
             $multimediaObject->setStatus($status);
             $multimediaObject->setSeries($series);
@@ -1008,7 +1009,7 @@ EOT
             $line2 = '';
             $locale = 'en';
 
-            $series = new Series();
+            $series = $factoryService->createSeries();
             $series->setAnnounce($announce);
             $series->setPublicDate($publicDate);
             $series->setTitle($title);
@@ -1122,7 +1123,7 @@ EOT
             $subtitle = '';
             $description = "";
 
-            $multimediaObject = new MultimediaObject();
+            $multimediaObject = $factoryService->createMultimediaObject($series);
             $multimediaObject->setRank($rank);
             $multimediaObject->setStatus($status);
             $multimediaObject->setSeries($series);
@@ -1156,7 +1157,7 @@ EOT
             $line2 = '';
             $locale = 'en';
 
-            $series = new Series();
+            $series = $factoryService->createSeries();
             $series->setAnnounce($announce);
             $series->setPublicDate($publicDate);
             $series->setTitle($title);
@@ -1270,7 +1271,7 @@ EOT
             $subtitle = '';
             $description = "";
 
-            $multimediaObject = new MultimediaObject();
+            $multimediaObject = $factoryService->createMultimediaObject($series);
             $multimediaObject->setRank($rank);
             $multimediaObject->setStatus($status);
             $multimediaObject->setSeries($series);
@@ -1304,7 +1305,7 @@ EOT
             $line2 = '';
             $locale = 'en';
 
-            $series = new Series();
+            $series = $factoryService->createSeries();
             $series->setAnnounce($announce);
             $series->setPublicDate($publicDate);
             $series->setTitle($title);
@@ -1418,7 +1419,7 @@ EOT
             $subtitle = '';
             $description = "";
 
-            $multimediaObject = new MultimediaObject();
+            $multimediaObject = $factoryService->createMultimediaObject($series);
             $multimediaObject->setRank($rank);
             $multimediaObject->setStatus($status);
             $multimediaObject->setSeries($series);
@@ -1500,7 +1501,7 @@ EOT
             $subtitle = '';
             $description = "";
 
-            $multimediaObject = new MultimediaObject();
+            $multimediaObject = $factoryService->createMultimediaObject($series);
             $multimediaObject->setRank($rank);
             $multimediaObject->setStatus($status);
             $multimediaObject->setSeries($series);
@@ -1533,7 +1534,7 @@ EOT
             $line2 = '';
             $locale = 'en';
 
-            $series = new Series();
+            $series = $factoryService->createSeries();
             $series->setAnnounce($announce);
             $series->setPublicDate($publicDate);
             $series->setTitle($title);
@@ -1647,7 +1648,7 @@ EOT
             $subtitle = 'Zigzag';
             $description = "";
 
-            $multimediaObject = new MultimediaObject();
+            $multimediaObject = $factoryService->createMultimediaObject($series);
             $multimediaObject->setRank($rank);
             $multimediaObject->setStatus($status);
             $multimediaObject->setSeries($series);
@@ -1681,7 +1682,7 @@ EOT
             $line2 = '';
             $locale = 'en';
 
-            $series = new Series();
+            $series = $factoryService->createSeries();
             $series->setAnnounce($announce);
             $series->setPublicDate($publicDate);
             $series->setTitle($title);
@@ -1795,7 +1796,7 @@ EOT
             $subtitle = 'Quijote';
             $description = "";
 
-            $multimediaObject = new MultimediaObject();
+            $multimediaObject = $factoryService->createMultimediaObject($series);
             $multimediaObject->setRank($rank);
             $multimediaObject->setStatus($status);
             $multimediaObject->setSeries($series);
@@ -1877,7 +1878,7 @@ EOT
             $subtitle = 'Quijote';
             $description = "";
 
-            $multimediaObject = new MultimediaObject();
+            $multimediaObject = $factoryService->createMultimediaObject($series);
             $multimediaObject->setRank($rank);
             $multimediaObject->setStatus($status);
             $multimediaObject->setSeries($series);
@@ -1911,7 +1912,7 @@ EOT
             $line2 = '';
             $locale = 'en';
 
-            $series = new Series();
+            $series = $factoryService->createSeries();
             $series->setAnnounce($announce);
             $series->setPublicDate($publicDate);
             $series->setTitle($title);
@@ -2025,7 +2026,7 @@ EOT
             $subtitle = '';
             $description = "";
 
-            $multimediaObject = new MultimediaObject();
+            $multimediaObject = $factoryService->createMultimediaObject($series);
             $multimediaObject->setRank($rank);
             $multimediaObject->setStatus($status);
             $multimediaObject->setSeries($series);
@@ -2059,7 +2060,7 @@ EOT
             $line2 = '';
             $locale = 'en';
 
-            $series = new Series();
+            $series = $factoryService->createSeries();
             $series->setAnnounce($announce);
             $series->setPublicDate($publicDate);
             $series->setTitle($title);
@@ -2173,7 +2174,7 @@ EOT
             $subtitle = '';
             $description = "";
 
-            $multimediaObject = new MultimediaObject();
+            $multimediaObject = $factoryService->createMultimediaObject($series);
             $multimediaObject->setRank($rank);
             $multimediaObject->setStatus($status);
             $multimediaObject->setSeries($series);
