@@ -41,8 +41,14 @@
           </td> 
           <td colspan="2" width="3%"></td>   
           <td>
-            <img class="mini" src="{{ mediaPackage.attachments.attachment.0.url }}" height="23" width="30">
-            <!--<img class="mini" src="{{ asset('/bundles/pumukitnewadmin/images/none.jpg') }}" alt="{% trans %}No_pic{% endtrans %}" height="23" width="30">-->
+            {% set url_set = false %}
+            {% if mediaPackage.attachments.attachment.0.url is not empty %}
+              <img class="mini" src="{{ mediaPackage.attachments.attachment.0.url }}" height="23" width="30">
+              {% set url_set = true %}
+            {% endif %}
+            {% if not url_set %}
+            <img class="mini" src="{{ asset('/bundles/pumukitnewadmin/images/none.jpg') }}" alt="{% trans %}No_pic{% endtrans %}" height="23" width="30">
+            {% endif %}
           </td>
           <td>
             {{ mediaPackage.id }}
@@ -57,6 +63,10 @@
           </td>
           <td>
             {{ mediaPackage.start|date("d/m/Y") }}
+          </td>
+          <td>
+            <a href="">{% trans %}Import{% endtrans %}</a> |
+            <a href="http://engage14.campusdomar.es/paellaengage/ui/cmarwatch.html?id={{mediaPackage.id}}">{% trans %}Play{% endtrans %}</a>
           </td>
         </tr>
         {% endfor %}
