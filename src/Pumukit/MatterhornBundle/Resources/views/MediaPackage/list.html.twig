@@ -59,14 +59,14 @@
           <td>
           </td>
           <td>
-            {{ mediaPackage.duration|date("i:s") }}
+            {{ (((mediaPackage.duration)//1000)-3600)|date("H:i:s") }}
           </td>
           <td>
             {{ mediaPackage.start|date("d/m/Y") }}
           </td>
           <td>
             <a href="">{% trans %}Import{% endtrans %}</a> |
-            <a href="http://engage14.campusdomar.es/paellaengage/ui/cmarwatch.html?id={{mediaPackage.id}}">{% trans %}Play{% endtrans %}</a>
+            <a target="black" href="http://engage14.campusdomar.es/paellaengage/ui/cmarwatch.html?id={{mediaPackage.id}}">{% trans %}Play{% endtrans %}</a>
           </td>
         </tr>
         {% endfor %}
