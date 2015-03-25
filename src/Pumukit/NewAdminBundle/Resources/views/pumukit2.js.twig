@@ -762,7 +762,7 @@ $(function() {
   });
 
   init_tabs();
-
+  init_event_tab();
 });
 
 /**
@@ -779,7 +779,7 @@ function init_tabs()
 
     var lastMmTab = localStorage.getItem('lastMmTab');
     if (lastMmTab) {
-      $('#menuTab a[href="#' + lastMmTab+ '"]').tab('show')
+      $('#menuTab a[href="#' + lastMmTab+ '"]').tab('show');
     }
   }
 
@@ -792,7 +792,7 @@ function init_tabs()
 
     var lastSeriesTab = localStorage.getItem('lastSeriesTab');
     if (lastSeriesTab) {
-      $('#seriesTab a[href="#' + lastSeriesTab+ '"]').tab('show')
+      $('#seriesTab a[href="#' + lastSeriesTab+ '"]').tab('show');
     }
   }
 
@@ -805,7 +805,70 @@ function init_tabs()
 
     var lastTemplateTab = localStorage.getItem('lastTemplateTab');
     if (lastTemplateTab) {
-      $('#templateTab a[href="#' + lastTemplateTab+ '"]').tab('show')
+      $('#templateTab a[href="#' + lastTemplateTab+ '"]').tab('show');
+    }
+  }
+}
+
+$(document).on('load', '#list_events', function() {init_event_tab();});
+
+$(document).on('click', '#previousMonth', function(){
+    localStorage.setItem('lastEventTab', 'calEvent');
+    $('#list_events').load('{{ path('pumukitnewadmin_event_list', {'month': 'previous'})|raw }}', {'_method':'POST'});
+    // TODO check. Doesn't change the tab
+    $eventTab = $('#eventTab');
+    if($eventTab) {
+        var lastEventTab = localStorage.getItem('lastEventTab');
+        if (lastEventTab) {
+          $('#eventTab a[href="#' + lastEventTab+ '"]').tab('show');
+        }
+    }
+    return false;
+});
+
+$(document).on('click', '#todayMonth', function(){
+    localStorage.setItem('lastEventTab', 'calEvent');
+    $('#list_events').load('{{ path('pumukitnewadmin_event_list', {'month': 'today'})|raw }}', {'_method':'POST'});
+    // TODO check. Doesn't change the tab
+    $eventTab = $('#eventTab');
+    if($eventTab) {
+        var lastEventTab = localStorage.getItem('lastEventTab');
+        if (lastEventTab) {
+          $('#eventTab a[href="#' + lastEventTab+ '"]').tab('show');
+        }
+    }
+    return false;
+});
+
+$(document).on('click', '#nextMonth', function(){
+    localStorage.setItem('lastEventTab', 'calEvent');
+    $('#list_events').load('{{ path('pumukitnewadmin_event_list', {'month': 'next'})|raw }}', {'_method':'POST'});
+    // TODO check. Doesn't change the tab
+    $eventTab = $('#eventTab');
+    if($eventTab) {
+        var lastEventTab = localStorage.getItem('lastEventTab');
+        if (lastEventTab) {
+          $('#eventTab a[href="#' + lastEventTab+ '"]').tab('show');
+        }
+    }
+    return false;
+});
+
+/**
+ * Event List/Calendar Tabs
+ */
+function init_event_tab()
+{
+  $eventTab = $('#eventTab');
+  if($eventTab) {
+    $eventTab.on('show.bs.tab', function (e) {
+      where = e.target.href.split('#')[1];
+      localStorage.setItem('lastEventTab', where);
+    });
+
+    var lastEventTab = localStorage.getItem('lastEventTab');
+    if (lastEventTab) {
+      $('#eventTab a[href="#' + lastEventTab+ '"]').tab('show');
     }
   }
 }

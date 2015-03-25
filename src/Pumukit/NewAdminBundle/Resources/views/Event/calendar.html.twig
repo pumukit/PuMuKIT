@@ -71,7 +71,7 @@
           <div class="pagerfanta">
             <ul class="pagination pagination-sm">
               <li class="prev">
-	            <a class="azul" href="#" onclick="$('#list_events').load('{{ path('pumukitnewadmin_event_list', {'month': 'previous'}) }}', {'_method':'POST'}); return false;">
+	            <a id="previousMonth" class="azul" href="#">
                   &laquo;{% trans %}Previous{% endtrans %}
                 </a>
               </li>
@@ -81,12 +81,12 @@
                 </span>
               </li>
               <li class="next">
-	            <a class="azul" href="#" onclick="$('#list_events').load('{{ path('pumukitnewadmin_event_list', {'month': 'today'}) }}', {'_method':'POST'}); return false;">
+	            <a id="todayMonth" class="azul" href="#">
                   {% trans %}TODAY{% endtrans %}
                 </a>
               </li>
               <li class="next">
-	            <a class="azul" href="#" onclick="$('#list_events').load('{{ path('pumukitnewadmin_event_list', {'month': 'next'}) }}', {'_method':'POST'}); return false;">
+	            <a id="nextMonth" class="azul" href="#">
                   {% trans %}Next{% endtrans %}&raquo;
                 </a>
               </li>
