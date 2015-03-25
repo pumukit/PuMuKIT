@@ -1,13 +1,13 @@
 <!-- Filter -->
 <div class="well">
-  <form class="form-horizontal" id="filter_users" onsubmit="" action="{{ path('pumukitnewadmin_ingester_index') }}" method="get">
+  <form class="form-horizontal" id="filter_mediapackages" action="{{ path('pumukitnewadmin_ingester_index') }}" method="get">
   
   <fieldset>
     <h2>{% trans %}Search{% endtrans %}</h2>
 
     <div class="form-group">
       <label for="name" class="col-md-2 control-label">{% trans %}Name{% endtrans %}:</label>
-      {% set criteria = app.session.get('admin/person/criteria') %}
+      {% set criteria = app.session.get('admin/mediapackage/criteria') %}
       <div class="col-md-10">
         <input type="text" class="reset form-control" name="criteria[name]" id="filters_name" value="{{ criteria['name']|default("") }}">
       </div>
