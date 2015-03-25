@@ -641,7 +641,7 @@ window.click_fila_edit_urls = function(element, tr, show_url, update_url)
 {
     $('#preview_'+element).load(show_url);
 
-    $('#edit_'+element).load(update_url, function(){init_mm_tab();});
+    $('#edit_'+element).load(update_url, function(){init_tabs();});
 
     $('.success').removeClass('success');
     $(tr.parentNode).addClass('success');
@@ -761,29 +761,54 @@ $(function() {
     $(this).removeData('bs.modal');
   });
 
-  init_mm_tab();
+  init_tabs();
 
 });
 
 /**
  * Tab
  */
-function init_mm_tab()
+function init_tabs()
 {
-  $tab = $('#menuTab');
-  if($tab) {
-    $tab.on('show.bs.tab', function (e) {
+  $mmTab = $('#menuTab');
+  if($mmTab) {
+    $mmTab.on('show.bs.tab', function (e) {
       where = e.target.href.split('#')[1];
-      localStorage.setItem('lastTab', where);
+      localStorage.setItem('lastMmTab', where);
     });
 
-    var lastTab = localStorage.getItem('lastTab');
-    if (lastTab) {
-      $('#menuTab a[href="#' + lastTab+ '"]').tab('show')
+    var lastMmTab = localStorage.getItem('lastMmTab');
+    if (lastMmTab) {
+      $('#menuTab a[href="#' + lastMmTab+ '"]').tab('show')
+    }
+  }
+
+  $seriesTab = $('#seriesTab');
+  if($seriesTab) {
+    $seriesTab.on('show.bs.tab', function (e) {
+      where = e.target.href.split('#')[1];
+      localStorage.setItem('lastSeriesTab', where);
+    });
+
+    var lastSeriesTab = localStorage.getItem('lastSeriesTab');
+    if (lastSeriesTab) {
+      $('#seriesTab a[href="#' + lastSeriesTab+ '"]').tab('show')
+    }
+  }
+
+  $templateTab = $('#templateTab');
+  if($templateTab) {
+    $templateTab.on('show.bs.tab', function (e) {
+      where = e.target.href.split('#')[1];
+      localStorage.setItem('lastTemplateTab', where);
+    });
+
+    var lastTemplateTab = localStorage.getItem('lastTemplateTab');
+    if (lastTemplateTab) {
+      $('#templateTab a[href="#' + lastTemplateTab+ '"]').tab('show')
     }
   }
 }
-
 
 /**
  * Test from URL
