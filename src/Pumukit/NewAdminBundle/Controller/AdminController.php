@@ -5,6 +5,8 @@ namespace Pumukit\NewAdminBundle\Controller;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
+use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Pagerfanta;
 
 class AdminController extends ResourceController
 {
@@ -177,15 +179,37 @@ class AdminController extends ResourceController
         $config = $this->getConfiguration();
         $pluralName = $config->getPluralResourceName();
         $resourceName = $config->getResourceName();
+        $session = $this->get('session');
+
+        $reorderResources = false;
+        $type = '';
 
         $sorting = $request->get('sorting');
         if ((null !== $sorting) && ('series' === $resourceName)){
-            $this->get('session')->set('admin/'.$resourceName.'/type', $sorting[key($sorting)]);
-            $this->get('session')->set('admin/'.$resourceName.'/sort', key($sorting));
+            $session->set('admin/series/type', $sorting[key($sorting)]);
+            $session->set('admin/series/sort', key($sorting));
+            if ('multimedia_objects' === key($sorting)){
+                $reorderResources = true;
+                $type = $sorting[key($sorting)];
+            }
         }
 
         $criteria = $this->getCriteria($config);
         $resources = $this->getResources($request, $config, $criteria);
+        dump(count($resources));
+
+        // Workaround to reorder Series by number of MultimediaObjects
+        if ($reorderResources){
+            $resources = $this->reorderResources($resources, $type);
+            dump(count($resources));
+            $adapter = new ArrayAdapter($resources);
+            $resources = new Pagerfanta($adapter);
+            dump(count($resources));
+            $resources
+                ->setCurrentPage($session->get('admin/series/page', 1), true, true)
+                ->setMaxPerPage($session->get('admin/series/paginate', 10));
+            dump(count($resources));
+        }
 
         return $this->render('PumukitNewAdminBundle:'.ucfirst($resourceName).':list.html.twig',
             array($pluralName => $resources)

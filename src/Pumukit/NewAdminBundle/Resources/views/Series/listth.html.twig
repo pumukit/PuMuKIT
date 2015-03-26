@@ -8,7 +8,7 @@
   </th>
 {% endif %}
 
-{% if 'date' == app.session.get('admin/series/sort') %}
+{% if 'public_date' == app.session.get('admin/series/sort') %}
   <th width="8%">
     <a href="#" onclick="$('#list_series').load('{{ path('pumukitnewadmin_series_list', {'sorting': {'public_date': app.session.get('admin/series/type')=='asc'?'desc':'asc'}}) }}'); return false;">{% trans %}Date{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25BE;':'&#x25B4;' }}</a>
   </th>
@@ -18,7 +18,7 @@
   </th>
 {% endif %}
 
-{% if 'mmobj' == app.session.get('admin/series/sort') %}
+{% if 'multimedia_objects' == app.session.get('admin/series/sort') %}
   <th width="1%">
     <a href="#" onclick="$('#list_series').load('{{ path('pumukitnewadmin_series_list', {'sorting': {'multimedia_objects': app.session.get('admin/series/type')=='asc'?'desc':'asc'}}) }}'); return false;">{% trans %}Mm.Obj.{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25BE;':'&#x25B4;' }}</a>
   </th>  

@@ -331,4 +331,57 @@ class SeriesController extends AdminController
         }
         $dm->flush();
     }
+
+    /**
+     * Used in AdminController to
+     * reorder series when sort is multimedia_objects
+     *
+     * @param ArrayCollection $resources
+     * @param string $type 'asc'|'desc'
+     * @return array $series
+     */
+    protected function reorderResources($resources, $type)
+    {
+        $series = array();
+        foreach($resources as $resource){
+            if (empty($series)) {
+                $series[] = $resource;
+            }else{
+                $aux = $series;
+                foreach($aux as $index => $oneseries){
+                    if ($this->compareSeries($resource, $oneseries, $type)){
+                        array_splice($series, $index, 0, array($resource));
+                        break;
+                    }elseif ($index == (count($aux) - 1)){
+                        $series[] = $resource;
+                    }
+                }
+            }
+        }
+
+        return $series;
+    }
+
+    /**
+     * Compare Series
+     * Compare the number of multimedia objects
+     * according to type (greater or lower than)
+     *
+     * @param Series $series1
+     * @param Series $series2
+     * @param string $type
+     * @return boolean
+     */
+    protected function compareSeries($series1, $series2, $type)
+    {
+        $type = $this->get('session')->get('admin/series/type');
+
+        if ('asc' === $type){
+            return (count($series1->getMultimediaObjects()) < count($series2->getMultimediaObjects()));
+        }elseif('desc' === $type){
+            return (count($series1->getMultimediaObjects()) > count($series2->getMultimediaObjects()));
+        }
+
+        return false;
+    }
 }
