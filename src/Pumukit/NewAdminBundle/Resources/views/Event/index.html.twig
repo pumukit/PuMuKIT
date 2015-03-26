@@ -8,11 +8,6 @@
   <div class="col-md-10">
     <div class="well">
       <div id="list_events">
-        {% if app.session.has('admin/event/cal') %}
-          {% set div_url = 'cal' %}
-        {% else %}
-          {% set div_url = '' %}
-        {% endif %}
         {% include 'PumukitNewAdminBundle:Event:list.html.twig' %}
       </div>
       <div class="row">
@@ -25,8 +20,8 @@
           </select>
         </div>
         <div class="col-md-10 text-right">
-          {# TODO event series <a title="{% trans %}Create new series of live events{% endtrans %}" class="btn btn-pumukit btn-raised" href="{{ path('pumukitnewadmin_event_create_several', {'cal': div_url}) }}" data-toggle="modal" data-target="#myModal">{% trans %}New Series{% endtrans %}</a> #}
-          <a title="{% trans %}Create new live event{% endtrans %}" class="btn btn-pumukit btn-raised" href="{{ path('pumukitnewadmin_event_create', {'cal': div_url}) }}" data-toggle="modal" data-target="#myModal">{% trans %}New{% endtrans %}</a>
+          {# TODO event series <a title="{% trans %}Create new series of live events{% endtrans %}" class="btn btn-pumukit btn-raised" href="{{ path('pumukitnewadmin_event_create_several') }}" data-toggle="modal" data-target="#myModal">{% trans %}New Series{% endtrans %}</a> #}
+          <a title="{% trans %}Create new live event{% endtrans %}" class="btn btn-pumukit btn-raised" href="{{ path('pumukitnewadmin_event_create') }}" data-toggle="modal" data-target="#myModal">{% trans %}New{% endtrans %}</a>
         </div>
       </div>
     </div>

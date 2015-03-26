@@ -812,46 +812,37 @@ function init_tabs()
 
 $(document).on('load', '#list_events', function() {init_event_tab();});
 
+updatesession = function(tab){
+    if ('calEvent' == tab) var route = '{{ path('pumukitnewadmin_event_updatesession', {'activeTab': 'calEvent'})|raw }}';
+    else var route = '{{ path('pumukitnewadmin_event_updatesession')|raw }}';
+    $.ajax({
+            url: route,
+            type: 'GET',
+    });
+}
+
 $(document).on('click', '#previousMonth', function(){
-    localStorage.setItem('lastEventTab', 'calEvent');
     $('#list_events').load('{{ path('pumukitnewadmin_event_list', {'month': 'previous'})|raw }}', {'_method':'POST'});
-    // TODO check. Doesn't change the tab
-    $eventTab = $('#eventTab');
-    if($eventTab) {
-        var lastEventTab = localStorage.getItem('lastEventTab');
-        if (lastEventTab) {
-          $('#eventTab a[href="#' + lastEventTab+ '"]').tab('show');
-        }
-    }
     return false;
 });
 
 $(document).on('click', '#todayMonth', function(){
-    localStorage.setItem('lastEventTab', 'calEvent');
     $('#list_events').load('{{ path('pumukitnewadmin_event_list', {'month': 'today'})|raw }}', {'_method':'POST'});
-    // TODO check. Doesn't change the tab
-    $eventTab = $('#eventTab');
-    if($eventTab) {
-        var lastEventTab = localStorage.getItem('lastEventTab');
-        if (lastEventTab) {
-          $('#eventTab a[href="#' + lastEventTab+ '"]').tab('show');
-        }
-    }
     return false;
 });
 
 $(document).on('click', '#nextMonth', function(){
-    localStorage.setItem('lastEventTab', 'calEvent');
     $('#list_events').load('{{ path('pumukitnewadmin_event_list', {'month': 'next'})|raw }}', {'_method':'POST'});
-    // TODO check. Doesn't change the tab
-    $eventTab = $('#eventTab');
-    if($eventTab) {
-        var lastEventTab = localStorage.getItem('lastEventTab');
-        if (lastEventTab) {
-          $('#eventTab a[href="#' + lastEventTab+ '"]').tab('show');
-        }
-    }
     return false;
+});
+
+// To keep listening on the event after jquery load
+$(document).on('show.bs.tab', '#eventTab', function(e){
+    where = e.target.href.split('#')[1];
+    localStorage.setItem('lastEventTab', where);
+    // Update session
+    if ('calEvent' == where) updatesession('calEvent');
+    else updatesession('');
 });
 
 /**
