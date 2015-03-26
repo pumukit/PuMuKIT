@@ -74,6 +74,10 @@ pumukitnewadmin_event:
     resource: @PumukitNewAdminBundle/Resources/config/routes/event.yml
     prefix: /admin/event
 
-pumukitnewadmin_ingester:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/ingester.yml
-    prefix: /admin/ingester
+pumukitmatterhorn_mediapackage:
+    resource: @PumukitMatterhornBundle/Resources/config/routes/mediapackage.yml
+    prefix: /admin/mediapackage
+
+#pumukitnewadmin_ingester:
+#    resource: @PumukitNewAdminBundle/Resources/config/routes/ingester.yml
+#    prefix: /admin/ingester

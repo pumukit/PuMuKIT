@@ -51,7 +51,8 @@ class Builder extends ContainerAware
         //$management->addChild('Broadcast Servers');
 
         $ingester = $menu->addChild('Ingester');
-        $ingester->addChild('Matterhorn Ingester', array('route' => 'pumukitnewadmin_ingester_index'));
+        //$ingester->addChild('Matterhorn Ingester', array('route' => 'pumukitnewadmin_ingester_index'));
+        $ingester->addChild('Matterhorn Ingester', array('route' => 'pumukitmatterhorn_mediapackage_index'));
 
         return $menu;
     }

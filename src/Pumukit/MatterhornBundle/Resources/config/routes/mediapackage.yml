@@ -1,0 +1,7 @@
+pumukitmatterhorn_mediapackage_index:
+    pattern: /
+    methods: [GET]
+    defaults:
+        _controller: pumukitmatterhorn.controller.mediapackage:indexAction
+        _sylius:
+            filterable: true
