@@ -65,7 +65,7 @@ class TrackController extends Controller
             return array(
                          'mm' => $multimediaObject,
                          'uploaded' => 'failed',
-                         'message' => $e->getMessage()
+                         'message' => preg_replace( "/\r|\n/", "", $e->getMessage())
                          );
         }
 
