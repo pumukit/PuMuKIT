@@ -1,7 +1,0 @@
-pumukitnewadmin_ingester_index:
-    pattern: /
-    methods: [GET]
-    defaults:
-        _controller: pumukitnewadmin.controller.ingester:indexAction
-        _sylius:
-            filterable: true
