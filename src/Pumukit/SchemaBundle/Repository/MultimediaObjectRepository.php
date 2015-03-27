@@ -166,8 +166,7 @@ class MultimediaObjectRepository extends DocumentRepository
             ->field('tags._id')->equals(new \MongoId($tag->getId()));
         
         if (0 !== count($sort) ){
-            //$qb->sort($sort['fieldName'], $sort['order']);
-            $qb->sort($sort);
+            $qb->sort($sort['fieldName'], $sort['order']);
         }        
 
         return $qb;
