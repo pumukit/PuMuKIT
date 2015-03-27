@@ -14,7 +14,7 @@ use Pumukit\SchemaBundle\Document\SeriesType;
 class SeriesRepository extends DocumentRepository
 {
     /**
-     * Find series with tag
+     * Find series by tag id
      *
      * @param Tag|EmbeddedTag $tag
      * @param array $sort
@@ -24,16 +24,7 @@ class SeriesRepository extends DocumentRepository
      */
     public function findWithTag($tag, $sort = array(), $limit = 0, $page = 0)
     {
-        $referencedSeries = $this->getDocumentManager()
-            ->getRepository('PumukitSchemaBundle:MultimediaObject')
-            ->findSeriesFieldWithTag($tag);
-        
-        $qb = $this->createQueryBuilder()
-            ->field('id')->in($referencedSeries->toArray());
-
-        if (0 !== count($sort) ){
-            $qb->sort($sort['fieldName'], $sort['order']);
-        }
+        $qb = $this->createBuilderWithTag($tag, $sort);
 
         if ($limit > 0){
             $qb->limit($limit)->skip($limit * $page);
@@ -41,7 +32,30 @@ class SeriesRepository extends DocumentRepository
 
         return $qb->getQuery()->execute();
     }
- 
+
+    /**
+     * Create QueryBuilder to find series by tag id
+     *
+     * @param Tag|EmbeddedTag $tag
+     * @param array $sort
+     * @return QueryBuilder
+     */
+    public function createBuilderWithTag($tag, $sort = array())
+    {
+        $referencedSeries = $this->getDocumentManager()
+            ->getRepository('PumukitSchemaBundle:MultimediaObject')
+            ->findSeriesFieldWithTag($tag);
+
+        $qb = $this->createQueryBuilder()
+            ->field('id')->in($referencedSeries->toArray());
+
+        if (0 !== count($sort) ){
+            $qb->sort($sort['fieldName'], $sort['order']);
+        }
+        return $qb;
+    }
+
+
     /**
      * Find one series with tag
      *
@@ -222,7 +236,7 @@ class SeriesRepository extends DocumentRepository
           ->field('pics._id')->equals(new \MongoId($picId))
           ->getQuery()
           ->getSingleResult();
-    }
+  }
 
     /**
      * Find series by person id
