@@ -6,165 +6,143 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Pagerfanta;
 
 class SeriesController extends AdminController
 {
-  /**
-   * Overwrite to search criteria with date
-   * @Template
-   */
-  public function indexAction(Request $request)
-  {
-      $config = $this->getConfiguration();
+    /**
+     * Overwrite to search criteria with date
+     * @Template
+     */
+    public function indexAction(Request $request)
+    {
+        $config = $this->getConfiguration();
 
-      $criteria = $this->getCriteria($config);
-      $resources = $this->getResources($request, $config, $criteria);
+        $criteria = $this->getCriteria($config);
+        $resources = $this->getResources($request, $config, $criteria);
 
-      $update_session = true;
-      foreach($resources as $series) {
-          if($series->getId() == $this->get('session')->get('admin/series/id')){
-              $update_session = false;
-          }
-      }
- 
-      if($update_session){
-          $this->get('session')->remove('admin/series/id');
-      }
+        $update_session = true;
+        foreach($resources as $series) {
+            if($series->getId() == $this->get('session')->get('admin/series/id')){
+                $update_session = false;
+            }
+        }
 
-      return array('series' => $resources);
-  }
+        if($update_session){
+            $this->get('session')->remove('admin/series/id');
+        }
 
-  /**
-   * Create new resource
-   * @Template("PumukitNewAdminBundle:Series:list.html.twig")
-   */
-  public function createAction(Request $request)
-  {
-      $config = $this->getConfiguration();
-      $pluralName = $config->getPluralResourceName();
+        return array('series' => $resources);
+    }
 
-      $series = $this->get('pumukitschema.factory');
-      $series->createSeries();
+    /**
+     * List action
+     * @Template
+     */
+    public function listAction(Request $request)
+    {
+        $config = $this->getConfiguration();
+        $session = $this->get('session');
 
-      $this->addFlash('success', 'create');
+        $sorting = $request->get('sorting', null);
+        if (null !== $sorting){
+            $session->set('admin/series/type', $sorting[key($sorting)]);
+            $session->set('admin/series/sort', key($sorting));
+        }
 
-      $criteria = $this->getCriteria($config);
-      $resources = $this->getResources($request, $config, $criteria);
+        $criteria = $this->getCriteria($config);
+        $resources = $this->getResources($request, $config, $criteria);
 
-      return array('series' => $resources);
-  }
+        return array('series' => $resources);
+    }
 
+    /**
+     * Create new resource
+     * @Template("PumukitNewAdminBundle:Series:list.html.twig")
+     */
+    public function createAction(Request $request)
+    {
+        $config = $this->getConfiguration();
+        $pluralName = $config->getPluralResourceName();
 
-  /**
-   * Display the form for editing or update the resource.
-   */
-  public function updateAction(Request $request)
-  {
-      $config = $this->getConfiguration();
+        $series = $this->get('pumukitschema.factory');
+        $series->createSeries();
 
-      $resource = $this->findOr404($request);
-      $this->get('session')->set('admin/series/id', $request->get('id'));
-      $form = $this->getForm($resource);
+        $this->addFlash('success', 'create');
 
-      $method = $request->getMethod();
-      if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
-      $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
-          $this->domainManager->update($resource);
+        $criteria = $this->getCriteria($config);
+        $resources = $this->getResources($request, $config, $criteria);
 
-          if ($config->isApiRequest()) {
-              return $this->handleView($this->view($form));
-          }
+        return array('series' => $resources);
+    }
 
-          $criteria = $this->getCriteria($config);
-          $resources = $this->getResources($request, $config, $criteria);
+    /**
+     * Display the form for editing or update the resource.
+     */
+    public function updateAction(Request $request)
+    {
+        $config = $this->getConfiguration();
 
-          return $this->render('PumukitNewAdminBundle:Series:list.html.twig',
-                               array('series' => $resources)
-                               );
-      }
+        $resource = $this->findOr404($request);
+        $this->get('session')->set('admin/series/id', $request->get('id'));
+        $form = $this->getForm($resource);
 
-      if ($config->isApiRequest()) {
-          return $this->handleView($this->view($form));
-      }
+        $method = $request->getMethod();
+        if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
+            $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+            $this->domainManager->update($resource);
 
-      // EDIT MULTIMEDIA OBJECT TEMPLATE CONTROLLER SOURCE CODE
-      $factoryService = $this->get('pumukitschema.factory');
+            if ($config->isApiRequest()) {
+                return $this->handleView($this->view($form));
+            }
 
-      $roles = $factoryService->getRoles();
-      if (null === $roles){
-          throw new \Exception('Not found any role.');
-      }
+            $criteria = $this->getCriteria($config);
+            $resources = $this->getResources($request, $config, $criteria);
 
-      $parentTags = $factoryService->getParentTags();
-      $mmtemplate = $factoryService->getMultimediaObjectTemplate($resource);
+            return $this->render('PumukitNewAdminBundle:Series:list.html.twig',
+                                 array('series' => $resources)
+                                 );
+        }
 
-      $formMeta = $this->createForm('pumukitnewadmin_mmtemplate_meta', $mmtemplate);
+        if ($config->isApiRequest()) {
+            return $this->handleView($this->view($form));
+        }
 
-      $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
+        // EDIT MULTIMEDIA OBJECT TEMPLATE CONTROLLER SOURCE CODE
+        $factoryService = $this->get('pumukitschema.factory');
 
-      $template = '';
-      if (MultimediaObject::STATUS_PROTOTYPE === $mmtemplate->getStatus()){
-          $template = '_template';
-      }
-      // end of getting data for multimedia object template in series
+        $roles = $factoryService->getRoles();
+        if (null === $roles){
+            throw new \Exception('Not found any role.');
+        }
 
-      return $this->render('PumukitNewAdminBundle:Series:update.html.twig',
-                           array(
-                                 'series'        => $resource,
-                                 'form'          => $form->createView(),
-                                 'mmtemplate'    => $mmtemplate,
-                                 'form_meta'     => $formMeta->createView(),
-                                 'roles'         => $roles,
-                                 'pub_decisions' => $pubDecisionsTags,
-                                 'parent_tags'   => $parentTags,
-                                 'template'      => $template
-                                 )
-                           );
-  }
+        $parentTags = $factoryService->getParentTags();
+        $mmtemplate = $factoryService->getMultimediaObjectTemplate($resource);
 
-  /**
-   * Gets the criteria values
-   */
-  public function getCriteria($config)
-  {
-      //$criteria = $config->getCriteria();
-      $criteria = $this->getRequest()->get('criteria', array());
+        $formMeta = $this->createForm('pumukitnewadmin_mmtemplate_meta', $mmtemplate);
 
-      if (array_key_exists('reset', $criteria)) {
-          $this->get('session')->remove('admin/series/criteria');
-      } elseif ($criteria) {
-          $this->get('session')->set('admin/series/criteria', $criteria);
-      }
-      $criteria = $this->get('session')->get('admin/series/criteria', array());
+        $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
 
-      $new_criteria = array();
-      foreach ($criteria as $property => $value) {
-          //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
-          if (('' !== $value) && ('title.en' === $property)) {
-              $new_criteria[$property] = new \MongoRegex('/'.$value.'/i');
-          } elseif (('' !== $value) && ('date' == $property)) {
-              if ('' !== $value['from']) $date_from = new \DateTime($value['from']);
-              if ('' !== $value['to']) $date_to = new \DateTime($value['to']);
-              if (('' !== $value['from']) && ('' !== $value['to']))
-                  $new_criteria['public_date'] = array('$gte' => $date_from, '$lt' => $date_to);
-              elseif ('' !== $value['from'])
-                  $new_criteria['public_date'] = array('$gte' => $date_from);
-              elseif ('' !== $value['to'])
-                  $new_criteria['public_date'] = array('$lt' => $date_to);
-          } elseif (('' !== $value) && ('announce' === $property)) {
-              if ('true' === $value) {
-                  $new_criteria[$property] = true;
-              } elseif ('false' === $value){
-                  $new_criteria[$property] = false;
-              }
-          } elseif(('' !== $value) && ('status' === $property)) {
-          } elseif(('' !== $value) && ('_id' === $property)) {
-              $new_criteria['_id'] = $value;
-          }
-      }
+        $template = '';
+        if (MultimediaObject::STATUS_PROTOTYPE === $mmtemplate->getStatus()){
+            $template = '_template';
+        }
+        // end of getting data for multimedia object template in series
 
-      return $new_criteria;
-  }
+        return $this->render('PumukitNewAdminBundle:Series:update.html.twig',
+                             array(
+                                   'series'        => $resource,
+                                   'form'          => $form->createView(),
+                                   'mmtemplate'    => $mmtemplate,
+                                   'form_meta'     => $formMeta->createView(),
+                                   'roles'         => $roles,
+                                   'pub_decisions' => $pubDecisionsTags,
+                                   'parent_tags'   => $parentTags,
+                                   'template'      => $template
+                                   )
+                             );
+    }
 
     /**
      * @param Request $request
@@ -305,6 +283,93 @@ class SeriesController extends AdminController
     }
 
     /**
+     * Gets the criteria values
+     */
+    public function getCriteria($config)
+    {
+        $criteria = $this->getRequest()->get('criteria', array());
+
+        if (array_key_exists('reset', $criteria)) {
+            $this->get('session')->remove('admin/series/criteria');
+        } elseif ($criteria) {
+            $this->get('session')->set('admin/series/criteria', $criteria);
+        }
+        $criteria = $this->get('session')->get('admin/series/criteria', array());
+
+        $new_criteria = array();
+        foreach ($criteria as $property => $value) {
+            //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
+            if (('' !== $value) && ('title.en' === $property)) {
+                $new_criteria[$property] = new \MongoRegex('/'.$value.'/i');
+            } elseif (('' !== $value) && ('date' == $property)) {
+                if ('' !== $value['from']) $date_from = new \DateTime($value['from']);
+                if ('' !== $value['to']) $date_to = new \DateTime($value['to']);
+                if (('' !== $value['from']) && ('' !== $value['to']))
+                    $new_criteria['public_date'] = array('$gte' => $date_from, '$lt' => $date_to);
+                elseif ('' !== $value['from'])
+                    $new_criteria['public_date'] = array('$gte' => $date_from);
+                elseif ('' !== $value['to'])
+                    $new_criteria['public_date'] = array('$lt' => $date_to);
+            } elseif (('' !== $value) && ('announce' === $property)) {
+                if ('true' === $value) {
+                    $new_criteria[$property] = true;
+                } elseif ('false' === $value){
+                    $new_criteria[$property] = false;
+                }
+            } elseif(('' !== $value) && ('status' === $property)) {
+            } elseif(('' !== $value) && ('_id' === $property)) {
+                $new_criteria['_id'] = $value;
+            }
+        }
+
+        return $new_criteria;
+    }
+
+    /**
+     * Gets the list of resources according to a criteria
+     */
+    public function getResources(Request $request, $config, $criteria)
+    {
+        $sorting = $config->getSorting();
+        $repository = $this->getRepository();
+        $session = $this->get('session');
+        $session_namespace = 'admin/series';
+
+        if ($config->isPaginated()) {
+            if (array_key_exists('multimedia_objects', $sorting)){
+                $resources = $this
+                    ->resourceResolver
+                    ->getResource($repository, 'findBy', array($criteria));
+                $resources = $this->reorderResources($resources);
+                $adapter = new ArrayAdapter($resources);
+                $resources = new Pagerfanta($adapter);
+            }else{
+                $resources = $this
+                    ->resourceResolver
+                    ->getResource($repository, 'createPaginator', array($criteria, $sorting));
+            }
+
+            if ($request->get('page', null)) {
+                $session->set($session_namespace.'/page', $request->get('page', 1));
+            }
+
+            if ($request->get('paginate', null)) {
+                $session->set($session_namespace.'/paginate', $request->get('paginate', 10));
+            }
+
+            $resources
+                ->setCurrentPage($session->get($session_namespace.'/page', 1), true, true)
+                ->setMaxPerPage($session->get($session_namespace.'/paginate', 10));
+        } else {
+            $resources = $this
+                ->resourceResolver
+                ->getResource($repository, 'findBy', array($criteria, $sorting, $config->getLimit()));
+        }
+
+        return $resources;
+    }
+
+    /**
      * Modify Multimedia Objects status
      */
     private function modifyMultimediaObjectsStatus($values)
@@ -340,7 +405,7 @@ class SeriesController extends AdminController
      * @param string $type 'asc'|'desc'
      * @return array $series
      */
-    protected function reorderResources($resources, $type)
+    private function reorderResources($resources)
     {
         $series = array();
         foreach($resources as $resource){
@@ -349,7 +414,7 @@ class SeriesController extends AdminController
             }else{
                 $aux = $series;
                 foreach($aux as $index => $oneseries){
-                    if ($this->compareSeries($resource, $oneseries, $type)){
+                    if ($this->compareSeries($resource, $oneseries)){
                         array_splice($series, $index, 0, array($resource));
                         break;
                     }elseif ($index == (count($aux) - 1)){
@@ -369,10 +434,9 @@ class SeriesController extends AdminController
      *
      * @param Series $series1
      * @param Series $series2
-     * @param string $type
      * @return boolean
      */
-    protected function compareSeries($series1, $series2, $type)
+    private function compareSeries($series1, $series2)
     {
         $type = $this->get('session')->get('admin/series/type');
 
