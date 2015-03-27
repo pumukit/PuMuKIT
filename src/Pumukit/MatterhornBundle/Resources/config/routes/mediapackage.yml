@@ -5,3 +5,9 @@ pumukitmatterhorn_mediapackage_index:
         _controller: pumukitmatterhorn.controller.mediapackage:indexAction
         _sylius:
             filterable: true
+
+pumukitmatterhorn_mediapackage_import:
+    pattern: /{id}/download
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitmatterhorn.controller.mediapackage:importAction
