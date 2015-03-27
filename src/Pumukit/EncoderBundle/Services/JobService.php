@@ -14,8 +14,9 @@ use Pumukit\InspectionBundle\Services\InspectionServiceInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
-//TODO add log
 class JobService
 {
     private $dm;
@@ -25,8 +26,9 @@ class JobService
     private $inspectionService;
     private $tmp_path;
     private $test;
+    private $logger;
 
-    public function __construct(DocumentManager $documentManager, ProfileService $profileService, CpuService $cpuService, InspectionServiceInterface $inspectionService, $tmp_path=null, $test=false)
+    public function __construct(DocumentManager $documentManager, ProfileService $profileService, CpuService $cpuService, InspectionServiceInterface $inspectionService, $logPath, $tmp_path=null, $test=false)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
@@ -35,6 +37,8 @@ class JobService
         $this->inspectionService = $inspectionService;
         $this->tmp_path = $tmp_path ? realpath($tmp_path) : sys_get_temp_dir();
         $this->test = $test;
+        $this->logger = new Logger('encoder');
+        $this->logger->pushHandler(new StreamHandler($logPath));
     }
 
     /**
@@ -43,20 +47,24 @@ class JobService
     public function addJob($pathFile, $profile, $priority, MultimediaObject $multimediaObject, $language = null, $description = array())
     {
         if (!is_file($pathFile)) {
+            $this->logger->addError('[addJob] FileNotFoundException: Could not find file "'.$pathFile);
             throw new FileNotFoundException($pathFile); 
         }
 
         if (null === $this->profileService->getProfile($profile)){
+            $this->logger->addError('[addJob] Can not find given profile with name "'.$profile);
             throw new \Exception("Can't find given profile with name ".$profile);
         }
         
         if (null === $multimediaObject){
+            $this->logger->addError('[addJob] Given null multimedia object');
             throw new \Exception("Given null multimedia object");
         }
 
         try{
             $duration = $this->inspectionService->getDuration($pathFile);
         }catch (\Exception $e){
+            $this->logger->addError('[addJob] InspectionService getDuration error message: '.$e->getMessage());
             throw new \Exception($e->getMessage());
         }
         
@@ -79,6 +87,8 @@ class JobService
 
         $this->setPathEndAndExtensions($job);
 
+        $this->logger->addInfo('[addJob] Added job with id: '.$job->getId());
+
         $this->executeNextJob();
 
         return $job;
@@ -94,6 +104,7 @@ class JobService
         $job = $this->repo->find($id);
 
         if (null === $job){
+            $this->logger->addError('[pauseJob] Can not find job with id '.$id);
             throw new \Exception("Can't find job with id ".$id);
         }
         $this->changeStatus($job, Job::STATUS_WAITING, Job::STATUS_PAUSED);
@@ -109,6 +120,7 @@ class JobService
         $job = $this->repo->find($id);
 
         if (null === $job){
+            $this->logger->addError('[resumeJob] Can not find job with id '.$id);
             throw new \Exception("Can't find job with id ".$id);
         }
         $this->changeStatus($job, Job::STATUS_PAUSED, Job::STATUS_WAITING);      
@@ -124,9 +136,11 @@ class JobService
         $job = $this->repo->find($id);
 
         if (null === $job){
+            $this->logger->addError('[cancelJob] Can not find job with id '.$id);
             throw new \Exception("Can't find job with id ".$id);
         }
         if ((Job::STATUS_WAITING !== $job->getStatus()) && (Job::STATUS_PAUSED !== $job->getStatus())){
+            $this->logger->addError('[cancelJob] Trying to cancel job "'.$id.'" that is not paused or waiting');
             throw new \Exception("Trying to cancel job ".$id." that is not paused or waiting");
         }
         $this->dm->remove($job);
@@ -138,10 +152,12 @@ class JobService
         $job = $this->repo->find($id);
 
         if (null === $job){
+            $this->logger->addError('[deleteJob] Can not find job with id '.$id);
             throw new \Exception("Can't find job with id ".$id);
         }
         if (Job::STATUS_ERROR !== $job->getStatus()){
-            throw new \Exception("Trying to cancel job ".$id." that is not paused or waiting");
+            $this->logger->addError('[deleteJob] Trying to delete job "'.$id.'" that has not error status. Given status is '.$job->getStatus());
+            throw new \Exception("Trying to delete job ".$id." that has not error status. Given status is ".$job->getStatus());
         }
         $this->dm->remove($job);
         $this->dm->flush();
@@ -237,6 +253,7 @@ class JobService
         $process = $pb->getProcess();
 
         $command = $process->getCommandLine();
+        $this->logger->addInfo('[executeInBackground] CommandLine '.$command);
         shell_exec("nohup $command 1> /dev/null 2> /dev/null & echo $!");
 
         //$process->disableOutput();
@@ -254,10 +271,14 @@ class JobService
         $profile = $this->getProfile($job);
         $cpu = $this->cpuService->getCpuByName($job->getCpu());
         $commandLine = $this->renderBat($job);
-        // TODO - LOG FILE
 
         // TODO - Set pathEnd in some point
-        @mkdir(dirname($job->getPathEnd()), 0777, true);
+        $created = @mkdir(dirname($job->getPathEnd()), 0777, true);
+        if ($created){
+            $this->logger->addInfo('[execute] Directory "'.dirname($job->getPathEnd()).'" from job path end "'.$job->getPathEnd().'" successfully created.');
+        }else{
+            $this->logger->addError('[execute] Could not create directory "'.dirname($job->getPathEnd()).'" from job path end "'.$job->getPathEnd().'"');
+        }
         
         $executor = $this->getExecutor($profile['app'], $cpu);
         
@@ -267,12 +288,12 @@ class JobService
             $duration = $this->inspectionService->getDuration($job->getPathEnd());
             $job->setNewDuration($duration);
 
-            var_dump($commandLine);
-            var_dump($profile['app']);
-            var_dump($out);
-            var_dump($job->getDuration());
-            var_dump($duration);
-    
+            $this->logger->addInfo('[execute] cpu: '.serialize($cpu));
+            $this->logger->addInfo('[execute] CommandLine: '.$commandLine);
+            $this->logger->addInfo('[execute] profile.app: "'.$profile['app'].'"');
+            $this->logger->addInfo('[execute] out: "'.$out.'"');
+            $this->logger->addInfo('[execute] job duration: '.$job->getDuration());
+            $this->logger->addInfo('[execute] duration: '.$duration);
 
             $this->searchError($profile['app'], $out, $job->getDuration(), $duration);
 
@@ -284,10 +305,8 @@ class JobService
             $job->setTimeend(new \DateTime('now'));
             $job->setStatus(Job::STATUS_ERROR);
 
-            var_dump("ERROR--");
             $job->setOutput($e->getMessage());
-            var_dump($job->getOutput());
-            var_dump("ERROR--");
+            $this->logger->addError('[execute] job output: '.$e->getMessage());
         }
 
         $this->dm->persist($job);
@@ -329,6 +348,7 @@ class JobService
         }
 
         $commandLine = str_replace(array_keys($vars), array_values($vars), $profile['bat']);
+        $this->logger->addInfo('[renderBat] CommandLine: '.$commandLine);
     
         $cpu = $this->cpuService->getCpuByName($job->getCpu());
         if(CpuService::TYPE_WINDOWS === $cpu['type']){
@@ -358,14 +378,17 @@ class JobService
     public function setPathEndAndExtensions($job)
     {
         if (!file_exists($job->getPathIni())) {
+            $this->logger->addError('[setPathEndAndExtensions] Error input file does not exist when setting the path_end');
             throw new \Exception('Error input file does not exist when setting the path_end');
         }
 
         if (!$job->getMmId()) {
+            $this->logger->addError('[setPathEndAndExtensions] Error getting multimedia object to set path_end.');
             throw new \Exception('Error getting multimedia object to set path_end.');
         }
    
         if (!$job->getProfile()) {
+            $this->logger->addError('[setPathEndAndExtensions] Error with profile name to set path_end.');
             throw new \Exception('Error with profile name to set path_end.');
         }
 
@@ -376,13 +399,19 @@ class JobService
 
         $mmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
         if (!$mmobj){
+            $this->logger->addError('[setPathEndAndExtensions] Error getting multimedia object from id: '.$job->getMmId());
             throw new \Exception('Error getting multimedia object from id: '.$job->getMmId());
         }
 
         $tempDir = $profile['streamserver']['dir_out'] . '/' . $mmobj->getSeries()->getId();
 
         //TODO repeat mkdir (see this->execute) and check error
-        @mkdir($tempDir, 0777, true);
+        $created = @mkdir($tempDir, 0777, true);
+        if ($created){
+            $this->logger->addInfo('[setPathEndAndExtensions] Directory "'.$tempDir.'" successfully created.');
+        }else{
+            $this->logger->addError('[setPathEndAndExtensions] Could not create directory: "'.$tempDir.'"');
+        }
 
         $pathEnd = realpath($tempDir) . '/' . $job->getId() . '.' . $finalExtension;
 
@@ -463,7 +492,12 @@ class JobService
         $profile = $this->getProfile($job);
         $tempDir = $profile['streamserver']['dir_out'] . '/' . $mmobj->getSeries()->getId();
         //TODO repeat mkdir (see this->execute) and check errors
-        @mkdir($tempDir, 0777, true);
+        $created = @mkdir($tempDir, 0777, true);
+        if ($created){
+            $this->logger->addInfo('[retryJob] Directory "'.$tempDir.'" successfully created.');
+        }else{
+            $this->logger->addError('[retryJob] Could not create directory: "'.$tempDir.'"');
+        }
 
         $job->setStatus(Job::STATUS_WAITING);
         $job->setPriority(2);
