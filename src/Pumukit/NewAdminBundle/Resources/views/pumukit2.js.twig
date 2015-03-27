@@ -715,7 +715,7 @@ procesaOk = function(){
                          /^(\d+)\/(\d+)\/(\d+) (\d+):(\d+)(:(\d+))?$/
                          )) {
     borraFechasSiInactivas();
-    $('remember_save_mm_pub').hide();
+    $('#remember_save_mm_pub').hide();
     return true;
   } else {
     return false;
@@ -1108,4 +1108,12 @@ $(document).on('submit', '#pumukitnewadmin_mms_updatemeta_form', function(event)
             });
 
     return false;
+});
+
+$(document).on('change', "*[id^='pumukitnewadmin_series_']", function(){
+    $('#remember_save_series').show();
+});
+
+$(document).on('change', "*[id^='pumukitnewadmin_mms_meta_']", function(){
+    $('#remember_save_mm').show();
 });
