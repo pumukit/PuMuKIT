@@ -1070,3 +1070,42 @@ $(document).ready(function(){
         });
     });
 });
+
+$(document).on('submit', '#pumukitnewadmin_mms_updatemeta_form', function(event){
+    $('#remember_save_mm').hide();
+
+    var publicDateVal = $('#pumukitnewadmin_mms_meta_public_date').val();
+    var recordDateVal = $('#pumukitnewadmin_mms_meta_record_date').val();
+
+    var publicDate = new Date(publicDateVal);
+    var recordDate = new Date(recordDateVal);
+
+    if (publicDate.getTime() < recordDate.getTime()){
+        var message = '{% trans %}Multimedia Object saved ERROR: Public Date can not be lower than Record Date.{% endtrans %}';
+        no_success(message);
+        return false;
+    }
+
+    var route = '{{ path('pumukitnewadmin_mms_update_meta', {'id': '__mmId__'}) }}';
+    var mmId = $('#id').val();
+
+    route = route.replace('__mmId__', mmId);
+
+    var showRoute = '{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'}) }}';
+    showRoute = showRoute.replace('__mmId__', mmId);
+
+    $.ajax({
+            url: route,
+            type: 'POST',
+            data: $(this).serialize(),
+            error: function(request, json){var message = '{% trans %}Multimedia Object saved ERROR{% endtrans %}'; no_success(message);},
+            success: function(response){
+                                        $('#list_mms').html(response);
+                                        $('#preview_mm').load(showRoute);
+                                        var message = '{% trans %}Multimedia Object saved OK{% endtrans %}';
+                                        success(message);
+                                        }
+            });
+
+    return false;
+});
