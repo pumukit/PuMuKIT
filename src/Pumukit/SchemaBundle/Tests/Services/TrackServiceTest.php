@@ -57,7 +57,7 @@ class TrackServiceTest extends WebTestCase
         $cpuService = new CpuService($this->getDemoCpus(), $this->dm);
         $inspectionService = $this->getMock('Pumukit\InspectionBundle\Services\InspectionServiceInterface');
         $inspectionService->expects($this->any())->method('getDuration')->will($this->returnValue(5));
-        $jobService = new JobService($this->dm, $profileService, $cpuService, $inspectionService, null, true);
+        $jobService = new JobService($this->dm, $profileService, $cpuService, $inspectionService, $this->resources.'/encoder_test.log', null, true);
         $this->trackService = new TrackService($this->dm, $jobService, $profileService, null);
 
         $this->tmpDir = $this->trackService->getTempDirs()[0];

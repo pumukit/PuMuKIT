@@ -48,7 +48,7 @@ class FuncionalTest extends WebTestCase
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
         $this->dm->flush();
         
-        $this->jobService = new JobService($this->dm, $this->profileService, $this->cpuService, $this->inspectionService);
+        $this->jobService = new JobService($this->dm, $this->profileService, $this->cpuService, $this->inspectionService, realpath(__DIR__.'/../Resources').'/encoder_test.log');
     }
 
     public function testSimpleEncoding()
