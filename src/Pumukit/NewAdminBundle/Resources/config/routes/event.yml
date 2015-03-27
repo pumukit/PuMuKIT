@@ -51,3 +51,9 @@ pumukitnewadmin_event_list:
         _controller: pumukitnewadmin.controller.event:listAction
         _sylius:
             filterable: true
+
+pumukitnewadmin_event_updatesession:
+    pattern: /updatesession
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.event:updateSessionAction

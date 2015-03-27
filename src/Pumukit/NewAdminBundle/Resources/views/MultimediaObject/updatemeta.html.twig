@@ -2,19 +2,7 @@
 
 <div id="tv_admin_container" class="well">
 
-  <form onsubmit="$.ajax({
-                          url: '{{ path('pumukitnewadmin_mms_update_meta', {'id': mm.id}) }}',
-                          type: 'POST',
-                          data: $(this).serialize(),
-                          error: function(request, json){var message = '{% trans %}Multimedia Object saved ERROR{% endtrans %}'; no_success(message);},
-                          success: function(response){
-                                                      $('#list_mms').html(response);
-                                                      $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}');
-                                                      var message = '{% trans %}Multimedia Object saved OK{% endtrans %}';
-                                                      success(message);
-                                                      }
-                  });
-		          return false;"
+  <form id="pumukitnewadmin_mms_updatemeta_form"
         action="{{ path('pumukitnewadmin_mms_update_meta', {'id': mm.id}) }}" method="POST">
 
 	<input type="hidden" name="id" id="id" value="{{ mm.id }}">
@@ -29,7 +17,7 @@
 
       <div class="col-md-9 text-right">
         <button type="button" class="btn btn-default btn-raised" onclick="$('#remember_save_mm').hide();">{% trans %}Cancel{% endtrans %}</button>
-        <button type="submit" class="btn btn-pumukit btn-raised" onclick="$('#remember_save_mm').hide();">{% trans %}OK{% endtrans %}</button>
+        <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}OK{% endtrans %}</button>
       </div>
     </div>
 
@@ -44,11 +32,3 @@
 	</fieldset>
   </form>
 </div>
-
-<script type="text/javascript">
-$(document).ready(function() {
-    $("*[id^='pumukitnewadmin_mms_meta_']").on('change', function(){
-        $('#remember_save_mm').show();
-    });
-});
-</script>

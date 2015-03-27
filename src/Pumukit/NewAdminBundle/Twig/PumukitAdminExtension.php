@@ -45,6 +45,8 @@ class PumukitAdminExtension extends \Twig_Extension
                      new \Twig_SimpleFilter('series_text', array($this, 'getSeriesText')),
                      new \Twig_SimpleFilter('profile_width', array($this, 'getProfileWidth')),
                      new \Twig_SimpleFilter('profile_height', array($this, 'getProfileHeight')),
+                     new \Twig_SimpleFilter('announce_icon', array($this, 'getAnnounceIcon')),
+                     new \Twig_SimpleFilter('announce_text', array($this, 'getAnnounceText')),
                      );
     }
 
@@ -290,6 +292,51 @@ class PumukitAdminExtension extends \Twig_Extension
 
         return '0';
     }    
+
+    /**
+     * Get announce icon of Series
+     * and MultimediaObjects inside of it
+     *
+     * @param Series $series
+     * @return string $icon
+     */
+    public function getAnnounceIcon($series)
+    {
+        $icon = '';
+
+        if ($series->getAnnounce()) return "mdi-action-spellcheck pumukit-series-announce";
+
+        foreach($series->getMultimediaObjects() as $mm){
+            if ($mm->containsTagWithCod('PUDENEW'))
+              return "mdi-action-spellcheck pumukit-mm-announce";
+        }
+
+        return $icon;
+    }
+
+    /**
+     * Get announce text of Series
+     * and MultimediaObjects inside of it
+     *
+     * @param Series $series
+     * @return string $text
+     */
+    public function getAnnounceText($series)
+    {
+        $text = '';
+
+        if ($series->getAnnounce()) return "This Series is announced";
+
+        $count = 0;
+        foreach($series->getMultimediaObjects() as $mm){
+            if ($mm->containsTagWithCod('PUDENEW')) ++$count;
+        }
+
+        if ($count > 0)
+            return "This Series is not announced but has ".$count." announced Multimedia Object(s)";
+
+        return $text;
+    }
 
     /**
      * Get profile

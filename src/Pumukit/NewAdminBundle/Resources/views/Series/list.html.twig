@@ -33,13 +33,7 @@
           </div>
         </td>
         <td>
-          {{ oneseries.announce?'<span style="color: blue">A</span>':'' }}
-
-	      {# TODO field in Series with mm_announce or field announce in MultimediaObject
-          <?php echo ($series['mm_announce']?'<span style="color: grey">A</span>':'') ?>
-          <?php echo (($series['mm_announce'])||($series['announce'])?'':'&nbsp;') ?>
-	      #}
-
+          <i class="{{ oneseries|announce_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|announce_text }}"></i>
         </td> 
         <td>
           <a href="{{ path('pumukitnewadmin_series_changepub', {'id': oneseries.id}) }}" data-toggle="modal" data-target="#myModal">
