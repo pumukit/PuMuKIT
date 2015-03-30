@@ -64,7 +64,7 @@
         </td>
       </tr>
       {% endfor %}
-      {% if (series|length - (series.getMaxPerPage() * (series.getCurrentPage() - 1))) < (series.maxPerPage-1) %}
+      {% if (series|length - (series.getMaxPerPage() * (series.getCurrentPage() - 1))) < (series.maxPerPage) %}
       {% for i in (series|length - (series.getMaxPerPage() * (series.getCurrentPage() - 1)))..(series.maxPerPage-1) %}
       <tr>
         <td>&nbsp;</td>

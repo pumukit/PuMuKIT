@@ -101,7 +101,7 @@
 
     {% if 0 == mms|length%}
         {% set range = 1..9 %}
-    {% elseif (mms|length - (mms.getMaxPerPage() * (mms.getCurrentPage() - 1))) < (mms.maxPerPage-1) %}
+    {% elseif (mms|length - (mms.getMaxPerPage() * (mms.getCurrentPage() - 1))) < (mms.maxPerPage) %}
         {% set range = (mms|length - (mms.getMaxPerPage() * (mms.getCurrentPage() - 1)))..(mms.maxPerPage-1) %}
     {% else %}
         {% set range = [] %}
