@@ -371,6 +371,66 @@ class SeriesRepositoryTest extends WebTestCase
         }
     }
 
+    public function testCreateBuilderWithTag()
+    {
+        $tag1 = new Tag();
+        $tag1->setCod('tag1');
+        $tag2 = new Tag();
+        $tag2->setCod('tag2');
+        $tag3 = new Tag();
+        $tag3->setCod('tag3');
+  
+        $this->dm->persist($tag1);
+        $this->dm->persist($tag2);
+        $this->dm->persist($tag3);
+        $this->dm->flush();
+  
+        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
+  
+        $series1 = $this->createSeries('Series 1');
+        $series2 = $this->createSeries('Series 2');
+        $series3 = $this->createSeries('Series 3');
+ 
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->persist($series3);
+        $this->dm->flush();
+
+        $mm11 = $this->factoryService->createMultimediaObject($series1);
+        $mm22 = $this->factoryService->createMultimediaObject($series2);
+        $mm33 = $this->factoryService->createMultimediaObject($series3);
+
+        $this->dm->persist($mm11);
+        $this->dm->persist($mm22);
+        $this->dm->persist($mm33);
+        $this->dm->flush();
+ 
+        $mm11->addTag($tag1);
+        $mm11->addTag($tag2);
+
+        $mm22->addTag($tag2);
+        $mm22->addTag($tag3);
+ 
+        $mm33->addTag($tag1);
+        $mm33->addTag($tag3);
+
+        $this->dm->persist($mm11);
+        $this->dm->persist($mm22);
+        $this->dm->persist($mm33);
+        $this->dm->flush();
+          
+        // SORT
+        $sort = array();
+        $sortAsc =  array('fieldName' => 'title', 'order' => 1);
+        $sortDesc = array('fieldName' => 'title', 'order' => -1);
+   
+        $this->assertEquals(1, count($this->repo->createBuilderWithTag($tag1)));
+        $this->assertEquals(1, count($this->repo->createBuilderWithTag($tag1, $sort)));
+        $this->assertEquals(1, count($this->repo->createBuilderWithTag($tag2, $sortAsc)));  
+        $this->assertEquals(1, count($this->repo->createBuilderWithTag($tag3, $sortDesc)));
+ 
+    }
+
     public function testFindSeriesByPersonId()
     {
         $broadcast = new Broadcast();
