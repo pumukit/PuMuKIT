@@ -2,6 +2,7 @@
 
 namespace Pumukit\EncoderBundle\Command;
 
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -17,8 +18,8 @@ class PumukitEncoderInfoCommand extends BasePumukitEncoderCommand
             ->setName('pumukit:encoder:info')
             ->setDescription('Pumukit show job info')
             ->setDefinition(array(
-                new InputArgument('id', InputArgument::REQUIRED, 'Job identifier to execute'),
-                new InputOption('format', null, InputOption::VALUE_REQUIRED, 'To output description in other formats', 'txt'),
+                new InputArgument('id', InputArgument::OPTIONAL, 'Job identifier to execute'),
+                new InputOption('all', null, InputOption::VALUE_NONE, 'Set this parameter to list jobs in all states')
             ))
             ->setHelp(<<<EOT
 TODO
@@ -30,13 +31,90 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+      if ($id = $input->getArgument('id')){
+        $this->showInfo($input->getArgument('id'), $output);
+      }else{
+        $this->showList($input->getOption('all'), $output);
+      }
+    }
+
+
+    protected function showList($all, OutputInterface $output)
+    {
+        $this->listCpus($output);
+        $this->listJobs($output, $all);
+    }
+
+
+    private function listCpus(OutputInterface $output)
+    {
+
+        $cpuService = $this->getContainer()->get('pumukitencoder.cpu');
+        $cpus = $cpuService->getCpus();
+        
+        $output->writeln("<info>CPUS:</info>");
+        $table = new Table($output);
+        $table->setHeaders(array('Name', 'Type', 'Host', 'Number', 'Description'));
+
+        foreach($cpus as $name => $cpu) {
+            $table->addRow(array(
+                $name,
+                $cpu['type'],
+                $cpu['host'],
+                $cpu['number'] .'/'. $cpu['max'],
+                $cpu['description']
+            ));
+        }
+        $table->render();
+    }
+
+    private function listJobs(OutputInterface $output, $all = false)
+    {
+        $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+        $jobRepo = $dm->getRepository('PumukitEncoderBundle:Job');
+        $jobService = $this->getContainer()->get('pumukitencoder.job');
+
+        $stats = $jobService->getAllJobsStatus();
+        
+        $output->writeln("<info>JOBS NUMBERS:</info>");
+        $table = new Table($output);
+        $table->setHeaders(array_keys($stats));
+        $table->addRow(array_values($stats));
+        $table->render();
+
+        if ($all) {
+            $status = array_keys(Job::$statusTexts);
+        }else{
+            $status = array(Job::STATUS_EXECUTING);
+        }
+        $jobs = $jobRepo->findWithStatus($status);
+
+        $output->writeln("<info>JOBS:</info>");
+        $table = new Table($output);
+        $table->setHeaders(array('Id', 'Priority', 'MM', 'Profile', 'Cpu', 'Status',
+                                 'Timeini', 'Timestart', 'Timeend'));
+
+        foreach($jobs as $name => $job) {
+            $table->addRow(array(
+                $job->getId(),
+                $this->formatStatus($job->getStatus()),
+                $job->getMmId(),
+                $job->getProfile(),
+                $job->getCpu(),
+                $job->getPriority(),
+                $job->getTimeini('Y-m-d H:i:s'),
+                $job->getTimestart('Y-m-d H:i:s'),
+                $job->getTimeend('Y-m-d H:i:s'),
+            ));
+        }
+        $table->render();
+    }
+
+    private function showInfo($id, OutputInterface $output)
+    {
         $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $jobService = $this->getContainer()->get('pumukitencoder.job');
         
-        if (($id = $input->getArgument('id')) === null) {
-            throw new \RuntimeException("Argument 'ID' is required in order to execute this command correctly.");
-        }
-
         if (($job = $dm->find('PumukitEncoderBundle:Job', $id)) === null) {
             throw new \RuntimeException("Not job found with id $id.");
         }
