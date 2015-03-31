@@ -20,7 +20,8 @@
             <argument type="service" id="pumukitencoder.profile"/>
             <argument type="service" id="pumukitencoder.cpu"/>
             <argument type="service" id="pumukit.inspection"/>
-            <argument type="expression">parameter('kernel.logs_dir') ~ '/encoder_' ~ parameter('kernel.environment') ~ '.log'</argument>
+            <argument type="service" id="logger"/>
+            <tag name="monolog.logger" channel="encoder"/>
         </service>
 
         <service id="pumukitencoder.picextractor" class="Pumukit\EncoderBundle\Services\PicExtractorService">

@@ -14,6 +14,7 @@ use Pumukit\InspectionBundle\Services\InspectionServiceInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
+use Symfony\Component\HttpKernel\Log\LoggerInterface;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
@@ -28,7 +29,7 @@ class JobService
     private $test;
     private $logger;
 
-    public function __construct(DocumentManager $documentManager, ProfileService $profileService, CpuService $cpuService, InspectionServiceInterface $inspectionService, $logPath, $tmp_path=null, $test=false)
+    public function __construct(DocumentManager $documentManager, ProfileService $profileService, CpuService $cpuService, InspectionServiceInterface $inspectionService, LoggerInterface $logger, $tmp_path=null, $test=false)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
@@ -37,8 +38,7 @@ class JobService
         $this->inspectionService = $inspectionService;
         $this->tmp_path = $tmp_path ? realpath($tmp_path) : sys_get_temp_dir();
         $this->test = $test;
-        $this->logger = new Logger('encoder');
-        $this->logger->pushHandler(new StreamHandler($logPath));
+        $this->logger = $logger;
     }
 
     /**
@@ -64,7 +64,7 @@ class JobService
         try{
             $duration = $this->inspectionService->getDuration($pathFile);
         }catch (\Exception $e){
-            $this->logger->addError('[addJob] InspectionService getDuration error message: '.$e->getMessage());
+            $this->logger->addError('[addJob] InspectionService getDuration error message: '. $e->getMessage());
             throw new \Exception($e->getMessage());
         }
         
