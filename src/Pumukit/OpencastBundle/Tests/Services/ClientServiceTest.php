@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\MatterhornBundle\Tests\Services;
+namespace Pumukit\OpencastBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -11,7 +11,7 @@ use Pumukit\SchemaBundle\Services\TrackService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\EncoderBundle\Services\JobService;
-use Pumukit\MatterhornBundle\Services\ClientService;
+use Pumukit\OpencastBundle\Services\ClientService;
 
 class ClientServiceTest extends WebTestCase
 {
@@ -29,7 +29,7 @@ class ClientServiceTest extends WebTestCase
         $kernel = static::createKernel($options);
         $kernel->boot();
 
-        $this->clientService = $kernel->getContainer()->get('pumukitmatterhorn.client');
+        $this->clientService = $kernel->getContainer()->get('pumukitopencast.client');
 
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\MatterhornBundle\Controller;
+namespace Pumukit\OpencastBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,22 +21,29 @@ class MediaPackageController extends ResourceController
     public function indexAction(Request $request)
     {
         $config = $this->getConfiguration();
-        
         $criteria = $this->getCriteria($config);
         $resources = $this->getResources($request, $config, $criteria);
 
         $pluralName = $config->getPluralResourceName();
         dump($pluralName);
 
-
-        $limit = 5;
-        $page =  $request->get("page", 1);
-
-    	$mediaPackages = $this->get('pumukit_matterhorn.client')->getMediaPackages(0,$limit,$page);
-    	//var_dump($mediaPackages);
+        $mediaPackages = $this->get('pumukit_opencast.client')->getMediaPackages(0,0,0);
+        dump($mediaPackages);
 
         $adapter = new ArrayAdapter($mediaPackages);
         $pagerfanta = new Pagerfanta($adapter);
+
+        $limit = 5;
+        $offset =  0;
+        $page =  $request->get("page", 1);
+
+    	$mediaPackages = $this->get('pumukit_opencast.client')->getMediaPackages(0,$limit,$offset);
+
+        //$adapter = new ArrayAdapter($mediaPackages);
+        //$pagerfanta = new Pagerfanta($adapter);
+
+        //$pagerfanta->setMaxPerPage($limit);
+        //$pagerfanta->setCurrentPage($offset);
 
         $pagerfanta->setMaxPerPage($limit);
         $pagerfanta->setCurrentPage($page);

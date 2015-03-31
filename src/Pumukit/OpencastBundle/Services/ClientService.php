@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\MatterhornBundle\Services;
+namespace Pumukit\OpencastBundle\Services;
 
 class ClientService
 {
@@ -23,6 +23,8 @@ class ClientService
     //var_dump($url); exit;
     $ch = curl_init($this->url . $path);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    dump($this->url . $path);
     //curl_setopt($ch, CURLOPT_HEADER, true);
 
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
@@ -52,12 +54,24 @@ class ClientService
 
   public function getMediaPackages($q, $limit, $offset)
   {
-    $sal = $this->request("/search/episode.json");
+    dump($q);
+    dump($limit);
+    dump($offset);
+
+    if($limit == 0){
+      $sal = $this->request("/search/episode.json?q=" . $q);
+    }
+
+    if($limit > 1){
+      $sal = $this->request("/search/episode.json?q=" . $q . "&limit=" . $limit);
+    }
+
+    //dump($sal);
 
     if ($sal["status"] !== 200) return false;
     $decode = json_decode($sal["var"], true);
 
-    //var_dump($decode);
+    dump($decode);
 
     if (!($decode)) {
       throw new sfException("Matterhorn communication error");

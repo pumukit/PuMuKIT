@@ -1,5 +1,5 @@
-pumukit_matterhorn:
-    resource: "@PumukitMatterhornBundle/Controller/"
+pumukit_opencast:
+    resource: "@PumukitOpencastBundle/Controller/"
     type:     annotation
     prefix:   /
 
