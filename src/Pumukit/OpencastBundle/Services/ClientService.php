@@ -20,13 +20,8 @@ class ClientService
   private function request($path){
     $sal = array();
 
-    //var_dump($url); exit;
     $ch = curl_init($this->url . $path);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-    dump($this->url . $path);
-    //curl_setopt($ch, CURLOPT_HEADER, true);
-
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
 
     if ($this->user != "") {
@@ -51,45 +46,57 @@ class ClientService
   }
 
 
-
+  /**
+   *
+   */
   public function getMediaPackages($q, $limit, $offset)
   {
-    dump($q);
-    dump($limit);
-    dump($offset);
+    $sal = $this->request("/search/episode.json?q=" . $q . "&limit=" . $limit . "&offset=" . $offset);
 
-    if($limit == 0){
-      $sal = $this->request("/search/episode.json?q=" . $q);
-    }
-
-    if($limit > 1){
-      $sal = $this->request("/search/episode.json?q=" . $q . "&limit=" . $limit);
-    }
-
-    //dump($sal);
 
     if ($sal["status"] !== 200) return false;
     $decode = json_decode($sal["var"], true);
-
-    dump($decode);
 
     if (!($decode)) {
       throw new sfException("Matterhorn communication error");
     }
 
-    $return = array();
+    $return = array(0, array());
 
     if ($decode["search-results"]["total"] == 0)
       return $return;
     
+    $return[0] = $decode["search-results"]["total"];
     if ($decode["search-results"]["limit"] > 1)
       foreach($decode["search-results"]["result"] as $media)
-        $return[] = $media["mediapackage"];
+        $return[1][] = $media["mediapackage"];
     else
-      $return[] = $decode["search-results"]["result"]["mediapackage"];
+      $return[1][] = $decode["search-results"]["result"]["mediapackage"];
 
     return $return;
   }
 
+
+  public function getMediapackage($id)
+  {
+    $sal = $this->request("/search/episode.json?id=" . $id);
+
+
+    if ($sal["status"] !== 200) return false;
+    $decode = json_decode($sal["var"], true);
+
+    if (!($decode)) {
+      throw new sfException("Matterhorn communication error");
+    }
+
+    if ($decode["search-results"]["total"] == 0)
+      return null;
+    if ($decode["search-results"]["limit"] > 1)
+      return $decode["search-results"]["limit"][0]["mediapackage"];
+    else
+      return $decode["search-results"]["result"]["mediapackage"];
+
+    
+  }
 
 }
