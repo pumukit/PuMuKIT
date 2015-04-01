@@ -70,4 +70,17 @@ class MediaPackageController extends ResourceController
         return $new_criteria;
     }
 
+
+    /**
+     * @Route("/mediapackage/{id}")
+     */
+    public function importAction($id, Request $request)
+    {
+        $mediaPackage = $this->get('pumukit_opencast.client')->getMediaPackage($id);
+        dump($mediaPackage);
+
+        //Crear serie? crear objeto multimedia? con el mediapackage con los servicios como en el dataexample
+
+        return $id;
+    }
 }
