@@ -1,0 +1,7 @@
+{% extends 'PumukitNewAdminBundle:Inbox:base.html.twig' %}
+
+{% block inbox_body %}
+<p style="padding: 5px">
+  <code>{{ dir }}</code> {% trans %}is not readable{% endtrans %}. {% trans %}Check the file system permissions{% endtrans %}.
+</p>
+{% endblock %}

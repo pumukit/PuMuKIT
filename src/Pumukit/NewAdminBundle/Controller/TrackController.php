@@ -28,14 +28,11 @@ class TrackController extends Controller
 
         $masterProfiles = $this->get('pumukitencoder.profile')->getMasterProfiles(true);
 
-        $dirs = $this->container->hasParameter('pumukit2.inbox') ? array($this->container->getParameter('pumukit2.inbox')) : array();
-
         return array(
                      'track' => $track,
                      'form' => $form->createView(),
                      'mm' => $multimediaObject,
                      'master_profiles' => $masterProfiles,
-                     'dirs' => $dirs
                      );
     }
 

@@ -57,28 +57,7 @@
       </div>
       
       <div class="form-group" id="pumukitnewadmin_track_inbox" style="display: none">
-        <label for="file" class="control-label">{% trans %}Resource{% endtrans %}:</label>
-        <div class="input-group" style="width: 100%; font-family: monospace">
-          <input type="hidden" name="file" id="file" value="" placeholder="{% trans %}Select a file on the tree{% endtrans %}" class="form-control">
-          <div id="explorer_videoserv" class="pmk-tag-tree list-group videoserv" style="border: 1px solid #bbb; float: left; overflow-x: hidden; overflow-y: scroll; width: 100%">
-              {% for dir in dirs %}
-              <a class="list-group-item collapsed noload" href="#"
-                 onclick="javascript:fileServerTree(this, 'file', '{{ dir }}', 0, 'explorer_videoserv'); return false;">
-                <span style="padding-left: 0px">
-                  <i class="mdi- tag_icon"></i>
-                </span>
-                <span>
-                  {{ dir }}
-                </span>                  
-              </a>
-            {% else %}
-              <p style="padding: 5px">
-                To use the inbox mode define the inbox path as <code>pumukit2.inbox</code> parameter in your config file.
-              </p>
-            {% endfor %}
-          </div>
-          
-        </div>
+        {{ render(controller('PumukitNewAdminBundle:Inbox:Form')) }}
       </div>      
     </fieldset>
     <div class="modal-footer">
