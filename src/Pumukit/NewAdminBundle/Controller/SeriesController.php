@@ -325,12 +325,27 @@ class SeriesController extends AdminController
         return $new_criteria;
     }
 
+
+    private function getSorting($config)
+    {
+      $session = $this->get('session');    
+      $sorting = $config->getSorting();
+      if(!$sorting && $session->has('admin/series/sort')) {
+            $value = $session->get('admin/series/type');
+            $key = $session->get('admin/series/sort');
+            $sorting = array($key => $value);
+      }
+      dump($sorting);
+      return $sorting;
+    }
+
+
     /**
      * Gets the list of resources according to a criteria
      */
     public function getResources(Request $request, $config, $criteria)
     {
-        $sorting = $config->getSorting();
+        $sorting = $this->getSorting($config);
         $repository = $this->getRepository();
         $session = $this->get('session');
         $session_namespace = 'admin/series';
