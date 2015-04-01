@@ -979,16 +979,30 @@ window.fileServerSelect = function(element, path)
 window.fileServerTree = function(element, type, dir, num, input)
 {
     baseelement = $(element);
-    baseelement.removeClass("collapsed").addClass("expanded");
-    $.get('{{ path('pumukit_newadmin_inbox_dir') }}?dir=' + dir, function(files){
-        links = "";
-        for(var i in files) {
-          var file = files[i];
-          link = '<a class="list-group-item" onclick="fileServerSelect(this, \'' + file.path +'\'); return false;" href="#"><span style="padding-left: 20px"><i class="mdi- tag_icon"></i></span><span>' + file.relativepath + '</span></a>';
-          links += link;
+    if (baseelement.hasClass('collapsed')) {
+        baseelement.removeClass("collapsed").addClass("expanded");
+        if (baseelement.hasClass('noload')) {
+            $.get('{{ path('pumukit_newadmin_inbox_dir') }}?dir=' + dir, function(files){
+                links = "";
+                for(var i in files) {
+                  var file = files[i];
+                  link = '<a class="list-group-item elem" onclick="fileServerSelect(this, \'' + file.path +
+                         '\'); return false;" href="#"><span style="padding-left: 20px"><i class="mdi- tag_icon"></i></span><span title="' +
+                         file.relativepath + '">' +
+                         ((file.relativepath.length > 50) ? (file.relativepath.slice(0, 35) + '...' + file.relativepath.slice(-15)) : (file.relativepath)) +
+                         '</span></a>';
+                  links += link;
+                }
+                baseelement.after(links);
+                baseelement.removeClass('noload')
+            })
+        } else {
+            $('.list-group-item.elem').show();
         }
-        baseelement.after(links);
-    })
+    } else {
+        baseelement.addClass("collapsed").removeClass("expanded");
+        $('.list-group-item.elem').hide();
+    }
 
 }
 
