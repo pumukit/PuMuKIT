@@ -1,13 +1,13 @@
 <!-- Filter -->
 <div class="well">
-  <form class="form-horizontal" id="filter_broadcasts"  action="{{ path('pumukitnewadmin_broadcast_index') }}" method="get">
+  <form id="filter_broadcasts"  action="{{ path('pumukitnewadmin_broadcast_index') }}" method="get">
   <fieldset>
     <h2>{% trans %}Search{% endtrans %}</h2>
 
     <div class="form-group">
-      <label for="name" class="col-md-2 control-label">{% trans %}Name{% endtrans %}:</label>
+      <label for="name" class="control-label">{% trans %}Name{% endtrans %}:</label>
       {% set criteria = app.session.get('admin/broadcast/criteria') %}
-      <div class="col-md-10">
+      <div>
         <input type="text" class="reset form-control" name="criteria[name.{{ app.request.getLocale() }}]" id="filters_name" value="{{ criteria['name.{{ app.request.getLocale() }}']|default("") }}">
       </div>
     </div>

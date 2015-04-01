@@ -1,13 +1,13 @@
 <!-- Filter -->
 <div class="well">
-  <form class="form-horizontal" id="filter_roles"  action="{{ path('pumukitnewadmin_role_index') }}" method="get">
+  <form id="filter_roles"  action="{{ path('pumukitnewadmin_role_index') }}" method="get">
   <fieldset>
     <h2>{% trans %}Search{% endtrans %}</h2>
 
     <div class="form-group">
-      <label for="cod" class="col-md-2 control-label">{% trans %}Cod{% endtrans %}:</label>
+      <label for="cod" class="control-label">{% trans %}Cod{% endtrans %}:</label>
       {% set criteria = app.session.get('admin/role/criteria') %}
-      <div class="col-md-10">
+      <div>
         <input type="text" class="reset form-control" name="criteria[cod]" id="filters_cod" value="{{ criteria['cod']|default("") }}">
       </div>
     </div>
