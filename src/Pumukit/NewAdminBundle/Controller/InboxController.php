@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class InboxController extends Controller
 {
     /**
-     * @Route("/inbox")
+     * @Route("/inbox", defaults={"_format"="json"})
      */
     public function dirAction(Request $request)
     {
