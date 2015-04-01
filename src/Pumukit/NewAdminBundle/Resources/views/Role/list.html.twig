@@ -58,7 +58,7 @@
 	          {% endif %}
           </td>
           <td>
-	          {% if roles.getCurrentPage() == roles.getNbPages() and not loop.last %}
+	          {% if (roles.getCurrentPage() != roles.getNbPages()) or (loop.index + ((roles.getCurrentPage() - 1 ) * roles.getMaxPerPage()) != roles.getNbResults())  %}
 	          {% spaceless %}
 	          <a href="{{ path('pumukitnewadmin_role_down', {'id': role.id}) }}">&#8595;</a>
 	          <a href="{{ path('pumukitnewadmin_role_bottom', {'id': role.id}) }}"><i class="mdi-editor-vertical-align-bottom"></i></a>
