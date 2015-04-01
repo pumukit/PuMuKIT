@@ -10,7 +10,6 @@
             </div>
           </th>
           <th colspan="5" width="7%"></th>
-          <th width="1%">{% trans %}Id{% endtrans %}</th>
           <th width="1%">{% trans %}Display{% endtrans %}</th>
           <th>{% trans %}Code{% endtrans %}</th>
           <th>{% trans %}Name{% endtrans %}</th>
@@ -20,7 +19,7 @@
       <tbody>
         {% if roles is empty %}
         <tr>
-          <td colspan="11">
+          <td colspan="10">
             {% trans %}There are no roles with those values.{% endtrans %}
           </td>
         </tr>
@@ -67,9 +66,6 @@
 	          {% endif %}
           </td>
           <td>
-            {{ role.id }}
-	        </td>
-          <td>
             {{ role.display }}
 	        </td>
           <td>
@@ -86,7 +82,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <th colspan="11">
+          <th colspan="10">
             <div class="col-md-8">            
               {{ roles.getNbResults }}
               {% transchoice roles.getNbResults %}

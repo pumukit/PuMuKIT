@@ -10,7 +10,6 @@
             </div>
           </th>
           <th colspan="2" width="3%"></th>
-          <th width="1%">{% trans %}Id{% endtrans %}</th>
           <th>{% trans %}Name{% endtrans %}</th>
           <th>{% trans %}Login{% endtrans %}</th>
           <th>{% trans %}Type{% endtrans %}</th>
@@ -22,7 +21,7 @@
 
         {% if users is empty %}
         <tr>
-          <td colspan="9">
+          <td colspan="8">
             {% trans %}There are no users with those values.{% endtrans %}
           </td>
         </tr>
@@ -46,9 +45,6 @@
             <a href="#" onclick="window.submit_delete_user('{{ user.id }}', '{{ user.fullname }}'); return false;">
               <i class="mdi-content-clear"></i>
             </a>
-          </td>
-          <td>
-	          {{ user.id }}
           </td>
           <td>
 	          {% if user.fullname is not empty %}{{ user.fullname }}{% endif %}
@@ -80,7 +76,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <th colspan="9">
+          <th colspan="8">
             <div class="col-md-8">
               {{ users.getNbResults }}
               {% transchoice users.getNbResults %}

@@ -10,7 +10,6 @@
             </div>            
           </th>
           <th colspan="4" width="5%"></th>
-          <th width="1%">{% trans %}Id{% endtrans %}</th>
           <th width="5%">{% trans %}Type{% endtrans %}</th>
           <th>{% trans %}Name{% endtrans %}</th>
           <th>{% trans %}Description{% endtrans %}</th>
@@ -21,7 +20,7 @@
       <tbody>
         {% if broadcasts|length == 0 %}
         <tr>
-          <td colspan="10">
+          <td colspan="9">
             {% trans %}There are no broadcasts with those values.{% endtrans %}
           </td>
         </tr>
@@ -60,9 +59,6 @@
 	                 >
           </td>
           <td>
-            {{ broadcast.id }}
-          </td>
-          <td>
             {{ broadcast.getBroadcastTypeId() }}
           </td>
           <td>
@@ -79,7 +75,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <th colspan="10">
+          <th colspan="9">
             <div class="col-md-8">            
               {{ broadcasts.getNbResults }} 
               {% transchoice broadcasts.getNbResults %}
