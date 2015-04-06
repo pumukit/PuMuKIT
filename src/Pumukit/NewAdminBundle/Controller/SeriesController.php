@@ -335,7 +335,6 @@ class SeriesController extends AdminController
             $key = $session->get('admin/series/sort');
             $sorting = array($key => $value);
       }
-      dump($sorting);
       return $sorting;
     }
 
