@@ -15,7 +15,7 @@ class MultimediaObjectTemplateMetaType extends AbstractType
         $builder
             ->add('i18n_keyword', 'texti18n',
               array('required' => false, 'label' => 'Keyword'))
-            ->add('i18n_copyright', 'texti18n',
+            ->add('copyright', 'text',
               array('required' => false, 'label' => 'Copyright'))
             ->add('broadcast', null, array('label' => 'Broadcast'))
             ->add('public_date', new Html5dateType(),

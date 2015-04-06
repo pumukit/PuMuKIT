@@ -19,7 +19,7 @@ class SeriesType extends AbstractType
         array('label' => 'Title'))
       ->add('i18n_keyword', 'texti18n',
         array('required' => false, 'label' => 'Keyword'))
-      ->add('i18n_copyright', 'texti18n',
+      ->add('copyright', 'text',
         array('required' => false, 'label' => 'Copyright'))
       ->add('series_type', null, array('required' => false, 'label' => 'Channel'))
       ->add('public_date', new Html5dateType(),

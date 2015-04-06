@@ -67,7 +67,6 @@ class SeriesTest extends \PHPUnit_Framework_TestCase
         $descriptionI18n = array($locale => $description, $localeEs => $descriptionEs);
         $headerI18n = array($locale => $header, $localeEs => $headerEs);
         $footerI18n = array($locale => $footer, $localeEs => $footerEs);
-        $copyrightI18n = array($locale => $copyright, $localeEs => $copyrightEs);
         $keywordI18n = array($locale => $keyword, $localeEs => $keywordEs);
         $line2I18n = array($locale => $line2, $localeEs => $line2Es);
 
@@ -76,7 +75,6 @@ class SeriesTest extends \PHPUnit_Framework_TestCase
         $series->setI18nDescription($descriptionI18n);
         $series->setI18nHeader($headerI18n);
         $series->setI18nFooter($footerI18n);
-        $series->setI18nCopyright($copyrightI18n);
         $series->setI18nKeyword($keywordI18n);
         $series->setI18nLine2($line2I18n);
 
@@ -85,7 +83,6 @@ class SeriesTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($descriptionI18n, $series->getI18nDescription());
         $this->assertEquals($headerI18n, $series->getI18nHeader());
         $this->assertEquals($footerI18n, $series->getI18nFooter());
-        $this->assertEquals($copyrightI18n, $series->getI18nCopyright());
         $this->assertEquals($keywordI18n, $series->getI18nKeyword());
         $this->assertEquals($line2I18n, $series->getI18nLine2());
     }

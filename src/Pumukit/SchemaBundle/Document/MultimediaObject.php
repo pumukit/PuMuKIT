@@ -142,9 +142,16 @@ class MultimediaObject
     /**
      * @var string $copyright
      *
-     * @MongoDB\Raw
+     * @MongoDB\String
      */
-    private $copyright = array('en' => '');
+    private $copyright;
+
+    /**
+     * @var string $copyright
+     *
+     * @MongoDB\String
+     */
+    private $license;
 
     /**
      * @var string $keyword
@@ -529,50 +536,18 @@ class MultimediaObject
      * Set copyright
      *
      * @param string $copyright
-     * @param string|null $locale 
      */
-    public function setCopyright($copyright, $locale = null)
-    {
-        if ($locale == null) {
-            $locale = $this->locale;
-        }
-        $this->copyright[$locale] = $copyright;
-    }
-
-    /**
-     * Get copyright
-     *
-     * @param string|null $locale
-     * @return string
-     */
-    public function getCopyright($locale = null)
-    {
-        if ($locale == null) {
-            $locale = $this->locale;
-        }
-        if (!isset($this->copyright[$locale])) {
-            return;
-        }
-
-        return $this->copyright[$locale];
-    }
-
-    /**
-     * Set I18n copyright
-     *
-     * @param array $copyright
-     */
-    public function setI18nCopyright(array $copyright)
+    public function setCopyright($copyright)
     {
         $this->copyright = $copyright;
     }
 
     /**
-     * Get I18n copyright
+     * Get copyright
      *
-     * @return array
+     * @return string
      */
-    public function getI18nCopyright()
+    public function getCopyright()
     {
         return $this->copyright;
     }
