@@ -12,18 +12,15 @@ class BroadcastType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-      ->add('i18n_name', 'texti18n',
-        array('attr' => array('style' => 'width: 420px'), 'label' => 'Name'))
+      ->add('i18n_name', 'texti18n', array('label' => 'Name'))
       ->add('broadcast_type_id', 'choice',
         array('choices' => array(
                        Broadcast::BROADCAST_TYPE_PUB => Broadcast::BROADCAST_TYPE_PUB,
                        Broadcast::BROADCAST_TYPE_PRI => Broadcast::BROADCAST_TYPE_PRI,
                        Broadcast::BROADCAST_TYPE_COR => Broadcast::BROADCAST_TYPE_COR, ),
           'label' => 'Type', ))
-      ->add('passwd', 'password',
-        array('attr' => array('style' => 'width: 420px'), 'label' => 'Passwd'))
-      ->add('i18n_description', 'textareai18n',
-        array('attr' => array('style' => 'width: 420px'), 'label' => 'Description'));
+      ->add('passwd', 'password', array('label' => 'Passwd'))
+      ->add('i18n_description', 'textareai18n', array('label' => 'Description'));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
