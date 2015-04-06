@@ -25,7 +25,6 @@
               <div class="form-group">
                 <label for="title" class="control-label">{% trans %}Title{% endtrans %}:</label>
                 <div>
-                  {# TODO culture #}
                   <input type="text" class="form-control" name="criteria[title.{{ app.request.locale }}]" id="filters_title" value="{{ criteria['title.{{ app.request.locale }}']|default("") }}">
                 </div>
               </div>
@@ -33,8 +32,6 @@
               {# <div class="form-group">
                 <label for="person" class="control-label">{% trans %}Person{% endtrans %}:</label>
                 <div>
-                  {# TODO person name, comes from multimedia object in series #}
-                  {# TODO culture #}
                   <input type="text" class="form-control" name="criteria[person]" id="filters_person" value="{{ criteria['person']|default("") }}">
                 </div>
               </div> #}
@@ -89,7 +86,7 @@
 
     <div class="text-right">
 	  <input class="btn btn-default btn-raised" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
-	  <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="btn btn-pumukit btn-raised" onclick="return testDates($('filters_date_from').value, $('filters_date_to').value, /^(\d+)-(\d+)-(\d+)$/)"> {# TODO GET CULTURE DATE FORMAT #}
+	  <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="btn btn-pumukit btn-raised" onclick="return testDates($('filters_date_from').value, $('filters_date_to').value, /^(\d+)-(\d+)-(\d+)$/)"> {# TODO GET DATE FORMAT #}
     </div>
   </form>
 </div>
