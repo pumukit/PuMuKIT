@@ -9,7 +9,7 @@
               </label>
             </div>
           </th>
-          <th colspan="5" width="7%"></th>
+          <th colspan="4" width="7%"></th>
           <th width="1%">{% trans %}Display{% endtrans %}</th>
           <th>{% trans %}Code{% endtrans %}</th>
           <th>{% trans %}Name{% endtrans %}</th>
@@ -41,13 +41,6 @@
             <a href="#" onclick="window.submit_delete_role('{{ role.id }}', '{{ role.getNumberPeopleInMultimediaObject() }}'); return false;">
               <i class="mdi-content-clear"></i>            
             </a>
-          </td>
-          <td>
-            <form action="{{ path('pumukitnewadmin_role_copy', {'id': role.id}) }}" method="post" class="delete-action-form" novalidate="">
-              <button type="submit" style="background: transparent; border: none">
-                <i class="mdi-content-content-copy"></i>                
-	            </button>
-	          </form>
           </td>
           <td>
 	          {% if roles.getCurrentPage() != 1 or not loop.first %}
