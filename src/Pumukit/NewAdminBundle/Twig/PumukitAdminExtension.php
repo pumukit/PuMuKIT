@@ -45,8 +45,10 @@ class PumukitAdminExtension extends \Twig_Extension
                      new \Twig_SimpleFilter('series_text', array($this, 'getSeriesText')),
                      new \Twig_SimpleFilter('profile_width', array($this, 'getProfileWidth')),
                      new \Twig_SimpleFilter('profile_height', array($this, 'getProfileHeight')),
-                     new \Twig_SimpleFilter('announce_icon', array($this, 'getAnnounceIcon')),
-                     new \Twig_SimpleFilter('announce_text', array($this, 'getAnnounceText')),
+                     new \Twig_SimpleFilter('series_announce_icon', array($this, 'getSeriesAnnounceIcon')),
+                     new \Twig_SimpleFilter('series_announce_text', array($this, 'getSeriesAnnounceText')),
+                     new \Twig_SimpleFilter('mms_announce_icon', array($this, 'getMmsAnnounceIcon')),
+                     new \Twig_SimpleFilter('mms_announce_text', array($this, 'getMmsAnnounceText')),
                      );
     }
 
@@ -300,16 +302,11 @@ class PumukitAdminExtension extends \Twig_Extension
      * @param Series $series
      * @return string $icon
      */
-    public function getAnnounceIcon($series)
+    public function getSeriesAnnounceIcon($series)
     {
-        $icon = '';
+        $icon = 'mdi-action-done pumukit-transparent';
 
         if ($series->getAnnounce()) return "mdi-action-spellcheck pumukit-series-announce";
-
-        foreach($series->getMultimediaObjects() as $mm){
-            if ($mm->containsTagWithCod('PUDENEW'))
-              return "mdi-action-spellcheck pumukit-mm-announce";
-        }
 
         return $icon;
     }
@@ -321,11 +318,44 @@ class PumukitAdminExtension extends \Twig_Extension
      * @param Series $series
      * @return string $text
      */
-    public function getAnnounceText($series)
+    public function getSeriesAnnounceText($series)
     {
         $text = '';
 
         if ($series->getAnnounce()) return "This Series is announced";
+
+        return $text;
+    }
+
+    /**
+     * Get announce icon of Multimedia Objects in Series
+     * and MultimediaObjects inside of it
+     *
+     * @param Series $series
+     * @return string $icon
+     */
+    public function getMmsAnnounceIcon($series)
+    {
+        $icon = 'mdi-action-done pumukit-transparent';
+
+        foreach($series->getMultimediaObjects() as $mm){
+            if ($mm->containsTagWithCod('PUDENEW'))
+              return "mdi-action-spellcheck pumukit-mm-announce";
+        }
+
+        return $icon;
+    }
+
+    /**
+     * Get announce text of Multimedia Objects in Series
+     * and MultimediaObjects inside of it
+     *
+     * @param Series $series
+     * @return string $text
+     */
+    public function getMmsAnnounceText($series)
+    {
+        $text = '';
 
         $count = 0;
         foreach($series->getMultimediaObjects() as $mm){
@@ -333,7 +363,7 @@ class PumukitAdminExtension extends \Twig_Extension
         }
 
         if ($count > 0)
-            return "This Series is not announced but has ".$count." announced Multimedia Object(s)";
+            return "This Series has ".$count." announced Multimedia Object(s)";
 
         return $text;
     }
