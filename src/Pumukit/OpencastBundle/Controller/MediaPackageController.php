@@ -5,7 +5,7 @@ namespace Pumukit\OpencastBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+//use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pagerfanta\Adapter\FixedAdapter;
@@ -45,8 +45,6 @@ class MediaPackageController extends ResourceController
                 $limit,
                 ($page -1) * $limit);
 
-        dump($mediaPackages);
-
         $adapter = new FixedAdapter($total, $mediaPackages);
         $pagerfanta = new Pagerfanta($adapter);
 
@@ -63,7 +61,6 @@ class MediaPackageController extends ResourceController
     public function importAction($id, Request $request)
     {
         $mediaPackage = $this->get('pumukit_opencast.client')->getMediaPackage($id);
-        dump($mediaPackage);
 
         $this->dm = $this->get('doctrine_mongodb')->getManager();
         $factoryService = $this->get('pumukitschema.factory');
@@ -133,7 +130,7 @@ class MediaPackageController extends ResourceController
         $status = MultimediaObject::STATUS_NORMAL;
         $title = $mediaPackage["title"];
 
-        $multimediaObject = new MultimediaObject();
+        $multimediaObject =  $factoryService->createMultimediaObject($series);
         $multimediaObject->setRank($rank);
         $multimediaObject->setStatus($status);
         $multimediaObject->setSeries($series);
