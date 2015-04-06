@@ -48,7 +48,7 @@
 				}"
                       id="all_status_change_pub">
                 <option selected="selected" ></option>
-                <option value="{{ 'PumukitSchemaBundle:MultimediaObject:STATUS_NORMAL' }}" >{% trans %}Published{% endtrans %}</option>
+                <option value="{{ 'PumukitSchemaBundle:MultimediaObject:STATUS_PUBLISHED' }}" >{% trans %}Published{% endtrans %}</option>
                 <option value="{{ 'PumukitSchemaBundle:MultimediaObject:STATUS_BLOQ' }}" >{% trans %}Blocked{% endtrans %}</option>
                 <option value="{{ 'PumukitSchemaBundle:MultimediaObject:STATUS_HIDE' }}" >{% trans %}Hidden{% endtrans %}</option>
               </select>
@@ -77,7 +77,7 @@
 	    {% if true %}
             <td style="background: transparent">
               <select name="data[{{ mm.id }}][status]" id="filters_anounce_{{ mm.id }}" onchange="" class="status_change_pub">
-                <option {{ ('PumukitSchemaBundle:MultimediaObject:STATUS_NORMAL' == mm.status) ? 'selected="selected"' : '' }} value="0" >{% trans %}Published{% endtrans %}</option>
+                <option {{ ('PumukitSchemaBundle:MultimediaObject:STATUS_PUBLISHED' == mm.status) ? 'selected="selected"' : '' }} value="0" >{% trans %}Published{% endtrans %}</option>
                 <option {{ ('PumukitSchemaBundle:MultimediaObject:STATUS_BLOQ' == mm.status) ? 'selected="selected"' : '' }} value="1" >{% trans %}Blocked{% endtrans %}</option>
                 <option {{ ('PumukitSchemaBundle:MultimediaObject:STATUS_HIDE' == mm.status) ? 'selected="selected"' : '' }} value="2" >{% trans %}Hidden{% endtrans %}</option>
               </select>

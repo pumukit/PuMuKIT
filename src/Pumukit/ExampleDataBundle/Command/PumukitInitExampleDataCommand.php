@@ -193,7 +193,7 @@ EOT
             $pic->setHide($hide);
 
             $rank = 3;
-            $status = MultimediaObject::STATUS_NORMAL;
+            $status = MultimediaObject::STATUS_PUBLISHED;
             $record_date = new \DateTime();
             $public_date = new \DateTime();
             $title = 'Access Grid';
@@ -339,7 +339,7 @@ EOT
             $pic->setHide($hide);
 
             $rank = 3;
-            $status = MultimediaObject::STATUS_NORMAL;
+            $status = MultimediaObject::STATUS_PUBLISHED;
             $record_date = new \DateTime();
             $public_date = new \DateTime();
             $title = 'Uvigo';
@@ -485,7 +485,7 @@ EOT
             $pic->setHide($hide);
 
             $rank = 3;
-            $status = MultimediaObject::STATUS_NORMAL;
+            $status = MultimediaObject::STATUS_PUBLISHED;
             $record_date = new \DateTime();
             $public_date = new \DateTime();
             $title = 'AIBO';
@@ -568,7 +568,7 @@ EOT
             $pic->setHide($hide);
 
             $rank = 3;
-            $status = MultimediaObject::STATUS_NORMAL;
+            $status = MultimediaObject::STATUS_PUBLISHED;
             $record_date = new \DateTime();
             $public_date = new \DateTime();
             $title = 'Movil';
@@ -650,7 +650,7 @@ EOT
             $pic->setHide($hide);
 
             $rank = 3;
-            $status = MultimediaObject::STATUS_NORMAL;
+            $status = MultimediaObject::STATUS_PUBLISHED;
             $record_date = new \DateTime();
             $public_date = new \DateTime();
             $title = 'Fanuc';
@@ -732,7 +732,7 @@ EOT
             $pic->setHide($hide);
 
             $rank = 3;
-            $status = MultimediaObject::STATUS_NORMAL;
+            $status = MultimediaObject::STATUS_PUBLISHED;
             $record_date = new \DateTime();
             $public_date = new \DateTime();
             $title = 'Concurso';
@@ -814,7 +814,7 @@ EOT
             $pic->setHide($hide);
 
             $rank = 3;
-            $status = MultimediaObject::STATUS_NORMAL;
+            $status = MultimediaObject::STATUS_PUBLISHED;
             $record_date = new \DateTime();
             $public_date = new \DateTime();
             $title = 'Robonova';
@@ -960,7 +960,7 @@ EOT
             $pic->setHide($hide);
 
             $rank = 3;
-            $status = MultimediaObject::STATUS_NORMAL;
+            $status = MultimediaObject::STATUS_PUBLISHED;
             $record_date = new \DateTime();
             $public_date = new \DateTime();
             $title = 'Armesto';
@@ -1106,7 +1106,7 @@ EOT
             $pic->setHide($hide);
 
             $rank = 3;
-            $status = MultimediaObject::STATUS_NORMAL;
+            $status = MultimediaObject::STATUS_PUBLISHED;
             $record_date = new \DateTime();
             $public_date = new \DateTime();
             $title = 'Energy materials and environment';
@@ -1252,7 +1252,7 @@ EOT
             $pic->setHide($hide);
 
             $rank = 3;
-            $status = MultimediaObject::STATUS_NORMAL;
+            $status = MultimediaObject::STATUS_PUBLISHED;
             $record_date = new \DateTime();
             $public_date = new \DateTime();
             $title = 'Toralla';
@@ -1398,7 +1398,7 @@ EOT
             $pic->setHide($hide);
 
             $rank = 3;
-            $status = MultimediaObject::STATUS_NORMAL;
+            $status = MultimediaObject::STATUS_PUBLISHED;
             $record_date = new \DateTime();
             $public_date = new \DateTime();
             $title = 'Isaac Díaz Pardo';
@@ -1480,7 +1480,7 @@ EOT
             $pic->setHide($hide);
 
             $rank = 3;
-            $status = MultimediaObject::STATUS_NORMAL;
+            $status = MultimediaObject::STATUS_PUBLISHED;
             $record_date = new \DateTime();
             $public_date = new \DateTime();
             $title = 'Promo';
@@ -1625,7 +1625,7 @@ EOT
             $pic->setHide($hide);
 
             $rank = 3;
-            $status = MultimediaObject::STATUS_NORMAL;
+            $status = MultimediaObject::STATUS_PUBLISHED;
             $record_date = new \DateTime();
             $public_date = new \DateTime();
             $title = 'Episode I';
@@ -1771,7 +1771,7 @@ EOT
             $pic->setHide($hide);
 
             $rank = 3;
-            $status = MultimediaObject::STATUS_NORMAL;
+            $status = MultimediaObject::STATUS_PUBLISHED;
             $record_date = new \DateTime();
             $public_date = new \DateTime();
             $title = 'First';
@@ -1853,7 +1853,7 @@ EOT
             $pic->setHide($hide);
 
             $rank = 3;
-            $status = MultimediaObject::STATUS_NORMAL;
+            $status = MultimediaObject::STATUS_PUBLISHED;
             $record_date = new \DateTime();
             $public_date = new \DateTime();
             $title = 'Second';
@@ -1999,7 +1999,7 @@ EOT
             $pic->setHide($hide);
 
             $rank = 3;
-            $status = MultimediaObject::STATUS_NORMAL;
+            $status = MultimediaObject::STATUS_PUBLISHED;
             $record_date = new \DateTime();
             $public_date = new \DateTime();
             $title = 'Conference';
@@ -2145,7 +2145,7 @@ EOT
             $pic->setHide($hide);
 
             $rank = 3;
-            $status = MultimediaObject::STATUS_NORMAL;
+            $status = MultimediaObject::STATUS_PUBLISHED;
             $record_date = new \DateTime();
             $public_date = new \DateTime();
             $title = 'Presentation';

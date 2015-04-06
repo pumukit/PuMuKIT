@@ -137,7 +137,7 @@ class PumukitAdminExtension extends \Twig_Extension
         $iconClass = "mdi-alert-warning";
 
         switch ($status) {
-            case MultimediaObject::STATUS_NORMAL:
+            case MultimediaObject::STATUS_PUBLISHED:
                 $iconClass = "mdi-device-signal-wifi-4-bar";
                 break;
             case MultimediaObject::STATUS_HIDE:
@@ -162,11 +162,11 @@ class PumukitAdminExtension extends \Twig_Extension
         $iconText = "New";
 
         switch ($status) {
-            case MultimediaObject::STATUS_NORMAL:
-                $iconText = "Normal: is listed in the Series and can be played with normal URL";
+            case MultimediaObject::STATUS_PUBLISHED:
+                $iconText = "Published: is listed in the Series and can be played with published URL";
                 break;
             case MultimediaObject::STATUS_HIDE:
-                $iconText = "Hidden: is not listed in the Series but can be played with normal URL";
+                $iconText = "Hidden: is not listed in the Series but can be played with published URL";
                 break;
             case MultimediaObject::STATUS_BLOQ:
                 $iconText = "Blocked: is not listed in the Series but can be played with magic URL";
@@ -184,14 +184,14 @@ class PumukitAdminExtension extends \Twig_Extension
      */
     public function getSeriesIcon($series)
     {
-        $mmobjsNormal = 0;
+        $mmobjsPublished = 0;
         $mmobjsHidden = 0;
         $mmobjsBlocked = 0;
 
         foreach($series->getMultimediaObjects() as $mmobj){
             switch ($mmobj->getStatus()) {
-                case MultimediaObject::STATUS_NORMAL:
-                    ++$mmobjsNormal;
+                case MultimediaObject::STATUS_PUBLISHED:
+                    ++$mmobjsPublished;
                     break;
                 case MultimediaObject::STATUS_HIDE:
                     ++$mmobjsHidden;
@@ -205,21 +205,21 @@ class PumukitAdminExtension extends \Twig_Extension
 
         $iconClass = "mdi-alert-warning";
 
-        if ((0 === $mmobjsNormal) && (0 === $mmobjsHidden) && (0 === $mmobjsBlocked)){
+        if ((0 === $mmobjsPublished) && (0 === $mmobjsHidden) && (0 === $mmobjsBlocked)){
             $iconClass = "mdi-device-signal-wifi-off pumukit-none";
-        }elseif (($mmobjsNormal > $mmobjsHidden) && ($mmobjsNormal > $mmobjsBlocked)){
-            $iconClass = "mdi-device-signal-wifi-4-bar pumukit-normal";
-        }elseif (($mmobjsNormal === $mmobjsHidden) && ($mmobjsNormal > $mmobjsBlocked)){
-            $iconClass = "mdi-device-signal-wifi-0-bar pumukit-hidden-normal";
-        }elseif (($mmobjsHidden > $mmobjsNormal) && ($mmobjsHidden > $mmobjsBlocked)){
+        }elseif (($mmobjsPublished > $mmobjsHidden) && ($mmobjsPublished > $mmobjsBlocked)){
+            $iconClass = "mdi-device-signal-wifi-4-bar pumukit-published";
+        }elseif (($mmobjsPublished === $mmobjsHidden) && ($mmobjsPublished > $mmobjsBlocked)){
+            $iconClass = "mdi-device-signal-wifi-0-bar pumukit-hidden-published";
+        }elseif (($mmobjsHidden > $mmobjsPublished) && ($mmobjsHidden > $mmobjsBlocked)){
             $iconClass = "mdi-device-signal-wifi-0-bar pumukit-hidden";
-        }elseif (($mmobjsNormal === $mmobjsBlocked) && ($mmobjsNormal > $mmobjsHidden)){
-            $iconClass = "mdi-device-wifi-lock pumukit-blocked-normal";
-        }elseif (($mmobjsBlocked === $mmobjsHidden) && ($mmobjsBlocked > $mmobjsNormal)){
+        }elseif (($mmobjsPublished === $mmobjsBlocked) && ($mmobjsPublished > $mmobjsHidden)){
+            $iconClass = "mdi-device-wifi-lock pumukit-blocked-published";
+        }elseif (($mmobjsBlocked === $mmobjsHidden) && ($mmobjsBlocked > $mmobjsPublished)){
             $iconClass = "mdi-device-wifi-lock pumukit-blocked-hidden";
-        }elseif (($mmobjsNormal === $mmobjsBlocked) && ($mmobjsNormal === $mmobjsHidden)){
-            $iconClass = "mdi-device-wifi-lock pumukit-blocked-hidden-normal";
-        }elseif (($mmobjsBlocked > $mmobjsNormal) && ($mmobjsBlocked > $mmobjsHidden)){
+        }elseif (($mmobjsPublished === $mmobjsBlocked) && ($mmobjsPublished === $mmobjsHidden)){
+            $iconClass = "mdi-device-wifi-lock pumukit-blocked-hidden-published";
+        }elseif (($mmobjsBlocked > $mmobjsPublished) && ($mmobjsBlocked > $mmobjsHidden)){
             $iconClass = "mdi-device-wifi-lock pumukit-blocked";
         }
 
@@ -234,14 +234,14 @@ class PumukitAdminExtension extends \Twig_Extension
      */
     public function getSeriesText($series)
     {
-        $mmobjsNormal = 0;
+        $mmobjsPublished = 0;
         $mmobjsHidden = 0;
         $mmobjsBlocked = 0;
 
         foreach($series->getMultimediaObjects() as $mmobj){
             switch ($mmobj->getStatus()) {
-                case MultimediaObject::STATUS_NORMAL:
-                    ++$mmobjsNormal;
+                case MultimediaObject::STATUS_PUBLISHED:
+                    ++$mmobjsPublished;
                     break;
                 case MultimediaObject::STATUS_HIDE:
                     ++$mmobjsHidden;
@@ -253,7 +253,7 @@ class PumukitAdminExtension extends \Twig_Extension
 
         }
 
-        $iconText = $mmobjsNormal." Normal Multimedia Object(s),\n".
+        $iconText = $mmobjsPublished." Published Multimedia Object(s),\n".
             $mmobjsHidden." Hidden Multimedia Object(s),\n".
             $mmobjsBlocked." Blocked Multimedia Object(s)\n".
             "(Click to modify broadcast status)";

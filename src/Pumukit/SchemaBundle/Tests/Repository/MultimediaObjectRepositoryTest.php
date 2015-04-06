@@ -66,7 +66,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
     public function testRepository()
     {
         //$rank = 1;
-        $status = MultimediaObject::STATUS_NORMAL;
+        $status = MultimediaObject::STATUS_PUBLISHED;
         $record_date = new \DateTime();
         $public_date = new \DateTime();
         $title = 'titulo cualquiera';
@@ -410,22 +410,22 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mmBloq = $this->createMultimediaObjectAssignedToSeries('Status bloq', $series);
         $mmBloq->setStatus(MultimediaObject::STATUS_BLOQ);
 
-        $mmNormal = $this->createMultimediaObjectAssignedToSeries('Status normal', $series);
-        $mmNormal->setStatus(MultimediaObject::STATUS_NORMAL);
+        $mmPublished = $this->createMultimediaObjectAssignedToSeries('Status published', $series);
+        $mmPublished->setStatus(MultimediaObject::STATUS_PUBLISHED);
 
         $this->dm->persist($mmNew);
         $this->dm->persist($mmHide);
         $this->dm->persist($mmBloq);
-        $this->dm->persist($mmNormal);
+        $this->dm->persist($mmPublished);
         $this->dm->flush();
 
         $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PROTOTYPE))));
         $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NEW))));
         $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_HIDE))));
         $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_BLOQ))));
-        $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NORMAL))));
+        $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED))));
         $this->assertEquals(2, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PROTOTYPE, MultimediaObject::STATUS_NEW))));
-        $this->assertEquals(3, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NORMAL, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDE))));
+        $this->assertEquals(3, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDE))));
 
         $mmArray = array($mmNew->getId() => $mmNew);
         $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NEW))->toArray());
@@ -433,10 +433,10 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_HIDE))->toArray());
         $mmArray = array($mmBloq->getId() => $mmBloq);
         $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_BLOQ))->toArray());
-        $mmArray = array($mmNormal->getId() => $mmNormal);
-        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NORMAL))->toArray());
-        $mmArray = array($mmNormal->getId() => $mmNormal, $mmNew->getId() => $mmNew, $mmHide->getId() => $mmHide);
-        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NORMAL, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDE))->toArray());
+        $mmArray = array($mmPublished->getId() => $mmPublished);
+        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED))->toArray());
+        $mmArray = array($mmPublished->getId() => $mmPublished, $mmNew->getId() => $mmNew, $mmHide->getId() => $mmHide);
+        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDE))->toArray());
     }
 
     public function testFindPrototype()
@@ -458,20 +458,20 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mmBloq = $this->createMultimediaObjectAssignedToSeries('Status bloq', $series);
         $mmBloq->setStatus(MultimediaObject::STATUS_BLOQ);
 
-        $mmNormal = $this->createMultimediaObjectAssignedToSeries('Status normal', $series);
-        $mmNormal->setStatus(MultimediaObject::STATUS_NORMAL);
+        $mmPublished = $this->createMultimediaObjectAssignedToSeries('Status published', $series);
+        $mmPublished->setStatus(MultimediaObject::STATUS_PUBLISHED);
 
         $this->dm->persist($mmNew);
         $this->dm->persist($mmHide);
         $this->dm->persist($mmBloq);
-        $this->dm->persist($mmNormal);
+        $this->dm->persist($mmPublished);
         $this->dm->flush();
 
         $this->assertEquals(1, count($this->repo->findPrototype($series)));
         $this->assertNotEquals($mmNew, $this->repo->findPrototype($series));
         $this->assertNotEquals($mmHide, $this->repo->findPrototype($series));
         $this->assertNotEquals($mmBloq, $this->repo->findPrototype($series));
-        $this->assertNotEquals($mmNormal, $this->repo->findPrototype($series));
+        $this->assertNotEquals($mmPublished, $this->repo->findPrototype($series));
     }
 
     public function testFindWithoutPrototype()
@@ -493,13 +493,13 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mmBloq = $this->createMultimediaObjectAssignedToSeries('Status bloq', $series);
         $mmBloq->setStatus(MultimediaObject::STATUS_BLOQ);
 
-        $mmNormal = $this->createMultimediaObjectAssignedToSeries('Status normal', $series);
-        $mmNormal->setStatus(MultimediaObject::STATUS_NORMAL);
+        $mmPublished = $this->createMultimediaObjectAssignedToSeries('Status published', $series);
+        $mmPublished->setStatus(MultimediaObject::STATUS_PUBLISHED);
 
         $this->dm->persist($mmNew);
         $this->dm->persist($mmHide);
         $this->dm->persist($mmBloq);
-        $this->dm->persist($mmNormal);
+        $this->dm->persist($mmPublished);
         $this->dm->flush();
 
         $this->assertEquals(4, count($this->repo->findWithoutPrototype($series)));
@@ -508,7 +508,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
              $mmNew->getId() => $mmNew,
              $mmHide->getId() => $mmHide,
              $mmBloq->getId() => $mmBloq,
-             $mmNormal->getId() => $mmNormal,
+             $mmPublished->getId() => $mmPublished,
              );
         $this->assertEquals($mmArray, $this->repo->findWithoutPrototype($series)->toArray());
     }

@@ -21,7 +21,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $series = new Series();
 
         $rank = 3;
-        $status = MultimediaObject::STATUS_NORMAL;
+        $status = MultimediaObject::STATUS_PUBLISHED;
         $record_date = new \DateTime();
         $public_date = new \DateTime();
         $title = 'Star Wars';

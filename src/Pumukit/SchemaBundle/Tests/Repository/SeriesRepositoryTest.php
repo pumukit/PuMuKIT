@@ -839,7 +839,7 @@ class SeriesRepositoryTest extends WebTestCase
 
     private function createMultimediaObjectAssignedToSeries($title, Series $series)
     {
-        $status = MultimediaObject::STATUS_NORMAL;
+        $status = MultimediaObject::STATUS_PUBLISHED;
         $record_date = new \DateTime();
         $public_date = new \DateTime();
         $subtitle = 'Subtitle';
