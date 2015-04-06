@@ -67,7 +67,7 @@
 	    {% endspaceless %}
 	    {% endif %}
         </td>
-        <td>
+        <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
           <span>{{ mm.isOnlyAudio() ? 'Audio':'Video' }}</span>
         </td>
         <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
