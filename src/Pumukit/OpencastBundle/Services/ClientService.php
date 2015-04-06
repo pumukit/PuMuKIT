@@ -20,6 +20,7 @@ class ClientService
   private function request($path){
     $sal = array();
 
+    dump($this->url . $path);
     $ch = curl_init($this->url . $path);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
@@ -35,12 +36,13 @@ class ClientService
     $sal["error"] = curl_error($ch);
     $sal["status"] = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
+    curl_close($ch);
+
     if(200 != $sal["status"]) {
       throw new \Exception("Error Processing Request", 1);
       
     }
-
-    curl_close($ch);
+   
     return $sal;
 
   }

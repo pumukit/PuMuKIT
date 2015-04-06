@@ -10,7 +10,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pagerfanta\Adapter\FixedAdapter;
 use Pagerfanta\Pagerfanta;
-use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -19,25 +18,19 @@ use Pumukit\SchemaBundle\Document\Pic;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 //use UploadedFile;
 
-class MediaPackageController extends ResourceController
+class MediaPackageController extends Controller
 {
     private $dm = null;
 
     /**
-     * @Route("/mediapackage")
+     * @Route("/mediapackage", name="opencastimport")
      * @Template()
      */
     public function indexAction(Request $request)
     {
-
-
-        $config = $this->getConfiguration();
-        $criteria = $this->getCriteria($config);
-
-        $pluralName = $config->getPluralResourceName();
-
         $limit = 10;
         $page =  $request->get("page", 1);
+        $criteria = $this->getCriteria($request);
 
 
         list($total, $mediaPackages) = $this->get('pumukit_opencast.client')->getMediaPackages(
@@ -146,7 +139,7 @@ class MediaPackageController extends ResourceController
             $vcodec = $mediaPackage["media"]["track"][$i]["video"]["encoder"]["type"];
          
             $track = new Track();
-            $track->setTags($tags);
+            $track->setTags(array("opencast"));
             $track->setUrl($url);
             $track->setMimeType($mime);
             $track->setDuration($duration);
@@ -177,23 +170,24 @@ class MediaPackageController extends ResourceController
 
         //----------------------------------------------------------------------------
 
-        return -1;
+        return $this->redirectToRoute('opencastimport');
     }
 
 
     /**
      * Gets the criteria values
      */
-    public function getCriteria($config)
+    public function getCriteria($request)
     {
-        $criteria = $config->getCriteria();
+        $criteria = $request->get('criteria', array());
+
 
         if (array_key_exists('reset', $criteria)) {
-            $this->get('session')->remove('admin/'.$config->getResourceName().'/criteria');
+            $this->get('session')->remove('admin/opencast/criteria');
         } elseif ($criteria) {
-            $this->get('session')->set('admin/'.$config->getResourceName().'/criteria', $criteria);
+            $this->get('session')->set('admin/opencast/criteria', $criteria);
         }
-        $criteria = $this->get('session')->get('admin/'.$config->getResourceName().'/criteria', array());
+        $criteria = $this->get('session')->get('admin/opencast/criteria', array());
 
         $new_criteria = array();
 
