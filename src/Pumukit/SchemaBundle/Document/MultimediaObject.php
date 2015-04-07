@@ -13,7 +13,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class MultimediaObject
 {
-    const STATUS_NORMAL = 0;
+    const STATUS_PUBLISHED = 0;
     const STATUS_BLOQ = 1;
     const STATUS_HIDE = 2;
     const STATUS_NEW = -1;

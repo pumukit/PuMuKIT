@@ -14,7 +14,7 @@ class MultimediaObjectPubType extends AbstractType
         $builder
       ->add('status', 'choice',
         array('choices' => array(
-                  MultimediaObject::STATUS_NORMAL => 'Normal',
+                  MultimediaObject::STATUS_PUBLISHED => 'Published',
                   MultimediaObject::STATUS_BLOQ => 'Blocked',
                   MultimediaObject::STATUS_HIDE => 'Hidden'
             ),

@@ -45,8 +45,10 @@ class PumukitAdminExtension extends \Twig_Extension
                      new \Twig_SimpleFilter('series_text', array($this, 'getSeriesText')),
                      new \Twig_SimpleFilter('profile_width', array($this, 'getProfileWidth')),
                      new \Twig_SimpleFilter('profile_height', array($this, 'getProfileHeight')),
-                     new \Twig_SimpleFilter('announce_icon', array($this, 'getAnnounceIcon')),
-                     new \Twig_SimpleFilter('announce_text', array($this, 'getAnnounceText')),
+                     new \Twig_SimpleFilter('series_announce_icon', array($this, 'getSeriesAnnounceIcon')),
+                     new \Twig_SimpleFilter('series_announce_text', array($this, 'getSeriesAnnounceText')),
+                     new \Twig_SimpleFilter('mms_announce_icon', array($this, 'getMmsAnnounceIcon')),
+                     new \Twig_SimpleFilter('mms_announce_text', array($this, 'getMmsAnnounceText')),
                      );
     }
 
@@ -135,7 +137,7 @@ class PumukitAdminExtension extends \Twig_Extension
         $iconClass = "mdi-alert-warning";
 
         switch ($status) {
-            case MultimediaObject::STATUS_NORMAL:
+            case MultimediaObject::STATUS_PUBLISHED:
                 $iconClass = "mdi-device-signal-wifi-4-bar";
                 break;
             case MultimediaObject::STATUS_HIDE:
@@ -160,11 +162,11 @@ class PumukitAdminExtension extends \Twig_Extension
         $iconText = "New";
 
         switch ($status) {
-            case MultimediaObject::STATUS_NORMAL:
-                $iconText = "Normal: is listed in the Series and can be played with normal URL";
+            case MultimediaObject::STATUS_PUBLISHED:
+                $iconText = "Published: is listed in the Series and can be played with published URL";
                 break;
             case MultimediaObject::STATUS_HIDE:
-                $iconText = "Hidden: is not listed in the Series but can be played with normal URL";
+                $iconText = "Hidden: is not listed in the Series but can be played with published URL";
                 break;
             case MultimediaObject::STATUS_BLOQ:
                 $iconText = "Blocked: is not listed in the Series but can be played with magic URL";
@@ -182,14 +184,14 @@ class PumukitAdminExtension extends \Twig_Extension
      */
     public function getSeriesIcon($series)
     {
-        $mmobjsNormal = 0;
+        $mmobjsPublished = 0;
         $mmobjsHidden = 0;
         $mmobjsBlocked = 0;
 
         foreach($series->getMultimediaObjects() as $mmobj){
             switch ($mmobj->getStatus()) {
-                case MultimediaObject::STATUS_NORMAL:
-                    ++$mmobjsNormal;
+                case MultimediaObject::STATUS_PUBLISHED:
+                    ++$mmobjsPublished;
                     break;
                 case MultimediaObject::STATUS_HIDE:
                     ++$mmobjsHidden;
@@ -203,21 +205,21 @@ class PumukitAdminExtension extends \Twig_Extension
 
         $iconClass = "mdi-alert-warning";
 
-        if ((0 === $mmobjsNormal) && (0 === $mmobjsHidden) && (0 === $mmobjsBlocked)){
+        if ((0 === $mmobjsPublished) && (0 === $mmobjsHidden) && (0 === $mmobjsBlocked)){
             $iconClass = "mdi-device-signal-wifi-off pumukit-none";
-        }elseif (($mmobjsNormal > $mmobjsHidden) && ($mmobjsNormal > $mmobjsBlocked)){
-            $iconClass = "mdi-device-signal-wifi-4-bar pumukit-normal";
-        }elseif (($mmobjsNormal === $mmobjsHidden) && ($mmobjsNormal > $mmobjsBlocked)){
-            $iconClass = "mdi-device-signal-wifi-0-bar pumukit-hidden-normal";
-        }elseif (($mmobjsHidden > $mmobjsNormal) && ($mmobjsHidden > $mmobjsBlocked)){
+        }elseif (($mmobjsPublished > $mmobjsHidden) && ($mmobjsPublished > $mmobjsBlocked)){
+            $iconClass = "mdi-device-signal-wifi-4-bar pumukit-published";
+        }elseif (($mmobjsPublished === $mmobjsHidden) && ($mmobjsPublished > $mmobjsBlocked)){
+            $iconClass = "mdi-device-signal-wifi-0-bar pumukit-hidden-published";
+        }elseif (($mmobjsHidden > $mmobjsPublished) && ($mmobjsHidden > $mmobjsBlocked)){
             $iconClass = "mdi-device-signal-wifi-0-bar pumukit-hidden";
-        }elseif (($mmobjsNormal === $mmobjsBlocked) && ($mmobjsNormal > $mmobjsHidden)){
-            $iconClass = "mdi-device-wifi-lock pumukit-blocked-normal";
-        }elseif (($mmobjsBlocked === $mmobjsHidden) && ($mmobjsBlocked > $mmobjsNormal)){
+        }elseif (($mmobjsPublished === $mmobjsBlocked) && ($mmobjsPublished > $mmobjsHidden)){
+            $iconClass = "mdi-device-wifi-lock pumukit-blocked-published";
+        }elseif (($mmobjsBlocked === $mmobjsHidden) && ($mmobjsBlocked > $mmobjsPublished)){
             $iconClass = "mdi-device-wifi-lock pumukit-blocked-hidden";
-        }elseif (($mmobjsNormal === $mmobjsBlocked) && ($mmobjsNormal === $mmobjsHidden)){
-            $iconClass = "mdi-device-wifi-lock pumukit-blocked-hidden-normal";
-        }elseif (($mmobjsBlocked > $mmobjsNormal) && ($mmobjsBlocked > $mmobjsHidden)){
+        }elseif (($mmobjsPublished === $mmobjsBlocked) && ($mmobjsPublished === $mmobjsHidden)){
+            $iconClass = "mdi-device-wifi-lock pumukit-blocked-hidden-published";
+        }elseif (($mmobjsBlocked > $mmobjsPublished) && ($mmobjsBlocked > $mmobjsHidden)){
             $iconClass = "mdi-device-wifi-lock pumukit-blocked";
         }
 
@@ -232,14 +234,14 @@ class PumukitAdminExtension extends \Twig_Extension
      */
     public function getSeriesText($series)
     {
-        $mmobjsNormal = 0;
+        $mmobjsPublished = 0;
         $mmobjsHidden = 0;
         $mmobjsBlocked = 0;
 
         foreach($series->getMultimediaObjects() as $mmobj){
             switch ($mmobj->getStatus()) {
-                case MultimediaObject::STATUS_NORMAL:
-                    ++$mmobjsNormal;
+                case MultimediaObject::STATUS_PUBLISHED:
+                    ++$mmobjsPublished;
                     break;
                 case MultimediaObject::STATUS_HIDE:
                     ++$mmobjsHidden;
@@ -251,7 +253,7 @@ class PumukitAdminExtension extends \Twig_Extension
 
         }
 
-        $iconText = $mmobjsNormal." Normal Multimedia Object(s),\n".
+        $iconText = $mmobjsPublished." Published Multimedia Object(s),\n".
             $mmobjsHidden." Hidden Multimedia Object(s),\n".
             $mmobjsBlocked." Blocked Multimedia Object(s)\n".
             "(Click to modify broadcast status)";
@@ -300,16 +302,11 @@ class PumukitAdminExtension extends \Twig_Extension
      * @param Series $series
      * @return string $icon
      */
-    public function getAnnounceIcon($series)
+    public function getSeriesAnnounceIcon($series)
     {
-        $icon = '';
+        $icon = 'mdi-action-done pumukit-transparent';
 
         if ($series->getAnnounce()) return "mdi-action-spellcheck pumukit-series-announce";
-
-        foreach($series->getMultimediaObjects() as $mm){
-            if ($mm->containsTagWithCod('PUDENEW'))
-              return "mdi-action-spellcheck pumukit-mm-announce";
-        }
 
         return $icon;
     }
@@ -321,11 +318,44 @@ class PumukitAdminExtension extends \Twig_Extension
      * @param Series $series
      * @return string $text
      */
-    public function getAnnounceText($series)
+    public function getSeriesAnnounceText($series)
     {
         $text = '';
 
         if ($series->getAnnounce()) return "This Series is announced";
+
+        return $text;
+    }
+
+    /**
+     * Get announce icon of Multimedia Objects in Series
+     * and MultimediaObjects inside of it
+     *
+     * @param Series $series
+     * @return string $icon
+     */
+    public function getMmsAnnounceIcon($series)
+    {
+        $icon = 'mdi-action-done pumukit-transparent';
+
+        foreach($series->getMultimediaObjects() as $mm){
+            if ($mm->containsTagWithCod('PUDENEW'))
+              return "mdi-action-spellcheck pumukit-mm-announce";
+        }
+
+        return $icon;
+    }
+
+    /**
+     * Get announce text of Multimedia Objects in Series
+     * and MultimediaObjects inside of it
+     *
+     * @param Series $series
+     * @return string $text
+     */
+    public function getMmsAnnounceText($series)
+    {
+        $text = '';
 
         $count = 0;
         foreach($series->getMultimediaObjects() as $mm){
@@ -333,7 +363,7 @@ class PumukitAdminExtension extends \Twig_Extension
         }
 
         if ($count > 0)
-            return "This Series is not announced but has ".$count." announced Multimedia Object(s)";
+            return "This Series has ".$count." announced Multimedia Object(s)";
 
         return $text;
     }

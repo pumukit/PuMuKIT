@@ -251,7 +251,7 @@ class SeriesController extends AdminController
         $series = $this->findOr404($request);
 
         $mmStatus = array(
-                        'published' => MultimediaObject::STATUS_NORMAL,
+                        'published' => MultimediaObject::STATUS_PUBLISHED,
                         'blocked' => MultimediaObject::STATUS_BLOQ,
                         'hidden' => MultimediaObject::STATUS_HIDE
                         );

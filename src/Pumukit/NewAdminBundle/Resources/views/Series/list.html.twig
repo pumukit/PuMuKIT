@@ -33,7 +33,10 @@
           </div>
         </td>
         <td>
-          <i class="{{ oneseries|announce_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|announce_text }}"></i>
+          {% spaceless %}
+          <i class="{{ oneseries|series_announce_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|series_announce_text }}"></i>
+          <i class="{{ oneseries|mms_announce_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|mms_announce_text }}"></i>
+          {% endspaceless %}
         </td> 
         <td>
           <a href="{{ path('pumukitnewadmin_series_changepub', {'id': oneseries.id}) }}" data-toggle="modal" data-target="#myModal">

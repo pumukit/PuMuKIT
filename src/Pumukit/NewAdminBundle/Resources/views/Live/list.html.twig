@@ -9,7 +9,7 @@
 	    </label>
 	  </div>
 	</th>
-	<th colspan="3" width="5%"></th>
+	<th colspan="2" width="5%"></th>
 	<th>{% trans %}Name{% endtrans %}</th>
 	<th>{% trans %}URL{% endtrans %}</th>
 	<th width="1%">{% trans %}Resolution{% endtrans %}</th>
@@ -42,14 +42,6 @@
               <a href="#" onclick="window.submit_delete_live('{{ live.id }}'); return false;">
 	            <i class="mdi-content-clear"></i>
               </a>
-            </td>
-            <td>
-              {# TODO DELETE OR CHANGE THE WAY OF DOING THE COPY??
-              <form action="{{ path('pumukitnewadmin_live_copy', {'id': live.id}) }}" method="post" class="delete-action-form" novalidate="">
-                <button type="submit" class="tv_admin_row_post">
-		          <img alt="{% trans %}clone{% endtrans %}" title="{% trans %}clone{% endtrans %}" src="/legacy/images/admin/mbuttons/copy_inline.gif">
-	            </button>
-	          </form> #}
             </td>
             <td onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
 	          {{ live.name }}
