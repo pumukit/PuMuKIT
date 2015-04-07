@@ -880,7 +880,7 @@ test_form_url = function(url){
  * Test URL generation
  */
 test_url_generation = function(url){
-    var re=/^\w+:\/\/\w+(\.\w+)*/;
+    var re=/^(?:(?:https?):\/\/)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\x{00a1}\-\x{ffff}0-9]+-?)*[a-z\x{00a1}\-\x{ffff}0-9]+)(?:\.(?:[a-z\x{00a1}\-\x{ffff}0-9]+-?)*[a-z\x{00a1}\-\x{ffff}0-9]+)*(?:\.(?:[a-z\x{00a1}\-\x{ffff}]{2,})))(?::\d{2,5})?(?:\/[^\s]*)?$/;
     return !re.test(url);
 }
 
@@ -1153,3 +1153,25 @@ $(document).on('click', '#pumukitnewadmin_mmtemplate_updatemeta_cancel', functio
     $('#pumukitnewadmin_mmtemplate_updatemeta_form')[0].reset();
     $('#remember_save_mm_template').hide();
 });
+
+function test_material_form_url(url){
+    $('.error').hide();
+
+    if (test_url_generation(url)){
+	$('#error_url').show();
+	return false;
+    }
+    $('#myModal').modal('hide');
+    return true;
+}
+
+function test_material_form_file_nmb(file){
+    $('.error').hide();
+
+    if (file == ""){
+	$('#error_file').show();
+	return false;
+    }
+
+    return true;
+}
