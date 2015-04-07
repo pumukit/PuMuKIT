@@ -1134,6 +1134,14 @@ $(document).on('change', "*[id^='pumukitnewadmin_mms_meta_']", function(){
     $('#remember_save_mm').css('display', 'inline-block');
 });
 
+$(document).on('change', "*[id^='pumukitnewadmin_mms_meta_']", function(){
+    $('#remember_save_mm').css('display', 'inline-block');
+});
+
+$(document).on('change', 'form#pumukitnewadmin_mms_updatepub_form input, form#pumukitnewadmin_mms_updatepub_form select', function(){
+    $('#remember_save_mm_pub').show();
+});
+
 $(document).on('click', '#pumukitnewadmin_series_updatemeta_cancel', function(){
     $('#pumukitnewadmin_series_updatemeta_form')[0].reset();
     $('#remember_save_series').hide();

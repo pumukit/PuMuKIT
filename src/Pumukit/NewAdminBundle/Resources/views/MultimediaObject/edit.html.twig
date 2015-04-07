@@ -62,13 +62,7 @@
   
     <div class="tab-content">
       <div id="pubMm" role="tabpanel" class="tab-pane active">
-        {# TODO set the below values #}
-        {% set langs = '' %}
-        {% set timeframe1 = '' %}
-        {% set interval1cmp = '' %}
-        {% set timeframe2 = '' %}
-        {% set interval2cmp = '' %}
-        {% include 'PumukitNewAdminBundle:MultimediaObject:updatepub.html.twig' with {'mm': mm, 'pub_channels': pub_channels, 'pub_decisions': pub_decisions, 'langs': langs, 'timeframe1': timeframe1, 'interval1cmp': interval1cmp, 'timeframe2': timeframe2, 'interval2cmp': interval2cmp} %}
+        {% include 'PumukitNewAdminBundle:MultimediaObject:updatepub.html.twig' with {'mm': mm, 'pub_channels': pub_channels, 'pub_decisions': pub_decisions} %}
       </div>
       <div id="metaMm" role="tabpanel" class="tab-pane">
         {% include 'PumukitNewAdminBundle:MultimediaObject:updatemeta.html.twig' with {'mm': mm} %}

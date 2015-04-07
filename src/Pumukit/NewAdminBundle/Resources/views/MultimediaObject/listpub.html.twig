@@ -8,7 +8,6 @@
 	    {% set status = mm.containsTag(pub) %}
         <label>
         <input type="checkbox"
-               onchange="$('remember_save_mm_pub').show()"
                name="pub_{{ pub_type }}[{{ pub.cod }}]"
 	           id="pub_{{ pub_type }}_{{ pub.cod }}"
                class="pub_channel_input_checkbox"
