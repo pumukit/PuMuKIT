@@ -57,10 +57,6 @@ class MediaPackageController extends Controller
 
         $this->dm = $this->get('doctrine_mongodb')->getManager();
         $factoryService = $this->get('pumukitschema.factory');
-        $mmsPicService = $this->get('pumukitschema.mmspic');
-        $jobService = $this->get('pumukitencoder.job'); 
-
-        //Series MediaPackage----------------------------------------------------------
 
         $announce = true;
         $publicDate = new \DateTime("now");
@@ -73,6 +69,7 @@ class MediaPackageController extends Controller
         $keyword = '';
         $line2 = '';
         $locale = 'en';
+        //$properties = $mediaPackage["series"];
 
         $series = $factoryService->createSeries();
         $series->setAnnounce($announce);
@@ -86,6 +83,7 @@ class MediaPackageController extends Controller
         $series->setKeyword($keyword);
         $series->setLine2($line2);
         $series->setLocale($locale);
+        //$series->setProperty("opencast",$properties);
 
         $titleEs = $mediaPackage["seriestitle"];
         $subtitleEs = '';
@@ -152,23 +150,23 @@ class MediaPackageController extends Controller
 
         for($j=0; $j<count($mediaPackage["attachments"]["attachment"]); $j++){
 
-            $tags = $mediaPackage["attachments"]["attachment"][$j]["tags"];
-            $url = $mediaPackage["attachments"]["attachment"][$j]["url"];
+            if($mediaPackage["attachments"]["attachment"][$j]["type"] == "presenter/search+preview"){
 
-            $pic = new Pic();
-            $pic->setTags(array($tags));
-            $pic->setUrl($url);
+                $tags = $mediaPackage["attachments"]["attachment"][$j]["tags"];
+                $url = $mediaPackage["attachments"]["attachment"][$j]["url"];
 
-            $multimediaObject->addPic($pic);
+                $pic = new Pic();
+                $pic->setTags(array($tags));
+                $pic->setUrl($url);
 
+                $multimediaObject->addPic($pic);
+            }
         }
 
 
         $dm = $this->get('doctrine_mongodb')->getManager();
         $dm->persist($multimediaObject);
         $dm->flush();
-
-        //----------------------------------------------------------------------------
 
         return $this->redirectToRoute('opencastimport');
     }
