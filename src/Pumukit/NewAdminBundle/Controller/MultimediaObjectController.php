@@ -22,11 +22,6 @@ class MultimediaObjectController extends SortableAdminController
         $config = $this->getConfiguration();
         $criteria = $this->getCriteria($config);
         $resources = $this->getResources($request, $config, $criteria);
-        $sorting = $request->get('sorting');
-        if (null !== $sorting){
-            $this->get('session')->set('admin/mms/type', $sorting[key($sorting)]);
-            $this->get('session')->set('admin/mms/sort', key($sorting));
-        }
 
         $factoryService = $this->get('pumukitschema.factory');
 
@@ -419,14 +414,11 @@ class MultimediaObjectController extends SortableAdminController
         $page = $session->get('admin/mms/page', 1);
         $maxPerPage = $session->get('admin/mms/paginate', 10);
 
-        $sorting = array();
-        if ($this->get('session')->has('admin/mms/type') && $this->get('session')->has('admin/mms/sort')){
-          $sorting['fieldName'] = $this->get('session')->get('admin/mms/sort');
-          $sorting['order'] = $this->get('session')->get('admin/mms/type');
-        }
+        $sorting = array('fieldName' => "rank", 'order' => "asc")
         $coll_mms = $this->get('doctrine_mongodb.odm.document_manager')
           ->getRepository('PumukitSchemaBundle:MultimediaObject')->findOrderedBy($series, $sorting);
 
+        //TODO add DoctrineODMMongoDBAdapter.
         $adapter = new ArrayAdapter($coll_mms->toArray());
         $mms = new Pagerfanta($adapter);
 
@@ -511,13 +503,6 @@ class MultimediaObjectController extends SortableAdminController
         $config = $this->getConfiguration();
         $criteria = $this->getCriteria($config);
         $resources = $this->getResources($request, $config, $criteria);
-
-        $sorting = $request->get('sorting');
-        if (null !== $sorting){
-            $this->get('session')->set('admin/mms/type', $sorting[key($sorting)]);
-            $this->get('session')->set('admin/mms/sort', key($sorting));
-        }
-
         $factoryService = $this->get('pumukitschema.factory');
         $seriesId = $request->get('seriesId', null);
         $sessionId = $this->get('session')->get('admin/series/id', null);
