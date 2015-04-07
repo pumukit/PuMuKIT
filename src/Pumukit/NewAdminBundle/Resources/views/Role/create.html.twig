@@ -4,7 +4,7 @@
 </div>
 <div class="modal-body">
   {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
-  <form onsubmit="$('#myModal').modal('hide');
+  <form autocomplete="off" onsubmit="$('#myModal').modal('hide');
                   $.ajax({
                           url: '{{ path('pumukitnewadmin_role_create') }}',
                           method: 'POST',

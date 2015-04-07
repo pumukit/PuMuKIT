@@ -4,7 +4,7 @@
 </div>
 <div class="modal-body">
   {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
-  <form method="post" target="iframeUpload"
+  <form autocomplete="off" method="post" target="iframeUpload"
         action="{{ path('pumukitnewadmin_track_upload', {'id': mm.id}) }}" 
         enctype="multipart/form-data" name="formulario">
     <iframe id="iframeUpload" name="iframeUpload" style="display:none" src=""></iframe> 
