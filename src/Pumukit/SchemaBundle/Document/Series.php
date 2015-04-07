@@ -112,6 +112,13 @@ class Series
   private $line2 = array('en' => '');
 
   /**
+   * @var string $properties
+   *
+   * @MongoDB\Raw
+   */
+  private $properties = array();
+
+  /**
    * Used locale to override Translation listener`s locale
    * this is not a mapped field of entity metadata, just a simple property
    * @var locale $locale
@@ -120,9 +127,9 @@ class Series
 
   public function __construct()
   {
-      $this->secret = new \MongoId();  
-      $this->multimedia_objects = new ArrayCollection();
-      $this->pics = new ArrayCollection();
+    $this->secret = new \MongoId();  
+    $this->multimedia_objects = new ArrayCollection();
+    $this->pics = new ArrayCollection();
   }
 
   /**
@@ -132,7 +139,7 @@ class Series
    */
   public function getId()
   {
-      return $this->id;
+    return $this->id;
   }
 
   /**
@@ -142,7 +149,7 @@ class Series
    */
   public function getSecret()
   {
-      return $this->secret;
+    return $this->secret;
   }
 
   /**
@@ -152,7 +159,7 @@ class Series
    */
   public function setSeriesType(SeriesType $series_type)
   {
-      $this->series_type = $series_type;
+    $this->series_type = $series_type;
   }
 
   /**
@@ -162,7 +169,7 @@ class Series
    */
   public function getSeriesType()
   {
-      return $this->series_type;
+    return $this->series_type;
   }
 
 
@@ -175,7 +182,7 @@ class Series
    */
   public function containsMultimediaObject(MultimediaObject $multimedia_object)
   {
-      return $this->multimedia_objects->contains($multimedia_object);
+    return $this->multimedia_objects->contains($multimedia_object);
   }
 
   /**
@@ -185,7 +192,7 @@ class Series
    */
   public function getMultimediaObjects()
   {
-      return $this->multimedia_objects;
+    return $this->multimedia_objects;
   }
 
   /**
@@ -195,7 +202,7 @@ class Series
    */
   public function setAnnounce($announce)
   {
-      $this->announce = $announce;
+    $this->announce = $announce;
   }
 
   /**
@@ -205,7 +212,7 @@ class Series
    */
   public function getAnnounce()
   {
-      return $this->announce;
+    return $this->announce;
   }
 
   /**
@@ -215,7 +222,7 @@ class Series
    */
   public function setPublicDate($public_date)
   {
-      $this->public_date = $public_date;
+    $this->public_date = $public_date;
   }
 
   /**
@@ -225,7 +232,7 @@ class Series
    */
   public function getPublicDate()
   {
-      return $this->public_date;
+    return $this->public_date;
   }
 
   /**
@@ -236,10 +243,10 @@ class Series
    */
   public function setTitle($title, $locale = null)
   {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      $this->title[$locale] = $title;
+    if ($locale == null) {
+      $locale = $this->locale;
+    }
+    $this->title[$locale] = $title;
   }
 
   /**
@@ -250,14 +257,14 @@ class Series
    */
   public function getTitle($locale = null)
   {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      if (!isset($this->title[$locale])) {
-          return;
-      }
+    if ($locale == null) {
+      $locale = $this->locale;
+    }
+    if (!isset($this->title[$locale])) {
+      return;
+    }
 
-      return $this->title[$locale];
+    return $this->title[$locale];
   }
 
   /**
@@ -267,7 +274,7 @@ class Series
    */
   public function setI18nTitle(array $title)
   {
-      $this->title = $title;
+    $this->title = $title;
   }
 
   /**
@@ -277,7 +284,7 @@ class Series
    */
   public function getI18nTitle()
   {
-      return $this->title;
+    return $this->title;
   }
 
   /**
@@ -288,10 +295,10 @@ class Series
    */
   public function setSubtitle($subtitle, $locale = null)
   {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      $this->subtitle[$locale] = $subtitle;
+    if ($locale == null) {
+      $locale = $this->locale;
+    }
+    $this->subtitle[$locale] = $subtitle;
   }
 
   /**
@@ -302,14 +309,14 @@ class Series
    */
   public function getSubtitle($locale = null)
   {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      if (!isset($this->subtitle[$locale])) {
-          return;
-      }
+    if ($locale == null) {
+      $locale = $this->locale;
+    }
+    if (!isset($this->subtitle[$locale])) {
+      return;
+    }
 
-      return $this->subtitle[$locale];
+    return $this->subtitle[$locale];
   }
 
   /**
@@ -319,7 +326,7 @@ class Series
    */
   public function setI18nSubtitle(array $subtitle)
   {
-      $this->subtitle = $subtitle;
+    $this->subtitle = $subtitle;
   }
 
   /**
@@ -329,7 +336,7 @@ class Series
    */
   public function getI18nSubtitle()
   {
-      return $this->subtitle;
+    return $this->subtitle;
   }
 
   /**
@@ -340,10 +347,10 @@ class Series
    */
   public function setDescription($description, $locale = null)
   {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      $this->description[$locale] = $description;
+    if ($locale == null) {
+      $locale = $this->locale;
+    }
+    $this->description[$locale] = $description;
   }
 
   /**
@@ -354,14 +361,14 @@ class Series
    */
   public function getDescription($locale = null)
   {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      if (!isset($this->description[$locale])) {
-          return;
-      }
+    if ($locale == null) {
+      $locale = $this->locale;
+    }
+    if (!isset($this->description[$locale])) {
+      return;
+    }
 
-      return $this->description[$locale];
+    return $this->description[$locale];
   }
 
   /**
@@ -371,7 +378,7 @@ class Series
    */
   public function setI18nDescription(array $description)
   {
-      $this->description = $description;
+    $this->description = $description;
   }
 
   /**
@@ -381,7 +388,7 @@ class Series
    */
   public function getI18nDescription()
   {
-      return $this->description;
+    return $this->description;
   }
 
   /**
@@ -392,10 +399,10 @@ class Series
    */
   public function setHeader($header, $locale = null)
   {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      $this->header[$locale] = $header;
+    if ($locale == null) {
+      $locale = $this->locale;
+    }
+    $this->header[$locale] = $header;
   }
 
   /**
@@ -406,14 +413,14 @@ class Series
    */
   public function getHeader($locale = null)
   {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      if (!isset($this->header[$locale])) {
-          return;
-      }
+    if ($locale == null) {
+      $locale = $this->locale;
+    }
+    if (!isset($this->header[$locale])) {
+      return;
+    }
 
-      return $this->header[$locale];
+    return $this->header[$locale];
   }
 
   /**
@@ -423,7 +430,7 @@ class Series
    */
   public function setI18nHeader(array $header)
   {
-      $this->header = $header;
+    $this->header = $header;
   }
 
   /**
@@ -433,7 +440,7 @@ class Series
    */
   public function getI18nHeader()
   {
-      return $this->header;
+    return $this->header;
   }
 
   /**
@@ -444,10 +451,10 @@ class Series
    */
   public function setFooter($footer, $locale = null)
   {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      $this->footer[$locale] = $footer;
+    if ($locale == null) {
+      $locale = $this->locale;
+    }
+    $this->footer[$locale] = $footer;
   }
 
   /**
@@ -458,14 +465,14 @@ class Series
    */
   public function getFooter($locale = null)
   {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      if (!isset($this->footer[$locale])) {
-          return;
-      }
+    if ($locale == null) {
+      $locale = $this->locale;
+    }
+    if (!isset($this->footer[$locale])) {
+      return;
+    }
 
-      return $this->footer[$locale];
+    return $this->footer[$locale];
   }
 
   /**
@@ -475,7 +482,7 @@ class Series
    */
   public function setI18nFooter(array $footer)
   {
-      $this->footer = $footer;
+    $this->footer = $footer;
   }
 
   /**
@@ -485,7 +492,7 @@ class Series
    */
   public function getI18nFooter()
   {
-      return $this->footer;
+    return $this->footer;
   }
 
   /**
@@ -496,10 +503,10 @@ class Series
    */
   public function setCopyright($copyright, $locale = null)
   {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      $this->copyright[$locale] = $copyright;
+    if ($locale == null) {
+      $locale = $this->locale;
+    }
+    $this->copyright[$locale] = $copyright;
   }
 
   /**
@@ -510,14 +517,14 @@ class Series
    */
   public function getCopyright($locale = null)
   {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      if (!isset($this->copyright[$locale])) {
-          return;
-      }
+    if ($locale == null) {
+      $locale = $this->locale;
+    }
+    if (!isset($this->copyright[$locale])) {
+      return;
+    }
 
-      return $this->copyright[$locale];
+    return $this->copyright[$locale];
   }
 
   /**
@@ -527,7 +534,7 @@ class Series
    */
   public function setI18nCopyright(array $copyright)
   {
-      $this->copyright = $copyright;
+    $this->copyright = $copyright;
   }
 
   /**
@@ -537,7 +544,7 @@ class Series
    */
   public function getI18nCopyright()
   {
-      return $this->copyright;
+    return $this->copyright;
   }
 
   /**
@@ -548,10 +555,10 @@ class Series
    */
   public function setKeyword($keyword, $locale = null)
   {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      $this->keyword[$locale] = $keyword;
+    if ($locale == null) {
+      $locale = $this->locale;
+    }
+    $this->keyword[$locale] = $keyword;
   }
 
   /**
@@ -562,14 +569,14 @@ class Series
    */
   public function getKeyword($locale = null)
   {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      if (!isset($this->keyword[$locale])) {
-          return;
-      }
+    if ($locale == null) {
+      $locale = $this->locale;
+    }
+    if (!isset($this->keyword[$locale])) {
+      return;
+    }
 
-      return $this->keyword[$locale];
+    return $this->keyword[$locale];
   }
 
   /**
@@ -579,7 +586,7 @@ class Series
    */
   public function setI18nKeyword(array $keyword)
   {
-      $this->keyword = $keyword;
+    $this->keyword = $keyword;
   }
 
   /**
@@ -589,7 +596,7 @@ class Series
    */
   public function getI18nKeyword()
   {
-      return $this->keyword;
+    return $this->keyword;
   }
 
   /**
@@ -600,10 +607,10 @@ class Series
    */
   public function setLine2($line2, $locale = null)
   {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      $this->line2[$locale] = $line2;
+    if ($locale == null) {
+      $locale = $this->locale;
+    }
+    $this->line2[$locale] = $line2;
   }
 
   /**
@@ -614,14 +621,14 @@ class Series
    */
   public function getLine2($locale = null)
   {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      if (!isset($this->line2[$locale])) {
-          return;
-      }
+    if ($locale == null) {
+      $locale = $this->locale;
+    }
+    if (!isset($this->line2[$locale])) {
+      return;
+    }
 
-      return $this->line2[$locale];
+    return $this->line2[$locale];
   }
 
   /**
@@ -631,7 +638,7 @@ class Series
    */
   public function setI18nLine2(array $line2)
   {
-      $this->line2 = $line2;
+    $this->line2 = $line2;
   }
 
   /**
@@ -641,13 +648,13 @@ class Series
    */
   public function getI18nLine2()
   {
-      return $this->line2;
+    return $this->line2;
   }
 
-    public function __toString()
-    {
-        return $this->getTitle();
-    }
+  public function __toString()
+  {
+    return $this->getTitle();
+  }
 
   /**
    * Set locale
@@ -656,7 +663,7 @@ class Series
    */
   public function setLocale($locale)
   {
-      $this->locale = $locale;
+    $this->locale = $locale;
   }
 
   /**
@@ -666,7 +673,7 @@ class Series
    */
   public function getLocale()
   {
-      return $this->locale;
+    return $this->locale;
   }
 
   /**
@@ -677,13 +684,13 @@ class Series
    */
   public function containsMultimediaObjectWithTag(Tag $tag)
   {
-      foreach ($this->multimedia_objects as $mmo) {
-          if ($mmo->containsTag($tag)) {
-              return true;
-          }
+    foreach ($this->multimedia_objects as $mmo) {
+      if ($mmo->containsTag($tag)) {
+        return true;
       }
+    }
 
-      return false;
+    return false;
   }
 
   /**
@@ -694,15 +701,15 @@ class Series
    */
   public function getMultimediaObjectsWithTag(Tag $tag)
   {
-      $r = array();
+    $r = array();
 
-      foreach ($this->multimedia_objects as $mmo) {
-          if ($mmo->containsTag($tag)) {
-              $r[] = $mmo;
-          }
+    foreach ($this->multimedia_objects as $mmo) {
+      if ($mmo->containsTag($tag)) {
+        $r[] = $mmo;
       }
+    }
 
-      return $r;
+    return $r;
   }
 
   /**
@@ -713,15 +720,15 @@ class Series
    */
   public function getMultimediaObjectWithTag(Tag $tag)
   {
-      foreach ($this->multimedia_objects as $mmo) {
+    foreach ($this->multimedia_objects as $mmo) {
       //if ($mmo->tags->contains($tag)) {
       //FIXME no pasa el test phpunit cuando se llama desde seriestest
       if ($mmo->containsTag($tag)) {
-          return $mmo;
+        return $mmo;
       }
-      }
+    }
 
-      return;
+    return;
   }
 
   /**
@@ -732,14 +739,14 @@ class Series
    */
   public function getMultimediaObjectsWithAllTags(array $tags)
   {
-      $r = array();
-      foreach ($this->multimedia_objects as $mmo) {
-          if ($mmo->containsAllTags($tags)) {
-              $r[] = $mmo;
-          }
+    $r = array();
+    foreach ($this->multimedia_objects as $mmo) {
+      if ($mmo->containsAllTags($tags)) {
+        $r[] = $mmo;
       }
+    }
 
-      return $r;
+    return $r;
   }
 
   /**
@@ -750,13 +757,13 @@ class Series
    */
   public function getMultimediaObjectWithAllTags(array $tags)
   {
-      foreach ($this->multimedia_objects as $mmo) {
-          if ($mmo->containsAllTags($tags)) {
-              return $mmo;
-          }
+    foreach ($this->multimedia_objects as $mmo) {
+      if ($mmo->containsAllTags($tags)) {
+        return $mmo;
       }
+    }
 
-      return;
+    return;
   }
 
   /**
@@ -767,15 +774,15 @@ class Series
    */
   public function getMultimediaObjectsWithAnyTag(array $tags)
   {
-      $r = array();
+    $r = array();
 
-      foreach ($this->multimedia_objects as $mmo) {
-          if ($mmo->containsAnyTag($tags)) {
-              $r[] = $mmo;
-          }
+    foreach ($this->multimedia_objects as $mmo) {
+      if ($mmo->containsAnyTag($tags)) {
+        $r[] = $mmo;
       }
+    }
 
-      return $r;
+    return $r;
   }
 
   /**
@@ -786,13 +793,13 @@ class Series
    */
   public function getMultimediaObjectWithAnyTag(array $tags)
   {
-      foreach ($this->multimedia_objects as $mmo) {
-          if ($mmo->containsAnyTag($tags)) {
-              return $mmo;
-          }
+    foreach ($this->multimedia_objects as $mmo) {
+      if ($mmo->containsAnyTag($tags)) {
+        return $mmo;
       }
+    }
 
-      return;
+    return;
   }
 
   /**
@@ -805,31 +812,31 @@ class Series
    * @return ArrayCollection
    */
   public function getFilteredMultimediaObjectsWithTags(
-                             array $any_tags = array(),
-                             array $all_tags = array(),
-                             array $not_any_tags = array(),
-                             array $not_all_tags = array())
+   array $any_tags = array(),
+   array $all_tags = array(),
+   array $not_any_tags = array(),
+   array $not_all_tags = array())
   {
-      $r = array();
+    $r = array();
 
-      foreach ($this->multimedia_objects as $mmo) {
-          if ($any_tags && !$mmo->containsAnyTag($any_tags)) {
-              continue;
-          }
-          if ($all_tags && !$mmo->containsAllTags($all_tags)) {
-              continue;
-          }
-          if ($not_any_tags && $mmo->containsAnyTag($not_any_tags)) {
-              continue;
-          }
-          if ($not_all_tags && $mmo->containsAllTags($not_all_tags)) {
-              continue;
-          }
-
-          $r[] = $mmo;
+    foreach ($this->multimedia_objects as $mmo) {
+      if ($any_tags && !$mmo->containsAnyTag($any_tags)) {
+        continue;
+      }
+      if ($all_tags && !$mmo->containsAllTags($all_tags)) {
+        continue;
+      }
+      if ($not_any_tags && $mmo->containsAnyTag($not_any_tags)) {
+        continue;
+      }
+      if ($not_all_tags && $mmo->containsAllTags($not_all_tags)) {
+        continue;
       }
 
-      return $r;
+      $r[] = $mmo;
+    }
+
+    return $r;
   }
 
   /**
@@ -839,7 +846,7 @@ class Series
    */
   public function addPic(Pic $pic)
   {
-      $this->pics->add($pic);
+    $this->pics->add($pic);
   }
 
   /**
@@ -849,7 +856,7 @@ class Series
    */
   public function removePic(Pic $pic)
   {
-      $this->pics->removeElement($pic);
+    $this->pics->removeElement($pic);
   }
 
   /**
@@ -859,9 +866,9 @@ class Series
    */
   public function removePicById($picId)
   {
-      $this->pics = $this->pics->filter(function ($pic) use ($picId) {
+    $this->pics = $this->pics->filter(function ($pic) use ($picId) {
       return $pic->getId() !== $picId;
-      });
+    });
   }
 
   /**
@@ -871,7 +878,7 @@ class Series
    */
   public function upPicById($picId)
   {
-      $this->reorderPicById($picId, true);
+    $this->reorderPicById($picId, true);
   }
 
   /**
@@ -881,7 +888,7 @@ class Series
    */
   public function downPicById($picId)
   {
-      $this->reorderPicById($picId, false);
+    $this->reorderPicById($picId, false);
   }
 
   /**
@@ -892,22 +899,22 @@ class Series
    */
   private function reorderPicById($picId, $up = true)
   {
-      $snapshot = array_values($this->pics->toArray());
-      $this->pics->clear();
+    $snapshot = array_values($this->pics->toArray());
+    $this->pics->clear();
 
-      $out = array();
-      foreach ($snapshot as $key => $pic) {
-          if ($pic->getId() === $picId) {
-              $out[($key * 10) + ($up ? -11 : 11) ] = $pic;
-          } else {
-              $out[$key * 10] = $pic;
-          }
+    $out = array();
+    foreach ($snapshot as $key => $pic) {
+      if ($pic->getId() === $picId) {
+        $out[($key * 10) + ($up ? -11 : 11) ] = $pic;
+      } else {
+        $out[$key * 10] = $pic;
       }
+    }
 
-      ksort($out);
-      foreach ($out as $pic) {
-          $this->pics->add($pic);
-      }
+    ksort($out);
+    foreach ($out as $pic) {
+      $this->pics->add($pic);
+    }
   }
 
   /**
@@ -919,7 +926,7 @@ class Series
    */
   public function containsPic(Pic $pic)
   {
-      return $this->pics->contains($pic);
+    return $this->pics->contains($pic);
   }
 
   /**
@@ -929,7 +936,7 @@ class Series
    */
   public function getPics()
   {
-      return $this->pics;
+    return $this->pics;
   }
 
   /**
@@ -939,7 +946,7 @@ class Series
    */
   public function getPic()
   {
-      return $this->pics->get(0);
+    return $this->pics->get(0);
   }
 
   /**
@@ -951,13 +958,13 @@ class Series
    */
   public function getPicById($picId)
   {
-      foreach ($this->pics as $pic) {
-          if ($pic->getId() == $picId) {
-              return $pic;
-          }
+    foreach ($this->pics as $pic) {
+      if ($pic->getId() == $picId) {
+        return $pic;
       }
+    }
 
-      return;
+    return;
   }
 
   /**
@@ -969,14 +976,65 @@ class Series
    */
   public function getFirstUrlPic($default='')
   {
-      $url = $default;
-      foreach ($this->pics as $pic) {
-          if (null !== $pic->getUrl()) {
-              $url = $pic->getUrl();
-              break;
-          }
+    $url = $default;
+    foreach ($this->pics as $pic) {
+      if (null !== $pic->getUrl()) {
+        $url = $pic->getUrl();
+        break;
       }
+    }
 
-      return $url;
+    return $url;
   }
+
+
+  /**
+   * Get properties, null if none.
+   *
+   * @return array
+   */
+  public function getProperties()
+  {
+      return $this->properties;
+  }
+
+
+  /**
+   * Set properties
+   *
+   * @param array $properties
+   */
+  public function setProperties($properties)
+  {
+      $this->properties = $properties;
+  }
+
+
+  /**
+   * Get property, null if none.
+   *
+   * @param string $key
+   *
+   * @return string
+   */
+  public function getProperty($key)
+  {
+      if (isset($this->properties[$key])) {
+          return $this->properties[$key];
+      }
+      return null;
+  }
+
+
+  /**
+   * Set property
+   *
+   * @param string $key
+   * @param string $value
+   */
+  public function setProperty($key, $value)
+  {
+      $this->properties[$key] = $value;
+  }
+
 }
