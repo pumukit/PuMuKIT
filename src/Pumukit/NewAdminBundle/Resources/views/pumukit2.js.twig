@@ -1133,3 +1133,23 @@ $(document).on('change', "*[id^='pumukitnewadmin_series_']", function(){
 $(document).on('change', "*[id^='pumukitnewadmin_mms_meta_']", function(){
     $('#remember_save_mm').css('display', 'inline-block');
 });
+
+$(document).on('click', '#pumukitnewadmin_series_updatemeta_cancel', function(){
+    $('#pumukitnewadmin_series_updatemeta_form')[0].reset();
+    $('#remember_save_series').hide();
+});
+
+$(document).on('click', '#pumukitnewadmin_mms_updatepub_cancel', function(){
+    $('#pumukitnewadmin_mms_updatepub_form')[0].reset();
+    return procesaReset();
+});
+
+$(document).on('click', '#pumukitnewadmin_mms_updatemeta_cancel', function(){
+    $('#pumukitnewadmin_mms_updatemeta_form')[0].reset();
+    $('#remember_save_mm').hide();
+});
+
+$(document).on('click', '#pumukitnewadmin_mmtemplate_updatemeta_cancel', function(){
+    $('#pumukitnewadmin_mmtemplate_updatemeta_form')[0].reset();
+    $('#remember_save_mm_template').hide();
+});

@@ -1,5 +1,6 @@
 <div class="well">
-  <form onsubmit="$.ajax({
+  <form id="pumukitnewadmin_series_updatemeta_form"
+        onsubmit="$.ajax({
                           url: '{{ path('pumukitnewadmin_series_update', {'id': series.id}) }}',
                           type: 'POST',
                           data: $(this).serialize(),
@@ -22,7 +23,7 @@
       </div>
 
       <div class="col-md-6 text-right">
-        <button type="button" class="btn btn-default btn-raised" onclick="$('#remember_save_series').hide();">{% trans %}Cancel{% endtrans %}</button>
+        <button id="pumukitnewadmin_series_updatemeta_cancel" type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button>
         <button type="submit" class="btn btn-pumukit btn-raised" onclick="$('#remember_save_series').hide();">{% trans %}OK{% endtrans %}</button>
       </div>
 	</div>

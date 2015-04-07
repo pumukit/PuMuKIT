@@ -2,7 +2,8 @@
 
 <div class="well">
 
-  <form onsubmit="$.ajax({
+  <form id="pumukitnewadmin_mmtemplate_updatemeta_form"
+        onsubmit="$.ajax({
                           url: '{{ path('pumukitnewadmin_mmtemplate_update_meta', {'id': mm.id, 'seriesId': mm.getSeries().getId()}) }}',
                           type: 'POST',
                           data: $(this).serialize(),
@@ -23,7 +24,7 @@
       </div>
 
       <div class="col-md-9 text-right">
-        <button type="button" class="btn btn-default btn-raised" onclick="$('#remember_save_mm_template').hide();">{% trans %}Cancel{% endtrans %}</button>
+        <button id="pumukitnewadmin_mmtemplate_updatemeta_cancel" type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button>
         <button type="submit" class="btn btn-pumukit btn-raised" onclick="$('#remember_save_mm_template').hide();">{% trans %}OK{% endtrans %}</button>
       </div>
 	</div>
