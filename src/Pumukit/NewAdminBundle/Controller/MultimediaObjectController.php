@@ -414,7 +414,7 @@ class MultimediaObjectController extends SortableAdminController
         $page = $session->get('admin/mms/page', 1);
         $maxPerPage = $session->get('admin/mms/paginate', 10);
 
-        $sorting = array('fieldName' => "rank", 'order' => "asc")
+        $sorting = array('fieldName' => "rank", 'order' => "asc");
         $coll_mms = $this->get('doctrine_mongodb.odm.document_manager')
           ->getRepository('PumukitSchemaBundle:MultimediaObject')->findOrderedBy($series, $sorting);
 
