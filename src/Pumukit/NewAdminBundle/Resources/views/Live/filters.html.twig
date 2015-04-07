@@ -1,5 +1,5 @@
 <div class="well">
-  <form id="filter_lives" class="form" onsubmit="$('#list_lives').load('{{ path('pumukitnewadmin_live_list') }}', $(this).serialize()); return false;" action="{{ path('pumukitnewadmin_live_list') }}" method="POST">
+  <form autocomplete="off" id="filter_lives" class="form" onsubmit="$('#list_lives').load('{{ path('pumukitnewadmin_live_list') }}', $(this).serialize()); return false;" action="{{ path('pumukitnewadmin_live_list') }}" method="POST">
     <fieldset>
       <div class="panel panel-default">
         <div class="panel-heading">

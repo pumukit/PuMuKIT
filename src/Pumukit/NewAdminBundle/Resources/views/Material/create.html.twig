@@ -4,7 +4,7 @@
 </div>
 <div class="modal-body">
 {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
-  <form enctype="multipart/form-data" target="iframeUpload"
+  <form autocomplete="off" enctype="multipart/form-data" target="iframeUpload"
         action="{{ path('pumukitnewadmin_material_upload', {'id': mm.id}) }}" method="POST">
 	<input type="hidden" name="id" id="id" value="{{ mm.id }}">
 	<fieldset>

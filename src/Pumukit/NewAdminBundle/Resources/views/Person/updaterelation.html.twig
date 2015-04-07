@@ -3,7 +3,7 @@
   <h4 class="modal-title" id="myModalLabel">{% trans %}edit person{% endtrans %}</h4>
 </div>
 <div class="modal-body">
-  <form onsubmit="$('#myModal').modal('hide');
+  <form autocomplete="off" onsubmit="$('#myModal').modal('hide');
                   $.ajax({
                           url: '{{ path('pumukitnewadmin_person_update_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}',
                           type: 'POST',
