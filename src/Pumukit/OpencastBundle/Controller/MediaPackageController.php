@@ -27,9 +27,6 @@ class MediaPackageController extends Controller
      */
     public function indexAction(Request $request)
     {
-        //$repository_series = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
-        //dump($repository_series->findOneBy(array("properties.opencast"=> "c492c19c-3694-421e-a554-c1e42d0e9602")));
-
         $limit = 10;
         $page =  $request->get("page", 1);
         $criteria = $this->getCriteria($request);
@@ -69,6 +66,7 @@ class MediaPackageController extends Controller
 
 
         if($oneseries == null){
+
             $announce = true;
             $publicDate = new \DateTime("now");
             $title = $mediaPackage["seriestitle"];
@@ -127,7 +125,6 @@ class MediaPackageController extends Controller
             $dm = $this->get('doctrine_mongodb')->getManager();
             $dm->persist($series);
             $dm->flush();
-
         }
 
 
