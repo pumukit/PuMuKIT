@@ -112,7 +112,7 @@ class Series
   private $line2 = array('en' => '');
 
   /**
-   * @var string $properties
+   * @var array $properties
    *
    * @MongoDB\Raw
    */
