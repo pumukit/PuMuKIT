@@ -16,6 +16,7 @@
 
         <service id="pumukitschema.factory" class="Pumukit\SchemaBundle\Services\FactoryService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+            <argument type="service" id="pumukitschema.tag" />
             <argument type="service" id="translator" />
             <argument>%pumukit2.locales%</argument>
         </service>

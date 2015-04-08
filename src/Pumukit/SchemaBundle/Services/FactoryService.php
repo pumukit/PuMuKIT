@@ -14,12 +14,14 @@ class FactoryService
     const DEFAULT_MULTIMEDIAOBJECT_TITLE = 'New';
 
     private $dm;
+    private $tagService;
     private $translator;
     private $locales;
 
-    public function __construct(DocumentManager $documentManager, TranslatorInterface $translator, array $locales = array())
+    public function __construct(DocumentManager $documentManager, TagService $tagService, TranslatorInterface $translator, array $locales = array())
     {
         $this->dm = $documentManager;
+        $this->tagService = $tagService;
         $this->translator = $translator;
         $this->locales = $locales;
     }
@@ -281,7 +283,7 @@ class FactoryService
         $new->setNumview($prototype->getNumview());
 
         foreach ($prototype->getTags() as $tag) {
-            $new->addTag($tag);
+            $this->tagService->addTagToMultimediaObject($new, $tag->getId());
         }
 
         foreach ($prototype->getRoles() as $embeddedRole) {
