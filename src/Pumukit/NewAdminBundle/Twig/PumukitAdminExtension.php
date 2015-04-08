@@ -53,6 +53,16 @@ class PumukitAdminExtension extends \Twig_Extension
     }
 
     /**
+     * Get functions
+     */
+    function getFunctions()
+    {
+      return array(
+                   new \Twig_SimpleFunction('php_upload_max_filesize', array($this, 'getPhpUploadMaxFilesize')),
+                   );
+    }
+
+    /**
      * Get basename
      * 
      * @param string $path
@@ -366,6 +376,16 @@ class PumukitAdminExtension extends \Twig_Extension
             return "This Series has ".$count." announced Multimedia Object(s)";
 
         return $text;
+    }
+
+    /**
+     * Get php upload max filesize
+     *
+     * @return string
+     */
+    public function getPhpUploadMaxFilesize()
+    {
+        return ini_get('upload_max_filesize')."B";
     }
 
     /**
