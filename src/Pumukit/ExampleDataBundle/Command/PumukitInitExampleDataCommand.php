@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use ZipArchive;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -53,6 +54,9 @@ EOT
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:Tag");
         $factoryService = $this->getContainer()->get('pumukitschema.factory');
+        $seriesPicService = $this->getContainer()->get('pumukitschema.seriespic'); 
+        $mmsPicService = $this->getContainer()->get('pumukitschema.mmspic');
+        $jobService = $this->getContainer()->get('pumukitencoder.job'); 
 
         if ($input->getOption('force')) {
             
@@ -127,10 +131,12 @@ EOT
             $series->setI18nKeyword($keywordI18n);
             $series->setI18nLine2($line2I18n);
 
-            $url = '/bundles/pumukitexampledata/images/39.jpg';
-            $pic = new Pic();
-            $pic->setUrl($url);
-            $series->addPic($pic);
+            $originalPicPath = realpath(dirname(__FILE__) . '/../Resources/public/images/39.jpg');
+            $picPath = realpath(dirname(__FILE__) . '/../Resources/public/images').'/pic39.jpg';
+            if (copy($originalPicPath, $picPath)){
+                  $picFile = new UploadedFile($picPath, 'pic39.png', null, null, null, true);
+                  $series = $seriesPicService->addPicFile($series, $picFile);
+            }
 
             $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
             $dm->persist($series);
@@ -273,10 +279,12 @@ EOT
             $series->setI18nKeyword($keywordI18n);
             $series->setI18nLine2($line2I18n);
 
-            $url = '/bundles/pumukitexampledata/images/7.jpg';
-            $pic = new Pic();
-            $pic->setUrl($url);
-            $series->addPic($pic);
+            $originalPicPath = realpath(dirname(__FILE__) . '/../Resources/public/images/7.jpg');
+            $picPath = realpath(dirname(__FILE__) . '/../Resources/public/images').'/pic7.jpg';
+            if (copy($originalPicPath, $picPath)){
+                  $picFile = new UploadedFile($picPath, 'pic7.png', null, null, null, true);
+                  $series = $seriesPicService->addPicFile($series, $picFile);
+            }
 
             $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
             $dm->persist($series);
@@ -419,10 +427,12 @@ EOT
             $series->setI18nKeyword($keywordI18n);
             $series->setI18nLine2($line2I18n);
 
-            $url = '/bundles/pumukitexampledata/images/22.jpg';
-            $pic = new Pic();
-            $pic->setUrl($url);
-            $series->addPic($pic);
+            $originalPicPath = realpath(dirname(__FILE__) . '/../Resources/public/images/22.jpg');
+            $picPath = realpath(dirname(__FILE__) . '/../Resources/public/images').'/pic22.jpg';
+            if (copy($originalPicPath, $picPath)){
+                  $picFile = new UploadedFile($picPath, 'pic22.png', null, null, null, true);
+                  $series = $seriesPicService->addPicFile($series, $picFile);
+            }
 
             $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
             $dm->persist($series);
@@ -894,10 +904,12 @@ EOT
             $series->setI18nKeyword($keywordI18n);
             $series->setI18nLine2($line2I18n);
 
-            $url = '/bundles/pumukitexampledata/images/37.jpg';
-            $pic = new Pic();
-            $pic->setUrl($url);
-            $series->addPic($pic);
+            $originalPicPath = realpath(dirname(__FILE__) . '/../Resources/public/images/37.jpg');
+            $picPath = realpath(dirname(__FILE__) . '/../Resources/public/images').'/pic37.jpg';
+            if (copy($originalPicPath, $picPath)){
+                  $picFile = new UploadedFile($picPath, 'pic37.png', null, null, null, true);
+                  $series = $seriesPicService->addPicFile($series, $picFile);
+            }
 
             $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
             $dm->persist($series);
@@ -1040,10 +1052,12 @@ EOT
             $series->setI18nKeyword($keywordI18n);
             $series->setI18nLine2($line2I18n);
 
-            $url = '/bundles/pumukitexampledata/images/32.jpg';
-            $pic = new Pic();
-            $pic->setUrl($url);
-            $series->addPic($pic);
+            $originalPicPath = realpath(dirname(__FILE__) . '/../Resources/public/images/32.jpg');
+            $picPath = realpath(dirname(__FILE__) . '/../Resources/public/images').'/pic32.jpg';
+            if (copy($originalPicPath, $picPath)){
+                  $picFile = new UploadedFile($picPath, 'pic32.png', null, null, null, true);
+                  $series = $seriesPicService->addPicFile($series, $picFile);
+            }
 
             $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
             $dm->persist($series);
@@ -1186,10 +1200,12 @@ EOT
             $series->setI18nKeyword($keywordI18n);
             $series->setI18nLine2($line2I18n);
 
-            $url = '/bundles/pumukitexampledata/images/28.jpg';
-            $pic = new Pic();
-            $pic->setUrl($url);
-            $series->addPic($pic);
+            $originalPicPath = realpath(dirname(__FILE__) . '/../Resources/public/images/28.jpg');
+            $picPath = realpath(dirname(__FILE__) . '/../Resources/public/images').'/pic28.jpg';
+            if (copy($originalPicPath, $picPath)){
+                  $picFile = new UploadedFile($picPath, 'pic28.png', null, null, null, true);
+                  $series = $seriesPicService->addPicFile($series, $picFile);
+            }
 
             $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
             $dm->persist($series);
@@ -1332,10 +1348,12 @@ EOT
             $series->setI18nKeyword($keywordI18n);
             $series->setI18nLine2($line2I18n);
 
-            $url = '/bundles/pumukitexampledata/images/41.jpg';
-            $pic = new Pic();
-            $pic->setUrl($url);
-            $series->addPic($pic);
+            $originalPicPath = realpath(dirname(__FILE__) . '/../Resources/public/images/41.jpg');
+            $picPath = realpath(dirname(__FILE__) . '/../Resources/public/images').'/pic41.jpg';
+            if (copy($originalPicPath, $picPath)){
+                  $picFile = new UploadedFile($picPath, 'pic41.png', null, null, null, true);
+                  $series = $seriesPicService->addPicFile($series, $picFile);
+            }
 
             $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
             $dm->persist($series);
@@ -1559,10 +1577,12 @@ EOT
             $series->setI18nKeyword($keywordI18n);
             $series->setI18nLine2($line2I18n);
 
-            $url = '/bundles/pumukitexampledata/images/40.jpg';
-            $pic = new Pic();
-            $pic->setUrl($url);
-            $series->addPic($pic);
+            $originalPicPath = realpath(dirname(__FILE__) . '/../Resources/public/images/40.jpg');
+            $picPath = realpath(dirname(__FILE__) . '/../Resources/public/images').'/pic40.jpg';
+            if (copy($originalPicPath, $picPath)){
+                  $picFile = new UploadedFile($picPath, 'pic40.png', null, null, null, true);
+                  $series = $seriesPicService->addPicFile($series, $picFile);
+            }
 
             $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
             $dm->persist($series);
@@ -1705,10 +1725,12 @@ EOT
             $series->setI18nKeyword($keywordI18n);
             $series->setI18nLine2($line2I18n);
 
-            $url = '/bundles/pumukitexampledata/images/35.jpg';
-            $pic = new Pic();
-            $pic->setUrl($url);
-            $series->addPic($pic);
+            $originalPicPath = realpath(dirname(__FILE__) . '/../Resources/public/images/35.jpg');
+            $picPath = realpath(dirname(__FILE__) . '/../Resources/public/images').'/pic35.jpg';
+            if (copy($originalPicPath, $picPath)){
+                  $picFile = new UploadedFile($picPath, 'pic35.png', null, null, null, true);
+                  $series = $seriesPicService->addPicFile($series, $picFile);
+            }
 
             $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
             $dm->persist($series);
@@ -1933,10 +1955,12 @@ EOT
             $series->setI18nKeyword($keywordI18n);
             $series->setI18nLine2($line2I18n);
 
-            $url = '/bundles/pumukitexampledata/images/33.jpg';
-            $pic = new Pic();
-            $pic->setUrl($url);
-            $series->addPic($pic);
+            $originalPicPath = realpath(dirname(__FILE__) . '/../Resources/public/images/33.jpg');
+            $picPath = realpath(dirname(__FILE__) . '/../Resources/public/images').'/pic33.jpg';
+            if (copy($originalPicPath, $picPath)){
+                  $picFile = new UploadedFile($picPath, 'pic33.png', null, null, null, true);
+                  $series = $seriesPicService->addPicFile($series, $picFile);
+            }
 
             $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
             $dm->persist($series);
@@ -2079,10 +2103,12 @@ EOT
             $series->setI18nKeyword($keywordI18n);
             $series->setI18nLine2($line2I18n);
 
-            $url = '/bundles/pumukitexampledata/images/36.jpg';
-            $pic = new Pic();
-            $pic->setUrl($url);
-            $series->addPic($pic);
+            $originalPicPath = realpath(dirname(__FILE__) . '/../Resources/public/images/36.jpg');
+            $picPath = realpath(dirname(__FILE__) . '/../Resources/public/images').'/pic36.jpg';
+            if (copy($originalPicPath, $picPath)){
+                  $picFile = new UploadedFile($picPath, 'pic36.png', null, null, null, true);
+                  $series = $seriesPicService->addPicFile($series, $picFile);
+            }
 
             $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
             $dm->persist($series);
