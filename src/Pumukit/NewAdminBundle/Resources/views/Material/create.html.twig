@@ -30,6 +30,7 @@
 	  <div id="pumukitnewadmin_material_file" class="form-group">
             <label for="file" class="control-label">{% trans %}File{% endtrans %}</label>
             <input type="file" name="file" id="file" value="">
+            <span style="color: blue">({% trans %}Under{% endtrans %} {{ php_upload_max_filesize() }})</span>
             <span id="error_file" style="display:none;color:red;" class="error">{% trans %}Empty file field{% endtrans %}</span>
 	  </div>
 

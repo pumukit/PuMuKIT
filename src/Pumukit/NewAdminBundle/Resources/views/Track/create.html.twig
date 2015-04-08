@@ -51,7 +51,7 @@
         <label for="url" class="control-label">{% trans %}Resource{% endtrans %}:</label>
         <div class="input-group">
           <input type="file" name="resource" id="resource" value="" size="70">
-          <span style="color: blue">({% trans %}Under 2GB{% endtrans %})</span>
+          <span style="color: blue">({% trans %}Under{% endtrans %} {{ php_upload_max_filesize() }})</span>
           <span id="file_upload_progress" style="color:blue; display:none;">{% trans %}Progress{% endtrans %}...</span>
         </div>
       </div>
