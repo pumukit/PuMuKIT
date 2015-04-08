@@ -20,6 +20,7 @@ class TrackServiceTest extends WebTestCase
     private $trackService;
     private $factoryService;
     private $resourcesDir;
+    private $logger;
 
     public function __construct()
     {
