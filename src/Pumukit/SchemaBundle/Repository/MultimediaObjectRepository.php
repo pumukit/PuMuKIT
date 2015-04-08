@@ -468,13 +468,27 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @param Series $series
      * @param array $sort
-     * @return ArrayCollection
+     * @return QueryBuilder
      */
-    public function findOrderedBy(Series $series, $sort = array())
+    public function getQueryBuilderOrderedBy(Series $series, $sort = array())
     {
         $qb = $this->createStandardQueryBuilder()
           ->field('series')->references($series);
         if (0 !== count($sort)) $qb->sort($sort['fieldName'], $sort['order']);
+        return $qb;
+    }
+
+
+    /**
+     * Find ordered by fieldName: asc/desc
+     *
+     * @param Series $series
+     * @param array $sort
+     * @return Cursor
+     */
+    public function findOrderedBy(Series $series, $sort = array())
+    {
+        $qb = $this->getQueryBuilderOrderedBy($series, $sort);
         return $qb->getQuery()->execute();
     }
 

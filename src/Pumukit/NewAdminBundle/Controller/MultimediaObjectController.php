@@ -4,7 +4,7 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
@@ -415,11 +415,11 @@ class MultimediaObjectController extends SortableAdminController
         $maxPerPage = $session->get('admin/mms/paginate', 10);
 
         $sorting = array('fieldName' => "rank", 'order' => "asc");
-        $coll_mms = $this->get('doctrine_mongodb.odm.document_manager')
-          ->getRepository('PumukitSchemaBundle:MultimediaObject')->findOrderedBy($series, $sorting);
+        $mmsQueryBuilder = $this->get('doctrine_mongodb.odm.document_manager')
+          ->getRepository('PumukitSchemaBundle:MultimediaObject')
+          ->getQueryBuilderOrderedBy($series, $sorting);
 
-        //TODO add DoctrineODMMongoDBAdapter.
-        $adapter = new ArrayAdapter($coll_mms->toArray());
+        $adapter = new DoctrineODMMongoDBAdapter($mmsQueryBuilder);
         $mms = new Pagerfanta($adapter);
 
         $mms
