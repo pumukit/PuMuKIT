@@ -409,7 +409,10 @@ window.change_select = function(element, selector, pluralName)
             var $this = $(this);
             ids.push($this.attr("id"));
         });
-        if (ids.length == 0) break;
+        if (ids.length == 0) {
+          no_success('No multimedia object selected');
+          break;
+        }
         var route = '{{ path('pumukitnewadmin_mms_cut', {'ids': '__ids__'})|raw }}';
         $.ajax({
                 url: route.replace('__ids__', JSON.stringify(ids)),
@@ -421,7 +424,7 @@ window.change_select = function(element, selector, pluralName)
                                 if (i == (response.length - 1)) paste_mm_text += ')';
                                 else paste_mm_text += ', ';
                             }
-                            $('#options_mms #paste_mm').html(paste_mm_text);
+                            $('#options_mms #paste_mm').html(paste_mm_text).show();
                             $('.' + element + '_checkbox:checked').each(function(){
                                 var $this = $(this);
                                 $this[0].checked = false;
@@ -437,8 +440,7 @@ window.change_select = function(element, selector, pluralName)
             var route = '{{ path('pumukitnewadmin_mms_paste', {'seriesId': '__seriesId__'})|raw }}';
             var seriesId = '{{ app.session.get('admin/series/id') }}';
             $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId), {'_method':'POST'}, function(){
-                var paste_mm_text = '{% trans %}Paste multimedia objects{% endtrans %} ()';
-                $('#options_mms #paste_mm').html(paste_mm_text);
+                $('#options_mms #paste_mm').hide();
 
                 var message = '{% trans %}Multimedia Object(s) pasted in the Series.{% endtrans %}';
                 success(message);
@@ -1086,6 +1088,7 @@ $(document).ready(function(){
         });
     });
 });
+
 
 $(document).on('submit', '#pumukitnewadmin_mms_updatemeta_form', function(event){
     $('#remember_save_mm').hide();
