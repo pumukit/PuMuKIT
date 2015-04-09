@@ -18,6 +18,7 @@ class JobServiceTest extends WebTestCase
     //private $profileService;
     //private $cpuService;
     private $resourcesDir;
+    private $logger;
 
     public function __construct()
     {
@@ -29,6 +30,8 @@ class JobServiceTest extends WebTestCase
           ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
           ->getRepository('PumukitEncoderBundle:Job');
+        $this->logger = $kernel->getContainer()
+          ->get('logger');
     }
 
     public function setUp()
@@ -41,7 +44,7 @@ class JobServiceTest extends WebTestCase
         $inspectionService = $this->getMock('Pumukit\InspectionBundle\Services\InspectionServiceInterface');
         $inspectionService->expects($this->any())->method('getDuration')->will($this->returnValue(5));
         $this->resourcesDir = realpath(__DIR__.'/../Resources').'/';
-        $this->jobService = new JobService($this->dm, $profileService, $cpuService, $inspectionService, $this->resourcesDir.'encoder_test.log', null, true);
+        $this->jobService = new JobService($this->dm, $profileService, $cpuService, $inspectionService, $this->logger, null, true);
     }
     
     public function testAddJob()
