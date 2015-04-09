@@ -576,4 +576,32 @@ class MultimediaObjectController extends SortableAdminController
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));
     }
+
+
+    /**
+     * Reorder multimedia objects
+     */
+    public function reorderAction(Request $request)
+    {
+        $factoryService = $this->get('pumukitschema.factory');
+        $sessionId = $this->get('session')->get('admin/series/id', null);
+        $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
+
+        $sorting = array('fieldName' => $request->get("fieldName"),
+                         'order' => $request->get("order"));
+
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $mms = $dm
+          ->getRepository('PumukitSchemaBundle:MultimediaObject')
+          ->findOrderedBy($series, $sorting);
+
+        $rank = 1;
+        foreach($mms as $mm){
+          $mm->setRank($rank++);
+          $dm->persist($mm);
+        }
+        $dm->flush();
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));      
+    }
 }

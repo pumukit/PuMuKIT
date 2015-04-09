@@ -384,24 +384,24 @@ window.change_select = function(element, selector, pluralName)
         break;
 */
     case 'order_rec_date_asc':
-        var route = '{{ path('pumukitnewadmin_mms_list', {'seriesId': '__seriesId__', 'sorting': {'record_date': 'asc'}})|raw }}';
+        var route = '{{ path('pumukitnewadmin_mms_reorder', {'seriesId': '__seriesId__', 'fieldName': 'record_date', 'order': 'asc'})|raw }}';
         var seriesId = '{{ app.session.get('admin/series/id') }}';
-        $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId));
+        $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId), {'_method': 'POST'});
         break;
     case 'order_rec_date_desc':
-        var route = '{{ path('pumukitnewadmin_mms_list', {'seriesId': '__seriesId__', 'sorting': {'record_date': 'desc'}})|raw }}';
+        var route = '{{ path('pumukitnewadmin_mms_reorder', {'seriesId': '__seriesId__', 'fieldName': 'record_date', 'order': 'desc'})|raw }}';
         var seriesId = '{{ app.session.get('admin/series/id') }}';
-        $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId));
+        $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId), {'_method': 'POST'});
         break;
     case 'order_pub_date_asc':
-        var route = '{{ path('pumukitnewadmin_mms_list', {'seriesId': '__seriesId__', 'sorting': {'public_date': 'asc'}})|raw }}';
+        var route = '{{ path('pumukitnewadmin_mms_reorder', {'seriesId': '__seriesId__', 'fieldName': 'public_date', 'order': 'asc'})|raw }}';
         var seriesId = '{{ app.session.get('admin/series/id') }}';
-        $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId));
+        $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId), {'_method': 'POST'});
         break;
     case 'order_pub_date_desc':
-        var route = '{{ path('pumukitnewadmin_mms_list', {'seriesId': '__seriesId__', 'sorting': {'public_date': 'desc'}})|raw }}';
+        var route = '{{ path('pumukitnewadmin_mms_reorder', {'seriesId': '__seriesId__', 'fieldName': 'public_date', 'order': 'desc'})|raw }}';
         var seriesId = '{{ app.session.get('admin/series/id') }}';
-        $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId));
+        $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId), {'_method': 'POST'});
         break;
     case 'cut_mm':
         var ids = [];
