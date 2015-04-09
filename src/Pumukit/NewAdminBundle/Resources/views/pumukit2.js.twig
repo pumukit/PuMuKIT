@@ -635,6 +635,8 @@ function del_tree_tag(tag_id, mm_id)
         if ($_element)  $_element.remove();
         inc_num_mm(c.id, -1);
       }
+      var url = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'}) }}";
+      $('#preview_mm').load(url.replace('__mmId__', mm_id));
     }
   });
 }
