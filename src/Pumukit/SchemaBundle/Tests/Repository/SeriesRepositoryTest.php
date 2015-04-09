@@ -688,6 +688,7 @@ class SeriesRepositoryTest extends WebTestCase
 
         $series = $this->createSeries('Series 1');
         //$this->assertEquals(0, count($series->getMultimediaObjects()));
+        // TODO clear doctrine mongo cache after this call
 
         $mm1 = $this->factoryService->createMultimediaObject($series);
         $mm2 = $this->factoryService->createMultimediaObject($series);
