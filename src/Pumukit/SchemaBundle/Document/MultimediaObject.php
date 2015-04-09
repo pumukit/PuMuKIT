@@ -36,7 +36,6 @@ class MultimediaObject
     /**
      * @MongoDB\ReferenceOne(targetDocument="Series", inversedBy="multimedia_objects", simple=true)
      * @Gedmo\SortableGroup
-     * // TODO SortableGroup #5623
      */
     private $series;
 
@@ -201,7 +200,7 @@ class MultimediaObject
 
     public function __toString()
     {
-        return $this->title;
+      return $this->getTitle();
     }
 
     /**
