@@ -364,10 +364,11 @@ class SeriesController extends AdminController
             if ($request->get('paginate', null)) {
                 $session->set($session_namespace.'/paginate', $request->get('paginate', 10));
             }
-
+  
             $resources
-                ->setCurrentPage($session->get($session_namespace.'/page', 1), true, true)
-                ->setMaxPerPage($session->get($session_namespace.'/paginate', 10));
+                ->setMaxPerPage($session->get($session_namespace.'/paginate', 10))
+                ->setNormalizeOutOfRangePages(true)
+                ->setCurrentPage($session->get($session_namespace.'/page', 1));
         } else {
             $resources = $this
                 ->resourceResolver

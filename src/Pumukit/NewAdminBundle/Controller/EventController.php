@@ -229,8 +229,9 @@ class EventController extends AdminController
             }
 
             $resources
-                ->setCurrentPage($session->get($session_namespace.'/page', 1), true, true)
-                ->setMaxPerPage($config->getPaginationMaxPerPage());
+                ->setMaxPerPage($config->getPaginationMaxPerPage())
+                ->setNormalizeOutOfRangePages(true)
+                ->setCurrentPage($session->get($session_namespace.'/page', 1));
         } else {
             $resources = $this
                 ->resourceResolver

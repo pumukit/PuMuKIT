@@ -466,8 +466,9 @@ class PersonController extends AdminController
             }
             
             $resources
-              ->setCurrentPage($this->get('session')->get('admin/person/page', 1), true, true)
               ->setMaxPerPage($config->getPaginationMaxPerPage())
+              ->setNormalizeOutOfRangePages(true)
+              ->setCurrentPage($this->get('session')->get('admin/person/page', 1));
               ;
         } else {
             $resources = $this

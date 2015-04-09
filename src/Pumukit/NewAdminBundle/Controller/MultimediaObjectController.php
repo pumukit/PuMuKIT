@@ -412,7 +412,8 @@ class MultimediaObjectController extends SortableAdminController
         $maxPerPage = $session->get('admin/mms/paginate', 10);
 
         $sorting = array('fieldName' => "rank", 'order' => "asc");
-        $mmsQueryBuilder = $this->get('doctrine_mongodb.odm.document_manager')
+        $mmsQueryBuilder = $this
+          ->get('doctrine_mongodb.odm.document_manager')
           ->getRepository('PumukitSchemaBundle:MultimediaObject')
           ->getQueryBuilderOrderedBy($series, $sorting);
 
@@ -420,8 +421,9 @@ class MultimediaObjectController extends SortableAdminController
         $mms = new Pagerfanta($adapter);
 
         $mms
-          ->setCurrentPage($page, true, true)
-          ->setMaxPerPage($maxPerPage);
+          ->setMaxPerPage($maxPerPage)
+          ->setNormalizeOutOfRangePages(true)
+          ->setCurrentPage($page);
         return $mms;
     }
 
