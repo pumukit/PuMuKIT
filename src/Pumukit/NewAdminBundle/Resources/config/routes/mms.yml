@@ -135,3 +135,10 @@ pumukitnewadmin_mms_paste:
     methods: [POST]
     defaults:
         _controller: pumukitnewadmin.controller.mms:pasteAction
+
+pumukitnewadmin_mms_reorder:
+    pattern: /reorder
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:reorderAction
+

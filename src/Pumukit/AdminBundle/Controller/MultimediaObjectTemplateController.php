@@ -34,7 +34,7 @@ class MultimediaObjectTemplateController extends MultimediaObjectController
         $this->get('session')->set('admin/series/id', $series->getId());
   
         $parentTags = $factoryService->getParentTags();
-        $mmtemplate = $factoryService->getMultimediaObjectTemplate($series);
+        $mmtemplate = $factoryService->getMultimediaObjectPrototype($series);
         
         $formMeta = $this->createForm($config->getFormType().'_meta', $mmtemplate);
 
@@ -79,7 +79,7 @@ class MultimediaObjectTemplateController extends MultimediaObjectController
         $this->get('session')->set('admin/series/id', $series->getId());
 
         $parentTags = $factoryService->getParentTags();
-        $mmtemplate = $factoryService->getMultimediaObjectTemplate($series);
+        $mmtemplate = $factoryService->getMultimediaObjectPrototype($series);
 
         $formMeta = $this->createForm($config->getFormType().'_meta', $mmtemplate);
 

@@ -291,8 +291,9 @@ class AdminController extends ResourceController
             }
 
             $resources
-                ->setCurrentPage($session->get($session_namespace.'/page', 1), true, true)
-                ->setMaxPerPage($session->get($session_namespace.'/paginate', 10));
+                ->setMaxPerPage($session->get($session_namespace.'/paginate', 10))
+                ->setNormalizeOutOfRangePages(true)
+                ->setCurrentPage($session->get($session_namespace.'/page', 1));
         } else {
             $resources = $this
                 ->resourceResolver

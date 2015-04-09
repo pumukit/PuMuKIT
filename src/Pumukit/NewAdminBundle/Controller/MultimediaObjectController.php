@@ -132,10 +132,7 @@ class MultimediaObjectController extends SortableAdminController
 
         $notMasterProfiles = $this->get('pumukitencoder.profile')->getMasterProfiles(false);
 
-        $template = '';      
-        if (MultimediaObject::STATUS_PROTOTYPE === $resource->getStatus()){
-            $template = '_template';
-        }
+        $template = $resource->isPrototype() ? '' : '_template';
 
         return array(
                      'mm'            => $resource,
@@ -415,7 +412,8 @@ class MultimediaObjectController extends SortableAdminController
         $maxPerPage = $session->get('admin/mms/paginate', 10);
 
         $sorting = array('fieldName' => "rank", 'order' => "asc");
-        $mmsQueryBuilder = $this->get('doctrine_mongodb.odm.document_manager')
+        $mmsQueryBuilder = $this
+          ->get('doctrine_mongodb.odm.document_manager')
           ->getRepository('PumukitSchemaBundle:MultimediaObject')
           ->getQueryBuilderOrderedBy($series, $sorting);
 
@@ -423,8 +421,9 @@ class MultimediaObjectController extends SortableAdminController
         $mms = new Pagerfanta($adapter);
 
         $mms
-          ->setCurrentPage($page, true, true)
-          ->setMaxPerPage($maxPerPage);
+          ->setMaxPerPage($maxPerPage)
+          ->setNormalizeOutOfRangePages(true)
+          ->setCurrentPage($page);
         return $mms;
     }
 
@@ -576,5 +575,33 @@ class MultimediaObjectController extends SortableAdminController
         $this->get('session')->remove('admin/mms/cut');
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));
+    }
+
+
+    /**
+     * Reorder multimedia objects
+     */
+    public function reorderAction(Request $request)
+    {
+        $factoryService = $this->get('pumukitschema.factory');
+        $sessionId = $this->get('session')->get('admin/series/id', null);
+        $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
+
+        $sorting = array('fieldName' => $request->get("fieldName"),
+                         'order' => $request->get("order"));
+
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $mms = $dm
+          ->getRepository('PumukitSchemaBundle:MultimediaObject')
+          ->findOrderedBy($series, $sorting);
+
+        $rank = 1;
+        foreach($mms as $mm){
+          $mm->setRank($rank++);
+          $dm->persist($mm);
+        }
+        $dm->flush();
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));      
     }
 }

@@ -185,8 +185,9 @@ class SeriesPicController extends Controller
         $pics = new Pagerfanta($adapter);
 
         $pics
-          ->setCurrentPage($page, true, true)
-          ->setMaxPerPage($limit);
+          ->setMaxPerPage($limit)
+          ->setNormalizeOutOfRangePages(true)
+          ->setCurrentPage($page);
 
         return $pics;
     }

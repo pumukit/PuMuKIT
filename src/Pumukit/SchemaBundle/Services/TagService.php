@@ -37,7 +37,9 @@ class TagService
             if (!$mmobj->containsTag($tag)) {
                 $tagAdded[] = $tag;
                 $mmobj->addTag($tag);
-                $tag->increaseNumberMultimediaObjects();
+                if (!$mmobj->isPrototype()) {
+                  $tag->increaseNumberMultimediaObjects();
+                }
                 $this->dm->persist($tag);
             }
         } while ($tag = $tag->getParent());

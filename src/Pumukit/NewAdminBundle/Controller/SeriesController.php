@@ -118,17 +118,11 @@ class SeriesController extends AdminController
         }
 
         $parentTags = $factoryService->getParentTags();
-        $mmtemplate = $factoryService->getMultimediaObjectTemplate($resource);
+        $mmtemplate = $factoryService->getMultimediaObjectPrototype($resource);
 
         $formMeta = $this->createForm('pumukitnewadmin_mmtemplate_meta', $mmtemplate);
 
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
-
-        $template = '';
-        if (MultimediaObject::STATUS_PROTOTYPE === $mmtemplate->getStatus()){
-            $template = '_template';
-        }
-        // end of getting data for multimedia object template in series
 
         return $this->render('PumukitNewAdminBundle:Series:update.html.twig',
                              array(
@@ -139,7 +133,7 @@ class SeriesController extends AdminController
                                    'roles'         => $roles,
                                    'pub_decisions' => $pubDecisionsTags,
                                    'parent_tags'   => $parentTags,
-                                   'template'      => $template
+                                   'template'      => '_template'
                                    )
                              );
     }
@@ -370,10 +364,11 @@ class SeriesController extends AdminController
             if ($request->get('paginate', null)) {
                 $session->set($session_namespace.'/paginate', $request->get('paginate', 10));
             }
-
+  
             $resources
-                ->setCurrentPage($session->get($session_namespace.'/page', 1), true, true)
-                ->setMaxPerPage($session->get($session_namespace.'/paginate', 10));
+                ->setMaxPerPage($session->get($session_namespace.'/paginate', 10))
+                ->setNormalizeOutOfRangePages(true)
+                ->setCurrentPage($session->get($session_namespace.'/page', 1));
         } else {
             $resources = $this
                 ->resourceResolver
