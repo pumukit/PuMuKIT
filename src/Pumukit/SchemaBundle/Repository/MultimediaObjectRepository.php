@@ -4,6 +4,7 @@ namespace Pumukit\SchemaBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Broadcast;
 
@@ -141,7 +142,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param int $page
      * @return ArrayCollection
      */
-    public function findWithTag($tag, $sort = array(), $limit = 0, $page = 0)
+    public function findWithTag(Tag $tag, $sort = array(), $limit = 0, $page = 0)
     {
         $qb = $this->createBuilderWithTag($tag, $sort);
 
@@ -160,7 +161,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param array $sort
      * @return QueryBuilder
      */
-    public function createBuilderWithTag($tag, $sort = array())
+    public function createBuilderWithTag(Tag $tag, $sort = array())
     {
         $qb = $this->createStandardQueryBuilder()
             ->field('tags._id')->equals(new \MongoId($tag->getId()));
@@ -178,7 +179,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param Tag|EmbeddedTag $tag
      * @return MultimediaObject
      */
-    public function findOneWithTag($tag)
+    public function findOneWithTag(Tag $tag)
     {
         return $this->createStandardQueryBuilder()
           ->field('tags._id')->equals(new \MongoId($tag->getId()))
@@ -262,7 +263,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param int $page
      * @return ArrayCollection
      */
-    public function findWithoutTag($tag, $sort = array(), $limit = 0, $page = 0)
+    public function findWithoutTag(Tag $tag, $sort = array(), $limit = 0, $page = 0)
     {
         $qb =  $this->createStandardQueryBuilder()
           ->field('tags._id')->notEqual(new \MongoId($tag->getId()));
@@ -284,7 +285,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param Tag|EmbeddedTag $tag
      * @return MultimediaObject
      */
-    public function findOneWithoutTag($tag)
+    public function findOneWithoutTag(Tag $tag)
     {
         return $this->createStandardQueryBuilder()
           ->field('tags._id')->notEqual(new \MongoId($tag->getId()))
@@ -328,7 +329,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param Tag|EmbeddedTag $tag
      * @return ArrayCollection
      */
-    public function findSeriesFieldWithTag($tag)
+    public function findSeriesFieldWithTag(Tag $tag)
     {
         return $this->createStandardQueryBuilder()
             ->field('tags._id')->equals(new \MongoId($tag->getId()))
@@ -342,7 +343,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param Tag|EmbeddedTag $tag
      * @return Series
      */
-    public function findOneSeriesFieldWithTag($tag)
+    public function findOneSeriesFieldWithTag(Tag $tag)
     {
         return $this->createStandardQueryBuilder()
           ->field('tags._id')->equals(new \MongoId($tag->getId()))

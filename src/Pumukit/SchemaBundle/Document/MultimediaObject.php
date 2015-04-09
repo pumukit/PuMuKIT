@@ -285,6 +285,16 @@ class MultimediaObject
     }
 
     /**
+     * Helper function to know if is the status a prototype.
+     *
+     * @return boolean
+     */
+    public function isPrototype()
+    {
+        return self::STATUS_PROTOTYPE === $this->getStatus();
+    }
+
+    /**
      * Set record_date
      *
      * @param DateTime $recordDate
