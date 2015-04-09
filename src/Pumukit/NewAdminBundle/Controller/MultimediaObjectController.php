@@ -132,10 +132,7 @@ class MultimediaObjectController extends SortableAdminController
 
         $notMasterProfiles = $this->get('pumukitencoder.profile')->getMasterProfiles(false);
 
-        $template = '';      
-        if (MultimediaObject::STATUS_PROTOTYPE === $resource->getStatus()){
-            $template = '_template';
-        }
+        $template = $resource->isPrototype() ? '' : '_template';
 
         return array(
                      'mm'            => $resource,

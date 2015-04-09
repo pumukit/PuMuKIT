@@ -50,7 +50,7 @@ class FactoryService
             $series->setTitle($title, $locale);
         }
 
-        $mm = $this->createMultimediaObjectTemplate($series);
+        $mm = $this->createMultimediaObjectPrototype($series);
 
         $this->dm->persist($mm);
         $this->dm->persist($series);
@@ -67,7 +67,7 @@ class FactoryService
      *
      * @return MultimediaObject
      */
-    private function createMultimediaObjectTemplate($series)
+    private function createMultimediaObjectPrototype($series)
     {
         $mm = new MultimediaObject();
         $mm->setStatus(MultimediaObject::STATUS_PROTOTYPE);
@@ -96,7 +96,7 @@ class FactoryService
      */
     public function createMultimediaObject($series)
     {
-        $prototype = $this->getMultimediaObjectTemplate($series);
+        $prototype = $this->getMultimediaObjectPrototype($series);
 
         if (null !== $prototype) {
             $mm = $this->createMultimediaObjectFromPrototype($prototype);
@@ -207,7 +207,7 @@ class FactoryService
      * @param Series $series
      * @return MultimediaObject
      */
-    public function getMultimediaObjectTemplate(Series $series=null)
+    public function getMultimediaObjectPrototype(Series $series=null)
     {
         return $this->dm
           ->getRepository('PumukitSchemaBundle:MultimediaObject')

@@ -118,17 +118,11 @@ class SeriesController extends AdminController
         }
 
         $parentTags = $factoryService->getParentTags();
-        $mmtemplate = $factoryService->getMultimediaObjectTemplate($resource);
+        $mmtemplate = $factoryService->getMultimediaObjectPrototype($resource);
 
         $formMeta = $this->createForm('pumukitnewadmin_mmtemplate_meta', $mmtemplate);
 
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
-
-        $template = '';
-        if (MultimediaObject::STATUS_PROTOTYPE === $mmtemplate->getStatus()){
-            $template = '_template';
-        }
-        // end of getting data for multimedia object template in series
 
         return $this->render('PumukitNewAdminBundle:Series:update.html.twig',
                              array(
@@ -139,7 +133,7 @@ class SeriesController extends AdminController
                                    'roles'         => $roles,
                                    'pub_decisions' => $pubDecisionsTags,
                                    'parent_tags'   => $parentTags,
-                                   'template'      => $template
+                                   'template'      => '_template'
                                    )
                              );
     }

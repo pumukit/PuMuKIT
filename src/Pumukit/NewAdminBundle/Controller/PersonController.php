@@ -156,10 +156,7 @@ class PersonController extends AdminController
         $criteria = $this->getCriteria($config, $request->getLocale());
         $resources = $this->getResources($request, $config, $criteria);
 
-        $template = '';
-        if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
-            $template = '_template';
-        }
+        $template = $multimediaObject->isPrototype() ? '_template' : '';
 
         return array(
                      'people' => $resources,
@@ -191,10 +188,7 @@ class PersonController extends AdminController
                 $this->get('session')->getFlashBag()->add('error', $e->getMessage());
             }
 
-            $template = '';
-            if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
-                $template = '_template';
-            }
+            $template = $multimediaObject->isPrototype() ? '_template' : '';
 
             return $this->render('PumukitNewAdminBundle:Person:listrelation.html.twig', 
                                  array(
@@ -234,10 +228,7 @@ class PersonController extends AdminController
                 $this->get('session')->getFlashBag()->add('error', $e->getMessage());
             }
 
-            $template = '';
-            if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
-                $template = '_template';
-            }
+            $template = $multimediaObject->isPrototype() ? '_template' : '';
 
             return $this->render('PumukitNewAdminBundle:Person:listrelation.html.twig', 
                                  array(
