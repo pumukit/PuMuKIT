@@ -730,16 +730,6 @@ class SeriesRepositoryTest extends WebTestCase
         $this->dm->persist($mm5);
         $this->dm->flush();
 
-
-        echo ".\n";
-        var_dump($tag4->getCod());
-        foreach ($series->getMultimediaObjects() as $mmo) {
-          echo "*";
-          foreach($mmo->tags as $t){
-            echo "-";
-            var_dump($t->getCod());
-          }          
-        }
         $this->assertTrue($series->containsMultimediaObjectWithTag($tag4));
         $this->assertFalse($series->containsMultimediaObjectWithTag($tag8));
 
