@@ -6,6 +6,12 @@ pumukitnewadmin_series_index:
         _sylius:
             filterable: true
 
+pumukitnewadmin_series_search:
+    pattern: /search
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.series:searchAction
+
 pumukitnewadmin_series_create:
     pattern: /create
     methods: [GET, POST]

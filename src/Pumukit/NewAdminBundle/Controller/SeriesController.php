@@ -457,4 +457,16 @@ class SeriesController extends AdminController
 
         return false;
     }
+
+    /**
+     * Helper for search form in menú
+     */
+    public function searchAction(Request $req)
+    {
+        $q = $req->get('q');
+        $this->get('session')->set('admin/series/criteria', array('title.'. $req->getLocale() => $q));
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_series_index'));
+    }
+     
 }
