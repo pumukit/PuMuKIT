@@ -67,7 +67,7 @@ class FactoryServiceTest extends WebTestCase
         //NOTE series.multimedia_objects have diferent internal initialized value.
         //$this->assertEquals($series, $this->mmobjRepo->findAll()[0]->getSeries());
         $this->assertEquals($series->getId(), $this->mmobjRepo->findAll()[0]->getSeries()->getId());
-        $this->assertEquals($this->mmobjRepo->findAll()[0]->isPrototype());
+        $this->assertTrue($this->mmobjRepo->findAll()[0]->isPrototype());
     }
 
     public function testCreateMultimediaObject()
@@ -256,7 +256,7 @@ class FactoryServiceTest extends WebTestCase
 
         $series = $this->factory->createSeries();
 
-        $this->assertEquals($this->factory->getMultimediaObjectPrototype($series)->isPrototype());
+        $this->assertTrue($this->factory->getMultimediaObjectPrototype($series)->isPrototype());
     }
 
     public function testDeleteSeries()
