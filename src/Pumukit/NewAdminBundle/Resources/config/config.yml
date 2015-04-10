@@ -17,7 +17,7 @@ sylius_resource:
             templates: PumukitNewAdminBundle:User
             classes:
                 model: Pumukit\SchemaBundle\Document\User
-                controller: Pumukit\NewAdminBundle\Controller\AdminController
+                controller: Pumukit\NewAdminBundle\Controller\UserController
         pumukitnewadmin.person:
             driver: doctrine/mongodb-odm
             templates: PumukitNewAdminBundle:Person
