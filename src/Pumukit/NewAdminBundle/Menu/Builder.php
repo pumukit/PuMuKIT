@@ -39,16 +39,13 @@ class Builder extends ContainerAware
         $tables = $menu->addChild('Tables');
         $tables->addChild('People', array('route' => 'pumukitnewadmin_person_index'));
 
-        $management = $menu->addChild('Management');
-        $management->addChild('Admin users', array('route' => 'pumukitnewadmin_user_index'));
-        $management->addChild('Tags', array('route' => 'pumukitnewadmin_tag_index'));
-        //$management->addChild('Genres');
-        //$management->addChild('Material types');
-        //$management->addChild('Series types');
-        //$management->addChild('Languages');
-        $management->addChild('Roles', array('route' => 'pumukitnewadmin_role_index'));
-        $management->addChild('Access Profiles', array('route' => 'pumukitnewadmin_broadcast_index'));
-        //$management->addChild('Broadcast Servers');
+        if ($this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
+          $management = $menu->addChild('Management');
+          $management->addChild('Admin users', array('route' => 'pumukitnewadmin_user_index'));
+          $management->addChild('Tags', array('route' => 'pumukitnewadmin_tag_index'));
+          $management->addChild('Roles', array('route' => 'pumukitnewadmin_role_index'));
+          $management->addChild('Access Profiles', array('route' => 'pumukitnewadmin_broadcast_index'));
+        }
 
         $ingester = $menu->addChild('Ingester');
         $ingester->addChild('Matterhorn Ingester');
