@@ -18,7 +18,6 @@ class SeriesController extends AdminController
     public function indexAction(Request $request)
     {
         $config = $this->getConfiguration();
-
         $criteria = $this->getCriteria($config);
         $resources = $this->getResources($request, $config, $criteria);
 
@@ -43,14 +42,6 @@ class SeriesController extends AdminController
     public function listAction(Request $request)
     {
         $config = $this->getConfiguration();
-        $session = $this->get('session');
-
-        $sorting = $request->get('sorting', null);
-        if (null !== $sorting){
-            $session->set('admin/series/type', current($sorting));
-            $session->set('admin/series/sort', key($sorting));
-        }
-
         $criteria = $this->getCriteria($config);
         $resources = $this->getResources($request, $config, $criteria);
 
@@ -64,15 +55,13 @@ class SeriesController extends AdminController
     public function createAction(Request $request)
     {
         $config = $this->getConfiguration();
-        $pluralName = $config->getPluralResourceName();
-
-        $series = $this->get('pumukitschema.factory');
-        $series->createSeries();
-
-        $this->addFlash('success', 'create');
-
         $criteria = $this->getCriteria($config);
         $resources = $this->getResources($request, $config, $criteria);
+        
+        $factory = $this->get('pumukitschema.factory');
+        $factory->createSeries();
+
+        $this->addFlash('success', 'create');
 
         return array('series' => $resources);
     }
@@ -320,16 +309,20 @@ class SeriesController extends AdminController
     }
 
 
-    private function getSorting($config)
+    private function getSorting(Request $request)
     {
       $session = $this->get('session');    
-      $sorting = $config->getSorting();
-      if(!$sorting && $session->has('admin/series/sort')) {
-            $value = $session->get('admin/series/type');
-            $key = $session->get('admin/series/sort');
-            $sorting = array($key => $value);
-      }
-      return $sorting;
+
+      if ($sorting = $request->get('sorting')){
+          $session->set('admin/series/type', current($sorting));
+          $session->set('admin/series/sort', key($sorting));
+      } 
+
+      $value = $session->get('admin/series/type', 'public_date');
+      $key = $session->get('admin/series/sort', 'desc');
+
+      dump(array($key, $value));
+      return  array($key => $value);
     }
 
 
@@ -338,7 +331,7 @@ class SeriesController extends AdminController
      */
     public function getResources(Request $request, $config, $criteria)
     {
-        $sorting = $this->getSorting($config);
+        $sorting = $this->getSorting($request);
         $repository = $this->getRepository();
         $session = $this->get('session');
         $session_namespace = 'admin/series';
