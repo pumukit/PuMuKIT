@@ -24,9 +24,9 @@
   {% for mtag in mm.tags if mtag.level == 2  %}
   <div class="panel panel-primary">
     <div class="panel-heading">
-      <h3 class="panel-title">Tags {{mtag.title}} </h3>
+      <h3 class="panel-title-preview panel-title">Tags {{mtag.title}} </h3>
     </div>
-    <div class="panel-body">
+    <div class="panel-body-preview panel-body">
       {% for tag in mm.tags if tag.isDescendantOf(mtag) %}
          <span class="label label-default">{{ tag.title }}</span>
       {% else %}
@@ -43,22 +43,23 @@
 <div>
 <ul>
 {% for role in roles if role.getDisplay() %}
+  {% set actors = mm.getPeopleInMultimediaObjectByRole(role) %}
+  {% if actors|length != 0 %}
   <li>{{ role.name }}</li>
   <ul>
-  {% for act in mm.getPeopleInMultimediaObjectByRole(role) %}
-    <li>
-	  {{ role.getText() }}
-	  {% if act.getWeb() is not empty %}
-	    <a target="_black" href="{{ act.getWeb() }}">{{ act.getHName() }}</a>
-      {% else %}
-        {{ act.getHName() }}
-      {% endif %}
-      <small>{{ act.getInfo() }}</small>
-    </li>
-  {% else %}
-     <li><em>{% trans %}None{% endtrans %}</em></li>
-  {% endfor %}
+    {% for act in actors %}
+      <li>
+	    {{ role.getText() }}
+	    {% if act.getWeb() is not empty %}
+	      <a target="_black" href="{{ act.getWeb() }}">{{ act.getHName() }}</a>
+        {% else %}
+          {{ act.getHName() }}
+        {% endif %}
+        <small>{{ act.getInfo() }}</small>
+      </li>
+    {% endfor %}    
   </ul>
+  {% endif %}
 {% endfor %}
 </ul>
 </div>
