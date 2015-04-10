@@ -459,7 +459,7 @@ class SeriesController extends AdminController
     }
 
     /**
-     * Helper for search form in menú
+     * Helper for the menu search form
      */
     public function searchAction(Request $req)
     {
