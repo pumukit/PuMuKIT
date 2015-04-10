@@ -98,6 +98,13 @@ class Series
   private $copyright;
 
   /**
+   * @var string $license
+   *
+   * @MongoDB\String
+   */
+  private $license;
+
+  /**
    * @var string $keyword
    *
    * @MongoDB\Raw
@@ -506,6 +513,26 @@ class Series
   public function getCopyright()
   {
       return $this->copyright;
+  }
+
+  /**
+   * Set license
+   *
+   * @param string $license
+   */
+  public function setLicense($license)
+  {
+      $this->license = $license;
+  }
+
+  /**
+   * Get license
+   *
+   * @return array
+   */
+  public function getLicense()
+  {
+      return $this->license;
   }
 
   /**

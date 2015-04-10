@@ -17,6 +17,7 @@ class MultimediaObjectMetaType extends AbstractType
             ->add('i18n_subtitle', 'texti18n', array('required' => false, 'label' => 'Subtitle'))
             ->add('i18n_keyword', 'texti18n',array('required' => false, 'label' => 'Keyword'))
             ->add('copyright', 'text', array('required' => false, 'label' => 'Copyright'))
+            ->add('license', 'text', array('required' => false, 'label' => 'License'))           
             ->add('public_date', new Html5dateType(), array('data_class' => 'DateTime', 'label' => 'Public Date'))
             ->add('record_date', new Html5dateType(), array('data_class' => 'DateTime', 'label' => 'Record Date'))
             ->add('i18n_description', 'textareai18n', array('required' => false, 'label' => 'Description'))

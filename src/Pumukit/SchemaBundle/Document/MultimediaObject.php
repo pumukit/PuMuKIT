@@ -146,7 +146,7 @@ class MultimediaObject
     private $copyright;
 
     /**
-     * @var string $copyright
+     * @var string $license
      *
      * @MongoDB\String
      */
@@ -559,6 +559,26 @@ class MultimediaObject
     public function getCopyright()
     {
         return $this->copyright;
+    }
+
+    /**
+     * Set license
+     *
+     * @param string $license
+     */
+    public function setLicense($license)
+    {
+        $this->license = $license;
+    }
+
+    /**
+     * Get license
+     *
+     * @return string
+     */
+    public function getLicense()
+    {
+        return $this->license;
     }
 
     /**
