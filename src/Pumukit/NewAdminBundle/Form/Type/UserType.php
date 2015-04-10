@@ -13,18 +13,14 @@ class UserType extends AbstractType
     {
         $builder
       ->add('enabled', 'hidden', array('data' => true))
-      ->add('fullname', 'text', array('attr' => array('style' => 'width: 420px'), 'label' => 'Name'))
+      ->add('fullname', 'text', array('label' => 'Name'))
       ->add('username', 'text', array(
                 'attr' => array(
                     'pattern' => "^[a-zA-Z0-9_]{4,16}$",
                     'oninvalid' => "setCustomValidity('The username can not have blank spaces neither special characters')",
-                    'oninput' => "setCustomValidity('')",
-                    'style' => 'width: 420px', ),
+                    'oninput' => "setCustomValidity('')"),
                 'label' => 'Username', ))
-      ->add('plain_password', 'password', array(
-        'required' => false,
-        'label' => 'Password',
-                'attr' => array('style' => 'width: 420px'), ))
+      ->add('plain_password', 'password', array('required' => false, 'label' => 'Password'))
       /*
       ->add('plain_password', 'repeated', array(
         'type' => 'password',
@@ -35,14 +31,13 @@ class UserType extends AbstractType
         'second_options' => array('label' => 'Repita Password'),
                 'attr' => array('style' => 'width: 420px')))
       */
-      ->add('email', 'email', array('attr' => array('style' => 'width: 420px'), 'label' => 'Email'))
+      ->add('email', 'email', array('label' => 'Email'))
       ->add('roles', 'choice', array(
                     'choices' => array(
                         'ROLE_SUPER_ADMIN' => 'Administrator',
                         'ROLE_ADMIN' => 'Publisher', ),
             'multiple' => true,
             'expanded' => true,
-                    'attr' => array('style' => 'width: 420px'),
                     'label' => 'Type', ));
     }
 
