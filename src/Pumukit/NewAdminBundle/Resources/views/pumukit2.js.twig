@@ -1000,7 +1000,9 @@ window.fileServerTree = function(element, type, dir, num, input)
                 baseelement.after(links);
                 baseelement.removeClass('noload')
             }, 'json').fail(function(e){
-                debugger; // TODO ver con Merchi
+                var error = e.responseJSON.error;
+                no_success(error.message + ": (" + error.exception[0].message + ")")
+
             });
         } else {
             $('.list-group-item.elem').show();
