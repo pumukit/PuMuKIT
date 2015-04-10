@@ -1133,6 +1133,38 @@ $(document).on('click', '#pumukitnewadmin_mmtemplate_updatemeta_cancel', functio
     $('#remember_save_mm_template').hide();
 });
 
+// TODO do this another way (SOLVE IT!!)
+// Does the return before finishing the ajax call
+$(document).on('click', '#pumukitnewadmin_user_form_save', function(){
+    //var clickToSubmit = false;
+    var clickToSubmit = true;
+    var email = $('#pumukitnewadmin_user_email').val();
+    var route = "{{ path('pumukitnewadmin_user_check_email', {'email': '__email__'})|raw }}";
+    if ('' != email){
+        $.ajax({
+                url: route.replace('__email__', email),
+                type: 'GET',
+                error: function(jqXHR, textStatus, errorThrown){
+                    var textError = eval('('+jqXHR.responseText+')');
+                    var statusError = textError.status;
+                    var message = errorThrown+': '+statusError;
+                    no_success(message);
+                    clickToSubmit = false;
+                },
+                success: function(response){
+                    if (response.usedEmail){
+                        var message = '{% trans %}There is already an exisiting user with this email{% endtrans %}';
+                        no_success(message);
+                        clickToSubmit = false;
+                    }else{
+                        clickToSubmit = true;
+                    }
+                }
+        });
+    }
+    return clickToSubmit;
+});
+
 function test_material_form_url(url){
     $('.error').hide();
 

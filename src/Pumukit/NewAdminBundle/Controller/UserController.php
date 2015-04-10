@@ -3,6 +3,7 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class UserController extends AdminController
 {
@@ -46,5 +47,36 @@ class UserController extends AdminController
                                    'user' => $user,
                                    'form' => $form->createView()
                                    ));
+    }
+
+    /**
+     * Check email
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function checkEmailAction(Request $request)
+    {
+        $email = $request->get('email', 'default');
+
+        return new JsonResponse(array('usedEmail' =>  $this->checkUsedEmail($email)));
+    }
+
+    /**
+     * Check used email
+     *
+     * @param String $email
+     * @return boolean TRUE if there is an user with this email, FALSE otherwise
+     */
+    private function checkUsedEmail($email)
+    {
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $repo = $dm->getRepository('PumukitSchemaBundle:User');
+
+        $user = $repo->findOneByEmail($email);
+
+        if ($user) return true;
+
+        return false;
     }
 }
