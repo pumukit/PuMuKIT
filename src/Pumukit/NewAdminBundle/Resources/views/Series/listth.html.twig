@@ -9,7 +9,7 @@
   </th>
 {% endif %}
 
-{% if 'public_date' == app.session.get('admin/series/sort') %}
+{% if 'public_date' == app.session.get('admin/series/sort', 'public_date') %}
   <th width="8%">
     <a href="#" onclick="$('#list_series').load('{{ path('pumukitnewadmin_series_list', {'sorting': {'public_date': app.session.get('admin/series/type')=='asc'?'desc':'asc'}}) }}'); return false;">{% trans %}Date{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
   </th>
