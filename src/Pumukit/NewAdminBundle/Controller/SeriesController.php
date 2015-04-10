@@ -47,7 +47,7 @@ class SeriesController extends AdminController
 
         $sorting = $request->get('sorting', null);
         if (null !== $sorting){
-            $session->set('admin/series/type', $sorting[key($sorting)]);
+            $session->set('admin/series/type', current($sorting));
             $session->set('admin/series/sort', key($sorting));
         }
 
