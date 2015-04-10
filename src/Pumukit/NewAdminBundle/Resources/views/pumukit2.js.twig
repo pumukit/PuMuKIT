@@ -656,55 +656,19 @@ window.dblclick_fila_url = function(element, tr, url)
   document.location.href= (url);
 }
 
-function testDates(init, end, re_date) {
 
-    if ((typeof(init) == 'undefined') || (init ==  null) || (init == "")) {
-        return true;
-    }
+function filter_series()
+{
+    var from_date = $('#filters_date_from');
+    var to_date = $('#filters_date_to');
 
-    if ((typeof(end) == 'undefined') || (end ==  null) || (end == "")) {
-        return true;
-    }
-
-    var partes = init.split(" ");
-    var fecha = partes[0];
-    var hora = partes[1];
-    var partes_fecha = fecha.split("/");
-    if (typeof(hora) != 'undefined' && hora !=  null) {
-        var partes_hora = hora.split(":");	
-        var ini = new Date(partes_fecha[2], partes_fecha[1] - 1, partes_fecha[0], partes_hora[0], partes_hora[1]);
+    if (to_date.val() != "" && from_date.val() >= to_date.val()) {
+        to_date[0].setCustomValidity("{% trans %}From date must be less than to date{% endtrans %}");
     }else{
-        var ini = new Date(partes_fecha[2], partes_fecha[1] - 1, partes_fecha[0]);
-    }
-
-    partes = end.split(" ");
-    fecha = partes[0];
-    hora = partes[1];
-    partes_fecha = fecha.split("/");
-    if (typeof(hora) != 'undefined' && hora !=  null) {
-        partes_hora = hora.split(":");
-        var fi = new Date(partes_fecha[2], partes_fecha[1] - 1 , partes_fecha[0], partes_hora[0], partes_hora[1]);
-    }else{
-        var fi = new Date(partes_fecha[2], partes_fecha[1] - 1 , partes_fecha[0]);
-    }
-
-    if (comprobar_date(init, re_date)){
-        alert ("El formato de la fecha de inicio no es el adecuado. Utilice dd/mm/aaaa hh:mm");
-        return false;
+        $('#list_series').load('{{ path('pumukitnewadmin_series_list')|raw }}', $(this).serialize());    
     }
   
-    if (comprobar_date(end, re_date)){
-        alert ("El formato de fecha de fin no es el adecuado. Utilice dd/mm/aaaa hh:mm");
-        return false;
-    }
-
-    if (ini.getTime() > fi.getTime()) {
-        alert("La fecha inicial es posterior a la fecha final");
-        return false;
-    }
-
-    //Modalbox.hide();
-    return true;  
+    return false;
 }
 
 function comprobar_date(date, re){

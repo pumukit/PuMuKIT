@@ -1,8 +1,7 @@
 {% set criteria = app.session.get('admin/series/criteria') %}
 <div class="well">
   <form autocomplete="off" id="filter_series" class="form" 
-        onsubmit="$('#list_series').load('{{ path('pumukitnewadmin_series_list') }}', $(this).serialize()); return false;"
-        action="{{ path('pumukitnewadmin_series_list') }}" method="GET">
+        onsubmit="return filter_series();">
     <fieldset>
       <div id="accordion" class="panel-group" role="tablist" arirole="tablist" aria-multiselectable="true">
 
@@ -39,9 +38,11 @@
 	            <label for="publicdate" class="control-label">{% trans %}Date{% endtrans %}:</label>
                 <div class="row">
 	              <div class="col-md-11 col-md-offset-1">
-	                {% trans %}From{% endtrans %}:&nbsp;<input type="datetime-local" class="form-control" name="criteria[date][from]" id="filters_date_from" value="{{ criteria['date']['from']|default("") }}">
+	                {% trans %}From{% endtrans %}:&nbsp;<input type="datetime-local" class="form-control" pattern="(\d\d\d\d)-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)" title="Format YYYY-MM-DDThh:mm:ss"
+                                                             name="criteria[date][from]" id="filters_date_from" value="{{ criteria['date']['from']|default("") }}">
                     <br/>
-	                {% trans %}To{% endtrans %}:&nbsp;&nbsp;<input type="datetime-local" class="form-control" name="criteria[date][to]" id="filters_date_to" value="{{ criteria['date']['to']|default("") }}">
+	                  {% trans %}To{% endtrans %}:&nbsp;&nbsp;<input type="datetime-local" class="form-control" pattern="(\d\d\d\d)-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)" title="Format YYYY-MM-DDThh:mm:ss"
+                                                                   name="criteria[date][to]" id="filters_date_to" value="{{ criteria['date']['to']|default("") }}">
 	              </div>
                 </div>
 	          </div>
@@ -77,7 +78,7 @@
 
     <div class="text-right">
 	  <input class="btn btn-default btn-raised" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
-	  <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="btn btn-pumukit btn-raised" onclick="return testDates($('filters_date_from').value, $('filters_date_to').value, /^(\d+)-(\d+)-(\d+)$/)"> {# TODO GET DATE FORMAT #}
+	  <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="btn btn-pumukit btn-raised">
     </div>
   </form>
 </div>

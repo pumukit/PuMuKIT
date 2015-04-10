@@ -47,7 +47,7 @@ class SeriesController extends AdminController
 
         $sorting = $request->get('sorting', null);
         if (null !== $sorting){
-            $session->set('admin/series/type', $sorting[key($sorting)]);
+            $session->set('admin/series/type', current($sorting));
             $session->set('admin/series/sort', key($sorting));
         }
 
@@ -459,7 +459,7 @@ class SeriesController extends AdminController
     }
 
     /**
-     * Helper for search form in menú
+     * Helper for the menu search form
      */
     public function searchAction(Request $req)
     {
