@@ -49,3 +49,9 @@ pumukitnewadmin_user_check_email:
     methods: [GET, POST]
     defaults:
         _controller: pumukitnewadmin.controller.user:checkEmailAction
+
+pumukitnewadmin_user_check_username:
+    pattern: /checkusername
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.user:checkUsernameAction

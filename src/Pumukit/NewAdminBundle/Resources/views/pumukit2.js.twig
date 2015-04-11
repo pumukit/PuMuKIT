@@ -1165,6 +1165,52 @@ $(document).on('click', '#pumukitnewadmin_user_form_save', function(){
     return clickToSubmit;
 });
 
+$(document).on('keyup', '#pumukitnewadmin_user_email', function(){
+    var email = $('#pumukitnewadmin_user_email').val();
+    var route = "{{ path('pumukitnewadmin_user_check_email', {'email': '__email__'})|raw }}";
+    if ('' != email){
+        $.ajax({
+                url: route.replace('__email__', email),
+                type: 'GET',
+                error: function(jqXHR, textStatus, errorThrown){
+                    var textError = eval('('+jqXHR.responseText+')');
+                    var statusError = textError.status;
+                    var message = errorThrown+': '+statusError;
+                    no_success(message);
+                },
+                success: function(response){
+                    if (response.usedEmail){
+                        var message = '{% trans %}There is already an exisiting user with this email{% endtrans %}';
+                        no_success(message);
+                    }
+                }
+        });
+    }
+});
+
+$(document).on('keyup', '#pumukitnewadmin_user_username', function(){
+    var username = $('#pumukitnewadmin_user_username').val();
+    var route = "{{ path('pumukitnewadmin_user_check_username', {'username': '__username__'})|raw }}";
+    if ('' != username){
+        $.ajax({
+                url: route.replace('__username__', username),
+                type: 'GET',
+                error: function(jqXHR, textStatus, errorThrown){
+                    var textError = eval('('+jqXHR.responseText+')');
+                    var statusError = textError.status;
+                    var message = errorThrown+': '+statusError;
+                    no_success(message);
+                },
+                success: function(response){
+                    if (response.usedUsername){
+                        var message = '{% trans %}There is already an exisiting user with this username{% endtrans %}';
+                        no_success(message);
+                    }
+                }
+        });
+    }
+});
+
 function test_material_form_url(url){
     $('.error').hide();
 

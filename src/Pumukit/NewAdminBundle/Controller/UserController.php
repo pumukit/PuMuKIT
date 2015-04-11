@@ -79,4 +79,35 @@ class UserController extends AdminController
 
         return false;
     }
+
+    /**
+     * Check username
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function checkUsernameAction(Request $request)
+    {
+        $username = $request->get('username', 'default');
+
+        return new JsonResponse(array('usedUsername' =>  $this->checkUsedUsername($username)));
+    }
+
+    /**
+     * Check used username
+     *
+     * @param String $username
+     * @return boolean TRUE if there is an user with this username, FALSE otherwise
+     */
+    private function checkUsedUsername($username)
+    {
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $repo = $dm->getRepository('PumukitSchemaBundle:User');
+
+        $user = $repo->findOneByUsername($username);
+
+        if ($user) return true;
+
+        return false;
+    }
 }
