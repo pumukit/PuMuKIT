@@ -31,6 +31,7 @@ class MediaPackageController extends Controller
         $page =  $request->get("page", 1);
         $criteria = $this->getCriteria($request);
 
+        $repository_multimediaobjects = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
 
         list($total, $mediaPackages) = $this->get('pumukit_opencast.client')->getMediaPackages(
                 (isset($criteria["name"])) ? $criteria["name"]->regex : 0,
@@ -43,7 +44,9 @@ class MediaPackageController extends Controller
         $pagerfanta->setMaxPerPage($limit);
         $pagerfanta->setCurrentPage($page);
 
-        return array('mediaPackages' => $pagerfanta);
+        $repo = $repository_multimediaobjects->findall();
+
+        return array('mediaPackages' => $pagerfanta, 'multimediaObjects' => $repo);
     }
 
 
@@ -62,7 +65,6 @@ class MediaPackageController extends Controller
 
         $this->dm = $this->get('doctrine_mongodb')->getManager();
         $factoryService = $this->get('pumukitschema.factory');
-
 
         if($oneseries == null){
 
@@ -126,7 +128,6 @@ class MediaPackageController extends Controller
             $dm->flush();
         }
 
-
         if($onemultimediaobjects == null){
             
             $rank = 3;
@@ -178,7 +179,6 @@ class MediaPackageController extends Controller
                 }
             }
 
-
             $dm = $this->get('doctrine_mongodb')->getManager();
             $dm->persist($multimediaObject);
             $dm->flush();
@@ -186,7 +186,6 @@ class MediaPackageController extends Controller
 
         return $this->redirectToRoute('opencastimport');
     }
-
 
     /**
      * Gets the criteria values

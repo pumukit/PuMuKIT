@@ -65,8 +65,17 @@
             {{ mediaPackage.start|date("d-m-Y") }}
           </td>
           <td>
-            <a href="{{ path('pumukitopencast_mediapackage_import', {'id': mediaPackage.id}) }}">{% trans %}Import{% endtrans %}</a>
-            <a href="">{% trans %}Imported{% endtrans %}</a>
+            {% set import = 'import' %}
+            {% for  multimediaObject in multimediaObjects %}
+              {% if (multimediaObject.properties != null) and (multimediaObject.properties['opencast'] == mediaPackage.id) %}
+                <a href="">{% trans %}Imported{% endtrans %}</a>
+                {% set import = 'imported' %}
+              {% endif %} 
+            {% endfor %}
+
+            {% if import != 'imported' %}
+              <a href="{{ path('pumukitopencast_mediapackage_import', {'id': mediaPackage.id}) }}">{% trans %}Import{% endtrans %}</a>
+            {% endif %}
             |<a target="black" href="http://engage14.campusdomar.es/paellaengage/ui/cmarwatch.html?id={{mediaPackage.id}}">{% trans %}Play{% endtrans %}</a>
           </td>
         </tr>
