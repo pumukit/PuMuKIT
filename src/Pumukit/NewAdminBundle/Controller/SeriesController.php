@@ -321,7 +321,6 @@ class SeriesController extends AdminController
       $value = $session->get('admin/series/type', 'public_date');
       $key = $session->get('admin/series/sort', 'desc');
 
-      dump(array($key, $value));
       return  array($key => $value);
     }
 
