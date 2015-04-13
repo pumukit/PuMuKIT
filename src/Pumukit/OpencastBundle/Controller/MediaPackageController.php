@@ -53,7 +53,6 @@ class MediaPackageController extends Controller
     public function importAction($id, Request $request)
     {
         $mediaPackage = $this->get('pumukit_opencast.client')->getMediaPackage($id);
-        dump($mediaPackage);
 
         $repository_series = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
         $oneseries = $repository_series->findOneBy(array("properties.opencast" => $mediaPackage["series"]));
@@ -133,7 +132,7 @@ class MediaPackageController extends Controller
             $rank = 3;
             $status = MultimediaObject::STATUS_NORMAL;
             $title = $mediaPackage["title"];
-            $properties = $mediaPackage["series"];
+            $properties = $mediaPackage["id"];
  
             $series_of_multimediaobject = $repository_series->findOneBy(array("properties.opencast" => $mediaPackage["series"]));
             $multimediaObject =  $factoryService->createMultimediaObject($series_of_multimediaobject);         
