@@ -18,8 +18,10 @@ class MaterialController extends Controller
      */
     public function createAction(MultimediaObject $multimediaObject, Request $request)
     {
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
         $material = new Material();
-        $form = $this->createForm(new MaterialType(), $material);
+        $form = $this->createForm(new MaterialType($translator, $locale), $material);
 
         return array(
                      'material' => $material,
@@ -33,8 +35,10 @@ class MaterialController extends Controller
      */
     public function updateAction(MultimediaObject $multimediaObject, Request $request)
     {
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
         $material = $multimediaObject->getMaterialById($request->get('id'));
-        $form = $this->createForm(new MaterialType(), $material);
+        $form = $this->createForm(new MaterialType($translator, $locale), $material);
 
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
             try {

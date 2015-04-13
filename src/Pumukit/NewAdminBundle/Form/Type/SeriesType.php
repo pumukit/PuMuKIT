@@ -7,33 +7,64 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\NewAdminBundle\Form\Type\Other\Html5dateType;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class SeriesType extends AbstractType
 {
+    private $translator;
+    private $locale;
+
+    public function __construct(TranslatorInterface $translator, $locale='en')
+    {
+        $this->translator = $translator;
+        $this->locale = $locale;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-      ->add('announce', 'checkbox',
-        array('required' => false, 'label' => 'New'))
-      ->add('i18n_title', 'texti18n',
-        array('label' => 'Title'))
-      ->add('i18n_keyword', 'texti18n',
-        array('required' => false, 'label' => 'Keyword'))
-      ->add('copyright', 'text',
-        array('required' => false, 'label' => 'Copyright'))
-      ->add('license', 'text',
-        array('required' => false, 'label' => 'License'))
-      ->add('series_type', null, array('required' => false, 'label' => 'Channel'))
-      ->add('public_date', new Html5dateType(),
-        array('data_class' => 'DateTime', 'label' => 'Public Date'))
-      ->add('i18n_description', 'textareai18n',
-        array('required' => false, 'label' => 'Description'))
-      ->add('i18n_header', 'textareai18n',
-        array('required' => false, 'label' => 'Header Text'))
-      ->add('i18n_footer', 'textareai18n',
-        array('required' => false, 'label' => 'Footer Text'))
-      ->add('i18n_line2', 'textareai18n',
-        array('required' => false, 'label' => 'Headline'));
+            ->add('announce', 'checkbox',
+                  array(
+                        'required' => false,
+                        'label' => $this->translator->trans('New', array(), null, $this->locale)))
+            ->add('i18n_title', 'texti18n',
+                  array('label' => $this->translator->trans('Title', array(), null, $this->locale)))
+            ->add('i18n_keyword', 'texti18n',
+                  array(
+                        'required' => false,
+                        'label' => $this->translator->trans('Keyword', array(), null, $this->locale)))
+            ->add('copyright', 'text',
+                  array(
+                        'required' => false,
+                        'label' => $this->translator->trans('Copyright', array(), null, $this->locale)))
+            ->add('license', 'text',
+                  array(
+                        'required' => false,
+                        'label' => $this->translator->trans('License', array(), null, $this->locale)))
+            ->add('series_type', null,
+                  array(
+                        'required' => false,
+                        'label' => $this->translator->trans('Channel', array(), null, $this->locale)))
+            ->add('public_date', new Html5dateType(),
+                  array(
+                        'data_class' => 'DateTime',
+                        'label' => $this->translator->trans('Public Date', array(), null, $this->locale)))
+            ->add('i18n_description', 'textareai18n',
+                  array(
+                        'required' => false,
+                        'label' => $this->translator->trans('Description', array(), null, $this->locale)))
+            ->add('i18n_header', 'textareai18n',
+                  array(
+                        'required' => false,
+                        'label' => $this->translator->trans('Header Text', array(), null, $this->locale)))
+            ->add('i18n_footer', 'textareai18n',
+                  array(
+                        'required' => false,
+                        'label' => $this->translator->trans('Footer Text', array(), null, $this->locale)))
+            ->add('i18n_line2', 'textareai18n',
+                  array(
+                        'required' => false,
+                        'label' => $this->translator->trans('Headline', array(), null, $this->locale)));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

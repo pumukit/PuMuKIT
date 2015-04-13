@@ -67,7 +67,9 @@ class TagController extends Controller
     public function updateAction(Tag $tag, Request $request)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
-        $form = $this->createForm(new TagType(), $tag);
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
+        $form = $this->createForm(new TagType($translator, $locale), $tag);
 
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
             $dm->persist($tag);
@@ -91,7 +93,10 @@ class TagController extends Controller
         $tag = new Tag();
         $tag->setParent($parent);
 
-        $form = $this->createForm(new TagType(), $tag);
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
+
+        $form = $this->createForm(new TagType($translator, $locale), $tag);
 
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
             try {

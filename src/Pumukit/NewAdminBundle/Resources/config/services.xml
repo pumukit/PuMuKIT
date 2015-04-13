@@ -18,18 +18,26 @@
 
     <service id="pumukitnewadmin.form.type.person" class="Pumukit\NewAdminBundle\Form\Type\PersonType">
       <tag name="form.type" alias="pumukitnewadmin_person" />
+      <argument type="service" id="translator" />
+      <argument>en</argument>
     </service>
 
     <service id="pumukitnewadmin.form.type.series" class="Pumukit\NewAdminBundle\Form\Type\SeriesType">
       <tag name="form.type" alias="pumukitnewadmin_series" />
+      <argument type="service" id="translator" />
+      <argument>en</argument>
     </service>
 
     <service id="pumukitnewadmin.form.type.mmtemplate.meta" class="Pumukit\NewAdminBundle\Form\Type\MultimediaObjectTemplateMetaType">
       <tag name="form.type" alias="pumukitnewadmin_mmtemplate_meta" />
+      <argument type="service" id="translator" />
+      <argument>en</argument>
     </service>
 
     <service id="pumukitnewadmin.form.type.mms.meta" class="Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType">
       <tag name="form.type" alias="pumukitnewadmin_mms_meta" />
+      <argument type="service" id="translator" />
+      <argument>en</argument>
     </service>
 
     <service id="pumukitnewadmin.form.type.role" class="Pumukit\NewAdminBundle\Form\Type\RoleType">
@@ -42,14 +50,20 @@
         
     <service id="pumukitnewadmin.form.type.mms.pub" class="Pumukit\NewAdminBundle\Form\Type\MultimediaObjectPubType">
       <tag name="form.type" alias="pumukitnewadmin_mms_pub" />
+      <argument type="service" id="translator" />
+      <argument>en</argument>
     </service>
 
     <service id="pumukitnewadmin.form.type.link" class="Pumukit\NewAdminBundle\Form\Type\LinkType">
       <tag name="form.type" alias="pumukitnewadmin_link" />
+      <argument type="service" id="translator" />
+      <argument>en</argument>
     </service>
 
     <service id="pumukitnewadmin.form.type.material" class="Pumukit\NewAdminBundle\Form\Type\MaterialType">
       <tag name="form.type" alias="pumukitnewadmin_material" />
+      <argument type="service" id="translator" />
+      <argument>en</argument>
     </service>
 
     <service id="pumukitnewadmin.form.type.track" class="Pumukit\NewAdminBundle\Form\Type\TrackType">

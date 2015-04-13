@@ -5,14 +5,24 @@ namespace Pumukit\NewAdminBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class MaterialType extends AbstractType
 {
+    private $translator;
+    private $locale;
+
+    public function __construct(TranslatorInterface $translator, $locale='en')
+    {
+        $this->translator = $translator;
+        $this->locale = $locale;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-      ->add('i18n_name', 'texti18n', array('required' => false, 'label' => 'Name'))
-      ->add('hide', 'checkbox', array('required' => false, 'label' => 'Hide'))
+          ->add('i18n_name', 'texti18n', array('required' => false, 'label' => $this->translator->trans('Name', array(), null, $this->locale)))
+          ->add('hide', 'checkbox', array('required' => false, 'label' => $this->translator->trans('Hide', array(), null, $this->locale)))
       ->add('mime_type', 'choice', array(
                 'choices' => array(
                                    '1' => 'xxx - ', 
@@ -29,7 +39,7 @@ class MaterialType extends AbstractType
                                    '12' => 'doc - Word file',
                                    '13' => 'srt - Text-captions srt'
                                    ),
-                'label' => 'Type'))
+                'label' => $this->translator->trans('Type')))
       ;
     }
 
