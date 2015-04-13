@@ -10,14 +10,14 @@
               </label>
             </div>
           </th>
-          <th colspan="2" width="5%"></th>
+          <th colspan="2" width="4%"></th>
           <th >{% trans %}Img{% endtrans %}</th>
           <th >{% trans %}Id{% endtrans %}</th>
           <th >{% trans %}Name{% endtrans %}</th>
           <th >{% trans %}Series{% endtrans %}</th>
           <th >{% trans %}Duration{% endtrans %}</th>
           <th >{% trans %}Date{% endtrans %}</th>
-          <th ></th>
+          <th width="10%"></th>
         </tr>
       </thead>
   
@@ -65,10 +65,11 @@
             {{ mediaPackage.start|date("d-m-Y") }}
           </td>
           <td>
+            <a target="black" href="http://engage14.campusdomar.es/paellaengage/ui/cmarwatch.html?id={{mediaPackage.id}}">{% trans %}Play{% endtrans %}</a>&nbsp;&nbsp;|&nbsp;&nbsp;
             {% set import = 'import' %}
             {% for  multimediaObject in multimediaObjects %}
               {% if (multimediaObject.properties != null) and (multimediaObject.properties['opencast'] == mediaPackage.id) %}
-                <a href="">{% trans %}Imported{% endtrans %}</a>
+                <a href="/admin/mms/series?id={{multimediaObject.series.id}}">{% trans %}Imported{% endtrans %}</a>
                 {% set import = 'imported' %}
               {% endif %} 
             {% endfor %}
@@ -76,7 +77,7 @@
             {% if import != 'imported' %}
               <a href="{{ path('pumukitopencast_mediapackage_import', {'id': mediaPackage.id}) }}">{% trans %}Import{% endtrans %}</a>
             {% endif %}
-            |<a target="black" href="http://engage14.campusdomar.es/paellaengage/ui/cmarwatch.html?id={{mediaPackage.id}}">{% trans %}Play{% endtrans %}</a>
+            
           </td>
         </tr>
         {% endfor %}
