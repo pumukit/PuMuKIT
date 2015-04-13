@@ -71,12 +71,8 @@ class FactoryService
     {
         $mm = new MultimediaObject();
         $mm->setStatus(MultimediaObject::STATUS_PROTOTYPE);
-        try {
-            $broadcast = $this->getDefaultBroadcast();
-            $mm->setBroadcast($broadcast);
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
-        }
+        $broadcast = $this->getDefaultBroadcast();
+        if ($broadcast) $mm->setBroadcast($broadcast);
         $mm->setPublicDate(new \DateTime("now"));
         $mm->setRecordDate($mm->getPublicDate());
         foreach ($this->locales as $locale) {
@@ -107,12 +103,8 @@ class FactoryService
                 $mm->setTitle($title, $locale);
             }
         }
-        try {
-            $broadcast = $this->getDefaultBroadcast();
-            $mm->setBroadcast($broadcast);
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
-        }
+        $broadcast = $this->getDefaultBroadcast();
+        if ($broadcast) $mm->setBroadcast($broadcast);
         $mm->setPublicDate(new \DateTime("now"));
         $mm->setRecordDate($mm->getPublicDate());
         $mm->setStatus(MultimediaObject::STATUS_BLOQ);
@@ -139,10 +131,6 @@ class FactoryService
 
         if (null == $broadcast) {
             $broadcast = $repoBroadcast->findPublicBroadcast();
-        }
-
-        if (null == $broadcast) {
-            throw new \Exception('There is no default selected broadcast neither public broadcast.');
         }
 
         return $broadcast;
