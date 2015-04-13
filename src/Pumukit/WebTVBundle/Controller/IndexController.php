@@ -17,17 +17,15 @@ class IndexController extends Controller
     public function indexAction()
     {
     	$series_repository = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
-    	$num_series = count($series_repository->findall());
-
         $repository = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
 
-        $multimediaObjects_sorted_by_numview = $repository->findBy(array(), array('numview' => -1));
-        $multimediaObjects_sorted_by_numview = array_slice($multimediaObjects_sorted_by_numview, 0, 3);
+    	$num_series = count($series_repository->findall());
 
-        $multimediaObjects_sorted_by_public_date = $repository->findBy(array(), array('public_date' => -1));
-        $multimediaObjects_sorted_by_public_date = array_slice($multimediaObjects_sorted_by_public_date, 0, 3);
+        $multimediaObjects_sorted_by_numview = $repository->findBy(array(), array('numview' => -1), 3, 0);
+        $multimediaObjects_sorted_by_public_date = $repository->findBy(array(), array('public_date' => -1), 3, 0);
 
-        return array('num_series' => $num_series, 'multimediaObjects_sorted_by_numview' => $multimediaObjects_sorted_by_numview, 
-            'multimediaObjects_sorted_by_public_date' => $multimediaObjects_sorted_by_public_date);
+        return array('num_series' => $num_series, 
+                     'multimediaObjects_sorted_by_numview' => $multimediaObjects_sorted_by_numview, 
+                     'multimediaObjects_sorted_by_public_date' => $multimediaObjects_sorted_by_public_date);
     }
 }
