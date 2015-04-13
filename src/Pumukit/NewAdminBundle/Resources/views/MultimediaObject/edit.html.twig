@@ -24,8 +24,8 @@
             </div>
             <label for="inputROMagicUrl" class="col-lg-2 control-label" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">Magic Url:</label>
             <div class="col-lg-10 input-group">
-              <input type="text" class="form-control" id="inputROMagicUrl" readonly onclick="select()" value="{{ url('pumukit_webtv_multimediaobject_indexbymagicid', {id: mm.secret}) }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}"> 
-              <span class="input-group-addon"><a href="{{ url('pumukit_webtv_multimediaobject_indexbymagicid', {id: mm.secret}) }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
+              <input type="text" class="form-control" id="inputROMagicUrl" readonly onclick="select()" value="{{ url('pumukit_webtv_multimediaobject_indexbymagicid', {secret: mm.secret}) }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}"> 
+              <span class="input-group-addon"><a href="{{ url('pumukit_webtv_multimediaobject_indexbymagicid', {secret: mm.secret}) }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
             </div>
           </div>            
           {# TODO add info: iframe...

@@ -1,5 +1,8 @@
 {% extends 'PumukitWebTVBundle::layout_mm.html.twig' %}
 
+{% block title %}{{ parent() }} - {{ multimediaObject.title }}{% endblock %}
+{% block keywords %}{{ parent() }} - {{ multimediaObject.keyword }}{% endblock %}
+
 {% block body %}
 	<h1>{{multimediaObject.title}}</h1>
 	<div class="grid_10">
