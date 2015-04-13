@@ -1133,82 +1133,62 @@ $(document).on('click', '#pumukitnewadmin_mmtemplate_updatemeta_cancel', functio
     $('#remember_save_mm_template').hide();
 });
 
-// TODO do this another way (SOLVE IT!!)
-// Does the return before finishing the ajax call
-$(document).on('click', '#pumukitnewadmin_user_form_save', function(){
-    //var clickToSubmit = false;
-    var clickToSubmit = true;
-    var email = $('#pumukitnewadmin_user_email').val();
-    var route = "{{ path('pumukitnewadmin_user_check_email', {'email': '__email__'})|raw }}";
-    if ('' != email){
-        $.ajax({
-                url: route.replace('__email__', email),
-                type: 'GET',
-                error: function(jqXHR, textStatus, errorThrown){
-                    var textError = eval('('+jqXHR.responseText+')');
-                    var statusError = textError.status;
-                    var message = errorThrown+': '+statusError;
-                    no_success(message);
-                    clickToSubmit = false;
-                },
-                success: function(response){
-                    if (response.usedEmail){
-                        var message = '{% trans %}There is already an exisiting user with this email{% endtrans %}';
-                        no_success(message);
-                        clickToSubmit = false;
-                    }else{
-                        clickToSubmit = true;
-                    }
-                }
-        });
-    }
-    return clickToSubmit;
+$(document).on('submit', '#pumukitnewadmin_user_form_update', function(event){
+    $('#myModal').modal('hide');
+
+    var route = '{{ path('pumukitnewadmin_user_update', {'id': '__userId__'}) }}';
+    var userId = $('#userId').val();
+
+    route = route.replace('__userId__', userId);
+
+    $.ajax({
+            url: route,
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function(response, textStatus, jqXHR){
+                        if (jqXHR.responseText.indexOf('modal-header') != -1){
+                            var message = '{% trans %}There was an error in updating the User.{% endtrans %}';
+                            no_success(message);
+                        }else{
+                            $('#list_users').html(response);
+                            var message = '{% trans %}User successfully updated.{% endtrans %}';
+                            success(message);
+                        }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                        var responseText = jqXHR.responseText.split("<title>").pop().split("</title>").shift();
+                        var message = responseText.replace(/(\r\n|\n|\r)/gm,"");
+                        no_success(errorThrown+': '+textStatus+', '+message);
+            }
+    });
+    return false;
 });
 
-$(document).on('keyup', '#pumukitnewadmin_user_email', function(){
-    var email = $('#pumukitnewadmin_user_email').val();
-    var route = "{{ path('pumukitnewadmin_user_check_email', {'email': '__email__'})|raw }}";
-    if ('' != email){
-        $.ajax({
-                url: route.replace('__email__', email),
-                type: 'GET',
-                error: function(jqXHR, textStatus, errorThrown){
-                    var textError = eval('('+jqXHR.responseText+')');
-                    var statusError = textError.status;
-                    var message = errorThrown+': '+statusError;
-                    no_success(message);
-                },
-                success: function(response){
-                    if (response.usedEmail){
-                        var message = '{% trans %}There is already an exisiting user with this email{% endtrans %}';
-                        no_success(message);
-                    }
-                }
-        });
-    }
-});
+$(document).on('submit', '#pumukitnewadmin_user_form_create', function(event){
+    $('#myModal').modal('hide');
 
-$(document).on('keyup', '#pumukitnewadmin_user_username', function(){
-    var username = $('#pumukitnewadmin_user_username').val();
-    var route = "{{ path('pumukitnewadmin_user_check_username', {'username': '__username__'})|raw }}";
-    if ('' != username){
-        $.ajax({
-                url: route.replace('__username__', username),
-                type: 'GET',
-                error: function(jqXHR, textStatus, errorThrown){
-                    var textError = eval('('+jqXHR.responseText+')');
-                    var statusError = textError.status;
-                    var message = errorThrown+': '+statusError;
-                    no_success(message);
-                },
-                success: function(response){
-                    if (response.usedUsername){
-                        var message = '{% trans %}There is already an exisiting user with this username{% endtrans %}';
-                        no_success(message);
-                    }
-                }
-        });
-    }
+    var route = '{{ path('pumukitnewadmin_user_create') }}';
+    $.ajax({
+            url: route,
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function(response, textStatus, jqXHR){
+                        if (jqXHR.responseText.indexOf('modal-header') != -1){
+                            var message = '{% trans %}There was an error in creating the User.{% endtrans %}';
+                            no_success(message);
+                        }else{
+                            $('#list_users').html(response);
+                            var message = '{% trans %}User successfully created.{% endtrans %}';
+                            success(message);
+                        }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                        var responseText = jqXHR.responseText.split("<title>").pop().split("</title>").shift();
+                        var message = responseText.replace(/(\r\n|\n|\r)/gm,"");
+                        no_success(errorThrown+': '+textStatus+', '+message);
+            }
+    });
+    return false;
 });
 
 function test_material_form_url(url){

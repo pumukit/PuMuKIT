@@ -4,6 +4,7 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends AdminController
 {
@@ -47,67 +48,5 @@ class UserController extends AdminController
                                    'user' => $user,
                                    'form' => $form->createView()
                                    ));
-    }
-
-    /**
-     * Check email
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function checkEmailAction(Request $request)
-    {
-        $email = $request->get('email', 'default');
-
-        return new JsonResponse(array('usedEmail' =>  $this->checkUsedEmail($email)));
-    }
-
-    /**
-     * Check used email
-     *
-     * @param String $email
-     * @return boolean TRUE if there is an user with this email, FALSE otherwise
-     */
-    private function checkUsedEmail($email)
-    {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $repo = $dm->getRepository('PumukitSchemaBundle:User');
-
-        $user = $repo->findOneByEmail($email);
-
-        if ($user) return true;
-
-        return false;
-    }
-
-    /**
-     * Check username
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function checkUsernameAction(Request $request)
-    {
-        $username = $request->get('username', 'default');
-
-        return new JsonResponse(array('usedUsername' =>  $this->checkUsedUsername($username)));
-    }
-
-    /**
-     * Check used username
-     *
-     * @param String $username
-     * @return boolean TRUE if there is an user with this username, FALSE otherwise
-     */
-    private function checkUsedUsername($username)
-    {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $repo = $dm->getRepository('PumukitSchemaBundle:User');
-
-        $user = $repo->findOneByUsername($username);
-
-        if ($user) return true;
-
-        return false;
     }
 }
