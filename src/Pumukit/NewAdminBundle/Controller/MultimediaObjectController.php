@@ -27,6 +27,8 @@ class MultimediaObjectController extends SortableAdminController
 
         $sessionId = $this->get('session')->get('admin/series/id', null);
         $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
+        if(!$series) throw $this->createNotFoundException();
+
         $this->get('session')->set('admin/series/id', $series->getId());
 
         $mms = $this->getListMultimediaObjects($series);
