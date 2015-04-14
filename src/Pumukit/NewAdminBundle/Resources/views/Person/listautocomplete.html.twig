@@ -27,7 +27,7 @@
                      return false;">
       {% trans %}Use{% endtrans %}
     </button>
-    <button type="button" class="btn btn-pumukit btn-raised" data-toggle="modal" data-dismiss="modal" data-target="#myAuxModal"
+    <button type="button" class="btn btn-pumukit btn-raised" data-toggle="modal" data-dismiss="modal" data-target="#myAuxModal{{ template }}"
             id="create_relation" href="#"
             onclick="var aux = $('#name').val();
                      $('#name').val('{% trans %}name to search for{% endtrans %}');
