@@ -3,14 +3,6 @@
 
       <thead>
         <tr>
-          <th width="1%">
-            <div class="checkbox">
-              <label>
-                <input type="checkbox" onclick="window.click_checkbox_all('user', this.checked)">
-              </label>
-            </div>
-          </th>
-          <th colspan="2" width="4%"></th>
           <th >{% trans %}Img{% endtrans %}</th>
           <th >{% trans %}Id{% endtrans %}</th>
           <th >{% trans %}Name{% endtrans %}</th>
@@ -31,15 +23,7 @@
         {% endif %}
 
         {% for mediaPackage in mediaPackages %}
-        <tr>
-          <td>
-            <div class="checkbox">
-              <label>
-                <input id="{{ mediaPackage.id }}" class="user_checkbox" type="checkbox" size="1">
-              </label>
-            </div>
-          </td> 
-          <td colspan="2" width="3%"></td>   
+        <tr> 
           <td>
             {% set url_set = false %}
             {% if mediaPackage.attachments.attachment.0.url is not empty %}
