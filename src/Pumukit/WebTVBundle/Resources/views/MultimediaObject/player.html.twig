@@ -1,4 +1,4 @@
-{% if track.url %}
+{% if track %}
 <video id="player1" controls></video>
 <script type="text/javascript">
   jwplayer("player1").setup({
@@ -14,5 +14,7 @@
   });
 </script>
 {% else %}
+<div style="color: white; background: black; width: {{ width|default('620') }}px; height: {{ height|default('465') }}px; text-align: center;vertical-align: middle;display: table-cell;">
   No track.
+</div>
 {% endif %}
