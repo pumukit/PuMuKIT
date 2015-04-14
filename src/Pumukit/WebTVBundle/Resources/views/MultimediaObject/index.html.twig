@@ -1,9 +1,9 @@
-{% extends 'PumukitWebTVBundle::one_layout.html.twig' %}
+{% extends 'PumukitWebTVBundle::layout.html.twig' %}
 
 {% block title %}{{ parent() }} - {{ multimediaObject.title }}{% endblock %}
 {% block keywords %}{{ parent() }} - {{ multimediaObject.keyword }}{% endblock %}
 
-{% block body %}
+{% block body_without_bar %}
 	<h1>{{multimediaObject.title}}</h1>
 	<div class="grid_10">
 		<!--<h3>{{multimediaObject.getRecordDate().format("Y-m-d")}}</h3>-->

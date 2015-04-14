@@ -35,12 +35,14 @@
             </div><!--end div headerbar-->
 
             <div id="body">
+                {% block body_without_bar %}
                 <div id="slidebar" class="grid_3">
                     {% include 'PumukitWebTVBundle::slidebar.html.twig' %}
                 </div>
                 <div id="other_body" class="grid_12">
                     {% block body %}{% endblock %}
                 </div>
+                {% endblock %}
                 <div style="clear:both"></div>
             </div>
 
