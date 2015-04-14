@@ -92,6 +92,7 @@ EOT
             return -1;
         }
         $this->removeTags();
+        var_dump("HOLA");
         $root = $this->createRoot();
         foreach ($finder as $tagFile) {
             $this->createFromFile($tagFile, $root, $output, 'tag');
@@ -166,7 +167,7 @@ EOT
 
     protected function createRoot()
     {
-        $root = $this->createTagFromCsvArray(array(null, "ROOT", 1, 0, "ROOT", "ROOT", "ROOT"));
+        $root = $this->createTagFromCsvArray(array(null, "ROOT", 1, 1, "ROOT", "ROOT", "ROOT"));
         $this->dm->flush();
 
         return $root;
