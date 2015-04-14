@@ -4,7 +4,7 @@
     <!--Multimedia object tags-->
     <div style="width: 440px;">
       <ul>
-        {% for tag in multimediaObject.getTags() %}
+        {% for tag in multimediaObject.getTags() if tag.getDisplay() and not tag.getMetatag() %}
           <li style="list-style:none; float: left; margin: 5px;">
             <div title="{{ tag.getTitle() }}" class="label-categories label-info">
               <a style="text-decoration: none" href="/multimediaobjects/tag/{{tag.getId()}}">{{ tag.getTitle() }}</a>
@@ -68,4 +68,8 @@
        	</tr>
     </tbody>
    </table>
+</div>
+
+<div style="clear: left;">
+  <span style="font-weight: bold">Serie:</span> <a href="/series/{{multimediaObject.getSeries().getId()}}">{{multimediaObject.getSeries().getTitle()}}</a>
 </div>

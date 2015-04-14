@@ -9,12 +9,8 @@
             <link href="{{ asset('bundles/pumukitwebtv/css/default.css') }}" type="text/css" rel="stylesheet" media="screen"/>
             <link href="{{ asset('bundles/pumukitwebtv/css/css.css') }}" type="text/css" rel="stylesheet" media="screen"/>
             <link href="{{ asset('bundles/pumukitwebtv/css/960.css') }}" type="text/css" rel="stylesheet" media="screen"/>
-
             <link href="{{ asset('bundles/pumukitwebtv/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" media="screen"/>
             <link href="{{ asset('bundles/pumukitwebtv/css/bootstrap-datetimepicker.css') }}" type="text/css" rel="stylesheet" media="screen"/>
-            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
-            
         {% endblock %}
         <!--Block with Javascript files-->
         {% block javascripts %}
@@ -23,12 +19,11 @@
             <script src="{{ asset('bundles/pumukitwebtv/js/bootstrap.min.js') }}" type="text/javascript"></script>
             <script src="{{ asset('bundles/pumukitwebtv/js/moment-with-locales.js') }}" type="text/javascript"></script>
             <script src="{{ asset('bundles/pumukitwebtv/js/bootstrap-datetimepicker.js') }}" type="text/javascript"></script>
-
-
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('bundles/pumukitwebtv/images/favicon.ico') }}" />
     </head>
     <body>
+        {% block body_base %}
         <div id="content" class="container_15">
             <div id="headerbar">
                 {% include 'PumukitWebTVBundle::header.html.twig' %}
@@ -50,11 +45,12 @@
                 {% include 'PumukitWebTVBundle::footer.html.twig'%}
             </div>
             <div style="clear:both; text-align: right; padding: 10px 0px 0px 10px; font-size: 11px; ">
-                <img alt="Icono de Pumukit" src="{{ asset('bundles/pumukitwebtv/images/favicon.ico') }}" style="width: 10px;">
+                <img alt="PuMuKIT icon" src="{{ asset('bundles/pumukitwebtv/images/favicon.ico') }}" style="width: 10px;">
                 <a href="http://pumukit.org" style="color:#000; text-decoration: none; ">
-                    Powered by <span style="font-style: italic">PumuKIT V 2.00</span>
+                    Powered by <span style="font-style: italic">PuMuKIT</span>
                 </a>
             </div>
         </div>
+        {% endblock %}
     </body>
 </html>

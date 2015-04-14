@@ -1,9 +1,22 @@
 <?php
 
+
+/**
+TODO:
+ - Inc counters.
+ - Review info
+ - Add intro parameter.
+ - Add option to add posibility to download video ????
+ - Add doctrine filters
+ - Add test.
+ -      
+ */
+
 namespace Pumukit\WebTVBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -17,7 +30,7 @@ class MultimediaObjectController extends Controller
      * @Route("/video/{id}")
      * @Template("PumukitWebTVBundle:MultimediaObject:index.html.twig")
      */
-    public function indexByIdAction(MultimediaObject $multimediaObject, Request $request)
+    public function indexAction(MultimediaObject $multimediaObject, Request $request)
     {
       if (MultimediaObject::STATUS_PUBLISHED !== $multimediaObject->getStatus())
         throw $this->createNotFoundException();
@@ -34,12 +47,19 @@ class MultimediaObjectController extends Controller
         //TODO.
         throw $this->createNotFoundException();
         
-      $serie = $multimediaObject->getSeries();
-      $multimediaObjects = $serie->getMultimediaObjects();
-      return array('multimediaObject' => $multimediaObject, 
-                   'track' => $track,
-                   'multimediaObjects' => $multimediaObjects);
-     
+      return array('autostart' => $request->query->get('autostart', 'true'),
+                   'multimediaObject' => $multimediaObject, 
+                   'track' => $track);
+    }
+
+
+   /**
+     * @Route("/iframe/{id}")
+     * @Template()
+     */
+    public function iframeAction(MultimediaObject $multimediaObject, Request $request)
+    {
+      return $this->indexAction($multimediaObject, $request);
     }
 
 
@@ -47,16 +67,40 @@ class MultimediaObjectController extends Controller
      * @Route("/video/magic/{secret}")
      * @Template("PumukitWebTVBundle:MultimediaObject:index.html.twig")
      */
-    public function indexByMagicIdAction(MultimediaObject $multimediaObject, Request $request)
+    public function magicIndexAction(MultimediaObject $multimediaObject, Request $request)
     {
+      //TODO
       $track = $request->query->has('track_id') ?
         $multimediaObject->getTrackById($request->query->get('track_id')) :
         $multimediaObject->getTrackWithTag('display');
 
-      $serie = $multimediaObject->getSeries();
-      $multimediaObjects = $serie->getMultimediaObjects();
       return array('multimediaObject' => $multimediaObject, 
-                   'track' => $track,
+                   'track' => $track);
+    }
+
+
+    /**
+     * @Template()
+     */
+    public function seriesAction(MultimediaObject $multimediaObject)
+    {
+      $series = $multimediaObject->getSeries();
+      $multimediaObjects = $series->getMultimediaObjects();
+
+      return array('series' => $series,
                    'multimediaObjects' => $multimediaObjects);
+    }
+
+    /**
+     * @Template()
+     */
+    public function relatedAction(MultimediaObject $multimediaObject)
+    {
+      $mmobjRepo = $this
+        ->get('doctrine_mongodb.odm.document_manager')
+        ->getRepository('PumukitSchemaBundle:MultimediaObject');
+      $relatedMms = $mmobjRepo->findRelatedMultimediaObjects($multimediaObject);
+
+      return array('multimediaObjects' => $relatedMms);
     }
 }

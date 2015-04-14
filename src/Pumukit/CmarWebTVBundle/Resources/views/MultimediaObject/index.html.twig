@@ -17,5 +17,6 @@
 	<div class="grid_5">
 		{% render(controller('PumukitWebTVBundle:MultimediaObject:series', {'multimediaObject': multimediaObject})) %}
         {% render(controller('PumukitWebTVBundle:MultimediaObject:related', {'multimediaObject': multimediaObject})) %}
+		{% include 'PumukitWebTVBundle:MultimediaObject:share.html.twig' %}
 	</div>
 {% endblock %}

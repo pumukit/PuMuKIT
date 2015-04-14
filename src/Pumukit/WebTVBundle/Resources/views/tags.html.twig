@@ -1,0 +1,16 @@
+<abbr title="{% set sep = '' %}{% for tag in tags %}{{ sep }}{{ tag.getTitle() }}{% set sep = ', ' %}{% endfor %}">
+  {% if show_tag == 'true' %}
+    {% set sep = '' %}
+    {% set ii = 0 %}
+    {% for tag in tags if (ii < 3) %}
+      {% if ii == 2 %}
+        <span style="font-weight: bold; font-size: 100%">[+]</span>
+      {% endif %}
+      {{ tag.getTitle()[:15] }}{% if ((tag.getTitle()|length) > 15) %}...{% endif %}
+      {% set sep = ', ' %}
+      {% set ii = ii + 1 %}
+    {% endfor %}
+  {% else %}
+    <span style="font-weight: bold; font-size: 100%">[+]</span>
+  {% endif %}
+</abbr>
