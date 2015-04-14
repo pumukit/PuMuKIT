@@ -8,7 +8,7 @@
           <th >{% trans %}Name{% endtrans %}</th>
           <th >{% trans %}Series{% endtrans %}</th>
           <th >{% trans %}Duration{% endtrans %}</th>
-          <th >{% trans %}Date{% endtrans %}</th>
+          <th width="7%">{% trans %}Date{% endtrans %}</th>
           <th width="10%"></th>
         </tr>
       </thead>
@@ -41,6 +41,7 @@
             {% if mediaPackage.title is not empty %}{{ mediaPackage.title }}{% endif %}
           </td>
           <td>
+            {{ mediaPackage.seriestitle }}
           </td>
           <td>
             {{ (((mediaPackage.duration)//1000)-3600)|date("H:i:s") }}
