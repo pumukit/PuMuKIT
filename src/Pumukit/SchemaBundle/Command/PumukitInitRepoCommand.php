@@ -92,7 +92,6 @@ EOT
             return -1;
         }
         $this->removeTags();
-        var_dump("HOLA");
         $root = $this->createRoot();
         foreach ($finder as $tagFile) {
             $this->createFromFile($tagFile, $root, $output, 'tag');
