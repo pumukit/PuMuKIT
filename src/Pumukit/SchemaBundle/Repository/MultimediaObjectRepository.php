@@ -524,4 +524,43 @@ class MultimediaObjectRepository extends DocumentRepository
         return $this->createQueryBuilder()
           ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE);
     }
+
+    /**
+     * Find similar multimedia objects to a given one
+     * with same tags, from different series,
+     * broadcast public, status normal,
+     * maximum 20 and random
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param array $tags
+     * @return ArrayCollection
+     */
+    public function findRelatedMultimediaObjects(MultimediaObject $multimediaObject)
+    {
+        $qb = $this->createQueryBuilder()
+          ->field('_id')->notEqual($multimediaObject->getId())
+          ->field('series')->notEqual($multimediaObject->getSeries()->getId())
+          ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED);
+
+        // Broadcast public
+        $broadcastRepo = $this->dm->getRepository('PumukitSchemaBundle:Broadcast');
+        $broadcast = $broadcastRepo->findPublicBroadcast();
+        $qb->field('broadcast')->references($broadcast);
+
+        // Includes PUCHWEBTV code
+        $codes = array();
+        foreach ($multimediaObject->getTags() as $tag) {
+            $codes[] = $tag->getCod();
+        }
+        $qb->field('tags.cod')->all($codes);
+
+        // Limit 20 and random order
+        $qb
+          ->limit(20)
+          ->sort('rank', mt_rand(0, 1) ? 1 : -1);
+
+        $aux = $qb->getQuery()->execute();
+
+        return $aux;
+    }
 }
