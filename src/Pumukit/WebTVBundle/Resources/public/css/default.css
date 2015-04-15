@@ -725,7 +725,7 @@ div.other_mmobjs .box{
 div.share_mmobj{
   margin: 30px 0px 20px 5px;
   background-color: #F0F0FF;
-  padding: 15px;
+  padding: 10px;
 }
 
 
@@ -822,7 +822,8 @@ div.pumukit_mini_mmobjs .pumukit_mini_mmobj .info{
 div.pumukit_mmobjs .pumukit_mmobj .thumbnail, div.pumukit_mini_mmobjs .pumukit_mini_mmobj .thumbnail{
   display:inline;
   float:left;
-
+  padding: 0px;
+  border: none;
   margin:0 7px 0 0;
   position:relative;
 }
