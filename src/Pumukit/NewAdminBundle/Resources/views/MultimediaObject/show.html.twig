@@ -43,7 +43,7 @@
 <div>
 <ul>
 {% for role in roles if role.getDisplay() %}
-  {% set actors = mm.getPeopleInMultimediaObjectByRole(role) %}
+  {% set actors = mm.getPeopleByRole(role) %}
   {% if actors|length != 0 %}
   <li>{{ role.name }}</li>
   <ul>
