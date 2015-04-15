@@ -950,7 +950,7 @@ window.fileServerTree = function(element, type, dir, num, input)
     if (baseelement.hasClass('collapsed')) {
         baseelement.removeClass("collapsed").addClass("expanded");
         if (baseelement.hasClass('noload')) {
-            $.get('{{ path('pumukit_newadmin_inbox_dir') }}?dir=' + dir, function(files){
+            $.get('{{ path('pumukit_newadmin_inbox_dir')|raw }}?type=' + type + '&dir=' + dir, function(files){
                 links = "";
                 for(var i in files) {
                   var file = files[i];

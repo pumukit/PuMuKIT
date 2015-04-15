@@ -16,7 +16,8 @@ class InboxController extends Controller
      */
     public function dirAction(Request $request)
     {
-        $dir = $request->get("dir", "");
+        $dir = $request->query->get("dir", "");
+        $type = $request->query->get("type", "file");
         $baseDir = $this->container->getParameter('pumukit2.inbox');
 
         if(0 !== strpos($dir, $baseDir)) {
@@ -24,7 +25,13 @@ class InboxController extends Controller
         }
 
         $finder = new Finder();
-        $finder->files()->in($dir);
+
+        if ("file" == $type) {
+            $finder->files()->in($dir);
+        }else{
+            $finder->directories()->in($dir);
+        }
+        $finder->sortByName();
 
         $res = array();
         foreach ($finder as $f) {
@@ -39,7 +46,7 @@ class InboxController extends Controller
     /**
      * @Template
      */
-    public function formAction()
+    public function formAction($onlyDir=false)
     {
         if (!$this->container->hasParameter('pumukit2.inbox')) {
             return $this->render('@PumukitNewAdmin/Inbox/form_noconf.html.twig');
@@ -55,6 +62,6 @@ class InboxController extends Controller
             return $this->render('@PumukitNewAdmin/Inbox/form_noperm.html.twig', array('dir' => $dir));
         }
 
-        return $this->render('@PumukitNewAdmin/Inbox/form.html.twig', array('dir' => $dir));
+        return $this->render('@PumukitNewAdmin/Inbox/form.html.twig', array('dir' => $dir, 'onlyDir' => $onlyDir));
     }
 }

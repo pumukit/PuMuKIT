@@ -2,7 +2,7 @@
 
 {% block inbox_body %}
 <a class="list-group-item collapsed noload" href="#"
-   onclick="javascript:fileServerTree(this, 'file', '{{ dir }}', 0, 'explorer_videoserv'); return false;">
+   onclick="javascript:fileServerTree(this, '{{ onlyDir ? 'dir' : 'file'}}', '{{ dir }}', 0, 'explorer_videoserv'); return false;">
   <span style="padding-left: 0px">
     <i class="mdi- tag_icon"></i>
   </span>
