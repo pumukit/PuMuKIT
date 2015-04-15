@@ -40,21 +40,26 @@
       	<author>tv@uvigo.es</author>
 
       	<source url="http://tv.uvigo.es/xml/arca">Universidad de Vigo Television</source> 
-      	<media:thumbnail url="http://tv.uvigo.es/uploads/pic/Serial/2279/Video/25673/miniatura_principal.jpg" height="82" width="100" />
+      	<media:thumbnail url="{{ multimediaObject.getFirstUrlPic() }}" height="82" width="100" />
       	<media:copyright>UVigo-Tv</media:copyright>
       	<guid isPermaLink="true">http://tv.uvigo.es/es/video/mm/25673.html</guid>
+
+        <!-- Persons -->
         <media:credit role="director">Salustiano Mato de la Iglesia</media:credit>
         <media:credit role="actor">María Álvarez Lires</media:credit>
-        <media:credit role="actor">Raquel López Gutiérrez</media:credit>                                            
-        <category domain="DIRECTRIZ">Ciencias Jurídico-Sociales</category>
-        <category domain="UNESCO">Sociología</category>
-        <category domain="UNESCO">Grupos sociales</category>
-        <category domain="UNESCO">Posición social de la mujer</category>
-        <category domain="UNESCOUVIGOTV">Institucional</category>
-        <category domain="UNESCOUVIGOTV">Unidad de Igualdad</category>
-            
-        <media:content url="http://tv.uvigo.es/video/112868.html" type="video/x-flv" medium="video" isDefault="true" expression="full" framerate="25" 
-          channels="1" duration="3308" height="576" width="720" lang="gl"/>                  
+        <media:credit role="actor">Raquel López Gutiérrez</media:credit>
+
+        <!-- Tags -->
+        {% for tag in multimediaObject.getTags() %}                                            
+          <category domain="{{ tag.getCod() }}">{{ tag.getTitle() }}</category>
+        {% endfor %}  
+
+        <!-- Tracks -->
+        {% for track in multimediaObject.getTracks() %}
+          <media:content url="http://tv.uvigo.es/video/112868.html" type="video/x-flv" medium="video" isDefault="true" expression="full" framerate="25" 
+          channels="1" duration="{{ track.getDuration() }}" height="576" width="720" lang="gl"/>          
+        {% endfor %}
+
     	</item>
     {% endfor %}
 
