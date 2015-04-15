@@ -85,6 +85,7 @@ class Track extends Element
    * @var int $numview
    *
    * @MongoDB\Int
+   * @MongoDB\Increment
    */
   private $numview;
 
@@ -302,6 +303,15 @@ class Track extends Element
   public function setNumview($numview)
   {
       $this->numview = $numview;
+  }
+
+  /**
+   * Increment numview
+   *
+   */
+  public function incNumview()
+  {
+    $this->numview++;
   }
 
   /**
