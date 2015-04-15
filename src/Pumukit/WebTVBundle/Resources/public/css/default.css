@@ -344,11 +344,11 @@ div.cab_serial h3.place{
 /*
   Body MM
 */
-div#serial_body div.inter_mm {
+div.serial_body div.inter_mm {
   margin-top:16px;
 }
 
-div#serial_body div.serial_place{ 
+div.serial_body div.serial_place{ 
    text-align: right;
    padding-right: 5px;
    background-color: #DFDFFF;
@@ -358,13 +358,13 @@ div#serial_body div.serial_place{
 }
                                   
 
-div#serial_body div.serial_place_w{ 
+div.serial_body div.serial_place_w{ 
    background-color: rgb(255, 171, 84);
 }
                                     
 
 
-div#serial_body div.serial_date{ 
+div.serial_body div.serial_date, div.serial_body div.date{ 
    text-align: center;
    background-color: #006699;
    font-weight: bold;
@@ -373,27 +373,27 @@ div#serial_body div.serial_date{
 }
                                  
 
-div#serial_body div.serial_date_w{ 
+div.serial_body div.serial_date_w{ 
    background-color: rgb(245, 102 ,0);
 }
                                    
 
 
-div#serial_body div.serial_mm{ 
+div.serial_body div.serial_mm{ 
   background-color: #F0F0FF;
 }
 
-div#serial_body div.serial_mm:hover{ 
+div.serial_body div.serial_mm:hover{ 
   background-color: #C0C0CF;
 }
                                
 
-div#serial_body div.serial_mm_w{ 
+div.serial_body div.serial_mm_w{ 
   background-color: #ffead6;
 }
                                  
 
-div#serial_body div.serial_mm_pics{ 
+div.serial_body div.serial_mm_pics{ 
   width: 21%;
   margin-left: 5px;
   vertical-align: top;
@@ -407,7 +407,7 @@ img.serial{
 }
                  
 
-div#serial_body div.serial_mm_info{ 
+div.serial_body div.serial_mm_info{ 
   padding-left: 2%;
   padding-right: 2%;
   text-align: left;

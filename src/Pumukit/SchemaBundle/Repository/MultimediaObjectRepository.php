@@ -451,6 +451,39 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
+     * Find by series, tag code and status
+     *
+     * @param Series
+     * @param string $tagCod
+     * @param array $status
+     * @return ArrayCollection
+     */
+    public function findBySeriesByTagCodAndStatus(Series $series, $tagCod, $status = array())
+    {
+        $qb = $this->createStandardQueryBuilder()
+          ->field('series')->references($series)
+          ->field('tags.cod')->equals($tagCod);
+
+        if (0 !== count($status)) $qb->field('status')->in($status);
+
+        $qb->sort('rank', 'asc');
+
+        $aux = $qb->getQuery()->execute();
+
+        //TODO Multimedia Objects with Broadcast public or corporative
+        $multimediaObjects = array();
+        foreach ($aux as $mm){
+            $mmBroadcast = $mm->getBroadcast()->getBroadcastTypeId();
+            if (($mmBroadcast == Broadcast::BROADCAST_TYPE_PUB) || ($mmBroadcast == Broadcast::BROADCAST_TYPE_COR)){
+                $multimediaObjects[] = $mm;
+            }
+        }
+
+        return $multimediaObjects;
+    }
+    
+
+    /**
      * Find by broadcast
      *
      * @param Broadcast $broadcast

@@ -1,7 +1,27 @@
 {% extends 'PumukitWebTVBundle::layout.html.twig' %}
 
+{% block title %}{{ parent() }} - {{ series.title }}{% endblock %}
+{% block keywords %}{{ parent() }} - {{ series.keyword }}{% endblock %}
+
 {% block body %}
-	<h1 id="index_h1">Serie: {{series.title}}</h1>
-	{% include 'PumukitWebTVBundle:Series:series_body.html.twig' %}
-	{% include 'PumukitWebTVBundle:Series:pager.html.twig' %}
+	<h1 id="index_h1">Serie: {{ series.title|default("No title"|trans) }}</h1>
+    {% include 'PumukitWebTVBundle:Series:header.html.twig' %}
+    <div id="serial_header">
+      {{ series.header|raw }}
+    </div>
+    
+    <div class="serial_body">
+      {% set last_date = '' %}
+      {% for mm in multimediaObjects %}
+      {# TODO 'template' SERIES getSerialTemplateId() #}
+      {% set template = '' %}
+      {% include 'PumukitWebTVBundle:Series:multimediaobjectbody.html.twig' with {'mm': mm, 'last_date': last_date, 'template': template} %}
+      {% set last_date = mm.getRecordDate() %}
+      
+      {% endfor %}
+    </div>
+
+    <div id="serial_footer">
+      {{ series.footer|raw }}
+    </div>
 {% endblock %}
