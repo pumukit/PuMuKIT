@@ -15,3 +15,21 @@ pumukitwizard_default_type:
     methods: [GET, POST]
     defaults:
         _controller: PumukitWizardBundle:Default:type
+
+pumukitwizard_default_option:
+    pattern: /option
+    methods: [GET, POST]
+    defaults:
+        _controller: PumukitWizardBundle:Default:option
+
+pumukitwizard_default_multimediaobject:
+    pattern: /multimediaobject
+    methods: [GET, POST]
+    defaults:
+        _controller: PumukitWizardBundle:Default:multimediaobject
+
+pumukitwizard_default_track:
+    pattern: /track
+    methods: [GET, POST]
+    defaults:
+        _controller: PumukitWizardBundle:Default:track

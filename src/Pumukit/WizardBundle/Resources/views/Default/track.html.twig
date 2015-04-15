@@ -1,0 +1,208 @@
+{% extends 'PumukitWizardBundle:Default:index.html.twig' %}
+{% block wizard_body %}
+<div class="well">
+  <form id="pumukitwizard_track_form" autocomplete="off"
+        enctype="multipart/form-data" target="iframeUpload"
+        action="{# TODO path('')  url_for('wizard/end') #}" method="POST">
+    <iframe name="iframeUpload" style="display:none" src=""></iframe>
+    <input type="hidden" name="pumukitwizard_form_data[series][id]" id="pumukitwizard_series_id" value="{{ form_data.series.id }}">
+    {% for field, locales in form_data.series %}
+    {% for locale, value in locales %}
+    {# TODO if value is not null here or at the end of wizard #}
+    <input type="hidden" name="pumukitwizard_form_data[series][{{ field }}][{{ locale }}]" id="pumukitwizard_track_series_{{ field }}_{{ locale }}" value="{{ value }}">
+    {% endfor %}
+    {% endfor %}
+    <input type="hidden" name="pumukitwizard_form_data[type][option]" id="pumukitwizard_track_type_option" value="{{ form_data.type.option }}">
+    {% if 'single' == form_data.type.option %}
+    {% for field, locales in form_data.multimediaobject %}
+    {% for locale, value in locales %}
+    {# TODO if value is not null here or at the end of wizard #}
+    <input type="hidden" name="pumukitwizard_form_data[multimediaobject][{{ field }}][{{ locale }}]" id="pumukitwizard_track_multimediaobject_{{ field }}_{{ locale }}" value="{{ value }}">
+    {% endfor %}
+    {% endfor %}
+    {% endif %}
+    <fieldset>
+      <div class="form-group" id="pumukitwizard_track_profile">
+        <label for="pumukitwizard_track_profile" class="control-label">{% trans %}Profile{% endtrans %}</label>
+        {% for key in master_profiles|keys %}
+        <div class="radio">
+          <label><input type="radio" name="pumukitwizard_form_data[track][profile]" id="pumukitwizard_track_profile_{{ key }}" value="{{ key }}" {{ ("master_copy"==key)?'checked':'' }}>{{ key }}</label>
+        </div>
+        {% endfor %}
+      </div>
+	  <div class="form-group" id="pumukitwizard_track_pubchannel">
+	    <label for="pumukitwizard_track_pubchannel" class="control-label">{% trans %}Publication Channels{% endtrans %}:</label>
+        {% for pub in pub_channels %}
+        {% if not pub.getDisplay() %}
+        <div style="color: grey">
+          <input type="checkbox" disabled="disabled" />  {{ pub.getTitle() }}
+        </div>
+        {% else %}
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"
+                   name="pumukitwizard_form_data[track][pubchannel][{{ pub.cod }}]"
+	               id="pumukitwizard_track_pubchannel_{{ pub.cod }}"
+                   class="pub_channel_input_checkbox"
+                   {# TODO <?php echo(($estado === 2) || ($estado === 2)) ? 'disabled="disabled"' : ''?> #}
+                   />
+            {{ pub.getTitle() }}
+          </label>
+        </div>
+        {% endif %}
+        {% endfor %}
+	  </div>
+      <div class="form-group" id="pumukitwizard_track_priority">
+        <label for="pumukitwizard_track_priority" class="control-label">{% trans %}Priority{% endtrans %}</label>        
+        <div class="radio">
+          <label><input type="radio" name="pumukitwizard_form_data[track][priority]" value="1"/>{% trans %}Low-Priority{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</label>
+        </div>
+        <div class="radio">
+          <label><input type="radio" name="pumukitwizard_form_data[track][priority]" value="2" checked="checked"/>{% trans %}Normal-Priority{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</label>
+        </div>
+        <div class="radio">
+          <label><input type="radio" name="pumukitwizard_form_data[track][priority]" value="3"/>{% trans %}High-Priority{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</label>
+        </div>
+      </div>
+      <div class="form-group" id="pumukitwizard_track_language">
+        <label for="pumukitwizard_track_language" class="control-label">{% trans %}Language{% endtrans %}</label>
+        <select id="pumukitwizard_track_language" name="pumukitwizard_form_data[track][language]" class="form-control">
+          {% for locale, language in languages %}
+          <option value="{{ locale }}" {{ (locale == app.request.getLocale())?'selected="selected"':''}}>{{ language }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="pumukitwizard_track_filetype" class="control-label">{% trans %}Mode{% endtrans %}</label>
+        {% if 'single' == form_data.type.option %}
+        <div class="radio">
+          <label><input type="radio" name="pumukitwizard_form_data[track][filetype]" value="inbox" onclick="$('#pumukitwizard_track_file').hide();$('#pumukitwizard_track_inbox').show();"/> {% trans %}Inbox on server{% endtrans %}</label>
+        </div>
+        <div class="radio">
+          <label><input type="radio" name="pumukitwizard_form_data[track][filetype]" value="file" checked="checked" onclick="$('#pumukitwizard_track_inbox').hide();$('#pumukitwizard_track_file').show();"/> {% trans %}Local hard drive{% endtrans %}</label>
+        </div>
+        {% elseif 'multiple' == form_data.type.option %}
+        {# TODO Add third option: directory #}
+        <div class="radio">
+          <label><input type="radio" name="pumukitwizard_form_data[track][filetype]" value="directory" checked="checked"/> {% trans %}Inbox directory on server{% endtrans %}</label>
+        </div>
+        {% endif %}
+      </div>
+      {% if 'single' == form_data.type.option %}
+      <div class="form-group" id="pumukitwizard_track_file">
+        <label for="url" class="control-label">{% trans %}Resource{% endtrans %}:</label>
+        <div class="input-group">
+          <input type="file" name="resource" id="resource" value="" size="70">
+          <span style="color: blue">({% trans %}Under{% endtrans %} {{ php_upload_max_filesize() }})</span>
+          <span id="file_upload_progress" style="color:blue; display:none;">{% trans %}Progress{% endtrans %}...</span>
+        </div>
+      </div>
+      <div class="form-group" id="pumukitwizard_track_inbox" style="display: none">
+        {# TODO check this: create new in WizardBundle with same code? #}
+        {{ render(controller('PumukitNewAdminBundle:Inbox:Form')) }}
+      </div>
+      {% elseif 'multiple' == form_data.type.option %}
+      {# TODO Add third option: directory #}
+      <div class="form-group" id="pumukitwizard_track_directory">
+        TODO
+        {# TODO similar to inbox file #}
+        {{ render(controller('PumukitNewAdminBundle:Inbox:Form', {'onlyDir': true})) }}
+      </div>
+      {% endif %}
+
+
+
+{# TODO
+
+
+<div class="form-row">
+  <?php echo label_for('file_type', __('Modo:'), 'class="required" ') ?>
+  
+  <div class="content">
+    <input type="radio" name="file_type" value="file" checked="checked" onclick="$('input_trans_file').hide();$('input_trans_dir').hide();$('input_trans_url').show();"/> <?php echo __('Archivo Local')?>  
+    <input type="radio" name="file_type" value="url" onclick="$('input_trans_url').hide();$('input_trans_dir').hide();$('input_trans_file').show();"/> <?php echo __('Archivo de Servidor')?>
+    <input type="radio" name="file_type" value="dir" onclick="$('input_trans_url').hide();$('input_trans_file').hide();$('input_trans_dir').show();"/> <?php echo __('Directorio entero del servidor')?>
+  </div>
+</div>
+
+<div class="form-row" id="input_trans_url">
+
+  <?php echo label_for('url', __('Archivo local:'), 'class="required" ') ?>
+
+  <div class="content">
+    <?php $value = input_file_tag('video', array ('size' => 65)); echo $value ? $value : '&nbsp;' ?> &nbsp;
+    <span style="color: blue"><?php echo __('(Menor 2GB)')?></span>
+    <span id="file_upload_progress" style="color:blue; display:none;"><?php echo __('Progreso...')?></span>
+  </div>
+</div>
+
+<div class="form-row" id="input_trans_file" style="display: none">
+
+  <?php echo label_for('file', __('Archivo en el Servidor:'), 'class="required" ') ?>
+
+  <div class="content">
+    <?php $value = input_tag('file', '//172.20...' ,array ('size' => 80)); echo $value ? $value : '&nbsp;' ?> &nbsp;
+    <?php echo button_to_function('explorar', "Effect.toggle('explorer_videoserv_file','blind', { afterFinish:function(){ Modalbox.resizeToContent() }})" )?>
+    <div id="explorer_videoserv_file" class="videoserv" style="display:none;">
+      
+      <ul class="videoserv_tree">
+        <?php foreach(sfConfig::get('app_transcoder_inbox') as $dir):?>
+        <li class="collapsed">
+          <span onclick="fileServerTree(this, 'file', '<?php echo $dir?>', 0, 'explorer_videoserv_file')"><?php echo $dir?></span>
+          <ul></ul>
+        </li>
+        <?php endforeach;?>
+      </ul>
+
+    </div>   
+
+
+  </div>
+</div>
+
+
+
+
+<div class="form-row" id="input_trans_dir" style="display:none">
+  <?php echo label_for('url', __('Directorio en el servidor:'), 'class="required" ') ?>
+  <div class="content">
+    <input type="text" size="80" id="url" name="url" /> 
+    <?php echo button_to_function('explorar', "Effect.toggle('explorer_videoserv_dir','blind')" )?>
+      <div id="explorer_videoserv_dir" class="videoserv" style="display:none;">
+      
+      <ul class="videoserv_tree">
+        <?php foreach(sfConfig::get('app_transcoder_inbox') as $dir):?>
+        <li class="collapsed">
+          <span onclick="dirServerTree(this, 'url', '<?php echo $dir?>', 0, 'explorer_videoserv_dir')"><?php echo $dir?></span>
+          <ul></ul>
+        </li>
+        <?php endforeach;?>
+      </ul>
+
+    </div>    
+  </div>
+</div>
+#}
+
+    </fieldset>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="text-right">
+          <button type="submit" id="pumukitwizard_track_previous" class="btn btn-primary btn-raised">{% trans %}Previous{% endtrans %}</button>
+          {# TODO check this href when doing the menu with steps #}
+          {% spaceless %}
+          {% if 'null' == form_data.series.id %}
+          <a href="{{ path('pumukitnewadmin_series_index') }}">
+          {% else %}
+          <a href="{{ path('pumukitnewadmin_mms_index', {'id': form_data.series.id}) }}">
+          {% endif %}
+          <button type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button>
+          </a>
+          {% endspaceless %}
+          <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %}</button>{# TODO #}
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock wizard_body %}
