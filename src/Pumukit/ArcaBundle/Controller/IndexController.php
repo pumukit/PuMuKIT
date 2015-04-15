@@ -23,8 +23,15 @@ class IndexController extends Controller
      */
     public function listAction($year)
     {
-	    $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+	    $repository_multimediaObjects = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
 
-        return array('multimediaObjects' => $repo->findAll());
+        $start = new \DateTime($year . '/01/01');
+        $end = new \DateTime($year . '/12/31');
+
+        $in_range = array('$gte' => $start, '$lt' => $end);
+
+        $multimediaObjects = $repository_multimediaObjects->findBy(array('record_date' => $in_range));
+
+        return array('multimediaObjects' => $multimediaObjects);
     }
 }
