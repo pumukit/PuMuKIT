@@ -46,9 +46,9 @@ class MultimediaObjectController extends Controller
       $this->incNumView($multimediaObject, $track);
         
       return array('autostart' => $request->query->get('autostart', 'true'),
-                   'multimediaObject' => $multimediaObject, 
-                   'track' => $track,
-                   'intro' => $this->getIntro($request->query->get('intro')));
+                   'intro' => $this->getIntro($request->query->get('intro')),
+                   'multimediaObject' => $multimediaObject,
+                   'track' => $track);
     }
 
 
@@ -75,9 +75,10 @@ class MultimediaObjectController extends Controller
 
       $this->incNumView($multimediaObject, $track);
 
-      return array('multimediaObject' => $multimediaObject, 
-                   'track' => $track,
-                   'intro' => $this->getIntro($request->query->get('intro')));
+      return array('autostart' => $request->query->get('autostart', 'true'),
+                   'intro' => $this->getIntro($request->query->get('intro')),
+                   'multimediaObject' => $multimediaObject, 
+                   'track' => $track);
     }
 
 
