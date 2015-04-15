@@ -2,15 +2,29 @@
 <video id="player1" controls></video>
 <script type="text/javascript">
   jwplayer("player1").setup({
+    {% if intro %}
+    playlist: [{
+      file: "{{intro}}",
+      {% if multimediaObject.getFirstUrlPic() %}
+      image: "{{ multimediaObject.getFirstUrlPic() }}",
+      {% endif %}
+    },{
+      file: "{{track.url}}",
+      {% if multimediaObject.getFirstUrlPic() %}
+      image: "{{ multimediaObject.getFirstUrlPic() }}",
+      {% endif %}
+    }],
+    {% else %}
     file: "{{track.url}}",
+    {% if multimediaObject.getFirstUrlPic() %}
+    image: "{{ multimediaObject.getFirstUrlPic() }}",
+    {% endif %}
+    {% endif %}
     startparam: "start",
     autostart: {{ autostart|default("true") }},
     repeat: "false",
-    {% if multimediaObject.getFirstUrlPic() %}
-    image: '{{ multimediaObject.getFirstUrlPic() }}',
-    {% endif %}
-    width: {{ width|default('620') }},
-    height: {{ height|default('465') }}
+    width: {{ width|default("620") }},
+    height: {{ height|default("465") }}
   });
 </script>
 {% else %}

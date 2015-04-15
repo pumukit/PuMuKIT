@@ -3,8 +3,7 @@
 
 /**
 TODO:
- - Add intro parameter.
- - Add doctrine filters
+ - Add doctrine filters.
  -      
  */
 
@@ -48,7 +47,8 @@ class MultimediaObjectController extends Controller
         
       return array('autostart' => $request->query->get('autostart', 'true'),
                    'multimediaObject' => $multimediaObject, 
-                   'track' => $track);
+                   'track' => $track,
+                   'intro' => $this->getIntro($request->query->get('intro')));
     }
 
 
@@ -76,7 +76,8 @@ class MultimediaObjectController extends Controller
       $this->incNumView($multimediaObject, $track);
 
       return array('multimediaObject' => $multimediaObject, 
-                   'track' => $track);
+                   'track' => $track,
+                   'intro' => $this->getIntro($request->query->get('intro')));
     }
 
 
@@ -106,12 +107,27 @@ class MultimediaObjectController extends Controller
     }
 
 
-    private function incNumView(MultimediaObject $multimediaObject, Track $track)
+
+    private function getIntro($queryIntro=false)
+    {
+      $hasIntro = $this->container->hasParameter('pumukit2.intro');
+      
+      if ($queryIntro && filter_var($queryIntro, FILTER_VALIDATE_URL)) {
+        $intro = $queryIntro;
+      } elseif($hasIntro) {
+        $intro = $this->container->getParameter('pumukit2.intro');
+      } else {
+        $intro = false;
+      }
+
+      return $intro;
+    }
+
+    private function incNumView(MultimediaObject $multimediaObject, Track $track=null)
     {
       $dm = $this->get('doctrine_mongodb.odm.document_manager');
       $multimediaObject->incNumview();
-      $track->incNumview();
-      $dm->persist($track);
+      $track && $track->incNumview();
       $dm->persist($multimediaObject);
       $dm->flush();
     }
