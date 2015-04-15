@@ -25,6 +25,7 @@ class Tag
    * @var int $number_multimedia_objects
    *
    * @MongoDB\Int
+   * @MongoDB\Increment
    */
   private $number_multimedia_objects = 0;
 
