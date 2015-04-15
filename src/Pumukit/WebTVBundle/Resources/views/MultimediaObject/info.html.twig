@@ -60,7 +60,7 @@
   <!-- PERSONS ACT -->
   <div class="" style="overflow: hidden;">
     {% for role in multimediaObject.getRoles() if role.getDisplay() %}
-      {% for person in multimediaObject.getPeopleInMultimediaObjectByRole(role) %}
+      {% for person in multimediaObject.getPeopleByRole(role) %}
         <div>
           {{ role.getText() }}
           <span style="font-weight: bolder">{{ person.getHName() }}</span>

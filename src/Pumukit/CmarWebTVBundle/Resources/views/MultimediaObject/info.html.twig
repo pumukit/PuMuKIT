@@ -21,7 +21,7 @@
 <div class="serial_mm_info">
   <div class="persons" style="overflow: hidden">
     {% for role in multimediaObject.getRoles() if role.getDisplay() %}
-      {% for person in multimediaObject.getPeopleInMultimediaObjectByRole(role) %}
+      {% for person in multimediaObject.getPeopleByRole(role) %}
       <div>
         <div class="person">
         {{ role.getText() }}
