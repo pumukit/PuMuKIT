@@ -302,4 +302,24 @@ class AdminController extends ResourceController
 
         return $resources;
     }
+
+    /**
+     * Overwrite to get form with translations
+     * @param object|null $resource
+     *
+     * @return FormInterface
+     */
+    public function getForm($resource = null)
+    {
+        $formName = $this->config->getFormType();
+        $prefix = "pumukitnewadmin_";
+        $formType = "Pumukit\\NewAdminBundle\\Form\\Type\\".ucfirst(substr($formName, strlen($prefix)))."Type";
+
+        $translator = $this->get('translator');
+        $locale = $this->getRequest()->getLocale();
+
+        $form = $this->createForm(new $formType($translator, $locale), $resource);
+
+        return $form;
+    }
 }

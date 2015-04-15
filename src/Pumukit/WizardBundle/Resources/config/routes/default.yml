@@ -1,0 +1,17 @@
+pumukitwizard_default_index:
+    pattern: /
+    methods: [GET]
+    defaults:
+        _controller: PumukitWizardBundle:Default:index
+
+pumukitwizard_default_series:
+    pattern: /series
+    methods: [GET, POST]
+    defaults:
+        _controller: PumukitWizardBundle:Default:series
+
+pumukitwizard_default_type:
+    pattern: /type/{id}
+    methods: [GET, POST]
+    defaults:
+        _controller: PumukitWizardBundle:Default:type

@@ -12,10 +12,11 @@ class Builder extends ContainerAware
         $menu = $factory->createItem('root');
         $menu->setAttribute('class', 'nav navbar-nav');
 
-        $menu->addChild('Dashboard', array('route' => 'pumukit_newadmin_dashboard_index'));
+        // Add translations in src/Pumukit/NewAdminBundle/Resource/translations/NewAdminBundle.locale.yml
+        $menu->addChild('Dashboard', array('route' => 'pumukit_newadmin_dashboard_index'))->setExtra('translation_domain', 'NewAdminBundle');
 
-        $series = $menu->addChild('Multimedia Series', array('route' => 'pumukitnewadmin_series_index'));
-        $series->addChild('Multimedia', array('route' => 'pumukitadmin_mms_index'));
+        $series = $menu->addChild('Multimedia Series', array('route' => 'pumukitnewadmin_series_index'))->setExtra('translation_domain', 'NewAdminBundle');
+        $series->addChild('Multimedia', array('route' => 'pumukitadmin_mms_index'))->setExtra('translation_domain', 'NewAdminBundle');
         $series->setDisplayChildren(false);
 
         
@@ -30,25 +31,25 @@ class Builder extends ContainerAware
         $portal_design->addChild('News');
         */
                 
-        $live = $menu->addChild('Live');
-        $live->addChild('Live Channels', array('route' => 'pumukitnewadmin_live_index'));
-        $live->addChild('Live Events', array('route' => 'pumukitnewadmin_event_index'));
+        $live = $menu->addChild('Live')->setExtra('translation_domain', 'NewAdminBundle');
+        $live->addChild('Live Channels', array('route' => 'pumukitnewadmin_live_index'))->setExtra('translation_domain', 'NewAdminBundle');
+        $live->addChild('Live Events', array('route' => 'pumukitnewadmin_event_index'))->setExtra('translation_domain', 'NewAdminBundle');
 
         //$menu->addChild('Temporized Publishing');
 
-        $tables = $menu->addChild('Tables');
-        $tables->addChild('People', array('route' => 'pumukitnewadmin_person_index'));
+        $tables = $menu->addChild('Tables')->setExtra('translation_domain', 'NewAdminBundle');
+        $tables->addChild('People', array('route' => 'pumukitnewadmin_person_index'))->setExtra('translation_domain', 'NewAdminBundle');
 
         if ($this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
-          $management = $menu->addChild('Management');
-          $management->addChild('Admin users', array('route' => 'pumukitnewadmin_user_index'));
-          $management->addChild('Tags', array('route' => 'pumukitnewadmin_tag_index'));
-          $management->addChild('Roles', array('route' => 'pumukitnewadmin_role_index'));
-          $management->addChild('Access Profiles', array('route' => 'pumukitnewadmin_broadcast_index'));
+          $management = $menu->addChild('Management')->setExtra('translation_domain', 'NewAdminBundle');
+          $management->addChild('Admin users', array('route' => 'pumukitnewadmin_user_index'))->setExtra('translation_domain', 'NewAdminBundle');
+          $management->addChild('Tags', array('route' => 'pumukitnewadmin_tag_index'))->setExtra('translation_domain', 'NewAdminBundle');
+          $management->addChild('Roles', array('route' => 'pumukitnewadmin_role_index'))->setExtra('translation_domain', 'NewAdminBundle');
+          $management->addChild('Access Profiles', array('route' => 'pumukitnewadmin_broadcast_index'))->setExtra('translation_domain', 'NewAdminBundle');
         }
 
-        $ingester = $menu->addChild('Ingester');
-        $ingester->addChild('Matterhorn Ingester');
+        $ingester = $menu->addChild('Ingester')->setExtra('translation_domain', 'NewAdminBundle');
+        $ingester->addChild('Matterhorn Ingester')->setExtra('translation_domain', 'NewAdminBundle');
 
         return $menu;
     }

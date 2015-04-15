@@ -129,6 +129,11 @@ upload_max_filesize = 2000M
 
  * http://symfony.com/doc/current/book/installation.html#checking-symfony-application-configuration-and-setup
  * http://symfony.es/documentacion/como-solucionar-el-problema-de-los-permisos-de-symfony2/
+ * Setting up ownership of upload directories
+
+    ```
+    sudo chown -R www-data:www-data web/storage/ web/uploads/
+    ```
 
 **403 Forbidden access to config.php and app_dev.php**
 

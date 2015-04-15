@@ -6,6 +6,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\NewAdminBundle\Form\Type\SeriesType;
+use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectTemplateMetaType;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 
@@ -75,7 +77,11 @@ class SeriesController extends AdminController
 
         $resource = $this->findOr404($request);
         $this->get('session')->set('admin/series/id', $request->get('id'));
-        $form = $this->getForm($resource);
+
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
+
+        $form = $this->createForm(new SeriesType($translator, $locale), $resource);
 
         $method = $request->getMethod();
         if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
@@ -109,7 +115,10 @@ class SeriesController extends AdminController
         $parentTags = $factoryService->getParentTags();
         $mmtemplate = $factoryService->getMultimediaObjectPrototype($resource);
 
-        $formMeta = $this->createForm('pumukitnewadmin_mmtemplate_meta', $mmtemplate);
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
+
+        $formMeta = $this->createForm(new MultimediaObjectTemplateMetaType($translator, $locale), $mmtemplate);
 
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
 

@@ -312,6 +312,6 @@ class Broadcast
    */
   public function __toString()
   {
-      return $this->broadcast_type_id;
+      return $this->getName();
   }
 }

@@ -47,8 +47,10 @@ class PersonController extends AdminController
     {
         $personService = $this->get('pumukitschema.person');
 
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
         $person = new Person();
-        $form = $this->createForm(new PersonType(), $person);
+        $form = $this->createForm(new PersonType($translator, $locale), $person);
 
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
             try {
@@ -74,8 +76,10 @@ class PersonController extends AdminController
     {
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
-        
-        $form = $this->createForm(new PersonType(), $person);
+
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
+        $form = $this->createForm(new PersonType($translator, $locale), $person);
 
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
             try {
@@ -177,8 +181,11 @@ class PersonController extends AdminController
     {
         $person = new Person();
         $person->setName(preg_replace('/\d+ - /', '', $request->get('name')));
-        
-        $form = $this->createForm(new PersonType(), $person);
+
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
+
+        $form = $this->createForm(new PersonType($translator, $locale), $person);
 
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
             try {
@@ -218,8 +225,11 @@ class PersonController extends AdminController
     {
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
-        
-        $form = $this->createForm(new PersonType(), $person);
+
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
+
+        $form = $this->createForm(new PersonType($translator, $locale), $person);
 
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
             try {

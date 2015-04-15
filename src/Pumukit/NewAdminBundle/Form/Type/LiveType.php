@@ -8,31 +8,53 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Pumukit\LiveBundle\Document\Live;
 use Pumukit\NewAdminBundle\Form\Type\Other\LivequalitiesType;
 use Pumukit\NewAdminBundle\Form\Type\Other\LiveresolutionType;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class LiveType extends AbstractType
 {
+    private $translator;
+    private $locale;
+
+    public function __construct(TranslatorInterface $translator, $locale='en')
+    {
+        $this->translator = $translator;
+        $this->locale = $locale;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-      ->add('i18n_name', 'texti18n', array('label' => 'Name'))
-      ->add('i18n_description', 'textareai18n',
-        array('required' => false, 'label' => 'Description'))
-      ->add('url', 'url', array('label' => 'URL'))
-      ->add('broadcasting', 'choice',
-        array('choices'   => array('0' => 'On hold', '1' => 'Live Broadcasting'),
-          'label' => 'Status', ))
-      ->add('live_type', 'choice',
-        array('choices'   => array(Live::LIVE_TYPE_FMS => 'FMS', Live::LIVE_TYPE_WMS => 'WMS'),
-          'label' => 'Tecnology', ))
-      ->add('resolution', new LiveresolutionType(),
-        array('label' => 'Resolution', 'required' => false))
-      ->add('qualities', new LivequalitiesType(),
-        array('label' => 'Qualities', 'required' => false))
-      ->add('ip_source', 'text',
-        array('required' => false))
-      ->add('source_name', 'text',
-        array('label' => 'STREAM'))
-      ->add('index_play', 'checkbox', array('required' => false));
+            ->add('i18n_name', 'texti18n',
+                  array('label' => $this->translator->trans('Name', array(), null, $this->locale)))
+            ->add('i18n_description', 'textareai18n',
+                  array(
+                        'required' => false,
+                        'label' => $this->translator->trans('Description', array(), null, $this->locale)))
+            ->add('url', 'url',
+                  array('label' => $this->translator->trans('URL', array(), null, $this->locale)))
+            ->add('broadcasting', 'choice',
+                  array(
+                        'choices' => array('0' => 'On hold', '1' => 'Live Broadcasting'),
+                        'label' => $this->translator->trans('Status', array(), null, $this->locale)))
+            ->add('live_type', 'choice',
+                  array(
+                        'choices' => array(Live::LIVE_TYPE_FMS => 'FMS', Live::LIVE_TYPE_WMS => 'WMS'),
+                        'label' => $this->translator->trans('Tecnology', array(), null, $this->locale)))
+            ->add('resolution', new LiveresolutionType(),
+                  array(
+                        'label' => $this->translator->trans('Resolution', array(), null, $this->locale),
+                        'required' => false))
+            ->add('qualities', new LivequalitiesType(),
+                  array(
+                        'label' => $this->translator->trans('Qualities', array(), null, $this->locale),
+                        'required' => false))
+            ->add('ip_source', 'text',
+                  array(
+                        'required' => false,
+                        'label' => $this->translator->trans('IP source', array(), null, $this->locale)))
+            ->add('source_name', 'text',
+                  array('label' => $this->translator->trans('STREAM', array(), null, $this->locale)))
+            ->add('index_play', 'checkbox', array('required' => false));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

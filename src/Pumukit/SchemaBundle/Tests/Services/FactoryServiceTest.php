@@ -115,23 +115,6 @@ class FactoryServiceTest extends WebTestCase
         }
     }
 
-    /**
-     * @expectedException Exception
-     * @expectedExceptionMessage There is no default selected broadcast neither public broadcast
-     */
-    public function testNoDefaultBroadcast()
-    {
-        $series = $this->factory->createSeries();
-        $mmobj = $this->factory->createMultimediaObject($series);
-
-        $this->assertNull($this->mmobjRepo->find($mmobj->getId())->getBroadcast());
-
-        $this->createBroadcasts();
-        $mmobj2 = $this->factory->createMultimediaObject($series);
-
-        $this->assertNotNull($this->mmobjRepo->find($mmobj2->getId())->getBroadcast());
-    }
-
     public function testSeriesType()
     {
         $this->createBroadcasts();

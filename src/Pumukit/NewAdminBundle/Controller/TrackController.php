@@ -23,8 +23,10 @@ class TrackController extends Controller
      */
     public function createAction(MultimediaObject $multimediaObject, Request $request)
     {
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
         $track = new Track();
-        $form = $this->createForm(new TrackType(), $track);
+        $form = $this->createForm(new TrackType($translator, $locale), $track);
 
         $masterProfiles = $this->get('pumukitencoder.profile')->getMasterProfiles(true);
 
@@ -79,8 +81,10 @@ class TrackController extends Controller
      */
     public function updateAction(MultimediaObject $multimediaObject, Request $request)
     {
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
         $track = $multimediaObject->getTrackById($request->get('id'));
-        $form = $this->createForm(new TrackUpdateType(), $track);
+        $form = $this->createForm(new TrackUpdateType($translator, $locale), $track);
 
         $profiles = $this->get('pumukitencoder.profile')->getProfiles();
 

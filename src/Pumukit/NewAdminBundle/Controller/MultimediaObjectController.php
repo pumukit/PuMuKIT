@@ -9,6 +9,8 @@ use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType;
+use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectPubType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class MultimediaObjectController extends SortableAdminController
@@ -122,9 +124,10 @@ class MultimediaObjectController extends SortableAdminController
         $parentTags = $factoryService->getParentTags();
 
         $resource = $this->findOr404($request);
-
-        $formMeta = $this->createForm($config->getFormType().'_meta', $resource);
-        $formPub = $this->createForm($config->getFormType().'_pub', $resource);
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
+        $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $resource);
+        $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource);
 
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
@@ -176,9 +179,10 @@ class MultimediaObjectController extends SortableAdminController
         $parentTags = $factoryService->getParentTags();
 
         $resource = $this->findOr404($request);
-
-        $formMeta = $this->createForm($config->getFormType().'_meta', $resource);
-        $formPub = $this->createForm($config->getFormType().'_pub', $resource);
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
+        $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $resource);
+        $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource);
 
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
@@ -249,9 +253,10 @@ class MultimediaObjectController extends SortableAdminController
         $parentTags = $factoryService->getParentTags();
 
         $resource = $this->findOr404($request);
-
-        $formMeta = $this->createForm($config->getFormType().'_meta', $resource);
-        $formPub = $this->createForm($config->getFormType().'_pub', $resource);
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
+        $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $resource);
+        $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource);
 
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
