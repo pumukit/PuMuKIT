@@ -3,12 +3,8 @@
 
 /**
 TODO:
- - Inc counters.
- - Review info
  - Add intro parameter.
- - Add option to add posibility to download video ????
  - Add doctrine filters
- - Add test.
  -      
  */
 
@@ -20,8 +16,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\Broadcast;
 
 class MultimediaObjectController extends Controller
@@ -46,6 +43,8 @@ class MultimediaObjectController extends Controller
           (Broadcast::BROADCAST_TYPE_PUB !== $broadcast->getBroadcastTypeId()))
         //TODO.
         throw $this->createNotFoundException();
+
+      $this->incNumView($multimediaObject, $track);
         
       return array('autostart' => $request->query->get('autostart', 'true'),
                    'multimediaObject' => $multimediaObject, 
@@ -73,6 +72,8 @@ class MultimediaObjectController extends Controller
       $track = $request->query->has('track_id') ?
         $multimediaObject->getTrackById($request->query->get('track_id')) :
         $multimediaObject->getTrackWithTag('display');
+
+      $this->incNumView($multimediaObject, $track);
 
       return array('multimediaObject' => $multimediaObject, 
                    'track' => $track);
@@ -102,5 +103,16 @@ class MultimediaObjectController extends Controller
       $relatedMms = $mmobjRepo->findRelatedMultimediaObjects($multimediaObject);
 
       return array('multimediaObjects' => $relatedMms);
+    }
+
+
+    private function incNumView(MultimediaObject $multimediaObject, Track $track)
+    {
+      $dm = $this->get('doctrine_mongodb.odm.document_manager');
+      $multimediaObject->incNumview();
+      $track->incNumview();
+      $dm->persist($track);
+      $dm->persist($multimediaObject);
+      $dm->flush();
     }
 }
