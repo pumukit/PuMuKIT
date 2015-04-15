@@ -1183,6 +1183,7 @@ $(document).on('submit', '#pumukitnewadmin_user_form_create', function(event){
                         }
             },
             error: function(jqXHR, textStatus, errorThrown){
+                        // TODO: talk to Rubén
                         var responseText = jqXHR.responseText.split("<title>").pop().split("</title>").shift();
                         var message = responseText.replace(/(\r\n|\n|\r)/gm,"");
                         no_success(errorThrown+': '+textStatus+', '+message);

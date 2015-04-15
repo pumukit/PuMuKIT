@@ -166,7 +166,7 @@ EOT
 
     protected function createRoot()
     {
-        $root = $this->createTagFromCsvArray(array(null, "ROOT", 1, 0, "ROOT", "ROOT", "ROOT"));
+        $root = $this->createTagFromCsvArray(array(null, "ROOT", 1, 1, "ROOT", "ROOT", "ROOT"));
         $this->dm->flush();
 
         return $root;

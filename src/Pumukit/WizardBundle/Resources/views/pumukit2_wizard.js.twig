@@ -1,0 +1,16 @@
+$(function(){
+
+    $('#pumukitwizard_type_previous').on('click', function(){
+        $('#pumukitwizard_type_form')[0].action = "{{ url('pumukitwizard_default_series')|raw }}";
+        $('#pumukitwizard_type_form')[0].submit();
+    });
+
+
+});
+
+/*
+    $(document).on('click', '#pumukitwizard_type_previous', function(){
+        $('#pumukitwizard_type_form')[0].action = "{{ url('pumukitwizard_default_series')|raw }}";
+        $('#pumukitwizard_type_form')[0].submit();
+    });
+*/

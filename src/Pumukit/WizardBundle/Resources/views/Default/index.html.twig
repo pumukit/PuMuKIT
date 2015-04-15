@@ -1,0 +1,12 @@
+{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript" src="{{ path('pumukitwizard_js') }}"></script>
+{% endblock %}
+
+
+{% block body %}
+{% block wizard_body %}
+WIZARD STEPS
+{% endblock %}
+{% endblock body %}

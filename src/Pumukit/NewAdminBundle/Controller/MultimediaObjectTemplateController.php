@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectTemplateMetaType;
 
 class MultimediaObjectTemplateController extends MultimediaObjectController
 {
@@ -35,7 +36,9 @@ class MultimediaObjectTemplateController extends MultimediaObjectController
         $parentTags = $factoryService->getParentTags();
         $mmtemplate = $factoryService->getMultimediaObjectPrototype($series);
 
-        $formMeta = $this->createForm($config->getFormType().'_meta', $mmtemplate);
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
+        $formMeta = $this->createForm(new MultimediaObjectTemplateMetaType($translator, $locale), $mmtemplate);
 
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
 

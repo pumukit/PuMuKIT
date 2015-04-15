@@ -5,14 +5,24 @@ namespace Pumukit\NewAdminBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class LinkType extends AbstractType
 {
+    private $translator;
+    private $locale;
+
+    public function __construct(TranslatorInterface $translator, $locale='en')
+    {
+        $this->translator = $translator;
+        $this->locale = $locale;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-      ->add('i18n_name', 'texti18n', array('required' => false, 'label' => 'Name'))
-      ->add('url', 'url', array('required' => false, 'label' => 'URL'))
+          ->add('i18n_name', 'texti18n', array('required' => false, 'label' => $this->translator->trans('Name', array(), null, $this->locale)))
+          ->add('url', 'url', array('required' => false, 'label' => $this->translator->trans('URL', array(), null, $this->locale)))
       ;
     }
 
