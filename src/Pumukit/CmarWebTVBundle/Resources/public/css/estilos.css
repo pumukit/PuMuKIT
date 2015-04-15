@@ -1,5 +1,5 @@
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td { margin:0; padding:0; border:0; outline:0; font-size:100%;}
-body { background-color:#fff; padding-top:2px; font:0.75em Verdana, Arial, sans-serif;}
+body { background-color:#fff; font:0.75em Verdana, Arial, sans-serif;}
 .salto { height:0px; position: absolute; left: -9999px;}
 /*MAQUETACIÓN*/
 #idiomas { margin: 0px; padding: 0; float: right;}
@@ -64,6 +64,7 @@ ANTES CAMBIO DE ESTILO
 #blq-navegacion-lateral li strong { font-weight:bold;}
 #blq-navegacion-lateral ul li a:hover { color: #257e94;}
 .container_15 address { text-align: center; background-color: #FFF; padding:2px;}
+.container_15 { padding: 0px; }
 #contacto a {color: #005268;}
 #contacto a:hover { text-decoration: none; color: #257e94;}
 /*TEXTOS E CONTIDOS*/
@@ -108,3 +109,4 @@ ul.datos2 li {border-top: 1px solid #999; padding: 2px 0 2px 5px; list-style:non
 .perfis ul li {margin: 5px 0 0 10px; list-style-type:disc;}
 .pe_foto_perfis {position:absolute; bottom:0; left:0; width:217px; background:#222; color:#FFF; margin:0; padding:4px; line-height:14px; filter:alpha(opacity=80); -moz-opacity:.8; opacity:.8; text-align: right;}
 #usctv_m_mmobj {height: 1%; overflow: hidden; margin-top: 20px;}
+.blq-pie{background-color: #333; clear: both; position: relative; }

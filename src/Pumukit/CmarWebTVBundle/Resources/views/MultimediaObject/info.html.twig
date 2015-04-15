@@ -1,3 +1,4 @@
+<br />
 <div class="num_view">
   <div style="float:left">
     {% trans %}Video language{% endtrans %}: <span class="num_view_number">{{ track.getLanguage() }}</span>
@@ -20,7 +21,7 @@
 <div class="serial_mm_info">
   <div class="persons" style="overflow: hidden">
     {% for role in multimediaObject.getRoles() if role.getDisplay() %}
-      {% for person in multimediaObject.getPeopleInMultimediaObjectWithRole(role) %}
+      {% for person in multimediaObject.getPeopleInMultimediaObjectByRole(role) %}
       <div>
         <div class="person">
         {{ role.getText() }}

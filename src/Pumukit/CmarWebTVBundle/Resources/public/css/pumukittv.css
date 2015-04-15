@@ -144,29 +144,29 @@ div.usctv_mmobjs .info{
   margin-left: 150px
 }
 
-div.pic_mm:hover .play_icon_shadow, .usctv_mini_mmobj:hover .play_icon_shadow, div.usctv_mmobj:hover .play_icon_shadow{ 
+div.pic_mm:hover .play_icon_shadow, .pumukit_mini_mmobj:hover .play_icon_shadow, div.usctv_mmobj:hover .play_icon_shadow{ 
   opacity:1;
 }
 
 
-div.usctv_mini_mmobjs .usctv_mini_mmobj{
+div.pumukit_mini_mmobjs .pumukit_mini_mmobj{
   position:relative;
   margin: 1%;
   overflow: hidden;
 }
 
-div.usctv_mini_mmobjs .usctv_mini_mmobj:hover{
+div.pumukit_mini_mmobjs .pumukit_mini_mmobj:hover{
   background-color: #eee;
   position:relative;
   margin: 1%;
 }
 
-div.usctv_mini_mmobjs .usctv_mini_mmobj .info{
+div.pumukit_mini_mmobjs .pumukit_mini_mmobj .info{
   min-height: 60px;
 }
 
 
-div.usctv_mmobjs .usctv_mmobj .thumbnail, div.usctv_mini_mmobjs .usctv_mini_mmobj .thumbnail{
+div.usctv_mmobjs .usctv_mmobj .thumbnail, div.pumukit_mini_mmobjs .pumukit_mini_mmobj .thumbnail{
   display:inline;
   float:left;
   margin:0 7px 0 0;
@@ -222,13 +222,13 @@ div.usctv_series .usctv_mmobj .title{
 }
 
 
-div.usctv_mmobjs .usctv_mmobj .title, div.mini_usctv_mmobjs .usctv_mini_mmobj .title{
+div.usctv_mmobjs .usctv_mmobj .title, div.mini_usctv_mmobjs .pumukit_mini_mmobj .title{
   font-weight: bold;
   font-size: 85%; 
   padding-top: 10px;    
 }
 
-div.usctv_mmobjs .usctv_mmobj .title a, div.mini_usctv_mmobjs .usctv_mini_mmobj .title a{
+div.usctv_mmobjs .usctv_mmobj .title a, div.mini_usctv_mmobjs .pumukit_mini_mmobj .title a{
   color: #919090;
 }
 
@@ -236,7 +236,7 @@ div.usctv_mmobjs .usctv_mmobj .serial_title{
   color: #A2A2A2;
 }
 
-div.usctv_mmobjs .usctv_mmobj .mmobj_bottom, div.usctv_mini_mmobjs .usctv_mini_mmobj .mini_mmobj_bottom{
+div.usctv_mmobjs .usctv_mmobj .mmobj_bottom, div.pumukit_mini_mmobjs .pumukit_mini_mmobj .mini_mmobj_bottom{
   bottom: 16px; /* FIGURE */
   right: 6px;
   position: absolute !important;
@@ -244,7 +244,7 @@ div.usctv_mmobjs .usctv_mmobj .mmobj_bottom, div.usctv_mini_mmobjs .usctv_mini_m
   color: #A2A2A2;
 }
 
-div.usctv_mmobjs .usctv_mmobj .date, div.usctv_mini_mmobjs .usctv_mini_mmobj .date{
+div.usctv_mmobjs .usctv_mmobj .date, div.pumukit_mini_mmobjs .pumukit_mini_mmobj .date{
   bottom:16px; /* FIGURE */
   left: 160px; /* FIGURE */
   position:absolute;
