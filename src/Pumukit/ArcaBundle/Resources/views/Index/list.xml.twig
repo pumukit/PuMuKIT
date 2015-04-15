@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" 
+    xmlns:media="http://search.yahoo.com/mrss/" 
+    xmlns:g="http://base.google.com/ns/1.0" 
+    xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+    xmlns:arca="http://arca.uc3m.es/">
+
+	<channel>
+ 		<title>Universidad de Vigo Television</title> 
+ 		<description>Material Audiovisual ofrecido por la Universidad de Vigo</description>
+ 		<link>http://tv.uvigo.es</link>
+ 		<copyright>UVigo-Tv</copyright>
+ 		<managingEditor>tv@uvigo.es</managingEditor>
+ 		<webMaster>tv@uvigo.es</webMaster>
+ 		<category domain="categoria_canal">universidad</category>
+ 		<docs>http://tv.uvigo.es/xml/arca</docs>
+ 		<generator>Pumukit V1</generator>
+ 		<ttl>1440</ttl>
+ 		<language>es</language>
+ 		<image>
+  			<url>http://tv.uvigo.es/uploads/uvigo/logo_tv_60x60.gif</url>
+  			<link>http://tv.uvigo.es</link>
+  			<title>UVigo-Tv</title>
+ 		</image>
+
+    {% for multimediaObject in multimediaObjects %}
+    	<item>
+        <arca:course>
+        	<arca:title>Acto Institucional del día Internacional de las Mujeres 2015</arca:title>
+	   			<arca:description>María Álvarez Lires presentará el informe “Análisis de las trayectorias profesionales de mujeres en la Universidade de Vigo y se leerá un manifiesto por parte del alumnado. </arca:description>
+        	<arca:image>http://tv.uvigo.es/uploads/pic/Serial/2279/2_entrega_premios.jpg</arca:image>
+        	<arca:order>1</arca:order>
+        </arca:course>
+
+      	<title> {{ multimediaObject.title }} </title>
+      	<link>http://tv.uvigo.es/video/index?mm_id=25673</link>
+      	<description> {{ multimediaObject.getDescription() }} </description>
+      	<pubDate> {{ multimediaObject.getPublicDate()|date() }} </pubDate>
+      	<g:publish_date> {{ multimediaObject.getPublicDate()|date("Y-m-d") }} </g:publish_date>
+      	<author>tv@uvigo.es</author>
+
+      	<source url="http://tv.uvigo.es/xml/arca">Universidad de Vigo Television</source> 
+      	<media:thumbnail url="http://tv.uvigo.es/uploads/pic/Serial/2279/Video/25673/miniatura_principal.jpg" height="82" width="100" />
+      	<media:copyright>UVigo-Tv</media:copyright>
+      	<guid isPermaLink="true">http://tv.uvigo.es/es/video/mm/25673.html</guid>
+        <media:credit role="director">Salustiano Mato de la Iglesia</media:credit>
+        <media:credit role="actor">María Álvarez Lires</media:credit>
+        <media:credit role="actor">Raquel López Gutiérrez</media:credit>                                            
+        <category domain="DIRECTRIZ">Ciencias Jurídico-Sociales</category>
+        <category domain="UNESCO">Sociología</category>
+        <category domain="UNESCO">Grupos sociales</category>
+        <category domain="UNESCO">Posición social de la mujer</category>
+        <category domain="UNESCOUVIGOTV">Institucional</category>
+        <category domain="UNESCOUVIGOTV">Unidad de Igualdad</category>
+            
+        <media:content url="http://tv.uvigo.es/video/112868.html" type="video/x-flv" medium="video" isDefault="true" expression="full" framerate="25" 
+          channels="1" duration="3308" height="576" width="720" lang="gl"/>                  
+    	</item>
+    {% endfor %}
+
+	</channel>
+</rss>
