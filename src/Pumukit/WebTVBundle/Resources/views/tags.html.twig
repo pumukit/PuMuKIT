@@ -1,8 +1,8 @@
-<abbr title="{% set sep = '' %}{% for tag in tags %}{{ sep }}{{ tag.getTitle() }}{% set sep = ', ' %}{% endfor %}">
+<abbr title="{% set sep = '' %}{% for tag in tags if tag.getDisplay() and not tag.getMetatag() %}{{ sep }}{{ tag.getTitle() }}{% set sep = ', ' %}{% endfor %}">
   {% if show_tag == 'true' %}
     {% set sep = '' %}
     {% set ii = 0 %}
-    {% for tag in tags if (ii < 3) %}
+    {% for tag in tags if tag.getDisplay() and not tag.getMetatag() and (ii < 3) %}
       {% if ii == 2 %}
         <span style="font-weight: bold; font-size: 100%">[+]</span>
       {% endif %}
