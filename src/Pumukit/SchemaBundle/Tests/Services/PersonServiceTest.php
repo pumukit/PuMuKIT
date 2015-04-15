@@ -308,11 +308,11 @@ class PersonServiceTest extends WebTestCase
         $nameJohn = 'John Smith';
         $personJohn->setName($nameJohn);
 
-        $this->assertEquals(0, count($mm->getPeopleInMultimediaObjectByRole($roleActor)));
+        $this->assertEquals(0, count($mm->getPeopleByRole($roleActor)));
 
         $mm = $this->personService->createRelationPerson($personJohn, $roleActor, $mm);
 
-        $this->assertEquals(1, count($mm->getPeopleInMultimediaObjectByRole($roleActor)));
+        $this->assertEquals(1, count($mm->getPeopleByRole($roleActor)));
     }
 
     public function testAutoCompletePeopleByName()
@@ -491,13 +491,13 @@ class PersonServiceTest extends WebTestCase
         $this->dm->persist($mm3);
         $this->dm->flush();
 
-        $mm1PeopleActor = $mm1->getPeopleInMultimediaObjectByRole($roleActor);
+        $mm1PeopleActor = $mm1->getPeopleByRole($roleActor);
         $this->assertEquals($personJohn->getId(), $mm1PeopleActor[0]->getId());
         $this->assertEquals($personBob->getId(), $mm1PeopleActor[1]->getId());
 
         $this->personService->upPersonWithRole($personBob, $roleActor, $mm1);
 
-        $mm1PeopleActor = $mm1->getPeopleInMultimediaObjectByRole($roleActor);
+        $mm1PeopleActor = $mm1->getPeopleByRole($roleActor);
         $this->assertEquals($personBob->getId(), $mm1PeopleActor[0]->getId());
         $this->assertEquals($personJohn->getId(), $mm1PeopleActor[1]->getId());
 
@@ -510,21 +510,21 @@ class PersonServiceTest extends WebTestCase
         $this->dm->persist($mm1);
         $this->dm->flush();
 
-        $mm1PeopleActor = $mm1->getPeopleInMultimediaObjectByRole($roleActor);
+        $mm1PeopleActor = $mm1->getPeopleByRole($roleActor);
         $this->assertEquals($personBob->getId(), $mm1PeopleActor[0]->getId());
         $this->assertEquals($personJohn->getId(), $mm1PeopleActor[1]->getId());
         $this->assertEquals($personKate->getId(), $mm1PeopleActor[2]->getId());
 
         $this->personService->downPersonWithRole($personBob, $roleActor, $mm1);
 
-        $mm1PeopleActor = $mm1->getPeopleInMultimediaObjectByRole($roleActor);
+        $mm1PeopleActor = $mm1->getPeopleByRole($roleActor);
         $this->assertEquals($personJohn->getId(), $mm1PeopleActor[0]->getId());
         $this->assertEquals($personBob->getId(), $mm1PeopleActor[1]->getId());
         $this->assertEquals($personKate->getId(), $mm1PeopleActor[2]->getId());
 
         $this->personService->downPersonWithRole($personBob, $roleActor, $mm1);
 
-        $mm1PeopleActor = $mm1->getPeopleInMultimediaObjectByRole($roleActor);
+        $mm1PeopleActor = $mm1->getPeopleByRole($roleActor);
         $this->assertEquals($personJohn->getId(), $mm1PeopleActor[0]->getId());
         $this->assertEquals($personKate->getId(), $mm1PeopleActor[1]->getId());
         $this->assertEquals($personBob->getId(), $mm1PeopleActor[2]->getId());

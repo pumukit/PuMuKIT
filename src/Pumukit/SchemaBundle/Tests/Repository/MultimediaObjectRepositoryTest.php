@@ -205,7 +205,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         $this->assertFalse($mm->containsPerson($personKate));
         $this->assertFalse($mm->containsPersonWithRole($personKate, $roleActor));
-        $this->assertEquals(0, count($mm->getPeopleInMultimediaObject()));
+        $this->assertEquals(0, count($mm->getPeople()));
         $this->assertFalse($mm->containsPersonWithAllRoles($personKate, array($roleActor, $rolePresenter, $roleDirector)));
         $this->assertFalse($mm->containsPersonWithAnyRole($personKate, array($roleActor, $rolePresenter, $roleDirector)));
 
@@ -218,7 +218,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertFalse($mm->containsPersonWithRole($personKate, $rolePresenter));
         $this->assertFalse($mm->containsPersonWithRole($personKate, $roleDirector));
         $this->assertFalse($mm->containsPerson($personLucy));
-        $this->assertEquals(1, count($mm->getPeopleInMultimediaObject()));
+        $this->assertEquals(1, count($mm->getPeople()));
         $this->assertEquals($personKate->getId(), $mm->getPersonWithRole($personKate, $roleActor)->getId());
 
         $mm2 = new MultimediaObject();
@@ -227,7 +227,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         $this->assertFalse($mm2->containsPerson($personKate));
         $this->assertFalse($mm2->containsPersonWithRole($personKate, $roleActor));
-        $this->assertEquals(0, count($mm2->getPeopleInMultimediaObject()));
+        $this->assertEquals(0, count($mm2->getPeople()));
 
         $this->assertFalse($mm2->getPersonWithRole($personKate, $roleActor));
 
@@ -240,7 +240,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertFalse($mm2->containsPersonWithRole($personKate, $rolePresenter));
         $this->assertFalse($mm2->containsPersonWithRole($personKate, $roleDirector));
         $this->assertFalse($mm2->containsPerson($personLucy));
-        $this->assertEquals(1, count($mm2->getPeopleInMultimediaObject()));
+        $this->assertEquals(1, count($mm2->getPeople()));
 
         $mm->addPersonWithRole($personKate, $rolePresenter);
         $this->dm->persist($mm);
@@ -249,7 +249,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertTrue($mm->containsPersonWithRole($personKate, $roleActor));
         $this->assertTrue($mm->containsPersonWithRole($personKate, $rolePresenter));
         $this->assertFalse($mm->containsPersonWithRole($personKate, $roleDirector));
-        $this->assertEquals(1, count($mm->getPeopleInMultimediaObject()));
+        $this->assertEquals(1, count($mm->getPeople()));
 
         $mm->addPersonWithRole($personKate, $roleDirector);
         $this->dm->persist($mm);
@@ -260,7 +260,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertTrue($mm->containsPersonWithRole($personKate, $roleDirector));
         $this->assertTrue($mm->containsPersonWithAllRoles($personKate, array($roleActor, $rolePresenter, $roleDirector)));
         $this->assertTrue($mm->containsPersonWithAnyRole($personKate, array($roleActor, $rolePresenter, $roleDirector)));
-        $this->assertEquals(1, count($mm->getPeopleInMultimediaObject()));
+        $this->assertEquals(1, count($mm->getPeople()));
 
         $mm->addPersonWithRole($personLucy, $roleDirector);
         $this->dm->persist($mm);
@@ -273,43 +273,43 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $roleActor));
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $rolePresenter));
         $this->assertTrue($mm->containsPersonWithRole($personLucy, $roleDirector));
-        $this->assertEquals(2, count($mm->getPeopleInMultimediaObject()));
+        $this->assertEquals(2, count($mm->getPeople()));
 
-        $this->assertEquals(2, count($mm->getPeopleInMultimediaObjectByRole(null, false)));
+        $this->assertEquals(2, count($mm->getPeopleByRole(null, false)));
         $mm->getEmbeddedRole($roleDirector)->setDisplay(false);
         $this->dm->persist($mm);
         $this->dm->flush();
-        $this->assertEquals(2, count($mm->getPeopleInMultimediaObjectByRole(null, true)));
-        $this->assertEquals(1, count($mm->getPeopleInMultimediaObjectByRole(null, false)));
+        $this->assertEquals(2, count($mm->getPeopleByRole(null, true)));
+        $this->assertEquals(1, count($mm->getPeopleByRole(null, false)));
         $mm->getEmbeddedRole($roleDirector)->setDisplay(true);
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $peopleDirector = $mm->getPeopleInMultimediaObjectByRole($roleDirector);
+        $peopleDirector = $mm->getPeopleByRole($roleDirector);
         $this->assertEquals(array($personKate->getId(), $personLucy->getId()),
                             array($peopleDirector[0]->getId(), $peopleDirector[1]->getId()));
 
         $mm->downPersonWithRole($personKate, $roleDirector);
         $this->dm->persist($mm);
-        $peopleDirector = $mm->getPeopleInMultimediaObjectByRole($roleDirector);
+        $peopleDirector = $mm->getPeopleByRole($roleDirector);
         $this->assertEquals(array($personLucy->getId(), $personKate->getId()),
                             array($peopleDirector[0]->getId(), $peopleDirector[1]->getId()));
 
         $mm->upPersonWithRole($personKate, $roleDirector);
         $this->dm->persist($mm);
-        $peopleDirector = $mm->getPeopleInMultimediaObjectByRole($roleDirector);
+        $peopleDirector = $mm->getPeopleByRole($roleDirector);
         $this->assertEquals(array($personKate->getId(), $personLucy->getId()),
                             array($peopleDirector[0]->getId(), $peopleDirector[1]->getId()));
 
         $mm->upPersonWithRole($personLucy, $roleDirector);
         $this->dm->persist($mm);
-        $peopleDirector = $mm->getPeopleInMultimediaObjectByRole($roleDirector);
+        $peopleDirector = $mm->getPeopleByRole($roleDirector);
         $this->assertEquals(array($personLucy->getId(), $personKate->getId()),
                             array($peopleDirector[0]->getId(), $peopleDirector[1]->getId()));
 
         $mm->downPersonWithRole($personLucy, $roleDirector);
         $this->dm->persist($mm);
-        $peopleDirector = $mm->getPeopleInMultimediaObjectByRole($roleDirector);
+        $peopleDirector = $mm->getPeopleByRole($roleDirector);
         $this->assertEquals(array($personKate->getId(), $personLucy->getId()),
                             array($peopleDirector[0]->getId(), $peopleDirector[1]->getId()));
 
@@ -329,7 +329,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $roleActor));
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $rolePresenter));
         $this->assertTrue($mm->containsPersonWithRole($personLucy, $roleDirector));
-        $this->assertEquals(2, count($mm->getPeopleInMultimediaObject()));
+        $this->assertEquals(2, count($mm->getPeople()));
 
         $this->assertTrue($mm->removePersonWithRole($personLucy, $roleDirector));
         $this->dm->persist($mm);
@@ -342,7 +342,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $roleActor));
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $rolePresenter));
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $roleDirector));
-        $this->assertEquals(1, count($mm->getPeopleInMultimediaObject()));
+        $this->assertEquals(1, count($mm->getPeople()));
 
         $this->assertTrue($mm->removePersonWithRole($personKate, $roleDirector));
         $this->dm->persist($mm);
@@ -355,19 +355,19 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $roleActor));
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $rolePresenter));
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $roleDirector));
-        $this->assertEquals(1, count($mm->getPeopleInMultimediaObject()));
+        $this->assertEquals(1, count($mm->getPeople()));
 
         $this->assertFalse($mm->removePersonWithRole($personKate, $roleActor));
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertEquals(1, count($mm->getPeopleInMultimediaObject()));
+        $this->assertEquals(1, count($mm->getPeople()));
 
         $this->assertTrue($mm->removePersonWithRole($personKate, $rolePresenter));
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertEquals(0, count($mm->getPeopleInMultimediaObject()));
+        $this->assertEquals(0, count($mm->getPeople()));
     }
 
     public function testFindBySeries()

@@ -91,7 +91,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findByPersonId($personId)
     {
         return $this->createQueryBuilder()
-          ->field('people_in_multimedia_object.people._id')->equals(new \MongoId($personId))
+          ->field('people.people._id')->equals(new \MongoId($personId))
           ->getQuery()
           ->execute();
     }
@@ -107,7 +107,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findByPersonIdWithRoleCod($personId, $roleCod)
     {
         $qb = $this->createQueryBuilder();
-        $qb->field('people_in_multimedia_object')->elemMatch(
+        $qb->field('people')->elemMatch(
             $qb->expr()->field('people._id')->equals(new \MongoId($personId))
                 ->field('cod')->equals($roleCod)
         );
@@ -124,7 +124,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findSeriesFieldByPersonId($personId)
     {
         return $this->createQueryBuilder()
-          ->field('people_in_multimedia_object.people._id')->equals(new \MongoId($personId))
+          ->field('people.people._id')->equals(new \MongoId($personId))
           ->distinct('series')
           ->getQuery()
           ->execute();
