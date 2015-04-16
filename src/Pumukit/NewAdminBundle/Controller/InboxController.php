@@ -26,18 +26,26 @@ class InboxController extends Controller
 
         $finder = new Finder();
 
+        $res = array();
+
         if ("file" == $type) {
             $finder->files()->in($dir);
+            $finder->sortByName();
+            foreach ($finder as $f) {
+                $res[] = array('path' => $f->getRealpath(),
+                               'relativepath' => $f->getRelativePathname(),
+                               'is_file' => $f->isFile());
+            }
         }else{
             $finder->directories()->in($dir);
-        }
-        $finder->sortByName();
-
-        $res = array();
-        foreach ($finder as $f) {
-            $res[] = array('path' => $f->getRealpath(),
-                           'relativepath' => $f->getRelativePathname(),
-                           'is_file' => $f->isFile());
+            $finder->sortByName();
+            foreach ($finder as $f) {
+                if (0 !== (count(glob("$f/*")))){
+                    $res[] = array('path' => $f->getRealpath(),
+                                   'relativepath' => $f->getRelativePathname(),
+                                   'is_file' => $f->isFile());
+                }
+            }
         }
 
         return new JsonResponse($res);
