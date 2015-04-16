@@ -26,13 +26,13 @@
     {% for multimediaObject in multimediaObjects %}
     	<item>
         <arca:course>
-        	<arca:title>Acto Institucional del día Internacional de las Mujeres 2015</arca:title>
-	   			<arca:description>María Álvarez Lires presentará el informe “Análisis de las trayectorias profesionales de mujeres en la Universidade de Vigo y se leerá un manifiesto por parte del alumnado. </arca:description>
+        	<arca:title> {{ multimediaObject.getTitle() }} </arca:title>
+	   			<arca:description> {{ multimediaObject.getDescription() }} </arca:description>
         	<arca:image>http://tv.uvigo.es/uploads/pic/Serial/2279/2_entrega_premios.jpg</arca:image>
         	<arca:order>1</arca:order>
         </arca:course>
 
-      	<title> {{ multimediaObject.title }} </title>
+      	<title> {{ multimediaObject.getTitle() }} </title>
       	<link>http://tv.uvigo.es/video/index?mm_id=25673</link>
       	<description> {{ multimediaObject.getDescription() }} </description>
       	<pubDate> {{ multimediaObject.getPublicDate()|date() }} </pubDate>
@@ -41,13 +41,13 @@
 
       	<source url="http://tv.uvigo.es/xml/arca">Universidad de Vigo Television</source> 
       	<media:thumbnail url="{{ multimediaObject.getFirstUrlPic() }}" height="82" width="100" />
-      	<media:copyright>UVigo-Tv</media:copyright>
+      	<media:copyright>{{ multimediaObject.getCopyright() }}</media:copyright>
       	<guid isPermaLink="true">http://tv.uvigo.es/es/video/mm/25673.html</guid>
 
         <!-- Persons -->
-        <media:credit role="director">Salustiano Mato de la Iglesia</media:credit>
-        <media:credit role="actor">María Álvarez Lires</media:credit>
-        <media:credit role="actor">Raquel López Gutiérrez</media:credit>
+        {% for person in multimediaObject.getPeopleInMultimediaObject() %}
+          <media:credit role="director">{{ person.getName() }}</media:credit>
+        {% endfor %}
 
         <!-- Tags -->
         {% for tag in multimediaObject.getTags() %}                                            
@@ -59,7 +59,6 @@
           <media:content url="http://tv.uvigo.es/video/112868.html" type="video/x-flv" medium="video" isDefault="true" expression="full" framerate="25" 
           channels="1" duration="{{ track.getDuration() }}" height="576" width="720" lang="gl"/>          
         {% endfor %}
-
     	</item>
     {% endfor %}
 
