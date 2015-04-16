@@ -42,7 +42,7 @@ class IndexController extends Controller
     public function mostviewedAction()
     {
       $repository = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
-      $multimediaObjectsSortedByNumview = $repository->findMMMBy(array(), array('numview' => -1), 3, 0);
+      $multimediaObjectsSortedByNumview = $repository->findStandardBy(array(), array('numview' => -1), 3, 0);
       return array('multimediaObjectsSortedByNumview' => $multimediaObjectsSortedByNumview);
     }
 
@@ -52,8 +52,7 @@ class IndexController extends Controller
     public function recentlyaddedAction()
     {
       $repository = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
-      //TODO Join series and multimedia objects.
-      $multimediaObjectsSortedByPublicDate = $repository->findMMMBy(array(), array('public_date' => -1), 3, 0);
+      $multimediaObjectsSortedByPublicDate = $repository->findStandardBy(array(), array('public_date' => -1), 3, 0);
       return array('multimediaObjectsSortedByPublicDate' => $multimediaObjectsSortedByPublicDate);
     }
 

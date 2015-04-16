@@ -559,13 +559,31 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
-     * TODO Add doc change name
-     * findBy filtering prototypes
+     * Finds standard MultimediaObjects (not prototype) by a set of criteria.
+     *
+     * @param array        $criteria Query criteria
+     * @param array        $sort     Sort array for Cursor::sort()
+     * @param integer|null $limit    Limit for Cursor::limit()
+     * @param integer|null $skip     Skip for Cursor::skip()
+     *
+     * @return array
      */
-    public function findMMMBy(array $criteria, array $sort = null, $limit = null, $skip = null)
+    public function findStandardBy(array $criteria, array $sort = null, $limit = null, $skip = null)
     {
       $criteria["status"] = MultimediaObject::STATUS_PUBLISHED;
       return $this->getDocumentPersister()->loadAll($criteria, $sort, $limit, $skip)->toArray(false);      
+    }
+
+    /**
+     * Finds a single standard MultimediaObject (not prototype) by a set of criteria.
+     *
+     * @param array $criteria
+     * @return object
+     */
+    public function findStandardOneBy(array $criteria)
+    {
+      $criteria["status"] = MultimediaObject::STATUS_PUBLISHED;
+      return $this->getDocumentPersister()->load($criteria);
     }
 
     /**
