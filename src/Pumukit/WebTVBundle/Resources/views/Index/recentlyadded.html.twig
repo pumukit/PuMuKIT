@@ -1,7 +1,7 @@
 <div style="width: 49%; float: right;">
 	<h2>Recently added:</h2>
 
-	{% for multimediaObject in multimediaObjects_sorted_by_public_date %}
+	{% for multimediaObject in multimediaObjectsSortedByPublicDate %}
 
 	<!--Objeto multimedia-->
     <div style="cursor:pointer;" onclick="window.location='/video/{{multimediaObject.getId()}}'">

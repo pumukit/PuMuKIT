@@ -1,7 +1,7 @@
 <div style="width: 49%; float: left;">
 	<h2>Most viewed:</h2>
 
-	{% for multimediaObject in multimediaObjects_sorted_by_numview %}
+	{% for multimediaObject in multimediaObjectsSortedByNumview %}
 
 	<!--Objeto multimedia-->
     <div style="cursor:pointer;" onclick="window.location='/video/{{multimediaObject.getId()}}'">

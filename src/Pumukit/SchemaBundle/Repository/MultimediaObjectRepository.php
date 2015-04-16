@@ -559,6 +559,16 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
+     * TODO Add doc change name
+     * findBy filtering prototypes
+     */
+    public function findMMMBy(array $criteria, array $sort = null, $limit = null, $skip = null)
+    {
+      $criteria["status"] = MultimediaObject::STATUS_PUBLISHED;
+      return $this->getDocumentPersister()->loadAll($criteria, $sort, $limit, $skip)->toArray(false);      
+    }
+
+    /**
      * Find similar multimedia objects to a given one
      * with same tags, from different series,
      * broadcast public, status normal,

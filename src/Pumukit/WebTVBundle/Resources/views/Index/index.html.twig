@@ -2,11 +2,11 @@
 
 {% block body %}
     <h1 id="index_h1">Principal</h1>
-    {% include 'PumukitWebTVBundle:Index:info.html.twig' %}
-    {% include 'PumukitWebTVBundle:Index:categories.html.twig' %}
+    {% render(controller('PumukitWebTVBundle:Index:info')) %}
+    {% render(controller('PumukitWebTVBundle:Index:categories')) %}
     <div style="overflow: hidden; padding: 10px;">
-    	{% include 'PumukitWebTVBundle:Index:mostviewed.html.twig' %}
-    	{% include 'PumukitWebTVBundle:Index:recentlyadded.html.twig' %}
+    	{% render(controller('PumukitWebTVBundle:Index:mostviewed')) %}
+    	{% render(controller('PumukitWebTVBundle:Index:recentlyadded')) %} 
     </div>
-    {% include 'PumukitWebTVBundle:Index:news.html.twig' %}
+    {% render(controller('PumukitWebTVBundle:Index:news')) %}
 {% endblock %}

@@ -16,16 +16,52 @@ class IndexController extends Controller
      */
     public function indexAction()
     {
-    	$series_repository = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
-        $repository = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+      return array();
+    }
 
-    	$num_series = count($series_repository->findall());
+    /**
+     * @Template()
+     */
+    public function infoAction()
+    {
+      return array();
+    }
 
-        $multimediaObjects_sorted_by_numview = $repository->findBy(array(), array('numview' => -1), 3, 0);
-        $multimediaObjects_sorted_by_public_date = $repository->findBy(array(), array('public_date' => -1), 3, 0);
+    /**
+     * @Template()
+     */
+    public function categoriesAction()
+    {
+      return array();
+    }
 
-        return array('num_series' => $num_series, 
-                     'multimediaObjects_sorted_by_numview' => $multimediaObjects_sorted_by_numview, 
-                     'multimediaObjects_sorted_by_public_date' => $multimediaObjects_sorted_by_public_date);
+
+    /**
+     * @Template()
+     */
+    public function mostviewedAction()
+    {
+      $repository = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+      $multimediaObjectsSortedByNumview = $repository->findMMMBy(array(), array('numview' => -1), 3, 0);
+      return array('multimediaObjectsSortedByNumview' => $multimediaObjectsSortedByNumview);
+    }
+
+    /**
+     * @Template()
+     */
+    public function recentlyaddedAction()
+    {
+      $repository = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+      //TODO Join series and multimedia objects.
+      $multimediaObjectsSortedByPublicDate = $repository->findMMMBy(array(), array('public_date' => -1), 3, 0);
+      return array('multimediaObjectsSortedByPublicDate' => $multimediaObjectsSortedByPublicDate);
+    }
+
+    /**
+     * @Template()
+     */
+    public function newsAction()
+    {
+      return array();
     }
 }
