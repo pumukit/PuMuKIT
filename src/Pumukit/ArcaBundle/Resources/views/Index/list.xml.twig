@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" 
-    xmlns:media="http://search.yahoo.com/mrss/" 
-    xmlns:g="http://base.google.com/ns/1.0" 
-    xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
-    xmlns:arca="http://arca.uc3m.es/">
+<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/" xmlns:g="http://base.google.com/ns/1.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:arca="http://arca.uc3m.es/">
 
 	<channel>
  		<title>Universidad de Vigo Television</title> 
@@ -18,48 +14,52 @@
  		<ttl>1440</ttl>
  		<language>es</language>
  		<image>
-  			<url>http://tv.uvigo.es/uploads/uvigo/logo_tv_60x60.gif</url>
-  			<link>http://tv.uvigo.es</link>
-  			<title>UVigo-Tv</title>
+  		<url>http://tv.uvigo.es/uploads/uvigo/logo_tv_60x60.gif</url>
+  		<link>http://tv.uvigo.es</link>
+  		<title>UVigo-Tv</title>
  		</image>
 
     {% for multimediaObject in multimediaObjects %}
-    	<item>
-        <arca:course>
-        	<arca:title> {{ multimediaObject.getTitle() }} </arca:title>
-	   			<arca:description> {{ multimediaObject.getDescription() }} </arca:description>
-        	<arca:image>http://tv.uvigo.es/uploads/pic/Serial/2279/2_entrega_premios.jpg</arca:image>
-        	<arca:order>1</arca:order>
-        </arca:course>
+      {% for tag_arca in multimediaObject.getTags() %}
+        {% if tag_arca.getCod() == "PUCHARCA" %}
+    	    <item>
+            <arca:course>
+        	    <arca:title> {{ multimediaObject.getTitle() }} </arca:title>
+	   			    <arca:description> {{ multimediaObject.getDescription() }} </arca:description>
+        	    <arca:image>http://tv.uvigo.es/uploads/pic/Serial/2279/2_entrega_premios.jpg</arca:image>
+        	    <arca:order>1</arca:order>
+            </arca:course>
 
-      	<title> {{ multimediaObject.getTitle() }} </title>
-      	<link>http://tv.uvigo.es/video/index?mm_id=25673</link>
-      	<description> {{ multimediaObject.getDescription() }} </description>
-      	<pubDate> {{ multimediaObject.getPublicDate()|date() }} </pubDate>
-      	<g:publish_date> {{ multimediaObject.getPublicDate()|date("Y-m-d") }} </g:publish_date>
-      	<author>tv@uvigo.es</author>
+      	    <title> {{ multimediaObject.getTitle() }} </title>
+      	    <link>http://tv.uvigo.es/video/index?mm_id=25673</link>
+      	    <description> {{ multimediaObject.getDescription() }} </description>
+      	    <pubDate> {{ multimediaObject.getPublicDate()|date() }} </pubDate>
+      	    <g:publish_date> {{ multimediaObject.getPublicDate()|date("Y-m-d") }} </g:publish_date>
+      	    <author>tv@uvigo.es</author>
 
-      	<source url="http://tv.uvigo.es/xml/arca">Universidad de Vigo Television</source> 
-      	<media:thumbnail url="{{ multimediaObject.getFirstUrlPic() }}" height="82" width="100" />
-      	<media:copyright>{{ multimediaObject.getCopyright() }}</media:copyright>
-      	<guid isPermaLink="true">http://tv.uvigo.es/es/video/mm/25673.html</guid>
+      	    <source url="http://tv.uvigo.es/xml/arca">Universidad de Vigo Television</source> 
+      	    <media:thumbnail url="{{ multimediaObject.getFirstUrlPic() }}" height="82" width="100" />
+      	    <media:copyright>{{ multimediaObject.getCopyright() }}</media:copyright>
+      	    <guid isPermaLink="true">http://tv.uvigo.es/es/video/mm/25673.html</guid>
 
-        <!-- Persons -->
-        {% for person in multimediaObject.getPeopleInMultimediaObject() %}
-          <media:credit role="director">{{ person.getName() }}</media:credit>
-        {% endfor %}
+            <!-- Persons -->
+            {% for person in multimediaObject.getPeopleInMultimediaObject() %}
+              <media:credit role="director">{{ person.getName() }}</media:credit>
+            {% endfor %}
 
-        <!-- Tags -->
-        {% for tag in multimediaObject.getTags() %}                                            
-          <category domain="{{ tag.getCod() }}">{{ tag.getTitle() }}</category>
-        {% endfor %}  
+            <!-- Tags -->
+            {% for tag in multimediaObject.getTags() %}                                            
+              <category domain="{{ tag.getCod() }}">{{ tag.getTitle() }}</category>
+            {% endfor %}  
 
-        <!-- Tracks -->
-        {% for track in multimediaObject.getTracks() %}
-          <media:content url="http://tv.uvigo.es/video/112868.html" type="video/x-flv" medium="video" isDefault="true" expression="full" framerate="25" 
-          channels="1" duration="{{ track.getDuration() }}" height="576" width="720" lang="gl"/>          
-        {% endfor %}
-    	</item>
+            <!-- Tracks -->
+            {% for track in multimediaObject.getTracks() %}
+              <media:content url="http://tv.uvigo.es/video/112868.html" type="video/x-flv" medium="video" isDefault="true" expression="full" framerate="25" 
+              channels="1" duration="{{ track.getDuration() }}" height="576" width="720" lang="gl"/>          
+            {% endfor %}
+    	    </item>
+        {% endif %}
+      {% endfor %}
     {% endfor %}
 
 	</channel>
