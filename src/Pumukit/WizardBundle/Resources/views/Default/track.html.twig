@@ -3,7 +3,7 @@
 <div class="well">
   <form id="pumukitwizard_track_form" autocomplete="off"
         enctype="multipart/form-data" target="iframeUpload"
-        action="{# TODO path('')  url_for('wizard/end') #}" method="POST">
+        action="{{ path('pumukitwizard_default_upload') }}" method="POST">
     <iframe name="iframeUpload" style="display:none" src=""></iframe>
     <input type="hidden" name="pumukitwizard_form_data[series][id]" id="pumukitwizard_series_id" value="{{ form_data.series.id }}">
     {% for field, locales in form_data.series %}
@@ -119,7 +119,7 @@
           <button type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button>
           </a>
           {% endspaceless %}
-          <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %}</button>{# TODO #}
+          <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %}</button>
         </div>
       </div>
     </div>

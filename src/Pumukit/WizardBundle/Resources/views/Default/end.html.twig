@@ -1,0 +1,77 @@
+{% block wizard_body %}
+<div class="well">
+
+TODO
+{#
+<h1 class="cS_h1">{% trans %}File uploaded successfully{% endtrans %}</h1>
+
+<h3>
+{% trans %}The video must be encoded to be available at the website. An email will be sent to you when finishing encoding notifying the availability of your video at the website.{% endtrans %}
+
+
+<?php if ($mm->getYoutube()): ?>
+   <br />
+   <br />
+   {% trans %}El vídeo ha sido subido a Youtube. Cuando Youtube informe del estado del vídeo se le enviará un email avisando de la disponibilidad de su vídeo en Youtube'); ?>
+<?php endif; ?>
+</h3>
+
+<div class="cS_uno">
+<div class="cS_dos">
+  <table>
+   <tbody>
+    <tr>
+     <td>
+       <div class="cS_div_image">
+         <span class="cS_span_image"></span>
+         <img src="<?php echo $mm->getFirstUrlPic() ?>" class="cS_img_image"/>
+       </div>
+     </td>
+     <td>
+      <div class="cS_announce">
+        <div class="cS_ann_element">
+          <span class="cS_ann_label">{% trans %}SERIE{% endtrans %}: &nbsp;</span>
+          <span class="cS_ann_info"><?php echo $mm->getSerial()->getTitle() ?> </span>
+        </div>
+        <div class="cS_ann_element">
+          <span class="cS_ann_label">{% trans %}VIDEO{% endtrans %}: </span>
+          <span class="cS_ann_info"><?php echo $mm->getTitle() ?> </span>
+        </div>
+        <div class="cS_ann_element">
+          <span class="cS_ann_label">{% trans %}FECHA{% endtrans %}: </span>
+          <span class="cS_ann_info" style="font-size:80%"><?php echo $mm->getPublicDate('d/m/Y')?></span>
+        </div>
+      </div>
+     </td>
+    </tr>
+   </tbody>
+  </table>
+</div>
+</div>
+
+{% trans %}Acciones{% endtrans %}:
+<ul style="margin-left: 50px; margin-bottom: 10px">
+<li>
+  <a href="<?php echo url_for('mms/index?serial=' . $mm->getSerialId()) ?>">
+    {% trans %}Datos del archivo multimedia{% endtrans %}
+  </a>
+</li>
+
+<li>
+  <a href="<?php echo url_for('uploads/dos?serial_id=' . $mm->getSerialId()) ?>">
+    {% trans %}Otro archivo multimedia en la misma serie{% endtrans %}
+  </a>
+</li>
+
+<li>
+  <a href="<?php echo url_for('uploads/index') ?>">
+    {% trans %}Otro archivo multimedia{% endtrans %}
+  </a>
+</li>
+</ul>
+
+<?php include_partial('uploads/ayuda', array('que' => 'cuatro')) ?>
+#}
+
+</div>
+{% endblock wizard_body %}
