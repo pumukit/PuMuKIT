@@ -273,11 +273,15 @@ class JobService
         $commandLine = $this->renderBat($job);
 
         // TODO - Set pathEnd in some point
-        $created = @mkdir(dirname($job->getPathEnd()), 0777, true);
-        if ($created){
-            $this->logger->addInfo('[execute] Directory "'.dirname($job->getPathEnd()).'" from job path end "'.$job->getPathEnd().'" successfully created.');
+        if (!realpath(dirname($job->getPathEnd())) && !file_exists(dirname($job->getPathEnd()))){
+            $created = @mkdir(dirname($job->getPathEnd()), 0777, true);
+            if ($created){
+                $this->logger->addInfo('[execute] Directory "'.dirname($job->getPathEnd()).'" from job path end "'.$job->getPathEnd().'" successfully created.');
+            }else{
+                $this->logger->addError('[execute] Could not create directory "'.dirname($job->getPathEnd()).'" from job path end "'.$job->getPathEnd().'"');
+            }
         }else{
-            $this->logger->addError('[execute] Could not create directory "'.dirname($job->getPathEnd()).'" from job path end "'.$job->getPathEnd().'"');
+            $this->logger->addWarning('[execute] Directory "'.dirname($job->getPathEnd()).'" already exists or permission denied to access the route.');
         }
         
         $executor = $this->getExecutor($profile['app'], $cpu);
@@ -406,11 +410,15 @@ class JobService
         $tempDir = $profile['streamserver']['dir_out'] . '/' . $mmobj->getSeries()->getId();
 
         //TODO repeat mkdir (see this->execute) and check error
-        $created = @mkdir($tempDir, 0777, true);
-        if ($created){
-            $this->logger->addInfo('[setPathEndAndExtensions] Directory "'.$tempDir.'" successfully created.');
+        if (!realpath($tempDir) && !file_exists($tempDir)){
+            $created = @mkdir($tempDir, 0777, true);
+            if ($created){
+                $this->logger->addInfo('[setPathEndAndExtensions] Directory "'.$tempDir.'" successfully created.');
+            }else{
+                $this->logger->addError('[setPathEndAndExtensions] Could not create directory: "'.$tempDir.'"');
+            }
         }else{
-            $this->logger->addError('[setPathEndAndExtensions] Could not create directory: "'.$tempDir.'"');
+            $this->logger->addWarning('[setPathEndAndExtensions] Directory "'.$tempDir.'" already exists or permission denied to access the route.');
         }
 
         $pathEnd = realpath($tempDir) . '/' . $job->getId() . '.' . $finalExtension;
@@ -492,11 +500,15 @@ class JobService
         $profile = $this->getProfile($job);
         $tempDir = $profile['streamserver']['dir_out'] . '/' . $mmobj->getSeries()->getId();
         //TODO repeat mkdir (see this->execute) and check errors
-        $created = @mkdir($tempDir, 0777, true);
-        if ($created){
-            $this->logger->addInfo('[retryJob] Directory "'.$tempDir.'" successfully created.');
+        if (!realpath($tempDir) && !file_exists($tempDir)){
+            $created = @mkdir($tempDir, 0777, true);
+            if ($created){
+                $this->logger->addInfo('[retryJob] Directory "'.$tempDir.'" successfully created.');
+            }else{
+                $this->logger->addError('[retryJob] Could not create directory: "'.$tempDir.'"');
+            }
         }else{
-            $this->logger->addError('[retryJob] Could not create directory: "'.$tempDir.'"');
+            $this->logger->addWarning('[retryJob] Directory "'.$tempDir.'" already exists or permission denied to access the route.');
         }
 
         $job->setStatus(Job::STATUS_WAITING);
