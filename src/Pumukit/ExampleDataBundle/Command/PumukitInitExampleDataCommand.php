@@ -57,9 +57,10 @@ EOT
             if ($input->getOption('force')) {
             
                   if ($input->getOption('append') != 1){
-                        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array()); 
-                        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
+                        $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')->remove(array());
                         $this->dm->getDocumentCollection('PumukitSchemaBundle:Person')->remove(array());
+                        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
+                        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
                   }
 
                   //Unzipping videos in folder
