@@ -9,7 +9,7 @@
                           url: '{{ path('pumukitnewadmin_track_update', {'id': track.id, 'mmId': mmId}) }}',
                           type: 'POST',
                           data: $(this).serialize(),
-                          success: function(response){$('#tracks_mms').html(response);}
+                          success: function(response){$('#tracks_mms_{{ mmId }}').html(response);}
                   });
                   return false;"
         action="{{ path('pumukitnewadmin_track_update', {'id': track.id, 'mmId': mmId}) }}" method="POST">

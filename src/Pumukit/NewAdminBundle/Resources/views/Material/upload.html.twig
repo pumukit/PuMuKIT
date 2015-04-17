@@ -1,7 +1,7 @@
 <script type="text/javascript">
   parent.$('#myModal').modal('hide');
 
-  new parent.$('#materials_mms').load('{{ path('pumukitnewadmin_material_list', {'id': mm.id}) }}');
+  new parent.$('#materials_mms_{{ mm.id }}').load('{{ path('pumukitnewadmin_material_list', {'id': mm.id}) }}');
   new parent.$('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}');
 
   var uploaded = '{{ uploaded }}';

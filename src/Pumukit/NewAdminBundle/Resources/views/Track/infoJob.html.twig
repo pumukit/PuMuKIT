@@ -36,8 +36,8 @@
   <form enctype="multipart/form-data" action="#" method="POST">
 	<div class="modal-footer">
 	  <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-	  <button type="submit" class="btn btn-pumukit btn-raised" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_retry_job', {'mmId': multimediaObject.Id, 'jobId': job.id, 'preview': 1}) }}'); return false;" data-dismiss="modal">{% trans %}RETRY{% endtrans %}</button>
-	  <button type="submit" class="btn btn-danger btn-raised" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_delete_job', {'mmId': multimediaObject.Id, 'jobId': job.id, 'preview': 1}) }}', {'_method': 'DELETE'}); return false;" data-dismiss="modal">{% trans %}DELETE{% endtrans %}</button>
+	  <button type="submit" class="btn btn-pumukit btn-raised" onclick="$('#tracks_mms_{{ multimediaObject.Id }}').load('{{ path('pumukitnewadmin_track_retry_job', {'mmId': multimediaObject.Id, 'jobId': job.id, 'preview': 1}) }}'); return false;" data-dismiss="modal">{% trans %}RETRY{% endtrans %}</button>
+	  <button type="submit" class="btn btn-danger btn-raised" onclick="$('#tracks_mms_{{ multimediaObject.Id }}').load('{{ path('pumukitnewadmin_track_delete_job', {'mmId': multimediaObject.Id, 'jobId': job.id, 'preview': 1}) }}', {'_method': 'DELETE'}); return false;" data-dismiss="modal">{% trans %}DELETE{% endtrans %}</button>
 	</div>
   </form>
 </div>

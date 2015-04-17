@@ -10,7 +10,7 @@
                           type: 'POST',
                           data: $(this).serialize(),
                           success: function(response){
-                                                      $('#materials_mms').html(response);
+                                                      $('#materials_mms_{{ mmId }}').html(response);
                                                       success('{% trans %}Material successfully updated.{% endtrans %}');
                                                       }
                   });

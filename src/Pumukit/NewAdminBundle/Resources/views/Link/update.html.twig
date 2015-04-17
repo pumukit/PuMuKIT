@@ -9,7 +9,7 @@
                           url: '{{ path('pumukitnewadmin_link_update', {'id': link.id, 'mmId': mm.id}) }}',
                           type: 'POST',
                           data: $(this).serialize(),
-                          success: function(response){$('#links_mms').html(response);}
+                          success: function(response){$('#links_mms_{{ mm.id }}').html(response);}
                   });
                   return false;"
         action="{{ path('pumukitadmin_link_update', {'id': link.id, 'mmId': mm.id}) }}" method="POST">

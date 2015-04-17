@@ -12,11 +12,11 @@
             </a>
 
 {#
-            <a href="#" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_retry_job', {'mmId': mmId, 'jobId': job.id, 'preview': 1}) }}'); return false;">
+            <a href="#" onclick="$('#tracks_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_track_retry_job', {'mmId': mmId, 'jobId': job.id, 'preview': 1}) }}'); return false;">
               <i class="mdi-navigation-refresh"></i>
             </a>
   
-            <a href="#" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_delete_job', {'mmId': mmId, 'jobId': job.id, 'preview': 1}) }}'); return false;">
+            <a href="#" onclick="$('#tracks_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_track_delete_job', {'mmId': mmId, 'jobId': job.id, 'preview': 1}) }}'); return false;">
               <i class="mdi-content-clear"></i>
             </a>
 #}
@@ -57,7 +57,7 @@
           </a>
       </td>
       <td>
-        <a href="#" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_autocomplete', {'id': track.id, 'mmId': mmId, 'preview': 1, 'mod': 'mm'}) }}'); return false;">
+        <a href="#" onclick="$('#tracks_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_track_autocomplete', {'id': track.id, 'mmId': mmId, 'preview': 1, 'mod': 'mm'}) }}'); return false;">
           <i class="mdi-action-spellcheck"></i>
         </a>
       </td>
@@ -71,10 +71,10 @@
               <a href="#" onclick="$.ajax({
                                            url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mmId, 'preview': 1, 'numframe': 0}) }}',
                                            type: 'POST',
-                                           beforeSend: function(){$('#pic_mms_load').show();},
+                                           beforeSend: function(){$('#pic_mms_{{ mmId }}_load').show();},
                                            success: function(response){
-                                                                       $('#pic_mms_load').hide();
-                                                                       $('#pic_mms').html(response);
+                                                                       $('#pic_mms_{{ mmId }}_load').hide();
+                                                                       $('#pic_mms_{{ mmId }}').html(response);
                                            }
                                    });
                                    return false;">
@@ -85,10 +85,10 @@
               <a href="#" onclick="$.ajax({
                                            url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mmId, 'preview': 1, 'numframe': '10%'}) }}',
                                            type: 'POST',
-                                           beforeSend: function(){$('#pic_mms_load').show();},
+                                           beforeSend: function(){$('#pic_mms_{{ mmId }}_load').show();},
                                            success: function(response){
-                                                                       $('#pic_mms_load').hide();
-                                                                       $('#pic_mms').html(response);
+                                                                       $('#pic_mms_{{ mmId }}_load').hide();
+                                                                       $('#pic_mms_{{ mmId }}').html(response);
                                            }
                                    });
                                    return false;">
@@ -99,10 +99,10 @@
               <a href="#" onclick="$.ajax({
                                            url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mmId, 'preview': 1, 'numframe': '25%'}) }}',
                                            type: 'POST',
-                                           beforeSend: function(){$('#pic_mms_load').show();},
+                                           beforeSend: function(){$('#pic_mms_{{ mmId }}_load').show();},
                                            success: function(response){
-                                                                       $('#pic_mms_load').hide();
-                                                                       $('#pic_mms').html(response);
+                                                                       $('#pic_mms_{{ mmId }}_load').hide();
+                                                                       $('#pic_mms_{{ mmId }}').html(response);
                                            }
                                    });
                                    return false;">
@@ -113,10 +113,10 @@
               <a href="#" onclick="$.ajax({
                                            url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mmId, 'preview': 1, 'numframe': '50%'}) }}',
                                            type: 'POST',
-                                           beforeSend: function(){$('#pic_mms_load').show();},
+                                           beforeSend: function(){$('#pic_mms_{{ mmId }}_load').show();},
                                            success: function(response){
-                                                                       $('#pic_mms_load').hide();
-                                                                       $('#pic_mms').html(response);
+                                                                       $('#pic_mms_{{ mmId }}_load').hide();
+                                                                       $('#pic_mms_{{ mmId }}').html(response);
                                            }
                                    });
                                    return false;">
@@ -127,10 +127,10 @@
               <a href="#" onclick="$.ajax({
                                            url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mmId, 'preview': 1, 'numframe': '75%'}) }}',
                                            type: 'POST',
-                                           beforeSend: function(){$('#pic_mms_load').show();},
+                                           beforeSend: function(){$('#pic_mms_{{ mmId }}_load').show();},
                                            success: function(response){
-                                                                       $('#pic_mms_load').hide();
-                                                                       $('#pic_mms').html(response);
+                                                                       $('#pic_mms_{{ mmId }}_load').hide();
+                                                                       $('#pic_mms_{{ mmId }}').html(response);
                                            }
                                    });
                                    return false;">
@@ -141,10 +141,10 @@
               <a href="#" onclick="$.ajax({
                                            url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mmId, 'preview': 1, 'numframe': '90%'}) }}',
                                            type: 'POST',
-                                           beforeSend: function(){$('#pic_mms_load').show();},
+                                           beforeSend: function(){$('#pic_mms_{{ mmId }}_load').show();},
                                            success: function(response){
-                                                                       $('#pic_mms_load').hide();
-                                                                       $('#pic_mms').html(response);
+                                                                       $('#pic_mms_{{ mmId }}_load').hide();
+                                                                       $('#pic_mms_{{ mmId }}').html(response);
                                            }
                                    });
                                    return false;">
@@ -170,7 +170,7 @@
             <li>&nbsp;&nbsp;<strong>{% trans %}Transcode to profile{% endtrans %}:</strong></li>
             {% for key in not_master_profiles|keys %}
             <li>
-              <a href="#" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_retranscode', {'id': track.id, 'mmId': mmId, 'profile': key}) }}'); return false;">
+              <a href="#" onclick="$('#tracks_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_track_retranscode', {'id': track.id, 'mmId': mmId, 'profile': key}) }}'); return false;">
                 <i class="mdi-image-camera-roll"></i> {{ key }}
               </a>
             </li>
@@ -190,14 +190,14 @@
       {% if loop.first %}
         &nbsp;
       {% else %}
-        <a href="#" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_up', {'id': track.id, 'mmId': mmId, 'preview': 1}) }}', {'_method': 'POST'}); return false;">&#8593;</a>
+        <a href="#" onclick="$('#tracks_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_track_up', {'id': track.id, 'mmId': mmId, 'preview': 1}) }}', {'_method': 'POST'}); return false;">&#8593;</a>
       {% endif %}
       </td>
       <td>
       {% if loop.last %}
         &nbsp;
       {% else %}
-        <a href="#" onclick="$('#tracks_mms').load('{{ path('pumukitnewadmin_track_down', {'id': track.id, 'mmId': mmId, 'preview': 1}) }}', {'_method': 'POST'}); return false;">&#8595;</a>
+        <a href="#" onclick="$('#tracks_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_track_down', {'id': track.id, 'mmId': mmId, 'preview': 1}) }}', {'_method': 'POST'}); return false;">&#8595;</a>
       {% endif %}
       </td>
 
@@ -237,6 +237,6 @@
 
 {% if jobs|length != 0 %}
 <script type="text/javascript">
-  setTimeout(function(){$('#tracks_mms').load('{{ url('pumukitnewadmin_track_list', {'id': mmId})}}')}, 8000);
+  setTimeout(function(){$('#tracks_mms_{{ mmId }}').load('{{ url('pumukitnewadmin_track_list', {'id': mmId})}}')}, 8000);
 </script>
 {% endif %}
