@@ -116,6 +116,7 @@ class DefaultController extends Controller
     public function uploadAction(Request $request)
     {
         $trackService = $this->get('pumukitschema.track');
+        $tagService = $this->get('pumukitschema.tag');
 
         $formData = $request->get('pumukitwizard_form_data');
         if ($formData){
@@ -130,47 +131,90 @@ class DefaultController extends Controller
 
             $pubchannel = $this->getKeyData('pubchannel', $trackData);
 
-            // TODO try catch
-            /* if (empty($_FILES) && empty($_POST)){ */
-            /*     throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')'); */
-            /* } */
-
-            $option = $this->getKeyData('option', $typeData);
-            if ('single' === $option){
-                $series = $this->getSeries($seriesData);
-                $multimediaobjectData = $this->getKeyData('multimediaobject', $formData);
-                $multimediaObject = $this->createMultimediaObject($multimediaobjectData, $series);
-
-                $filetype = $this->getKeyData('filetype', $trackData);
-                if ('file' === $filetype){
-                    $selectedPath = $request->get('resource');
-                    $multimediaObject = $trackService->createTrackFromLocalHardDrive($multimediaObject, $request->files->get('resource'), $profile, $priority, $language, $description);
-                }elseif ('inbox' === $filetype){
-                    $selectedPath = $request->get('file');
-                    $multimediaObject = $trackService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description);
+            // TODO try catch exception
+            try{
+                if (empty($_FILES) && empty($_POST)){
+                    throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
                 }
-                // TODO add pub channel if multimediaobject
-            }elseif ('multiple' === $option){
-                $series = $this->getSeries($seriesData);
-                $selectedPath = $request->get('file');
-                $finder = new Finder();
-                $finder->files()->in($selectedPath);
-                foreach ($finder as $f){
-                    $filePath = $f->getRealpath();
-                    $multimediaObject = $this->createMultimediaObject(array(), $series);
-                    if ($multimediaObject){
-                        $multimediaObject = $trackService->createTrackFromInboxOnServer($multimediaObject, $filePath, $profile, $priority, $language, $description);
-                        // TODO add pub channel
+
+                $option = $this->getKeyData('option', $typeData);
+                if ('single' === $option){
+                    $series = $this->getSeries($seriesData);
+                    $multimediaObjectData = $this->getKeyData('multimediaobject', $formData);
+
+                    $i18nTitle = $this->getKeyData('i18n_title', $multimediaObjectData);
+                    if (empty(array_filter($i18nTitle))) $multimediaObjectData = $this->getDefaultFieldValuesInData($multimediobjectData, 'i18n_title', 'New', true);
+
+                    $multimediaObject = $this->createMultimediaObject($multimediaObjectData, $series);
+
+                    $filetype = $this->getKeyData('filetype', $trackData);
+                    if ('file' === $filetype){
+                        $selectedPath = $request->get('resource');
+                        $multimediaObject = $trackService->createTrackFromLocalHardDrive($multimediaObject, $request->files->get('resource'), $profile, $priority, $language, $description);
+                    }elseif ('inbox' === $filetype){
+                        $selectedPath = $request->get('file');
+                        $multimediaObject = $trackService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description);
+                    }
+                    if ($multimediaObject && $pubchannel){
+                        foreach($pubchannel as $tagCode => $valueOn){
+                            $addedTags = $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
+                            // TODO #6465 : Review addition of Publication Channel (create service)
+                            // * If MultimediaObject didn't contained PUCHWEBTV tag and now it does:
+                            //   - execute job (master_copy to video_h264)
+                            // * If MultimediaObject didn't contained ARCA tag and now it does:
+                            //   - execute corresponding job
+                        }
+                    }
+                }elseif ('multiple' === $option){
+                    $series = $this->getSeries($seriesData);
+                    $selectedPath = $request->get('file');
+                    $finder = new Finder();
+                    $finder->files()->in($selectedPath);
+                    foreach ($finder as $f){
+                        $filePath = $f->getRealpath();
+                        $titleData = $this->getDefaultFieldValuesInData(array(), 'i18n_title', $f->getRelativePathname(), true);
+                        $multimediaObject = $this->createMultimediaObject($titleData, $series);
+                        if ($multimediaObject){
+                            try{
+                                $multimediaObject = $trackService->createTrackFromInboxOnServer($multimediaObject, $filePath, $profile, $priority, $language, $description);
+                            }catch(\Exception $e){
+                                // TODO: filter invalid files another way
+                                if (!strpos($e->getMessage(), 'Unknown error')){
+                                    $this->removeInvalidMultimediaObject($multimediaObject);
+                                    throw $e;
+                                }
+                            }
+                            foreach($pubchannel as $tagCode => $valueOn){
+                                $addedTags = $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
+                                // TODO #6465 : Review addition of Publication Channel (create service)
+                                // * If MultimediaObject didn't contained PUCHWEBTV tag and now it does:
+                                //   - execute job (master_copy to video_h264)
+                                // * If MultimediaObject didn't contained ARCA tag and now it does:
+                                //   - execute corresponding job
+                            }
+                        }
                     }
                 }
+            }catch(\Exception $e){
+                // TODO filter unknown errors
+                $message = preg_replace( "/\r|\n/", "", $e->getMessage());
+                return array(
+                             'uploaded' => 'failed',
+                             'message' => $e->getMessage(),
+                             );
             }
-
         }else{
             // TODO THROW EXCEPTION OR RENDER SPECIFIC TEMPLATE WITH MESSAGE
+            return array(
+                         'uploaded' => 'failed',
+                         'message' => 'No data received'
+                         );
         }
 
-
-        return array();
+        return array(
+                     'uploaded' => 'success',
+                     'message' => 'Track(s) added'
+                     );
     }
 
     /**
@@ -180,7 +224,18 @@ class DefaultController extends Controller
     {
         // TODO complete
 
-        return array();
+        return array('message' => 'success it seems');
+    }
+
+    /**
+     * @Template()
+     */
+    public function errorAction(Request $request)
+    {
+        // TODO complete
+        $errorMessage = $request->get('errormessage');
+
+        return array('message' => $errorMessage);
     }
 
     /**
@@ -223,6 +278,9 @@ class DefaultController extends Controller
             $factoryService = $this->get('pumukitschema.factory');
             $series = $factoryService->createSeries();
 
+            $i18nTitle = $this->getKeyData('i18n_title', $seriesData);
+            if (empty(array_filter($i18nTitle))) $seriesData = $this->getDefaultFieldValuesInData($seriesData, 'i18n_title', 'New', true);
+
             $keys = array('i18n_title', 'i18n_description');
             $series = $this->setData($series, $seriesData, $keys);
 
@@ -253,6 +311,22 @@ class DefaultController extends Controller
     }
 
     /**
+     * Add Tag to Multimedia Object by Code
+     */
+    private function addTagToMultimediaObjectByCode(MultimediaObject $multimediaObject, $tagCode)
+    {
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $tagRepo = $dm->getRepository('PumukitSchema:Tag');
+
+        $addedTags = array();
+
+        $tag = $tagRepo->findOneByCode($tagCode);
+        if ($tag) $addedTags = $tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());
+
+        return $addedTags;
+    }
+
+    /**
      * Set data
      */
     private function setData($resource, $resourceData, $keys)
@@ -272,6 +346,37 @@ class DefaultController extends Controller
         $dm->flush();
 
         return $resource;
+    }
+
+    /**
+     * Remove Invalid Multimedia Object
+     */
+    private function removeInvalidMultimediaObject(MultimediaObject $multimediaObject)
+    {
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $dm->remove($multimediaObject);
+        $dm->flush();
+    }
+
+    /**
+     * Get default field values in data
+     * for those important fields that can not be empty
+     */
+    private function getDefaultFieldValuesInData($resourceData=array(), $fieldName='', $defaultValue='', $isI18nField=false)
+    {
+        if ($fieldName && $defaultValue){
+            if ($isI18nField){
+                $resourceData[$fieldName] = array();
+                $locales = $this->container->getParameter('pumukit2.locales');
+                foreach($locales as $locale){
+                    $resourceData[$fieldName][$locale] = $defaultValue;
+                }
+            }else{
+                $resourceData[$fieldName] = $defaultValue;
+            }
+        }
+
+        return $resourceData;
     }
 
     /**

@@ -1,4 +1,11 @@
 <script type="text/javascript">
-  parent.$('#pumukitwizard_body').load("{{ path('pumukitwizard_default_end') }}", {'_method': 'POST'});
-  //parent.success('{% trans %}New Track added.{% endtrans %}');
+  var uploaded = '{{ uploaded }}';
+  if ('success' == uploaded){
+    parent.$('#pumukitwizard_body').load("{{ path('pumukitwizard_default_end') }}", {'_method': 'POST'});
+    parent.success('{% trans %}New Track(s) added.{% endtrans %}');
+  }else{
+    var message = "{{ message }}";
+    parent.$('#pumukitwizard_body').load("{{ path('pumukitwizard_default_error') }}", {'errormessage': message, '_method': 'POST'});
+    parent.no_success('{{ message }}');
+  }
 </script>
