@@ -55,7 +55,7 @@
 
             <!-- Tracks -->
             {% for track in multimediaObject.getTracks() %}
-              <media:content url="http://tv.uvigo.es/video/112868.html" type="video/x-flv" medium="video" isDefault="true" expression="full" framerate="{{ track.getFramerate() }}" channels="{{ track.getChannels() }}" duration="{{ track.getDuration() }}" height="{{ track.getHeight() }}" width="{{ track.getWidth() }}" lang="{{ track.getLanguage() }}"/>          
+              <media:content url="{{ track.getUrl() }}" type="{{ track.getMimeType() }}" medium="{{ track.getFormat() }}" isDefault="true" expression="full" framerate="{{ track.getFramerate() }}" channels="{{ track.getChannels() }}" duration="{{ track.getDuration() }}" height="{{ track.getHeight() }}" width="{{ track.getWidth() }}" lang="{{ track.getLanguage() }}"/>          
             {% endfor %}
     	    </item>
 
