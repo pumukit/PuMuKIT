@@ -165,13 +165,6 @@ class DefaultController extends Controller
                             //   - execute corresponding job
                         }
                     }
-
-                    return array(
-                                 'uploaded' => 'success',
-                                 'message' => 'Track(s) added',
-                                 'option' => 'single',
-                                 'mm' => $multimediaObject
-                                 );
                 }elseif ('multiple' === $option){
                     $series = $this->getSeries($seriesData);
                     $selectedPath = $request->get('file');
@@ -218,11 +211,17 @@ class DefaultController extends Controller
                          );
         }
 
+        if ($series) $seriesId = $series->getId();
+        else $seriesId = null;
+        if ($multimediaObject) $mmId = $multimediaObject->getId();
+        else $mmId = null;
+
         return array(
                      'uploaded' => 'success',
                      'message' => 'Track(s) added',
-                     'option' => 'multiple',
-                     'mm' => null
+                     'option' => $option,
+                     'seriesId' => $seriesId,
+                     'mmId' => $mmId
                      );
     }
 
@@ -234,10 +233,14 @@ class DefaultController extends Controller
         // TODO complete
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $mmRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $multimediaObject = $mmRepo->find($request->get('id'));
+        $seriesRepo = $dm->getRepository('PumukitSchemaBundle:Series');
+
+        $series = $seriesRepo->find($request->get('seriesId'));
+        $multimediaObject = $mmRepo->find($request->get('mmId'));
 
         return array(
                      'message' => 'success it seems',
+                     'series' => $series,
                      'mm' => $multimediaObject
                      );
     }

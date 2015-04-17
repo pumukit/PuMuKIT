@@ -1,13 +1,16 @@
 <script type="text/javascript">
   var uploaded = '{{ uploaded }}';
   if ('success' == uploaded){
-    var option = '{{ option }}';
+    var seriesId = "{{ seriesId }}";
+    var option = "{{ option }}";
     if ('single' == option){
-      var id = '{{ mm.id }}';
-      var route = "{{ path('pumukitwizard_default_end', {'id': '__id__'}) }}";
-      route = route.replace('__id__', id);
+      var mmId = "{{ mmId }}";
+      var route = "{{ path('pumukitwizard_default_end', {'seriesId': '__seriesId__', 'mmId': '__mmId__'})|raw }}";
+      route = route.replace('__seriesId__', seriesId);
+      route = route.replace('__mmId__', mmId);
     }else{
-      var route = "{{ path('pumukitwizard_default_end') }}";
+      var route = "{{ path('pumukitwizard_default_end', {'seriesId': '__seriesId__'})|raw }}";
+      route = route.replace('__seriesId__', seriesId);
     }
     parent.$('#pumukitwizard_body').load(route, {'_method':'POST'});
     parent.success('{% trans %}New Track(s) added.{% endtrans %}');

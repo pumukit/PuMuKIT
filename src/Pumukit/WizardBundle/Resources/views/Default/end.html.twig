@@ -32,20 +32,23 @@
       <span>{{ mm.getPublicDate()|date('d/m/Y') }}</span>
     </div>
   </div>
+  {% endif %}
   <div class="row">
     <div class="col-md-12">
       {% trans %}Actions{% endtrans %}:
       <ul>
+        {% if series is not empty %}
         <li>
-          <a href="{{ path('pumukitnewadmin_mms_index', {'id': mm.getSeries.getId()}) }}">
+          <a href="{{ path('pumukitnewadmin_mms_index', {'id': series.getId()}) }}">
             {% trans %}Multimedia Object data{% endtrans %}
           </a>
         </li>
         <li>
-          <a href="{{ path('pumukitwizard_default_type', {'id': mm.getSeries.getId()}) }}">
+          <a href="{{ path('pumukitwizard_default_type', {'id': series.getId()}) }}">
             {% trans %}Another Multimedia Object in same Series{% endtrans %}
           </a>
         </li>
+        {% endif %}
         <li>
           <a href="{{ path('pumukitwizard_default_series') }}">
             {% trans %}Another Multimedia Object in a new Series{% endtrans %}
@@ -54,7 +57,6 @@
       </ul>
     </div>
   </div>
-  {% endif %}
   {# TODO
   <?php include_partial('uploads/ayuda', array('que' => 'cuatro')) ?>
   #}
