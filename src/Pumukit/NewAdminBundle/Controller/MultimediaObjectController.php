@@ -262,6 +262,11 @@ class MultimediaObjectController extends SortableAdminController
         $method = $request->getMethod();
         if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
             $formPub->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+            // TODO #6465 : Review change of Publication Channel (create service)
+            // * If MultimediaObject didn't contained PUCHWEBTV tag and now it does:
+            //   - execute job (master_copy to video_h264)
+            // * If MultimediaObject didn't contained ARCA tag and now it does:
+            //   - execute corresponding job
             $resource = $this->updateTags($request->get('pub_channels', null), "PUCH", $resource);
             $resource = $this->updateTags($request->get('pub_decisions', null), "PUDE", $resource);
 
