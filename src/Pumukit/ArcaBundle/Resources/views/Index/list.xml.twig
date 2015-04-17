@@ -22,6 +22,7 @@
     {% for multimediaObject in multimediaObjects %}
       {% for tag_arca in multimediaObject.getTags() %}
         {% if tag_arca.getCod() == "PUCHARCA" %}
+
     	    <item>
             <arca:course>
         	    <arca:title> {{ multimediaObject.getTitle() }} </arca:title>
@@ -54,10 +55,10 @@
 
             <!-- Tracks -->
             {% for track in multimediaObject.getTracks() %}
-              <media:content url="http://tv.uvigo.es/video/112868.html" type="video/x-flv" medium="video" isDefault="true" expression="full" framerate="25" 
-              channels="1" duration="{{ track.getDuration() }}" height="576" width="720" lang="gl"/>          
+              <media:content url="http://tv.uvigo.es/video/112868.html" type="video/x-flv" medium="video" isDefault="true" expression="full" framerate="{{ track.getFramerate() }}" channels="{{ track.getChannels() }}" duration="{{ track.getDuration() }}" height="{{ track.getHeight() }}" width="{{ track.getWidth() }}" lang="{{ track.getLanguage() }}"/>          
             {% endfor %}
     	    </item>
+
         {% endif %}
       {% endfor %}
     {% endfor %}
