@@ -143,7 +143,7 @@ class DefaultController extends Controller
                     $multimediaObjectData = $this->getKeyData('multimediaobject', $formData);
 
                     $i18nTitle = $this->getKeyData('i18n_title', $multimediaObjectData);
-                    if (empty(array_filter($i18nTitle))) $multimediaObjectData = $this->getDefaultFieldValuesInData($multimediobjectData, 'i18n_title', 'New', true);
+                    if (empty(array_filter($i18nTitle))) $multimediaObjectData = $this->getDefaultFieldValuesInData($multimediaObjectData, 'i18n_title', 'New', true);
 
                     $multimediaObject = $this->createMultimediaObject($multimediaObjectData, $series);
 
@@ -165,6 +165,13 @@ class DefaultController extends Controller
                             //   - execute corresponding job
                         }
                     }
+
+                    return array(
+                                 'uploaded' => 'success',
+                                 'message' => 'Track(s) added',
+                                 'option' => 'single',
+                                 'mm' => $multimediaObject
+                                 );
                 }elseif ('multiple' === $option){
                     $series = $this->getSeries($seriesData);
                     $selectedPath = $request->get('file');
@@ -213,7 +220,9 @@ class DefaultController extends Controller
 
         return array(
                      'uploaded' => 'success',
-                     'message' => 'Track(s) added'
+                     'message' => 'Track(s) added',
+                     'option' => 'multiple',
+                     'mm' => null
                      );
     }
 
@@ -223,8 +232,14 @@ class DefaultController extends Controller
     public function endAction(Request $request)
     {
         // TODO complete
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $mmRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $multimediaObject = $mmRepo->find($request->get('id'));
 
-        return array('message' => 'success it seems');
+        return array(
+                     'message' => 'success it seems',
+                     'mm' => $multimediaObject
+                     );
     }
 
     /**

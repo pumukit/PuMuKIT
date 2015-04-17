@@ -1,7 +1,15 @@
 <script type="text/javascript">
   var uploaded = '{{ uploaded }}';
   if ('success' == uploaded){
-    parent.$('#pumukitwizard_body').load("{{ path('pumukitwizard_default_end') }}", {'_method': 'POST'});
+    var option = '{{ option }}';
+    if ('single' == option){
+      var id = '{{ mm.id }}';
+      var route = "{{ path('pumukitwizard_default_end', {'id': '__id__'}) }}";
+      route = route.replace('__id__', id);
+    }else{
+      var route = "{{ path('pumukitwizard_default_end') }}";
+    }
+    parent.$('#pumukitwizard_body').load(route, {'_method':'POST'});
     parent.success('{% trans %}New Track(s) added.{% endtrans %}');
   }else{
     var message = "{{ message }}";
