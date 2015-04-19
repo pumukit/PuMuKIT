@@ -200,14 +200,20 @@ class DefaultController extends Controller
                 $message = preg_replace( "/\r|\n/", "", $e->getMessage());
                 return array(
                              'uploaded' => 'failed',
-                             'message' => $e->getMessage(),
+                             'message' => $message,
+			     'option' => null,
+			     'seriesId' => null,
+			     'mmId' => null
                              );
             }
         }else{
             // TODO THROW EXCEPTION OR RENDER SPECIFIC TEMPLATE WITH MESSAGE
             return array(
                          'uploaded' => 'failed',
-                         'message' => 'No data received'
+                         'message' => 'No data received',
+			 'option' => null,
+			 'seriesId' => null,
+			 'mmId' => null
                          );
         }
 
