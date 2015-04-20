@@ -31,7 +31,7 @@
       <div class="container_15" id="tvusc">
         <div class="usctv_cab">
           {% include 'PumukitCmarWebTVBundle::header_menu.html.twig' %}
-          {% include 'PumukitCmarWebTVBundle::header_breadcrumb.html.twig' %}
+          {% render(controller('PumukitWebTVBundle:Widget:breadcrumbs')) %}
         </div>
         <div class="">
           {% block body_without_bar %}
