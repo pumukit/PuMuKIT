@@ -39,7 +39,7 @@
       	    <author>tv@uvigo.es</author>
 
       	    <source url="http://tv.uvigo.es/xml/arca">Universidad de Vigo Television</source> 
-      	    <media:thumbnail url="{{ multimediaObject.getFirstUrlPic() }}" height="82" width="100" />
+      	    <media:thumbnail url="{{ multimediaObject.getFirstUrlPic() }}" height="{{ multimediaObject.getPic().getHeight() }}" width="{{ multimediaObject.getPic().getWidth() }}" />
       	    <media:copyright>{{ multimediaObject.getCopyright() }}</media:copyright>
       	    <guid isPermaLink="true">http://tv.uvigo.es/es/video/mm/25673.html</guid>
 
