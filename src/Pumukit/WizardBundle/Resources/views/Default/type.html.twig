@@ -1,5 +1,6 @@
 {% extends 'PumukitWizardBundle:Default:index.html.twig' %}
 {% block wizard_body %}
+{% render(controller('PumukitWizardBundle:Default:steps', {'step': 1, 'option': 'single', 'show_series': show_series})) %}
 <div class="well">
   <form id="pumukitwizard_type_form" autocomplete="off"
         action="{{ path('pumukitwizard_default_option') }}" method="POST">
@@ -10,6 +11,23 @@
     <input type="hidden" name="pumukitwizard_form_data[series][{{ field }}][{{ locale }}]" id="pumukitwizard_type_series_{{ field }}_{{ locale }}" value="{{ value }}">
     {% endfor %}
     {% endfor %}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="text-right">
+          {# TODO check this href when doing the menu with steps #}
+          {% spaceless %}
+          {% if show_series %}
+          <a href="{{ path('pumukitnewadmin_series_index') }}">
+          {% else %}
+          <a href="{{ path('pumukitnewadmin_mms_index', {'id': series_id}) }}">
+          {% endif %}
+          <button type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button>
+          </a>
+          {% endspaceless %}
+          <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %}</button>
+        </div>
+      </div>
+    </div>
     <fieldset>
       <div class="form-group" id="pumukitwizard_type_option">
         <label for="pumukitwizard_type_option" class="control-label">{% trans %}Type{% endtrans %}</label>
@@ -30,26 +48,6 @@
         {% endif %}
       </div>
     </fieldset>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="text-right">
-          {% if show_previous %}
-          <button type="submit" id="pumukitwizard_type_previous" class="btn btn-primary btn-raised">{% trans %}Previous{% endtrans %}</button>
-          {% endif %}
-          {# TODO check this href when doing the menu with steps #}
-          {% spaceless %}
-          {% if show_previous %}
-          <a href="{{ path('pumukitnewadmin_series_index') }}">
-          {% else %}
-          <a href="{{ path('pumukitnewadmin_mms_index', {'id': series_id}) }}">
-          {% endif %}
-          <button type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button>
-          </a>
-          {% endspaceless %}
-          <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %}</button>
-        </div>
-      </div>
-    </div>
   </form>
 </div>
 {% endblock wizard_body %}

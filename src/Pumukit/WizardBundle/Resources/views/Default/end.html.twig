@@ -1,4 +1,5 @@
 {% block wizard_body %}
+{% render(controller('PumukitWizardBundle:Default:steps', {'step': 4, 'option': option})) %}
 <div class="well">
   <h3>{% trans %}Track(s) uploaded successfully{% endtrans %}</h3>
   <h4>
@@ -40,18 +41,18 @@
         {% if series is not empty %}
         <li>
           <a href="{{ path('pumukitnewadmin_mms_index', {'id': series.getId()}) }}">
-            {% trans %}Multimedia Object data{% endtrans %}
+            {% trans %}See Multimedia Object data{% endtrans %}
           </a>
         </li>
         <li>
           <a href="{{ path('pumukitwizard_default_type', {'id': series.getId()}) }}">
-            {% trans %}Another Multimedia Object in same Series{% endtrans %}
+            {% trans %}Create another Multimedia Object in same Series{% endtrans %}
           </a>
         </li>
         {% endif %}
         <li>
           <a href="{{ path('pumukitwizard_default_series') }}">
-            {% trans %}Another Multimedia Object in a new Series{% endtrans %}
+            {% trans %}Create another Multimedia Object in a new Series{% endtrans %}
           </a>
         </li>
       </ul>

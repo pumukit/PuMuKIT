@@ -40,13 +40,13 @@ class DefaultController extends Controller
     {
         $formData = $request->get('pumukitwizard_form_data');
 
-        $showPrevious = true;
+        $showSeries = true;
         $seriesRepo = $this->get('doctrine_mongodb.odm.document_manager')
             ->getRepository('PumukitSchemaBundle:Series');
         $series = $seriesRepo->find($id);
 
         if ($series){
-            $showPrevious = false;
+            $showSeries = false;
             if (!$formData){
                 $formData = array('series' => array(
                                                    'i18n_title' => $series->getI18nTitle(),
@@ -58,7 +58,7 @@ class DefaultController extends Controller
         return array(
                      'series_id' => $id,
                      'form_data' => $formData,
-                     'show_previous' => $showPrevious
+                     'show_series' => $showSeries
                      );
     }
 
@@ -118,9 +118,14 @@ class DefaultController extends Controller
         $trackService = $this->get('pumukitschema.track');
         $tagService = $this->get('pumukitschema.tag');
 
+        $series = null;
+        $seriesId = null;
         $formData = $request->get('pumukitwizard_form_data');
         if ($formData){
             $seriesData = $this->getKeyData('series', $formData);
+
+            $seriesId = $this->getKeyData('id', $seriesData);
+
             $typeData = $this->getKeyData('type', $formData);
             $trackData = $this->getKeyData('track', $formData);
 
@@ -131,7 +136,7 @@ class DefaultController extends Controller
 
             $pubchannel = $this->getKeyData('pubchannel', $trackData);
 
-            // TODO try catch exception
+            // TODO Fragment this. Develop better way.
             try{
                 if (empty($_FILES) && empty($_POST)){
                     throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
@@ -211,11 +216,13 @@ class DefaultController extends Controller
             return array(
                          'uploaded' => 'failed',
                          'message' => 'No data received',
-			 'option' => null,
-			 'seriesId' => null,
-			 'mmId' => null
+                         'option' => null,
+                         'seriesId' => null,
+                         'mmId' => null
                          );
         }
+
+        if ('null' == $seriesId) $showSeries = true;
 
         if ($series) $seriesId = $series->getId();
         else $seriesId = null;
@@ -227,7 +234,8 @@ class DefaultController extends Controller
                      'message' => 'Track(s) added',
                      'option' => $option,
                      'seriesId' => $seriesId,
-                     'mmId' => $mmId
+                     'mmId' => $mmId,
+                     'show_series' => $showSeries
                      );
     }
 
@@ -243,11 +251,15 @@ class DefaultController extends Controller
 
         $series = $seriesRepo->find($request->get('seriesId'));
         $multimediaObject = $mmRepo->find($request->get('mmId'));
+        $option = $request->get('option');
+        $showSeries = $request->get('show_series');
 
         return array(
                      'message' => 'success it seems',
                      'series' => $series,
-                     'mm' => $multimediaObject
+                     'mm' => $multimediaObject,
+                     'option' => $option,
+                     'show_series' => $showSeries
                      );
     }
 
@@ -258,8 +270,30 @@ class DefaultController extends Controller
     {
         // TODO complete
         $errorMessage = $request->get('errormessage');
+        $option = $request->get('option');
+        $showSeries = $request->get('show_series');
 
-        return array('message' => $errorMessage);
+        return array(
+                     'message' => $errorMessage,
+                     'option' => $option,
+                     'show_series' => $showSeries
+                     );
+    }
+
+    /**
+     * @Template()
+     */
+    public function stepsAction(Request $request)
+    {
+        $step = $request->get('step');
+        $option = $request->get('option');
+        $showSeries = $request->get('show_series');
+
+        return array(
+                     'step' => $step,
+                     'option' => $option,
+                     'show_series' => $showSeries
+                     );
     }
 
     /**

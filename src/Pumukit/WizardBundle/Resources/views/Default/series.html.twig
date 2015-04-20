@@ -1,10 +1,19 @@
 {% extends 'PumukitWizardBundle:Default:index.html.twig' %}
-
 {% block wizard_body %}
+{% render(controller('PumukitWizardBundle:Default:steps', {'step': 0, 'option': 'single', 'show_series': true})) %}
 <div class="well">
   <form id="pumukitwizard_series_form" autocomplete="off"
         action="{{ path('pumukitwizard_default_type', {'id': 'null'}) }}" method="POST">
     <input type="hidden" name="pumukitwizard_form_data[series][id]" id="pumukitwizard_series_id" value="">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="text-right">
+          {# TODO check this href when doing the menu with steps #}
+          <a href="{{ path('pumukitnewadmin_series_index') }}"><button type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button></a>
+          <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %}</button>
+        </div>
+      </div>
+    </div>
     <fieldset>
       <div class="form-group" id="pumukitwizard_series_i18n_title">
         <label for="pumukitwizard_series_i18n_title" class="control-label">{% trans %}Title{% endtrans %}</label>
@@ -33,15 +42,6 @@
         {% endfor %}
       </div>
     </fieldset>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="text-right">
-          {# TODO check this href when doing the menu with steps #}
-          <a href="{{ path('pumukitnewadmin_series_index') }}"><button type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button></a>
-          <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %}</button>
-        </div>
-      </div>
-    </div>
   </form>
 </div>
 {% endblock wizard_body %}

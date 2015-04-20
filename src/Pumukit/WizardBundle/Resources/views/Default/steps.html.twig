@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col-md-12">
+    <ul id="mainNav" class="nav nav-pills nav-wizard">
+      <li class="{% if not show_series %}disabled{% elseif (step == 0) %}active{% elseif (step == 1) %}lastdone{% elseif (step > 1) %}done{% endif %}">
+        <a id="pumukitwizard_type_previous" href="#">{% trans %}Step 0: Series{% endtrans %}<br/>
+          {% trans %}Create a new Series for the Multimedia Object{% endtrans %}
+        </a>
+        <div class="nav-arrow"></div>
+      </li>
+      <li class="{% if not show_series %}first-child-pumukit{% endif %} {% if (step == 1) %}active{% elseif ((step == 2) or ((step == 3) and ('multiple' == option))) %}lastdone{% elseif (step > 2) %}done{% elseif (step < 1) %}disabled{% endif %}">
+        <a {{ ('single' == option)?'id="pumukitwizard_multimediaobject_previous"':'id="pumukitwizard_track_previous"' }} href="#" style="float:left;clear:left;">{% trans %}Step 1: Type{% endtrans %}<br/>
+          {% trans %}Chose option type{% endtrans %}
+        </a>
+        <div class="nav-arrow"></div>
+      </li>
+      <li class="{% if (step == 2) and ('single' == option) %}active{% elseif (step == 3) and ('single' == option) %}lastdone{% elseif (step > 3) and ('single' == option) %}done{% elseif (step < 2) or ('multiple' == option) %}disabled{% endif %}">
+        <a id="pumukitwizard_track_previous" href="#">{% trans %}Step 2: Metadata{% endtrans %}<br/>
+          {% trans %}Insert the data for the Multimedia Object{% endtrans %}
+        </a>
+        <div class="nav-arrow"></div>
+      </li>
+      {% if  ('single' == option) %}
+      <li class="{% if (step == 3) %}active{% elseif (step > 2) %}done{% elseif (step < 3) %}disabled{% endif %}">
+        <a href="#">{% trans %}Step 3: File{% endtrans %}<br/>
+          {% trans %}Upload the multimedia file{% endtrans %}
+        </a>
+        <div class="nav-arrow"></div>
+      </li>
+      {% elseif 'multiple' == option %}
+      <li class="{% if (step == 3) %}active{% elseif (step > 2) %}done{% elseif (step < 3) %}disabled{% endif %}">
+        <a href="#">{% trans %}Step 2: Files{% endtrans %}<br/>
+          {% trans %}Upload the multimedia file{% endtrans %}
+        </a>
+        <div class="nav-arrow"></div>
+      </li>
+      {% endif %}
+      <li class="{% if (step == 4) or (step == 5) %}active{% elseif (step < 4) %}disabled{% endif %}">
+        <a href="#">
+          {% if (5 == step) %}
+          {% trans %}Final step: Error{% endtrans %}<br/>
+          {% trans %}Failure in wizard proccess{% endtrans %}
+          {% else %}
+          {% trans %}Final step: End{% endtrans %}<br/>
+          {% trans %}Wait for the end of transcoding to be notified{% endtrans %}
+          {% endif %}
+        </a>
+        <div class="nav-arrow"></div>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="clearfloat"> </div>

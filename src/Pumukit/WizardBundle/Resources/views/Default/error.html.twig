@@ -1,4 +1,5 @@
 {% block wizard_body %}
+{% render(controller('PumukitWizardBundle:Default:steps', {'step': 5, 'option': option})) %}
 <div class="well">
 
 <h1 class="cS_h1_error">{{ message }}</h1>

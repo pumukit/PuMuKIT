@@ -1,32 +1,42 @@
 $(function(){
 
-    $('#pumukitwizard_type_previous').on('click', function(){
-        var typeForm = $('#pumukitwizard_type_form')[0];
-        typeForm.action = "{{ path('pumukitwizard_default_series')|raw }}";
-        typeForm.submit();
+    $('#pumukitwizard_type_previous').on('click', function(e){
+        if($(this).parent().hasClass('lastdone')){
+            console.log('entra en el if');
+            var typeForm = $('#pumukitwizard_type_form')[0];
+            typeForm.action = "{{ path('pumukitwizard_default_series')|raw }}";
+            typeForm.submit();
+        }
+        return false;
     });
 
-    $('#pumukitwizard_multimediaobject_previous').on('click', function(){
-        var multimediaobjectForm = $('#pumukitwizard_multimediaobject_form')[0];
-        var route = "{{ path('pumukitwizard_default_type', {'id': '__seriesId__'})|raw }}";
-        var seriesId = $('#pumukitwizard_series_id').val();
-        multimediaobjectForm.action = route.replace('__seriesId__', seriesId);
-        multimediaobjectForm.submit();
+    $('#pumukitwizard_multimediaobject_previous').on('click', function(e){
+        if($(this).parent().hasClass('lastdone')){
+            var multimediaobjectForm = $('#pumukitwizard_multimediaobject_form')[0];
+            var route = "{{ path('pumukitwizard_default_type', {'id': '__seriesId__'})|raw }}";
+            var seriesId = $('#pumukitwizard_series_id').val();
+            multimediaobjectForm.action = route.replace('__seriesId__', seriesId);
+            multimediaobjectForm.submit();
+        }
+        return false;
     });
 
     $('#pumukitwizard_track_previous').on('click', function(){
-        var trackForm = $('#pumukitwizard_track_form')[0];
-        var typeOption = $('#pumukitwizard_track_type_option').val();
-        if ('multiple' == typeOption){
-            var route = "{{ path('pumukitwizard_default_type', {'id': '__seriesId__'})|raw }}";
-            var seriesId = $('#pumukitwizard_series_id').val();
-            trackForm.action = route.replace('__seriesId__', seriesId);
-        }else{
-            trackForm.action = "{{ path('pumukitwizard_default_multimediaobject')|raw }}";
+        if($(this).parent().hasClass('lastdone')){
+            var trackForm = $('#pumukitwizard_track_form')[0];
+            var typeOption = $('#pumukitwizard_track_type_option').val();
+            if ('multiple' == typeOption){
+                var route = "{{ path('pumukitwizard_default_type', {'id': '__seriesId__'})|raw }}";
+                var seriesId = $('#pumukitwizard_series_id').val();
+                trackForm.action = route.replace('__seriesId__', seriesId);
+            }else{
+                trackForm.action = "{{ path('pumukitwizard_default_multimediaobject')|raw }}";
+            }
+            trackForm.enctype = "";
+            trackForm.target = "";
+            trackForm.submit();
         }
-        trackForm.enctype = "";
-        trackForm.target = "";
-        trackForm.submit();
+        return false;
     });
 
 });

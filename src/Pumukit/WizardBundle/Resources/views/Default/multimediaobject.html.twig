@@ -1,5 +1,6 @@
 {% extends 'PumukitWizardBundle:Default:index.html.twig' %}
 {% block wizard_body %}
+{% render(controller('PumukitWizardBundle:Default:steps', {'step': 2, 'option': form_data.type.option, 'show_series': ('null' == form_data.series.id)})) %}
 <div class="well">
   <form id="pumukitwizard_multimediaobject_form" autocomplete="off"
         action="{{ path('pumukitwizard_default_track') }}" method="POST">
@@ -11,6 +12,24 @@
     {% endfor %}
     {% endfor %}
     <input type="hidden" name="pumukitwizard_form_data[type][option]" id="pumukitwizard_multimediaobject_type_option" value="{{ form_data.type.option }}">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="text-right">
+          {# TODO check this href when doing the menu with steps #}
+          {% spaceless %}
+          {% if 'null' == form_data.series.id %}
+          <a href="{{ path('pumukitnewadmin_series_index') }}">
+          {% else %}
+          <a href="{{ path('pumukitnewadmin_mms_index', {'id': form_data.series.id}) }}">
+          {% endif %}
+          <button type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button>
+          </a>
+          {% endspaceless %}
+          {# TODO PASO III: ARCHIVOS as title to next form #}
+          <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %}</button>
+        </div>
+      </div>
+    </div>
     <fieldset>
       {# TODO build input fields with for loop #}
       <div class="form-group" id="pumukitwizard_multimediaobject_i18n_title">
@@ -74,25 +93,6 @@
         </div>
       </div>
     </fieldset>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="text-right">
-          <button type="submit" id="pumukitwizard_multimediaobject_previous" class="btn btn-primary btn-raised">{% trans %}Previous{% endtrans %}</button>
-          {# TODO check this href when doing the menu with steps #}
-          {% spaceless %}
-          {% if 'null' == form_data.series.id %}
-          <a href="{{ path('pumukitnewadmin_series_index') }}">
-          {% else %}
-          <a href="{{ path('pumukitnewadmin_mms_index', {'id': form_data.series.id}) }}">
-          {% endif %}
-          <button type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button>
-          </a>
-          {% endspaceless %}
-          {# TODO PASO III: ARCHIVOS as title to next form #}
-          <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %}</button>
-        </div>
-      </div>
-    </div>
   </form>
 </div>
 {% endblock wizard_body %}
