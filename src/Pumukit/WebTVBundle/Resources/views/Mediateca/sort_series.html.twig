@@ -2,14 +2,14 @@
 
   <!--Toggle whit filter (SIN ACABAR)-->
   <div style="float: right" class="lib_menu_view">
-    <a href="#" onclick="javascript:cambia_estado_div();">Filter</a>
+    <a href="#" onclick="$('#search_div').toggle('slow','linear');">Filter</a>
   </div>
 
   <!--Methods to order series -->
   <div class="lib_menu_sort">
     <span>Sort by:</span>  
-    <a href="/mediateca/date">Date</a>,
-    <a href="/mediateca/alphabetically">Alphabetically</a>.
+    <a href="{{ path('pumukit_webtv_mediateca_index', {'sort': 'date'}) }}">Date</a>,
+    <a href="{{ path('pumukit_webtv_mediateca_index', {'sort': 'alphabetically'}) }}">Alphabetically</a>.
     <!--<a href="<?php //echo url_for('library/channel' . $more) ?>">Categories</a>.-->
   </div>
 
@@ -25,7 +25,3 @@
   </div>
 
 </div>
-
-<script>
-  function cambia_estado_div(){$("#search_div").toggle('slow','linear');}
-</script>

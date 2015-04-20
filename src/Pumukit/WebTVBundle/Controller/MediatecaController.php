@@ -17,16 +17,10 @@ class MediatecaController extends Controller
     {
     	$repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
 
-        dump($sort);
-        dump($request->getLocale());
+        $sortField = "alphabetically" == $sort ? 'title.' . $request->getLocale() : "public_date";
+        $series = $repo->findBy(array(), array($sortField => 1));        
 
-        if($sort == "alphabetically"){
-    		$series = $repo->findBy(array(), array('title.' . $request->getLocale() => +1));
-        }
-        else{
-        	$series = $repo->findBy(array(), array('public_date' => +1));
-        	dump($series);
-        }
+        $this->get('pumukit_web_tv.breadcrumbs')->addList("All", "pumukit_webtv_mediateca_index");
 
         return array('series' => $series, 'sort' => $sort);
     }
