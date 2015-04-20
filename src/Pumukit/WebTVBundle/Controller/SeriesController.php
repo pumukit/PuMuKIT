@@ -22,6 +22,7 @@ class SeriesController extends Controller
         ->getRepository('PumukitSchemaBundle:MultimediaObject');
       $multimediaObjects = $mmobjRepo->findBySeriesByTagCodAndStatus($series, 'PUCHWEBTV', array(MultimediaObject::STATUS_PUBLISHED));
 
+      $this->updateBreadcrumbs($series);
     	
       return array('series' => $series, 
                    'multimediaObjects' => $multimediaObjects);
@@ -38,8 +39,15 @@ class SeriesController extends Controller
         ->getRepository('PumukitSchemaBundle:MultimediaObject');
       $multimediaObjects = $mmobjRepo->findBySeriesByTagCodAndStatus($series, 'PUCHWEBTV');
 
-    	
+      $this->updateBreadcrumbs($series);
+
       return array('series' => $series, 
                    'multimediaObjects' => $multimediaObjects);
+    }
+
+    private function updateBreadcrumbs(Series $series)
+    {
+      $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
+      $breadcrumbs->addSeries($series);
     }
 }

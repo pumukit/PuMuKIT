@@ -43,6 +43,7 @@ class MultimediaObjectController extends Controller
         //TODO.
         throw $this->createNotFoundException();
 
+      $this->updateBreadcrumbs($multimediaObject);
       $this->incNumView($multimediaObject, $track);
         
       return array('autostart' => $request->query->get('autostart', 'true'),
@@ -73,6 +74,7 @@ class MultimediaObjectController extends Controller
         $multimediaObject->getTrackById($request->query->get('track_id')) :
         $multimediaObject->getTrackWithTag('display');
 
+      $this->updateBreadcrumbs($multimediaObject);
       $this->incNumView($multimediaObject, $track);
 
       return array('autostart' => $request->query->get('autostart', 'true'),
@@ -131,5 +133,12 @@ class MultimediaObjectController extends Controller
       $track && $track->incNumview();
       $dm->persist($multimediaObject);
       $dm->flush();
+    }
+
+
+    private function updateBreadcrumbs(MultimediaObject $multimediaObject)
+    {
+      $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
+      $breadcrumbs->addMultimediaObject($multimediaObject);
     }
 }
