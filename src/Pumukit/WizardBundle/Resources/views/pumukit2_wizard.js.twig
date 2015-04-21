@@ -2,7 +2,6 @@ $(function(){
 
     $('#pumukitwizard_type_previous').on('click', function(e){
         if($(this).parent().hasClass('lastdone')){
-            console.log('entra en el if');
             var typeForm = $('#pumukitwizard_type_form')[0];
             typeForm.action = "{{ path('pumukitwizard_default_series')|raw }}";
             typeForm.submit();
