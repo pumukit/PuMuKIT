@@ -16,13 +16,13 @@
         float: left;
         margin: 10px;
         margin-right: 20px;">
-        <a href="/video/{{object.getId()}}">
+        <a href="{{ path('pumukit_webtv_multimediaobject_index', {'id': object.getId()}) }}">
           <img src="{{ object|first_url_pic(true) }}"></img>
         </a>
       </div>
       <div class="info">
         <div class="title">
-          <a href="/video/{{object.getId()}}">{{object.getTitle()}}</a>
+          <a href="{{ path('pumukit_webtv_multimediaobject_index', {'id': object.getId()}) }}">{{object.getTitle()}}</a>
         </div>
 
         <div class="subtitle">

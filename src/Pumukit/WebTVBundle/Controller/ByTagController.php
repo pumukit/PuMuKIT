@@ -13,7 +13,7 @@ use Pumukit\SchemaBundle\Document\Tag;
 class ByTagController extends Controller
 {
 
-  private $limit = 3;
+  private $limit = 10;
 
   /**
    * @Route("/multimediaobjects/tag/{cod}")
@@ -26,7 +26,9 @@ class ByTagController extends Controller
     
     $pagerfanta = $this->createPager($mmobjs, $request->query->get("page", 1));
     
-    return array('objects' => $pagerfanta, 'tag' => $tag);
+    return array('title' => 'Multimedia objects with tag',
+                 'objects' => $pagerfanta, 
+                 'tag' => $tag);
   }
   
   /**
@@ -40,7 +42,9 @@ class ByTagController extends Controller
     
     $pagerfanta = $this->createPager($series, $request->query->get("page", 1));
     
-    return array('objects' => $pagerfanta, 'tag' => $tag);
+    return array('title' => 'Series with tag',
+                 'objects' => $pagerfanta,
+                 'tag' => $tag);
   }
 
 
