@@ -267,6 +267,18 @@ class DefaultController extends Controller
     }
 
     /**
+     * Data action
+     */
+    public function dataAction(Request $request)
+    {
+        $mmId = $request->get('mmId');
+        $this->get('session')->set('admin/mms/id', $mmId);
+        $seriesId = $request->get('seriesId');
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_index', array('id' => $seriesId)));
+    }
+
+    /**
      * @Template()
      */
     public function errorAction(Request $request)

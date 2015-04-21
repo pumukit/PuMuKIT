@@ -38,12 +38,14 @@
     <div class="col-md-12">
       {% trans %}Actions{% endtrans %}:
       <ul>
-        {% if series is not empty %}
+        {% if series is not empty and mm is not empty %}
         <li>
-          <a href="{{ path('pumukitnewadmin_mms_index', {'id': series.getId()}) }}">
+          <a href="{{ path('pumukitwizard_default_data', {'mmId': mm.getId(), 'seriesId': series.getId()}) }}">
             {% trans %}See Multimedia Object data{% endtrans %}
           </a>
         </li>
+        {% endif %}
+        {% if series is not empty %}
         <li>
           <a href="{{ path('pumukitwizard_default_type', {'id': series.getId()}) }}">
             {% trans %}Create another Multimedia Object in same Series{% endtrans %}
