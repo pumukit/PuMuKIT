@@ -12,8 +12,6 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class DefaultController extends Controller
 {
-  // TODO complete all actions
-
     /**
      * @Template()
      */
@@ -247,7 +245,6 @@ class DefaultController extends Controller
      */
     public function endAction(Request $request)
     {
-        // TODO complete
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $mmRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $seriesRepo = $dm->getRepository('PumukitSchemaBundle:Series');
@@ -283,7 +280,6 @@ class DefaultController extends Controller
      */
     public function errorAction(Request $request)
     {
-        // TODO complete
         $errorMessage = $request->get('errormessage');
         $option = $request->get('option');
         $showSeries = $request->get('show_series');
