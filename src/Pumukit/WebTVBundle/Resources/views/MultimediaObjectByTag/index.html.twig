@@ -1,7 +1,0 @@
-{% extends 'PumukitWebTVBundle::layout.html.twig' %}
-
-{% block body %}
-	<h1 id="index_h1">Multimedia objects with tag: {{tag.getTitle()}}</h1>
-	{% include 'PumukitWebTVBundle:MultimediaObjectByTag:library_multimediaobject_tag.html.twig' %}
-	{% include 'PumukitWebTVBundle:MultimediaObjectByTag:pager.html.twig' %}
-{% endblock %}
