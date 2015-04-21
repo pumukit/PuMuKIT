@@ -78,3 +78,5 @@ parameters:
     pumukit2.locales:
         - es
         - en
+    pumukit2.inbox: "%kernel.root_dir%/../web/storage/inbox"
+    pumukit2.tmp: "%kernel.root_dir%/../web/storage/tmp"

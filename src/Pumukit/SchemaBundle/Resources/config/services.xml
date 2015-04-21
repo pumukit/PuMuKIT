@@ -51,6 +51,7 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="pumukitencoder.job"/>
             <argument type="service" id="pumukitencoder.profile"/>
+            <argument>%pumukit2.tmp%</argument>
         </service>
 
         <service id="pumukitschema.person" class="Pumukit\SchemaBundle\Services\PersonService">
