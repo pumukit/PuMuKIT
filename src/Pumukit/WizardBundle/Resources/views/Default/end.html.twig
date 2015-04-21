@@ -1,5 +1,5 @@
 {% block wizard_body %}
-{% render(controller('PumukitWizardBundle:Default:steps', {'step': 4, 'option': option})) %}
+{% render(controller('PumukitWizardBundle:Default:steps', {'step': 4, 'option': option, 'show_series': show_series})) %}
 <div class="well">
   <h3>{% trans %}Track(s) uploaded successfully{% endtrans %}</h3>
   <h4>

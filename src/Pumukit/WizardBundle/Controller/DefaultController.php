@@ -222,7 +222,8 @@ class DefaultController extends Controller
                          );
         }
 
-        if ('null' == $seriesId) $showSeries = true;
+        $showSeries = false;
+        if (('null' === $seriesId) || (null === $seriesId)) $showSeries = true;
 
         if ($series) $seriesId = $series->getId();
         else $seriesId = null;
