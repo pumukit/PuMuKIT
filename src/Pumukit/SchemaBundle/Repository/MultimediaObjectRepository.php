@@ -167,7 +167,7 @@ class MultimediaObjectRepository extends DocumentRepository
             ->field('tags._id')->equals(new \MongoId($tag->getId()));
         
         if (0 !== count($sort) ){
-            $qb->sort($sort['fieldName'], $sort['order']);
+          $qb->sort($sort);
         }        
 
         return $qb;
@@ -203,7 +203,7 @@ class MultimediaObjectRepository extends DocumentRepository
           ->field('tags._id')->in($mongoIds);
         
         if (0 !== count($sort) ){
-          $qb->sort($sort['fieldName'], $sort['order']);
+          $qb->sort($sort);
         }        
         
         if ($limit > 0){
@@ -229,7 +229,7 @@ class MultimediaObjectRepository extends DocumentRepository
           ->field('tags._id')->all($mongoIds);
         
         if (0 !== count($sort) ){
-            $qb->sort($sort['fieldName'], $sort['order']);
+            $qb->sort($sort);
         }        
 
         if ($limit > 0){
@@ -269,7 +269,7 @@ class MultimediaObjectRepository extends DocumentRepository
           ->field('tags._id')->notEqual(new \MongoId($tag->getId()));
         
         if (0 !== count($sort) ){
-            $qb->sort($sort['fieldName'], $sort['order']);
+            $qb->sort($sort);
         }        
 
         if ($limit > 0){
@@ -309,7 +309,7 @@ class MultimediaObjectRepository extends DocumentRepository
           ->field('tags._id')->notIn($mongoIds);
         
         if (0 !== count($sort) ){
-            $qb->sort($sort['fieldName'], $sort['order']);
+            $qb->sort($sort);
         }        
 
         if ($limit > 0){
@@ -508,7 +508,7 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $qb = $this->createStandardQueryBuilder()
           ->field('series')->references($series);
-        if (0 !== count($sort)) $qb->sort($sort['fieldName'], $sort['order']);
+        if (0 !== count($sort)) $qb->sort($sort);
         return $qb;
     }
 
