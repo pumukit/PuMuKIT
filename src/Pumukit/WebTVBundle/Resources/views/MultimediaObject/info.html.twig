@@ -7,8 +7,7 @@
         {% for tag in multimediaObject.getTags() if tag.getDisplay() and not tag.getMetatag() %}
           <li style="list-style:none; float: left; margin: 5px;">
             <div title="{{ tag.getTitle() }}" class="label-categories label-info">
-              {# FIX LINKS #}
-              <a style="text-decoration: none" href="/multimediaobjects/tag/{{tag.getId()}}">{{ tag.getTitle() }}</a>
+              <a style="text-decoration: none" href="{{ path('pumukit_webtv_bytag_multimediaobjects', {'cod': tag.getCod()})}}">{{ tag.getTitle() }}</a>
             </div>
           </li>
         {% endfor %}
