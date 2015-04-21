@@ -1214,8 +1214,8 @@ function test_material_form_url(url){
     $('.error').hide();
 
     if (test_url_generation(url)){
-	$('#error_url').show();
-	return false;
+    	$('#error_url').show();
+	    return false;
     }
     $('#myModal').modal('hide');
     return true;
@@ -1223,11 +1223,26 @@ function test_material_form_url(url){
 
 function test_material_form_file_nmb(file){
     $('.error').hide();
-
+    console.log(file);
     if (file == ""){
-	$('#error_file').show();
-	return false;
+    	$('#error_file').show();
+	    return false;
     }
 
     return true;
 }
+
+$(document).on('click', '#pumukitnewadmin_track_ok_button', function(event){
+    if ($('#radio_file').prop('checked')){
+        var file = $('#resource').val();
+    }else{
+        var file = $('#file').val();
+    }
+    var valid = test_material_form_file_nmb(file);
+    if (valid){
+        $('#file_upload_progress').show();
+        return true;
+    }else{
+        return false;
+    }
+});

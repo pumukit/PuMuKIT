@@ -40,10 +40,10 @@
       <div class="form-group">
         <label for="file_type" class="control-label">{% trans %}Mode{% endtrans %}</label>        
         <div class="radio">
-          <label><input type="radio" name="file_type" value="inbox" onclick="$('#pumukitnewadmin_track_file').hide();$('#pumukitnewadmin_track_inbox').show();"/> {% trans %}Inbox on server{% endtrans %}</label>
+          <label><input type="radio" name="file_type" id="radio_inbox" value="inbox" onclick="$('#pumukitnewadmin_track_file').hide();$('#pumukitnewadmin_track_inbox').show();"/> {% trans %}Inbox on server{% endtrans %}</label>
         </div>
         <div class="radio">
-          <label><input type="radio" name="file_type" value="file" checked="checked" onclick="$('#pumukitnewadmin_track_inbox').hide();$('#pumukitnewadmin_track_file').show();"/> {% trans %}Local hard drive{% endtrans %}</label>
+          <label><input type="radio" name="file_type" id="radio_file" value="file" checked="checked" onclick="$('#pumukitnewadmin_track_inbox').hide();$('#pumukitnewadmin_track_file').show();"/> {% trans %}Local hard drive{% endtrans %}</label>
         </div>
       </div>
       
@@ -58,11 +58,12 @@
       
       <div class="form-group" id="pumukitnewadmin_track_inbox" style="display: none">
         {{ render(controller('PumukitNewAdminBundle:Inbox:Form')) }}
-      </div>      
+      </div>
+      <span id="error_file" style="display:none;color:red;" class="error">{% trans %}Empty file field{% endtrans %}</span>
     </fieldset>
     <div class="modal-footer">
       <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-      <button type="submit" class="btn btn-pumukit btn-raised" onclick="$('#file_upload_progress').show();">{% trans %}OK{% endtrans %}</button>
+      <button type="submit" class="btn btn-pumukit btn-raised" id="pumukitnewadmin_track_ok_button">{% trans %}OK{% endtrans %}</button>
     </div>
   </form>
 </div>
