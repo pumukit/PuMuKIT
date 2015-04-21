@@ -132,6 +132,20 @@ class Series
       $this->pics = new ArrayCollection();
   }
 
+  public function __toString()
+  {
+    return $this->getTitle();
+  }
+
+  /**
+   *
+   * @return boolean
+   */
+  public function isCollection()
+  {
+    return true;
+  }
+
   /**
    * Get id
    *
@@ -638,11 +652,6 @@ class Series
   {
       return $this->line2;
   }
-
-    public function __toString()
-    {
-        return $this->getTitle();
-    }
 
   /**
    * Set locale
