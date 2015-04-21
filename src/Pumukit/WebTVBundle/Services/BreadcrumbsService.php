@@ -16,7 +16,7 @@ class BreadcrumbsService
   private $breadcrumbs;
 
   
-  public function __construct(Router $router, Session $session, $allRoute="pumukit_webtv_mediateca_index")
+  public function __construct(Router $router, Session $session, $allRoute="pumukit_webtv_medialibrary_index")
   {
     $this->session = $session;
     $this->router = $router;
@@ -33,7 +33,7 @@ class BreadcrumbsService
   public function addSeries(Series $series)
   {
     if (1 == count($this->breadcrumbs)){
-      $this->add(1, "All", "pumukit_webtv_mediateca_index");
+      $this->add(1, "All", $this->allRoute);
     }
     
     $this->add(2, $series->getTitle(), "pumukit_webtv_series_index", array("id" => $series->getId()));
