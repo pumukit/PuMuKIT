@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Intl\Intl;
 use Symfony\Component\Finder\Finder;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class DefaultController extends Controller
 {
@@ -116,7 +117,6 @@ class DefaultController extends Controller
     public function uploadAction(Request $request)
     {
         $trackService = $this->get('pumukitschema.track');
-        $tagService = $this->get('pumukitschema.tag');
 
         $series = null;
         $seriesId = null;
@@ -136,13 +136,16 @@ class DefaultController extends Controller
 
             $pubchannel = $this->getKeyData('pubchannel', $trackData);
 
+            $showSeries = false;
+            if (('null' === $seriesId) || (null === $seriesId)) $showSeries = true;
+
             // TODO Fragment this. Develop better way.
+            $option = $this->getKeyData('option', $typeData);
             try{
                 if (empty($_FILES) && empty($_POST)){
                     throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
                 }
 
-                $option = $this->getKeyData('option', $typeData);
                 if ('single' === $option){
                     $series = $this->getSeries($seriesData);
                     $multimediaObjectData = $this->getKeyData('multimediaobject', $formData);
@@ -206,9 +209,10 @@ class DefaultController extends Controller
                 return array(
                              'uploaded' => 'failed',
                              'message' => $message,
-			     'option' => null,
-			     'seriesId' => null,
-			     'mmId' => null
+                             'option' => $option,
+                             'seriesId' => null,
+                             'mmId' => null,
+                             'show_series' => $showSeries
                              );
             }
         }else{
@@ -216,14 +220,12 @@ class DefaultController extends Controller
             return array(
                          'uploaded' => 'failed',
                          'message' => 'No data received',
-                         'option' => null,
+                         'option' => $option,
                          'seriesId' => null,
-                         'mmId' => null
+                         'mmId' => null,
+                         'show_series' => $showSeries
                          );
         }
-
-        $showSeries = false;
-        if (('null' === $seriesId) || (null === $seriesId)) $showSeries = true;
 
         if ($series) $seriesId = $series->getId();
         else $seriesId = null;
@@ -374,12 +376,13 @@ class DefaultController extends Controller
      */
     private function addTagToMultimediaObjectByCode(MultimediaObject $multimediaObject, $tagCode)
     {
+        $tagService = $this->get('pumukitschema.tag');
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $tagRepo = $dm->getRepository('PumukitSchema:Tag');
+        $tagRepo = $dm->getRepository('PumukitSchemaBundle:Tag');
 
         $addedTags = array();
 
-        $tag = $tagRepo->findOneByCode($tagCode);
+        $tag = $tagRepo->findOneByCod($tagCode);
         if ($tag) $addedTags = $tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());
 
         return $addedTags;
