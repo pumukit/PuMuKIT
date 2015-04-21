@@ -59,7 +59,7 @@ class BroadcastTest extends \PHPUnit_Framework_TestCase
     {
         $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
 
-        $this->assertEquals($broadcast->getBroadcastTypeId(), $broadcast->__toString());
+        $this->assertEquals($broadcast->getName(), $broadcast->__toString());
     }
 
     private function createBroadcast($broadcastTypeId)
