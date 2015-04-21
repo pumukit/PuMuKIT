@@ -144,12 +144,10 @@ class SeriesController extends AdminController
     public function deleteAction(Request $request)
     {
         $config = $this->getConfiguration();
+        $factoryService = $this->get('pumukitschema.factory');
 
         $series = $this->findOr404($request);
         $seriesId = $series->getId();
-
-        $factoryService = $this->get('pumukitschema.factory');
-        $factoryService->deleteSeries($series);
 
         $seriesSessionId = $this->get('session')->get('admin/mms/id');
         if ($seriesId === $seriesSessionId){
@@ -164,6 +162,8 @@ class SeriesController extends AdminController
             }
         }
 
+        $factoryService->deleteSeries($series);
+
         if ($config->isApiRequest()) {
             return $this->handleView($this->view());
         }
@@ -177,6 +177,8 @@ class SeriesController extends AdminController
      */
     public function batchDeleteAction(Request $request)
     {
+        $factoryService = $this->get('pumukitschema.factory');
+
         $ids = $this->getRequest()->get('ids');
 
         if ('string' === gettype($ids)){
@@ -186,9 +188,6 @@ class SeriesController extends AdminController
         foreach ($ids as $id) {
             $series = $this->find($id);
             $seriesId = $series->getId();
-
-            $factoryService = $this->get('pumukitschema.factory');
-            $factoryService->deleteSeries($series);
 
             $seriesSessionId = $this->get('session')->get('admin/mms/id');
             if ($seriesId === $seriesSessionId){
@@ -202,6 +201,8 @@ class SeriesController extends AdminController
                     $this->get('session')->remove('admin/mms/id');
                 }
             }
+
+            $factoryService->deleteSeries($series);
         }
         $this->addFlash('success', 'delete');
 
