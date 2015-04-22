@@ -1,0 +1,41 @@
+<br />
+<div class="num_view">
+  <div style="float:left">
+    {% trans %}Video language{% endtrans %}: <span class="num_view_number">{{ track.getLanguage() }}</span>
+  </div>
+  {% trans %}Viewed{% endtrans %}:
+  <span class="num_view_number">{% if track.getNumview() is not empty %}{{ track.getNumview() }}{% else %}0{% endif %}</span>
+  {% if (1 == track.getNumview) %}
+    {% trans %}time{% endtrans%}
+  {% else %}
+    {% trans %}times{% endtrans%}
+  {% endif %}
+</div>
+<div class="title">
+  {{ multimediaObject.getSubtitle() }}
+</div>
+<p class="description">
+  {{ multimediaObject.getDescription() }}
+</p>
+
+<div class="serial_mm_info">
+  <div class="persons" style="overflow: hidden">
+    {% for role in multimediaObject.getRoles() if role.getDisplay() %}
+      {% for person in multimediaObject.getPeopleByRole(role) %}
+      <div>
+        <div class="person">
+        {{ role.getText() }}
+        {% if person.getWeb() is not empty %}
+          <a href="{{ person.getWeb() }}">{{ person.getHName() }}</a>
+        {% else %}
+          {{ person.getHName() }}
+        {% endif %}
+        </div>
+        {{ person.getInfo() }}
+      </div>
+      {% endfor %}
+    {% endfor %}
+  </div>
+</div>
+
+

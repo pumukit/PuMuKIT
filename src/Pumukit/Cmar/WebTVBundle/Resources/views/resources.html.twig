@@ -1,0 +1,89 @@
+<div class="usctv_mmobjs">
+{% for resource in resources %}
+  <div class="usctv_mmobj">
+    {# if resource is instance_of_series #}{% if false %}
+    <figure class="album" style="margin:2px 20px 2px 2px; ">
+      <a href="{{ url('pumukit_webtv_series_index', {'id': resource.id}) }}">
+        {% set series_pic = resource.getFirstUrlPic() %}
+        {% set mms = resource.getMultimediaObjects() %}
+        {% if series_pic is empty and mms is not empty %}
+          {% for mm in mms if mm.getFirstUrlPic() and not series_pic %}
+            {% set series_pic = mm.getFirstUrlPic() %}
+          {% endfor %}
+        {% endif %}
+        <div class="picture"><img src="{{ series_pic }}" /></div>
+        <div class="picture"><img src="{{ series_pic }}" /></div>
+        <div class="picture"><img src="{{ series_pic }}" /></div>
+      </a>
+    </figure>
+    {% else %}
+    <div class="thumbnail">
+      <a href="{{ url('pumukit_webtv_multimediaobject_index', {'id': resource.id}) }}" >
+        <img class="play_icon_shadow" alt="" width="30" src="{{ asset('bundles/pumukitcmarwebtv/images/usc/sombra.png') }}"/>
+        <img class="play_icon" alt="" width="15" src="{{ asset('bundles/pumukitcmarwebtv/images/usc/play.png') }}"/>
+        <img class="serial" alt="serial_pic" src="{{ resource.getFirstUrlPic() }}" />
+      </a>
+    </div>
+    {% endif %}
+    <div class="info">
+      <div class="title">
+        {# if resource is instance_of_series #}{% if false %}
+        <a href="{{ url('pumukit_webtv_series_index', {'id': resource.id}) }}" >
+        {% else %}
+        <a href="{{ url('pumukit_webtv_multimediaobject_index', {'id': resource.id}) }}" >
+        {% endif %}
+          {% if ((resource.getTitle()|length) < 69) %}
+            {{ resource.getTitle() }}
+          {% else %}
+            {{ resource.getTitle()[:69] }}...
+          {% endif %}
+        </a>
+      </div>
+    </div>
+    <div class="serial_title">
+      {% if ((resource.getLine2()|length) > 1) %}
+        {% set aux = resource.getLine2() %}
+      {% else %}
+        {% set aux = resource.getTitle() %}
+      {% endif %}
+      {% if ((aux|length) < 27) %}
+        {{ aux }}
+      {% else %}
+        <abbr title="{{ aux }}">
+          {{ aux[:27] }}{% if ((aux|length) > 27) %}...{% endif %}
+        </abbr>
+      {% endif %}
+    </div>
+    {# if resource is not instance_of_series #}{% if true %}
+    <div style="color:#A2A2A2; position: absolute; left:160px; bottom: 32px; ">
+      {% set master_track = resource.getTrackWithTag('master') %}
+      {% if master_track %}
+        {{ master_track.getLanguage() }}
+      {% endif %}
+    </div>
+    {% endif %}
+    <div class="date">
+      {# if resource is instance_of_series #}{% if false %}
+        {{ resource.getPublicDate()|date('d-m-Y') }}
+      {% else %}
+        {{ resource.getRecordDate()|date('d-m-Y') }}
+      {% endif %}
+    </div>
+    <div class="mmobj_bottom">
+      {# if resource is instance_of_series #}{% if false %}
+      {% set tags = [] %}
+        {% for mm in resource %}
+          {% set tags = tags|merge(mm.getTags()) %}
+        {% endfor %}
+      {% else %}
+        {% set tags = resource.getTags() %}
+      {% endif %}
+      {% include 'PumukitWebTVBundle::tags.html.twig' with {'show_tag': show_tag, 'tags': tags } %}
+      {% if ((viewed is not empty)) %} {# and (resource is not instance_of_series)) %} #}
+        {% trans %}Views{% endtrans %}:&nbsp;{{ resource.getNumView() }}&nbsp;{% if (resource.getNumView() == 1) %}{% trans %}time{% endtrans %}{% else %}{% trans %}times{% endtrans %}{% endif %}
+      {% endif %}
+    </div>
+  </div>
+{% endfor %}
+</div>
+

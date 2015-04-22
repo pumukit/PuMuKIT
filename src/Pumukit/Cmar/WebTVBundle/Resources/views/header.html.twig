@@ -1,0 +1,19 @@
+<div class="grid_15 logo" style="height:120px;">
+  <div class="busca" style="position:absolute;top: 52px; right: 25px">
+    <form name="searchhead"
+          method="post"
+          action="/busca">
+      <div class="search-cont">
+        <label accesskey="t" for="busca" class="salto">"{% trans %}Search{% endtrans %}:"</label>
+        <input style="height:16px" placeholder="{% trans %}Search{% endtrans %}..." name="q" maxlength="30" type="text" />
+        <input type="image" src="{{ asset('bundles/pumukitcmarwebtv/images/usc/lupa.png') }}" style="position: relative; top: 4px; left: -4px;" name="startsearch" />
+      </div>
+    </form>
+  </div>
+  <a href="{{ url('pumukit_webtv_index_index') }}"
+     style="padding-left: 100px;
+            text-align: center;
+            width:280px; display: block;
+            height:120px;
+            text-decoration:none;">&nbsp;</a>
+</div>

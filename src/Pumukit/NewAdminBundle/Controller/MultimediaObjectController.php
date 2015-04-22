@@ -29,6 +29,8 @@ class MultimediaObjectController extends SortableAdminController
 
         $sessionId = $this->get('session')->get('admin/series/id', null);
         $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
+        if(!$series) throw $this->createNotFoundException();
+
         $this->get('session')->set('admin/series/id', $series->getId());
 
         $mms = $this->getListMultimediaObjects($series);
@@ -421,7 +423,7 @@ class MultimediaObjectController extends SortableAdminController
         $page = $session->get('admin/mms/page', 1);
         $maxPerPage = $session->get('admin/mms/paginate', 10);
 
-        $sorting = array('fieldName' => "rank", 'order' => "asc");
+        $sorting = array("rank" => "asc");
         $mmsQueryBuilder = $this
           ->get('doctrine_mongodb.odm.document_manager')
           ->getRepository('PumukitSchemaBundle:MultimediaObject')
@@ -597,8 +599,7 @@ class MultimediaObjectController extends SortableAdminController
         $sessionId = $this->get('session')->get('admin/series/id', null);
         $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
 
-        $sorting = array('fieldName' => $request->get("fieldName"),
-                         'order' => $request->get("order"));
+        $sorting = array($request->get("fieldName", "rank") => $request->get("order", 1));
 
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $mms = $dm

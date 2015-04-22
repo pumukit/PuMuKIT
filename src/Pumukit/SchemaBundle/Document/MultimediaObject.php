@@ -205,6 +205,15 @@ class MultimediaObject
     }
 
     /**
+     *
+     * @return boolean
+     */
+    public function isCollection()
+    {
+      return false;
+    }
+
+    /**
      * Get id
      *
      * @return int

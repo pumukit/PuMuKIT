@@ -1,0 +1,262 @@
+
+/*
+  Body MM
+*/
+.serial_body{ 
+ margin-bottom: 50px;
+ margin-top: 20px;
+}
+
+div.serial_body div.inter_mm {
+  margin-top:16px;
+}
+
+div.serial_body div.serial_place{ 
+   text-align: right;
+   padding-right: 5px;
+   background-color: #DFDFDF;
+   font-weight: bold;
+   color: #000;
+   margin-bottom: 11px;
+}
+                                  
+
+div.serial_body div.serial_place_w{ 
+   background-color: rgb(255, 171, 84);
+}
+                                    
+div.serial_body div.date{
+   font-size: 150%; 
+   text-align: right; 
+}
+
+
+div.serial_body div.serial_date{ 
+/*
+   text-align: center;
+   background:#006 url("/images/tv/usc/bg_azul_sinesquinas.gif") repeat-x 0 0;     
+   font-weight: bold;
+   color: #fff;
+   margin-bottom: 11px;
+*/
+   border-bottom: 2px solid #005268;
+   color: #005268;
+   font-weight: bold;
+   font-size: 12px;
+   margin: 25px 0px 10px 10px;
+}
+                                 
+
+div.serial_body div.serial_date_w{ 
+   background-color: rgb(245, 102 ,0);
+}
+                                   
+
+
+div.serial_body div.serial_mm{ 
+  background-color: #F0F0F0;
+}
+                               
+
+div.serial_body div.serial_mm_w{ 
+  background-color: #ffead6;
+}
+                                 
+
+div.serial_body div.serial_mm_pics{ 
+  width: 21%;
+  margin-left: 5px;
+  vertical-align: top;
+}
+                                    
+                 
+
+div.serial_body div.serial_mm_info{ 
+  padding-left: 2%;
+  padding-right: 2%;
+  text-align: left;
+}
+
+                                    
+div.serial_mm_info .title{ 
+  font-weight: bold;
+  font-size: 13px;
+}
+                           
+
+div.serial_mm_info .subtitle{ 
+  color: #000;
+}
+                              
+
+div.serial_mm_info .objects{ 
+  margin-left: 20px;
+}
+                             
+
+div.serial_mm_info .file{ 
+  padding-left: 25px;
+  min-height: 18px;
+}
+                          
+
+div.serial_mm_info .material{ 
+  padding-left: 25px;
+  min-height: 18px;
+}
+                              
+
+div.serial_mm_info .link{ 
+  padding-left: 25px;
+  min-height: 18px;
+}
+                          
+
+div.serial_mm_info .persons{ 
+  font-size: 85%;
+  color : #666;
+}
+
+
+div.serial_mm_info .person{ 
+  font-weight: bold;
+  color : #000;
+}
+                            
+
+div.serial_mm_info .language,
+div.serial_mm_info .numView{ 
+  font-weight: bold;
+}        
+
+div.serial_mm_info #material {
+  min-height:18px;
+  padding-left:25px;
+}
+
+
+
+table#directo_announces{
+   width: 69%;
+   border: 0px;
+   border-spacing: 2px;
+   margin: 0 auto;
+}
+
+table#directo_announces thead tr{
+  background-color: #cc0000;
+  font-size: 13px;
+  color: #ffffff;
+  font-weight: bold;
+  text-align: center;
+}
+
+table#directo_announces tbody tr.par{
+  background-color: #f0f0f0;
+}
+
+table#directo_announces tbody tr.impar{
+  background-color: #dfdfdf;
+}
+
+table#directo_announces tfoot tr{
+  background-color: #0052a4;
+  font-size: 11px;
+  color: #ffffff;
+  font-weight: bold;
+  text-align: center;
+}
+
+
+
+
+.audio {
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:transparent url(/images/tv/iconos/altavoz2.gif) no-repeat scroll left top;
+}
+.book {
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:transparent url(/images/tv/iconos/book2.gif) no-repeat scroll left top;
+}
+.doc {
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:transparent url(/images/tv/iconos/doc.gif) no-repeat scroll left top;
+}
+.video {
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:transparent url(/images/tv/iconos/movie2.gif) no-repeat scroll left top;
+}
+.matterhorn {
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:transparent url(/images/tv/iconos/movie2.gif) no-repeat scroll left top;
+}
+.link {
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:transparent url(/images/tv/iconos/url.gif) no-repeat scroll left top;
+}
+.mp3 {
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:transparent url(/images/tv/iconos/mp3.gif) no-repeat scroll left top;
+}
+.pdf {
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:transparent url(/images/tv/iconos/pdf.gif) no-repeat scroll left top;
+}
+.pps {
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:transparent url(/images/tv/iconos/pps.gif) no-repeat scroll left top;
+}
+.ppt {
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:transparent url(/images/tv/iconos/ppt.gif) no-repeat scroll left top;
+}
+.url {
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:transparent url(/images/tv/iconos/url.gif) no-repeat scroll left top;
+}
+.txt {
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:transparent url(/images/tv/iconos/txt.gif) no-repeat scroll left top;
+}
+.swf {
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:transparent url(/images/tv/iconos/swf.gif) no-repeat scroll left top;
+}
+.xlm {
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:transparent url(/images/tv/iconos/swf.xlm) no-repeat scroll left top;
+}
+.zip {
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:transparent url(/images/tv/iconos/zip.gif) no-repeat scroll left top;
+}

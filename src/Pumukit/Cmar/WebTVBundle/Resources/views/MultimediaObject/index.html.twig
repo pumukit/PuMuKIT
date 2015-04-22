@@ -1,0 +1,24 @@
+{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('bundles/pumukitwebtv/js/jwplayer/jwplayer.js') }}" type="text/javascript"></script>
+{% endblock%}
+
+{% block title %}{{ parent() }} - {{ multimediaObject.title }}{% endblock %}
+{% block keywords %}{{ parent() }} - {{ multimediaObject.keyword }}{% endblock %}
+
+{% block body_without_bar %}
+    <p class="titulo_widget titulo_widget_grande">
+      {{ multimediaObject.title|default("No title"|trans) }}
+    </p>
+	<div class="grid_10 mm_player">
+		{% include 'PumukitWebTVBundle:MultimediaObject:player.html.twig' with {'width': '620', 'height': '465'} %}
+		{% include 'PumukitWebTVBundle:MultimediaObject:info.html.twig' %}
+	</div>
+	<div class="grid_5">
+		{% render(controller('PumukitWebTVBundle:MultimediaObject:series', {'multimediaObject': multimediaObject})) %}
+        {% render(controller('PumukitWebTVBundle:MultimediaObject:related', {'multimediaObject': multimediaObject})) %}
+		{% include 'PumukitWebTVBundle:MultimediaObject:share.html.twig' %}
+	</div>
+{% endblock %}

@@ -50,7 +50,7 @@ class SeriesRepository extends DocumentRepository
             ->field('id')->in($referencedSeries->toArray());
 
         if (0 !== count($sort) ){
-            $qb->sort($sort['fieldName'], $sort['order']);
+            $qb->sort($sort);
         }
         return $qb;
     }
@@ -93,7 +93,7 @@ class SeriesRepository extends DocumentRepository
             ->field('id')->in($referencedSeries->toArray());
 
         if (0 !== count($sort) ){
-            $qb->sort($sort['fieldName'], $sort['order']);
+            $qb->sort($sort);
         }
 
         if ($limit > 0){
@@ -122,7 +122,7 @@ class SeriesRepository extends DocumentRepository
             ->field('id')->in($referencedSeries->toArray());
 
         if (0 !== count($sort) ){
-            $qb->sort($sort['fieldName'], $sort['order']);
+            $qb->sort($sort);
         }
 
         if ($limit > 0){
@@ -169,7 +169,7 @@ class SeriesRepository extends DocumentRepository
             ->field('id')->notIn($referencedSeries->toArray());
 
         if (0 !== count($sort) ){
-            $qb->sort($sort['fieldName'], $sort['order']);
+            $qb->sort($sort);
         }
         
         if ($limit > 0){
@@ -214,7 +214,7 @@ class SeriesRepository extends DocumentRepository
             ->field('id')->notIn($referencedSeries->toArray());
 
         if (0 !== count($sort) ){
-            $qb->sort($sort['fieldName'], $sort['order']);
+            $qb->sort($sort);
         }
 
         if ($limit > 0){
@@ -268,5 +268,20 @@ class SeriesRepository extends DocumentRepository
             ->field('series_type')->references($series_type)
             ->getQuery()
             ->execute();
+    }
+
+    /**
+     * Count number of series in the repo.
+     *
+     * @return integer
+     */
+    public function count()
+    {
+      return $this
+        ->createQueryBuilder()
+        ->count()
+        ->getQuery()
+        ->execute()
+        ;
     }
 }

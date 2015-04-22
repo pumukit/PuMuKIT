@@ -1,0 +1,102 @@
+<a name="{{ mm.id }}"></a>
+<!-- DATE -->
+{# TODO if(($template == 2) || ((!in_array($template, array(4,5))) && ($mm->getRecordDate()) && ($mm->getRecorddate() !== '1999-11-30') && ($mm->getRecordDate('dmy') !== $lastDate))):  #}
+{% if (((mm.getRecordDate()|date('d/m/Y')) is not empty) and ((last_date|date('U')) != (mm.getRecordDate()|date('U')))) %}
+<div class="date">
+  {% trans %}Record Date{% endtrans %}: {{ mm.getRecordDate()|date('d/m/Y') }}
+</div>
+{% endif %}
+<!-- PIC -->
+<div class="serial_mm">
+  <table>
+   <tbody>
+    <tr>
+     <td width="1%" valign="top"> <!-- hack-->
+       <div style="position:relative; overflow:hidden" class="pic_mm">
+         <a href="{{ url('pumukit_webtv_multimediaobject_index', {'id': mm.id}) }}" class="serial_mm_pics" > 
+           {% for pic in mm.getPics() if pic.getUrl() is not empty %}<img src="{{ pic.getUrl() }}" class="serial">{% endfor %}
+         </a>
+       </div>
+     </td>
+     <td>
+       <div class="serial_mm_info">
+         <!-- TITLE & SUBTITLE -->
+         {% if mm.getTitle() is not empty %}
+         <div class="title">"{{ mm.getTitle() }}"</div>
+         {% endif %}
+         {% if mm.getSubtitle() is not empty %}
+         <div class="subtitle">{{ mm.getSubtitle() }}</div>	
+         {% endif %}
+         <div class="objects">
+           <!-- MATTERHORN -->
+           {# TODO  if($mh = MmMatterhornPeer::retrieveByPK($mm->getId())): #}
+           {% set mh = '' %}
+           {% if mh is not empty %}
+           <div id="material" class="file matterhorn">
+             <a href="{{ url('pumukit_webtv_multimediaobject_index', {'id': mm.id}) }}">{% trans %}Video{% endtrans %}{% if (mm.getBroadcast().getBroadcastTypeId() == private_broadcast) %}&nbsp;{{ private_broadcast }}{% endif %}</a>
+  	         &nbsp;|&nbsp;&nbsp;<span class="language">{{ mh.getLanguage().getName() }}</span> 
+  	         &nbsp;|&nbsp; {{ mh.getDurationString() }}
+	         &nbsp;|&nbsp; {% trans %}Viewed{% endtrans %}: <span class="numView">{{ mh.getNumView() }}</span>
+             {% if (mh.getNumView() == 1) %}{% trans %}time{% endtrans %}{% else %}{% trans %}times{% endtrans %}{% endif %}
+           </div>
+           {% endif %}
+           <!-- TRACKS -->
+           {% set tracks = mm.getFilteredTracksWithTags([], ['display'], [], ['master']) %}
+           {% for track in tracks %}
+             {# TODO if(!in_array($file->getPerfilId(), array(12, 13))): #}
+             {% if true %}
+               <div>{# TODO class="file audio|video" and move out gif images to serial.css file, put it in twig #}
+                 {% if track.getOnlyAudio() %}
+                 <img src="{{ asset('bundles/pumukitcmarwebtv/images/iconos/altavoz2.gif') }}"/>
+                 {% else %}
+                 <img src="{{ asset('bundles/pumukitcmarwebtv/images/iconos/movie2.gif') }}"/>
+                 {% endif %}
+                 <a href="{{ url('pumukit_webtv_multimediaobject_index', {'id': mm.id, 'track_id': track.id}) }}">{{ track.getOnlyAudio() ? "Audio": "Video" }}</a>
+                 &nbsp;|&nbsp;&nbsp;<span class="language">{{ track.getLanguage() }}</span>
+                 &nbsp;({{ track.getDuration()|duration_string }})
+                 &nbsp;|&nbsp; {% trans %}Viewed{% endtrans %}: <span class="numView">{{ track.getNumView() }}</span>
+                 {% if (track.getNumView() == 1) %}
+                   {% trans %}time{% endtrans %}
+                 {% else %}
+                   {% trans %}times{% endtrans %}
+                 {% endif %}
+               </div>
+            {% endif %}
+          {% endfor %}  
+          <!-- MATERIAL -->
+          {% for material in mm.getMaterials() if not material.getHide() %}
+            <div id="material" class="{{ material.getMimeType() }}">
+              <a target="_blank" href="{{ material.getUrl() }}">{{ material.getName() }}</a>
+            </div>
+          {% endfor %}
+          <!-- LINK -->
+          {% for link in mm.getLinks() %}
+            <div id="link" class="link">
+              <a target="_blank" href="{{ link.getUrl() }}">{{ link.getName() }}</a>
+            </div>
+          {% endfor %}
+        </div>        
+        <!-- PERSONS ACT -->
+        <div class="persons" style="overflow: hidden; padding-top: 6px;">
+        {% for role in mm.getRoles() if role.getDisplay() %}
+          {% for person in mm.getPeopleInMultimediaObjectByRole(role) %}
+            <div>
+              <div class="person">
+	            {{ role.getText() }}
+                {% if person.getWeb() is not empty %}
+                  <a href="{{ person.getWeb() }}">{{ person.getHName() }}</a>
+                {% else %}
+                  {{ person.getHName() }}
+                {% endif %}
+              </div>
+              {{ person.getInfo() }}
+            </div>
+          {% endfor %}
+        {% endfor %}
+        </div>
+       </div>
+     </td>
+   </tr>
+  </tbody>
+ </table>
+</div>

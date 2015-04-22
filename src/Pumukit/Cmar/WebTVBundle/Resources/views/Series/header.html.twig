@@ -1,0 +1,10 @@
+<p class="titulo_widget titulo_widget_grande" style="margin-left: 0;">
+  {{ series.getTitle()|default("No title"|trans) }}
+</p>
+<div class="cab_serial">
+  {% if series.getSubtitle() is not empty %}
+  <h5 class="subtitle">
+    {{ series.getSubtitle() }}
+  </h5>
+  {% endif %}
+</div>

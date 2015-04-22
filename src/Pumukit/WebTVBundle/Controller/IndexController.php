@@ -11,23 +11,56 @@ use Pumukit\SchemaBundle\Document\Series;
 class IndexController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/", name="pumukit_webtv_index_index")
      * @Template()
      */
     public function indexAction()
     {
-    	$series_repository = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
-    	$num_series = count($series_repository->findall());
+      return array();
+    }
 
-        $repository = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+    /**
+     * @Template()
+     */
+    public function infoAction()
+    {
+      return array();
+    }
 
-        $multimediaObjects_sorted_by_numview = $repository->findBy(array(), array('numview' => -1));
-        $multimediaObjects_sorted_by_numview = array_slice($multimediaObjects_sorted_by_numview, 0, 3);
+    /**
+     * @Template()
+     */
+    public function categoriesAction()
+    {
+      return array();
+    }
 
-        $multimediaObjects_sorted_by_public_date = $repository->findBy(array(), array('public_date' => -1));
-        $multimediaObjects_sorted_by_public_date = array_slice($multimediaObjects_sorted_by_public_date, 0, 3);
 
-        return array('num_series' => $num_series, 'multimediaObjects_sorted_by_numview' => $multimediaObjects_sorted_by_numview, 
-            'multimediaObjects_sorted_by_public_date' => $multimediaObjects_sorted_by_public_date);
+    /**
+     * @Template()
+     */
+    public function mostviewedAction()
+    {
+      $repository = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+      $multimediaObjectsSortedByNumview = $repository->findStandardBy(array(), array('numview' => -1), 3, 0);
+      return array('multimediaObjectsSortedByNumview' => $multimediaObjectsSortedByNumview);
+    }
+
+    /**
+     * @Template()
+     */
+    public function recentlyaddedAction()
+    {
+      $repository = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+      $multimediaObjectsSortedByPublicDate = $repository->findStandardBy(array(), array('public_date' => -1), 3, 0);
+      return array('multimediaObjectsSortedByPublicDate' => $multimediaObjectsSortedByPublicDate);
+    }
+
+    /**
+     * @Template()
+     */
+    public function newsAction()
+    {
+      return array();
     }
 }

@@ -246,7 +246,6 @@ EOT
      */
     private function createTagFromCsvArray($csv_array, $tag_parent = null)
     {
-        $c = new Tag();
         if ($tag = $this->tagsRepo->findOneByCod($csv_array[1])) {
             throw new \LengthException("Nothing done - Tag retrieved from DB id: ".$tag->getId()." cod: ".$tag->getCod());
         }

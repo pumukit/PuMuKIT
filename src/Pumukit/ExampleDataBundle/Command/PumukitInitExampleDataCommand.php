@@ -83,7 +83,7 @@ EOT
                   $multimediaObject = $factoryService->createMultimediaObject($series);
                   $this->load_multimediaobject($multimediaObject, $series, "Access grid");
                   $this->load_track_multimediaobject($multimediaObject, 8, 24);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUBDECISIONS","PUBCHANNELS","PUCHARCA"));
+                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUBDECISIONS","PUBCHANNELS","PUCHARCA","Dscience","Dhealth"));
                   $this->load_pic_multimediaobject($multimediaObject, 17);
 
                   //Series Uvigo
@@ -94,7 +94,7 @@ EOT
                   $multimediaObject = $factoryService->createMultimediaObject($series);
                   $this->load_multimediaobject($multimediaObject, $series, "Uvigo");
                   $this->load_track_multimediaobject($multimediaObject, 9, 26);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEREV","PUDEPD3","PUCHWEBTV"));
+                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEREV","PUDEPD3","PUCHWEBTV","DIRECTRIZ","Dhealth"));
                   $this->load_pic_multimediaobject($multimediaObject, 19);
 
                   //Series Robots
@@ -105,31 +105,31 @@ EOT
                   $multimediaObject = $factoryService->createMultimediaObject($series);
                   $this->load_multimediaobject($multimediaObject, $series, "AIBO");
                   $this->load_track_multimediaobject($multimediaObject, 10, 38);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD3"));
+                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD3","Dscience","Dtechnical"));
                   $this->load_pic_multimediaobject($multimediaObject, 21);
 
                   $multimediaObject = $factoryService->createMultimediaObject($series);
                   $this->load_multimediaobject($multimediaObject, $series, "Movil");
                   $this->load_track_multimediaobject($multimediaObject, 10, 36);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW"));
+                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","Dscience","Dhumanities"));
                   $this->load_pic_multimediaobject($multimediaObject, 22);
 
                   $multimediaObject = $factoryService->createMultimediaObject($series);
                   $this->load_multimediaobject($multimediaObject, $series, "Fanuc");
                   $this->load_track_multimediaobject($multimediaObject, 10, 28);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD3","PUCHWEBTV"));
+                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD3","PUCHWEBTV","DIRECTRIZ","Dhealth","Dtechnical"));
                   $this->load_pic_multimediaobject($multimediaObject, 23);
 
                   $multimediaObject = $factoryService->createMultimediaObject($series);
                   $this->load_multimediaobject($multimediaObject, $series, "Concurso");
                   $this->load_track_multimediaobject($multimediaObject, 10, 30);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEREV","PUDEPD3","PUCHWEBTV"));
+                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEREV","PUDEPD3","PUCHWEBTV","Dsocial","Dhumanities"));
                   $this->load_pic_multimediaobject($multimediaObject, 27);
 
                   $multimediaObject = $factoryService->createMultimediaObject($series);
                   $this->load_multimediaobject($multimediaObject, $series, "Robonova");
                   $this->load_track_multimediaobject($multimediaObject, 10, 35);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD3"));
+                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD3","DIRECTRIZ","Dscience","Dhumanities"));
                   $this->load_pic_multimediaobject($multimediaObject, 20);
 
                   //Series Polimedia
@@ -140,7 +140,7 @@ EOT
                   $multimediaObject = $factoryService->createMultimediaObject($series);
                   $this->load_multimediaobject($multimediaObject, $series, "Armesto");
                   $this->load_track_multimediaobject($multimediaObject, 11, 34);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD3","PUBDECISIONS"));
+                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD3","PUBDECISIONS","Dsocial","Dhumanities"));
                   $this->load_pic_multimediaobject($multimediaObject, 38);
 
                   //Serie Energia de materiales y medio ambiente
@@ -151,7 +151,7 @@ EOT
                   $multimediaObject = $factoryService->createMultimediaObject($series);
                   $this->load_multimediaobject($multimediaObject, $series, "Energy materials and environment");
                   $this->load_track_multimediaobject($multimediaObject, 12, 40);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUCHARCA"));
+                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUCHARCA","Dhealth","Dtechnical"));
                   $this->load_pic_multimediaobject($multimediaObject, 28);
 
                   //Serie Marine sciences
@@ -162,7 +162,7 @@ EOT
                   $multimediaObject = $factoryService->createMultimediaObject($series);
                   $this->load_multimediaobject($multimediaObject, $series, "Toralla");
                   $this->load_track_multimediaobject($multimediaObject, 13, 45);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEREV","PUDEPD2","PUDEPD3","PUCHWEBTV"));
+                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEREV","PUDEPD2","PUDEPD3","PUCHWEBTV","Dscience","Dsocial"));
                   $this->load_pic_multimediaobject($multimediaObject, 29);
 
                   //Serie NOS register
@@ -173,13 +173,13 @@ EOT
                   $multimediaObject = $factoryService->createMultimediaObject($series);
                   $this->load_multimediaobject($multimediaObject, $series, "Isaac Díaz Pardo");
                   $this->load_track_multimediaobject($multimediaObject, 14, 46);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD3","PUCHWEBTV"));
+                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD3","PUCHWEBTV","Dsocial","Dhumanities"));
                   $this->load_pic_multimediaobject($multimediaObject, 31);
 
                   $multimediaObject = $factoryService->createMultimediaObject($series);
                   $this->load_multimediaobject($multimediaObject, $series, "Promo");
                   $this->load_track_multimediaobject($multimediaObject, 14, 47);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUCHARCA"));
+                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUCHARCA","Dscience","Dtechnical"));
                   $this->load_pic_multimediaobject($multimediaObject, 30);
 
                   //Serie Zigzag
@@ -190,7 +190,7 @@ EOT
                   $multimediaObject = $factoryService->createMultimediaObject($series);
                   $this->load_multimediaobject($multimediaObject, $series, "Episode I");
                   $this->load_track_multimediaobject($multimediaObject, 15, 48);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD1","PUBCHANNELS"));
+                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD1","PUBCHANNELS","DIRECTRIZ","Dsocial","Dhealth"));
                   $this->load_pic_multimediaobject($multimediaObject, 40);
 
                   //Serie Quijote
@@ -201,13 +201,13 @@ EOT
                   $multimediaObject = $factoryService->createMultimediaObject($series);
                   $this->load_multimediaobject($multimediaObject, $series, "First");
                   $this->load_track_multimediaobject($multimediaObject, 16, 53);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDEPD3","PUCHARCA"));
+                  $this->load_tags_multimediaobject($multimediaObject, array("PUDEPD3","PUCHARCA","Dtechnical","Dhumanities"));
                   $this->load_pic_multimediaobject($multimediaObject, 33);
 
                   $multimediaObject = $factoryService->createMultimediaObject($series);
                   $this->load_multimediaobject($multimediaObject, $series, "Second");
                   $this->load_track_multimediaobject($multimediaObject, 16, 50);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD2","PUCHWEBTV"));
+                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD2","PUCHWEBTV","Dsocial","Dtechnical"));
                   $this->load_pic_multimediaobject($multimediaObject, 34);
 
                   //Serie autonomic
@@ -218,7 +218,7 @@ EOT
                   $multimediaObject = $factoryService->createMultimediaObject($series);
                   $this->load_multimediaobject($multimediaObject, $series, "Conference");
                   $this->load_track_multimediaobject($multimediaObject, 17, 54);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEREV","PUDEPD3","PUCHARCA"));
+                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEREV","PUDEPD3","PUCHARCA","Dscience","Dhumanities"));
                   $this->load_pic_multimediaobject($multimediaObject, 35);
 
                   //Serie HD
@@ -229,7 +229,7 @@ EOT
                   $multimediaObject = $factoryService->createMultimediaObject($series);
                   $this->load_multimediaobject($multimediaObject, $series, "Presentation");
                   $this->load_track_multimediaobject($multimediaObject, 18, 56);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUBDECISIONS","PUDEPD1"));
+                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUBDECISIONS","PUDEPD1","DIRECTRIZ","Dsocial","Dtechnical"));
                   $this->load_pic_multimediaobject($multimediaObject, 36);
 
                   unlink('tmp_file.zip');

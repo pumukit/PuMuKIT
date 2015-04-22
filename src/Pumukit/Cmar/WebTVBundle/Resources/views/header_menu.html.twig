@@ -1,0 +1,35 @@
+<!--Comezo da franxa horizontal superior-->
+<div class="grid_15 blq-navegacion-superior" style="text-align: right">
+  <!--  <div class="grid_6 alpha"> -->
+  <div class="grid_4 push_11"> 
+    <ul id="idiomas" style="float:right">
+      <li class="first_child">
+        {% if 'gl' != 'gl' %} 
+        <a href="/culture/gl" title="Versión en gallego" hreflang="gl">
+          Galego
+        </a>
+        {% else %}
+        Galego
+        {% endif %}
+      </li>
+      <li>
+        {% if 'es' == 'es' %}
+        <a href="/culture/es" title="Versión en castellano" hreflang="es">
+          Castelán
+        </a>
+        {% else %}
+        Castelán
+        {% endif %}
+      </li>
+      <li>
+        {% if 'en' == 'en' %}
+        <a href="/culture/en" title="Versión en inglés" hreflang="en">
+          Inglés
+        </a>
+        {% else %}
+        Inglés
+        {% endif %}
+      </li>
+    </ul>
+  </div>
+</div>

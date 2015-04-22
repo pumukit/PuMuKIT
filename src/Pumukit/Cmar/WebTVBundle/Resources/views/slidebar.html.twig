@@ -1,0 +1,65 @@
+<div id="blq-navegacion-lateral">
+  <!-- categorias -->
+  <!-- IE fix -->
+  <div></div>
+  <div class="caixa">
+  	<div class="titulo">{% trans %}Categories{% endtrans %}</div>
+  	<div>
+  	  <ul>
+  		<!-- Media library -->
+      	<li>
+          <a href="{{ url('pumukit_webtv_medialibrary_index') }}">{% trans %}Media library{% endtrans %}</a>
+      	</li>
+      	<!-- Congresses -->
+      	<li>
+          <a href="{{ url('pumukit_webtv_medialibrary_index') }}">{% trans %}Congresses{% endtrans %}</a>
+      	</li>
+      	<!-- Live -->
+      	<li>
+          <a href="#{# TODO /live #}">{% trans %}Live{% endtrans %}</a>
+      	</li>
+      	<!-- Press area -->
+      	<li>
+          <a href="{{ url('pumukit_webtv_medialibrary_index') }}">{% trans %}Press area{% endtrans %}</a>
+      	</li>
+      	<!-- Recorded lectures -->
+      	<li>
+          <a href="#{# TODO /librarymh #}">{% trans %}Recorded lectures{% endtrans %}</a>
+      	</li>
+  	  </ul>
+  	</div>
+  </div>
+  <div></div>
+  <div class="caixa">
+  	<div class="titulo">Campus do Mar TV {% trans %}in{% endtrans %}</div>
+  	<div style="padding: 2px 5px">
+  	  <ul>
+  		<!-- Youtube -->
+      	<li>
+          <a style="padding-left: 17px; background: transparent url({{ asset('bundles/pumukitcmarwebtv/images/iconos/favicon_youtube.gif')}}) no-repeat 0% 50%" target="_blank" href="http://www.youtube.com/user/CampusdoMar">YouTube</a>
+      	</li>
+  	  </ul>
+  	</div>
+  </div>
+  <div></div>
+  {% render(controller('PumukitWebTVBundle:Widget:stats')) %}
+  <div></div>
+  <div class="caixa">
+  	<div class="titulo">{% trans %}Upcoming live events{% endtrans %}</div>
+  	<div style="padding: 2px 5px">
+  	  <ul>
+      	<li>{% trans %}No scheduled broadcasts.{% endtrans %}</li>
+  	  </ul>
+  	</div>
+  </div>
+  <div></div>
+  <div class="caixa">
+  	<div class="titulo">{% trans %}Contact{% endtrans %}</div>
+  	<div>
+  	  <ul>
+        {# TODO pass mail from config #}
+      	<li><a href="mailto:tv@campusdomar.es">tv@campusdomar.es</a></li>
+  	  </ul>
+  	</div>
+  </div>
+</div>
