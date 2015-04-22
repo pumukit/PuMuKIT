@@ -624,4 +624,37 @@ class MultimediaObjectRepository extends DocumentRepository
 
         return $aux;
     }
+
+
+    /**
+     * Count number of standard (not prototype) multimedia objects in the repo
+     *
+     * @return integer
+     */
+    public function count()
+    {
+      return $this
+        ->createStandardQueryBuilder()
+        ->count()
+        ->getQuery()
+        ->execute();
+    }
+
+    /**
+     * Count total duration of standard (not prototype) multimedia objects. 
+     *
+     * @return integer total of seconds
+     */
+    public function countDuration()
+    {
+      $result = $this
+        ->createStandardQueryBuilder()
+        ->group(array(), array('count' => 0))
+        ->reduce('function (obj, prev) { prev.count += obj.duration; }')
+        ->getQuery()
+        ->execute();
+
+      $singleResult = $result->getSingleResult();
+      return $singleResult["count"];
+    }
 }

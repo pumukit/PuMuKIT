@@ -269,4 +269,19 @@ class SeriesRepository extends DocumentRepository
             ->getQuery()
             ->execute();
     }
+
+    /**
+     * Count number of series in the repo.
+     *
+     * @return integer
+     */
+    public function count()
+    {
+      return $this
+        ->createQueryBuilder()
+        ->count()
+        ->getQuery()
+        ->execute()
+        ;
+    }
 }
