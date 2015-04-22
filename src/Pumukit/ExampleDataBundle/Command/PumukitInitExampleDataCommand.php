@@ -65,7 +65,7 @@ EOT
 
                   //Unzipping videos in folder
                   $newFile = 'tmp_file.zip';
-                  if (!copy(self::PATH_VIDEO, $newFile)) {
+                  if (!$this->download(self::PATH_VIDEO, $newFile, $output)) {
                         echo "Failed to copy $file...\n";
                   }
                   $zip = new ZipArchive();
@@ -233,6 +233,7 @@ EOT
                   $this->load_pic_multimediaobject($multimediaObject, 36);
 
                   unlink('tmp_file.zip');
+                  $output->writeln('<info>Example data load successful</info>');
 
             } 
             else {
@@ -361,5 +362,29 @@ EOT
             $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
             $dm->persist($multimediaObject);
             $dm->flush();
+      }
+
+      private function download($src, $target, $output)
+      {
+            $output->writeln("Downloading multimedia files to init the database:");
+            $progress = new \Symfony\Component\Console\Helper\ProgressBar($output, 100);
+            $progress->start();
+
+            $ch = curl_init($src);
+            $targetFile = fopen($target, 'wb');        
+            curl_setopt($ch, CURLOPT_FILE, $targetFile);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_NOPROGRESS, false);
+            curl_setopt($ch, CURLOPT_PROGRESSFUNCTION, function($c, $downloadSize, $downloaded, $uploadSize, $uploaded) use ($progress){
+               $percentage = ($downloaded > 0 && $downloadSize > 0 ? round($downloaded / $downloadSize, 2) : 0.0);
+               $progress->setProgress($percentage * 100);
+            });
+            curl_exec($ch);
+            $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            fclose($targetFile);            
+            curl_close($ch);
+            $progress->finish();
+            
+            return (200 == $statusCode);
       }
 }
