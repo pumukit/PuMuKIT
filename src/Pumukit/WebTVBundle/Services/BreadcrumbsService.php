@@ -27,12 +27,13 @@ class BreadcrumbsService
   }
 
   
-  public function addList($title, $routeName, $routeParameters = array())
+  public function addList($title, $routeName, array $routeParameters = array())
   {
+    dump($routeParameters);
     $this->session->set('breadcrumbs/title', $title);
     $this->session->set('breadcrumbs/routeName', $routeName);
     $this->session->set('breadcrumbs/routeParameters', $routeParameters);
-    $this->add(1, $title, $routeName, $routeParameters = array());
+    $this->add(1, $title, $routeName, $routeParameters);
   }
 
 
@@ -56,7 +57,7 @@ class BreadcrumbsService
   }
 
 
-  private function add($index, $title, $routeName, $routeParameters = array())
+  private function add($index, $title, $routeName, array $routeParameters = array())
   {
     $this->breadcrumbs[$index] = array("title" => $title, 
                                        "link" => $this->router->generate($routeName, $routeParameters));
