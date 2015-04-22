@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class IndexController extends Controller
 {
     /**
-     * @Route("/arca.xml", defaults={"_format": "xml"})
+     * @Route("/arca.xml", defaults={"_format": "xml"}, name="pumukit_arca_index")
      * @Template()
      */
     public function indexAction()
@@ -18,7 +18,7 @@ class IndexController extends Controller
     }
 
     /**
-     * @Route("{year}/arca.xml", defaults={"_format": "xml"})
+     * @Route("{year}/arca.xml", defaults={"_format": "xml"}, name="pumukit_arca_list")
      * @Template()
      */
     public function listAction($year)
