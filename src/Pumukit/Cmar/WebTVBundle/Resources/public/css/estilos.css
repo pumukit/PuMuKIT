@@ -5,7 +5,7 @@ body { background-color:#fff; font:0.75em Verdana, Arial, sans-serif;}
 #idiomas { margin: 0px; padding: 0; float: right;}
 #idiomas li { padding:0 8px; float:left; list-style:none; text-align: left; color: #B19653; border-left:1px solid #FFF;}
 #idiomas li a { color: #005268; }
-.blq-navegacion-superior { margin: 0px; padding: 14px; width: 944px;}
+.blq-navegacion-superior { margin: 0px; padding: 8px; width: 944px;}
 #navegacion-superior { display:inline; padding:0; margin:0;}
 #navegacion-superior li { border-left:1px solid #666; padding:0 8px; float:right; list-style:none;}
 #navegacion-superior li.first_child, #idiomas li.first_child { border:0;}
