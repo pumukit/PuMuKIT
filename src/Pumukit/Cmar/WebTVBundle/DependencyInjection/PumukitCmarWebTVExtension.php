@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\CmarWebTVBundle\DependencyInjection;
+namespace Pumukit\Cmar\WebTVBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

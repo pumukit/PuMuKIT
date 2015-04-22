@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\CmarWebTVBundle\Controller;
+namespace Pumukit\Cmar\WebTVBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;

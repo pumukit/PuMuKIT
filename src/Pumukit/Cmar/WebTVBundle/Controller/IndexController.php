@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\CmarWebTVBundle\Controller;
+namespace Pumukit\Cmar\WebTVBundle\Controller;
 
 use Pumukit\WebTVBundle\Controller\IndexController as Base;
 

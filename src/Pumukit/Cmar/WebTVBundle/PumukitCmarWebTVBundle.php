@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\CmarWebTVBundle;
+namespace Pumukit\Cmar\WebTVBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
