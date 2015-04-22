@@ -23,7 +23,7 @@ use Pumukit\SchemaBundle\Document\Broadcast;
 class MultimediaObjectController extends Controller
 {
     /**
-     * @Route("/video/{id}")
+     * @Route("/video/{id}", name="pumukit_webtv_multimediaobject_index")
      * @Template("PumukitWebTVBundle:MultimediaObject:index.html.twig")
      */
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
@@ -54,7 +54,7 @@ class MultimediaObjectController extends Controller
 
 
    /**
-     * @Route("/iframe/{id}")
+     * @Route("/iframe/{id}", name="pumukit_webtv_multimediaobject_iframe")
      * @Template()
      */
     public function iframeAction(MultimediaObject $multimediaObject, Request $request)
@@ -64,7 +64,7 @@ class MultimediaObjectController extends Controller
 
 
     /**
-     * @Route("/video/magic/{secret}")
+     * @Route("/video/magic/{secret}", name="pumukit_webtv_multimediaobject_magicindex")
      * @Template("PumukitWebTVBundle:MultimediaObject:index.html.twig")
      */
     public function magicIndexAction(MultimediaObject $multimediaObject, Request $request)

@@ -12,7 +12,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 class SeriesController extends Controller
 {
     /**
-     * @Route("/series/{id}")
+     * @Route("/series/{id}", name="pumukit_webtv_series_index")
      * @Template("PumukitWebTVBundle:Series:index.html.twig")
      */
     public function indexAction(Series $series, Request $request)
@@ -29,7 +29,7 @@ class SeriesController extends Controller
     }
 
     /**
-     * @Route("/series/magic/{secret}")
+     * @Route("/series/magic/{secret}", name="pumukit_webtv_series_magicindex")
      * @Template("PumukitWebTVBundle:Series:index.html.twig")
      */
     public function magicIndexAction(Series $series, Request $request)

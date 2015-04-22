@@ -11,7 +11,7 @@ use Pumukit\SchemaBundle\Document\Series;
 class IndexController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/", name="pumukit_webtv_index_index")
      * @Template()
      */
     public function indexAction()

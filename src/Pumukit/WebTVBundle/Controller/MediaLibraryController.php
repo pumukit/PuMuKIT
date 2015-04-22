@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class MediaLibraryController extends Controller
 {
     /**
-     * @Route("/mediateca/{sort}", defaults={"sort" = "date"}, requirements={"sort" = "alphabetically|date"})
+     * @Route("/mediateca/{sort}", defaults={"sort" = "date"}, requirements={"sort" = "alphabetically|date"}, name="pumukit_webtv_medialibrary_index")
      * @Template()
      */
     public function indexAction($sort, Request $request)

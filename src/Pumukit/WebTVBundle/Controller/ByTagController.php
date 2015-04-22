@@ -16,7 +16,7 @@ class ByTagController extends Controller
   private $limit = 10;
 
   /**
-   * @Route("/multimediaobjects/tag/{cod}")
+   * @Route("/multimediaobjects/tag/{cod}", name="pumukit_webtv_bytag_multimediaobjects")
    * @Template("PumukitWebTVBundle:ByTag:index.html.twig")
    */
   public function multimediaObjectsAction(Tag $tag, Request $request)
@@ -32,7 +32,7 @@ class ByTagController extends Controller
   }
   
   /**
-   * @Route("/series/tag/{cod}")
+   * @Route("/series/tag/{cod}", name="pumukit_webtv_bytag_series")
    * @Template("PumukitWebTVBundle:ByTag:index.html.twig")
    */
   public function seriesAction(Tag $tag, Request $request)
