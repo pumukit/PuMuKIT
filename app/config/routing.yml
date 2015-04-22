@@ -1,7 +1,7 @@
-pumukit_cmar_sonar:
-    resource: "@PumukitCmarSonarBundle/Controller/"
-    type:     annotation
-    prefix:   /
+# pumukit_cmar_sonar:
+#     resource: "@PumukitCmarSonarBundle/Controller/"
+#     type:     annotation
+#     prefix:   /
 
 pumukitwizard:
     resource: "@PumukitWizardBundle/Resources/config/routing.yml"

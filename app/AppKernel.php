@@ -31,8 +31,8 @@ class AppKernel extends Kernel
             new Pumukit\LiveBundle\PumukitLiveBundle(),
             new Pumukit\WizardBundle\PumukitWizardBundle(),
             new Pumukit\WebTVBundle\PumukitWebTVBundle(),
-            new Pumukit\Cmar\WebTVBundle\PumukitCmarWebTVBundle(),
-            new Pumukit\Cmar\SonarBundle\PumukitCmarSonarBundle(),
+            //new Pumukit\Cmar\WebTVBundle\PumukitCmarWebTVBundle(),
+            //new Pumukit\Cmar\SonarBundle\PumukitCmarSonarBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
