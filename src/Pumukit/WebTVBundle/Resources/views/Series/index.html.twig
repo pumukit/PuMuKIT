@@ -4,7 +4,6 @@
 {% block keywords %}{{ parent() }} - {{ series.keyword }}{% endblock %}
 
 {% block body %}
-	<h1 id="index_h1">Serie: {{ series.title|default("No title"|trans) }}</h1>
     {% include 'PumukitWebTVBundle:Series:header.html.twig' %}
     <div id="serial_header">
       {{ series.header|raw }}
