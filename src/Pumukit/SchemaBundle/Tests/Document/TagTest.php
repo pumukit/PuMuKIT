@@ -16,6 +16,8 @@ class TagTest extends \PHPUnit_Framework_TestCase
         $created = new \DateTime("now");
         $updated = new \DateTime("now");
         $display = true;
+        $youtubeProperty = "w7dD-JJJytM&list=PLmXxqSJJq-yUfrjvKe5c5LX_1x7nGVF6c";
+        $properties = array('youtube' => $youtubeProperty);
 
         $tag = new Tag($title);
 
@@ -27,6 +29,7 @@ class TagTest extends \PHPUnit_Framework_TestCase
         $tag->setCreated($created);
         $tag->setUpdated($updated);
         $tag->setDisplay($display);
+        $tag->setProperties($properties);
 
         $tag_parent = new Tag("parent");
         $tag->setParent($tag_parent);
@@ -40,6 +43,7 @@ class TagTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($updated, $tag->getUpdated());
         $this->assertEquals($tag_parent, $tag->getParent());
         $this->assertEquals($display, $tag->getDisplay());
+        $this->assertEquals($properties, $tag->getProperties());
 
         $this->assertNull($tag->getTitle('fr'));
         $this->assertNull($tag->getDescription('fr'));
@@ -56,6 +60,11 @@ class TagTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($descriptionArray, $tag->getI18nDescription());
 
         $this->assertEquals($tag->getTitle(), $tag->__toString());
+
+        $testProperty = 'test property';
+        $tag->setProperty('test', $testProperty);
+        $this->assertEquals($youtubeProperty, $tag->getProperty('youtube'));
+        $this->assertEquals($testProperty, $tag->getProperty('test'));
     }
 
     public function testNumberMultimediaObjects()
