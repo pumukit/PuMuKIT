@@ -1,0 +1,20 @@
+{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+{% block body %}
+<p class="titulo_widget titulo_widget_grande">
+{{ title }}
+</p>
+
+{% set last_date = 'next year' %}
+{% for oneseries in series %}
+  <div class="serial_body">
+    {% for mm in oneseries.getMultimediaObjects() %}
+      {% if mm.containsTagWithCod(tag_cod) %}
+        {# TODO template series.getSeriesTemplateId() #}
+        {% set template = '' %}
+        {% include 'PumukitWebTVBundle:Series:multimediaobjectbody.html.twig' with {'mm': mm, 'roles': mm.getRoles(), 'last_date': last_date, 'template': template} %}
+        {% set last_date = mm.getRecordDate() %}
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endfor %}
+{% endblock body %}
