@@ -12,28 +12,37 @@ class BreadcrumbsService
 {
   private $session;
   private $router;
+  private $allTitle;
   private $allRoute;
   private $breadcrumbs;
 
-  
-  public function __construct(Router $router, Session $session, $allRoute="pumukit_webtv_medialibrary_index")
+
+  public function __construct(Router $router, Session $session, $allTitle='All', $allRoute="pumukit_webtv_medialibrary_index")
   {
     $this->session = $session;
     $this->router = $router;
+    $this->allTitle = $allTitle;
     $this->allRoute = $allRoute;
     $this->breadcrumbs = array(array("title" => "Home", "link" => $this->router->generate("pumukit_webtv_index_index")));
   }
-  
 
+  
   public function addList($title, $routeName, $routeParameters = array())
   {
+    $this->session->set('breadcrumbs/title', $title);
+    $this->session->set('breadcrumbs/routeName', $routeName);
+    $this->session->set('breadcrumbs/routeParameters', $routeParameters);
     $this->add(1, $title, $routeName, $routeParameters = array());
   }
+
 
   public function addSeries(Series $series)
   {
     if (1 == count($this->breadcrumbs)){
-      $this->add(1, "All", $this->allRoute);
+      $this->add(1, 
+                 $this->session->get('breadcrumbs/title', $this->allTitle),
+                 $this->session->get('breadcrumbs/routeName', $this->allRoute),
+                 $this->session->get('breadcrumbs/routeParameters', array()));
     }
     
     $this->add(2, $series->getTitle(), "pumukit_webtv_series_index", array("id" => $series->getId()));
