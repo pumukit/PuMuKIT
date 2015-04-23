@@ -29,7 +29,6 @@ class BreadcrumbsService
   
   public function addList($title, $routeName, array $routeParameters = array())
   {
-    dump($routeParameters);
     $this->session->set('breadcrumbs/title', $title);
     $this->session->set('breadcrumbs/routeName', $routeName);
     $this->session->set('breadcrumbs/routeParameters', $routeParameters);
