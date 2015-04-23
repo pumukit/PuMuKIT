@@ -31,9 +31,9 @@ Setup a development environment on Ubuntu 14.04:
 2. Download the last version of PuMuKIT-2:
 
     ```
-    git clone http://gitlab.teltek.es/pumukit/pumukit2.git /var/www/pumukit2
+    git clone https://github.com/campusdomar/PuMuKIT2.git /var/www/pumukit2
     cd /var/www/pumukit2
-    git checkout 2.0.0
+    git checkout master
     ```
 
 3. Add NGINX config file.
