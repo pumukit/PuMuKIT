@@ -46,8 +46,10 @@ class Builder extends ContainerAware
           $management->addChild('Access Profiles', array('route' => 'pumukitnewadmin_broadcast_index'))->setExtra('translation_domain', 'NewAdminBundle');
         }
 
-        $ingester = $menu->addChild('Ingester')->setExtra('translation_domain', 'NewAdminBundle');
-        $ingester->addChild('Opencast Ingester')->setExtra('translation_domain', 'NewAdminBundle');
+        if ($this->container->has("pumukit_opencast.client")) {
+          $ingester = $menu->addChild('Ingester')->setExtra('translation_domain', 'NewAdminBundle');
+          $ingester->addChild('Opencast Ingester', array('route' => 'pumukitopencast'))->setExtra('translation_domain', 'NewAdminBundle');
+        }
 
         return $menu;
     }
