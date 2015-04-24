@@ -3,6 +3,11 @@
 #     type:     annotation
 #     prefix:   /
 
+pumukit_opencast:
+    resource: "@PumukitOpencastBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 pumukitwizard:
     resource: "@PumukitWizardBundle/Resources/config/routing.yml"
 

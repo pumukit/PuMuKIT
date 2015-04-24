@@ -1,0 +1,93 @@
+<div class="table-responsive well">
+    <table class="table table-striped table-hover">
+
+      <thead>
+        <tr>
+          <th >{% trans %}Img{% endtrans %}</th>
+          <th >{% trans %}Id{% endtrans %}</th>
+          <th >{% trans %}Name{% endtrans %}</th>
+          <th >{% trans %}Series{% endtrans %}</th>
+          <th >{% trans %}Duration{% endtrans %}</th>
+          <th width="7%">{% trans %}Date{% endtrans %}</th>
+          <th width="10%"></th>
+        </tr>
+      </thead>
+  
+      <tbody>
+        {% if mediaPackages is empty %}
+        <tr>
+          <td colspan="9">
+            {% trans %}There are no mediapackages with those values.{% endtrans %}
+          </td>
+        </tr>
+        {% endif %}
+
+        {% for mediaPackage in mediaPackages %}
+        <tr> 
+          <td>
+            {% set url_set = false %}
+            {% if mediaPackage.attachments.attachment.0.url is not empty %}
+              <img class="mini" src="{{ mediaPackage.attachments.attachment.0.url }}" height="23" width="30">
+              {% set url_set = true %}
+            {% endif %}
+            {% if not url_set %}
+            <img class="mini" src="{{ asset('/bundles/pumukitnewadmin/images/none.jpg') }}" alt="{% trans %}No_pic{% endtrans %}" height="23" width="30">
+            {% endif %}
+          </td>
+          <td>
+            {{ mediaPackage.id }}
+          </td>
+          <td>
+            {% if mediaPackage.title is not empty %}{{ mediaPackage.title }}{% endif %}
+          </td>
+          <td>
+            {{ mediaPackage.seriestitle }}
+          </td>
+          <td>
+            {{ (((mediaPackage.duration)//1000)-3600)|date("H:i:s") }}
+          </td>
+          <td>
+            {{ mediaPackage.start|date("d-m-Y") }}
+          </td>
+          <td>
+            <a target="black" href="{{player}}?id={{mediaPackage.id}}">{% trans %}Play{% endtrans %}</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            {% set import = 'import' %}
+            {% for  multimediaObject in multimediaObjects %}
+              {% if (multimediaObject.properties != null) and (multimediaObject.properties['opencast'] == mediaPackage.id) %}
+                <a href="/admin/mms/series?id={{multimediaObject.series.id}}">{% trans %}Imported{% endtrans %}</a>
+                {% set import = 'imported' %}
+              {% endif %} 
+            {% endfor %}
+
+            {% if import != 'imported' %}
+              <a href="{{ path('pumukitopencast_import', {'id': mediaPackage.id}) }}">{% trans %}Import{% endtrans %}</a>
+            {% endif %}
+            
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+
+      <tfoot>
+        <tr>
+          <th colspan="10">
+            <div class="col-md-8">
+              {{ mediaPackages.getNbResults }}
+              {% transchoice mediaPackages.getNbResults %}
+                  {0} users|{1} mediaPackages|]1,Inf] Media Packages
+              {% endtranschoice %}
+              {% if app.session.get('admin/mediapackage/criteria')|length != 0 %}
+                <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
+              {% endif %}
+            </div>
+            <div class="col-md-4 text-right" style="float:right;">
+              <div class="pagerfanta">
+                {{ pagerfanta(mediaPackages, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitopencast"}) }}
+              </div>
+            </div>                
+          </th>
+        </tr>
+      </tfoot>
+
+    </table>
+</div>

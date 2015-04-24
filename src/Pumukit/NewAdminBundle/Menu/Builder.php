@@ -35,8 +35,6 @@ class Builder extends ContainerAware
         $live->addChild('Live Channels', array('route' => 'pumukitnewadmin_live_index'))->setExtra('translation_domain', 'NewAdminBundle');
         $live->addChild('Live Events', array('route' => 'pumukitnewadmin_event_index'))->setExtra('translation_domain', 'NewAdminBundle');
 
-        //$menu->addChild('Temporized Publishing');
-
         $tables = $menu->addChild('Tables')->setExtra('translation_domain', 'NewAdminBundle');
         $tables->addChild('People', array('route' => 'pumukitnewadmin_person_index'))->setExtra('translation_domain', 'NewAdminBundle');
 
@@ -48,8 +46,10 @@ class Builder extends ContainerAware
           $management->addChild('Access Profiles', array('route' => 'pumukitnewadmin_broadcast_index'))->setExtra('translation_domain', 'NewAdminBundle');
         }
 
-        $ingester = $menu->addChild('Ingester')->setExtra('translation_domain', 'NewAdminBundle');
-        $ingester->addChild('Matterhorn Ingester')->setExtra('translation_domain', 'NewAdminBundle');
+        if ($this->container->has("pumukit_opencast.client")) {
+          $ingester = $menu->addChild('Ingester')->setExtra('translation_domain', 'NewAdminBundle');
+          $ingester->addChild('Opencast Ingester', array('route' => 'pumukitopencast'))->setExtra('translation_domain', 'NewAdminBundle');
+        }
 
         return $menu;
     }

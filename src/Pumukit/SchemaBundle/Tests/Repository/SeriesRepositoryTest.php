@@ -379,7 +379,7 @@ class SeriesRepositoryTest extends WebTestCase
         $tag2->setCod('tag2');
         $tag3 = new Tag();
         $tag3->setCod('tag3');
-  
+
         $this->dm->persist($tag1);
         $this->dm->persist($tag2);
         $this->dm->persist($tag3);
@@ -404,13 +404,13 @@ class SeriesRepositoryTest extends WebTestCase
         $this->dm->persist($mm22);
         $this->dm->persist($mm33);
         $this->dm->flush();
- 
+
         $mm11->addTag($tag1);
         $mm11->addTag($tag2);
 
         $mm22->addTag($tag2);
         $mm22->addTag($tag3);
- 
+
         $mm33->addTag($tag1);
         $mm33->addTag($tag3);
 
@@ -428,7 +428,6 @@ class SeriesRepositoryTest extends WebTestCase
         $this->assertEquals(1, count($this->repo->createBuilderWithTag($tag1, $sort)));
         $this->assertEquals(1, count($this->repo->createBuilderWithTag($tag2, $sortAsc)));  
         $this->assertEquals(1, count($this->repo->createBuilderWithTag($tag3, $sortDesc)));
- 
     }
 
     public function testFindSeriesByPersonId()
