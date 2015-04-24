@@ -73,7 +73,3 @@ pumukitnewadmin_live:
 pumukitnewadmin_event:
     resource: @PumukitNewAdminBundle/Resources/config/routes/event.yml
     prefix: /admin/event
-
-pumukitopencast_mediapackage:
-    resource: @PumukitOpencastBundle/Resources/config/routes/mediapackage.yml
-    prefix: /admin/opencast/mediapackage

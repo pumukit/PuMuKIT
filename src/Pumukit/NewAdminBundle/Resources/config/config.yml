@@ -84,9 +84,3 @@ sylius_resource:
             classes:
                 model: Pumukit\LiveBundle\Document\Event
                 controller: Pumukit\NewAdminBundle\Controller\EventController
-        pumukitopencast.mediapackage:
-            driver: doctrine/mongodb-odm
-            templates: PumukitOpencastBundle:MediaPackage
-            classes:
-                model: Pumukit\LiveBundle\Document\Event
-                controller: Pumukit\OpencastBundle\Controller\MediaPackageController
