@@ -50,7 +50,7 @@
             {{ mediaPackage.start|date("d-m-Y") }}
           </td>
           <td>
-            <a target="black" href="http://engage14.campusdomar.es/paellaengage/ui/cmarwatch.html?id={{mediaPackage.id}}">{% trans %}Play{% endtrans %}</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <a target="black" href="{{player}}?id={{mediaPackage.id}}">{% trans %}Play{% endtrans %}</a>&nbsp;&nbsp;|&nbsp;&nbsp;
             {% set import = 'import' %}
             {% for  multimediaObject in multimediaObjects %}
               {% if (multimediaObject.properties != null) and (multimediaObject.properties['opencast'] == mediaPackage.id) %}
@@ -60,7 +60,7 @@
             {% endfor %}
 
             {% if import != 'imported' %}
-              <a href="{{ path('pumukitopencast_mediapackage_import', {'id': mediaPackage.id}) }}">{% trans %}Import{% endtrans %}</a>
+              <a href="{{ path('pumukitopencast_import', {'id': mediaPackage.id}) }}">{% trans %}Import{% endtrans %}</a>
             {% endif %}
             
           </td>
@@ -82,7 +82,7 @@
             </div>
             <div class="col-md-4 text-right" style="float:right;">
               <div class="pagerfanta">
-                {{ pagerfanta(mediaPackages, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitopencast_mediapackage_index"}) }}
+                {{ pagerfanta(mediaPackages, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitopencast"}) }}
               </div>
             </div>                
           </th>

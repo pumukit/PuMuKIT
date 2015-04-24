@@ -22,18 +22,24 @@ class MediaPackageController extends Controller
     private $dm = null;
 
     /**
-     * @Route("/opencast/mediapackage", name="opencastimport")
+     * @Route("/opencast/mediapackage", name="pumukitopencast")
      * @Template()
      */
     public function indexAction(Request $request)
     {
+        if(!$this->has('pumukit_opencast.client')) {
+          throw $this->createNotFoundException('PumukitOpencastBundle not configured.');
+        }
+
+        $opencastClient = $this->get('pumukit_opencast.client');
+        $repository_multimediaobjects = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+
         $limit = 10;
         $page =  $request->get("page", 1);
         $criteria = $this->getCriteria($request);
 
-        $repository_multimediaobjects = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
 
-        list($total, $mediaPackages) = $this->get('pumukit_opencast.client')->getMediaPackages(
+        list($total, $mediaPackages) = $opencastClient->getMediaPackages(
                 (isset($criteria["name"])) ? $criteria["name"]->regex : 0,
                 $limit,
                 ($page -1) * $limit);
@@ -46,12 +52,12 @@ class MediaPackageController extends Controller
 
         $repo = $repository_multimediaobjects->findall();
 
-        return array('mediaPackages' => $pagerfanta, 'multimediaObjects' => $repo);
+        return array('mediaPackages' => $pagerfanta, 'multimediaObjects' => $repo, 'player' => $opencastClient->getPlayerUrl());
     }
 
 
     /**
-     * @Route("/opencast/mediapackage/{id}")
+     * @Route("/opencast/mediapackage/{id}", name="pumukitopencast_import")
      */
     public function importAction($id, Request $request)
     {
@@ -184,7 +190,7 @@ class MediaPackageController extends Controller
             $dm->flush();
         }
 
-        return $this->redirectToRoute('opencastimport');
+        return $this->redirectToRoute('pumukitopencast');
     }
 
     /**

@@ -23,6 +23,26 @@ class Configuration implements ConfigurationInterface
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
+        $rootNode
+          ->children()
+            ->scalarNode('host')
+              ->info('Matterhorn server URL (Engage node in cluster).')
+            ->end()
+            ->scalarNode('username')
+              ->defaultValue("")
+              ->info('Name of the account used to operate the Matterhron REST endpoints (org.opencastproject.security.digest.user).')
+            ->end()
+            ->scalarNode('password')
+              ->defaultValue("")
+              ->info('Password for the account used to operate the Matterhorn REST endpoints (org.opencastproject.security.digest.pass).')
+            ->end()
+            ->scalarNode('player')
+              ->defaultValue("/engage/ui/watch.html")
+              ->info('Opencast player URL or path (default /engage/ui/watch.html).')
+            ->end()
+          ->end()
+        ;
+          
 
         return $treeBuilder;
     }

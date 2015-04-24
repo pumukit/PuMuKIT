@@ -7,20 +7,31 @@ class ClientService
   private $url;
   private $user;
   private $passwd;
+  private $player;
 
 
-  public function __construct($url, $user, $passwd)
+  public function __construct($url, $user="", $passwd="", $player="/engage/ui/watch.html")
   {
     $this->url  = $url;
     $this->user  = $user;
     $this->passwd  = $passwd;
+    $this->player  = $player;
+  }
+
+  public function getUrl()
+  {
+    return $this->url;
+  }
+
+  public function getPlayerUrl()
+  {
+    return ('/' === $this->player[0]) ? $this->url . $this->player : $this->player;
   }
 
 
   private function request($path){
     $sal = array();
 
-    dump($this->url . $path);
     $ch = curl_init($this->url . $path);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
@@ -96,9 +107,7 @@ class ClientService
     if ($decode["search-results"]["limit"] > 1)
       return $decode["search-results"]["limit"][0]["mediapackage"];
     else
-      return $decode["search-results"]["result"]["mediapackage"];
-
-    
+      return $decode["search-results"]["result"]["mediapackage"];   
   }
 
 }
