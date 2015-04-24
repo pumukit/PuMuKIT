@@ -8,19 +8,69 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
+use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
 
-
-class SearchMultimediaObjectsController extends Controller
+class SearchController extends Controller
 {
-    /**
-     * @Route("/searchmultimediaobjects")
-     * @Template()
+	private $limit = 10;
+
+	/**
+   	 * @Route("/searchseries")
+     * @Template("PumukitWebTVBundle:Search:index.html.twig")
      */
-    public function indexAction(Request $request)
-    {
-    	$tag_search = new Tag();
+  	public function seriesAction(Request $request)
+  	{
+  		$serie_search = new Series();
+
+        $search_found = $request->query->get('search');
+    	$start_found = $request->query->get('start');
+    	$end_found = $request->query->get('end');
+
+    	$repository_series = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
+
+    	$series = $repository_series->findall();
+
+    	foreach ($series as $serie) {
+            if($serie->getTitle() == $search_found){
+                $serie_search = $serie;
+            }
+        }
+
+		$queryBuilder = $repository_series->createQueryBuilder();
+
+		/*------------------Aplicamos los FILTROS y nos quedamos con las series deseadas ----------------------*/
+
+        //Obtenemos todas las series del repositorio que su titulo coincida con <$search_found>
+        if($search_found != ""){
+            $queryBuilder->field('title.en')->equals($serie_search->getTitle());
+        }
+
+		//Obtenemos todos los objetos multimedia con fecha superior o igual a <$start_found>
+		if($start_found != "All" && $start_found != ""){
+			$start = \DateTime::createFromFormat("d/m/Y", $start_found);
+			$queryBuilder->field('public_date')->gt($start);
+		}
+
+		//Obtenemos todos los objetos multimedia con fecha inferior o igual a <$end_found>
+		if($end_found != "All" && $end_found != ""){
+			$end = \DateTime::createFromFormat("d/m/Y", $end_found);
+			$queryBuilder->field('public_date')->lt($end);
+		}
+
+		$pagerfanta = $this->createPager($queryBuilder, $request->query->get("page", 1));
+
+		return array('objects' => $pagerfanta, 'start_found' => $start_found, 'end_found' => $end_found);
+  	}
+
+	/**
+   	 * @Route("/searchmultimediaobjects")
+     * @Template("PumukitWebTVBundle:Search:index.html.twig")
+     */
+  	public function multimediaObjectsAction(Request $request)
+  	{
+  		$tag_search = new Tag();
     	$multimediaObject_search = new MultimediaObject();
 
     	//Recogemos los campos de búsqueda de los filtros
@@ -31,11 +81,7 @@ class SearchMultimediaObjectsController extends Controller
     	$start_found = $request->query->get('start');
     	$end_found = $request->query->get('end');
 
-    	//Información proporcionada al paginador
-    	$limit = 6;
-        $page =  $request->get("page", 1);
-
-        //Accedemos al repositorio de los objetos multimedia y de los tags
+    	//Accedemos al repositorio de los objetos multimedia y de los tags
     	$repository_multimediaObjects = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
     	$repository_tags = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
 
@@ -107,13 +153,19 @@ class SearchMultimediaObjectsController extends Controller
 			$queryBuilder->field('record_date')->lt($end);
 		}
 
-		//Creamos el paginador
-		$adapter = new DoctrineODMMongoDBAdapter($queryBuilder);
-        $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage($limit);
-        $pagerfanta->setCurrentPage($page);
-
-        return array('multimediaObjects' => $pagerfanta, 'tags' => $tags, 'tag_found' => $tag_found, 'type_found' => $type_found,
+		$pagerfanta = $this->createPager($queryBuilder, $request->query->get("page", 1));
+  		
+  		return array('objects' => $pagerfanta, 'tags' => $tags, 'tag_found' => $tag_found, 'type_found' => $type_found,
         	'duration_found' => $duration_found, 'start_found' => $start_found, 'end_found' => $end_found);
-    }
+  	}
+
+  	private function createPager($objects, $page)
+  	{
+    	$adapter = new DoctrineODMMongoDBAdapter($objects);
+    	$pagerfanta = new Pagerfanta($adapter);
+    	$pagerfanta->setMaxPerPage($this->limit);
+    	$pagerfanta->setCurrentPage($page);    
+
+    	return $pagerfanta;
+  	}
 }
