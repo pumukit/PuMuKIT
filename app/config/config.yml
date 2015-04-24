@@ -33,7 +33,8 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     globals:
-        locales:      "%pumukit2.locales%"
+        pumukit2_info: "%pumukit2.info%"
+        locales:       "%pumukit2.locales%"
 
 # Assetic Configuration
 assetic:
@@ -75,8 +76,14 @@ fos_user:
 
 # Pumukit2 parameters
 parameters:
+    pumukit2.info:
+        title:        "UCies.tv"
+        description:  "Cíes University TV Website"
+        keywords:     "webtv, Tv, Cies University, uvigo, uvigotv, pumukit"
+        email:        "tv@ucies.tv"
+        logo:         "/bundles/pumukitwebtv/images/UCies/logo.png"
     pumukit2.locales:
         - es
         - en
-    pumukit2.inbox: "%kernel.root_dir%/../web/storage/inbox"
-    pumukit2.tmp: "%kernel.root_dir%/../web/storage/tmp"
+    pumukit2.inbox:   "%kernel.root_dir%/../web/storage/inbox"
+    pumukit2.tmp:     "%kernel.root_dir%/../web/storage/tmp"
