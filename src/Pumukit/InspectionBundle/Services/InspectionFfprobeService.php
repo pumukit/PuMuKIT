@@ -107,7 +107,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
         $process->setTimeout(60);
         $process->run();
         if (!$process->isSuccessful()) {
-            throw new \RuntimeException($process->getErrorOutput());
+            throw new \RuntimeException($process->getExitCode().' '.$process->getExitCodeText().'. '.$process->getErrorOutput());
         }
 
         return $process->getOutput();

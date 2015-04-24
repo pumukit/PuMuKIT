@@ -1,5 +1,23 @@
+# pumukit_cmar_sonar:
+#     resource: "@PumukitCmarSonarBundle/Controller/"
+#     type:     annotation
+#     prefix:   /
+
 pumukit_opencast:
     resource: "@PumukitOpencastBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pumukitwizard:
+    resource: "@PumukitWizardBundle/Resources/config/routing.yml"
+
+pumukit_arca:
+    resource: "@PumukitArcaBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pumukit_live:
+    resource: "@PumukitLiveBundle/Controller/"
     type:     annotation
     prefix:   /
 

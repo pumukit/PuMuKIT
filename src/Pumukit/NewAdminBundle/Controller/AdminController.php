@@ -177,12 +177,9 @@ class AdminController extends ResourceController
         $config = $this->getConfiguration();
         $pluralName = $config->getPluralResourceName();
         $resourceName = $config->getResourceName();
+        $session = $this->get('session');
 
         $sorting = $request->get('sorting');
-        if ((null !== $sorting) && ('series' === $resourceName)){
-            $this->get('session')->set('admin/'.$resourceName.'/type', $sorting[key($sorting)]);
-            $this->get('session')->set('admin/'.$resourceName.'/sort', key($sorting));
-        }
 
         $criteria = $this->getCriteria($config);
         $resources = $this->getResources($request, $config, $criteria);
@@ -294,8 +291,9 @@ class AdminController extends ResourceController
             }
 
             $resources
-                ->setCurrentPage($session->get($session_namespace.'/page', 1), true, true)
-                ->setMaxPerPage($session->get($session_namespace.'/paginate', 10));
+                ->setMaxPerPage($session->get($session_namespace.'/paginate', 10))
+                ->setNormalizeOutOfRangePages(true)
+                ->setCurrentPage($session->get($session_namespace.'/page', 1));
         } else {
             $resources = $this
                 ->resourceResolver
@@ -303,5 +301,25 @@ class AdminController extends ResourceController
         }
 
         return $resources;
+    }
+
+    /**
+     * Overwrite to get form with translations
+     * @param object|null $resource
+     *
+     * @return FormInterface
+     */
+    public function getForm($resource = null)
+    {
+        $formName = $this->config->getFormType();
+        $prefix = "pumukitnewadmin_";
+        $formType = "Pumukit\\NewAdminBundle\\Form\\Type\\".ucfirst(substr($formName, strlen($prefix)))."Type";
+
+        $translator = $this->get('translator');
+        $locale = $this->getRequest()->getLocale();
+
+        $form = $this->createForm(new $formType($translator, $locale), $resource);
+
+        return $form;
     }
 }

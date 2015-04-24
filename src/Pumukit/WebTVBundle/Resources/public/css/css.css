@@ -30,7 +30,7 @@ div.index_widget{
 margin: 1em 0em;
 }
 div#index_body h1, div#other_body h1, h1.video_title{
-background:transparent url(/uploads/UdN/pestana_larga.png) no-repeat scroll right 4px;
+background:transparent url(/bundles/pumukitwebtv/images/UdN/pestana_larga.png) no-repeat scroll right 4px;
 font-size:28px;
 font-weight:bold;
 margin:0px 0px 22px;
@@ -69,7 +69,7 @@ font-family: "Arial";
 
 body{
 background-attachment:fixed;
-background-image:url(/uploads/UdN/fondo960.gif);
+background-image:url(/bundles/pumukitwebtv/images/UdN/fondo960.gif);
 background-position:center center;
 background-repeat:repeat-y;
 }
@@ -105,3 +105,24 @@ background: none repeat scroll 0 0 #F3F3F3;
 margin: 4px;
 padding: 2px;
 }
+
+/*span.video-duration {
+top: 4px;
+position: absolute;
+z-index:10; 
+background-color:#000;
+color: #FFF;
+padding: 0px 4px;
+font-size: 11px;
+font-weight: normal;
+text-shadow: none;
+height: 14px;
+line-height: 14px;
+opacity: 0.75;
+filter: alpha(opacity=75);
+display: -moz-inline-stack;
+vertical-align: top;
+zoom: 1;
+display: inline-block;
+font-family: Verdana, Arial, sans-serif;
+}*/

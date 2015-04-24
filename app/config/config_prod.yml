@@ -13,6 +13,15 @@ imports:
 
 monolog:
     handlers:
+        encoder:
+            type:         fingers_crossed
+            action_level: error
+            handler:      encoder_nested
+            channels:     [encoder]
+        encoder_nested:
+            type:   stream
+            path:   "%kernel.logs_dir%/encoder_%kernel.environment%.log"
+            level:  debug
         main:
             type:         fingers_crossed
             action_level: error

@@ -14,12 +14,14 @@ class FactoryService
     const DEFAULT_MULTIMEDIAOBJECT_TITLE = 'New';
 
     private $dm;
+    private $tagService;
     private $translator;
     private $locales;
 
-    public function __construct(DocumentManager $documentManager, TranslatorInterface $translator, array $locales = array())
+    public function __construct(DocumentManager $documentManager, TagService $tagService, TranslatorInterface $translator, array $locales = array())
     {
         $this->dm = $documentManager;
+        $this->tagService = $tagService;
         $this->translator = $translator;
         $this->locales = $locales;
     }
@@ -48,7 +50,7 @@ class FactoryService
             $series->setTitle($title, $locale);
         }
 
-        $mm = $this->createMultimediaObjectTemplate($series);
+        $mm = $this->createMultimediaObjectPrototype($series);
 
         $this->dm->persist($mm);
         $this->dm->persist($series);
@@ -65,16 +67,12 @@ class FactoryService
      *
      * @return MultimediaObject
      */
-    private function createMultimediaObjectTemplate($series)
+    private function createMultimediaObjectPrototype($series)
     {
         $mm = new MultimediaObject();
         $mm->setStatus(MultimediaObject::STATUS_PROTOTYPE);
-        try {
-            $broadcast = $this->getDefaultBroadcast();
-            $mm->setBroadcast($broadcast);
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
-        }
+        $broadcast = $this->getDefaultBroadcast();
+        if ($broadcast) $mm->setBroadcast($broadcast);
         $mm->setPublicDate(new \DateTime("now"));
         $mm->setRecordDate($mm->getPublicDate());
         foreach ($this->locales as $locale) {
@@ -94,7 +92,7 @@ class FactoryService
      */
     public function createMultimediaObject($series)
     {
-        $prototype = $this->getMultimediaObjectTemplate($series);
+        $prototype = $this->getMultimediaObjectPrototype($series);
 
         if (null !== $prototype) {
             $mm = $this->createMultimediaObjectFromPrototype($prototype);
@@ -105,12 +103,8 @@ class FactoryService
                 $mm->setTitle($title, $locale);
             }
         }
-        try {
-            $broadcast = $this->getDefaultBroadcast();
-            $mm->setBroadcast($broadcast);
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
-        }
+        $broadcast = $this->getDefaultBroadcast();
+        if ($broadcast) $mm->setBroadcast($broadcast);
         $mm->setPublicDate(new \DateTime("now"));
         $mm->setRecordDate($mm->getPublicDate());
         $mm->setStatus(MultimediaObject::STATUS_BLOQ);
@@ -137,10 +131,6 @@ class FactoryService
 
         if (null == $broadcast) {
             $broadcast = $repoBroadcast->findPublicBroadcast();
-        }
-
-        if (null == $broadcast) {
-            throw new \Exception('There is no default selected broadcast neither public broadcast.');
         }
 
         return $broadcast;
@@ -205,7 +195,7 @@ class FactoryService
      * @param Series $series
      * @return MultimediaObject
      */
-    public function getMultimediaObjectTemplate(Series $series=null)
+    public function getMultimediaObjectPrototype(Series $series=null)
     {
         return $this->dm
           ->getRepository('PumukitSchemaBundle:MultimediaObject')
@@ -275,13 +265,13 @@ class FactoryService
         $new->setI18nSubtitle($prototype->getI18nSubtitle());
         $new->setI18nDescription($prototype->getI18nDescription());
         $new->setI18nLine2($prototype->getI18nLine2());
-        $new->setI18nCopyright($prototype->getI18nCopyright());
         $new->setI18nKeyword($prototype->getI18nKeyword());
+        $new->setCopyright($prototype->getCopyright());
         $new->setDuration($prototype->getDuration());
         $new->setNumview($prototype->getNumview());
 
         foreach ($prototype->getTags() as $tag) {
-            $new->addTag($tag);
+            $tagAdded = $this->tagService->addTagToMultimediaObject($new, $tag->getId());
         }
 
         foreach ($prototype->getRoles() as $embeddedRole) {

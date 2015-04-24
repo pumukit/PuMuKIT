@@ -23,14 +23,14 @@
         {% if loop.first %}
 	  &nbsp;
 	{% else %}
-	  <a href="#" onclick="$('#materials_mms').load('{{ path('pumukitnewadmin_material_up', {'id': material.id, 'mmId': mmId}) }}', {'_method': 'POST'}); return false;">&#8593;</a>
+	  <a href="#" onclick="$('#materials_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_material_up', {'id': material.id, 'mmId': mmId}) }}', {'_method': 'POST'}); return false;">&#8593;</a>
 	{% endif %}
       </td>
       <td>
 	{% if loop.last %}
           &nbsp;
 	{% else %}
-	  <a href="#" onclick="$('#materials_mms').load('{{ path('pumukitnewadmin_material_down', {'id': material.id, 'mmId': mmId}) }}', {'_method': 'POST'}); return false;">&#8595;</a>
+	  <a href="#" onclick="$('#materials_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_material_down', {'id': material.id, 'mmId': mmId}) }}', {'_method': 'POST'}); return false;">&#8595;</a>
 	{% endif %}
       </td>
       <td>

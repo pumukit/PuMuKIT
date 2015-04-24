@@ -66,7 +66,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
     public function testRepository()
     {
         //$rank = 1;
-        $status = MultimediaObject::STATUS_NORMAL;
+        $status = MultimediaObject::STATUS_PUBLISHED;
         $record_date = new \DateTime();
         $public_date = new \DateTime();
         $title = 'titulo cualquiera';
@@ -205,7 +205,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         $this->assertFalse($mm->containsPerson($personKate));
         $this->assertFalse($mm->containsPersonWithRole($personKate, $roleActor));
-        $this->assertEquals(0, count($mm->getPeopleInMultimediaObject()));
+        $this->assertEquals(0, count($mm->getPeople()));
         $this->assertFalse($mm->containsPersonWithAllRoles($personKate, array($roleActor, $rolePresenter, $roleDirector)));
         $this->assertFalse($mm->containsPersonWithAnyRole($personKate, array($roleActor, $rolePresenter, $roleDirector)));
 
@@ -218,7 +218,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertFalse($mm->containsPersonWithRole($personKate, $rolePresenter));
         $this->assertFalse($mm->containsPersonWithRole($personKate, $roleDirector));
         $this->assertFalse($mm->containsPerson($personLucy));
-        $this->assertEquals(1, count($mm->getPeopleInMultimediaObject()));
+        $this->assertEquals(1, count($mm->getPeople()));
         $this->assertEquals($personKate->getId(), $mm->getPersonWithRole($personKate, $roleActor)->getId());
 
         $mm2 = new MultimediaObject();
@@ -227,7 +227,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         $this->assertFalse($mm2->containsPerson($personKate));
         $this->assertFalse($mm2->containsPersonWithRole($personKate, $roleActor));
-        $this->assertEquals(0, count($mm2->getPeopleInMultimediaObject()));
+        $this->assertEquals(0, count($mm2->getPeople()));
 
         $this->assertFalse($mm2->getPersonWithRole($personKate, $roleActor));
 
@@ -240,7 +240,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertFalse($mm2->containsPersonWithRole($personKate, $rolePresenter));
         $this->assertFalse($mm2->containsPersonWithRole($personKate, $roleDirector));
         $this->assertFalse($mm2->containsPerson($personLucy));
-        $this->assertEquals(1, count($mm2->getPeopleInMultimediaObject()));
+        $this->assertEquals(1, count($mm2->getPeople()));
 
         $mm->addPersonWithRole($personKate, $rolePresenter);
         $this->dm->persist($mm);
@@ -249,7 +249,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertTrue($mm->containsPersonWithRole($personKate, $roleActor));
         $this->assertTrue($mm->containsPersonWithRole($personKate, $rolePresenter));
         $this->assertFalse($mm->containsPersonWithRole($personKate, $roleDirector));
-        $this->assertEquals(1, count($mm->getPeopleInMultimediaObject()));
+        $this->assertEquals(1, count($mm->getPeople()));
 
         $mm->addPersonWithRole($personKate, $roleDirector);
         $this->dm->persist($mm);
@@ -260,7 +260,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertTrue($mm->containsPersonWithRole($personKate, $roleDirector));
         $this->assertTrue($mm->containsPersonWithAllRoles($personKate, array($roleActor, $rolePresenter, $roleDirector)));
         $this->assertTrue($mm->containsPersonWithAnyRole($personKate, array($roleActor, $rolePresenter, $roleDirector)));
-        $this->assertEquals(1, count($mm->getPeopleInMultimediaObject()));
+        $this->assertEquals(1, count($mm->getPeople()));
 
         $mm->addPersonWithRole($personLucy, $roleDirector);
         $this->dm->persist($mm);
@@ -273,43 +273,43 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $roleActor));
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $rolePresenter));
         $this->assertTrue($mm->containsPersonWithRole($personLucy, $roleDirector));
-        $this->assertEquals(2, count($mm->getPeopleInMultimediaObject()));
+        $this->assertEquals(2, count($mm->getPeople()));
 
-        $this->assertEquals(2, count($mm->getPeopleInMultimediaObjectByRole(null, false)));
+        $this->assertEquals(2, count($mm->getPeopleByRole(null, false)));
         $mm->getEmbeddedRole($roleDirector)->setDisplay(false);
         $this->dm->persist($mm);
         $this->dm->flush();
-        $this->assertEquals(2, count($mm->getPeopleInMultimediaObjectByRole(null, true)));
-        $this->assertEquals(1, count($mm->getPeopleInMultimediaObjectByRole(null, false)));
+        $this->assertEquals(2, count($mm->getPeopleByRole(null, true)));
+        $this->assertEquals(1, count($mm->getPeopleByRole(null, false)));
         $mm->getEmbeddedRole($roleDirector)->setDisplay(true);
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $peopleDirector = $mm->getPeopleInMultimediaObjectByRole($roleDirector);
+        $peopleDirector = $mm->getPeopleByRole($roleDirector);
         $this->assertEquals(array($personKate->getId(), $personLucy->getId()),
                             array($peopleDirector[0]->getId(), $peopleDirector[1]->getId()));
 
         $mm->downPersonWithRole($personKate, $roleDirector);
         $this->dm->persist($mm);
-        $peopleDirector = $mm->getPeopleInMultimediaObjectByRole($roleDirector);
+        $peopleDirector = $mm->getPeopleByRole($roleDirector);
         $this->assertEquals(array($personLucy->getId(), $personKate->getId()),
                             array($peopleDirector[0]->getId(), $peopleDirector[1]->getId()));
 
         $mm->upPersonWithRole($personKate, $roleDirector);
         $this->dm->persist($mm);
-        $peopleDirector = $mm->getPeopleInMultimediaObjectByRole($roleDirector);
+        $peopleDirector = $mm->getPeopleByRole($roleDirector);
         $this->assertEquals(array($personKate->getId(), $personLucy->getId()),
                             array($peopleDirector[0]->getId(), $peopleDirector[1]->getId()));
 
         $mm->upPersonWithRole($personLucy, $roleDirector);
         $this->dm->persist($mm);
-        $peopleDirector = $mm->getPeopleInMultimediaObjectByRole($roleDirector);
+        $peopleDirector = $mm->getPeopleByRole($roleDirector);
         $this->assertEquals(array($personLucy->getId(), $personKate->getId()),
                             array($peopleDirector[0]->getId(), $peopleDirector[1]->getId()));
 
         $mm->downPersonWithRole($personLucy, $roleDirector);
         $this->dm->persist($mm);
-        $peopleDirector = $mm->getPeopleInMultimediaObjectByRole($roleDirector);
+        $peopleDirector = $mm->getPeopleByRole($roleDirector);
         $this->assertEquals(array($personKate->getId(), $personLucy->getId()),
                             array($peopleDirector[0]->getId(), $peopleDirector[1]->getId()));
 
@@ -329,7 +329,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $roleActor));
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $rolePresenter));
         $this->assertTrue($mm->containsPersonWithRole($personLucy, $roleDirector));
-        $this->assertEquals(2, count($mm->getPeopleInMultimediaObject()));
+        $this->assertEquals(2, count($mm->getPeople()));
 
         $this->assertTrue($mm->removePersonWithRole($personLucy, $roleDirector));
         $this->dm->persist($mm);
@@ -342,7 +342,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $roleActor));
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $rolePresenter));
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $roleDirector));
-        $this->assertEquals(1, count($mm->getPeopleInMultimediaObject()));
+        $this->assertEquals(1, count($mm->getPeople()));
 
         $this->assertTrue($mm->removePersonWithRole($personKate, $roleDirector));
         $this->dm->persist($mm);
@@ -355,19 +355,19 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $roleActor));
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $rolePresenter));
         $this->assertFalse($mm->containsPersonWithRole($personLucy, $roleDirector));
-        $this->assertEquals(1, count($mm->getPeopleInMultimediaObject()));
+        $this->assertEquals(1, count($mm->getPeople()));
 
         $this->assertFalse($mm->removePersonWithRole($personKate, $roleActor));
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertEquals(1, count($mm->getPeopleInMultimediaObject()));
+        $this->assertEquals(1, count($mm->getPeople()));
 
         $this->assertTrue($mm->removePersonWithRole($personKate, $rolePresenter));
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertEquals(0, count($mm->getPeopleInMultimediaObject()));
+        $this->assertEquals(0, count($mm->getPeople()));
     }
 
     public function testFindBySeries()
@@ -410,22 +410,22 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mmBloq = $this->createMultimediaObjectAssignedToSeries('Status bloq', $series);
         $mmBloq->setStatus(MultimediaObject::STATUS_BLOQ);
 
-        $mmNormal = $this->createMultimediaObjectAssignedToSeries('Status normal', $series);
-        $mmNormal->setStatus(MultimediaObject::STATUS_NORMAL);
+        $mmPublished = $this->createMultimediaObjectAssignedToSeries('Status published', $series);
+        $mmPublished->setStatus(MultimediaObject::STATUS_PUBLISHED);
 
         $this->dm->persist($mmNew);
         $this->dm->persist($mmHide);
         $this->dm->persist($mmBloq);
-        $this->dm->persist($mmNormal);
+        $this->dm->persist($mmPublished);
         $this->dm->flush();
 
         $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PROTOTYPE))));
         $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NEW))));
         $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_HIDE))));
         $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_BLOQ))));
-        $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NORMAL))));
+        $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED))));
         $this->assertEquals(2, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PROTOTYPE, MultimediaObject::STATUS_NEW))));
-        $this->assertEquals(3, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NORMAL, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDE))));
+        $this->assertEquals(3, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDE))));
 
         $mmArray = array($mmNew->getId() => $mmNew);
         $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NEW))->toArray());
@@ -433,10 +433,10 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_HIDE))->toArray());
         $mmArray = array($mmBloq->getId() => $mmBloq);
         $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_BLOQ))->toArray());
-        $mmArray = array($mmNormal->getId() => $mmNormal);
-        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NORMAL))->toArray());
-        $mmArray = array($mmNormal->getId() => $mmNormal, $mmNew->getId() => $mmNew, $mmHide->getId() => $mmHide);
-        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NORMAL, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDE))->toArray());
+        $mmArray = array($mmPublished->getId() => $mmPublished);
+        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED))->toArray());
+        $mmArray = array($mmPublished->getId() => $mmPublished, $mmNew->getId() => $mmNew, $mmHide->getId() => $mmHide);
+        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDE))->toArray());
     }
 
     public function testFindPrototype()
@@ -458,20 +458,20 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mmBloq = $this->createMultimediaObjectAssignedToSeries('Status bloq', $series);
         $mmBloq->setStatus(MultimediaObject::STATUS_BLOQ);
 
-        $mmNormal = $this->createMultimediaObjectAssignedToSeries('Status normal', $series);
-        $mmNormal->setStatus(MultimediaObject::STATUS_NORMAL);
+        $mmPublished = $this->createMultimediaObjectAssignedToSeries('Status published', $series);
+        $mmPublished->setStatus(MultimediaObject::STATUS_PUBLISHED);
 
         $this->dm->persist($mmNew);
         $this->dm->persist($mmHide);
         $this->dm->persist($mmBloq);
-        $this->dm->persist($mmNormal);
+        $this->dm->persist($mmPublished);
         $this->dm->flush();
 
         $this->assertEquals(1, count($this->repo->findPrototype($series)));
         $this->assertNotEquals($mmNew, $this->repo->findPrototype($series));
         $this->assertNotEquals($mmHide, $this->repo->findPrototype($series));
         $this->assertNotEquals($mmBloq, $this->repo->findPrototype($series));
-        $this->assertNotEquals($mmNormal, $this->repo->findPrototype($series));
+        $this->assertNotEquals($mmPublished, $this->repo->findPrototype($series));
     }
 
     public function testFindWithoutPrototype()
@@ -493,13 +493,13 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mmBloq = $this->createMultimediaObjectAssignedToSeries('Status bloq', $series);
         $mmBloq->setStatus(MultimediaObject::STATUS_BLOQ);
 
-        $mmNormal = $this->createMultimediaObjectAssignedToSeries('Status normal', $series);
-        $mmNormal->setStatus(MultimediaObject::STATUS_NORMAL);
+        $mmPublished = $this->createMultimediaObjectAssignedToSeries('Status published', $series);
+        $mmPublished->setStatus(MultimediaObject::STATUS_PUBLISHED);
 
         $this->dm->persist($mmNew);
         $this->dm->persist($mmHide);
         $this->dm->persist($mmBloq);
-        $this->dm->persist($mmNormal);
+        $this->dm->persist($mmPublished);
         $this->dm->flush();
 
         $this->assertEquals(4, count($this->repo->findWithoutPrototype($series)));
@@ -508,7 +508,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
              $mmNew->getId() => $mmNew,
              $mmHide->getId() => $mmHide,
              $mmBloq->getId() => $mmBloq,
-             $mmNormal->getId() => $mmNormal,
+             $mmPublished->getId() => $mmPublished,
              );
         $this->assertEquals($mmArray, $this->repo->findWithoutPrototype($series)->toArray());
     }
@@ -785,8 +785,8 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         // SORT
         $sort = array();
-        $sortAsc =  array('fieldName' => 'public_date', 'order' => 1);
-        $sortDesc = array('fieldName' => 'public_date', 'order' => -1);
+        $sortAsc =  array('public_date' => 1);
+        $sortDesc = array('public_date' => -1);
 
         // FIND WITH TAG
         $this->assertEquals(7, count($this->repo->findWithTag($tag1)));
@@ -1198,10 +1198,10 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->flush();
 
         $sort = array();
-        $sortPubDateAsc =  array('fieldName' => 'public_date', 'order' => 'asc');
-        $sortPubDateDesc = array('fieldName' => 'public_date', 'order' => 'desc');
-        $sortRecDateAsc =  array('fieldName' => 'record_date', 'order' => 'asc');
-        $sortRecDateDesc = array('fieldName' => 'record_date', 'order' => 'desc');
+        $sortPubDateAsc =  array('public_date' => 'asc');
+        $sortPubDateDesc = array('public_date' => 'desc');
+        $sortRecDateAsc =  array('record_date' => 'asc');
+        $sortRecDateDesc = array('record_date' => 'desc');
 
         $this->assertEquals(3, $this->repo->findOrderedBy($series, $sort)->count(true));
         $this->assertEquals(3, $this->repo->findOrderedBy($series, $sortPubDateAsc)->count(true));

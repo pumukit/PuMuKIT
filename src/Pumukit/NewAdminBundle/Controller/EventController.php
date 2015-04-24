@@ -23,10 +23,10 @@ class EventController extends AdminController
         $config = $this->getConfiguration();
 
         $criteria = $this->getCriteria($config);
-        $resources = $this->getResources($request, $config, $criteria);
+        list($events, $month, $year, $calendar) = $this->getResources($request, $config, $criteria);
 
         $update_session = true;
-        foreach($resources['events'] as $event) {
+        foreach($events as $event) {
             if($event->getId() == $this->get('session')->get('admin/event/id')){
                 $update_session = false;
             }
@@ -36,7 +36,12 @@ class EventController extends AdminController
             $this->get('session')->remove('admin/event/id');
         }
 
-        return $resources;
+        return array(
+                     'events' => $events,
+                     'm' => $month,
+                     'y' => $year,
+                     'calendar' => $calendar,
+                     );
     }
 
     /**
@@ -50,9 +55,32 @@ class EventController extends AdminController
         $sorting = $request->get('sorting');
 
         $criteria = $this->getCriteria($config);
-        $resources = $this->getResources($request, $config, $criteria);
+        list($events, $month, $year, $calendar) = $this->getResources($request, $config, $criteria);
 
-        return $resources;
+        return array(
+                     'events' => $events,
+                     'm' => $month,
+                     'y' => $year,
+                     'calendar' => $calendar,
+                     );
+    }
+
+    /**
+     * Update session with active tab
+     */
+    public function updateSessionAction(Request $request)
+    {
+        $activeTab = $request->get('activeTab', null);
+
+        if ($activeTab){
+            $this->get('session')->set('admin/event/tab', $activeTab);
+            $tabValue = 'Active tab: '.$activeTab;
+        }else{
+            $this->get('session')->remove('admin/event/tab');
+            $tabValue = 'Active tab: listTab';
+        }
+
+        return new JsonResponse(array('tabValue'=> $tabValue));
     }
 
     /**
@@ -151,14 +179,20 @@ class EventController extends AdminController
         $criteria = $this->get('session')->get('admin/event/criteria', array());
 
         $new_criteria = array();
+
         foreach ($criteria as $property => $value) {
             //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
             if (('' !== $value) && ('date' !== $property)) {
                 $new_criteria[$property] = new \MongoRegex('/'.$value.'/i');
             } elseif (('' !== $value) && ('date' == $property)) {
-                $date_from = new \DateTime($value['from']);
-                $date_to = new \DateTime($value['to']);
-                $new_criteria[$property] = array('$gte' => $date_from, '$lt' => $date_to);
+                if ('' !== $value['from']) $date_from = new \DateTime($value['from']);
+                if ('' !== $value['to']) $date_to = new \DateTime($value['to']);
+                if (('' !== $value['from']) && ('' !== $value['to']))
+                    $new_criteria[$property] = array('$gte' => $date_from, '$lt' => $date_to);
+                elseif ('' !== $value['from'])
+                    $new_criteria[$property] = array('$gte' => $date_from);
+                elseif ('' !== $value['to'])
+                    $new_criteria[$property] = array('$lt' => $date_to);
             }
         }
 
@@ -195,35 +229,17 @@ class EventController extends AdminController
             }
 
             $resources
-                ->setCurrentPage($session->get($session_namespace.'/page', 1), true, true)
-                ->setMaxPerPage($config->getPaginationMaxPerPage());
+                ->setMaxPerPage($config->getPaginationMaxPerPage())
+                ->setNormalizeOutOfRangePages(true)
+                ->setCurrentPage($session->get($session_namespace.'/page', 1));
         } else {
             $resources = $this
                 ->resourceResolver
                 ->getResource($repository, 'findBy', array($criteria, $sorting, $config->getLimit()));
         }
 
-        if ("cal" == $request->query->get('cal')) {
-            $session->set($session_namespace.'/cal', 'cal');
-        } elseif ("list" == $request->query->get('cal')) {
-            $session->remove($session_namespace.'/cal');
-        }
-
-
-        /* TODO DELETE IF IT WORKS THE below
-        if ($session->has($session_namespace.'/cal')) {
-            list($m, $y, $calendar) = $this->getCalendar($config, $request);
-            $resources = array('events' => $resources, 'm' => $m, 'y' => $y, 'calendar' => $calendar);
-        } else {
-            //$resources = array('events' => $resources); // TODO TEST
-            $resources = array('events' => $resources, 'm' => '', 'y' => '', 'calendar' => array());
-        }
-        */
-
         list($m, $y, $calendar) = $this->getCalendar($config, $request);
-        $resources = array('events' => $resources, 'm' => $m, 'y' => $y, 'calendar' => $calendar);
 
-
-        return $resources;
+        return (array($resources, $m, $y, $calendar));
     }
 }

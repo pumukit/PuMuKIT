@@ -1,5 +1,5 @@
 <div class="well">
-  <form id="filter_lives" class="form" onsubmit="$('#list_lives').load('{{ path('pumukitnewadmin_live_list') }}', $(this).serialize()); return false;" action="{{ path('pumukitnewadmin_live_list') }}" method="POST">
+  <form autocomplete="off" id="filter_lives" class="form" onsubmit="$('#list_lives').load('{{ path('pumukitnewadmin_live_list') }}', $(this).serialize()); return false;" action="{{ path('pumukitnewadmin_live_list') }}" method="POST">
     <fieldset>
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -9,9 +9,8 @@
           <div class="form-group">
             <label for="name" class="col-md-2 control-label">{% trans %}Name{% endtrans %}:</label>
             <div>
-              {# TODO culture #}
               {% set criteria = app.session.get('admin/live/criteria') %}
-	          <input type="text" class="reset form-control" name="criteria[name.en]" id="filters_name" value="{{ criteria['name.en']|default("") }}">
+	          <input type="text" class="reset form-control" name="criteria[name.{{ app.request.getLocale() }}]" id="filters_name" value="{{ criteria['name.{{ app.request.getLocale() }}']|default("") }}">
             </div>
           </div>
         </div>

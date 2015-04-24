@@ -18,8 +18,10 @@ class LinkController extends Controller
      */
     public function createAction(MultimediaObject $multimediaObject, Request $request)
     {
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
         $link = new Link();
-        $form = $this->createForm(new LinkType(), $link);
+        $form = $this->createForm(new LinkType($translator, $locale), $link);
 
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
             try {
@@ -48,8 +50,10 @@ class LinkController extends Controller
      */
     public function updateAction(MultimediaObject $multimediaObject, Request $request)
     {
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
         $link = $multimediaObject->getLinkById($this->getRequest()->get('id'));
-        $form = $this->createForm(new LinkType(), $link);
+        $form = $this->createForm(new LinkType($translator, $locale), $link);
 
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
             try {

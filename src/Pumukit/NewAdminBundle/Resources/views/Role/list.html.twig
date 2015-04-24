@@ -9,8 +9,7 @@
               </label>
             </div>
           </th>
-          <th colspan="5" width="7%"></th>
-          <th width="1%">{% trans %}Id{% endtrans %}</th>
+          <th colspan="4" width="7%"></th>
           <th width="1%">{% trans %}Display{% endtrans %}</th>
           <th>{% trans %}Code{% endtrans %}</th>
           <th>{% trans %}Name{% endtrans %}</th>
@@ -20,7 +19,7 @@
       <tbody>
         {% if roles is empty %}
         <tr>
-          <td colspan="11">
+          <td colspan="10">
             {% trans %}There are no roles with those values.{% endtrans %}
           </td>
         </tr>
@@ -44,13 +43,6 @@
             </a>
           </td>
           <td>
-            <form action="{{ path('pumukitnewadmin_role_copy', {'id': role.id}) }}" method="post" class="delete-action-form" novalidate="">
-              <button type="submit" style="background: transparent; border: none">
-                <i class="mdi-content-content-copy"></i>                
-	            </button>
-	          </form>
-          </td>
-          <td>
 	          {% if roles.getCurrentPage() != 1 or not loop.first %}
 	          {% spaceless %}
 	          <a href="{{ path('pumukitnewadmin_role_up', {'id': role.id}) }}">&#8593;</a>
@@ -59,16 +51,13 @@
 	          {% endif %}
           </td>
           <td>
-	          {% if roles.getCurrentPage() == roles.getNbPages() and not loop.last %}
+	          {% if (roles.getCurrentPage() != roles.getNbPages()) or (loop.index + ((roles.getCurrentPage() - 1 ) * roles.getMaxPerPage()) != roles.getNbResults())  %}
 	          {% spaceless %}
 	          <a href="{{ path('pumukitnewadmin_role_down', {'id': role.id}) }}">&#8595;</a>
 	          <a href="{{ path('pumukitnewadmin_role_bottom', {'id': role.id}) }}"><i class="mdi-editor-vertical-align-bottom"></i></a>
 	          {% endspaceless %}
 	          {% endif %}
           </td>
-          <td>
-            {{ role.id }}
-	        </td>
           <td>
             {{ role.display }}
 	        </td>
@@ -86,7 +75,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <th colspan="11">
+          <th colspan="10">
             <div class="col-md-8">            
               {{ roles.getNbResults }}
               {% transchoice roles.getNbResults %}

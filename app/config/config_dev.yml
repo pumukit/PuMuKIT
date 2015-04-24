@@ -13,6 +13,11 @@ web_profiler:
 
 monolog:
     handlers:
+        encoder:
+            type:   stream
+            path:   "%kernel.logs_dir%/encoder_%kernel.environment%.log"
+            level:  debug
+            channels: [encoder]
         main:
             type:   stream
             path:   "%kernel.logs_dir%/%kernel.environment%.log"

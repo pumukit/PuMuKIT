@@ -33,13 +33,10 @@
           </div>
         </td>
         <td>
-          {{ oneseries.announce?'<span style="color: blue">A</span>':'' }}
-
-	      {# TODO field in Series with mm_announce or field announce in MultimediaObject
-          <?php echo ($series['mm_announce']?'<span style="color: grey">A</span>':'') ?>
-          <?php echo (($series['mm_announce'])||($series['announce'])?'':'&nbsp;') ?>
-	      #}
-
+          {% spaceless %}
+          <i class="{{ oneseries|series_announce_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|series_announce_text }}"></i>
+          <i class="{{ oneseries|mms_announce_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|mms_announce_text }}"></i>
+          {% endspaceless %}
         </td> 
         <td>
           <a href="{{ path('pumukitnewadmin_series_changepub', {'id': oneseries.id}) }}" data-toggle="modal" data-target="#myModal">
@@ -70,7 +67,7 @@
         </td>
       </tr>
       {% endfor %}
-      {% if (series|length - (series.getMaxPerPage() * (series.getCurrentPage() - 1))) < (series.maxPerPage-1) %}
+      {% if (series|length - (series.getMaxPerPage() * (series.getCurrentPage() - 1))) < (series.maxPerPage) %}
       {% for i in (series|length - (series.getMaxPerPage() * (series.getCurrentPage() - 1)))..(series.maxPerPage-1) %}
       <tr>
         <td>&nbsp;</td>

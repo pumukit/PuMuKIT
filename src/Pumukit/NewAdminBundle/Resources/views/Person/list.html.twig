@@ -9,7 +9,7 @@
             </label>
           </div>
         </th>
-        <th colspan="3" width="5%"></th>
+        <th colspan="2" width="5%"></th>
         {% include 'PumukitNewAdminBundle:Person:listth.html.twig' %}
       <th width="1%">{% trans %}Videos{% endtrans %}</th>
       </tr>
@@ -43,13 +43,6 @@
             <i class="mdi-content-clear"></i>
           </a>
         </td>
-      <td>
-        <form action="{{ path('pumukitnewadmin_person_copy', {'id': person.id}) }}" method="post" class="delete-action-form" novalidate="">
-          <button type="submit" style="background: transparent; border: none">
-            <i class="mdi-content-content-copy"></i>
-	      </button>
-	    </form>
-      </td>
         <td onclick="click_fila_url('person', this, '{{ path('pumukitnewadmin_person_show', {'id': person.id}) }}');">
           {{ person.id }}
         </td>

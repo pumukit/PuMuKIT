@@ -1,0 +1,67 @@
+<div class="grid_15 cab_pan">
+  <ul id="tvusces_pan">
+	<li>
+      <a href="http://www.campusdomar.es">{% trans %}HOME{% endtrans %}</a>
+    </li>
+    <li>
+      &nbsp;»&nbsp; 
+      <a href="{{ breadcrumbs[0]["link"] }}" {% if breadcrumbs|length == 1 %}class="select"{% endif %} >
+        CAMPUS DO MAR TV
+      </a>
+    </li>
+    
+    {% if breadcrumbs|length > 1 %}
+    <li>
+      &nbsp;»&nbsp; 
+      <a href="{{ breadcrumbs[1]["link"] }}" {% if breadcrumbs|length == 2 %}class="select"{% endif %} >
+        {{ breadcrumbs[1]["title"]}}
+      </a>
+    </li>
+    {% endif %}
+    
+    {% if breadcrumbs|length > 2 %}
+    <li>
+      &nbsp;»&nbsp; 
+      <a id="tvpumukites_breadcrumbs_series_a" href="{{ breadcrumbs[2]["link"] }}" {% if breadcrumbs|length == 3 %}class="select" {% endif %} >
+        {{ breadcrumbs[2]["title"]}}
+      </a>
+    </li>
+    {% endif %}
+    
+    {% if breadcrumbs|length > 3 %}
+    <li id="tvpumukites_breadcrumbs_mmobj">
+      &nbsp;»&nbsp; 
+      <a id="tvpumukites_breadcrumbs_mmobj_a" href="{{ breadcrumbs[3]["link"] }}" {% if breadcrumbs|length == 4 %}class="select" {% endif %} >
+        {{ breadcrumbs[3]["title"]}}
+      </a>
+    </li>
+    
+
+
+<script type="text/javascript">
+Event.observe(window, 'load', function() { 
+    var pan_mmobj = $('tvpumukites_breadcrumbs_mmobj');
+    var pan_serial = $('tvpumukites_breadcrumbs_series_a');
+    var pan_mmobja = $('tvpumukites_breadcrumbs_mmobj_a');
+    if((pan_mmobj != null) &&(pan_serial != null)){
+      var izq = ($('tvusc').cumulativeOffset()[0]);
+      var tamano = ( pan_mmobj.cumulativeOffset()[0] + pan_mmobj.offsetWidth - izq );
+
+      while( tamano > 920){
+  
+        if(pan_serial.innerHTML.strip().length > 20){
+          pan_serial.update(pan_serial.innerHTML.truncate(pan_serial.innerHTML.strip().length -1 ));
+        }else{
+          pan_mmobja.update(pan_mmobja.innerHTML.truncate(pan_mmobja.innerHTML.strip().length -1 ));
+        }
+        var tamano = ( pan_mmobj.cumulativeOffset()[0] + pan_mmobj.offsetWidth - izq);
+      }
+   }
+});
+</script>
+
+
+  {% endif %}
+
+ </ul>
+</div>

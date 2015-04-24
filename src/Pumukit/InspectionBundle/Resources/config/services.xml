@@ -5,12 +5,12 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="pumukit.inspection.class">Pumukit\InspectionBundle\Services\InspectionFfprobeService</parameter>
+        <parameter key="pumukit.inspection.class">Pumukit\InspectionBundle\Services\InspectionMediainfoService</parameter>
     </parameters>
 
     <services>
         <service id="pumukit.inspection" class="%pumukit.inspection.class%">
-          <argument>ffprobe -v quiet -print_format json -show_format -show_streams "{{file}}"</argument>
+          <!--<argument>ffprobe -v quiet -print_format json -show_format -show_streams "{{file}}"</argument>-->
           <argument type="service" id="logger"/>
         </service>
     </services>

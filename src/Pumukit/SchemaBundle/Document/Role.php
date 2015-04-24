@@ -35,6 +35,7 @@ class Role
      * @var int $number_people_in_multimedia_object
      *
      * @MongoDB\Int
+     * @MongoDB\Increment
      */
     private $number_people_in_multimedia_object = 0;
 

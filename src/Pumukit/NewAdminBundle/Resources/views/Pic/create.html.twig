@@ -6,12 +6,12 @@
 <div class="modal-body">
 
   <div id="tv_admin_container">
-    <form onsubmit="$.ajax({
+    <form autocomplete="off" onsubmit="$.ajax({
                             url: '{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id}) }}',
                             type: 'POST',
                             data: $(this).serialize(),
                             success: function(response){
-                                                        $('#pic_{{ resource_name }}').html(response);
+                                                        $('#pic_{{ resource_name }}_{{ resource.id }}').html(response);
                                                         success('{% trans %}New Pic added.{% endtrans %}');
                                                         }
                           });
@@ -38,7 +38,7 @@
   <div style="clear:both"></div>
 
   <div id="tv_admin_container">
-    <form method="post" enctype="multipart/form-data" target="iframeUpload" action="{{ path('pumukitnewadmin_'~resource_name~'pic_upload', {'id': resource.id}) }}">
+    <form autocomplete="off" method="post" enctype="multipart/form-data" target="iframeUpload" action="{{ path('pumukitnewadmin_'~resource_name~'pic_upload', {'id': resource.id}) }}">
       <input type="hidden" name="type" id="type" value="url">
       <input type="hidden" name="{{ resource_name }}" id="{{ resource_name }}" value="{{ resource.id }}">
       <fieldset>
@@ -48,7 +48,7 @@
 	        <input type="file" name="file" id="file" value="" size="66" class="file">
           </div>
         </div>
-        <iframe name="iframeUpload" style="display:none" src=""></iframe>
+        <iframe id="iframeUpload" name="iframeUpload" style="display:none" src=""></iframe>
       </fieldset>
       <div class="modal-footer">
         <button type="submit" class="btn btn-pumukit btn-raised" onclick="if($('#file').val()==''){window.alert('{% trans %}Select a file on first place. Thank you.{% endtrans %}');return false;}">{% trans %}Add{% endtrans %}</button>
@@ -74,7 +74,7 @@
               <div class="wrap1">
                 <div class="wrap2">
                   <div class="wrap3">
-		            <a href="#" data-dismiss="modal" onclick="$('#pic_{{ resource_name }}').load('{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id, 'picUrl': pic_url}) }}', function(){success('{% trans %}New Pic added.{% endtrans %}');}); return false;">
+		            <a href="#" data-dismiss="modal" onclick="$('#pic_{{ resource_name }}_{{ resource.id }}').load('{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id, 'picUrl': pic_url}) }}', function(){success('{% trans %}New Pic added.{% endtrans %}');}); return false;">
                       <img src="{{ pic_url }}" alt="{{ pic_url|split('/')|last }}" height="82" width="100"/>
                     </a>
                   </div>
@@ -91,7 +91,7 @@
 
     <div class="modal-footer">
       <div class="pagerfanta">
-        {{ pagerfanta(pics, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_'~resource_name~'_pic", "routeParams": {'id': resource.id}}) }}
+        {{ pagerfanta(pics, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_#{resource_name}pic_create", "routeParams": {'id': resource.id}}) }}
       </div>
 
       <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>

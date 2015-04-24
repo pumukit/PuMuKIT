@@ -166,7 +166,7 @@ EOT
 
     protected function createRoot()
     {
-        $root = $this->createTagFromCsvArray(array(null, "ROOT", 1, 0, "ROOT", "ROOT", "ROOT"));
+        $root = $this->createTagFromCsvArray(array(null, "ROOT", 1, 1, "ROOT", "ROOT", "ROOT"));
         $this->dm->flush();
 
         return $root;
@@ -246,7 +246,6 @@ EOT
      */
     private function createTagFromCsvArray($csv_array, $tag_parent = null)
     {
-        $c = new Tag();
         if ($tag = $this->tagsRepo->findOneByCod($csv_array[1])) {
             throw new \LengthException("Nothing done - Tag retrieved from DB id: ".$tag->getId()." cod: ".$tag->getCod());
         }

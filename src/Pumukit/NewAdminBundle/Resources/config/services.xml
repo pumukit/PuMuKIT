@@ -5,65 +5,10 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
   <services>
-
     <service id="pumukitnewadmin.kernelexception.listener" class="Pumukit\NewAdminBundle\Listener\ExceptionListener">
       <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" priority="255" />
     </service>
 
-    <service id="pumukitnewadmin.form.type.user" class="Pumukit\NewAdminBundle\Form\Type\UserType">
-      <argument>Pumukit\SchemaBundle\Document\User</argument>
-      <tag name="form.type" alias="pumukitnewadmin_user" />
-    </service>
-    
-
-    <service id="pumukitnewadmin.form.type.person" class="Pumukit\NewAdminBundle\Form\Type\PersonType">
-      <tag name="form.type" alias="pumukitnewadmin_person" />
-    </service>
-
-    <service id="pumukitnewadmin.form.type.series" class="Pumukit\NewAdminBundle\Form\Type\SeriesType">
-      <tag name="form.type" alias="pumukitnewadmin_series" />
-    </service>
-
-    <service id="pumukitnewadmin.form.type.mmtemplate.meta" class="Pumukit\NewAdminBundle\Form\Type\MultimediaObjectTemplateMetaType">
-      <tag name="form.type" alias="pumukitnewadmin_mmtemplate_meta" />
-    </service>
-
-    <service id="pumukitnewadmin.form.type.mms.meta" class="Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType">
-      <tag name="form.type" alias="pumukitnewadmin_mms_meta" />
-    </service>
-
-    <service id="pumukitnewadmin.form.type.role" class="Pumukit\NewAdminBundle\Form\Type\RoleType">
-      <tag name="form.type" alias="pumukitnewadmin_role" />
-    </service>
-
-    <service id="pumukitnewadmin.form.type.broadcast" class="Pumukit\NewAdminBundle\Form\Type\BroadcastType">
-      <tag name="form.type" alias="pumukitnewadmin_broadcast" />
-    </service>
-        
-    <service id="pumukitnewadmin.form.type.mms.pub" class="Pumukit\NewAdminBundle\Form\Type\MultimediaObjectPubType">
-      <tag name="form.type" alias="pumukitnewadmin_mms_pub" />
-    </service>
-
-    <service id="pumukitnewadmin.form.type.link" class="Pumukit\NewAdminBundle\Form\Type\LinkType">
-      <tag name="form.type" alias="pumukitnewadmin_link" />
-    </service>
-
-    <service id="pumukitnewadmin.form.type.material" class="Pumukit\NewAdminBundle\Form\Type\MaterialType">
-      <tag name="form.type" alias="pumukitnewadmin_material" />
-    </service>
-
-    <service id="pumukitnewadmin.form.type.track" class="Pumukit\NewAdminBundle\Form\Type\TrackType">
-      <tag name="form.type" alias="pumukitnewadmin_track" />
-    </service>
-
-    <service id="pumukitnewadmin.form.type.live" class="Pumukit\NewAdminBundle\Form\Type\LiveType">
-      <tag name="form.type" alias="pumukitnewadmin_live" />
-    </service>
-
-    <service id="pumukitnewadmin.form.type.event" class="Pumukit\NewAdminBundle\Form\Type\EventType">
-      <tag name="form.type" alias="pumukitnewadmin_event" />
-    </service>
-    
     <service id="pumukitnewadmin.twig_extension" class="Pumukit\NewAdminBundle\Twig\PumukitAdminExtension">
       <tag name="twig.extension"/>
       <argument type="service" id="pumukitencoder.profile"/>

@@ -1,13 +1,13 @@
 <!-- Filter -->
 <div class="well">
-  <form class="form-horizontal" id="filter_users"  action="{{ path('pumukitnewadmin_user_index') }}" method="get">
+  <form autocomplete="off" id="filter_users"  action="{{ path('pumukitnewadmin_user_index') }}" method="get">
   <fieldset>
     <h2>{% trans %}Search{% endtrans %}</h2>
 
     <div class="form-group">
-      <label for="username" class="col-md-2 control-label">{% trans %}Username{% endtrans %}:</label>
+      <label for="username" class="control-label">{% trans %}Username{% endtrans %}:</label>
       {% set criteria = app.session.get('admin/user/criteria') %}
-      <div class="col-md-10">
+      <div>
         <input type="text" class="reset form-control" name="criteria[username]" id="filters_username" value="{{ criteria['username']|default("") }}">
       </div>
     </div>

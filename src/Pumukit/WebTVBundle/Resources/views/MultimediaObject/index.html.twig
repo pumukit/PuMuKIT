@@ -1,17 +1,21 @@
-{% extends 'PumukitWebTVBundle::layout_mm.html.twig' %}
+{% extends 'PumukitWebTVBundle::layout.html.twig' %}
 
-{% block body %}
-	<h1>{{multimediaObject.title}}</h1>
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('bundles/pumukitwebtv/js/jwplayer/jwplayer.js') }}" type="text/javascript"></script>
+{% endblock%}
+
+{% block title %}{{ parent() }} - {{ multimediaObject.title }}{% endblock %}
+{% block keywords %}{{ parent() }} - {{ multimediaObject.keyword }}{% endblock %}
+
+{% block body_without_bar %}
+	<h1>{{ multimediaObject.title|default("No title"|trans) }}</h1>
 	<div class="grid_10">
-		<!--<h3>{{multimediaObject.getRecordDate().format("Y-m-d")}}</h3>-->
-		{% include 'PumukitWebTVBundle:MultimediaObject:player.html.twig' %}
-		<br />
+		{% include 'PumukitWebTVBundle:MultimediaObject:player.html.twig' with {'width': '620', 'height': '465'} %}
 		{% include 'PumukitWebTVBundle:MultimediaObject:info.html.twig' %}
-		<div style="clear: left;">
-       		<span style="font-weight: bold">Serie:</span> <a href="/series/{{multimediaObject.getSeries().getId()}}">{{multimediaObject.getSeries().getTitle()}}</a>
-    	</div>
 	</div>
 	<div class="grid_5">
-		{% include 'PumukitWebTVBundle:MultimediaObject:other_multimediaObjects.html.twig' %}
+		{% render(controller('PumukitWebTVBundle:MultimediaObject:series', {'multimediaObject': multimediaObject})) %}
+        {% render(controller('PumukitWebTVBundle:MultimediaObject:related', {'multimediaObject': multimediaObject})) %}
 	</div>
 {% endblock %}

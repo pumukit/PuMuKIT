@@ -36,7 +36,7 @@ EOT
 
         $tags = $tagRepo->findAll();
         foreach ($tags as $tag) {
-            $mms = $mmRepo->findBy(array("tags.cod" => $tag->getCod()));
+            $mms = $mmRepo->findWithTag($tag);
             $output->writeln($tag->getCod().": ".$tag->getNumberMultimediaObjects()." -> ".count($mms));
             $tag->setNumberMultimediaObjects(count($mms));
             $dm->persist($tag);

@@ -77,15 +77,29 @@ class SeriesPicController extends Controller
      */
     public function uploadAction(Series $series, Request $request)
     {
-      if ($request->files->has("file")) {
-        $picService = $this->get('pumukitschema.seriespic');
-        $media = $picService->addPicFile($series, $request->files->get("file"));
-      }
+        try{
+            if (empty($_FILES) && empty($_POST)){
+                throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
+            }
+            if ($request->files->has("file")) {
+                $picService = $this->get('pumukitschema.seriespic');
+                $media = $picService->addPicFile($series, $request->files->get("file"));
+            }
+        }catch (\Exception $e){
+            return array(
+                         'resource' => $series,
+                         'resource_name' => 'series',
+                         'uploaded' => 'failed',
+                         'message' => $e->getMessage()
+                         );
+        }
 
-      return array(
-                   'resource' => $series,
-                   'resource_name' => 'series',
-                   );
+        return array(
+                     'resource' => $series,
+                     'resource_name' => 'series',
+                     'uploaded' => 'success',
+                     'message' => 'New Pic added.'
+                     );
     }
 
     /**
@@ -171,8 +185,9 @@ class SeriesPicController extends Controller
         $pics = new Pagerfanta($adapter);
 
         $pics
-          ->setCurrentPage($page, true, true)
-          ->setMaxPerPage($limit);
+          ->setMaxPerPage($limit)
+          ->setNormalizeOutOfRangePages(true)
+          ->setCurrentPage($page);
 
         return $pics;
     }

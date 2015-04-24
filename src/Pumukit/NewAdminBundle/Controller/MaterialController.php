@@ -18,8 +18,10 @@ class MaterialController extends Controller
      */
     public function createAction(MultimediaObject $multimediaObject, Request $request)
     {
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
         $material = new Material();
-        $form = $this->createForm(new MaterialType(), $material);
+        $form = $this->createForm(new MaterialType($translator, $locale), $material);
 
         return array(
                      'material' => $material,
@@ -33,8 +35,10 @@ class MaterialController extends Controller
      */
     public function updateAction(MultimediaObject $multimediaObject, Request $request)
     {
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
         $material = $multimediaObject->getMaterialById($request->get('id'));
-        $form = $this->createForm(new MaterialType(), $material);
+        $form = $this->createForm(new MaterialType($translator, $locale), $material);
 
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
             try {
@@ -63,13 +67,28 @@ class MaterialController extends Controller
         $formData = $request->get('pumukitnewadmin_material', array());
 
         $materialService = $this->get('pumukitschema.material');
-        if (($request->files->has('file')) && (!$request->get('url', null))) {
-            $multimediaObject = $materialService->addMaterialFile($multimediaObject, $request->files->get('file'), $formData);
-        } elseif ($request->get('url', null)) {
-          $multimediaObject = $materialService->addMaterialUrl($multimediaObject, $request->get('url'), $formData);
+        try{
+            if (empty($_FILES) && empty($_POST)){
+                throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
+            }
+            if (($request->files->has('file')) && (!$request->get('url', null))) {
+                $multimediaObject = $materialService->addMaterialFile($multimediaObject, $request->files->get('file'), $formData);
+            } elseif ($request->get('url', null)) {
+                $multimediaObject = $materialService->addMaterialUrl($multimediaObject, $request->get('url'), $formData);
+            }
+        }catch (\Exception $e){
+            return array(
+                         'mm' => $multimediaObject,
+                         'uploaded' => 'failed',
+                         'message' => $e->getMessage()
+                         );
         }
 
-        return array('mm' => $multimediaObject);
+        return array(
+                     'mm' => $multimediaObject,
+                     'uploaded' => 'success',
+                     'message' => 'New Material added.'
+                     );
     }
 
     /**

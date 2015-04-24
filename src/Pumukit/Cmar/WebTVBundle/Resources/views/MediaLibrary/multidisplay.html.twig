@@ -1,0 +1,12 @@
+{% extends 'PumukitCmarWebTVBundle::layout.html.twig' %}
+{% block body %}
+<p class="titulo_widget titulo_widget_grande">
+{{ title }}
+</p>
+<div class="usctv_mmobjs usctv_series">
+  {% for oneseries in series %}
+    {% include 'PumukitCmarWebTVBundle:MediaLibrary:series.html.twig' with {'series': oneseries} %}
+  {% endfor %}
+</div>
+<div style="clear:left"></div>
+{% endblock body %}

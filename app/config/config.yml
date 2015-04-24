@@ -4,6 +4,7 @@ imports:
     - { resource: doctrine_extensions.yml }
     - { resource: @PumukitAdminBundle/Resources/config/config.yml }
     - { resource: @PumukitNewAdminBundle/Resources/config/config.yml }
+    - { resource: encoder.yml }
 
 framework:
     #esi:             ~
@@ -31,6 +32,9 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        pumukit2_info: "%pumukit2.info%"
+        locales:       "%pumukit2.locales%"
 
 # Assetic Configuration
 assetic:
@@ -72,86 +76,14 @@ fos_user:
 
 # Pumukit2 parameters
 parameters:
+    pumukit2.info:
+        title:        "UCies.tv"
+        description:  "Cíes University TV Website"
+        keywords:     "webtv, Tv, Cies University, uvigo, uvigotv, pumukit"
+        email:        "tv@ucies.tv"
+        logo:         "/bundles/pumukitwebtv/images/UCies/logo.png"
     pumukit2.locales:
         - es
         - en
-
-pumukit_encoder:
-    thumbnail:
-        width: 304
-        height: 242
-    cpus: 
-        local:
-            host: 127.0.0.1
-    profiles:
-        master_copy:
-            display: false
-            wizard: true
-            master: true
-            resolution_hor: 0
-            resolution_ver: 0
-            framerate: 0
-            channels: 1
-            audio: false
-            bat: 'cp "{{input}}" "{{output}}"'
-            streamserver:
-                name: Localmaster
-                type: store
-                host: 127.0.0.1
-                description: Local master server
-                dir_out: "%kernel.root_dir%/../web/storage/masters"
-            app: cp
-            rel_duration_size: 1
-            rel_duration_trans: 1
-        master_video_h264:
-            display: false
-            wizard: true
-            master: true
-            format: mp4
-            codec: h264
-            mime_type: 'video/x-mp4'
-            extension: mp4
-            resolution_hor: 0
-            resolution_ver: 0
-            bitrate: 1 Mbps
-            framerate: 25
-            channels: 1
-            audio: false
-            bat: |
-                ffmpeg -y -i "{{input}}" -acodec libfdk_aac -vcodec libx264 -preset slow -crf 15 -threads 0 "{{output}}"
-            streamserver:
-                name: Localmaster
-                type: store
-                host: 127.0.0.1
-                description: Local master server
-                dir_out: "%kernel.root_dir%/../web/storage/masters"
-            app: ffmpeg
-            rel_duration_size: 1
-            rel_duration_trans: 1
-        video_h264:
-            display: true
-            wizard: true
-            master: false
-            tags: html5
-            format: mp4
-            codec: h264
-            mime_type: 'video/x-mp4'
-            extension: mp4
-            resolution_hor: 0
-            resolution_ver: 0
-            bitrate: 1 Mbps
-            framerate: 25
-            channels: 1
-            audio: false
-            bat: |
-                ffmpeg -y -i "{{input}}" -acodec libfdk_aac -vcodec libx264 -preset slow -crf 15 -threads 0 "{{output}}"
-            streamserver:
-                name: Localhost
-                type: download
-                host: 127.0.0.1
-                description: Local download server
-                dir_out: "%kernel.root_dir%/../web/storage/downloads"
-                url_out: "/storage/downloads"
-            app: ffmpeg
-            rel_duration_size: 1
-            rel_duration_trans: 1
+    pumukit2.inbox:   "%kernel.root_dir%/../web/storage/inbox"
+    pumukit2.tmp:     "%kernel.root_dir%/../web/storage/tmp"

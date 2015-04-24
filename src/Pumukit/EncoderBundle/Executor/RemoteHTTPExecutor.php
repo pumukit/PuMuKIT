@@ -36,13 +36,10 @@ class RemoteHTTPExecutor
 
 
         $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);        
         if (200 != $statusCode) {
-            curl_close($curl);
-
             throw new \RuntimeException(sprintf('The web service failed for an unknown reason (HTTP %s).', $statusCode));
         }
-
-        curl_close($curl);
 
         return $response;
   }

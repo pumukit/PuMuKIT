@@ -67,7 +67,7 @@ class FactoryServiceTest extends WebTestCase
         //NOTE series.multimedia_objects have diferent internal initialized value.
         //$this->assertEquals($series, $this->mmobjRepo->findAll()[0]->getSeries());
         $this->assertEquals($series->getId(), $this->mmobjRepo->findAll()[0]->getSeries()->getId());
-        $this->assertEquals(MultimediaObject::STATUS_PROTOTYPE, $this->mmobjRepo->findAll()[0]->getStatus());
+        $this->assertTrue($this->mmobjRepo->findAll()[0]->isPrototype());
     }
 
     public function testCreateMultimediaObject()
@@ -113,23 +113,6 @@ class FactoryServiceTest extends WebTestCase
             $this->assertNotEquals($mmobj->getKeyword($locale), $this->mmobjRepo->findPrototype($series)->getKeyword($locale));
             $this->assertEquals($mmobj2->getKeyword($locale), $this->mmobjRepo->findPrototype($series)->getKeyword($locale));
         }
-    }
-
-    /**
-     * @expectedException Exception
-     * @expectedExceptionMessage There is no default selected broadcast neither public broadcast
-     */
-    public function testNoDefaultBroadcast()
-    {
-        $series = $this->factory->createSeries();
-        $mmobj = $this->factory->createMultimediaObject($series);
-
-        $this->assertNull($this->mmobjRepo->find($mmobj->getId())->getBroadcast());
-
-        $this->createBroadcasts();
-        $mmobj2 = $this->factory->createMultimediaObject($series);
-
-        $this->assertNotNull($this->mmobjRepo->find($mmobj2->getId())->getBroadcast());
     }
 
     public function testSeriesType()
@@ -256,7 +239,7 @@ class FactoryServiceTest extends WebTestCase
 
         $series = $this->factory->createSeries();
 
-        $this->assertEquals(MultimediaObject::STATUS_PROTOTYPE, $this->factory->getMultimediaObjectTemplate($series)->getStatus());
+        $this->assertTrue($this->factory->getMultimediaObjectPrototype($series)->isPrototype());
     }
 
     public function testDeleteSeries()

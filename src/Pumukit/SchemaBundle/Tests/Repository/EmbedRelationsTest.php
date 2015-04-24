@@ -158,7 +158,7 @@ class EmbedRelationsTest extends WebTestCase
 
     private function createTestMultimediaObject()
     {
-        $status = MultimediaObject::STATUS_NORMAL;
+        $status = MultimediaObject::STATUS_PUBLISHED;
         $record_date = new \DateTime();
         $public_date = new \DateTime();
         $title = 'titulo cualquiera';

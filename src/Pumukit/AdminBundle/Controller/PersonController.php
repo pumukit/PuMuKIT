@@ -206,7 +206,7 @@ class PersonController extends AdminController
 
             return $this->render('PumukitAdminBundle:Person:listrelation.html.twig', 
                                  array(
-                                       'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
+                                       'people' => $multimediaObject->getPeopleByRole($role),
                                        'role' => $role,
                                        'mm' => $multimediaObject,
                                        'template' => $template
@@ -253,7 +253,7 @@ class PersonController extends AdminController
 
             return $this->render('PumukitAdminBundle:Person:listrelation.html.twig', 
                                  array(
-                                       'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
+                                       'people' => $multimediaObject->getPeopleByRole($role),
                                        'role' => $role,
                                        'mm' => $multimediaObject,
                                        'template' => $template
@@ -300,7 +300,7 @@ class PersonController extends AdminController
         }
         
         return array(
-                     'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
+                     'people' => $multimediaObject->getPeopleByRole($role),
                      'role' => $role,
                      'mm' => $multimediaObject,
                      'template' => $template
@@ -344,7 +344,7 @@ class PersonController extends AdminController
         }
         
         return array(
-                     'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
+                     'people' => $multimediaObject->getPeopleByRole($role),
                      'role' => $role,
                      'mm' => $multimediaObject,
                      'template' => $template
@@ -374,7 +374,7 @@ class PersonController extends AdminController
         }
         
         return array(
-                     'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
+                     'people' => $multimediaObject->getPeopleByRole($role),
                      'role' => $role,
                      'mm' => $multimediaObject,
                      'template' => $template
@@ -404,7 +404,7 @@ class PersonController extends AdminController
         }
         
         return array(
-                     'people' => $multimediaObject->getPeopleInMultimediaObjectByRole($role),
+                     'people' => $multimediaObject->getPeopleByRole($role),
                      'role' => $role,
                      'mm' => $multimediaObject,
                      'template' => $template

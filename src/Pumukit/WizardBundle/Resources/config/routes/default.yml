@@ -1,0 +1,59 @@
+pumukitwizard_default_index:
+    pattern: /
+    methods: [GET]
+    defaults:
+        _controller: PumukitWizardBundle:Default:index
+
+pumukitwizard_default_series:
+    pattern: /series
+    methods: [GET, POST]
+    defaults:
+        _controller: PumukitWizardBundle:Default:series
+
+pumukitwizard_default_type:
+    pattern: /type/{id}
+    methods: [GET, POST]
+    defaults:
+        _controller: PumukitWizardBundle:Default:type
+
+pumukitwizard_default_option:
+    pattern: /option
+    methods: [GET, POST]
+    defaults:
+        _controller: PumukitWizardBundle:Default:option
+
+pumukitwizard_default_multimediaobject:
+    pattern: /multimediaobject
+    methods: [GET, POST]
+    defaults:
+        _controller: PumukitWizardBundle:Default:multimediaobject
+
+pumukitwizard_default_track:
+    pattern: /track
+    methods: [GET, POST]
+    defaults:
+        _controller: PumukitWizardBundle:Default:track
+
+pumukitwizard_default_upload:
+    pattern: /upload
+    methods: [GET, POST]
+    defaults:
+        _controller: PumukitWizardBundle:Default:upload
+
+pumukitwizard_default_end:
+    pattern: /end
+    methods: [GET, POST]
+    defaults:
+        _controller: PumukitWizardBundle:Default:end
+
+pumukitwizard_default_error:
+    pattern: /error
+    methods: [GET, POST]
+    defaults:
+        _controller: PumukitWizardBundle:Default:error
+
+pumukitwizard_default_data:
+    pattern: /data
+    methods: [GET, POST]
+    defaults:
+        _controller: PumukitWizardBundle:Default:data

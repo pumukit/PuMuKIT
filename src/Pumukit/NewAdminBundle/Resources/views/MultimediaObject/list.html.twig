@@ -60,14 +60,14 @@
 	      {% endif %}
         </td>
         <td>
-	      {% if mms.getCurrentPage() == mms.getNbPages() and not loop.last %}
+	      {% if (mms.getCurrentPage() != mms.getNbPages()) or (loop.index + ((mms.getCurrentPage() - 1 ) * mms.getMaxPerPage()) != mms.getNbResults())  %}
 	      {% spaceless %}
  	    <a href="{{ path('pumukitnewadmin_mms_up', {'id': mm.id}) }}" title="{% trans %}Move one position down{% endtrans %}">&#8595;</a>
 	    <a href="{{ path('pumukitnewadmin_mms_top', {'id': mm.id}) }}" title="{% trans %}Move to the end of the list{% endtrans %}"><i class="mdi-editor-vertical-align-bottom"></i></a>
 	    {% endspaceless %}
 	    {% endif %}
         </td>
-        <td>
+        <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
           <span>{{ mm.isOnlyAudio() ? 'Audio':'Video' }}</span>
         </td>
         <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
@@ -101,7 +101,7 @@
 
     {% if 0 == mms|length%}
         {% set range = 1..9 %}
-    {% elseif (mms|length - (mms.getMaxPerPage() * (mms.getCurrentPage() - 1))) < (mms.maxPerPage-1) %}
+    {% elseif (mms|length - (mms.getMaxPerPage() * (mms.getCurrentPage() - 1))) < (mms.maxPerPage) %}
         {% set range = (mms|length - (mms.getMaxPerPage() * (mms.getCurrentPage() - 1)))..(mms.maxPerPage-1) %}
     {% else %}
         {% set range = [] %}
@@ -137,8 +137,8 @@
           </div>
             <div class="col-md-6 text-right">
               <div class="pagerfanta">
-                {% set sorting = {('sorting[' ~ (app.session.get('admin/mms/sort')) ~ ']') : (app.session.get('admin/mms/type')) } %}
-                {{ pagerfanta(mms, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_mms_index", "routeParams": sorting}) }}
+                {{ pagerfanta(mms, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;",
+                                                          "routeParams": {"id": series.id}, "routeName": "pumukitnewadmin_mms_index"}) }}
 
                 <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_mms_index') }}' + '?page=1&paginate=' + this.value">
                   <option {% if mms.maxPerPage == 10 %}selected{% endif %} value="10">10</option>

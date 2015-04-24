@@ -81,14 +81,28 @@ class MultimediaObjectPicController extends Controller
      */
     public function uploadAction(MultimediaObject $multimediaObject, Request $request)
     {
-        if ($request->files->has("file")) {
-            $picService = $this->get('pumukitschema.mmspic');
-            $media = $picService->addPicFile($multimediaObject, $request->files->get("file"));
+        try{
+            if (empty($_FILES) && empty($_POST)){
+                throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
+            }
+            if ($request->files->has("file")) {
+                $picService = $this->get('pumukitschema.mmspic');
+                $media = $picService->addPicFile($multimediaObject, $request->files->get("file"));
+            }
+        }catch (\Exception $e){
+            return array(
+                         'resource' => $multimediaObject,
+                         'resource_name' => 'mms',
+                         'uploaded' => 'failed',
+                         'message' => $e->getMessage()
+                         );
         }
         
         return array(
                      'resource' => $multimediaObject,
                      'resource_name' => 'mms',
+                     'uploaded' => 'success',
+                     'message' => 'New Pic added.'
                      );
     }
   
@@ -175,8 +189,9 @@ class MultimediaObjectPicController extends Controller
         $pics = new Pagerfanta($adapter);
 
         $pics
-          ->setCurrentPage($page, true, true)
-          ->setMaxPerPage($limit);
+          ->setMaxPerPage($limit)
+          ->setNormalizeOutOfRangePages(true)
+          ->setCurrentPage($page);
 
         return $pics;
     }

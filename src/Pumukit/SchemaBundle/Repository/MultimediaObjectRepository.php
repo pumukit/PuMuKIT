@@ -4,6 +4,7 @@ namespace Pumukit\SchemaBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Broadcast;
 
@@ -90,7 +91,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findByPersonId($personId)
     {
         return $this->createQueryBuilder()
-          ->field('people_in_multimedia_object.people._id')->equals(new \MongoId($personId))
+          ->field('people.people._id')->equals(new \MongoId($personId))
           ->getQuery()
           ->execute();
     }
@@ -106,7 +107,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findByPersonIdWithRoleCod($personId, $roleCod)
     {
         $qb = $this->createQueryBuilder();
-        $qb->field('people_in_multimedia_object')->elemMatch(
+        $qb->field('people')->elemMatch(
             $qb->expr()->field('people._id')->equals(new \MongoId($personId))
                 ->field('cod')->equals($roleCod)
         );
@@ -123,7 +124,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findSeriesFieldByPersonId($personId)
     {
         return $this->createQueryBuilder()
-          ->field('people_in_multimedia_object.people._id')->equals(new \MongoId($personId))
+          ->field('people.people._id')->equals(new \MongoId($personId))
           ->distinct('series')
           ->getQuery()
           ->execute();
@@ -141,7 +142,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param int $page
      * @return ArrayCollection
      */
-    public function findWithTag($tag, $sort = array(), $limit = 0, $page = 0)
+    public function findWithTag(Tag $tag, $sort = array(), $limit = 0, $page = 0)
     {
         $qb = $this->createBuilderWithTag($tag, $sort);
 
@@ -160,14 +161,13 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param array $sort
      * @return QueryBuilder
      */
-    public function createBuilderWithTag($tag, $sort = array())
+    public function createBuilderWithTag(Tag $tag, $sort = array())
     {
         $qb = $this->createStandardQueryBuilder()
             ->field('tags._id')->equals(new \MongoId($tag->getId()));
         
         if (0 !== count($sort) ){
-            //$qb->sort($sort['fieldName'], $sort['order']);
-            $qb->sort($sort);
+          $qb->sort($sort);
         }        
 
         return $qb;
@@ -179,7 +179,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param Tag|EmbeddedTag $tag
      * @return MultimediaObject
      */
-    public function findOneWithTag($tag)
+    public function findOneWithTag(Tag $tag)
     {
         return $this->createStandardQueryBuilder()
           ->field('tags._id')->equals(new \MongoId($tag->getId()))
@@ -203,7 +203,7 @@ class MultimediaObjectRepository extends DocumentRepository
           ->field('tags._id')->in($mongoIds);
         
         if (0 !== count($sort) ){
-          $qb->sort($sort['fieldName'], $sort['order']);
+          $qb->sort($sort);
         }        
         
         if ($limit > 0){
@@ -229,7 +229,7 @@ class MultimediaObjectRepository extends DocumentRepository
           ->field('tags._id')->all($mongoIds);
         
         if (0 !== count($sort) ){
-            $qb->sort($sort['fieldName'], $sort['order']);
+            $qb->sort($sort);
         }        
 
         if ($limit > 0){
@@ -263,13 +263,13 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param int $page
      * @return ArrayCollection
      */
-    public function findWithoutTag($tag, $sort = array(), $limit = 0, $page = 0)
+    public function findWithoutTag(Tag $tag, $sort = array(), $limit = 0, $page = 0)
     {
         $qb =  $this->createStandardQueryBuilder()
           ->field('tags._id')->notEqual(new \MongoId($tag->getId()));
         
         if (0 !== count($sort) ){
-            $qb->sort($sort['fieldName'], $sort['order']);
+            $qb->sort($sort);
         }        
 
         if ($limit > 0){
@@ -285,7 +285,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param Tag|EmbeddedTag $tag
      * @return MultimediaObject
      */
-    public function findOneWithoutTag($tag)
+    public function findOneWithoutTag(Tag $tag)
     {
         return $this->createStandardQueryBuilder()
           ->field('tags._id')->notEqual(new \MongoId($tag->getId()))
@@ -309,7 +309,7 @@ class MultimediaObjectRepository extends DocumentRepository
           ->field('tags._id')->notIn($mongoIds);
         
         if (0 !== count($sort) ){
-            $qb->sort($sort['fieldName'], $sort['order']);
+            $qb->sort($sort);
         }        
 
         if ($limit > 0){
@@ -329,7 +329,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param Tag|EmbeddedTag $tag
      * @return ArrayCollection
      */
-    public function findSeriesFieldWithTag($tag)
+    public function findSeriesFieldWithTag(Tag $tag)
     {
         return $this->createStandardQueryBuilder()
             ->field('tags._id')->equals(new \MongoId($tag->getId()))
@@ -343,7 +343,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param Tag|EmbeddedTag $tag
      * @return Series
      */
-    public function findOneSeriesFieldWithTag($tag)
+    public function findOneSeriesFieldWithTag(Tag $tag)
     {
         return $this->createStandardQueryBuilder()
           ->field('tags._id')->equals(new \MongoId($tag->getId()))
@@ -451,6 +451,39 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
+     * Find by series, tag code and status
+     *
+     * @param Series
+     * @param string $tagCod
+     * @param array $status
+     * @return ArrayCollection
+     */
+    public function findBySeriesByTagCodAndStatus(Series $series, $tagCod, $status = array())
+    {
+        $qb = $this->createStandardQueryBuilder()
+          ->field('series')->references($series)
+          ->field('tags.cod')->equals($tagCod);
+
+        if (0 !== count($status)) $qb->field('status')->in($status);
+
+        $qb->sort('rank', 'asc');
+
+        $aux = $qb->getQuery()->execute();
+
+        //TODO Multimedia Objects with Broadcast public or corporative
+        $multimediaObjects = array();
+        foreach ($aux as $mm){
+            $mmBroadcast = $mm->getBroadcast()->getBroadcastTypeId();
+            if (($mmBroadcast == Broadcast::BROADCAST_TYPE_PUB) || ($mmBroadcast == Broadcast::BROADCAST_TYPE_COR)){
+                $multimediaObjects[] = $mm;
+            }
+        }
+
+        return $multimediaObjects;
+    }
+    
+
+    /**
      * Find by broadcast
      *
      * @param Broadcast $broadcast
@@ -469,13 +502,27 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @param Series $series
      * @param array $sort
-     * @return ArrayCollection
+     * @return QueryBuilder
      */
-    public function findOrderedBy(Series $series, $sort = array())
+    public function getQueryBuilderOrderedBy(Series $series, $sort = array())
     {
         $qb = $this->createStandardQueryBuilder()
           ->field('series')->references($series);
-        if (0 !== count($sort)) $qb->sort($sort['fieldName'], $sort['order']);
+        if (0 !== count($sort)) $qb->sort($sort);
+        return $qb;
+    }
+
+
+    /**
+     * Find ordered by fieldName: asc/desc
+     *
+     * @param Series $series
+     * @param array $sort
+     * @return Cursor
+     */
+    public function findOrderedBy(Series $series, $sort = array())
+    {
+        $qb = $this->getQueryBuilderOrderedBy($series, $sort);
         return $qb->getQuery()->execute();
     }
 
@@ -509,5 +556,105 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         return $this->createQueryBuilder()
           ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE);
+    }
+
+    /**
+     * Finds standard MultimediaObjects (not prototype) by a set of criteria.
+     *
+     * @param array        $criteria Query criteria
+     * @param array        $sort     Sort array for Cursor::sort()
+     * @param integer|null $limit    Limit for Cursor::limit()
+     * @param integer|null $skip     Skip for Cursor::skip()
+     *
+     * @return array
+     */
+    public function findStandardBy(array $criteria, array $sort = null, $limit = null, $skip = null)
+    {
+      $criteria["status"] = MultimediaObject::STATUS_PUBLISHED;
+      return $this->getDocumentPersister()->loadAll($criteria, $sort, $limit, $skip)->toArray(false);      
+    }
+
+    /**
+     * Finds a single standard MultimediaObject (not prototype) by a set of criteria.
+     *
+     * @param array $criteria
+     * @return object
+     */
+    public function findStandardOneBy(array $criteria)
+    {
+      $criteria["status"] = MultimediaObject::STATUS_PUBLISHED;
+      return $this->getDocumentPersister()->load($criteria);
+    }
+
+    /**
+     * Find similar multimedia objects to a given one
+     * with same tags, from different series,
+     * broadcast public, status normal,
+     * maximum 20 and random
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param array $tags
+     * @return ArrayCollection
+     */
+    public function findRelatedMultimediaObjects(MultimediaObject $multimediaObject)
+    {
+        $qb = $this->createQueryBuilder()
+          ->field('_id')->notEqual($multimediaObject->getId())
+          ->field('series')->notEqual($multimediaObject->getSeries()->getId())
+          ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED);
+
+        // Broadcast public
+        $broadcastRepo = $this->dm->getRepository('PumukitSchemaBundle:Broadcast');
+        $broadcast = $broadcastRepo->findPublicBroadcast();
+        $qb->field('broadcast')->references($broadcast);
+
+        // Includes PUCHWEBTV code
+        $codes = array();
+        foreach ($multimediaObject->getTags() as $tag) {
+            $codes[] = $tag->getCod();
+        }
+        $qb->field('tags.cod')->all($codes);
+
+        // Limit 20 and random order
+        $qb
+          ->limit(20)
+          ->sort('rank', mt_rand(0, 1) ? 1 : -1);
+
+        $aux = $qb->getQuery()->execute();
+
+        return $aux;
+    }
+
+
+    /**
+     * Count number of standard (not prototype) multimedia objects in the repo
+     *
+     * @return integer
+     */
+    public function count()
+    {
+      return $this
+        ->createStandardQueryBuilder()
+        ->count()
+        ->getQuery()
+        ->execute();
+    }
+
+    /**
+     * Count total duration of standard (not prototype) multimedia objects. 
+     *
+     * @return integer total of seconds
+     */
+    public function countDuration()
+    {
+      $result = $this
+        ->createStandardQueryBuilder()
+        ->group(array(), array('count' => 0))
+        ->reduce('function (obj, prev) { prev.count += obj.duration; }')
+        ->getQuery()
+        ->execute();
+
+      $singleResult = $result->getSingleResult();
+      return $singleResult["count"];
     }
 }

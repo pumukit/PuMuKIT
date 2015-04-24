@@ -1,0 +1,93 @@
+<form id="form_buscador" name="busqueda" method="get" action="/searchmultimediaobjects">
+<table style="width:100%;">
+	<tbody>
+	<tr>
+	
+		<!--SEARCH by term-->
+		<td style="width:33%; float:left;">
+			<div>&nbsp;Search:</div>
+            <div class="input-group" style="height: 30px; width:90%">
+                <input type="text" class="form-control" style="height: 30px; width:100%;" name="search" maxlength="100" value="" placeholder="">
+                <span class="input-group-addon" style="cursor:pointer;"><input type="image" src="{{asset('/bundles/pumukitwebtv/images/lupa_buscador.png')}}"></input></span>
+            </div>
+      		<noscript>&lt;input type="submit" name="commit" value="go" /&gt;</noscript>
+  		</td>
+
+  		<!--Input START DATE-->
+		<td style="width:33%; float:left">
+			<div>&nbsp;Start date:</div>
+    		<div class="input-group date" id="datetimepicker1" style="width: 90%;">
+                <input class="form-control" style="width: 100%; height: 30px" placeholder="" name="start" value="" maxlength="100" type="text">
+                <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+            </div>
+    	</td>
+
+    	<!--Input END DATE-->
+    	<td style="width:33%; float:left">
+			<div>&nbsp;Finish date:</div>
+    		<div class="input-group date" id="datetimepicker2" style="width: 90%;">
+                <input class="form-control" style="width: 100%; height: 30px" placeholder="" name="end" value="" maxlength="100" type="text">
+                <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+            </div>
+    	</td>
+
+		<!--Selected TAGs-->
+		<td style="width:33%; float:left; padding-top: 15px;">
+    		<div>&nbsp;Tags</div>
+    		<select name="tags" style="width: 90%; margin-bottom: 10px;" onchange="Javascript:this.form.submit();">
+    			<option {% if tag_found == "" %} selected="selected" {% endif %}>All</option>
+				{% for tag in tags %}
+					{% if tag.getTitle() != "" %}
+    				<option {% if tag_found == tag.getTitle() %} selected="selected" {% endif %}>{{ tag.getTitle() }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>
+		</td>
+
+		<!--Selected TYPE-->
+		<td style="width:33%; float:left; padding-top: 15px;">
+    		<div>&nbsp;Video / Audio</div>
+    		<select name="type" style="width: 90%; margin-bottom: 10px;" onchange="Javascript:this.form.submit();">
+    			<option {% if type_found == "" %} selected="selected" {% endif %}>All</option>
+				<option {% if type_found == "Video" %} selected="selected" {% endif %}>Video</option>
+				<option {% if type_found == "Audio" %} selected="selected" {% endif %}>Audio</option>
+			</select>
+		</td>
+
+		<!--Selected DURATION-->
+		<td style="width:33%; float:left; padding-top: 15px;">
+    		<div>&nbsp;Duration:</div>
+    		<select name="duration" style="width: 90%; margin-bottom: 10px;" onchange="Javascript:this.form.submit();">
+    			<option {% if duration_found == "" %} selected="selected" {% endif %}>All</option>
+				<option {% if duration_found == "Up to 5 minutes" %} selected="selected" {% endif %}>Up to 5 minutes</option>
+				<option {% if duration_found == "Up to 10 minutes" %} selected="selected" {% endif %}>Up to 10 minutes</option>
+				<option {% if duration_found == "Up to 30 minutes" %} selected="selected" {% endif %}>Up to 30 minutes</option>
+				<option {% if duration_found == "Up to 60 minutes" %} selected="selected" {% endif %}>Up to 60 minutes</option>
+				<option {% if duration_found == "More than 60 minutes" %} selected="selected" {% endif %}>More than 60 minutes</option>
+			</select>
+		</td>
+
+		<!--RESET los filtros a los valores por defecto y actualizamos los objetos multimedia-->
+		<td style="width:90px; float:left">
+    		<div>Eliminar filtros</div>
+      		<input type="button" onclick="window.location.href=window.location.pathname" name="filter" value="Reset" class="btn" />
+  		</td>
+
+    	<script type="text/javascript">
+      	$(function() {
+        	$( "#datetimepicker1" ).datetimepicker({viewMode: 'years', format: 'DD/MM/YYYY'});
+        	$( "#datetimepicker1" ).val("All");
+        	$( "#datetimepicker2" ).datetimepicker({viewMode: 'years', format: 'DD/MM/YYYY'});
+        	$( "#datetimepicker2" ).val("All");
+        	var tzOffset = (new Date()).getTimezoneOffset();
+        	//document.write(tzOffset);
+     	});
+    	</script>
+
+	</tr>
+
+</tbody>
+</table>
+</form>
+<br />
+<a href="/searchseries">Search by series</a>

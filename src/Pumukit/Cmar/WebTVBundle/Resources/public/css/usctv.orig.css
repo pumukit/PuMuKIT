@@ -1,0 +1,324 @@
+/**
+ * cap_pan
+ */
+div.cab_pan{
+  padding: 5px;
+  overflow: hidden;
+}
+
+div.cab_pan ul{
+  white-space: nowrap;
+  list-style-type: none;
+}
+
+div.cab_pan ul li{
+  padding-left: 8px;
+  display:inline;
+}
+
+div.cab_pan ul li a{
+  text-decoration: none;
+}
+
+div.cab_pan ul li a.select{
+  text-decoration: none;
+  font-weight: bold;
+  color: #000;
+}
+
+
+
+/**
+ * Index module imgs
+ */ 
+div#usctv_m_index table{
+  width: 100%;
+}
+
+div#usctv_m_index table div.img_category{
+  margin: 7px;
+  position: relative;
+  overflow: hidden;
+}
+
+div#usctv_m_index table div.img_category:hover div.cover{
+  background-color: #fff;
+  color: #000;
+}
+
+div#usctv_m_index table div.img_category div.cover{
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  background-color: #000;
+  opacity: .8; 
+  /* For IE 5-7 */
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+  /* For IE 8 */
+  -MS-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+  color: #FFF;
+  font-weight: bold;
+  font-size: 120%;  
+}
+
+div#usctv_m_index table div.img_category div.cover div, div#usctv_m_index table div.img_category div.cover span{
+  padding: 20px 8px 8px;
+}
+
+/**
+ * tabs
+ */ 
+
+
+div.usctv_m div.index_tab{
+  overflow: hidden;
+  border-bottom: 1px solid #aaa;
+  border-left: 1px solid #aaa;
+  margin-top: 15px;
+}
+
+div.usctv_m div.index_tab div{
+  float:left; 
+  /*Mas pequeños para que entre en el modulo mmobj*/
+  width: 150px; 
+  text-align: center;
+  border-top: 1px solid #aaa;
+  border-right: 1px solid #aaa;
+  background-color: #e2e2e2;
+  padding: 3px;
+}
+
+div.usctv_m div.index_tab div.index_tab_sel a{
+  color: #fff;
+  text-shadow: 1px 1px 1px #333;
+}
+
+div.usctv_m div.index_tab a{
+  display: block;
+  font-weight: bold;
+  text-shadow: 1px 1px 1px #bbb;
+}
+
+div.usctv_m div.index_tab div.index_tab_sel{
+  background:#006 url("/images/tv/usc/bg_azul_sinesquinas.gif") repeat-x 0 0;     
+}
+
+div.usctv_m div.index_tab div a{
+  text-decoration: none;
+  font-size: 120%;
+}
+
+
+
+div.usctv_m div.index_tab_box{
+  border-bottom: 1px solid #aaa;
+  border-right: 1px solid #aaa;
+  border-left: 1px solid #aaa;
+  padding: 10px;
+
+}
+
+
+/**
+ * USCTV MMOBJs
+ */
+div.usctv_mmobjs, div.usctv_mini_mmobjs{
+  overflow: hidden;
+}
+
+
+div.usctv_mmobjs .usctv_mmobj{
+  position:relative;
+  background: #e9e9e9;
+  margin: 1%;
+  width: 48%;
+  float: left;
+}
+
+div.usctv_mini_mmobjs .usctv_mini_mmobj{
+  position:relative;
+  margin: 1%;
+}
+
+div.usctv_mini_mmobjs .usctv_mini_mmobj:hover{
+  background-color: #eee;
+  position:relative;
+  margin: 1%;
+}
+
+div.usctv_mini_mmobjs .usctv_mini_mmobj .info{
+  min-height: 60px;
+}
+
+
+div.usctv_mmobjs .usctv_mmobj .thumbnail, div.usctv_mini_mmobjs .usctv_mini_mmobj .thumbnail{
+  display:inline;
+  float:left;
+  margin:0 7px 0 0;
+  position:relative;
+}
+
+img.play_icon{
+  left:4px;
+  top:4px;
+  position:absolute;
+  z-index:1;
+}
+
+a:hover img.play_icon{
+  -webkit-box-shadow: 0px 0px 25px #fff; 
+  -moz-box-shadow: 0px 0px 25px #fff; 
+  box-shadow: 0px 0px 25px #fff;
+}
+
+div.usctv_series .usctv_mmobj .titular{
+  color: #00F;
+}
+
+div.usctv_series .usctv_mmobj .title{
+  font-weight: bold;
+  color: #00C; 
+  font-size: 110% !important;
+}
+
+
+div.usctv_mmobjs .usctv_mmobj .title, div.mini_usctv_mmobjs .usctv_mini_mmobj .title{
+  font-weight: bold;
+  font-size: 85%;
+}
+
+div.usctv_mmobjs .usctv_mmobj .title a, div.mini_usctv_mmobjs .usctv_mini_mmobj .title a{
+  color: #00C; 
+}
+
+div.usctv_mmobjs .usctv_mmobj .serial_title{
+  color: #666;
+}
+
+div.usctv_mmobjs .usctv_mmobj .mmobj_bottom, div.usctv_mini_mmobjs .usctv_mini_mmobj .mmobj_bottom{
+  bottom:6px;
+  right: 6px;
+  position:absolute;
+  font-size: 85%;
+}
+
+div.usctv_mmobjs .usctv_mmobj .date, div.usctv_mini_mmobjs .usctv_mini_mmobj .date{
+  bottom:6px;
+  left: 140px;
+  position:absolute;
+}
+
+
+
+
+/**
+ * other_mmobjs
+ */
+div.other_mmobjs{
+  background-color: #efeae6;
+  overflow: hidden;
+}
+
+div.other_mmobjs .label{
+  color: #524944;
+  text-align: left;
+  font-size: 120%;
+  padding: 5px 5px 0px;
+  text-shadow:1px 1px 1px #bbb;
+  font-weight: bold;
+}
+
+div.other_mmobjs .box{
+  background-color: #ffffff;
+  height: 400px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  margin: 10px 15px;
+  -webkit-box-shadow: 0 0px 3px #000; 
+  -moz-box-shadow: 0 0 3px #000; 
+  box-shadow: 0 0 3px #000;
+}
+
+/**
+ *
+ */
+div.mm_player .title{
+  font-weight: bold;
+  font-size: 150%;
+}
+
+div.mm_player .num_view{
+  text-align: right;
+}
+
+div.mm_player .num_view .num_view_number{
+  font-weight: bold;
+}
+
+div.mm_player .date{
+  text-align: right;
+  font-size: 150%;
+}
+
+.library_tabs{
+  overflow: hidden;
+}
+
+.library_tabs .library_tab{
+  float: left;
+  padding: 10px;
+  margin: 0px 5px 5px;
+  background-color: #eee;
+  font-weight: bold;
+  color: blue;
+  width:15%;
+  text-align:center;
+}
+
+.library_tabs .library_tab:hover{
+  text-shadow: 1px 1px 1px #ccc;
+}
+
+.library_tabs .library_tab:hover a{
+  text-decoration: none;
+}
+
+/**
+ * Aviso de Impacto.
+ */
+
+
+div.impacto{
+  background-color: #ba5151;
+  color: #fff;
+  margin: 20px;
+  padding: 10px;
+  text-align:center;
+
+}
+
+div.impacto .msg{
+  text-transform:uppercase;
+  font-size: 150%;
+  font-weight: bold;
+  text-shadow:1px 1px 1px #000;
+}
+
+div.impacto .close{
+  float: right;
+  
+}
+
+div.impacto .close a{
+  color: #fff;
+}
+
+
+/**
+ * Share mmobj
+ */
+div.share_mmobj{
+  margin: 30px 15px 20px;
+  background-color: #F0F0FF;
+  padding: 15px;
+}

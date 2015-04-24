@@ -93,9 +93,16 @@ class Series
   /**
    * @var string $copyright
    *
-   * @MongoDB\Raw
+   * @MongoDB\String
    */
-  private $copyright = array('en' => '');
+  private $copyright;
+
+  /**
+   * @var string $license
+   *
+   * @MongoDB\String
+   */
+  private $license;
 
   /**
    * @var string $keyword
@@ -130,6 +137,20 @@ class Series
     $this->secret = new \MongoId();  
     $this->multimedia_objects = new ArrayCollection();
     $this->pics = new ArrayCollection();
+  }
+
+  public function __toString()
+  {
+    return $this->getTitle();
+  }
+
+  /**
+   *
+   * @return boolean
+   */
+  public function isCollection()
+  {
+    return true;
   }
 
   /**
@@ -499,52 +520,40 @@ class Series
    * Set copyright
    *
    * @param string $copyright
-   * @param string|null $locale 
    */
-  public function setCopyright($copyright, $locale = null)
+  public function setCopyright($copyright)
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    $this->copyright[$locale] = $copyright;
+      $this->copyright = $copyright;
   }
 
   /**
    * Get copyright
    *
-   * @param string|null $locale 
-   * @return string
+   * @return array
    */
-  public function getCopyright($locale = null)
+  public function getCopyright()
   {
-    if ($locale == null) {
-      $locale = $this->locale;
-    }
-    if (!isset($this->copyright[$locale])) {
-      return;
-    }
-
-    return $this->copyright[$locale];
+      return $this->copyright;
   }
 
   /**
-   * Set I18n copyright
+   * Set license
    *
-   * @param array $copyright
+   * @param string $license
    */
-  public function setI18nCopyright(array $copyright)
+  public function setLicense($license)
   {
-    $this->copyright = $copyright;
+      $this->license = $license;
   }
 
   /**
-   * Get i18n copyright
+   * Get license
    *
    * @return array
    */
-  public function getI18nCopyright()
+  public function getLicense()
   {
-    return $this->copyright;
+      return $this->license;
   }
 
   /**
@@ -649,11 +658,6 @@ class Series
   public function getI18nLine2()
   {
     return $this->line2;
-  }
-
-  public function __toString()
-  {
-    return $this->getTitle();
   }
 
   /**

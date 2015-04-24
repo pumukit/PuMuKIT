@@ -6,24 +6,34 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Pumukit\SchemaBundle\Document\Broadcast;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class BroadcastType extends AbstractType
 {
+    private $translator;
+    private $locale;
+
+    public function __construct(TranslatorInterface $translator, $locale='en')
+    {
+        $this->translator = $translator;
+        $this->locale = $locale;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-      ->add('i18n_name', 'texti18n',
-        array('attr' => array('style' => 'width: 420px'), 'label' => 'Name'))
-      ->add('broadcast_type_id', 'choice',
-        array('choices' => array(
-                       Broadcast::BROADCAST_TYPE_PUB => Broadcast::BROADCAST_TYPE_PUB,
-                       Broadcast::BROADCAST_TYPE_PRI => Broadcast::BROADCAST_TYPE_PRI,
-                       Broadcast::BROADCAST_TYPE_COR => Broadcast::BROADCAST_TYPE_COR, ),
-          'label' => 'Type', ))
-      ->add('passwd', 'password',
-        array('attr' => array('style' => 'width: 420px'), 'label' => 'Passwd'))
-      ->add('i18n_description', 'textareai18n',
-        array('attr' => array('style' => 'width: 420px'), 'label' => 'Description'));
+            ->add('i18n_name', 'texti18n',
+                  array('label' => $this->translator->trans('Name', array(), null, $this->locale)))
+            ->add('broadcast_type_id', 'choice',
+                  array('choices' => array(
+                                           Broadcast::BROADCAST_TYPE_PUB => Broadcast::BROADCAST_TYPE_PUB,
+                                           Broadcast::BROADCAST_TYPE_PRI => Broadcast::BROADCAST_TYPE_PRI,
+                                           Broadcast::BROADCAST_TYPE_COR => Broadcast::BROADCAST_TYPE_COR, ),
+                        'label' => $this->translator->trans('Type', array(), null, $this->locale)))
+            ->add('passwd', 'password',
+                  array('label' => $this->translator->trans('Passwd', array(), null, $this->locale)))
+            ->add('i18n_description', 'textareai18n',
+                  array('label' => $this->translator->trans('Description', array(), null, $this->locale)));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

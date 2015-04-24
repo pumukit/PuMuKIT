@@ -1,0 +1,55 @@
+$(function(){
+
+    $('#pumukitwizard_type_previous').on('click', function(e){
+        if($(this).parent().hasClass('lastdone')){
+            var typeForm = $('#pumukitwizard_type_form')[0];
+            typeForm.action = "{{ path('pumukitwizard_default_series')|raw }}";
+            typeForm.submit();
+        }
+        return false;
+    });
+
+    $('#pumukitwizard_multimediaobject_previous').on('click', function(e){
+        if($(this).parent().hasClass('lastdone')){
+            var multimediaobjectForm = $('#pumukitwizard_multimediaobject_form')[0];
+            var route = "{{ path('pumukitwizard_default_type', {'id': '__seriesId__'})|raw }}";
+            var seriesId = $('#pumukitwizard_series_id').val();
+            multimediaobjectForm.action = route.replace('__seriesId__', seriesId);
+            multimediaobjectForm.submit();
+        }
+        return false;
+    });
+
+    $('#pumukitwizard_track_previous').on('click', function(){
+        if($(this).parent().hasClass('lastdone')){
+            var trackForm = $('#pumukitwizard_track_form')[0];
+            var typeOption = $('#pumukitwizard_track_type_option').val();
+            if ('multiple' == typeOption){
+                var route = "{{ path('pumukitwizard_default_type', {'id': '__seriesId__'})|raw }}";
+                var seriesId = $('#pumukitwizard_series_id').val();
+                trackForm.action = route.replace('__seriesId__', seriesId);
+            }else{
+                trackForm.action = "{{ path('pumukitwizard_default_multimediaobject')|raw }}";
+            }
+            trackForm.enctype = "";
+            trackForm.target = "";
+            trackForm.submit();
+        }
+        return false;
+    });
+
+    $('#pumukitwizard_track_next_button').on('click', function(){
+        if ($('#radio_file').prop('checked')) {
+            var file = $('#resource').val();
+        }else{
+            var file = $('#file').val();
+        }
+        var valid = test_material_form_file_nmb(file);
+        if (valid){
+            $('#file_upload_progress').show();
+            return true;
+        }else{
+            return false;
+        }
+    });
+});

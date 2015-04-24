@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}CAMPUS DO MAR TV{% endblock %}</title>
+    <meta name="Keywords" content="{% block keywords %}WebTv, Pumukit{% endblock %}" />
+    <!--Block with CSS files-->
+    {% block stylesheets %}
+    <link href="{{ asset('bundles/pumukitcmarwebtv/css/960.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+    <link href="{{ asset('bundles/pumukitcmarwebtv/css/iefix.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+    <link href="{{ asset('bundles/pumukitcmarwebtv/css/matterhorn.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+    <link href="{{ asset('bundles/pumukitcmarwebtv/css/serial.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+    <link href="{{ asset('bundles/pumukitcmarwebtv/css/pumukittv.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+    <link href="{{ asset('bundles/pumukitcmarwebtv/css/estilos.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+    {% endblock %}
+    {% block javascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/pumukitcmarwebtv/js/prototype.js') }}"></script>
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('bundles/pumukitcmarwebtv/images/favicon.ico') }}" />
+  </head>
+  <body>
+    {% block body_base %}
+    <div id="headerbar">
+      <div style="overflow:hidden; background:#005268 url({{ asset('bundles/pumukitcmarwebtv/images/usc/cmartvL.jpg') }}) no-repeat 50% 50%">
+        <div class="container_15">
+          {% include 'PumukitCmarWebTVBundle::header.html.twig' %}
+        </div>
+      </div>
+    </div>  
+    <div id="body">
+      <div class="container_15" id="tvusc">
+        <div class="usctv_cab">
+          {% include 'PumukitCmarWebTVBundle::header_menu.html.twig' %}
+          {% render(controller('PumukitWebTVBundle:Widget:breadcrumbs')) %}
+        </div>
+        <div class="">
+          {% block body_without_bar %}
+          <div class="grid_3">
+            {% include 'PumukitCmarWebTVBundle::slidebar.html.twig' %}
+          </div>
+          <div class="grid_12">
+            {% block body %}{% endblock %}
+          </div>
+          {% endblock %}
+        </div>
+        {% include 'PumukitCmarWebTVBundle::footer.html.twig' %}
+      </div>
+    </div>
+    {% endblock %}
+  </body>
+</html>

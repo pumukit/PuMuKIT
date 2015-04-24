@@ -7,15 +7,17 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class InboxController extends Controller
 {
     /**
-     * @Route("/inbox")
+     * @Route("/inbox", defaults={"_format"="json"})
      */
     public function dirAction(Request $request)
     {
-        $dir = $request->get("dir", "");
+        $dir = $request->query->get("dir", "");
+        $type = $request->query->get("type", "file");
         $baseDir = $this->container->getParameter('pumukit2.inbox');
 
         if(0 !== strpos($dir, $baseDir)) {
@@ -23,15 +25,51 @@ class InboxController extends Controller
         }
 
         $finder = new Finder();
-        $finder->files()->in($dir);
 
         $res = array();
-        foreach ($finder as $f) {
-            $res[] = array('path' => $f->getRealpath(),
-                           'relativepath' => $f->getRelativePathname(),
-                           'is_file' => $f->isFile());
+
+        if ("file" == $type) {
+            $finder->files()->in($dir);
+            $finder->sortByName();
+            foreach ($finder as $f) {
+                $res[] = array('path' => $f->getRealpath(),
+                               'relativepath' => $f->getRelativePathname(),
+                               'is_file' => $f->isFile());
+            }
+        }else{
+            $finder->directories()->in($dir);
+            $finder->sortByName();
+            foreach ($finder as $f) {
+                if (0 !== (count(glob("$f/*")))){
+                    $res[] = array('path' => $f->getRealpath(),
+                                   'relativepath' => $f->getRelativePathname(),
+                                   'is_file' => $f->isFile());
+                }
+            }
         }
 
         return new JsonResponse($res);
+    }
+
+    /**
+     * @Template
+     */
+    public function formAction($onlyDir=false)
+    {
+        if (!$this->container->hasParameter('pumukit2.inbox')) {
+            return $this->render('@PumukitNewAdmin/Inbox/form_noconf.html.twig');
+        }
+        
+        $dir = $this->container->getParameter('pumukit2.inbox');
+
+        if (!file_exists($dir)) {
+            return $this->render('@PumukitNewAdmin/Inbox/form_nofile.html.twig', array('dir' => $dir));
+        }
+
+        if (!is_readable($dir)) {
+            return $this->render('@PumukitNewAdmin/Inbox/form_noperm.html.twig', array('dir' => $dir));
+        }
+
+        return $this->render('@PumukitNewAdmin/Inbox/form.html.twig', array('dir' => $dir, 'onlyDir' => $onlyDir));
     }
 }

@@ -1,0 +1,67 @@
+{% block wizard_body %}
+{% render(controller('PumukitWizardBundle:Default:steps', {'step': 4, 'option': option, 'show_series': show_series})) %}
+<div class="well">
+  <h3>{% trans %}Track(s) uploaded successfully{% endtrans %}</h3>
+  <h4>
+    {% trans %}The video must be encoded to be available at the website. An email will be sent to you when finishing encoding notifying the availability of your video at the website.{% endtrans %}
+    {# TODO
+    {% if (mm.getYoutube()) %}
+    <br />
+    <br />
+    {% trans %}El vídeo ha sido subido a Youtube. Cuando Youtube informe del estado del vídeo se le enviará un email avisando de la disponibilidad de su vídeo en Youtube.{% endtrans %}
+    {% endif %}
+    #}
+  </h4>
+  {% if mm is not empty %}
+  <div class="well">
+    {# TODO CLASS IMAGE
+    <div>
+      <span></span>
+      <img src="{{ mm.getFirstUrlPic() }}"/>
+      </div>
+    #}
+    <div>
+      <span>{% trans %}SERIES{% endtrans %}: &nbsp;</span>
+      <span>{{ mm.getSeries().getTitle() }}</span>
+    </div>
+    <div>
+      <span>{% trans %}VIDEO{% endtrans %}: </span>
+      <span>{{ mm.getTitle() }}</span>
+    </div>
+    <div>
+      <span>{% trans %}DATE{% endtrans %}: </span>
+      <span>{{ mm.getPublicDate()|date('d/m/Y') }}</span>
+    </div>
+  </div>
+  {% endif %}
+  <div class="row">
+    <div class="col-md-12">
+      {% trans %}Actions{% endtrans %}:
+      <ul>
+        {% if series is not empty and mm is not empty %}
+        <li>
+          <a href="{{ path('pumukitwizard_default_data', {'mmId': mm.getId(), 'seriesId': series.getId()}) }}">
+            {% trans %}See Multimedia Object data{% endtrans %}
+          </a>
+        </li>
+        {% endif %}
+        {% if series is not empty %}
+        <li>
+          <a href="{{ path('pumukitwizard_default_type', {'id': series.getId()}) }}">
+            {% trans %}Create another Multimedia Object in same Series{% endtrans %}
+          </a>
+        </li>
+        {% endif %}
+        <li>
+          <a href="{{ path('pumukitwizard_default_series') }}">
+            {% trans %}Create another Multimedia Object in a new Series{% endtrans %}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  {# TODO
+  <?php include_partial('uploads/ayuda', array('que' => 'cuatro')) ?>
+  #}
+</div>
+{% endblock wizard_body %}

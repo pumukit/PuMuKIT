@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Pumukit\SchemaBundle\Document\Track;
@@ -22,19 +23,18 @@ class TrackController extends Controller
      */
     public function createAction(MultimediaObject $multimediaObject, Request $request)
     {
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
         $track = new Track();
-        $form = $this->createForm(new TrackType(), $track);
+        $form = $this->createForm(new TrackType($translator, $locale), $track);
 
         $masterProfiles = $this->get('pumukitencoder.profile')->getMasterProfiles(true);
-
-        $dirs = $this->container->hasParameter('pumukit2.inbox') ? array($this->container->getParameter('pumukit2.inbox')) : array();
 
         return array(
                      'track' => $track,
                      'form' => $form->createView(),
                      'mm' => $multimediaObject,
                      'master_profiles' => $masterProfiles,
-                     'dirs' => $dirs
                      );
     }
 
@@ -51,13 +51,28 @@ class TrackController extends Controller
 
         $trackService = $this->get('pumukitschema.track');
 
-        if (($request->files->has('resource')) && ("file" == $request->get('file_type'))) {
-            $multimediaObject = $trackService->createTrackFromLocalHardDrive($multimediaObject, $request->files->get('resource'), $profile, $priority, $language, $description);
-        } elseif (($request->get('file', null)) && ("inbox" == $request->get('file_type'))) {
-            $multimediaObject = $trackService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description);
+        try{
+            if (empty($_FILES) && empty($_POST)){
+                throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
+            }
+            if (($request->files->has('resource')) && ("file" == $request->get('file_type'))) {
+                $multimediaObject = $trackService->createTrackFromLocalHardDrive($multimediaObject, $request->files->get('resource'), $profile, $priority, $language, $description);
+            } elseif (($request->get('file', null)) && ("inbox" == $request->get('file_type'))) {
+                $multimediaObject = $trackService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description);
+            }
+        }catch (\Exception $e){
+            return array(
+                         'mm' => $multimediaObject,
+                         'uploaded' => 'failed',
+                         'message' => preg_replace( "/\r|\n/", "", $e->getMessage())
+                         );
         }
 
-        return array('mm' => $multimediaObject);
+        return array(
+                     'mm' => $multimediaObject,
+                     'uploaded' => 'success',
+                     'message' => 'New Track added.'
+                     );
     }
 
     /**
@@ -66,8 +81,10 @@ class TrackController extends Controller
      */
     public function updateAction(MultimediaObject $multimediaObject, Request $request)
     {
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
         $track = $multimediaObject->getTrackById($request->get('id'));
-        $form = $this->createForm(new TrackUpdateType(), $track);
+        $form = $this->createForm(new TrackUpdateType($translator, $locale), $track);
 
         $profiles = $this->get('pumukitencoder.profile')->getProfiles();
 

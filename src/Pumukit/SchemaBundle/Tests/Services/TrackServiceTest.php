@@ -20,6 +20,7 @@ class TrackServiceTest extends WebTestCase
     private $trackService;
     private $factoryService;
     private $resourcesDir;
+    private $logger;
 
     public function __construct()
     {
@@ -27,6 +28,8 @@ class TrackServiceTest extends WebTestCase
         $kernel = static::createKernel($options);
         $kernel->boot();
 
+        $this->logger = $kernel->getContainer()
+          ->get('logger');
         $this->dm = $kernel->getContainer()
           ->get('doctrine_mongodb')->getManager();
         $this->repoJobs = $this->dm
@@ -57,7 +60,7 @@ class TrackServiceTest extends WebTestCase
         $cpuService = new CpuService($this->getDemoCpus(), $this->dm);
         $inspectionService = $this->getMock('Pumukit\InspectionBundle\Services\InspectionServiceInterface');
         $inspectionService->expects($this->any())->method('getDuration')->will($this->returnValue(5));
-        $jobService = new JobService($this->dm, $profileService, $cpuService, $inspectionService, null, true);
+        $jobService = new JobService($this->dm, $profileService, $cpuService, $inspectionService, $this->logger, null, true);
         $this->trackService = new TrackService($this->dm, $jobService, $profileService, null);
 
         $this->tmpDir = $this->trackService->getTempDirs()[0];

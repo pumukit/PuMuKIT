@@ -4,13 +4,13 @@
 </div>
 <div class="modal-body">
   {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
-  <form onsubmit="$('#myModal').modal('hide');
+  <form autocomplete="off" onsubmit="$('#myModal').modal('hide');
                   $.ajax({
                           url: '{{ path('pumukitnewadmin_material_update', {'id': material.id, 'mmId': mmId}) }}',
                           type: 'POST',
                           data: $(this).serialize(),
                           success: function(response){
-                                                      $('#materials_mms').html(response);
+                                                      $('#materials_mms_{{ mmId }}').html(response);
                                                       success('{% trans %}Material successfully updated.{% endtrans %}');
                                                       }
                   });

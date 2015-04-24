@@ -1,0 +1,186 @@
+.nav-wizard > li {
+  float: left;
+}
+.nav-wizard > li > a {
+  position: relative;
+  background-color: #d5d5d5;
+}
+.nav-wizard > li > a .badge {
+  margin-left: 3px;
+  color: #d5d5d5;
+  background-color: #ED6D00;
+}
+.nav-wizard > li:not(:first-child) > a {
+  padding-left: 60px;
+}
+.nav-wizard > li:not(:first-child) > a:before {
+  width: 0px;
+  height: 0px;
+  border-top: 50px inset transparent;
+  border-bottom: 50px inset transparent;
+  border-left: 50px solid #eeeeee;
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+}
+.nav-wizard > li:not(:last-child) > a {
+  margin-right: 6px;
+}
+.nav-wizard > li:not(:last-child) > a:after {
+  width: 0px;
+  height: 0px;
+  border-top: 50px inset transparent;
+  border-bottom: 50px inset transparent;
+  border-left: 50px solid #eeeeee;
+  position: absolute;
+  content: "";
+  top: 0;
+  right: -50px;
+  z-index: 2;
+}
+.nav-wizard > li:first-child > a {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+.nav-wizard > li:last-child > a {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.nav-wizard > li.first-child-pumukit > a {
+  padding-left: 30px;
+}
+.nav-wizard > li.first-child-pumukit > a:before {
+  width: 0px;
+  height: 0px;
+  border-top: 50px transparent;
+  border-bottom: 50px transparent;
+  border-left: 50px solid #eeeeee;
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+}
+.nav-wizard > li.first-child-pumukit > a {
+  margin-right: 6px;
+}
+.nav-wizard > li.first-child-pumukit > a:after {
+  width: 0px;
+  height: 0px;
+  border-top: 50px inset transparent;
+  border-bottom: 50px inset transparent;
+  border-left: 50px solid #eeeeee;
+  position: absolute;
+  content: "";
+  top: 0;
+  right: -50px;
+  z-index: 2;
+}
+.nav-wizard > li.first-child-pumukit > a {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+.nav-wizard > li.done:hover > a,
+.nav-wizard > li:hover > a {
+  background-color: #d5d5d5;
+}
+.nav-wizard > li.done:hover > a:before,
+.nav-wizard > li:hover > a:before {
+  border-right-color: #d5d5d5;
+}
+.nav-wizard > li.done:hover > a:after,
+.nav-wizard > li:hover > a:after {
+  border-left-color: #d5d5d5;
+}
+.nav-wizard > li.done > a {
+  color: #777777;
+  background-color: #d5d5d5;
+  cursor: default;
+}
+.nav-wizard > li.done > a:before {
+  color: #777777;
+  border-right-color: #d5d5d5;
+}
+.nav-wizard > li.done > a:after {
+  color: #777777;
+  border-left-color: #d5d5d5;
+}
+.nav-wizard > li.lastdone:hover > a {
+  background-color: #009587;
+}
+.nav-wizard > li.lastdone:hover > a:before {
+  border-right-color: #009587;
+}
+.nav-wizard > li.lastdone:hover > a:after {
+  border-left-color: #009587;
+}
+.nav-wizard > li.lastdone > a {
+  color: #ffffff;
+  background-color: #009587;
+}
+.nav-wizard > li.lastdone > a:before {
+  color: #ffffff;
+  border-right-color: #009587;
+}
+.nav-wizard > li.lastdone > a:after {
+  color: #ffffff;
+  border-left-color: #009587;
+}
+.nav-wizard > li.active > a,
+.nav-wizard > li.active > a:hover,
+.nav-wizard > li.active > a:focus {
+  color: #ffffff;
+  background-color: #ED6D00;
+  cursor: default;
+}
+.nav-wizard > li.active > a:after {
+  border-left-color: #ED6D00;
+}
+.nav-wizard > li.active > a .badge {
+  color: #ED6D00;
+  background-color: #ffffff;
+}
+.nav-wizard > li.disabled > a {
+  color: #009587;
+  display: none;
+}
+.nav-wizard > li.disabled > a:hover,
+.nav-wizard > li.disabled > a:focus {
+  color: #009587;
+  text-decoration: none;
+  background-color: #d5d5d5;
+  cursor: default;
+  display: none;
+}
+.nav-wizard > li.disabled > a:before {
+  color: #009587;
+  border-right-color: #d5d5d5;
+  display: none;
+}
+.nav-wizard > li.disabled > a:after {
+  color: #009587;
+  border-left-color: #d5d5d5;
+  display: none;
+}
+.nav-wizard.nav-justified > li {
+  float: none;
+}
+.nav-wizard.nav-justified > li > a {
+  padding: 10px 15px;
+}
+@media (max-width: 768px) {
+  .nav-wizard.nav-justified > li > a {
+    border-radius: 0px;
+    margin-right: 0;
+  }
+  .nav-wizard.nav-justified > li > a:before,
+  .nav-wizard.nav-justified > li > a:after {
+    border: none !important;
+  }
+}
+.nav-pills>li>a {
+  border-radius: 0px;
+}
+.nav>li>a {
+  padding: 30px 30px;
+}

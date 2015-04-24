@@ -94,7 +94,7 @@
 
   <!-- PERSONS PRESENT -->
         {% for role in roles if role.getDisplay() %}
-	  {% for act in mm.getPeopleInMultimediaObjectByRole(role) %}
+          {% for act in mm.getPeopleByRole(role) %}
             <div>
               <div class="person" style="color:#000099; font-weight:bold;">
 	        {{ role.getText() }}

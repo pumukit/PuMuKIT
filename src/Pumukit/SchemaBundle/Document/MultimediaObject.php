@@ -13,7 +13,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class MultimediaObject
 {
-    const STATUS_NORMAL = 0;
+    const STATUS_PUBLISHED = 0;
     const STATUS_BLOQ = 1;
     const STATUS_HIDE = 2;
     const STATUS_NEW = -1;
@@ -36,7 +36,6 @@ class MultimediaObject
     /**
      * @MongoDB\ReferenceOne(targetDocument="Series", inversedBy="multimedia_objects", simple=true)
      * @Gedmo\SortableGroup
-     * // TODO SortableGroup #5623
      */
     private $series;
 
@@ -149,9 +148,16 @@ class MultimediaObject
     /**
      * @var string $copyright
      *
-     * @MongoDB\Raw
+     * @MongoDB\String
      */
-    private $copyright = array('en' => '');
+    private $copyright;
+
+    /**
+     * @var string $license
+     *
+     * @MongoDB\String
+     */
+    private $license;
 
     /**
      * @var string $keyword
@@ -171,6 +177,7 @@ class MultimediaObject
      * @var int $numview
      *
      * @MongoDB\Int
+     * @MongoDB\Increment
      */
     private $numview;
 
@@ -179,7 +186,7 @@ class MultimediaObject
      *
      * @MongoDB\EmbedMany(targetDocument="EmbeddedRole")
      */
-    private $people_in_multimedia_object;
+    private $people;
 
     /**
      * Used locale to override Translation listener`s locale
@@ -196,12 +203,21 @@ class MultimediaObject
         $this->materials = new ArrayCollection();
         $this->links = new ArrayCollection();
         $this->tags = new ArrayCollection();
-        $this->people_in_multimedia_object = new ArrayCollection();
+        $this->people = new ArrayCollection();
     }
 
     public function __toString()
     {
-        return $this->title;
+      return $this->getTitle();
+    }
+
+    /**
+     *
+     * @return boolean
+     */
+    public function isCollection()
+    {
+      return false;
     }
 
     /**
@@ -282,6 +298,16 @@ class MultimediaObject
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Helper function to know if is the status a prototype.
+     *
+     * @return boolean
+     */
+    public function isPrototype()
+    {
+        return self::STATUS_PROTOTYPE === $this->getStatus();
     }
 
     /**
@@ -536,52 +562,40 @@ class MultimediaObject
      * Set copyright
      *
      * @param string $copyright
-     * @param string|null $locale 
      */
-    public function setCopyright($copyright, $locale = null)
-    {
-        if ($locale == null) {
-            $locale = $this->locale;
-        }
-        $this->copyright[$locale] = $copyright;
-    }
-
-    /**
-     * Get copyright
-     *
-     * @param string|null $locale
-     * @return string
-     */
-    public function getCopyright($locale = null)
-    {
-        if ($locale == null) {
-            $locale = $this->locale;
-        }
-        if (!isset($this->copyright[$locale])) {
-            return;
-        }
-
-        return $this->copyright[$locale];
-    }
-
-    /**
-     * Set I18n copyright
-     *
-     * @param array $copyright
-     */
-    public function setI18nCopyright(array $copyright)
+    public function setCopyright($copyright)
     {
         $this->copyright = $copyright;
     }
 
     /**
-     * Get I18n copyright
+     * Get copyright
      *
-     * @return array
+     * @return string
      */
-    public function getI18nCopyright()
+    public function getCopyright()
     {
         return $this->copyright;
+    }
+
+    /**
+     * Set license
+     *
+     * @param string $license
+     */
+    public function setLicense($license)
+    {
+        $this->license = $license;
+    }
+
+    /**
+     * Get license
+     *
+     * @return string
+     */
+    public function getLicense()
+    {
+        return $this->license;
     }
 
     /**
@@ -691,6 +705,15 @@ class MultimediaObject
     public function setNumview($numview)
     {
         $this->numview = $numview;
+    }
+
+    /**
+     * Increment numview
+     *
+     */
+    public function incNumview()
+    {
+        $this->numview++;
     }
 
     /**
@@ -1968,18 +1991,18 @@ class MultimediaObject
 
     // End of Link getter - setter etc methods section
 
-    // Start people_in_multimedia_object section.
+    // Start people section.
 
     /**
-     * Get people_in_multimedia_object
+     * Get people
      *
      * @return array
      */
-    public function getPeopleInMultimediaObject()
+    public function getPeople()
     {
         $aux = array();
 
-        foreach ($this->people_in_multimedia_object as $role) {
+        foreach ($this->people as $role) {
             foreach ($role->getPeople() as $person) {
                 if (!in_array($person, $aux)) {
                     $aux[] = $person;
@@ -2000,7 +2023,7 @@ class MultimediaObject
     {
         $aux = array();
 
-        foreach ($this->people_in_multimedia_object as $role) {
+        foreach ($this->people as $role) {
             foreach ($role->getPeople() as $embeddedPerson) {
                 if ($embeddedPerson->getId() === $person->getId()) {
                     $aux[] = $embeddedPerson;
@@ -2020,7 +2043,7 @@ class MultimediaObject
      */
     public function containsPerson($person)
     {
-        foreach ($this->getPeopleInMultimediaObject() as $embeddedPerson) {
+        foreach ($this->getPeople() as $embeddedPerson) {
             if ($person->getId() == $embeddedPerson->getId()) {
                 return true;
             }
@@ -2039,7 +2062,7 @@ class MultimediaObject
      */
     public function containsPersonWithRole($person, $role)
     {
-        foreach ($this->getPeopleInMultimediaObjectByRole($role, true) as $embeddedPerson) {
+        foreach ($this->getPeopleByRole($role, true) as $embeddedPerson) {
             if ($person->getId() == $embeddedPerson->getId()) {
                 return true;
             }
@@ -2093,12 +2116,12 @@ class MultimediaObject
      * @param  boolean           $always
      * @return array
      */
-    public function getPeopleInMultimediaObjectByRole($role = null, $always = false)
+    public function getPeopleByRole($role = null, $always = false)
     {
         $aux = array();
 
         if (null !== $role) {
-            foreach ($this->people_in_multimedia_object as $embeddedRole) {
+            foreach ($this->people as $embeddedRole) {
                 if ($role->getCod() == $embeddedRole->getCod()) {
                     if ($always || $embeddedRole->getDisplay()) {
                         foreach ($embeddedRole->getPeople() as $embeddedPerson) {
@@ -2109,7 +2132,7 @@ class MultimediaObject
                 }
             }
         } else {
-            foreach ($this->people_in_multimedia_object as $embeddedRole) {
+            foreach ($this->people as $embeddedRole) {
                 if ($always || $embeddedRole->getDisplay()) {
                     foreach ($embeddedRole->getPeople() as $embeddedPerson) {
                         if (!in_array($embeddedPerson, $aux)) {
@@ -2137,7 +2160,7 @@ class MultimediaObject
             } else {
                 $embeddedRole = $this->createEmbeddedRole($role);
                 $embeddedRole->addPerson($person);
-                $this->people_in_multimedia_object[] = $embeddedRole;
+                $this->people[] = $embeddedRole;
             }
         }
     }
@@ -2160,7 +2183,7 @@ class MultimediaObject
         $hasRemoved = $embeddedRole->removePerson($person);
 
         if (0 === count($embeddedRole->getPeople())) {
-            $this->people_in_multimedia_object->removeElement($embeddedRole);
+            $this->people->removeElement($embeddedRole);
         }
 
         return $hasRemoved;
@@ -2214,7 +2237,7 @@ class MultimediaObject
      */
     public function reorderPersonWithRole($person, $role, $up = true)
     {
-        $people = array_values($this->getPeopleInMultimediaObjectByRole($role, true));
+        $people = array_values($this->getPeopleByRole($role, true));
         $this->getEmbeddedRole($role)->getPeople()->clear();
 
         $out = array();
@@ -2240,7 +2263,7 @@ class MultimediaObject
      */
     public function getEmbeddedRole($role)
     {
-        foreach ($this->people_in_multimedia_object as $embeddedRole) {
+        foreach ($this->people as $embeddedRole) {
             if ($role->getCod() === $embeddedRole->getCod()) {
                 return $embeddedRole;
             }
@@ -2276,10 +2299,10 @@ class MultimediaObject
      */
     public function getRoles()
     {
-        return $this->people_in_multimedia_object;
+        return $this->people;
     }
 
-    // End of people_in_multimedia_object section
+    // End of people section
 
     /**  
      * Update duration

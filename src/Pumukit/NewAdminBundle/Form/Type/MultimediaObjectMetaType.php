@@ -7,20 +7,31 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\NewAdminBundle\Form\Type\Other\Html5dateType;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class MultimediaObjectMetaType extends AbstractType
 {
+    private $translator;
+    private $locale;
+
+    public function __construct(TranslatorInterface $translator, $locale='en')
+    {
+        $this->translator = $translator;
+        $this->locale = $locale;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('i18n_title', 'texti18n', array('label' => 'Title'))
-            ->add('i18n_subtitle', 'texti18n', array('required' => false, 'label' => 'Subtitle'))
-            ->add('i18n_keyword', 'texti18n',array('required' => false, 'label' => 'Keyword'))
-            ->add('i18n_copyright', 'texti18n', array('required' => false, 'label' => 'Copyright'))
-            ->add('public_date', new Html5dateType(), array('data_class' => 'DateTime', 'label' => 'Public Date'))
-            ->add('record_date', new Html5dateType(), array('data_class' => 'DateTime', 'label' => 'Record Date'))
-            ->add('i18n_description', 'textareai18n', array('required' => false, 'label' => 'Description'))
-            ->add('i18n_line2', 'textareai18n', array('required' => false, 'label' => 'Headline'));
+            ->add('i18n_title', 'texti18n', array('label' => $this->translator->trans('Title', array(), null, $this->locale)))
+            ->add('i18n_subtitle', 'texti18n', array('required' => false, 'label' => $this->translator->trans('Subtitle', array(), null, $this->locale)))
+            ->add('i18n_keyword', 'texti18n', array('required' => false, 'label' => $this->translator->trans('Keyword', array(), null, $this->locale)))
+            ->add('copyright', 'text', array('required' => false, 'label' => $this->translator->trans('Copyright', array(), null, $this->locale)))
+            ->add('license', 'text', array('required' => false, 'label' => $this->translator->trans('License', array(), null, $this->locale)))           
+            ->add('public_date', new Html5dateType(), array('data_class' => 'DateTime', 'label' => $this->translator->trans('Public Date', array(), null, $this->locale)))
+            ->add('record_date', new Html5dateType(), array('data_class' => 'DateTime', 'label' => $this->translator->trans('Record Date', array(), null, $this->locale)))
+            ->add('i18n_description', 'textareai18n', array('required' => false, 'label' => $this->translator->trans('Description', array(), null, $this->locale)))
+            ->add('i18n_line2', 'textareai18n', array('required' => false, 'label' => $this->translator->trans('Headline', array(), null, $this->locale)));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

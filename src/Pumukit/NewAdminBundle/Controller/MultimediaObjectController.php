@@ -4,11 +4,13 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType;
+use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectPubType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class MultimediaObjectController extends SortableAdminController
@@ -22,16 +24,13 @@ class MultimediaObjectController extends SortableAdminController
         $config = $this->getConfiguration();
         $criteria = $this->getCriteria($config);
         $resources = $this->getResources($request, $config, $criteria);
-        $sorting = $request->get('sorting');
-        if (null !== $sorting){
-            $this->get('session')->set('admin/mms/type', $sorting[key($sorting)]);
-            $this->get('session')->set('admin/mms/sort', key($sorting));
-        }
 
         $factoryService = $this->get('pumukitschema.factory');
 
         $sessionId = $this->get('session')->get('admin/series/id', null);
         $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
+        if(!$series) throw $this->createNotFoundException();
+
         $this->get('session')->set('admin/series/id', $series->getId());
 
         $mms = $this->getListMultimediaObjects($series);
@@ -125,9 +124,10 @@ class MultimediaObjectController extends SortableAdminController
         $parentTags = $factoryService->getParentTags();
 
         $resource = $this->findOr404($request);
-
-        $formMeta = $this->createForm($config->getFormType().'_meta', $resource);
-        $formPub = $this->createForm($config->getFormType().'_pub', $resource);
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
+        $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $resource);
+        $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource);
 
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
@@ -137,10 +137,7 @@ class MultimediaObjectController extends SortableAdminController
 
         $notMasterProfiles = $this->get('pumukitencoder.profile')->getMasterProfiles(false);
 
-        $template = '';      
-        if (MultimediaObject::STATUS_PROTOTYPE === $resource->getStatus()){
-            $template = '_template';
-        }
+        $template = $resource->isPrototype() ? '_template' : '';
 
         return array(
                      'mm'            => $resource,
@@ -182,9 +179,10 @@ class MultimediaObjectController extends SortableAdminController
         $parentTags = $factoryService->getParentTags();
 
         $resource = $this->findOr404($request);
-
-        $formMeta = $this->createForm($config->getFormType().'_meta', $resource);
-        $formPub = $this->createForm($config->getFormType().'_pub', $resource);
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
+        $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $resource);
+        $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource);
 
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
@@ -255,9 +253,10 @@ class MultimediaObjectController extends SortableAdminController
         $parentTags = $factoryService->getParentTags();
 
         $resource = $this->findOr404($request);
-
-        $formMeta = $this->createForm($config->getFormType().'_meta', $resource);
-        $formPub = $this->createForm($config->getFormType().'_pub', $resource);
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
+        $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $resource);
+        $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource);
 
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
@@ -265,6 +264,11 @@ class MultimediaObjectController extends SortableAdminController
         $method = $request->getMethod();
         if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
             $formPub->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+            // TODO #6465 : Review change of Publication Channel (create service)
+            // * If MultimediaObject didn't contained PUCHWEBTV tag and now it does:
+            //   - execute job (master_copy to video_h264)
+            // * If MultimediaObject didn't contained ARCA tag and now it does:
+            //   - execute corresponding job
             $resource = $this->updateTags($request->get('pub_channels', null), "PUCH", $resource);
             $resource = $this->updateTags($request->get('pub_decisions', null), "PUDE", $resource);
 
@@ -419,20 +423,19 @@ class MultimediaObjectController extends SortableAdminController
         $page = $session->get('admin/mms/page', 1);
         $maxPerPage = $session->get('admin/mms/paginate', 10);
 
-        $sorting = array();
-        if ($this->get('session')->has('admin/mms/type') && $this->get('session')->has('admin/mms/sort')){
-          $sorting['fieldName'] = $this->get('session')->get('admin/mms/sort');
-          $sorting['order'] = $this->get('session')->get('admin/mms/type');
-        }
-        $coll_mms = $this->get('doctrine_mongodb.odm.document_manager')
-          ->getRepository('PumukitSchemaBundle:MultimediaObject')->findOrderedBy($series, $sorting);
+        $sorting = array("rank" => "asc");
+        $mmsQueryBuilder = $this
+          ->get('doctrine_mongodb.odm.document_manager')
+          ->getRepository('PumukitSchemaBundle:MultimediaObject')
+          ->getQueryBuilderOrderedBy($series, $sorting);
 
-        $adapter = new ArrayAdapter($coll_mms->toArray());
+        $adapter = new DoctrineODMMongoDBAdapter($mmsQueryBuilder);
         $mms = new Pagerfanta($adapter);
 
         $mms
-          ->setCurrentPage($page, true, true)
-          ->setMaxPerPage($maxPerPage);
+          ->setMaxPerPage($maxPerPage)
+          ->setNormalizeOutOfRangePages(true)
+          ->setCurrentPage($page);
         return $mms;
     }
 
@@ -511,13 +514,6 @@ class MultimediaObjectController extends SortableAdminController
         $config = $this->getConfiguration();
         $criteria = $this->getCriteria($config);
         $resources = $this->getResources($request, $config, $criteria);
-
-        $sorting = $request->get('sorting');
-        if (null !== $sorting){
-            $this->get('session')->set('admin/mms/type', $sorting[key($sorting)]);
-            $this->get('session')->set('admin/mms/sort', key($sorting));
-        }
-
         $factoryService = $this->get('pumukitschema.factory');
         $seriesId = $request->get('seriesId', null);
         $sessionId = $this->get('session')->get('admin/series/id', null);
@@ -591,5 +587,32 @@ class MultimediaObjectController extends SortableAdminController
         $this->get('session')->remove('admin/mms/cut');
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));
+    }
+
+
+    /**
+     * Reorder multimedia objects
+     */
+    public function reorderAction(Request $request)
+    {
+        $factoryService = $this->get('pumukitschema.factory');
+        $sessionId = $this->get('session')->get('admin/series/id', null);
+        $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
+
+        $sorting = array($request->get("fieldName", "rank") => $request->get("order", 1));
+
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $mms = $dm
+          ->getRepository('PumukitSchemaBundle:MultimediaObject')
+          ->findOrderedBy($series, $sorting);
+
+        $rank = 1;
+        foreach($mms as $mm){
+          $mm->setRank($rank++);
+          $dm->persist($mm);
+        }
+        $dm->flush();
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));      
     }
 }

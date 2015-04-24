@@ -18,14 +18,14 @@
         {% if loop.first %}
 	  &nbsp;
 	{% else %}
-	  <a href="#" onclick="$('#links_mms').load('{{ path('pumukitnewadmin_link_up', {'id': link.id, 'mmId': mmId}) }}', {'_method': 'POST'}); return false;">&#8593;</a>
+	  <a href="#" onclick="$('#links_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_link_up', {'id': link.id, 'mmId': mmId}) }}', {'_method': 'POST'}); return false;">&#8593;</a>
 	{% endif %}
       </td>
       <td>
 	{% if loop.last %}
           &nbsp;
 	{% else %}
-	  <a href="#" onclick="$('#links_mms').load('{{ path('pumukitnewadmin_link_down', {'id': link.id, 'mmId': mmId}) }}', {'_method': 'POST'}); return false;">&#8595;</a>
+	  <a href="#" onclick="$('#links_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_link_down', {'id': link.id, 'mmId': mmId}) }}', {'_method': 'POST'}); return false;">&#8595;</a>
 	{% endif %}
       </td>
       <td>&nbsp;{{ link.id }} - {{ link.getUrl() }}</td>
