@@ -304,7 +304,7 @@ class JobService
             $job->setTimeend(new \DateTime('now'));
             $job->setStatus(Job::STATUS_FINISHED);
 
-            $this->createFile($job);
+            $this->createTrackWithJob($job);
         }catch (\Exception $e){
             $job->setTimeend(new \DateTime('now'));
             $job->setStatus(Job::STATUS_ERROR);
@@ -432,7 +432,7 @@ class JobService
     }
 
 
-    public function createFile($job)
+    public function createTrackWithJob($job)
     {
 
         $profile = $this->getProfile($job);
@@ -456,6 +456,63 @@ class JobService
         $this->inspectionService->autocompleteTrack($track);
 
         //TODO review
+        $track->setOnlyAudio($track->getWidth() == 0);
+        $track->setHide(false);
+
+        $multimediaObject->addTrack($track);
+     
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+    }
+
+    public function createTrackWithFile($pathFile, $profileName, MultimediaObject $multimediaObject, $language = null, $description = array(), $trackName){
+
+        $profile = $this->profileService->getProfile($profileName);
+        $track = new Track();
+        $track->addTag('profile:' . $profileName);
+        if ($profile['master']) $track->addTag('master');
+        if ($profile['display']) $track->addTag('display');
+        foreach(explode(",", $profile['tags']) as $tag) {
+            $track->addTag(trim($tag));
+        }
+
+        if (!empty($description)){
+            $job->setI18nDescription($description);
+        }
+
+        if($profileName == "master_copy"){
+            $structure = realpath(dirname(__FILE__) . '/../../../../web/storage/masters') . '/' . $multimediaObject->getId();
+            if(!mkdir($structure, 0777, true)) {
+                throw new \Exception("Could not create the folder");
+            }
+
+            $dest = $structure . '/' . $trackName . '.mp4';
+            $track->setPath($dest);
+            if (!copy($pathFile, $dest)) {
+                throw new \Exception("Error to copy file");
+            }
+        }
+
+        $track->setLanguage($language);
+        if(isset($profile['streamserver']['url_out'])) {
+            
+            $structure = realpath(dirname(__FILE__) . '/../../../../web/storage/downloads') . '/' . $multimediaObject->getId();
+            if(!mkdir($structure, 0777, true)) {
+                throw new \Exception("Could not create the folder");
+            }
+
+            $dest = $structure . '/' . $trackName . '.mp4';
+            $track->setPath($dest);
+            if (!copy($pathFile, $dest)) {
+                throw new \Exception("Error to copy file");
+            }
+
+            $track->setUrl(str_replace(realpath($profile['streamserver']['dir_out']), $profile['streamserver']['url_out'], $dest));
+        }
+        //$track->setPath($pathFile);
+
+        $this->inspectionService->autocompleteTrack($track);
+
         $track->setOnlyAudio($track->getWidth() == 0);
         $track->setHide(false);
 
