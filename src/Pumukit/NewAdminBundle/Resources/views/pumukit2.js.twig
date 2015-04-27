@@ -765,20 +765,19 @@ $(function() {
 			var seriesId = response['seriesId'];
 			var mmId = response['mmId'];
 
-			// NOTE: Important to call listAction first to update page in session if needed
+			// NOTE: Important to call listAction first to update multimedia object id in session
 			var routeList = "{{ path('pumukitnewadmin_mms_list', {'id': '__seriesId__', 'newMmId': '__newMmId__'}) }}";
 			routeList = routeList.replace('__newMmId__', mmId);
-			$('#list_mms').load(routeList.replace('__seriesId__', seriesId), {'_method':'POST'});
+            $('#list_mms').load(routeList.replace('__seriesId__', seriesId), {'_method':'POST'}, function(){
+                var routeShow = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'}) }}";
+                $('#preview_mm').load(routeShow.replace('__mmId__', mmId), {'_method':'POST'});
 
-			var routeShow = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'}) }}";
-			$('#preview_mm').load(routeShow.replace('__mmId__', mmId), {'_method':'POST'});
-
-			var routeEdit = "{{ path('pumukitnewadmin_mms_edit', {'id': '__mmId__', 'seriesId': '__seriesId__', 'newMmId': '__newMmId__'}) }}";
-			routeEdit = routeEdit.replace('__seriesId__', seriesId)
-			$('#edit_mm').load(routeEdit.replace('__mmId__', mmId), function(){
-			    init_tabs();
-			});
-
+                var routeEdit = "{{ path('pumukitnewadmin_mms_edit', {'id': '__mmId__', 'seriesId': '__seriesId__'}) }}";
+                routeEdit = routeEdit.replace('__seriesId__', seriesId);
+                $('#edit_mm').load(routeEdit.replace('__mmId__', mmId), function(){
+                    init_tabs();
+                });
+            });
 			success('{% trans %}Multimedia Object successfully created.{% endtrans %}');
 	    }
     });
