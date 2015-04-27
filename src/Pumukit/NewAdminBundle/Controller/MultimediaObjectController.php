@@ -54,7 +54,6 @@ class MultimediaObjectController extends SortableAdminController
 
     /**
      * Create new resource
-     * @Template("PumukitNewAdminBundle:MultimediaObject:list.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -71,12 +70,12 @@ class MultimediaObjectController extends SortableAdminController
 
        $this->addFlash('success', 'create');
 
-       $mms = $this->getListMultimediaObjects($series);
+       $this->get('session')->set('admin/mms/id', $mmobj->getId());
 
-       return array(
-                    'series' => $series,
-                    'mms' => $mms
-                    );
+       return new JsonResponse(array(
+				     'seriesId' => $series->getId(),
+				     'mmId' => $mmobj->getId()
+				     ));
     }
 
     /**
@@ -417,10 +416,10 @@ class MultimediaObjectController extends SortableAdminController
      * Get the view list of multimedia objects
      * belonging to a series
      */
-    private function getListMultimediaObjects(Series $series)
+    private function getListMultimediaObjects(Series $series, $newMultimediaObjectId=null)
     {
         $session = $this->get('session');
-        $page = $session->get('admin/mms/page', 1);
+	$page = $session->get('admin/mms/page', 1);
         $maxPerPage = $session->get('admin/mms/paginate', 10);
 
         $sorting = array("rank" => "asc");
@@ -434,9 +433,22 @@ class MultimediaObjectController extends SortableAdminController
 
         $mms
           ->setMaxPerPage($maxPerPage)
-          ->setNormalizeOutOfRangePages(true)
-          ->setCurrentPage($page);
-        return $mms;
+          ->setNormalizeOutOfRangePages(true);
+
+	/*
+	  NOTE: Multimedia Objects are sorted by ascending rank.
+	  A new MultimediaObject is created with last rank,
+	  so it will be at the end of the list.
+	  We update the page if a new page is created to show the
+	  the new MultimediaObject in new last page.
+	*/
+	if ($newMultimediaObjectId && (($mms->getNbResults()/$maxPerPage) > $page)) {
+            $page = $mms->getNbPages();
+	    $session->set('admin/mms/page', $page);
+	}
+	$mms->setCurrentPage($page);
+
+	return $mms;
     }
 
     /**
@@ -519,7 +531,7 @@ class MultimediaObjectController extends SortableAdminController
         $sessionId = $this->get('session')->get('admin/series/id', null);
         $series = $factoryService->findSeriesById($seriesId, $sessionId);
 
-        $mms = $this->getListMultimediaObjects($series);
+        $mms = $this->getListMultimediaObjects($series, $request->get('newMmId', null));
 
         $update_session = true;
         foreach($mms as $mm) {

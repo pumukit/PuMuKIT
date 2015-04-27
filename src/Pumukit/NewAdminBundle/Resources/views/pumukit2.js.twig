@@ -749,6 +749,42 @@ $(function() {
 
   init_tabs();
   init_event_tab();
+
+  $('#pumukitnewadmin_mms_new_button').on('click', function () {
+    var seriesId = $('#mms_series_id').val();
+    var route = "{{ path('pumukitnewadmin_mms_create', {'id': '__seriesId__'}) }}";
+    route = route.replace('__seriesId__', seriesId);
+    $.ajax(route, {
+            type: 'GET',
+	    error: function(jqXHR, textStatus, errorThrown){
+                        var responseText = jqXHR.responseText.split("<title>").pop().split("</title>").shift();
+                        var message = responseText.replace(/(\r\n|\n|\r)/gm,"");
+                        no_success(errorThrown+': '+textStatus+', '+message);
+	    },
+	    success: function(response, textStatus, jqXHR){
+			var seriesId = response['seriesId'];
+			var mmId = response['mmId'];
+
+			// NOTE: Important to call listAction first to update page in session if needed
+			var routeList = "{{ path('pumukitnewadmin_mms_list', {'id': '__seriesId__', 'newMmId': '__newMmId__'}) }}";
+			routeList = routeList.replace('__newMmId__', mmId);
+			$('#list_mms').load(routeList.replace('__seriesId__', seriesId), {'_method':'POST'});
+
+			var routeShow = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'}) }}";
+			$('#preview_mm').load(routeShow.replace('__mmId__', mmId), {'_method':'POST'});
+
+			var routeEdit = "{{ path('pumukitnewadmin_mms_edit', {'id': '__mmId__', 'seriesId': '__seriesId__', 'newMmId': '__newMmId__'}) }}";
+			routeEdit = routeEdit.replace('__seriesId__', seriesId)
+			$('#edit_mm').load(routeEdit.replace('__mmId__', mmId), function(){
+			    init_tabs();
+			});
+
+			success('{% trans %}Multimedia Object successfully created.{% endtrans %}');
+	    }
+    });
+
+    return false;
+  });
 });
 
 /**
