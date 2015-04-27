@@ -8,7 +8,7 @@
 </head>
 <body>
   {% for year in years %}
-    <outline type="rss" text="{{ pumukit2_info['title'] }}" xmlUrl="{{ url('pumukit_arca_list', {'year': year}) }}" />
+    <outline type="rss" text="{{ pumukit2_info['title'] }}" xmlUrl="{{ url('pumukit_arca_list', {'year': year['_id']}) }}" />
   {% endfor %}
 </body>
 </opml>
