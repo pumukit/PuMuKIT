@@ -204,9 +204,6 @@ class JobService
             $nextJob->setStatus(Job::STATUS_EXECUTING);
             $this->dm->persist($nextJob);
             $this->dm->flush();
-
-            // TODO Define pumukit command and execute it in background
-            // finalizado.php in Pumukit1.8
             $this->executeInBackground($nextJob);
 
             return $nextJob;
@@ -273,6 +270,7 @@ class JobService
         $commandLine = $this->renderBat($job);
 
         // TODO - Set pathEnd in some point
+        // TODO - Use Symfony\Component\Filesystem\Filesystem.
         if (!realpath(dirname($job->getPathEnd())) && !file_exists(dirname($job->getPathEnd()))){
             $created = @mkdir(dirname($job->getPathEnd()), 0777, true);
             if ($created){
@@ -398,16 +396,29 @@ class JobService
 
         $profile = $this->getProfile($job);
 
-        $extension = pathinfo($job->getPathIni(), PATHINFO_EXTENSION);
-        $finalExtension = isset($profile['extension'])?$profile['extension']:$extension;
-
         $mmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
         if (!$mmobj){
             $this->logger->addError('[setPathEndAndExtensions] Error getting multimedia object from id: '.$job->getMmId());
             throw new \Exception('Error getting multimedia object from id: '.$job->getMmId());
         }
 
-        $tempDir = $profile['streamserver']['dir_out'] . '/' . $mmobj->getSeries()->getId();
+        $extension = pathinfo($job->getPathIni(), PATHINFO_EXTENSION);        
+        $pathEnd = $this->getPathEnd($profile, $mmobj->getSeries()->getId(), $job->getId(), $extension);
+
+        $job->setPathEnd($pathEnd);
+        $job->setExtIni($extension);
+        $job->setExtEnd(pathinfo($pathEnd, PATHINFO_EXTENSION));
+
+        $this->dm->persist($job);
+        $this->dm->flush();
+    }
+
+
+    private function getPathEnd(array $profile, $dir, $file, $extension)
+    {
+        $finalExtension = isset($profile['extension'])?$profile['extension']:$extension;
+
+        $tempDir = $profile['streamserver']['dir_out'] . '/' . $dir;
 
         //TODO repeat mkdir (see this->execute) and check error
         if (!realpath($tempDir) && !file_exists($tempDir)){
@@ -421,55 +432,38 @@ class JobService
             $this->logger->addWarning('[setPathEndAndExtensions] Directory "'.$tempDir.'" already exists or permission denied to access the route.');
         }
 
-        $pathEnd = realpath($tempDir) . '/' . $job->getId() . '.' . $finalExtension;
-
-        $job->setPathEnd($pathEnd);
-        $job->setExtIni($extension);
-        $job->setExtEnd($finalExtension);
-
-        $this->dm->persist($job);
-        $this->dm->flush();
+        return realpath($tempDir) . '/' . $file . '.' . $finalExtension;      
     }
 
 
     public function createTrackWithJob($job)
     {
-
-        $profile = $this->getProfile($job);
-
         $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
-        //TODO if mmobj doesn't exists
-        $track = new Track();
-        $track->addTag('profile:' . $job->getProfile());
-        if ($profile['master']) $track->addTag('master');
-        if ($profile['display']) $track->addTag('display');
-        foreach(explode(",", $profile['tags']) as $tag) {
-            $track->addTag(trim($tag));
-        }
 
-        $track->setLanguage($job->getLanguageId());
-        if(isset($profile['streamserver']['url_out'])) {
-          $track->setUrl(str_replace(realpath($profile['streamserver']['dir_out']), $profile['streamserver']['url_out'], $job->getPathEnd()));
-        }
-        $track->setPath($job->getPathEnd());
-
-        $this->inspectionService->autocompleteTrack($track);
-
-        //TODO review
-        $track->setOnlyAudio($track->getWidth() == 0);
-        $track->setHide(false);
-
-        $multimediaObject->addTrack($track);
-     
-        $this->dm->persist($multimediaObject);
-        $this->dm->flush();
+        $this->createTrack($multimediaObject, $job->getPathEnd(), $job->getProfile(), $job->getLanguageId());
     }
 
-    public function createTrackWithFile($pathFile, $profileName, MultimediaObject $multimediaObject, $language = null, $description = array(), $trackName){
-
+    public function createTrackWithFile($pathFile, $profileName, MultimediaObject $multimediaObject, $language = null, $description = array())
+    {
         $profile = $this->profileService->getProfile($profileName);
+
+        $pathEnd = $this->getPathEnd($profile, 
+                                     $multimediaObject->getSeries()->getId(), 
+                                     pathinfo($pathFile, PATHINFO_FILENAME),
+                                     pathinfo($pathFile, PATHINFO_EXTENSION));
+
+        if (!copy($pathFile, $pathEnd)) {
+          throw new \Exception("Error to copy file");
+        }
+        
+        $this->createTrack($multimediaObject, $pathEnd, $profileName, $language, $description);
+    }
+
+    private function createTrack(MultimediaObject $multimediaObject, $pathEnd, $profileName, $language = null, $description = array())
+    {
+        $profile = $this->profileService->getProfile($profileName);
+
         $track = new Track();
-        $track->addTag('profile:' . $profileName);
         if ($profile['master']) $track->addTag('master');
         if ($profile['display']) $track->addTag('display');
         foreach(explode(",", $profile['tags']) as $tag) {
@@ -477,39 +471,14 @@ class JobService
         }
 
         if (!empty($description)){
-            $job->setI18nDescription($description);
+            $track->setI18nDescription($description);
         }
-
-        if($profileName == "master_copy"){
-            $structure = realpath(dirname(__FILE__) . '/../../../../web/storage/masters') . '/' . $multimediaObject->getId();
-            if(!mkdir($structure, 0777, true)) {
-                throw new \Exception("Could not create the folder");
-            }
-
-            $dest = $structure . '/' . $trackName . '.mp4';
-            $track->setPath($dest);
-            if (!copy($pathFile, $dest)) {
-                throw new \Exception("Error to copy file");
-            }
-        }
-
         $track->setLanguage($language);
+
+        $track->setPath($pathEnd);
         if(isset($profile['streamserver']['url_out'])) {
-            
-            $structure = realpath(dirname(__FILE__) . '/../../../../web/storage/downloads') . '/' . $multimediaObject->getId();
-            if(!mkdir($structure, 0777, true)) {
-                throw new \Exception("Could not create the folder");
-            }
-
-            $dest = $structure . '/' . $trackName . '.mp4';
-            $track->setPath($dest);
-            if (!copy($pathFile, $dest)) {
-                throw new \Exception("Error to copy file");
-            }
-
-            $track->setUrl(str_replace(realpath($profile['streamserver']['dir_out']), $profile['streamserver']['url_out'], $dest));
+          $track->setUrl(str_replace(realpath($profile['streamserver']['dir_out']), $profile['streamserver']['url_out'], $pathEnd));
         }
-        //$track->setPath($pathFile);
 
         $this->inspectionService->autocompleteTrack($track);
 

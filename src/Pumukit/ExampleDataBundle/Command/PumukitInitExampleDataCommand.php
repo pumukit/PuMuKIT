@@ -338,8 +338,8 @@ EOT
             $language = 'es';
             $description = array();
             $path = realpath(dirname(__FILE__) . '/../Resources/public/videos/' . $folder . '/' . $track . '.mp4');
-            $jobService->createTrackWithFile($path, 'master_copy', $multimediaObject, $language, $description, $track);
-            $jobService->createTrackWithFile($path, 'video_h264', $multimediaObject, $language, $description, $track);
+            $jobService->createTrackWithFile($path, 'master_copy', $multimediaObject, $language, $description);
+            $jobService->createTrackWithFile($path, 'video_h264', $multimediaObject, $language, $description);
       }
 
       private function load_tags_multimediaobject($multimediaObject, $tags){
