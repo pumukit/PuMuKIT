@@ -1,12 +1,5 @@
 <?php
 
-
-/**
-TODO:
- - Add doctrine filters.
- -      
- */
-
 namespace Pumukit\WebTVBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
