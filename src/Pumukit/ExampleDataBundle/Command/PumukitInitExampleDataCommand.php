@@ -18,6 +18,7 @@ use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Document\Role;
 
 
 class PumukitInitExampleDataCommand extends ContainerAwareCommand
@@ -35,13 +36,16 @@ class PumukitInitExampleDataCommand extends ContainerAwareCommand
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
             ->addOption('reusezip', null, InputOption::VALUE_NONE, 'Set this parameter to not delete zip file with videos to reuse in the future')
             ->addOption('append', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
+            ->addOption('notClearFiles', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
             ->setHelp(<<<EOT
 
             Command to load a data set of data into a database. Useful for init a demo Pumukit environment.
 
             The --force parameter has to be used to actually drop the database.
 
-            The --append paramenter has to be used to add examples to database without deleting.
+            The --append parameter has to be used to add examples to database without deleting.
+
+            The --notClearFiles parameter has to be used to undelete files.
 
 EOT
           );
@@ -64,16 +68,16 @@ EOT
                         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
                   }
 
-                  //Unzipping videos in folder
-                  if (!file_exists($newFile) || !$input->getOption('reusezip')) {
-                    if (!$this->download(self::PATH_VIDEO, $newFile, $output)) {
-                      echo "Failed to copy $file...\n";
-                    }
-                  }
-                  $zip = new ZipArchive();
-                  if ($zip->open($newFile, ZIPARCHIVE::CREATE)==TRUE) {
-                        $zip->extractTo(realpath(dirname(__FILE__) . '/../Resources/public/'));
-                        $zip->close();
+                  if(!$input->getOption('notClearFiles')){
+                        if (!$this->download(self::PATH_VIDEO, $newFile, $output)) {
+                              echo "Failed to copy $file...\n";
+                        }
+                        
+                        $zip = new ZipArchive();
+                        if ($zip->open($newFile, ZIPARCHIVE::CREATE)==TRUE) {
+                              $zip->extractTo(realpath(dirname(__FILE__) . '/../Resources/public/'));
+                              $zip->close();
+                        }
                   }
 
                   //Series Access grid
@@ -85,6 +89,7 @@ EOT
                   $this->load_multimediaobject($multimediaObject, $series, "Access grid");
                   $this->load_track_multimediaobject($multimediaObject, '8', '24');
                   $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUBDECISIONS","PUBCHANNELS","PUCHARCA","Dscience","Dhealth"));
+                  $this->load_people_multimediaobject($multimediaObject, 'Will', 'actor');
                   $this->load_pic_multimediaobject($multimediaObject, '17');
 
                   //Series Uvigo
@@ -113,6 +118,7 @@ EOT
                   $this->load_multimediaobject($multimediaObject, $series, "Movil");
                   $this->load_track_multimediaobject($multimediaObject, '10', '36');
                   $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","Dscience","Dhumanities"));
+                  $this->load_people_multimediaobject($multimediaObject, 'Laura', 'presenter');
                   $this->load_pic_multimediaobject($multimediaObject, '22');
 
                   $multimediaObject = $factoryService->createMultimediaObject($series);
@@ -153,6 +159,7 @@ EOT
                   $this->load_multimediaobject($multimediaObject, $series, "Energy materials and environment");
                   $this->load_track_multimediaobject($multimediaObject, '12', '40');
                   $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUCHARCA","Dhealth","Dtechnical"));
+                  $this->load_people_multimediaobject($multimediaObject, 'Marcos', 'presenter');
                   $this->load_pic_multimediaobject($multimediaObject, '28');
 
                   //Serie Marine sciences
@@ -203,6 +210,7 @@ EOT
                   $this->load_multimediaobject($multimediaObject, $series, "First");
                   $this->load_track_multimediaobject($multimediaObject, '16', '53');
                   $this->load_tags_multimediaobject($multimediaObject, array("PUDEPD3","PUCHARCA","Dtechnical","Dhumanities"));
+                  $this->load_people_multimediaobject($multimediaObject, 'Ana', 'actor');
                   $this->load_pic_multimediaobject($multimediaObject, '33');
 
                   $multimediaObject = $factoryService->createMultimediaObject($series);
@@ -231,14 +239,16 @@ EOT
                   $this->load_multimediaobject($multimediaObject, $series, "Presentation");
                   $this->load_track_multimediaobject($multimediaObject, '18', '56');
                   $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUBDECISIONS","PUDEPD1","DIRECTRIZ","Dsocial","Dtechnical"));
+                  $this->load_people_multimediaobject($multimediaObject, 'Sara', 'presenter');
+                  $this->load_people_multimediaobject($multimediaObject, 'Carlos', 'actor');
                   $this->load_pic_multimediaobject($multimediaObject, '36');
 
-                  if (!$input->getOption('reusezip')) {
-                    unlink($newFile);
+                  if(!$input->getOption('notClearFiles')){
+                        unlink($newFile);
                   }
                   $output->writeln('<info>Example data load successful</info>');
-
-            } else {
+            } 
+            else {
                   $output->writeln('<error>ATTENTION:</error> This operation should not be executed in a production environment.');
                   $output->writeln('');
                   $output->writeln('<info>Would drop the database</info>');
@@ -351,6 +361,18 @@ EOT
                   $tagService = $this->getContainer()->get('pumukitschema.tag'); 
                   $tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());
             }
+      }
+
+      private function load_people_multimediaobject($multimediaObject, $name, $role){
+            $personService = $this->getContainer()->get('pumukitschema.person');
+            $person = new Person();
+            $person->setName($name);
+
+            $rolePerson = new Role();
+            $rolePerson->setCod($role);
+
+            $multimediaObject->addPersonWithRole($person, $rolePerson);
+            $personService->savePerson($person);
       }
 
       private function load_pic_multimediaobject($multimediaObject, $pic){

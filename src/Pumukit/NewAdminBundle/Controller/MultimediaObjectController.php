@@ -419,7 +419,7 @@ class MultimediaObjectController extends SortableAdminController
     private function getListMultimediaObjects(Series $series, $newMultimediaObjectId=null)
     {
         $session = $this->get('session');
-	$page = $session->get('admin/mms/page', 1);
+        $page = $session->get('admin/mms/page', 1);
         $maxPerPage = $session->get('admin/mms/paginate', 10);
 
         $sorting = array("rank" => "asc");

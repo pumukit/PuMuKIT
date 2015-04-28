@@ -12,7 +12,7 @@
                           success: function(response){$('#links_mms_{{ mm.id }}').html(response);}
                   });
                   return false;"
-        action="{{ path('pumukitadmin_link_update', {'id': link.id, 'mmId': mm.id}) }}" method="POST">
+        action="{{ path('pumukitnewadmin_link_update', {'id': link.id, 'mmId': mm.id}) }}" method="POST">
     <fieldset>
       {% for child in form %}
       {{ form_row(child) }}

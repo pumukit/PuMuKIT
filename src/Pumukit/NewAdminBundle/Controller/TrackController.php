@@ -90,7 +90,7 @@ class TrackController extends Controller
 
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
             try {
-                $multimediaObject = $this->get('pumukitadmin.track')->updateTrackInMultimediaObject($multimediaObject);
+                $multimediaObject = $this->get('pumukitschema.track')->updateTrackInMultimediaObject($multimediaObject);
             } catch (\Exception $e) {
                 $this->get('session')->getFlashBag()->add('error', $e->getMessage());
             }
