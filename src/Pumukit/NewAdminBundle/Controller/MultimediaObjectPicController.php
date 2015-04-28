@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class MultimediaObjectPicController extends Controller
 {

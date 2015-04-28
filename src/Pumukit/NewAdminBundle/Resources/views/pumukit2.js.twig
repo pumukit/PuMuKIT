@@ -145,7 +145,7 @@ window.delete_mmspic = function(id, resourceId) {
         var url = '{{ path('pumukitnewadmin_mmspic_delete', {'id': '___id___'})|raw }}';
         var div_id = '#pic_mms___resourceId__';
         div_id = div_id.replace('__resourceId__', resourceId);
-        $(div_id).load(url.replace('___id___', resourceId), {'_method': 'DELETE'}, function(){success('{% trans %}Image removed.{% endtrans %}');});
+        $(div_id).load(url.replace('___id___', id), {'_method': 'DELETE'}, function(){success('{% trans %}Image removed.{% endtrans %}');});
     }
 }
 
