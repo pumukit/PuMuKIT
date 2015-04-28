@@ -9,11 +9,25 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/hello/{name}")
-     * @Template()
+     * @Route("/podcast/conferencevideo.xml", defaults={"_format": "xml"})
+     * @Template("PumukitCmarPodcastBundle:Default:index.xml.twig")
      */
-    public function indexAction($name)
+    public function videoAction()
     {
-        return array('name' => $name);
+	    $mmObjRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $multimediaObjects = $mmObjRepo->findBy(array('tracks.only_audio' => false));
+        return array('multimediaObjects' => $multimediaObjects);
+    }
+
+
+    /**
+     * @Route("/podcast/conferenceaudio.xml", defaults={"_format": "xml"})
+     * @Template("PumukitCmarPodcastBundle:Default:index.xml.twig")
+     */
+    public function audioAction()
+    {
+	    $mmObjRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $multimediaObjects = $mmObjRepo->findBy(array('tracks.only_false' => true));
+        return array('multimediaObjects' => $multimediaObjects);
     }
 }
