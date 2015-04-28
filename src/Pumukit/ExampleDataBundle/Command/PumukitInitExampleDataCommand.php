@@ -28,14 +28,13 @@ class PumukitInitExampleDataCommand extends ContainerAwareCommand
       private $dm = null;
       private $repo = null;
 
-      private $tagsPath = "../Resources/data/tags/";
-
       protected function configure()
       {
             $this
             ->setName('pumukit:init:example')
             ->setDescription('Load Pumukit expample data fixtures to your database')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
+            ->addOption('reusezip', null, InputOption::VALUE_NONE, 'Set this parameter to not delete zip file with videos to reuse in the future')
             ->addOption('append', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
             ->addOption('notClearFiles', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
             ->setHelp(<<<EOT
@@ -54,6 +53,8 @@ EOT
 
       protected function execute(InputInterface $input, OutputInterface $output)
       {
+ 
+            $newFile = $this->getContainer()->getParameter('kernel.cache_dir') . '/tmp_file.zip';
             $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
             $this->repo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:Tag");
             $factoryService = $this->getContainer()->get('pumukitschema.factory'); 
@@ -67,9 +68,7 @@ EOT
                         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
                   }
 
-                  if($input->getOption('notClearFiles') != 1){
-
-                        $newFile = 'tmp_file.zip';
+                  if(!$input->getOption('notClearFiles')){
                         if (!$this->download(self::PATH_VIDEO, $newFile, $output)) {
                               echo "Failed to copy $file...\n";
                         }
@@ -244,10 +243,10 @@ EOT
                   $this->load_people_multimediaobject($multimediaObject, 'Carlos', 'actor');
                   $this->load_pic_multimediaobject($multimediaObject, '36');
 
-                  if($input->getOption('notClearFiles') != 1){
-                        unlink('tmp_file.zip');
-                        $output->writeln('<info>Example data load successful</info>');
+                  if(!$input->getOption('notClearFiles')){
+                        unlink($newFile);
                   }
+                  $output->writeln('<info>Example data load successful</info>');
             } 
             else {
                   $output->writeln('<error>ATTENTION:</error> This operation should not be executed in a production environment.');
@@ -391,10 +390,6 @@ EOT
 
       private function download($src, $target, $output)
       {
-            if (file_exists($target)) {
-                  $output->writeln("Using existed file.");
-                  return true;
-            }
             $output->writeln("Downloading multimedia files to init the database:");
             $progress = new \Symfony\Component\Console\Helper\ProgressBar($output, 100);
             $progress->start();
