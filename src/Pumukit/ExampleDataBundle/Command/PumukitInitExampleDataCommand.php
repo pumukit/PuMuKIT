@@ -37,13 +37,16 @@ class PumukitInitExampleDataCommand extends ContainerAwareCommand
             ->setDescription('Load Pumukit expample data fixtures to your database')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
             ->addOption('append', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
+            ->addOption('notClearFiles', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
             ->setHelp(<<<EOT
 
             Command to load a data set of data into a database. Useful for init a demo Pumukit environment.
 
             The --force parameter has to be used to actually drop the database.
 
-            The --append paramenter has to be used to add examples to database without deleting.
+            The --append parameter has to be used to add examples to database without deleting.
+
+            The --notClearFiles parameter has to be used to undelete files.
 
 EOT
           );
@@ -64,6 +67,7 @@ EOT
                         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
                   }
 
+                  if($input->getOption('notClearFiles') != 1){
                   //Unzipping videos in folder
                   $newFile = 'tmp_file.zip';
                   if (!$this->download(self::PATH_VIDEO, $newFile, $output)) {
@@ -74,6 +78,7 @@ EOT
                         $zip->extractTo(realpath(dirname(__FILE__) . '/../Resources/public/'));
                         $zip->close();
                         //unlink('tmp_file.zip');
+                  }
                   }
 
                   //Series Access grid
@@ -239,9 +244,10 @@ EOT
                   $this->load_people_multimediaobject($multimediaObject, 'Carlos', 'actor');
                   $this->load_pic_multimediaobject($multimediaObject, '36');
 
-                  unlink('tmp_file.zip');
-                  $output->writeln('<info>Example data load successful</info>');
-
+                  if($input->getOption('notClearFiles') != 1){
+                        unlink('tmp_file.zip');
+                        $output->writeln('<info>Example data load successful</info>');
+                  }
             } 
             else {
                   $output->writeln('<error>ATTENTION:</error> This operation should not be executed in a production environment.');
