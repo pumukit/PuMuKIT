@@ -1439,6 +1439,10 @@ class MultimediaObject
         $r = array();
 
         foreach ($this->tracks as $track) {
+            // TODO Move 'hide' field to tag 'hidden' in track
+            if ($track->getHide()) {
+                continue;
+            }
             if ($any_tags && !$track->containsAnyTag($any_tags)) {
                 continue;
             }
