@@ -207,7 +207,7 @@
         ({{ track.getPath()|basename }}/{{ track.getLanguage()|language_name }})
          - {{ track.getDuration()|duration_string }}
          - {{ (track.getSize() / 1048576)|number_format(2) }} MB
-         - {% if track.getWidth() and track.getHeight() %}{{ track.getWidth() }}x{{ track.getHeight() }}{% endif %}
+         {% if track.getWidth() and track.getHeight() %}- {{ track.getWidth() }}x{{ track.getHeight() }}{% endif %}
          {% if track.getHide() %}<i>({% trans %}Hidden{% endtrans %})</i>{% endif %}
       </td>
     </tr>
