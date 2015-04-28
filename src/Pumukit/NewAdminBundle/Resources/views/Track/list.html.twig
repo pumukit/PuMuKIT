@@ -207,16 +207,11 @@
         ({{ track.getPath()|basename }}/{{ track.getLanguage()|language_name }})
          - {{ track.getDuration()|duration_string }}
          - {{ (track.getSize() / 1048576)|number_format(2) }} MB
-         - {# {{ track.getResolutionHor() }}x{{ track.getResolutionVer() }}
-         {% if track.getDisplay() %}{% else %}({% trans %}Hidden{% endtrans %}){% endif %} #}
+         - {% if track.getWidth() and track.getHeight() %}{{ track.getWidth() }}x{{ track.getHeight() }}{% endif %}
+         {% if track.getHide() %}<i>({% trans %}Hidden{% endtrans %})</i>{% endif %}
       </td>
     </tr>
   {% endfor %}
-
-  <!-- <tr>
-    <td><ul><li></li><ul></td>
-    <td colspan="9"><?php echo m_link_to(__('nuevo...'), 'files/create?mm='.$mmId, array('title' => __('Crear File')), array('width' => '800')) ?></td>
-  </tr>-->
   <tr>
     <td><ul><li></li></ul></td>
     <td colspan="11"><a data-toggle="modal" data-target="#myModal" href="{{ path('pumukitnewadmin_track_create', {'id': mmId}) }}">{% trans %}New master{% endtrans %}...</a></td>
