@@ -440,7 +440,7 @@ class JobService
     {
         $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
 
-        $this->createTrack($multimediaObject, $job->getPathEnd(), $job->getProfile(), $job->getLanguageId());
+        $this->createTrack($multimediaObject, $job->getPathEnd(), $job->getProfile(), $job->getLanguageId(), $job->getI18nDescription());
     }
 
     public function createTrackWithFile($pathFile, $profileName, MultimediaObject $multimediaObject, $language = null, $description = array())
