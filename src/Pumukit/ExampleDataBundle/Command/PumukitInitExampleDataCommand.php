@@ -27,14 +27,13 @@ class PumukitInitExampleDataCommand extends ContainerAwareCommand
       private $dm = null;
       private $repo = null;
 
-      private $tagsPath = "../Resources/data/tags/";
-
       protected function configure()
       {
             $this
             ->setName('pumukit:init:example')
             ->setDescription('Load Pumukit expample data fixtures to your database')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
+            ->addOption('reusezip', null, InputOption::VALUE_NONE, 'Set this parameter to not delete zip file with videos to reuse in the future')
             ->addOption('append', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
             ->setHelp(<<<EOT
 
@@ -50,6 +49,8 @@ EOT
 
       protected function execute(InputInterface $input, OutputInterface $output)
       {
+ 
+            $newFile = $this->getContainer()->getParameter('kernel.cache_dir') . '/tmp_file.zip';
             $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
             $this->repo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:Tag");
             $factoryService = $this->getContainer()->get('pumukitschema.factory'); 
@@ -64,15 +65,15 @@ EOT
                   }
 
                   //Unzipping videos in folder
-                  $newFile = 'tmp_file.zip';
-                  if (!$this->download(self::PATH_VIDEO, $newFile, $output)) {
-                        echo "Failed to copy $file...\n";
+                  if (!file_exists($newFile) || !$input->getOption('reusezip')) {
+                    if (!$this->download(self::PATH_VIDEO, $newFile, $output)) {
+                      echo "Failed to copy $file...\n";
+                    }
                   }
                   $zip = new ZipArchive();
                   if ($zip->open($newFile, ZIPARCHIVE::CREATE)==TRUE) {
                         $zip->extractTo(realpath(dirname(__FILE__) . '/../Resources/public/'));
                         $zip->close();
-                        //unlink('tmp_file.zip');
                   }
 
                   //Series Access grid
@@ -232,11 +233,12 @@ EOT
                   $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUBDECISIONS","PUDEPD1","DIRECTRIZ","Dsocial","Dtechnical"));
                   $this->load_pic_multimediaobject($multimediaObject, '36');
 
-                  unlink('tmp_file.zip');
+                  if (!$input->getOption('reusezip')) {
+                    unlink($newFile);
+                  }
                   $output->writeln('<info>Example data load successful</info>');
 
-            } 
-            else {
+            } else {
                   $output->writeln('<error>ATTENTION:</error> This operation should not be executed in a production environment.');
                   $output->writeln('');
                   $output->writeln('<info>Would drop the database</info>');
@@ -366,10 +368,6 @@ EOT
 
       private function download($src, $target, $output)
       {
-            if (file_exists($target)) {
-                  $output->writeln("Using existed file.");
-                  return true;
-            }
             $output->writeln("Downloading multimedia files to init the database:");
             $progress = new \Symfony\Component\Console\Helper\ProgressBar($output, 100);
             $progress->start();
