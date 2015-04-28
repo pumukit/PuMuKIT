@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xml:lang="en" version="2.0">
+    <channel>
+        <title><![CDATA[CMar Conferencias destacadas]]></title>
+        <link>{{ asset('/', absolute=true)}}</link>
+        <description><![CDATA[Audios das conferencias ofrecidas por Campus do Mar]]></description>
+        <generator>PuMuKiT</generator>
+        <lastBuildDate>{{ "now"|date("r") }}</lastBuildDate>
+        <language>es</language>
+        <copyright><![CDATA[UVIGO-Tv]]></copyright>
+        <itunes:image href="{{ asset('/bundles/pumukitcmarpodcast/images/gc_video.jpg', absolute=true)}}" />
+        <image>
+            <url>{{ asset('/bundles/pumukitcmarpodcast/images/gc_video.jpg', absolute=true)}}</url>
+            <title><![CDATA[Campus do Mar Televisión: Conferencias]]></title>
+            <link>{{ asset('/', absolute=true)}}</link>
+        </image>
+        <itunes:category text="Education" />
+        <itunes:summary><![CDATA[Grandes conferencias impartidas no Campus do Mar]]></itunes:summary>
+        <itunes:subtitle><![CDATA[Conferencias]]></itunes:subtitle>
+        <itunes:author>CMAR-TV</itunes:author>
+        <itunes:owner>
+            <itunes:name>CMAR-TV</itunes:name>
+            <itunes:email>tv@uvigo.es</itunes:email>
+        </itunes:owner>
+        <itunes:explicit>no</itunes:explicit>
+
+        {% for v in multimediaObjects %}
+        {% set t = v.getTrackWithTag("display") %}
+        <item>
+            <title><![CDATA[{{ v.title|length ==0 ? v.series.title : v.title}}]]></title>
+            <itunes:subtitle><![CDATA[{{ v.subtitle }}]]></itunes:subtitle>
+            <itunes:summary><![CDATA[{{ v.description }}]]></itunes:summary>
+            <description><![CDATA[{{ v.description }}]]></description>
+            <link>{{ t.getUrl() }}</link>
+            <enclosure url="{{ t.getUrl() }}" length="{{ t.getSize() }}" type="{{ t.getMimeType() }}"/>
+            <guid>{{ t.getUrl() }}</guid>
+            <itunes:duration>{{ v.getDurationString() }}</itunes:duration>
+            <author>{{ v.getCopyright() }}</author>
+            <itunes:author>{{ v.getCopyright() }}</itunes:author>
+            <itunes:keywords><![CDATA[{{ v.getKeyword }}]]></itunes:keywords>
+            <itunes:explicit>no</itunes:explicit>
+            <pubDate>{{ v.getRecordDate()|date("r") }}</pubDate>
+        </item>
+        {% endfor %}
+    </channel>
+</rss>
+
