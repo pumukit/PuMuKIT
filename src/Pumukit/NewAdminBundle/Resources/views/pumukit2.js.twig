@@ -175,7 +175,7 @@ window.submit_delete_material = function(id, mmId)
     }
 }
 
-window.submit_delete_track = function(id, mmId)
+window.submit_delete_track = function(id, mmId, seriesId)
 {
     if (window.confirm('{% trans %}Are you sure you want to delete this track?{% endtrans %}')){
         var url = "{{ path('pumukitnewadmin_track_delete', {'id': '__id__', 'mmId': '__mmId__'})|raw }}";
@@ -183,7 +183,14 @@ window.submit_delete_track = function(id, mmId)
         url = url.replace('__mmId__', mmId);
         var div_id = '#tracks_mms___mmId__';
         div_id = div_id.replace('__mmId__', mmId);
-        $(div_id).load(url, {'_method': 'DELETE'});
+        $(div_id).load(url, {'_method': 'DELETE'}, function(){
+            var listUrl = "{{ path('pumukitnewadmin_mms_list', {'seriesId': '__seriesId__'})|raw }}";
+            listUrl = listUrl.replace('__seriesId__', seriesId);
+            $('#list_mms').load(listUrl, {'_method': 'POST'});
+            var showUrl = "{{ path('pumukitnewadmin_mms_show', {'id': '__id__'})|raw }}";
+            showUrl = showUrl.replace('__id__', mmId);
+            $('#preview_mm').load(showUrl, {'_method': 'POST'});
+        });
     }
 }
 

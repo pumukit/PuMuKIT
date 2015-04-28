@@ -7,16 +7,16 @@
             <a title="{% trans %}Encoder Job info{% endtrans %}" 
                style="color:red"
                data-toggle="modal" data-dismiss="modal" data-target="#myModal"
-               href="{{ path('pumukitnewadmin_track_info_job', {'mmId': mmId, 'jobId': job.id, 'preview': 1}) }}">
+               href="{{ path('pumukitnewadmin_track_info_job', {'mmId': mm.id, 'jobId': job.id, 'preview': 1}) }}">
                 <i class="mdi-action-info"></i>
             </a>
 
 {#
-            <a href="#" onclick="$('#tracks_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_track_retry_job', {'mmId': mmId, 'jobId': job.id, 'preview': 1}) }}'); return false;">
+            <a href="#" onclick="$('#tracks_mms_{{ mm.id }}').load('{{ path('pumukitnewadmin_track_retry_job', {'mmId': mm.id, 'jobId': job.id, 'preview': 1}) }}'); return false;">
               <i class="mdi-navigation-refresh"></i>
             </a>
   
-            <a href="#" onclick="$('#tracks_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_track_delete_job', {'mmId': mmId, 'jobId': job.id, 'preview': 1}) }}'); return false;">
+            <a href="#" onclick="$('#tracks_mms_{{ mm.id }}').load('{{ path('pumukitnewadmin_track_delete_job', {'mmId': mm.id, 'jobId': job.id, 'preview': 1}) }}'); return false;">
               <i class="mdi-content-clear"></i>
             </a>
 #}
@@ -40,24 +40,24 @@
       <td>
         <a title="{% trans %}Edit file of multimedia object{% endtrans %} {{ track.id }}"
            data-toggle="modal" data-dismiss="modal" data-target="#myModal"
-           href="{{ path('pumukitnewadmin_track_update', {'id': track.id, 'mmId': mmId}) }}">
+           href="{{ path('pumukitnewadmin_track_update', {'id': track.id, 'mmId': mm.id}) }}">
           <i class="mdi-editor-mode-edit"></i>
         </a>
       <td>
       <td>
         <a title="{% trans %}File info of multimedia object{% endtrans %} {{ track.id }}"
            data-toggle="modal" data-dismiss="modal" data-target="#myModal"
-           href="{{ path('pumukitnewadmin_track_info', {'id': track.id, 'mmId': mmId}) }}">
+           href="{{ path('pumukitnewadmin_track_info', {'id': track.id, 'mmId': mm.id}) }}">
           <i class="mdi-action-info"></i>
         </a>
       <td>
       <td>
-          <a href="#" onclick="window.submit_delete_track('{{ track.id }}', '{{ mmId }}'); return false;">
+          <a href="#" onclick="window.submit_delete_track('{{ track.id }}', '{{ mm.id }}'); return false;">
              <i class="mdi-content-clear"></i>
           </a>
       </td>
       <td>
-        <a href="#" onclick="$('#tracks_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_track_autocomplete', {'id': track.id, 'mmId': mmId, 'preview': 1, 'mod': 'mm'}) }}'); return false;">
+        <a href="#" onclick="$('#tracks_mms_{{ mm.id }}').load('{{ path('pumukitnewadmin_track_autocomplete', {'id': track.id, 'mmId': mm.id, 'preview': 1, 'mod': 'mm'}) }}'); return false;">
           <i class="mdi-action-spellcheck"></i>
         </a>
       </td>
@@ -69,12 +69,12 @@
             <li>&nbsp;&nbsp;<strong>{% trans %}Capture frame from{% endtrans %}:</strong></li>
             <li>
               <a href="#" onclick="$.ajax({
-                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mmId, 'preview': 1, 'numframe': 0}) }}',
+                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mm.id, 'preview': 1, 'numframe': 0}) }}',
                                            type: 'POST',
-                                           beforeSend: function(){$('#pic_mms_{{ mmId }}_load').show();},
+                                           beforeSend: function(){$('#pic_mms_{{ mm.id }}_load').show();},
                                            success: function(response){
-                                                                       $('#pic_mms_{{ mmId }}_load').hide();
-                                                                       $('#pic_mms_{{ mmId }}').html(response);
+                                                                       $('#pic_mms_{{ mm.id }}_load').hide();
+                                                                       $('#pic_mms_{{ mm.id }}').html(response);
                                            }
                                    });
                                    return false;">
@@ -83,12 +83,12 @@
             </li>
             <li>
               <a href="#" onclick="$.ajax({
-                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mmId, 'preview': 1, 'numframe': '10%'}) }}',
+                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mm.id, 'preview': 1, 'numframe': '10%'}) }}',
                                            type: 'POST',
-                                           beforeSend: function(){$('#pic_mms_{{ mmId }}_load').show();},
+                                           beforeSend: function(){$('#pic_mms_{{ mm.id }}_load').show();},
                                            success: function(response){
-                                                                       $('#pic_mms_{{ mmId }}_load').hide();
-                                                                       $('#pic_mms_{{ mmId }}').html(response);
+                                                                       $('#pic_mms_{{ mm.id }}_load').hide();
+                                                                       $('#pic_mms_{{ mm.id }}').html(response);
                                            }
                                    });
                                    return false;">
@@ -97,12 +97,12 @@
             </li>
             <li>
               <a href="#" onclick="$.ajax({
-                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mmId, 'preview': 1, 'numframe': '25%'}) }}',
+                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mm.id, 'preview': 1, 'numframe': '25%'}) }}',
                                            type: 'POST',
-                                           beforeSend: function(){$('#pic_mms_{{ mmId }}_load').show();},
+                                           beforeSend: function(){$('#pic_mms_{{ mm.id }}_load').show();},
                                            success: function(response){
-                                                                       $('#pic_mms_{{ mmId }}_load').hide();
-                                                                       $('#pic_mms_{{ mmId }}').html(response);
+                                                                       $('#pic_mms_{{ mm.id }}_load').hide();
+                                                                       $('#pic_mms_{{ mm.id }}').html(response);
                                            }
                                    });
                                    return false;">
@@ -111,12 +111,12 @@
             </li>
             <li>
               <a href="#" onclick="$.ajax({
-                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mmId, 'preview': 1, 'numframe': '50%'}) }}',
+                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mm.id, 'preview': 1, 'numframe': '50%'}) }}',
                                            type: 'POST',
-                                           beforeSend: function(){$('#pic_mms_{{ mmId }}_load').show();},
+                                           beforeSend: function(){$('#pic_mms_{{ mm.id }}_load').show();},
                                            success: function(response){
-                                                                       $('#pic_mms_{{ mmId }}_load').hide();
-                                                                       $('#pic_mms_{{ mmId }}').html(response);
+                                                                       $('#pic_mms_{{ mm.id }}_load').hide();
+                                                                       $('#pic_mms_{{ mm.id }}').html(response);
                                            }
                                    });
                                    return false;">
@@ -125,12 +125,12 @@
             </li>
             <li>
               <a href="#" onclick="$.ajax({
-                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mmId, 'preview': 1, 'numframe': '75%'}) }}',
+                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mm.id, 'preview': 1, 'numframe': '75%'}) }}',
                                            type: 'POST',
-                                           beforeSend: function(){$('#pic_mms_{{ mmId }}_load').show();},
+                                           beforeSend: function(){$('#pic_mms_{{ mm.id }}_load').show();},
                                            success: function(response){
-                                                                       $('#pic_mms_{{ mmId }}_load').hide();
-                                                                       $('#pic_mms_{{ mmId }}').html(response);
+                                                                       $('#pic_mms_{{ mm.id }}_load').hide();
+                                                                       $('#pic_mms_{{ mm.id }}').html(response);
                                            }
                                    });
                                    return false;">
@@ -139,12 +139,12 @@
             </li>
             <li>
               <a href="#" onclick="$.ajax({
-                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mmId, 'preview': 1, 'numframe': '90%'}) }}',
+                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mm.id, 'preview': 1, 'numframe': '90%'}) }}',
                                            type: 'POST',
-                                           beforeSend: function(){$('#pic_mms_{{ mmId }}_load').show();},
+                                           beforeSend: function(){$('#pic_mms_{{ mm.id }}_load').show();},
                                            success: function(response){
-                                                                       $('#pic_mms_{{ mmId }}_load').hide();
-                                                                       $('#pic_mms_{{ mmId }}').html(response);
+                                                                       $('#pic_mms_{{ mm.id }}_load').hide();
+                                                                       $('#pic_mms_{{ mm.id }}').html(response);
                                            }
                                    });
                                    return false;">
@@ -157,7 +157,7 @@
       </td>
 
       <td>
-        <a href="{{ path('pumukitnewadmin_track_download', {'id': track.id, 'mmId': mmId}) }}" download>
+        <a href="{{ path('pumukitnewadmin_track_download', {'id': track.id, 'mmId': mm.id}) }}" download>
           <i class="mdi-file-file-download"></i>
         </a>
       </td>
@@ -170,7 +170,7 @@
             <li>&nbsp;&nbsp;<strong>{% trans %}Transcode to profile{% endtrans %}:</strong></li>
             {% for key in not_master_profiles|keys %}
             <li>
-              <a href="#" onclick="$('#tracks_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_track_retranscode', {'id': track.id, 'mmId': mmId, 'profile': key}) }}'); return false;">
+              <a href="#" onclick="$('#tracks_mms_{{ mm.id }}').load('{{ path('pumukitnewadmin_track_retranscode', {'id': track.id, 'mmId': mm.id, 'profile': key}) }}'); return false;">
                 <i class="mdi-image-camera-roll"></i> {{ key }}
               </a>
             </li>
@@ -181,7 +181,7 @@
       </td>
       {% else %}
       <td>
-         <a data-toggle="modal" data-target="#myModal" href="{{ path('pumukitnewadmin_track_play', {'id': track.id, 'mmId': mmId}) }}">
+         <a data-toggle="modal" data-target="#myModal" href="{{ path('pumukitnewadmin_track_play', {'id': track.id, 'mmId': mm.id}) }}">
           <i class="mdi-av-play-arrow"></i>
         </a>
       </td>
@@ -190,14 +190,14 @@
       {% if loop.first %}
         &nbsp;
       {% else %}
-        <a href="#" onclick="$('#tracks_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_track_up', {'id': track.id, 'mmId': mmId, 'preview': 1}) }}', {'_method': 'POST'}); return false;">&#8593;</a>
+        <a href="#" onclick="$('#tracks_mms_{{ mm.id }}').load('{{ path('pumukitnewadmin_track_up', {'id': track.id, 'mmId': mm.id, 'preview': 1}) }}', {'_method': 'POST'}, function() {$('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id })|raw }}');}); return false;">&#8593;</a>
       {% endif %}
       </td>
       <td>
       {% if loop.last %}
         &nbsp;
       {% else %}
-        <a href="#" onclick="$('#tracks_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_track_down', {'id': track.id, 'mmId': mmId, 'preview': 1}) }}', {'_method': 'POST'}); return false;">&#8595;</a>
+        <a href="#" onclick="$('#tracks_mms_{{ mm.id }}').load('{{ path('pumukitnewadmin_track_down', {'id': track.id, 'mmId': mm.id, 'preview': 1}) }}', {'_method': 'POST'}, function() {$('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id })|raw }}');}); return false;">&#8595;</a>
       {% endif %}
       </td>
 
@@ -214,24 +214,28 @@
   {% endfor %}
   <tr>
     <td><ul><li></li></ul></td>
-    <td colspan="11"><a data-toggle="modal" data-target="#myModal" href="{{ path('pumukitnewadmin_track_create', {'id': mmId}) }}">{% trans %}New master{% endtrans %}...</a></td>
+    <td colspan="11"><a data-toggle="modal" data-target="#myModal" href="{{ path('pumukitnewadmin_track_create', {'id': mm.id}) }}">{% trans %}New master{% endtrans %}...</a></td>
   </tr>
 </tbody></table>
 
 {% if false %} {# TODO ($sf_request->getParameter('preview')) #} {# define update_preview #}
 <script type="text/javascript">
-  update_preview('{{ mmId }}');
+  update_preview('{{ mm.id }}');
 </script>
 {% endif %}
 
 {% if false %} {# TODO (isset($reload_pub_channel)) #}
 <script type="text/javascript">
-    new Ajax.Updater('list_pub_{{ mmId }}', ' TODO {# " . url_for('mms/updatelistpub?id=' . $mmId) . " #}')
+    new Ajax.Updater('list_pub_{{ mm.id }}', ' TODO {# " . url_for('mms/updatelistpub?id=' . $mm.id) . " #}')
 </script>
 {% endif %}
 
 {% if jobs|length != 0 %}
 <script type="text/javascript">
-  setTimeout(function(){$('#tracks_mms_{{ mmId }}').load('{{ url('pumukitnewadmin_track_list', {'id': mmId})}}')}, 8000);
+  setTimeout(function(){
+    $('#tracks_mms_{{ mm.id }}').load('{{ url('pumukitnewadmin_track_list', {'id': mm.id})}}')
+    $('#list_mms').load('{{ path('pumukitnewadmin_mms_list', {'seriesId': mm.getSeries().getId()})|raw }}');
+    $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id })|raw }}');
+  }, 8000);
 </script>
 {% endif %}

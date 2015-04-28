@@ -2309,7 +2309,7 @@ class MultimediaObject
      */
     private function updateDuration()
     {
-        $maxDuration = $this->getDuration();
+        $maxDuration = 0;
 
         foreach ($this->tracks as $mmTrack) {
             if ($mmTrack->getDuration() > $this->getDuration()) {

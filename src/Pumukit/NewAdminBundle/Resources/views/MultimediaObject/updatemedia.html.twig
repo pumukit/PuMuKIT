@@ -14,7 +14,7 @@
         <dt>{% trans %}Video Files{% endtrans %}:</dt>
         <dd>
           <div id="tracks_mms_{{ mm.id }}" style="overflow:visible;">
-	        {% include 'PumukitNewAdminBundle:Track:list.html.twig' with {'mmId': mm.id, 'tracks': mm.getTracks(), 'oc': ''} %}
+	        {% include 'PumukitNewAdminBundle:Track:list.html.twig' with {'mm': mm, 'tracks': mm.getTracks(), 'oc': ''} %}
           </div>
         </dd>
       </div>

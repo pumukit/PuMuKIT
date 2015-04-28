@@ -179,7 +179,7 @@ class TrackController extends Controller
         $notMasterProfiles = $this->get('pumukitencoder.profile')->getMasterProfiles(false);
 
         return array(
-                     'mmId' => $multimediaObject->getId(),
+                     'mm' => $multimediaObject,
                      'tracks' => $multimediaObject->getTracks(),
                      'jobs' => $jobs,
                      'status_error'  => $jobStatusError,
