@@ -18,6 +18,7 @@ use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Document\Role;
 
 
 class PumukitInitExampleDataCommand extends ContainerAwareCommand
@@ -84,6 +85,7 @@ EOT
                   $this->load_multimediaobject($multimediaObject, $series, "Access grid");
                   $this->load_track_multimediaobject($multimediaObject, '8', '24');
                   $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUBDECISIONS","PUBCHANNELS","PUCHARCA","Dscience","Dhealth"));
+                  $this->load_people_multimediaobject($multimediaObject, 'Will', 'actor');
                   $this->load_pic_multimediaobject($multimediaObject, '17');
 
                   //Series Uvigo
@@ -112,6 +114,7 @@ EOT
                   $this->load_multimediaobject($multimediaObject, $series, "Movil");
                   $this->load_track_multimediaobject($multimediaObject, '10', '36');
                   $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","Dscience","Dhumanities"));
+                  $this->load_people_multimediaobject($multimediaObject, 'Laura', 'presenter');
                   $this->load_pic_multimediaobject($multimediaObject, '22');
 
                   $multimediaObject = $factoryService->createMultimediaObject($series);
@@ -152,6 +155,7 @@ EOT
                   $this->load_multimediaobject($multimediaObject, $series, "Energy materials and environment");
                   $this->load_track_multimediaobject($multimediaObject, '12', '40');
                   $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUCHARCA","Dhealth","Dtechnical"));
+                  $this->load_people_multimediaobject($multimediaObject, 'Marcos', 'presenter');
                   $this->load_pic_multimediaobject($multimediaObject, '28');
 
                   //Serie Marine sciences
@@ -202,6 +206,7 @@ EOT
                   $this->load_multimediaobject($multimediaObject, $series, "First");
                   $this->load_track_multimediaobject($multimediaObject, '16', '53');
                   $this->load_tags_multimediaobject($multimediaObject, array("PUDEPD3","PUCHARCA","Dtechnical","Dhumanities"));
+                  $this->load_people_multimediaobject($multimediaObject, 'Ana', 'actor');
                   $this->load_pic_multimediaobject($multimediaObject, '33');
 
                   $multimediaObject = $factoryService->createMultimediaObject($series);
@@ -230,6 +235,8 @@ EOT
                   $this->load_multimediaobject($multimediaObject, $series, "Presentation");
                   $this->load_track_multimediaobject($multimediaObject, '18', '56');
                   $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUBDECISIONS","PUDEPD1","DIRECTRIZ","Dsocial","Dtechnical"));
+                  $this->load_people_multimediaobject($multimediaObject, 'Sara', 'presenter');
+                  $this->load_people_multimediaobject($multimediaObject, 'Carlos', 'actor');
                   $this->load_pic_multimediaobject($multimediaObject, '36');
 
                   unlink('tmp_file.zip');
@@ -349,6 +356,18 @@ EOT
                   $tagService = $this->getContainer()->get('pumukitschema.tag'); 
                   $tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());
             }
+      }
+
+      private function load_people_multimediaobject($multimediaObject, $name, $role){
+            $personService = $this->getContainer()->get('pumukitschema.person');
+            $person = new Person();
+            $person->setName($name);
+
+            $rolePerson = new Role();
+            $rolePerson->setCod($role);
+
+            $multimediaObject->addPersonWithRole($person, $rolePerson);
+            $personService->savePerson($person);
       }
 
       private function load_pic_multimediaobject($multimediaObject, $pic){
