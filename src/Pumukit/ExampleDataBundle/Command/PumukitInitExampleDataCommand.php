@@ -68,17 +68,17 @@ EOT
                   }
 
                   if($input->getOption('notClearFiles') != 1){
-                  //Unzipping videos in folder
-                  $newFile = 'tmp_file.zip';
-                  if (!$this->download(self::PATH_VIDEO, $newFile, $output)) {
-                        echo "Failed to copy $file...\n";
-                  }
-                  $zip = new ZipArchive();
-                  if ($zip->open($newFile, ZIPARCHIVE::CREATE)==TRUE) {
-                        $zip->extractTo(realpath(dirname(__FILE__) . '/../Resources/public/'));
-                        $zip->close();
-                        //unlink('tmp_file.zip');
-                  }
+
+                        $newFile = 'tmp_file.zip';
+                        if (!$this->download(self::PATH_VIDEO, $newFile, $output)) {
+                              echo "Failed to copy $file...\n";
+                        }
+                        
+                        $zip = new ZipArchive();
+                        if ($zip->open($newFile, ZIPARCHIVE::CREATE)==TRUE) {
+                              $zip->extractTo(realpath(dirname(__FILE__) . '/../Resources/public/'));
+                              $zip->close();
+                        }
                   }
 
                   //Series Access grid
