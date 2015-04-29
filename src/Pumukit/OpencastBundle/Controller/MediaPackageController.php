@@ -17,6 +17,9 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\Pic;
 
+/**
+ * @Route("/admin")
+ */
 class MediaPackageController extends Controller
 {
     private $dm = null;
