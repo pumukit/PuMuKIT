@@ -682,7 +682,7 @@ window.dblclick_fila_url = function(element, tr, url)
 }
 
 
-function filter_series()
+function filter_series(form)
 {
     var from_date = $('#filters_date_from');
     var to_date = $('#filters_date_to');
@@ -690,7 +690,7 @@ function filter_series()
     if (to_date.val() != "" && from_date.val() >= to_date.val()) {
         to_date[0].setCustomValidity("{% trans %}From date must be less than to date{% endtrans %}");
     }else{
-        $('#list_series').load('{{ path('pumukitnewadmin_series_list')|raw }}', $(this).serialize());    
+        $('#list_series').load('{{ path('pumukitnewadmin_series_list')|raw }}', $(form).serialize());    
     }
   
     return false;
