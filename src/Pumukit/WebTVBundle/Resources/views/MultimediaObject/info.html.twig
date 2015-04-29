@@ -33,7 +33,7 @@
       		<td style="padding: 5px 0 0 10px; width:217px;">
 
             <!--Download associated materials to multimedia object-->
-            {% for material in multimediaObject.getMaterials() %}
+            {% for material in multimediaObject.getMaterials() if not material.getHide() %}
               <div class="download" style="height: 30px; margin-left: 5px;">
                 <a style="margin-left: 20px" href="{{ material.getUrl() }}">{{ material.getName() }}</a>
               </div>
