@@ -59,9 +59,6 @@ class ClientService
   }
 
 
-  /**
-   *
-   */
   public function getMediaPackages($q, $limit, $offset)
   {
     $sal = $this->request("/search/episode.json?q=" . $q . "&limit=" . $limit . "&offset=" . $offset);
