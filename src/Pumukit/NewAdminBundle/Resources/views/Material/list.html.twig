@@ -34,7 +34,7 @@
 	{% endif %}
       </td>
       <td>
-        &nbsp; {{ material.id }} - {{ material.getName() }} {% if material.getHide() %}({% trans %}Hidden{% endtrans %}){% endif %}
+        &nbsp; {{ material.id }} - {{ material.getName() }} {% if material.getHide() %}<i>({% trans %}Hidden{% endtrans %})</i>{% endif %}
       </td>
     </tr>
   {% endfor %}
