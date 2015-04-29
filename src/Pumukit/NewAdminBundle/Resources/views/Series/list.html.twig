@@ -39,9 +39,15 @@
           {% endspaceless %}
         </td> 
         <td>
+          {% if is_granted('ROLE_SUPER_ADMIN') %}
           <a href="{{ path('pumukitnewadmin_series_changepub', {'id': oneseries.id}) }}" data-toggle="modal" data-target="#myModal">
-            <i class="{{ oneseries|series_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|series_text }}"></i>
+            <i class="{{ oneseries|series_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|series_text }}({% trans %}Click to modify broadcast status{% endtrans %})"></i>
           </a>
+          {% else %}
+          <a href="#" data-toggle="modal" data-target="#myModal">
+            <i class="{{ oneseries|series_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|series_text }}({% trans %}Not enough privileges to modify broadcast status{% endtrans %})"></i>
+          </a>
+          {% endif %}
         </td>
         <td>
 	      {% include 'PumukitNewAdminBundle:Series:updatemenu.html.twig' with {'oneseries': oneseries, 'numV': oneseries.getMultimediaObjects()|length } %}

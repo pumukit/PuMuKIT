@@ -265,8 +265,7 @@ class PumukitAdminExtension extends \Twig_Extension
 
         $iconText = $mmobjsPublished." Published Multimedia Object(s),\n".
             $mmobjsHidden." Hidden Multimedia Object(s),\n".
-            $mmobjsBlocked." Blocked Multimedia Object(s)\n".
-            "(Click to modify broadcast status)";
+          $mmobjsBlocked." Blocked Multimedia Object(s)\n";
 
         return $iconText;
     }
