@@ -109,7 +109,6 @@ class MediaPackageController extends Controller
             $descriptionEs = '';
             $headerEs = '';
             $footerEs = '';
-            $copyrightEs = '';
             $keywordEs = '';
             $line2Es = '';
             $localeEs = 'es';
@@ -119,7 +118,6 @@ class MediaPackageController extends Controller
             $descriptionI18n = array($locale => $description, $localeEs => $descriptionEs);
             $headerI18n = array($locale => $header, $localeEs => $headerEs);
             $footerI18n = array($locale => $footer, $localeEs => $footerEs);
-            $copyrightI18n = array($locale => $copyright, $localeEs => $copyrightEs);
             $keywordI18n = array($locale => $keyword, $localeEs => $keywordEs);
             $line2I18n = array($locale => $line2, $localeEs => $line2Es);
 
@@ -128,7 +126,6 @@ class MediaPackageController extends Controller
             $series->setI18nDescription($descriptionI18n);
             $series->setI18nHeader($headerI18n);
             $series->setI18nFooter($footerI18n);
-            $series->setI18nCopyright($copyrightI18n);
             $series->setI18nKeyword($keywordI18n);
             $series->setI18nLine2($line2I18n);
 
@@ -140,7 +137,7 @@ class MediaPackageController extends Controller
         if($onemultimediaobjects == null){
             
             $rank = 3;
-            $status = MultimediaObject::STATUS_NORMAL;
+            $status = MultimediaObject::STATUS_PUBLISHED;
             $title = $mediaPackage["title"];
             $properties = $mediaPackage["id"];
  
