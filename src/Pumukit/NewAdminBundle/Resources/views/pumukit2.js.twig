@@ -13,7 +13,11 @@ window.submit_delete_role = function(id, countMm)
 
 window.submit_delete_user = function(id, userFullname)
 {
-    if (window.confirm("{% trans %}Are you sure you want to delete the user{% endtrans %} "+userFullname+"?")){
+    var usersLength = $('#list_users tbody tr').length;
+    if (1 == usersLength) {
+        var message = "{% trans %}Can not delete this unique user{% endtrans %}";
+        no_success(message);
+    } else if (window.confirm("{% trans %}Are you sure you want to delete the user{% endtrans %} "+userFullname+"?")) {
         var url = "{{ path('pumukitnewadmin_user_delete', {'id': '__id__'})|raw }}";
         var message = '{% trans %}User{% endtrans %} "'+userFullname+'" {% trans %}successfully deleted.{% endtrans %}';
         $('#list_users').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
@@ -346,6 +350,14 @@ window.change_select = function(element, selector, pluralName)
             ids.push($this.attr("id"));
         });
         if (ids.length == 0) break;
+        if (pluralName.indexOf('user') != -1) {
+            var usersLength = $('#list_users tbody tr').length;
+            if (((ids.length == usersLength) || (1 == usersLength)) && (pluralName.indexOf('user') != -1)) {
+                var message = '{% trans %}Can not delete all users{% endtrans %}';
+                no_success(message);
+                break;
+            }
+        }
         if (confirm('{% trans %}Are you sure?{% endtrans %}')) {
             var route = get_batch_delete_route(element, ids);
             if (pluralName.indexOf('mms') != -1){
