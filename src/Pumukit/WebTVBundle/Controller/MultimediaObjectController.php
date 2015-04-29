@@ -21,9 +21,6 @@ class MultimediaObjectController extends Controller
      */
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
     {
-      if (MultimediaObject::STATUS_PUBLISHED !== $multimediaObject->getStatus())
-        throw $this->createNotFoundException();
-     
       $track = $request->query->has('track_id') ?
         $multimediaObject->getTrackById($request->query->get('track_id')) :
         $multimediaObject->getTrackWithTag('display');
@@ -57,12 +54,11 @@ class MultimediaObjectController extends Controller
 
 
     /**
-     * @Route("/video/magic/{secret}", name="pumukit_webtv_multimediaobject_magicindex")
+     * @Route("/video/magic/{secret}", name="pumukit_webtv_multimediaobject_magicindex", defaults={"filter": false})
      * @Template("PumukitWebTVBundle:MultimediaObject:index.html.twig")
      */
     public function magicIndexAction(MultimediaObject $multimediaObject, Request $request)
     {
-      //TODO
       $track = $request->query->has('track_id') ?
         $multimediaObject->getTrackById($request->query->get('track_id')) :
         $multimediaObject->getTrackWithTag('display');

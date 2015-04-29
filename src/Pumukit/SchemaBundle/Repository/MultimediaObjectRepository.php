@@ -453,6 +453,8 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find by series, tag code and status
      *
+     * TODO not needed (Using findBySeries and filter)
+     *
      * @param Series
      * @param string $tagCod
      * @param array $status
