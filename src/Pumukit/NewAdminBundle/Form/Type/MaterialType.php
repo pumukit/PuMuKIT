@@ -21,7 +21,7 @@ class MaterialType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-          ->add('i18n_name', 'texti18n', array('required' => false, 'label' => $this->translator->trans('Name', array(), null, $this->locale)))
+          ->add('i18n_name', 'texti18n', array('required' => true, 'label' => $this->translator->trans('Name', array(), null, $this->locale)))
           ->add('hide', 'checkbox', array('required' => false, 'label' => $this->translator->trans('Hide', array(), null, $this->locale)))
       ->add('mime_type', 'choice', array(
                 'choices' => array(
