@@ -24,7 +24,7 @@ class TrackUpdateType extends AbstractType
         $builder
             ->add('i18n_description', 'texti18n',
                   array(
-                        'required' => true, 
+                        'required' => false,
                         'label' => $this->translator->trans('Description', array(), null, $this->locale)))
             ->add('hide', 'checkbox',
                   array(
