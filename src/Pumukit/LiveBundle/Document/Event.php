@@ -73,6 +73,14 @@ class Event
   private $locale = 'en';
 
   /**
+   * Constructor
+   */
+  public function __construct()
+  {
+      $this->date = new \Datetime("now");
+  }
+
+  /**
    * Get id
    *
    * @return int
