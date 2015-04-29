@@ -14,6 +14,11 @@
             <tag name="doctrine_mongodb.odm.event_listener" event="postLoad" />
         </service>
 
+        <service id="pumukitschema.schema.remove" class="Pumukit\SchemaBundle\Listener\RemoveListener">
+            <argument type="service" id="service_container" />
+            <tag name="doctrine_mongodb.odm.event_listener" event="preRemove" />
+        </service>
+
         <service id="pumukitschema.factory" class="Pumukit\SchemaBundle\Services\FactoryService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager" />
             <argument type="service" id="pumukitschema.tag" />
