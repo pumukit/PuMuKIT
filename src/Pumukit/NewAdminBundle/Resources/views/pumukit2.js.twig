@@ -392,7 +392,7 @@ window.change_select = function(element, selector, pluralName)
         $('#myModal').modal('show');
         break;
     case 'series_preview':
-        var url = "{{ url('pumukit_webtv_series_index', {id: '__mmSecret__'}) }}";
+        var url = "{{ url('pumukit_webtv_series_magicindex', {secret: '__mmSecret__'}) }}";
         var secret = selector.find(':selected').attr('id');
         if (secret !== '') window.open(url.replace('__mmSecret__', secret));
         break;
@@ -694,7 +694,7 @@ window.dblclick_fila_url = function(element, tr, url)
 }
 
 
-function filter_series()
+function filter_series(form)
 {
     var from_date = $('#filters_date_from');
     var to_date = $('#filters_date_to');
@@ -702,7 +702,7 @@ function filter_series()
     if (to_date.val() != "" && from_date.val() >= to_date.val()) {
         to_date[0].setCustomValidity("{% trans %}From date must be less than to date{% endtrans %}");
     }else{
-        $('#list_series').load('{{ path('pumukitnewadmin_series_list')|raw }}', $(this).serialize());    
+        $('#list_series').load('{{ path('pumukitnewadmin_series_list')|raw }}', $(form).serialize());    
     }
   
     return false;

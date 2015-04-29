@@ -59,6 +59,11 @@ doctrine_mongodb:
     document_managers:
         default:
             auto_mapping: true
+            filters:
+                frontend:
+                    class:     Pumukit\SchemaBundle\Filter\ArcaFilter
+                    enabled:   false
+
 
 # Swiftmailer Configuration
 swiftmailer:

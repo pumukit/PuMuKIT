@@ -20,7 +20,7 @@ class SeriesController extends Controller
       $mmobjRepo = $this
         ->get('doctrine_mongodb.odm.document_manager')
         ->getRepository('PumukitSchemaBundle:MultimediaObject');
-      $multimediaObjects = $mmobjRepo->findBySeriesByTagCodAndStatus($series, 'PUCHWEBTV', array(MultimediaObject::STATUS_PUBLISHED));
+      $multimediaObjects = $mmobjRepo->findBySeries($series);
 
       $this->updateBreadcrumbs($series);
     	
@@ -29,7 +29,7 @@ class SeriesController extends Controller
     }
 
     /**
-     * @Route("/series/magic/{secret}", name="pumukit_webtv_series_magicindex")
+     * @Route("/series/magic/{secret}", name="pumukit_webtv_series_magicindex", defaults={"filter": false})
      * @Template("PumukitWebTVBundle:Series:index.html.twig")
      */
     public function magicIndexAction(Series $series, Request $request)
@@ -37,7 +37,7 @@ class SeriesController extends Controller
       $mmobjRepo = $this
         ->get('doctrine_mongodb.odm.document_manager')
         ->getRepository('PumukitSchemaBundle:MultimediaObject');
-      $multimediaObjects = $mmobjRepo->findBySeriesByTagCodAndStatus($series, 'PUCHWEBTV');
+      $multimediaObjects = $mmobjRepo->findBySeries($series);
 
       $this->updateBreadcrumbs($series);
 

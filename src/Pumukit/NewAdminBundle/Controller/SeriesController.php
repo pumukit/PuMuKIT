@@ -328,8 +328,8 @@ class SeriesController extends AdminController
           $session->set('admin/series/sort', key($sorting));
       } 
 
-      $value = $session->get('admin/series/type', 'public_date');
-      $key = $session->get('admin/series/sort', 'desc');
+      $value = $session->get('admin/series/type', 'desc');
+      $key = $session->get('admin/series/sort', 'public_date');
 
       return  array($key => $value);
     }

@@ -1,7 +1,7 @@
 {% set criteria = app.session.get('admin/series/criteria') %}
 <div class="well">
   <form autocomplete="off" id="filter_series" class="form" 
-        onsubmit="return filter_series();">
+        onsubmit="return filter_series(this);">
     <fieldset>
       <div id="accordion" class="panel-group" role="tablist" arirole="tablist" aria-multiselectable="true">
 
