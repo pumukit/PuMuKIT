@@ -56,7 +56,13 @@
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",
         "incenteev-parameters": {
-            "file": "app/config/parameters.yml"
+            "file": "app/config/parameters.yml",
+            "env-map": {
+                opencast_host:  'PUMUKIT2_OPENCAST_HOST',
+                opencast_username: 'PUMUKIT2_OPENCAST_USERNAME',
+                opencast_password: 'PUMUKIT2_OPENCAST_PASSWORD',
+                opencast_player: 'PUMUKIT2_OPENCAST_PLAYER'
+            }
         },
         "branch-alias": {
             "dev-master": "2.5-dev"
