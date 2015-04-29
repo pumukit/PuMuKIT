@@ -68,6 +68,9 @@ class MediaPackageController extends Controller
 
         $mediaPackage = $this->get('pumukit_opencast.client')->getMediaPackage($id);
         $repository_series = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
+
+        $series = $repository_series->findOneBy(array("title.en" => "MediaPackages without series"));
+
         if(isset($mediaPackage["series"])){
             $oneseries = $repository_series->findOneBy(array("properties.opencast" => $mediaPackage["series"]));    
         }
@@ -77,7 +80,7 @@ class MediaPackageController extends Controller
         $this->dm = $this->get('doctrine_mongodb')->getManager();
         $factoryService = $this->get('pumukitschema.factory');
 
-        if($oneseries == null or $oneseries == "WITHOUT_SERIES"){
+        if($oneseries == null or ($oneseries == "WITHOUT_SERIES" and $series == null)){
 
             $announce = true;
             $publicDate = new \DateTime("now");
@@ -91,13 +94,12 @@ class MediaPackageController extends Controller
             $locale = 'en';
 
             if($oneseries == "WITHOUT_SERIES"){
-                $title = "MediaPackage without series";
+                $title = "MediaPackages without series";
                 $properties = "";
             } else{
                 $title = $mediaPackage["seriestitle"];
                 $properties = $mediaPackage["series"];
             }
-
   
             $series = $factoryService->createSeries();
             $series->setAnnounce($announce);
@@ -122,7 +124,7 @@ class MediaPackageController extends Controller
             $localeEs = 'es';
 
             if($oneseries == "WITHOUT_SERIES"){
-                $titleEs = "MediaPackage sin serie";
+                $titleEs = "Paquetes multimedia sin serie";
                 $properties = "";
             } else{
                 $titleEs = $mediaPackage["seriestitle"];
@@ -158,7 +160,8 @@ class MediaPackageController extends Controller
  
             if($oneseries != "WITHOUT_SERIES"){
                 $series = $repository_series->findOneBy(array("properties.opencast" => $mediaPackage["series"]));
-            }       
+            }
+
             $multimediaObject =  $factoryService->createMultimediaObject($series);
             $multimediaObject->setRank($rank);
             $multimediaObject->setStatus($status);
