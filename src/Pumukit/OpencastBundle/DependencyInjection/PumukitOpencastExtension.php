@@ -21,7 +21,7 @@ class PumukitOpencastExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        if(isset($config['host'])) {
+        if(isset($config['host']) && $config['host']) {
           if (!filter_var($config['host'], FILTER_VALIDATE_URL)){
             throw new InvalidConfigurationException(sprintf(
               'The parameter "pumukit_opencast.host" is not a valid url: "%s" ',

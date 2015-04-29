@@ -13,3 +13,8 @@ parameters:
     debug_toolbar:          true
     debug_redirects:        false
     use_assetic_controller: true
+
+    opencast_host:  ''
+    opencast_username: ''
+    opencast_password: ''
+    opencast_player: ''
