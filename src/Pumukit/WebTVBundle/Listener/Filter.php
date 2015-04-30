@@ -22,8 +22,8 @@ class Filter
     $routeParams = $req->attributes->get("_route_params");
 
     if ($event->getRequestType() === HttpKernelInterface::MASTER_REQUEST 
-        && isset($routeParams["filter"]) && $routeParams["filter"]
-        && "Pumukit\WebTVBundle" === substr($req->attributes->get("_controller"), 0, 19)) {
+        && "Pumukit\WebTVBundle" === substr($req->attributes->get("_controller"), 0, 19)
+        && (!isset($routeParams["filter"]) || $routeParams["filter"])) {
       
       $filter = $this->dm->getFilterCollection()->enable("frontend");
       $filter->setParameter("pub_channel_tag", "PUCHWEBTV");

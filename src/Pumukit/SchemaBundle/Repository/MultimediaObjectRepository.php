@@ -451,6 +451,20 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
+     * Find by series
+     *
+     * @param Series $series
+     * @return ArrayCollection
+     */
+    public function findStandardBySeries(Series $series)
+    {
+        return $this->createStandardQueryBuilder()
+          ->field('series')->references($series)
+          ->getQuery()
+          ->execute();
+    }
+
+    /**
      * Find by series, tag code and status
      *
      * TODO not needed (Using findBySeries and filter)
