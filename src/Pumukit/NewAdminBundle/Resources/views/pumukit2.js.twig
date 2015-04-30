@@ -1269,6 +1269,7 @@ $(document).on('submit', '#pumukitnewadmin_user_form_update', function(event){
 });
 
 $(document).on('submit', '#pumukitnewadmin_user_form_create', function(event){
+    $(event.currentTarget).find(':submit').prop('disabled', true);
     $('#myModal').modal('hide');
 
     var route = '{{ path('pumukitnewadmin_user_create') }}';
