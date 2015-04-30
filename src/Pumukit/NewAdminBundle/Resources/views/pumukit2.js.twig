@@ -13,14 +13,15 @@ window.submit_delete_role = function(id, countMm)
 
 window.submit_delete_user = function(id, userFullname)
 {
-    var usersLength = $('#list_users tbody tr').length;
-    if (1 == usersLength) {
-        var message = "{% trans %}Can not delete this unique user{% endtrans %}";
-        no_success(message);
-    } else if (window.confirm("{% trans %}Are you sure you want to delete the user{% endtrans %} "+userFullname+"?")) {
+    if (window.confirm("{% trans %}Are you sure you want to delete the user{% endtrans %} "+userFullname+"?")) {
         var url = "{{ path('pumukitnewadmin_user_delete', {'id': '__id__'})|raw }}";
-        var message = '{% trans %}User{% endtrans %} "'+userFullname+'" {% trans %}successfully deleted.{% endtrans %}';
-        $('#list_users').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
+        $('#list_users').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
+          if(XMLHttpRequest.status >= 400){
+            no_success('{% trans %}Error deleting user{% endtrans %}: ' + responseText);
+          }else{
+            success('{% trans %}User{% endtrans %} "'+userFullname+'" {% trans %}successfully deleted.{% endtrans %}');
+          }
+        });
     }
 }
 
@@ -1343,6 +1344,7 @@ $(document).on('submit', '#pumukitnewadmin_user_form_update', function(event){
 });
 
 $(document).on('submit', '#pumukitnewadmin_user_form_create', function(event){
+    $(event.currentTarget).find(':submit').prop('disabled', true);
     $('#myModal').modal('hide');
 
     var route = '{{ path('pumukitnewadmin_user_create') }}';

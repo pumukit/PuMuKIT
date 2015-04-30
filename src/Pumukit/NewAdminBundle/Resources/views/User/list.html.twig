@@ -27,7 +27,6 @@
         </tr>
         {% endif %}
 
-        {% set lastUser = (users|length == 1) %}
         {% for user in users %}
         <tr>
           <td>
@@ -43,13 +42,9 @@
             </a>
           </td>
           <td>
-            {% if lastUser %}
-            <i data-toggle="tooltip" data-placement="top" data-original-title="{% trans %}Delete last user is not allowed{% endtrans %}" class="mdi-content-clear"></i>
-            {% else %}
             <a href="#" onclick="window.submit_delete_user('{{ user.id }}', '{{ user.fullname }}'); return false;">
               <i class="mdi-content-clear"></i>
             </a>
-            {% endif%}
           </td>
           <td>
 	          {% if user.fullname is not empty %}{{ user.fullname }}{% endif %}

@@ -24,7 +24,7 @@ class UserController extends AdminController
         $userManager = $this->get('fos_user.user_manager');
 
         $user = $this->findOr404($request);
-        $form     = $this->getForm($user);
+        $form = $this->getForm($user);
 
         if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
             // false to not flush
@@ -49,4 +49,22 @@ class UserController extends AdminController
                                    'form' => $form->createView()
                                    ));
     }
+
+
+    /**
+     * Delete action
+     */
+    public function deleteAction(Request $request)
+    {
+        $repo = $this
+          ->get('doctrine_mongodb.odm.document_manager')
+          ->getRepository('PumukitSchemaBundle:User');
+
+        if( 1 == $repo->createQueryBuilder()->getQuery()->execute()->count()){
+          return new Response('Can not delete this unique user', 405);
+        }
+
+        return parent::deleteAction($request);
+    }
+
 }
