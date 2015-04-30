@@ -61,7 +61,7 @@ class UserController extends AdminController
           ->getRepository('PumukitSchemaBundle:User');
 
         if( 1 == $repo->createQueryBuilder()->getQuery()->execute()->count()){
-          return new Response('Can not delete this unique user', 405);
+          return new Response('Can not delete this unique user', 409);
         }
 
         return parent::deleteAction($request);
