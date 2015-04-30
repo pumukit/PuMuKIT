@@ -3,7 +3,6 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends AdminController
