@@ -21,8 +21,8 @@
                                                      success(message);
                                                }
                           },
-                          error: function(jqXHR, textStatus, errorThrown){
-                                               no_success(errorThrown+': '+textStatus);
+                          error: function(jqXHR, textStatus, errorThrown){ 
+                                               no_success(errorThrown + ': ' + jqXHR.responseJSON.status);
                           }
                   });
                   return false;"

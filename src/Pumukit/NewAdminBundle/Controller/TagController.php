@@ -103,7 +103,7 @@ class TagController extends Controller
                 $dm->persist($tag);
                 $dm->flush();
             } catch (\Exception $e) {
-                $this->get('session')->getFlashBag()->add('error', $e->getMessage());
+                return new JsonResponse(array("status" => $e->getMessage()), 409);
             }
 
             return $this->redirect($this->generateUrl('pumukitnewadmin_tag_list'));
