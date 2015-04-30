@@ -61,10 +61,12 @@ window.submit_delete_mms = function(id)
     if (window.confirm("{% trans %}Are you sure you want to delete this multimedia object?{% endtrans %}")){
         var url = "{{ path('pumukitnewadmin_mms_delete', {'id': '__id__'})|raw }}";
         var message = '{% trans %}Multimedia Object successfully deleted.{% endtrans %}';
-        // TODO if deleted when selected, update edit and show views
+        var sessionId = $($('tr.success').find('input.mm_checkbox')[0]).attr('id');
         $('#list_mms').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){
-            $('#preview_mm').html('{% trans %}Select any multimedia object.{% endtrans %}');
-            $('#edit_mm').html('');
+            if (id === sessionId) {
+                $('#preview_mm').html('{% trans %}Select any multimedia object.{% endtrans %}');
+                $('#edit_mm').html('');
+            }
             success(message)
         });
     }
@@ -75,10 +77,13 @@ window.submit_delete_series = function(id, seriesTitle, countMm)
     if (window.confirm('{% trans %}Are you sure you want to delete the series{% endtrans %} "'+seriesTitle+'"? {% trans %}This series has{% endtrans %} '+countMm+' {% trans %}multimedia object(s){% endtrans %}.')){
         var url = "{{ path('pumukitnewadmin_series_delete', {'id': '__id__'})|raw }}";
         var message = '{% trans %}Series{% endtrans %} "'+seriesTitle+'" {% trans %}successfully deleted{% endtrans %}.';
+        var sessionId = $($('tr.success').find('input.series_checkbox')[0]).attr('id');
         $('#list_series').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){
-                    $('#preview_series').html('{% trans %}Select any series.{% endtrans %}');
-                    $('#edit_series').html('');
-                    success(message);
+            if (id === sessionId) {
+                $('#preview_series').html('{% trans %}Select any series.{% endtrans %}');
+                $('#edit_series').html('');
+            }
+            success(message);
         });
     }
 }
@@ -390,14 +395,20 @@ window.change_select = function(element, selector, pluralName)
                         }
                     },
                     success: function(response){
-                                        $('#list_'+pluralName).html(response);
                                         if (pluralName.indexOf('mms') != -1){
-                                            $('#preview_mm').html('{% trans %}Select any multimedia object.{% endtrans %}');
-                                            $('#edit_mm').html('');
+                                            var sessionId = $($('tr.success').find('input.mm_checkbox')[0]).attr('id');
+                                            if (ids.indexOf(sessionId) != -1) {
+                                                $('#preview_mm').html('{% trans %}Select any multimedia object.{% endtrans %}');
+                                                $('#edit_mm').html('');
+                                            }
                                         } else if (pluralName.indexOf('series') != -1){
-                                            $('#preview_series').html('{% trans %}Select any series.{% endtrans %}');
-                                            $('#edit_series').html('');
+                                            var sessionId = $($('tr.success').find('input.series_checkbox')[0]).attr('id');
+                                            if (ids.indexOf(sessionId) != -1) {
+                                                $('#preview_series').html('{% trans %}Select any series.{% endtrans %}');
+                                                $('#edit_series').html('');
+                                            }
                                         }
+                                        $('#list_'+pluralName).html(response);
                                         success(message);
                     }
             });
