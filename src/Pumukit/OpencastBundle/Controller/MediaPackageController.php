@@ -210,7 +210,7 @@ class MediaPackageController extends Controller
             $dm->flush();
         }
 
-        return $this->redirectToRoute('pumukitopencast');
+        return $this->redirect($this->getRequest()->headers->get('referer'));
     }
 
     /**
