@@ -803,6 +803,37 @@ $(function() {
 
     return false;
   });
+
+  $('#pumukitnewadmin_series_new_button').on('click', function () {
+    var seriesId = $('#series_series_id').val();
+    var route = "{{ path('pumukitnewadmin_series_create', {'id': '__seriesId__'}) }}";
+    $('#filter_series')[0].reset();
+    route = route.replace('__seriesId__', seriesId);
+    $.ajax(route, {
+            type: 'GET',
+            error: function(jqXHR, textStatus, errorThrown){
+                        var responseText = jqXHR.responseText.split("<title>").pop().split("</title>").shift();
+                        var message = responseText.replace(/(\r\n|\n|\r)/gm,"");
+                        no_success(errorThrown+': '+textStatus+', '+message);
+	        },
+            success: function(response, textStatus, jqXHR){
+			    var seriesId = response['seriesId'];
+
+                // NOTE: Important to call listAction first to update series id in session
+                var routeList = "{{ path('pumukitnewadmin_series_list', {'newSeriesId': '__seriesId__'})|raw }}";
+                $('#list_series').load(routeList.replace('__seriesId__', seriesId), function(){
+                    var routeShow = "{{ path('pumukitnewadmin_series_show', {'id': '__seriesId__'})|raw }}";
+                    $('#preview_series').load(routeShow.replace('__seriesId__', seriesId));
+                    var routeUpdate = "{{ path('pumukitnewadmin_series_update', {'id': '__seriesId__'})|raw }}";
+                    $('#edit_series').load(routeUpdate.replace('__seriesId__', seriesId), function(){
+                        init_tabs();
+                    });
+                });
+	            success('{% trans %}Series successfully created.{% endtrans %}');
+	        }
+    });
+    return false;
+  });
 });
 
 /**

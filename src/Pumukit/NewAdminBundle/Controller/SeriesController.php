@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\NewAdminBundle\Form\Type\SeriesType;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectTemplateMetaType;
 use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
 
 class SeriesController extends AdminController
@@ -45,27 +46,22 @@ class SeriesController extends AdminController
     {
         $config = $this->getConfiguration();
         $criteria = $this->getCriteria($config);
-        $resources = $this->getResources($request, $config, $criteria);
+        $newSeriesId = $request->get('newSeriesId', null);
+        $resources = $this->getResources($request, $config, $criteria, $newSeriesId);
 
         return array('series' => $resources);
     }
 
     /**
      * Create new resource
-     * @Template("PumukitNewAdminBundle:Series:list.html.twig")
      */
     public function createAction(Request $request)
     {
-        $config = $this->getConfiguration();
-        $criteria = $this->getCriteria($config);
-        $resources = $this->getResources($request, $config, $criteria);
-        
         $factory = $this->get('pumukitschema.factory');
-        $factory->createSeries();
+        $series = $factory->createSeries();
+        $this->get('session')->set('admin/series/id', $series->getId());
 
-        $this->addFlash('success', 'create');
-
-        return array('series' => $resources);
+        return new JsonResponse(array('seriesId' => $series->getId()));
     }
 
     /**
@@ -338,7 +334,7 @@ class SeriesController extends AdminController
     /**
      * Gets the list of resources according to a criteria
      */
-    public function getResources(Request $request, $config, $criteria)
+    public function getResources(Request $request, $config, $criteria, $newSeriesId=null)
     {
         $sorting = $this->getSorting($request);
         $repository = $this->getRepository();
@@ -367,10 +363,25 @@ class SeriesController extends AdminController
                 $session->set($session_namespace.'/paginate', $request->get('paginate', 10));
             }
   
+            if ($newSeriesId) {
+                $newSeries = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:Series')->find($newSeriesId);
+                $adapter = $resources->getAdapter();
+                $returnedSeries = $adapter->getSlice(0, $adapter->getNbResults());
+                $position = 0;
+                foreach ($returnedSeries as $series) {
+                  if ($newSeriesId == $series->getId()) break;
+                  ++$position;
+                }
+                $maxPerPage = $session->get($session_namespace.'/paginate', 10);
+                $page = intval(ceil($position/$maxPerPage));
+            } else {
+                $page = $session->get($session_namespace.'/page', 1);
+            }
+
             $resources
                 ->setMaxPerPage($session->get($session_namespace.'/paginate', 10))
                 ->setNormalizeOutOfRangePages(true)
-                ->setCurrentPage($session->get($session_namespace.'/page', 1));
+                ->setCurrentPage($page);
         } else {
             $resources = $this
                 ->resourceResolver
