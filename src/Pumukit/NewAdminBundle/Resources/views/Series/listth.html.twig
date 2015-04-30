@@ -1,30 +1,31 @@
+<input type="hidden" name="pumukitnewadmin_series_sort_change_type" id="pumukitnewadmin_series_sort_change_type" value="{{ app.session.get('admin/series/type')=='asc'?'desc':'asc' }}"/>
 {% set title_locale = 'title.'~app.request.getLocale() %}
 {% if title_locale == app.session.get('admin/series/sort') %}
   <th>
-    <a href="#" onclick="$('#list_series').load('{{ path('pumukitnewadmin_series_list', {'sorting': {(title_locale): app.session.get('admin/series/type')=='asc'?'desc':'asc'}}) }}'); return false;">{% trans %}Title{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
+    <a href="#" id="pumukitnewadmin_series_title_sort_selected">{% trans %}Title{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
   </th>
 {% else %}
   <th>
-    <a href="#" onclick="$('#list_series').load('{{ path('pumukitnewadmin_series_list', {'sorting': {(title_locale): 'asc'}}) }}'); return false;">{% trans %}Title{% endtrans %}</a>
+    <a href="#" id="pumukitnewadmin_series_title_sort_not_selected">{% trans %}Title{% endtrans %}</a>
   </th>
 {% endif %}
 
 {% if 'public_date' == app.session.get('admin/series/sort', 'public_date') %}
   <th width="8%">
-    <a href="#" onclick="$('#list_series').load('{{ path('pumukitnewadmin_series_list', {'sorting': {'public_date': app.session.get('admin/series/type')=='asc'?'desc':'asc'}}) }}'); return false;">{% trans %}Date{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
+    <a href="#" id="pumukitnewadmin_series_public_date_sort_selected">{% trans %}Date{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
   </th>
 {% else %}
   <th width="8%">
-    <a href="#" onclick="$('#list_series').load('{{ path('pumukitnewadmin_series_list', {'sorting': {'public_date': 'asc'}}) }}'); return false;">{% trans %}Date{% endtrans %}</a>
+    <a href="#" id="pumukitnewadmin_series_public_date_sort_not_selected">{% trans %}Date{% endtrans %}</a>
   </th>
 {% endif %}
 
 {% if 'multimedia_objects' == app.session.get('admin/series/sort') %}
   <th width="1%">
-    <a href="#" onclick="$('#list_series').load('{{ path('pumukitnewadmin_series_list', {'sorting': {'multimedia_objects': app.session.get('admin/series/type')=='asc'?'desc':'asc'}}) }}'); return false;">{% trans %}Mm.Obj.{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
+    <a href="#" id="pumukitnewadmin_series_multimedia_objects_sort_selected">{% trans %}Mm.Obj.{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
   </th>  
 {% else %}
   <th width="1%">
-    <a href="#" onclick="$('#list_series').load('{{ path('pumukitnewadmin_series_list', {'sorting': {'multimedia_objects': 'asc'}}) }}'); return false;">{% trans %}Mm.Obj.{% endtrans %}</a>
+    <a href="#" id="pumukitnewadmin_series_multimedia_objects_sort_not_selected">{% trans %}Mm.Obj.{% endtrans %}</a>
   </th>
 {% endif %}

@@ -46,8 +46,8 @@ class SeriesController extends AdminController
     {
         $config = $this->getConfiguration();
         $criteria = $this->getCriteria($config);
-        $newSeriesId = $request->get('newSeriesId', null);
-        $resources = $this->getResources($request, $config, $criteria, $newSeriesId);
+        $selectedSeriesId = $request->get('selectedSeriesId', null);
+        $resources = $this->getResources($request, $config, $criteria, $selectedSeriesId);
 
         return array('series' => $resources);
     }
@@ -89,7 +89,7 @@ class SeriesController extends AdminController
             }
 
             $criteria = $this->getCriteria($config);
-            $resources = $this->getResources($request, $config, $criteria);
+            $resources = $this->getResources($request, $config, $criteria, $resource->getId());
 
             return $this->render('PumukitNewAdminBundle:Series:list.html.twig',
                                  array('series' => $resources)
@@ -334,7 +334,7 @@ class SeriesController extends AdminController
     /**
      * Gets the list of resources according to a criteria
      */
-    public function getResources(Request $request, $config, $criteria, $newSeriesId=null)
+    public function getResources(Request $request, $config, $criteria, $selectedSeriesId=null)
     {
         $sorting = $this->getSorting($request);
         $repository = $this->getRepository();
@@ -363,21 +363,20 @@ class SeriesController extends AdminController
                 $session->set($session_namespace.'/paginate', $request->get('paginate', 10));
             }
   
-            if ($newSeriesId) {
-                $newSeries = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:Series')->find($newSeriesId);
+            if ($selectedSeriesId) {
+                $newSeries = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:Series')->find($selectedSeriesId);
                 $adapter = $resources->getAdapter();
                 $returnedSeries = $adapter->getSlice(0, $adapter->getNbResults());
-                $position = 0;
+                $position = 1;
                 foreach ($returnedSeries as $series) {
-                  if ($newSeriesId == $series->getId()) break;
-                  ++$position;
+                    if ($selectedSeriesId == $series->getId()) break;
+                    ++$position;
                 }
                 $maxPerPage = $session->get($session_namespace.'/paginate', 10);
                 $page = intval(ceil($position/$maxPerPage));
             } else {
                 $page = $session->get($session_namespace.'/page', 1);
             }
-
             $resources
                 ->setMaxPerPage($session->get($session_namespace.'/paginate', 10))
                 ->setNormalizeOutOfRangePages(true)
