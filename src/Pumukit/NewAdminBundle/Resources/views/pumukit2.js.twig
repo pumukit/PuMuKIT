@@ -562,11 +562,20 @@ window.change_select = function(element, selector, pluralName)
         }
         for (var i = 0; i < ids.length; i++) {
             id = ids[i];
-            var puDeNew = $("#list_pubdecisions_"+id+" #pub_decisions_PUDENEW");
-            if (1 == puDeNew.length){
-                var checkedValue = puDeNew[0].checked;
-                if (checkedValue) puDeNew[0].checked = false;
-                else puDeNew[0].checked = true;
+            if ('mm' == element) {
+                var puDeNew = $("#list_pubdecisions_"+id+" #pub_decisions_PUDENEW");
+                if (1 == puDeNew.length){
+                    var checkedValue = puDeNew[0].checked;
+                    if (checkedValue) puDeNew[0].checked = false;
+                    else puDeNew[0].checked = true;
+                }
+            } else if ('series' == element) {
+                var announcedSeries = $("#pumukitnewadmin_series_announce");
+                if (1 == announcedSeries.length){
+                    var checkedValue = announcedSeries[0].checked;
+                    if (checkedValue) announcedSeries[0].checked = false;
+                    else announcedSeries[0].checked = true;
+                }
             }
         }
         break;
