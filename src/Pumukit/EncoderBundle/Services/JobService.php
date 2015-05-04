@@ -441,7 +441,7 @@ class JobService
         
         if(!$multimediaObject) {
           $errorMsg = sprintf("[createTrackWithJob] Multimedia object %s not found when the job $s creates the track", $job->getId(), $job->getMmId());
-          $this->logger->addError($errorMsg)
+          $this->logger->addError($errorMsg);
           throw new \Exception($errorMsg);
         }
 
