@@ -45,6 +45,7 @@ class PersonType extends AbstractType
             ->add('web', 'url',
                   array(
                         'required' => false,
+                        'pattern' => '^https?:\/\/.*',
                         'label' => $this->translator->trans('Web', array(), null, $this->locale)))
             ->add('phone', 'text',
                   array(
