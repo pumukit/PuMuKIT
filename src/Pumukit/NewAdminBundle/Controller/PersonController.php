@@ -4,6 +4,7 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -52,14 +53,23 @@ class PersonController extends AdminController
         $person = new Person();
         $form = $this->createForm(new PersonType($translator, $locale), $person);
 
-        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
-            try {
-                $person = $personService->savePerson($person);
-            } catch (\Exception $e) {
-                $this->get('session')->getFlashBag()->add('error', $e->getMessage());
-            }
+        if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
+            if ($form->bind($request)->isValid()) {
+                try {
+                    $person = $personService->savePerson($person);
+                } catch (\Exception $e) {
+                    $this->get('session')->getFlashBag()->add('error', $e->getMessage());
+                }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_person_list'));
+                return $this->redirect($this->generateUrl('pumukitnewadmin_person_list'));
+            } else {
+                $errors = $this->get('validator')->validate($person);
+                $textStatus = '';
+                foreach ($errors as $error) {
+                    $textStatus .= $error->getPropertyPath().' value '.$error->getInvalidValue().': '.$error->getMessage();
+                }
+                return new Response($textStatus, 409);
+            }
         }
 
         return array(
@@ -81,14 +91,23 @@ class PersonController extends AdminController
         $locale = $request->getLocale();
         $form = $this->createForm(new PersonType($translator, $locale), $person);
 
-        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
-            try {
-                $person = $personService->updatePerson($person);
-            } catch (\Exception $e) {
-                $this->get('session')->getFlashBag()->add('error', $e->getMessage());
-            }
+        if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
+            if ($form->bind($request)->isValid()) {
+                try {
+                    $person = $personService->updatePerson($person);
+                } catch (\Exception $e) {
+                    $this->get('session')->getFlashBag()->add('error', $e->getMessage());
+                }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_person_list'));
+                return $this->redirect($this->generateUrl('pumukitnewadmin_person_list'));
+            } else {
+                $errors = $this->get('validator')->validate($person);
+                $textStatus = '';
+                foreach ($errors as $error) {
+                    $textStatus .= $error->getPropertyPath().' value '.$error->getInvalidValue().': '.$error->getMessage();
+                }
+                return new Response($textStatus, 409);
+            }
         }
 
         return array(

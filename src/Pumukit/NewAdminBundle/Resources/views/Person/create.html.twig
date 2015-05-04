@@ -22,7 +22,9 @@
                                                }
                           },
                           error: function(jqXHR, textStatus, errorThrown){
-                                               no_success(errorThrown+': '+textStatus);
+                                    var textError = jqXHR.responseText;
+                                    var message = errorThrown+': '+textError;
+                                    no_success(message);
                           }
                   });
                   return false;
