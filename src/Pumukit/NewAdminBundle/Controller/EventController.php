@@ -45,6 +45,48 @@ class EventController extends AdminController
     }
 
     /**
+     * Create Action
+     * Overwrite to return json response
+     * and update page
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse|Response
+     */
+    public function createAction(Request $request)
+    {
+        $config = $this->getConfiguration();
+
+        $resource = $this->createNew();
+        $form = $this->getForm($resource);
+
+        if ($form->handleRequest($request)->isValid()) {
+            $resource = $this->domainManager->create($resource);
+
+            if ($this->config->isApiRequest()) {
+                return $this->handleView($this->view($resource, 201));
+            }
+
+            if (null === $resource) {
+                return new JsonResponse(array('eventId' => null));
+            }
+            $this->get('session')->set('admin/event/id', $resource->getId());
+
+            return new JsonResponse(array('eventId' => $resource->getId()));
+        }
+
+        if ($this->config->isApiRequest()) {
+            return $this->handleView($this->view($form));
+        }
+
+        return $this->render("PumukitNewAdminBundle:Event:create.html.twig",
+                             array(
+                                   'event' => $resource,
+                                   'form' => $form->createView()
+                                   ));
+    }
+
+    /**
      * List action
      * @Template
      */
@@ -209,6 +251,9 @@ class EventController extends AdminController
         $session = $this->get('session');
         $session_namespace = 'admin/event';
 
+        $newEventId = $request->get('newEventId');
+        $page = $session->get($session_namespace.'/page', 1);
+
         $m = '';
         $y = '';
         $calendar = array();
@@ -230,8 +275,13 @@ class EventController extends AdminController
 
             $resources
                 ->setMaxPerPage($config->getPaginationMaxPerPage())
-                ->setNormalizeOutOfRangePages(true)
-                ->setCurrentPage($session->get($session_namespace.'/page', 1));
+                ->setNormalizeOutOfRangePages(true);
+
+            if ($newEventId && (($resources->getNbResults()/$resources->getMaxPerPage()) > $page)) {
+                $page = $resources->getNbPages();
+                $session->set($session_namespace.'/page', $page);
+            }
+            $resources->setCurrentPage($page);
         } else {
             $resources = $this
                 ->resourceResolver
