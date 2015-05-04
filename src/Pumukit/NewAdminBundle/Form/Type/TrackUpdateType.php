@@ -54,7 +54,7 @@ class TrackUpdateType extends AbstractType
                       'required' => true,
                       'read_only' => true,
                       'label' => $this->translator->trans('File', array(), null, $this->locale)))
-          ->add('url', 'url',
+          ->add('url', 'text',
                 array(
                       'required' => true,
                       'read_only' => true,
