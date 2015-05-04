@@ -39,7 +39,7 @@
           </a>
         </td>
         <td>
-          <a href="#" onclick="window.submit_delete_person('{{ person.id }}', '{{ countMmPeople[person.id] }}', '{{ person.getHName() }}'); return false;">
+          <a href="#" onclick="window.submit_delete_person('{{ person.id }}', '{{ countMmPeople[person.id] }}', '{% autoescape 'js' %}{{ person.getHName() }}{% endautoescape %}'); return false;">
             <i class="mdi-content-clear"></i>
           </a>
         </td>
