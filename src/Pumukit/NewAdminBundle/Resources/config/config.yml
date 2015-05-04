@@ -77,7 +77,7 @@ sylius_resource:
             templates: PumukitNewAdminBundle:Live
             classes:
                 model: Pumukit\LiveBundle\Document\Live
-                controller: Pumukit\NewAdminBundle\Controller\AdminController
+                controller: Pumukit\NewAdminBundle\Controller\LiveController
         pumukitnewadmin.event:
             driver: doctrine/mongodb-odm
             templates: PumukitNewAdminBundle:Event
