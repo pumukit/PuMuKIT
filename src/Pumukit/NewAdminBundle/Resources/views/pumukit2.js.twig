@@ -365,8 +365,9 @@ window.change_select = function(element, selector, pluralName)
         });
         if (ids.length == 0) break;
         if (pluralName.indexOf('user') != -1) {
-            var aux = $('#numberUsers').val();
-            var usersLength = parseInt(aux.split(" ")[0]);
+            var aux = $('#numberUsers').html().replace(/(\r\n|\n|\r)/gm,"");
+            numberUsers = $.trim(aux);
+            var usersLength = parseInt(numberUsers.split(" ")[0]);
             if (((ids.length == usersLength) || (1 == usersLength)) && (pluralName.indexOf('user') != -1)) {
                 var message = '{% trans %}Can not delete all users{% endtrans %}';
                 no_success(message);
