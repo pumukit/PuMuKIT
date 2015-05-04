@@ -233,12 +233,9 @@ class JobService
 
         $pb
           ->add('php')
-          ->add($console);
-        /*
-        //TODO master_copy_h264 only works with --env=dev
+          ->add($console)
           ->add('--env=prod')
           ;
-        */
 
         if (false) {
           $pb->add('--verbose');
