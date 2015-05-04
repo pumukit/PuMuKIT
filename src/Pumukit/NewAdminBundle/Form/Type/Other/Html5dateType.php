@@ -10,8 +10,8 @@ class Html5dateType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-        'compound' => false,
-    ));
+            'compound' => false,
+        ));
     }
 
     public function getParent()
