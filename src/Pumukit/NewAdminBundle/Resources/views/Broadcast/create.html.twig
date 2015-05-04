@@ -38,3 +38,9 @@
     </div>
   </form>
 </div>
+
+<script>
+document.getElementById('pumukitnewadmin_broadcast_broadcast_type_id').addEventListener('change', function(event) {
+  document.getElementById('pumukitnewadmin_broadcast_passwd').required = (event.target.value != "public");
+});
+</script>

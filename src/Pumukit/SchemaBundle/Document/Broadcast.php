@@ -4,6 +4,7 @@ namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Pumukit\SchemaBundle\Document\Broadcast
@@ -313,5 +314,15 @@ class Broadcast
   public function __toString()
   {
       return $this->getName();
+  }
+
+
+  /**
+   * @Assert\True(message = "Password required if not public")
+   */
+  public function isPasswordValid()
+  {
+    return ((self::BROADCAST_TYPE_PUB == $this->getBroadcastTypeId())
+            || ("" != $this->getPasswd()));
   }
 }

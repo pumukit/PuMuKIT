@@ -31,7 +31,8 @@ class BroadcastType extends AbstractType
                                            Broadcast::BROADCAST_TYPE_COR => Broadcast::BROADCAST_TYPE_COR, ),
                         'label' => $this->translator->trans('Type', array(), null, $this->locale)))
             ->add('passwd', 'password',
-                  array('label' => $this->translator->trans('Passwd', array(), null, $this->locale)))
+                  array('label' => $this->translator->trans('Passwd', array(), null, $this->locale),
+                        'required' => false))
             ->add('i18n_description', 'textareai18n',
                   array('label' => $this->translator->trans('Description', array(), null, $this->locale)));
     }
