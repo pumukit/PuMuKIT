@@ -24,6 +24,29 @@
   width: 30px;
 }
 
+.checkbox label input[type=checkbox]:not(:checked)~.ripple,
+.checkbox.pumukit-mms-checkbox label input[type=checkbox]:not(:checked)~.ripple {
+  -webkit-animation:rippleOff 0ms;
+  animation:rippleOff 0ms
+}
+
+.checkbox label .check:before,
+.checkbox.pumukit-mms-checkbox label .check:before{
+  position:absolute;
+  content:"";
+  -webkit-transform:rotate(45deg);
+  -ms-transform:rotate(45deg);
+  transform:rotate(45deg);
+  display:block;
+  margin-top:-4px;
+  margin-left:6px;
+  width:0;
+  height:0;
+  box-shadow:0 0 0 0,0 0 0 0,0 0 0 0,0 0 0 0,0 0 0 0,0 0 0 0,0 0 0 0 inset;
+  -webkit-animation:0s;
+  animation:0s;
+}
+
 .label, .badge {
   font-weight: 300;
 }
