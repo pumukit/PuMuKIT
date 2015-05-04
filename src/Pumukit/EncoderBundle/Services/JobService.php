@@ -572,7 +572,7 @@ class JobService
     {
         $jobs = $this->repo->findWithStatus(array(Job::STATUS_EXECUTING));
         $now = new \DateTime('now'); 
-        $interval = new \DateInterval('P1D')
+        $interval = new \DateInterval('P1D');
         foreach($jobs as $job) {
           if(($now  - $job->getTimestart()) > $interval) {  
             $this->logger->addError(sprintf('[checkService] Job executing for a long time %s', $job-getId()));
