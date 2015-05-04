@@ -46,6 +46,8 @@ class JobService
      */
     public function addJob($pathFile, $profile, $priority, MultimediaObject $multimediaObject, $language = null, $description = array())
     {
+        $this->checkService();
+
         if (!is_file($pathFile)) {
             $this->logger->addError('[addJob] FileNotFoundException: Could not find file "'.$pathFile);
             throw new FileNotFoundException($pathFile); 
@@ -439,6 +441,12 @@ class JobService
     public function createTrackWithJob($job)
     {
         $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
+        
+        if(!$multimediaObject) {
+          $errorMsg = sprintf("[createTrackWithJob] Multimedia object %s not found when the job $s creates the track", $job->getId(), $job->getMmId());
+          $this->logger->addError($errorMsg)
+          throw new \Exception($errorMsg);
+        }
 
         $this->createTrack($multimediaObject, $job->getPathEnd(), $job->getProfile(), $job->getLanguageId(), $job->getI18nDescription());
     }
@@ -558,5 +566,20 @@ class JobService
     private function getProfile($job)
     {
         return $this->profileService->getProfile($job->getProfile());
+    }
+
+
+    private function checkService()
+    {
+        $jobs = $this->repo->findWithStatus(array(Job::STATUS_EXECUTING));
+        $now = new \DateTime('now'); 
+        $interval = new \DateInterval('P1D')
+        foreach($jobs as $job) {
+          if(($now  - $job->getTimestart()) > $interval) {  
+            $this->logger->addError(sprintf('[checkService] Job executing for a long time %s', $job-getId()));
+          }
+        }
+        
+      
     }
 }
