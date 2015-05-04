@@ -29,14 +29,14 @@ class DashboardController extends Controller
         $series = $repo->findAll();
 
         $XML = new \SimpleXMLElement("<data></data>");
-        $XML->addAttribute('wiki-url', 'TODO');
-        $XML->addAttribute('wiki-section', 'TODO');
+        $XML->addAttribute('wiki-url', $request->getUri());
+        $XML->addAttribute('wiki-section', 'Pumukit2 time-line Feed');
 
         foreach($series as $s) {
           $XMLSeries = $XML->addChild('event', $s->getTitle());
           $XMLSeries->addAttribute('start', $s->getPublicDate()->format("M j Y H:i:s \G\M\TP"));
           $XMLSeries->addAttribute('title', $s->getTitle());
-          $XMLSeries->addAttribute('link', 'TODO');
+          $XMLSeries->addAttribute('link', $this->get('router')->generate('pumukit_webtv_series_index', array('id' => $s->getId()), true)); 
         }
 
         return new Response($XML->asXML(), 200, array('Content-Type' => 'text/xml'));
