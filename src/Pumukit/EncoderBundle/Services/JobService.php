@@ -28,8 +28,9 @@ class JobService
     private $tmp_path;
     private $test;
     private $logger;
+    private $environment;
 
-    public function __construct(DocumentManager $documentManager, ProfileService $profileService, CpuService $cpuService, InspectionServiceInterface $inspectionService, LoggerInterface $logger, $tmp_path=null, $test=false)
+    public function __construct(DocumentManager $documentManager, ProfileService $profileService, CpuService $cpuService, InspectionServiceInterface $inspectionService, LoggerInterface $logger, $environment="dev", $tmp_path=null, $test=false)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
@@ -39,6 +40,7 @@ class JobService
         $this->tmp_path = $tmp_path ? realpath($tmp_path) : sys_get_temp_dir();
         $this->test = $test;
         $this->logger = $logger;
+        $this->environment = $environment;
     }
 
     /**
@@ -234,7 +236,7 @@ class JobService
         $pb
           ->add('php')
           ->add($console)
-          ->add('--env=prod')
+          ->add('--env='.$this->environment)
           ;
 
         if (false) {
