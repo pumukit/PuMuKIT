@@ -68,8 +68,6 @@ class MultimediaObjectController extends SortableAdminController
 
        $mmobj = $factoryService->createMultimediaObject($series);
 
-       $this->addFlash('success', 'create');
-
        $this->get('session')->set('admin/mms/id', $mmobj->getId());
 
        return new JsonResponse(array(
@@ -435,20 +433,20 @@ class MultimediaObjectController extends SortableAdminController
           ->setMaxPerPage($maxPerPage)
           ->setNormalizeOutOfRangePages(true);
 
-	/*
-	  NOTE: Multimedia Objects are sorted by ascending rank.
-	  A new MultimediaObject is created with last rank,
-	  so it will be at the end of the list.
-	  We update the page if a new page is created to show the
-	  the new MultimediaObject in new last page.
-	*/
-	if ($newMultimediaObjectId && (($mms->getNbResults()/$maxPerPage) > $page)) {
+        /*
+          NOTE: Multimedia Objects are sorted by ascending rank.
+          A new MultimediaObject is created with last rank,
+          so it will be at the end of the list.
+          We update the page if a new page is created to show the
+          the new MultimediaObject in new last page.
+        */
+        if ($newMultimediaObjectId && (($mms->getNbResults()/$maxPerPage) > $page)) {
             $page = $mms->getNbPages();
-	    $session->set('admin/mms/page', $page);
-	}
-	$mms->setCurrentPage($page);
+            $session->set('admin/mms/page', $page);
+        }
+        $mms->setCurrentPage($page);
 
-	return $mms;
+        return $mms;
     }
 
     /**
