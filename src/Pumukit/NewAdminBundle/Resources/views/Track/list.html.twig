@@ -233,7 +233,7 @@
 {% if jobs|length != 0 %}
 <script type="text/javascript">
   setTimeout(function(){
-    $('#tracks_mms_{{ mm.id }}').load('{{ url('pumukitnewadmin_track_list', {'id': mm.id})}}')
+    $('#tracks_mms_{{ mm.id }}').load('{{ url('pumukitnewadmin_track_list', {'id': mm.id})}}');
     $('#list_mms').load('{{ path('pumukitnewadmin_mms_list', {'seriesId': mm.getSeries().getId()})|raw }}');
     $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id })|raw }}');
   }, 8000);

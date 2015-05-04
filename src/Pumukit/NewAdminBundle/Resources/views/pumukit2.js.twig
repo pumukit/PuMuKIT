@@ -1271,6 +1271,63 @@ $(document).ready(function(){
     });
 });
 
+$(document).on('submit', '#pumukitnewadmin_event_create_form', function() {
+    $(this).find(':submit').prop('disabled', true);
+    $('#myModal').modal('hide');
+    $.ajax({
+            url: "{{ path('pumukitnewadmin_event_create')|raw }}",
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function(response, textStatus, jqXHR){
+                if (jqXHR.responseText.indexOf('modal-header') != -1){
+                    var message = '{% trans %}There was an error in creating the Live event.{% endtrans %}';
+                    no_success(message);
+                }else{
+                    var eventId = response['eventId'];
+                    var routeList = "{{ path('pumukitnewadmin_event_list', {'newEventId': '__eventId__'})|raw }}";
+                    $('#list_events').load(routeList.replace('__eventId__', eventId), {'_method':'POST'}, function(){
+                        var routeShow = "{{ path('pumukitnewadmin_event_show', {'id': '__eventId__'})|raw }}";
+                        $('#preview_event').load(routeShow.replace('__eventId__', eventId));
+                    });
+                    var message = '{% trans %}Live event successfully created.{% endtrans %}';
+                    success(message);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                no_success(errorThrown+': '+textStatus);
+            }
+    });
+    return false;
+});
+
+$(document).on('submit', '#pumukitnewadmin_live_create_form', function() {
+    $(this).find(':submit').prop('disabled', true);
+    $('#myModal').modal('hide');
+    $.ajax({
+            url: "{{ path('pumukitnewadmin_live_create')|raw }}",
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function(response, textStatus, jqXHR){
+                if (jqXHR.responseText.indexOf('modal-header') != -1){
+                    var message = '{% trans %}There was an error in creating the Live channel.{% endtrans %}';
+                    no_success(message);
+                }else{
+                    var liveId = response['liveId'];
+                    var routeList = "{{ path('pumukitnewadmin_live_list', {'newLiveId': '__liveId__'})|raw }}";
+                    $('#list_lives').load(routeList.replace('__liveId__', liveId), {'_method':'POST'}, function(){
+                        var routeShow = "{{ path('pumukitnewadmin_live_show', {'id': '__liveId__'})|raw }}";
+                        $('#preview_live').load(routeShow.replace('__liveId__', liveId));
+                    });
+                    var message = '{% trans %}Live channel successfully created.{% endtrans %}';
+                    success(message);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                no_success(errorThrown+': '+textStatus);
+            }
+    });
+    return false;
+});
 
 $(document).on('submit', '#pumukitnewadmin_mms_updatemeta_form', function(event){
     $('#remember_save_mm').hide();

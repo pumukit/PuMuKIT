@@ -3,7 +3,7 @@
     <thead>
       <tr>
         <th width="1%">
-          <div class="checkbox">
+          <div class="checkbox pumukit-mms-checkbox">
             <label>
               <input type="checkbox" onclick="window.click_checkbox_all('mm', this.checked)">
             </label>
@@ -31,7 +31,7 @@
       {% for mm in mms %}
       <tr style="cursor: pointer" {% if(app.session.get('admin/mms/id') == mm.id ) %} class="success" {% endif %}>
         <td>
-          <div class="checkbox">
+          <div class="checkbox pumukit-mms-checkbox">
             <label>
               <input id="{{ mm.id }}" class="mm_checkbox" type="checkbox">
             </label>
