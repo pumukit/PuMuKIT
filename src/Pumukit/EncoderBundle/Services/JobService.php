@@ -571,10 +571,10 @@ class JobService
     private function checkService()
     {
         $jobs = $this->repo->findWithStatus(array(Job::STATUS_EXECUTING));
-        $now = new \DateTime('now'); 
-        $interval = new \DateInterval('P1D');
+        $yesterday = new \DateTime('-1 day'); 
+
         foreach($jobs as $job) {
-          if(($now  - $job->getTimestart()) > $interval) {  
+          if($job->getTimestart() < $yesterday) {  
             $this->logger->addError(sprintf('[checkService] Job executing for a long time %s', $job-getId()));
           }
         }
