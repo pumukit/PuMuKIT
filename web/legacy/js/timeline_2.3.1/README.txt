@@ -70,7 +70,7 @@
   This software was created by the SIMILE project and originally written
   by the SIMILE development team (in alphabetical order):
 
-   - David François Huynh <dfhuynh at csail.mit.edu>
+   - David FranÃ§ois Huynh <dfhuynh at csail.mit.edu>
 
 
 
