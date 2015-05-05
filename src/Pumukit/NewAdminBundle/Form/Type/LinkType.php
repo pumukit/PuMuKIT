@@ -21,7 +21,7 @@ class LinkType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-          ->add('i18n_name', 'texti18n', array('required' => false, 'label' => $this->translator->trans('Name', array(), null, $this->locale)))
+          ->add('i18n_name', 'texti18n', array('required' => true, 'label' => $this->translator->trans('Name', array(), null, $this->locale)))
           ->add('url', 'url', array('required' => false, 'label' => $this->translator->trans('URL', array(), null, $this->locale)))
       ;
     }
