@@ -23,7 +23,7 @@ class MultimediaObjectMetaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('i18n_title', 'texti18n', array('label' => $this->translator->trans('Title', array(), null, $this->locale)))
+            ->add('i18n_title', 'texti18n', array('required' => false, 'label' => $this->translator->trans('Title', array(), null, $this->locale)))
             ->add('i18n_subtitle', 'texti18n', array('required' => false, 'label' => $this->translator->trans('Subtitle', array(), null, $this->locale)))
             ->add('i18n_keyword', 'texti18n', array('required' => false, 'label' => $this->translator->trans('Keyword', array(), null, $this->locale)))
             ->add('copyright', 'text', array('required' => false, 'label' => $this->translator->trans('Copyright', array(), null, $this->locale)))
