@@ -66,7 +66,7 @@ class PersonController extends AdminController
                 $errors = $this->get('validator')->validate($person);
                 $textStatus = '';
                 foreach ($errors as $error) {
-                    $textStatus .= $error->getPropertyPath().' value '.$error->getInvalidValue().': '.$error->getMessage();
+                    $textStatus .= $error->getPropertyPath().' value '.$error->getInvalidValue().': '.$error->getMessage().'. ';
                 }
                 return new Response($textStatus, 409);
             }
@@ -104,7 +104,7 @@ class PersonController extends AdminController
                 $errors = $this->get('validator')->validate($person);
                 $textStatus = '';
                 foreach ($errors as $error) {
-                    $textStatus .= $error->getPropertyPath().' value '.$error->getInvalidValue().': '.$error->getMessage();
+                    $textStatus .= $error->getPropertyPath().' value '.$error->getInvalidValue().': '.$error->getMessage().'. ';
                 }
                 return new Response($textStatus, 409);
             }
@@ -206,17 +206,25 @@ class PersonController extends AdminController
 
         $form = $this->createForm(new PersonType($translator, $locale), $person);
 
-        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
-            try {
-                $personService = $this->get('pumukitschema.person');              
-                $multimediaObject = $personService->createRelationPerson($person, $role, $multimediaObject);
-            } catch (\Exception $e) {
-                $this->get('session')->getFlashBag()->add('error', $e->getMessage());
+        if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
+            if ($form->bind($request)->isValid()) {
+                try {
+                    $personService = $this->get('pumukitschema.person');
+                    $multimediaObject = $personService->createRelationPerson($person, $role, $multimediaObject);
+                } catch (\Exception $e) {
+                    $this->get('session')->getFlashBag()->add('error', $e->getMessage());
+                }
+
+                $template = $multimediaObject->isPrototype() ? '_template' : '';
+            } else {
+                $errors = $this->get('validator')->validate($person);
+                $textStatus = '';
+                foreach ($errors as $error) {
+                    $textStatus .= $error->getPropertyPath().' value '.$error->getInvalidValue().': '.$error->getMessage().'. ';
+                }
+                return new Response($textStatus, 409);
             }
-
-            $template = $multimediaObject->isPrototype() ? '_template' : '';
-
-            return $this->render('PumukitNewAdminBundle:Person:listrelation.html.twig', 
+            return $this->render('PumukitNewAdminBundle:Person:listrelation.html.twig',
                                  array(
                                        'people' => $multimediaObject->getPeopleByRole($role),
                                        'role' => $role,
@@ -225,10 +233,13 @@ class PersonController extends AdminController
                                        ));
         }
 
+        $template = $multimediaObject->isPrototype() ? '_template' : '';
+
         return array(
                      'person' => $person,
                      'role' => $role,
                      'mm' => $multimediaObject,
+                     'template' => $template,
                      'form' => $form->createView(),
                      );
     }
@@ -250,29 +261,40 @@ class PersonController extends AdminController
 
         $form = $this->createForm(new PersonType($translator, $locale), $person);
 
-        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
-            try {
-                $person = $personService->updatePerson($person);
-            } catch (\Exception $e) {
-                $this->get('session')->getFlashBag()->add('error', $e->getMessage());
+        if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
+            if ($form->bind($request)->isValid()) {
+                try {
+                    $person = $personService->updatePerson($person);
+                } catch (\Exception $e) {
+                    $this->get('session')->getFlashBag()->add('error', $e->getMessage());
+                }
+
+                $template = $multimediaObject->isPrototype() ? '_template' : '';
+
+                return $this->render('PumukitNewAdminBundle:Person:listrelation.html.twig',
+                                     array(
+                                           'people' => $multimediaObject->getPeopleByRole($role),
+                                           'role' => $role,
+                                           'mm' => $multimediaObject,
+                                           'template' => $template
+                                           ));
+            } else {
+                $errors = $this->get('validator')->validate($person);
+                $textStatus = '';
+                foreach ($errors as $error) {
+                    $textStatus .= $error->getPropertyPath().' value '.$error->getInvalidValue().': '.$error->getMessage().'. ';
+                }
+                return new Response($textStatus, 409);
             }
-
-            $template = $multimediaObject->isPrototype() ? '_template' : '';
-
-            return $this->render('PumukitNewAdminBundle:Person:listrelation.html.twig', 
-                                 array(
-                                       'people' => $multimediaObject->getPeopleByRole($role),
-                                       'role' => $role,
-                                       'mm' => $multimediaObject,
-                                       'template' => $template
-                                       ));
-
         }
+
+        $template = $multimediaObject->isPrototype() ? '_template' : '';
 
         return array(
                      'person' => $person,
                      'role' => $role,
                      'mm' => $multimediaObject,
+                     'template' => $template,
                      'form' => $form->createView()
                      );
     }

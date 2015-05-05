@@ -1,18 +1,25 @@
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <h4 class="modal-title" id="myAuxModalLabel">{% trans %}edit new person{% endtrans %}</h4>
+  <h4 class="modal-title" id="myAuxModal{{ template }}Label">{% trans %}edit new person{% endtrans %}</h4>
 </div>
 <div class="modal-body">
-  <form autocomplete="off" onsubmit="$('#myAuxModal').modal('hide');
+  <form autocomplete="off"
+        onsubmit="$('#myAuxModal{{ template }}').modal('hide');
                   $.ajax({
                           url: '{{ path('pumukitnewadmin_person_create_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}',
                           type: 'POST',
                           data: $(this).serialize(),
                           success: function(response){
-                                                      $('#{{ role.id }}_person_mms').html(response);
-                                                      $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}');
-                                                      success('{% trans %}Person successfully associated to Multimedia Object{% endtrans %} *{{ mm.getTitle() }}* {% trans %}with role{% endtrans %} *{{ role.getName() }}*');
-                                                      }
+                                    $('#{{ role.id }}_person_mms{{ template }}').html(response);
+                                    var template = '{{ template }}';
+                                    if ('_template' == template) $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}');
+                                    success('{% trans %}Person successfully associated to Multimedia Object{% endtrans %} *{{ mm.getTitle() }}* {% trans %}with role{% endtrans %} *{{ role.getName() }}*');
+                          },
+                          error: function(jqXHR, textStatus, errorThrown){
+                                    var textError = jqXHR.responseText;
+                                    var message = errorThrown+': '+textError;
+                                    no_success(message);
+                          }
                   });
 		          return false;"
 	    action="{{ path('pumukitnewadmin_person_create_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}" method="POST">

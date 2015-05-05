@@ -38,6 +38,11 @@
                 <a style="margin-left: 20px" target="_blank" href="{{ material.getUrl() }}">{{ material.getName() }}</a>
               </div>
             {% endfor %}
+            {% for link in multimediaObject.getLinks() %}
+              <div class="download" style="height: 30px; margin-left: 5px;">
+                <a style="margin-left: 20px" target="_blank" href="{{ link.getUrl() }}">{{ link.getName() }}</a>
+              </div>
+            {% endfor %}
             <div style="clear:both;"></div>
 
             {% include 'PumukitWebTVBundle:MultimediaObject:share.html.twig' %}
