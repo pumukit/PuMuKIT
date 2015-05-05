@@ -235,11 +235,6 @@ class MultimediaObjectController extends SortableAdminController
 
         $factoryService = $this->get('pumukitschema.factory');
 
-        $roles = $factoryService->getRoles();
-        if (null === $roles){
-            throw new \Exception('Not found any role.');
-        }
-
         $sessionId = $this->get('session')->get('admin/series/id', null);
         $series = $factoryService->findSeriesById(null, $sessionId);
         if (null === $series){
@@ -287,6 +282,11 @@ class MultimediaObjectController extends SortableAdminController
 
         if ($config->isApiRequest()) {
             return $this->handleView($this->view($formPub));
+        }
+
+        $roles = $factoryService->getRoles();
+        if (null === $roles){
+            throw new \Exception('Not found any role.');
         }
 
         return $this->render('PumukitNewAdminBundle:MultimediaObject:edit.html.twig',
