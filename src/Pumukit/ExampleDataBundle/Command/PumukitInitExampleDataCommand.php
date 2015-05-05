@@ -1,4 +1,4 @@
-1;3409;0c<?php
+<?php
 
 namespace Pumukit\ExampleDataBundle\Command;
 
