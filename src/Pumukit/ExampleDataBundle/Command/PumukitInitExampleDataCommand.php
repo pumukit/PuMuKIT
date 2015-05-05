@@ -1,4 +1,4 @@
-<?php
+1;3409;0c<?php
 
 namespace Pumukit\ExampleDataBundle\Command;
 
@@ -397,7 +397,7 @@ EOT
             $ch = curl_init($src);
             $targetFile = fopen($target, 'wb');        
             curl_setopt($ch, CURLOPT_FILE, $targetFile);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_NOPROGRESS, false);
             curl_setopt($ch, CURLOPT_PROGRESSFUNCTION, function($c, $downloadSize, $downloaded, $uploadSize, $uploaded) use ($progress){
                $percentage = ($downloaded > 0 && $downloadSize > 0 ? round($downloaded / $downloadSize, 2) : 0.0);
