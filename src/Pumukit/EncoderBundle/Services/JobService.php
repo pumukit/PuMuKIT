@@ -50,6 +50,21 @@ class JobService
         $this->environment = $environment;
     }
 
+
+    /**
+     * Add job checking if not exists.
+     */
+    public function addUniqueJob($pathFile, $profile, $priority, MultimediaObject $multimediaObject, $language = null, $description = array())
+    {
+        $job = $this->repo->findOneBy(array("profile" => $profile, "mm_id" => $multimediaObject->getId()));
+
+        if ($job) {
+            return $job;
+        } else {
+            return $this->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description);
+        }
+    }
+
     /**
      * Add job
      */
