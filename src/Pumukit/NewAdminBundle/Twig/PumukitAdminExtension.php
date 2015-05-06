@@ -440,7 +440,6 @@ class PumukitAdminExtension extends \Twig_Extension
      */
     public function filterProfiles($profiles, $onlyAudio)
     {
-      dump($onlyAudio);
         return array_filter($profiles, function($elem) use ($onlyAudio){ return !$onlyAudio || $elem['audio'];});
     }
 }
