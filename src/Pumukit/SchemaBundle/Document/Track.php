@@ -216,6 +216,18 @@ class Track extends Element
   }
 
   /**
+   * Get only_audio.
+   *
+   * getOnlyAudio proxy. Same API as MultimediaObject
+   *
+   * @return boolean
+   */
+  public function isOnlyAudio()
+  {
+      return $this->only_audio;
+  }
+
+  /**
    * Set channels
    *
    * @param integer $channels

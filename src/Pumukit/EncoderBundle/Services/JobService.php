@@ -3,7 +3,16 @@
 namespace Pumukit\EncoderBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\ProcessBuilder;
+use Symfony\Component\HttpKernel\Log\LoggerInterface;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\EncoderBundle\Event\JobEvent;
+use Pumukit\EncoderBundle\Event\EncoderEvents;
 use Pumukit\EncoderBundle\Executor\LocalExecutor;
 use Pumukit\EncoderBundle\Executor\RemoteHTTPExecutor;
 use Pumukit\EncoderBundle\Services\ProfileService;
@@ -11,12 +20,6 @@ use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\InspectionBundle\Services\InspectionServiceInterface;
-use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
-use Symfony\Component\Process\Process;
-use Symfony\Component\Process\ProcessBuilder;
-use Symfony\Component\HttpKernel\Log\LoggerInterface;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
 
 class JobService
 {
@@ -27,10 +30,13 @@ class JobService
     private $inspectionService;
     private $tmp_path;
     private $test;
+    private $dispatcher;
     private $logger;
     private $environment;
 
-    public function __construct(DocumentManager $documentManager, ProfileService $profileService, CpuService $cpuService, InspectionServiceInterface $inspectionService, LoggerInterface $logger, $environment="dev", $tmp_path=null, $test=false)
+    public function __construct(DocumentManager $documentManager, ProfileService $profileService, CpuService $cpuService, 
+                                InspectionServiceInterface $inspectionService, EventDispatcherInterface $dispatcher, LoggerInterface $logger, 
+                                $environment="dev", $tmp_path=null, $test=false)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
@@ -40,6 +46,7 @@ class JobService
         $this->tmp_path = $tmp_path ? realpath($tmp_path) : sys_get_temp_dir();
         $this->test = $test;
         $this->logger = $logger;
+        $this->dispatcher = $dispatcher;
         $this->environment = $environment;
     }
 
@@ -303,13 +310,15 @@ class JobService
             $job->setTimeend(new \DateTime('now'));
             $job->setStatus(Job::STATUS_FINISHED);
 
-            $this->createTrackWithJob($job);
+            $track = $this->createTrackWithJob($job);
+            $this->dispatch(true, $job, $track);
         }catch (\Exception $e){
             $job->setTimeend(new \DateTime('now'));
             $job->setStatus(Job::STATUS_ERROR);
 
             $job->setOutput($e->getMessage());
-            $this->logger->addError('[execute] job output: '.$e->getMessage());
+            $this->logger->addError('[execute] error job output: '.$e->getMessage());
+            $this->dispatch(false, $job);
         }
 
         $this->dm->persist($job);
@@ -326,7 +335,7 @@ class JobService
     {
         $duration_conf = 25;
         if (($duration_in < $duration_end - $duration_conf ) || ($duration_in > $duration_end + $duration_conf )){
-            throw new \Exception();
+            throw new \Exception(sprintf("Final duration (%s) and initial duration (%s) are differents", $duration_in, $duration_end));
         }
         return true;
     }
@@ -396,12 +405,7 @@ class JobService
         }
 
         $profile = $this->getProfile($job);
-
-        $mmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
-        if (!$mmobj){
-            $this->logger->addError('[setPathEndAndExtensions] Error getting multimedia object from id: '.$job->getMmId());
-            throw new \Exception('Error getting multimedia object from id: '.$job->getMmId());
-        }
+        $mmobj = $this->getMultimediaObject($job);
 
         $extension = pathinfo($job->getPathIni(), PATHINFO_EXTENSION);        
         $pathEnd = $this->getPathEnd($profile, $mmobj->getSeries()->getId(), $job->getId(), $extension);
@@ -438,16 +442,10 @@ class JobService
 
 
     public function createTrackWithJob($job)
-    {
-        $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
-        
-        if(!$multimediaObject) {
-          $errorMsg = sprintf("[createTrackWithJob] Multimedia object %s not found when the job $s creates the track", $job->getId(), $job->getMmId());
-          $this->logger->addError($errorMsg);
-          throw new \Exception($errorMsg);
-        }
-
-        $this->createTrack($multimediaObject, $job->getPathEnd(), $job->getProfile(), $job->getLanguageId(), $job->getI18nDescription());
+    {                             
+        $multimediaObject = $this->getMultimediaObject($job);
+      
+        return $this->createTrack($multimediaObject, $job->getPathEnd(), $job->getProfile(), $job->getLanguageId(), $job->getI18nDescription());
     }
 
     public function createTrackWithFile($pathFile, $profileName, MultimediaObject $multimediaObject, $language = null, $description = array())
@@ -463,7 +461,7 @@ class JobService
           throw new \Exception("Error to copy file");
         }
         
-        $this->createTrack($multimediaObject, $pathEnd, $profileName, $language, $description);
+        return $this->createTrack($multimediaObject, $pathEnd, $profileName, $language, $description);
     }
 
     private function createTrack(MultimediaObject $multimediaObject, $pathEnd, $profileName, $language = null, $description = array())
@@ -496,6 +494,8 @@ class JobService
      
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
+        
+        return $track;
     }
 
     /**
@@ -567,7 +567,34 @@ class JobService
         return $this->profileService->getProfile($job->getProfile());
     }
 
+    private function getMultimediaObject($job)
+    {
+        $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
+        
+        if(!$multimediaObject) {
+          $errorMsg = sprintf("[createTrackWithJob] Multimedia object %s not found when the job $s creates the track", $job->getId(), $job->getMmId());
+          $this->logger->addError($errorMsg);
+          throw new \Exception($errorMsg);
+        }
+        
+        return $multimediaObject;
+    }
 
+
+    /**
+     * Emit an event to notifiy finised job.
+     */
+    private function dispatch($success, Job $job, Track $track=null)
+    {
+        $multimediaObject = $this->getMultimediaObject($job);
+
+        $event = new JobEvent($job, $track, $multimediaObject);
+        $this->dispatcher->dispatch($success ? EncoderEvents::JOB_SUCCESS : EncoderEvents::JOB_ERROR, $event);
+    }
+
+    /**
+     * Check for blocked jobs.
+     */
     private function checkService()
     {
         $jobs = $this->repo->findWithStatus(array(Job::STATUS_EXECUTING));

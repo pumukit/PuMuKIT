@@ -11,6 +11,8 @@ use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectPubType;
+use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
+use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class MultimediaObjectController extends SortableAdminController
@@ -260,6 +262,8 @@ class MultimediaObjectController extends SortableAdminController
             $resource = $this->updateTags($request->get('pub_decisions', null), "PUDE", $resource);
 
             $this->domainManager->update($resource);
+
+            $this->dispatchUpdate($resource);
 
             if ($config->isApiRequest()) {
                 return $this->handleView($this->view($formPub));
@@ -619,5 +623,11 @@ class MultimediaObjectController extends SortableAdminController
         $dm->flush();
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));      
+    }
+
+    private function dispatchUpdate($multimediaObject)
+    {
+        $event = new MultimediaObjectEvent($multimediaObject);
+        $this->get('event_dispatcher')->dispatch(SchemaEvents::MULTIMEDIAOBJECT_UPDATE, $event);
     }
 }

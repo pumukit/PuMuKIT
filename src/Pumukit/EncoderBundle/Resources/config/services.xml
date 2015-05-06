@@ -20,6 +20,7 @@
             <argument type="service" id="pumukitencoder.profile"/>
             <argument type="service" id="pumukitencoder.cpu"/>
             <argument type="service" id="pumukit.inspection"/>
+            <argument type="service" id="event_dispatcher"/>
             <argument type="service" id="logger"/>
             <tag name="monolog.logger" channel="encoder"/>
             <argument>%kernel.environment%</argument>
