@@ -41,7 +41,7 @@
            </div>
            {% endif %}
            <!-- TRACKS -->
-           {% set tracks = mm.getFilteredTracksWithTags([], ['display'], [], ['master']) %}
+           {% set tracks = mm.getFilteredTracksWithTags(['display']) %}
            {% for track in tracks %}
              {# TODO if(!in_array($file->getPerfilId(), array(12, 13))): #}
              {% if true %}

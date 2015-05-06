@@ -1439,7 +1439,7 @@ class MultimediaObject
         $r = array();
 
         foreach ($this->tracks as $track) {
-            // TODO Move 'hide' field to tag 'hidden' in track
+            // TODO Move 'hide' field to tag 'hidden' in track (see hidden vs display tag)
             if ($track->getHide()) {
                 continue;
             }

@@ -23,7 +23,7 @@ class MultimediaObjectController extends Controller
     {
       $track = $request->query->has('track_id') ?
         $multimediaObject->getTrackById($request->query->get('track_id')) :
-        $multimediaObject->getTrackWithTag('display');
+        $multimediaObject->getFilteredTracksWithTags(array('display'));
 
       if (!$track)
         throw $this->createNotFoundException();
