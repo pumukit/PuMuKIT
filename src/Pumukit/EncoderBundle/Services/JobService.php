@@ -471,7 +471,7 @@ class JobService
         $track = new Track();
         if ($profile['master']) $track->addTag('master');
         if ($profile['display']) $track->addTag('display');
-        foreach(explode(",", $profile['tags']) as $tag) {
+        foreach(array_filter(preg_split('/[,\s]+/', $profile['tags'])) as $tag) {
             $track->addTag(trim($tag));
         }
 
