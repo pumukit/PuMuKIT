@@ -28,7 +28,13 @@
 	  <a href="#" onclick="$('#links_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_link_down', {'id': link.id, 'mmId': mmId}) }}', {'_method': 'POST'}); return false;">&#8595;</a>
 	{% endif %}
       </td>
-      <td>&nbsp;{{ link.id }} - {{ link.getUrl() }}</td>
+      <td>
+        &nbsp;{{ link.id }} - {{ link.getUrl() }}
+        {% if link.getHide() %}<span class="label label-default">{% trans %}hidden{% endtrans %}</span></i>{% endif %}
+        {% for tag in link.getTags() %}   
+          <span class="label label-primary">{{ tag }}</span>
+        {% endfor %}
+      </td>
     </tr>
   {% endfor %}
   <tr>

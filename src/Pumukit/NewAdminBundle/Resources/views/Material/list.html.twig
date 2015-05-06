@@ -34,7 +34,11 @@
 	{% endif %}
       </td>
       <td>
-        &nbsp; {{ material.id }} - {{ material.getName() }} {% if material.getHide() %}<i>({% trans %}Hidden{% endtrans %})</i>{% endif %}
+        &nbsp; {{ material.id }} - {{ material.getName() }} 
+        {% if material.getHide() %}<span class="label label-default">{% trans %}hidden{% endtrans %}</span></i>{% endif %}
+        {% for tag in material.getTags() %}   
+          <span class="label label-primary">{{ tag }}</span>
+        {% endfor %}
       </td>
     </tr>
   {% endfor %}
