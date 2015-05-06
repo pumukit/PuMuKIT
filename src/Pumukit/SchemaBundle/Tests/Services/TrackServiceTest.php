@@ -58,9 +58,12 @@ class TrackServiceTest extends WebTestCase
         
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
         $cpuService = new CpuService($this->getDemoCpus(), $this->dm);
+        $dispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $inspectionService = $this->getMock('Pumukit\InspectionBundle\Services\InspectionServiceInterface');
         $inspectionService->expects($this->any())->method('getDuration')->will($this->returnValue(5));
-        $jobService = new JobService($this->dm, $profileService, $cpuService, $inspectionService, $this->logger, null, true);
+        $jobService = new JobService($this->dm, $profileService, $cpuService, 
+                                     $inspectionService, $dispatcher, $this->logger, 
+                                     "test", null, true);
         $this->trackService = new TrackService($this->dm, $jobService, $profileService, null);
 
         $this->tmpDir = $this->trackService->getTempDirs()[0];

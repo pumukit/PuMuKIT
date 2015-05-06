@@ -243,7 +243,7 @@ class JobService
         $pb
           ->add('php')
           ->add($console)
-          ->add('--env='.$this->environment)
+          ->add(sprintf('--env=%s', $this->environment))
           ;
 
         if (false) {
