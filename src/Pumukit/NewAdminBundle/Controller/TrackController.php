@@ -174,7 +174,6 @@ class TrackController extends Controller
     public function listAction(MultimediaObject $multimediaObject)
     {
         $jobs = $this->get('pumukitencoder.job')->getJobsByMultimediaObjectId($multimediaObject->getId());
-        $jobStatusError = $this->get('pumukitencoder.job')->getStatusError();
 
         $notMasterProfiles = $this->get('pumukitencoder.profile')->getMasterProfiles(false);
 
@@ -182,7 +181,6 @@ class TrackController extends Controller
                      'mm' => $multimediaObject,
                      'tracks' => $multimediaObject->getTracks(),
                      'jobs' => $jobs,
-                     'status_error'  => $jobStatusError,
                      'not_master_profiles' => $notMasterProfiles,
                      'oc' => ''
                      );

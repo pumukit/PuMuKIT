@@ -132,7 +132,6 @@ class MultimediaObjectController extends SortableAdminController
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
 
         $jobs = $this->get('pumukitencoder.job')->getJobsByMultimediaObjectId($resource->getId());
-        $jobStatusError = $this->get('pumukitencoder.job')->getStatusError();
 
         $notMasterProfiles = $this->get('pumukitencoder.profile')->getMasterProfiles(false);
 
@@ -148,7 +147,6 @@ class MultimediaObjectController extends SortableAdminController
                      'pub_decisions' => $pubDecisionsTags,
                      'parent_tags'   => $parentTags,
                      'jobs'          => $jobs,
-                     'status_error'  => $jobStatusError,
                      'not_master_profiles' => $notMasterProfiles,
                      'template' => $template
                      );

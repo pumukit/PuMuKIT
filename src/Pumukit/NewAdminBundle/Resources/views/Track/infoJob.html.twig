@@ -30,14 +30,20 @@
             <li class="command">{{ command }}</li>
             <li>&nbsp;</li>
             <li>{{ job.getOutput()|replace({' ':'&nbsp;', '\n': '</li><li>'})|raw }}</li>
+            {% if constant('STATUS_EXECUTING', job) == job.getStatus() %}<li>executing...</li>{% endif %}
+            {% if constant('STATUS_WAITING', job) == job.getStatus() %}<li>waiting...</li>{% endif %}
         </ul>
     </div>
   </div>
   <form enctype="multipart/form-data" action="#" method="POST">
 	<div class="modal-footer">
 	  <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+    {% if constant('STATUS_ERROR', job) == job.getStatus() %}
 	  <button type="submit" class="btn btn-pumukit btn-raised" onclick="$('#tracks_mms_{{ multimediaObject.Id }}').load('{{ path('pumukitnewadmin_track_retry_job', {'mmId': multimediaObject.Id, 'jobId': job.id, 'preview': 1}) }}'); return false;" data-dismiss="modal">{% trans %}RETRY{% endtrans %}</button>
+    {% endif %}
+    {% if constant('STATUS_ERROR', job) == job.getStatus() or constant('STATUS_WAITING', job) == job.getStatus() %}    
 	  <button type="submit" class="btn btn-danger btn-raised" onclick="$('#tracks_mms_{{ multimediaObject.Id }}').load('{{ path('pumukitnewadmin_track_delete_job', {'mmId': multimediaObject.Id, 'jobId': job.id, 'preview': 1}) }}', {'_method': 'DELETE'}); return false;" data-dismiss="modal">{% trans %}DELETE{% endtrans %}</button>
+    {% endif %}    
 	</div>
   </form>
 </div>

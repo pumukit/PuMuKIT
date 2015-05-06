@@ -179,9 +179,10 @@ class JobService
             $this->logger->addError('[deleteJob] Can not find job with id '.$id);
             throw new \Exception("Can't find job with id ".$id);
         }
-        if (Job::STATUS_ERROR !== $job->getStatus()){
-            $this->logger->addError('[deleteJob] Trying to delete job "'.$id.'" that has not error status. Given status is '.$job->getStatus());
-            throw new \Exception("Trying to delete job ".$id." that has not error status. Given status is ".$job->getStatus());
+        if (Job::STATUS_EXECUTING === $job->getStatus()){
+            $msg = sprintf('[deleteJob] Trying to delete job "%s" that has executing status. Given status is %s', $id, $job->getStatus());
+            $this->logger->addError($msg);
+            throw new \Exception($msg);
         }
         $this->dm->remove($job);
         $this->dm->flush();
