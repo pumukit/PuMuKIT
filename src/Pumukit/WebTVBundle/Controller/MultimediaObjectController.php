@@ -23,10 +23,11 @@ class MultimediaObjectController extends Controller
     {
       $track = $request->query->has('track_id') ?
         $multimediaObject->getTrackById($request->query->get('track_id')) :
-        $multimediaObject->getFilteredTracksWithTags(array('display'));
+        $multimediaObject->getFilteredTrackWithTags(array('display'));
 
-      if (!$track)
+      if (!$track && !($opencasturl = $multimediaObject->getProperty("opencasturl"))) {
         throw $this->createNotFoundException();
+      }
 
       if (($broadcast = $multimediaObject->getBroadcast()) && 
           (Broadcast::BROADCAST_TYPE_PUB !== $broadcast->getBroadcastTypeId()))
@@ -35,6 +36,10 @@ class MultimediaObjectController extends Controller
 
       $this->updateBreadcrumbs($multimediaObject);
       $this->incNumView($multimediaObject, $track);
+
+      if($opencasturl) {
+          $this->redirect($opencasturl);
+      }
         
       return array('autostart' => $request->query->get('autostart', 'true'),
                    'intro' => $this->getIntro($request->query->get('intro')),

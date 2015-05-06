@@ -1462,6 +1462,46 @@ class MultimediaObject
         return $r;
     }
 
+
+    /**
+     * Get filtered track with tags
+     *
+     * @param  array           $any_tags
+     * @param  array           $all_tags
+     * @param  array           $not_any_tags
+     * @param  array           $not_all_tags
+     * @return Track
+     */
+    public function getFilteredTrackWithTags(
+                                            array $any_tags = array(),
+                                            array $all_tags = array(),
+                                            array $not_any_tags = array(),
+                                            array $not_all_tags = array())
+    {
+        foreach ($this->tracks as $track) {
+            // TODO Move 'hide' field to tag 'hidden' in track (see hidden vs display tag)
+            if ($track->getHide()) {
+                continue;
+            }
+            if ($any_tags && !$track->containsAnyTag($any_tags)) {
+                continue;
+            }
+            if ($all_tags && !$track->containsAllTags($all_tags)) {
+                continue;
+            }
+            if ($not_any_tags && $track->containsAnyTag($not_any_tags)) {
+                continue;
+            }
+            if ($not_all_tags && $track->containsAllTags($not_all_tags)) {
+                continue;
+            }
+
+            return $track;
+        }
+
+        return null;
+    }
+
     // End of Track getter - setter etc methods section
 
     /**

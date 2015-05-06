@@ -64,9 +64,10 @@ class MediaPackageController extends Controller
      */
     public function importAction($id, Request $request)
     {
+        $opencastClient = $this->get('pumukit_opencast.client');
         $oneseries = "WITHOUT_SERIES";
 
-        $mediaPackage = $this->get('pumukit_opencast.client')->getMediaPackage($id);
+        $mediaPackage = $opencastClient->getMediaPackage($id);
         $repository_series = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
 
         $series = $repository_series->findOneBy(array("title.en" => "MediaPackages without series"));
@@ -113,7 +114,7 @@ class MediaPackageController extends Controller
             $series->setKeyword($keyword);
             $series->setLine2($line2);
             $series->setLocale($locale);
-            $series->setProperty("opencast",$properties);
+            $series->setProperty("opencast", $properties);
 
             $subtitleEs = '';
             $descriptionEs = '';
@@ -167,7 +168,8 @@ class MediaPackageController extends Controller
             $multimediaObject->setStatus($status);
             $multimediaObject->setSeries($series);
             $multimediaObject->setTitle($title);
-            $multimediaObject->setProperty("opencast",$properties);
+            $multimediaObject->setProperty("opencast", $properties);
+            $multimediaObject->setProperty("opencasturl", $opencastClient->getPlayerUrl() . "?id=" . $properties);
 
             for($i=0; $i<count($mediaPackage["media"]["track"]); $i++){
 
