@@ -49,6 +49,7 @@ class PumukitAdminExtension extends \Twig_Extension
                      new \Twig_SimpleFilter('series_announce_text', array($this, 'getSeriesAnnounceText')),
                      new \Twig_SimpleFilter('mms_announce_icon', array($this, 'getMmsAnnounceIcon')),
                      new \Twig_SimpleFilter('mms_announce_text', array($this, 'getMmsAnnounceText')),
+                     new \Twig_SimpleFilter('filter_profiles', array($this, 'filterProfiles')),
                      );
     }
 
@@ -429,5 +430,17 @@ class PumukitAdminExtension extends \Twig_Extension
         if ($aux < 10 ) $aux = '0' . $aux;
         
         return $aux;
+    }
+
+    
+   /**
+     * Filter profiles to show only audio profiles.
+     *
+     * @return array
+     */
+    public function filterProfiles($profiles, $onlyAudio)
+    {
+      dump($onlyAudio);
+        return array_filter($profiles, function($elem) use ($onlyAudio){ return !$onlyAudio || $elem['audio'];});
     }
 }
