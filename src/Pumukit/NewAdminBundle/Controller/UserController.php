@@ -4,7 +4,12 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+
+/**
+ * @Security("has_role('ROLE_SUPER_ADMIN')")
+ */
 class UserController extends AdminController
 {
     /**
