@@ -63,7 +63,7 @@ class TrackServiceTest extends WebTestCase
         $inspectionService->expects($this->any())->method('getDuration')->will($this->returnValue(5));
         $jobService = new JobService($this->dm, $profileService, $cpuService, 
                                      $inspectionService, $dispatcher, $this->logger, 
-                                     "test", null, true);
+                                     "test", null);
         $this->trackService = new TrackService($this->dm, $jobService, $profileService, null);
 
         $this->tmpDir = $this->trackService->getTempDirs()[0];

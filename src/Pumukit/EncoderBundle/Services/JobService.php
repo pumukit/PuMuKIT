@@ -29,14 +29,13 @@ class JobService
     private $cpuService;
     private $inspectionService;
     private $tmp_path;
-    private $test;
     private $dispatcher;
     private $logger;
     private $environment;
 
     public function __construct(DocumentManager $documentManager, ProfileService $profileService, CpuService $cpuService, 
                                 InspectionServiceInterface $inspectionService, EventDispatcherInterface $dispatcher, LoggerInterface $logger, 
-                                $environment="dev", $tmp_path=null, $test=false)
+                                $environment="dev", $tmp_path=null)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
@@ -44,7 +43,6 @@ class JobService
         $this->cpuService = $cpuService;
         $this->inspectionService = $inspectionService;
         $this->tmp_path = $tmp_path ? realpath($tmp_path) : sys_get_temp_dir();
-        $this->test = $test;
         $this->logger = $logger;
         $this->dispatcher = $dispatcher;
         $this->environment = $environment;
@@ -218,7 +216,7 @@ class JobService
      */
     public function executeNextJob()
     {
-        if($this->test){
+        if("test" == $this->environment){
             return null;
         }
 

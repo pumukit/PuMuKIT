@@ -47,7 +47,7 @@ class JobServiceTest extends WebTestCase
         $this->resourcesDir = realpath(__DIR__.'/../Resources').'/';
         $this->jobService = new JobService($this->dm, $profileService, $cpuService, 
                                            $inspectionService, $dispatcher, $this->logger, 
-                                           "test", null, true);
+                                           "test", null);
     }
     
     public function testAddJob()
