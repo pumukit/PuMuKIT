@@ -168,8 +168,8 @@ class TagController extends Controller
         }else{
             foreach ($tags as $tag){
                 $dm->remove($tag);
-                $dm->flush();
             }
+            $dm->flush();
         }
 
         $this->addFlash('success', 'delete');

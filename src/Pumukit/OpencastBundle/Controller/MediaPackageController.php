@@ -80,7 +80,7 @@ class MediaPackageController extends Controller
         $this->dm = $this->get('doctrine_mongodb')->getManager();
         $factoryService = $this->get('pumukitschema.factory');
 
-        if($oneseries == null or ($oneseries == "WITHOUT_SERIES" and $series == null)){
+        if(!$oneseries || ($oneseries == "WITHOUT_SERIES" && !$series)){
 
             $announce = true;
             $publicDate = new \DateTime("now");

@@ -11,6 +11,8 @@ use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectPubType;
+use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
+use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class MultimediaObjectController extends SortableAdminController
@@ -235,11 +237,6 @@ class MultimediaObjectController extends SortableAdminController
 
         $factoryService = $this->get('pumukitschema.factory');
 
-        $roles = $factoryService->getRoles();
-        if (null === $roles){
-            throw new \Exception('Not found any role.');
-        }
-
         $sessionId = $this->get('session')->get('admin/series/id', null);
         $series = $factoryService->findSeriesById(null, $sessionId);
         if (null === $series){
@@ -261,15 +258,12 @@ class MultimediaObjectController extends SortableAdminController
         $method = $request->getMethod();
         if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
             $formPub->submit($request, !$request->isMethod('PATCH'))->isValid()) {
-            // TODO #6465 : Review change of Publication Channel (create service)
-            // * If MultimediaObject didn't contained PUCHWEBTV tag and now it does:
-            //   - execute job (master_copy to video_h264)
-            // * If MultimediaObject didn't contained ARCA tag and now it does:
-            //   - execute corresponding job
             $resource = $this->updateTags($request->get('pub_channels', null), "PUCH", $resource);
             $resource = $this->updateTags($request->get('pub_decisions', null), "PUDE", $resource);
 
             $this->domainManager->update($resource);
+
+            $this->dispatchUpdate($resource);
 
             if ($config->isApiRequest()) {
                 return $this->handleView($this->view($formPub));
@@ -287,6 +281,11 @@ class MultimediaObjectController extends SortableAdminController
 
         if ($config->isApiRequest()) {
             return $this->handleView($this->view($formPub));
+        }
+
+        $roles = $factoryService->getRoles();
+        if (null === $roles){
+            throw new \Exception('Not found any role.');
         }
 
         return $this->render('PumukitNewAdminBundle:MultimediaObject:edit.html.twig',
@@ -624,5 +623,11 @@ class MultimediaObjectController extends SortableAdminController
         $dm->flush();
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));      
+    }
+
+    private function dispatchUpdate($multimediaObject)
+    {
+        $event = new MultimediaObjectEvent($multimediaObject);
+        $this->get('event_dispatcher')->dispatch(SchemaEvents::MULTIMEDIAOBJECT_UPDATE, $event);
     }
 }

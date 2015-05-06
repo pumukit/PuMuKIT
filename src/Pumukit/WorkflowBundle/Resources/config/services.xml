@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+
+    <services>
+        <service id="pumukit_workflow.listener" class="Pumukit\WorkflowBundle\Services\WorkflowService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="pumukitencoder.job" />
+            <argument type="service" id="logger"/>
+            <tag name="kernel.event_listener" event="job.success" method="onJobSuccess" />
+            <tag name="kernel.event_listener" event="multimediaobject.update" method="onMultimediaobjectUpdate" />
+        </service>
+    </services>
+
+</container>
