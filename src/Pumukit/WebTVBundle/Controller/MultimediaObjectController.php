@@ -21,13 +21,18 @@ class MultimediaObjectController extends Controller
      */
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
     {
+      //TODO refact.
+      if($opencasturl = $multimediaObject->getProperty("opencasturl")) {
+          $this->incNumView($multimediaObject, $track);
+          $this->redirect($opencasturl);
+      }
+    
       $track = $request->query->has('track_id') ?
         $multimediaObject->getTrackById($request->query->get('track_id')) :
         $multimediaObject->getFilteredTrackWithTags(array('display'));
 
-      if (!$track && !($opencasturl = $multimediaObject->getProperty("opencasturl"))) {
+      if (!$track)
         throw $this->createNotFoundException();
-      }
 
       if (($broadcast = $multimediaObject->getBroadcast()) && 
           (Broadcast::BROADCAST_TYPE_PUB !== $broadcast->getBroadcastTypeId()))
@@ -36,10 +41,6 @@ class MultimediaObjectController extends Controller
 
       $this->updateBreadcrumbs($multimediaObject);
       $this->incNumView($multimediaObject, $track);
-
-      if($opencasturl) {
-          $this->redirect($opencasturl);
-      }
         
       return array('autostart' => $request->query->get('autostart', 'true'),
                    'intro' => $this->getIntro($request->query->get('intro')),
