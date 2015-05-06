@@ -469,6 +469,7 @@ class JobService
         $profile = $this->profileService->getProfile($profileName);
 
         $track = new Track();
+        $track->addTag('profile:' . $profileName);
         if ($profile['master']) $track->addTag('master');
         if ($profile['display']) $track->addTag('display');
         foreach(array_filter(preg_split('/[,\s]+/', $profile['tags'])) as $tag) {
