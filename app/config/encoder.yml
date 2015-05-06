@@ -77,7 +77,7 @@ pumukit_encoder:
             app: ffmpeg
             rel_duration_size: 1
             rel_duration_trans: 1
-        audio_mp3:
+        audio_aac:
             display: true
             wizard: true
             master: false

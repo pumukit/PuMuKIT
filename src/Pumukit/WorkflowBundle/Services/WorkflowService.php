@@ -47,9 +47,8 @@ class WorkflowService
            && ($master)
            && (!$publicTracks)) {
 
-            //TODO audio??
             //TODO no repeat JOB.
-            $targetProfile = $multimediaObject->isOnlyAudio() ? "TODO" : "video_h264";
+            $targetProfile = $multimediaObject->isOnlyAudio() ? "audio_aac" : "video_h264";
             $this->logger->info(sprintf("WorkflowService creates new job (%s) for multimedia object %s", $targetProfile, $multimediaObject->getId()));
             $this->jobService->addJob($master->getPath(), $targetProfile, 2, $multimediaObject, $master->getLanguage());
         }
