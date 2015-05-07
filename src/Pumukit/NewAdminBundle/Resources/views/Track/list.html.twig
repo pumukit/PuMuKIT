@@ -9,12 +9,15 @@
            href="{{ path('pumukitnewadmin_track_info_job', {'mmId': mm.id, 'jobId': job.id, 'preview': 1}) }}">
             <i class="{% if constant('STATUS_ERROR', job) == job.getStatus() %}mdi-action-info{% else %}mdi-navigation-refresh pmk-job-animate{% endif %}"></i>
         </a>
+
+        {% if constant('STATUS_EXECUTING', job) != job.getStatus() %}
         <a title="{% trans %}Delete Encoder Job{% endtrans %}"
            style="color:inherit"
            href="#"
            onclick="$('#tracks_mms_{{ mm.Id }}').load('{{ path('pumukitnewadmin_track_delete_job', {'mmId': mm.Id, 'jobId': job.id, 'preview': 1}) }}', {'_method': 'DELETE'}); return false;">
             <i class="mdi-content-clear"></i>
         </a>
+        {% endif %}
 
         <small>{{ job.getStatusText() }}</small>
       </td>
