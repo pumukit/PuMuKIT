@@ -243,6 +243,12 @@ EOT
                   $this->load_people_multimediaobject($multimediaObject, 'Carlos', 'actor');
                   $this->load_pic_multimediaobject($multimediaObject, '36');
 
+                  //Serie AUDIOS
+                  $series = $factoryService->createSeries();
+                  $this->load_series($series, "AUDIOS");
+                  $this->load_pic_series($series, 'audio');
+
+
                   if(!$input->getOption('notClearFiles')){
                         unlink($newFile);
                   }
