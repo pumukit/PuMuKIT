@@ -43,25 +43,26 @@
            <!-- TRACKS -->
            {% set tracks = mm.getFilteredTracksWithTags(['display']) %}
            {% for track in tracks %}
-             {# TODO if(!in_array($file->getPerfilId(), array(12, 13))): #}
-             {% if true %}
                <div>{# TODO class="file audio|video" and move out gif images to serial.css file, put it in twig #}
-                 {% if track.getOnlyAudio() %}
-                 <img src="{{ asset('bundles/pumukitcmarwebtv/images/iconos/altavoz2.gif') }}"/>
-                 {% else %}
-                 <img src="{{ asset('bundles/pumukitcmarwebtv/images/iconos/movie2.gif') }}"/>
-                 {% endif %}
-                 <a href="{{ url('pumukit_webtv_multimediaobject_index', {'id': mm.id, 'track_id': track.id}) }}">{{ track.getOnlyAudio() ? "Audio": "Video" }}</a>
-                 &nbsp;|&nbsp;&nbsp;<span class="language">{{ track.getLanguage() }}</span>
-                 &nbsp;({{ track.getDuration()|duration_string }})
-                 &nbsp;|&nbsp; {% trans %}Viewed{% endtrans %}: <span class="numView">{{ track.getNumView() }}</span>
-                 {% if (track.getNumView() == 1) %}
-                   {% trans %}time{% endtrans %}
-                 {% else %}
-                   {% trans %}times{% endtrans %}
-                 {% endif %}
+                   <img src="{{ mm.isOnlyAudio() ? asset('bundles/pumukitcmarwebtv/images/iconos/altavoz2.gif') : asset('bundles/pumukitcmarwebtv/images/iconos/movie2.gif') }}"/>
+                   <a href="{{ url('pumukit_webtv_multimediaobject_index', {'id': mm.id, 'track_id': track.id}) }}">{{ track.isOnlyAudio() ? "Audio": "Video" }}</a>
+                   &nbsp;|&nbsp;&nbsp;<span class="language">{{ track.getLanguage() }}</span>
+                   &nbsp;({{ track.getDuration()|duration_string }})
+                   &nbsp;|&nbsp; {% trans %}Viewed{% endtrans %}: <span class="numView">{{ track.getNumView() }}</span>
+                   {% transchoice mm.getNumView() %}
+                       {0}times|{1}time|]1,Inf]times
+                   {% endtranschoice %}
                </div>
-            {% endif %}
+          {% else %}
+               <div>{# TODO class="file audio|video" and move out gif images to serial.css file, put it in twig #}
+                   <img src="{{ mm.isOnlyAudio() ? asset('bundles/pumukitcmarwebtv/images/iconos/altavoz2.gif') : asset('bundles/pumukitcmarwebtv/images/iconos/movie2.gif') }}"/>
+                   <a href="{{ url('pumukit_webtv_multimediaobject_index', {'id': mm.id}) }}">{{ mm.isOnlyAudio() ? "Audio": "Video" }}</a>
+                   &nbsp;({{ mm.getDuration()|duration_string }})
+                   &nbsp;|&nbsp; {% trans %}Viewed{% endtrans %}: <span class="numView">{{ mm.getNumView() }}</span>
+                   {% transchoice mm.getNumView() %}
+                       {0}times|{1}time|]1,Inf]times
+                   {% endtranschoice %}
+               </div>
           {% endfor %}  
           <!-- MATERIAL -->
           {% for material in mm.getMaterials() if not material.getHide() %}

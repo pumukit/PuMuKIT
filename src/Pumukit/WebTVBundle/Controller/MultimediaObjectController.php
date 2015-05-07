@@ -21,10 +21,10 @@ class MultimediaObjectController extends Controller
      */
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
     {
-      //TODO refact.
+      //TODO refact webtvopencast.
       if($opencasturl = $multimediaObject->getProperty("opencasturl")) {
-          $this->incNumView($multimediaObject, $track);
-          $this->redirect($opencasturl);
+          $this->incNumView($multimediaObject);
+          return $this->redirect($opencasturl);
       }
     
       $track = $request->query->has('track_id') ?
@@ -65,6 +65,12 @@ class MultimediaObjectController extends Controller
      */
     public function magicIndexAction(MultimediaObject $multimediaObject, Request $request)
     {
+      //TODO refact webtvopencast.
+      if($opencasturl = $multimediaObject->getProperty("opencasturl")) {
+          $this->incNumView($multimediaObject);
+          return $this->redirect($opencasturl);
+      }
+
       $track = $request->query->has('track_id') ?
         $multimediaObject->getTrackById($request->query->get('track_id')) :
         $multimediaObject->getTrackWithTag('display');
