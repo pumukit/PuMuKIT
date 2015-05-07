@@ -243,6 +243,26 @@ EOT
                   $this->load_people_multimediaobject($multimediaObject, 'Carlos', 'actor');
                   $this->load_pic_multimediaobject($multimediaObject, '36');
 
+                  //Serie AUDIOS
+                  $series = $factoryService->createSeries();
+                  $this->load_series($series, "AUDIOS");
+                  $this->load_pic_series($series, 'audio');
+
+                  $multimediaObject = $factoryService->createMultimediaObject($series);
+                  $this->load_multimediaobject($multimediaObject, $series, "Audio1");
+                  $this->load_audio_multimediaobject($multimediaObject,'20', 'Audio1');
+                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUBDECISIONS","PUDEPD1","DIRECTRIZ","Dsocial","Dtechnical"));
+                  $this->load_people_multimediaobject($multimediaObject, 'Sara', 'presenter');
+                  $this->load_pic_multimediaobject($multimediaObject, 'audio');
+
+                  $multimediaObject = $factoryService->createMultimediaObject($series);
+                  $this->load_multimediaobject($multimediaObject, $series, "Audio2");
+                  $this->load_audio_multimediaobject($multimediaObject,'20', 'Audio2');
+                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUBDECISIONS","PUDEPD1","DIRECTRIZ","Dsocial","Dtechnical"));
+                  $this->load_people_multimediaobject($multimediaObject, 'Sara', 'presenter');
+                  $this->load_pic_multimediaobject($multimediaObject, 'audio');
+
+
                   if(!$input->getOption('notClearFiles')){
                         unlink($newFile);
                   }
@@ -352,6 +372,15 @@ EOT
             $path = realpath(dirname(__FILE__) . '/../Resources/public/videos/' . $folder . '/' . $track . '.mp4');
             $jobService->createTrackWithFile($path, 'master_copy', $multimediaObject, $language, $description);
             $jobService->createTrackWithFile($path, 'video_h264', $multimediaObject, $language, $description);
+      }
+
+      private function load_audio_multimediaobject($multimediaObject, $folder, $audio){
+            $jobService = $this->getContainer()->get('pumukitencoder.job');
+            $language = "es";
+            $description = array();
+            $path = realpath(dirname(__FILE__) . '/../Resources/public/videos/' . $folder . '/' . $audio . '.m4a');
+            $jobService->createTrackWithFile($path, 'master_copy', $multimediaObject, $language, $description);
+            $jobService->createTrackWithFile($path, 'audio_aac', $multimediaObject, $language, $description);
       }
 
       private function load_tags_multimediaobject($multimediaObject, $tags){
