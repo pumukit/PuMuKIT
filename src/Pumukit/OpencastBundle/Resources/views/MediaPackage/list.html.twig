@@ -54,7 +54,7 @@
             {% set import = 'import' %}
             {% for  multimediaObject in multimediaObjects %}
               {% if (multimediaObject.properties != null) and (multimediaObject.properties['opencast'] == mediaPackage.id) %}
-                <a href="{{ url('pumukitnewadmin_series_index', {id: multimediaObject.series.id}) }}">{% trans %}Imported{% endtrans %}</a>
+                <a href="{{ url('pumukitnewadmin_mms_index', {id: multimediaObject.series.id}) }}">{% trans %}Imported{% endtrans %}</a>
                 {% set import = 'imported' %}
               {% endif %} 
             {% endfor %}
