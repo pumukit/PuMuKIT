@@ -1,9 +1,17 @@
-<div style="width:100%; margin:0 auto; text-align:center" style="color:red" id="preview">{% trans %}You need to install Flash Plugin{% endtrans %}</div>
+<div id="directo-sbs" style="width:100%; margin: 0px auto;"></div>      
 
-<script type='text/javascript'>
-  var s1 = new SWFObject('/swf/player.swf?autostart=true','player','{{ live.width }}','{{ live.height }}','9');
-  s1.addParam('allowfullscreen','true');
-  s1.addParam('allowscriptaccess','always');
-  s1.addParam('flashvars','repeat=list&file={{ live.url }}');
-  s1.write('preview');
+<script type="text/javascript">
+
+$(function(){          
+  jwplayer("directo-sbs").setup({
+      file: "{{ live.url }}/{{ live.sourcename }}",
+      autostart: true,
+      width: "100%",
+      stretching: "exactfit",
+      aspectratio: "16:9",
+      logo: {hide: true},
+      analytics: {enabled: false}
+  });
+});
+
 </script>
