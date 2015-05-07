@@ -184,7 +184,7 @@ class MediaPackageController extends Controller
                 $track->setTags(array("opencast"));
                 $track->setUrl($url);
                 $track->setMimeType($mime);
-                $track->setDuration($duration);
+                $track->setDuration($duration/1000);
                 $track->setAcodec($acodec);
                 $track->setVcodec($vcodec);
 
