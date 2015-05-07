@@ -11,8 +11,9 @@
                           data: $(this).serialize(),
                           success: function(response){
                                     $('#{{ role.id }}_person_mms{{ template }}').html(response);
-                                    var template = '{{ template }}';
-                                    if ('_template' == template) $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}');
+                                    {% if template != '_template' %}                                    
+                                    $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}');
+                                    {% endif %}
                                     success('{% trans %}Person associated to Multimedia Object{% endtrans %} \'{{ mm.getTitle() }}\' {% trans %}with role{% endtrans %} \'{{ role.getName() }}\' {% trans %}successfully updated{% endtrans %}.');
                           },
                           error: function(jqXHR, textStatus, errorThrown){
