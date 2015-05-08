@@ -80,7 +80,7 @@
         <!-- PERSONS ACT -->
         <div class="persons" style="overflow: hidden; padding-top: 6px;">
         {% for role in mm.getRoles() if role.getDisplay() %}
-          {% for person in mm.getPeopleInMultimediaObjectByRole(role) %}
+          {% for person in mm.getPeopleByRole(role) %}
             <div>
               <div class="person">
 	            {{ role.getText() }}
