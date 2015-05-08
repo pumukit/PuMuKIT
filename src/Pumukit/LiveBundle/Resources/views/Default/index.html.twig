@@ -1,1 +1,33 @@
-Hello {{ name }}!
+{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('bundles/pumukitwebtv/js/jwplayer/jwplayer.js') }}" type="text/javascript"></script>
+{% endblock%}
+
+{% block title %}{{ parent() }} - {{ live.name }}{% endblock %}
+
+{% block body_without_bar %}
+
+<div id="directo-sbs" style="width:100%; margin: 0px auto;"></div>      
+
+<script type="text/javascript">
+
+$(function(){          
+  jwplayer("directo-sbs").setup({
+      file: "{{ live.url }}/{{ live.sourcename }}",
+      autostart: true,
+      width: "100%",
+      stretching: "exactfit",
+      aspectratio: "16:9",
+      logo: {hide: true},
+      analytics: {enabled: false}
+  });
+});
+
+</script>
+
+{# include('PumukitLiveBundle:Default:info.html.twig') #}
+
+
+{% endblock %}
