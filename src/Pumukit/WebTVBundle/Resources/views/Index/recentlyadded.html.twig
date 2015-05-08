@@ -4,7 +4,7 @@
 	{% for multimediaObject in multimediaObjectsSortedByPublicDate %}
 
 	<!--Objeto multimedia-->
-    <div style="cursor:pointer;" onclick="window.location='/video/{{multimediaObject.getId()}}'">
+    <div>
       	<div class="pumukit_mmobjs" style="float:left; width:100%;">
         	<div class="pumukit_mmobj" style="float:left;">
         		<div class="picture" style="position: relative;
@@ -13,7 +13,7 @@
             		float: left;
             		margin: 10px;
             		margin-right: 20px;">
-            		<a href="/video/{{multimediaObject.getId()}}">
+            		<a href="{{ path('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.getId})}}">
               			<img src="{{ multimediaObject|first_url_pic(true) }}"></img>
                 		<span class="video-duration" style="top: 4px;
                      		position: absolute;
@@ -38,7 +38,7 @@
           		</div>
 
           		<div class="info" style="padding-top: 3%;">
-            		<div class="title"><a href="/video/{{multimediaObject.getId()}}">{{multimediaObject.getTitle()}}</a></div>
+            		<div class="title"><a href="{{ path('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.getId})}}">{{multimediaObject.getTitle()}}</a></div>
             		<div class="subtitle"><abbr title="{{multimediaObject.getSubtitle()}}">{{multimediaObject.getSubtitle()}}</abbr></div>
             		<div class="date" style="font-size: 85%;">{{multimediaObject.getRecordDate()|date("d/m/Y")}}</div>
                   	<div class="mmobj_bottom" style="bottom: 16px;right:16px;">Visto {{multimediaObject.getNumview()}} veces</div>
