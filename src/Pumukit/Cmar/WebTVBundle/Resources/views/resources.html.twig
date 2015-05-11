@@ -1,7 +1,7 @@
 <div class="usctv_mmobjs">
 {% for resource in resources %}
   <div class="usctv_mmobj">
-    {# if resource is instance_of_series #}{% if false %}
+    {% if resource.isCollection() %}
     <figure class="album" style="margin:2px 20px 2px 2px; ">
       <a href="{{ url('pumukit_webtv_series_index', {'id': resource.id}) }}">
         {% set series_pic = resource.getFirstUrlPic() %}
@@ -27,7 +27,7 @@
     {% endif %}
     <div class="info">
       <div class="title">
-        {# if resource is instance_of_series #}{% if false %}
+        {% if resource.isCollection() %}
         <a href="{{ url('pumukit_webtv_series_index', {'id': resource.id}) }}" >
         {% else %}
         <a href="{{ url('pumukit_webtv_multimediaobject_index', {'id': resource.id}) }}" >
@@ -54,7 +54,7 @@
         </abbr>
       {% endif %}
     </div>
-    {# if resource is not instance_of_series #}{% if true %}
+    {% if not resource.isCollection() %}
     <div style="color:#A2A2A2; position: absolute; left:160px; bottom: 32px; ">
       {% set master_track = resource.getTrackWithTag('master') %}
       {% if master_track %}
@@ -63,14 +63,14 @@
     </div>
     {% endif %}
     <div class="date">
-      {# if resource is instance_of_series #}{% if false %}
+      {% if resource.isCollection() %}
         {{ resource.getPublicDate()|date('d-m-Y') }}
       {% else %}
         {{ resource.getRecordDate()|date('d-m-Y') }}
       {% endif %}
     </div>
     <div class="mmobj_bottom">
-      {# if resource is instance_of_series #}{% if false %}
+      {% if resource.isCollection() %}
       {% set tags = [] %}
         {% for mm in resource %}
           {% set tags = tags|merge(mm.getTags()) %}
@@ -79,7 +79,7 @@
         {% set tags = resource.getTags() %}
       {% endif %}
       {% include 'PumukitWebTVBundle::tags.html.twig' with {'show_tag': show_tag, 'tags': tags } %}
-      {% if ((viewed is not empty)) %} {# and (resource is not instance_of_series)) %} #}
+      {% if ((viewed is not empty) and (not resource.isCollection())) %} 
         {% trans %}Views{% endtrans %}:&nbsp;{{ resource.getNumView() }}&nbsp;{% if (resource.getNumView() == 1) %}{% trans %}time{% endtrans %}{% else %}{% trans %}times{% endtrans %}{% endif %}
       {% endif %}
     </div>
