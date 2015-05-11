@@ -478,7 +478,7 @@ class JobService
         return $this->createTrack($multimediaObject, $pathEnd, $profileName, $language, $description);
     }
 
-    private function createTrack(MultimediaObject $multimediaObject, $pathEnd, $profileName, $language = null, $description = array())
+    public function createTrack(MultimediaObject $multimediaObject, $pathEnd, $profileName, $language = null, $description = array())
     {
         $profile = $this->profileService->getProfile($profileName);
 
