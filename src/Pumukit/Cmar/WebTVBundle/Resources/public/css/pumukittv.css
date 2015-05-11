@@ -263,7 +263,7 @@ div.usctv_series .date{
 div.other_mmobjs{
   background-color: #F1F0F0;
   overflow: hidden;
-  margin-top: 30px;
+  *margin-top: 30px;
 }
 
 div.other_mmobjs_mh{
