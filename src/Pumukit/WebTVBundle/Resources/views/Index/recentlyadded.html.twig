@@ -1,9 +1,41 @@
 <div style="width: 49%; float: right;">
 	<h2>Recently added:</h2>
 
-	{% for multimediaObject in multimediaObjectsSortedByPublicDate %}
+	{% for element in last %}
+    {% if element.isCollection() %}
 
-	<!--Objeto multimedia-->
+	<!-- Series -->
+    <div>
+      	<div class="pumukit_mmobjs" style="float:left; width:100%;">
+        	<div class="pumukit_mmobj" style="float:left;">
+              <figure class="album">  
+                <a href="{{ path('pumukit_webtv_series_index', {'id': element.getId()}) }}">
+                  <div class="picture">
+                    <img src="{{ element|first_url_pic(true) }}"></img>
+                  </div>
+                  <div class="picture">
+                    <img src="{{ element|first_url_pic(true) }}"></img>
+                  </div>
+                  <div class="picture">
+                    <img src="{{ element|first_url_pic(true) }}"></img>
+                  </div>
+                </a>
+              </figure>
+
+          	  <div class="info" style="padding-top: 3%;">
+            	<div class="title"><a href="{{ path('pumukit_webtv_series_index', {'id': element.getId})}}">{{element.getTitle()}}</a></div>
+            	<div class="subtitle"><abbr title="{{element.getSubtitle()}}">{{element.getSubtitle()}}</abbr></div>
+            	<div class="date" style="font-size: 85%;">{{element.getPublicDate()|date("d/m/Y")}}</div>
+                <div class="mmobj_bottom" style="bottom: 16px;right:16px;">{{element.getMultimediaObjects()|length}} videos</div>
+          	  </div>
+
+        	</div>
+      	</div>
+    </div>
+
+    {% else %}
+
+	<!-- Multimedia object -->
     <div>
       	<div class="pumukit_mmobjs" style="float:left; width:100%;">
         	<div class="pumukit_mmobj" style="float:left;">
@@ -13,8 +45,8 @@
             		float: left;
             		margin: 10px;
             		margin-right: 20px;">
-            		<a href="{{ path('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.getId})}}">
-              			<img src="{{ multimediaObject|first_url_pic(true) }}"></img>
+            		<a href="{{ path('pumukit_webtv_multimediaobject_index', {'id': element.getId})}}">
+              			<img src="{{ element|first_url_pic(true) }}"></img>
                 		<span class="video-duration" style="top: 4px;
                      		position: absolute;
                       		z-index:10; 
@@ -32,21 +64,22 @@
                       		vertical-align: top;
                       		zoom: 1;
                       		display: inline-block;
-                      		font-family: Verdana, Arial, sans-serif;">{{ multimediaObject.getDurationString }}
+                      		font-family: Verdana, Arial, sans-serif;">{{ element.getDurationString }}
                     	</span>
             		</a>
           		</div>
 
           		<div class="info" style="padding-top: 3%;">
-            		<div class="title"><a href="{{ path('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.getId})}}">{{multimediaObject.getTitle()}}</a></div>
-            		<div class="subtitle"><abbr title="{{multimediaObject.getSubtitle()}}">{{multimediaObject.getSubtitle()}}</abbr></div>
-            		<div class="date" style="font-size: 85%;">{{multimediaObject.getRecordDate()|date("d/m/Y")}}</div>
-                  	<div class="mmobj_bottom" style="bottom: 16px;right:16px;">Visto {{multimediaObject.getNumview()}} veces</div>
+            		<div class="title"><a href="{{ path('pumukit_webtv_multimediaobject_index', {'id': element.getId})}}">{{element.getTitle()}}</a></div>
+            		<div class="subtitle"><abbr title="{{element.getSubtitle()}}">{{element.getSubtitle()}}</abbr></div>
+            		<div class="date" style="font-size: 85%;">{{element.getRecordDate()|date("d/m/Y")}}</div>
+                  	<div class="mmobj_bottom" style="bottom: 16px;right:16px;">Visto {{element.getNumview()}} veces</div>
           		</div>
 
         	</div>
       	</div>
     </div>
 
+    {% endif %}
     {% endfor %}
 </div>

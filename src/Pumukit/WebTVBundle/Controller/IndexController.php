@@ -51,9 +51,8 @@ class IndexController extends Controller
      */
     public function recentlyaddedAction()
     {
-      $repository = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
-      $multimediaObjectsSortedByPublicDate = $repository->findStandardBy(array(), array('public_date' => -1), 3, 0);
-      return array('multimediaObjectsSortedByPublicDate' => $multimediaObjectsSortedByPublicDate);
+      $last = $this->get('pumukitschema.announce')->getLast(3);
+      return array('last' => $last);
     }
 
     /**
