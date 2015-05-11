@@ -24,7 +24,7 @@
         <label for="profile" class="control-label">{% trans %}Profile{% endtrans %}</label>        
         <select name="profile" id="profile" class="form-control" disabled>
           {% for key in profiles|keys %}
-          <option value="{{ key }}" id="" {{ track.getTags()|profile == key ?'checked="checked"' :'' }}>{{ key }}</option>
+              <option value="{{ key }}" {{ track.getTags()|profile == key ?'selected="selected"' :'' }}>{{ key }}</option>
           {% endfor %}
         </select>
       </div>

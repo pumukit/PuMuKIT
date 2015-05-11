@@ -1,0 +1,49 @@
+<div id="directo_info" >
+  <table id="directo_announces">		
+    <thead>
+      <tr> 
+        <td valign="top" colspan="2">
+          {% trans %}Next live event{% endtrans %}
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="impar"> 
+        <td width="25%" valign="top">
+          <div align="right">E<font size="1">VENTO</font><br/></div>
+        </td>
+        <td width="75%"><div align="center">
+          <strong>{# event.name #}</strong></div>
+        </td>
+      </tr>
+      <tr class="par">
+        <td width="22%" valign="top">
+          <div align="right">L<font size="1">UGAR</font></div>
+        </td>
+        <td width="78%"><div align="center">
+          <strong>{# event.place #}</strong></div>
+        </td>
+      </tr>
+      <tr class="impar"> 
+        <td valign="top"> 
+          <div align="right">D<font size="1">ATA</font></div>
+        </td>
+        <td>
+          <div align="center"><strong><font color="#000066">{# event.date|date('d/m/Y') #}</font></strong></div>
+        </td>
+      </tr>
+      <tr class="par"> 
+        <td valign="top"> 
+          <div align="right">H<font size="1">ORA</font></div>
+        </td>
+        <td>
+          <div align="center"><strong><font color="#000066">{# event.date|('H:i') #}</font></strong></div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<br />
+<br />
+<br />

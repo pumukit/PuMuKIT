@@ -32,6 +32,8 @@ class LiveType extends AbstractType
                         'label' => $this->translator->trans('Description', array(), null, $this->locale)))
             ->add('url', 'url',
                   array('label' => $this->translator->trans('URL', array(), null, $this->locale)))
+            ->add('source_name', 'text',
+                  array('label' => $this->translator->trans('STREAM', array(), null, $this->locale)))
             ->add('broadcasting', 'choice',
                   array(
                         'choices' => array('0' => 'On hold', '1' => 'Live Broadcasting'),
@@ -52,8 +54,6 @@ class LiveType extends AbstractType
                   array(
                         'required' => false,
                         'label' => $this->translator->trans('IP source', array(), null, $this->locale)))
-            ->add('source_name', 'text',
-                  array('label' => $this->translator->trans('STREAM', array(), null, $this->locale)))
             ->add('index_play', 'checkbox', array('required' => false));
     }
 

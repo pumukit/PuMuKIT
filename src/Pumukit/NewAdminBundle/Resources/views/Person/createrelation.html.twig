@@ -4,16 +4,17 @@
 </div>
 <div class="modal-body">
   <form autocomplete="off"
-        onsubmit="$('#myAuxModal{{ template }}').modal('hide');
+        onsubmit="$('#myModal').modal('hide');
                   $.ajax({
                           url: '{{ path('pumukitnewadmin_person_create_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}',
                           type: 'POST',
                           data: $(this).serialize(),
                           success: function(response){
                                     $('#{{ role.id }}_person_mms{{ template }}').html(response);
-                                    var template = '{{ template }}';
-                                    if ('_template' == template) $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}');
-                                    success('{% trans %}Person successfully associated to Multimedia Object{% endtrans %} *{{ mm.getTitle() }}* {% trans %}with role{% endtrans %} *{{ role.getName() }}*');
+                                    {% if template != '_template' %}
+                                    $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}');
+                                    {% endif %}
+                                    success('{% trans %}Person successfully associated to Multimedia Object{% endtrans %} \'{{ mm.getTitle() }}\' {% trans %}with role{% endtrans %} \'{{ role.getName() }}\'');
                           },
                           error: function(jqXHR, textStatus, errorThrown){
                                     var textError = jqXHR.responseText;

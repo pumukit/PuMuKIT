@@ -8,3 +8,10 @@
     <button type="button" class="btn btn-primary btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
   </div>
 </div>
+
+<script>
+$('#myModal').on('hide.bs.modal', function (e) {
+    var player = document.getElementById('player_{{ track.id }}');
+    if (player) player.pause();
+})
+</script>

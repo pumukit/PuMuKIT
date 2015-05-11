@@ -6,7 +6,7 @@
     </div>
 {% endif %}
 
-<div style="cursor:pointer;" onclick="window.location='/video/{{object.getId()}}'">
+<div>
     <div class="pumukit_mmobjs" style="width:50%; float:left;">
         <div class="pumukit_mmobj" style="float:left;">
             <div class="picture" style="position: relative;
@@ -15,7 +15,7 @@
             	float: left;
             	margin: 10px;
             	margin-right: 20px;">
-            	<a href="/video/{{object.getId()}}">
+            	<a href="{{ path('pumukit_webtv_multimediaobject_index', {'id': object.getId()}) }}">
               		<img src="{{ object|first_url_pic(true) }}"></img>
                     <span class="video-duration" style="top: 4px;
                     	position: absolute;
@@ -34,13 +34,13 @@
                       	vertical-align: top;
                       	zoom: 1;
                       	display: inline-block;
-                      	font-family: Verdana, Arial, sans-serif;">{{object.getDuration()|date("i:s")}}
+                      	font-family: Verdana, Arial, sans-serif;">{{ object.getDurationString() }}
                     </span>
             	</a>
           	</div>
 
           	<div class="info" style="padding-top: 3%;">
-            	<div class="title"><a href="/video/{{object.getId()}}">{{object.getTitle()}}</a></div>
+            	<div class="title"><a href="{{ path('pumukit_webtv_multimediaobject_index', {'id': object.getId()}) }}">{{object.getTitle()}}</a></div>
             	<div class="subtitle"><abbr title="{{object.getSubtitle()}}">{{object.getSubtitle()}}</abbr></div>
             	<div class="date" style="font-size: 85%;">{{object.getRecordDate()|date("d/m/Y")}}</div>
             	<div class="mmobj_bottom" style="bottom: 16px;right:16px;">Visto {{object.getNumview()}} veces</div>

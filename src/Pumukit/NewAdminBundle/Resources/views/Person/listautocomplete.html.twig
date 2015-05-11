@@ -18,9 +18,10 @@
             onclick="if('' != $('#person_id').val()){
                                                      var route = '{{ path('pumukitnewadmin_person_link', {'id': '__personId__', 'roleId': role.id, 'mmId': mm.id} ) }}';
                                                      var personId = $('#person_id').val();
-                                                     $('#{{ role.id }}_person_mms{{ template }}').load(route.replace('__personId__', personId), {'_method':'POST'}, function(){success('{% trans %}Person successfully associated to Multimedia Object{% endtrans %} *{{ mm.getTitle() }}* {% trans %}with role{% endtrans %} *{{ role.getName() }}*');});
-                                                     var template = '{{ template }}';
-                                                     if ('_template' == template) $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', {'_method':'POST'});
+                                                     $('#{{ role.id }}_person_mms{{ template }}').load(route.replace('__personId__', personId), {'_method':'POST'}, function(){
+                                                         success('{% trans %}Person successfully associated to Multimedia Object{% endtrans %} \'{{ mm.getTitle() }}\' {% trans %}with role{% endtrans %} \'{{ role.getName() }}\'');
+                                                         {% if template != '_template' %} $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', {'_method':'POST'}); {%endif%}
+                                                     });
                                                      $('#myAuxModal{{ template }}').modal('hide');
                      }else{
                            alert('{% trans %}Select before a person{% endtrans %}');
@@ -28,11 +29,9 @@
                      return false;">
       {% trans %}Use{% endtrans %}
     </button>
-    <button type="button" class="btn btn-pumukit btn-raised" data-toggle="modal" data-dismiss="modal" data-target="#myAuxModal{{ template }}"
+    <button type="button" class="btn btn-pumukit btn-raised" data-toggle="modal" data-dismiss="modal" data-target="#myModal"
             id="create_relation" href="#"
             onclick="var aux = $('#name').val();
-                     $('#name').val('{% trans %}name to search for{% endtrans %}');
-	                 if (aux == '{% trans %}name to search for{% endtrans %}') aux='';
                      var route = '{{ path('pumukitnewadmin_person_create_relation', {'mmId': mm.id, 'roleId': role.id, 'name': '__aux__'}) }}';
                      $('#create_relation').attr('href', encodeURI(route.replace('__aux__', aux))); return true;">
       {% trans %}New{% endtrans %}
