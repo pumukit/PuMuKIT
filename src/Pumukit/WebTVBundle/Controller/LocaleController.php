@@ -21,10 +21,16 @@ class LocaleController extends Controller
     $baseUrl = $request->getBaseUrl();
     $lastPath = substr($referer, strpos($referer, $baseUrl) + strlen($baseUrl));
     $route = $this->get('router')->getMatcher()->match($lastPath);    
-    //TODO
-    dump($route);
 
-    $url = $this->generateUrl($route["_route"], $route);
+    //array_filter ARRAY_FILTER_USE_BOTH only in 5.6
+    $params = array();
+    foreach($route as $k => $v) {
+      if ("_" != $k[0]) {
+        $params[$k] = $v;
+      }
+    }
+
+    $url = $this->generateUrl($route["_route"], $params);
     return $this->redirect($url);
   }
 }
