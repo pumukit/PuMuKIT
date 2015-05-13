@@ -14,7 +14,6 @@ class ElementTest extends \PHPUnit_Framework_TestCase
         $path = '/mnt/video/123/23435.mp4';
         $mime = 'video/mpeg4';
         $hide = false;
-        $format = 'formato';
         $description = 'element description';
 
         $element = new Element();
@@ -24,7 +23,6 @@ class ElementTest extends \PHPUnit_Framework_TestCase
         $element->setPath($path);
         $element->setMimeType($mime);
         $element->setHide($hide);
-        $element->setFormat($format);
         $element->setDescription($description);
 
         $this->assertEquals($tags, $element->getTags());
@@ -33,7 +31,6 @@ class ElementTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($path, $element->getPath());
         $this->assertEquals($mime, $element->getMimeType());
         $this->assertFalse($hide, $element->getHide());
-        $this->assertEquals($format, $element->getFormat());
         $this->assertEquals($description, $element->getDescription());
     }
 

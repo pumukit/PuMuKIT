@@ -46,13 +46,6 @@ class Element
   private $path;
 
   /**
-   * @var string $format
-   *
-   * @MongoDB\String
-   */
-  private $format;
-
-  /**
    * @var string $mime_type
    *
    * @MongoDB\String
@@ -244,26 +237,6 @@ class Element
   public function getPath()
   {
       return $this->path;
-  }
-
-  /**
-   * Set format
-   *
-   * @param string $format
-   */
-  public function setFormat($format)
-  {
-      $this->format = $format;
-  }
-
-  /**
-   * Get format
-   *
-   * @return string
-   */
-  public function getFormat()
-  {
-      return $this->format;
   }
 
   /**
