@@ -117,11 +117,11 @@ class TagRepositoryTest extends WebTestCase
         $tagB2 = $this->repo->findOneByCod("B2");
         $tagB2A = $this->repo->findOneByCod("B2A");
 
-        $this->assertTrue($tagB2->isChildrenOf($tagB));
-        $this->assertFalse($tagB->isChildrenOf($tagB2));
-        $this->assertFalse($tagB2A->isChildrenOf($tagB));
-        $this->assertFalse($tagA->isChildrenOf($tagB));
-        $this->assertFalse($tagB->isChildrenOf($tagB));
+        $this->assertTrue($tagB2->isChildOf($tagB));
+        $this->assertFalse($tagB->isChildOf($tagB2));
+        $this->assertFalse($tagB2A->isChildOf($tagB));
+        $this->assertFalse($tagA->isChildOf($tagB));
+        $this->assertFalse($tagB->isChildOf($tagB));
 
         $this->assertTrue($tagB2->isDescendantOf($tagB));
         $this->assertFalse($tagB->isDescendantOf($tagB2));
