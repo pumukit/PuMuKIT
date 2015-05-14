@@ -243,6 +243,6 @@ class SeriesType
    */
   public function __toString()
   {
-      return $this->name($this->locale);
+      return $this->getName();
   }
 }
