@@ -26,22 +26,26 @@ class AnnounceService
           $i = 0;
           $iMms = 0;
           $iSeries = 0;
-          // TODO: Review workaround
-          if ($lastMms) {
-              while($i < $limit){
-                  $auxMms = $lastMms[$iMms];
-                  $auxSeries = $lastSeries[$iSeries];
-                  if ($auxMms->getPublicDate() > $auxSeries->getPublicDate() ) {
-                      $return[] = $auxMms;
-                      $iMms++;
-                  } else {
-                      $return[] = $auxSeries;
-                      $iSeries++;
-                  }
-                  $i++;
+
+          while($i++ < $limit){
+              if ((!isset($lastMms[$iMms])) && (!isset($lastSeries[$iMms]))) break;
+              if (!isset($lastMms[$iMms])) {
+                $return[] = $lastSeries[$iSeries++];
+              } elseif (!isset($lastSeries[$iSeries])) {
+                $return[] = $lastMms[$iMms++];
+              } else {
+                $auxMms = $lastMms[$iMms];
+                $auxSeries = $lastSeries[$iSeries];
+                if ($auxMms->getPublicDate() > $auxSeries->getPublicDate() ) {
+                    $return[] = $auxMms;
+                    $iMms++;
+                } else {
+                    $return[] = $auxSeries;
+                    $iSeries++;
+                }
               }
           }
-          
+
           return $return;
       }
 }
