@@ -410,9 +410,16 @@ class EmbeddedTag
    *
    * @return bool
    */
-  public function isChildrenOf($tag)
+  public function isChildOf($tag)
   {
-      return $tag->getCod() == $this->getParent()->getCod();
+      if ($this->isDescendantOf($tag)) {
+          $suffixPath = substr($this->getPath(), strlen($tag->getPath()), strlen($this->getPath()));
+          if (1 === substr_count($suffixPath, "|")) {
+              return true;
+          }
+      }
+
+      return false;
   }
 
   /**

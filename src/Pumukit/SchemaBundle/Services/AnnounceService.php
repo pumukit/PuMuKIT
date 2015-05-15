@@ -26,17 +26,20 @@ class AnnounceService
           $i = 0;
           $iMms = 0;
           $iSeries = 0;
-          while($i < $limit){
-            $auxMms = $lastMms[$iMms];
-            $auxSeries = $lastSeries[$iSeries];
-            if ($auxMms->getPublicDate() > $auxSeries->getPublicDate() ) {
-              $return[] = $auxMms;
-              $iMms++;
-            } else {
-              $return[] = $auxSeries;
-              $iSeries++;
-            }
-            $i++;
+          // TODO: Review workaround
+          if ($lastMms) {
+              while($i < $limit){
+                  $auxMms = $lastMms[$iMms];
+                  $auxSeries = $lastSeries[$iSeries];
+                  if ($auxMms->getPublicDate() > $auxSeries->getPublicDate() ) {
+                      $return[] = $auxMms;
+                      $iMms++;
+                  } else {
+                      $return[] = $auxSeries;
+                      $iSeries++;
+                  }
+                  $i++;
+              }
           }
           
           return $return;
