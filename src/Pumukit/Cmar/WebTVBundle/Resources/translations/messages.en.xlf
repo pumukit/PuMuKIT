@@ -174,6 +174,10 @@
         <source>Project CEI10-1-0006 infrastructures funded by the Spanish Ministry of Economy and Competitiveness in the framework of the programme INNOCAMPUS anda co-funded with European Regional Development Funds (FEDER)</source>
         <target>Project CEI10-1-0006 infrastructures funded by the Spanish Ministry of Economy and Competitiveness in the framework of the programme INNOCAMPUS anda co-funded with European Regional Development Funds (FEDER)</target>
       </trans-unit>
+      <trans-unit id="040b059dabb8b53ba029edbccdeb414e" resname="Date of holding">
+        <source>Date of holding</source>
+        <target>Date of holding</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

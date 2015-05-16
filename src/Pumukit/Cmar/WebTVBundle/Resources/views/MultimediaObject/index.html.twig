@@ -14,7 +14,7 @@
     </p>
 	<div class="grid_10 mm_player">
       <div class="date">
-        Date of holding: {{ multimediaObject.getRecordDate()|date("d/m/Y")}}
+        {% trans %}Date of holding{% endtrans %}: {{ multimediaObject.getRecordDate()|date("d/m/Y")}}
       </div>
 	  {% include 'PumukitWebTVBundle:MultimediaObject:player.html.twig' with {'width': '620', 'height': '465'} %}
 	  {% include 'PumukitWebTVBundle:MultimediaObject:info.html.twig' %}
