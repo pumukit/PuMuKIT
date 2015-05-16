@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+    <body>
+      <trans-unit id="b900119b283c0339c634733d27d98912" resname="Health Sciences">
+        <source>Health Sciences</source>
+        <target>Health Sciences</target>
+      </trans-unit>
+      <trans-unit id="b115d9cc059510376c77ed4edd343902" resname="Humanities">
+        <source>Humanities</source>
+        <target>Humanities</target>
+      </trans-unit>
+      <trans-unit id="8e8790229c666128fa88ff6e76de8565" resname="Experimental sciences">
+        <source>Experimental sciences</source>
+        <target>Experimental sciences</target>
+      </trans-unit>
+      <trans-unit id="5dc3368bd1d6e900406c812bbf1e5a86" resname="Technical science">
+        <source>Technical science</source>
+        <target>Technical science</target>
+      </trans-unit>
+      <trans-unit id="1741e76bc095bfafab0bdd36b2d853b9" resname="Social and Legal sciences">
+        <source>Social and Legal sciences</source>
+        <target>Social and Legal sciences</target>
+      </trans-unit>
+      <trans-unit id="d163fae6668b451e5ba411e30dd142cd" resname="PuMuKIT">
+        <source>PuMuKIT</source>
+        <target>PuMuKIT</target>
+      </trans-unit>
+      <trans-unit id="a2e767b37fcde6a6ddafb5799deffc0e" resname="PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.">
+        <source>PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.</source>
+        <target>PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.</target>
+      </trans-unit>
+      <trans-unit id="b024381f0498329c791a3991c10660af" resname="No title">
+        <source>No title</source>
+        <target>No title</target>
+      </trans-unit>
+      <trans-unit id="9aeb3ef76717905e375b8c8604d48c11" resname="Videos you may also be interested in">
+        <source>Videos you may also be interested in</source>
+        <target>Videos you may also be interested in</target>
+      </trans-unit>
+      <trans-unit id="c69c53aeab6542e087ba6b2d175ca78b" resname="Videos from same Series">
+        <source>Videos from same Series</source>
+        <target>Videos from same Series</target>
+      </trans-unit>
+      <trans-unit id="d8b432ad04a16f807bd4f10794c069fa" resname="Record Date">
+        <source>Record Date</source>
+        <target>Record Date</target>
+      </trans-unit>
+      <trans-unit id="34e2d1989a1dbf75cd631596133ee5ee" resname="Video">
+        <source>Video</source>
+        <target>Video</target>
+      </trans-unit>
+      <trans-unit id="5e729042e30967c9d6f65c6eab73e2fe" resname="Viewed">
+        <source>Viewed</source>
+        <target>Viewed</target>
+      </trans-unit>
+      <trans-unit id="07cc694b9b3fc636710fa08b6922c42b" resname="time">
+        <source>time</source>
+        <target>time</target>
+      </trans-unit>
+      <trans-unit id="f2b798f672d4b42c0359ced11d4f10cd" resname="times">
+        <source>times</source>
+        <target>times</target>
+      </trans-unit>
+      <trans-unit id="46ff8516a0561d872c57da1f6f5db25c" resname="{0}times|{1}time|]1,Inf]times">
+        <source>{0}times|{1}time|]1,Inf]times</source>
+        <target>{0}times|{1}time|]1,Inf]times</target>
+      </trans-unit>
+      <trans-unit id="9d948e617b083222afc868add2f50ec2" resname="Series">
+        <source>Series</source>
+        <target>Series</target>
+      </trans-unit>
+      <trans-unit id="554cfab3938e21d9270bd6b75931f96f" resname="Videos">
+        <source>Videos</source>
+        <target>Videos</target>
+      </trans-unit>
+      <trans-unit id="6a7e73161603d87b26a8eac49dab0a9c" resname="Hours">
+        <source>Hours</source>
+        <target>Hours</target>
+      </trans-unit>
+      <trans-unit id="cd40fd354c1b02d89c9f06708c17dbce" resname="There are no videos with these specifications">
+        <source>There are no videos with these specifications</source>
+        <target>There are no videos with these specifications</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
