@@ -18,8 +18,8 @@ class LocaleController extends Controller
     $this->get('session')->set('_locale', $locale);
     
     $referer = $request->headers->get("referer");
-    $baseUrl = $request->getBaseUrl();
-    $lastPath = substr($referer, strpos($referer, $baseUrl) + strlen($baseUrl));
+    $base = $request->getUriForPath("");
+    $lastPath = str_replace($base, "", $referer);
     $route = $this->get('router')->getMatcher()->match($lastPath);    
 
     //array_filter ARRAY_FILTER_USE_BOTH only in 5.6
