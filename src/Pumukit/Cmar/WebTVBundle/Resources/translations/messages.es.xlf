@@ -1,170 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="es" datatype="plaintext" original="file.ext">
+  <file source-language="en" target-language="gl" datatype="plaintext" original="file.ext">
     <body>
       <trans-unit id="28d0cabca3861781b4d2f0cb6d020033" resname="FEATUREED VIDEOS">
         <source>FEATUREED VIDEOS</source>
-        <target>__FEATUREED VIDEOS</target>
+        <target>VIDEOS DESTACADOS</target>
       </trans-unit>
       <trans-unit id="e3cf434f4a7120e24f06be35fb1f77fb" resname="Most viewed in last month">
         <source>Most viewed in last month</source>
-        <target>__Most viewed in last month</target>
+        <target>Más vistos en el último mes</target>
       </trans-unit>
       <trans-unit id="8de56fbeeb825a9f65910ee399469698" resname="Last added">
         <source>Last added</source>
-        <target>__Last added</target>
+        <target>Últimos añadidos</target>
       </trans-unit>
       <trans-unit id="61176c2ad87e83612200c5afcd912a37" resname="Main Conferences">
         <source>Main Conferences</source>
-        <target>__Main Conferences</target>
+        <target>Grandes Conferencias</target>
       </trans-unit>
       <trans-unit id="3779c2d7efbb3edb4396810b5a6d89e2" resname="LIVE BROADCASTING">
         <source>LIVE BROADCASTING</source>
-        <target>__LIVE BROADCASTING</target>
+        <target>EMISIÓN EN DIRECTO</target>
       </trans-unit>
       <trans-unit id="fd361440ab0f50cab15c33bf6a9af847" resname="Lectures">
         <source>Lectures</source>
-        <target>__Lectures</target>
+        <target>Clases</target>
       </trans-unit>
       <trans-unit id="d2c1902ca812bbf82c182cd61903f4a0" resname="Project Support">
         <source>Project Support</source>
-        <target>__Project Support</target>
+        <target>Apoyo al Proyecto</target>
       </trans-unit>
       <trans-unit id="6b5e8e69f036b96821cf755e1bbdfd73" resname="Promotional">
         <source>Promotional</source>
-        <target>__Promotional</target>
+        <target>Promocionales</target>
       </trans-unit>
       <trans-unit id="badd3316a0987acbd75a76ecf1138851" resname="Press Area">
         <source>Press Area</source>
-        <target>__Press Area</target>
+        <target>Área de Prensa</target>
       </trans-unit>
       <trans-unit id="34e2d1989a1dbf75cd631596133ee5ee" resname="Video">
         <source>Video</source>
-        <target>__Video</target>
+        <target>Vídeo</target>
       </trans-unit>
       <trans-unit id="554cfab3938e21d9270bd6b75931f96f" resname="Videos">
         <source>Videos</source>
-        <target>__Videos</target>
+        <target>Vídeos</target>
       </trans-unit>
       <trans-unit id="b024381f0498329c791a3991c10660af" resname="No title">
         <source>No title</source>
-        <target>__No title</target>
+        <target>Sin título</target>
       </trans-unit>
       <trans-unit id="5607981cfe6710000cb5091bd0a614f4" resname="Video language">
         <source>Video language</source>
-        <target>__Video language</target>
+        <target>Idioma del vídeo</target>
       </trans-unit>
       <trans-unit id="5e729042e30967c9d6f65c6eab73e2fe" resname="Viewed">
         <source>Viewed</source>
-        <target>__Viewed</target>
+        <target>Visto</target>
       </trans-unit>
       <trans-unit id="07cc694b9b3fc636710fa08b6922c42b" resname="time">
         <source>time</source>
-        <target>__time</target>
+        <target>vez</target>
       </trans-unit>
       <trans-unit id="f2b798f672d4b42c0359ced11d4f10cd" resname="times">
         <source>times</source>
-        <target>__times</target>
+        <target>veces</target>
       </trans-unit>
       <trans-unit id="c6b3a19665dfe8cea552ed11e670e76a" resname="Share on facebook">
         <source>Share on facebook</source>
-        <target>__Share on facebook</target>
+        <target>Compartir en facebook</target>
       </trans-unit>
       <trans-unit id="bf45173a6e925cf295e5d3999cfbcba7" resname="Share on twitter">
         <source>Share on twitter</source>
-        <target>__Share on twitter</target>
+        <target>Compartir en twitter</target>
       </trans-unit>
       <trans-unit id="7b553440eb08e2ac61539b9a16d51815" resname="Share on delicious">
         <source>Share on delicious</source>
-        <target>__Share on delicious</target>
+        <target>Compartir en delicious</target>
       </trans-unit>
       <trans-unit id="c4c9af2dec5e21d98d9af578e8686120" resname="Share on google buz">
         <source>Share on google buz</source>
-        <target>__Share on google buz</target>
+        <target>Compartir en google buz</target>
       </trans-unit>
       <trans-unit id="710533dd879dd1202e5c73b27705bf02" resname="HOME">
         <source>HOME</source>
-        <target>__HOME</target>
+        <target>INICIO</target>
       </trans-unit>
       <trans-unit id="ada3afdc701cddda1efebb3200afdf91" resname="Media library">
         <source>Media library</source>
-        <target>__Media library</target>
+        <target>Mediateca</target>
       </trans-unit>
       <trans-unit id="9d948e617b083222afc868add2f50ec2" resname="Series">
         <source>Series</source>
-        <target>__Series</target>
+        <target>Series</target>
       </trans-unit>
       <trans-unit id="6a7e73161603d87b26a8eac49dab0a9c" resname="Hours">
         <source>Hours</source>
-        <target>__Hours</target>
+        <target>Horas</target>
       </trans-unit>
       <trans-unit id="13348442cc6a27032d2b4aa28b75a5d3" resname="Search">
         <source>Search</source>
-        <target>__Search</target>
+        <target>Búsqueda</target>
       </trans-unit>
       <trans-unit id="ed4832a84ee072b00a6740f657183598" resname="Views">
         <source>Views</source>
-        <target>__Views</target>
+        <target>Visto</target>
       </trans-unit>
       <trans-unit id="af1b98adf7f686b84cd0b443e022b7a0" resname="Categories">
         <source>Categories</source>
-        <target>__Categories</target>
+        <target>Categorías</target>
       </trans-unit>
       <trans-unit id="6fc9545f1087ceaf605d5cbbcb8481eb" resname="Congresses">
         <source>Congresses</source>
-        <target>__Congresses</target>
+        <target>Congresos</target>
       </trans-unit>
       <trans-unit id="955ad3298db330b5ee880c2c9e6f23a0" resname="Live">
         <source>Live</source>
-        <target>__Live</target>
+        <target>Directo</target>
       </trans-unit>
       <trans-unit id="3ff63b352f13910d742bb7d07cc5aecd" resname="Press area">
         <source>Press area</source>
-        <target>__Press area</target>
+        <target>Área de prensa</target>
       </trans-unit>
       <trans-unit id="901ee949524133f0966f506d0d2c1c58" resname="Recorded lectures">
         <source>Recorded lectures</source>
-        <target>__Recorded lectures</target>
+        <target>Clases Grabadas</target>
       </trans-unit>
       <trans-unit id="13b5bfe96f3e2fe411c9f66f4a582adf" resname="in">
         <source>in</source>
-        <target>__in</target>
+        <target>en</target>
       </trans-unit>
       <trans-unit id="f6e460a87c68c900fd9bb0fa65c156aa" resname="Upcoming live events">
         <source>Upcoming live events</source>
-        <target>__Upcoming live events</target>
+        <target>Próximos directos</target>
       </trans-unit>
       <trans-unit id="46639c124c617e109410eefe349ea11d" resname="No scheduled broadcasts.">
         <source>No scheduled broadcasts.</source>
-        <target>__No scheduled broadcasts.</target>
+        <target>No existen retransmisiones programadas.</target>
       </trans-unit>
       <trans-unit id="bbaff12800505b22a853e8b7f4eb6a22" resname="Contact">
         <source>Contact</source>
-        <target>__Contact</target>
-      </trans-unit>
-      <trans-unit id="b4c108f25d93236271ff5f979bced818" resname="Galician version">
-        <source>Galician version</source>
-        <target>Versión en gallego</target>
-      </trans-unit>
-      <trans-unit id="516a623325ded756f29f124618baabbc" resname="Galician">
-        <source>Galician</source>
-        <target>Gallego</target>
-      </trans-unit>
-      <trans-unit id="48d2fca5cead32cbe32ec1dac1cf3846" resname="Spanish version">
-        <source>Spanish version</source>
-        <target>Versión en Castellano</target>
-      </trans-unit>
-      <trans-unit id="cb5480c32e71778852b08ae1e8712775" resname="Spanish">
-        <source>Spanish</source>
-        <target>Castellano</target>
-      </trans-unit>
-      <trans-unit id="578b782f64887d982d0ead16ddac39a8" resname="English version">
-        <source>English version</source>
-        <target>Versión en inglés</target>
-      </trans-unit>
-      <trans-unit id="78463a384a5aa4fad5fa73e2f506ecfc" resname="English">
-        <source>English</source>
-        <target>Inglés</target>
+        <target>Contacto</target>
       </trans-unit>
     </body>
   </file>
