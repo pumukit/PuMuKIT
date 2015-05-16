@@ -166,6 +166,14 @@
         <source>Contact</source>
         <target>Contact</target>
       </trans-unit>
+      <trans-unit id="cc0bfb17e21d676b52bc9909db004f15" resname="Project funded by the Ministry of Education in the framework of the International Campus of Excellence programme and the Ministry of Economy and Competitiveness in the framework of the National R&amp;D&amp;I Plan">
+        <source>Project funded by the Ministry of Education in the framework of the International Campus of Excellence programme and the Ministry of Economy and Competitiveness in the framework of the National R&amp;D&amp;I Plan</source>
+        <target><![CDATA[Project funded by the Ministry of Education in the framework of the International Campus of Excellence programme and the Ministry of Economy and Competitiveness in the framework of the National R&D&I Plan]]></target>
+      </trans-unit>
+      <trans-unit id="76c9b2c4603f066a2c6c847bfbe4f3fd" resname="Project CEI10-1-0006 infrastructures funded by the Spanish Ministry of Economy and Competitiveness in the framework of the programme INNOCAMPUS anda co-funded with European Regional Development Funds (FEDER)">
+        <source>Project CEI10-1-0006 infrastructures funded by the Spanish Ministry of Economy and Competitiveness in the framework of the programme INNOCAMPUS anda co-funded with European Regional Development Funds (FEDER)</source>
+        <target>Project CEI10-1-0006 infrastructures funded by the Spanish Ministry of Economy and Competitiveness in the framework of the programme INNOCAMPUS anda co-funded with European Regional Development Funds (FEDER)</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
