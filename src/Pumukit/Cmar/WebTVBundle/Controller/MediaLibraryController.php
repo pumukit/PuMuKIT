@@ -109,17 +109,19 @@ class MediaLibraryController extends Controller
 
     private function action($title, $tagName, $routeName, Request $request, array $sort=array('public_date' => -1))
     {
-        $this->get('pumukit_web_tv.breadcrumbs')->addList($title, $routeName);
-
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
 
         $tag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneByCod($tagName);
         if (!$tag) {
           throw $this->createNotFoundException('The tag does not exist');
         }
+    
+        $title = $title != null ? $title : $tag->getTitle();
+        
+        $this->get('pumukit_web_tv.breadcrumbs')->addList($title, $routeName);
 
         $series = $dm->getRepository('PumukitSchemaBundle:Series')->findWithTag($tag, $sort);
 
-        return array('title' => $title != null ? $title : $tag->getTitle(), 'series' => $series, 'tag_cod' => $tagName);
+        return array('title' => $title, 'series' => $series, 'tag_cod' => $tagName);
     }
 }
