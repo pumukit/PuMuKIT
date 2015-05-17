@@ -1,0 +1,30 @@
+{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+
+{% block body %}
+<p class="titulo_widget titulo_widget_grande" style="margin-left: 0;">{% trans %}What is sonar?{% endtrans %}</p>
+</br>
+
+<div style="text-align: justify">
+<p>{% trans %}The Sonar-SSL project is promoted by the International Campus of Excellence – Campus do Mar and funded by the Spanish Ministry of Education, Culture and Sport, and the Vodafone Foundation under the Spanish Subprogram of Strengthening CEI 2011. It aims to facilitate hearing-impaired people’s access to educational and scientific resources in audiovisual formats. {% endtrans %}</p>
+
+<p>{% trans %}Contrary to what one might think, deaf people’s comprehension of the written language is limited. For them, spoken languages (such as Spanish or Galician) in their written form are actually second or third languages which present their own particular obstacles to learning. The natural language of deaf people is a visual-gestural one: the Spanish Sign Language (SSL) in which they think and dream.{% endtrans %}</p>
+
+<p>{% trans %}In order to overcome the differences between disparate sign languages, many researchers in the linguistics of these languages propose the use of American Sign Language (ASL) as the lingua franca, however the deaf community prefers the International Sign System (ISS).{% endtrans %}</p>
+
+<p>{% trans %}Regardless of the gestural lingua franca (either ISS or ASL), at this moment in time it is of paramount importance to provide quality scientific and cultural resources in visual-gestural languages for the deaf people of the 21st century. Campus do Mar, thanks to the financial support of the above institutions, has created this portal which intends, apart from becoming a reference in the adaptation of educational and scientific resources,  to bring science closer to the Spanish and global deaf community.{% endtrans %}</p>
+
+</br>
+</br>
+<h2>{% trans %}Research Team{% endtrans %}</h2>
+
+<p>{% trans %}This project has been developed by the Spanish Language and Signed Languages Research Group (GRILES) of the University of Vigo, coordinated by Inmaculada C. Báez Montero.{% endtrans %} {% trans %}Click on{% endtrans %} <a href="http://griles.webs.uvigo.es/index.html">http://griles.webs.uvigo.es/index.html</a> {% trans %}to learn more about our research group.{% endtrans %}</p>
+
+<p>{% trans %}The following people are involved in the project of languages for specific purposes in SSL and ISS: linguistics (Inmaculada C. Báez and Ana Fernández), SSL and ISS validators and signers (María Bao, Rayco González, Ruth Lamas, Manuel Lema, Mónica Martínez, Alba Puentes, José López and Marianne Stumpf) and advisers and translators of spoken languages (Marta Peláez and Herminda Otero). A team from the Campus Digital del Mar is also taking part in the project and they are in charge of coordinating communication from Campus do Mar (José Jato Darriba), technical and audiovisual coordination (Luis Pena) and recording and post-production (Enrique Leirachá).{% endtrans %}</p>
+
+</div>
+</br>
+</br>
+<a href="/mmobj/index/id/3754">
+  <img alt="Manos" src="{{ asset('bundles/pumukitcmarsonar/images/PNG_FINALES/que_es_SONNAR.png') }}" style="width:100%"/>
+</a>
+{% endblock %}

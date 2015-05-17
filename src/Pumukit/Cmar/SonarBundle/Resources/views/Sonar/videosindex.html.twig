@@ -3,22 +3,22 @@
    <tr>
      <td >
        <div class="img_category">
-         <a href="<?php echo url_for('serial/index')."/index/id/".$conferencias ;sfConfig::set('app_metas_banner', 'sonar'); ?>">
-          <img alt="Conferencias" src="/images/SONAR/PNG_FINALES/conferencias_<?php echo strtolower($sf_user->getCulture());?>.png" style="width:235px;"/>
+         <a href="{# echo url_for('serial/index')."/index/id/".$conferencias ;sfConfig::set('app_metas_banner', 'sonar'); #}">
+          <img alt="Conferencias" src="{{ asset('bundles/pumukitcmarsonar/images/PNG_FINALES/conferencias_' ~ app.session.get('_locale') ~ '.png') }}" style="width:235px;"/>
          </a>
        </div>
      </td>
      <td >
        <div class="img_category">
-	 <a href="<?php echo url_for('serial/index')."/index/id/".$microespacios ; sfConfig::set('app_metas_banner', 'sonar');?>">
-	   <img alt="Microespacios" src="/images/SONAR/PNG_FINALES/microespacios_<?php echo strtolower($sf_user->getCulture());?>.png" style="width:235px;"/>
+	 <a href="{# echo url_for('serial/index')."/index/id/".$microespacios ; sfConfig::set('app_metas_banner', 'sonar');#}">
+	   <img alt="Microespacios" src="{{ asset('bundles/pumukitcmarsonar/images/PNG_FINALES/microespacios_' ~ app.session.get('_locale') ~ '.png') }}" style="width:235px;"/>
          </a>
        </div>
      </td>
      <td >
        <div class="img_category">
-	 <a href="<?php echo url_for('serial/index')."/index/id/".$divulgare ; sfConfig::set('app_metas_banner', 'sonar');  ?>">
-           <img alt="Divulgare" src="/images/SONAR/PNG_FINALES/divulgare.png"  style="width:235px;"/>
+	 <a href="{# echo url_for('serial/index')."/index/id/".$divulgare ; sfConfig::set('app_metas_banner', 'sonar');  #}">
+           <img alt="Divulgare" src="{{ asset('bundles/pumukitcmarsonar/images/PNG_FINALES/divulgare.png') }}"  style="width:235px;"/>
          </a>
        </div>
      </td>
@@ -30,15 +30,15 @@
    <tr>
      <td width="50%">
        <div class="img_category">
-         <a href="<?php echo url_for('sonar/procesosignado')?>">
-           <img alt="Signado" src="/images/SONAR/PNG_FINALES/proceso_signado_<?php echo strtolower($sf_user->getCulture());?>.png" style="width:352px; margin-left: 3px;"/>
+         <a href="{{ path('sonar_procesosignado') }}">
+           <img alt="Signado" src="{{ asset('bundles/pumukitcmarsonar/images/PNG_FINALES/proceso_signado_' ~ app.session.get('_locale') ~ '.png') }}" style="width:352px; margin-left: 3px;"/>
          </a>
        </div>
      </td>
      <td width="50%">
        <div class="img_category">
-         <a href="<?php echo url_for('sonar/sonar')?>">
-           <img alt="Sonar" src="/images/SONAR/PNG_FINALES/que_es_sonar_<?php echo strtolower($sf_user->getCulture());?>.png" style="width:352px; margin-left: 3px;"/>
+         <a href="{{ path('sonar_sonar') }}">
+           <img alt="Sonar" src="{{ asset('bundles/pumukitcmarsonar/images/PNG_FINALES/que_es_sonar_' ~ app.session.get('_locale') ~ '.png') }}" style="width:352px; margin-left: 3px;"/>
          </a>
        </div>
      </td>
