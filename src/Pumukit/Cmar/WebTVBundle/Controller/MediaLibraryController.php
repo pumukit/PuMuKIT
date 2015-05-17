@@ -31,10 +31,9 @@ class MediaLibraryController extends Controller
      */
     public function mainConferencesAction(Request $request)
     {
-        $title = "Conferences";
-        $tagName = 'PUDEPD1';
+        $tagName = 'PUDEMAINCONF';
 
-        return $this->action($title, $tagName, "pumukitcmarwebtv_library_mainconferences", $request);
+        return $this->action(null, $tagName, "pumukitcmarwebtv_library_mainconferences", $request);
     }
 
 
@@ -45,10 +44,9 @@ class MediaLibraryController extends Controller
      */
     public function promotionalAction(Request $request)
     {
-        $title = "Promotional and corporate";
-        $tagName = 'PUDEPD2';
+        $tagName = 'PUDEPROMO';
 
-        return $this->action($title, $tagName, "pumukitcmarwebtv_library_promotional", $request);
+        return $this->action(null, $tagName, "pumukitcmarwebtv_library_promotional", $request);
     }
 
 
@@ -59,10 +57,9 @@ class MediaLibraryController extends Controller
      */
     public function pressAreaAction(Request $request)
     {
-        $title = "Press Area";
-        $tagName = 'PUDEPD3';
+        $tagName = 'PUDEPRESS';
 
-        return $this->action($title, $tagName, "pumukitcmarwebtv_library_pressarea", $request);
+        return $this->action(null, $tagName, "pumukitcmarwebtv_library_pressarea", $request);
     }
 
 
@@ -73,11 +70,10 @@ class MediaLibraryController extends Controller
      */
     public function projectSupportAction(Request $request)
     {
-        $title = "Project Support";
-        $tagName = 'PUDEPD4';
+        $tagName = 'PUDESUPPORT';
 
         /* TODO $serials["all"] = SerialPeer::retrieveByPKs(array(6, 9, 7)); */
-        return $this->action($title, $tagName, "pumukitcmarwebtv_library_projectsupport", $request);
+        return $this->action(null, $tagName, "pumukitcmarwebtv_library_projectsupport", $request);
     }
 
     /**
@@ -87,30 +83,12 @@ class MediaLibraryController extends Controller
      */
     public function congressesAction(Request $request)
     {
-      $title = "Congresses";
-      $tagName = 'PUDEPD5';
-
+        $tagName = 'PUDECONGRESSES';
+        
         // TODO review: check locale, check defintion of congresses
         // $series = $seriesRepo->findBy(array('keyword.en' => 'congress'), array('public_date' => 'desc'));
-        return $this->action($title, $tagName, "pumukitcmarwebtv_library_congresses", $request);
+        return $this->action(null, $tagName, "pumukitcmarwebtv_library_congresses", $request);
     }
-
-    /**
-     * @Route("/i")
-     * @Route("/institutional", name="pumukitcmarwebtv_library_institutional")
-     * @Template("PumukitCmarWebTVBundle:MediaLibrary:multidisplay.html.twig")
-     */
-    public function institutionalAction(Request $request)
-    {
-        $title = "Institutional";
-        $tagName = 'PUDEPD6';
-
-        //TODO review
-        //$tagCod = new \MongoRegex('/^U9901../'); // UNESCO tags for institutions
-        //$series = $seriesRepo->findByTagCodAndDisplayStatus($tagCod, $display);
-        return $this->action($title, $tagName, "pumukitcmarwebtv_library_institutional", $request);
-    }
-
 
     /**
      * @Route("/all", name="pumukitcmarwebtv_library_all")
@@ -142,6 +120,6 @@ class MediaLibraryController extends Controller
 
         $series = $dm->getRepository('PumukitSchemaBundle:Series')->findWithTag($tag, $sort);
 
-        return array('title' => $title, 'series' => $series, 'tag_cod' => $tagName);
+        return array('title' => $title != null ? $title : $tag->getTitle(), 'series' => $series, 'tag_cod' => $tagName);
     }
 }

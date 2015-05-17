@@ -3,7 +3,7 @@
 {# TODO if(($template == 2) || ((!in_array($template, array(4,5))) && ($mm->getRecordDate()) && ($mm->getRecorddate() !== '1999-11-30') && ($mm->getRecordDate('dmy') !== $lastDate))):  #}
 {% if (((mm.getRecordDate()|date('d/m/Y')) is not empty) and ((last_date|date('U')) != (mm.getRecordDate()|date('U')))) %}
 <div class="date">
-  {% trans %}Record Date{% endtrans %}: {{ mm.getRecordDate()|date('d/m/Y') }}
+  {% trans %}Date of holding{% endtrans %}: {{ mm.getRecordDate()|date('d/m/Y') }}
 </div>
 {% endif %}
 <!-- PIC -->
