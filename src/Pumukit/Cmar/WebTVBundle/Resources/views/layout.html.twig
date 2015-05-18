@@ -20,13 +20,7 @@
   </head>
   <body>
     {% block body_base %}
-    <div id="headerbar">
-      <div style="overflow:hidden; background:#005268 url({{ asset('bundles/pumukitcmarwebtv/images/usc/cmartvL.jpg') }}) no-repeat 50% 50%">
-        <div class="container_15">
-          {% include 'PumukitCmarWebTVBundle::header.html.twig' %}
-        </div>
-      </div>
-    </div>  
+    {% include 'PumukitCmarWebTVBundle::header.html.twig' %}
     <div id="body">
       <div class="container_15" id="tvusc">
         <div class="usctv_cab">
@@ -43,7 +37,7 @@
           </div>
           {% endblock %}
         </div>
-        {% include 'PumukitCmarWebTVBundle::footer.html.twig' %}
+        {% include 'PumukitCmarSonarBundle::footer.html.twig' %}
       </div>
     </div>
     {% endblock %}
