@@ -3,7 +3,7 @@
    <tr>
      <td rowspan="2" width="31%">
        <div class="img_category">
-         <a href="{{ url('pumukitcmarwebtv_library_mainconferences') }}">
+         <a href="{{ path('pumukitcmarwebtv_library_mainconferences') }}">
           <img alt="Main Conferences" src="{{ asset('bundles/pumukitcmarwebtv/images/usc/gc.jpg') }}" style="height: 349px; width: 216px"/>
            <div class="cover"><div><span>{% trans %}Main Conferences{% endtrans %}</span></div></div>
          </a>
@@ -17,7 +17,7 @@
            <div class="cover"><div><span>{% trans %}LIVE BROADCASTING{% endtrans %}</span></div></div>
          </a>
        {% else %}
-         <a href="#{# TODO url_for('librarymh/index') #}"> {# TODO URL #}
+         <a href="{{ path('pumukitcmarwebtv_library_lectures') }}">
 	         <img alt="Recorded Lectures" src="{{ asset('bundles/pumukitcmarwebtv/images/usc/lectures.jpg') }}" />
            <div class="cover"><div><span>{% trans %}Lectures{% endtrans %}</span></div></div>
          </a>
@@ -26,7 +26,7 @@
      </td>
      <td width="31%">
        <div class="img_category">
-         <a href="{{ url('pumukitcmarwebtv_library_projectsupport') }}">
+         <a href="{{ path('pumukitcmarwebtv_library_projectsupport') }}">
            <img alt="Project Support" src="{{ asset('bundles/pumukitcmarwebtv/images/usc/ps.jpg') }}" />
            <div class="cover"><div><span>{% trans %}Project Support{% endtrans %}</span></div></div>
          </a>
@@ -36,7 +36,7 @@
    <tr>
      <td width="31%">
        <div class="img_category">
-         <a href="{{ url('pumukitcmarwebtv_library_promotional') }}">
+         <a href="{{ path('pumukitcmarwebtv_library_promotional') }}">
            <img alt="Promotional" src="{{ asset('bundles/pumukitcmarwebtv/images/usc/gm.jpg') }}" />
            <div class="cover"><div><span>{% trans %}Promotional{% endtrans %}</span></div></div>
          </a>
@@ -44,7 +44,7 @@
      </td>
      <td width="31%">
        <div class="img_category">
-         <a href="{{ url('pumukitcmarwebtv_library_pressarea') }}">
+         <a href="{{ path('pumukitcmarwebtv_library_pressarea') }}">
            <img alt="Press Area" src="{{ asset('bundles/pumukitcmarwebtv/images/usc/pa.jpg') }}" />
            <div class="cover"><div><span>{% trans %}Press Area{% endtrans %}</span></div></div>
          </a>

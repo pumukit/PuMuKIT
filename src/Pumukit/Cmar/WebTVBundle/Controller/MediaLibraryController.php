@@ -91,6 +91,20 @@ class MediaLibraryController extends Controller
     }
 
     /**
+     * @Route("/librarymh")
+     * @Route("/lectures", name="pumukitcmarwebtv_library_lectures")
+     * @Template("PumukitCmarWebTVBundle:MediaLibrary:multidisplay.html.twig")
+     */
+    public function lecturesAction(Request $request)
+    {
+        $tagName = 'GENRE22';
+        
+        // TODO review: check locale, check defintion of congresses
+        // $series = $seriesRepo->findBy(array('keyword.en' => 'congress'), array('public_date' => 'desc'));
+        return $this->action(null, $tagName, "pumukitcmarwebtv_library_lectures", $request);
+    }
+
+    /**
      * @Route("/all", name="pumukitcmarwebtv_library_all")
      * @Template("PumukitCmarWebTVBundle:MediaLibrary:multidisplay.html.twig")
      */
