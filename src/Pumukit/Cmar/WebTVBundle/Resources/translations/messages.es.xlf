@@ -178,6 +178,10 @@
         <source>Date of holding</source>
         <target>Fecha de celebración</target>
       </trans-unit>
+      <trans-unit id="040b059dabb8b53ba029edbccdeb4666" resname="All videos">
+        <source>All videos</source>
+        <target>Todos</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
