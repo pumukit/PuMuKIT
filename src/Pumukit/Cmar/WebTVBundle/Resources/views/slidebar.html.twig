@@ -8,23 +8,23 @@
   	  <ul>
   		<!-- Media library -->
       	<li>
-          <a href="{{ url('pumukitcmarwebtv_library_all') }}">{% trans %}Media library{% endtrans %}</a>
+          <a href="{{ path('pumukitcmarwebtv_library_all') }}">{% trans %}Media library{% endtrans %}</a>
       	</li>
       	<!-- Congresses -->
       	<li>
-          <a href="{{ url('pumukitcmarwebtv_library_congresses') }}">{% trans %}Congresses{% endtrans %}</a>
+          <a href="{{ path('pumukitcmarwebtv_library_congresses') }}">{% trans %}Congresses{% endtrans %}</a>
       	</li>
       	<!-- Live -->
       	<li>
-          <a href="{{ url('pumukit_live') }}">{% trans %}Live{% endtrans %}</a>
+          <a href="{{ path('pumukit_live') }}">{% trans %}Live{% endtrans %}</a>
       	</li>
       	<!-- Press area -->
       	<li>
-          <a href="{{ url('pumukitcmarwebtv_library_pressarea') }}">{% trans %}Press area{% endtrans %}</a>
+          <a href="{{ path('pumukitcmarwebtv_library_pressarea') }}">{% trans %}Press area{% endtrans %}</a>
       	</li>
       	<!-- Recorded lectures -->
       	<li>
-          <a href="#{# TODO /librarymh #}">{% trans %}Recorded lectures{% endtrans %}</a>
+          <a href="{{ path('pumukitcmarwebtv_library_lectures') }}">{% trans %}Recorded lectures{% endtrans %}</a>
       	</li>
   	  </ul>
   	</div>
@@ -36,7 +36,7 @@
   	  <ul>
   		<!-- Youtube -->
       	<li>
-          <a style="padding-left: 17px; background: transparent url({{ asset('bundles/pumukitcmarwebtv/images/iconos/favicon_youtube.gif')}}) no-repeat 0% 50%" target="_blank" href="http://www.youtube.com/user/CampusdoMar">YouTube</a>
+          <a style="padding-left: 17px; background: transparent path({{ asset('bundles/pumukitcmarwebtv/images/iconos/favicon_youtube.gif')}}) no-repeat 0% 50%" target="_blank" href="http://www.youtube.com/user/CampusdoMar">YouTube</a>
       	</li>
   	  </ul>
   	</div>
