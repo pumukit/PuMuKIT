@@ -122,6 +122,7 @@ client_body_buffer_size 128k;
 
 ```
 upload_max_filesize = 2000M
+post_max_size = 2000M
 ```
 
 
