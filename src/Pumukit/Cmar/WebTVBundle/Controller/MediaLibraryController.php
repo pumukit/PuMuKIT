@@ -97,6 +97,7 @@ class MediaLibraryController extends Controller
     public function allAction(Request $request)
     {
         $title = "All Videos";
+        $this->get('pumukit_web_tv.breadcrumbs')->addList($title, "pumukitcmarwebtv_library_all");
 
         $seriesRepo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:Series');
 
