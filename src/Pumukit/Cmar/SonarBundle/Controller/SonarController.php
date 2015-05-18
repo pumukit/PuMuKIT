@@ -17,7 +17,8 @@ class SonarController extends Controller
      */
     public function indexAction()
     {
-      $this->updateBreadcrumbs("Sonar", "sonar");
+      $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
+      $breadcrumbs->addList("Sonar", "sonar");
       return array();
     }  
 
@@ -27,7 +28,9 @@ class SonarController extends Controller
      */
     public function procesosignadoAction()
     {
-      $this->updateBreadcrumbs("The process of signing", "sonar_procesosignado");
+      $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
+      $breadcrumbs->addList("Sonar", "sonar");
+      $breadcrumbs->add("The process of signing", "sonar_procesosignado");
       return array();
     }  
 
@@ -37,13 +40,9 @@ class SonarController extends Controller
      */
     public function sonarAction()
     {
-      $this->updateBreadcrumbs("What is sonar?", "sonar_sonar");    
+      $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
+      $breadcrumbs->addList("Sonar", "sonar");
+      $breadcrumbs->add("What is sonar?", "sonar_sonar");    
       return array();
-    }
-
-    private function updateBreadcrumbs($title, $routeName, array $routeParameters = array())
-    {
-        $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
-        $breadcrumbs->addList($title, $routeName, $routeParameters);
     }
 }
