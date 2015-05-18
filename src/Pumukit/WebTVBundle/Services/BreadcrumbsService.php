@@ -23,43 +23,51 @@ class BreadcrumbsService
     $this->router = $router;
     $this->allTitle = $allTitle;
     $this->allRoute = $allRoute;
+    $this->reset();
+  }
+
+  public function reset()
+  {
+    $this->session->set('breadcrumbs/title', $this->allTitle);
+    $this->session->set('breadcrumbs/routeName', $this->allRoute);
+    $this->session->set('breadcrumbs/routeParameters', array());
     $this->breadcrumbs = array(array("title" => "Home", "link" => $this->router->generate("pumukit_webtv_index_index")));
   }
 
   
   public function addList($title, $routeName, array $routeParameters = array())
   {
+    $this->reset();
     $this->session->set('breadcrumbs/title', $title);
     $this->session->set('breadcrumbs/routeName', $routeName);
     $this->session->set('breadcrumbs/routeParameters', $routeParameters);
-    $this->add(1, $title, $routeName, $routeParameters);
+    $this->add($title, $routeName, $routeParameters);
   }
 
 
   public function addSeries(Series $series)
   {
     if (1 == count($this->breadcrumbs)){
-      $this->add(1, 
-                 $this->session->get('breadcrumbs/title', $this->allTitle),
+      $this->add($this->session->get('breadcrumbs/title', $this->allTitle),
                  $this->session->get('breadcrumbs/routeName', $this->allRoute),
                  $this->session->get('breadcrumbs/routeParameters', array()));
     }
     
-    $this->add(2, $series->getTitle(), "pumukit_webtv_series_index", array("id" => $series->getId()));
+    $this->add($series->getTitle(), "pumukit_webtv_series_index", array("id" => $series->getId()));
   }
 
 
   public function addMultimediaObject(MultimediaObject $multimediaObject)
   {
     $this->addSeries($multimediaObject->getSeries());
-    $this->add(3, $multimediaObject->getTitle(), "pumukit_webtv_multimediaobject_index", array("id" => $multimediaObject->getId()));
+    $this->add($multimediaObject->getTitle(), "pumukit_webtv_multimediaobject_index", array("id" => $multimediaObject->getId()));
   }
 
 
-  private function add($index, $title, $routeName, array $routeParameters = array())
+  public function add($title, $routeName, array $routeParameters = array())
   {
-    $this->breadcrumbs[$index] = array("title" => $title, 
-                                       "link" => $this->router->generate($routeName, $routeParameters));
+    $this->breadcrumbs[] = array("title" => $title, 
+                                 "link" => $this->router->generate($routeName, $routeParameters));
   }
 
   public function getBreadcrumbs()
