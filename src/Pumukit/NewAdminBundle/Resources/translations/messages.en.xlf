@@ -1,0 +1,1455 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+    <body>
+      <trans-unit id="8fa0d7386b6c6c16d0acfcc76c65946f" resname="create new broadcast">
+        <source>create new broadcast</source>
+        <target>create new broadcast</target>
+      </trans-unit>
+      <trans-unit id="c02ce872543e9725dd596b42054315e1" resname="There was an error in creating the Broadcast.">
+        <source>There was an error in creating the Broadcast.</source>
+        <target>There was an error in creating the Broadcast.</target>
+      </trans-unit>
+      <trans-unit id="4d6f5d583504b7023b52efa2d93f9516" resname="Broadcast successfully created.">
+        <source>Broadcast successfully created.</source>
+        <target>Broadcast successfully created.</target>
+      </trans-unit>
+      <trans-unit id="d3d2e617335f08df83599665eef8a418" resname="Close">
+        <source>Close</source>
+        <target>Close</target>
+      </trans-unit>
+      <trans-unit id="daa6b483e9f6ca081ec7e0b4a352f9e9" resname="Save changes">
+        <source>Save changes</source>
+        <target>Save changes</target>
+      </trans-unit>
+      <trans-unit id="13348442cc6a27032d2b4aa28b75a5d3" resname="Search">
+        <source>Search</source>
+        <target>Search</target>
+      </trans-unit>
+      <trans-unit id="49ee3087348e8d44e1feda1917443987" resname="Name">
+        <source>Name</source>
+        <target>Name</target>
+      </trans-unit>
+      <trans-unit id="86266ee937d97f812a8e57d22b62ee29" resname="reset">
+        <source>reset</source>
+        <target>reset</target>
+      </trans-unit>
+      <trans-unit id="b2c97ae425dd751b0e48a3acae79cf4a" resname="filter">
+        <source>filter</source>
+        <target>filter</target>
+      </trans-unit>
+      <trans-unit id="87d301526459f04001a083b7990410a9" resname="Broadcasts">
+        <source>Broadcasts</source>
+        <target>Broadcasts</target>
+      </trans-unit>
+      <trans-unit id="882737e085a883190178a2d6738cd825" resname="Actions on selected items">
+        <source>Actions on selected items</source>
+        <target>Actions on selected items</target>
+      </trans-unit>
+      <trans-unit id="25b1e58532fdaa3ed86d04f30b943ff8" resname="Select an action...">
+        <source>Select an action...</source>
+        <target>Select an action...</target>
+      </trans-unit>
+      <trans-unit id="d3b206d196cd6be3a2764c1fb90b200f" resname="Delete selected">
+        <source>Delete selected</source>
+        <target>Delete selected</target>
+      </trans-unit>
+      <trans-unit id="f7f78b9dfe29752b9e04490253838264" resname="Create new">
+        <source>Create new</source>
+        <target>Create new</target>
+      </trans-unit>
+      <trans-unit id="03c2e7e41ffc181a4e84080b4710e81e" resname="New">
+        <source>New</source>
+        <target>New</target>
+      </trans-unit>
+      <trans-unit id="1e90923b480ee935dee9edc36669318b" resname="You don't have enough permissions to access this content.">
+        <source>You don't have enough permissions to access this content.</source>
+        <target>You don't have enough permissions to access this content.</target>
+      </trans-unit>
+      <trans-unit id="a1fa27779242b4902f7ae3bdd5c6d508" resname="Type">
+        <source>Type</source>
+        <target>Type</target>
+      </trans-unit>
+      <trans-unit id="b5a7adde1af5c87d7fd797b6245c2a39" resname="Description">
+        <source>Description</source>
+        <target>Description</target>
+      </trans-unit>
+      <trans-unit id="9d948e617b083222afc868add2f50ec2" resname="Series">
+        <source>Series</source>
+        <target>Series</target>
+      </trans-unit>
+      <trans-unit id="c91391b6983c77f7562c2a156a321f07" resname="There are no broadcasts with those values.">
+        <source>There are no broadcasts with those values.</source>
+        <target>There are no broadcasts with those values.</target>
+      </trans-unit>
+      <trans-unit id="4a9ebd8b6cab747973e7ff131a660a8e" resname="Edit Broadcast">
+        <source>Edit Broadcast</source>
+        <target>Edit Broadcast</target>
+      </trans-unit>
+      <trans-unit id="d8effba971c620e405826682352b31d7" resname="Select this broadcast by default">
+        <source>Select this broadcast by default</source>
+        <target>Select this broadcast by default</target>
+      </trans-unit>
+      <trans-unit id="e37dd7e25177f297750b902a35f2d5ea" resname="Default broadcast changed to">
+        <source>Default broadcast changed to</source>
+        <target>Default broadcast changed to</target>
+      </trans-unit>
+      <trans-unit id="ed3ad9a67a38f55342b301a058878f48" resname="{0} broadcasts|{1} broadcast|]1,Inf] broadcasts">
+        <source>{0} broadcasts|{1} broadcast|]1,Inf] broadcasts</source>
+        <target>{0} broadcasts|{1} broadcast|]1,Inf] broadcasts</target>
+      </trans-unit>
+      <trans-unit id="919180ed16fc428cad01c39777bb0485" resname="Cancel current search">
+        <source>Cancel current search</source>
+        <target>Cancel current search</target>
+      </trans-unit>
+      <trans-unit id="036934cf9842451c835a9981a067d0c3" resname="Cancel search">
+        <source>Cancel search</source>
+        <target>Cancel search</target>
+      </trans-unit>
+      <trans-unit id="71c28f02b6c62ac9e2b3a9f603d2d295" resname="modify broadcast">
+        <source>modify broadcast</source>
+        <target>modify broadcast</target>
+      </trans-unit>
+      <trans-unit id="bd06a46fabd1233bcf85ea3940fb3386" resname="There was an error in updating the Broadcast.">
+        <source>There was an error in updating the Broadcast.</source>
+        <target>There was an error in updating the Broadcast.</target>
+      </trans-unit>
+      <trans-unit id="e8569cbaa4a6baf00bffe76953f192c9" resname="Broadcast successfully updated.">
+        <source>Broadcast successfully updated.</source>
+        <target>Broadcast successfully updated.</target>
+      </trans-unit>
+      <trans-unit id="2938c7f7e560ed972f8a4f68e80ff834" resname="Dashboard">
+        <source>Dashboard</source>
+        <target>Dashboard</target>
+      </trans-unit>
+      <trans-unit id="d63a360b4f267dea1f99e94122b29c11" resname="This page uses Javascript to show you a Timeline.">
+        <source>This page uses Javascript to show you a Timeline.</source>
+        <target>This page uses Javascript to show you a Timeline.</target>
+      </trans-unit>
+      <trans-unit id="c5a0f2d6c4f156aeff88cfb6c7a161c8" resname="Please enable Javascript in your browser to see the full page.">
+        <source>Please enable Javascript in your browser to see the full page.</source>
+        <target>Please enable Javascript in your browser to see the full page.</target>
+      </trans-unit>
+      <trans-unit id="2d439011ecebc222e1feb2e3e005c0ac" resname="Thank you.">
+        <source>Thank you.</source>
+        <target>Thank you.</target>
+      </trans-unit>
+      <trans-unit id="f6e6a1af42cefe6c122ee0801ca42e60" resname="Go to series WebTV page">
+        <source>Go to series WebTV page</source>
+        <target>Go to series WebTV page</target>
+      </trans-unit>
+      <trans-unit id="44749712dbec183e983dcd78a7736c41" resname="Date">
+        <source>Date</source>
+        <target>Date</target>
+      </trans-unit>
+      <trans-unit id="9dffbf69ffba8bc38bc4e01abf4b1675" resname="Text">
+        <source>Text</source>
+        <target>Text</target>
+      </trans-unit>
+      <trans-unit id="3d067bedfe2f4677470dd6ccf64d05ed" resname="Public">
+        <source>Public</source>
+        <target>Public</target>
+      </trans-unit>
+      <trans-unit id="92f5a4059c183e45b7b5cf4cf5cb80b0" resname="There are no live events with those values.">
+        <source>There are no live events with those values.</source>
+        <target>There are no live events with those values.</target>
+      </trans-unit>
+      <trans-unit id="6a11c1c2e2c1eee420568e31dc85f72a" resname="Edit Event">
+        <source>Edit Event</source>
+        <target>Edit Event</target>
+      </trans-unit>
+      <trans-unit id="4ffedae7e1c0e453877d5eb7e9344c96" resname="{0} live events|{1} live event|]1,Inf] live events">
+        <source>{0} live events|{1} live event|]1,Inf] live events</source>
+        <target>{0} live events|{1} live event|]1,Inf] live events</target>
+      </trans-unit>
+      <trans-unit id="98617021b249af0ace0f84ee92ccc7cd" resname="MONDAY">
+        <source>MONDAY</source>
+        <target>MONDAY</target>
+      </trans-unit>
+      <trans-unit id="5f5140afce13197a89e848004f292f14" resname="TUESDAY">
+        <source>TUESDAY</source>
+        <target>TUESDAY</target>
+      </trans-unit>
+      <trans-unit id="aaebdc947e9f7d4ea362e5dc4fe7f825" resname="WEDNESDAY">
+        <source>WEDNESDAY</source>
+        <target>WEDNESDAY</target>
+      </trans-unit>
+      <trans-unit id="7a61b324afb4dd8b2fb4a38afc34f755" resname="THURSDAY">
+        <source>THURSDAY</source>
+        <target>THURSDAY</target>
+      </trans-unit>
+      <trans-unit id="86fb6d343289267f3e9edb9b7403d936" resname="FRIDAY">
+        <source>FRIDAY</source>
+        <target>FRIDAY</target>
+      </trans-unit>
+      <trans-unit id="fd5ae113ac00b67f69541bc8c7f21ef7" resname="SATURDAY">
+        <source>SATURDAY</source>
+        <target>SATURDAY</target>
+      </trans-unit>
+      <trans-unit id="95fa12cb2100ce7081b71f7c44bc12a5" resname="SUNDAY">
+        <source>SUNDAY</source>
+        <target>SUNDAY</target>
+      </trans-unit>
+      <trans-unit id="dd1f775e443ff3b9a89270713580a51b" resname="Previous">
+        <source>Previous</source>
+        <target>Previous</target>
+      </trans-unit>
+      <trans-unit id="03219b11d6170520cd434a165300cbde" resname="TODAY">
+        <source>TODAY</source>
+        <target>TODAY</target>
+      </trans-unit>
+      <trans-unit id="10ac3d04253ef7e1ddc73e6091c0cd55" resname="Next">
+        <source>Next</source>
+        <target>Next</target>
+      </trans-unit>
+      <trans-unit id="82aacdd426e82471943619e51c68d471" resname="create new live event">
+        <source>create new live event</source>
+        <target>create new live event</target>
+      </trans-unit>
+      <trans-unit id="5da618e8e4b89c66fe86e32cdafde142" resname="From">
+        <source>From</source>
+        <target>From</target>
+      </trans-unit>
+      <trans-unit id="e12167aa0a7698e6ebc92b4ce3909b53" resname="To">
+        <source>To</source>
+        <target>To</target>
+      </trans-unit>
+      <trans-unit id="72694e6cee9a756862d0e74dc02932f4" resname="Live broadcastings">
+        <source>Live broadcastings</source>
+        <target>Live broadcastings</target>
+      </trans-unit>
+      <trans-unit id="ec8643ebf38a237ee57bfab73a826381" resname="Create new live event">
+        <source>Create new live event</source>
+        <target>Create new live event</target>
+      </trans-unit>
+      <trans-unit id="95d3955ede02b6910ec9a915e0952e9b" resname="Select any live event.">
+        <source>Select any live event.</source>
+        <target>Select any live event.</target>
+      </trans-unit>
+      <trans-unit id="4ee29ca12c7d126654bd0e5275de6135" resname="List">
+        <source>List</source>
+        <target>List</target>
+      </trans-unit>
+      <trans-unit id="8ff922bbcd8ad41cdfc48d3c5163b2ab" resname="Calendar">
+        <source>Calendar</source>
+        <target>Calendar</target>
+      </trans-unit>
+      <trans-unit id="96aa8615b9f8a7330695d231603ac9ce" resname="min.">
+        <source>min.</source>
+        <target>min.</target>
+      </trans-unit>
+      <trans-unit id="cc58cd4895e7a86c70d4fa9d9427da40" resname="Select or create any live event.">
+        <source>Select or create any live event.</source>
+        <target>Select or create any live event.</target>
+      </trans-unit>
+      <trans-unit id="8407d4fd24eeaaaebfb32d89d3dae663" resname="modify live event">
+        <source>modify live event</source>
+        <target>modify live event</target>
+      </trans-unit>
+      <trans-unit id="00f8f838ec40e3aa2030e1a74694ac0f" resname="There was an error in updating the Live event.">
+        <source>There was an error in updating the Live event.</source>
+        <target>There was an error in updating the Live event.</target>
+      </trans-unit>
+      <trans-unit id="c4b9a7e958b0b92f52ac06c5d1729747" resname="Live event successfully updated.">
+        <source>Live event successfully updated.</source>
+        <target>Live event successfully updated.</target>
+      </trans-unit>
+      <trans-unit id="be8545ae7ab0276e15898aae7acfbd7a" resname="Resource">
+        <source>Resource</source>
+        <target>Resource</target>
+      </trans-unit>
+      <trans-unit id="f985bf39894ce069d16c11e12836e2e7" resname="Select a file on the tree">
+        <source>Select a file on the tree</source>
+        <target>Select a file on the tree</target>
+      </trans-unit>
+      <trans-unit id="affa928796995b6d2f52cedcfe3538cb" resname="To use the inbox mode define the inbox path as &lt;code&gt;pumukit2.inbox&lt;/code&gt; parameter in your config file.">
+        <source>To use the inbox mode define the inbox path as &lt;code&gt;pumukit2.inbox&lt;/code&gt; parameter in your config file.</source>
+        <target><![CDATA[To use the inbox mode define the inbox path as <code>pumukit2.inbox</code> parameter in your config file.]]></target>
+      </trans-unit>
+      <trans-unit id="d333d17be3621ef941f39c3ccfda0c7e" resname="not exists">
+        <source>not exists</source>
+        <target>not exists</target>
+      </trans-unit>
+      <trans-unit id="845ac28dd1e178e8d2f75b05f2d571a6" resname="is not readable">
+        <source>is not readable</source>
+        <target>is not readable</target>
+      </trans-unit>
+      <trans-unit id="cfa2df1960c169d484924cd356df30b4" resname="Check the file system permissions">
+        <source>Check the file system permissions</source>
+        <target>Check the file system permissions</target>
+      </trans-unit>
+      <trans-unit id="c3e02d73c1aa4f494501c10da7f3a240" resname="create new link">
+        <source>create new link</source>
+        <target>create new link</target>
+      </trans-unit>
+      <trans-unit id="ea4788705e6873b424c65e91c2846b19" resname="Cancel">
+        <source>Cancel</source>
+        <target>Cancel</target>
+      </trans-unit>
+      <trans-unit id="e0aa021e21dddbd6d8cecec71e9cf564" resname="OK">
+        <source>OK</source>
+        <target>OK</target>
+      </trans-unit>
+      <trans-unit id="9b36d7411de98344e6dbbe8c0e8abcf0" resname="Edit file of multimedia object">
+        <source>Edit file of multimedia object</source>
+        <target>Edit file of multimedia object</target>
+      </trans-unit>
+      <trans-unit id="662f707d5491e9bce8238a6c0be92190" resname="hidden">
+        <source>hidden</source>
+        <target>hidden</target>
+      </trans-unit>
+      <trans-unit id="e6ae269f5cb324e453f30997ca5df6c0" resname="Create Link">
+        <source>Create Link</source>
+        <target>Create Link</target>
+      </trans-unit>
+      <trans-unit id="4644bba60825f347b0cdc3665d66e7fa" resname="create new live channel">
+        <source>create new live channel</source>
+        <target>create new live channel</target>
+      </trans-unit>
+      <trans-unit id="a9e77665b6abe64830336745d22c80e9" resname="Live channels">
+        <source>Live channels</source>
+        <target>Live channels</target>
+      </trans-unit>
+      <trans-unit id="418623d9ef2cbd1ec0f9d9da294241d3" resname="Create new live channel">
+        <source>Create new live channel</source>
+        <target>Create new live channel</target>
+      </trans-unit>
+      <trans-unit id="792f61a257799d5184116e7514e3aed2" resname="Select any live channel.">
+        <source>Select any live channel.</source>
+        <target>Select any live channel.</target>
+      </trans-unit>
+      <trans-unit id="e6b391a8d2c4d45902a23a8b6585703d" resname="URL">
+        <source>URL</source>
+        <target>URL</target>
+      </trans-unit>
+      <trans-unit id="b5a4b64b2aa505bd7c11f79b8a9f458d" resname="Resolution">
+        <source>Resolution</source>
+        <target>Resolution</target>
+      </trans-unit>
+      <trans-unit id="428f468a4c854e4317edd788023a625a" resname="There are no live channels with those values.">
+        <source>There are no live channels with those values.</source>
+        <target>There are no live channels with those values.</target>
+      </trans-unit>
+      <trans-unit id="159689e05160dd2cfef39b2aa30e5ce2" resname="Edit live channel">
+        <source>Edit live channel</source>
+        <target>Edit live channel</target>
+      </trans-unit>
+      <trans-unit id="02b7b3f2e7279c0a8fafdecfb61293dc" resname="{0} live channels|{1} live channel|]1,Inf] live channels">
+        <source>{0} live channels|{1} live channel|]1,Inf] live channels</source>
+        <target>{0} live channels|{1} live channel|]1,Inf] live channels</target>
+      </trans-unit>
+      <trans-unit id="7d367dab8b471ac44dddc3ab3aa2c1bf" resname="Source IP">
+        <source>Source IP</source>
+        <target>Source IP</target>
+      </trans-unit>
+      <trans-unit id="bc50fcf61628aae2749e54463b42dd4d" resname="Show player at homepage">
+        <source>Show player at homepage</source>
+        <target>Show player at homepage</target>
+      </trans-unit>
+      <trans-unit id="cb456215c3333db0551bd0788bc258c7" resname="Activated">
+        <source>Activated</source>
+        <target>Activated</target>
+      </trans-unit>
+      <trans-unit id="43c7582c40594c3fe32a6634ef9dcb07" resname="Deactivated">
+        <source>Deactivated</source>
+        <target>Deactivated</target>
+      </trans-unit>
+      <trans-unit id="ec53a8c4f07baed5d8825072c89799be" resname="Status">
+        <source>Status</source>
+        <target>Status</target>
+      </trans-unit>
+      <trans-unit id="428c47a7256f6ca3ef9c5f16cf3006c4" resname="On hold">
+        <source>On hold</source>
+        <target>On hold</target>
+      </trans-unit>
+      <trans-unit id="90cfed52c60a3357ed0cfe291d9a1995" resname="Live broadcasting">
+        <source>Live broadcasting</source>
+        <target>Live broadcasting</target>
+      </trans-unit>
+      <trans-unit id="952b7b4c30886da0f3c86a6fd50777a1" resname="modify live channel">
+        <source>modify live channel</source>
+        <target>modify live channel</target>
+      </trans-unit>
+      <trans-unit id="f18a9fa39e74d5489f1e50027ee12352" resname="There was an error in updating the Live channel.">
+        <source>There was an error in updating the Live channel.</source>
+        <target>There was an error in updating the Live channel.</target>
+      </trans-unit>
+      <trans-unit id="f114f4467c71d4e59ec9bebe7e9fd17a" resname="Live channel successfully updated.">
+        <source>Live channel successfully updated.</source>
+        <target>Live channel successfully updated.</target>
+      </trans-unit>
+      <trans-unit id="ddd0dce2e67488889330d67ce0801933" resname="create new material">
+        <source>create new material</source>
+        <target>create new material</target>
+      </trans-unit>
+      <trans-unit id="650be61892bf690026089544abbd9d26" resname="Mode">
+        <source>Mode</source>
+        <target>Mode</target>
+      </trans-unit>
+      <trans-unit id="0b27918290ff5323bea1e3b78a9cf04e" resname="File">
+        <source>File</source>
+        <target>File</target>
+      </trans-unit>
+      <trans-unit id="c96195be36b2f1276b7dc203ae476b75" resname="URL format not valid">
+        <source>URL format not valid</source>
+        <target>URL format not valid</target>
+      </trans-unit>
+      <trans-unit id="02552d3c116b8a96f9ff0001b6ae661c" resname="Under">
+        <source>Under</source>
+        <target>Under</target>
+      </trans-unit>
+      <trans-unit id="e08ad75931308230cd41ec229bf0689e" resname="Empty file field">
+        <source>Empty file field</source>
+        <target>Empty file field</target>
+      </trans-unit>
+      <trans-unit id="164f104d600faf896518a1727248a084" resname="Create Material">
+        <source>Create Material</source>
+        <target>Create Material</target>
+      </trans-unit>
+      <trans-unit id="c476c6a9e317d1b4ee4e83e6f3cd03ed" resname="update material">
+        <source>update material</source>
+        <target>update material</target>
+      </trans-unit>
+      <trans-unit id="2f4f7e64ee392bf7ff6aec34a84ab9e1" resname="Material successfully updated.">
+        <source>Material successfully updated.</source>
+        <target>Material successfully updated.</target>
+      </trans-unit>
+      <trans-unit id="7d1a4fa92de3530cec1602475f2ae129" resname="New Material added.">
+        <source>New Material added.</source>
+        <target>New Material added.</target>
+      </trans-unit>
+      <trans-unit id="feec6ee6a4a144e5e182a90c7690ab82" resname="This URL will give you access to the series without login.">
+        <source>This URL will give you access to the series without login.</source>
+        <target>This URL will give you access to the series without login.</target>
+      </trans-unit>
+      <trans-unit id="6bd6beac1da76b2d2a9c3b7914ba034c" resname="Publication">
+        <source>Publication</source>
+        <target>Publication</target>
+      </trans-unit>
+      <trans-unit id="ce21470ab49d1d1976bc3dc72438c183" resname="Metadata">
+        <source>Metadata</source>
+        <target>Metadata</target>
+      </trans-unit>
+      <trans-unit id="189f63f277cd73395561651753563065" resname="Tags">
+        <source>Tags</source>
+        <target>Tags</target>
+      </trans-unit>
+      <trans-unit id="78386ec8f2845742c324a3d7d3e800ff" resname="People">
+        <source>People</source>
+        <target>People</target>
+      </trans-unit>
+      <trans-unit id="2f56b4f336dc97edf739bf79523fb9a6" resname="Multimedia">
+        <source>Multimedia</source>
+        <target>Multimedia</target>
+      </trans-unit>
+      <trans-unit id="44dfd689352039aac0f6247bf94fa03c" resname="Select an action">
+        <source>Select an action</source>
+        <target>Select an action</target>
+      </trans-unit>
+      <trans-unit id="38cf4b2cfcce068ad718942069cba590" resname="Announce/Not announce selected">
+        <source>Announce/Not announce selected</source>
+        <target>Announce/Not announce selected</target>
+      </trans-unit>
+      <trans-unit id="62c5afd627dcf34a49c1a06cb94bd503" resname="List multimedia objects in descending order of publication date">
+        <source>List multimedia objects in descending order of publication date</source>
+        <target>List multimedia objects in descending order of publication date</target>
+      </trans-unit>
+      <trans-unit id="abe024c4d4a6ddd25313bc1267420e45" resname="List multimedia objects in ascending order of publication date">
+        <source>List multimedia objects in ascending order of publication date</source>
+        <target>List multimedia objects in ascending order of publication date</target>
+      </trans-unit>
+      <trans-unit id="1ee1a8f62c601f99eb08919cb1b78788" resname="List multimedia objects in descending order of recording date">
+        <source>List multimedia objects in descending order of recording date</source>
+        <target>List multimedia objects in descending order of recording date</target>
+      </trans-unit>
+      <trans-unit id="869c932002d911b88a5561bc35bc9709" resname="List multimedia objects in ascending order of recording date">
+        <source>List multimedia objects in ascending order of recording date</source>
+        <target>List multimedia objects in ascending order of recording date</target>
+      </trans-unit>
+      <trans-unit id="a3b2babf515370667710ada3dbd898e5" resname="Cut multimedia objects">
+        <source>Cut multimedia objects</source>
+        <target>Cut multimedia objects</target>
+      </trans-unit>
+      <trans-unit id="f3d80d25283c5191fcac9573ced74dee" resname="Paste multimedia objects">
+        <source>Paste multimedia objects</source>
+        <target>Paste multimedia objects</target>
+      </trans-unit>
+      <trans-unit id="24c9bdf4a3829f90708fac4e945a8c40" resname="Preview show of the series">
+        <source>Preview show of the series</source>
+        <target>Preview show of the series</target>
+      </trans-unit>
+      <trans-unit id="5af874093e5efcbaeb4377b84c5f2ec5" resname="Wizard">
+        <source>Wizard</source>
+        <target>Wizard</target>
+      </trans-unit>
+      <trans-unit id="fc9cb6b618489cd3e51e9256cfe4ded0" resname="Create new multimedia object">
+        <source>Create new multimedia object</source>
+        <target>Create new multimedia object</target>
+      </trans-unit>
+      <trans-unit id="fe81835152dca8e5b9c25c136ba8c3fb" resname="Select any multimedia object.">
+        <source>Select any multimedia object.</source>
+        <target>Select any multimedia object.</target>
+      </trans-unit>
+      <trans-unit id="e0c2297cd0586edafa230edc0585c1af" resname="Audio/Video">
+        <source>Audio/Video</source>
+        <target>Audio/Video</target>
+      </trans-unit>
+      <trans-unit id="21133d71a056222fa2096906538e4e04" resname="Img">
+        <source>Img</source>
+        <target>Img</target>
+      </trans-unit>
+      <trans-unit id="b78a3223503896721cca1303f776159b" resname="Title">
+        <source>Title</source>
+        <target>Title</target>
+      </trans-unit>
+      <trans-unit id="e02d2ae03de9d493df2b6b2d2813d302" resname="Duration">
+        <source>Duration</source>
+        <target>Duration</target>
+      </trans-unit>
+      <trans-unit id="b11befb9b12822f75e5f3d0131e08fec" resname="RecDate">
+        <source>RecDate</source>
+        <target>RecDate</target>
+      </trans-unit>
+      <trans-unit id="b9098dfe6720d6c108e103efa643a582" resname="PubDate">
+        <source>PubDate</source>
+        <target>PubDate</target>
+      </trans-unit>
+      <trans-unit id="994c33e4d404d4a841ec61077f4c9fd2" resname="There are no multimedia objects with those values.">
+        <source>There are no multimedia objects with those values.</source>
+        <target>There are no multimedia objects with those values.</target>
+      </trans-unit>
+      <trans-unit id="6ad82d464215ca3b501dad2cfdfea8fa" resname="Move one position up">
+        <source>Move one position up</source>
+        <target>Move one position up</target>
+      </trans-unit>
+      <trans-unit id="0f7c9dff42fff7dfcfac5b0f9beb8732" resname="Move to the beginning of the list">
+        <source>Move to the beginning of the list</source>
+        <target>Move to the beginning of the list</target>
+      </trans-unit>
+      <trans-unit id="7d4998571de4462f81530a1c5d312bd7" resname="Move one position down">
+        <source>Move one position down</source>
+        <target>Move one position down</target>
+      </trans-unit>
+      <trans-unit id="503857cb22010035098858e7c9670014" resname="Move to the end of the list">
+        <source>Move to the end of the list</source>
+        <target>Move to the end of the list</target>
+      </trans-unit>
+      <trans-unit id="54cccb798c938dead7d08ed77eb605a5" resname="No_pic">
+        <source>No_pic</source>
+        <target>No_pic</target>
+      </trans-unit>
+      <trans-unit id="c08a04d16c7a626ff2a983d0661b089a" resname="Mm. Obj.">
+        <source>Mm. Obj.</source>
+        <target>Mm. Obj.</target>
+      </trans-unit>
+      <trans-unit id="6adf97f83acf6453d4a6a4b1070f3754" resname="None">
+        <source>None</source>
+        <target>None</target>
+      </trans-unit>
+      <trans-unit id="fff0d600f8a0b5e19e88bfb821dd1157" resname="Images">
+        <source>Images</source>
+        <target>Images</target>
+      </trans-unit>
+      <trans-unit id="34565428b7750b6f19cacb1123b5f052" resname="Video Files">
+        <source>Video Files</source>
+        <target>Video Files</target>
+      </trans-unit>
+      <trans-unit id="23ce0eb7d180f3dc8391d4af48572d21" resname="Materials">
+        <source>Materials</source>
+        <target>Materials</target>
+      </trans-unit>
+      <trans-unit id="bd908db5ccb07777ced8023dffc802f4" resname="Links">
+        <source>Links</source>
+        <target>Links</target>
+      </trans-unit>
+      <trans-unit id="3ad47dc0e9de6e0abf175f67e7cb8d9d" resname="Delete multimedia object">
+        <source>Delete multimedia object</source>
+        <target>Delete multimedia object</target>
+      </trans-unit>
+      <trans-unit id="eac43c6192e71b67210c7e4310d0f13b" resname="Press OK for changes to take effect">
+        <source>Press OK for changes to take effect</source>
+        <target>Press OK for changes to take effect</target>
+      </trans-unit>
+      <trans-unit id="019d592dffb967a27f628b9133958f16" resname="Multimedia Object saved ERROR">
+        <source>Multimedia Object saved ERROR</source>
+        <target>Multimedia Object saved ERROR</target>
+      </trans-unit>
+      <trans-unit id="0cd0e19f40907cfdaf48a8bf063c4ed6" resname="Multimedia Object saved OK">
+        <source>Multimedia Object saved OK</source>
+        <target>Multimedia Object saved OK</target>
+      </trans-unit>
+      <trans-unit id="5c7314e0275926ee426d0ed1af6928f4" resname="Publication Channels">
+        <source>Publication Channels</source>
+        <target>Publication Channels</target>
+      </trans-unit>
+      <trans-unit id="6ad892c7ec3e03a38a61c80a24d6047c" resname="Publishing Decisions">
+        <source>Publishing Decisions</source>
+        <target>Publishing Decisions</target>
+      </trans-unit>
+      <trans-unit id="96ce65b8fd1d0094e095c0346550da80" resname="Mutlimedia Object Template saved ERROR">
+        <source>Mutlimedia Object Template saved ERROR</source>
+        <target>Mutlimedia Object Template saved ERROR</target>
+      </trans-unit>
+      <trans-unit id="66c1faead4cb99af8725104143a7cabf" resname="Mutlimedia Object Template saved OK">
+        <source>Mutlimedia Object Template saved OK</source>
+        <target>Mutlimedia Object Template saved OK</target>
+      </trans-unit>
+      <trans-unit id="888ee58ccfa82ba8a0685c58bb43fd7d" resname="Press OK for the change to take effect">
+        <source>Press OK for the change to take effect</source>
+        <target>Press OK for the change to take effect</target>
+      </trans-unit>
+      <trans-unit id="eea12f8def73f982b688e9e43d73dce0" resname="create new person">
+        <source>create new person</source>
+        <target>create new person</target>
+      </trans-unit>
+      <trans-unit id="e8e8cac1fc34a909a2890151e6098bd8" resname="Person successfully created.">
+        <source>Person successfully created.</source>
+        <target>Person successfully created.</target>
+      </trans-unit>
+      <trans-unit id="cbffa256bcbad72e3a26f907af045f1b" resname="edit new person">
+        <source>edit new person</source>
+        <target>edit new person</target>
+      </trans-unit>
+      <trans-unit id="714494e16649c3c5dd3d797a39f6a2f5" resname="Person successfully associated to Multimedia Object">
+        <source>Person successfully associated to Multimedia Object</source>
+        <target>Person successfully associated to Multimedia Object</target>
+      </trans-unit>
+      <trans-unit id="b878aa8bbb132d9c66de1424698c44d2" resname="with role">
+        <source>with role</source>
+        <target>with role</target>
+      </trans-unit>
+      <trans-unit id="03d947a2158373c3b9d74325850cb8b9" resname="Post">
+        <source>Post</source>
+        <target>Post</target>
+      </trans-unit>
+      <trans-unit id="17a53d1a012580ef609b70ef6a25d1f1" resname="Letter">
+        <source>Letter</source>
+        <target>Letter</target>
+      </trans-unit>
+      <trans-unit id="5129d1f61faeedfd033bae6e66a36eb6" resname="Select any person.">
+        <source>Select any person.</source>
+        <target>Select any person.</target>
+      </trans-unit>
+      <trans-unit id="554cfab3938e21d9270bd6b75931f96f" resname="Videos">
+        <source>Videos</source>
+        <target>Videos</target>
+      </trans-unit>
+      <trans-unit id="9baa5e144254031440ecd0e9b78f3d38" resname="There are no people with those values.">
+        <source>There are no people with those values.</source>
+        <target>There are no people with those values.</target>
+      </trans-unit>
+      <trans-unit id="cc991c5669b278ab24bee4d0c911f3c9" resname="Edit Person">
+        <source>Edit Person</source>
+        <target>Edit Person</target>
+      </trans-unit>
+      <trans-unit id="d2ea4545ac956c2bbf057858bf841ce1" resname="{0} people|{1} person|]1,Inf] people">
+        <source>{0} people|{1} person|]1,Inf] people</source>
+        <target>{0} people|{1} person|]1,Inf] people</target>
+      </trans-unit>
+      <trans-unit id="f4d46eec2d41c4ab86e8a4a2a3ccb987" resname="Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and">
+        <source>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and</source>
+        <target>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and</target>
+      </trans-unit>
+      <trans-unit id="98d6ceb3a5d782932eae0aa8bad56de5" resname="use him/her">
+        <source>use him/her</source>
+        <target>use him/her</target>
+      </trans-unit>
+      <trans-unit id="183068852d9ce76cea8a2387ea691b90" resname="If he/she doesn't exist in the database">
+        <source>If he/she doesn't exist in the database</source>
+        <target>If he/she doesn't exist in the database</target>
+      </trans-unit>
+      <trans-unit id="76ea0bebb3c22822b4f0dd9c9fd021c5" resname="create">
+        <source>create</source>
+        <target>create</target>
+      </trans-unit>
+      <trans-unit id="869b263ea71b6772696b39c002822945" resname="a new entrance with the written name">
+        <source>a new entrance with the written name</source>
+        <target>a new entrance with the written name</target>
+      </trans-unit>
+      <trans-unit id="667c1b8275a93e3f20ff88b55c1334d7" resname="name to search for">
+        <source>name to search for</source>
+        <target>name to search for</target>
+      </trans-unit>
+      <trans-unit id="c327b49efdca2668f28cd7b4beee54b3" resname="working">
+        <source>working</source>
+        <target>working</target>
+      </trans-unit>
+      <trans-unit id="5c372099c348697eb720e6175b16b700" resname="Select before a person">
+        <source>Select before a person</source>
+        <target>Select before a person</target>
+      </trans-unit>
+      <trans-unit id="ad8783089f828b927473fb61d51940ec" resname="Use">
+        <source>Use</source>
+        <target>Use</target>
+      </trans-unit>
+      <trans-unit id="686e697538050e4664636337cc3b834f" resname="Create">
+        <source>Create</source>
+        <target>Create</target>
+      </trans-unit>
+      <trans-unit id="22af645d1859cb5ca6da0c484f1f37ea" resname="new">
+        <source>new</source>
+        <target>new</target>
+      </trans-unit>
+      <trans-unit id="490aa6e856ccf208a054389e47ce0d06" resname="Id">
+        <source>Id</source>
+        <target>Id</target>
+      </trans-unit>
+      <trans-unit id="ce8ae9da5b7cd6c3df2929543a9af92d" resname="Email">
+        <source>Email</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="bcc254b55c4a1babdf1dcb82c207506b" resname="Phone">
+        <source>Phone</source>
+        <target>Phone</target>
+      </trans-unit>
+      <trans-unit id="551b723eafd6a31d444fcb2f5920fbd3" resname="INFO">
+        <source>INFO</source>
+        <target>INFO</target>
+      </trans-unit>
+      <trans-unit id="764ba341884a1bd017da8032c4fb350a" resname="SERIES">
+        <source>SERIES</source>
+        <target>SERIES</target>
+      </trans-unit>
+      <trans-unit id="f3177b164abaa30bcc742ed6dec3c7a3" resname="Select any person">
+        <source>Select any person</source>
+        <target>Select any person</target>
+      </trans-unit>
+      <trans-unit id="91e34f18a53e345f5364fd609123572d" resname="modify person">
+        <source>modify person</source>
+        <target>modify person</target>
+      </trans-unit>
+      <trans-unit id="774d25ceb9a5a1264ee07685f72b0d21" resname="Person successfully updated.">
+        <source>Person successfully updated.</source>
+        <target>Person successfully updated.</target>
+      </trans-unit>
+      <trans-unit id="a9e2a81f929ffd2dad72f09cdaf3d4ef" resname="edit person">
+        <source>edit person</source>
+        <target>edit person</target>
+      </trans-unit>
+      <trans-unit id="89a9281337a1b50dfd495a05f5371c16" resname="Person associated to Multimedia Object">
+        <source>Person associated to Multimedia Object</source>
+        <target>Person associated to Multimedia Object</target>
+      </trans-unit>
+      <trans-unit id="8643913b0a508757e4abdc7fa1e5c6c6" resname="successfully updated">
+        <source>successfully updated</source>
+        <target>successfully updated</target>
+      </trans-unit>
+      <trans-unit id="5c084549f542f14df74f4cefa207e2ee" resname="add new pic">
+        <source>add new pic</source>
+        <target>add new pic</target>
+      </trans-unit>
+      <trans-unit id="0080299bc013b5534d0229eed5acc4ee" resname="New Pic added.">
+        <source>New Pic added.</source>
+        <target>New Pic added.</target>
+      </trans-unit>
+      <trans-unit id="a08e742bf53cb8beef744fd3e923fd0f" resname="Write the URL">
+        <source>Write the URL</source>
+        <target>Write the URL</target>
+      </trans-unit>
+      <trans-unit id="6b74c9611951bd925533b70e18599ad1" resname="Add a file">
+        <source>Add a file</source>
+        <target>Add a file</target>
+      </trans-unit>
+      <trans-unit id="c6172c3b2f539b1866f212c8b79e4936" resname="Select a file on first place. Thank you.">
+        <source>Select a file on first place. Thank you.</source>
+        <target>Select a file on first place. Thank you.</target>
+      </trans-unit>
+      <trans-unit id="ec211f7c20af43e742bf2570c3cb84f9" resname="Add">
+        <source>Add</source>
+        <target>Add</target>
+      </trans-unit>
+      <trans-unit id="0788c01942c51699193ae0c99728553f" resname="Use Image">
+        <source>Use Image</source>
+        <target>Use Image</target>
+      </trans-unit>
+      <trans-unit id="5f3adbc8fb5a898e9e99a7d00219cb0a" resname="There are no images in the database.">
+        <source>There are no images in the database.</source>
+        <target>There are no images in the database.</target>
+      </trans-unit>
+      <trans-unit id="a14fa2166ed698f3d04061f57e5ab9b9" resname="loading">
+        <source>loading</source>
+        <target>loading</target>
+      </trans-unit>
+      <trans-unit id="5a7f843f9d8751c817e2cf3460c3e336" resname="New image">
+        <source>New image</source>
+        <target>New image</target>
+      </trans-unit>
+      <trans-unit id="641974d34118f20224411bbc63ad3e4b" resname="Update the video to show the images">
+        <source>Update the video to show the images</source>
+        <target>Update the video to show the images</target>
+      </trans-unit>
+      <trans-unit id="d4aa1184a32d2db1fbe02b31c347c771" resname="create new role">
+        <source>create new role</source>
+        <target>create new role</target>
+      </trans-unit>
+      <trans-unit id="11f44ec7952b7acf02b454d2591d119b" resname="There was an error in creating the Role.">
+        <source>There was an error in creating the Role.</source>
+        <target>There was an error in creating the Role.</target>
+      </trans-unit>
+      <trans-unit id="0e9e63d414673a0512802f1fe0e50b3d" resname="Role successfully created.">
+        <source>Role successfully created.</source>
+        <target>Role successfully created.</target>
+      </trans-unit>
+      <trans-unit id="9949c8a2c8c52e71890de5cf5a9dac6a" resname="Cod">
+        <source>Cod</source>
+        <target>Cod</target>
+      </trans-unit>
+      <trans-unit id="a5cd3ed116608dac017f14c046ea56bf" resname="Roles">
+        <source>Roles</source>
+        <target>Roles</target>
+      </trans-unit>
+      <trans-unit id="b9987a246a537f4fe86f1f2e3d10dbdb" resname="Display">
+        <source>Display</source>
+        <target>Display</target>
+      </trans-unit>
+      <trans-unit id="ca0dbad92a874b2f69b549293387925e" resname="Code">
+        <source>Code</source>
+        <target>Code</target>
+      </trans-unit>
+      <trans-unit id="7d32f78a591cc1732dca0569e9a1196b" resname="There are no roles with those values.">
+        <source>There are no roles with those values.</source>
+        <target>There are no roles with those values.</target>
+      </trans-unit>
+      <trans-unit id="7158415ddd8d364c23ff16c1c0e46338" resname="Edit Role">
+        <source>Edit Role</source>
+        <target>Edit Role</target>
+      </trans-unit>
+      <trans-unit id="e16cfe02edb81860b3a10268cba80f18" resname="{0} roles|{1} role|]1,Inf] roles">
+        <source>{0} roles|{1} role|]1,Inf] roles</source>
+        <target>{0} roles|{1} role|]1,Inf] roles</target>
+      </trans-unit>
+      <trans-unit id="9494e2f436425a535f6a65c483414b47" resname="modify role">
+        <source>modify role</source>
+        <target>modify role</target>
+      </trans-unit>
+      <trans-unit id="13cea3763d1824930ed87f01a9e6cb63" resname="There was an error in updating the Role.">
+        <source>There was an error in updating the Role.</source>
+        <target>There was an error in updating the Role.</target>
+      </trans-unit>
+      <trans-unit id="cbecbedc4c072c0889be6bc5dd5f747e" resname="Role successfully updated.">
+        <source>Role successfully updated.</source>
+        <target>Role successfully updated.</target>
+      </trans-unit>
+      <trans-unit id="52ef9633d88a7480b3a938ff9eaa2a25" resname="Others">
+        <source>Others</source>
+        <target>Others</target>
+      </trans-unit>
+      <trans-unit id="154f69b52fc414f40367eb43ff046724" resname="Announced">
+        <source>Announced</source>
+        <target>Announced</target>
+      </trans-unit>
+      <trans-unit id="f2fcec7e6a3f80c8d00485a09a735c2d" resname="Indifferent">
+        <source>Indifferent</source>
+        <target>Indifferent</target>
+      </trans-unit>
+      <trans-unit id="93cba07454f06a4a960172bbd6e2a435" resname="Yes">
+        <source>Yes</source>
+        <target>Yes</target>
+      </trans-unit>
+      <trans-unit id="bafd7322c6e97d25b6299b5d6fe8920b" resname="No">
+        <source>No</source>
+        <target>No</target>
+      </trans-unit>
+      <trans-unit id="0bb9885b2f22eb2c9f84085fe3ac2255" resname="change broadcast status of multimedia objects inside the series">
+        <source>change broadcast status of multimedia objects inside the series</source>
+        <target>change broadcast status of multimedia objects inside the series</target>
+      </trans-unit>
+      <trans-unit id="51f950aa3065224126ed97477757007c" resname="Multimedia Objects">
+        <source>Multimedia Objects</source>
+        <target>Multimedia Objects</target>
+      </trans-unit>
+      <trans-unit id="5fb1f955b45e38e31789286a1790398d" resname="ALL">
+        <source>ALL</source>
+        <target>ALL</target>
+      </trans-unit>
+      <trans-unit id="9b9d8a976b42e0bd66381797644943d5" resname="Published">
+        <source>Published</source>
+        <target>Published</target>
+      </trans-unit>
+      <trans-unit id="4ecc0d90eec1cea3e9db96583a1bb9c2" resname="Blocked">
+        <source>Blocked</source>
+        <target>Blocked</target>
+      </trans-unit>
+      <trans-unit id="7acdf85c69cc3c5305456a293524386e" resname="Hidden">
+        <source>Hidden</source>
+        <target>Hidden</target>
+      </trans-unit>
+      <trans-unit id="e0626222614bdee31951d84c64e5e9ff" resname="Select">
+        <source>Select</source>
+        <target>Select</target>
+      </trans-unit>
+      <trans-unit id="3e47b75000b0924b6c9ba5759a7cf15d" resname="nothing">
+        <source>nothing</source>
+        <target>nothing</target>
+      </trans-unit>
+      <trans-unit id="a181a603769c1f98ad927e7367c7aa51" resname="all">
+        <source>all</source>
+        <target>all</target>
+      </trans-unit>
+      <trans-unit id="17cd4945a039ee7e45d22752d265efdc" resname="Multimedia Series">
+        <source>Multimedia Series</source>
+        <target>Multimedia Series</target>
+      </trans-unit>
+      <trans-unit id="b3a7cf9f78321e0612e3de4eb00bdd6d" resname="Create new series">
+        <source>Create new series</source>
+        <target>Create new series</target>
+      </trans-unit>
+      <trans-unit id="58033cab4f0a120d88e6e4f38b59de4a" resname="Select any series.">
+        <source>Select any series.</source>
+        <target>Select any series.</target>
+      </trans-unit>
+      <trans-unit id="193a985036f40e2437f9a86479f617f2" resname="There are no series with those values.">
+        <source>There are no series with those values.</source>
+        <target>There are no series with those values.</target>
+      </trans-unit>
+      <trans-unit id="b7544ec9b8477d5cf73a288a7b60178b" resname="Click to modify broadcast status">
+        <source>Click to modify broadcast status</source>
+        <target>Click to modify broadcast status</target>
+      </trans-unit>
+      <trans-unit id="ef1e8be579e2ff66adfd5475393bd207" resname="Not enough privileges to modify broadcast status">
+        <source>Not enough privileges to modify broadcast status</source>
+        <target>Not enough privileges to modify broadcast status</target>
+      </trans-unit>
+      <trans-unit id="cce3df80f07d36b56db4376a4802d6c2" resname="videos">
+        <source>videos</source>
+        <target>videos</target>
+      </trans-unit>
+      <trans-unit id="411b2d055a659faba81085650f243102" resname="{0} series|{1} series|]1,Inf] series">
+        <source>{0} series|{1} series|]1,Inf] series</source>
+        <target>{0} series|{1} series|]1,Inf] series</target>
+      </trans-unit>
+      <trans-unit id="02658c8d8d6f47e0233eec9ea5375fe9" resname="Mm.Obj.">
+        <source>Mm.Obj.</source>
+        <target>Mm.Obj.</target>
+      </trans-unit>
+      <trans-unit id="4059b0251f66a18cb56f544728796875" resname="Info">
+        <source>Info</source>
+        <target>Info</target>
+      </trans-unit>
+      <trans-unit id="9212495f5c0753c9170e927299922356" resname="Videos Template">
+        <source>Videos Template</source>
+        <target>Videos Template</target>
+      </trans-unit>
+      <trans-unit id="95b0cedd46dacd21763538fd6ee2fd24" resname="Delete the series">
+        <source>Delete the series</source>
+        <target>Delete the series</target>
+      </trans-unit>
+      <trans-unit id="a6074d93415afc28f99b35ce95401a46" resname="Series saved ERROR">
+        <source>Series saved ERROR</source>
+        <target>Series saved ERROR</target>
+      </trans-unit>
+      <trans-unit id="f098f3495dcf0337cc88d48edcd4c1b9" resname="Series saved OK">
+        <source>Series saved OK</source>
+        <target>Series saved OK</target>
+      </trans-unit>
+      <trans-unit id="d0a747c834d69b4e8ef0ff7e507b9efe" resname="Show configuration">
+        <source>Show configuration</source>
+        <target>Show configuration</target>
+      </trans-unit>
+      <trans-unit id="7ec2ad9bc90afdc877bda3faeed6bb60" resname="Texts.">
+        <source>Texts.</source>
+        <target>Texts.</target>
+      </trans-unit>
+      <trans-unit id="099af53f601532dbd31e0ea99ffdeb64" resname="delete">
+        <source>delete</source>
+        <target>delete</target>
+      </trans-unit>
+      <trans-unit id="9b868d291bde84c856aecf7d82a57db8" resname="Edit tag">
+        <source>Edit tag</source>
+        <target>Edit tag</target>
+      </trans-unit>
+      <trans-unit id="59bb54949c2f60a0d5a8f37fa7b45428" resname="Create child tag for">
+        <source>Create child tag for</source>
+        <target>Create child tag for</target>
+      </trans-unit>
+      <trans-unit id="bba7852d4b6a7e159949b967c4085148" resname="create new tag">
+        <source>create new tag</source>
+        <target>create new tag</target>
+      </trans-unit>
+      <trans-unit id="6085a7ac2266a956c85d0622432448db" resname="There was an error in creating the Tag.">
+        <source>There was an error in creating the Tag.</source>
+        <target>There was an error in creating the Tag.</target>
+      </trans-unit>
+      <trans-unit id="f152503fafd63e4ecc28c32015d41d25" resname="Tag successfully created.">
+        <source>Tag successfully created.</source>
+        <target>Tag successfully created.</target>
+      </trans-unit>
+      <trans-unit id="e9186d345e9895a1f1bd52f67237cb6d" resname="Code - Name">
+        <source>Code - Name</source>
+        <target>Code - Name</target>
+      </trans-unit>
+      <trans-unit id="204c0a8bbc7d0e7215e93082aad12c1d" resname="MM. Obj.">
+        <source>MM. Obj.</source>
+        <target>MM. Obj.</target>
+      </trans-unit>
+      <trans-unit id="65b0daa9eeaf0d5db90a42a990d7e134" resname="There are no tags with those values.">
+        <source>There are no tags with those values.</source>
+        <target>There are no tags with those values.</target>
+      </trans-unit>
+      <trans-unit id="3055b191f9efea2478875e16b7acb8f6" resname="There was an error in updating the Tag.">
+        <source>There was an error in updating the Tag.</source>
+        <target>There was an error in updating the Tag.</target>
+      </trans-unit>
+      <trans-unit id="8da94294d519d5bd81773b59e817bf87" resname="Tag successfully updated.">
+        <source>Tag successfully updated.</source>
+        <target>Tag successfully updated.</target>
+      </trans-unit>
+      <trans-unit id="f2ac8e8cd7d5bcd54e88c5efe9e50ce6" resname="Duration(min)">
+        <source>Duration(min)</source>
+        <target>Duration(min)</target>
+      </trans-unit>
+      <trans-unit id="8601dbb301e7007794671a3cb4cb63ef" resname="create new track">
+        <source>create new track</source>
+        <target>create new track</target>
+      </trans-unit>
+      <trans-unit id="cce99c598cfdb9773ab041d54c3d973a" resname="Profile">
+        <source>Profile</source>
+        <target>Profile</target>
+      </trans-unit>
+      <trans-unit id="502996d9790340c5fd7b86a5b93b1c9f" resname="Priority">
+        <source>Priority</source>
+        <target>Priority</target>
+      </trans-unit>
+      <trans-unit id="7b2580149fa254a97b1e42c08aa3df94" resname="Low-Priority">
+        <source>Low-Priority</source>
+        <target>Low-Priority</target>
+      </trans-unit>
+      <trans-unit id="634197cd21d33506bcee84a2c0143b6a" resname="Normal-Priority">
+        <source>Normal-Priority</source>
+        <target>Normal-Priority</target>
+      </trans-unit>
+      <trans-unit id="7050cf0d21fcaca51e96bdaf8c6413e0" resname="High-Priority">
+        <source>High-Priority</source>
+        <target>High-Priority</target>
+      </trans-unit>
+      <trans-unit id="2b2884d35c4381b201c8423a590a6236" resname="Inbox on server">
+        <source>Inbox on server</source>
+        <target>Inbox on server</target>
+      </trans-unit>
+      <trans-unit id="38c75b7c8a7878e5c633f56d3572de2c" resname="Local hard drive">
+        <source>Local hard drive</source>
+        <target>Local hard drive</target>
+      </trans-unit>
+      <trans-unit id="46b5f8c58b679b4243cbdb5749642c86" resname="Progress">
+        <source>Progress</source>
+        <target>Progress</target>
+      </trans-unit>
+      <trans-unit id="5efaf63319005da666e53b1354198c28" resname="track info">
+        <source>track info</source>
+        <target>track info</target>
+      </trans-unit>
+      <trans-unit id="e35371362f5cd42636b4edddc99d4e4f" resname="Embedded IFRAME">
+        <source>Embedded IFRAME</source>
+        <target>Embedded IFRAME</target>
+      </trans-unit>
+      <trans-unit id="d20b44cf3c7d17e9fff9e3c5f4be677f" resname="Not understand iframes">
+        <source>Not understand iframes</source>
+        <target>Not understand iframes</target>
+      </trans-unit>
+      <trans-unit id="c17ee73343e7b19a3d0c610ae31cf2a2" resname="EMBED">
+        <source>EMBED</source>
+        <target>EMBED</target>
+      </trans-unit>
+      <trans-unit id="23063b605699c41c2e1a0c35da0a2f02" resname="Original resolution">
+        <source>Original resolution</source>
+        <target>Original resolution</target>
+      </trans-unit>
+      <trans-unit id="82f419359551257da33d2bc119fbf360" resname="Loading Microsoft Windows Media Player components">
+        <source>Loading Microsoft Windows Media Player components</source>
+        <target>Loading Microsoft Windows Media Player components</target>
+      </trans-unit>
+      <trans-unit id="02be7a545f459ee0bcbae192ee1f94a5" resname="Resolution 480x320">
+        <source>Resolution 480x320</source>
+        <target>Resolution 480x320</target>
+      </trans-unit>
+      <trans-unit id="34e2d1989a1dbf75cd631596133ee5ee" resname="Video">
+        <source>Video</source>
+        <target>Video</target>
+      </trans-unit>
+      <trans-unit id="5801dc37dcb8115a1e1020f404e84a43" resname="Job info">
+        <source>Job info</source>
+        <target>Job info</target>
+      </trans-unit>
+      <trans-unit id="07f07b623b4a00b57dc150ff2e59cb92" resname="Mm">
+        <source>Mm</source>
+        <target>Mm</target>
+      </trans-unit>
+      <trans-unit id="54c82ef76ecbbd4c2293e09bae01b54e" resname="Cpu">
+        <source>Cpu</source>
+        <target>Cpu</target>
+      </trans-unit>
+      <trans-unit id="9060587edeb01a63e3d3edc959678d1e" resname="Before">
+        <source>Before</source>
+        <target>Before</target>
+      </trans-unit>
+      <trans-unit id="632a2406bbcbcd553eec45ac14b40a0a" resname="after">
+        <source>after</source>
+        <target>after</target>
+      </trans-unit>
+      <trans-unit id="b3ac111fd7521343dd1a3fabce8279c2" resname="Times">
+        <source>Times</source>
+        <target>Times</target>
+      </trans-unit>
+      <trans-unit id="0eceeb45861f9585dd7a97a3e36f85c6" resname="Created">
+        <source>Created</source>
+        <target>Created</target>
+      </trans-unit>
+      <trans-unit id="3bebb2f89180b03fa5ae736665f648d9" resname="started">
+        <source>started</source>
+        <target>started</target>
+      </trans-unit>
+      <trans-unit id="a5d7ceb2c59b8cee46c2953fec9abc19" resname="finished">
+        <source>finished</source>
+        <target>finished</target>
+      </trans-unit>
+      <trans-unit id="a6fbb2ce4173b61ca5a2f0450191112c" resname="Output Command">
+        <source>Output Command</source>
+        <target>Output Command</target>
+      </trans-unit>
+      <trans-unit id="c0cc02c3b3d55abb7bfb49ddbb4866c8" resname="RETRY">
+        <source>RETRY</source>
+        <target>RETRY</target>
+      </trans-unit>
+      <trans-unit id="32f68a60cef40faedbc6af20298c1a1e" resname="DELETE">
+        <source>DELETE</source>
+        <target>DELETE</target>
+      </trans-unit>
+      <trans-unit id="371ab4ac98728d66b49d1a14ba726292" resname="Encoder Job info">
+        <source>Encoder Job info</source>
+        <target>Encoder Job info</target>
+      </trans-unit>
+      <trans-unit id="e02a07ad19f6a1c69cef8288429aaedd" resname="Delete Encoder Job">
+        <source>Delete Encoder Job</source>
+        <target>Delete Encoder Job</target>
+      </trans-unit>
+      <trans-unit id="c3e53f75912bdea8c95c7ae9851d659a" resname="File info of multimedia object">
+        <source>File info of multimedia object</source>
+        <target>File info of multimedia object</target>
+      </trans-unit>
+      <trans-unit id="ab6b7e1b0708d1ad1d4ba0f137f95817" resname="Capture frame from">
+        <source>Capture frame from</source>
+        <target>Capture frame from</target>
+      </trans-unit>
+      <trans-unit id="06b9281e396db002010bde1de57262eb" resname="Auto">
+        <source>Auto</source>
+        <target>Auto</target>
+      </trans-unit>
+      <trans-unit id="bb1a5a2b7eec4f940f8e78abe48d68bf" resname="10%">
+        <source>10%</source>
+        <target>10%</target>
+      </trans-unit>
+      <trans-unit id="ae0ce64fc49cd0aa826b50099f869922" resname="25%">
+        <source>25%</source>
+        <target>25%</target>
+      </trans-unit>
+      <trans-unit id="2496af30b64c3a4ff21e8505ea439a73" resname="50%">
+        <source>50%</source>
+        <target>50%</target>
+      </trans-unit>
+      <trans-unit id="f819de81247be4a5428dc0e169de28b8" resname="75%">
+        <source>75%</source>
+        <target>75%</target>
+      </trans-unit>
+      <trans-unit id="f52f03b450a9cd105adef48e609c4ff4" resname="90%">
+        <source>90%</source>
+        <target>90%</target>
+      </trans-unit>
+      <trans-unit id="0e3a50ba0067d015c223dcaed58f9fb3" resname="Transcode to profile">
+        <source>Transcode to profile</source>
+        <target>Transcode to profile</target>
+      </trans-unit>
+      <trans-unit id="4c5bc28c3bedbd9ba72e9a833a6f7628" resname="New master">
+        <source>New master</source>
+        <target>New master</target>
+      </trans-unit>
+      <trans-unit id="17b749be88ed7eb4c2ea38a619054392" resname="play track">
+        <source>play track</source>
+        <target>play track</target>
+      </trans-unit>
+      <trans-unit id="811a0eea8a315aff43a9df55ff02c2cd" resname="update track">
+        <source>update track</source>
+        <target>update track</target>
+      </trans-unit>
+      <trans-unit id="630fd5c224192c780dcc650d1bd94bac" resname="Update the web page to show master videos">
+        <source>Update the web page to show master videos</source>
+        <target>Update the web page to show master videos</target>
+      </trans-unit>
+      <trans-unit id="dfaf09345e35103c855afaffa460c33d" resname="New Track added.">
+        <source>New Track added.</source>
+        <target>New Track added.</target>
+      </trans-unit>
+      <trans-unit id="40c6907f3e993a48f7eb56b81b5c2b02" resname="create new user">
+        <source>create new user</source>
+        <target>create new user</target>
+      </trans-unit>
+      <trans-unit id="f6039d44b29456b20f8f373155ae4973" resname="Username">
+        <source>Username</source>
+        <target>Username</target>
+      </trans-unit>
+      <trans-unit id="f9aae5fda8d810a29f12d1e61b4ab25f" resname="Users">
+        <source>Users</source>
+        <target>Users</target>
+      </trans-unit>
+      <trans-unit id="99dea78007133396a7b8ed70578ac6ae" resname="Login">
+        <source>Login</source>
+        <target>Login</target>
+      </trans-unit>
+      <trans-unit id="d48d5ebc32be822ac641864a68faa905" resname="There are no users with those values.">
+        <source>There are no users with those values.</source>
+        <target>There are no users with those values.</target>
+      </trans-unit>
+      <trans-unit id="65d7cc265608a3f28d479f7cb8e742ec" resname="Edit User">
+        <source>Edit User</source>
+        <target>Edit User</target>
+      </trans-unit>
+      <trans-unit id="7b7bc2512ee1fedcd76bdc68926d4f7b" resname="Administrator">
+        <source>Administrator</source>
+        <target>Administrator</target>
+      </trans-unit>
+      <trans-unit id="32c73be0cb175da278c8e2af0811b0d1" resname="Publisher">
+        <source>Publisher</source>
+        <target>Publisher</target>
+      </trans-unit>
+      <trans-unit id="8f9bfe9d1345237cb3b2b205864da075" resname="User">
+        <source>User</source>
+        <target>User</target>
+      </trans-unit>
+      <trans-unit id="bae41d2524d769cd9de6d6048841d052" resname="{0} users|{1} user|]1,Inf] users">
+        <source>{0} users|{1} user|]1,Inf] users</source>
+        <target>{0} users|{1} user|]1,Inf] users</target>
+      </trans-unit>
+      <trans-unit id="8a85527bc3ccb0b6346d5294326d8c7f" resname="modify user">
+        <source>modify user</source>
+        <target>modify user</target>
+      </trans-unit>
+      <trans-unit id="e61888c744dffaf0ac60ae8c6f40a1e4" resname="Are you sure you want to delete this role?">
+        <source>Are you sure you want to delete this role?</source>
+        <target>Are you sure you want to delete this role?</target>
+      </trans-unit>
+      <trans-unit id="12b9ebd75001eb0e345ee03760fc6b7f" resname="Role successfully deleted.">
+        <source>Role successfully deleted.</source>
+        <target>Role successfully deleted.</target>
+      </trans-unit>
+      <trans-unit id="4e0df9ab1a5534c8a8994d2f8b36ced6" resname="Impossible to delete, role with">
+        <source>Impossible to delete, role with</source>
+        <target>Impossible to delete, role with</target>
+      </trans-unit>
+      <trans-unit id="12a032ce9179c32a6c7ab397b9d871fa" resname="people">
+        <source>people</source>
+        <target>people</target>
+      </trans-unit>
+      <trans-unit id="eee9f637fd981a6d2f32481c380a22ed" resname="Are you sure you want to delete the user">
+        <source>Are you sure you want to delete the user</source>
+        <target>Are you sure you want to delete the user</target>
+      </trans-unit>
+      <trans-unit id="17fb2da5396f939202adc1a045fa405d" resname="Error deleting user">
+        <source>Error deleting user</source>
+        <target>Error deleting user</target>
+      </trans-unit>
+      <trans-unit id="e1d9719c4816cb12250cc51b94483dc2" resname="successfully deleted.">
+        <source>successfully deleted.</source>
+        <target>successfully deleted.</target>
+      </trans-unit>
+      <trans-unit id="d4a7f68aa54a8fa8eef60fc258123da3" resname="Are you sure you want to delete this broadcast?">
+        <source>Are you sure you want to delete this broadcast?</source>
+        <target>Are you sure you want to delete this broadcast?</target>
+      </trans-unit>
+      <trans-unit id="edc1cf6a82f8ca14569cb7709991bbe9" resname="Broadcast successfully deleted.">
+        <source>Broadcast successfully deleted.</source>
+        <target>Broadcast successfully deleted.</target>
+      </trans-unit>
+      <trans-unit id="6329db6519784caf2d01b1a77796825c" resname="Impossible to delete, broadcast with">
+        <source>Impossible to delete, broadcast with</source>
+        <target>Impossible to delete, broadcast with</target>
+      </trans-unit>
+      <trans-unit id="f87304411b5d4ef37ae8b640d2f28d91" resname="multimedia object(s).">
+        <source>multimedia object(s).</source>
+        <target>multimedia object(s).</target>
+      </trans-unit>
+      <trans-unit id="7028d670d8c904d070d7e0288be8196f" resname="Are you sure you want to delete this live channel?">
+        <source>Are you sure you want to delete this live channel?</source>
+        <target>Are you sure you want to delete this live channel?</target>
+      </trans-unit>
+      <trans-unit id="2341277909075b11f58c191da31c23a4" resname="Live channel successfully deleted.">
+        <source>Live channel successfully deleted.</source>
+        <target>Live channel successfully deleted.</target>
+      </trans-unit>
+      <trans-unit id="c3f0668a5a038545688bdc7c6df69379" resname="Are you sure you want to delete this live event?">
+        <source>Are you sure you want to delete this live event?</source>
+        <target>Are you sure you want to delete this live event?</target>
+      </trans-unit>
+      <trans-unit id="9ddd64a5b8afc0c4aa82957c0238c469" resname="Live event successfully deleted.">
+        <source>Live event successfully deleted.</source>
+        <target>Live event successfully deleted.</target>
+      </trans-unit>
+      <trans-unit id="470608c99219ae88ec43c2b74d929fd8" resname="Are you sure you want to delete this multimedia object?">
+        <source>Are you sure you want to delete this multimedia object?</source>
+        <target>Are you sure you want to delete this multimedia object?</target>
+      </trans-unit>
+      <trans-unit id="8a150f35bc4d7476c6b39749ce51646c" resname="Multimedia Object successfully deleted.">
+        <source>Multimedia Object successfully deleted.</source>
+        <target>Multimedia Object successfully deleted.</target>
+      </trans-unit>
+      <trans-unit id="9053cb6cfaedd1ad871000cb2db76a8f" resname="Are you sure you want to delete the series">
+        <source>Are you sure you want to delete the series</source>
+        <target>Are you sure you want to delete the series</target>
+      </trans-unit>
+      <trans-unit id="ba0edcf745d31523cb1825234acecfd5" resname="This series has">
+        <source>This series has</source>
+        <target>This series has</target>
+      </trans-unit>
+      <trans-unit id="8752fea80d6dd774bfc69ea3bdab33c3" resname="multimedia object(s)">
+        <source>multimedia object(s)</source>
+        <target>multimedia object(s)</target>
+      </trans-unit>
+      <trans-unit id="b9e6a581c8bda90f8722c4210f9f1d26" resname="successfully deleted">
+        <source>successfully deleted</source>
+        <target>successfully deleted</target>
+      </trans-unit>
+      <trans-unit id="f2ce3a2e075b2ae7df5bd3f2c06e157d" resname="Are you sure you want to delete this picture?">
+        <source>Are you sure you want to delete this picture?</source>
+        <target>Are you sure you want to delete this picture?</target>
+      </trans-unit>
+      <trans-unit id="75bf4e0be95a1b79b306de6513864ff5" resname="Image removed.">
+        <source>Image removed.</source>
+        <target>Image removed.</target>
+      </trans-unit>
+      <trans-unit id="3af9fe50987e1253e07a74e3802f6eae" resname="Are you sure you want to delete the relation of">
+        <source>Are you sure you want to delete the relation of</source>
+        <target>Are you sure you want to delete the relation of</target>
+      </trans-unit>
+      <trans-unit id="48ebfa4a98c6f22828b8d9879a89fde5" resname="Person successfully removed from Multimedia Object">
+        <source>Person successfully removed from Multimedia Object</source>
+        <target>Person successfully removed from Multimedia Object</target>
+      </trans-unit>
+      <trans-unit id="38bde29a9a93bf2782b990cb83670012" resname="Are you sure you want to delete this link?">
+        <source>Are you sure you want to delete this link?</source>
+        <target>Are you sure you want to delete this link?</target>
+      </trans-unit>
+      <trans-unit id="043583291040c3f9e4748a7f190f40ba" resname="Are you sure you want to delete this material?">
+        <source>Are you sure you want to delete this material?</source>
+        <target>Are you sure you want to delete this material?</target>
+      </trans-unit>
+      <trans-unit id="4fdac8c3ebdea368b2a973a9aeab43e3" resname="Material successfully deleted.">
+        <source>Material successfully deleted.</source>
+        <target>Material successfully deleted.</target>
+      </trans-unit>
+      <trans-unit id="699283fa16c69cd7c36cc5e51eaa0738" resname="Are you sure you want to delete this track?">
+        <source>Are you sure you want to delete this track?</source>
+        <target>Are you sure you want to delete this track?</target>
+      </trans-unit>
+      <trans-unit id="8527935745926a5d29101e1a7eea97ff" resname="Are you sure you want to delete the data of">
+        <source>Are you sure you want to delete the data of</source>
+        <target>Are you sure you want to delete the data of</target>
+      </trans-unit>
+      <trans-unit id="f25d7ebff98b23a487e37037dc9cca12" resname="Person successfully deleted.">
+        <source>Person successfully deleted.</source>
+        <target>Person successfully deleted.</target>
+      </trans-unit>
+      <trans-unit id="e1536618ab38439ce248c0e96d2b85e5" resname="Cannot delete the data of">
+        <source>Cannot delete the data of</source>
+        <target>Cannot delete the data of</target>
+      </trans-unit>
+      <trans-unit id="10bcaacd9e075b688fb5cb5e799820c9" resname="multimedia object(s) contain(s) this person">
+        <source>multimedia object(s) contain(s) this person</source>
+        <target>multimedia object(s) contain(s) this person</target>
+      </trans-unit>
+      <trans-unit id="3103b8cd124a484278c75cbff56243c1" resname="Can not delete all users">
+        <source>Can not delete all users</source>
+        <target>Can not delete all users</target>
+      </trans-unit>
+      <trans-unit id="729a51874fe901b092899e9e8b31c97a" resname="Are you sure?">
+        <source>Are you sure?</source>
+        <target>Are you sure?</target>
+      </trans-unit>
+      <trans-unit id="41c07df10d923fdcf1e1da0e1bb35874" resname="Multimedia Object(s) successfully deleted.">
+        <source>Multimedia Object(s) successfully deleted.</source>
+        <target>Multimedia Object(s) successfully deleted.</target>
+      </trans-unit>
+      <trans-unit id="8425cddbc7fc52e2dafce5c38126770a" resname="Tags with children can not be deleted.">
+        <source>Tags with children can not be deleted.</source>
+        <target>Tags with children can not be deleted.</target>
+      </trans-unit>
+      <trans-unit id="a17f9721c617d2664d8ddb1e057ae0da" resname="There was an error in deleting.">
+        <source>There was an error in deleting.</source>
+        <target>There was an error in deleting.</target>
+      </trans-unit>
+      <trans-unit id="bf197646d2caa8ad8bed05aca91bbe47" resname="Multimedia Object cut. Paste it in the desire Series.">
+        <source>Multimedia Object cut. Paste it in the desire Series.</source>
+        <target>Multimedia Object cut. Paste it in the desire Series.</target>
+      </trans-unit>
+      <trans-unit id="6a139f9d8492bd8b42f3bd0cbc259de2" resname="Multimedia Objects cut. Paste them in the desire Series.">
+        <source>Multimedia Objects cut. Paste them in the desire Series.</source>
+        <target>Multimedia Objects cut. Paste them in the desire Series.</target>
+      </trans-unit>
+      <trans-unit id="ee2e8056ac92ae0d6d20ccd30aef61e1" resname="Paste multimedia object(s) in this series?">
+        <source>Paste multimedia object(s) in this series?</source>
+        <target>Paste multimedia object(s) in this series?</target>
+      </trans-unit>
+      <trans-unit id="a9132a2a3382528cba6eba1fe7aa8c63" resname="Multimedia Object(s) pasted in the Series.">
+        <source>Multimedia Object(s) pasted in the Series.</source>
+        <target>Multimedia Object(s) pasted in the Series.</target>
+      </trans-unit>
+      <trans-unit id="a737de563c3997a6084957bafa51b606" resname="From date must be less than to date">
+        <source>From date must be less than to date</source>
+        <target>From date must be less than to date</target>
+      </trans-unit>
+      <trans-unit id="9ff0baa6607db7919e5c36f0c416c66c" resname="Multimedia Object successfully created.">
+        <source>Multimedia Object successfully created.</source>
+        <target>Multimedia Object successfully created.</target>
+      </trans-unit>
+      <trans-unit id="94ddd72e85f403a49de4291c439adb55" resname="Series successfully created.">
+        <source>Series successfully created.</source>
+        <target>Series successfully created.</target>
+      </trans-unit>
+      <trans-unit id="024f827415850540c9329c81530f7e56" resname="The given URL is not valid">
+        <source>The given URL is not valid</source>
+        <target>The given URL is not valid</target>
+      </trans-unit>
+      <trans-unit id="cb2438bb89acec64f1b97f4027a0f119" resname="Are you sure you want to delete the tag with code">
+        <source>Are you sure you want to delete the tag with code</source>
+        <target>Are you sure you want to delete the tag with code</target>
+      </trans-unit>
+      <trans-unit id="c101058e7ea21bbbf2a5ac893088e90b" resname="Tag">
+        <source>Tag</source>
+        <target>Tag</target>
+      </trans-unit>
+      <trans-unit id="82b19eaea40d5e84d03c532e5fcb0551" resname="There was an error in creating the Live event.">
+        <source>There was an error in creating the Live event.</source>
+        <target>There was an error in creating the Live event.</target>
+      </trans-unit>
+      <trans-unit id="c03bb23b13ecc2c19901db10637520ea" resname="Live event successfully created.">
+        <source>Live event successfully created.</source>
+        <target>Live event successfully created.</target>
+      </trans-unit>
+      <trans-unit id="b85eb19c49ad6ae5643c04e2050e9cfd" resname="There was an error in creating the Live channel.">
+        <source>There was an error in creating the Live channel.</source>
+        <target>There was an error in creating the Live channel.</target>
+      </trans-unit>
+      <trans-unit id="0079f28bf429fca6e8f954f34a29483f" resname="Live channel successfully created.">
+        <source>Live channel successfully created.</source>
+        <target>Live channel successfully created.</target>
+      </trans-unit>
+      <trans-unit id="a135e4853508e597db760c63c5b40f7f" resname="Multimedia Object saved ERROR: Public Date can not be lower than Record Date.">
+        <source>Multimedia Object saved ERROR: Public Date can not be lower than Record Date.</source>
+        <target>Multimedia Object saved ERROR: Public Date can not be lower than Record Date.</target>
+      </trans-unit>
+      <trans-unit id="253453ff16857dbcc5b50daecb61415a" resname="There was an error in updating the User.">
+        <source>There was an error in updating the User.</source>
+        <target>There was an error in updating the User.</target>
+      </trans-unit>
+      <trans-unit id="169a72064864928387ee566ed5b924ba" resname="User successfully updated.">
+        <source>User successfully updated.</source>
+        <target>User successfully updated.</target>
+      </trans-unit>
+      <trans-unit id="47eb4907c08a86e4b0259c67ab37f4a4" resname="There was an error in creating the User.">
+        <source>There was an error in creating the User.</source>
+        <target>There was an error in creating the User.</target>
+      </trans-unit>
+      <trans-unit id="030cde9ec21804cf8da3026d58a5a380" resname="User successfully created.">
+        <source>User successfully created.</source>
+        <target>User successfully created.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

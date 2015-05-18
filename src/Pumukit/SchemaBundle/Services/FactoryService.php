@@ -271,7 +271,7 @@ class FactoryService
         $new->setNumview($prototype->getNumview());
 
         foreach ($prototype->getTags() as $tag) {
-            $tagAdded = $this->tagService->addTagToMultimediaObject($new, $tag->getId());
+          $tagAdded = $this->tagService->addTagToMultimediaObject($new, $tag->getId(), false);
         }
 
         foreach ($prototype->getRoles() as $embeddedRole) {
