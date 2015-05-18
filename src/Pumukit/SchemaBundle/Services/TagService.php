@@ -22,9 +22,10 @@ class TagService
      *
      * @param  MultimediaObject $mmobj
      * @param  string           $tagId
+     * @param  boolean          $executeFlush
      * @return Array[Tag]       addded tags
      */
-    public function addTagToMultimediaObject(MultimediaObject $mmobj, $tagId)
+    public function addTagToMultimediaObject(MultimediaObject $mmobj, $tagId, $executeFlush=true)
     {
         $tagAdded = array();
 
@@ -45,7 +46,9 @@ class TagService
         } while ($tag = $tag->getParent());
 
         $this->dm->persist($mmobj);
-        $this->dm->flush();
+        if ($executeFlush) {
+            $this->dm->flush();
+        }
 
         return $tagAdded;
     }
