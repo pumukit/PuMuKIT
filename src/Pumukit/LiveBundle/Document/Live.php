@@ -27,7 +27,7 @@ class Live
    *
    * @MongoDB\String
    * @Assert\NotBlank()
-   * @Assert\Url(protocols= {"rtmp", "http", "mms", "rtp", "https"})
+   * @Assert\Url(protocols= {"rtmpt", "rtmp", "http", "mms", "rtp", "https"})
    */
   private $url;
 
@@ -70,7 +70,6 @@ class Live
    * @var string $ip_source
    *
    * @MongoDB\String
-   * @Assert\Ip
    */
   private $ip_source;
 
