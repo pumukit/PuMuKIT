@@ -255,7 +255,6 @@ EOT
                   $this->load_people_multimediaobject($multimediaObject, 'Sara', 'presenter');
                   $this->load_pic_multimediaobject($multimediaObject, 'audio');
 
-                  var_dump("HOLA");
                   $multimediaObject = $factoryService->createMultimediaObject($series);
                   $this->load_multimediaobject($multimediaObject, $series, "Audio2");
                   $this->load_track_multimediaobject($multimediaObject,'20', 'Audio2', true);
