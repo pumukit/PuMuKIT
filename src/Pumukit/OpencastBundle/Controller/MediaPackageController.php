@@ -177,8 +177,6 @@ class MediaPackageController extends Controller
                 $url = $mediaPackage["media"]["track"][$i]["url"];
                 $mime = $mediaPackage["media"]["track"][$i]["mimetype"];
                 $duration = $mediaPackage["media"]["track"][$i]["duration"];
-                $acodec = $mediaPackage["media"]["track"][$i]["audio"]["encoder"]["type"];
-                $vcodec = $mediaPackage["media"]["track"][$i]["video"]["encoder"]["type"];
 
                 $track = new Track();
 
