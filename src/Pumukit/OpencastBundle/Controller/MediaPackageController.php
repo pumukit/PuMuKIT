@@ -47,13 +47,22 @@ class MediaPackageController extends Controller
                 $limit,
                 ($page -1) * $limit);
 
+        $currentPageOpencastIds = array();
+        foreach ($mediaPackages as $mediaPackage) {
+            $currentPageOpencastIds[] = $mediaPackage["id"];
+        }
+
         $adapter = new FixedAdapter($total, $mediaPackages);
         $pagerfanta = new Pagerfanta($adapter);
 
         $pagerfanta->setMaxPerPage($limit);
         $pagerfanta->setCurrentPage($page);
 
-        $repo = $repository_multimediaobjects->findall();
+        $repo = $repository_multimediaobjects->createQueryBuilder()
+          ->field("properties.opencast")->exists(true)
+          ->field("properties.opencast")->in($currentPageOpencastIds)
+          ->getQuery()
+          ->execute();
 
         return array('mediaPackages' => $pagerfanta, 'multimediaObjects' => $repo, 'player' => $opencastClient->getPlayerUrl());
     }
