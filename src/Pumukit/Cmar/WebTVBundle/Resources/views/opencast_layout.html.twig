@@ -1,0 +1,17 @@
+{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+
+{% block body_base %}
+
+{% include 'PumukitCmarWebTVBundle::header.html.twig' %}
+<div id="tvusc">
+  <div class="usctv_cab" style="margin: 10 auto; width: auto; overflow: hidden; min-width: 1220px">
+    {% include 'PumukitCmarWebTVBundle::header_menu.html.twig' %}
+    {% render(controller('PumukitWebTVBundle:Widget:breadcrumbs')) %}
+  </div>
+  <div class="usctv_content">
+    {% block body_without_bar %}
+    {% endblock %}
+  </div>
+  {% include 'PumukitCmarWebTVBundle::opencast_footer.html.twig' %}
+</div>
+{% endblock %}

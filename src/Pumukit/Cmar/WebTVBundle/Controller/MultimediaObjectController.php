@@ -9,9 +9,10 @@ class MultimediaObjectController extends Base
 {
     public function preExecute(MultimediaObject $multimediaObject)
     {
-      if($opencasturl = $multimediaObject->getProperty("opencasturl")) {
-          $this->incNumView($multimediaObject);
-          return $this->redirect($opencasturl);
-      }
+        if($opencasturl = $multimediaObject->getProperty("opencasturl")) {
+            $this->incNumView($multimediaObject);
+            // TODO is_old_browser
+            return $this->render("PumukitCmarWebTVBundle:MultimediaObject:opencast.html.twig", array("multimediaObject" => $multimediaObject));
+        }
     }
 }
