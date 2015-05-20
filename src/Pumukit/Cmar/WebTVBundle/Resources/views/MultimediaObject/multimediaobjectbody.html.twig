@@ -1,0 +1,21 @@
+<div class="serial_mm_info">
+  <div class="persons" style="overflow: hidden">
+    {% for role in multimediaObject.getRoles() if role.getDisplay() %}
+      {% for person in multimediaObject.getPeopleByRole(role) %}
+      <div>
+        <div class="person"{% if 'org' == role.getCod() %} style="float:right"{% endif %}>
+          {{ role.getText() }}
+          {% if person.getWeb() is not empty %}
+            <a href="{{ person.getWeb() }}">{{ person.getHName() }}> </a>
+          {% else %}
+            <span style="font-weight: bolder">{{ person.getHName() }}</span>
+          {% endif %}
+        </div>
+        <span style="font-size:85%; color:#666">{{ person.getInfo() }}</span>
+      </div>
+    </div>
+    {% endfor %}
+  {% endfor %}
+</div>
+
+

@@ -10,7 +10,7 @@
 <div class="mm_player">
   <div class="date" style="min-width: 1310px; margin-right: 10px;">
     {# TODO set this value in controller #}
-    {% set is_old_browser = true %}
+    {% set is_old_browser = false %}
     {% if is_old_browser %}
     <div style="margin-left: 20%; padding: 3px; font-size: 14px; font-weight: bold; text-align: center; color: #FFF; background-color: #D80000; float:left">
       <img id="imagen_alert" src="{{ asset('bundles/pumukitwebtv/usc/obsolete.png') }}" style="float: left; margin-right: 3px;"></img>
@@ -24,11 +24,7 @@
 </div>
 <div style="clear:both"></div>
 
-
-{# TODO
-
 <script type="text/javascript">
-
 //<![CDATA[
 function mh_animacion(){
 
@@ -58,51 +54,38 @@ function mh_animacion(){
 //]]>
 </script>
 
-
 <div id="bloque" style="width: auto; min-width: 1220px;">
  <div id="usctv_m_mmobj" class="usctv_m" style="margin: 0px 1%; padding: 20px 0px;">
-
-
   <div id="sidebar" > 
     <div id="mh_toggle_div" onclick="mh_animacion();" >
-
     <div id="mh_toggle_img_1" class="mh_toggle_img"
          style="top:25%; ">
          &nbsp;
     </div>
-
     <div id="mh_toggle_img_2" class="mh_toggle_img"
          style="top:50%; ">
          &nbsp;
     </div>
-
     <div id="mh_toggle_img_3" class="mh_toggle_img"
          style="top:75%; ">
          &nbsp;
     </div>
   </div>
   <div id="sidebar_content" style="width: 100%">
-   <?php include_partial('mmobj/shareMatterhorn', array('mmobj' => $m, 'file' => $file))?>
-   <?php include_partial('mmobj/other', array('texto' => __('Vídeos da mesma serie:'), 
-					      'mmobjs' => PubChannelPeer::getMmsFromSerial(1, $m->getSerialId())))?>
-   <?php include_partial('mmobj/other', array('texto' => __('Tamén che interesan:'), 
-					      'mmobjs' => $m->getSimilarMms()))?>
+    {% include 'PumukitCmarWebTVBundle:MultimediaObject:shareopencast.html.twig' with {'multimediaObject': multimediaObject, 'track': multimediaObject.getTrackWithTag('opencast')} %}
+	{% render(controller('PumukitWebTVBundle:MultimediaObject:series', {'multimediaObject': multimediaObject})) %}
+    {% render(controller('PumukitWebTVBundle:MultimediaObject:related', {'multimediaObject': multimediaObject})) %}
   </div>
- </div>    
-
-
-
-<?php if($isHTML5): ?>
-     <?php  include_partial('mmobj/playerhtml5_matterhorn', array('m' => $m, 'roles' => $roles, 'oc'=>$oc))?>
-<?php else: ?>
-     <?php  include_partial('mmobj/player_matterhorn', array('m' => $m, 'roles' => $roles, 'oc' => $oc, 'is_old_browser' => $is_old_browser))?>
-<?php endif ?>
-
-
-
-
+ </div>
+  {% set track = multimediaObject.getTrackWithTag('opencast') %}
+  {% if track.containsTag('html5') %}
+  {% include 'PumukitCmarWebTVBundle:MultimediaObject:playerhtml5opencast.html.twig' with {'multimediaObject': multimediaObject, 'roles': multimediaObject.getRoles()} %}
+  {% else %}
+  {% include 'PumukitCmarWebTVBundle:MultimediaObject:playeropencast.html.twig' with {'multimediaObject': multimediaObject, 'roles': multimediaObject.getRoles(), 'is_old_browser': is_old_browser} %}
+  {% endif %}
  </div>
 </div>
+
 <script language="JavaScript">
      function blink_uno() {
      document.getElementById('imagen_alert').style.visibility='visible';
@@ -114,7 +97,5 @@ function blink_dos() {
 }
 blink_uno();
 </script>
-
-#}
 
 {% endblock %}

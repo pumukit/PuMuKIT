@@ -1,0 +1,27 @@
+<div class="share_mmobj" style="margin: 0px 0px 0px 18px">
+  <div style="">
+    <a href="http://www.facebook.com/sharer.php?u={{ url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id}) }}">
+      <img style="width:20px" src="{{ asset('bundles/pumukitcmarwebtv/images/iconos/facebook.png') }}" title="{% trans %}Share on facebook{% endtrans %}" />
+    </a>
+    <a href="http://twitter.com/home?status={{ multimediaObject.getTitle()|raw|url_encode(true) }}{{ url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id}) }}">
+      <img style="width:20px" src="{{ asset('bundles/pumukitcmarwebtv/images/iconos/twitter.png') }}" title="{% trans %}Share on twitter{% endtrans %}" />     
+    </a>
+    <a href="http://del.icio.us/post?url={{ url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id}) }}">
+      <img style="width: 20px;" src="{{ asset('bundles/pumukitcmarwebtv/images/iconos/delicious.png') }}" title="{% trans %}Share on delicious{% endtrans %}">
+    </a>
+    <a href="http://www.google.com/reader/link?url={{ url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id}) }}">
+      <img style="width: 20px;" src="{{ asset('bundles/pumukitcmarwebtv/images/iconos/google.png') }}"  title="{% trans %}Share on google buz{% endtrans %}">
+    </a>
+  </div>
+  
+  <div class="share_input" style="overflow:hidden;">
+    <span>URL:&nbsp;&nbsp;</span>
+    <input type="text" value="{{ url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id}) }}" 
+           onclick="this.select()" style="width: 70%; border: 1px solid #ccc; float:right" readonly="readonly"/>
+  </div>
+  <div class="share_input" style="overflow:hidden">   
+    <span>IFRAME:</span>
+    <input type="text" value="&lt;iframe src=&quot;{{ url('pumukit_webtv_multimediaobject_iframe', {'id': multimediaObject.id}) }}&quot; style=&quot;border:0px #FFFFFF none;&quot; name=&quot;Pumukit - Media Player&quot; scrolling=&quot;no&quot; frameborder=&quot;1&quot; marginheight=&quot;0px&quot; marginwidth=&quot;0px&quot; height=&quot;740&quot; width=&quot;1220&quot;&gt;&lt;/iframe&gt;" 
+           onclick="this.select()" style="width: 70%; border: 1px solid #ccc; float:right" readonly="readonly"/>
+  </div>
+</div>

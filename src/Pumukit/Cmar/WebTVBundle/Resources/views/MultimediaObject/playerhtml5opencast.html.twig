@@ -1,0 +1,32 @@
+{% set track = multimediaObject.getTrackWithTag('opencast') %}
+{% if track %}
+<div id="mh_player">
+<script type="text/javascript" src="/js/jwplayer.js"></script>
+  <video 
+       id = "player"
+       style = "width: 100%; min-height: 400px"
+       controls = "controls"
+       poster = "{{ asset(bundles/pumukitcmarwebtv/cmar/poster.png }}" >
+      <source src="{{ multimediaObject.getProperty('opencasturl')|replace({'%id%': multimediaObject.getProperty('opencast')}) }}" type="video/mp4"/>
+  </video>
+   <div class="mm_player">
+     <div class="num_view">
+       <div style="float:left">
+         {% trans %}Video language{% endtrans %}: <span class="num_view_number">{{ track.getLanguage()|language_name }}</span>
+       </div>
+       {% trans %}Viewed{% endtrans %}:
+       <span class="num_view_number">{{ multimediaObject.getNumview() }}</span>&nbsp;
+       {% if 1 == multimediaObject.getNumview() %}{% trans %}time{% endtrans %}{% else %}{% trans %}times{% endtrans %}&nbsp;&nbsp;
+     </div>
+   </div>
+   <div class="title">
+     {{ multimediaObject.getSubtitle() }}
+   </div>
+   <p class="description">
+     {{ multimediaObject.getDescription() }}
+   </p>
+   {% include 'PumukitWebTVBundle:MultimediaObject:multimediaobjectbody.html.twig' with {'multimediaObject': multimediaObject} %}
+{% else %}
+ <h1 class="cS_h1_error">{% trans %}VIDEO NOT AVAILABLE{% endtrans %}</h1>
+{% endif %}
+</div>

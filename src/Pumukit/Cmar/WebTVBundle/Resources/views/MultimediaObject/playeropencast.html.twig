@@ -1,0 +1,32 @@
+{% set track = multimediaObject.getTrackWithTag('opencast') %}
+{% if track %}
+<div id="mh_player">
+  {# TODO set is_html5 $is_html5 = (preg_match('/(Safari)|(Chrome)/i', $_SERVER['HTTP_USER_AGENT']) == 1) #}
+  {% set is_html5 = true %}
+  <iframe src="{{ iframeurl(multimediaObject, is_html5, true, is_old_browser) }}"
+          id="mh_iframe"
+          style="border:0px #FFFFFF none; width:100%; height:950px;" 
+          name="Opencast Matterhorn - Media Player" 
+          scrolling="no" frameborder="0" marginheight="0px" marginwidth="0px" 
+          webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true"
+          >
+  </iframe>
+  <div class="mm_player">
+    <div class="num_view">
+      <div style="float:left">
+        {% trans %}Video language{% endtrans %}: <span class="num_view_number">{{ track.getLanguage()|language_name }}</span>
+      </div>
+      {% trans %}Viewed{% endtrans %}:
+      <span class="num_view_number">{{ multimediaObject.getNumview() }}</span>&nbsp;
+      {% if 1 == multimediaObject.getNumview() %}{% trans %}time{% endtrans %}{% else %}{% trans %}times{% endtrans %}{% endif %}&nbsp;&nbsp;
+    </div>
+  </div>
+  <div class="title">
+    {{ multimediaObject.getSubtitle() }}
+  </div>
+  <p class="description">
+    {{ multimediaObject.getDescription() }}
+  </p>
+  {% include 'PumukitWebTVBundle:MultimediaObject:multimediaobjectbody.html.twig' with {'multimediaObject': multimediaObject} %}
+</div>
+{% endif %}
