@@ -190,13 +190,17 @@ class MediaPackageController extends Controller
                 $track = new Track();
 
                 if( isset($mediapackage["media"]["track"][$i]["audio"])) {
-                  $acodec = $mediaPackage["media"]["track"][$i]["audio"]["encoder"]["type"];
-                  $track->setAcodec($acodec);
+                    $acodec = $mediaPackage["media"]["track"][$i]["audio"]["encoder"]["type"];
+                    $track->setAcodec($acodec);
                 }
 
                 if( isset($mediaPackage["media"]["track"][$i]["video"])) {
-                  $vcodec = $mediaPackage["media"]["track"][$i]["video"]["encoder"]["type"];
-                  $track->setVcodec($vcodec);
+                    $vcodec = $mediaPackage["media"]["track"][$i]["video"]["encoder"]["type"];
+                    $track->setVcodec($vcodec);
+                }
+
+                if (!$track->getVcodec() && $track->getAcodec()) {
+                    $track->setOnlyAudio(true);
                 }
 
                 $track->setTags(array("opencast"));
