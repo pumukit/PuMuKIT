@@ -82,7 +82,7 @@ class MediaPackageController extends Controller
         $series = $repository_series->findOneBy(array("title.en" => "MediaPackages without series"));
 
         if(isset($mediaPackage["series"])){
-            $oneseries = $repository_series->findOneBy(array("properties.opencast" => $mediaPackage["series"]));    
+            $oneseries = $repository_series->findOneBy(array("properties.opencast" => $mediaPackage["series"]));
         }
         $repository_multimediaobjects = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
         $onemultimediaobjects = $repository_multimediaobjects->findOneBy(array("properties.opencast" => $mediaPackage["id"]));
@@ -110,7 +110,7 @@ class MediaPackageController extends Controller
                 $title = $mediaPackage["seriestitle"];
                 $properties = $mediaPackage["series"];
             }
-  
+
             $series = $factoryService->createSeries();
             $series->setAnnounce($announce);
             $series->setPublicDate($publicDate);
@@ -162,12 +162,12 @@ class MediaPackageController extends Controller
         }
 
         if($onemultimediaobjects == null){
-            
+
             $rank = 3;
             $status = MultimediaObject::STATUS_PUBLISHED;
             $title = $mediaPackage["title"];
             $properties = $mediaPackage["id"];
- 
+
             if($oneseries != "WITHOUT_SERIES"){
                 $series = $repository_series->findOneBy(array("properties.opencast" => $mediaPackage["series"]));
             }
@@ -186,16 +186,23 @@ class MediaPackageController extends Controller
                 $url = $mediaPackage["media"]["track"][$i]["url"];
                 $mime = $mediaPackage["media"]["track"][$i]["mimetype"];
                 $duration = $mediaPackage["media"]["track"][$i]["duration"];
-                $acodec = $mediaPackage["media"]["track"][$i]["audio"]["encoder"]["type"];
-                $vcodec = $mediaPackage["media"]["track"][$i]["video"]["encoder"]["type"];
-         
+
                 $track = new Track();
+
+                if( isset($mediapackage["media"]["track"][$i]["audio"])) {
+                  $acodec = $mediaPackage["media"]["track"][$i]["audio"]["encoder"]["type"];
+                  $track->setAcodec($acodec);
+                }
+
+                if( isset($mediaPackage["media"]["track"][$i]["video"])) {
+                  $vcodec = $mediaPackage["media"]["track"][$i]["video"]["encoder"]["type"];
+                  $track->setVcodec($vcodec);
+                }
+
                 $track->setTags(array("opencast"));
                 $track->setUrl($url);
                 $track->setMimeType($mime);
-                $track->setDuration($duration/1000);
-                $track->setAcodec($acodec);
-                $track->setVcodec($vcodec);
+                $track->setDuration($duration);
 
                 $multimediaObject->addTrack($track);
             }
