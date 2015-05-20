@@ -93,8 +93,11 @@ Installation a development environment
 To quick develop you could use the PHP built-in web server.
 
 ```
-# User develop
+# Use develop
 git checkout develop
+
+# Create new branch named develop if it is not created in local
+git checkout -b develop
 
 # Cache clear
 php app/console cache:clear
