@@ -8,7 +8,7 @@
       <label for="name" class="control-label">{% trans %}Name{% endtrans %}:</label>
       {% set criteria = app.session.get('admin/broadcast/criteria') %}
       <div>
-        <input type="text" class="reset form-control" name="criteria[name.{{ app.request.getLocale() }}]" id="filters_name" value="{{ criteria['name.{{ app.request.getLocale() }}']|default("") }}">
+        <input type="text" class="reset form-control" name="criteria[name]" id="filters_name" value="{{ criteria['name']|default("") }}">
       </div>
     </div>
 

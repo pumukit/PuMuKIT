@@ -22,7 +22,7 @@ class BroadcastType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('i18n_name', 'texti18n',
+            ->add('name', 'text',
                   array('label' => $this->translator->trans('Name', array(), null, $this->locale)))
             ->add('broadcast_type_id', 'choice',
                   array('choices' => array(

@@ -34,9 +34,11 @@ class Broadcast
   /**
    * @var string $name
    *
-   * @MongoDB\Raw
+   * @MongoDB\String
+   * @MongoDB\UniqueIndex(order="asc")
+   * @Assert\Regex("/^\w*$/")
    */
-  private $name = array('en' => '');
+  private $name;
 
   /**
    * @var string $broadcast_type_id
@@ -115,50 +117,18 @@ class Broadcast
    * Set name
    *
    * @param string $name
-   * @param string|null $locale
    */
-  public function setName($name, $locale = null)
-  {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      $this->name[$locale] = $name;
-  }
-
-  /**
-   * Get name
-   *
-   * @param string|null $locale
-   * @return string
-   */
-  public function getName($locale = null)
-  {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      if (!isset($this->name[$locale])) {
-          return;
-      }
-
-      return $this->name[$locale];
-  }
-
-  /**
-   * Set I18n name
-   *
-   * @param array $name
-   */
-  public function setI18nName(array $name)
+  public function setName($name)
   {
       $this->name = $name;
   }
 
   /**
-   * Get i18n name
+   * Get name
    *
-   * @return array
+   * @return string
    */
-  public function getI18nName()
+  public function getName()
   {
       return $this->name;
   }
