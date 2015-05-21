@@ -160,22 +160,20 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(2, count($mmobj_ned_lord));
         $this->assertEquals(1, count($mmobj_ned_hand));
 
-        // TODO - FAILS #6100
-        //$this->assertEquals(0, count($mmobj_benjen_lord));
-        //$this->assertEquals(0, count($mmobj_ned_ranger));
+        $this->assertEquals(0, count($mmobj_benjen_lord));
+        $this->assertEquals(0, count($mmobj_ned_ranger));
         $this->assertEquals(0, count($mmobj_benjen_hand));
 
         $seriesBenjen = $this->repo->findSeriesFieldByPersonId($person_benjen->getId());
         $seriesNed = $this->repo->findSeriesFieldByPersonId($person_ned->getId());
 
         $this->assertEquals(2, count($seriesBenjen));
-        $this->assertEquals($series_wall->getId(), $seriesBenjen->toArray()[0]);
-        $this->assertEquals($series_main->getId(), $seriesBenjen->toArray()[1]);
+        $this->assertTrue(in_array($series_wall->getId(), $seriesBenjen->toArray()));
+        $this->assertTrue(in_array($series_main->getId(), $seriesBenjen->toArray()));
 
         $this->assertEquals(2, count($seriesNed));
-        $this->assertEquals($series_main->getId(), $seriesNed->toArray()[0]);
-        $this->assertEquals($series_lhazar->getId(), $seriesNed->toArray()[1]);
-
+        $this->assertTrue(in_array($series_main->getId(), $seriesNed->toArray()));
+        $this->assertTrue(in_array($series_lhazar->getId(), $seriesNed->toArray()));
     }
 
     public function testPeopleInMultimediaObjectCollection()
