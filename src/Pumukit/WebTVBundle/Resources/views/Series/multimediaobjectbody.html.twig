@@ -49,7 +49,7 @@
                    &nbsp;|&nbsp;&nbsp;<span class="language">{{ track.getLanguage()|language_name}}</span>
                    &nbsp;({{ track.getDuration()|duration_string }})
                    &nbsp;|&nbsp; {% trans %}Viewed{% endtrans %}: <span class="numView">{{ mm.getNumview() }}</span>
-                   {% transchoice mm.getNumiew() %}
+                   {% transchoice mm.getNumview() %}
                        {0}times|{1}time|]1,Inf]times
                    {% endtranschoice %}
                </div>
