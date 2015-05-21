@@ -35,8 +35,7 @@ class Broadcast
    * @var string $name
    *
    * @MongoDB\String
-   * @MongoDB\UniqueIndex(order="asc")
-   * @Assert\Regex("/^\w*$/")
+   * @MongoDB\UniqueIndex(safe=1)
    */
   private $name;
 
