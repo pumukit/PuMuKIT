@@ -1,0 +1,23 @@
+pumukitcmarwebtv_opencast_css:
+    pattern: /opencast.css
+    methods: [GET]
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'PumukitCmarWebTVBundle::opencast.css.twig'
+        _format: css
+
+pumukitcmarwebtv_series_css:
+    pattern: /series.css
+    methods: [GET]
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'PumukitCmarWebTVBundle::series.css.twig'
+        _format: css
+
+pumukitcmarwebtv_style_css:
+    pattern: /style.css
+    methods: [GET]
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'PumukitCmarWebTVBundle::style.css.twig'
+        _format: css

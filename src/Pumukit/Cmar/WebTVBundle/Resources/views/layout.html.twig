@@ -8,10 +8,10 @@
     {% block stylesheets %}
     <link href="{{ asset('bundles/pumukitcmarwebtv/css/960.css') }}" type="text/css" rel="stylesheet" media="screen"/>
     <link href="{{ asset('bundles/pumukitcmarwebtv/css/iefix.css') }}" type="text/css" rel="stylesheet" media="screen"/>
-    <link href="{{ asset('bundles/pumukitcmarwebtv/css/matterhorn.css') }}" type="text/css" rel="stylesheet" media="screen"/>
-    <link href="{{ asset('bundles/pumukitcmarwebtv/css/serial.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+    <link href="{{ path('pumukitcmarwebtv_opencast_css') }}" rel="stylesheet">
+    <link href="{{ path('pumukitcmarwebtv_series_css') }}" rel="stylesheet">
+    <link href="{{ path('pumukitcmarwebtv_style_css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/pumukitcmarwebtv/css/pumukittv.css') }}" type="text/css" rel="stylesheet" media="screen"/>
-    <link href="{{ asset('bundles/pumukitcmarwebtv/css/estilos.css') }}" type="text/css" rel="stylesheet" media="screen"/>
     {% endblock %}
     {% block javascripts %}
     <script type="text/javascript" src="{{ asset('bundles/pumukitcmarwebtv/js/prototype.js') }}"></script>

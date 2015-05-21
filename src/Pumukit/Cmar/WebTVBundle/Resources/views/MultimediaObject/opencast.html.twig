@@ -9,8 +9,6 @@
 </p>
 <div class="mm_player">
   <div class="date" style="min-width: 1310px; margin-right: 10px;">
-    {# TODO set this value in controller #}
-    {% set is_old_browser = false %}
     {% if is_old_browser %}
     <div style="margin-left: 20%; padding: 3px; font-size: 14px; font-weight: bold; text-align: center; color: #FFF; background-color: #D80000; float:left">
       <img id="imagen_alert" src="{{ asset('bundles/pumukitwebtv/usc/obsolete.png') }}" style="float: left; margin-right: 3px;"></img>
@@ -35,16 +33,16 @@ function mh_animacion(){
     player.removeClassName('fullscreen');
     player.setStyle({'margin': '0px 287px 0px 0px'}); 
     lateral.setStyle({'width': '270px'});
-    $('mh_toggle_img_1').setStyle({'background': 'transparent  url("/images/tv/iconos/flechas.png") no-repeat -22px 0px'});  
-    $('mh_toggle_img_2').setStyle({'background': 'transparent  url("/images/tv/iconos/flechas.png") no-repeat -22px 0px'});  
-    $('mh_toggle_img_3').setStyle({'background': 'transparent  url("/images/tv/iconos/flechas.png") no-repeat -22px 0px'});   
+    $('mh_toggle_img_1').setStyle({'background': 'transparent  url("{{ asset('bundles/pumukitcmarwebtv/images/iconos/flechas.png') }}") no-repeat -22px 0px'});
+    $('mh_toggle_img_2').setStyle({'background': 'transparent  url("{{ asset('bundles/pumukitcmarwebtv/images/iconos/flechas.png') }}") no-repeat -22px 0px'});
+    $('mh_toggle_img_3').setStyle({'background': 'transparent  url("{{ asset('bundles/pumukitcmarwebtv/images/iconos/flechas.png') }}") no-repeat -22px 0px'});
   }else{
     player.addClassName('fullscreen')
     lateral.setStyle({'width': '19px'}); 
     player.setStyle({'margin': '0px 40px 0px 0px'}); 
-    $('mh_toggle_img_1').setStyle({'background': 'transparent  url("/images/tv/iconos/flechas.png") no-repeat -22px -16px'});  
-    $('mh_toggle_img_2').setStyle({'background': 'transparent  url("/images/tv/iconos/flechas.png") no-repeat -22px -16px'});  
-    $('mh_toggle_img_3').setStyle({'background': 'transparent  url("/images/tv/iconos/flechas.png") no-repeat -22px -16px'}); 
+    $('mh_toggle_img_1').setStyle({'background': 'transparent  url("{{ asset('bundles/pumukitcmarwebtv/images/iconos/flechas.png') }}") no-repeat -22px -16px'});
+    $('mh_toggle_img_2').setStyle({'background': 'transparent  url("{{ asset('bundles/pumukitcmarwebtv/images/iconos/flechas.png') }}") no-repeat -22px -16px'});
+    $('mh_toggle_img_3').setStyle({'background': 'transparent  url("{{ asset('bundles/pumukitcmarwebtv/images/iconos/flechas.png') }}") no-repeat -22px -16px'});
   }
   
   return false;

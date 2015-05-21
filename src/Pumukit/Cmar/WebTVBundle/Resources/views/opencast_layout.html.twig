@@ -1,7 +1,18 @@
 {% extends 'PumukitWebTVBundle::layout.html.twig' %}
 
-{% block body_base %}
+{% block stylesheets %}
+    <link href="{{ asset('bundles/pumukitcmarwebtv/css/960.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+    <link href="{{ asset('bundles/pumukitcmarwebtv/css/iefix.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+    <link href="{{ path('pumukitcmarwebtv_opencast_css') }}" rel="stylesheet">
+    <link href="{{ path('pumukitcmarwebtv_series_css') }}" rel="stylesheet">
+    <link href="{{ path('pumukitcmarwebtv_style_css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/pumukitcmarwebtv/css/pumukittv.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+    {% endblock %}
+    {% block javascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/pumukitcmarwebtv/js/prototype.js') }}"></script>
+{% endblock %}
 
+{% block body_base %}
 {% include 'PumukitCmarWebTVBundle::header.html.twig' %}
 <div id="tvusc">
   <div class="usctv_cab" style="margin: 10 auto; width: auto; overflow: hidden; min-width: 1220px">
