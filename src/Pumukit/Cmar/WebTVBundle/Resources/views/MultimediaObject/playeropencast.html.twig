@@ -1,9 +1,7 @@
 {% set track = multimediaObject.getTrackWithTag('opencast') %}
 {% if track %}
 <div id="mh_player">
-  {# TODO set is_html5 $is_html5 = (preg_match('/(Safari)|(Chrome)/i', $_SERVER['HTTP_USER_AGENT']) == 1) #}
-  {% set is_html5 = true %}
-  <iframe src="{{ iframeurl(multimediaObject, is_html5, true, is_old_browser) }}"
+  <iframe src="{{ iframeurl(multimediaObject, not is_old_browser, true, is_old_browser) }}"
           id="mh_iframe"
           style="border:0px #FFFFFF none; width:100%; height:950px;" 
           name="Opencast Matterhorn - Media Player" 
