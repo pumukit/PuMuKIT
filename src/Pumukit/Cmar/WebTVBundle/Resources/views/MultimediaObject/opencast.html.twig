@@ -11,9 +11,9 @@
   <div class="date" style="min-width: 1310px; margin-right: 10px;">
     {% if is_old_browser %}
     <div style="margin-left: 20%; padding: 3px; font-size: 14px; font-weight: bold; text-align: center; color: #FFF; background-color: #D80000; float:left">
-      <img id="imagen_alert" src="{{ asset('bundles/pumukitwebtv/usc/obsolete.png') }}" style="float: left; margin-right: 3px;"></img>
+      <img id="imagen_alert" src="{{ asset('bundles/pumukitcmarwebtv/images/usc/obsolete.png') }}" style="float: left; margin-right: 3px;"></img>
       <span>{% trans %}Use{% endtrans %}&nbsp<a href="https://www.google.com/intl/es/chrome/browser/?hl=es" target="_blank" style="color: #FFF;">Google Chrome</a>&nbsp{% trans %}or{% endtrans %}&nbsp<a href="http://www.apple.com/es/safari/" target="_blank" style="color: #FFF;">Safari</a>&nbsp{% trans %}to improve your experience in watching recorded lectures{% endtrans %}</span>
-      <div>({% trans %}HTML5 and h.264 codec video support web explorers{% endtrans %})</div>
+      <div>({% trans %}Web explorers with HTML5 and h.264 codec video support{% endtrans %})</div>
     </div>
     {% endif %}
     <!-- Fixme falta estilo de esto -->
@@ -85,15 +85,17 @@ function mh_animacion(){
 </div>
 
 <script language="JavaScript">
-     function blink_uno() {
-     document.getElementById('imagen_alert').style.visibility='visible';
-     setTimeout('blink_dos()',1000);
- }
+function blink_uno() {
+    document.getElementById('imagen_alert').style.visibility='visible';
+    setTimeout('blink_dos()',1000);
+}
 function blink_dos() {
     document.getElementById('imagen_alert').style.visibility='hidden';
     setTimeout('blink_uno()',1000);
 }
-blink_uno();
+{% if is_old_browser %}
+    blink_uno();
+{% endif %}
 </script>
 
 {% endblock %}
