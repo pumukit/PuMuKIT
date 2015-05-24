@@ -275,9 +275,12 @@ class PersonServiceTest extends WebTestCase
         $this->assertEquals(2, count($seriesBob));
         $this->assertEquals(2, count($seriesKate));
 
-        $this->assertEquals(array($series1, $series3), $seriesJohn->toArray());
-        $this->assertEquals(array($series1, $series3), $seriesBob->toArray());
-        $this->assertEquals(array($series1, $series2), $seriesKate->toArray());
+        $this->assertTrue(in_array($series1, $seriesJohn->toArray(), TRUE));
+        $this->assertTrue(in_array($series3, $seriesJohn->toArray(), TRUE));
+        $this->assertTrue(in_array($series1, $seriesBob->toArray(), TRUE));
+        $this->assertTrue(in_array($series3, $seriesBob->toArray(), TRUE));
+        $this->assertTrue(in_array($series1, $seriesKate->toArray(), TRUE));
+        $this->assertTrue(in_array($series2, $seriesKate->toArray(), TRUE));
 
         $seriesKate1 = $this->personService->findSeriesWithPerson($personKate, 1);
         $this->assertEquals(array($series1), $seriesKate1->toArray());

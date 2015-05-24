@@ -187,7 +187,7 @@ EOT
             while (($currentRow = fgetcsv($file, 300, ";")) !== false) {
                 $number = count($currentRow);
                 if ((('tag' === $repoName) && ($number == 6 || $number == 8)) || 
-                    (('broadcast' === $repoName) && ($number == 7 || $number == 10)) || 
+                    (('broadcast' === $repoName) && ($number == 5 || $number == 8)) || 
                     (('role' === $repoName) && ($number == 7 || $number == 10))){
                     //Check header rows
                     if (trim($currentRow[0]) == "id") {
@@ -278,28 +278,21 @@ EOT
     {
         $broadcast = new Broadcast();
 
-        $broadcast->setName($csv_array[1], 'es');
-        // NOTE Take care of csv language order!
-        if (isset($csv_array[2])) {
-            $broadcast->setName($csv_array[2], 'gl');
-        }
-        if (isset($csv_array[3])) {
-            $broadcast->setName($csv_array[3], 'en');
-        }
-        if (in_array($csv_array[4], array(Broadcast::BROADCAST_TYPE_PUB, Broadcast::BROADCAST_TYPE_PRI, Broadcast::BROADCAST_TYPE_COR))){
-            $broadcast->setBroadcastTypeId($csv_array[4]);
+        $broadcast->setName($csv_array[1]);
+        if (in_array($csv_array[2], array(Broadcast::BROADCAST_TYPE_PUB, Broadcast::BROADCAST_TYPE_PRI, Broadcast::BROADCAST_TYPE_COR))){
+            $broadcast->setBroadcastTypeId($csv_array[2]);
         }else{
             $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PRI);
         }
-        $broadcast->setPasswd($csv_array[5]);
-        $broadcast->setDefaultSel($csv_array[6]);
-        $broadcast->setDescription($csv_array[7], 'es');
+        $broadcast->setPasswd($csv_array[3]);
+        $broadcast->setDefaultSel($csv_array[4]);
+        $broadcast->setDescription($csv_array[5], 'es');
         // NOTE Take care of csv language order!
-        if (isset($csv_array[8])) {
-            $broadcast->setDescription($csv_array[8], 'gl');
+        if (isset($csv_array[6])) {
+            $broadcast->setDescription($csv_array[6], 'gl');
         }
-        if (isset($csv_array[9])) {
-            $broadcast->setDescription($csv_array[9], 'en');
+        if (isset($csv_array[7])) {
+            $broadcast->setDescription($csv_array[7], 'en');
         }
         
         $this->dm->persist($broadcast);
