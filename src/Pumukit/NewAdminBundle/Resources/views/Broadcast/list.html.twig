@@ -41,7 +41,7 @@
             </a>
           </td>
           <td>
-            <a href="#" onclick="window.submit_delete_broadcast('{{ broadcast.id }}', '{{ broadcast.countMultimediaObjects() }}'); return false;">
+            <a href="#" onclick="window.submit_delete_broadcast('{{ broadcast.id }}', '{{ broadcast.getNumberMultimediaObjects() }}'); return false;">
               <i class="mdi-content-clear"></i>              
             </a>
           </td>
@@ -61,7 +61,7 @@
             {{ broadcast.getDescription() }}
           </td>
           <td>
-            {{ broadcast.countMultimediaObjects() }}
+            {{ broadcast.getNumberMultimediaObjects() }}
           </td>
         </tr>
         {% endfor %}

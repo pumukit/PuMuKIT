@@ -32,6 +32,14 @@ class Broadcast
   private $multimedia_objects;
 
   /**
+   * @var int $number_multimedia_objects
+   *
+   * @MongoDB\Int
+   * @MongoDB\Increment
+   */
+  private $number_multimedia_objects = 0;
+
+  /**
    * @var string $name
    *
    * @MongoDB\String
@@ -110,6 +118,38 @@ class Broadcast
   public function getMultimediaObjects()
   {
       return $this->multimedia_objects;
+  }
+
+  /**
+   * Increase number_multimedia_objects
+   */
+  public function increaseNumberMultimediaObjects()
+  {
+      ++$this->number_multimedia_objects;
+  }
+
+  /**
+   * Decrease number_multimedia_objects
+   */
+  public function decreaseNumberMultimediaObjects()
+  {
+      --$this->number_multimedia_objects;
+  }
+
+  /**
+   * Get number_multimedia_objects
+   */
+  public function getNumberMultimediaObjects()
+  {
+      return $this->number_multimedia_objects;
+  }
+
+  /**
+   * Set number_multimedia_objects
+   */
+  public function setNumberMultimediaObjects($count)
+  {
+      return $this->number_multimedia_objects = $count;
   }
 
   /**
@@ -293,15 +333,5 @@ class Broadcast
   {
     return ((self::BROADCAST_TYPE_PUB == $this->getBroadcastTypeId())
             || ("" != $this->getPasswd()));
-  }
-
-  /**
-   * Count multimedia objects
-   *
-   * @return integer
-   */
-  public function countMultimediaObjects()
-  {
-      return $this->multimedia_objects->count();
   }
 }
