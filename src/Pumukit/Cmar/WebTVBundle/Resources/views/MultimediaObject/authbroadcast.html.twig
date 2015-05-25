@@ -1,0 +1,39 @@
+{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+
+{% block title %}{{ parent() }} - {{ multimediaObject.title }}{% endblock %}
+{% block keywords %}{{ parent() }} - {{ multimediaObject.keyword }}{% endblock %}
+
+{% block body_without_bar %}
+<p class="titulo_widget titulo_widget_grande">
+  {{ multimediaObject.title|default("No title"|trans) }}
+</p>
+<div class="grid_10 mm_player">
+  {% if error %}
+  <div>{% trans %}Error{% endtrans %}</div>
+  {% endif %}
+  <div class="title">
+    {% trans %}This video is not public. In order to watch it, you must enter broadcast name and password.{% endtrans %}
+  </div>
+  <p></p>{# TODO give style #}
+  <form action="{{ path("pumukit_webtv_multimediaobject_check_broadcast") }}" method="post">
+    <div>
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+    </div>
+    <div>
+      <label for="username">{% trans %}Broadcast{% endtrans %}</label>
+      <input type="text" id="username" name="_username" value="{{ last_broadcast }}" required="required" />
+    </div>
+    <div>
+      <label for="password">{% trans %}Password{% endtrans %}</label>
+      <input type="password" id="password" name="_password" required="required" />
+    </div>
+    <div>
+      <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+      <label for="remember_me">{% trans %}Remember me{% endtrans %}</label>
+    </div>
+    <div>
+      <input type="submit" id="_submit" name="_submit" value="{% trans %}Submit{% endtrans %}" />
+    </div>
+  </form>
+</div>
+{% endblock %}
