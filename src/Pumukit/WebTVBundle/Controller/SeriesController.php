@@ -20,7 +20,7 @@ class SeriesController extends Controller
       $mmobjRepo = $this
         ->get('doctrine_mongodb.odm.document_manager')
         ->getRepository('PumukitSchemaBundle:MultimediaObject');
-      $multimediaObjects = $mmobjRepo->findStandardBySeries($series);
+      $multimediaObjects = $mmobjRepo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED));
 
       $this->updateBreadcrumbs($series);
     	

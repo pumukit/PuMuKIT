@@ -42,7 +42,6 @@ class CmarWebTVExtension extends \Twig_Extension
     {
       return array(
                    new \Twig_SimpleFunction('iframeurl', array($this, 'getIframeUrl')),
-                   new \Twig_SimpleFunction('private_broadcast', array($this, 'getPrivateBroadcast')),
                    );
     }
 
@@ -90,15 +89,5 @@ class CmarWebTVExtension extends \Twig_Extension
         }
 
         return $url;
-    }
-
-    /**
-     * Get private broadcast
-     *
-     * @return string
-     */
-    public function getPrivateBroadcast()
-    {
-        return Broadcast::BROADCAST_TYPE_PRI;
     }
 }
