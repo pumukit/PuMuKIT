@@ -3,6 +3,7 @@
 namespace Pumukit\WebTVBundle\Twig;
 
 use Symfony\Component\Routing\RequestContext;
+use Pumukit\SchemaBundle\Document\Broadcast;
 
 class PumukitExtension extends \Twig_Extension
 {
@@ -23,11 +24,26 @@ class PumukitExtension extends \Twig_Extension
         $this->defaultPic = $defaultPic;
     }
 
+    public function getName()
+    {
+        return 'pumukit_extension';
+    }
+
     public function getFilters()
     {
         return array(
             new \Twig_SimpleFilter('first_url_pic', array($this, 'getFirstUrlPicFilter')),
         );
+    }
+
+    /**
+     * Get functions
+     */
+    function getFunctions()
+    {
+      return array(
+                   new \Twig_SimpleFunction('public_broadcast', array($this, 'getPublicBroadcast')),
+                   );
     }
 
     /**
@@ -65,8 +81,13 @@ class PumukitExtension extends \Twig_Extension
 
     }
 
-    public function getName()
+    /**
+     * Get public broadcast
+     *
+     * @return string
+     */
+    public function getPublicBroadcast()
     {
-        return 'pumukit_extension';
+        return Broadcast::BROADCAST_TYPE_PUB;
     }
 }
