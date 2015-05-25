@@ -294,4 +294,14 @@ class Broadcast
     return ((self::BROADCAST_TYPE_PUB == $this->getBroadcastTypeId())
             || ("" != $this->getPasswd()));
   }
+
+  /**
+   * Count multimedia objects
+   *
+   * @return integer
+   */
+  public function countMultimediaObjects()
+  {
+      return $this->multimedia_objects->count();
+  }
 }
