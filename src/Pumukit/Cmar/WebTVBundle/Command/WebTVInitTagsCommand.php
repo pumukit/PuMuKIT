@@ -68,11 +68,20 @@ EOT
         if (null == $publishingDecisionTag) {
             throw new \Exception("Trying to add children tags to the not created Publishing Decision Tag. Please init pumukit tags");
         }
+        $rootTag = $this->tagsRepo->findOneByCod("ROOT");
+        if (null == $rootTag) {
+            throw new \Exception("Trying to add children tags to the not created ROOT Tag. Please init pumukit tags");
+        }
         foreach ($finder as $tagFile) {
-            $this->createFromFile($tagFile, $publishingDecisionTag, $output);
+            if (0 < strpos(pathinfo($tagFile, PATHINFO_EXTENSION), '~')) {
+                continue;
+            }
+            $parentTag = $this->getParentTag($tagFile, $rootTag, $publishingDecisionTag);
+            $this->createFromFile($tagFile, $parentTag, $output);
         }
         if ($file) {
-            $this->createFromFile($file, $publisingDecisionTag, $output);
+            $parentTag = $this->getParentTag($tagFile, $rootTag, $publishingDecisionTag);
+            $this->createFromFile($file, $parentTag, $output);
         }
 
         return 0;
@@ -81,7 +90,7 @@ EOT
     protected function createFromFile($file, $parentTag, OutputInterface $output)
     {
         if (!file_exists($file)) {
-            $output->writeln("<error>".$repoName.": Error stating ".$file."</error>");
+            $output->writeln("<error>Tag: Error stating ".$file."</error>");
 
             return -1;
         }
@@ -110,7 +119,7 @@ EOT
                         $output->writeln("<error>Tag: ".$e->getMessage()."</error>");
                     }
                 } else {
-                    $output->writeln($repoName.": Last valid row = ...");
+                    $output->writeln("Tag: Last valid row = ...". ($row - 1));
                     $output->writeln("Error: line $row has $number elements");
                 }
 
@@ -157,5 +166,14 @@ EOT
         $this->dm->persist($tag);
 
         return $tag;
+    }
+
+    private function getParentTag($tagFile, $rootTag, $publishingDecisionTag)
+    {
+        if (0 < strpos($tagFile, 'publishing_decision')) {
+            return $publishingDecisionTag;
+        }
+
+        return $rootTag;
     }
 }

@@ -1,0 +1,7 @@
+id;cod;tree_parent_id;metacategory;display;name_es;name_gl;name_en
+1;TECHNOLOGY;0;1;1;TECNOLOGÍA;TECNOLOXÍA;TECHNOLOGY
+2;TECHOPENCAST;1;0;1;"Opencast";"Opencast";"Opencast"
+3;TECHPOLIMEDIA;1;0;1;"Polimedia";"Polimedia";"Polimedia"
+4;TECHENG;1;0;1;"ENG";"ENG";"ENG"
+5;TECHMULTICAMERA;1;0;1;"Multicámara";"Multicámara";"Multicamera"
+6;TECHSCRIPTED;1;0;1;"Guionizado";"Guionizado";"Scripted"
