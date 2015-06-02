@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Component\Translation\LoggingTranslator;
 
 class BreadcrumbsService
 {
@@ -17,7 +16,7 @@ class BreadcrumbsService
   private $breadcrumbs;
   private $translator;
 
-  public function __construct(Router $router, Session $session, $allTitle='All', $allRoute="pumukit_webtv_medialibrary_index", LoggingTranslator $translator)
+  public function __construct(Router $router, Session $session, $allTitle='All', $allRoute="pumukit_webtv_medialibrary_index", $translator)
   {
     $this->session = $session;
     $this->router = $router;
