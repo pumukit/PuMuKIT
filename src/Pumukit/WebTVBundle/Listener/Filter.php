@@ -20,6 +20,7 @@ class Filter
   {
     $req = $event->getRequest();
     $routeParams = $req->attributes->get("_route_params");
+
     if ($event->getRequestType() === HttpKernelInterface::MASTER_REQUEST 
         && (false !== strpos($req->attributes->get("_controller"), 'WebTVBundle'))
         && (!isset($routeParams["filter"]) || $routeParams["filter"])) {
