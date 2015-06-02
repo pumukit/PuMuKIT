@@ -93,7 +93,7 @@ class MediaLibraryController extends Controller
     /**
      * @Route("/librarymh")
      * @Route("/lectures", name="pumukitcmarwebtv_library_lectures")
-     * @Template("PumukitCmarWebTVBundle:MediaLibrary:multidisplay.html.twig")
+     * @Template("PumukitCmarWebTVBundle:MediaLibrary:opencastindex.html.twig")
      */
     public function lecturesAction(Request $request)
     {
@@ -101,7 +101,7 @@ class MediaLibraryController extends Controller
         
         // TODO review: check locale, check defintion of congresses
         // $series = $seriesRepo->findBy(array('keyword.en' => 'congress'), array('public_date' => 'desc'));
-        return $this->action(null, $tagName, "pumukitcmarwebtv_library_lectures", $request);
+        return $this->actionOpencast(null, $tagName, "pumukitcmarwebtv_library_lectures", $request);
     }
 
     /**
@@ -138,5 +138,29 @@ class MediaLibraryController extends Controller
         $series = $dm->getRepository('PumukitSchemaBundle:Series')->findWithTag($tag, $sort);
 
         return array('title' => $title, 'series' => $series, 'tag_cod' => $tagName);
+    }
+
+    private function actionOpencast($title, $tagName, $routeName, Request $request, array $sort=array('public_date' => -1))
+    {
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+
+        $tag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneByCod($tagName);
+        if (!$tag) {
+            throw $this->createNotFoundException('The tag does not exist');
+        }
+
+        $title = $title != null ? $title : $tag->getTitle();
+
+        $this->get('pumukit_web_tv.breadcrumbs')->addList($title, $routeName);
+
+        // NOTE: Review if the number of SeriesType increases
+        $allSeriesType = $dm->getRepository('PumukitSchemaBundle:SeriesType')->findAll();
+        $subseries = array();
+        foreach ($allSeriesType as $seriesType) {
+            $series = $dm->getRepository('PumukitSchemaBundle:Series')->findWithTagAndSeriesType($tag, $seriesType, $sort);
+            $subseries[$seriesType->getName($this->get('session')->get('_locale'))] = $series;
+        }
+
+        return array('title' => $title, 'subseries' => $subseries, 'tag_cod' => $tagName);
     }
 }

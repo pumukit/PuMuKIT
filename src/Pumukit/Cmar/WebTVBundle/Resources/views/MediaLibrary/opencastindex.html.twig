@@ -1,0 +1,47 @@
+{% extends 'PumukitCmarWebTVBundle::layout.html.twig' %}
+
+{# TODO review     <?php // Código para usar la función que sólo cuenta Matterhorn
+          // $stid=$listaSeries[0]->getSerialTypeId();
+          // $prueba = PubChannelPeer::countMmsWithSameSerialType (1, $stid );
+          // echo "videos por categoría $sti = $prueba"; ?>
+#}
+
+{% block body %}
+<div class="resumo_categorias" >
+  <ul style="width:80%">
+    {% for key, series in subseries if (series|length) != 0 %}
+      {% set countMultimediaObjects = 0 %}
+      {% for oneseries in series %}
+        {% set countMultimediaObjects = countMultimediaObjects + (oneseries.getMultimediaObjects|length) %}
+        {# TODO review $numVs += PubChannelPeer::countMmsFromSerial(1, $ls->getId()); #}
+      {% endfor %}
+      <li>
+        <a href="#{{ key }}">{{ key }}</a>
+        <span class="resumo_categorias_numvideos" style="float:none">
+          {% spaceless %}
+          [{{ countMultimediaObjects }}
+          {% if countMultimediaObjects == 1 %}
+            {% trans %}Video{% endtrans %}
+          {% else %}
+            {% trans %}Videos{% endtrans %}
+          {% endif %}
+          ]
+          {% endspaceless %}
+        </span>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+<div class="usctv_mmobjs usctv_series">
+  {% for key, series in subseries if (series|length) != 0 %}
+    <p class="titulo_widget titulo_widget_grande">
+      <a name="{{ key }}">{{key }}</a> 
+    </p>
+    {% for oneseries in series %}
+      {# TODO REVIEW <?php foreach ($listaSeries as $l) {include_partial('librarymh/serial', array('serial' => $l));} ?> #}
+      {% include 'PumukitCmarWebTVBundle:MediaLibrary:series.html.twig' with {'series': oneseries} %}
+    {% endfor %}
+  {% endfor %}
+</div>
+<div style="clear:left"></div>
+{% endblock %}
