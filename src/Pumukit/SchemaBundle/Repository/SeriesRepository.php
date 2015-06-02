@@ -284,4 +284,49 @@ class SeriesRepository extends DocumentRepository
         ->execute()
         ;
     }
+
+    /**
+     * Find series with tag and series type
+     *
+     * @param Tag|EmbeddedTag $tag
+     * @param SeriesType $seriesType
+     * @param array $sort
+     * @param int $limit
+     * @param int $page
+     * @return ArrayCollection
+     */
+    public function findWithTagAndSeriesType($tag, $seriesType, $sort = array(), $limit = 0, $page = 0)
+    {
+        $qb = $this->createBuilderWithTagAndSeriesType($tag, $seriesType,  $sort);
+
+        if ($limit > 0){
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
+     * Create QueryBuilder to find series with tag and series type
+     *
+     * @param Tag|EmbeddedTag $tag
+     * @param SeriesType $seriesType
+     * @param array $sort
+     * @return QueryBuilder
+     */
+    public function createBuilderWithTagAndSeriesType($tag, $seriesType,  $sort = array())
+    {
+        $referencedSeries = $this->getDocumentManager()
+            ->getRepository('PumukitSchemaBundle:MultimediaObject')
+            ->findSeriesFieldWithTag($tag);
+
+        $qb = $this->createQueryBuilder()
+            ->field('id')->in($referencedSeries->toArray())
+            ->field('series_type')->references($seriesType);
+
+        if (0 !== count($sort) ){
+            $qb->sort($sort);
+        }
+        return $qb;
+    }
 }
