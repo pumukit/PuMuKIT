@@ -97,11 +97,11 @@ class MediaLibraryController extends Controller
      */
     public function lecturesAction(Request $request)
     {
-        $tagName = 'GENRE22';
+        $tagName = 'TECHOPENCAST';
         
         // TODO review: check locale, check defintion of congresses
         // $series = $seriesRepo->findBy(array('keyword.en' => 'congress'), array('public_date' => 'desc'));
-        return $this->actionOpencast(null, $tagName, "pumukitcmarwebtv_library_lectures", $request);
+        return $this->actionOpencast("Recorded lectures", $tagName, "pumukitcmarwebtv_library_lectures");
     }
 
     /**
@@ -140,7 +140,7 @@ class MediaLibraryController extends Controller
         return array('title' => $title, 'series' => $series, 'tag_cod' => $tagName);
     }
 
-    private function actionOpencast($title, $tagName, $routeName, Request $request, array $sort=array('public_date' => -1))
+    private function actionOpencast($title, $tagName, $routeName, array $sort=array('public_date' => -1))
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
 
@@ -151,14 +151,14 @@ class MediaLibraryController extends Controller
 
         $title = $title != null ? $title : $tag->getTitle();
 
-        $this->get('pumukit_web_tv.breadcrumbs')->addList($title, $routeName);
+        $this->get('pumukit_web_tv.breadcrumbs')->addList($title, $routeName, array(), true);
 
         // NOTE: Review if the number of SeriesType increases
         $allSeriesType = $dm->getRepository('PumukitSchemaBundle:SeriesType')->findAll();
         $subseries = array();
         foreach ($allSeriesType as $seriesType) {
             $series = $dm->getRepository('PumukitSchemaBundle:Series')->findWithTagAndSeriesType($tag, $seriesType, $sort);
-            $subseries[$seriesType->getName($this->get('session')->get('_locale'))] = $series;
+            $subseries[$seriesType->getName()] = $series;
         }
 
         return array('title' => $title, 'subseries' => $subseries, 'tag_cod' => $tagName);
