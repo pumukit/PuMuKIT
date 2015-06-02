@@ -27,6 +27,7 @@
           <argument type="service" id="session" />
           <argument>%pumukit_web_tv.breadcrumbs_all_title%</argument>
           <argument>%pumukit_web_tv.breadcrumbs_all_route%</argument>
+          <argument type="service" id="translator" />
         </service>
     </services>
 </container>
