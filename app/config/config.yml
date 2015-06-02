@@ -61,7 +61,7 @@ doctrine_mongodb:
             auto_mapping: true
             filters:
                 frontend:
-                    class:     Pumukit\SchemaBundle\Filter\ArcaFilter
+                    class:     Pumukit\SchemaBundle\Filter\SchemaFilter
                     enabled:   false
 
 

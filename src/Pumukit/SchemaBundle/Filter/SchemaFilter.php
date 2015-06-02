@@ -5,7 +5,7 @@ namespace Pumukit\SchemaBundle\Filter;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetaData;
 use Doctrine\ODM\MongoDB\Query\Filter\BsonFilter;
 
-class ArcaFilter extends BsonFilter
+class SchemaFilter extends BsonFilter
 {
 
   public function addFilterCriteria(ClassMetadata $targetDocument)
