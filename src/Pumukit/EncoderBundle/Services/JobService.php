@@ -365,9 +365,18 @@ class JobService
     public function renderBat(Job $job)
     {
         $profile = $this->getProfile($job);
+        $mmobj = $this->getMultimediaObject($job);
 
-        $vars = array('{{input}}' => $job->getPathIni(), 
-                      '{{output}}' => $job->getPathEnd());
+        $vars = array();
+
+        foreach ($mmobj->getTracks() as $track) {
+            foreach($track->getTags() as $tag) {
+                $vars['{{' . $tag . '}}'] = $track->getPath();
+            }
+        }
+        
+        $vars['{{input}}'] = $job->getPathIni();
+        $vars['{{output}}'] = $job->getPathEnd();
 
         foreach(range(1, 9) as $identifier){
             $vars['{{temfile' . $identifier. '}}'] = $this->tmp_path . '/' . rand();
