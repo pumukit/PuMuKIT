@@ -257,11 +257,13 @@ EOT
         if ($tag_parent) {
             $tag->setParent($tag_parent);
         }
-        $tag->setTitle($csv_array[5], 'es');
-      // NOTE Take care of csv language order!
-      if (isset($csv_array[6])) {
-          $tag->setTitle($csv_array[6], 'gl');
-      }
+        // NOTE Take care of csv language order!
+        if (isset($csv_array[5])) {
+            $tag->setTitle($csv_array[5], 'es');
+        }
+        if (isset($csv_array[6])) {
+            $tag->setTitle($csv_array[6], 'gl');
+        }
         if (isset($csv_array[7])) {
             $tag->setTitle($csv_array[7], 'en');
         }
@@ -286,8 +288,10 @@ EOT
         }
         $broadcast->setPasswd($csv_array[3]);
         $broadcast->setDefaultSel($csv_array[4]);
-        $broadcast->setDescription($csv_array[5], 'es');
         // NOTE Take care of csv language order!
+        if (isset($csv_array[5])) {
+            $broadcast->setDescription($csv_array[5], 'es');
+        }
         if (isset($csv_array[6])) {
             $broadcast->setDescription($csv_array[6], 'gl');
         }
@@ -310,16 +314,18 @@ EOT
         $role->setCod($csv_array[1]);
         $role->setXml($csv_array[2]);
         $role->setDisplay($csv_array[3]);
-        $role->setName($csv_array[4], 'es');
         // NOTE Take care of csv language order!
+        $role->setName($csv_array[4], 'es');
         if (isset($csv_array[5])) {
             $role->setName($csv_array[5], 'gl');
         }
         if (isset($csv_array[6])) {
             $role->setName($csv_array[6], 'en');
         }
-        $role->setText($csv_array[7], 'es');
         // NOTE Take care of csv language order!
+        if (isset($csv_array[7])) {
+            $role->setText($csv_array[7], 'es');
+        }
         if (isset($csv_array[8])) {
             $role->setText($csv_array[8], 'gl');
         }
