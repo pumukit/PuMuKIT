@@ -29,6 +29,8 @@ class SeriesType extends AbstractType
                         'label' => $this->translator->trans('New', array(), null, $this->locale)))
             ->add('i18n_title', 'texti18n',
                   array('label' => $this->translator->trans('Title', array(), null, $this->locale)))
+            ->add('i18n_subtitle', 'texti18n',
+                  array('label' => $this->translator->trans('Subtitle', array(), null, $this->locale)))
             ->add('i18n_keyword', 'texti18n',
                   array(
                         'required' => false,
