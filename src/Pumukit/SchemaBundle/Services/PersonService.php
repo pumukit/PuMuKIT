@@ -116,7 +116,9 @@ class PersonService
             $this->dm->persist($person);
             $this->dm->flush();
             $multimediaObject->addPersonWithRole($person, $role);
+            $role->increaseNumberPeopleInMultimediaObject();
             $this->dm->persist($multimediaObject);
+            $this->dm->persist($role);
             $this->dm->flush();
         }
 
@@ -181,7 +183,9 @@ class PersonService
     public function deleteRelation(Person $person, Role $role, MultimediaObject $multimediaObject)
     {
         $flag = $multimediaObject->removePersonWithRole($person, $role);
+        $role->decreaseNumberPeopleInMultimediaObject();
         $this->dm->persist($multimediaObject);
+        $this->dm->persist($role);
         $this->dm->flush();
 
         return $multimediaObject;
