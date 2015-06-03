@@ -203,8 +203,10 @@ class MediaPackageController extends Controller
                     $track->setOnlyAudio(true);
                 }
 
-                $track->setTags(array("opencast"));
+                $track->addTag("opencast");
+                $track->addTag($mediaPackage["media"]["track"][$i]["type"]);
                 $track->setUrl($url);
+                $track->setPath($this->get('pumukit_opencast.job')->getPath($url));
                 $track->setMimeType($mime);
                 $track->setDuration($duration);
 
@@ -230,6 +232,11 @@ class MediaPackageController extends Controller
             $dm = $this->get('doctrine_mongodb')->getManager();
             $dm->persist($multimediaObject);
             $dm->flush();
+
+            if($track) {
+                $this->get('pumukit_opencast.job')->genSbs($multimediaObject);
+            }
+
         }
 
         return $this->redirect($this->getRequest()->headers->get('referer'));
