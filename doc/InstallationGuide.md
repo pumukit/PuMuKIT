@@ -130,16 +130,23 @@ post_max_size = 2000M
 
 3.- If you get a 504 "Gateway Time-out", change the php5-fpm configuration. Chose the same value for `request_terminate_timeout` in `/etc/php5/fpm/pool.d/www.conf` and `max_execution_time` in `/etc/php5/fmp/php.ini`files. For example:
 
-/etc/php5/fpm/pool.d/www.conf
+# /etc/php5/fpm/pool.d/www.conf
 
 ```
 request_terminate_timeout = 30
 ```
 
-/etc/php5/fpm/php.ini
+# /etc/php5/fpm/php.ini
 
 ```
 max_execution_time = 30
+```
+
+# Restart php5-fpm and NGINX:
+
+```
+sudo service php5-fpm restart
+sudo service ningx restart
 ```
 
 
