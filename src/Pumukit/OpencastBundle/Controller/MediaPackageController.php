@@ -230,6 +230,12 @@ class MediaPackageController extends Controller
             }
 
             $dm = $this->get('doctrine_mongodb')->getManager();
+            $tagRepo = $dm->getRepository('PumukitSchemaBundle:Tag');
+            $opencastTag = $tagRepo->findOneByCod('TECHOPENCAST');
+            if ($opencastTag) {
+                $tagService = $this->get('pumukitschema.tag');
+                $tagAdded = $tagService->addTagToMultimediaObject($multimediaObject, $opencastTag->getId());
+            }
             $dm->persist($multimediaObject);
             $dm->flush();
 
