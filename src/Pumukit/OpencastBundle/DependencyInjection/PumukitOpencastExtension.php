@@ -3,8 +3,10 @@
 namespace Pumukit\OpencastBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+
 
 /**
  * This is the class that loads and manages your bundle configuration
@@ -35,6 +37,14 @@ class PumukitOpencastExtension extends Extension
             ->addArgument($config['username'])
             ->addArgument($config['password'])
             ->addArgument($config['player']);
+
+          $container
+            ->register("pumukit_opencast.job", "Pumukit\OpencastBundle\Services\OpencastService")
+            ->addArgument($config['generate_sbs'] ? $config['profile'] : null)
+            ->addArgument(new Reference('pumukitencoder.job'))
+            ->addArgument($config['url_mapping']);
         }
+
+        
     }
 }
