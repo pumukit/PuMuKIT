@@ -110,12 +110,12 @@ class MediaLibraryController extends Controller
      */
     public function allAction(Request $request)
     {
-        $title = "All Videos";
+        $title = $this->get('translator')->trans("All videos");
         $this->get('pumukit_web_tv.breadcrumbs')->addList($title, "pumukitcmarwebtv_library_all");
 
         $seriesRepo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:Series');
 
-        //TODO revew
+        //TODO review
         $series = $seriesRepo->findBy(array(), array('public_date' => -1));
 
         return array('title' => $title, 'series' => $series);
