@@ -41,6 +41,7 @@
       {# TODO REVIEW <?php foreach ($listaSeries as $l) {include_partial('librarymh/serial', array('serial' => $l));} ?> #}
       {% include 'PumukitCmarWebTVBundle:MediaLibrary:series.html.twig' with {'series': oneseries} %}
     {% endfor %}
+    {% include 'PumukitWebTVBundle:ByTag:pager.html.twig' with {'objects': series} %}
   {% endfor %}
 </div>
 <div style="clear:left"></div>

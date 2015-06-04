@@ -8,5 +8,6 @@
     {% include 'PumukitCmarWebTVBundle:MediaLibrary:series.html.twig' with {'series': oneseries} %}
   {% endfor %}
 </div>
+{% include 'PumukitWebTVBundle:ByTag:pager.html.twig' with {'objects': series} %}
 <div style="clear:left"></div>
 {% endblock body %}
