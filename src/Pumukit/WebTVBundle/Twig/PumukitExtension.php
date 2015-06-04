@@ -4,6 +4,7 @@ namespace Pumukit\WebTVBundle\Twig;
 
 use Symfony\Component\Routing\RequestContext;
 use Pumukit\SchemaBundle\Document\Broadcast;
+use Doctrine\ODM\MongoDB\DocumentManager;
 
 class PumukitExtension extends \Twig_Extension
 {
@@ -18,8 +19,11 @@ class PumukitExtension extends \Twig_Extension
      */
     protected $context;
 
-    public function __construct(RequestContext $context, $defaultPic)
+    private $dm;
+
+    public function __construct(DocumentManager $documentManager, RequestContext $context, $defaultPic)
     {
+        $this->dm = $documentManager;
         $this->context = $context;
         $this->defaultPic = $defaultPic;
     }
@@ -33,6 +37,7 @@ class PumukitExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFilter('first_url_pic', array($this, 'getFirstUrlPicFilter')),
+            new \Twig_SimpleFilter('precinct_fulltitle', array($this, 'getPrecinctFulltitle')),
         );
     }
 
@@ -43,6 +48,7 @@ class PumukitExtension extends \Twig_Extension
     {
       return array(
                    new \Twig_SimpleFunction('public_broadcast', array($this, 'getPublicBroadcast')),
+                   new \Twig_SimpleFunction('precinct', array($this, 'getPrecinct')),
                    );
     }
 
@@ -89,5 +95,59 @@ class PumukitExtension extends \Twig_Extension
     public function getPublicBroadcast()
     {
         return Broadcast::BROADCAST_TYPE_PUB;
+    }
+
+    /**
+     * Get precinct
+     *
+     * @param ArrayCollection $embeddedTags
+     * @return EmbbededTag|null
+     */
+    public function getPrecinct($embeddedTags)
+    {
+        $precinctTag = null;
+
+        foreach ($embeddedTags as $tag) {
+            if (0 === strpos($tag->getCod(), 'PRECINCT')) {
+                return $tag;
+            }
+        }
+
+        return $precinctTag;
+    }
+
+    /**
+     * Get precinct fulltitle
+     *
+     * @param EmbbededTag $precinctEmbeddedTag
+     * @return string
+     */
+    public function getPrecinctFulltitle($precinctEmbeddedTag)
+    {
+        $fulltitle = '';
+
+        if ($precinctEmbeddedTag) {
+            $tagRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
+            $precinctTag = $tagRepo->findOneByCod($precinctEmbeddedTag->getCod());
+            if ($precinctTag) {
+                if ($precinctTag->getTitle()) {
+                    $fulltitle = $precinctTag->getTitle();
+                }
+                $placeTag = $precinctTag->getParent();
+                if ($placeTag) {
+                    if ($placeTag->getTitle()) {
+                        if ($fulltitle) {
+                            $fulltitle .= ', ' . $placeTag->getTitle();
+                        } else {
+                            $fulltitle = $placeTag->getTitle();
+                        }
+                    }
+                }
+            } elseif ($precinctEmbeddedTag->getTitle()) {
+                $fulltitle = $precinctEmbeddedTag->getTitle();
+            }
+        }
+
+        return $fulltitle;
     }
 }
