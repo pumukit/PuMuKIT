@@ -6,6 +6,36 @@
   {% trans %}Date of holding{% endtrans %}: {{ mm.getRecordDate()|date('d/m/Y') }}
 </div>
 {% endif %}
+<!-- SUBSERIAL -->
+{% if not mm.getProperty("subseries") %}
+  <div class="inter_mm"></div>
+{% endif %}
+<!-- PRECINCT -->
+{% set mm_precinct = precinct(mm.getTags()) %}
+{% if ((mm_precinct) and ((mm_precinct != last_precinct) or ((last_date|date('U')) != (mm.getRecordDate()|date('U')))) and (mm_precinct.getCod() != 'PRECINCT1')) %}
+  <div class="serial_place">
+    {{ mm_precinct|precinct_fulltitle }}
+  </div>
+{% endif %}
+<!-- SUBSERIAL -->
+{% if (mm.getProperty('subseriestitle') and (((mm.getProperty('subseriestitle')|raw) != last_subseriestitle) or ((last_date|date('U')) != (mm.getRecordDate()|date('U'))))) %}
+  <div class="serial_date">{{ mm.getProperty('subseriestitle') }}</div>
+{% endif %}
+<!-- MULTISUBSERIAL -->
+{# TODO use seriesprototype or not
+{% if seriesprototype == 5 %}
+  {% set subseries_now = (mm.getProperty('subseriestitle')|split("\\n")) %}
+  {% set subseries_before = (last_subseriestitle|split("\\n")) %}
+  {% set all_subseries = false %}
+  {% for key, subseries_text in subseries_now %}
+    {% if (all_subseries or ((subseries_before|length) <= key) or ((subseries_text|raw) != subseries_before[key])) %}
+      {% set all_subseries = true %}
+        <div class="serial_date">{{ subseries_text }}</div>
+    {% endif %}
+  {% endfor %}
+{% endif %}
+#}
+
 <!-- PIC -->
 <div class="serial_mm">
   <table>
