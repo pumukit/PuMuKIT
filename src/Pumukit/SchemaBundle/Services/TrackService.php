@@ -9,6 +9,7 @@ use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
+use Symfony\Component\Finder\Finder;
 
 class TrackService
 {
@@ -16,13 +17,15 @@ class TrackService
     private $tmpPath;
     private $jobService;
     private $profileService;
+    private $forceDeleteOnDisk;
 
-    public function __construct(DocumentManager $documentManager, JobService $jobService, ProfileService $profileService, $tmpPath=null)
+    public function __construct(DocumentManager $documentManager, JobService $jobService, ProfileService $profileService, $tmpPath=null, $forceDeleteOnDisk=true)
     {
         $this->dm = $documentManager;
         $this->jobService = $jobService;
         $this->profileService = $profileService;
         $this->tmpPath = $tmpPath ? realpath($tmpPath) : sys_get_temp_dir();
+        $this->forceDeleteOnDisk = $forceDeleteOnDisk;
     }
 
     /**
@@ -100,9 +103,16 @@ class TrackService
      */
     public function removeTrackFromMultimediaObject(MultimediaObject $multimediaObject, $trackId)
     {
+        $track = $multimediaObject->getTrackById($trackId);
+        $trackPath = $track->getPath();
+
         $multimediaObject->removeTrackById($trackId);
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
+
+        if ($this->forceDeleteOnDisk && $trackPath) {
+            $this->deleteFileOnDisk($trackPath);
+        }
 
         return $multimediaObject;
     }
@@ -137,5 +147,26 @@ class TrackService
     public function getTempDirs()
     {
         return array($this->tmpPath);
+    }
+
+    private function deleteFileOnDisk($path)
+    {
+        $dirname = pathinfo($path, PATHINFO_DIRNAME);
+        try {
+            $deleted = unlink($path);
+            if (!$deleted) {
+                throw new \Exception("Error deleting file '".$path."' on disk");
+            }
+            $finder = new Finder();
+            $finder->files()->in($dirname);
+            if (0 === $finder->count()) {
+                $dirDeleted = rmdir($dirname);
+                if (!$deleted) {
+                    throw new \Exception("Error deleting directory '".$dirname."'on disk");
+                }
+            }
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
     }
 }
