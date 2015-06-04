@@ -1,7 +1,7 @@
 <a name="{{ mm.id }}"></a>
 <!-- DATE -->
 {# TODO if(($template == 2) || ((!in_array($template, array(4,5))) && ($mm->getRecordDate()) && ($mm->getRecorddate() !== '1999-11-30') && ($mm->getRecordDate('dmy') !== $lastDate))):  #}
-{% if (((mm.getRecordDate()|date('d/m/Y')) is not empty) and ((last_date|date('U')) != (mm.getRecordDate()|date('U')))) %}
+{% if (((mm.getRecordDate()|date('d/m/Y')) is not empty) and ((last_date|date('Y-m-d')) != (mm.getRecordDate()|date('Y-m-d')))) %}
 <div class="date">
   {% trans %}Date of holding{% endtrans %}: {{ mm.getRecordDate()|date('d/m/Y') }}
 </div>
@@ -12,13 +12,13 @@
 {% endif %}
 <!-- PRECINCT -->
 {% set mm_precinct = precinct(mm.getTags()) %}
-{% if ((mm_precinct) and ((mm_precinct != last_precinct) or ((last_date|date('U')) != (mm.getRecordDate()|date('U')))) and (mm_precinct.getCod() != 'PRECINCT1')) %}
+{% if ((mm_precinct) and ((mm_precinct != last_precinct) or ((last_date|date('Y-m-d')) != (mm.getRecordDate()|date('Y-m-d')))) and (mm_precinct.getCod() != 'PRECINCT1')) %}
   <div class="serial_place">
     {{ mm_precinct|precinct_fulltitle }}
   </div>
 {% endif %}
 <!-- SUBSERIAL -->
-{% if (mm.getProperty('subseriestitle') and (((mm.getProperty('subseriestitle')|raw) != last_subseriestitle) or ((last_date|date('U')) != (mm.getRecordDate()|date('U'))))) %}
+{% if (mm.getProperty('subseriestitle') and (((mm.getProperty('subseriestitle')|raw) != last_subseriestitle) or ((last_date|date('Y-m-d')) != (mm.getRecordDate()|date('Y-m-d'))))) %}
   <div class="serial_date">{{ mm.getProperty('subseriestitle') }}</div>
 {% endif %}
 <!-- MULTISUBSERIAL -->
