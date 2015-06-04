@@ -6,7 +6,7 @@
        id = "player"
        style = "width: 100%; min-height: 400px"
        controls = "controls"
-       poster = "{{ asset(bundles/pumukitcmarwebtv/cmar/poster.png }}" >
+       poster = "{{ asset('bundles/pumukitcmarwebtv/cmar/poster.png') }}" >
       <source src="{{ multimediaObject.getProperty('opencasturl')|replace({'%id%': multimediaObject.getProperty('opencast')}) }}" type="video/mp4"/>
   </video>
    <div class="mm_player">
@@ -16,7 +16,7 @@
        </div>
        {% trans %}Viewed{% endtrans %}:
        <span class="num_view_number">{{ multimediaObject.getNumview() }}</span>&nbsp;
-       {% if 1 == multimediaObject.getNumview() %}{% trans %}time{% endtrans %}{% else %}{% trans %}times{% endtrans %}&nbsp;&nbsp;
+       {% if 1 == multimediaObject.getNumview() %}{% trans %}time{% endtrans %}{% else %}{% trans %}times{% endtrans %}{% endif %}&nbsp;&nbsp;
      </div>
    </div>
    <div class="title">
