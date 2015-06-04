@@ -208,7 +208,7 @@ class MediaPackageController extends Controller
                 $track->setUrl($url);
                 $track->setPath($this->get('pumukit_opencast.job')->getPath($url));
                 $track->setMimeType($mime);
-                $track->setDuration($duration);
+                $track->setDuration($duration/1000);
 
                 $multimediaObject->addTrack($track);
             }

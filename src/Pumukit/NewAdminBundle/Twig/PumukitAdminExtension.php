@@ -119,7 +119,7 @@ class PumukitAdminExtension extends \Twig_Extension
      */
     public function getDurationString($duration)
     {
-        return gmdate("H:i:s", $duration/1000);
+        return gmdate("H:i:s", $duration);
     }
 
     /**
