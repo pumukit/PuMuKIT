@@ -134,7 +134,7 @@ class PumukitAdminExtension extends \Twig_Extension
      */
     public function getLanguageName($code)
     {
-        return $this->languages[$code];
+        return ucfirst($this->languages[$code]);
     }
 
     /**
