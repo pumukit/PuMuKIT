@@ -180,22 +180,60 @@ class MediaPackageController extends Controller
             $multimediaObject->setProperty("opencast", $properties);
             $multimediaObject->setProperty("opencasturl", $opencastClient->getPlayerUrl() . "?id=" . $properties);
 
-            for($i=0; $i<count($mediaPackage["media"]["track"]); $i++){
+            //Multiple tracks
+            if(isset($mediaPackage["media"]["track"][0])){
 
-                $tags = $mediaPackage["media"]["track"][$i]["tags"];
-                $url = $mediaPackage["media"]["track"][$i]["url"];
-                $mime = $mediaPackage["media"]["track"][$i]["mimetype"];
-                $duration = $mediaPackage["media"]["track"][$i]["duration"];
+                for($i=0; $i<count($mediaPackage["media"]["track"]); $i++){
+
+                    $tags = $mediaPackage["media"]["track"][$i]["tags"];
+                    $url = $mediaPackage["media"]["track"][$i]["url"];
+                    $mime = $mediaPackage["media"]["track"][$i]["mimetype"];
+                    $duration = $mediaPackage["media"]["track"][$i]["duration"];
+
+                    $track = new Track();
+
+                    if( isset($mediapackage["media"]["track"][$i]["audio"])) {
+                        $acodec = $mediaPackage["media"]["track"][$i]["audio"]["encoder"]["type"];
+                        $track->setAcodec($acodec);
+                    }
+
+                    if( isset($mediaPackage["media"]["track"][$i]["video"])) {
+                        $vcodec = $mediaPackage["media"]["track"][$i]["video"]["encoder"]["type"];
+                        $track->setVcodec($vcodec);
+                    }
+
+                    if (!$track->getVcodec() && $track->getAcodec()) {
+                        $track->setOnlyAudio(true);
+                    }
+
+                    $track->addTag("opencast");
+                    $track->addTag($mediaPackage["media"]["track"][$i]["type"]);
+                    $track->setUrl($url);
+                    $track->setPath($this->get('pumukit_opencast.job')->getPath($url));
+                    $track->setMimeType($mime);
+                    $track->setDuration($duration);
+
+                    $multimediaObject->addTrack($track);
+                }
+            }
+
+            //Only track
+            else{
+
+                $tags = $mediaPackage["media"]["track"]["tags"];
+                $url = $mediaPackage["media"]["track"]["url"];
+                $mime = $mediaPackage["media"]["track"]["mimetype"];
+                $duration = $mediaPackage["media"]["track"]["duration"];
 
                 $track = new Track();
 
-                if( isset($mediapackage["media"]["track"][$i]["audio"])) {
-                    $acodec = $mediaPackage["media"]["track"][$i]["audio"]["encoder"]["type"];
+                if( isset($mediapackage["media"]["track"]["audio"])) {
+                    $acodec = $mediaPackage["media"]["track"]["audio"]["encoder"]["type"];
                     $track->setAcodec($acodec);
                 }
 
-                if( isset($mediaPackage["media"]["track"][$i]["video"])) {
-                    $vcodec = $mediaPackage["media"]["track"][$i]["video"]["encoder"]["type"];
+                if( isset($mediaPackage["media"]["track"]["video"])) {
+                    $vcodec = $mediaPackage["media"]["track"]["video"]["encoder"]["type"];
                     $track->setVcodec($vcodec);
                 }
 
@@ -204,7 +242,7 @@ class MediaPackageController extends Controller
                 }
 
                 $track->addTag("opencast");
-                $track->addTag($mediaPackage["media"]["track"][$i]["type"]);
+                $track->addTag($mediaPackage["media"]["track"]["type"]);
                 $track->setUrl($url);
                 $track->setPath($this->get('pumukit_opencast.job')->getPath($url));
                 $track->setMimeType($mime);
@@ -212,7 +250,6 @@ class MediaPackageController extends Controller
 
                 $multimediaObject->addTrack($track);
             }
-
 
             for($j=0; $j<count($mediaPackage["attachments"]["attachment"]); $j++){
 
