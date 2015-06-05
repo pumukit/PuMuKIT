@@ -461,10 +461,15 @@ class SeriesController extends AdminController
     {
         $type = $this->get('session')->get('admin/series/type');
 
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $mmRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $numberMultimediaObjectsInSeries1 = $mmRepo->countInSeries($series1);
+        $numberMultimediaObjectsInSeries2 = $mmRepo->countInSeries($series2);
+
         if ('asc' === $type){
-            return (count($series1->getMultimediaObjects()) < count($series2->getMultimediaObjects()));
+            return ($numberMultimediaObjectsInSeries1 < $numberMultimediaObjectsInSeries2);
         }elseif('desc' === $type){
-            return (count($series1->getMultimediaObjects()) > count($series2->getMultimediaObjects()));
+            return ($numberMultimediaObjectsInSeries1 > $numberMultimediaObjectsInSeries2);
         }
 
         return false;
