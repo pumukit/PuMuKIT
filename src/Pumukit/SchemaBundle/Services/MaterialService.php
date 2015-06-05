@@ -15,7 +15,7 @@ class MaterialService
     private $targetUrl;
     private $forceDeleteOnDisk;
 
-    public function __construct(DocumentManager $documentManager, $targetPath, $targetUrl, $forceDeleteOnDisk)
+    public function __construct(DocumentManager $documentManager, $targetPath, $targetUrl, $forceDeleteOnDisk=true)
     {
         $this->dm = $documentManager;
         $this->targetPath = realpath($targetPath);

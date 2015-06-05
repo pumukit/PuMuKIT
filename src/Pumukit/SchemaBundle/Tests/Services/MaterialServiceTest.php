@@ -222,7 +222,7 @@ class MaterialServiceTest extends WebTestCase
      */
     public function testInvalidTargetPath()
     {
-        $materialService = new MaterialService($this->dm, "/non/existing/path", "/uploads/material");
+        $materialService = new MaterialService($this->dm, "/non/existing/path", "/uploads/material", true);
     }
 
     private function createBroadcast($broadcastTypeId)
