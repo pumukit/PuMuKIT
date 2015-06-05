@@ -12,8 +12,7 @@
 <div id="directo-sbs" style="width:100%; margin: 0px auto;"></div>      
 
 <script type="text/javascript">
-
-$(function(){          
+document.addEventListener('DOMContentLoaded', function(){
   jwplayer("directo-sbs").setup({
       file: "{{ live.url }}/{{ live.sourcename }}",
       autostart: true,
@@ -27,7 +26,7 @@ $(function(){
 
 </script>
 
-{# include('PumukitLiveBundle:Default:info.html.twig') #}
+{% include('PumukitLiveBundle:Default:info.html.twig') %}
 
 
 {% endblock %}
