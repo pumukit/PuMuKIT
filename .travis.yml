@@ -10,7 +10,6 @@ services:
   - mongodb
 before_script: 
   - sleep 5
-  - php composer.phar create-project composer/satis --stability=dev --keep-vcs
   - if [ -f "~/satis/bin/satis" ]; then ~/satis/bin/satis --no-interaction build ~/packages.json ~/packages; fi
   - if [ -f "app/config/parameters.yml" ]; then rm app/config/parameters.yml; fi
   - if [ -d "app/cache" ]; then rm -Rf app/cache/*; fi
