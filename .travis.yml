@@ -15,7 +15,7 @@ before_script:
   - if [ -d "app/cache" ]; then rm -Rf app/cache/*; fi
   - if [ -d "app/logs" ]; then rm -Rf app/logs/*; fi
   - mkdir -p build
-  - sed "s|$antes|$despues|" app/console >> app/console
+  - echo "umask(0000);" >> app/console
   - php ~/.phpenv/versions/5.3.3/bin/composer create-project composer/satis --stability=dev --keep-vcs
   - php app/console doctrine:mongodb:schema:create 
 
