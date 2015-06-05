@@ -1450,6 +1450,10 @@
         <source>User successfully created.</source>
         <target>User successfully created.</target>
       </trans-unit>
+      <trans-unit id="1ce5275a34f518c105ff88bbb5d415df" resname="Multimedia Object saved ERROR: Public Date can not be lower than Date of holding.">
+        <source>Multimedia Object saved ERROR: Public Date can not be lower than Date of holding.</source>
+        <target>Multimedia Object saved ERROR: Public Date can not be lower than Date of holding.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
