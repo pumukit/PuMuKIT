@@ -29,7 +29,7 @@ class MultimediaObjectMetaType extends AbstractType
             ->add('copyright', 'text', array('required' => false, 'label' => $this->translator->trans('Copyright', array(), null, $this->locale)))
             ->add('license', 'text', array('required' => false, 'label' => $this->translator->trans('License', array(), null, $this->locale)))           
             ->add('public_date', new Html5dateType(), array('data_class' => 'DateTime', 'label' => $this->translator->trans('Public Date', array(), null, $this->locale)))
-            ->add('record_date', new Html5dateType(), array('data_class' => 'DateTime', 'label' => $this->translator->trans('Record Date', array(), null, $this->locale)))
+            ->add('record_date', new Html5dateType(), array('data_class' => 'DateTime', 'label' => $this->translator->trans('Date of holding', array(), null, $this->locale)))
             ->add('i18n_description', 'textareai18n', array('required' => false, 'label' => $this->translator->trans('Description', array(), null, $this->locale)))
             ->add('i18n_line2', 'textareai18n', array('required' => false, 'label' => $this->translator->trans('Headline', array(), null, $this->locale)));
     }

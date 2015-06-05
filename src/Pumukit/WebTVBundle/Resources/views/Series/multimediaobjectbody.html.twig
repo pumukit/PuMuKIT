@@ -70,7 +70,7 @@
                {% trans %}Video{% endtrans %}
                {% endif %}
                {% if (mm.getBroadcast().getBroadcastTypeId() != public_broadcast()) %}
-               :&nbsp;{% trans %}private{% endtrans %}
+               {% trans %}private{% endtrans %}
                {% endif %}
              {% endspaceless %}</a>
   	         &nbsp;|&nbsp;&nbsp;<span class="language">{{ opencast_track.getLanguage()|language_name }}</span> 
@@ -94,7 +94,7 @@
                      {% trans %}Video{% endtrans %}
                      {% endif %}
                      {% if (mm.getBroadcast().getBroadcastTypeId() != public_broadcast()) %}
-                     :&nbsp;{% trans %}private{% endtrans %}
+                     {% trans %}private{% endtrans %}
                      {% endif %}
                      {% endspaceless %}</a>
                    &nbsp;|&nbsp;&nbsp;<span class="language">{{ track.getLanguage()|language_name}}</span>
@@ -115,7 +115,7 @@
                      {% trans %}Video{% endtrans %}
                      {% endif %}
                      {% if (mm.getBroadcast().getBroadcastTypeId() != public_broadcast()) %}
-                     :&nbsp;{% trans %}private{% endtrans %}
+                     {% trans %}private{% endtrans %}
                      {% endif %}
                      {% endspaceless %}</a>
                    &nbsp;({{ mm.getDuration()|duration_string }})
