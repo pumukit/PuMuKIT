@@ -9,16 +9,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Broadcast;
-use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
-use Pagerfanta\Pagerfanta;
 
 /**
  * @Route("/library")
  */
 class MediaLibraryController extends Controller
 {
-    private $limit = 10;
-
     /**
      * @Route("/", name="pumukit_webtv_medialibrary_index")
      * @Route("/", name="pumukitcmarwebtv_library_index")
@@ -105,7 +101,7 @@ class MediaLibraryController extends Controller
         
         // TODO review: check locale, check defintion of congresses
         // $series = $seriesRepo->findBy(array('keyword.en' => 'congress'), array('public_date' => 'desc'));
-        return $this->actionOpencast($request, "Recorded lectures", $tagName, "pumukitcmarwebtv_library_lectures");
+        return $this->actionOpencast("Recorded lectures", $tagName, "pumukitcmarwebtv_library_lectures");
     }
 
     /**
@@ -118,9 +114,7 @@ class MediaLibraryController extends Controller
         $this->get('pumukit_web_tv.breadcrumbs')->addList($title, "pumukitcmarwebtv_library_all");
 
         $seriesRepo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:Series');
-        $series = $seriesRepo->createQueryBuilder()
-          ->sort('public_date', -1);
-        $series = $this->createPager($series, $request->query->get("page", 1));
+        $series = $seriesRepo->findBy(array(), array('public_date' => -1));
 
         return array('title' => $title, 'series' => $series);
     }
@@ -140,14 +134,12 @@ class MediaLibraryController extends Controller
         $this->get('pumukit_web_tv.breadcrumbs')->addList($title, $routeName);
 
         $sort = array('public_date' => -1);
-        $seriesRepo = $dm->getRepository('PumukitSchemaBundle:Series');
-        $series = $seriesRepo->createBuilderWithTag($tag, $sort);
-        $series = $this->createPager($series, $request->query->get("page", 1));
+        $series = $dm->getRepository('PumukitSchemaBundle:Series')->findWithTag($tag, $sort);
 
         return array('title' => $title, 'series' => $series, 'tag_cod' => $tagName);
     }
 
-    private function actionOpencast(Request $request, $title, $tagName, $routeName, array $sort=array('public_date' => -1))
+    private function actionOpencast($title, $tagName, $routeName, array $sort=array('public_date' => -1))
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
 
@@ -164,9 +156,7 @@ class MediaLibraryController extends Controller
         $allSeriesType = $dm->getRepository('PumukitSchemaBundle:SeriesType')->findAll();
         $subseries = array();
         foreach ($allSeriesType as $seriesType) {
-            $seriesRepo = $dm->getRepository('PumukitSchemaBundle:Series');
-            $series = $seriesRepo->createBuilderWithTagAndSeriesType($tag, $seriesType, $sort);
-            $series = $this->createPager($series, $request->query->get("page", 1));
+            $series = $dm->getRepository('PumukitSchemaBundle:Series')->findWithTagAndSeriesType($tag, $seriesType, $sort);
             $subseries[$seriesType->getName()] = $series;
         }
 
