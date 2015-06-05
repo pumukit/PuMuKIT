@@ -203,7 +203,7 @@
          - {{ (track.getSize() / 1048576)|number_format(2) }} MB
          {% if track.getWidth() and track.getHeight() %}- {{ track.getWidth() }}x{{ track.getHeight() }}{% endif %}
          {% if track.getHide() %}<span class="label label-default">{% trans %}hidden{% endtrans %}</span></i>{% endif %}
-         {% for tag in track.getTags() if tag[0:8] != "profile:" %}   
+         {% for tag in track.getTags() if tag[0:8] != "profile:" and tag[0:8] != "mysqlid:" %}
            <span class="label label-primary">{{ tag }}</span>
          {% endfor %}
       </td>
