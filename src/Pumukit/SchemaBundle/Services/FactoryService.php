@@ -72,7 +72,10 @@ class FactoryService
         $mm = new MultimediaObject();
         $mm->setStatus(MultimediaObject::STATUS_PROTOTYPE);
         $broadcast = $this->getDefaultBroadcast();
-        if ($broadcast) $mm->setBroadcast($broadcast);
+        if ($broadcast) {
+            $mm->setBroadcast($broadcast);
+            $this->dm->persist($broadcast);
+        }
         $mm->setPublicDate(new \DateTime("now"));
         $mm->setRecordDate($mm->getPublicDate());
         foreach ($this->locales as $locale) {
@@ -81,8 +84,6 @@ class FactoryService
         }
 
         $mm->setSeries($series);
-
-        $this->dm->persist($broadcast);
 
         return $mm;
     }
@@ -106,14 +107,16 @@ class FactoryService
             }
         }
         $broadcast = $this->getDefaultBroadcast();
-        if ($broadcast) $mm->setBroadcast($broadcast);
+        if ($broadcast) {
+            $mm->setBroadcast($broadcast);
+            $this->dm->persist($broadcast);
+        }
         $mm->setPublicDate(new \DateTime("now"));
         $mm->setRecordDate($mm->getPublicDate());
         $mm->setStatus(MultimediaObject::STATUS_BLOQ);
 
         $mm->setSeries($series);
 
-        $this->dm->persist($broadcast);
         $this->dm->persist($mm);
         $this->dm->persist($series);
         $this->dm->flush();
