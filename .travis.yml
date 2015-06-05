@@ -8,7 +8,7 @@ env:
   - PUMUKIT2_OPENCAST_HOST="http://engage14.campusdomar.es" PUMUKIT2_OPENCAST_USERNAME="" PUMUKIT2_OPENCAST_PASSWORD="" PUMUKIT2_OPENCAST_PLAYER="/paellaengage/ui/cmarwatch.html" 
 
 before_script: 
-  - ~/satis/bin/satis --no-interaction build ~/packages.json ~/packages
+  - if [ -f "~/satis/bin/satis" ]; then ~/satis/bin/satis --no-interaction build ~/packages.json ~/packages; fi
   - if [ -f "app/config/parameters.yml" ]; then rm app/config/parameters.yml; fi
   - if [ -d "app/cache" ]; then rm -Rf app/cache/*; fi
   - if [ -d "app/logs" ]; then rm -Rf app/logs/*; fi
