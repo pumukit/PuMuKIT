@@ -38,6 +38,7 @@ class PumukitExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFilter('first_url_pic', array($this, 'getFirstUrlPicFilter')),
             new \Twig_SimpleFilter('precinct_fulltitle', array($this, 'getPrecinctFulltitle')),
+            new \Twig_SimpleFilter('count_multimedia_objects', array($this, 'countMultimediaObjects')),
         );
     }
 
@@ -149,5 +150,16 @@ class PumukitExtension extends \Twig_Extension
         }
 
         return $fulltitle;
+    }
+
+    /**
+     * Count Multimedia Objects
+     *
+     * @param Series $series
+     * @return integer
+     */
+    public function countMultimediaObjects($series)
+    {
+        return $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->countInSeries($series);
     }
 }

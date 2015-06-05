@@ -4,16 +4,19 @@ namespace Pumukit\Cmar\WebTVBundle\Twig;
 
 use Symfony\Component\Intl\Intl;
 use Pumukit\SchemaBundle\Document\Broadcast;
+use Doctrine\ODM\MongoDB\DocumentManager;
 
 class CmarWebTVExtension extends \Twig_Extension
 {
+    private $dm;
     private $languages;
 
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(DocumentManager $documentManager)
     {
+        $this->dm = $documentManager;
         $this->languages = Intl::getLanguageBundle()->getLanguageNames();
     }
   
@@ -32,6 +35,7 @@ class CmarWebTVExtension extends \Twig_Extension
     {
         return array(
                      new \Twig_SimpleFilter('language_name', array($this, 'getLanguageName')),
+                     new \Twig_SimpleFilter('count_multimedia_objects', array($this, 'countMultimediaObjects')),
                      );
     }
 
@@ -89,5 +93,16 @@ class CmarWebTVExtension extends \Twig_Extension
         }
 
         return $url;
+    }
+
+    /**
+     * Count Multimedia Objects
+     *
+     * @param Series $series
+     * @return integer
+     */
+    public function countMultimediaObjects($series)
+    {
+        return $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->countInSeries($series);
     }
 }
