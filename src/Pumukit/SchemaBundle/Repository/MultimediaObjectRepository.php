@@ -673,4 +673,20 @@ class MultimediaObjectRepository extends DocumentRepository
       $singleResult = $result->getSingleResult();
       return $singleResult["count"];
     }
+
+    /**
+     * Count number of standard (not prototype) multimedia objects in a Series
+     *
+     * @param Series $series
+     * @return integer
+     */
+    public function countInSeries($series)
+    {
+      return $this
+        ->createStandardQueryBuilder()
+        ->field('series')->references($series)
+        ->count()
+        ->getQuery()
+        ->execute();
+    }
 }

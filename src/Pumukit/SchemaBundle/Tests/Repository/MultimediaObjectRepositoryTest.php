@@ -1275,6 +1275,46 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertFalse($embeddedTag3->isChildOf($tag4));
     }
 
+    public function testCountInSeries()
+    {
+        $series1 = new Series();
+        $series2 = new Series();
+
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->flush();
+
+        $mm11 = new MultimediaObject();
+        $mm12 = new MultimediaObject();
+        $mm13 = new MultimediaObject();
+
+        $mm21 = new MultimediaObject();
+        $mm22 = new MultimediaObject();
+        $mm23 = new MultimediaObject();
+        $mm24 = new MultimediaObject();
+
+        $mm11->setSeries($series1);
+        $mm12->setSeries($series1);
+        $mm13->setSeries($series1);
+
+        $mm21->setSeries($series2);
+        $mm22->setSeries($series2);
+        $mm23->setSeries($series2);
+        $mm24->setSeries($series2);
+
+        $this->dm->persist($mm11);
+        $this->dm->persist($mm12);
+        $this->dm->persist($mm13);
+        $this->dm->persist($mm21);
+        $this->dm->persist($mm22);
+        $this->dm->persist($mm23);
+        $this->dm->persist($mm24);
+        $this->dm->flush();
+
+        $this->assertEquals(3, $this->repo->countInSeries($series1));
+        $this->assertEquals(4, $this->repo->countInSeries($series2));
+    }
+
     private function createPerson($name)
     {
         $email = $name.'@mail.es';
