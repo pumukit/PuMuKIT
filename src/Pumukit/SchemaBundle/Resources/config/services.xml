@@ -31,12 +31,14 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
 	        <argument type="expression">parameter('kernel.root_dir') ~ '/../web/uploads/pic/'</argument>
 	        <argument>/uploads/pic</argument>
+            <argument>%pumukit2.delete_on_disk%</argument>
         </service>
 
         <service id="pumukitschema.mmspic" class="Pumukit\SchemaBundle\Services\MultimediaObjectPicService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
 	        <argument type="expression">parameter('kernel.root_dir') ~ '/../web/uploads/pic/'</argument>
 	        <argument>/uploads/pic</argument>
+            <argument>%pumukit2.delete_on_disk%</argument>
         </service>
 
         <service id="pumukitschema.tag" class="Pumukit\SchemaBundle\Services\TagService">
@@ -51,6 +53,7 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="expression">parameter('kernel.root_dir') ~ '/../web/uploads/material'</argument>
             <argument>/uploads/material</argument>
+            <argument>%pumukit2.delete_on_disk%</argument>
         </service>
 
         <service id="pumukitschema.track" class="Pumukit\SchemaBundle\Services\TrackService">
@@ -58,6 +61,7 @@
             <argument type="service" id="pumukitencoder.job"/>
             <argument type="service" id="pumukitencoder.profile"/>
             <argument>%pumukit2.tmp%</argument>
+            <argument>%pumukit2.delete_on_disk%</argument>
         </service>
 
         <service id="pumukitschema.person" class="Pumukit\SchemaBundle\Services\PersonService">

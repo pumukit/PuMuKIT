@@ -5,19 +5,22 @@ namespace Pumukit\NewAdminBundle\Twig;
 use Symfony\Component\Intl\Intl;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Doctrine\ODM\MongoDB\DocumentManager;
 
 class PumukitAdminExtension extends \Twig_Extension
 {
+    private $dm;
     private $languages;
     private $profileService;
 
     /**
      * Constructor
      */
-    public function __construct(ProfileService $profileService)
+    public function __construct(ProfileService $profileService, DocumentManager $documentManager)
     {
-      $this->languages = Intl::getLanguageBundle()->getLanguageNames();
-      $this->profileService = $profileService;
+        $this->dm = $documentManager;
+        $this->languages = Intl::getLanguageBundle()->getLanguageNames();
+        $this->profileService = $profileService;
     }
   
     /**
@@ -50,6 +53,7 @@ class PumukitAdminExtension extends \Twig_Extension
                      new \Twig_SimpleFilter('mms_announce_icon', array($this, 'getMmsAnnounceIcon')),
                      new \Twig_SimpleFilter('mms_announce_text', array($this, 'getMmsAnnounceText')),
                      new \Twig_SimpleFilter('filter_profiles', array($this, 'filterProfiles')),
+                     new \Twig_SimpleFilter('count_multimedia_objects', array($this, 'countMultimediaObjects')),
                      );
     }
 
@@ -134,7 +138,7 @@ class PumukitAdminExtension extends \Twig_Extension
      */
     public function getLanguageName($code)
     {
-        return $this->languages[$code];
+        return ucfirst($this->languages[$code]);
     }
 
     /**
@@ -441,5 +445,16 @@ class PumukitAdminExtension extends \Twig_Extension
     public function filterProfiles($profiles, $onlyAudio)
     {
         return array_filter($profiles, function($elem) use ($onlyAudio){ return !$onlyAudio || $elem['audio'];});
+    }
+
+    /**
+     * Count Multimedia Objects
+     *
+     * @param Series $series
+     * @return integer
+     */
+    public function countMultimediaObjects($series)
+    {
+        return $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->countInSeries($series);
     }
 }

@@ -114,8 +114,6 @@ class MediaLibraryController extends Controller
         $this->get('pumukit_web_tv.breadcrumbs')->addList($title, "pumukitcmarwebtv_library_all");
 
         $seriesRepo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:Series');
-
-        //TODO review
         $series = $seriesRepo->findBy(array(), array('public_date' => -1));
 
         return array('title' => $title, 'series' => $series);
@@ -135,6 +133,7 @@ class MediaLibraryController extends Controller
         
         $this->get('pumukit_web_tv.breadcrumbs')->addList($title, $routeName);
 
+        $sort = array('public_date' => -1);
         $series = $dm->getRepository('PumukitSchemaBundle:Series')->findWithTag($tag, $sort);
 
         return array('title' => $title, 'series' => $series, 'tag_cod' => $tagName);
@@ -162,5 +161,15 @@ class MediaLibraryController extends Controller
         }
 
         return array('title' => $title, 'subseries' => $subseries, 'tag_cod' => $tagName);
+    }
+
+    private function createPager($objects, $page)
+    {
+        $adapter = new DoctrineODMMongoDBAdapter($objects);
+        $pagerfanta = new Pagerfanta($adapter);
+        $pagerfanta->setMaxPerPage($this->limit);
+        $pagerfanta->setCurrentPage($page);
+
+        return $pagerfanta;
     }
 }

@@ -121,11 +121,7 @@ class MultimediaObjectPicController extends Controller
             throw new NotFoundHttpException('Requested multimedia object does not exist');
         }
 
-        $multimediaObject->removePicById($picId);
-
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $dm->persist($multimediaObject);
-        $dm->flush();
+        $multimediaObject = $this->get('pumukitschema.mmspic')->removePicFromMultimediaObject($multimediaObject, $picId);
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_mmspic_list', array('id' => $multimediaObject->getId())));
     }

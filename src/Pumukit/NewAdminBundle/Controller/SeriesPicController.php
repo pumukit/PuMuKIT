@@ -116,11 +116,7 @@ class SeriesPicController extends Controller
             throw new NotFoundHttpException('Requested series does not exist');
         }
 
-        $series->removePicById($picId);
-
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $dm->persist($series);
-        $dm->flush();
+        $series = $this->get('pumukitschema.seriespic')->removePicFromSeries($series, $picId);
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_seriespic_list', array('id' => $series->getId())));
     }

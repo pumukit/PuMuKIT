@@ -50,7 +50,7 @@
           {% endif %}
         </td>
         <td>
-	      {% include 'PumukitNewAdminBundle:Series:updatemenu.html.twig' with {'oneseries': oneseries, 'numV': oneseries.getMultimediaObjects()|length } %}
+	      {% include 'PumukitNewAdminBundle:Series:updatemenu.html.twig' with {'oneseries': oneseries, 'numV': (oneseries|count_multimedia_objects)} %}
         </td>
         <td>
 	      <a href="{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}">{% trans %}videos{% endtrans %}</a>
@@ -69,7 +69,7 @@
 	      {{ oneseries.getPublicDate()|date('Y-m-d') }}
         </td>
         <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
-          {{ oneseries.getMultimediaObjects()|length }}
+          {{ oneseries|count_multimedia_objects }}
         </td>
       </tr>
       {% endfor %}

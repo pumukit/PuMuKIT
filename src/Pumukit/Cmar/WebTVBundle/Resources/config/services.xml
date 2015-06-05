@@ -11,6 +11,7 @@
 
     <services>
       <service id="pumukitcmarwebtv.twig_extension" class="Pumukit\Cmar\WebTVBundle\Twig\CmarWebTVExtension">
+        <argument type="service" id="doctrine_mongodb.odm.document_manager" />
         <tag name="twig.extension"/>
       </service>
     </services>

@@ -13,7 +13,7 @@
     <div class="list">
       <ul>      
         <li>
-        	<a href="{{ path('pumukit_webtv_series_index', {'id': serie.id}) }}">{{serie.getTitle()}}</a> [{{serie.getMultimediaObjects()|length}} videos]
+        	<a href="{{ path('pumukit_webtv_series_index', {'id': serie.id}) }}">{{serie.getTitle()}}</a> [{{serie|count_multimedia_objects}} videos]
         </li>
       </ul>
     </div>
@@ -35,7 +35,7 @@
     	<div class="list">
       	<ul>      
         	<li>
-        		<a href="{{ path('pumukit_webtv_series_index', {'id': serie.id}) }}">{{serie.getTitle()}}</a> [{{serie.getMultimediaObjects()|length}} videos]
+        		<a href="{{ path('pumukit_webtv_series_index', {'id': serie.id}) }}">{{serie.getTitle()}}</a> [{{serie|count_multimedia_objects}} videos]
         	</li>
       	</ul>
     	</div>

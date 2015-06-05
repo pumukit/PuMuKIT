@@ -32,7 +32,7 @@
           <abbr title="{{object.getTitle()}}">{{object.getLine2()}}</abbr>
         </div>
 
-        <div class="mmobj_bottom">{{object.getPublicDate()|date("d/m/Y")}} - {{object.getMultimediaObjects()|length}} videos</div>
+        <div class="mmobj_bottom">{{object.getPublicDate()|date("d/m/Y")}} - {{object|count_multimedia_objects}} videos</div>
       </div>
     </div>
   </div>

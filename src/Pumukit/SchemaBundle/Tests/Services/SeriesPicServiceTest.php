@@ -153,7 +153,7 @@ class SeriesPicServiceTest extends WebTestCase
      */
     public function testInvalidTargetPath()
     {
-        $seriespicService = new SeriesPicService($this->dm, "/non/existing/path", "/uploads/pic");
+        $seriespicService = new SeriesPicService($this->dm, "/non/existing/path", "/uploads/pic", true);
     }
 
     private function createBroadcast($broadcastTypeId)

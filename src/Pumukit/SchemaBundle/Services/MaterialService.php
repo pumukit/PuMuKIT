@@ -6,14 +6,16 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Material;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Symfony\Component\Finder\Finder;
 
 class MaterialService
 {
     private $dm;
     private $targetPath;
     private $targetUrl;
+    private $forceDeleteOnDisk;
 
-    public function __construct(DocumentManager $documentManager, $targetPath, $targetUrl)
+    public function __construct(DocumentManager $documentManager, $targetPath, $targetUrl, $forceDeleteOnDisk=true)
     {
         $this->dm = $documentManager;
         $this->targetPath = realpath($targetPath);
@@ -22,6 +24,7 @@ class MaterialService
         }
 
         $this->targetUrl = $targetUrl;
+        $this->forceDeleteOnDisk = $forceDeleteOnDisk;
     }
 
     /**
@@ -86,9 +89,16 @@ class MaterialService
      */
     public function removeMaterialFromMultimediaObject(MultimediaObject $multimediaObject, $materialId)
     {
+        $material = $multimediaObject->getMaterialById($materialId);
+        $materialPath = $material->getPath();
+
         $multimediaObject->removeMaterialById($materialId);
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
+
+        if ($this->forceDeleteOnDisk && $materialPath) {
+            $this->deleteFileOnDisk($materialPath);
+        }
 
         return $multimediaObject;
     }
@@ -135,5 +145,26 @@ class MaterialService
         }
 
         return $material;
+    }
+
+    private function deleteFileOnDisk($path)
+    {
+        $dirname = pathinfo($path, PATHINFO_DIRNAME);
+        try {
+            $deleted = unlink($path);
+            if (!$deleted) {
+                throw new \Exception("Error deleting file '".$path."' on disk");
+            }
+            $finder = new Finder();
+            $finder->files()->in($dirname);
+            if (0 === $finder->count()) {
+                $dirDeleted = rmdir($dirname);
+                if (!$deleted) {
+                    throw new \Exception("Error deleting directory '".$dirname."'on disk");
+                }
+            }
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
     }
 }

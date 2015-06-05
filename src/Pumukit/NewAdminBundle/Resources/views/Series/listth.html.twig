@@ -20,6 +20,7 @@
   </th>
 {% endif %}
 
+{# TODO fix this sorting
 {% if 'multimedia_objects' == app.session.get('admin/series/sort') %}
   <th width="1%">
     <a href="#" id="pumukitnewadmin_series_multimedia_objects_sort_selected">{% trans %}Mm.Obj.{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
@@ -29,3 +30,6 @@
     <a href="#" id="pumukitnewadmin_series_multimedia_objects_sort_not_selected">{% trans %}Mm.Obj.{% endtrans %}</a>
   </th>
 {% endif %}
+#}
+{# TODO delete this line when fixing the previous sorting #}
+<th width="1%">{% trans %}Mm.Obj.{% endtrans %}</th>

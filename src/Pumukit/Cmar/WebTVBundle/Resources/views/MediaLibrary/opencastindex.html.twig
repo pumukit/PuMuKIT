@@ -12,8 +12,7 @@
     {% for key, series in subseries if (series|length) != 0 %}
       {% set countMultimediaObjects = 0 %}
       {% for oneseries in series %}
-        {% set countMultimediaObjects = countMultimediaObjects + (oneseries.getMultimediaObjects|length) %}
-        {# TODO review $numVs += PubChannelPeer::countMmsFromSerial(1, $ls->getId()); #}
+        {% set countMultimediaObjects = countMultimediaObjects + (oneseries|count_multimedia_objects) %}
       {% endfor %}
       <li>
         <a href="#{{ key }}">{{ key }}</a>

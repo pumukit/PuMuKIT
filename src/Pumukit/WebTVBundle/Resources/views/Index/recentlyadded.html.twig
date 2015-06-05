@@ -26,7 +26,7 @@
             	<div class="title"><a href="{{ path('pumukit_webtv_series_index', {'id': element.getId})}}">{{element.getTitle()}}</a></div>
             	<div class="subtitle"><abbr title="{{element.getSubtitle()}}">{{element.getSubtitle()}}</abbr></div>
             	<div class="date" style="font-size: 85%;">{{element.getPublicDate()|date("d/m/Y")}}</div>
-                <div class="mmobj_bottom" style="bottom: 16px;right:16px;">{{element.getMultimediaObjects()|length}} videos</div>
+                <div class="mmobj_bottom" style="bottom: 16px;right:16px;">{{element|count_multimedia_objects}} videos</div>
           	  </div>
 
         	</div>

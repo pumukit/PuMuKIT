@@ -28,7 +28,7 @@ class BreadcrumbsService
 
   public function reset()
   {
-    $this->session->set('breadcrumbs/title', $this->allTitle);
+    $this->session->set('breadcrumbs/title', $this->translator->trans($this->allTitle));
     $this->session->set('breadcrumbs/routeName', $this->allRoute);
     $this->session->set('breadcrumbs/routeParameters', array());
     $this->breadcrumbs = array(array("title" => "Home", "link" => $this->router->generate("pumukit_webtv_index_index")));
