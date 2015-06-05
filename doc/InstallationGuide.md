@@ -86,6 +86,11 @@ Setup a development environment on Ubuntu 14.04:
     service nginx restart 
     ```
 
+11. Connect and enjoy
+
+    Connect to the frontend here: http://{MyPuMuKIT_IP}/
+    Connect to the backend (Admin UI) with the user created on step 6 here: http://{MyPuMuKIT_IP}/admin
+
 
 Installation a development environment
 -------------------------------------
