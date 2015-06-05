@@ -82,6 +82,18 @@
         <source>There are no videos with these specifications</source>
         <target>Non existen vídeos de estas características</target>
       </trans-unit>
+      <trans-unit id="040b059dabb8b53ba029edbccdeb414e" resname="Date of holding">
+        <source>Date of holding</source>
+        <target>Data de celebración</target>
+      </trans-unit>
+      <trans-unit id="b22f0418e8ac915eb66f829d262d14a2" resname="Audio">
+        <source>Audio</source>
+        <target>Audio</target>
+      </trans-unit>
+      <trans-unit id="2c17c6393771ee3048ae34d6b380c5ec" resname="private">
+        <source>private</source>
+        <target>privado</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
