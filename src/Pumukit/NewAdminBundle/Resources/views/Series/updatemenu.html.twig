@@ -2,7 +2,7 @@
   <i class="mdi-navigation-menu" id="list_pics_{{ oneseries.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
   <ul class="dropdown-menu" role="menu" aria-labelledby="list_pics_{{ oneseries.id }}">
     <li>
-      <a href="#" onclick="window.submit_delete_series('{{ oneseries.id }}', '{{ oneseries.getTitle() }}', '{{ oneseries.getMultimediaObjects()|length }}'); return false;">
+      <a href="#" onclick="window.submit_delete_series('{{ oneseries.id }}', '{{ oneseries.getTitle() }}', '{{ oneseries|count_multimedia_objects }}'); return false;">
         <i class="mdi-content-clear"></i> {% trans %}Delete the series{% endtrans %}
       </a>
     </li>
