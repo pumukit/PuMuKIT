@@ -178,9 +178,29 @@
         <source>Date of holding</source>
         <target>Date of holding</target>
       </trans-unit>
-      <trans-unit id="040b059dabb8b53ba029edbccdeb4666" resname="All videos">
+      <trans-unit id="22b79e4afa28e9c7950108e6f6bf8354" resname="All videos">
         <source>All videos</source>
         <target>All videos</target>
+      </trans-unit>
+      <trans-unit id="ad8783089f828b927473fb61d51940ec" resname="Use">
+        <source>Use</source>
+        <target>Use</target>
+      </trans-unit>
+      <trans-unit id="e81c4e4f2b7b93b481e13a8553c2ae1b" resname="or">
+        <source>or</source>
+        <target>or</target>
+      </trans-unit>
+      <trans-unit id="e723931919d56cef7931968684de17a7" resname="to improve your experience in watching recorded lectures">
+        <source>to improve your experience in watching recorded lectures</source>
+        <target>to improve your experience in watching recorded lectures</target>
+      </trans-unit>
+      <trans-unit id="1bec2303919e8e55e3f4b4ba314ad859" resname="Web explorers with HTML5 and h.264 codec video support">
+        <source>Web explorers with HTML5 and h.264 codec video support</source>
+        <target>Web explorers with HTML5 and h.264 codec video support</target>
+      </trans-unit>
+      <trans-unit id="981ea2b6354fbaef390ffc8d1b8f2b43" resname="VIDEO NOT AVAILABLE">
+        <source>VIDEO NOT AVAILABLE</source>
+        <target>VIDEO NOT AVAILABLE</target>
       </trans-unit>
     </body>
   </file>
