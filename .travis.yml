@@ -4,7 +4,7 @@ php:
   - 5.4
   - 5.5
 env:
-  - PUMUKIT2_OPENCAST_HOST="http://engage14.campusdomar.es" PUMUKIT2_OPENCAST_USERNAME="" PUMUKIT2_OPENCAST_PASSWORD="" PUMUKIT2_OPENCAST_PLAYER="/paellaengage/ui/cmarwatch.html" antes="//umask(0000);" despues="umask(0000);"
+  - PUMUKIT2_OPENCAST_HOST="http://engage14.campusdomar.es" PUMUKIT2_OPENCAST_USERNAME="" PUMUKIT2_OPENCAST_PASSWORD="" PUMUKIT2_OPENCAST_PLAYER="/paellaengage/ui/cmarwatch.html"
 services:
   - mongodb
 before_script: 
