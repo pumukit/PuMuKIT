@@ -6,16 +6,14 @@ php:
   - 5.5
 env:
   - PUMUKIT2_OPENCAST_HOST="http://engage14.campusdomar.es" PUMUKIT2_OPENCAST_USERNAME="" PUMUKIT2_OPENCAST_PASSWORD="" PUMUKIT2_OPENCAST_PLAYER="/paellaengage/ui/cmarwatch.html"
+  - MONGO_VERSION=stable
 services:
   - mongodb
+
 before_script: 
-  - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
-  - echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
-  - sudo apt-get update
-  - sudo apt-get install -y mongodb-org=2.6.6 mongodb-org-server=2.6.6 mongodb-org-shell=2.6.6 mongodb-org-mongos=2.6.6 mongodb-org-tools=2.6.6
-  - sleep 15 #mongo may not be responded directly. See http://docs.travis-ci.com/user/database-setup/#MongoDB
+  - yes '' | pecl -q install -f mongo-${MONGO_VERSION} && echo "extension=mongo.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
+  - composer install --dev
   - mongo --version
-  - echo "extension = mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - echo 'date.timezone = "Europe/Madrid"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - export TZ="Europe/Madrid"
   - php -i|grep mongo
