@@ -6,16 +6,16 @@ php:
   - 5.5
 
 env:
-  - PUMUKIT2_OPENCAST_HOST="http://engage14.campusdomar.es" PUMUKIT2_OPENCAST_USERNAME="" PUMUKIT2_OPENCAST_PASSWORD="" PUMUKIT2_OPENCAST_PLAYER="/paellaengage/ui/cmarwatch.html" MONGO_VERSION=stable
+  - PUMUKIT2_OPENCAST_HOST="http://engage14.campusdomar.es" PUMUKIT2_OPENCAST_USERNAME="" PUMUKIT2_OPENCAST_PASSWORD="" PUMUKIT2_OPENCAST_PLAYER="/paellaengage/ui/cmarwatch.html"
 
 matrix:
   include:
     - php: 5.5
-      env: MONGO_VERSION=1.2.12 PUMUKIT2_OPENCAST_HOST="http://engage14.campusdomar.es" PUMUKIT2_OPENCAST_USERNAME="" PUMUKIT2_OPENCAST_PASSWORD="" PUMUKIT2_OPENCAST_PLAYER="/paellaengage/ui/cmarwatch.html" MONGO_VERSION=stable
+      env: MONGO_VERSION=1.2.12 PUMUKIT2_OPENCAST_HOST="http://engage14.campusdomar.es" PUMUKIT2_OPENCAST_USERNAME="" PUMUKIT2_OPENCAST_PASSWORD="" PUMUKIT2_OPENCAST_PLAYER="/paellaengage/ui/cmarwatch.html"
     - php: 5.5
-      env: MONGO_VERSION=1.3.7 PUMUKIT2_OPENCAST_HOST="http://engage14.campusdomar.es" PUMUKIT2_OPENCAST_USERNAME="" PUMUKIT2_OPENCAST_PASSWORD="" PUMUKIT2_OPENCAST_PLAYER="/paellaengage/ui/cmarwatch.html" MONGO_VERSION=stable
+      env: MONGO_VERSION=1.3.7 PUMUKIT2_OPENCAST_HOST="http://engage14.campusdomar.es" PUMUKIT2_OPENCAST_USERNAME="" PUMUKIT2_OPENCAST_PASSWORD="" PUMUKIT2_OPENCAST_PLAYER="/paellaengage/ui/cmarwatch.html" 
     - php: 5.5
-      env: MONGO_VERSION=1.4.5 PUMUKIT2_OPENCAST_HOST="http://engage14.campusdomar.es" PUMUKIT2_OPENCAST_USERNAME="" PUMUKIT2_OPENCAST_PASSWORD="" PUMUKIT2_OPENCAST_PLAYER="/paellaengage/ui/cmarwatch.html" MONGO_VERSION=stable
+      env: MONGO_VERSION=1.4.5 PUMUKIT2_OPENCAST_HOST="http://engage14.campusdomar.es" PUMUKIT2_OPENCAST_USERNAME="" PUMUKIT2_OPENCAST_PASSWORD="" PUMUKIT2_OPENCAST_PLAYER="/paellaengage/ui/cmarwatch.html" 
 
 services:
   - mongodb
