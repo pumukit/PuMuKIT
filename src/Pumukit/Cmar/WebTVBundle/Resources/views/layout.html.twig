@@ -20,7 +20,7 @@
   </head>
   <body>
     {% block body_base %}
-    {% include 'PumukitCmarWebTVBundle::header.html.twig' %}
+    {% include app.session.get('breadcrumbs/title') == 'Sonar' ? 'PumukitCmarSonarBundle::header.html.twig' : 'PumukitCmarWebTVBundle::header.html.twig' %}
     <div id="body">
       <div class="container_15" id="tvusc">
         <div class="usctv_cab">
@@ -37,7 +37,7 @@
           </div>
           {% endblock %}
         </div>
-        {% include 'PumukitCmarWebTVBundle::footer.html.twig' %}
+        {% include app.session.get('breadcrumbs/title') == 'Sonar' ? 'PumukitCmarSonarBundle::footer.html.twig' : 'PumukitCmarWebTVBundle::footer.html.twig' %}
       </div>
     </div>
     {% endblock %}
