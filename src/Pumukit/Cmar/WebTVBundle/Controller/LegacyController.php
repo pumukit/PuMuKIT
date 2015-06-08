@@ -3,7 +3,6 @@
 namespace Pumukit\Cmar\WebTVBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -16,12 +15,10 @@ class LegacyController extends Controller
      * @Route("/serial/index/id/{mysqlid}")
      * {mysqlid} matches series.properties("mysqlid")
      */
-    public function seriesAction(Request $request)
+    public function seriesAction($mysqlid)
     {
         $dm = $this->get("doctrine_mongodb.odm.document_manager");
         $seriesRepo = $dm->getRepository("PumukitSchemaBundle:Series");
-
-        $mysqlid = $request->get("mysqlid");
 
         $series = $seriesRepo->createQueryBuilder()
           ->field("properties.mysqlid")->equals($mysqlid)
@@ -35,19 +32,14 @@ class LegacyController extends Controller
     }
 
     /**
-     * @Route("/{locale}/video/{mysqlid}.html")
-     * {locale} matches current locale
+     * @Route("/{_locale}/video/{mysqlid}.html")
+     * {_locale} matches current locale
      * {mysqlid} matches multimediaObject.properties("mysqlid")
      */
-    public function multimediaObjectAction(Request $request)
+    public function multimediaObjectAction($mysqlid)
     {
         $dm = $this->get("doctrine_mongodb.odm.document_manager");
         $mmobjRepo = $dm->getRepository("PumukitSchemaBundle:MultimediaObject");
-
-        $locale = $request->get("locale");
-        $this->get('session')->set('_locale', $locale);
-
-        $mysqlid = $request->get("mysqlid");
 
         $multimediaObject = $mmobjRepo->createQueryBuilder()
           ->field("properties.mysqlid")->equals($mysqlid)
@@ -64,12 +56,10 @@ class LegacyController extends Controller
      * @Route("/mmobj/index/file_id/{mysqlid}")
      * {mysqlid} matches the tag "mysqlid:{mysqlid}" in track.getTags()
      */
-    public function trackAction(Request $request)
+    public function trackAction($mysqlid)
     {
         $dm = $this->get("doctrine_mongodb.odm.document_manager");
         $mmobjRepo = $dm->getRepository("PumukitSchemaBundle:MultimediaObject");
-
-        $mysqlid = $request->get("mysqlid");
 
         $multimediaObject = $mmobjRepo->createQueryBuilder()
           ->field("tracks.tags")->equals(new \MongoRegex("/\bmysqlid:".$mysqlid."\b/i"))
