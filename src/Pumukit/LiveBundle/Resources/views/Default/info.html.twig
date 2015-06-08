@@ -1,3 +1,5 @@
+{% set events = future_and_not_finished_event(1) %}
+{% for event in events %}
 <br />
 <br />
 <div id="directo_info" >
@@ -5,41 +7,45 @@
     <thead>
       <tr> 
         <td valign="top" colspan="2">
+          {% if ((event.date|date('U')) < ('now'|date('U'))) %}
+          {% trans %}Current live event{% endtrans %}
+          {% else %}
           {% trans %}Next live event{% endtrans %}
+          {% endif %}
         </td>
       </tr>
     </thead>
     <tbody>
       <tr class="impar"> 
         <td width="25%" valign="top">
-          <div align="right">E<font size="1">VENTO</font><br/></div>
+          <div align="right"><font size="1">{% trans %}EVENT{% endtrans %}</font><br/></div>
         </td>
         <td width="75%"><div align="center">
-          <strong>{# event.name #}</strong></div>
+          <strong>{{ event.name }}</strong></div>
         </td>
       </tr>
       <tr class="par">
         <td width="22%" valign="top">
-          <div align="right">L<font size="1">UGAR</font></div>
+          <div align="right"><font size="1">{% trans %}PLACE{% endtrans %}</font></div>
         </td>
         <td width="78%"><div align="center">
-          <strong>{# event.place #}</strong></div>
+          <strong>{{ event.place }}</strong></div>
         </td>
       </tr>
       <tr class="impar"> 
         <td valign="top"> 
-          <div align="right">D<font size="1">ATA</font></div>
+          <div align="right"><font size="1">{% trans %}DATE{% endtrans %}</font></div>
         </td>
         <td>
-          <div align="center"><strong><font color="#000066">{# event.date|date('d/m/Y') #}</font></strong></div>
+          <div align="center"><strong><font color="#000066">{{ event.date|date('d/m/Y') }}</font></strong></div>
         </td>
       </tr>
       <tr class="par"> 
         <td valign="top"> 
-          <div align="right">H<font size="1">ORA</font></div>
+          <div align="right"><font size="1">{% trans %}TIME{% endtrans %}</font></div>
         </td>
         <td>
-          <div align="center"><strong><font color="#000066">{# event.date|('H:i') #}</font></strong></div>
+          <div align="center"><strong><font color="#000066">{{ event.date|date('H:i') }}</font></strong></div>
         </td>
       </tr>
     </tbody>
@@ -47,3 +53,4 @@
 </div>
 <br />
 <br />
+{% endfor %}
