@@ -10,8 +10,8 @@ services:
   - mongodb
 
 before_script: 
+  - /home/travis/.phpenv/versions/5.3.3/bin/composer self-update
   - yes '' | pecl -q install -f mongo-${MONGO_VERSION} && echo "extension=mongo.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
-  - composer install --dev
   - mongo --version
   - echo 'date.timezone = "Europe/Madrid"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - export TZ="Europe/Madrid"
@@ -22,6 +22,7 @@ before_script:
   - if [ -d "app/cache" ]; then rm -Rf app/cache/*; fi
   - if [ -d "app/logs" ]; then rm -Rf app/logs/*; fi
   - mkdir -p build
+  - php ~/.phpenv/versions/5.3.3/bin/composer
   - php composer.phar install --no-interaction
   - php app/check.php
   - sudo php app/console doctrine:mongodb:schema:create 
