@@ -16,7 +16,6 @@ before_script:
   - if [ -d "app/logs" ]; then rm -Rf app/logs/*; fi
   - mkdir -p build
   - echo "umask(0000);" >> app/console
-  - php ~/.phpenv/versions/5.3.3/bin/composer create-project composer/satis --stability=dev --keep-vcs
   - php app/console doctrine:mongodb:schema:create 
 
 script: php bin/phpunit --log-junit build/unit.xml  --coverage-html build/coverage --coverage-clover build/coverage/coverage.xml -c app
