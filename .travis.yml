@@ -21,7 +21,7 @@ before_script:
   - if [ -d "app/logs" ]; then rm -Rf app/logs/*; fi
   - curl -sS https://getcomposer.org/installer | php
   - mkdir -p build
-  - php composer.phar install
+  - php composer.phar install --no-interaction
   - php app/check.php
   - sudo php app/console doctrine:mongodb:schema:create 
   - php app/console cache:clear
