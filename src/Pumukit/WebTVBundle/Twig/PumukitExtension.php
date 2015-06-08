@@ -45,12 +45,12 @@ class PumukitExtension extends \Twig_Extension
     /**
      * Get functions
      */
-    function getFunctions()
+    public function getFunctions()
     {
-      return array(
-                   new \Twig_SimpleFunction('public_broadcast', array($this, 'getPublicBroadcast')),
-                   new \Twig_SimpleFunction('precinct', array($this, 'getPrecinct')),
-                   );
+        return array(
+                     new \Twig_SimpleFunction('public_broadcast', array($this, 'getPublicBroadcast')),
+                     new \Twig_SimpleFunction('precinct', array($this, 'getPrecinct')),
+                     );
     }
 
     /**
