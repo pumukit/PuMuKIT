@@ -17,6 +17,9 @@ class SonarController extends Controller
      */
     public function indexAction()
     {
+      $filter = $this->get('doctrine_mongodb.odm.document_manager')->getFilterCollection()->enable("channel");
+      $filter->setParameter("channel_tag", "SONAR");
+
       $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
       $breadcrumbs->addList("Sonar", "sonar");
       return array();
