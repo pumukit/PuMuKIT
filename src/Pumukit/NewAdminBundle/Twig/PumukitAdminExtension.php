@@ -22,7 +22,7 @@ class PumukitAdminExtension extends \Twig_Extension
         $this->languages = Intl::getLanguageBundle()->getLanguageNames();
         $this->profileService = $profileService;
     }
-  
+
     /**
      * Get name
      */
@@ -69,7 +69,7 @@ class PumukitAdminExtension extends \Twig_Extension
 
     /**
      * Get basename
-     * 
+     *
      * @param string $path
      * @return string
      */
@@ -123,11 +123,7 @@ class PumukitAdminExtension extends \Twig_Extension
      */
     public function getDurationString($duration)
     {
-        $min = $this->getDurationInMinutes($duration);
-        if ($min == 0 ) $aux = $this->getDurationInSeconds($duration) ."''";
-        else $aux = $min . "' ". $this->getDurationInSeconds($duration) ."''";
-        
-        return $aux;
+        return gmdate("H:i:s", $duration);
     }
 
     /**
@@ -286,9 +282,9 @@ class PumukitAdminExtension extends \Twig_Extension
         $profileName = $this->getProfileFromTags($tags);
         $profile = $this->profileService->getProfile($profileName);
         if (null !== $profile) {
-            return $profile['resolution_hor'];          
+            return $profile['resolution_hor'];
         }
-      
+
         return '0';
     }
 
@@ -307,7 +303,7 @@ class PumukitAdminExtension extends \Twig_Extension
         }
 
         return '0';
-    }    
+    }
 
     /**
      * Get announce icon of Series
@@ -432,12 +428,11 @@ class PumukitAdminExtension extends \Twig_Extension
     {
         $aux = $duration % 60;
         if ($aux < 10 ) $aux = '0' . $aux;
-        
+
         return $aux;
     }
 
-    
-   /**
+    /**
      * Filter profiles to show only audio profiles.
      *
      * @return array
@@ -446,6 +441,7 @@ class PumukitAdminExtension extends \Twig_Extension
     {
         return array_filter($profiles, function($elem) use ($onlyAudio){ return !$onlyAudio || $elem['audio'];});
     }
+
 
     /**
      * Count Multimedia Objects
@@ -458,3 +454,4 @@ class PumukitAdminExtension extends \Twig_Extension
         return $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->countInSeries($series);
     }
 }
+

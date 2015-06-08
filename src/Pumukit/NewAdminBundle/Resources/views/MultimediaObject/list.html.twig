@@ -42,7 +42,7 @@
         </td>
         <td>
 	      {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-editor-format-color-text">':'&nbsp;' }}
-        </td> 
+        </td>
         <td>
           <a href="#" onclick="window.submit_delete_mms('{{ mm.id }}'); return false;">
             <i class="mdi-content-clear"></i>
@@ -88,7 +88,7 @@
           {{ mm.getTitle() }}
         </td>
         <td class="text-nowrap" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
-          {{ mm.getDurationString() }}
+          {{ mm.getDuration()|duration_string }}
         </td>
         <td class="text-nowrap" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
           {{ mm.getRecordDate()|date('d-m-Y') }}
@@ -147,7 +147,7 @@
                 </select>
 
               </div>
-            </div>          
+            </div>
         </div>
       </th>
     </tr>
@@ -166,11 +166,11 @@
 {% if reloadEditAndPreview %}
 <script type="text/javascript">
   new Ajax.Updater('edit_mms', '{{ path('pumukitnewadmin_mms_edit', {'id': mm_sel.id}) }}', {
-      asynchronous: true, 
+      asynchronous: true,
       evalScripts: true
   });
   new Ajax.Updater('preview_mms', '{{ path('pumukitnewadmin_mms_show', {'id': mm_sel.id}) }}', {
-      asynchronous: true, 
+      asynchronous: true,
       evalScripts: true
   });
 </script>
