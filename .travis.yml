@@ -14,7 +14,6 @@ before_script:
   - echo 'date.timezone = "Europe/Madrid"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - export TZ="Europe/Madrid"
   - php -i|grep mongo
-  - /home/travis/.phpenv/versions/5.3.3/bin/composer self-update
   - sleep 5
   - if [ -f "~/satis/bin/satis" ]; then ~/satis/bin/satis --no-interaction build ~/packages.json ~/packages; fi
   - if [ -f "app/config/parameters.yml" ]; then rm app/config/parameters.yml; fi
