@@ -167,6 +167,7 @@ class MediaPackageController extends Controller
             $status = MultimediaObject::STATUS_PUBLISHED;
             $title = $mediaPackage["title"];
             $properties = $mediaPackage["id"];
+            $recDate = $mediaPackage["start"];
 
             if($oneseries != "WITHOUT_SERIES"){
                 $series = $repository_series->findOneBy(array("properties.opencast" => $mediaPackage["series"]));
@@ -177,6 +178,7 @@ class MediaPackageController extends Controller
             $multimediaObject->setStatus($status);
             $multimediaObject->setSeries($series);
             $multimediaObject->setTitle($title);
+            $multimediaObject->setRecordDate($recDate);
             $multimediaObject->setProperty("opencast", $properties);
             $multimediaObject->setProperty("opencasturl", $opencastClient->getPlayerUrl() . "?id=" . $properties);
 
@@ -246,7 +248,7 @@ class MediaPackageController extends Controller
                 $track->setUrl($url);
                 $track->setPath($this->get('pumukit_opencast.job')->getPath($url));
                 $track->setMimeType($mime);
-                $track->setDuration($duration);
+                $track->setDuration($duration/1000);
 
                 $multimediaObject->addTrack($track);
             }
