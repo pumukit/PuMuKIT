@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="es" datatype="plaintext" original="file.ext">
+    <body>
+      <trans-unit id="a09db87872b455033c3903d60d4cf0fd" resname="Current live event">
+        <source>Current live event</source>
+        <target>Transmisión en directo actual</target>
+      </trans-unit>
+      <trans-unit id="19633d75b6ef363510f653f26704a4e1" resname="Next live event">
+        <source>Next live event</source>
+        <target>Próxima transmisión en directo</target>
+      </trans-unit>
+      <trans-unit id="030d962d0faa148f02848881a3b4fdb6" resname="EVENT">
+        <source>EVENT</source>
+        <target>EVENTO</target>
+      </trans-unit>
+      <trans-unit id="8c756b7e3daff6db3808a377b05a148f" resname="PLACE">
+        <source>PLACE</source>
+        <target>LUGAR</target>
+      </trans-unit>
+      <trans-unit id="633a6c7a6b9958f8174250094daf1e6a" resname="DATE">
+        <source>DATE</source>
+        <target>DÍA</target>
+      </trans-unit>
+      <trans-unit id="346ff32eaa3c09983fb2ec057816d352" resname="TIME">
+        <source>TIME</source>
+        <target>HORA</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
