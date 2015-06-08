@@ -9,6 +9,7 @@ env:
 services:
   - mongodb
 before_script: 
+  - mongo --version
   - echo "extension = mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - echo 'date.timezone = "Europe/Madrid"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - export TZ="Europe/Madrid"
