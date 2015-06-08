@@ -21,7 +21,6 @@ before_script:
   - if [ -f "app/config/parameters.yml" ]; then rm app/config/parameters.yml; fi
   - if [ -d "app/cache" ]; then rm -Rf app/cache/*; fi
   - if [ -d "app/logs" ]; then rm -Rf app/logs/*; fi
-  - curl -sS https://getcomposer.org/installer | php
   - mkdir -p build
   - php composer.phar install --no-interaction
   - php app/check.php
