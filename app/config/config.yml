@@ -63,6 +63,9 @@ doctrine_mongodb:
                 frontend:
                     class:     Pumukit\SchemaBundle\Filter\SchemaFilter
                     enabled:   false
+                channel:
+                    class:     Pumukit\SchemaBundle\Filter\ChannelFilter
+                    enabled:   false
 
 
 # Swiftmailer Configuration
