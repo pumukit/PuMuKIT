@@ -31,10 +31,24 @@ class ProfileService
 
     /**
      * Get available profiles
+     *
+     * @param boolean|null $display if not null used to filter.
+     * @param boolean|null $wizard if not null used to filter.
+     * @param boolean|null $master if not null used to filter.
+     * @return array filtered profiles
      */
-    public function getProfiles()
+    public function getProfiles($display = null, $wizard = null, $master = null)
     {
-        return $this->profiles;
+        if (is_null($display) && is_null($wizard) && is_null($master)) {
+            return $this->profiles;
+        }
+
+        return array_filter($this->profiles, function ($profile) use ($display, $wizard, $master) {
+            return ((is_null($display) || $profile['display'] === $display) &&
+                    (is_null($wizard) || $profile['wizard'] === $wizard) &&
+                    (is_null($master) || $profile['master'] === $master));
+        });        
+
     }
 
     /**
@@ -45,9 +59,7 @@ class ProfileService
      */
     public function getMasterProfiles($master)
     {
-        return array_filter($this->profiles, function ($profile) use ($master) {
-              return $profile['master'] === $master;
-          });
+        return $this->getProfiles(null, null, $master);
     }
 
     /**
