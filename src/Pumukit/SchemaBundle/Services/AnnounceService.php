@@ -28,7 +28,7 @@ class AnnounceService
           $iSeries = 0;
 
           while($i++ < $limit){
-              if ((!isset($lastMms[$iMms])) && (!isset($lastSeries[$iMms]))) break;
+              if ((!isset($lastMms[$iMms])) && (!isset($lastSeries[$iSeries]))) break;
               if (!isset($lastMms[$iMms])) {
                 $return[] = $lastSeries[$iSeries++];
               } elseif (!isset($lastSeries[$iSeries])) {
