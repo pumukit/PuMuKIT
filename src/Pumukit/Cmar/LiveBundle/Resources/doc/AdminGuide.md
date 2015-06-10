@@ -56,7 +56,7 @@ Steps before the live event: How to enable and configure the chat
     > exit
     ```
 
-2. Set the `pumukit_cmar_live_chat.enable` parameter to `true` in your `app/config/config.yml` file to enable the chat:
+2. Set the `pumukit_cmar_live_chat.enable` parameter to `true` in your `src/Pumukit/Cmar/LiveBundle/Resources/config/config.yml` file to enable the chat:
 
    ```
    parameters:
@@ -65,7 +65,7 @@ Steps before the live event: How to enable and configure the chat
        ...
    ```
 
-3. Set the `pumukit_cmar_live_chat.update_interval` paramater with the desired milliseconds in your `app/config/config.yml` file to configure the refresh interval of the chat:
+3. Set the `pumukit_cmar_live_chat.update_interval` paramater with the desired milliseconds in your `src/Pumukit/Cmar/LiveBundle/Resources/config/config.yml` file to configure the refresh interval of the chat:
 
    ```
    parameters:
@@ -135,7 +135,7 @@ Steps after the live event: How to export chat messages and disable the chat
     > exit
     ```
 
-2. If there aren't other live channels with live events on that moment, set the `pumukit_cmar_live_chat.enable` parameter to `true` in your `app/config/config.yml` file to enable the chat:
+2. If there aren't other live channels with live events on that moment, set the `pumukit_cmar_live_chat.enable` parameter to `true` in your `src/Pumukit/Cmar/LiveBundle/Resources/config/config.yml` file to enable the chat:
 
    ```
    parameters:
