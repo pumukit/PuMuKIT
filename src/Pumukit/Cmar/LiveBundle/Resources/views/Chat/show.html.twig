@@ -14,13 +14,10 @@
           <table border="0" cellspacing="0" cellpadding="0">
             <tbody>
               <tr>
-                <td align="left" class="chatText">{% trans %}Name{% endtrans %}</td>
+                <td align="left" class="chatText">{% trans %}Name{% endtrans %}:</td>
                 <td align="right">
-                  <input type="text" name="name" id="chatName" maxlength="30" class="chatForm" style="width:198px">
+                  <input type="text" name="name" id="chatName" maxlength="30" class="chatForm" style="width:198px" {{ enable_chat?'':'disabled' }}>
                 </td>
-              </tr>
-              <tr>
-                <td align="right"><input type="hidden" name="sbEMail" maxlength="75" class="chatForm" style="width:198px"></td>
               </tr>
               <tr>
                 <td colspan="2">
@@ -33,7 +30,7 @@
                       </tr>
                     </tbody>
                   </table>
-                  <textarea name="message" id="chatMessage" rows="3" style="width:305px; height:50px" wrap="virtual" class="chatForm"></textarea>
+                  <textarea name="message" id="chatMessage" rows="3" style="width:305px; height:50px" wrap="virtual" class="chatForm" {{ enable_chat?'':'disabled' }}></textarea>
                 </td>
               </tr>
             </tbody>

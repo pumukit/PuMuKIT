@@ -22,13 +22,11 @@
         <td style="width:100%; margin: 0px auto;">
           <div id="directo-sbs" style="width:100%; margin: 0px auto;"></div>
         </td>
-      {% if enable_chat %}
         <td valign="top">
           <div style="float: right;">
             {% render(controller('PumukitCmarLiveBundle:Chat:show', {'channel' : live.id})) %}
           </div>
         </td>
-        {% endif %}
       </tr>
     </tbody>
   </table>
