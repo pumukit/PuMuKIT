@@ -3,6 +3,6 @@ twig:
         enable_chat:   "%pumukit_cmar_live_chat.enable%"
 
 parameters:
-    pumukit_cmar_live_chat.enable: true
+    pumukit_cmar_live_chat.enable: false
     # refresh interval in milliseconds
     pumukit_cmar_live_chat.update_interval: 5000
