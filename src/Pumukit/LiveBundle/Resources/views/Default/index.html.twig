@@ -8,8 +8,8 @@
 {% block title %}{{ parent() }} - {{ live.name }}{% endblock %}
 
 {% block body_without_bar %}
-
-<div id="directo-sbs" style="width:100%; margin: 0px auto;"></div>      
+  <h1>{{ live.name()|default("No title"|trans) }}</h1>
+  <div id="directo-sbs" style="width:100%; margin: 0px auto;"></div>
 
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function(){
