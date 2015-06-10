@@ -1,8 +1,8 @@
-<table border="0" cellspacing="0" cellpadding="0" style="table-layout:fixed; height: 100%">
+<table border="0" cellspacing="0" cellpadding="0" class="chatTable">
   <form id="chatForm" onsubmit="postMessage(); return false;" action="{{ path('pumukit_cmar_live_chat_post', {'channel': channel}) }}" method="post">
     <tbody>
-      <tr style="overflow: hidden;">
-        <td id="chatList" class="chatBox" frameborder="0" style="overflow: hidden;">
+      <tr class="chatList">
+        <td id="chatList" class="chatBox" frameborder="0">
             {% render(controller('PumukitCmarLiveBundle:Chat:list', {'channel': channel})) %}
         </td>
       </tr>
@@ -39,8 +39,8 @@
       </tr> 
     </tbody>
 </table>
-<span style="position: relative; top: 10px; font: bold 15px verdana;">{% trans %}How to use the chat{% endtrans %}:</span>
-<span style="position: relative; top: 10px; font: 15px verdana;"> {% trans %}Enter your name, write your message and press Enter.{% endtrans %}</span>
+<span class="chatTooltipTitle">{% trans %}How to use the chat{% endtrans %}:</span>
+<span class="chatTooltipText"> {% trans %}Enter your name, write your message and press Enter.{% endtrans %}</span>
 <script type="text/javascript">
 var timer = null;
 document.addEventListener('DOMContentLoaded', function() {
