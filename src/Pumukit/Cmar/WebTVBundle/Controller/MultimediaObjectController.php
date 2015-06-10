@@ -7,7 +7,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class MultimediaObjectController extends Base
 {
-    public function preExecute(MultimediaObject $multimediaObject)
+    public function preExecute(MultimediaObject $multimediaObject, Request $request)
     {
         if ($opencasturl = $multimediaObject->getProperty("opencasturl")) {
             $this->updateBreadcrumbs($multimediaObject);

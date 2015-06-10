@@ -21,7 +21,7 @@ class MultimediaObjectController extends Controller
      */
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
     {
-      $response = $this->preExecute($multimediaObject);
+      $response = $this->preExecute($multimediaObject, $request);
       if($response instanceof Response) {
         return $response;
       }
@@ -33,10 +33,10 @@ class MultimediaObjectController extends Controller
       if (!$track)
         throw $this->createNotFoundException();
 
-      if (($broadcast = $multimediaObject->getBroadcast()) && 
-          (Broadcast::BROADCAST_TYPE_PUB !== $broadcast->getBroadcastTypeId()))
-        //TODO.
-        throw $this->createNotFoundException();
+      $response = $this->testBroadcast($multimediaObject, $request);
+      if($response instanceof Response) {
+        return $response;
+      }
 
       $this->updateBreadcrumbs($multimediaObject);
       $this->incNumView($multimediaObject, $track);
@@ -142,12 +142,20 @@ class MultimediaObjectController extends Controller
     }
 
 
-    public function preExecute(MultimediaObject $multimediaObject)
+    public function preExecute(MultimediaObject $multimediaObject, Request $request)
     {
-
       if($opencasturl = $multimediaObject->getProperty("opencasturl")) {
           $this->incNumView($multimediaObject);
           return $this->redirect($opencasturl);
       }
+    }
+
+    public function testBroadcast(MultimediaObject $multimediaObject, Request $request)
+    {
+      if (($broadcast = $multimediaObject->getBroadcast()) && 
+          (Broadcast::BROADCAST_TYPE_PUB !== $broadcast->getBroadcastTypeId()) &&
+          ((!($request->headers->get('PHP_AUTH_USER', false))) ||
+           ($request->headers->get('PHP_AUTH_PW') !== $broadcast->getPasswd() )))
+        return new Response("", 401, array('WWW-Authenticate' => 'Basic realm="Resource not public."'));
     }
 }
