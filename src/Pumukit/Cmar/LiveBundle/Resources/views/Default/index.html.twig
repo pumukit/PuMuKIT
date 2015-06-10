@@ -1,0 +1,52 @@
+{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link href="{{ asset('bundles/pumukitcmarlive/css/chat.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('bundles/pumukitwebtv/js/jwplayer/jwplayer.js') }}" type="text/javascript"></script>
+{% endblock%}
+
+{% block title %}{{ parent() }} - {{ live.name }}{% endblock %}
+
+{% block body_without_bar %}
+<p class="titulo_widget titulo_widget_grande">{{ live.name()|default("No title"|trans) }}</p>
+<div id="body">
+<div style="overflow:hidden;">
+  <table>
+    <tbody>
+      <tr>
+        <td style="width:100%; margin: 0px auto;">
+          <div id="directo-sbs" style="width:100%; margin: 0px auto;"></div>
+        </td>
+      {% if enable_chat %}
+        <td valign="top">
+          <div style="float: right;">
+            {% render(controller('PumukitCmarLiveBundle:Chat:show', {'channel' : live.id})) %}
+          </div>
+        </td>
+        {% endif %}
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+{% include('PumukitLiveBundle:Default:info.html.twig') %}
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function(){
+  jwplayer("directo-sbs").setup({
+      file: "{{ live.url }}/{{ live.sourcename }}",
+      autostart: true,
+      width: "640",
+      height:  "540",
+      controlbar: "bottom",
+      logo: {hide: true},
+      analytics: {enabled: false}
+  });
+});
+
+</script>
+{% endblock %}
