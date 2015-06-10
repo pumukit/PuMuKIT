@@ -10,12 +10,12 @@ use Pumukit\LiveBundle\Document\Live;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/live/{id}"))
+     * @Route("/live/{id}", name="pumukit_live_id")
      * @Template("PumukitLiveBundle:Default:index.html.twig")
      */
     public function indexAction(Live $live)
     {
-        $this->updateBreadcrumbs($live->getName(), "pumukit_live_default_index", array("id" => $live->getId()));
+        $this->updateBreadcrumbs($live->getName(), "pumukit_live_id", array("id" => $live->getId()));
         return array('live' => $live);
     }
 

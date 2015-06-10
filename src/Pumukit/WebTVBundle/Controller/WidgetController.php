@@ -48,4 +48,13 @@ class WidgetController extends Controller
       return array();
     }
 
+
+    /**
+     * @Template()
+     */
+    public function liveChannelsAction()
+    {
+      $channels = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Live')->findAll();
+      return array('live_channels' => $channels);
+    }
 }

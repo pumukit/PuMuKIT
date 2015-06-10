@@ -14,9 +14,7 @@
       </li>
 
       <!-- Direct -->
-      <li>
-        <a href="{{ path('pumukit_live')}}">Direct</a>
-      </li>
+      {% render(controller('PumukitWebTVBundle:Widget:liveChannels')) %}
 
       <!-- Mediateca -->
       <li>
