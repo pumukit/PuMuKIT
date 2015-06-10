@@ -2,8 +2,10 @@
 
 namespace Pumukit\Cmar\WebTVBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Pumukit\WebTVBundle\Controller\MultimediaObjectController as Base;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Broadcast;
 
 class MultimediaObjectController extends Base
 {
@@ -56,5 +58,26 @@ class MultimediaObjectController extends Base
             $version = floor($match[2]);
 
         return $version;
+    }
+
+
+   public function testBroadcast(MultimediaObject $multimediaObject, Request $request)
+   {
+      if (($broadcast = $multimediaObject->getBroadcast()) && 
+          (Broadcast::BROADCAST_TYPE_PUB !== $broadcast->getBroadcastTypeId())) {
+
+        \phpCAS::client(CAS_VERSION_2_0, "login.campusdomar.es", 443, "cas", false);
+        //\phpCAS::setDebug('/tmp/cas.log');
+        \phpCAS::setNoCasServerValidation();
+        //\phpCAS::setSingleSignoutCallback(array($this, 'casSingleSignOut'));
+        //\phpCAS::setPostAuthenticateCallback(array($this, 'casPostAuth'));
+        \phpCAS::handleLogoutRequests(true, array($request->server->get('SERVER_ADDR')));
+
+        \phpCAS::forceAuthentication();
+
+        if(!in_array(\phpCAS::getUser(), array($broadcast->getName(), "tv", "prueba", "adminmh", "admin", "sistemas.uvigo"))) {
+          throw $this->createAccessDeniedException('Unable to access this page!');        
+        }
+      }
     }
 }
