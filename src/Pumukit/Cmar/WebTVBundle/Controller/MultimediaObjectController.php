@@ -12,6 +12,7 @@ class MultimediaObjectController extends Base
     public function preExecute(MultimediaObject $multimediaObject, Request $request)
     {
         if ($opencasturl = $multimediaObject->getProperty("opencasturl")) {
+            $this->testBroadcast($multimediaObject, $request);
             $this->updateBreadcrumbs($multimediaObject);
             $this->incNumView($multimediaObject);
             $userAgent = $this->getRequest()->headers->get('user-agent');
@@ -66,12 +67,20 @@ class MultimediaObjectController extends Base
       if (($broadcast = $multimediaObject->getBroadcast()) && 
           (Broadcast::BROADCAST_TYPE_PUB !== $broadcast->getBroadcastTypeId())) {
 
-        \phpCAS::client(CAS_VERSION_2_0, "login.campusdomar.es", 443, "cas", false);
+          if ((!$this->container->hasParameter('pumukit_cmar_web_tv.cas_url')) && 
+              (!$this->container->hasParameter('pumukit_cmar_web_tv.cas_port')) &&
+              (!$this->container->hasParameter('pumukit_cmar_web_tv.cas_uri')) &&
+              (!$this->container->hasParameter('pumukit_cmar_web_tv.cas_allowed_ip_clients'))) {
+              throw $this->createNotFoundException('PumukitCmarWebTVBundle not configured.');
+          }
+
+
+        \phpCAS::client(CAS_VERSION_2_0, $this->container->getParameter('pumukit_cmar_web_tv.cas_url'), $this->container->getParameter('pumukit_cmar_web_tv.cas_port'), $this->container->getParameter('pumukit_cmar_web_tv.cas_uri'), false);
         //\phpCAS::setDebug('/tmp/cas.log');
         \phpCAS::setNoCasServerValidation();
         //\phpCAS::setSingleSignoutCallback(array($this, 'casSingleSignOut'));
         //\phpCAS::setPostAuthenticateCallback(array($this, 'casPostAuth'));
-        \phpCAS::handleLogoutRequests(true, array($request->server->get('SERVER_ADDR')));
+        \phpCAS::handleLogoutRequests(true, $this->container->getParameter('pumukit_cmar_web_tv.cas_allowed_ip_clients'));
 
         \phpCAS::forceAuthentication();
 
