@@ -37,7 +37,14 @@ class AppKernel extends Kernel
 }
 ```
 
-2.- Uncomment these lines in the `app/config/routing.yml` file of your project:
+2.- Uncomment this line in the `app/config/config.yml` file of your project:
+
+```
+imports:
+    - { resource: @PumukitCmarLiveBundle/Resources/config/config.yml }
+```
+
+3.- Uncomment these lines in the `app/config/routing.yml` file of your project:
 
 ```
 pumukitcmarwebtv:
@@ -50,7 +57,7 @@ pumukit_cmar_sonar:
     prefix:   /
 ```
 
-3.- Add your Opencast server configuration to your `app/config/parameters.yml` files:
+4.- Add your Opencast server configuration to your `app/config/parameters.yml` files:
 
 ```
     opencast_host: ''
@@ -65,7 +72,7 @@ pumukit_cmar_sonar:
    - `opencast_player` is the Opencast player URL or path (default /engage/ui/watch.html).
 
 
-4.- Add your CAS server configuration to your `app/config/config.yml` files:
+5.- Add your CAS server configuration to your `app/config/config.yml` files:
 
 ```
 pumukit_cmar_web_tv:
@@ -83,7 +90,7 @@ pumukit_cmar_web_tv:
    - `cas_allowed_ip_clients` is an array of allowed IPs of the clients.
 
 
-5.- Go to root Pumukit2 folder and init bundle tags
+6.- Go to root Pumukit2 folder and init bundle tags
 
 ```
 $ cd /var/www/pumukit2-cmar
@@ -91,7 +98,7 @@ $ php app/console podcast:init:tags --force
 $ php app/console webtv:init:tags --force
 ```
 
-6.- OPTIONAL: Add locales. By default, Pumukit2 brings Spanish and English as locales. For CMAR there is Galician translation file as well. You can add Galician in your `app/config/config.yml` file from root project directory:
+7.- OPTIONAL: Add locales. By default, Pumukit2 brings Spanish and English as locales. For CMAR there is Galician translation file as well. You can add Galician in your `app/config/config.yml` file from root project directory:
 
 ```
 parameters:
@@ -102,14 +109,14 @@ parameters:
 ```
 
 
-7.- OPTIONAL: Add intro. Configure the video intro for CMAR with the URL of the video in your `app/config/config.yml` file from root project directory:
+8.- OPTIONAL: Add intro. Configure the video intro for CMAR with the URL of the video in your `app/config/config.yml` file from root project directory:
 
 ```
 parameters:
     pumukit2.intro: 'http://{URL of the video}'
 ```
 
-8.- Clear chache and install assets. Go to root Pumukit2 folder:
+9.- Clear chache and install assets. Go to root Pumukit2 folder:
 
 ```
 $ cd /var/www/pumukit2
