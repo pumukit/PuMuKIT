@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Pumukit\EncoderBundle\Document\Job;
@@ -32,10 +33,11 @@ class JobService
     private $dispatcher;
     private $logger;
     private $environment;
+    private $tokenStorage;
 
     public function __construct(DocumentManager $documentManager, ProfileService $profileService, CpuService $cpuService, 
-                                InspectionServiceInterface $inspectionService, EventDispatcherInterface $dispatcher, LoggerInterface $logger, 
-                                $environment="dev", $tmp_path=null)
+                                InspectionServiceInterface $inspectionService, EventDispatcherInterface $dispatcher, LoggerInterface $logger,
+                                TokenStorage $tokenStorage, $environment="dev", $tmp_path=null)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
@@ -44,6 +46,7 @@ class JobService
         $this->inspectionService = $inspectionService;
         $this->tmp_path = $tmp_path ? realpath($tmp_path) : sys_get_temp_dir();
         $this->logger = $logger;
+        $this->tokenStorage = $tokenStorage;
         $this->dispatcher = $dispatcher;
         $this->environment = $environment;
     }
@@ -91,7 +94,7 @@ class JobService
             $this->logger->addError('[addJob] InspectionService getDuration error message: '. $e->getMessage());
             throw new \Exception($e->getMessage());
         }
-        
+
         $job = new Job();
         $job->setMmId($multimediaObject->getId());
         $job->setProfile($profile);
@@ -104,6 +107,9 @@ class JobService
         }
         if (!empty($description)){
             $job->setI18nDescription($description);
+        }
+        if ($email = $this->getUserEmail()) {
+            $job->setEmail($email);
         }
         $job->setTimeini(new \DateTime('now'));
         $this->dm->persist($job);
@@ -629,7 +635,22 @@ class JobService
             $this->logger->addError(sprintf('[checkService] Job executing for a long time %s', $job-getId()));
           }
         }
-        
-      
+    }
+
+    /**
+     * Get user email
+     *
+     * Gets the email of the user who executed the job
+     */
+    private function getUserEmail()
+    {
+        $email = null;
+        if (null !== $token = $this->tokenStorage->getToken()) {
+            if (is_object($user = $token->getUser())) {
+                $email = $user->getEmail();
+            }
+        }
+
+        return $email;
     }
 }

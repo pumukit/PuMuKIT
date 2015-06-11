@@ -22,6 +22,7 @@
             <argument type="service" id="pumukit.inspection"/>
             <argument type="service" id="event_dispatcher"/>
             <argument type="service" id="logger"/>
+            <argument type="service" id="security.token_storage"/>
             <tag name="monolog.logger" channel="encoder"/>
             <argument>%kernel.environment%</argument>
             <argument>%pumukit2.tmp%</argument>

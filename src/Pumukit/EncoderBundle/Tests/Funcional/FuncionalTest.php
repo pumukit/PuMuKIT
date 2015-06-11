@@ -19,8 +19,7 @@ class FuncionalTest extends WebTestCase
     private $cpuService;
     private $inspectionService;
     private $jobService;
-    //private $profileService;
-    //private $cpuService;
+    private $tokenStorage;
 
     public function __construct()
     {
@@ -34,6 +33,7 @@ class FuncionalTest extends WebTestCase
         $this->profileService = $kernel->getContainer()->get('pumukitencoder.profile');
         $this->cpuService = $kernel->getContainer()->get('pumukitencoder.cpu');
         $this->inspectionService = $kernel->getContainer()->get('pumukit.inspection');
+        $this->tokenStorage = $kernel->getContainer()->get('security.token_storage');
     }
 
 
@@ -47,8 +47,9 @@ class FuncionalTest extends WebTestCase
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
         $this->dm->flush();
-        
-        $this->jobService = new JobService($this->dm, $this->profileService, $this->cpuService, $this->inspectionService, realpath(__DIR__.'/../Resources').'/encoder_test.log');
+
+        $dispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $this->jobService = new JobService($this->dm, $this->profileService, $this->cpuService, $this->inspectionService, $dispatcher, realpath(__DIR__.'/../Resources').'/encoder_test.log', $this->tokenStorage, "test");
     }
 
     public function testSimpleEncoding()
