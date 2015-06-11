@@ -1,15 +1,14 @@
-a, a:active, a:visited {
+A, A:active, A:visited {
   color: #000000;
   text-decoration: none;
 }
-a:hover {
+A:hover {
   color: #FF0000;
   text-decoration: underline;
 }
 .chatBox {
   background-color: #FFFFFF;
   border: 2px inset #EEEEEE;
-  overflow: hidden;
 }
 .chatForm {
   font-family: Arial, Helvetica;
@@ -17,44 +16,25 @@ a:hover {
   background-color: #E4F1F3;
   border: 2px inset #EEEEEE;
 }
+.chatButton {
+  font-family: Arial, Helvetica;
+  font-size: 13px;
+}
 .chatText {
   font-family: Arial, Helvetica;
   font-size: 13px;
   color: #000000;
+}
+.chatTextAdmin {
+  font-family: Arial, Helvetica;
+  font-size: 13px;
+  color: #D00000;
 }
 .chatTime {
   font-family: Arial, Helvetica;
   font-size: 9px;
   color: #A0A0A0;
   text-align: right;
-}
-.chatOddRow {
-  background-color: #FFFFFF;
-}
-.chatEvenRow {
-  background-color: #F6F6F6;
-}
-.chatContent {
-  margin: 2px;
-  overflow-y: scroll;
-  height: 380px;
-}
-.chatTable {
-  table-layout: fixed;
-  height: 100%
-}
-.chatList {
-  overflow: hidden;
-}
-.chatTooltipTitle {
-  position: relative;
-  top: 10px;
-  font: bold 14px verdana;
-}
-.chatTooltipText {
-  position: relative;
-  top: 10px;
-  font: 14px verdana;
 }
 .chatRaised {
   background-color: #FFFFC0;
@@ -74,4 +54,31 @@ a:hover {
   padding-right: 1px;
   padding-bottom: 1px;
   text-align: center;
+}
+.chatError {
+  font-family: Arial, Helvetica;
+  font-size: 11px;
+  padding: 4px;
+  text-align: center;
+  color: #D00000;
+  background-color: #FFF0E0;
+  border: 1px solid #C0B0A0;
+}
+.cssCode {
+  font-family: Courier New, Courier, Monospace;
+  font-size: 12px;
+  color: #00A000;
+  background-color: #E0FFE0;
+  border: 1px solid #C0E0C0;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  padding: 4px;
+}
+.cssQuote {
+  color: #808080;
+  background-color: #F0F0F0;
+  border: 1px solid #C0C0C0;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  padding: 4px;
 }
