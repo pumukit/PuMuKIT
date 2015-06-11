@@ -12,13 +12,13 @@
       <figure class="album" style="margin:2px 20px 2px 2px">  
         <a href="{{ path('pumukit_webtv_series_index', {'id': object.getId()}) }}">
           <div class="picture">
-            <img src="{{ asset('bundles/pumukitwebtv/images/folder.png') }}"></img>
+            <img src="{{ object|first_url_pic(true) }}"></img>
           </div>
           <div class="picture">
-            <img src="{{ asset('bundles/pumukitwebtv/images/folder.png') }}"></img>
+            <img src="{{ object|first_url_pic(true) }}"></img>
           </div>
           <div class="picture">
-            <img src="{{ asset('bundles/pumukitwebtv/images/folder.png') }}"></img>
+            <img src="{{ object|first_url_pic(true) }}"></img>
           </div>
         </a>
       </figure>
