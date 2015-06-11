@@ -16,20 +16,10 @@
 <p class="titulo_widget titulo_widget_grande">{{ live.name()|default("No title"|trans) }}</p>
 <div id="body">
 <div style="overflow:hidden;">
-  <table>
-    <tbody>
-      <tr>
-        <td style="width:100%; margin: 0px auto;">
-          <div id="directo-sbs" style="width:100%; margin: 0px auto;"></div>
-        </td>
-        <td valign="top">
-          <div style="float: right;">
-            {% render(controller('PumukitCmarLiveBundle:Chat:show', {'channel' : live.id})) %}
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div style="float: right; width: 314px;">
+    {% render(controller('PumukitCmarLiveBundle:Chat:show', {'channel' : live.id})) %}
+  </div>
+  <div id="directo-sbs" style="width:100%; margin: 0px auto;"></div>
 </div>
 </div>
 {% include('PumukitLiveBundle:Default:info.html.twig') %}
