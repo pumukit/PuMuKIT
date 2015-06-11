@@ -102,11 +102,11 @@ parameters:
 ```
 
 
-7.- OPTIONAL: Add intro. Configure the video intro for CMAR in your `app/config/config.yml` file from root project directory:
+7.- OPTIONAL: Add intro. Configure the video intro for CMAR with the URL of the video in your `app/config/config.yml` file from root project directory:
 
 ```
 parameters:
-    pumukit2.intro: http://{YourVideosIPServer}/video.mp4
+    pumukit2.intro: 'http://{URL of the video}'
 ```
 
 8.- Clear chache and install assets. Go to root Pumukit2 folder:
