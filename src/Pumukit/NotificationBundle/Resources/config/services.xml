@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="pumukit_notification.listener" class="Pumukit\NotificationBundle\Services\NotificationService">
+          <argument type="service" id="mailer" />
+          <argument type="service" id="templating" />
+          <argument type="service" id="pumukitencoder.job"/>
+          <argument>%pumukit_notification.enable%</argument>
+          <argument>%pumukit_notification.platform_name%</argument>
+          <argument>%pumukit_notification.sender_email%</argument>
+          <argument>%pumukit_notification.sender_name%</argument>
+          <argument>%pumukit_notification.notificate_errors_to_sender%</argument>
+          <argument>%kernel.environment%</argument>
+          <tag name="kernel.event_listener" event="job.success" method="onJobSuccess" />
+          <tag name="kernel.event_listener" event="job.error" method="onJobError" />
+        </service>
+    </services>
+</container>

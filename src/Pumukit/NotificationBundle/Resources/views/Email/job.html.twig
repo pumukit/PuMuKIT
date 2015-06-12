@@ -1,0 +1,19 @@
+<h1>{{ subject }}</h1>
+<br/>
+<strong>Id:</strong> {{ job.getId() }}
+<strong>Status:</strong> {{ job_status }}
+<strong>Mm:</strong> {{ job.getMmId() }}
+<strong>Profile:</strong> {{ job.getProfile() }}
+<strong>Cpu:</strong> {{ job.getCpu() }}
+<strong>Priority:</strong> {{ job.getPriority() }}
+<strong>Duration:</strong> {{ job.getDuration() }}
+<strong>New Duration:</strong> {{ job.getNewDuration() }}
+<strong>Timeini:</strong> {{ job.getTimeini()|date('Y-m-d H:i:s') }}
+<strong>Timestart:</strong> {{ job.getTimestart()|date('Y-m-d H:i:s') }}
+<strong>Timeend:</strong> {{ job.getTimeend()|date('Y-m-d H:i:s') }}
+<strong>Command:</strong>
+{{ commandLine }}
+<strong>Out:</strong>
+{{ job.getOutput() }}
+<br/>
+{{ sender_name }}

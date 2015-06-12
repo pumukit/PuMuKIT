@@ -1,3 +1,8 @@
+# pumukit_notification:
+#     resource: "@PumukitNotificationBundle/Controller/"
+#     type:     annotation
+#     prefix:   /
+
 # pumukitcmarwebtv:
 #     resource: "@PumukitCmarWebTVBundle/Resources/config/routing.yml"
 #     prefix: /
