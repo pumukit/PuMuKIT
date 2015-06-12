@@ -172,6 +172,12 @@ class OpencastImportService
     {
         $announce = true;
         $publicDate = new \DateTime("now");
+        $subtitle = '';
+        $description = '';
+        $header = '';
+        $footer = '';
+        $keyword = '';
+        $line2 = '';
         $locale = 'en';
 
         if($oneseries == "WITHOUT_SERIES"){
