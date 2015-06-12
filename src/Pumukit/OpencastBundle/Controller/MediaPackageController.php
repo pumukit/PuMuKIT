@@ -43,7 +43,7 @@ class MediaPackageController extends Controller
 
 
         list($total, $mediaPackages) = $opencastClient->getMediaPackages(
-                (isset($criteria["name"])) ? $criteria["name"]->regex : 0,
+                (isset($criteria["name"])) ? $criteria["name"]->regex : "",
                 $limit,
                 ($page -1) * $limit);
 
