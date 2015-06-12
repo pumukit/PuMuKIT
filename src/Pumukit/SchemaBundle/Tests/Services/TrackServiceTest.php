@@ -21,6 +21,7 @@ class TrackServiceTest extends WebTestCase
     private $factoryService;
     private $resourcesDir;
     private $logger;
+    private $tokenStorage;
 
     public function __construct()
     {
@@ -38,6 +39,8 @@ class TrackServiceTest extends WebTestCase
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->factoryService = $kernel->getContainer()
           ->get('pumukitschema.factory');
+        $this->tokenStorage = $kernel->getContainer()
+          ->get('security.token_storage');
 
         $this->resourcesDir = realpath(__DIR__.'/../Resources');
     }
@@ -63,7 +66,7 @@ class TrackServiceTest extends WebTestCase
         $inspectionService->expects($this->any())->method('getDuration')->will($this->returnValue(5));
         $jobService = new JobService($this->dm, $profileService, $cpuService, 
                                      $inspectionService, $dispatcher, $this->logger, 
-                                     "test", null);
+                                     $this->tokenStorage, "test", null);
         $this->trackService = new TrackService($this->dm, $jobService, $profileService, null, true);
 
         $this->tmpDir = $this->trackService->getTempDirs()[0];

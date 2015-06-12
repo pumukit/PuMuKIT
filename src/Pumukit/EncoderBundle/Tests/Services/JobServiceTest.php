@@ -15,8 +15,6 @@ class JobServiceTest extends WebTestCase
     private $dm;
     private $repo;
     private $jobService;
-    //private $profileService;
-    //private $cpuService;
     private $resourcesDir;
     private $logger;
 
@@ -32,6 +30,8 @@ class JobServiceTest extends WebTestCase
           ->getRepository('PumukitEncoderBundle:Job');
         $this->logger = $kernel->getContainer()
           ->get('logger');
+        $this->tokenStorage = $kernel->getContainer()
+          ->get('security.token_storage');
     }
 
     public function setUp()
@@ -46,8 +46,8 @@ class JobServiceTest extends WebTestCase
         $inspectionService->expects($this->any())->method('getDuration')->will($this->returnValue(5));
         $this->resourcesDir = realpath(__DIR__.'/../Resources').'/';
         $this->jobService = new JobService($this->dm, $profileService, $cpuService, 
-                                           $inspectionService, $dispatcher, $this->logger, 
-                                           "test", null);
+                                           $inspectionService, $dispatcher, $this->logger,
+                                           $this->tokenStorage, "test", null);
     }
     
     public function testAddJob()
