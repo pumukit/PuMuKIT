@@ -90,7 +90,7 @@
            {% set tracks = mm.getFilteredTracksWithTags(['display'], [], [], []) %}
            {% for track in tracks if opencast_track_id != track.getId() %}
                <div>{# TODO class="file audio|video" and move out gif images to serial.css file, put it in twig #}
-                   <img src="{{ mm.isOnlyAudio() ? asset('bundles/pumukitcmarwebtv/images/iconos/altavoz2.gif') : asset('bundles/pumukitcmarwebtv/images/iconos/movie2.gif') }}"/>
+                   <img src="{{ mm.isOnlyAudio() ? asset('bundles/pumukitwebtv/images/iconos/altavoz2.gif') : asset('bundles/pumukitwebtv/images/iconos/movie2.gif') }}"/>
                    <a href="{{ url('pumukit_webtv_multimediaobject_index', {'id': mm.id, 'track_id': track.id}) }}">{% spaceless %}
                      {% if track.isOnlyAudio %}
                      {% trans %}Audio{% endtrans %}
@@ -111,7 +111,7 @@
           {% else %}
                {% if opencast_track is empty %}
                <div>{# TODO class="file audio|video" and move out gif images to serial.css file, put it in twig #}
-                   <img src="{{ mm.isOnlyAudio() ? asset('bundles/pumukitcmarwebtv/images/iconos/altavoz2.gif') : asset('bundles/pumukitcmarwebtv/images/iconos/movie2.gif') }}"/>
+                   <img src="{{ mm.isOnlyAudio() ? asset('bundles/pumukitwebtv/images/iconos/altavoz2.gif') : asset('bundles/pumukitwebtv/images/iconos/movie2.gif') }}"/>
                    <a href="{{ url('pumukit_webtv_multimediaobject_index', {'id': mm.id}) }}">{% spaceless %}
                      {% if mm.isOnlyAudio %}
                      {% trans %}Audio{% endtrans %}
