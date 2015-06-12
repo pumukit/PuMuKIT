@@ -14,7 +14,8 @@ class WidgetController extends Controller
      */
     public function menuAction()
     {
-      return array();
+      $channels = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Live')->findAll();
+      return array('live_channels' => $channels);
     }
     
     /**
@@ -46,15 +47,5 @@ class WidgetController extends Controller
     public function contactAction()
     {
       return array();
-    }
-
-
-    /**
-     * @Template()
-     */
-    public function liveChannelsAction()
-    {
-      $channels = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Live')->findAll();
-      return array('live_channels' => $channels);
     }
 }

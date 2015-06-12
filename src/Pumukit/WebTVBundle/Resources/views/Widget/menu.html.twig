@@ -14,7 +14,11 @@
       </li>
 
       <!-- Direct -->
-      {% render(controller('PumukitWebTVBundle:Widget:liveChannels')) %}
+      {% for live in live_channels %}
+        <li>
+          <a href="{{ path('pumukit_live_id', {'id': live.id})}}">{{ live.name }}</a>
+        </li>
+      {% endfor %}
 
       <!-- Mediateca -->
       <li>
