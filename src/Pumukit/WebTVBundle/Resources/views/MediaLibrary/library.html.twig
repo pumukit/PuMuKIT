@@ -5,6 +5,9 @@
 	{% set lastChar = '--' %}
 
 	{% for serie in series %}
+    {% set num_mmobj = serie|count_multimedia_objects %}
+    {% if num_mmobj != 0 %}
+
 		{% if serie.title|slice(0,1)|title != lastChar %}
     	<div class="name">
       		<div>{{serie.title|slice(0,1)|title}}</div>
@@ -13,13 +16,14 @@
     <div class="list">
       <ul>      
         <li>
-        	<a href="{{ path('pumukit_webtv_series_index', {'id': serie.id}) }}">{{serie.getTitle()}}</a> [{{serie|count_multimedia_objects}} videos]
+        	<a href="{{ path('pumukit_webtv_series_index', {'id': serie.id}) }}">{{serie.getTitle()}}</a> [{{ num_mmobj }} videos]
         </li>
       </ul>
     </div>
 
 	{% set lastChar = serie.title|slice(0,1)|title %}
 
+    {% endif %}
 	{% endfor %}
 
 {% else %}
@@ -27,6 +31,9 @@
 	{% set lastDate = '--' %}
 
 	{% for serie in series %}
+    {% set num_mmobj = serie|count_multimedia_objects %}
+    {% if num_mmobj != 0 %}
+
 		{% if serie.getPublicDate()|date("d/m/Y") != lastDate %}
     	<div class="name">
       		<div>{{ serie.getPublicDate()|date("d/m/Y") }}</div>
@@ -35,13 +42,14 @@
     	<div class="list">
       	<ul>      
         	<li>
-        		<a href="{{ path('pumukit_webtv_series_index', {'id': serie.id}) }}">{{serie.getTitle()}}</a> [{{serie|count_multimedia_objects}} videos]
+        		<a href="{{ path('pumukit_webtv_series_index', {'id': serie.id}) }}">{{serie.getTitle()}}</a> [{{ num_mmobj }} videos]
         	</li>
       	</ul>
     	</div>
 
 	{% set lastDate = serie.getPublicDate()|date("d/m/Y") %}
 
+    {% endif %}
 	{% endfor %}
 
 {% endif %}
