@@ -35,7 +35,7 @@ EOT
         $this->tagRepo = $this->dm->getRepository("PumukitSchemaBundle:Tag");
 
         if ($input->getOption('force')){
-            $sonarChannelTag = $this->createTagWithCode('CHSONNAR', 'SONAR', 'CHANNELS', false);
+            $sonarChannelTag = $this->createTagWithCode('CHSONAR', 'SONAR', 'CHANNELS', false);
             $output->writeln("Tag persisted - new id: ".$sonarChannelTag->getId()." cod: ".$sonarChannelTag->getCod());
         } else {
             $output->writeln('<error>ATTENTION:</error> This operation should not be executed in a production environment.');
