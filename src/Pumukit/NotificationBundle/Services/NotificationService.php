@@ -3,7 +3,7 @@
 namespace Pumukit\NotificationBundle\Services;
 
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Symfony\Component\Process\ProcessBuilder;
+use Symfony\Component\Translation\TranslatorInterface;
 use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\JobService;
@@ -18,8 +18,9 @@ class NotificationService
     private $senderName;
     private $notificateErrorsToSender;
     private $environment;
+    private $translator;
 
-    public function __construct($mailer, EngineInterface $templating, JobService $jobService, $enable, $platformName, $senderEmail, $senderName, $notificateErrorsToSender, $environment="dev")
+    public function __construct($mailer, EngineInterface $templating, JobService $jobService, $enable, $platformName, $senderEmail, $senderName, $notificateErrorsToSender, $environment="dev", TranslatorInterface $translator)
     {
         $this->mailer = $mailer;
         $this->templating = $templating;
@@ -30,6 +31,7 @@ class NotificationService
         $this->senderName = $senderName;
         $this->notificateErrorsToSender = $notificateErrorsToSender;
         $this->environment = $environment;
+        $this->translator = $translator;
     }
 
     /**
@@ -49,7 +51,7 @@ class NotificationService
                 return;
             }
 
-            $successMessage = "Job '".$job->getId()."' successfully finished";
+            $successMessage = $this->translator->trans("Job with id '".$job->getId()."' successfully finished");
             $subject = ($this->platformName?$this->platformName.': ':'').$successMessage;
             $this->sendJobNotification($event->getJob(), $subject, false);
         }
@@ -72,7 +74,7 @@ class NotificationService
                 return;
             }
 
-            $errorMessage = "Job '".$job->getId()."' failed";
+            $errorMessage = $this->translator->trans("Job with id '".$job->getId()."' failed");
             $subject = ($this->platformName?$this->platformName.': ':'').$errorMessage;
             $this->sendJobNotification($event->getJob(), $subject, true);
         }
@@ -101,21 +103,6 @@ class NotificationService
               ->setBody($this->templating->render('PumukitNotificationBundle:Email:job.html.twig', array('subject' => $subject, 'job_status' => Job::$statusTexts[$job->getStatus()],  'job' => $job, 'commandLine' => $this->jobService->renderBat($job), 'sender_name' => $this->senderName)), 'text/html');
 
             $sent = $this->mailer->send($message);
-
-            // TODO: spool type memory defined in config.yml. Needs to be executed the swiftmailer:spool:send command?
-            $console = __DIR__ . '/../../../../app/console';
-            $pb = new ProcessBuilder();
-            $pb
-              ->add('php')
-              ->add($console)
-              ->add(sprintf('--env=%s', $this->environment))
-              ;
-
-            $pb->add('swiftmailer:spool:send');
-            $process = $pb->getProcess();            
-            $command = $process->getCommandLine();
-
-            shell_exec("nohup $command 1> /dev/null 2> /dev/null & echo $!");
         }
     }
 }

@@ -14,6 +14,7 @@
           <argument>%pumukit_notification.sender_name%</argument>
           <argument>%pumukit_notification.notificate_errors_to_sender%</argument>
           <argument>%kernel.environment%</argument>
+          <argument type="service" id="translator" />
           <tag name="kernel.event_listener" event="job.success" method="onJobSuccess" />
           <tag name="kernel.event_listener" event="job.error" method="onJobError" />
         </service>
