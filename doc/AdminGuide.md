@@ -47,16 +47,7 @@ class AppKernel extends Kernel
 }
 ```
 
-2.- Uncomment these lines in the `app/config/config.yml` file of your project:
-
-```
-pumukit_notification:
-    resource: "@PumukitNotificationBundle/Controller/"
-    type:     annotation
-    prefix: /
-```
-
-3.- Add these parameters to your `app/config/config.yml` file:
+2.- Add these parameters to your `app/config/config.yml` file:
 
 ```
 pumukit_notification:
@@ -70,7 +61,7 @@ pumukit_notification:
 * `enable` defines whether activate the notifications through email or not.
 * `notificate_errors_to_sender` defines whether send an email to sender when a job finished with errors.
 
-4.- Clear the cache:
+3.- Clear the cache:
 
     ```
     $ php app/console cache:clear --env=prod --no-debug
