@@ -102,6 +102,7 @@ class InspectionMediainfoService implements InspectionServiceInterface
     private function getMediaInfo($file)
     {
         $process = new Process('mediainfo -f --Output=XML \'' . $file . '\'');
+        $process->setEnv(array( "LANG" => "en_US.UTF-8" ));
         $process->setTimeout(60);
         $process->run();
         if (!$process->isSuccessful()) {
