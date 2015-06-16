@@ -50,7 +50,6 @@ class OpencastImportService
         }
 
         if($onemultimediaobjects == null){
-            $status = MultimediaObject::STATUS_PUBLISHED;
             $title = $mediaPackage["title"];
             $properties = $mediaPackage["id"];
             $recDate = $mediaPackage["start"];
@@ -60,7 +59,6 @@ class OpencastImportService
             }
 
             $multimediaObject = $factoryService->createMultimediaObject($series);
-            $multimediaObject->setStatus($status);
             $multimediaObject->setSeries($series);
             $multimediaObject->setTitle($title);
             $multimediaObject->setRecordDate($recDate);
