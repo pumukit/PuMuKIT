@@ -5,7 +5,7 @@
       <td colspan="11" {% if constant('STATUS_ERROR', job) == job.getStatus() %} style="color:red" {% endif %}>
         <a title="{% trans %}Encoder Job info{% endtrans %}"
            style="color:inherit"
-           data-toggle="modal" data-dismiss="modal" data-target="#myModal"
+           data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
            href="{{ path('pumukitnewadmin_track_info_job', {'mmId': mm.id, 'jobId': job.id, 'preview': 1}) }}">
             <i class="{% if constant('STATUS_ERROR', job) == job.getStatus() %}mdi-action-info{% else %}mdi-navigation-refresh pmk-job-animate{% endif %}"></i>
         </a>
@@ -33,14 +33,14 @@
       <td><ul><li></li></ul></td>
       <td>
         <a title="{% trans %}Edit file of multimedia object{% endtrans %} {{ track.id }}"
-           data-toggle="modal" data-dismiss="modal" data-target="#myModal"
+           data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
            href="{{ path('pumukitnewadmin_track_update', {'id': track.id, 'mmId': mm.id}) }}">
           <i class="mdi-editor-mode-edit"></i>
         </a>
       <td>
       <td>
         <a title="{% trans %}File info of multimedia object{% endtrans %} {{ track.id }}"
-           data-toggle="modal" data-dismiss="modal" data-target="#myModal"
+           data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
            href="{{ path('pumukitnewadmin_track_info', {'id': track.id, 'mmId': mm.id}) }}">
           <i class="mdi-action-info"></i>
         </a>
@@ -175,7 +175,7 @@
       </td>
       {% else %}
       <td>
-         <a data-toggle="modal" data-target="#myModal" href="{{ path('pumukitnewadmin_track_play', {'id': track.id, 'mmId': mm.id}) }}">
+         <a data-toggle="modal" data-backdrop="static" data-target="#myModal" href="{{ path('pumukitnewadmin_track_play', {'id': track.id, 'mmId': mm.id}) }}">
           <i class="mdi-av-play-arrow"></i>
         </a>
       </td>
@@ -211,7 +211,7 @@
   {% endfor %}
   <tr>
     <td><ul><li></li></ul></td>
-    <td colspan="11"><a data-toggle="modal" data-target="#myModal" href="{{ path('pumukitnewadmin_track_create', {'id': mm.id}) }}">{% trans %}New master{% endtrans %}...</a></td>
+    <td colspan="11"><a data-toggle="modal" data-backdrop="static" data-target="#myModal" href="{{ path('pumukitnewadmin_track_create', {'id': mm.id}) }}">{% trans %}New master{% endtrans %}...</a></td>
   </tr>
 </tbody></table>
 

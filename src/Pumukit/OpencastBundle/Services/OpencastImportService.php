@@ -17,53 +17,57 @@ use Pumukit\OpencastBundle\Services\ClientService;
 
 class OpencastImportService
 {
+    private $opencastClient;
+    private $dm;
+    private $factoryService;
+    private $tagService;
+    private $jobService;
+    private $otherLocales;
+    
     public function __construct(DocumentManager $documentManager, factoryService $factoryService,
-            tagService $tagService, ClientService $opencastClient, OpencastService $jobService) {
+                                tagService $tagService, ClientService $opencastClient, OpencastService $jobService,
+                                array $otherLocales = array()) {
         $this->opencastClient = $opencastClient;
         $this->dm = $documentManager;
         $this->factoryService = $factoryService;
         $this->tagService = $tagService;
         $this->jobService = $jobService;
+        $this->otherLocales = $otherLocales;
     }
 
 
     public function importRecording($opencastId)
     {
-        $opencastClient = $this->opencastClient;
-        $oneseries = "WITHOUT_SERIES";
-
-        $mediaPackage = $opencastClient->getMediaPackage($opencastId);
-        $repository_series = $this->dm->getRepository('PumukitSchemaBundle:Series');
-
-        $series = $repository_series->findOneBy(array("title.en" => "MediaPackages without series"));
+        $mediaPackage = $this->opencastClient->getMediaPackage($opencastId);
+        $seriesRepo = $this->dm->getRepository('PumukitSchemaBundle:Series');
 
         if(isset($mediaPackage["series"])){
-            $oneseries = $repository_series->findOneBy(array("properties.opencast" => $mediaPackage["series"]));
+            $series = $seriesRepo->findOneBy(array("properties.opencast" => $mediaPackage["series"]));
+        }else{
+            $series = $seriesRepo->findOneBy(array("properties.opencast" => "default"));            
         }
-        $repository_multimediaobjects = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $onemultimediaobjects = $repository_multimediaobjects->findOneBy(array("properties.opencast" => $mediaPackage["id"]));
-
-        $factoryService = $this->factoryService;
-
-        if(!$oneseries || ($oneseries == "WITHOUT_SERIES" && !$series)){
-            $this->importSeries($oneseries, $mediaPackage);
+        
+        if(!$series) {
+            $series = $this->importSeries($mediaPackage);
         }
+
+        $multimediaobjectsRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $onemultimediaobjects = $multimediaobjectsRepo->findOneBy(array("properties.opencast" => $mediaPackage["id"]));        
 
         if($onemultimediaobjects == null){
             $title = $mediaPackage["title"];
             $properties = $mediaPackage["id"];
             $recDate = $mediaPackage["start"];
 
-            if($oneseries != "WITHOUT_SERIES"){
-                $series = $repository_series->findOneBy(array("properties.opencast" => $mediaPackage["series"]));
-            }
-
-            $multimediaObject = $factoryService->createMultimediaObject($series);
+            $multimediaObject = $this->factoryService->createMultimediaObject($series);
             $multimediaObject->setSeries($series);
-            $multimediaObject->setTitle($title);
             $multimediaObject->setRecordDate($recDate);
             $multimediaObject->setProperty("opencast", $properties);
-            $multimediaObject->setProperty("opencasturl", $opencastClient->getPlayerUrl() . "?id=" . $properties);
+            $multimediaObject->setProperty("opencasturl", $this->opencastClient->getPlayerUrl() . "?id=" . $properties);
+            $multimediaObject->setTitle($title);
+            foreach($this->otherLocales as $locale) {
+                $multimediaObject->setTitle($title, $locale);
+            }
 
             //Multiple tracks
             if(isset($mediaPackage["media"]["track"][0])){
@@ -146,15 +150,14 @@ class OpencastImportService
                 }
             }
 
-            $dm = $this->dm;
-            $tagRepo = $dm->getRepository('PumukitSchemaBundle:Tag');
+            $tagRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
             $opencastTag = $tagRepo->findOneByCod('TECHOPENCAST');
             if ($opencastTag) {
                 $tagService = $this->tagService;
                 $tagAdded = $tagService->addTagToMultimediaObject($multimediaObject, $opencastTag->getId());
             }
-            $dm->persist($multimediaObject);
-            $dm->flush();
+            $this->dm->persist($multimediaObject);
+            $this->dm->flush();
 
             if($track) {
                 $this->jobService->genSbs($multimediaObject);
@@ -163,66 +166,32 @@ class OpencastImportService
         }
     }
 
-    private function importSeries($oneseries, $mediaPackage)
+    private function importSeries($mediaPackage)
     {
         $announce = true;
         $publicDate = new \DateTime("now");
-        $subtitle = '';
-        $description = '';
-        $header = '';
-        $footer = '';
-        $keyword = '';
-        $line2 = '';
-        $locale = 'en';
 
-        if($oneseries == "WITHOUT_SERIES"){
-            $title = "MediaPackages without series";
-            $properties = "";
-        } else{
+        if(isset($mediaPackage["series"])){
             $title = $mediaPackage["seriestitle"];
-            $properties = $mediaPackage["series"];
+            $properties = $mediaPackage["series"];            
+        } else{
+            $title = "MediaPackages without series";
+            $properties = "default";            
         }
 
         $series = $this->factoryService->createSeries();
         $series->setAnnounce($announce);
         $series->setPublicDate($publicDate);
         $series->setTitle($title);
-        $series->setLocale($locale);
-        $series->setProperty("opencast", $properties);
-
-        $subtitleEs = '';
-        $descriptionEs = '';
-        $headerEs = '';
-        $footerEs = '';
-        $keywordEs = '';
-        $line2Es = '';
-        $localeEs = 'es';
-
-        if($oneseries == "WITHOUT_SERIES"){
-            $titleEs = "Paquetes multimedia sin serie";
-            $properties = "";
-        } else{
-            $titleEs = $mediaPackage["seriestitle"];
+        foreach($this->otherLocales as $locale) {
+            $series->setTitle($title, $locale);
         }
 
-        $titleI18n = array($locale => $title, $localeEs => $titleEs);
-        $subtitleI18n = array($locale => $subtitle, $localeEs => $subtitleEs);
-        $descriptionI18n = array($locale => $description, $localeEs => $descriptionEs);
-        $headerI18n = array($locale => $header, $localeEs => $headerEs);
-        $footerI18n = array($locale => $footer, $localeEs => $footerEs);
-        $keywordI18n = array($locale => $keyword, $localeEs => $keywordEs);
-        $line2I18n = array($locale => $line2, $localeEs => $line2Es);
+        $series->setProperty("opencast", $properties);
 
-        $series->setI18nTitle($titleI18n);
-        $series->setI18nSubtitle($subtitleI18n);
-        $series->setI18nDescription($descriptionI18n);
-        $series->setI18nHeader($headerI18n);
-        $series->setI18nFooter($footerI18n);
-        $series->setI18nKeyword($keywordI18n);
-        $series->setI18nLine2($line2I18n);
+        $this->dm->persist($series);
+        $this->dm->flush();
 
-        $dm = $this->dm;
-        $dm->persist($series);
-        $dm->flush();
+        return $series;
     }
 }

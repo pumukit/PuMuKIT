@@ -1266,7 +1266,8 @@ function tag_delete(id, cod, pid) {
 // END OF TAG SECTION //
 
 $(document).ready(function(){
-    $('#myModal').on('shown.bs.modal', function () {
+    $('#myModal')
+    .on('shown.bs.modal', function () {
         $('#iframeUpload').on("load", function(){
             var message = $('#iframeUpload').contents().find('title');
             if (message.length != 0) message = message[0].innerHTML;
@@ -1277,6 +1278,9 @@ $(document).ready(function(){
                 no_success('NGINX ERROR: '+message);
             }
         });
+    })
+    .on('show.bs.modal', function() {
+        $('.modal-content').html('');
     });
 });
 
