@@ -50,8 +50,6 @@ class OpencastImportService
         }
 
         if($onemultimediaobjects == null){
-
-            $rank = 3;
             $status = MultimediaObject::STATUS_PUBLISHED;
             $title = $mediaPackage["title"];
             $properties = $mediaPackage["id"];
@@ -62,7 +60,6 @@ class OpencastImportService
             }
 
             $multimediaObject = $factoryService->createMultimediaObject($series);
-            $multimediaObject->setRank($rank);
             $multimediaObject->setStatus($status);
             $multimediaObject->setSeries($series);
             $multimediaObject->setTitle($title);
