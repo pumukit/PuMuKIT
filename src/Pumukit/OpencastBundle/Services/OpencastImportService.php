@@ -44,7 +44,7 @@ class OpencastImportService
         $mediaPackage = $opencastClient->getMediaPackage($opencastId);
         $repository_series = $this->dm->getRepository('PumukitSchemaBundle:Series');
 
-        $series = $repository_series->findOneBy(array("title.en" => "MediaPackages without series"));
+        $series = $repository_series->findOneBy(array("properties.opencast" => "default"));
 
         if(isset($mediaPackage["series"])){
             $oneseries = $repository_series->findOneBy(array("properties.opencast" => $mediaPackage["series"]));
@@ -182,7 +182,7 @@ class OpencastImportService
 
         if($oneseries == "WITHOUT_SERIES"){
             $title = "MediaPackages without series";
-            $properties = "";
+            $properties = "default";
         } else{
             $title = $mediaPackage["seriestitle"];
             $properties = $mediaPackage["series"];
