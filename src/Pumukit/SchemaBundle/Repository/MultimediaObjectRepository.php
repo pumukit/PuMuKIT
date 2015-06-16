@@ -90,7 +90,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function findByPersonId($personId)
     {
-        return $this->createQueryBuilder()
+        return $this->createStandardQueryBuilder()
           ->field('people.people._id')->equals(new \MongoId($personId))
           ->getQuery()
           ->execute();
