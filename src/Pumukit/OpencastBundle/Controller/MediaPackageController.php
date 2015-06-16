@@ -74,7 +74,7 @@ class MediaPackageController extends Controller
      */
     public function importAction($id, Request $request)
     {
-        $opencastService = new opencastService();
+        $opencastService = $this->get('pumukit_opencast.import');
         $opencastService->importRecording($id);
         return $this->redirect($this->getRequest()->headers->get('referer'));
     }
