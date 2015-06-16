@@ -17,13 +17,15 @@ class FactoryService
     private $tagService;
     private $translator;
     private $locales;
+    private $defaultCopyright;
 
-    public function __construct(DocumentManager $documentManager, TagService $tagService, TranslatorInterface $translator, array $locales = array())
+    public function __construct(DocumentManager $documentManager, TagService $tagService, TranslatorInterface $translator, array $locales = array(), $defaultCopyright = "")
     {
         $this->dm = $documentManager;
         $this->tagService = $tagService;
         $this->translator = $translator;
         $this->locales = $locales;
+        $this->defaultCopyright = $defaultCopyright;
     }
 
     /**
@@ -44,7 +46,7 @@ class FactoryService
         $series = new Series();
 
         $series->setPublicDate(new \DateTime("now"));
-        $series->setCopyright('UdN-TV');
+        $series->setCopyright($this->defaultCopyright);
         foreach ($this->locales as $locale) {
             $title = $this->translator->trans(self::DEFAULT_SERIES_TITLE, array(), null, $locale);
             $series->setTitle($title, $locale);
@@ -78,6 +80,7 @@ class FactoryService
         }
         $mm->setPublicDate(new \DateTime("now"));
         $mm->setRecordDate($mm->getPublicDate());
+        $mm->setCopyright($this->defaultCopyright);        
         foreach ($this->locales as $locale) {
             $title = $this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE, array(), null, $locale);
             $mm->setTitle($title, $locale);

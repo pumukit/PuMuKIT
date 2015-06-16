@@ -43,8 +43,15 @@ class PumukitOpencastExtension extends Extension
             ->addArgument($config['generate_sbs'] ? $config['profile'] : null)
             ->addArgument(new Reference('pumukitencoder.job'))
             ->addArgument($config['url_mapping']);
+
+          $container
+            ->register("pumukit_opencast.import", "Pumukit\OpencastBundle\Services\OpencastImportService")
+            ->addArgument(new Reference("doctrine_mongodb.odm.document_manager"))
+            ->addArgument(new Reference("pumukitschema.factory"))
+            ->addArgument(new Reference("pumukitschema.tag"))
+            ->addArgument(new Reference("pumukit_opencast.client"))
+            ->addArgument(new Reference("pumukit_opencast.job"));
         }
 
-        
     }
 }
