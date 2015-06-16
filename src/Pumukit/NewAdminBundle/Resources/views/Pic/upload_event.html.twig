@@ -1,0 +1,12 @@
+<script type="text/javascript">
+
+  parent.$('#myModal').modal('hide');
+
+  parent.$('#list_events').load('{{ path('pumukitnewadmin_event_list') }}');
+  parent.$('#list_events').html('{% trans %}Update the event to show the image{% endtrans %}.');
+
+  var uploaded = '{{ uploaded }}';
+
+  if ('success' == uploaded) parent.success('{% trans %}New Pic added.{% endtrans %}');
+  else parent.no_success('{{ message }}');
+</script>
