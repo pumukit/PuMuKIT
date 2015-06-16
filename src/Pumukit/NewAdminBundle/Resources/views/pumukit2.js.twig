@@ -107,7 +107,11 @@ window.update_preview = function(id) {
 window.delete_eventpic = function(eventId) {
     if (window.confirm('{% trans %}Are you sure you want to delete this picture?{% endtrans %}')) {
         var url = '{{ path('pumukitnewadmin_eventpic_delete', {'id': '___id___'})|raw }}';
-        $('#list_events').load(url.replace('___id___', eventId), {'_method': 'DELETE'}, function(){success('{% trans %}Image removed.{% endtrans %}');});
+        $('#list_events').load(url.replace('___id___', eventId), {'_method': 'DELETE'}, function(){
+            var show_url = "{{ path('pumukitnewadmin_event_show', {'id': '___id___'})|raw }}";
+            $('#preview_event').load(show_url.replace('___id___', eventId));
+            success('{% trans %}Image removed.{% endtrans %}');
+        });
     }
 }
 

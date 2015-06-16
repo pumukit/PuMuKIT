@@ -14,6 +14,7 @@
                                                         var resource_name = '{{ resource_name }}';
                                                         if ('event' == resource_name) {
                                                           $('#list_events').html(response);
+                                                          $('#preview_event').load('{{ path('pumukitnewadmin_event_show', {'id': resource.id})|raw }}');
                                                         } else {
                                                           $('#pic_{{ resource_name }}_{{ resource.id }}').html(response);
                                                         }

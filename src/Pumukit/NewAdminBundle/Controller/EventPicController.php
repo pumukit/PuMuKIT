@@ -48,12 +48,14 @@ class EventPicController extends Controller
             }
         }catch (\Exception $e){
             return array(
+                         'event' => $event,
                          'uploaded' => 'failed',
                          'message' => $e->getMessage()
                          );
         }
 
         return array(
+                     'event' => $event,
                      'uploaded' => 'success',
                      'message' => 'New Pic added.'
                      );

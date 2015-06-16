@@ -2,7 +2,9 @@
 
   parent.$('#myModal').modal('hide');
 
-  parent.$('#list_events').load('{{ path('pumukitnewadmin_event_list') }}');
+  parent.$('#list_events').load('{{ path('pumukitnewadmin_event_list') }}', function(){
+            parent.$('#preview_event').load('{{ path('pumukitnewadmin_event_show', {'id': event.id})|raw }}');
+  });
   parent.$('#list_events').html('{% trans %}Update the event to show the image{% endtrans %}.');
 
   var uploaded = '{{ uploaded }}';
