@@ -118,4 +118,57 @@ class EventRepositoryTest extends WebTestCase
         $events = array($event4, $event1, $event3, $event2);
         $this->assertEquals($events, array_values($this->repo->findFutureAndNotFinished(4, $date)->toArray()));
     }
+
+    public function testFindByHoursEvent()
+    {
+        $date = new \DateTime("now");
+        $date1 = new \DateTime("now");
+        $date2 = new \DateTime("now");
+        $date3 = new \DateTime("now");
+        $date4 = new \DateTime("now");
+
+        $date->setTime(9, 0, 0);
+        $date1->setTime(9, 0, 0);
+        $date2->setTime(9, 0, 0);
+        $date3->setTime(9, 0, 0);
+        $date4->setTime(9, 0, 0);
+
+        $duration1 = 30;
+        $duration2 = 60;
+        $duration3 = 40;
+        $duration4 = 120;
+
+        $date1->add(new \DateInterval('P3D'));
+        $date2->add(new \DateInterval('P15D'));
+        $date3->add(new \DateInterval('P10D'));
+        $date4->sub(new \DateInterval('PT60M'));
+
+        $event1 = new Event();
+        $event1->setDisplay(true);
+        $event1->setDate($date1);
+        $event1->setDuration($duration1);
+
+        $event2 = new Event();
+        $event2->setDisplay(true);
+        $event2->setDate($date2);
+        $event2->setDuration($duration2);
+
+        $event3 = new Event();
+        $event3->setDisplay(true);
+        $event3->setDate($date3);
+        $event3->setDuration($duration3);
+
+        $event4 = new Event();
+        $event4->setDisplay(true);
+        $event4->setDate($date4);
+        $event4->setDuration($duration4);
+
+        $this->dm->persist($event1);
+        $this->dm->persist($event2);
+        $this->dm->persist($event3);
+        $this->dm->persist($event4);
+        $this->dm->flush();
+
+        $this->assertEquals($event4, $this->repo->findOneByHoursEvent(3, $date));
+    }
 }

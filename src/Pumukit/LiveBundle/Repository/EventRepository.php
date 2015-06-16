@@ -61,4 +61,46 @@ class EventRepository extends DocumentRepository
 
         return $qb->getQuery()->execute();
     }
+
+    /**
+     * Find one by hours event
+     *
+     * @param integer $hours
+     * @param Date $date
+     * @return Cursor
+     */
+    public function findOneByHoursEvent($hours=null, $date=null)
+    {
+        if (!$date) {
+            $currentDatetime = new \DateTime("now");
+            $hoursDatetime = new \DateTime("now");
+            $startDay = new \DateTime("now");
+            $finishDay = new \DateTime("now");
+        } else {
+            $currentDatetime = new \DateTime($date->format('Y-m-d H:s:i'));
+            $hoursDatetime = new \DateTime($date->format('Y-m-d H:s:i'));
+            $startDay = new \DateTime($date->format('Y-m-d H:s:i'));
+            $finishDay = new \DateTime($date->format('Y-m-d H:s:i'));
+        }
+        $hoursDatetime->add(new \DateInterval('PT'.$hours.'H'));
+        $startDay->setTime(0, 0, 0);
+        $finishDay->setTime(23, 59, 59);
+
+        $currentDayEvents = $this->createQueryBuilder()
+            ->field('display')->equals(true)
+            ->field('date')->gte($startDay)
+            ->field('date')->lte($finishDay)
+            ->sort('date', 1)
+            ->getQuery()->execute();
+
+        $duration = 0;
+        foreach ($currentDayEvents as $event) {
+            $eventDate = new \DateTime($event->getDate()->format("Y-m-d H:i:s"));
+            if (($eventDate <= $hoursDatetime) && ($currentDatetime <= $eventDate->add(new \DateInterval('PT'.$event->getDuration().'M')))) {
+                return $event;
+            }
+        }
+
+        return null;
+    }
 }
