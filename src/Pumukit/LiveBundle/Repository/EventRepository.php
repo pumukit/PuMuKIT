@@ -16,23 +16,30 @@ class EventRepository extends DocumentRepository
      * Find future and not finished
      *
      * @param integer $limit
+     * @param Date $date
      * @return Cursor
      */
-    public function findFutureAndNotFinished($limit=null)
+    public function findFutureAndNotFinished($limit=null, $date=null)
     {
         // First: look if there is a current live event broadcasting
         // for setting datetime minus duration
-        $currentDatetime = new \DateTime("now");
-        $startDay = new \DateTime("now");
-        $finishDay = new \DateTime("now");
+        if (!$date) {
+            $currentDatetime = new \DateTime("now");
+            $startDay = new \DateTime("now");
+            $finishDay = new \DateTime("now");
+        } else {
+            $currentDatetime = new \DateTime($date->format('Y-m-d H:s:i'));
+            $startDay = new \DateTime($date->format('Y-m-d H:s:i'));
+            $finishDay = new \DateTime($date->format('Y-m-d H:s:i'));
+        }
         $startDay->setTime(0, 0, 0);
         $finishDay->setTime(23, 59, 59);
 
-        $currentDayEvents = $this->createQueryBuilder("e")
-            ->field("display")->equals(true)
+        $currentDayEvents = $this->createQueryBuilder()
+            ->field('display')->equals(true)
             ->field('date')->gte($startDay)
             ->field('date')->lte($finishDay)
-            ->sort("date", 1)
+            ->sort('date', 1)
             ->getQuery()->execute();
 
         $duration = 0;
