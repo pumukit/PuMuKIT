@@ -39,7 +39,9 @@
         </a>
       </td>
       <td>
-	    {% include 'PumukitNewAdminBundle:Event:updatemenu.html.twig' with {'event': event} %}
+        <div class="dropdown">
+	      {% include 'PumukitNewAdminBundle:Event:updatemenu.html.twig' with {'event': event} %}
+        </div>
       </td>
       <td>
         <a href="#" onclick="window.submit_delete_event('{{ event.id }}'); return false;">

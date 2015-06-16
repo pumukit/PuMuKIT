@@ -1,27 +1,25 @@
-<div class="dropdown">
-  <i class="mdi-navigation-menu" id="list_pics_{{ event.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-  <ul class="dropdown-menu" role="menu" aria-labelledby="list_pics_{{ event.id }}">
-    <li>
-      {% if event.getPic() is empty %}
-      <a href="{{ path('pumukitnewadmin_eventpic_create', {'id': event.id}) }}" data-toggle="modal" data-target="#myModal">
-        <i class="mdi-image-camera-alt"></i> {% trans %}Add pic{% endtrans %}
-      </a>
-      <a href="#">
-        <i class="mdi-content-clear"></i> {% trans %}Delete pic{% endtrans %}
-      </a>
-      {% else %}
-      <a href="#">
-        <i class="mdi-image-camera-alt"></i> {% trans %}Add pic{% endtrans %}
-      </a>
-      <a href="#" onclick="window.delete_eventpic('{{ event.id }}'); return false;" data-toggle="modal" data-target="#myModal">
-        <i class="mdi-content-clear"></i> {% trans %}Delete pic{% endtrans %}
-      </a>
-      {% endif %}
-    </li>
-    <li>
-      <a href="#" onclick="return false;">
-        <strong>{% trans %}Cancel{% endtrans %}...</strong>
-      </a>
-    </li>
-  </ul>
-</div>
+<i class="mdi-navigation-menu" id="list_pics_{{ event.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+<ul class="dropdown-menu" role="menu" aria-labelledby="list_pics_{{ event.id }}">
+  <li>
+    {% if event.getPic() is empty %}
+    <a href="{{ path('pumukitnewadmin_eventpic_create', {'id': event.id}) }}" data-toggle="modal" data-target="#myModal">
+      <i class="mdi-image-camera-alt"></i> {% trans %}Add pic{% endtrans %}
+    </a>
+    <a href="#">
+      <i class="mdi-content-clear"></i> {% trans %}Delete pic{% endtrans %}
+    </a>
+    {% else %}
+    <a href="#">
+      <i class="mdi-image-camera-alt"></i> {% trans %}Add pic{% endtrans %}
+    </a>
+    <a href="#" onclick="window.delete_eventpic('{{ event.id }}'); return false;" data-toggle="modal" data-target="#myModal">
+      <i class="mdi-content-clear"></i> {% trans %}Delete pic{% endtrans %}
+    </a>
+    {% endif %}
+  </li>
+  <li>
+    <a href="#" onclick="return false;">
+      <strong>{% trans %}Cancel{% endtrans %}...</strong>
+    </a>
+  </li>
+</ul>
