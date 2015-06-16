@@ -3,6 +3,15 @@
   <p style="text-align:center; font-weight: bolder; font-size: large;">
     {{ event.name }}
   </p>
+  {% if event.pic %}
+  <div class="pmk-preview">
+    <div class="pmk-picture">
+      <div class="pmk-img">
+        <img src="{{ event.getPic() }}" />
+      </div>
+    </div>
+  </div>
+  {% endif %}
   <p style="overflow:hidden; padding:5px; border:solid 1px #DDD; background: {{ event.display ? '#FFEAD6' : '#DDD' }}" >
     {{ event.date|date('Y-m-d H:i') }} {{ event.duration }} {% trans %}min.{% endtrans %}
   </p>
