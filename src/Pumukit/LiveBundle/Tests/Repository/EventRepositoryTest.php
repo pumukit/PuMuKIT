@@ -58,15 +58,17 @@ class EventRepositoryTest extends WebTestCase
 
     public function testFindFutureAndNotFinished()
     {
+        $date = new \DateTime("now");
         $date1 = new \DateTime("now");
         $date2 = new \DateTime("now");
         $date3 = new \DateTime("now");
         $date4 = new \DateTime("now");
 
+        $date->setTime(9, 0, 0);
         $date1->setTime(9, 0, 0);
         $date2->setTime(9, 0, 0);
         $date3->setTime(9, 0, 0);
-        $date4->setTime(8, 0, 0);
+        $date4->setTime(9, 0, 0);
 
         $duration1 = 30;
         $duration2 = 60;
@@ -76,6 +78,7 @@ class EventRepositoryTest extends WebTestCase
         $date1->add(new \DateInterval('P3D'));
         $date2->add(new \DateInterval('P15D'));
         $date3->add(new \DateInterval('P10D'));
+        $date4->sub(new \DateInterval('PT60M'));
 
         $event1 = new Event();
         $event1->setDisplay(true);
@@ -104,15 +107,15 @@ class EventRepositoryTest extends WebTestCase
         $this->dm->flush();
 
         $events = array($event4);
-        $this->assertEquals($events, array_values($this->repo->findFutureAndNotFinished(1)->toArray()));
+        $this->assertEquals($events, array_values($this->repo->findFutureAndNotFinished(1, $date)->toArray()));
 
         $events = array($event4, $event1);
-        $this->assertEquals($events, array_values($this->repo->findFutureAndNotFinished(2)->toArray()));
+        $this->assertEquals($events, array_values($this->repo->findFutureAndNotFinished(2, $date)->toArray()));
 
         $events = array($event4, $event1, $event3);
-        $this->assertEquals($events, array_values($this->repo->findFutureAndNotFinished(3)->toArray()));
+        $this->assertEquals($events, array_values($this->repo->findFutureAndNotFinished(3, $date)->toArray()));
 
         $events = array($event4, $event1, $event3, $event2);
-        $this->assertEquals($events, array_values($this->repo->findFutureAndNotFinished(4)->toArray()));
+        $this->assertEquals($events, array_values($this->repo->findFutureAndNotFinished(4, $date)->toArray()));
     }
 }
