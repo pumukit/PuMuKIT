@@ -82,9 +82,9 @@ class TrackServiceTest extends WebTestCase
         $this->assertEquals(0, count($multimediaObject->getTracks()));
         $this->assertEquals(0, count($this->repoJobs->findAll()));
 
-        $originalFile = $this->resourcesDir.DIRECTORY_SEPARATOR.'camera.mp4';
+        $originalFile = $this->resourcesDir.'/camera.mp4';
 
-        $filePath = $this->resourcesDir.DIRECTORY_SEPARATOR.'cameraCopy.mp4';
+        $filePath = $this->resourcesDir.'/cameraCopy.mp4';
         if (copy($originalFile, $filePath)){
           $file = new UploadedFile($filePath, 'camera.mp4', null, null, null, true);
           
@@ -410,8 +410,7 @@ class TrackServiceTest extends WebTestCase
         $mmobjs = $this->repoMmobj->findAll();
 
         foreach($mmobjs as $mm){
-            $mmDir = $this->getDemoProfiles()['MASTER_COPY']['streamserver']['dir_out'].DIRECTORY_SEPARATOR.$mm->getSeries()->getId().DIRECTORY_SEPARATOR;
-
+            $mmDir = $this->getDemoProfiles()['MASTER_COPY']['streamserver']['dir_out'].'/'.$mm->getSeries()->getId().'/';
             if (is_dir($mmDir)){
                 $files = glob($mmDir.'*', GLOB_MARK);
                 foreach ($files as $file) {
@@ -421,6 +420,18 @@ class TrackServiceTest extends WebTestCase
                 }
 
                 rmdir($mmDir);
+            }
+
+            $tmpMmDir = '/tmp/'.$mm->getId().'/';
+            if (is_dir($tmpMmDir)){
+                $files = glob($tmpMmDir.'*', GLOB_MARK);
+                foreach ($files as $file) {
+                    if (is_writable($file)){
+                      unlink($file);
+                    }
+                }
+
+                rmdir($tmpMmDir);
             }
         }
     }
