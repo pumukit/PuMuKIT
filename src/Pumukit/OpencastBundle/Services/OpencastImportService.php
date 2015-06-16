@@ -17,6 +17,12 @@ use Pumukit\OpencastBundle\Services\ClientService;
 
 class OpencastImportService
 {
+    private $opencastClient;
+    private $dm;
+    private $factoryService;
+    private $tagService;
+    private $jobService;
+    
     public function __construct(DocumentManager $documentManager, factoryService $factoryService,
             tagService $tagService, ClientService $opencastClient, OpencastService $jobService) {
         $this->opencastClient = $opencastClient;
@@ -167,13 +173,6 @@ class OpencastImportService
     {
         $announce = true;
         $publicDate = new \DateTime("now");
-        $subtitle = '';
-        $description = '';
-        $header = '';
-        $footer = '';
-        $keyword = '';
-        $line2 = '';
-        $locale = 'en';
 
         if($oneseries == "WITHOUT_SERIES"){
             $title = "MediaPackages without series";
@@ -187,39 +186,7 @@ class OpencastImportService
         $series->setAnnounce($announce);
         $series->setPublicDate($publicDate);
         $series->setTitle($title);
-        $series->setLocale($locale);
         $series->setProperty("opencast", $properties);
-
-        $subtitleEs = '';
-        $descriptionEs = '';
-        $headerEs = '';
-        $footerEs = '';
-        $keywordEs = '';
-        $line2Es = '';
-        $localeEs = 'es';
-
-        if($oneseries == "WITHOUT_SERIES"){
-            $titleEs = "Paquetes multimedia sin serie";
-            $properties = "";
-        } else{
-            $titleEs = $mediaPackage["seriestitle"];
-        }
-
-        $titleI18n = array($locale => $title, $localeEs => $titleEs);
-        $subtitleI18n = array($locale => $subtitle, $localeEs => $subtitleEs);
-        $descriptionI18n = array($locale => $description, $localeEs => $descriptionEs);
-        $headerI18n = array($locale => $header, $localeEs => $headerEs);
-        $footerI18n = array($locale => $footer, $localeEs => $footerEs);
-        $keywordI18n = array($locale => $keyword, $localeEs => $keywordEs);
-        $line2I18n = array($locale => $line2, $localeEs => $line2Es);
-
-        $series->setI18nTitle($titleI18n);
-        $series->setI18nSubtitle($subtitleI18n);
-        $series->setI18nDescription($descriptionI18n);
-        $series->setI18nHeader($headerI18n);
-        $series->setI18nFooter($footerI18n);
-        $series->setI18nKeyword($keywordI18n);
-        $series->setI18nLine2($line2I18n);
 
         $dm = $this->dm;
         $dm->persist($series);
