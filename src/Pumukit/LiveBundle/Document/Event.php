@@ -3,6 +3,7 @@
 namespace Pumukit\LiveBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Pumukit\SchemaBundle\Document\Pic;
 
 /**
  * Pumukit\LiveBundle\Document\Event
@@ -66,6 +67,13 @@ class Event
    * @MongoDB\Boolean
    */
   private $create_serial = true;
+
+  /**
+   * @var Pic $pic
+   *
+   * @MongoDB\EmbedOne(targetDocument="Pumukit\SchemaBundle\Document\Pic")
+   */
+  private $pic;
 
   /**
    * @var locale $locale
@@ -273,4 +281,34 @@ class Event
           $this->duration = $schedule['duration'];
       }
   }
+
+    /**
+     * Set pic
+     *
+     * @param Pic $pic
+     */
+    public function setPic(Pic $pic)
+    {
+        $this->pic = $pic;
+    }
+
+    /**
+     * Remove pic
+     *
+     * @param Pic $pic
+     */
+    public function removePic()
+    {
+        $this->pic = null;
+    }
+
+    /**
+     * Get pic
+     *
+     * @return Pic
+     */
+    public function getPic()
+    {
+        return $this->pic;
+    }
 }

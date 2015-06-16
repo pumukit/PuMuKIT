@@ -4,10 +4,11 @@ namespace Pumukit\LiveBundle\Tests\Document;
 
 use Pumukit\LiveBundle\Document\Live;
 use Pumukit\LiveBundle\Document\Event;
+use Pumukit\SchemaBundle\Document\Pic;
 
 class EventTest extends \PHPUnit_Framework_TestCase
 {
-    public function testGetterAndSetter()
+    public function testSetterAndGetter()
     {
         $live = new Live();
         $name = 'event name';
@@ -16,6 +17,9 @@ class EventTest extends \PHPUnit_Framework_TestCase
         $duration = '60';
         $display = 0;
         $create_serial = 0;
+        $pic = new Pic();
+        $imagePath = '/path/to/image.jpg';
+        $pic->setPath($imagePath);
 
         $event = new Event();
 
@@ -26,6 +30,7 @@ class EventTest extends \PHPUnit_Framework_TestCase
         $event->setDuration($duration);
         $event->setDisplay($display);
         $event->setCreateSerial($create_serial);
+        $event->setPic($pic);
 
         $this->assertEquals($live, $event->getLive());
         $this->assertEquals($name, $event->getName());
@@ -34,5 +39,6 @@ class EventTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($duration, $event->getDuration());
         $this->assertEquals($display, $event->getDisplay());
         $this->assertEquals($create_serial, $event->getCreateSerial());
+        $this->assertEquals($pic, $event->getPic());
     }
 }
