@@ -3,6 +3,7 @@
 namespace Pumukit\OpencastBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Parameter;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -50,7 +51,8 @@ class PumukitOpencastExtension extends Extension
             ->addArgument(new Reference("pumukitschema.factory"))
             ->addArgument(new Reference("pumukitschema.tag"))
             ->addArgument(new Reference("pumukit_opencast.client"))
-            ->addArgument(new Reference("pumukit_opencast.job"));
+            ->addArgument(new Reference("pumukit_opencast.job"))
+            ->addArgument(new Parameter("pumukit2.locales"));
         }
 
     }

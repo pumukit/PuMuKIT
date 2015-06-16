@@ -22,14 +22,17 @@ class OpencastImportService
     private $factoryService;
     private $tagService;
     private $jobService;
+    private $otherLocales;
     
     public function __construct(DocumentManager $documentManager, factoryService $factoryService,
-            tagService $tagService, ClientService $opencastClient, OpencastService $jobService) {
+                                tagService $tagService, ClientService $opencastClient, OpencastService $jobService,
+                                array $otherLocales = array()) {
         $this->opencastClient = $opencastClient;
         $this->dm = $documentManager;
         $this->factoryService = $factoryService;
         $this->tagService = $tagService;
         $this->jobService = $jobService;
+        $this->otherLocales = $otherLocales;
     }
 
 
@@ -66,10 +69,13 @@ class OpencastImportService
 
             $multimediaObject = $factoryService->createMultimediaObject($series);
             $multimediaObject->setSeries($series);
-            $multimediaObject->setTitle($title);
             $multimediaObject->setRecordDate($recDate);
             $multimediaObject->setProperty("opencast", $properties);
             $multimediaObject->setProperty("opencasturl", $opencastClient->getPlayerUrl() . "?id=" . $properties);
+            $multimediaObject->setTitle($title);
+            foreach($this->otherLocales as $locale) {
+                $multimediaObject->setTitle($title, $locale);
+            }
 
             //Multiple tracks
             if(isset($mediaPackage["media"]["track"][0])){
@@ -186,6 +192,10 @@ class OpencastImportService
         $series->setAnnounce($announce);
         $series->setPublicDate($publicDate);
         $series->setTitle($title);
+        foreach($this->otherLocales as $locale) {
+            $series->setTitle($title, $locale);
+        }
+
         $series->setProperty("opencast", $properties);
 
         $dm = $this->dm;
