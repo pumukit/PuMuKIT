@@ -40,7 +40,7 @@
                   <a href="#" onclick="window.submit_delete_event('{{ day_event.id }}'); return false;">
 	                <i class="mdi-content-clear"></i>
                   </a>
-	              <a title="{% trans %}Edit Event{% endtrans %} {{ day_event.name }}" href="{{ path('pumukitnewadmin_event_update', {'id': day_event.id}) }}" data-toggle="modal" data-target="#myModal">
+	              <a title="{% trans %}Edit Event{% endtrans %} {{ day_event.name }}" href="{{ path('pumukitnewadmin_event_update', {'id': day_event.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
 	                <i class="mdi-editor-mode-edit"></i> {{ day_event.name }}
                   </a>
                 </li>

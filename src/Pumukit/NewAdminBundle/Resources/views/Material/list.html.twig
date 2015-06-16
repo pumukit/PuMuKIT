@@ -4,7 +4,7 @@
       <td><ul><li></li></ul></td>
       <td>
         <a title="{% trans %}Edit file of multimedia object{% endtrans %} {{ material.id }}"
-           data-toggle="modal" data-dismiss="modal" data-target="#myModal"
+           data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
            href="{{ path('pumukitnewadmin_material_update', {'id': material.id, 'mmId': mmId}) }}">
           <i class="mdi-editor-mode-edit"></i>
         </a>
@@ -44,6 +44,6 @@
   {% endfor %}
   <tr>
     <td><ul><li></li></ul></td>
-    <td colspan="6"><a title="{% trans %}Create Material{% endtrans %}" data-toggle="modal" data-target="#myModal" href="{{ path('pumukitnewadmin_material_create', {'id': mmId}) }}">{% trans %}New{% endtrans %}...</a></td>
+    <td colspan="6"><a title="{% trans %}Create Material{% endtrans %}" data-toggle="modal" data-backdrop="static" data-target="#myModal" href="{{ path('pumukitnewadmin_material_create', {'id': mmId}) }}">{% trans %}New{% endtrans %}...</a></td>
   </tr>
 </tbody></table>
