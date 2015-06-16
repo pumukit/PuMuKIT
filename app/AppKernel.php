@@ -36,7 +36,7 @@ class AppKernel extends Kernel
             new Pumukit\WebTVBundle\PumukitWebTVBundle(),
             //new Pumukit\Cmar\WebTVBundle\PumukitCmarWebTVBundle(),
             //new Pumukit\Cmar\SonarBundle\PumukitCmarSonarBundle(),
-            new Pumukit\Cmar\PodcastBundle\PumukitCmarPodcastBundle(),
+            //new Pumukit\Cmar\PodcastBundle\PumukitCmarPodcastBundle(),
             //new Pumukit\Cmar\LiveBundle\PumukitCmarLiveBundle(),
             //new Pumukit\NotificationBundle\PumukitNotificationBundle(),
         );

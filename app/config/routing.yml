@@ -2,10 +2,10 @@
 #     resource: "@PumukitCmarWebTVBundle/Resources/config/routing.yml"
 #     prefix: /
 
-pumukit_cmar_podcast:
-    resource: "@PumukitCmarPodcastBundle/Controller/"
-    type:     annotation
-    prefix:   /
+# pumukit_cmar_podcast:
+#     resource: "@PumukitCmarPodcastBundle/Controller/"
+#     type:     annotation
+#     prefix:   /
 
 # pumukit_cmar_sonar:
 #     resource: "@PumukitCmarSonarBundle/Controller/"
