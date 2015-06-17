@@ -1,4 +1,3 @@
-{% set locale = app.request.getLocale() %}
 <a name="{{ mm.id }}"></a>
 <!-- DATE -->
 {# TODO if(($template == 2) || ((!in_array($template, array(4,5))) && ($mm->getRecordDate()) && ($mm->getRecorddate() !== '1999-11-30') && ($mm->getRecordDate('dmy') !== $lastDate))):  #}
@@ -20,7 +19,7 @@
 {% endif %}
 <!-- SUBSERIAL -->
 {% if (mm.getProperty('subseriestitle') and (((mm.getProperty('subseriestitle')|raw) != last_subseriestitle) or ((last_date|date('Y-m-d')) != (mm.getRecordDate()|date('Y-m-d'))))) %}
-  <div class="serial_date">{{ mm.getProperty('subseriestitle').~locale }}</div>
+  <div class="serial_date">{{ mm.getProperty('subseriestitle')[app.request.getLocale()] }}</div>
 {% endif %}
 <!-- MULTISUBSERIAL -->
 {# TODO use seriesprototype or not
