@@ -94,6 +94,8 @@ parameters:
     pumukit2.locales:
         - es
         - en
+    pumukit2.uploads_dir: "%kernel.root_dir%/../web/uploads"
+    pumukit2.uploads_url: "/uploads"
     pumukit2.inbox:   "%kernel.root_dir%/../web/storage/inbox"
     pumukit2.tmp:     "%kernel.root_dir%/../web/storage/tmp"
     pumukit2.delete_on_disk: true
