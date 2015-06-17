@@ -627,6 +627,26 @@ class MultimediaObjectController extends SortableAdminController
         return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));      
     }
 
+    /**
+     * Sync tags for all multimedia objects of a series
+     */
+    public function syncTagsAction(Request $request)
+    {
+        $multimediaObjectRepo = $this->get('doctrine_mongodb.odm.document_manager')
+          ->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $multimediaObject = $multimediaObjectRepo
+          ->find($request->query->get('id'));
+
+        if(!$multimediaObject)
+          return new JsonResponse("Not Found", 404);
+
+        $mms = $multimediaObjectRepo->findBySeries($multimediaObject->getSeries())->toArray();
+        $tags = $multimediaObject->getTags()->toArray();
+        $this->get('pumukitschema.tag')->resetTags($mms, $tags);
+        
+        return new JsonResponse("");
+    }
+
     private function dispatchUpdate($multimediaObject)
     {
         $event = new MultimediaObjectEvent($multimediaObject);

@@ -86,4 +86,36 @@ class TagService
 
       return $removeTags;
   }
+  
+
+  /**
+   * Reset the tags of an array of MultimediaObjects
+   *
+   * @param array[MultimediaObject] $mmobjs
+   * @param array[string] $tags
+   * @return array[Tag] removed tags
+   */
+  public function resetTags(array $mmobjs, array $tags)
+  {
+    $modifyTags = array();
+
+    foreach($mmobjs as $mmobj) {
+        foreach($mmobj->getTags() as $originalEmbeddedTag) {
+            $originalTag = $this->repository->find($originalEmbeddedTag->getId());
+            $originalTag->decreaseNumberMultimediaObjects();
+            $this->dm->persist($originalTag);
+        }
+        $mmobj->setTags($tags);
+        $this->dm->persist($mmobj);
+        foreach($tags as $embeddedTag) {
+            $tag = $this->repository->find($embeddedTag->getId());
+            $tag->increaseNumberMultimediaObjects();
+            $this->dm->persist($tag);
+        }
+
+    }
+    
+    $this->dm->flush();
+  }
+  
 }

@@ -56,6 +56,22 @@ window.submit_delete_event = function(id)
     }
 }
 
+
+window.sync_tags_mms = function(id)
+{
+    if (window.confirm("{% trans %}Are you sure you want to sync this tags? The tags in other objects from this series will be lost.{% endtrans %}")){
+      var route = "{{ path('pumukitnewadmin_mms_sync_tags', {'id': '__id__'})|raw }}";
+      route = route.replace('__id__', id);
+      $.ajax(route, {
+        type: 'POST',
+        success: function(response, textStatus, jqXHR){
+          window.location.reload();
+        }
+      });
+    }
+}
+
+
 window.submit_delete_mms = function(id)
 {
     if (window.confirm("{% trans %}Are you sure you want to delete this multimedia object?{% endtrans %}")){

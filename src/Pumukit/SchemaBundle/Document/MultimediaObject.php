@@ -784,6 +784,16 @@ class MultimediaObject
     }
 
     /**
+     * Set tags
+     *
+     * @param array $tags
+     */
+    public function setTags(array $tags)
+    {
+        $this->tags = $tags;
+    }
+
+    /**
      * Add tag
      *
      * The original string tag logic used array_unique to avoid tag duplication.

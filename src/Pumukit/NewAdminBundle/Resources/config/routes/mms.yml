@@ -142,3 +142,9 @@ pumukitnewadmin_mms_reorder:
     defaults:
         _controller: pumukitnewadmin.controller.mms:reorderAction
 
+pumukitnewadmin_mms_sync_tags:
+    pattern: /synctags
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:syncTagsAction
+
