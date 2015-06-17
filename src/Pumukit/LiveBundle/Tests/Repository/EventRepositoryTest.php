@@ -58,11 +58,11 @@ class EventRepositoryTest extends WebTestCase
 
     public function testFindFutureAndNotFinished()
     {
-        $date = new \DateTime("now");
-        $date1 = new \DateTime("now");
-        $date2 = new \DateTime("now");
-        $date3 = new \DateTime("now");
-        $date4 = new \DateTime("now");
+        $date = new \DateTime("15-12-2015 9:00:00");
+        $date1 = new \DateTime("18-12-2015 9:00:00");
+        $date2 = new \DateTime("30-12-2015 9:00:00");
+        $date3 = new \DateTime("25-12-2015 9:00:00");
+        $date4 = new \DateTime("15-12-2015 8:00:00");
 
         $date->setTime(9, 0, 0);
         $date1->setTime(9, 0, 0);
@@ -74,11 +74,6 @@ class EventRepositoryTest extends WebTestCase
         $duration2 = 60;
         $duration3 = 40;
         $duration4 = 120;
-
-        $date1->add(new \DateInterval('P3D'));
-        $date2->add(new \DateInterval('P15D'));
-        $date3->add(new \DateInterval('P10D'));
-        $date4->sub(new \DateInterval('PT60M'));
 
         $event1 = new Event();
         $event1->setDisplay(true);
@@ -121,11 +116,11 @@ class EventRepositoryTest extends WebTestCase
 
     public function testFindByHoursEvent()
     {
-        $date = new \DateTime("now");
-        $date1 = new \DateTime("now");
-        $date2 = new \DateTime("now");
-        $date3 = new \DateTime("now");
-        $date4 = new \DateTime("now");
+        $date = new \DateTime("15-12-2015 9:00:00");
+        $date1 = new \DateTime("18-12-2015 9:00:00");
+        $date2 = new \DateTime("30-12-2015 9:00:00");
+        $date3 = new \DateTime("25-12-2015 9:00:00");
+        $date4 = new \DateTime("15-12-2015 8:00:00");
 
         $date->setTime(9, 0, 0);
         $date1->setTime(9, 0, 0);
@@ -137,11 +132,6 @@ class EventRepositoryTest extends WebTestCase
         $duration2 = 60;
         $duration3 = 40;
         $duration4 = 120;
-
-        $date1->add(new \DateInterval('P3D'));
-        $date2->add(new \DateInterval('P15D'));
-        $date3->add(new \DateInterval('P10D'));
-        $date4->sub(new \DateInterval('PT60M'));
 
         $event1 = new Event();
         $event1->setDisplay(true);
