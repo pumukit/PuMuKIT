@@ -7,12 +7,16 @@
 {% set last_date = 'next year' %}
 {% for oneseries in series %}
   <div class="serial_body">
+    {% set last_date = date('1/1/1900') %}
+    {% set last_precinct = '' %}
+    {% set last_subseriestitle = '' %}
     {% for mm in oneseries.getMultimediaObjects() %}
       {% if mm.containsTagWithCod(tag_cod) %}
-        {# TODO template series.getSeriesTemplateId() #}
-        {% set template = '' %}
-        {% include 'PumukitWebTVBundle:Series:multimediaobjectbody.html.twig' with {'mm': mm, 'roles': mm.getRoles(), 'last_date': last_date, 'template': template} %}
+        {# TODO 'template' SERIES getSerialTemplateId() #}
+        {% include 'PumukitWebTVBundle:Series:multimediaobjectbody.html.twig' with {'mm': mm, 'last_date': last_date, 'last_precinct': last_precinct, 'last_subseriestitle': last_subseriestitle, 'seriesprototype': series.getProperty('seriesprototype')} %}
         {% set last_date = mm.getRecordDate() %}
+        {% set last_precinct = precinct(mm.getTags()) %}
+        {% set last_subseriestitle = mm.getProperty('subseriestitle') %}
       {% endif %}
     {% endfor %}
   </div>
