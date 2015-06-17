@@ -10,8 +10,8 @@
         </service>
         <service id="pumukitlive.eventpic" class="Pumukit\LiveBundle\Services\EventPicService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
-	        <argument type="expression">parameter('kernel.root_dir') ~ '/../web/uploads/pic/'</argument>
-	        <argument>/uploads/pic</argument>
+            <argument>%pumukit2.uploads_dir%/pic</argument>
+            <argument>%pumukit2.uploads_url%/pic</argument>
             <argument>%pumukit2.delete_on_disk%</argument>
         </service>
     </services>

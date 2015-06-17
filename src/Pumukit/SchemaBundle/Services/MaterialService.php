@@ -22,7 +22,6 @@ class MaterialService
         if (!$this->targetPath){
             throw new \InvalidArgumentException("The path '".$targetPath."' for storing Materials does not exist.");
         }
-
         $this->targetUrl = $targetUrl;
         $this->forceDeleteOnDisk = $forceDeleteOnDisk;
     }

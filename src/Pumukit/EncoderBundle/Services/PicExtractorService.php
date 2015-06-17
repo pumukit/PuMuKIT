@@ -23,7 +23,10 @@ class PicExtractorService
         $this->mmsPicService = $mmsPicService;
         $this->width = $width;
         $this->height = $height;
-        $this->targetPath = $targetPath;
+        $this->targetPath = realpath($targetPath);
+        if (!$this->targetPath){
+            throw new \InvalidArgumentException("The path '".$targetPath."' for storing Pic does not exist.");
+        }
         $this->targetUrl = $targetUrl;
         $this->command = $command ?: 'ffmpeg -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"';
     }
