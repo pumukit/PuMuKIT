@@ -2,25 +2,22 @@
 
 {% set lastDate = '--' %}
 {% set lastSubserialTitle = 0 %}
-{% set contFilter = 0 %}
 
 	<div style="overflow:hidden">
 
+    {% if type == 'series' %}
+        {% include 'PumukitWebTVBundle:Search:filtersseries.html.twig' %}
+    {% else %}
+        {% include 'PumukitWebTVBundle:Search:filtersmultimediaobjects.html.twig' %}
+    {% endif %}
+
 	{% for object in objects %}
 		{% if object.isCollection() %}
-			{% if contFilter == 0 %}
-				{% include 'PumukitWebTVBundle:Search:filtersseries.html.twig' %}
-			{% endif %}
 			{% include 'PumukitWebTVBundle:Search:series.html.twig' %}
 			{% set lastDate = object.getPublicDate()|date("d/m/Y") %}
-			{% set contFilter = 1 %}
 		{% else %}
-			{% if contFilter == 0 %}
-				{% include 'PumukitWebTVBundle:Search:filtersmultimediaobjects.html.twig' %}
-			{% endif %}
 			{% include 'PumukitWebTVBundle:Search:multimediaobject.html.twig' %}
 			{% set lastDate = object.getPublicDate()|date("d/m/Y") %}
-			{% set contFilter = 1 %}
 		{% endif %}
 	{% endfor %}
 
