@@ -72,7 +72,6 @@ class MediaLibraryController extends Controller
     {
         $tagName = 'PUDESUPPORT';
 
-        /* TODO $serials["all"] = SerialPeer::retrieveByPKs(array(6, 9, 7)); */
         return $this->action(null, $tagName, "pumukitcmarwebtv_library_projectsupport", $request);
     }
 
