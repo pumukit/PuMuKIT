@@ -64,7 +64,7 @@ class MultimediaObjectController extends Controller
      */
     public function magicIndexAction(MultimediaObject $multimediaObject, Request $request)
     {
-      $response = $this->preExecute($multimediaObject);
+      $response = $this->preExecute($multimediaObject, $request);
       if($response instanceof Response) {
         return $response;
       }
