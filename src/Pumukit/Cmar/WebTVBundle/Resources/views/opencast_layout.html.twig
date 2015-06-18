@@ -15,11 +15,11 @@
 {% block body_base %}
 {% include 'PumukitCmarWebTVBundle::header.html.twig' %}
 <div id="tvusc">
-  <div class="usctv_cab" style="margin: 10 auto; width: auto; overflow: hidden; min-width: 1220px">
+  <div class="pumukit_cab" style="margin: 10 auto; width: auto; overflow: hidden; min-width: 1220px">
     {% include 'PumukitCmarWebTVBundle::header_menu.html.twig' %}
     {% render(controller('PumukitWebTVBundle:Widget:breadcrumbs')) %}
   </div>
-  <div class="usctv_content">
+  <div class="pumukit_content">
     {% block body_without_bar %}
     {% endblock %}
   </div>

@@ -37,22 +37,22 @@ div.cab_pan ul li a.select{
 /**
  * Index module imgs
  */ 
-div#usctv_m_index table{
+div#pumukit_m_index table{
   width: 100%;
 }
 
-div#usctv_m_index table div.img_category{
+div#pumukit_m_index table div.img_category{
   margin: 7px;
   position: relative;
   overflow: hidden;
 }
 
-div#usctv_m_index table div.img_category:hover div.cover{
+div#pumukit_m_index table div.img_category:hover div.cover{
   background-color: #fff;
   color: #000;
 }
 
-div#usctv_m_index table div.img_category div.cover{
+div#pumukit_m_index table div.img_category div.cover{
   position: absolute;
   bottom: 1px;
   right: 0px;
@@ -68,7 +68,7 @@ div#usctv_m_index table div.img_category div.cover{
   font-size: 120%;  
 }
 
-div#usctv_m_index table div.img_category div.cover div{
+div#pumukit_m_index table div.img_category div.cover div{
   padding: 10px 10px;
   background-color: transparent;
   opacity: 1.0; 
@@ -79,45 +79,45 @@ div#usctv_m_index table div.img_category div.cover div{
  */ 
 
 
-div.usctv_m div.index_tab{
+div.pumukit_m div.index_tab{
   overflow: hidden;
   margin-top: 15px;
 }
 
-div.usctv_m div.index_tab div.index_tab_entry{
+div.pumukit_m div.index_tab div.index_tab_entry{
   float:left; 
   width: 368px;
   padding-right: 6px;
 }
 
-div.usctv_m div.index_tab div.index_tab_sel a{
+div.pumukit_m div.index_tab div.index_tab_sel a{
   color: #000;
 }
 
 
-div.usctv_m div.index_tab div.index_tab_sel {
+div.pumukit_m div.index_tab div.index_tab_sel {
   color: #000;
   border-bottom: 1px solid #AC893F;
 }
 
-div.usctv_m div.index_tab a{
+div.pumukit_m div.index_tab a{
   display: block;
   font-weight: bold;
   text-shadow: 1px 1px 1px #bbb;
 }
 
-div.usctv_m div.index_tab div.index_tab_sel{
+div.pumukit_m div.index_tab div.index_tab_sel{
     
 }
 
-div.usctv_m div.index_tab div a{
+div.pumukit_m div.index_tab div a{
   text-decoration: none;
   font-size: 120%;
 }
 
 
 
-div.usctv_m div.index_tab_box{
+div.pumukit_m div.index_tab_box{
   border-bottom: 1px solid #aaa;
   border-right: 1px solid #aaa;
   border-left: 1px solid #aaa;
@@ -130,7 +130,7 @@ div.usctv_m div.index_tab_box{
  * USCTV MMOBJs
  */
 
-div.usctv_mmobjs .usctv_mmobj{
+div.pumukit_mmobjs .pumukit_mmobj{
   position:relative;
   background: #F1F0F0;
   margin: 3% 0% 3% 1%;
@@ -140,11 +140,11 @@ div.usctv_mmobjs .usctv_mmobj{
   cursor: pointer;
 }
 
-div.usctv_mmobjs .info{
+div.pumukit_mmobjs .info{
   margin-left: 150px
 }
 
-div.pic_mm:hover .play_icon_shadow, .pumukit_mini_mmobj:hover .play_icon_shadow, div.usctv_mmobj:hover .play_icon_shadow{ 
+div.pic_mm:hover .play_icon_shadow, .pumukit_mini_mmobj:hover .play_icon_shadow, div.pumukit_mmobj:hover .play_icon_shadow{ 
   opacity:1;
 }
 
@@ -166,7 +166,7 @@ div.pumukit_mini_mmobjs .pumukit_mini_mmobj .info{
 }
 
 
-div.usctv_mmobjs .usctv_mmobj .thumbnail, div.pumukit_mini_mmobjs .pumukit_mini_mmobj .thumbnail{
+div.pumukit_mmobjs .pumukit_mmobj .thumbnail, div.pumukit_mini_mmobjs .pumukit_mini_mmobj .thumbnail{
   display:inline;
   float:left;
   margin:0 7px 0 0;
@@ -210,11 +210,11 @@ img.play_icon_shadow{
 }
 
 
-div.usctv_series .usctv_mmobj .titular{
+div.pumukit_series .pumukit_mmobj .titular{
   color: #00F;
 }
 
-div.usctv_series .usctv_mmobj .title{
+div.pumukit_series .pumukit_mmobj .title{
   font-weight: bold;
   color: #00C; 
   font-size: 110% !important;
@@ -222,36 +222,36 @@ div.usctv_series .usctv_mmobj .title{
 }
 
 
-div.usctv_mmobjs .usctv_mmobj .title, div.mini_usctv_mmobjs .pumukit_mini_mmobj .title{
+div.pumukit_mmobjs .pumukit_mmobj .title, div.mini_pumukit_mmobjs .pumukit_mini_mmobj .title{
   font-weight: bold;
   font-size: 85%; 
   padding-top: 10px;    
 }
 
-div.usctv_mmobjs .usctv_mmobj .title a, div.mini_usctv_mmobjs .pumukit_mini_mmobj .title a{
+div.pumukit_mmobjs .pumukit_mmobj .title a, div.mini_pumukit_mmobjs .pumukit_mini_mmobj .title a{
   color: #919090;
 }
 
-div.usctv_mmobjs .usctv_mmobj .serial_title{
+div.pumukit_mmobjs .pumukit_mmobj .serial_title{
   color: #A2A2A2;
 }
 
-div.usctv_mmobjs .usctv_mmobj .mmobj_bottom, div.pumukit_mini_mmobjs .pumukit_mini_mmobj .mini_mmobj_bottom{
+div.pumukit_mmobjs .pumukit_mmobj .mmobj_bottom, div.pumukit_mini_mmobjs .pumukit_mini_mmobj .mini_mmobj_bottom{
   bottom: 16px; /* FIGURE */
   right: 6px;
-  position: absolute !important;
+  position: inherit !important;
   font-size: 85%;
   color: #A2A2A2;
 }
 
-div.usctv_mmobjs .usctv_mmobj .date, div.pumukit_mini_mmobjs .pumukit_mini_mmobj .date{
+div.pumukit_mmobjs .pumukit_mmobj .date, div.pumukit_mini_mmobjs .pumukit_mini_mmobj .date{
   bottom:16px; /* FIGURE */
   left: 160px; /* FIGURE */
   position:absolute;
   color: #A2A2A2;
 }
 
-div.usctv_series .date{
+div.pumukit_series .date{
   left: 180px !important; /* FIGURE */
 }
 

@@ -23,11 +23,11 @@
     {% include app.session.get('breadcrumbs/title') == 'Sonar' ? 'PumukitCmarSonarBundle::header.html.twig' : 'PumukitCmarWebTVBundle::header.html.twig' %}
     <div id="body">
       <div class="container_15" id="tvusc">
-        <div class="usctv_cab">
+        <div class="pumukit_cab">
           {% include 'PumukitCmarWebTVBundle::header_menu.html.twig' %}
           {% render(controller('PumukitWebTVBundle:Widget:breadcrumbs')) %}
         </div>
-        <div class="usctv_content">
+        <div class="pumukit_content">
           {% block body_without_bar %}
           <div class="grid_3">
             {% include 'PumukitCmarWebTVBundle::slidebar.html.twig' %}

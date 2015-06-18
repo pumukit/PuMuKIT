@@ -4,29 +4,29 @@
 /* safe settings                                 */
 
 /* add display:inline to floated elements */
-* html div.usctv_m div.index_tab div,
-* html div.usctv_mmobjs .usctv_mmobj,
-* html div.usctv_mmobjs .usctv_mmobj .thumbnail, * html div.usctv_mini_mmobjs .usctv_mini_mmobj .thumbnail,
+* html div.pumukit_m div.index_tab div,
+* html div.pumukit_mmobjs .pumukit_mmobj,
+* html div.pumukit_mmobjs .pumukit_mmobj .thumbnail, * html div.pumukit_mini_mmobjs .pumukit_mini_mmobj .thumbnail,
 * html .library_tabs .library_tab,
 * html div.impacto .close {display:inline;}
 
 /* convert min height values */
-* html div.usctv_mini_mmobjs .usctv_mini_mmobj .info {height:60px;}
+* html div.pumukit_mini_mmobjs .pumukit_mini_mmobj .info {height:60px;}
 
 
 /* add zoom:1 to overflow:hidden */
-* html div.usctv_m div.index_tab div,
-* html div.usctv_mmobjs .usctv_mmobj,
-* html div.usctv_mmobjs .usctv_mmobj .thumbnail, * html div.usctv_mini_mmobjs .usctv_mini_mmobj .thumbnail,
+* html div.pumukit_m div.index_tab div,
+* html div.pumukit_mmobjs .pumukit_mmobj,
+* html div.pumukit_mmobjs .pumukit_mmobj .thumbnail, * html div.pumukit_mini_mmobjs .pumukit_mini_mmobj .thumbnail,
 * html .library_tabs .library_tab,
 * html div.impacto .close {zoom:1;}
 
 /* add zoom:1 to pos:relative elements */
-* html div#usctv_m_index table div.img_category,
-* html div.usctv_mmobjs .usctv_mmobj,
-* html div.usctv_mini_mmobjs .usctv_mini_mmobj,
-* html div.usctv_mini_mmobjs .usctv_mini_mmobj:hover,
-* html div.usctv_mmobjs .usctv_mmobj .thumbnail, * html div.usctv_mini_mmobjs .usctv_mini_mmobj .thumbnail {zoom:1;}
+* html div#pumukit_m_index table div.img_category,
+* html div.pumukit_mmobjs .pumukit_mmobj,
+* html div.pumukit_mini_mmobjs .pumukit_mini_mmobj,
+* html div.pumukit_mini_mmobjs .pumukit_mini_mmobj:hover,
+* html div.pumukit_mmobjs .pumukit_mmobj .thumbnail, * html div.pumukit_mini_mmobjs .pumukit_mini_mmobj .thumbnail {zoom:1;}
 
 /* add transparancy */
-* html div#usctv_m_index table div.img_category div.cover {filter:progid:DXImageTransform.Microsoft.Alpha(opacity=80);}
+* html div#pumukit_m_index table div.img_category div.cover {filter:progid:DXImageTransform.Microsoft.Alpha(opacity=80);}
