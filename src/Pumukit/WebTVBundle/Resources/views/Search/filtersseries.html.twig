@@ -1,4 +1,4 @@
-<form id="form_buscador" name="busqueda" method="get" action="/searchseries">
+<form id="form_buscador" name="busqueda" method="get" action="{{ path('pumukit_webtv_search_series') }}">
 <table style="width:100%;">
 	<tbody>
 	<tr>
@@ -52,4 +52,4 @@
 </table>
 </form>
 <br />
-<a href="/searchmultimediaobjects">Search by multimedia objects</a>
+<a href="{{ path('pumukit_webtv_search_multimediaobjects') }}">Search by multimedia objects</a>
