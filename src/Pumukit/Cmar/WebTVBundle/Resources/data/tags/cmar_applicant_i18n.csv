@@ -1,5 +1,5 @@
 id;cod;tree_parent;metacategory;display;name_es;name_gl;name_en
-1;APPLICANT;0;1;1;SOLICITANTE;SOLICITANTE;APPLICANT
+1;APPLICANT;0;1;1;APPLICANT;APPLICANT;APPLICANT
 2;APPINSTITUTIONAL;1;0;1;"Institucional";"Institucional";"Institutional"
 3;AICORP;2;0;1;"Corporativos";"Corporativos";"Corporativos"
 4;AIPRESS;2;0;1;"Rueda de prensa";"Rueda de prensa";"Rueda de prensa"
