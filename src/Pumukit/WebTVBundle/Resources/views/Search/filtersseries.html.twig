@@ -1,55 +1,49 @@
-<form id="form_buscador" name="busqueda" method="get" action="/searchseries">
-<table style="width:100%;">
-	<tbody>
-	<tr>
-	
-		<!--SEARCH by term-->
-		<td style="width:33%; float:left;">
-			<div>&nbsp;Search:</div>
-      <div class="input-group" style="height: 30px; width:90%">
-        <input type="text" class="form-control" style="height: 30px; width:100%;" name="search" maxlength="100" value="" placeholder="">
-        <span class="input-group-addon" style="cursor:pointer;"><input type="image" src="{{asset('/bundles/pumukitwebtv/images/lupa_buscador.png')}}"></input></span>
+<form id="form_buscador" name="busqueda" method="get" action="{{ path('pumukit_webtv_search_series') }}" class="row">
+  <input type="submit" style="display:none"/>
+  <div class="form-group col-md-4">
+    <label for="search">{% trans %}Search{% endtrans %}:</label>
+    <div class="input-group">
+      <input type="text" class="form-control" id="search" name="search" value="{{ app.request.query.get('search') }}" placeholder="Search">
+      <div class="input-group-addon">
+        <a href="#" onclick="this.form.submit(); return false;">
+          <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+        </a>
       </div>
-      <noscript>&lt;input type="submit" name="commit" value="go" /&gt;</noscript>
-    </td>
+    </div>
+  </div>
 
-  	<!--Input START DATE-->
-		<td style="width:33%; float:left">
-			<div>&nbsp;Start date:</div>
-      <div class="input-group date" id="datetimepicker1" style="width: 90%;">
-        <input class="form-control" style="width: 100%; height: 30px" placeholder="" name="start" value="" maxlength="100" type="text">
-        <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+  <div class="form-group col-md-3">
+    <label for="start">{% trans %}Start date{% endtrans %}:</label>
+    <div class="input-group">
+      <input type="text" id="start" name="start" value="{{ app.request.query.get('start') }}" class="form-control" placeholder="From">
+      <div class="input-group-addon">
+        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
       </div>
-    </td>
+    </div>
+  </div>
 
-    <!--Input END DATE-->
-    <td style="width:33%; float:left">
-		<div>&nbsp;Finish date:</div>
-      <div class="input-group date" id="datetimepicker2" style="width: 90%;">
-        <input class="form-control" style="width: 100%; height: 30px" placeholder="" name="end" value="" maxlength="100" type="text">
-        <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+  <div class="form-group col-md-3">
+    <label for="end">{% trans %}Finish date{% endtrans %}:</label>
+    <div class="input-group">
+      <input type="text" class="form-control" id="end" name="end" value="{{ app.request.query.get('end') }}" placeholder="Until">
+      <div class="input-group-addon">
+        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
       </div>
-    </td>
+    </div>
+  </div>
 
-		<!--RESET los filtros a los valores por defecto y actualizamos los objetos multimedia-->
-		<td style="width:90px; float:left; padding-top:15px;">
-    	<div>Eliminar filtros</div>
-      <input type="button" onclick="window.location.href=window.location.pathname" name="filter" value="Reset" class="btn" />
-  	</td>
+  <div class="form-group col-md-2">
+    <label for="reset">{% trans %}Reset filters{% endtrans %}:</label>
+    <input type="button" class="btn btn-default form-control" id="exampleInputEmail1" placeholder="Email" value="{% trans %}Reset filters{% endtrans %}"
+           onclick="window.location.href=window.location.pathname">
+  </div>
 
-    <script type="text/javascript">
-      $(function() {
-        $( "#datetimepicker1" ).datetimepicker({viewMode: 'years', format: 'DD/MM/YYYY'});
-        $( "#datetimepicker1" ).val("All");
-        $( "#datetimepicker2" ).datetimepicker({viewMode: 'years', format: 'DD/MM/YYYY'});
-        $( "#datetimepicker2" ).val("All");
-      });
-    </script>
+<script type="text/javascript">
+  $(function() {
+    $( "#start" ).datetimepicker({viewMode: 'years', format: 'DD/MM/YYYY'});
+    $( "#end" ).datetimepicker({viewMode: 'years', format: 'DD/MM/YYYY'});
+  });
+</script>
 
-	</tr>
-
-</tbody>
-</table>
 </form>
-<br />
-<a href="/searchmultimediaobjects">Search by multimedia objects</a>
+<a href="{{ path('pumukit_webtv_search_multimediaobjects') }}">Search by multimedia objects</a>
