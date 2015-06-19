@@ -1,93 +1,84 @@
-<form id="form_buscador" name="busqueda" method="get" action="{{ path('pumukit_webtv_search_multimediaobjects') }}">
-<table style="width:100%;">
-	<tbody>
-	<tr>
-	
-		<!--SEARCH by term-->
-		<td style="width:33%; float:left;">
-			<div>&nbsp;Search:</div>
-            <div class="input-group" style="height: 30px; width:90%">
-                <input type="text" class="form-control" style="height: 30px; width:100%;" name="search" maxlength="100" value="{{ app.request.query.get('search') }}" placeholder="">
-                <span class="input-group-addon" style="cursor:pointer;"><input type="image" src="{{asset('/bundles/pumukitwebtv/images/lupa_buscador.png')}}"></input></span>
-            </div>
-      		<noscript>&lt;input type="submit" name="commit" value="go" /&gt;</noscript>
-  		</td>
+<form id="form_buscador" name="busqueda" method="get" action="{{ path('pumukit_webtv_search_multimediaobjects') }}" class="row">
 
-  		<!--Input START DATE-->
-		<td style="width:33%; float:left">
-			<div>&nbsp;Start date:</div>
-    		<div class="input-group date" id="datetimepicker1" style="width: 90%;">
-                <input class="form-control" style="width: 100%; height: 30px" placeholder="" name="start" value="{{ app.request.query.get('start') }}" maxlength="100" type="text">
-                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-            </div>
-    	</td>
+  <input type="submit" style="display:none"/>
+  <div class="form-group col-md-4">
+    <label for="search">{% trans %}Search{% endtrans %}:</label>
+    <div class="input-group">
+      <input type="text" class="form-control" id="search" name="search" value="{{ app.request.query.get('search') }}" placeholder="Search">
+      <div class="input-group-addon">
+        <a href="#" onclick="this.form.submit(); return false;">
+          <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+        </a>
+      </div>
+    </div>
+  </div>
 
-    	<!--Input END DATE-->
-    	<td style="width:33%; float:left">
-			<div>&nbsp;Finish date:</div>
-    		<div class="input-group date" id="datetimepicker2" style="width: 90%;">
-                <input class="form-control" style="width: 100%; height: 30px" placeholder="" name="end" value="{{ app.request.query.get('end') }}" maxlength="100" type="text">
-                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-            </div>
-    	</td>
+  <div class="form-group col-md-4">
+    <label for="tags">{% trans %}Tags{% endtrans %}:</label>
+    <div class="input-group">
+      <select id="tags" name="tags" class="form-control" onchange="javascript:this.form.submit();">
+        <option {% if tag_found == "" %} selected="selected" {% endif %}>All</option>
+        {% for tag in tags if tag.getTitle() != "" %}
+        <option {% if tag_found == tag.getTitle() %} selected="selected" {% endif %}>{{ tag.getTitle() }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
 
-		<!--Selected TAGs-->
-		<td style="width:33%; float:left; padding-top: 15px;">
-    		<div>&nbsp;Tags</div>
-    		<select name="tags" style="width: 90%; margin-bottom: 10px;" onchange="Javascript:this.form.submit();">
-    			<option {% if tag_found == "" %} selected="selected" {% endif %}>All</option>
-				{% for tag in tags %}
-					{% if tag.getTitle() != "" %}
-    				<option {% if tag_found == tag.getTitle() %} selected="selected" {% endif %}>{{ tag.getTitle() }}</option>
-					{% endif %}
-				{% endfor %}
-			</select>
-		</td>
+  <div class="form-group col-md-4">
+    <label for="duration">{% trans %}Duration{% endtrans %}:</label>
+    <select id="duration" name="duration" class="form-control" onchange="javascript:this.form.submit();">
+      <option value="all" {% if app.request.query.get('duration') == "all" %} selected="selected" {% endif %}>{% trans%}All{% endtrans %}</option>
+	  <option value="-5"  {% if app.request.query.get('duration') == "-5" %} selected="selected" {% endif %}>{% trans %}Up to 5 minutes{% endtrans %}</option>
+	  <option value="-10" {% if app.request.query.get('duration') == "-10" %} selected="selected" {% endif %}>{% trans %}Up to 10 minutes{% endtrans %}</option>
+	  <option value="-30" {% if app.request.query.get('duration') == "-30" %} selected="selected" {% endif %}>{% trans %}Up to 30 minutes{% endtrans %}</option>
+	  <option value="-60" {% if app.request.query.get('duration') == "-60" %} selected="selected" {% endif %}>{% trans %}Up to 60 minutes{% endtrans %}</option>
+	  <option value="+60" {% if app.request.query.get('duration') == "+60" %} selected="selected" {% endif %}>{% trans %}More than 60 minutes{% endtrans %}</option>
+	</select>
+  </div>
 
-		<!--Selected TYPE-->
-		<td style="width:33%; float:left; padding-top: 15px;">
-    		<div>&nbsp;Video / Audio</div>
-    		<select name="type" style="width: 90%; margin-bottom: 10px;" onchange="Javascript:this.form.submit();">
-    			<option {% if type_found == "" %} selected="selected" {% endif %}>All</option>
-				<option {% if type_found == "Video" %} selected="selected" {% endif %}>Video</option>
-				<option {% if type_found == "Audio" %} selected="selected" {% endif %}>Audio</option>
-			</select>
-		</td>
+  <div class="form-group col-md-4">
+    <label for="type">{% trans %}Video/Audio{% endtrans %}:</label>
+    <select id="type" name="type" class="form-control"  onchange="javascript:this.form.submit();">
+      <option {% if type_found == "" %} selected="selected" {% endif %}>{% trans %}All{% endtrans %}</option>
+	  <option {% if type_found == "Video" %} selected="selected" {% endif %}>{% trans %}Video{% endtrans %}</option>
+	  <option {% if type_found == "Audio" %} selected="selected" {% endif %}>{% trans %}Audio{% endtrans %}</option>
+	</select>
+  </div>
 
-		<!--Selected DURATION-->
-		<td style="width:33%; float:left; padding-top: 15px;">
-    		<div>&nbsp;Duration:</div>
-    		<select name="duration" style="width: 90%; margin-bottom: 10px;" onchange="Javascript:this.form.submit();">
-    			<option {% if duration_found == "" %} selected="selected" {% endif %}>All</option>
-				<option {% if duration_found == "Up to 5 minutes" %} selected="selected" {% endif %}>Up to 5 minutes</option>
-				<option {% if duration_found == "Up to 10 minutes" %} selected="selected" {% endif %}>Up to 10 minutes</option>
-				<option {% if duration_found == "Up to 30 minutes" %} selected="selected" {% endif %}>Up to 30 minutes</option>
-				<option {% if duration_found == "Up to 60 minutes" %} selected="selected" {% endif %}>Up to 60 minutes</option>
-				<option {% if duration_found == "More than 60 minutes" %} selected="selected" {% endif %}>More than 60 minutes</option>
-			</select>
-		</td>
+  <div class="form-group col-md-3">
+    <label for="start">{% trans %}Start date{% endtrans %}:</label>
+    <div class="input-group">
+      <input type="text" id="start" name="start" value="{{ app.request.query.get('start') }}" class="form-control" placeholder="From">
+      <div class="input-group-addon">
+        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
 
-		<!--RESET los filtros a los valores por defecto y actualizamos los objetos multimedia-->
-		<td style="width:90px; float:left">
-    		<div>Eliminar filtros</div>
-      		<input type="button" onclick="window.location.href=window.location.pathname" name="filter" value="Reset" class="btn" />
-  		</td>
+  <div class="form-group col-md-3">
+    <label for="end">{% trans %}Finish date{% endtrans %}:</label>
+    <div class="input-group">
+      <input type="text" class="form-control" id="end" name="end" value="{{ app.request.query.get('end') }}" placeholder="Until">
+      <div class="input-group-addon">
+        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
 
-    	<script type="text/javascript">
-      	$(function() {
-        	$( "#datetimepicker1" ).datetimepicker({viewMode: 'years', format: 'DD/MM/YYYY'});
-        	$( "#datetimepicker1" ).val("All");
-        	$( "#datetimepicker2" ).datetimepicker({viewMode: 'years', format: 'DD/MM/YYYY'});
-        	$( "#datetimepicker2" ).val("All");
-        	var tzOffset = (new Date()).getTimezoneOffset();
-        	//document.write(tzOffset);
-     	});
-    	</script>
+  <div class="form-group col-md-2">
+    <label for="reset">{% trans %}Reset filters{% endtrans %}:</label>
+    <input type="button" class="btn btn-default form-control" id="exampleInputEmail1" placeholder="Email" value="{% trans %}Reset filters{% endtrans %}"
+           onclick="window.location.href=window.location.pathname">
+  </div>
 
-	</tr>
+<script type="text/javascript">
+  $(function() {
+    $( "#start" ).datetimepicker({viewMode: 'years', format: 'DD/MM/YYYY'});
+    $( "#end" ).datetimepicker({viewMode: 'years', format: 'DD/MM/YYYY'});
+  });
+</script>
 
-</tbody>
-</table>
 </form>
-<br />
+
 <a href="{{ path('pumukit_webtv_search_series') }}">Search by series</a>

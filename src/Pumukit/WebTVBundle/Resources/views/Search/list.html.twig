@@ -3,7 +3,7 @@
 {% set lastDate = '--' %}
 {% set lastSubserialTitle = 0 %}
 
-	<div style="overflow:hidden">
+	<div>
 
     {% if type == 'series' %}
         {% include 'PumukitWebTVBundle:Search:filtersseries.html.twig' %}
@@ -11,6 +11,7 @@
         {% include 'PumukitWebTVBundle:Search:filtersmultimediaobjects.html.twig' %}
     {% endif %}
 
+    <div class="col-md-12">
 	{% for object in objects %}
 		{% if object.isCollection() %}
 			{% include 'PumukitWebTVBundle:Misc:series.html.twig' %}
@@ -19,8 +20,12 @@
 			{% include 'PumukitWebTVBundle:Misc:multimediaobject.html.twig' %}
 			{% set lastDate = object.getPublicDate()|date("d/m/Y") %}
 		{% endif %}
+    {% else %}
+      <div class="row text-center">
+      {% if type == "series"%}{% trans %}Not series found{% endtrans %}{% else %}{% trans %}Not multimedia objects found.{% endtrans %}{% endif %}.
+      </div>
 	{% endfor %}
-
+	</div>
 	</div>
 
 </div>
