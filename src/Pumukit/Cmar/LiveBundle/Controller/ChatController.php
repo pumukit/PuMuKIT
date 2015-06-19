@@ -25,7 +25,8 @@ class ChatController extends Controller
     public function showAction($channel)
     {
         return array(
-                     'updateInterval' => $this->container->getParameter('pumukit_cmar_live_chat.update_interval'),
+                     'enable_chat' => $this->container->getParameter('pumukit_cmar_live.chat.enable'),
+                     'updateInterval' => $this->container->getParameter('pumukit_cmar_live.chat.update_interval'),
                      'channel' => $channel
                      );
     }

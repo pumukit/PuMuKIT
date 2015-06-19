@@ -22,6 +22,10 @@ class PumukitCmarLiveExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('pumukit_cmar_live.chat', $config['chat']);
+        $container->setParameter('pumukit_cmar_live.chat.enable', $config['chat']['enable']);
+        $container->setParameter('pumukit_cmar_live.chat.update_interval', $config['chat']['update_interval']);
+
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
     }

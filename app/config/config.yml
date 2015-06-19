@@ -5,7 +5,6 @@ imports:
     - { resource: @PumukitAdminBundle/Resources/config/config.yml }
     - { resource: @PumukitNewAdminBundle/Resources/config/config.yml }
     - { resource: encoder.yml }
-    # - { resource: @PumukitCmarLiveBundle/Resources/config/config.yml }
 
 framework:
     #esi:             ~
