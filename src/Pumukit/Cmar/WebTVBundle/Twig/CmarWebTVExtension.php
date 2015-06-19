@@ -25,7 +25,7 @@ class CmarWebTVExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return 'pumukitcmarwebtv_extension';
+        return 'pumukit_cmar_web_tv_extension';
     }
 
     /**

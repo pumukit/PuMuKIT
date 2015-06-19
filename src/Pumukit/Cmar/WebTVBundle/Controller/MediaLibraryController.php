@@ -17,67 +17,67 @@ class MediaLibraryController extends Controller
 {
     /**
      * @Route("/", name="pumukit_webtv_medialibrary_index")
-     * @Route("/", name="pumukitcmarwebtv_library_index")
+     * @Route("/", name="pumukit_cmar_web_tv_library_index")
      */
     public function indexAction(Request $request)
     {
-        return $this->redirect($this->generateUrl('pumukitcmarwebtv_library_mainconferences'));
+        return $this->redirect($this->generateUrl('pumukit_cmar_web_tv_library_mainconferences'));
     }
 
     /**
      * @Route("/gc")
-     * @Route("/mainconferences", name="pumukitcmarwebtv_library_mainconferences")
+     * @Route("/mainconferences", name="pumukit_cmar_web_tv_library_mainconferences")
      * @Template("PumukitCmarWebTVBundle:MediaLibrary:display.html.twig")
      */
     public function mainConferencesAction(Request $request)
     {
         $tagName = 'PUDEMAINCONF';
 
-        return $this->action(null, $tagName, "pumukitcmarwebtv_library_mainconferences", $request);
+        return $this->action(null, $tagName, "pumukit_cmar_web_tv_library_mainconferences", $request);
     }
 
 
     /**
      * @Route("/pc")
-     * @Route("/promotional", name="pumukitcmarwebtv_library_promotional")
+     * @Route("/promotional", name="pumukit_cmar_web_tv_library_promotional")
      * @Template("PumukitCmarWebTVBundle:MediaLibrary:multidisplay.html.twig")
      */
     public function promotionalAction(Request $request)
     {
         $tagName = 'PUDEPROMO';
 
-        return $this->action(null, $tagName, "pumukitcmarwebtv_library_promotional", $request);
+        return $this->action(null, $tagName, "pumukit_cmar_web_tv_library_promotional", $request);
     }
 
 
     /**
      * @Route("/ap")
-     * @Route("/pressarea", name="pumukitcmarwebtv_library_pressarea")
+     * @Route("/pressarea", name="pumukit_cmar_web_tv_library_pressarea")
      * @Template("PumukitCmarWebTVBundle:MediaLibrary:multidisplay.html.twig")
      */
     public function pressAreaAction(Request $request)
     {
         $tagName = 'PUDEPRESS';
 
-        return $this->action(null, $tagName, "pumukitcmarwebtv_library_pressarea", $request);
+        return $this->action(null, $tagName, "pumukit_cmar_web_tv_library_pressarea", $request);
     }
 
 
     /**
      * @Route("/ps")
-     * @Route("/projectsupport", name="pumukitcmarwebtv_library_projectsupport")
+     * @Route("/projectsupport", name="pumukit_cmar_web_tv_library_projectsupport")
      * @Template("PumukitCmarWebTVBundle:MediaLibrary:multidisplay.html.twig")
      */
     public function projectSupportAction(Request $request)
     {
         $tagName = 'PUDESUPPORT';
 
-        return $this->action(null, $tagName, "pumukitcmarwebtv_library_projectsupport", $request);
+        return $this->action(null, $tagName, "pumukit_cmar_web_tv_library_projectsupport", $request);
     }
 
     /**
      * @Route("/c")
-     * @Route("/congresses", name="pumukitcmarwebtv_library_congresses")
+     * @Route("/congresses", name="pumukit_cmar_web_tv_library_congresses")
      * @Template("PumukitCmarWebTVBundle:MediaLibrary:multidisplay.html.twig")
      */
     public function congressesAction(Request $request)
@@ -86,12 +86,12 @@ class MediaLibraryController extends Controller
         
         // TODO review: check locale, check defintion of congresses
         // $series = $seriesRepo->findBy(array('keyword.en' => 'congress'), array('public_date' => 'desc'));
-        return $this->action(null, $tagName, "pumukitcmarwebtv_library_congresses", $request);
+        return $this->action(null, $tagName, "pumukit_cmar_web_tv_library_congresses", $request);
     }
 
     /**
      * @Route("/librarymh")
-     * @Route("/lectures", name="pumukitcmarwebtv_library_lectures")
+     * @Route("/lectures", name="pumukit_cmar_web_tv_library_lectures")
      * @Template("PumukitCmarWebTVBundle:MediaLibrary:opencastindex.html.twig")
      */
     public function lecturesAction(Request $request)
@@ -100,17 +100,17 @@ class MediaLibraryController extends Controller
         
         // TODO review: check locale, check defintion of congresses
         // $series = $seriesRepo->findBy(array('keyword.en' => 'congress'), array('public_date' => 'desc'));
-        return $this->actionOpencast("Recorded lectures", $tagName, "pumukitcmarwebtv_library_lectures");
+        return $this->actionOpencast("Recorded lectures", $tagName, "pumukit_cmar_web_tv_library_lectures");
     }
 
     /**
-     * @Route("/all", name="pumukitcmarwebtv_library_all")
+     * @Route("/all", name="pumukit_cmar_web_tv_library_all")
      * @Template("PumukitCmarWebTVBundle:MediaLibrary:multidisplay.html.twig")
      */
     public function allAction(Request $request)
     {
         $title = $this->get('translator')->trans("All videos");
-        $this->get('pumukit_web_tv.breadcrumbs')->addList($title, "pumukitcmarwebtv_library_all");
+        $this->get('pumukit_web_tv.breadcrumbs')->addList($title, "pumukit_cmar_web_tv_library_all");
 
         $seriesRepo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:Series');
         $series = $seriesRepo->findBy(array(), array('public_date' => -1));

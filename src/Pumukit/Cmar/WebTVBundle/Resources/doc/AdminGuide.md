@@ -47,7 +47,7 @@ imports:
 3.- Uncomment these lines in the `app/config/routing.yml` file of your project:
 
 ```
-pumukitcmarwebtv:
+pumukit_cmar_web_tv:
     resource: "@PumukitCmarWebTVBundle/Resources/config/routing.yml"
     prefix: /
 

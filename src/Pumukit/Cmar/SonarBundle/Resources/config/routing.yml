@@ -1,0 +1,4 @@
+pumukit_cmar_sonar_bundle:
+    resource: "@PumukitCmarSonarBundle/Controller/"
+    type:     annotation
+    prefix:   /

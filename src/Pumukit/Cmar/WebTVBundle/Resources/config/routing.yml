@@ -1,4 +1,4 @@
-pumukitcmarwebtv_opencast_css:
+pumukit_cmar_web_tv_opencast_css:
     pattern: /opencast.css
     methods: [GET]
     defaults:
@@ -6,7 +6,7 @@ pumukitcmarwebtv_opencast_css:
         template: 'PumukitCmarWebTVBundle::opencast.css.twig'
         _format: css
 
-pumukitcmarwebtv_series_css:
+pumukit_cmar_web_tv_series_css:
     pattern: /series.css
     methods: [GET]
     defaults:
@@ -14,7 +14,7 @@ pumukitcmarwebtv_series_css:
         template: 'PumukitCmarWebTVBundle::series.css.twig'
         _format: css
 
-pumukitcmarwebtv_style_css:
+pumukit_cmar_web_tv_style_css:
     pattern: /style.css
     methods: [GET]
     defaults:

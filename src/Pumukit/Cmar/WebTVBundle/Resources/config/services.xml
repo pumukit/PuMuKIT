@@ -6,11 +6,11 @@
 
     <parameters>
         <parameter key="pumukit_web_tv.breadcrumbs_all_title">All videos</parameter>
-        <parameter key="pumukit_web_tv.breadcrumbs_all_route">pumukitcmarwebtv_library_all</parameter>
+        <parameter key="pumukit_web_tv.breadcrumbs_all_route">pumukit_cmar_web_tv_library_all</parameter>
     </parameters>
 
     <services>
-      <service id="pumukitcmarwebtv.twig_extension" class="Pumukit\Cmar\WebTVBundle\Twig\CmarWebTVExtension">
+      <service id="pumukit_cmar_web_tv.twig_extension" class="Pumukit\Cmar\WebTVBundle\Twig\CmarWebTVExtension">
         <argument type="service" id="doctrine_mongodb.odm.document_manager" />
         <tag name="twig.extension"/>
       </service>
