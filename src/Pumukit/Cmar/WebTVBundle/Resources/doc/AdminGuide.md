@@ -27,6 +27,7 @@ class AppKernel extends Kernel
 
             new Pumukit\Cmar\WebTVBundle\PumukitCmarWebTVBundle(),
             new Pumukit\Cmar\SonarBundle\PumukitCmarSonarBundle(),
+            new Pumukit\Cmar\PodcastBundle\PumukitCmarPodcastBundle(),
             new Pumukit\Cmar\LiveBundle\PumukitCmarLiveBundle(),
         );
 
@@ -37,24 +38,26 @@ class AppKernel extends Kernel
 }
 ```
 
-2.- Uncomment this line in the `app/config/config.yml` file of your project:
-
-```
-imports:
-    - { resource: @PumukitCmarLiveBundle/Resources/config/config.yml }
-```
-
-3.- Uncomment these lines in the `app/config/routing.yml` file of your project:
+2.- Uncomment these lines in the `app/config/routing.yml` file of your project:
 
 ```
 pumukit_cmar_web_tv:
     resource: "@PumukitCmarWebTVBundle/Resources/config/routing.yml"
-    prefix: /
+
+pumukit_cmar_podcast:
+    resource: "@PumukitCmarPodcastBundle/Resources/config/routing.yml"
 
 pumukit_cmar_sonar:
-    resource: "@PumukitCmarSonarBundle/Controller/"
-    type:     annotation
-    prefix:   /
+    resource: "@PumukitCmarSonarBundle/Resources/config/routing.yml"
+```
+
+3.- Add your Cmar Live channel configuration for the chat in your `app/config/config.yml` file:
+
+```
+pumukit_cmar_live:
+    chat:
+        enable: true
+        update_interval: 5000
 ```
 
 4.- Add your Opencast server configuration to your `app/config/parameters.yml` files:
@@ -95,6 +98,7 @@ pumukit_cmar_web_tv:
 ```
 $ cd /var/www/pumukit2-cmar
 $ php app/console podcast:init:tags --force
+$ php app/console sonar:init:tags --force
 $ php app/console webtv:init:tags --force
 ```
 

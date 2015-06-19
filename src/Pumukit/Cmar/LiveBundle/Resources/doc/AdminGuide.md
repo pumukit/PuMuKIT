@@ -4,7 +4,7 @@ AdminGuide
 Steps before the live event: How to enable and configure the chat
 -----------------------------------------------------------------
 
-1. Check there are no messages for the live channel
+1.- Check there are no messages for the live channel
 
    - Connect to your database (pumukit in this example) in mongo:
 
@@ -56,31 +56,29 @@ Steps before the live event: How to enable and configure the chat
     > exit
     ```
 
-2. Set the `pumukit_cmar_live_chat.enable` parameter to `true` in your `src/Pumukit/Cmar/LiveBundle/Resources/config/config.yml` file to enable the chat:
+2.- Set the `pumukit_cmar_live.chat.enable` parameter to `true` in your `app/config/config.yml` file to enable the chat:
 
    ```
-   parameters:
-       ...
-       pumukit_cmar_live_chat.enable: true
-       ...
+   pumukit_cmar_live:
+       chat:
+           enable: true
    ```
 
-3. Set the `pumukit_cmar_live_chat.update_interval` paramater with the desired milliseconds in your `src/Pumukit/Cmar/LiveBundle/Resources/config/config.yml` file to configure the refresh interval of the chat:
+3.- Set the `pumukit_cmar_live.chat.update_interval` paramater with the desired milliseconds in your `app/config/config.yml` file to configure the refresh interval of the chat:
 
    ```
-   parameters:
-       ...
-       pumukit_cmar_live_chat.update_interval: 5000
-       ...
+   pumukit_cmar_live:
+       chat:
+           update_interval: 5000
    ```
 
-4. Clear the cache. For production environment:
+4.- Clear the cache. For production environment:
    
    ```
    $ php app/console cache:clear --env=prod --no-debug
    ```
 
-5. Go the live channel event `http://{YourPuMuKITLiveChannel}/live/{liveId}` or just `http://{YourPuMuKITLiveChannel}/live` if you only have one live channel broadcasting and write with your name:
+5.- Go the live channel event `http://{YourPuMuKITLiveChannel}/live/{liveId}` or just `http://{YourPuMuKITLiveChannel}/live` if you only have one live channel broadcasting and write with your name:
 
    ```
    Here you can write your questions for the speaker
@@ -89,7 +87,7 @@ Steps before the live event: How to enable and configure the chat
 Steps after the live event: How to export chat messages and disable the chat
 ----------------------------------------------------------------------------
 
-1. Export chat messages
+1.- Export chat messages
 
    - Connect to your database (pumukit in this example) in mongo:
 
@@ -135,16 +133,15 @@ Steps after the live event: How to export chat messages and disable the chat
     > exit
     ```
 
-2. If there aren't other live channels with live events on that moment, set the `pumukit_cmar_live_chat.enable` parameter to `true` in your `src/Pumukit/Cmar/LiveBundle/Resources/config/config.yml` file to enable the chat:
+2.- If there aren't other live channels with live events on that moment, set the `pumukit_cmar_live.chat.enable` parameter to `true` in your `app/config/config.yml` file to enable the chat:
 
    ```
-   parameters:
-       ...
-       pumukit_cmar_live_chat.enable: true
-       ...
+   pumukit_cmar_live:
+       chat:
+           enable: true
    ```
 
-3. Clear the cache. For production environment:
+3.- Clear the cache. For production environment:
    
    ```
    $ php app/console cache:clear --env=prod --no-debug
