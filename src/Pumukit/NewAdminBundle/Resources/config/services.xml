@@ -5,6 +5,16 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
   <services>
+    <service id="form.type.texti18n" class="Pumukit\AdminBundle\Form\Type\Base\TextI18nType">
+	    <argument>%pumukit2.locales%</argument>
+      <tag name="form.type" alias="texti18n" />
+    </service>
+
+    <service id="form.type.textareai18n" class="Pumukit\AdminBundle\Form\Type\Base\TextareaI18nType">
+	    <argument>%pumukit2.locales%</argument>
+      <tag name="form.type" alias="textareai18n" />
+    </service>
+
     <service id="pumukitnewadmin.kernelexception.listener" class="Pumukit\NewAdminBundle\Listener\ExceptionListener">
       <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" priority="255" />
     </service>

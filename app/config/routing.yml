@@ -40,10 +40,6 @@ pumukit_encoder:
     type:     annotation
     prefix:   /
 
-pumukitadmin:
-    resource: @PumukitAdminBundle/Resources/config/routing.yml
-    prefix:   /old
-
 pumukitnewadmin:
     resource: @PumukitNewAdminBundle/Resources/config/routing.yml
     prefix:   /

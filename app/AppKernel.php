@@ -22,8 +22,6 @@ class AppKernel extends Kernel
             new JMS\SerializerBundle\JMSSerializerBundle($this),
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
             new Sylius\Bundle\ResourceBundle\SyliusResourceBundle(),
-            new Pumukit\AdminBundle\PumukitAdminBundle(),
-            new Pumukit\DirectBundle\PumukitDirectBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Pumukit\EncoderBundle\PumukitEncoderBundle(),
             new Pumukit\InspectionBundle\PumukitInspectionBundle(),
