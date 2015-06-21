@@ -3,7 +3,9 @@
 {% block body %}
 
 <h3 class="cab_body_div">
-	<a title="{% trans %}Back to series list{% endtrans %}" href="{{ path('pumukitnewadmin_series_index') }}" class="btn btn-pumukit btn-raised pull-right" href="#">{% trans %}« Back to series{% endtrans %}</a>  
+  <a title="{% trans %}Back to series list{% endtrans %}" href="{{ path('pumukitnewadmin_series_index') }}" class="btn btn-pumukit btn-raised pull-right">
+    {% trans %}« Back to series{% endtrans %}
+  </a>
   <ul class="breadcrumb" style="margin-bottom: 5px;">
     <li><a href="{{ path('pumukitnewadmin_series_index') }}">Series ({{ series.getTitle() }})</a></li>
     <li class="active">Multimedia Objects</li>
