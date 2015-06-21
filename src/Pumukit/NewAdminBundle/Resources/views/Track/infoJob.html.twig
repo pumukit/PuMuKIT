@@ -15,13 +15,25 @@
       <dd>{{job.getProfile()}}</dd>
       <dt>{% trans %}Cpu{% endtrans %}</dt>
       <dd>{{job.getCpu()}}</dd>
-      <dt>{% trans %}Priority{% endtrans %}</dt>
-      <dd>{{job.getPriority()}}</dd>
       <dt>{% trans %}Duration{% endtrans %}</dt>
       <dd>{% trans %}Before{% endtrans %}: {{ job.duration|duration_string }}, {% trans %}after{% endtrans %}: {{ job.getNewDuration()|duration_string }}</dd>
       <dt>{% trans %}Times{% endtrans %}</dt>
-      <dd>{% trans %}Created{% endtrans %}: {{ job.getTimeini('Y-m-d H:i:s') }}, {% trans %}started{% endtrans %}: {{ job.getTimestart('Y-m-d H:i:s') }}, {% trans %}finished{% endtrans %}: {{ job.getTimeend('Y-m-d H:i:s') }}</d>
-
+      <dd>{% trans %}Created{% endtrans %}: {{ job.getTimeini('Y-m-d H:i:s') }}, {% trans %}started{% endtrans %}: {{ job.getTimestart('Y-m-d H:i:s') }}, {% trans %}finished{% endtrans %}: {{ job.getTimeend('Y-m-d H:i:s') }}</dd>
+      <dt>{% trans %}Priority{% endtrans %}</dt>
+      <dd>
+        <span id="job_info_priority_show" class="job_info_priority">
+          <span id="job_info_priority_show_val">{{job.getPriority()}}</span>
+          <a href="#" onclick="$('.job_info_priority').toggle(); return false;" title="{% trans %}Edit priority{% endtrans %}">
+            <i class="mdi-editor-mode-edit"></i>
+          </a>
+        </span>          
+        <span id="job_info_priority_edit" class="job_info_priority" style="display:none">
+          <input type="number" max="3" min="1" value="{{job.getPriority()}}" id="job_info_priority_edit_input" />
+          <a href="#" onclick="$.post('{{ path('pumukitnewadmin_track_update_job', {'mmId': multimediaObject.Id})}}', {'jobId': '{{ job.id }}', 'priority': $('#job_info_priority_edit_input').val()}).success(function(v){$('#job_info_priority_show_val').html(v.priority); $('.job_info_priority').toggle();}); return false;" title="{% trans %}Edit priority{% endtrans %}">
+            <i class="mdi-content-save"></i>
+          </a>
+        </span>          
+      </dd>      
     </dl>
 
     <div class="shell-wrap">

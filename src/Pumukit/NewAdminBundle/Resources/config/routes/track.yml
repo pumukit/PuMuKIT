@@ -64,6 +64,12 @@ pumukitnewadmin_track_delete_job:
     defaults:
         _controller: pumukitnewadmin.controller.track:deleteJobAction
 
+pumukitnewadmin_track_update_job:
+    pattern: /{mmId}/updatejob
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.track:updateJobPriorityAction
+
 pumukitnewadmin_track_info_job:
     pattern: /job/{mmId}/info/{jobId}
     methods: [GET]

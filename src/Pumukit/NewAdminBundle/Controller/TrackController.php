@@ -221,6 +221,15 @@ class TrackController extends Controller
         return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', array('id' => $multimediaObject->getId())));
     }
 
+    public function updateJobPriorityAction(Request $request)
+    {
+        $priority = $request->get('priority');
+        $jobId = $request->get('jobId');
+        $this->get('pumukitencoder.job')->updateJobPriority($jobId, $priority);
+        
+        return new JsonResponse(array("jobId" => $jobId, "priority" => $priority));
+    }    
+
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      */

@@ -194,6 +194,20 @@ class JobService
         $this->dm->flush();
     }
 
+    public function updateJobPriority($id, $priority)
+    {
+        $job = $this->repo->find($id);
+
+        if (null === $job){
+            $this->logger->addError('[updateJobPriority] Can not find job with id '.$id);
+            throw new \Exception("Can't find job with id ".$id);
+        }
+        
+        $job->setPriority($priority);
+        $this->dm->persist($job);
+        $this->dm->flush();
+    }
+    
     /**
      * Get all jobs status
      */
