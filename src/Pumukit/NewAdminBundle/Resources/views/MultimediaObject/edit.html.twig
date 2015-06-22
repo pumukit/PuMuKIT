@@ -43,11 +43,9 @@
 
   <div role="tabpanel">
     <ul id="menuTab" class="nav nav-tabs" role="tablist">
-      {% if is_granted('ROLE_SUPER_ADMIN') %}
       <li class="active">
         <a href="#pubMm" aria-controls="pubMm" role="tab" data-toggle="tab">{% trans %}Publication{% endtrans %}</a>
       </li>
-      {% endif %}
       <li>
         <a href="#metaMm" aria-controls="metaMm" role="tab" data-toggle="tab">{% trans %}Metadata{% endtrans %}</a>
       </li>
@@ -63,11 +61,9 @@
     </ul>
   
     <div class="tab-content">
-      {% if is_granted('ROLE_SUPER_ADMIN') %}
       <div id="pubMm" role="tabpanel" class="tab-pane active">
         {% include 'PumukitNewAdminBundle:MultimediaObject:updatepub.html.twig' with {'mm': mm, 'pub_channels': pub_channels, 'pub_decisions': pub_decisions} %}
       </div>
-      {% endif %}
       <div id="metaMm" role="tabpanel" class="tab-pane">
         {% include 'PumukitNewAdminBundle:MultimediaObject:updatemeta.html.twig' with {'mm': mm} %}
       </div>

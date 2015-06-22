@@ -46,6 +46,12 @@ pumukitnewadmin_mms_delete:
     defaults:
         _controller: pumukitnewadmin.controller.mms:deleteAction
 
+pumukitnewadmin_mms_clone:
+    pattern: /{id}/clone
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:cloneAction
+
 pumukitnewadmin_mms_copy:
     pattern: /{id}/copy
     methods: [GET, PUT, POST]

@@ -88,6 +88,17 @@ window.submit_delete_mms = function(id)
     }
 }
 
+window.submit_clone_mms = function(id)
+{
+    if (window.confirm("{% trans %}Are you sure you want to clone this multimedia object?{% endtrans %}")){
+        var url = "{{ path('pumukitnewadmin_mms_clone', {'id': '__id__'})|raw }}";
+        var message = '{% trans %}Multimedia Object successfully cloned.{% endtrans %}';
+        $('#list_mms').load(url.replace('__id__', id), {'_method': 'POST'}, function(){
+            success(message)
+        });
+    }
+}
+
 window.submit_delete_series = function(id, seriesTitle, countMm)
 {
     if (window.confirm('{% trans %}Are you sure you want to delete the series{% endtrans %} "'+seriesTitle+'"? {% trans %}This series has{% endtrans %} '+countMm+' {% trans %}multimedia object(s){% endtrans %}.')){
