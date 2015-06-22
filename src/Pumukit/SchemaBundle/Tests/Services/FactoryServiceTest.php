@@ -298,6 +298,33 @@ class FactoryServiceTest extends WebTestCase
         $this->assertEquals(0, count($this->dm->getRepository('PumukitSchemaBundle:Role')->findAll()));
     }
 
+
+    public function testClone()
+    {
+        $this->createBroadcasts();
+
+        $series = $this->factory->createSeries();
+        $src = $this->factory->createMultimediaObject($series);
+       
+        $new = $this->factory->cloneMultimediaObject($src);
+
+        $this->assertEquals($new->getI18nTitle(), $src->getI18nTitle());
+        $this->assertEquals($new->getI18nSubtitle(), $src->getI18nSubtitle());
+        $this->assertEquals($new->getI18nDescription(), $src->getI18nDescription());
+        $this->assertEquals($new->getI18nLine2(), $src->getI18nLine2());
+        $this->assertEquals($new->getI18nKeyword(), $src->getI18nKeyword());
+        $this->assertEquals($new->getCopyright(), $src->getCopyright());
+        $this->assertEquals($new->getLicense(), $src->getLicense());
+        $this->assertEquals($new->getPublicDate(), $src->getPublicDate());
+        $this->assertEquals($new->getRecordDate(), $src->getRecordDate());
+        $this->assertEquals($new->getStatus(), MultimediaObject::STATUS_BLOQ);
+        
+        $this->assertEquals($new->getBroadcast(), $src->getBroadcast());
+        $this->assertEquals(count($new->getRoles()), count($src->getRoles()));
+        $this->assertEquals(count($new->getTags()), count($src->getTags()));
+        
+    }
+
     private function createBroadcasts()
     {
         $locale = 'en';

@@ -4,7 +4,11 @@
     <li>
       <a href="#" onclick="window.submit_delete_mms('{{ mm.id }}'); return false;">
         <i class="mdi-content-clear"></i>{% trans %}Delete multimedia object{% endtrans %}
-    </li>   
+    </li>
+    <li>
+      <a href="#" onclick="window.submit_clone_mms('{{ mm.id }}'); return false;">
+        <i class="mdi-content-content-copy"></i>{% trans %}Clone multimedia object{% endtrans %}
+    </li>
     <li>
       <a href="#" onclick="return false;">
         <strong>{% trans %}Cancel{% endtrans %}...</strong>

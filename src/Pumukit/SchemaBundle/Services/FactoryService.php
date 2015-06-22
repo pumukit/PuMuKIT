@@ -108,11 +108,11 @@ class FactoryService
                 $title = $this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE, array(), null, $locale);
                 $mm->setTitle($title, $locale);
             }
-        }
-        $broadcast = $this->getDefaultBroadcast();
-        if ($broadcast) {
-            $mm->setBroadcast($broadcast);
-            $this->dm->persist($broadcast);
+            $broadcast = $this->getDefaultBroadcast();
+            if ($broadcast) {
+                $mm->setBroadcast($broadcast);
+                $this->dm->persist($broadcast);
+            }
         }
         $mm->setPublicDate(new \DateTime("now"));
         $mm->setRecordDate($mm->getPublicDate());
@@ -275,6 +275,12 @@ class FactoryService
         $new->setI18nLine2($prototype->getI18nLine2());
         $new->setI18nKeyword($prototype->getI18nKeyword());
         $new->setCopyright($prototype->getCopyright());
+        $new->setLicense($prototype->getLicense());
+
+        if ($broadcast = $prototype->getBroadcast()) {
+            $new->setBroadcast($broadcast);
+            $this->dm->persist($broadcast);
+        }
 
         foreach ($prototype->getTags() as $tag) {
           $tagAdded = $this->tagService->addTagToMultimediaObject($new, $tag->getId(), false);
@@ -285,6 +291,51 @@ class FactoryService
                 $new->addPersonWithRole($embeddedPerson, $embeddedRole);
             }
         }
+
+        return $new;
+    }
+
+
+    /**
+     * Clone a multimedia object.
+     *
+     * @param  MultimediaObject $src
+     * @return MultimediaObject
+     */
+    public function cloneMultimediaObject(MultimediaObject $src)
+    {
+        $new = new MultimediaObject();
+
+        $new->setI18nTitle($src->getI18nTitle());
+        $new->setI18nSubtitle($src->getI18nSubtitle());
+        $new->setI18nDescription($src->getI18nDescription());
+        $new->setI18nLine2($src->getI18nLine2());
+        $new->setI18nKeyword($src->getI18nKeyword());
+        $new->setCopyright($src->getCopyright());
+
+        foreach ($src->getTags() as $tag) {
+          $tagAdded = $this->tagService->addTagToMultimediaObject($new, $tag->getId(), false);
+        }
+
+        foreach ($src->getRoles() as $embeddedRole) {
+            foreach ($embeddedRole->getPeople() as $embeddedPerson) {
+                $new->addPersonWithRole($embeddedPerson, $embeddedRole);
+            }
+        }
+
+        $new->setSeries($src->getSeries());
+
+        if ($broadcast = $src->getBroadcast()) {
+            $new->setBroadcast($broadcast);
+            $this->dm->persist($broadcast);
+        }
+
+        $new->setPublicDate($src->getPublicDate());
+        $new->setRecordDate($src->getRecordDate());
+        $new->setStatus(MultimediaObject::STATUS_BLOQ);
+
+        $this->dm->persist($new);
+        $this->dm->flush();
 
         return $new;
     }

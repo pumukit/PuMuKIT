@@ -491,6 +491,21 @@ class MultimediaObjectController extends SortableAdminController
     }
 
     /**
+     * Clone action
+     */
+    public function cloneAction(Request $request)
+    {
+        $resource = $this->findOr404($request);
+        $resourceId = $resource->getId();
+        $seriesId = $resource->getSeries()->getId();
+
+        $this->get('pumukitschema.factory')->cloneMultimediaObject($resource);
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list', 
+                                                  array('seriesId' => $seriesId)));
+    }
+
+    /**
      * Batch invert announce selected
      */
     public function invertAnnounceAction(Request $request)
