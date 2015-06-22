@@ -29,13 +29,12 @@ class InspectionMediainfoService implements InspectionServiceInterface
         }
 
         $xml = simplexml_load_string($this->getMediaInfo($file));
-
         if (!$this->xmlHasMediaContent($xml)) {
             throw new \InvalidArgumentException("This file has no accesible video " .
                 "nor audio tracks\n" . $file);
         }
 
-        $duration = ceil($xml->File->track->Duration________________________________[0] / 1000); // in ms (using mediainfo -f)
+        $duration = ceil($xml->File->track->Duration / 1000); // in ms (using mediainfo -f)
 
         return $duration;
     }
