@@ -1,6 +1,6 @@
 <a name="{{ mm.id }}"></a>
 <!-- DATE -->
-{% if (("date_all" == seriesprototype) or (((mm.getRecordDate()|date('d/m/Y')) is not empty) and ((last_date|date('Y-m-d')) != (mm.getRecordDate()|date('Y-m-d'))))) %}
+{% if (("date_all" == template) or (((mm.getRecordDate()|date('d/m/Y')) is not empty) and ((last_date|date('Y-m-d')) != (mm.getRecordDate()|date('Y-m-d'))))) %}
 <div class="date">
   {% trans %}Date of holding{% endtrans %}: {{ mm.getRecordDate()|date('d/m/Y') }}
 </div>
@@ -17,11 +17,11 @@
   </div>
 {% endif %}
 <!-- SUBSERIAL -->
-{% if ((("date_subserial" == seriesprototype) and (mm.getProperty('subseriestitle') and (((mm.getProperty('subseriestitle')|raw) != last_subseriestitle) or ((last_date|date('Y-m-d')) != (mm.getRecordDate()|date('Y-m-d')))))) or (("subserial" == seriesprototype) and (mm.getProperty('subseriestitle') and ((mm.getProperty('subseriestitle')|raw) != last_subseriestitle)))) %}
+{% if ((("date_subserial" == template) and (mm.getProperty('subseriestitle') and (((mm.getProperty('subseriestitle')|raw) != last_subseriestitle) or ((last_date|date('Y-m-d')) != (mm.getRecordDate()|date('Y-m-d')))))) or (("subserial" == template) and (mm.getProperty('subseriestitle') and ((mm.getProperty('subseriestitle')|raw) != last_subseriestitle)))) %}
   <div class="serial_date">{{ mm.getProperty('subseriestitle')[app.request.getLocale()] }}</div>
 {% endif %}
 <!-- MULTISUBSERIAL -->
-{% if seriesprototype == "multisubserial" %}
+{% if template == "multisubserial" %}
   {% set subseries_now = (mm.getProperty('subseriestitle')[app.request.getLocale()]|split("\\n")) %}
   {% set subseries_before = (last_subseriestitle[app.request.getLocale()]|split("\\n")) %}
   {% set all_subseries = false %}
