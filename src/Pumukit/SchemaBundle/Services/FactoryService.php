@@ -269,15 +269,12 @@ class FactoryService
     {
         $new = new MultimediaObject();
 
-        //$new->setRank($prototype->getRank()); //SortablePosition
         $new->setI18nTitle($prototype->getI18nTitle());
         $new->setI18nSubtitle($prototype->getI18nSubtitle());
         $new->setI18nDescription($prototype->getI18nDescription());
         $new->setI18nLine2($prototype->getI18nLine2());
         $new->setI18nKeyword($prototype->getI18nKeyword());
         $new->setCopyright($prototype->getCopyright());
-        $new->setDuration($prototype->getDuration());
-        $new->setNumview($prototype->getNumview());
 
         foreach ($prototype->getTags() as $tag) {
           $tagAdded = $this->tagService->addTagToMultimediaObject($new, $tag->getId(), false);
