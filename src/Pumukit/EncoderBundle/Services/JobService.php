@@ -488,7 +488,7 @@ class JobService
     {                             
         $multimediaObject = $this->getMultimediaObject($job);
       
-        return $this->createTrack($multimediaObject, $job->getPathEnd(), $job->getProfile(), $job->getLanguageId(), $job->getI18nDescription());
+        return $this->createTrack($multimediaObject, $job->getPathEnd(), $job->getProfile(), $job->getLanguageId(), $job->getI18nDescription(), $job->getDuration());
     }
 
     public function createTrackWithFile($pathFile, $profileName, MultimediaObject $multimediaObject, $language = null, $description = array())
@@ -503,11 +503,18 @@ class JobService
         if (!copy($pathFile, $pathEnd)) {
           throw new \Exception("Error to copy file");
         }
+
+        try{
+            $duration = $this->inspectionService->getDuration($pathFile);
+        }catch (\Exception $e){
+            $this->logger->addError('[addJob] InspectionService getDuration error message: '. $e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
         
-        return $this->createTrack($multimediaObject, $pathEnd, $profileName, $language, $description);
+        return $this->createTrack($multimediaObject, $pathEnd, $profileName, $language, $description, $duration);
     }
 
-    public function createTrack(MultimediaObject $multimediaObject, $pathEnd, $profileName, $language = null, $description = array())
+    public function createTrack(MultimediaObject $multimediaObject, $pathEnd, $profileName, $language = null, $description = array(), $duration)
     {
         $profile = $this->profileService->getProfile($profileName);
 
@@ -530,6 +537,7 @@ class JobService
         }
 
         $this->inspectionService->autocompleteTrack($track);
+        $track->setDuration($duration);
 
         $track->setOnlyAudio($track->getWidth() == 0);
         $track->setHide(false);
