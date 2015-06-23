@@ -149,7 +149,7 @@ class EmbeddedTag
           $locale = $this->locale;
       }
       if (!isset($this->title[$locale])) {
-          return;
+          return "";
       }
 
       return $this->title[$locale];
@@ -201,7 +201,7 @@ class EmbeddedTag
           $locale = $this->locale;
       }
       if (!isset($this->description[$locale])) {
-          return;
+          return "";
       }
 
       return $this->description[$locale];
