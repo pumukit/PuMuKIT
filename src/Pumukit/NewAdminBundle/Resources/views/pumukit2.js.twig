@@ -47,6 +47,18 @@ window.submit_delete_live = function(id)
     }
 }
 
+
+window.submit_delete_seriestype = function(id)
+{
+    if (window.confirm("{% trans %}Are you sure you want to delete this series type?{% endtrans %}")){
+        var url = "{{ path('pumukitnewadmin_seriestype_delete', {'id': '__id__'})|raw }}";
+        var message = '{% trans %}Series type successfully deleted.{% endtrans %}';
+        $('#list_seriestypes').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
+    }
+}
+
+
+
 window.submit_delete_event = function(id)
 {
     if (window.confirm("{% trans %}Are you sure you want to delete this live event?{% endtrans %}")){
@@ -1363,6 +1375,30 @@ $(document).on('submit', '#pumukitnewadmin_live_create_form', function() {
                         $('#preview_live').load(routeShow.replace('__liveId__', liveId));
                     });
                     var message = '{% trans %}Live channel successfully created.{% endtrans %}';
+                    success(message);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                no_success(errorThrown+': '+textStatus);
+            }
+    });
+    return false;
+});
+
+$(document).on('submit', '#pumukitnewadmin_seriestype_create_form', function() {
+    $(this).find(':submit').prop('disabled', true);
+    $('#myModal').modal('hide');
+    $.ajax({
+            url: "{{ path('pumukitnewadmin_seriestype_create')|raw }}",
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function(response, textStatus, jqXHR){
+                if (jqXHR.responseText.indexOf('modal-header') != -1){
+                    var message = '{% trans %}There was an error in creating the Live channel.{% endtrans %}';
+                    no_success(message);
+                }else{
+                    $('#list_seriestypes').html(response);
+                    var message = '{% trans %}Series type channel successfully created.{% endtrans %}';
                     success(message);
                 }
             },

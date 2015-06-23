@@ -38,7 +38,8 @@ class Builder extends ContainerAware
         $tables = $menu->addChild('Tables')->setExtra('translation_domain', 'NewAdminBundle');
         $tables->addChild('People', array('route' => 'pumukitnewadmin_person_index'))->setExtra('translation_domain', 'NewAdminBundle');
         $tables->addChild('Tags', array('route' => 'pumukitnewadmin_tag_index'))->setExtra('translation_domain', 'NewAdminBundle');
-        $tables->addChild('Access Profiles', array('route' => 'pumukitnewadmin_broadcast_index'))->setExtra('translation_domain', 'NewAdminBundle');
+        $tables->addChild('Access profiles', array('route' => 'pumukitnewadmin_broadcast_index'))->setExtra('translation_domain', 'NewAdminBundle');
+        $tables->addChild('Series types', array('route' => 'pumukitnewadmin_seriestype_index'))->setExtra('translation_domain', 'NewAdminBundle');
 
         if ($this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
           $management = $menu->addChild('Management')->setExtra('translation_domain', 'NewAdminBundle');
