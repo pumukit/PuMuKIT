@@ -96,7 +96,7 @@ class SeriesType
           $locale = $this->locale;
       }
       if (!isset($this->name[$locale])) {
-          return;
+          return '';
       }
 
       return $this->name[$locale];
@@ -148,7 +148,7 @@ class SeriesType
           $locale = $this->locale;
       }
       if (!isset($this->description[$locale])) {
-          return;
+          return '';
       }
 
       return $this->description[$locale];

@@ -44,7 +44,7 @@ class Material extends Element
             $locale = $this->getLocale();
         }
         if (!isset($this->name[$locale])) {
-            return;
+            return '';
         }
 
         return $this->name[$locale];

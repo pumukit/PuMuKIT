@@ -258,7 +258,7 @@ class Broadcast
           $locale = $this->locale;
       }
       if (!isset($this->description[$locale])) {
-          return;
+          return '';
       }
 
       return $this->description[$locale];
