@@ -42,6 +42,8 @@
        <div style="position:relative; overflow:hidden" class="pic_mm">
          <a href="{{ url('pumukit_webtv_multimediaobject_index', {'id': mm.id}) }}" class="serial_mm_pics" > 
            {% for pic in mm.getPics() if pic.getUrl() is not empty %}
+               <img class="play_icon_shadow" alt="" width="30" src="/bundles/pumukitwebtv/images/webtv/sombra.png">
+               <img class="play_icon" alt="" width="15" src="/bundles/pumukitwebtv/images/webtv/play.png">
                <img src="{{ pic.getUrl() }}" class="serial">
            {% else %}
                <img src="/bundles/pumukitwebtv/images/no_pic.jpg" class="serial">
