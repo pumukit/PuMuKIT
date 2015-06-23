@@ -7,4 +7,11 @@
     {{ series.getSubtitle() }}
   </h5>
   {% endif %}
+  {% if series_precinct %}
+    {% if series_precinct.getCod() != "PRECINCT1" %}
+    <h3 class="place">
+      {{ precinct_complete_name(series_precinct, app.request.getLocale()) }}
+    </h3>
+    {% endif %}
+  {% endif %}
 </div>
