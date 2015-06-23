@@ -4,6 +4,7 @@ namespace Pumukit\Cmar\WebTVBundle\Twig;
 
 use Symfony\Component\Intl\Intl;
 use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\Tag;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
 class CmarWebTVExtension extends \Twig_Extension
@@ -46,6 +47,7 @@ class CmarWebTVExtension extends \Twig_Extension
     {
       return array(
                    new \Twig_SimpleFunction('iframeurl', array($this, 'getIframeUrl')),
+                   new \Twig_SimpleFunction('precinct_complete_name', array($this, 'getPrecinctCompleteName')),
                    );
     }
 
@@ -104,5 +106,23 @@ class CmarWebTVExtension extends \Twig_Extension
     public function countMultimediaObjects($series)
     {
         return $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->countInSeries($series);
+    }
+
+    /**
+     * Get precinct complete name
+     *
+     * @param Tag|EmbeddedTag $precinctTag
+     * @param string $locale
+     * @return string
+     */
+    public function getPrecinctCompleteName($precinctTag, $locale)
+    {
+        if (!($precinctTag instanceof Tag)) {
+            $precinctTag = $this->dm->getRepository('PumukitSchemaBundle:Tag')->findOneByCod($precinctTag->getCod());
+        }
+        $placeTag = $precinctTag->getParent();
+        $address = ($placeTag->getProperty("address".$locale) == '')?'':' - '.$placeTag->getProperty("address".$locale);
+        $precinct = ($precinctTag->getTitle() == '')?'':$precinctTag->getTitle().', ';
+        return $precinct . $placeTag->getTitle().$address;
     }
 }
