@@ -45,8 +45,8 @@ class TagTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($display, $tag->getDisplay());
         $this->assertEquals($properties, $tag->getProperties());
 
-        $this->assertNull($tag->getTitle('fr'));
-        $this->assertNull($tag->getDescription('fr'));
+        $this->assertEquals('', $tag->getTitle('fr'));
+        $this->assertEquals('', $tag->getDescription('fr'));
 
         $titleEs = 'título';
         $titleArray = array('en' => $title, 'es' => $titleEs);

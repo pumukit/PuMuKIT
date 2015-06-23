@@ -428,8 +428,8 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($tag->getPath(), $mm->getTags()[0]->getPath());
         $this->assertEquals($tag->getLevel(), $mm->getTags()[0]->getLevel());
 
-        $this->assertNull($mm->getTags()[0]->getTitle('fr'));
-        $this->assertNull($mm->getTags()[0]->getDescription('fr'));
+        $this->assertEquals('', $mm->getTags()[0]->getTitle('fr'));
+        $this->assertEquals('', $mm->getTags()[0]->getDescription('fr'));
 
         $this->assertEquals($titleArray, $mm->getTags()[0]->getI18nTitle());
         $this->assertEquals($descriptionArray, $mm->getTags()[0]->getI18nDescription());
@@ -473,8 +473,8 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($updated, $mm->getTags()[0]->getUpdated());
         $this->assertEquals($display, $mm->getTags()[0]->getDisplay());
 
-        $this->assertNull($mm->getTags()[0]->getTitle('fr'));
-        $this->assertNull($mm->getTags()[0]->getDescription('fr'));
+        $this->assertEquals('', $mm->getTags()[0]->getTitle('fr'));
+        $this->assertEquals('', $mm->getTags()[0]->getDescription('fr'));
 
         $this->assertEquals($titleArray, $mm->getTags()[0]->getI18nTitle());
         $this->assertEquals($descriptionArray, $mm->getTags()[0]->getI18nDescription());
