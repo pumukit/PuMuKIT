@@ -40,14 +40,14 @@ pumukit_encoder:
             channels: 1
             audio: false
             bat: |
-                ffmpeg -y -i "{{input}}" -acodec libfdk_aac -vcodec libx264 -preset slow -crf 15 -threads 0 "{{output}}"
+                avconv -y -i "{{input}}" -acodec libvo_aacenc -vcodec libx264 -preset slow -crf 15 -threads 0 "{{output}}"
             streamserver:
                 name: Localmaster
                 type: store
                 host: 127.0.0.1
                 description: Local master server
                 dir_out: "%kernel.root_dir%/../web/storage/masters"
-            app: ffmpeg
+            app: avconv
             rel_duration_size: 1
             rel_duration_trans: 1
         video_h264:
@@ -66,7 +66,7 @@ pumukit_encoder:
             channels: 1
             audio: false
             bat: |
-                ffmpeg -y -i "{{input}}" -acodec libfdk_aac -vcodec libx264 -preset slow -crf 15 -threads 0 "{{output}}"
+                avconv -y -i "{{input}}" -acodec libvo_aacenc -vcodec libx264 -preset slow -crf 15 -threads 0 "{{output}}"
             streamserver:
                 name: Localhost
                 type: download
@@ -74,7 +74,7 @@ pumukit_encoder:
                 description: Local download server
                 dir_out: "%kernel.root_dir%/../web/storage/downloads"
                 url_out: "/storage/downloads"
-            app: ffmpeg
+            app: avconv
             rel_duration_size: 1
             rel_duration_trans: 1
         audio_aac:
@@ -93,7 +93,7 @@ pumukit_encoder:
             channels: 1
             audio: true
             bat: |
-                ffmpeg -y -i "{{input}}" -acodec libfdk_aac -vn -threads 0 "{{output}}"
+                avconv -y -i "{{input}}" -acodec libvo_aacenc -vn -threads 0 "{{output}}"
             streamserver:
                 name: Localhost
                 type: download
@@ -101,7 +101,7 @@ pumukit_encoder:
                 description: Local download server
                 dir_out: "%kernel.root_dir%/../web/storage/downloads"
                 url_out: "/storage/downloads"
-            app: ffmpeg
+            app: avconv
             rel_duration_size: 1
             rel_duration_trans: 1
         sbs:
@@ -120,7 +120,7 @@ pumukit_encoder:
             channels: 1
             audio: false
             bat: |
-                ffmpeg -i {{presenter/delivery}}  -i {{presentation/delivery}} -filter_complex "[0:v]scale=640:-1[a],[a]pad=1280:720:0:120+((480-in_h)/2) [bg],[1:v]scale=640:-1[b],[bg][b]overlay=w:120+((480-h)/2)" -r 25 -vcodec libx264 -preset medium -crf 22 -maxrate 1100k -bufsize 1835k -acodec libfdk_aac -ac 2 -ar 44100 -b:a 128k -f mp4 -y "{{output}}"
+                avconv -i {{presenter/delivery}}  -i {{presentation/delivery}} -filter_complex "[0:v]scale=640:-1[a],[a]pad=1280:720:0:120+((480-in_h)/2) [bg],[1:v]scale=640:-1[b],[bg][b]overlay=w:120+((480-h)/2)" -r 25 -vcodec libx264 -preset medium -crf 22 -maxrate 1100k -bufsize 1835k -acodec libvo_aacenc -ac 2 -ar 44100 -b:a 128k -f mp4 -y "{{output}}"
             streamserver:
                 name: Localhost
                 type: download
@@ -128,7 +128,7 @@ pumukit_encoder:
                 description: Local download server
                 dir_out: "%kernel.root_dir%/../web/storage/downloads"
                 url_out: "/storage/downloads"
-            app: ffmpeg
+            app: avconv
             rel_duration_size: 1
             rel_duration_trans: 1
 
