@@ -28,7 +28,7 @@ class PicExtractorService
             throw new \InvalidArgumentException("The path '".$targetPath."' for storing Pic does not exist.");
         }
         $this->targetUrl = $targetUrl;
-        $this->command = $command ?: 'ffmpeg -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"';
+        $this->command = $command ?: 'avprobe -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"';
     }
 
     /**
