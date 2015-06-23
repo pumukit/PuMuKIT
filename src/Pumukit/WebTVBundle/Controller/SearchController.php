@@ -125,20 +125,20 @@ class SearchController extends Controller
 
 		//Obtenemos todos los objetos multimedia del repositorio que contengan <$duration_found>
 		if($duration_found != "All" && $duration_found != ""){
-			if($duration_found == "Up to 5 minutes"){
-				$queryBuilder->field('tracks.duration')->lte(5);
+			if($duration_found == "-5"){
+				$queryBuilder->field('tracks.duration')->lte(300);
 			}
-			if($duration_found == "Up to 10 minutes"){
-				$queryBuilder->field('tracks.duration')->lte(10);
+			if($duration_found == "-10"){
+				$queryBuilder->field('tracks.duration')->lte(600);
 			}
-			if($duration_found == "Up to 30 minutes"){
-				$queryBuilder->field('tracks.duration')->lte(30);
+			if($duration_found == "-30"){
+				$queryBuilder->field('tracks.duration')->lte(1800);
 			}
-			if($duration_found == "Up to 60 minutes"){
-				$queryBuilder->field('tracks.duration')->lte(60);
+			if($duration_found == "-60"){
+				$queryBuilder->field('tracks.duration')->lte(3600);
 			}
-			if($duration_found == "More than 60 minutes"){
-				$queryBuilder->field('tracks.duration')->gt(60);
+			if($duration_found == "+60"){
+				$queryBuilder->field('tracks.duration')->gt(3600);
 			}
 		}
 
