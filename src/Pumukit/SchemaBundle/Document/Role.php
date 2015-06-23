@@ -189,7 +189,7 @@ class Role
             $locale = $this->locale;
         }
         if (!isset($this->name[$locale])) {
-            return;
+            return '';
         }
 
         return $this->name[$locale];
@@ -241,7 +241,7 @@ class Role
             $locale = $this->locale;
         }
         if (!isset($this->text[$locale])) {
-            return;
+            return '';
         }
 
         return $this->text[$locale];
