@@ -1,0 +1,11 @@
+<div class="grid_15 ">
+  <div style="margin-right: 9px;">
+    {% if cas_is_authenticated %}
+    <div>
+      <span style="color:#000">{{ cas_username }}  -</span>  <a href="{{ path('pumukit_cmar_web_tv_utils_logout') }}" style="color:#257E94">{% trans %}logout{% endtrans %}</a>
+    </div>
+    {% else %}
+    <a href="{{ path('pumukit_cmar_web_tv_utils_login') }}" style="color:#B19653">{% trans %}login{% endtrans %}</a>
+    {% endif %}
+  </div>
+</div>

@@ -62,86 +62,32 @@
           <ul class="dropdown-menu" role="menu" aria-labelledby="list_capture_frame_{{ track.id }}">
             <li>&nbsp;&nbsp;<strong>{% trans %}Capture frame from{% endtrans %}:</strong></li>
             <li>
-              <a href="#" onclick="$.ajax({
-                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mm.id, 'preview': 1, 'numframe': 0}) }}',
-                                           type: 'POST',
-                                           beforeSend: function(){$('#pic_mms_{{ mm.id }}_load').show();},
-                                           success: function(response){
-                                                                       $('#pic_mms_{{ mm.id }}_load').hide();
-                                                                       $('#pic_mms_{{ mm.id }}').html(response);
-                                           }
-                                   });
-                                   return false;">
+              <a href="#" onclick="extract_pic('{{ track.id }}', '{{ mm.id }}', 0); return false;">
                 <i class="mdi-image-camera"></i> {% trans %}Auto{% endtrans %}
               </a>
             </li>
             <li>
-              <a href="#" onclick="$.ajax({
-                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mm.id, 'preview': 1, 'numframe': '10%'}) }}',
-                                           type: 'POST',
-                                           beforeSend: function(){$('#pic_mms_{{ mm.id }}_load').show();},
-                                           success: function(response){
-                                                                       $('#pic_mms_{{ mm.id }}_load').hide();
-                                                                       $('#pic_mms_{{ mm.id }}').html(response);
-                                           }
-                                   });
-                                   return false;">
+              <a href="#" onclick="extract_pic('{{ track.id }}', '{{ mm.id }}', '10%'); return false;">
                 <i class="mdi-image-camera"></i> {% trans %}10%{% endtrans %}
               </a>
             </li>
             <li>
-              <a href="#" onclick="$.ajax({
-                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mm.id, 'preview': 1, 'numframe': '25%'}) }}',
-                                           type: 'POST',
-                                           beforeSend: function(){$('#pic_mms_{{ mm.id }}_load').show();},
-                                           success: function(response){
-                                                                       $('#pic_mms_{{ mm.id }}_load').hide();
-                                                                       $('#pic_mms_{{ mm.id }}').html(response);
-                                           }
-                                   });
-                                   return false;">
+              <a href="#" onclick="extract_pic('{{ track.id }}', '{{ mm.id }}', '25%'); return false;">
                 <i class="mdi-image-camera"></i> {% trans %}25%{% endtrans %}
               </a>
             </li>
             <li>
-              <a href="#" onclick="$.ajax({
-                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mm.id, 'preview': 1, 'numframe': '50%'}) }}',
-                                           type: 'POST',
-                                           beforeSend: function(){$('#pic_mms_{{ mm.id }}_load').show();},
-                                           success: function(response){
-                                                                       $('#pic_mms_{{ mm.id }}_load').hide();
-                                                                       $('#pic_mms_{{ mm.id }}').html(response);
-                                           }
-                                   });
-                                   return false;">
+              <a href="#" onclick="extract_pic('{{ track.id }}', '{{ mm.id }}', '50%'); return false;">
                 <i class="mdi-image-camera"></i> {% trans %}50%{% endtrans %}
               </a>
             </li>
             <li>
-              <a href="#" onclick="$.ajax({
-                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mm.id, 'preview': 1, 'numframe': '75%'}) }}',
-                                           type: 'POST',
-                                           beforeSend: function(){$('#pic_mms_{{ mm.id }}_load').show();},
-                                           success: function(response){
-                                                                       $('#pic_mms_{{ mm.id }}_load').hide();
-                                                                       $('#pic_mms_{{ mm.id }}').html(response);
-                                           }
-                                   });
-                                   return false;">
+              <a href="#" onclick="extract_pic('{{ track.id }}', '{{ mm.id }}', '75%'); return false;">
                 <i class="mdi-image-camera"></i> {% trans %}75%{% endtrans %}
               </a>
             </li>
             <li>
-              <a href="#" onclick="$.ajax({
-                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mm.id, 'preview': 1, 'numframe': '90%'}) }}',
-                                           type: 'POST',
-                                           beforeSend: function(){$('#pic_mms_{{ mm.id }}_load').show();},
-                                           success: function(response){
-                                                                       $('#pic_mms_{{ mm.id }}_load').hide();
-                                                                       $('#pic_mms_{{ mm.id }}').html(response);
-                                           }
-                                   });
-                                   return false;">
+              <a href="#" onclick="extract_pic('{{ track.id }}', '{{ mm.id }}', '90%'); return false;">
                 <i class="mdi-image-camera"></i> {% trans %}90%{% endtrans %}
               </a>
             </li>
