@@ -50,6 +50,10 @@ pumukitnewadmin_mmspic:
     resource: @PumukitNewAdminBundle/Resources/config/routes/mmspic.yml
     prefix: /admin/mmspic
 
+pumukitnewadmin_seriestype:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/seriestype.yml
+    prefix: /admin/seriestype
+
 pumukitnewadmin_tag:
     resource: @PumukitNewAdminBundle/Resources/config/routes/tag.yml
     prefix: /admin/tag

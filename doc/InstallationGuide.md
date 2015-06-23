@@ -25,7 +25,7 @@ Setup a development environment on Ubuntu 14.04:
     sudo apt-get install git php5-fpm php5-cli nginx-full
     sudo apt-get install php5-intl php5-xdebug php5-curl
     sudo apt-get install mongodb php5-mongo 
-    sudo apt-get install mediainfo libav-tools
+    sudo apt-get install mediainfo libav-tools libavcodec-extra
     ```
 
 2. Download the last version of PuMuKIT-2:

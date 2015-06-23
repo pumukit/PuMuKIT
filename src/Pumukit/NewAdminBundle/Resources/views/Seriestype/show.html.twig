@@ -1,0 +1,15 @@
+{% if seriestype is not null %}
+<dl class="dl-horizontal">
+  <dt>{% trans %}Code{% endtrans %}</dt>
+  <dd>{{ seriestype.cod }}</dd>
+  <dt>{% trans %}Name{% endtrans %}</dt>
+  <dd>{{ seriestype.name }}</dd>
+  <dt>{% trans %}Description{% endtrans %}</dt>
+  <dd>{{ seriestype.description }}</dd>
+</dl>
+
+{% else %}
+<p>
+  {% trans %}Select any type.{% endtrans %}
+</p>
+{% endif %}
