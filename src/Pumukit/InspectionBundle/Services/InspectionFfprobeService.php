@@ -71,7 +71,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
             switch ((string) $stream->codec_type) {
                 case "video":
                     $track->setVcodec((string)$stream->codec_name);
-                    $track->setFramerate((string)$stream->r_frame_rate);
+                    $track->setFramerate((string)$stream->avg_frame_rate);
                     $track->setWidth(intval($stream->width));
                     $track->setHeight(intval($stream->height));
                     $only_audio = false;
