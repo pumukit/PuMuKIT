@@ -84,8 +84,6 @@ class MediaLibraryController extends Controller
     {
         $tagName = 'PUDECONGRESSES';
         
-        // TODO review: check locale, check defintion of congresses
-        // $series = $seriesRepo->findBy(array('keyword.en' => 'congress'), array('public_date' => 'desc'));
         return $this->action(null, $tagName, "pumukit_cmar_web_tv_library_congresses", $request);
     }
 
@@ -98,8 +96,6 @@ class MediaLibraryController extends Controller
     {
         $tagName = 'TECHOPENCAST';
         
-        // TODO review: check locale, check defintion of congresses
-        // $series = $seriesRepo->findBy(array('keyword.en' => 'congress'), array('public_date' => 'desc'));
         return $this->actionOpencast("Recorded lectures", $tagName, "pumukit_cmar_web_tv_library_lectures");
     }
 
