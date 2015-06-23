@@ -39,7 +39,7 @@ class BroadcastTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($i18nDescription, $broadcast->getI18nDescription());
 
-        $this->assertNull($broadcast->getDescription('fr'));
+        $this->assertEquals('', $broadcast->getDescription('fr'));
         $this->assertNull($broadcast->getId());
     }
 
