@@ -125,7 +125,7 @@ class MediaLibraryController extends Controller
 
         $tag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneByCod($tagName);
         if (!$tag) {
-          throw $this->createNotFoundException('The tag does not exist');
+          throw $this->createNotFoundException('The tag with code "'.$tagName.'" does not exist');
         }
     
         $title = $title != null ? $title : $tag->getTitle();
@@ -144,7 +144,7 @@ class MediaLibraryController extends Controller
 
         $tag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneByCod($tagName);
         if (!$tag) {
-            throw $this->createNotFoundException('The tag does not exist');
+            throw $this->createNotFoundException('The tag with code "'.$tagName.'" does not exist');
         }
 
         $title = $title != null ? $title : $tag->getTitle();
