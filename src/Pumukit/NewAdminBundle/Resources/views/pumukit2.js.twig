@@ -250,6 +250,26 @@ window.submit_delete_track = function(id, mmId, seriesId)
     }
 }
 
+window.extract_pic = function(trackId, mmId, numframe)
+{
+    var url = "{{ path('pumukitnewadmin_track_pic', {'id': '__trackId__', 'mmId': '__mmId__', 'preview': 1, 'numframe': '__numframe__'})|raw }}";
+    $.ajax({
+	url: url.replace('__mmId__', mmId).replace('__trackId__', trackId).replace('__numframe__', numframe),
+        type: 'POST',
+        beforeSend: function(){
+            $('#pic_mms_' + mmId +'_load').show();
+        },
+        success: function(response){
+            $('#pic_mms_' + mmId + '_load').hide();
+            $('#pic_mms_' + mmId).html(response);
+        },
+        error: function(){
+	    $('#pic_mms_' + mmId +'_load').hide();
+            no_success('{% trans %}Error extracting pic{% endtrans %}');
+        }
+    });
+}
+
 window.submit_delete_person = function(id, countMm, personHName)
 {
     if (countMm == 0){
