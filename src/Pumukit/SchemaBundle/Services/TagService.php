@@ -58,9 +58,10 @@ class TagService
    *
    * @param MultimediaObject $mmobj
    * @param string $tagId
+   * @param  boolean          $executeFlush
    * @return Array[Tag] removed tags
    */
-  public function removeTagFromMultimediaObject(MultimediaObject $mmobj, $tagId)
+  public function removeTagFromMultimediaObject(MultimediaObject $mmobj, $tagId, $executeFlush=true)
   {
       $removeTags = array();
 
@@ -82,7 +83,9 @@ class TagService
       } while ($tag = $tag->getParent());
 
       $this->dm->persist($mmobj);
-      $this->dm->flush();
+      if ($executeFlush) {
+          $this->dm->flush();
+      }
 
       return $removeTags;
   }
