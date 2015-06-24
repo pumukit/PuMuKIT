@@ -91,7 +91,7 @@ EOT
 
         $output->writeln("<info>JOBS:</info>");
         $table = new Table($output);
-        $table->setHeaders(array('Id', 'Priority', 'MM', 'Profile', 'Cpu', 'Status',
+        $table->setHeaders(array('Id', 'Status', 'MM', 'Profile', 'Cpu', 'Priority',
                                  'Timeini', 'Timestart', 'Timeend'));
 
         foreach($jobs as $name => $job) {
