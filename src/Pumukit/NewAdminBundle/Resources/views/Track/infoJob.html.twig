@@ -21,6 +21,7 @@
       <dd>{% trans %}Created{% endtrans %}: {{ job.getTimeini('Y-m-d H:i:s') }}, {% trans %}started{% endtrans %}: {{ job.getTimestart('Y-m-d H:i:s') }}, {% trans %}finished{% endtrans %}: {{ job.getTimeend('Y-m-d H:i:s') }}</dd>
       <dt>{% trans %}Priority{% endtrans %}</dt>
       <dd>
+        {% if job.isPending() %}
         <span id="job_info_priority_show" class="job_info_priority">
           <span id="job_info_priority_show_val">{{job.getPriority()}}</span>
           <a href="#" onclick="$('.job_info_priority').toggle(); return false;" title="{% trans %}Edit priority{% endtrans %}">
@@ -32,7 +33,10 @@
           <a href="#" onclick="$.post('{{ path('pumukitnewadmin_track_update_job', {'mmId': multimediaObject.Id})}}', {'jobId': '{{ job.id }}', 'priority': $('#job_info_priority_edit_input').val()}).success(function(v){$('#job_info_priority_show_val').html(v.priority); $('.job_info_priority').toggle();}); return false;" title="{% trans %}Edit priority{% endtrans %}">
             <i class="mdi-content-save"></i>
           </a>
-        </span>          
+        </span>
+        {% else %}
+        {{ job.getPriority()  }}
+        {% endif %}
       </dd>      
     </dl>
 
