@@ -1,0 +1,27 @@
+{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+
+{% block body %}
+
+<h1>Encoder</h1>
+
+<div class="row stats_jobs">
+ {% include 'PumukitEncoderBundle:Info:stats.html.twig' %}
+</div>
+
+<div class="row">
+  <div class="col-md-9">
+    <div class="well" id="list_jobs">
+      {% include 'PumukitEncoderBundle:Info:jobs.html.twig' with {'pageParameter': '[page_pending]', 'title': 'Pending jobs'|trans, 'jobs': jobs.pending }%}
+      {% include 'PumukitEncoderBundle:Info:jobs.html.twig' with {'pageParameter': '[page_executing]', 'title': 'Executing jobs'|trans, 'jobs': jobs.executing }%}
+      {% include 'PumukitEncoderBundle:Info:jobs.html.twig' with {'pageParameter': '[page_executed]', 'title': 'Executed jobs'|trans, 'jobs': jobs.executed }%}
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="well" id="list_cpus">
+      {% include 'PumukitEncoderBundle:Info:cpus.html.twig' %}
+    </div>
+  </div>    
+</div>
+
+
+{% endblock %}

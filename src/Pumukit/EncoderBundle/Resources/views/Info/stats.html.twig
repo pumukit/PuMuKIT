@@ -1,0 +1,108 @@
+{% import "PumukitEncoderBundle::macros.html.twig" as macros %}
+
+<div class="col-md-offset-1 col-md-2 col-sm-6 col-xs-12">
+  <div class="list-group">
+    <div class="list-group-item">
+      <div class="row-action-primary">
+        <i class="mdi-av-pause-circle-fill" style="background: {{ macros.job_status_color(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_PAUSED')) }}"></i>
+      </div>
+      <div class="row-content">
+        <div class="least-content togglebutton" style="bottom: 10px; top: inherit">
+          <label><input id="show_paused" type="checkbox" {% if app.request.query.get('show_paused', true) %}checked="checked"{% endif %}></label>
+        </div>
+        <h4 class="list-group-item-heading">{% trans %}Paused{% endtrans %}</h4>
+        <p class="list-group-item-text">{{ stats['paused'] }} jobs</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-2 col-sm-6 col-xs-12">
+  <div class="list-group">
+    <div class="list-group-item">
+      <div class="row-action-primary">
+        <i class="mdi-av-loop" style="background: {{ macros.job_status_color(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_WAITING')) }}"></i>
+      </div>
+      <div class="row-content">
+        <div class="least-content togglebutton" style="bottom: 10px; top: inherit">
+          <label><input id="show_waiting" type="checkbox" {% if app.request.query.get('show_waiting', true) %}checked="checked"{% endif %}></label>
+        </div>
+        <h4 class="list-group-item-heading">{% trans %}Waiting{% endtrans %}</h4>
+        <p class="list-group-item-text">{{ stats['waiting'] }} jobs</p>
+      </div>
+    </div>
+  </div>    
+</div>
+<div class="col-md-2 col-sm-6 col-xs-12">
+  <div class="list-group">
+    <div class="list-group-item">
+      <div class="row-action-primary">
+        <i class="mdi-av-equalizer" style="background: {{ macros.job_status_color(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_EXECUTING')) }};"></i>
+      </div>
+      <div class="row-content">
+        <div class="least-content togglebutton" style="bottom: 10px; top: inherit"></div>
+        <h4 class="list-group-item-heading">{% trans %}Executing{% endtrans %}</h4>
+        <p class="list-group-item-text">{{ stats['executing'] }} jobs</p>
+      </div>
+    </div>
+  </div>  
+</div>
+<div class="col-md-2 col-sm-6 col-xs-12">
+  <div class="list-group">
+    <div class="list-group-item">
+      <div class="row-action-primary">
+        <i class="mdi-av-play-circle-fill" style="background: {{ macros.job_status_color(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_FINISHED')) }}"></i>
+      </div>
+      <div class="row-content">
+        <div class="least-content togglebutton" style="bottom: 10px; top: inherit">
+          <label><input id="show_finished" type="checkbox" {% if app.request.query.get('show_finished', false) %}checked="checked"{% endif %}></label>
+        </div>
+        <h4 class="list-group-item-heading">{% trans %}Finished{% endtrans %}</h4>
+        <p class="list-group-item-text">{{ stats['finished'] }} jobs</p>
+      </div>
+    </div>
+  </div> 
+</div>
+<div class="col-md-2 col-sm-6 col-xs-12">
+  <div class="list-group">
+    <div class="list-group-item">
+      <div class="row-action-primary">
+        <i class="mdi-av-new-releases" style="background:{{ macros.job_status_color(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_ERROR')) }}"></i>
+      </div>
+      <div class="row-content">
+        <div class="least-content togglebutton" style="bottom: 10px; top: inherit">
+          <label><input id="show_error" type="checkbox" {% if app.request.query.get('show_error', true) %}checked="checked"{% endif %}></label>
+        </div>
+        <h4 class="list-group-item-heading">{% trans %}Error{% endtrans %}</h4>
+        <p class="list-group-item-text">{{ stats['error'] }} jobs</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $(function(){
+    var timeout = setTimeout("location.reload(true);", 30000);
+  
+    var serialize = function(obj, prefix) {
+      var str = [];
+      for(var p in obj) {
+        if (obj.hasOwnProperty(p)) {
+          var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
+          str.push(typeof v == "object" ?
+            serialize(v, k) :
+            encodeURIComponent(k) + "=" + encodeURIComponent(v));
+        }
+      }
+      return str.join("&");
+    }
+  
+    var queryDict = {}
+    location.search.substr(1).split("&").forEach(function(item) {queryDict[item.split("=")[0]] = item.split("=")[1]})
+  
+    $('.stats_jobs :checkbox').on('change', function(e){
+      queryDict[e.target.id] = e.target.checked ? 1 : 0;
+      window.location.href = window.location.pathname + "?" + serialize(queryDict);
+    })
+  });
+</script>

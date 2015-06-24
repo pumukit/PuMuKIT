@@ -12,6 +12,11 @@ pumukit_opencast:
     type:     annotation
     prefix:   /
 
+pumukit_encoder:
+    resource: "@PumukitEncoderBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 pumukitwizard:
     resource: "@PumukitWizardBundle/Resources/config/routing.yml"
 

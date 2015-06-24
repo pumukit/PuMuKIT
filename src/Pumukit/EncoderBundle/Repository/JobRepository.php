@@ -14,15 +14,30 @@ use Pumukit\EncoderBundle\Document\Job;
 class JobRepository extends DocumentRepository
 {
     /**
+     * Create query builder for all jobs with given status
+     */
+    public function createQueryWithStatus(array $status, $sort = false)
+    {
+        $qb = $this->createQueryBuilder()
+            ->field('status')->in($status);
+
+        if($sort) {
+            $qb->sort('priority', 'desc')
+                ->sort('timeini', 'asc');
+        }
+        
+        return $qb;
+    }
+
+    /**
      * Find all jobs with given status
      */
-    public function findWithStatus(array $status)
+    public function findWithStatus(array $status, $sort = false)
     {
-        return $this->createQueryBuilder()
-          ->field('status')->in($status)
+        return $this->createQueryWithStatus($status, $sort)
           ->getQuery()
           ->execute();
-    }
+    }    
 
     /**
      * Find the job with higher priority with given status

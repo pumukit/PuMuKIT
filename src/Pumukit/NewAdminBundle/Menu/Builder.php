@@ -18,23 +18,13 @@ class Builder extends ContainerAware
         $series = $menu->addChild('Multimedia Series', array('route' => 'pumukitnewadmin_series_index'))->setExtra('translation_domain', 'NewAdminBundle');
         $series->addChild('Multimedia', array('route' => 'pumukitnewadmin_mms_index'))->setExtra('translation_domain', 'NewAdminBundle');
         $series->setDisplayChildren(false);
-
-        
-        //$menu->addChild('Unesco Cataloger');
-
-        /*
-        $portal_design = $menu->addChild('WebTV Portal Design');
-        $portal_design->addChild('Design');
-        $portal_design->addChild('Templates');
-        $portal_design->addChild('FileManager');
-        $portal_design->addChild('Tags');
-        $portal_design->addChild('News');
-        */
                 
         $live = $menu->addChild('Live')->setExtra('translation_domain', 'NewAdminBundle');
         $live->addChild('Live Channels', array('route' => 'pumukitnewadmin_live_index'))->setExtra('translation_domain', 'NewAdminBundle');
         $live->addChild('Live Events', array('route' => 'pumukitnewadmin_event_index'))->setExtra('translation_domain', 'NewAdminBundle');
 
+        $menu->addChild('Encoder jobs', array('route' => 'pumukit_encoder_info'))->setExtra('translation_domain', 'NewAdminBundle');        
+        
         $tables = $menu->addChild('Tables')->setExtra('translation_domain', 'NewAdminBundle');
         $tables->addChild('People', array('route' => 'pumukitnewadmin_person_index'))->setExtra('translation_domain', 'NewAdminBundle');
         $tables->addChild('Tags', array('route' => 'pumukitnewadmin_tag_index'))->setExtra('translation_domain', 'NewAdminBundle');
