@@ -46,7 +46,8 @@ class PicExtractorService
         }
 
         if (false !== strpos($track->getFramerate(), '/')) {
-            $num_frames = intval(((float) ((float)(explode('/', $track->getFramerate())[0]) / (float) (explode('/', $track->getFramerate())[1]))) * $track->getDuration());
+            $aux = explode('/', $track->getFramerate());
+            $num_frames = intval($track->getDuration() * intval($aux[0]) / intval($aux[1]));
         } else {
             $num_frames = intval($track->getFramerate() * $track->getDuration());
         }
