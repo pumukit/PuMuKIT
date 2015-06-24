@@ -75,11 +75,11 @@ class CmarWebTVExtension extends \Twig_Extension
 
         $broadcast_type = $multimediaObject->getBroadcast()->getBroadcastTypeId();
         if (Broadcast::BROADCAST_TYPE_PUB == $broadcast_type) {
-            $url_player = 'cmarwatch.html';
+            $url_player = '/cmarwatch.html';
         } else {
-            $url_player = 'securitywatch.html';
+            $url_player = '/securitywatch.html';
         }
-        $url = str_replace('cmarwatch.html', $url_player, $url);
+        $url = str_replace('/watch.html', $url_player, $url);
 
         if ($isHTML5) {
             $url = str_replace('/engage/ui/', '/paellaengage/ui/', $url);
