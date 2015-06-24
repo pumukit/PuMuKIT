@@ -187,6 +187,8 @@ class TrackController extends Controller
     }
 
     /**
+     * TODO See: Pumukit\EncoderBundle\Controller\InfoController::retryJobAction
+     *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("job", class="PumukitEncoderBundle:Job", options={"id" = "jobId"})
      */
@@ -199,6 +201,8 @@ class TrackController extends Controller
     }
 
     /**
+     * TODO See: Pumukit\EncoderBundle\Controller\InfoController::infoJobAction 
+     *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("job", class="PumukitEncoderBundle:Job", options={"id" = "jobId"})
      * @Template
@@ -210,6 +214,8 @@ class TrackController extends Controller
     }
 
     /**
+     * TODO See: Pumukit\EncoderBundle\Controller\InfoController::deleteJobAction
+     *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      */
     public function deleteJobAction(MultimediaObject $multimediaObject, Request $request)
@@ -221,6 +227,10 @@ class TrackController extends Controller
         return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', array('id' => $multimediaObject->getId())));
     }
 
+    /**
+     * TODO See: Pumukit\EncoderBundle\Controller\InfoController::updateJobPriorityAction
+     *
+     */
     public function updateJobPriorityAction(Request $request)
     {
         $priority = $request->get('priority');
