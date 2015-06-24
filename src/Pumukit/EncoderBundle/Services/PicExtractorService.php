@@ -44,8 +44,12 @@ class PicExtractorService
         if (!file_exists($track->getPath())){
             return "Error in data autocomplete of multimedia object.";
         }
-        
-        $num_frames = $track->getFramerate() * $track->getDuration();
+
+        if (false !== strpos($track->getFramerate(), '/')) {
+            $num_frames = intval(((float) ((float)(explode('/', $track->getFramerate())[0]) / (float) (explode('/', $track->getFramerate())[1]))) * $track->getDuration());
+        } else {
+            $num_frames = intval($track->getFramerate() * $track->getDuration());
+        }
 
         if((is_null($numframe)||($num_frames == 0))){
             $num = 125 * (count($multimediaObject->getPics())) + 1;
