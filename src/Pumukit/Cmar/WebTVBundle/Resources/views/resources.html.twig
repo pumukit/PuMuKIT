@@ -78,8 +78,7 @@
       {% else %}
         {% set tags = resource.getTags() %}
       {% endif %}
-      {% include 'PumukitWebTVBundle::tags.html.twig' with {'show_tag': show_tag, 'tags': tags } %}
-      {% if ((viewed is not empty) and (not resource.isCollection())) %} 
+      {% if ((viewed) and (not resource.isCollection())) %}
         {% trans %}Views{% endtrans %}:&nbsp;{{ resource.getNumView() }}&nbsp;{% if (resource.getNumView() == 1) %}{% trans %}time{% endtrans %}{% else %}{% trans %}times{% endtrans %}{% endif %}
       {% endif %}
     </div>

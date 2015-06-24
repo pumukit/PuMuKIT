@@ -62,7 +62,6 @@
          {% endif %}
          <div class="objects">
            <!-- MATTERHORN -->
-           {# TODO  if($mh = MmMatterhornPeer::retrieveByPK($mm->getId())): #}
            {% set opencast_track = mm.getTrackWithTag('opencast') %}
            {% if opencast_track is not empty %}
            <div id="material" class="file matterhorn">

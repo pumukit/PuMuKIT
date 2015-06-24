@@ -17,7 +17,7 @@ class TrackTest extends \PHPUnit_Framework_TestCase
         $acodec = 'aac';
         $vcodec = 'mpeg4-HP';
         $bitrate = 10000;
-        $framerate = 25;
+        $framerate = '25/1';
         $only_audio = false;
         $channels = 1;
         $duration = 66666;

@@ -61,7 +61,7 @@ class Configuration implements ConfigurationInterface
                             ->integerNode('resolution_ver')->min(0)->defaultValue(0)
                                 ->info('Vertical resolution of the track')->end()
                             ->scalarNode('bitrate')->info('Bit rate of the track')->end()
-                            ->integerNode('framerate')->min(0)->defaultValue(0)
+                            ->scalarNode('framerate')->defaultValue('0')
                                 ->info('Framerate of the track')->end()
                             ->integerNode('channels')->min(0)->defaultValue(1)
                                 ->info('Available Channels')->end()
