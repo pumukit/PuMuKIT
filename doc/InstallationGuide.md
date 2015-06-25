@@ -1,14 +1,14 @@
 PuMuKIT-2 Installation Guide
 ====================================
 
-*This page is updated to the 2.0 release* 
+*This page is updated to the 2.1 release* 
 
 Requirements
 -------------------------------------
 
-PuMuKIT-2 is a LAMP application, created with the Symfony2 framework. It uses ffmpeg (or libav-tools) to analyze the audiovisual data, as well as to transcode them.
+PuMuKIT-2 is a LAMP application, created with the Symfony2 framework. It uses libav-tools (or ffmpeg) to analyze the audiovisual data, as well as to transcode them.
 
-The requirements for installation are linux, nginx, mongo, ffmpeg, php5. You must have installed a version of ffmpeg encoding to h264 and aac. Also the following modules are required php5: php5-ffmpeg, php5-cli, php5-mongo, php5-ldap, php5-curl and php5-intl.
+The requirements for installation are linux, nginx, libav-tools, php5 and mongo. Libav-tools with h264 and aac support is needed. Also the following php5 modules are required: php5-json, php5-cli, php5-mongo, php5-ldap, php5-curl and php5-intl. Make sure text search is enabled for your mongodb.
 
 Use [composer](https://getcomposer.org/) to check and install the dependencies
 
@@ -22,10 +22,11 @@ Setup a development environment on Ubuntu 14.04:
 1. Install dependencies of PuMuKIT-2 (see requirements):
 
     ```
-    sudo apt-get install git php5-fpm php5-cli nginx-full
+    sudo apt-get install git curl nginx-full
+    sudo apt-get install php5-fpm php5-cli php5-curl php5-intl php5-json
     sudo apt-get install php5-intl php5-xdebug php5-curl
     sudo apt-get install mongodb php5-mongo 
-    sudo apt-get install mediainfo libav-tools libavcodec-extra
+    sudo apt-get install libav-tools libavcodec-extra
     ```
 
 2. Download the last version of PuMuKIT-2:
