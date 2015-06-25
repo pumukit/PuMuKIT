@@ -296,9 +296,9 @@ class SeriesRepository extends DocumentRepository
         ->getRepository('PumukitSchemaBundle:MultimediaObject')
         ->createStandardQueryBuilder()
         ->distinct('series')
-        ->count()
         ->getQuery()
-        ->execute();
+        ->execute()
+        ->count();
     }
 
     /**
