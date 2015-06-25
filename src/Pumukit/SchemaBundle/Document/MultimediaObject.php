@@ -179,7 +179,7 @@ class MultimediaObject
      * @MongoDB\Int
      * @MongoDB\Increment
      */
-    private $numview;
+    private $numview = 0;
 
     /**
      * @var ArrayCollection $people
