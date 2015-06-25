@@ -35,7 +35,7 @@ class WidgetController extends Controller
       $mmRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
       $seriesRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:series');
 
-      $counts = array('series' => $seriesRepo->count(),
+      $counts = array('series' => $seriesRepo->countPublic(),
                       'mms' => $mmRepo->count(),
                       'hours' => bcdiv($mmRepo->countDuration(), 3600, 2));
       return array('counts' => $counts);

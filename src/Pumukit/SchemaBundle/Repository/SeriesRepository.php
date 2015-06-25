@@ -281,8 +281,24 @@ class SeriesRepository extends DocumentRepository
         ->createQueryBuilder()
         ->count()
         ->getQuery()
-        ->execute()
-        ;
+        ->execute();
+    }
+
+    /**
+     * Count number of series in the repo.
+     *
+     * @return integer
+     */
+    public function countPublic()
+    {
+      return $this
+        ->getDocumentManager()
+        ->getRepository('PumukitSchemaBundle:MultimediaObject')
+        ->createStandardQueryBuilder()
+        ->distinct('series')
+        ->count()
+        ->getQuery()
+        ->execute();
     }
 
     /**
