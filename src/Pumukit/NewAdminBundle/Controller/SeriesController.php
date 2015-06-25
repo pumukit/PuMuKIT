@@ -289,7 +289,7 @@ class SeriesController extends AdminController
         foreach ($criteria as $property => $value) {
             //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
             if (('' !== $value) && ('title.en' === $property)) {
-                $new_criteria['$text'] = array('$search' => $value)
+                $new_criteria['$text'] = array('$search' => $value);
             } elseif (('' !== $value) && ('date' == $property)) {
                 if ('' !== $value['from']) $date_from = new \DateTime($value['from']);
                 if ('' !== $value['to']) $date_to = new \DateTime($value['to']);
