@@ -1,12 +1,3 @@
-# pumukit_cmar_web_tv:
-#     resource: "@PumukitCmarWebTVBundle/Resources/config/routing.yml"
-
-# pumukit_cmar_podcast:
-#     resource: "@PumukitCmarPodcastBundle/Resources/config/routing.yml"
-
-# pumukit_cmar_sonar:
-#     resource: "@PumukitCmarSonarBundle/Resources/config/routing.yml"
-
 pumukit_opencast:
     resource: "@PumukitOpencastBundle/Controller/"
     type:     annotation
