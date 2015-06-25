@@ -165,6 +165,22 @@ sudo service ningx restart
     sudo chown -R www-data:www-data web/storage/ web/uploads/
     ```
 
+
+**Enable MongoDB text index**
+
+From MongoDB 2.6 the text search feature is enabled by default. In Ubuntu 14.04 you can install the last version of MongoDB using the next documentation:
+
+ * http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/
+
+In MongoDB 2.4, you need to enable the text search feature manually:
+
+
+    ```
+    echo "setParameter textSearchEnabled=true" | sudo tee -a /etc/mongodb.conf
+    sudo service mongodb restart
+    ```
+
+
 **403 Forbidden access to config.php and app_dev.php**
 
  * Uncomment code in `web/config.php` and `web/app_dev.php`
