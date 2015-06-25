@@ -118,6 +118,8 @@ class DefaultController extends Controller
 
         $series = null;
         $seriesId = null;
+        $multimediaObject = null;
+        $mmId = null;
         $formData = $request->get('pumukitwizard_form_data');
         if ($formData){
             $seriesData = $this->getKeyData('series', $formData);
