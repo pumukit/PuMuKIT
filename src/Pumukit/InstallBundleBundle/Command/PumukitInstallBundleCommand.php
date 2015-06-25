@@ -16,7 +16,7 @@ class PumukitInstallBundleCommand extends ContainerAwareCommand
     {
         $this
             ->setName('pumukit:install:bundle')
-            ->addArgument('bundle', InputArgument::REQUIRED, 'The bundle class with namespace')
+            ->addArgument('bundle', InputArgument::IS_ARRAY | InputArgument::REQUIRED, 'List of bundles classes with namespace')
             ->setDescription('Update Kernel (app/AppKernel.php) and routing (app/config/routing.yml) to enable the bundle.')
             ->setHelp(<<<EOT
 The <info>pumukit:install:bundle</info> command helps you installs bundles.
@@ -32,21 +32,25 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $bundleName = $input->getArgument('bundle');
-        $bundle = str_replace('/', '\\', $bundleName);
+        $kernel = $this->getContainer()->get('kernel');      
+        foreach($input->getArgument('bundle') as $bundleName) {
+            $bundle = str_replace('/', '\\', $bundleName);
 
-        if (!class_exists($bundle)) {
-            throw new \RuntimeException(sprintf('Class "%s" doesn\'t exist.', $bundle));
+            if (!class_exists($bundle)) {
+                throw new \RuntimeException(sprintf('Class "%s" doesn\'t exist.', $bundle));
+            }
+
+            $refClass = new \ReflectionClass($bundle);
+            if (!$refClass->isSubclassOf('Symfony\Component\HttpKernel\Bundle\Bundle')) {
+                throw new \RuntimeException(sprintf('Class "%s" doesn\'t extend of "Symfony\Component\HttpKernel\Bundle\Bundle".', $bundle));
+            }
         }
 
-        $refClass = new \ReflectionClass($bundle);
-        if (!$refClass->isSubclassOf('Symfony\Component\HttpKernel\Bundle\Bundle')) {
-            throw new \RuntimeException(sprintf('Class "%s" doesn\'t extend of "Symfony\Component\HttpKernel\Bundle\Bundle".', $bundle));
+        foreach($input->getArgument('bundle') as $bundleName) {
+            $bundle = str_replace('/', '\\', $bundleName);
+            $this->updateKernel($input, $output, $kernel, $bundle);
+            $this->updateRouting($input, $output, $bundle);
         }
-
-        $kernel = $this->getContainer()->get('kernel');
-        $this->updateKernel($input, $output, $kernel, $bundle);
-        $this->updateRouting($input, $output, $bundle);
     }
 
   
