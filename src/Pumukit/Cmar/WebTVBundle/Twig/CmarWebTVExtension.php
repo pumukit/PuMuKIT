@@ -121,7 +121,11 @@ class CmarWebTVExtension extends \Twig_Extension
             $precinctTag = $this->dm->getRepository('PumukitSchemaBundle:Tag')->findOneByCod($precinctTag->getCod());
         }
         $placeTag = $precinctTag->getParent();
-        $address = ($placeTag->getProperty("address".$locale) == '')?'':' - '.$placeTag->getProperty("address".$locale);
+        $address = '';
+        $i18nAddress = $placeTag->getProperty("address");
+        if ($i18nAddress && (!empty(array_filter($i18nAddress)))) {
+            $address = ($i18nAddress[$locale] == '')?'':' - '.$i18nAddress[$locale];
+        }
         $precinct = ($precinctTag->getTitle() == '')?'':$precinctTag->getTitle().', ';
         return $precinct . $placeTag->getTitle().$address;
     }
