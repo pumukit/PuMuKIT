@@ -625,9 +625,14 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb->field('broadcast')->references($broadcast);
 
         // Includes PUCHWEBTV code
+        $tagRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
+        $placeTag = $tagRepo->findOneByCod('PLACE');
+        $genreTag = $tagRepo->findOneByCod('GENRE');
         $codes = array();
         foreach ($multimediaObject->getTags() as $tag) {
-            $codes[] = $tag->getCod();
+            if (!($tag->isDescendantOf($placeTag) || ($tag->isDescendantOf($genreTag)))) {
+              $codes[] = $tag->getCod();
+            }
         }
         $qb->field('tags.cod')->all($codes);
 
