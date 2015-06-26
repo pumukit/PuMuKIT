@@ -79,26 +79,31 @@ EOT
 
     protected function updateRouting(InputInterface $input, OutputInterface $output, $bundle, $format="yml")
     {
-      $routing = new RoutingManipulator($this->getContainer()->getParameter('kernel.root_dir').'/config/routing.yml');
-      $bundleName = substr($bundle, 1+ strrpos($bundle, "\\"));;
-      try {
-        $ret = $routing->addResource($bundleName, $format);
-        if (!$ret) {
-          if ('annotation' === $format) {
-            $help = sprintf("        <comment>resource: \"@%s/Controller/\"</comment>\n        <comment>type:     annotation</comment>\n", $bundle);
-          } else {
-            $help = sprintf("        <comment>resource: \"@%s/Resources/config/routing.%s\"</comment>\n", $bundle, $format);
-          }
-          $help .= "        <comment>prefix:   /</comment>\n";
+        $refClass = new \ReflectionClass($bundle);
+        $bundleRoutingFile = sprintf("%s/Resources/config/routing.%s", dirname($refClass->getFileName()), $format);
 
-          $output->writeln("- Import the bundle\'s routing resource in the app main routing file:\n");
-          $output->writeln(sprintf("    <comment>%s:</comment>\n", $bundle));
-          $output->writeln($help);
+        if (is_file($bundleRoutingFile)) {
+
+            $routing = new RoutingManipulator($this->getContainer()->getParameter('kernel.root_dir').'/config/routing.yml');
+            $bundleName = substr($bundle, 1+ strrpos($bundle, "\\"));;
+            try {
+                $ret = $routing->addResource($bundleName, $format);
+                if (!$ret) {
+                    if ('annotation' === $format) {
+                        $help = sprintf("        <comment>resource: \"@%s/Controller/\"</comment>\n        <comment>type:     annotation</comment>\n", $bundle);
+                    } else {
+                        $help = sprintf("        <comment>resource: \"@%s/Resources/config/routing.%s\"</comment>\n", $bundle, $format);
+                    }
+                    $help .= "        <comment>prefix:   /</comment>\n";
+                
+                    $output->writeln("- Import the bundle\'s routing resource in the app main routing file:\n");
+                    $output->writeln(sprintf("    <comment>%s:</comment>\n", $bundle));
+                    $output->writeln($help);
+                }
+            } catch (\RuntimeException $e) {
+                $output->writeln(sprintf("Bundle <comment>%s</comment> is already imported.", $bundle));
+                throw $e;
+            }
         }
-      } catch (\RuntimeException $e) {
-          $output->writeln(sprintf("Bundle <comment>%s</comment> is already imported.", $bundle));
-          throw $e;
-      }
-
     }
 }
