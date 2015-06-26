@@ -1,4 +1,4 @@
-{% macro job_status_color(status) %}
+{% macro job_status_color(status) %}{% spaceless %}
 
 {% set colors = {
   (constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_ERROR')): 'rgb(221, 75, 57)',
@@ -8,7 +8,21 @@
   (constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_FINISHED')): 'rgb(0, 166, 90)',
 }
 %}
-
 {{ colors[status] }}
 
-{% endmacro %}
+{% endspaceless %}{% endmacro %}
+
+
+{% macro job_status_icon(status) %}{% spaceless %}
+
+{% set icons = {
+  (constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_ERROR')): 'mdi-av-new-releases',
+  (constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_PAUSED')): 'mdi-av-pause-circle-fill',
+  (constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_WAITING')): 'mdi-av-loop',
+  (constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_EXECUTING')): 'mdi-av-equalizer',
+  (constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_FINISHED')): 'mdi-av-play-circle-fill',
+}
+%}
+{{ icons[status] }}
+
+{% endspaceless %}{% endmacro %}
