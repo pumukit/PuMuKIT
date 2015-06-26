@@ -19,7 +19,7 @@ Installation
 
 Setup a development environment on Ubuntu 14.04:
 
-1. [Optional] Update APT source list to install last version of MongoDB.
+1. Update APT source list to install last version of MongoDB.
 
     ```
     sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
