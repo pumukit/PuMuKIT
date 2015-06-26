@@ -28,7 +28,15 @@ Setup a development environment on Ubuntu 14.04:
     sudo apt-get install mediainfo libav-tools libavcodec-extra
     ```
 
-2. Download the last version of PuMuKIT-2:
+2. [Optional] If the version of MongoDB is 2.4 (defaut version in Ubuntu 14.04), you need to enable the text search feature manually:
+
+    ```
+    echo "setParameter textSearchEnabled=true" | sudo tee -a /etc/mongodb.conf
+    sudo service mongodb restart
+    ```
+
+
+3. Download the last version of PuMuKIT-2:
 
     ```
     git clone https://github.com/campusdomar/PuMuKIT2.git /var/www/pumukit2
@@ -36,19 +44,19 @@ Setup a development environment on Ubuntu 14.04:
     git checkout master
     ```
 
-3. Install [composer](https://getcomposer.org/).
+4. Install [composer](https://getcomposer.org/).
 
     ```
     curl -sS https://getcomposer.org/installer | php
     ```
 
-4. Install dependencies
+5. Install dependencies
 
     ```
     php composer.phar install
     ```
 
-5. Prepare environment (check requirements, init mongo db, clear cache)
+6. Prepare environment (check requirements, init mongo db, clear cache)
 
     ```
     php app/check.php
@@ -56,37 +64,37 @@ Setup a development environment on Ubuntu 14.04:
     php app/console cache:clear
     ```
 
-6. Create the admin user
+7. Create the admin user
 
     ```
     php app/console fos:user:create admin --super-admin
     ```
     
-7. Load default values (tags, broadcasts and roles).
+8. Load default values (tags, broadcasts and roles).
 
     ```
     php app/console pumukit:init:repo all --force
     ```
 
-8. [Optional] Load example data (series and multimedia objects)
+9. [Optional] Load example data (series and multimedia objects)
 
     ```
     php app/console pumukit:init:example  --force    
     ```
     
-9. Add NGINX config file.
+10. Add NGINX config file.
 
     ```
     cp doc/conf_files/nginx/default /etc/nginx/sites-available/default
     ```
 
-10. Restart server
+11. Restart server
 
     ```
     service nginx restart 
     ```
 
-11. Connect and enjoy
+12. Connect and enjoy
 
     * Connect to the frontend here: `http://{MyPuMuKIT_IP}/`
     * Connect to the backend (Admin UI) with the user created on step 6 here: `http://{MyPuMuKIT_IP}/admin`
