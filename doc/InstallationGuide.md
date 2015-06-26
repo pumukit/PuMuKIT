@@ -87,13 +87,14 @@ Setup a development environment on Ubuntu 14.04:
 10. Add NGINX config file.
 
     ```
-    cp doc/conf_files/nginx/default /etc/nginx/sites-available/default
+    sudo cp doc/conf_files/nginx/default /etc/nginx/sites-available/default
     ```
 
 11. Restart server
 
     ```
-    service nginx restart 
+    sudo service php5-fpm restart
+    sudo service nginx restart 
     ```
 
 12. Connect and enjoy
