@@ -4,7 +4,8 @@
   <div class="list-group">
     <div class="list-group-item">
       <div class="row-action-primary">
-        <i class="mdi-av-pause-circle-fill" style="background: {{ macros.job_status_color(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_PAUSED')) }}"></i>
+        <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_PAUSED')) }}" 
+           style="background: {{ macros.job_status_color(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_PAUSED')) }}"></i>
       </div>
       <div class="row-content">
         <div class="least-content togglebutton" style="bottom: 10px; top: inherit">
@@ -20,7 +21,8 @@
   <div class="list-group">
     <div class="list-group-item">
       <div class="row-action-primary">
-        <i class="mdi-av-loop" style="background: {{ macros.job_status_color(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_WAITING')) }}"></i>
+        <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_WAITING')) }}" 
+           style="background: {{ macros.job_status_color(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_WAITING')) }}"></i>
       </div>
       <div class="row-content">
         <div class="least-content togglebutton" style="bottom: 10px; top: inherit">
@@ -36,7 +38,8 @@
   <div class="list-group">
     <div class="list-group-item">
       <div class="row-action-primary">
-        <i class="mdi-av-equalizer" style="background: {{ macros.job_status_color(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_EXECUTING')) }};"></i>
+        <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_EXECUTING')) }}" 
+           style="background: {{ macros.job_status_color(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_EXECUTING')) }};"></i>
       </div>
       <div class="row-content">
         <div class="least-content togglebutton" style="bottom: 10px; top: inherit"></div>
@@ -50,7 +53,8 @@
   <div class="list-group">
     <div class="list-group-item">
       <div class="row-action-primary">
-        <i class="mdi-av-play-circle-fill" style="background: {{ macros.job_status_color(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_FINISHED')) }}"></i>
+        <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_FINISHED')) }}" 
+           style="background: {{ macros.job_status_color(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_FINISHED')) }}"></i>
       </div>
       <div class="row-content">
         <div class="least-content togglebutton" style="bottom: 10px; top: inherit">
@@ -66,7 +70,8 @@
   <div class="list-group">
     <div class="list-group-item">
       <div class="row-action-primary">
-        <i class="mdi-av-new-releases" style="background:{{ macros.job_status_color(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_ERROR')) }}"></i>
+        <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_ERROR')) }}" 
+           style="background:{{ macros.job_status_color(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_ERROR')) }}"></i>
       </div>
       <div class="row-content">
         <div class="least-content togglebutton" style="bottom: 10px; top: inherit">

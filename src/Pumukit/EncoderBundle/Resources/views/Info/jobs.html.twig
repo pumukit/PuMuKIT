@@ -38,7 +38,11 @@
           <i class="mdi-action-info"></i>
         </a>
       </td>
-      <td style="color: {{ macros.job_status_color(job.getStatus()) }}">{{ job.getStatusText()|trans }}</td>
+      <td style="padding-top: 12px; color: {{ macros.job_status_color(job.getStatus()) }}">
+        <i class="{{ macros.job_status_icon(job.getStatus()) }}" 
+           style="color: #FFF; font-size: 16px; padding: 8px; border-radius: 100%; background: {{ macros.job_status_color(job.getStatus()) }}"></i>
+        {{ job.getStatusText()|trans }}
+      </td>
       <td>{{ job.getMmId() }}</td>
       <td>{{ job.getProfile() }}</td>
       <td>{{ job.getCpu() }}</td>

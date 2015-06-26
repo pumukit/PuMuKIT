@@ -266,6 +266,7 @@ EOT
                   if(!$input->getOption('notClearFiles')){
                         unlink($newFile);
                   }
+                  $output->writeln('');
                   $output->writeln('<info>Example data load successful</info>');
             } 
             else {

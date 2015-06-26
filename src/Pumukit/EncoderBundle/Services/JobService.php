@@ -4,6 +4,7 @@ namespace Pumukit\EncoderBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
@@ -311,18 +312,7 @@ class JobService
         $cpu = $this->cpuService->getCpuByName($job->getCpu());
         $commandLine = $this->renderBat($job);
 
-        // TODO - Set pathEnd in some point
-        // TODO - Use Symfony\Component\Filesystem\Filesystem.
-        if (!realpath(dirname($job->getPathEnd())) && !file_exists(dirname($job->getPathEnd()))){
-            $created = @mkdir(dirname($job->getPathEnd()), 0777, true);
-            if ($created){
-                $this->logger->addInfo('[execute] Directory "'.dirname($job->getPathEnd()).'" from job path end "'.$job->getPathEnd().'" successfully created.');
-            }else{
-                $this->logger->addError('[execute] Could not create directory "'.dirname($job->getPathEnd()).'" from job path end "'.$job->getPathEnd().'"');
-            }
-        }else{
-            $this->logger->addWarning('[execute] Directory "'.dirname($job->getPathEnd()).'" already exists or permission denied to access the route.');
-        }
+        $this->mkdir(dirname($job->getPathEnd()));
         
         $executor = $this->getExecutor($profile['app'], $cpu);
         
@@ -468,17 +458,7 @@ class JobService
 
         $tempDir = $profile['streamserver']['dir_out'] . '/' . $dir;
 
-        //TODO repeat mkdir (see this->execute) and check error
-        if (!realpath($tempDir) && !file_exists($tempDir)){
-            $created = @mkdir($tempDir, 0777, true);
-            if ($created){
-                $this->logger->addInfo('[setPathEndAndExtensions] Directory "'.$tempDir.'" successfully created.');
-            }else{
-                $this->logger->addError('[setPathEndAndExtensions] Could not create directory: "'.$tempDir.'"');
-            }
-        }else{
-            $this->logger->addWarning('[setPathEndAndExtensions] Directory "'.$tempDir.'" already exists or permission denied to access the route.');
-        }
+        $this->mkdir($tempDir);
 
         return realpath($tempDir) . '/' . $file . '.' . $finalExtension;      
     }
@@ -576,17 +556,8 @@ class JobService
 
         $profile = $this->getProfile($job);
         $tempDir = $profile['streamserver']['dir_out'] . '/' . $mmobj->getSeries()->getId();
-        //TODO repeat mkdir (see this->execute) and check errors
-        if (!realpath($tempDir) && !file_exists($tempDir)){
-            $created = @mkdir($tempDir, 0777, true);
-            if ($created){
-                $this->logger->addInfo('[retryJob] Directory "'.$tempDir.'" successfully created.');
-            }else{
-                $this->logger->addError('[retryJob] Could not create directory: "'.$tempDir.'"');
-            }
-        }else{
-            $this->logger->addWarning('[retryJob] Directory "'.$tempDir.'" already exists or permission denied to access the route.');
-        }
+        
+        $this->mkdir($tempDir);
 
         $job->setStatus(Job::STATUS_WAITING);
         $job->setPriority(2);
@@ -666,5 +637,15 @@ class JobService
         }
 
         return $email;
+    }
+
+
+    /**
+     * 
+     */
+    private function mkdir($path)
+    {
+      $fs = new Filesystem();
+      $fs->mkdir($path);
     }
 }
