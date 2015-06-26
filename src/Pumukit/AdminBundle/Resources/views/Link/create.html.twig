@@ -1,9 +1,0 @@
-{% form_theme form 'PumukitAdminBundle:Themes:fields.html.twig' %}
-{{ form(form, {'attr': {'onsubmit': 'submit_create_link(); return false;'}, 'action': path('pumukitadmin_link_create', {'id': mm.id})}) }}
-
-<script type="text/javascript">
-window.submit_create_link = function(){
-    parent.Modalbox.hide();
-    new parent.Ajax.Updater('links_mms', '{{ path('pumukitadmin_link_create', {'id': mm.id}) }}', {method: 'POST', asynchronous: true, evalScripts: true, parameters: Form.serialize('pumukitadmin_link')});
-}
-</script>
