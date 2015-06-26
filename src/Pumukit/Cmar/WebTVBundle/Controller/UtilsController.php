@@ -18,7 +18,6 @@ class UtilsController extends Controller
      */
     public function userAction(Request $request)
     {
-        $this->connectCAS();
         $casIsAuthenticated = \phpCAS::isAuthenticated();
         if ($casIsAuthenticated) {
             $username = \phpCAS::getUser();
@@ -37,7 +36,6 @@ class UtilsController extends Controller
      */
     public function loginAction(Request $request)
     {
-        $this->connectCAS();
         \phpCAS::forceAuthentication();
         if(!in_array(\phpCAS::getUser(), array("tv", "prueba", "adminmh", "admin", "sistemas.uvigo"))) {
             throw $this->createAccessDeniedException('Unable to access this page!');        
@@ -53,21 +51,9 @@ class UtilsController extends Controller
      */
     public function logoutAction(Request $request)
     {
-        $this->connectCAS();
-
         $url = $this->generateUrl('pumukit_webtv_index_index', array(), true);
         \phpCAS::logoutWithRedirectService($url);
 
         return $this->redirect($url);
-    }
-
-    public function connectCAS()
-    {
-        \phpCAS::client(CAS_VERSION_2_0, $this->container->getParameter('pumukit_cmar_web_tv.cas_url'), $this->container->getParameter('pumukit_cmar_web_tv.cas_port'), $this->container->getParameter('pumukit_cmar_web_tv.cas_uri'), false);
-        //\phpCAS::setDebug('/tmp/cas.log');
-        \phpCAS::setNoCasServerValidation();
-        //\phpCAS::setSingleSignoutCallback(array($this, 'casSingleSignOut'));
-        //\phpCAS::setPostAuthenticateCallback(array($this, 'casPostAuth'));
-        \phpCAS::handleLogoutRequests(true, $this->container->getParameter('pumukit_cmar_web_tv.cas_allowed_ip_clients'));
     }
 }

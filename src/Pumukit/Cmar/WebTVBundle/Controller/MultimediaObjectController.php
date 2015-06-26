@@ -74,14 +74,6 @@ class MultimediaObjectController extends Base
               throw $this->createNotFoundException('PumukitCmarWebTVBundle not configured.');
           }
 
-
-        \phpCAS::client(CAS_VERSION_2_0, $this->container->getParameter('pumukit_cmar_web_tv.cas_url'), $this->container->getParameter('pumukit_cmar_web_tv.cas_port'), $this->container->getParameter('pumukit_cmar_web_tv.cas_uri'), false);
-        //\phpCAS::setDebug('/tmp/cas.log');
-        \phpCAS::setNoCasServerValidation();
-        //\phpCAS::setSingleSignoutCallback(array($this, 'casSingleSignOut'));
-        //\phpCAS::setPostAuthenticateCallback(array($this, 'casPostAuth'));
-        \phpCAS::handleLogoutRequests(true, $this->container->getParameter('pumukit_cmar_web_tv.cas_allowed_ip_clients'));
-
         \phpCAS::forceAuthentication();
 
         if(!in_array(\phpCAS::getUser(), array($broadcast->getName(), "tv", "prueba", "adminmh", "admin", "sistemas.uvigo"))) {
