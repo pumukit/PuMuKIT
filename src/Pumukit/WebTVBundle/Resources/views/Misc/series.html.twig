@@ -6,7 +6,7 @@
   </div>
 {% endif %}
 
-<div style="cursor:pointer;" onclick="window.location='/series/{{object.getId()}}'">
+<div style="cursor:pointer;" onclick="window.location='{{ url('pumukit_webtv_series_index', {'id': object.getId()}) }}'">
   <div class="pumukit_mmobjs" style="width:50%; float:left;">
     <div class="pumukit_mmobj">
       <figure class="album" style="margin:2px 20px 2px 2px">  

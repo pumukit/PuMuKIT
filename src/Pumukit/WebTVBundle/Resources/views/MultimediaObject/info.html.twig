@@ -55,8 +55,7 @@
 </div>
 
 <div style="clear: left;">
-  {# TODO FIX URL #}
-  <span style="font-weight: bold">Serie:</span> <a href="/series/{{multimediaObject.getSeries().getId()}}">{{ multimediaObject.getSeries().getTitle() }}</a>
+  <span style="font-weight: bold">Serie:</span> <a href="{{ url('pumukit_webtv_series_index', {'id': multimediaObject.getSeries().getId()}) }}">{{ multimediaObject.getSeries().getTitle() }}</a>
 </div>
 
 
