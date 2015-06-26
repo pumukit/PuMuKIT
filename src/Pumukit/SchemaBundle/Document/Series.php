@@ -7,6 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\SeriesRepository")
+ * @MongoDB\Indexes({
+ *   @MongoDB\Index(keys={"$**"="text"})
+ * })
  */
 class Series
 {

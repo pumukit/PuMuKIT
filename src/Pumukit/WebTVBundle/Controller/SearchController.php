@@ -14,164 +14,142 @@ use Pumukit\SchemaBundle\Document\Tag;
 
 class SearchController extends Controller
 {
-	private $limit = 10;
+  private $limit = 10;
 
-	/**
-   	 * @Route("/searchseries")
-     * @Template("PumukitWebTVBundle:Search:index.html.twig")
-     */
-  	public function seriesAction(Request $request)
-  	{
-  		$serie_search = new Series();
+  /**
+   * @Route("/searchseries")
+   * @Template("PumukitWebTVBundle:Search:index.html.twig")
+   */
+  public function seriesAction(Request $request)
+  {
+    $search_found = $request->query->get('search');
+    $start_found = $request->query->get('start');
+    $end_found = $request->query->get('end');
 
-        $search_found = $request->query->get('search');
-    	$start_found = $request->query->get('start');
-    	$end_found = $request->query->get('end');
+    $repository_series = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
 
-    	$repository_series = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
+    $queryBuilder = $repository_series->createQueryBuilder();
 
-    	$series = $repository_series->findall();
+    //Obtenemos todas las series del repositorio que su titulo coincida con <$search_found>
+    if($search_found != ""){
+      $queryBuilder->field('$text')->equals(array('$search' => $search_found));
+    }
 
-    	foreach ($series as $serie) {
-            if($serie->getTitle() == $search_found){
-                $serie_search = $serie;
-            }
-        }
+    //Obtenemos todos los objetos multimedia con fecha superior o igual a <$start_found>
+    if($start_found != "All" && $start_found != ""){
+      $start = \DateTime::createFromFormat("d/m/Y", $start_found);
+      $queryBuilder->field('public_date')->gt($start);
+    }
 
-		$queryBuilder = $repository_series->createQueryBuilder();
+    //Obtenemos todos los objetos multimedia con fecha inferior o igual a <$end_found>
+    if($end_found != "All" && $end_found != ""){
+      $end = \DateTime::createFromFormat("d/m/Y", $end_found);
+      $queryBuilder->field('public_date')->lt($end);
+    }
 
-		/*------------------Aplicamos los FILTROS y nos quedamos con las series deseadas ----------------------*/
+    $pagerfanta = $this->createPager($queryBuilder, $request->query->get("page", 1));
 
-        //Obtenemos todas las series del repositorio que su titulo coincida con <$search_found>
-        if($search_found != ""){
-            $queryBuilder->field('title.en')->equals($serie_search->getTitle());
-        }
+    return array('type' => 'series',
+		 'objects' => $pagerfanta);
+  }
 
-		//Obtenemos todos los objetos multimedia con fecha superior o igual a <$start_found>
-		if($start_found != "All" && $start_found != ""){
-			$start = \DateTime::createFromFormat("d/m/Y", $start_found);
-			$queryBuilder->field('public_date')->gt($start);
-		}
+  /**
+   * @Route("/searchmultimediaobjects")
+   * @Template("PumukitWebTVBundle:Search:index.html.twig")
+   */
+  public function multimediaObjectsAction(Request $request)
+  {
+    $tag_search = new Tag();
 
-		//Obtenemos todos los objetos multimedia con fecha inferior o igual a <$end_found>
-		if($end_found != "All" && $end_found != ""){
-			$end = \DateTime::createFromFormat("d/m/Y", $end_found);
-			$queryBuilder->field('public_date')->lt($end);
-		}
+    //Recogemos los campos de búsqueda de los filtros
+    $search_found = $request->query->get('search');
+    $tag_found = $request->query->get('tags');
+    $type_found = $request->query->get('type');
+    $duration_found = $request->query->get('duration');
+    $start_found = $request->query->get('start');
+    $end_found = $request->query->get('end');
 
-		$pagerfanta = $this->createPager($queryBuilder, $request->query->get("page", 1));
+    //Accedemos al repositorio de los objetos multimedia y de los tags
+    $repository_multimediaObjects = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+    $repository_tags = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
 
-		return array('type' => 'series',
-                     'objects' => $pagerfanta);
-  	}
+    //Obtenemos del repositorio todos los objetos multimedia y todos los tags
+    $tags = $repository_tags->findall();
 
-	/**
-   	 * @Route("/searchmultimediaobjects")
-     * @Template("PumukitWebTVBundle:Search:index.html.twig")
-     */
-  	public function multimediaObjectsAction(Request $request)
-  	{
-  		$tag_search = new Tag();
-    	$multimediaObject_search = new MultimediaObject();
+    //Buscamos coincidencia del Tag si se modifica el campo del filtro: <Tags>
+    for ($i=0;$i<count($tags);$i++){
+      if($tags[$i]->getTitle() == $tag_found){
+	$tag_search = $tags[$i];
+      }
+    }
 
-    	//Recogemos los campos de búsqueda de los filtros
-    	$search_found = $request->query->get('search');
-    	$tag_found = $request->query->get('tags');
-    	$type_found = $request->query->get('type');
-    	$duration_found = $request->query->get('duration');
-    	$start_found = $request->query->get('start');
-    	$end_found = $request->query->get('end');
 
-    	//Accedemos al repositorio de los objetos multimedia y de los tags
-    	$repository_multimediaObjects = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
-    	$repository_tags = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
+    $queryBuilder = $repository_multimediaObjects->createStandardQueryBuilder();
 
-    	//Obtenemos del repositorio todos los objetos multimedia y todos los tags
-		$multimediaObjects = $repository_multimediaObjects->findall();
-		$tags = $repository_tags->findall();
+    //Obtenemos todos los objetos multimedia del repositorio que su titulo coincida con <$search_found>
+    if($search_found != ""){
+      $queryBuilder->field('$text')->equals(array('$search' => $search_found));
+    }
 
-		//Buscamos coincidencia del Tag si se modifica el campo del filtro: <Tags>
-		for ($i=0;$i<count($tags);$i++){
-			if($tags[$i]->getTitle() == $tag_found){
-				$tag_search = $tags[$i];
-			}
-		}
+    //Obtenemos todos los objetos multimedia del repositorio que contengan <$tag_found>
+    if($tag_found != "All" && $tag_found != ""){	
+      $queryBuilder->field('tags._id')->equals(new \MongoId($tag_search->getId()));
+    }
 
-		//Buscamos coincidencia del Objeto Multimedia si se modifica el campo del filtro: <Search>
-		foreach ($multimediaObjects as $multimediaObject) {
-			if($multimediaObject->getTitle() == $search_found){
-				$multimediaObject_search = $multimediaObject;
-			}
-		}
+    //Obtenemos todos los objetos multimedia del repositorio que contengan <$type_found>
+    if($type_found != "All" && $type_found != ""){
+      $queryBuilder->field('tracks.only_audio')->equals($type_found == "Audio");
+    }
 
-		$queryBuilder = $repository_multimediaObjects->createStandardQueryBuilder();
+    //Obtenemos todos los objetos multimedia del repositorio que contengan <$duration_found>
+    if($duration_found != "All" && $duration_found != ""){
+      if($duration_found == "-5"){
+	$queryBuilder->field('tracks.duration')->lte(300);
+      }
+      if($duration_found == "-10"){
+	$queryBuilder->field('tracks.duration')->lte(600);
+      }
+      if($duration_found == "-30"){
+	$queryBuilder->field('tracks.duration')->lte(1800);
+      }
+      if($duration_found == "-60"){
+	$queryBuilder->field('tracks.duration')->lte(3600);
+      }
+      if($duration_found == "+60"){
+	$queryBuilder->field('tracks.duration')->gt(3600);
+      }
+    }
 
-		/*------------------Aplicamos los FILTROS y nos quedamos con los objetos multimedia deseados ----------------------*/
+    //Obtenemos todos los objetos multimedia con fecha superior o igual a <$start_found>
+    if($start_found != "All" && $start_found != ""){
+      $start = \DateTime::createFromFormat("d/m/Y", $start_found);
+      $queryBuilder->field('record_date')->gt($start);
+    }
 
-		//Obtenemos todos los objetos multimedia del repositorio que su titulo coincida con <$search_found>
-		if($search_found != ""){
-			$queryBuilder->field('title.en')->equals($multimediaObject_search->getTitle());
-		}
+    //Obtenemos todos los objetos multimedia con fecha inferior o igual a <$end_found>
+    if($end_found != "All" && $end_found != ""){
+      $end = \DateTime::createFromFormat("d/m/Y", $end_found);
+      $queryBuilder->field('record_date')->lt($end);
+    }
 
-		//Obtenemos todos los objetos multimedia del repositorio que contengan <$tag_found>
-		if($tag_found != "All" && $tag_found != ""){	
-			$queryBuilder->field('tags._id')->equals(new \MongoId($tag_search->getId()));
-		}
-
-		//Obtenemos todos los objetos multimedia del repositorio que contengan <$type_found>
-		if($type_found != "All" && $type_found != ""){
-			$queryBuilder->field('tracks.only_audio')->equals($type_found == "Audio");
-		}
-
-		//Obtenemos todos los objetos multimedia del repositorio que contengan <$duration_found>
-		if($duration_found != "All" && $duration_found != ""){
-			if($duration_found == "-5"){
-				$queryBuilder->field('tracks.duration')->lte(300);
-			}
-			if($duration_found == "-10"){
-				$queryBuilder->field('tracks.duration')->lte(600);
-			}
-			if($duration_found == "-30"){
-				$queryBuilder->field('tracks.duration')->lte(1800);
-			}
-			if($duration_found == "-60"){
-				$queryBuilder->field('tracks.duration')->lte(3600);
-			}
-			if($duration_found == "+60"){
-				$queryBuilder->field('tracks.duration')->gt(3600);
-			}
-		}
-
-		//Obtenemos todos los objetos multimedia con fecha superior o igual a <$start_found>
-		if($start_found != "All" && $start_found != ""){
-			$start = \DateTime::createFromFormat("d/m/Y", $start_found);
-			$queryBuilder->field('record_date')->gt($start);
-		}
-
-		//Obtenemos todos los objetos multimedia con fecha inferior o igual a <$end_found>
-		if($end_found != "All" && $end_found != ""){
-			$end = \DateTime::createFromFormat("d/m/Y", $end_found);
-			$queryBuilder->field('record_date')->lt($end);
-		}
-
-		$pagerfanta = $this->createPager($queryBuilder, $request->query->get("page", 1));
+    $pagerfanta = $this->createPager($queryBuilder, $request->query->get("page", 1));
   		
-  		return array('type' => 'multimediaObject',
-                     'objects' => $pagerfanta, 
-                     'tags' => $tags, 
-                     'tag_found' => $tag_found, 
-                     'type_found' => $type_found,
-                     'duration_found' => $duration_found);
-  	}
+    return array('type' => 'multimediaObject',
+		 'objects' => $pagerfanta, 
+		 'tags' => $tags, 
+		 'tag_found' => $tag_found, 
+		 'type_found' => $type_found,
+		 'duration_found' => $duration_found);
+  }
 
 
-  	private function createPager($objects, $page)
-  	{
-    	$adapter = new DoctrineODMMongoDBAdapter($objects);
-    	$pagerfanta = new Pagerfanta($adapter);
-    	$pagerfanta->setMaxPerPage($this->limit);
-    	$pagerfanta->setCurrentPage($page);    
+  private function createPager($objects, $page)
+  {
+    $adapter = new DoctrineODMMongoDBAdapter($objects);
+    $pagerfanta = new Pagerfanta($adapter);
+    $pagerfanta->setMaxPerPage($this->limit);
+    $pagerfanta->setCurrentPage($page);    
 
-    	return $pagerfanta;
-  	}
+    return $pagerfanta;
+  }
 }

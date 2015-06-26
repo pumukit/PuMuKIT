@@ -10,6 +10,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Pumukit\SchemaBundle\Document\MultimediaObject
  *
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\MultimediaObjectRepository")
+ * @MongoDB\Indexes({
+ *   @MongoDB\Index(keys={"$**"="text"})
+ * })
  */
 class MultimediaObject
 {
