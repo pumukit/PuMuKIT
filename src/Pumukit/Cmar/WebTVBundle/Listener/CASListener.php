@@ -15,9 +15,9 @@ class CASListener
     public function __construct($casUrl, $casPort, $casUri, $casAllowedIpClients)
     {
         $this->casUrl = $casUrl;
-        $this->casUrl = $casPort;
-        $this->casUrl = $casUri;
-        $this->casUrl = $casAllowedIpClients;
+        $this->casPort = $casPort;
+        $this->casUri = $casUri;
+        $this->casAllowedIpClients = $casAllowedIpClients;
     }
 
     public function onKernelRequest(GetResponseEvent $event)
