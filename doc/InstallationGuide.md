@@ -183,7 +183,6 @@ Use MongoDB 2.6 or upper, the text search feature is enabled by default. In Ubun
  * http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/
 
 
-
 **403 Forbidden access to config.php and app_dev.php**
 
  * Uncomment code in `web/config.php` and `web/app_dev.php`
