@@ -628,11 +628,25 @@ class MultimediaObjectRepository extends DocumentRepository
         $tagRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
         $placeTag = $tagRepo->findOneByCod('PLACE');
         $genreTag = $tagRepo->findOneByCod('GENRE');
+        $descendantOfPlace = false;
+        $descendantOfGenre = false;
         $codes = array();
         foreach ($multimediaObject->getTags() as $tag) {
-            if (!($tag->isDescendantOf($placeTag) || ($tag->isDescendantOf($genreTag)))) {
+            if ($placeTag) {
+                if ($tag->isDescendantOf($placeTag)) {
+                    $descendantOfPlace = true;
+                }
+            }
+            if ($genreTag) {
+                if ($tag->isDescendantOf($genreTag)) {
+                    $descendantOfGenre = true;
+                }
+            }
+            if (!($descendantOfPlace || $descendantOfGenre)) {
               $codes[] = $tag->getCod();
             }
+            $descendantOfPlace = false;
+            $descendantOfGenre = false;
         }
         $qb->field('tags.cod')->all($codes);
 
