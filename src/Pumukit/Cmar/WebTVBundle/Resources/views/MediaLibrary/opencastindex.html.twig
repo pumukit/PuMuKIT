@@ -1,11 +1,4 @@
 {% extends 'PumukitCmarWebTVBundle::layout.html.twig' %}
-
-{# TODO review     <?php // Código para usar la función que sólo cuenta Matterhorn
-          // $stid=$listaSeries[0]->getSerialTypeId();
-          // $prueba = PubChannelPeer::countMmsWithSameSerialType (1, $stid );
-          // echo "videos por categoría $sti = $prueba"; ?>
-#}
-
 {% block body %}
 <div class="resumo_categorias" >
   <ul style="width:80%">
@@ -37,7 +30,6 @@
       <a name="{{ key }}">{{key }}</a> 
     </p>
     {% for oneseries in series %}
-      {# TODO REVIEW <?php foreach ($listaSeries as $l) {include_partial('librarymh/serial', array('serial' => $l));} ?> #}
       {% include 'PumukitCmarWebTVBundle:MediaLibrary:series.html.twig' with {'series': oneseries} %}
     {% endfor %}
   {% endfor %}
