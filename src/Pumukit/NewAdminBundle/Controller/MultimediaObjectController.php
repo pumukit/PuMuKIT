@@ -339,7 +339,7 @@ class MultimediaObjectController extends SortableAdminController
         try{
             $addedTags = $tagService->addTagToMultimediaObject($resource, $request->get('tagId'));
         }catch (\Exception $e){
-            $this->addFlash('success', $e->getMessage());
+            throw new \Exception($e->getMessage());
         }
 
         $json = array('added' => array(), 'recommended' => array());
@@ -369,7 +369,7 @@ class MultimediaObjectController extends SortableAdminController
         try{
             $deletedTags = $tagService->removeTagFromMultimediaObject($resource, $request->get('tagId'));
         }catch (\Exception $e){
-            $this->addFlash('success', $e->getMessage());
+            throw new \Exception($e->getMessage());
         }
 
         $json = array('deleted' => array(), 'recommended' => array());
