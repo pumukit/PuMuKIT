@@ -1,7 +1,7 @@
 <br />
 <div class="num_view">
   <div style="float:left">
-    {% trans %}Video language{% endtrans %}: <span class="num_view_number">{{ multimediaObject.getLanguage()|language_name }}</span>
+    {% trans %}Video language{% endtrans %}: <span class="num_view_number">{{ track.getLanguage()|language_name }}</span>
   </div>
   {% trans %}Viewed{% endtrans %}:
   <span class="num_view_number">{% if multimediaObject.getNumview() is not empty %}{{ multimediaObject.getNumview() }}{% else %}0{% endif %}</span>
