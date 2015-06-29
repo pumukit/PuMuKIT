@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Pumukit\SchemaBundle\Document\Track;
@@ -92,7 +93,7 @@ class TrackController extends Controller
             try {
                 $multimediaObject = $this->get('pumukitschema.track')->updateTrackInMultimediaObject($multimediaObject);
             } catch (\Exception $e) {
-                $this->get('session')->getFlashBag()->add('error', $e->getMessage());
+                return new Response($e->getMessage(), 400);
             }
 
             return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', array('id' => $multimediaObject->getId())));
