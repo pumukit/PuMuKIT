@@ -11,7 +11,7 @@
 <div class="row">
   <div class="col-md-9">
     <div class="well" id="list_jobs">
-      {% include 'PumukitEncoderBundle:Info:jobs.html.twig' with {'pageParameter': '[page_pending]', 'title': 'Pending jobs'|trans, 'jobs': jobs.pending }%}
+      {% include 'PumukitEncoderBundle:Info:jobs.html.twig' with {'pageParameter': '[page_pending]', 'title': 'Pending jobs (paused & waiting)'|trans, 'jobs': jobs.pending }%}
       {% include 'PumukitEncoderBundle:Info:jobs.html.twig' with {'pageParameter': '[page_executing]', 'title': 'Executing jobs'|trans, 'jobs': jobs.executing }%}
       {% include 'PumukitEncoderBundle:Info:jobs.html.twig' with {'pageParameter': '[page_executed]', 'title': 'Executed jobs'|trans, 'jobs': jobs.executed }%}
     </div>
