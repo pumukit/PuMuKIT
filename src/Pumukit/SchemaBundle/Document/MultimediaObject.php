@@ -11,7 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\MultimediaObjectRepository")
  * @MongoDB\Indexes({
- *   @MongoDB\Index(keys={"$**"="text"})
+ *   @MongoDB\Index(name="text_index", keys={"$**"="text"}, options={"language_override"="english"})
  * })
  */
 class MultimediaObject
