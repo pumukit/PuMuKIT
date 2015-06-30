@@ -626,29 +626,16 @@ class MultimediaObjectRepository extends DocumentRepository
 
         // Includes PUCHWEBTV code
         $tagRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
-        $placeTag = $tagRepo->findOneByCod('PLACE');
-        $genreTag = $tagRepo->findOneByCod('GENRE');
-        $descendantOfPlace = false;
-        $descendantOfGenre = false;
+        $unescoTag = $tagRepo->findOneByCod('UNESCO');
         $codes = array();
         foreach ($multimediaObject->getTags() as $tag) {
-            if ($placeTag) {
-                if ($tag->isDescendantOf($placeTag)) {
-                    $descendantOfPlace = true;
+            if ($unescoTag) {
+                if ($tag->isDescendantOf($unescoTag)) {
+                    $codes[] = $tag->getCod();
                 }
             }
-            if ($genreTag) {
-                if ($tag->isDescendantOf($genreTag)) {
-                    $descendantOfGenre = true;
-                }
-            }
-            if (!($descendantOfPlace || $descendantOfGenre)) {
-              $codes[] = $tag->getCod();
-            }
-            $descendantOfPlace = false;
-            $descendantOfGenre = false;
         }
-        $qb->field('tags.cod')->all($codes);
+        $qb->field('tags.cod')->in($codes);
 
         // Limit 20 and random order
         $qb
