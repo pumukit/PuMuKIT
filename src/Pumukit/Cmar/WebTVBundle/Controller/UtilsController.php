@@ -16,13 +16,23 @@ class UtilsController extends Controller
     /**
      * @Template()
      */
-    public function userAction(Request $request)
+    public function userAction(Request $request, $opencast=false)
     {
         $casIsAuthenticated = \phpCAS::isAuthenticated();
         if ($casIsAuthenticated) {
             $username = \phpCAS::getUser();
         } else {
             $username = '';
+        }
+
+        if ($opencast) {
+            return $this->render('PumukitCmarWebTVBundle:Utils:opencast_user.html.twig',
+                                 array(
+                                       'cas_is_authenticated' => $casIsAuthenticated,
+                                       'cas_username' => $username
+                                       )
+                                 )
+              ;
         }
 
         return array(
