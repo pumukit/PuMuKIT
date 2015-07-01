@@ -226,7 +226,7 @@ class PersonController extends AdminController
             }
             return $this->render('PumukitNewAdminBundle:Person:listrelation.html.twig',
                                  array(
-                                       'people' => $multimediaObject->getPeopleByRole($role),
+                                       'people' => $multimediaObject->getPeopleByRole($role, true),
                                        'role' => $role,
                                        'mm' => $multimediaObject,
                                        'template' => $template
@@ -273,7 +273,7 @@ class PersonController extends AdminController
 
                 return $this->render('PumukitNewAdminBundle:Person:listrelation.html.twig',
                                      array(
-                                           'people' => $multimediaObject->getPeopleByRole($role),
+                                           'people' => $multimediaObject->getPeopleByRole($role, true),
                                            'role' => $role,
                                            'mm' => $multimediaObject,
                                            'template' => $template
@@ -327,7 +327,7 @@ class PersonController extends AdminController
         
         return $this->render('PumukitNewAdminBundle:Person:listrelation.html.twig', 
                              array(
-                                   'people' => $multimediaObject->getPeopleByRole($role),
+                                   'people' => $multimediaObject->getPeopleByRole($role, true),
                                    'role' => $role,
                                    'mm' => $multimediaObject,
                                    'template' => $template
@@ -376,7 +376,7 @@ class PersonController extends AdminController
         
         return $this->render('PumukitNewAdminBundle:Person:listrelation.html.twig', 
                              array(
-                                   'people' => $multimediaObject->getPeopleByRole($role),
+                                   'people' => $multimediaObject->getPeopleByRole($role, true),
                                    'role' => $role,
                                    'mm' => $multimediaObject,
                                    'template' => $template
@@ -402,7 +402,7 @@ class PersonController extends AdminController
         
         return $this->render('PumukitNewAdminBundle:Person:listrelation.html.twig', 
                              array(
-                                   'people' => $multimediaObject->getPeopleByRole($role),
+                                   'people' => $multimediaObject->getPeopleByRole($role, true),
                                    'role' => $role,
                                    'mm' => $multimediaObject,
                                    'template' => $template
@@ -428,7 +428,7 @@ class PersonController extends AdminController
         }
         
         return array(
-                     'people' => $multimediaObject->getPeopleByRole($role),
+                     'people' => $multimediaObject->getPeopleByRole($role, true),
                      'role' => $role,
                      'mm' => $multimediaObject,
                      'template' => $template
