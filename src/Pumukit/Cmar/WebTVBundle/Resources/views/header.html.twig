@@ -5,10 +5,10 @@
         <div class="busca" style="position:absolute;top: 52px; right: 25px">
           <form name="searchhead"
                 method="post"
-                action="/busca">
+                action="{{ path('pumukit_cmar_web_tv_search_index') }}">
             <div class="search-cont">
               <label accesskey="t" for="busca" class="salto">"{% trans %}Search{% endtrans %}:"</label>
-              <input style="height:16px" placeholder="{% trans %}Search{% endtrans %}..." name="q" maxlength="30" type="text" />
+              <input style="height:16px" placeholder="{% trans %}Search{% endtrans %}..." name="indexSearch" maxlength="30" type="text" />
               <input type="image" src="{{ asset('bundles/pumukitcmarwebtv/images/webtv/lupa.png') }}" style="position: relative; top: 4px; left: -4px;" name="startsearch" />
             </div>
           </form>

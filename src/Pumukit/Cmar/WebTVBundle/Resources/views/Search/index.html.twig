@@ -1,0 +1,19 @@
+{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+
+{% block body %}
+
+<p class="titulo_widget titulo_widget_grande">{% trans %}Search{% endtrans %}</p>
+
+<div id="cse" style="width: 100%;">{% trans %}Loading{% endtrans %}...</div>
+<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+<script type="text/javascript">
+  google.load('search', '1', {language : '{{ app.request.getLocale() }}'});
+  google.setOnLoadCallback(function() {
+    var customSearchControl = new google.search.CustomSearchControl('007645658792751501776:p5mxp0-ccbi');
+    customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
+    customSearchControl.draw('cse');
+    customSearchControl.execute('{{ search|raw }}');
+  }, true);
+</script>
+<link rel="stylesheet" href="http://www.google.com/cse/style/look/default.css" type="text/css" />
+{% endblock %}
