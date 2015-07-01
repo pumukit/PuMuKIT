@@ -166,7 +166,7 @@ div.pumukit_mini_mmobjs .pumukit_mini_mmobj .info{
 }
 
 
-div.pumukit_mmobjs .pumukit_mmobj .thumbnail, div.pumukit_mini_mmobjs .pumukit_mini_mmobj .thumbnail{
+div.pumukit_mmobjs .pumukit_mmobj .pmk_thumbnail, div.pumukit_mini_mmobjs .pumukit_mini_mmobj .pmk_thumbnail{
   display:inline;
   float:left;
   margin:0 7px 0 0;
