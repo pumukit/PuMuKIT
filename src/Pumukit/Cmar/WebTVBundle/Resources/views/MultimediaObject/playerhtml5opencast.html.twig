@@ -7,7 +7,7 @@
        style = "width: 100%; min-height: 400px"
        controls = "controls"
        poster = "{{ asset('bundles/pumukitcmarwebtv/cmar/poster.png') }}" >
-      <source src="{{ multimediaObject.getProperty('opencasturl')|replace({'%id%': multimediaObject.getProperty('opencast')}) }}" type="video/mp4"/>
+      <source src="{{ iframeurl(multimediaObject, true, false) }}" type="video/mp4"/>
   </video>
    <div class="mm_player">
      <div class="num_view">
