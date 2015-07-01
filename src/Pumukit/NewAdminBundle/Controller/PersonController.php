@@ -492,7 +492,7 @@ class PersonController extends AdminController
         }
 
         if (array_key_exists('post', $criteria)){
-            if ('' !== $criteria['post.' . $locale]){
+            if ('' !== $criteria['post']){
                 $new_criteria['post.' . $locale] = new \MongoRegex('/'.$criteria['post'].'/i');
             }
         }
