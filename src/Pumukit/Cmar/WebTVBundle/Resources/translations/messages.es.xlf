@@ -202,6 +202,18 @@
         <source>VIDEO NOT AVAILABLE</source>
         <target>VIDEO NO DISPONIBLE</target>
       </trans-unit>
+      <trans-unit id="16bfbf9c462762cf1cba4134ec53c504" resname="Loading">
+        <source>Loading</source>
+        <target>Cargando</target>
+      </trans-unit>
+      <trans-unit id="4236a440a662cc8253d7536e5aa17942" resname="logout">
+        <source>logout</source>
+        <target>logout</target>
+      </trans-unit>
+      <trans-unit id="d56b699830e77ba53855679cb1d252da" resname="login">
+        <source>login</source>
+        <target>login</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
