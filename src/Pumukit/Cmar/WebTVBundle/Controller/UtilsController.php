@@ -46,12 +46,12 @@ class UtilsController extends Controller
      */
     public function loginAction(Request $request)
     {
+        $url = $request->server->get("HTTP_REFERER");
+        \phpCAS::setFixedServiceURL($url);
         \phpCAS::forceAuthentication();
         if(!in_array(\phpCAS::getUser(), array("tv", "prueba", "adminmh", "admin", "sistemas.uvigo"))) {
             throw $this->createAccessDeniedException('Unable to access this page!');        
         }
-
-        $url = $this->generateUrl('pumukit_webtv_index_index');
 
         return $this->redirect($url);
     }
