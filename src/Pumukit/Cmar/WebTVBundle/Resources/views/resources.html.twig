@@ -58,7 +58,7 @@
     <div style="color:#A2A2A2; position: absolute; left:160px; bottom: 32px; ">
       {% set master_track = resource.getTrackWithTag('master') %}
       {% if master_track %}
-        {{ master_track.getLanguage() }}
+        {{ master_track.getLanguage()|language_name }}
       {% endif %}
     </div>
     {% endif %}
