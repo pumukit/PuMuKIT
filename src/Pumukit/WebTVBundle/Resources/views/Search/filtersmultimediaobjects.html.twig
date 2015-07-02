@@ -15,51 +15,49 @@
 
   <div class="form-group col-md-4">
     <label for="tags">{% trans %}Tags{% endtrans %}:</label>
-    <div class="input-group">
       <select id="tags" name="tags" class="form-control" onchange="javascript:this.form.submit();">
         <option {% if tag_found == "" %} selected="selected" {% endif %}>All</option>
         {% for tag in tags if tag.getTitle() != "" %}
         <option {% if tag_found == tag.getTitle() %} selected="selected" {% endif %}>{{ tag.getTitle() }}</option>
         {% endfor %}
       </select>
-    </div>
   </div>
 
   <div class="form-group col-md-4">
     <label for="duration">{% trans %}Duration{% endtrans %}:</label>
     <select id="duration" name="duration" class="form-control" onchange="javascript:this.form.submit();">
       <option value="all" {% if app.request.query.get('duration') == "all" %} selected="selected" {% endif %}>{% trans%}All{% endtrans %}</option>
-	  <option value="-5"  {% if app.request.query.get('duration') == "-5" %} selected="selected" {% endif %}>{% trans %}Up to 5 minutes{% endtrans %}</option>
-	  <option value="-10" {% if app.request.query.get('duration') == "-10" %} selected="selected" {% endif %}>{% trans %}Up to 10 minutes{% endtrans %}</option>
-	  <option value="-30" {% if app.request.query.get('duration') == "-30" %} selected="selected" {% endif %}>{% trans %}Up to 30 minutes{% endtrans %}</option>
-	  <option value="-60" {% if app.request.query.get('duration') == "-60" %} selected="selected" {% endif %}>{% trans %}Up to 60 minutes{% endtrans %}</option>
-	  <option value="+60" {% if app.request.query.get('duration') == "+60" %} selected="selected" {% endif %}>{% trans %}More than 60 minutes{% endtrans %}</option>
-	</select>
+	    <option value="-5"  {% if app.request.query.get('duration') == "-5" %} selected="selected" {% endif %}>{% trans %}Up to 5 minutes{% endtrans %}</option>
+	    <option value="-10" {% if app.request.query.get('duration') == "-10" %} selected="selected" {% endif %}>{% trans %}Up to 10 minutes{% endtrans %}</option>
+	    <option value="-30" {% if app.request.query.get('duration') == "-30" %} selected="selected" {% endif %}>{% trans %}Up to 30 minutes{% endtrans %}</option>
+	    <option value="-60" {% if app.request.query.get('duration') == "-60" %} selected="selected" {% endif %}>{% trans %}Up to 60 minutes{% endtrans %}</option>
+	    <option value="+60" {% if app.request.query.get('duration') == "+60" %} selected="selected" {% endif %}>{% trans %}More than 60 minutes{% endtrans %}</option>
+	  </select>
   </div>
 
   <div class="form-group col-md-4">
     <label for="type">{% trans %}Video/Audio{% endtrans %}:</label>
     <select id="type" name="type" class="form-control"  onchange="javascript:this.form.submit();">
       <option {% if type_found == "" %} selected="selected" {% endif %}>{% trans %}All{% endtrans %}</option>
-	  <option {% if type_found == "Video" %} selected="selected" {% endif %}>{% trans %}Video{% endtrans %}</option>
-	  <option {% if type_found == "Audio" %} selected="selected" {% endif %}>{% trans %}Audio{% endtrans %}</option>
-	</select>
+	    <option {% if type_found == "Video" %} selected="selected" {% endif %}>{% trans %}Video{% endtrans %}</option>
+	    <option {% if type_found == "Audio" %} selected="selected" {% endif %}>{% trans %}Audio{% endtrans %}</option>
+	  </select>
   </div>
 
   <div class="form-group col-md-3">
     <label for="start">{% trans %}Start date{% endtrans %}:</label>
-    <div class="input-group">
-      <input type="text" id="start" name="start" value="{{ app.request.query.get('start') }}" class="form-control" placeholder="From">
-      <div class="input-group-addon">
+    <div class="input-group date" id='start'>
+      <input type='text' class="form-control" placeholder="From"/>
+      <span class="input-group-addon">
         <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-      </div>
+      </span>
     </div>
   </div>
 
   <div class="form-group col-md-3">
     <label for="end">{% trans %}Finish date{% endtrans %}:</label>
-    <div class="input-group">
-      <input type="text" class="form-control" id="end" name="end" value="{{ app.request.query.get('end') }}" placeholder="Until">
+    <div class="input-group date" id="end">
+      <input type="text" class="form-control" placeholder="Until">
       <div class="input-group-addon">
         <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
       </div>
