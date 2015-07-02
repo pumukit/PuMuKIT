@@ -5,10 +5,11 @@ namespace Pumukit\SchemaBundle\Event;
 final class SchemaEvents
 {
     /**
-     * The multimediaobject.update event is thrown each time a multimedia object is updated.
+     * The multimediaobject.update event is thrown each time a 
+     * multimedia object is updated.
      *
      * The event listener receives an
-     * Pumukit\EncoderBundle\Event\JobEvent\MultimediaObjectEvent instance.
+     * Pumukit\SchemaBundle\Event\MultimediaObjectEvent instance.
      *
      * @var string
      */
