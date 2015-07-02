@@ -47,7 +47,7 @@
   <div class="form-group col-md-3">
     <label for="start">{% trans %}Start date{% endtrans %}:</label>
     <div class="input-group date" id='start'>
-      <input type='text' class="form-control" name="start" value="{{ app.request.query.get('start') }}" placeholder="From"/>
+      <input type='text' class="form-control" name="start" value="{{ app.request.query.get('start') }}" placeholder="From" onblur="javascript:this.form.submit();"/>
       <span class="input-group-addon">
         <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
       </span>
@@ -57,7 +57,7 @@
   <div class="form-group col-md-3">
     <label for="end">{% trans %}Finish date{% endtrans %}:</label>
     <div class="input-group date" id="end">
-      <input type="text" class="form-control" name="end" value="{{ app.request.query.get('end') }}" placeholder="Until">
+      <input type="text" class="form-control" name="end" value="{{ app.request.query.get('end') }}" placeholder="Until" onblur="javascript:this.form.submit();"/>
       <div class="input-group-addon">
         <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
       </div>
