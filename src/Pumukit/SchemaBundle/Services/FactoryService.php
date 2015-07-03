@@ -312,6 +312,8 @@ class FactoryService
         $new->setI18nLine2($src->getI18nLine2());
         $new->setI18nKeyword($src->getI18nKeyword());
         $new->setCopyright($src->getCopyright());
+        $new->setLicense($src->getLicense());
+        $new->setProperties($src->getProperties());
 
         foreach ($src->getTags() as $tag) {
           $tagAdded = $this->tagService->addTagToMultimediaObject($new, $tag->getId(), false);
