@@ -129,7 +129,7 @@ class Live
 
     public function __toString()
     {
-        return $this->url;
+        return $this->getName();
     }
 
   /**
