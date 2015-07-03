@@ -24,7 +24,7 @@
               <div class="form-group">
                 <label for="title" class="control-label">{% trans %}Title{% endtrans %}:</label>
                 <div>
-                  <input type="text" class="form-control" name="criteria[title.{{ app.request.locale }}]" id="filters_title" value="{{ criteria['title.'~app.request.locale]|default("") }}">
+                  <input type="text" class="form-control" name="criteria[title]" id="filters_title" value="{{ criteria['title']|default("") }}">
                 </div>
               </div>
               

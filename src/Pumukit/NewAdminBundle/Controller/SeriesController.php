@@ -288,7 +288,7 @@ class SeriesController extends AdminController
         $new_criteria = array();
         foreach ($criteria as $property => $value) {
             //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
-            if (('' !== $value) && ('title.en' === $property)) {
+            if (('' !== $value) && ('title' === $property)) {
                 $new_criteria['$text'] = array('$search' => $value);
             } elseif (('' !== $value) && ('date' == $property)) {
                 if ('' !== $value['from']) $date_from = new \DateTime($value['from']);
@@ -481,7 +481,7 @@ class SeriesController extends AdminController
     public function searchAction(Request $req)
     {
         $q = $req->get('q');
-        $this->get('session')->set('admin/series/criteria', array('title.'. $req->getLocale() => $q));
+        $this->get('session')->set('admin/series/criteria', array('title' => $q));
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_series_index'));
     }
