@@ -30,64 +30,66 @@
     </div>
     <fieldset>
       {# TODO build input fields with for loop #}
-      <div class="form-group" id="pumukitwizard_multimediaobject_i18n_title">
-        <label for="pumukitwizard_multimediaobject_i18n_title" class="control-label">{% trans %}Title{% endtrans %}</label>
-        <div>
-          {% for locale in locales %}
-          <div class="input-group">
-            {% if form_data.multimediaobject is defined %}
-            <input type="text" id="pumukitwizard_multimediaobject_i18n_title_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_title][{{ locale }}]" class="form-control" value="{{ attribute(form_data.multimediaobject.i18n_title, locale) }}">
-            {% else %}
-            <input type="text" id="pumukitwizard_multimediaobject_i18n_title_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_title][{{ locale }}]" class="form-control" value="">
-            {% endif %}
-            <span class="input-group-addon">{{ locale }}</span>
+      <div class="col-md-7">
+        <div class="form-group" id="pumukitwizard_multimediaobject_i18n_title">
+          <label for="pumukitwizard_multimediaobject_i18n_title" class="control-label">{% trans %}Title{% endtrans %}</label>
+          <div>
+            {% for locale in locales %}
+            <div class="input-group">
+              {% if form_data.multimediaobject is defined %}
+              <input type="text" id="pumukitwizard_multimediaobject_i18n_title_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_title][{{ locale }}]" class="form-control" value="{{ attribute(form_data.multimediaobject.i18n_title, locale) }}">
+              {% else %}
+              <input type="text" id="pumukitwizard_multimediaobject_i18n_title_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_title][{{ locale }}]" class="form-control" value="">
+              {% endif %}
+              <span class="input-group-addon">{{ locale }}</span>
+            </div>
+            {% endfor %}
           </div>
-          {% endfor %}
         </div>
-      </div>
-      <div class="form-group" id="pumukitwizard_multimediaobject_i18n_subtitle">
-        <label for="pumukitwizard_multimediaobject_i18n_subtitle" class="control-label">{% trans %}Subtitle{% endtrans %}</label>
-        <div>
-          {% for locale in locales %}
-          <div class="input-group">
-            {% if form_data.multimediaobject is defined %}
-            <input type="text" id="pumukitwizard_multimediaobject_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_subtitle][{{ locale }}]" class="form-control" value="{{ attribute(form_data.multimediaobject.i18n_subtitle, locale) }}">
-            {% else %}
-            <input type="text" id="pumukitwizard_multimediaobject_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_subtitle][{{ locale }}]" class="form-control" value="">
-            {% endif %}
-            <span class="input-group-addon">{{ locale }}</span>
+        <div class="form-group" id="pumukitwizard_multimediaobject_i18n_subtitle">
+          <label for="pumukitwizard_multimediaobject_i18n_subtitle" class="control-label">{% trans %}Subtitle{% endtrans %}</label>
+          <div>
+            {% for locale in locales %}
+            <div class="input-group">
+              {% if form_data.multimediaobject is defined %}
+              <input type="text" id="pumukitwizard_multimediaobject_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_subtitle][{{ locale }}]" class="form-control" value="{{ attribute(form_data.multimediaobject.i18n_subtitle, locale) }}">
+              {% else %}
+              <input type="text" id="pumukitwizard_multimediaobject_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_subtitle][{{ locale }}]" class="form-control" value="">
+              {% endif %}
+              <span class="input-group-addon">{{ locale }}</span>
+            </div>
+            {% endfor %}
           </div>
-          {% endfor %}
         </div>
-      </div>
-      <div class="form-group" id="pumukitwizard_multimediaobject_i18n_description">
-        <label for="pumukitwizard_multimediaobject_i18n_description" class="control-label">{% trans %}Description{% endtrans %}</label>
-        <div>
-          {% for locale in locales %}
-          <div class="input-group">
-            {% if form_data.multimediaobject is defined %}
-            <input type="text" id="pumukitwizard_multimediaobject_i18n_description_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_description][{{ locale }}]" class="form-control" value="{{ attribute(form_data.multimediaobject.i18n_description, locale) }}">
-            {% else %}
-            <input type="text" id="pumukitwizard_multimediaobject_i18n_description_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_description][{{ locale }}]" class="form-control" value="">
-            {% endif %}
-            <span class="input-group-addon">{{ locale }}</span>
+        <div class="form-group" id="pumukitwizard_multimediaobject_i18n_description">
+          <label for="pumukitwizard_multimediaobject_i18n_description" class="control-label">{% trans %}Description{% endtrans %}</label>
+          <div>
+            {% for locale in locales %}
+            <div class="input-group">
+              {% if form_data.multimediaobject is defined %}
+              <input type="text" id="pumukitwizard_multimediaobject_i18n_description_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_description][{{ locale }}]" class="form-control" value="{{ attribute(form_data.multimediaobject.i18n_description, locale) }}">
+              {% else %}
+              <input type="text" id="pumukitwizard_multimediaobject_i18n_description_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_description][{{ locale }}]" class="form-control" value="">
+              {% endif %}
+              <span class="input-group-addon">{{ locale }}</span>
+            </div>
+            {% endfor %}
           </div>
-          {% endfor %}
         </div>
-      </div>
-      <div class="form-group" id="pumukitwizard_multimediaobject_i18n_line2">
-        <label for="pumukitwizard_multimediaobject_i18n_line2" class="control-label">{% trans %}Headline{% endtrans %}</label>
-        <div>
-          {% for locale in locales %}
-          <div class="input-group">
-            {% if form_data.multimediaobject is defined %}
-            <input type="text" id="pumukitwizard_multimediaobject_i18n_line2_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_line2][{{ locale }}]" class="form-control" value="{{ attribute(form_data.multimediaobject.i18n_line2, locale) }}">
-            {% else %}
-            <input type="text" id="pumukitwizard_multimediaobject_i18n_line2_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_line2][{{ locale }}]" class="form-control" value="">
-            {% endif %}
-            <span class="input-group-addon">{{ locale }}</span>
+        <div class="form-group" id="pumukitwizard_multimediaobject_i18n_line2">
+          <label for="pumukitwizard_multimediaobject_i18n_line2" class="control-label">{% trans %}Headline{% endtrans %}</label>
+          <div>
+            {% for locale in locales %}
+            <div class="input-group">
+              {% if form_data.multimediaobject is defined %}
+              <input type="text" id="pumukitwizard_multimediaobject_i18n_line2_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_line2][{{ locale }}]" class="form-control" value="{{ attribute(form_data.multimediaobject.i18n_line2, locale) }}">
+              {% else %}
+              <input type="text" id="pumukitwizard_multimediaobject_i18n_line2_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_line2][{{ locale }}]" class="form-control" value="">
+              {% endif %}
+              <span class="input-group-addon">{{ locale }}</span>
+            </div>
+            {% endfor %}
           </div>
-          {% endfor %}
         </div>
       </div>
     </fieldset>

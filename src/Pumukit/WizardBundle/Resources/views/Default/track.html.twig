@@ -39,89 +39,91 @@
       </div>
     </div>
     <fieldset>
-      <div class="form-group" id="pumukitwizard_track_profile">
-        <label for="pumukitwizard_track_profile" class="control-label">{% trans %}Profile{% endtrans %}</label>
-        {% for key in master_profiles|keys %}
-        <div class="radio">
-          <label><input type="radio" name="pumukitwizard_form_data[track][profile]" id="pumukitwizard_track_profile_{{ key }}" value="{{ key }}" {{ ("master_copy"==key)?'checked':'' }}>{{ key }}</label>
-        </div>
-        {% endfor %}
-      </div>
-	  <div class="form-group" id="pumukitwizard_track_pubchannel">
-	    <label for="pumukitwizard_track_pubchannel" class="control-label">{% trans %}Publication Channels{% endtrans %}:</label>
-        {% for pub in pub_channels %}
-        {% if not pub.getDisplay() %}
-        <div style="color: grey">
-          <input type="checkbox" disabled="disabled" />  {{ pub.getTitle() }}
-        </div>
-        {% else %}
-        <div class="checkbox">
-          <label>
-            <input type="checkbox"
-                   name="pumukitwizard_form_data[track][pubchannel][{{ pub.cod }}]"
-	               id="pumukitwizard_track_pubchannel_{{ pub.cod }}"
-                   class="pub_channel_input_checkbox"
-                   {# TODO <?php echo(($estado === 2) || ($estado === 2)) ? 'disabled="disabled"' : ''?> #}
-                   />
-            {{ pub.getTitle() }}
-          </label>
-        </div>
-        {% endif %}
-        {% endfor %}
-	  </div>
-      <div class="form-group" id="pumukitwizard_track_priority">
-        <label for="pumukitwizard_track_priority" class="control-label">{% trans %}Priority{% endtrans %}</label>        
-        <div class="radio">
-          <label><input type="radio" name="pumukitwizard_form_data[track][priority]" value="1"/>{% trans %}Low-Priority{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</label>
-        </div>
-        <div class="radio">
-          <label><input type="radio" name="pumukitwizard_form_data[track][priority]" value="2" checked="checked"/>{% trans %}Normal-Priority{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</label>
-        </div>
-        <div class="radio">
-          <label><input type="radio" name="pumukitwizard_form_data[track][priority]" value="3"/>{% trans %}High-Priority{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</label>
-        </div>
-      </div>
-      <div class="form-group" id="pumukitwizard_track_language">
-        <label for="pumukitwizard_track_language" class="control-label">{% trans %}Language{% endtrans %}</label>
-        <select id="pumukitwizard_track_language" name="pumukitwizard_form_data[track][language]" class="form-control">
-          {% for locale, language in languages %}
-          <option value="{{ locale }}" {{ (locale == app.request.getLocale())?'selected="selected"':''}}>{{ language }}</option>
+      <div class="col-md-7">
+        <div class="form-group" id="pumukitwizard_track_profile">
+          <label for="pumukitwizard_track_profile" class="control-label">{% trans %}Profile{% endtrans %}</label>
+          {% for key in master_profiles|keys %}
+          <div class="radio">
+            <label><input type="radio" name="pumukitwizard_form_data[track][profile]" id="pumukitwizard_track_profile_{{ key }}" value="{{ key }}" {{ ("master_copy"==key)?'checked':'' }}>{{ key }}</label>
+          </div>
           {% endfor %}
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="pumukitwizard_track_filetype" class="control-label">{% trans %}Mode{% endtrans %}</label>
-        {% if 'single' == form_data.type.option %}
-        <div class="radio">
-          <label><input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_inbox" value="inbox" onclick="$('#pumukitwizard_track_file').hide();$('#pumukitwizard_track_inbox').show();"/> {% trans %}Inbox on server{% endtrans %}</label>
         </div>
-        <div class="radio">
-          <label><input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_file" value="file" checked="checked" onclick="$('#pumukitwizard_track_inbox').hide();$('#pumukitwizard_track_file').show();"/> {% trans %}Local hard drive{% endtrans %}</label>
+	    <div class="form-group" id="pumukitwizard_track_pubchannel">
+	      <label for="pumukitwizard_track_pubchannel" class="control-label">{% trans %}Publication Channels{% endtrans %}:</label>
+          {% for pub in pub_channels %}
+          {% if not pub.getDisplay() %}
+          <div style="color: grey">
+            <input type="checkbox" disabled="disabled" />  {{ pub.getTitle() }}
+          </div>
+          {% else %}
+          <div class="checkbox">
+            <label>
+              <input type="checkbox"
+                     name="pumukitwizard_form_data[track][pubchannel][{{ pub.cod }}]"
+	                 id="pumukitwizard_track_pubchannel_{{ pub.cod }}"
+                     class="pub_channel_input_checkbox"
+                     {# TODO <?php echo(($estado === 2) || ($estado === 2)) ? 'disabled="disabled"' : ''?> #}
+                     />
+              {{ pub.getTitle() }}
+            </label>
+          </div>
+          {% endif %}
+          {% endfor %}
+	    </div>
+        <div class="form-group" id="pumukitwizard_track_priority">
+          <label for="pumukitwizard_track_priority" class="control-label">{% trans %}Priority{% endtrans %}</label>        
+          <div class="radio">
+            <label><input type="radio" name="pumukitwizard_form_data[track][priority]" value="1"/>{% trans %}Low-Priority{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          </div>
+          <div class="radio">
+            <label><input type="radio" name="pumukitwizard_form_data[track][priority]" value="2" checked="checked"/>{% trans %}Normal-Priority{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          </div>
+          <div class="radio">
+            <label><input type="radio" name="pumukitwizard_form_data[track][priority]" value="3"/>{% trans %}High-Priority{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          </div>
+        </div>
+        <div class="form-group" id="pumukitwizard_track_language">
+          <label for="pumukitwizard_track_language" class="control-label">{% trans %}Language{% endtrans %}</label>
+          <select id="pumukitwizard_track_language" name="pumukitwizard_form_data[track][language]" class="form-control">
+            {% for locale, language in languages %}
+            <option value="{{ locale }}" {{ (locale == app.request.getLocale())?'selected="selected"':''}}>{{ language }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="pumukitwizard_track_filetype" class="control-label">{% trans %}Mode{% endtrans %}</label>
+          {% if 'single' == form_data.type.option %}
+          <div class="radio">
+            <label><input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_inbox" value="inbox" onclick="$('#pumukitwizard_track_file').hide();$('#pumukitwizard_track_inbox').show();"/> {% trans %}Inbox on server{% endtrans %}</label>
+          </div>
+          <div class="radio">
+            <label><input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_file" value="file" checked="checked" onclick="$('#pumukitwizard_track_inbox').hide();$('#pumukitwizard_track_file').show();"/> {% trans %}Local hard drive{% endtrans %}</label>
+          </div>
+          {% elseif 'multiple' == form_data.type.option %}
+          <div class="radio">
+            <label><input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_directory" value="directory" checked="checked"/> {% trans %}Inbox directory on server{% endtrans %}</label>
+          </div>
+          {% endif %}
+        </div>
+        {% if 'single' == form_data.type.option %}
+        <div class="form-group" id="pumukitwizard_track_file">
+          <label for="url" class="control-label">{% trans %}Resource{% endtrans %}:</label>
+          <div class="input-group">
+            <input type="file" name="resource" id="resource" value="" size="70">
+            <span style="color: blue">({% trans %}Under{% endtrans %} {{ php_upload_max_filesize() }})</span>
+            <span id="file_upload_progress" style="color:blue; display:none;">{% trans %}Progress{% endtrans %}...</span>
+          </div>
+        </div>
+        <div class="form-group" id="pumukitwizard_track_inbox" style="display: none">
+          {{ render(controller('PumukitNewAdminBundle:Inbox:Form')) }}
         </div>
         {% elseif 'multiple' == form_data.type.option %}
-        <div class="radio">
-          <label><input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_directory" value="directory" checked="checked"/> {% trans %}Inbox directory on server{% endtrans %}</label>
+        <div class="form-group" id="pumukitwizard_track_directory">
+          {{ render(controller('PumukitNewAdminBundle:Inbox:Form', {'onlyDir': true})) }}
         </div>
         {% endif %}
+        <span id="error_file" style="display:none;color:red;" class="error">{% trans %}Empty file field{% endtrans %}</span>
       </div>
-      {% if 'single' == form_data.type.option %}
-      <div class="form-group" id="pumukitwizard_track_file">
-        <label for="url" class="control-label">{% trans %}Resource{% endtrans %}:</label>
-        <div class="input-group">
-          <input type="file" name="resource" id="resource" value="" size="70">
-          <span style="color: blue">({% trans %}Under{% endtrans %} {{ php_upload_max_filesize() }})</span>
-          <span id="file_upload_progress" style="color:blue; display:none;">{% trans %}Progress{% endtrans %}...</span>
-        </div>
-      </div>
-      <div class="form-group" id="pumukitwizard_track_inbox" style="display: none">
-        {{ render(controller('PumukitNewAdminBundle:Inbox:Form')) }}
-      </div>
-      {% elseif 'multiple' == form_data.type.option %}
-      <div class="form-group" id="pumukitwizard_track_directory">
-        {{ render(controller('PumukitNewAdminBundle:Inbox:Form', {'onlyDir': true})) }}
-      </div>
-      {% endif %}
-      <span id="error_file" style="display:none;color:red;" class="error">{% trans %}Empty file field{% endtrans %}</span>
     </fieldset>
   </form>
 </div>
