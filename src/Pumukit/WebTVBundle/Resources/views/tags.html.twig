@@ -2,7 +2,7 @@
   {% if show_tag %}
     {% set sep = '' %}
     {% set ii = 0 %}
-    {% for tag in tags if tag.getDisplay() and not tag.getMetatag() and (ii < 3) %}
+    {% for tag in tags if tag.getDisplay() and not tag.getMetatag() and tag.isDescendantOf(unescoTag) and (ii < 3) %}
       {% if ii == 2 %}
         <span style="font-weight: bold; font-size: 100%">[+]</span>
       {% endif %}
