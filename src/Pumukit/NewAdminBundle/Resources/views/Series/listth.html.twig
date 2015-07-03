@@ -1,6 +1,5 @@
 <input type="hidden" name="pumukitnewadmin_series_sort_change_type" id="pumukitnewadmin_series_sort_change_type" value="{{ app.session.get('admin/series/type')=='asc'?'desc':'asc' }}"/>
-{% set title_locale = 'title.'~app.request.getLocale() %}
-{% if title_locale == app.session.get('admin/series/sort') %}
+{% if 'title' == app.session.get('admin/series/sort') %}
   <th>
     <a href="#" id="pumukitnewadmin_series_title_sort_selected">{% trans %}Title{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
   </th>

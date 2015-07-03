@@ -944,15 +944,14 @@ $(function() {
   });
 });
 
-{% set titleLocale = 'title.'~app.request.getLocale() %}
 $(document).on('click', '#pumukitnewadmin_series_title_sort_selected', function(){
     var inputROId = $('#inputROId').val();
     var type = $('#pumukitnewadmin_series_sort_change_type').val();
     if (inputROId) {
-        var route = "{{ path('pumukitnewadmin_series_list', {'selectedSeriesId': '__inputROId__', 'sorting': {(titleLocale): '__type__'}})|raw }}";
+        var route = "{{ path('pumukitnewadmin_series_list', {'selectedSeriesId': '__inputROId__', 'sorting': {'title': '__type__'}})|raw }}";
         route = route.replace('__inputROId__', inputROId);
     } else {
-        var route = "{{ path('pumukitnewadmin_series_list', {'sorting': {(titleLocale): '__type__'}})|raw }}";
+        var route = "{{ path('pumukitnewadmin_series_list', {'sorting': {'title': '__type__'}})|raw }}";
     }
     $('#list_series').load(route.replace('__type__', type), {'_method':'POST'});
     return false;
@@ -960,10 +959,10 @@ $(document).on('click', '#pumukitnewadmin_series_title_sort_selected', function(
 $(document).on('click', '#pumukitnewadmin_series_title_sort_not_selected', function(){
     var inputROId = $('#inputROId').val();
     if (inputROId) {
-        var route = "{{ path('pumukitnewadmin_series_list', {'selectedSeriesId': '__inputROId__', 'sorting': {(titleLocale): 'asc'}})|raw }}";
+        var route = "{{ path('pumukitnewadmin_series_list', {'selectedSeriesId': '__inputROId__', 'sorting': {'title': 'asc'}})|raw }}";
         route = route.replace('__inputROId__', inputROId);
     } else {
-        var route = "{{ path('pumukitnewadmin_series_list', {'sorting': {(titleLocale): 'asc'}})|raw }}";
+        var route = "{{ path('pumukitnewadmin_series_list', {'sorting': {'title': 'asc'}})|raw }}";
     }
     $('#list_series').load(route, {'_method':'POST'});
     return false;
