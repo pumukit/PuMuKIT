@@ -27,6 +27,7 @@ class PumukitInitExampleDataCommand extends ContainerAwareCommand
 
       private $dm = null;
       private $repo = null;
+      private $roleRepo;
 
       protected function configure()
       {
@@ -56,7 +57,9 @@ EOT
  
             $newFile = $this->getContainer()->getParameter('kernel.cache_dir') . '/tmp_file.zip';
             $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-            $this->repo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:Tag");
+            $this->repo = $this->dm->getRepository("PumukitSchemaBundle:Tag");
+            $this->roleRepo = $this->dm->getRepository("PumukitSchemaBundle:Role");
+
             $factoryService = $this->getContainer()->get('pumukitschema.factory'); 
 
             if ($input->getOption('force')) {
@@ -80,6 +83,10 @@ EOT
                         }
                   }
 
+                  // Roles
+                  $actorRole = $this->getRoleWithCode('actor');
+                  $presenterRole = $this->getRoleWithCode('presenter');
+
                   //Series Access grid
                   $series = $factoryService->createSeries();
                   $this->load_series($series, "Access grid");
@@ -89,7 +96,7 @@ EOT
                   $this->load_multimediaobject($multimediaObject, $series, "Access grid");
                   $this->load_track_multimediaobject($multimediaObject, '8', '24', false);
                   $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUBDECISIONS","PUBCHANNELS","PUCHARCA","Dscience","Dhealth"));
-                  $this->load_people_multimediaobject($multimediaObject, 'Will', 'actor');
+                  $this->load_people_multimediaobject($multimediaObject, 'Will', $actorRole);
                   $this->load_pic_multimediaobject($multimediaObject, '17');
 
                   //Series Uvigo
@@ -118,7 +125,7 @@ EOT
                   $this->load_multimediaobject($multimediaObject, $series, "Movil");
                   $this->load_track_multimediaobject($multimediaObject, '10', '36', false);
                   $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","Dscience","Dhumanities"));
-                  $this->load_people_multimediaobject($multimediaObject, 'Laura', 'presenter');
+                  $this->load_people_multimediaobject($multimediaObject, 'Laura', $presenterRole);
                   $this->load_pic_multimediaobject($multimediaObject, '22');
 
                   $multimediaObject = $factoryService->createMultimediaObject($series);
@@ -159,7 +166,7 @@ EOT
                   $this->load_multimediaobject($multimediaObject, $series, "Energy materials and environment");
                   $this->load_track_multimediaobject($multimediaObject, '12', '40', false);
                   $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUCHARCA","Dhealth","Dtechnical"));
-                  $this->load_people_multimediaobject($multimediaObject, 'Marcos', 'presenter');
+                  $this->load_people_multimediaobject($multimediaObject, 'Marcos', $presenterRole);
                   $this->load_pic_multimediaobject($multimediaObject, '28');
 
                   //Serie Marine sciences
@@ -210,7 +217,7 @@ EOT
                   $this->load_multimediaobject($multimediaObject, $series, "First");
                   $this->load_track_multimediaobject($multimediaObject, '16', '53', false);
                   $this->load_tags_multimediaobject($multimediaObject, array("PUDEPD3","PUCHARCA","Dtechnical","Dhumanities"));
-                  $this->load_people_multimediaobject($multimediaObject, 'Ana', 'actor');
+                  $this->load_people_multimediaobject($multimediaObject, 'Ana', $actorRole);
                   $this->load_pic_multimediaobject($multimediaObject, '33');
 
                   $multimediaObject = $factoryService->createMultimediaObject($series);
@@ -239,8 +246,8 @@ EOT
                   $this->load_multimediaobject($multimediaObject, $series, "Presentation");
                   $this->load_track_multimediaobject($multimediaObject, '18', '56', false);
                   $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUBDECISIONS","PUDEPD1","DIRECTRIZ","Dsocial","Dtechnical"));
-                  $this->load_people_multimediaobject($multimediaObject, 'Sara', 'presenter');
-                  $this->load_people_multimediaobject($multimediaObject, 'Carlos', 'actor');
+                  $this->load_people_multimediaobject($multimediaObject, 'Sara', $presenterRole);
+                  $this->load_people_multimediaobject($multimediaObject, 'Carlos', $actorRole);
                   $this->load_pic_multimediaobject($multimediaObject, '36');
 
                   //Serie AUDIOS
@@ -252,14 +259,14 @@ EOT
                   $this->load_multimediaobject($multimediaObject, $series, "Audio1");
                   $this->load_track_multimediaobject($multimediaObject,'20', 'Audio1', true);
                   $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUBDECISIONS","PUDEPD1","DIRECTRIZ","Dsocial","Dtechnical"));
-                  $this->load_people_multimediaobject($multimediaObject, 'Sara', 'presenter');
+                  $this->load_people_multimediaobject($multimediaObject, 'Sara', $presenterRole);
                   $this->load_pic_multimediaobject($multimediaObject, 'audio');
 
                   $multimediaObject = $factoryService->createMultimediaObject($series);
                   $this->load_multimediaobject($multimediaObject, $series, "Audio2");
                   $this->load_track_multimediaobject($multimediaObject,'20', 'Audio2', true);
                   $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUBDECISIONS","PUDEPD1","DIRECTRIZ","Dsocial","Dtechnical"));
-                  $this->load_people_multimediaobject($multimediaObject, 'Sara', 'presenter');
+                  $this->load_people_multimediaobject($multimediaObject, 'Sara', $presenterRole);
                   $this->load_pic_multimediaobject($multimediaObject, 'audio');
 
 
@@ -395,12 +402,9 @@ EOT
             $personService = $this->getContainer()->get('pumukitschema.person');
             $person = new Person();
             $person->setName($name);
-
-            $rolePerson = new Role();
-            $rolePerson->setCod($role);
-
-            $multimediaObject->addPersonWithRole($person, $rolePerson);
             $personService->savePerson($person);
+
+            $multimediaObject->addPersonWithRole($person, $role);
       }
 
       private function load_pic_multimediaobject($multimediaObject, $pic){
@@ -438,5 +442,15 @@ EOT
             $progress->finish();
             
             return (200 == $statusCode);
+      }
+
+      private function getRoleWithCode($code)
+      {
+          $role = $this->roleRepo->findOneByCod($code);
+          if (null == $role) {
+              throw new \Exception("Role with code '".$code."' not found. Please, init pumukit roles.");
+          }
+
+          return $role;
       }
 }
