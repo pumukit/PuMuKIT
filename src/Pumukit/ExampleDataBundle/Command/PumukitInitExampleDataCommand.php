@@ -404,7 +404,7 @@ EOT
             $person->setName($name);
             $personService->savePerson($person);
 
-            $multimediaObject->addPersonWithRole($person, $role);
+            $multimediaObject = $personService->createRelationPerson($person, $role, $multimediaObject);
       }
 
       private function load_pic_multimediaobject($multimediaObject, $pic){
