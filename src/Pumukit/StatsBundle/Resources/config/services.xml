@@ -11,6 +11,12 @@
             <argument type="service" id="request_stack" />
             <tag name="kernel.event_listener" event="multimediaobject.view" method="onMultimediaObjectViewed" />
         </service>
+
+        <service id="pumukit_stats.stats" class="Pumukit\StatsBundle\Services\StatsService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+        </service>        
     </services>
+
+    
    
 </container>
