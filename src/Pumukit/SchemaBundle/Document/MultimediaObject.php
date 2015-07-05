@@ -888,6 +888,25 @@ class MultimediaObject
 
         return true;
     }
+    
+    /**
+     * Contains all tags with code
+     * The original string tag logic used array_intersect and count to check it.
+     * This function uses doctrine2 arrayCollection contains function instead.
+     *
+     * @param  array   $tags
+     * @return boolean TRUE if this multimedia_object contained all tags, FALSE otherwise.
+     */
+    public function containsAllTagsWithCod(array $tags)
+    {
+        foreach ($tags as $tag) {
+            if (!($this->containsTagWithCod($tag))) {
+                return false;
+            }
+        }
+
+        return true;
+    }    
 
     /**
      * Contains any tags
@@ -907,7 +926,26 @@ class MultimediaObject
 
         return false;
     }
+    
+    /**
+     * Contains any tags with code
+     * The original string tag logic used array_intersect and count to check it.
+     * This function uses doctrine2 arrayCollection contains function instead.
+     *
+     * @param  array   $tags
+     * @return boolean TRUE if this multimedia_object contained any tag of the list, FALSE otherwise.
+     */
+    public function containsAnyTagWithCod(array $tags)
+    {
+        foreach ($tags as $tag) {
+            if ($this->containsTagWithCod($tag)) {
+                return true;
+            }
+        }
 
+        return false;
+    }
+    
     // End of tags section
 
 
