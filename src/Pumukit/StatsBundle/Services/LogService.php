@@ -28,7 +28,7 @@ class LogService
                             $req->headers->get('user-agent'),
                             $req->headers->get('referer'),
                             $event->getMultimediaObject()->getId(),
-                            $event->getTrack()->getId());
+                            $event->getTrack() ? $event->getTrack()->getId() : null);
 
         $this->dm->persist($log);
         $this->dm->flush();        
