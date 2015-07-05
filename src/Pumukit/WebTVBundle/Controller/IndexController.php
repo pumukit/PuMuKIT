@@ -48,6 +48,15 @@ class IndexController extends Controller
     }
 
     /**
+     * @Template("PumukitWebTVBundle:Index:mostviewed.html.twig")
+     */
+    public function mostviewedlastmonthAction()
+    {
+      $multimediaObjectsSortedByNumview = $this->get('pumukit_stats.stats')->getMostViewedUsingFilters(30, 3);
+      return array('multimediaObjectsSortedByNumview' => $multimediaObjectsSortedByNumview);
+    }
+
+    /**
      * @Template()
      */
     public function recentlyaddedAction()
