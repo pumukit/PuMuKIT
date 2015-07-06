@@ -4,7 +4,7 @@
 <h1>{% trans %}Tags{% endtrans %}</h1>
 
 <div class="row">
-  {% if is_granted('ROLE_SUPER_ADMIN') %}
+  {% if is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ADMIN') %}
   <div class="col-md-12">
     <div class="well">
       <div id="list_tags">
