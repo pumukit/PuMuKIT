@@ -90,12 +90,16 @@ window.submit_delete_mms = function(id)
         var url = "{{ path('pumukitnewadmin_mms_delete', {'id': '__id__'})|raw }}";
         var message = '{% trans %}Multimedia Object successfully deleted.{% endtrans %}';
         var sessionId = $($('tr.success').find('input.mm_checkbox')[0]).attr('id');
-        $('#list_mms').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){
-            if (id === sessionId) {
-                $('#preview_mm').html('{% trans %}Select any multimedia object.{% endtrans %}');
-                $('#edit_mm').html('');
+        $('#list_mms').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
+            if (textStatus !== "error") {
+                if (id === sessionId) {
+                    $('#preview_mm').html('{% trans %}Select any multimedia object.{% endtrans %}');
+                    $('#edit_mm').html('');
+                }
+                success(message)
+            } else {
+                no_success(textStatus + ': ' + XMLHttpRequest['statusText']);
             }
-            success(message)
         });
     }
 }
@@ -117,12 +121,16 @@ window.submit_delete_series = function(id, seriesTitle, countMm)
         var url = "{{ path('pumukitnewadmin_series_delete', {'id': '__id__'})|raw }}";
         var message = '{% trans %}Series{% endtrans %} "'+seriesTitle+'" {% trans %}successfully deleted{% endtrans %}.';
         var sessionId = $($('tr.success').find('input.series_checkbox')[0]).attr('id');
-        $('#list_series').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){
-            if (id === sessionId) {
-                $('#preview_series').html('{% trans %}Select any series.{% endtrans %}');
-                $('#edit_series').html('');
+        $('#list_series').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
+            if (textStatus !== "error") {
+                if (id === sessionId) {
+                    $('#preview_series').html('{% trans %}Select any series.{% endtrans %}');
+                    $('#edit_series').html('');
+                }
+                success(message);
+            } else {
+                no_success(textStatus + ': ' + XMLHttpRequest['statusText']);
             }
-            success(message);
         });
     }
 }
