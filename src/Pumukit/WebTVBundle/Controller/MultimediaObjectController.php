@@ -12,6 +12,8 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\WebTVBundle\Event\ViewedEvent;
+use Pumukit\WebTVBundle\Event\WebTVEvents;
 
 class MultimediaObjectController extends Controller
 {
@@ -40,6 +42,7 @@ class MultimediaObjectController extends Controller
 
       $this->updateBreadcrumbs($multimediaObject);
       $this->incNumView($multimediaObject, $track);
+      $this->dispatch($multimediaObject, $track);      
         
       return array('autostart' => $request->query->get('autostart', 'true'),
                    'intro' => $this->getIntro($request->query->get('intro')),
@@ -75,6 +78,7 @@ class MultimediaObjectController extends Controller
 
       $this->updateBreadcrumbs($multimediaObject);
       $this->incNumView($multimediaObject, $track);
+      $this->dispatch($multimediaObject, $track);            
 
       return array('autostart' => $request->query->get('autostart', 'true'),
                    'intro' => $this->getIntro($request->query->get('intro')),
@@ -146,6 +150,11 @@ class MultimediaObjectController extends Controller
       $dm->flush();
     }
 
+    protected function dispatch(MultimediaObject $multimediaObject, Track $track=null)
+    {
+        $event = new ViewedEvent($multimediaObject, $track);
+        $this->get('event_dispatcher')->dispatch(WebTVEvents::MULTIMEDIAOBJECT_VIEW, $event);
+    }
 
     protected function updateBreadcrumbs(MultimediaObject $multimediaObject)
     {
@@ -158,6 +167,7 @@ class MultimediaObjectController extends Controller
     {
       if($opencasturl = $multimediaObject->getProperty("opencasturl")) {
           $this->incNumView($multimediaObject);
+          $this->dispatch($multimediaObject);
           return $this->redirect($opencasturl);
       }
     }
