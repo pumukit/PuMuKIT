@@ -68,8 +68,14 @@ class InfoController extends Controller
      */
     public function infoJobAction(Job $job, Request $request)
     {
-        $command = $this->get('pumukitencoder.job')->renderBat($job);
-        return array('job' => $job, 'command' => $command);
+        $deletedMultimediaObject = false;
+        try {
+            $command = $this->get('pumukitencoder.job')->renderBat($job);
+        } catch (\Exception $e) {
+            $command = $e->getMessage();
+            $deletedMultimediaObject = true;
+        }
+        return array('job' => $job, 'command' => $command, 'deletedMultimediaObject' => $deletedMultimediaObject);
     }
 
     /**

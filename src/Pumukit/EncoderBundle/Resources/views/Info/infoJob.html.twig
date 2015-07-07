@@ -54,7 +54,7 @@
   <form enctype="multipart/form-data" action="#" method="POST">
 	<div class="modal-footer">
 	  <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-    {% if job.isFailed() %}
+    {% if job.isFailed() and not deletedMultimediaObject %}
 	  <button type="submit" class="btn btn-pumukit btn-raised" onclick="$.post('{{ path('pumukit_encoder_retry_job', {'id': job.id}) }}', {'jobId': '{{ job.id }}', 'success': function(){window.location.reload()}}); return false;" data-dismiss="modal">
       {% trans %}RETRY{% endtrans %}
     </button>
