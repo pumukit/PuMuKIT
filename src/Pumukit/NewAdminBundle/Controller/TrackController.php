@@ -174,7 +174,7 @@ class TrackController extends Controller
      */
     public function listAction(MultimediaObject $multimediaObject)
     {
-        $jobs = $this->get('pumukitencoder.job')->getJobsByMultimediaObjectId($multimediaObject->getId());
+        $jobs = $this->get('pumukitencoder.job')->getNotFinishedJobsByMultimediaObjectId($multimediaObject->getId());
 
         $notMasterProfiles = $this->get('pumukitencoder.profile')->getProfiles(null, true, false);
 

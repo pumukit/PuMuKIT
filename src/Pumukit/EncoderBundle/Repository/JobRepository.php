@@ -53,9 +53,9 @@ class JobRepository extends DocumentRepository
     }
 
     /**
-     * Find all jobs except finished with given multimedia object id
+     * Find not finished jobs with given multimedia object id
      */
-    public function findByMultimediaObjectId($mmId)
+    public function findNotFinishedByMultimediaObjectId($mmId)
     {
         return $this->createQueryBuilder()
           ->field('mm_id')->equals($mmId)

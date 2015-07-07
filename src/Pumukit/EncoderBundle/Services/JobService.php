@@ -523,14 +523,14 @@ class JobService
     }
 
     /**
-     * Get jobs with multimedia object id
+     * Get not finished jobs with multimedia object id
      *
      * @param string $mmId
      * @return ArrayCollection $jobs with mmId
      */
-    public function getJobsByMultimediaObjectId($mmId)
+    public function getNotFinishedJobsByMultimediaObjectId($mmId)
     {
-        return $this->repo->findByMultimediaObjectId($mmId);
+        return $this->repo->findNotFinishedByMultimediaObjectId($mmId);
     }
 
     /**

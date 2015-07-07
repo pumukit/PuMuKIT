@@ -181,8 +181,8 @@ class JobRepositoryTest extends WebTestCase
         $this->dm->persist($job3);
         $this->dm->flush();
 
-        $this->assertEquals(2, count($this->repo->findByMultimediaObjectId($mm_id1)));
-        $this->assertEquals(1, count($this->repo->findByMultimediaObjectId($mm_id2)));
+        $this->assertEquals(2, count($this->repo->findNotFinishedByMultimediaObjectId($mm_id1)));
+        $this->assertEquals(1, count($this->repo->findNotFinishedByMultimediaObjectId($mm_id2)));
     }
 
     private function newJob($mm_id, $name)
