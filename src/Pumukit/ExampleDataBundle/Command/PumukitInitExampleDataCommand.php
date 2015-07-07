@@ -66,7 +66,7 @@ EOT
                   $this->dm->getDocumentCollection('PumukitSchemaBundle:Person')->remove(array());
                   $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
                   $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
-            } else{
+            } elseif (!$input->getOption('append')) {
                   $output->writeln('<error>ATTENTION:</error> This operation should not be executed in a production environment.');
                   $output->writeln('');
                   $output->writeln('<info>Would drop the database</info>');
