@@ -15,6 +15,7 @@ class MultimediaObjectController extends Base
             $this->testBroadcast($multimediaObject, $request);
             $this->updateBreadcrumbs($multimediaObject);
             $this->incNumView($multimediaObject);
+            $this->dispatch($multimediaObject);
             $userAgent = $this->getRequest()->headers->get('user-agent');
             $isOldBrowser = $this->getIsOldBrowser($userAgent);
             return $this->render("PumukitCmarWebTVBundle:MultimediaObject:opencast.html.twig",
