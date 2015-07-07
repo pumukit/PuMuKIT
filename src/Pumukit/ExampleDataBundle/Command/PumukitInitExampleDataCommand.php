@@ -35,9 +35,8 @@ class PumukitInitExampleDataCommand extends ContainerAwareCommand
             ->setName('pumukit:init:example')
             ->setDescription('Load Pumukit expample data fixtures to your database')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
-            ->addOption('reusezip', null, InputOption::VALUE_NONE, 'Set this parameter to not delete zip file with videos to reuse in the future')
             ->addOption('append', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
-            ->addOption('notClearFiles', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
+            ->addOption('reusezip', null, InputOption::VALUE_NONE, 'Set this parameter to not delete zip file with videos to reuse in the future')
             ->setHelp(<<<EOT
 
             Command to load a data set of data into a database. Useful for init a demo Pumukit environment.
@@ -46,7 +45,7 @@ class PumukitInitExampleDataCommand extends ContainerAwareCommand
 
             The --append parameter has to be used to add examples to database without deleting.
 
-            The --notClearFiles parameter has to be used to undelete files.
+            The --reusezip parameter has to be used to undelete files.
 
 EOT
           );
@@ -63,15 +62,23 @@ EOT
             $factoryService = $this->getContainer()->get('pumukitschema.factory'); 
 
             if ($input->getOption('force')) {
-            
-                  if ($input->getOption('append') != 1){
-                        $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')->remove(array());
-                        $this->dm->getDocumentCollection('PumukitSchemaBundle:Person')->remove(array());
-                        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
-                        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
-                  }
+                  $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')->remove(array());
+                  $this->dm->getDocumentCollection('PumukitSchemaBundle:Person')->remove(array());
+                  $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
+                  $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
+            } else{
+                  $output->writeln('<error>ATTENTION:</error> This operation should not be executed in a production environment.');
+                  $output->writeln('');
+                  $output->writeln('<info>Would drop the database</info>');
+                  $output->writeln('Please run the operation with --force to execute');
+                  $output->writeln('<error>All data will be lost!</error>');
+                  return -1;
+            }
 
-                  if(!$input->getOption('notClearFiles')){
+
+            if ($input->getOption('force') or $input->getOption('append')) {
+
+                  if(!$input->getOption('reusezip')){
                         if (!$this->download(self::PATH_VIDEO, $newFile, $output)) {
                               echo "Failed to copy $file...\n";
                         }
@@ -270,21 +277,12 @@ EOT
                   $this->load_pic_multimediaobject($multimediaObject, 'audio');
 
 
-                  if(!$input->getOption('notClearFiles')){
+                  if(!$input->getOption('reusezip')){
                         unlink($newFile);
                   }
                   $output->writeln('');
                   $output->writeln('<info>Example data load successful</info>');
             } 
-            else {
-                  $output->writeln('<error>ATTENTION:</error> This operation should not be executed in a production environment.');
-                  $output->writeln('');
-                  $output->writeln('<info>Would drop the database</info>');
-                  $output->writeln('Please run the operation with --force to execute');
-                  $output->writeln('<error>All data will be lost!</error>');
-
-                  return -1;
-            }
       }
 
       private function load_series($series, $title){
