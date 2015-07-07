@@ -44,9 +44,7 @@
             <i class="{{ oneseries|series_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|series_text }}({% trans %}Click to modify broadcast status{% endtrans %})"></i>
           </a>
           {% else %}
-          <a href="#" data-toggle="modal" data-backdrop="static" data-target="#myModal">
-            <i class="{{ oneseries|series_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|series_text }}({% trans %}Not enough privileges to modify broadcast status{% endtrans %})"></i>
-          </a>
+          <i class="{{ oneseries|series_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|series_text }}({% trans %}Not enough privileges to modify broadcast status{% endtrans %})"></i>
           {% endif %}
         </td>
         <td>
