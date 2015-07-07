@@ -6,7 +6,7 @@
   {% include 'PumukitCmarWebTVBundle:Index:videosindex.html.twig' with {'event': event} %}
   <div class="index_tab">
     {% render(controller('PumukitWebTVBundle:Index:recentlyadded')) %}
-    {% render(controller('PumukitWebTVBundle:Index:mostviewed')) %}
+    {% render(controller('PumukitWebTVBundle:Index:mostviewedlastmonth')) %}
   </div>
 </div>
 {% endblock %}
