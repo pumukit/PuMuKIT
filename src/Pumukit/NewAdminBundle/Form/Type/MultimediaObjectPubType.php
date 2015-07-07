@@ -28,6 +28,7 @@ class MultimediaObjectPubType extends AbstractType
                                            MultimediaObject::STATUS_BLOQ => 'Blocked',
                                            MultimediaObject::STATUS_HIDE => 'Hidden'
                                            ),
+                        'disabled' => $options['not_admin'],
                         'label' => $this->translator->trans('Status', array(), null, $this->locale) ))
             ->add('broadcast', null, array('label' => $this->translator->trans('Broadcast', array(), null, $this->locale)));
     }
@@ -36,7 +37,8 @@ class MultimediaObjectPubType extends AbstractType
     {
         $resolver->setDefaults(array(
         'data_class' => 'Pumukit\SchemaBundle\Document\MultimediaObject',
-    ));
+        'not_admin' => true,
+                                     ));
     }
 
     public function getName()

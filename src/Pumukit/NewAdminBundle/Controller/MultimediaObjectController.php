@@ -130,7 +130,8 @@ class MultimediaObjectController extends SortableAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $resource);
-        $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource);
+        $options = array('not_admin' => !$this->isGranted('ROLE_SUPER_ADMIN'));
+        $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource, $options);
 
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
@@ -183,7 +184,8 @@ class MultimediaObjectController extends SortableAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $resource);
-        $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource);
+        $options = array('not_admin' => !$this->isGranted('ROLE_SUPER_ADMIN'));
+        $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource, $options);
 
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
@@ -249,10 +251,12 @@ class MultimediaObjectController extends SortableAdminController
         $parentTags = $factoryService->getParentTags();
 
         $resource = $this->findOr404($request);
+
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $resource);
-        $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource);
+        $options = array('not_admin' => !$this->isGranted('ROLE_SUPER_ADMIN'));
+        $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource, $options);
 
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
