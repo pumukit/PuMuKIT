@@ -23,12 +23,12 @@ class RemoveListener
     {
         $document = $args->getDocument();
 
-        /* if ($document instanceof Series) { */
-        /*     $seriesPicService = $this->container->get("pumukitschema.seriespic"); */
-        /*     foreach ($document->getPics() as $pic) { */
-        /*         $document = $seriesPicService->removePicFromMultimediaObject($document, $pic->getId()); */
-        /*     } */
-        /* } */
+        if ($document instanceof Series) {
+            $seriesPicService = $this->container->get("pumukitschema.seriespic");
+            foreach ($document->getPics() as $pic) {
+                $document = $seriesPicService->removePicFromMultimediaObject($document, $pic->getId());
+            }
+        }
 
         if ($document instanceof MultimediaObject) {
             $dm = $this->container->get("doctrine_mongodb.odm.document_manager");
