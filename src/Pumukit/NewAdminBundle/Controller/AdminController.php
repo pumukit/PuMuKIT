@@ -5,6 +5,7 @@ namespace Pumukit\NewAdminBundle\Controller;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class AdminController extends ResourceController
 {
@@ -221,7 +222,11 @@ class AdminController extends ResourceController
         $factory = $this->get('pumukitschema.factory');
         foreach ($ids as $id) {
             $resource = $this->find($id);
-            $factory->deleteResource($resource);
+            try{
+                $factory->deleteResource($resource);
+            } catch (\Exception $e) {
+                return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
+            }
             if ($id === $this->get('session')->get('admin/'.$resourceName.'/id')){
                 $this->get('session')->remove('admin/'.$resourceName.'/id');
             }

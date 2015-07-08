@@ -3,6 +3,7 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -158,7 +159,11 @@ class SeriesController extends AdminController
             }
         }
 
-        $factoryService->deleteSeries($series);
+        try {
+            $factoryService->deleteSeries($series);
+        } catch (\Exception $e) {
+            return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
 
         if ($config->isApiRequest()) {
             return $this->handleView($this->view());
@@ -198,9 +203,12 @@ class SeriesController extends AdminController
                 }
             }
 
-            $factoryService->deleteSeries($series);
+            try {
+                $factoryService->deleteSeries($series);
+            } catch (\Exception $e) {
+                return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
+            }
         }
-        $this->addFlash('success', 'delete');
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_series_list', array()));
     }

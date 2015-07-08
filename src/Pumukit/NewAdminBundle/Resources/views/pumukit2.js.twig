@@ -98,7 +98,7 @@ window.submit_delete_mms = function(id)
                 }
                 success(message)
             } else {
-                no_success(textStatus + ': ' + XMLHttpRequest['statusText']);
+                no_success(XMLHttpRequest['statusText'] + ': ' + responseText);
             }
         });
     }
@@ -129,7 +129,7 @@ window.submit_delete_series = function(id, seriesTitle, countMm)
                 }
                 success(message);
             } else {
-                no_success(textStatus + ': ' + XMLHttpRequest['statusText']);
+                no_success(XMLHttpRequest['statusText'] + ': ' + responseText);
             }
         });
     }
@@ -470,8 +470,7 @@ window.change_select = function(element, selector, pluralName)
                             var message = errorThrown+': {% trans %}Tags with children can not be deleted.{% endtrans %} '+statusError;
                             no_success(message);
                         }else{
-                            var message = '{% trans %}There was an error in deleting.{% endtrans %}';
-                            no_success(message);
+                            no_success(errorThrown + ': ' + jqXHR.responseText);
                         }
                     },
                     success: function(response){

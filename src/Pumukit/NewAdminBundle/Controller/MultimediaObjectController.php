@@ -3,6 +3,7 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
@@ -485,7 +486,12 @@ class MultimediaObjectController extends SortableAdminController
         $resourceId = $resource->getId();
         $seriesId = $resource->getSeries()->getId();
 
-        $this->get('pumukitschema.factory')->deleteResource($resource);
+        try {
+            $this->get('pumukitschema.factory')->deleteResource($resource);
+        } catch (\Exception $e) {
+            return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
+
         if ($resourceId === $this->get('session')->get('admin/mms/id')){
             $this->get('session')->remove('admin/mms/id');
         }
