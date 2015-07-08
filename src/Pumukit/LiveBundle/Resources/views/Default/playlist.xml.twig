@@ -1,0 +1,11 @@
+<rss version="2.0" xmlns:jwplayer="http://rss.jwpcdn.com/">
+  <channel>
+    {% if intro %}
+    <item>
+      <title>Intro</title>
+      <description>Intro</description>
+      <jwplayer:source file="{{intro}}" />
+    </item>
+    {% endif %}
+  </channel>
+</rss>

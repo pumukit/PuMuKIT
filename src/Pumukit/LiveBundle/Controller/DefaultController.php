@@ -45,4 +45,19 @@ class DefaultController extends Controller
         $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
         $breadcrumbs->addList($title, $routeName, $routeParameters);
     }
+
+
+    /**
+     * @Route("/live/playlist/{id}", name="pumukit_live_playlist_id", defaults={"_format": "xml"})
+     * @Template("PumukitLiveBundle:Default:playlist.xml.twig")
+     */
+    public function playlistAction(Live $live)
+    {
+      $intro = $this->container->hasParameter('pumukit2.intro') ?
+        $this->container->getParameter('pumukit2.intro') :
+        null;
+      return array('live' => $live, 'intro' => $intro);
+    }
+
+    
 }
