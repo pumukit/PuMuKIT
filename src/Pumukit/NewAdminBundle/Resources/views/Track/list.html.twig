@@ -2,7 +2,7 @@
   {% for job in jobs %}
     <tr>
       <td><ul><li></li></ul></td>
-      <td colspan="11" {% if constant('STATUS_ERROR', job) == job.getStatus() %} style="color:red" {% endif %}>
+      <td colspan="9" {% if constant('STATUS_ERROR', job) == job.getStatus() %} style="color:red" {% endif %}>
         <a title="{% trans %}Encoder Job info{% endtrans %}"
            style="color:inherit"
            data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
@@ -37,14 +37,14 @@
            href="{{ path('pumukitnewadmin_track_update', {'id': track.id, 'mmId': mm.id}) }}">
           <i class="mdi-editor-mode-edit"></i>
         </a>
-      <td>
+      </td>
       <td>
         <a title="{% trans %}File info of multimedia object{% endtrans %} {{ track.id }}"
            data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
            href="{{ path('pumukitnewadmin_track_info', {'id': track.id, 'mmId': mm.id}) }}">
           <i class="mdi-action-info"></i>
         </a>
-      <td>
+      </td>
       <td>
           <a href="#" onclick="window.submit_delete_track('{{ track.id }}', '{{ mm.id }}', '{{ mm.getSeries().getId() }}'); return false;">
              <i class="mdi-content-clear"></i>
@@ -61,36 +61,14 @@
           <i class="mdi-image-camera-alt" id="list_capture_frame_{{ track.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
           <ul class="dropdown-menu" role="menu" aria-labelledby="list_capture_frame_{{ track.id }}">
             <li>&nbsp;&nbsp;<strong>{% trans %}Capture frame from{% endtrans %}:</strong></li>
+            {% set percentages = ['Auto', '10%', '25%', '50%', '75%', '90%'] %}
+            {% for percentage in percentages %}
             <li>
-              <a href="#" onclick="extract_pic('{{ track.id }}', '{{ mm.id }}', 0); return false;">
-                <i class="mdi-image-camera"></i> {% trans %}Auto{% endtrans %}
+              <a href="#" onclick="extract_pic('{{ track.id }}', '{{ mm.id }}', '{{ (percentage == 'Auto')?0:percentage }}'); return false;">
+                <i class="mdi-image-camera"></i> {{ percentage }}
               </a>
             </li>
-            <li>
-              <a href="#" onclick="extract_pic('{{ track.id }}', '{{ mm.id }}', '10%'); return false;">
-                <i class="mdi-image-camera"></i> {% trans %}10%{% endtrans %}
-              </a>
-            </li>
-            <li>
-              <a href="#" onclick="extract_pic('{{ track.id }}', '{{ mm.id }}', '25%'); return false;">
-                <i class="mdi-image-camera"></i> {% trans %}25%{% endtrans %}
-              </a>
-            </li>
-            <li>
-              <a href="#" onclick="extract_pic('{{ track.id }}', '{{ mm.id }}', '50%'); return false;">
-                <i class="mdi-image-camera"></i> {% trans %}50%{% endtrans %}
-              </a>
-            </li>
-            <li>
-              <a href="#" onclick="extract_pic('{{ track.id }}', '{{ mm.id }}', '75%'); return false;">
-                <i class="mdi-image-camera"></i> {% trans %}75%{% endtrans %}
-              </a>
-            </li>
-            <li>
-              <a href="#" onclick="extract_pic('{{ track.id }}', '{{ mm.id }}', '90%'); return false;">
-                <i class="mdi-image-camera"></i> {% trans %}90%{% endtrans %}
-              </a>
-            </li>
+            {% endfor %}
             <li class="cancel"><a href="#" onclick="return false;"><strong>{% trans %}Cancel{% endtrans %}...</strong></a></li>
           </ul>
         </div>
@@ -155,6 +133,9 @@
       </td>
     </tr>
   {% endfor %}
+  {% if mm.getProperty('opencast') %}
+     {% render(controller('PumukitOpencastBundle:MultimediaObject:index', {'id': mm.id })) %}
+  {% endif %}
   <tr>
     <td><ul><li></li></ul></td>
     <td colspan="11"><a data-toggle="modal" data-backdrop="static" data-target="#myModal" href="{{ path('pumukitnewadmin_track_create', {'id': mm.id}) }}">{% trans %}New master{% endtrans %}...</a></td>
