@@ -56,5 +56,7 @@ class PumukitOpencastExtension extends Extension
             ->addArgument(new Parameter("pumukit2.locales"));
         }
 
+        $container->setParameter('pumukit_opencast.generate_sbs', $config['generate_sbs'] ? $config['generate_sbs'] : false);
+        $container->setParameter('pumukit_opencast.profile', $config['generate_sbs'] ? $config['profile'] : null);
     }
 }
