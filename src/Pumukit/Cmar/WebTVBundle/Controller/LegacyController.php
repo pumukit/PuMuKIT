@@ -12,16 +12,16 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 class LegacyController extends Controller
 {
     /**
-     * @Route("/serial/index/id/{mysqlid}")
-     * {mysqlid} matches series.properties("mysqlid")
+     * @Route("/serial/index/id/{pumukit1id}")
+     * {pumukit1id} matches series.properties("pumukit1id")
      */
-    public function seriesAction($mysqlid)
+    public function seriesAction($pumukit1id)
     {
         $dm = $this->get("doctrine_mongodb.odm.document_manager");
         $seriesRepo = $dm->getRepository("PumukitSchemaBundle:Series");
 
         $series = $seriesRepo->createQueryBuilder()
-          ->field("properties.mysqlid")->equals($mysqlid)
+          ->field("properties.pumukit1id")->equals($pumukit1id)
           ->getQuery()->getSingleResult();
 
         if (!$series) {
@@ -32,17 +32,17 @@ class LegacyController extends Controller
     }
 
     /**
-     * @Route("/{_locale}/video/{mysqlid}.html")
+     * @Route("/{_locale}/video/{pumukit1id}.html")
      * {_locale} matches current locale
-     * {mysqlid} matches multimediaObject.properties("mysqlid")
+     * {pumukit1id} matches multimediaObject.properties("pumukit1id")
      */
-    public function multimediaObjectAction($mysqlid)
+    public function multimediaObjectAction($pumukit1id)
     {
         $dm = $this->get("doctrine_mongodb.odm.document_manager");
         $mmobjRepo = $dm->getRepository("PumukitSchemaBundle:MultimediaObject");
 
         $multimediaObject = $mmobjRepo->createQueryBuilder()
-          ->field("properties.mysqlid")->equals($mysqlid)
+          ->field("properties.pumukit1id")->equals($pumukit1id)
           ->getQuery()->getSingleResult();
 
         if (!$multimediaObject) {
@@ -53,16 +53,16 @@ class LegacyController extends Controller
     }
 
     /**
-     * @Route("/mmobj/index/file_id/{mysqlid}")
-     * {mysqlid} matches the tag "mysqlid:{mysqlid}" in track.getTags()
+     * @Route("/mmobj/index/file_id/{pumukit1id}")
+     * {pumukit1id} matches the tag "pumukit1id:{pumukit1id}" in track.getTags()
      */
-    public function trackAction($mysqlid)
+    public function trackAction($pumukit1id)
     {
         $dm = $this->get("doctrine_mongodb.odm.document_manager");
         $mmobjRepo = $dm->getRepository("PumukitSchemaBundle:MultimediaObject");
 
         $multimediaObject = $mmobjRepo->createQueryBuilder()
-          ->field("tracks.tags")->equals(new \MongoRegex("/\bmysqlid:".$mysqlid."\b/i"))
+          ->field("tracks.tags")->equals(new \MongoRegex("/\bpumukit1id:".$pumukit1id."\b/i"))
           ->getQuery()->getSingleResult();
 
         if (!$multimediaObject) {
