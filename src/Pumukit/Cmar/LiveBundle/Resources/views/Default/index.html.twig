@@ -26,7 +26,11 @@
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function(){
   jwplayer("directo-sbs").setup({
+      {% if live.broadcasting %}
       file: "{{ live.url }}/{{ live.sourcename }}",
+      {% else %}
+      playlist: "{{ path('pumukit_live_playlist_id', { 'id': live.id }) }}", 
+      {% endif %}
       autostart: true,
       width: "640",
       height:  "540",
