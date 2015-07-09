@@ -84,8 +84,8 @@ class PicExtractorService
         
         @mkdir($absCurrentDir, 0777, true);
 
-        $trackAspect = $this->getAspect($track);
-        if (0 !== $trackAspect) {
+        $aspectTrack = $this->getAspect($track);
+        if (0 !== $aspectTrack) {
             $newHeight = intval(1.0 * $this->width / $aspectTrack);
             if ($newHeight <= $this->height) {
                 $newWidth = $this->width;
