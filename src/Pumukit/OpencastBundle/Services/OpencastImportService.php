@@ -65,6 +65,7 @@ class OpencastImportService
             $multimediaObject->setProperty("opencast", $properties);
             $multimediaObject->setProperty("opencasturl", $this->opencastClient->getPlayerUrl() . "?id=" . $properties);
             $multimediaObject->setTitle($title);
+            if (isset($mediaPackage["language"])) $multimediaObject->setProperty("opencastlanguage", strtolower($mediaPackage["language"]));
             foreach($this->otherLocales as $locale) {
                 $multimediaObject->setTitle($title, $locale);
             }
