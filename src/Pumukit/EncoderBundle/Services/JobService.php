@@ -512,7 +512,7 @@ class JobService
         $this->inspectionService->autocompleteTrack($track);
 
         $track->setOnlyAudio($track->getWidth() == 0);
-        $track->setHide(false);
+        $track->setHide(!$profile['display']);
 
         $multimediaObject->addTrack($track);
      
