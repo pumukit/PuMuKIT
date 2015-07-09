@@ -13,7 +13,7 @@ use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\OpencastBundle\Services\OpencastService;
 use Pumukit\OpencastBundle\Services\ClientService;
-
+use Pumukit\InspectionBundle\Services\InspectionServiceInterface;
 
 class OpencastImportService
 {
@@ -21,17 +21,17 @@ class OpencastImportService
     private $dm;
     private $factoryService;
     private $tagService;
-    private $jobService;
+    private $opencastService;
+    private $inspectionService;
     private $otherLocales;
     
-    public function __construct(DocumentManager $documentManager, factoryService $factoryService,
-                                tagService $tagService, ClientService $opencastClient, OpencastService $jobService,
-                                array $otherLocales = array()) {
+    public function __construct(DocumentManager $documentManager, FactoryService $factoryService, TagService $tagService, ClientService $opencastClient, OpencastService $opencastService, InspectionServiceInterface $inspectionService, array $otherLocales = array()) {
         $this->opencastClient = $opencastClient;
         $this->dm = $documentManager;
         $this->factoryService = $factoryService;
         $this->tagService = $tagService;
-        $this->jobService = $jobService;
+        $this->opencastService = $opencastService;
+        $this->inspectionService = $inspectionService;
         $this->otherLocales = $otherLocales;
     }
 
@@ -88,6 +88,8 @@ class OpencastImportService
                     if( isset($mediaPackage["media"]["track"][$i]["video"])) {
                         $vcodec = $mediaPackage["media"]["track"][$i]["video"]["encoder"]["type"];
                         $track->setVcodec($vcodec);
+                        $framerate = $mediaPackage["media"]["track"][$i]["video"]["framerate"];
+                        $track->setFramerate($framerate);
                     }
 
                     if (!$track->getVcodec() && $track->getAcodec()) {
@@ -97,9 +99,11 @@ class OpencastImportService
                     $track->addTag("opencast");
                     $track->addTag($mediaPackage["media"]["track"][$i]["type"]);
                     $track->setUrl($url);
-                    $track->setPath($this->jobService->getPath($url));
+                    $track->setPath($this->opencastService->getPath($url));
                     $track->setMimeType($mime);
                     $track->setDuration($duration/1000);
+
+                    $this->inspectionService->autocompleteTrack($track);
 
                     $multimediaObject->addTrack($track);
                 }
@@ -119,6 +123,8 @@ class OpencastImportService
                 if( isset($mediaPackage["media"]["track"]["video"])) {
                     $vcodec = $mediaPackage["media"]["track"]["video"]["encoder"]["type"];
                     $track->setVcodec($vcodec);
+                    $framerate = $mediaPackage["media"]["track"][$i]["video"]["framerate"];
+                    $track->setFramerate($framerate);
                 }
 
                 if (!$track->getVcodec() && $track->getAcodec()) {
@@ -128,9 +134,11 @@ class OpencastImportService
                 $track->addTag("opencast");
                 $track->addTag($mediaPackage["media"]["track"]["type"]);
                 $track->setUrl($url);
-                $track->setPath($this->jobService->getPath($url));
+                $track->setPath($this->opencastService->getPath($url));
                 $track->setMimeType($mime);
                 $track->setDuration($duration/1000);
+
+                $this->inspectionService->autocompleteTrack($track);
 
                 $multimediaObject->addTrack($track);
             }
@@ -160,7 +168,7 @@ class OpencastImportService
             $this->dm->flush();
 
             if($track) {
-                $this->jobService->genSbs($multimediaObject);
+                $this->opencastService->genSbs($multimediaObject);
             }
 
         }

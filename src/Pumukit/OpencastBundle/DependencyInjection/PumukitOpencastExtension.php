@@ -52,6 +52,7 @@ class PumukitOpencastExtension extends Extension
             ->addArgument(new Reference("pumukitschema.tag"))
             ->addArgument(new Reference("pumukit_opencast.client"))
             ->addArgument(new Reference("pumukit_opencast.job"))
+            ->addArgument(new Reference("pumukit.inspection"))
             ->addArgument(new Parameter("pumukit2.locales"));
         }
 
