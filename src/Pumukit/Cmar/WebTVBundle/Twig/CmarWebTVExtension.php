@@ -69,8 +69,6 @@ class CmarWebTVExtension extends \Twig_Extension
      */
     public function getIframeUrl($multimediaObject, $isHTML5=false, $isDownloadable=false)
     {
-        $opencastTrack = $multimediaObject->getTrackWithTag('opencast');
-
         $url = str_replace('%id%', $multimediaObject->getProperty('opencast'), $multimediaObject->getProperty('opencasturl'));
 
         $broadcast_type = $multimediaObject->getBroadcast()->getBroadcastTypeId();

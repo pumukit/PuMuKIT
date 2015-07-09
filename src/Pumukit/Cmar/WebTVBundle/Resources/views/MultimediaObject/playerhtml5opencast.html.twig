@@ -1,5 +1,4 @@
-{% set track = multimediaObject.getTrackWithTag('opencast') %}
-{% if track %}
+{% if multimediaObject.getProperty('opencast') is not empty %}
 <div id="mh_player">
 <script type="text/javascript" src="/js/jwplayer.js"></script>
   <video 
@@ -7,12 +6,12 @@
        style = "width: 100%; min-height: 400px"
        controls = "controls"
        poster = "{{ asset('bundles/pumukitcmarwebtv/cmar/poster.png') }}" >
-      <source src="{{ iframeurl(multimediaObject, true, false) }}" type="video/mp4"/>
+      <source src="{{ multimediaObject.getProperty('opencasturl')|replace({'%id%': multimediaObject.getProperty('opencast')}) }}" type="video/mp4"/>
   </video>
    <div class="mm_player">
      <div class="num_view">
        <div style="float:left">
-         {% trans %}Video language{% endtrans %}: <span class="num_view_number">{{ track.getLanguage()|language_name }}</span>
+         {% trans %}Video language{% endtrans %}: <span class="num_view_number">{{ multimediaObject.getProperty('opencastlanguage')|language_name }}</span>
        </div>
        {% trans %}Viewed{% endtrans %}:
        <span class="num_view_number">{{ multimediaObject.getNumview() }}</span>&nbsp;
