@@ -16,7 +16,15 @@ class DefaultController extends Controller
     public function indexAction(Live $live)
     {
         $this->updateBreadcrumbs($live->getName(), "pumukit_live_id", array("id" => $live->getId()));
-        return array('live' => $live);
+
+        $userAgent = $this->getRequest()->headers->get('user-agent');
+        $technologyService = $this->get('pumukit_web_tv.technology');
+        $mobileDevice = $technologyService->isMobileDevice($userAgent);
+
+        return array(
+                     'live' => $live,
+                     'mobile_device' => $mobileDevice
+                     );
     }
 
 
@@ -35,8 +43,15 @@ class DefaultController extends Controller
           throw $this->createNotFoundException('The live channel does not exist');
         
         $this->updateBreadcrumbs($live->getName(), "pumukit_live", array("id" => $live->getId()));
-        
-        return array('live' => $live);
+
+        $userAgent = $this->getRequest()->headers->get('user-agent');
+        $technologyService = $this->get('pumukit_web_tv.technology');
+        $mobileDevice = $technologyService->isMobileDevice($userAgent);
+
+        return array(
+                     'live' => $live,
+                     'mobile_device' => $mobileDevice
+                     );
     }
 
 

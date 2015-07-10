@@ -27,7 +27,11 @@
 document.addEventListener('DOMContentLoaded', function(){
   jwplayer("directo-sbs").setup({
       {% if live.broadcasting %}
+      {% if mobile_device %}
+      file: "{{ live.url|replace({'rtmp://':'http://', 'rtmpt://': 'http://'}) }}/{{ live.sourcename }}/playlist.m3u8",
+      {% else %}
       file: "{{ live.url }}/{{ live.sourcename }}",
+      {% endif %}
       {% else %}
       playlist: "{{ path('pumukit_live_playlist_id', { 'id': live.id }) }}", 
       {% endif %}
