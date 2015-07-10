@@ -71,7 +71,7 @@
 	         &nbsp;|&nbsp; {% trans %}Viewed{% endtrans %}: <span class="numView">{{ mm.getNumview() }}</span>
              {% if (mm.getNumview() == 1) %}{% trans %}time{% endtrans %}{% else %}{% trans %}times{% endtrans %}{% endif %}
            </div>
-           {% endif %}
+           {% else %}
            <!-- TRACKS -->
            {% set tracks = mm.getFilteredTracksWithTags(['display'], [], [], []) %}
            {% for track in tracks if not track.getHide() %}
@@ -94,7 +94,8 @@
                        {0}times|{1}time|]1,Inf]times
                    {% endtranschoice %}
                </div>
-          {% endfor %}
+           {% endfor %}
+           {% endif %}
           <!-- MATERIAL -->
           {% for material in mm.getMaterials() if not material.getHide() %}
             <div id="material" class="{{ material.getMimeType() }}">
