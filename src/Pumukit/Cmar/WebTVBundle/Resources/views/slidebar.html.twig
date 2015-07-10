@@ -44,14 +44,7 @@
   <div></div>
   {% render(controller('PumukitWebTVBundle:Widget:stats')) %}
   <div></div>
-  <div class="caixa">
-  	<div class="titulo">{% trans %}Upcoming live events{% endtrans %}</div>
-  	<div style="padding: 2px 5px">
-  	  <ul>
-      	<li>{% trans %}No scheduled broadcasts.{% endtrans %}</li>
-  	  </ul>
-  	</div>
-  </div>
+  {% render(controller('PumukitWebTVBundle:Widget:upcomingLiveEvents')) %}
   <div></div>
   <div class="caixa">
   	<div class="titulo">{% trans %}Contact{% endtrans %}</div>

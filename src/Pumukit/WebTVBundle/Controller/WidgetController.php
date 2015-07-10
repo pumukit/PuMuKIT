@@ -48,4 +48,16 @@ class WidgetController extends Controller
     {
       return array();
     }
+
+    /**
+     * @Template("PumukitWebTVBundle:Widget:upcomingliveevents.html.twig")
+     */
+    public function upcomingLiveEventsAction()
+    {
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $eventRepo = $dm->getRepository('PumukitLiveBundle:Event');
+        $events = $eventRepo->findFutureAndNotFinished(5);
+
+        return array('events' => $events);
+    }
 }
