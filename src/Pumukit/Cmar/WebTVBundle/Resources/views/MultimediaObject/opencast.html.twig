@@ -69,17 +69,21 @@ function mh_animacion(){
          &nbsp;
     </div>
   </div>
+  {% set track = multimediaObject.getTrackWithTag('profile:BroadCast SbS') %}
   <div id="sidebar_content" style="width: 100%">
-    {% include 'PumukitCmarWebTVBundle:MultimediaObject:shareopencast.html.twig' with {'multimediaObject': multimediaObject, 'track': multimediaObject.getTrackWithTag('profile:BroadCast SbS')} %}
+    {% include 'PumukitCmarWebTVBundle:MultimediaObject:shareopencast.html.twig' with {'multimediaObject': multimediaObject, 'track': track} %}
 	{% render(controller('PumukitWebTVBundle:MultimediaObject:series', {'multimediaObject': multimediaObject})) %}
     {% render(controller('PumukitWebTVBundle:MultimediaObject:related', {'multimediaObject': multimediaObject})) %}
   </div>
  </div>
-  {% set track = multimediaObject.getTrackWithTag('profile:BroadCast SbS') %}
-  {% if track.containsTag('html5') %}
-  {% include 'PumukitCmarWebTVBundle:MultimediaObject:playerhtml5opencast.html.twig' with {'multimediaObject': multimediaObject, 'roles': multimediaObject.getRoles()} %}
+  {% if track %}
+    {% if track.containsTag('html5') %}
+      {% include 'PumukitCmarWebTVBundle:MultimediaObject:playerhtml5opencast.html.twig' with {'multimediaObject': multimediaObject, 'roles': multimediaObject.getRoles(), 'track': track} %}
+    {% else %}
+      {% include 'PumukitCmarWebTVBundle:MultimediaObject:playeropencast.html.twig' with {'multimediaObject': multimediaObject, 'roles': multimediaObject.getRoles(), 'is_old_browser': is_old_browser} %}
+    {% endif %}
   {% else %}
-  {% include 'PumukitCmarWebTVBundle:MultimediaObject:playeropencast.html.twig' with {'multimediaObject': multimediaObject, 'roles': multimediaObject.getRoles(), 'is_old_browser': is_old_browser} %}
+    {% include 'PumukitCmarWebTVBundle:MultimediaObject:playeropencast.html.twig' with {'multimediaObject': multimediaObject, 'roles': multimediaObject.getRoles(), 'is_old_browser': is_old_browser} %}
   {% endif %}
  </div>
 </div>
