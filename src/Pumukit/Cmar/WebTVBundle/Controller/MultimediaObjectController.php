@@ -17,11 +17,14 @@ class MultimediaObjectController extends Base
             $this->incNumView($multimediaObject);
             $this->dispatch($multimediaObject);
             $userAgent = $this->getRequest()->headers->get('user-agent');
+            $technologyService = $this->get('pumukit_web_tv.technology');
+            $mobileDevice = $technologyService->isMobileDevice($userAgent);
             $isOldBrowser = $this->getIsOldBrowser($userAgent);
             return $this->render("PumukitCmarWebTVBundle:MultimediaObject:opencast.html.twig",
                                  array(
                                        "multimediaObject" => $multimediaObject,
-                                       "is_old_browser" => $isOldBrowser
+                                       "is_old_browser" => $isOldBrowser,
+                                       "mobile_device" => $mobileDevice
                                        )
                                  );
         }

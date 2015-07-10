@@ -1,6 +1,6 @@
 {% if multimediaObject.getProperty('opencast') is not empty %}
 <div id="mh_player">
-  <iframe src="{{ iframeurl(multimediaObject, not is_old_browser, true, is_old_browser) }}"
+  <iframe src="{{ iframeurl(multimediaObject, not is_old_browser, true) }}"
           id="mh_iframe"
           style="border:0px #FFFFFF none; width:100%; height:950px;" 
           name="Opencast Matterhorn - Media Player" 
