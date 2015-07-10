@@ -108,7 +108,7 @@ pumukit_encoder:
             display: true
             wizard: false
             master: false
-            tags: html5
+            tags: html5, sbs
             format: mp4
             codec: aac
             mime_type: 'video/x-mp4'
