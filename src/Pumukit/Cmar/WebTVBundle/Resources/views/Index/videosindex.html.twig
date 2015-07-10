@@ -11,7 +11,7 @@
      </td>
      <td width="31%">
        <div class="img_category">
-         {% if event is not empty and event.getPic() != '' and event.live.broadcasting and event.live.getIndexPlay() %}
+         {% if event is not empty and event.getPic() != '' and event.live.getIndexPlay() %}
          <a href="{{ path('pumukit_live_id', {'id': event.live.id}) }}">
            <img alt="Live Announce" width="252" height="189" src="{{ event.getPic() }}" />
            <div class="cover"><div><span>{% trans %}LIVE BROADCASTING{% endtrans %}</span></div></div>
