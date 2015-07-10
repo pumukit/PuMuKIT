@@ -105,12 +105,13 @@ class TrackService
     {
         $track = $multimediaObject->getTrackById($trackId);
         $trackPath = $track->getPath();
+        $isNotOpencast = !$track->containsTag('opencast');
 
         $multimediaObject->removeTrackById($trackId);
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
-        if ($this->forceDeleteOnDisk && $trackPath) {
+        if ($this->forceDeleteOnDisk && $trackPath && $isNotOpencast) {
             $this->deleteFileOnDisk($trackPath);
         }
 

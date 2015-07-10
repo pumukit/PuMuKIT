@@ -53,9 +53,7 @@ class RemoveListener
 
             $trackService = $this->container->get("pumukitschema.track");
             foreach ($document->getTracks() as $track) {
-                if (!$track->containsTag('opencast')) {
-                    $trackService->removeTrackFromMultimediaObject($document, $track->getId());
-                }
+                $trackService->removeTrackFromMultimediaObject($document, $track->getId());
             }
 
             $mmsPicService = $this->container->get("pumukitschema.mmspic");
