@@ -69,7 +69,7 @@ function mh_animacion(){
          &nbsp;
     </div>
   </div>
-  {% set track = multimediaObject.getTrackWithTag('profile:BroadCast SbS') %}
+  {% set track = multimediaObject.getTrackWithTag('sbs') %}
   <div id="sidebar_content" style="width: 100%">
     {% include 'PumukitCmarWebTVBundle:MultimediaObject:shareopencast.html.twig' with {'multimediaObject': multimediaObject, 'track': track} %}
 	{% render(controller('PumukitWebTVBundle:MultimediaObject:series', {'multimediaObject': multimediaObject})) %}
