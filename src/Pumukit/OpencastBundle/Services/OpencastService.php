@@ -32,7 +32,7 @@ class OpencastService
         $track = $tracks[0];
         $path = $this->getPath($track->getUrl());
 
-        $language = $multimediaObject->getProperty('opencastlanguage')?$multimediaObject->getProperty('opencastlanguage'):'en';
+        $language = $multimediaObject->getProperty('opencastlanguage')?strtolower($multimediaObject->getProperty('opencastlanguage')):'en';
 
         return $this->jobService->addUniqueJob($path, $this->sbsProfile, 0, $multimediaObject, $language);
     }
