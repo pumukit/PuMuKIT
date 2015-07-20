@@ -57,7 +57,7 @@ class MultimediaObjectType extends AbstractType
         $builder->addEventListener(FormEvents::SUBMIT, function(FormEvent $event) {
             $opencastDisplay = $event->getForm()->get("opencastdisplay")->getData();
             $opencastInvert = $event->getForm()->get("opencastinvert")->getData();
-            $opencastLanguage = $event->getForm()->get("opencastlanguage")->getData();
+            $opencastLanguage = strtolower($event->getForm()->get("opencastlanguage")->getData());
             $multimediaObject = $event->getData();
             $multimediaObject->setProperty("opencastdisplay", $opencastDisplay);
             $multimediaObject->setProperty("opencastinvert", $opencastInvert);
