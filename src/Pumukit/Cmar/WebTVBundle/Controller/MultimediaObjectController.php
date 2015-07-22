@@ -3,6 +3,7 @@
 namespace Pumukit\Cmar\WebTVBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Pumukit\WebTVBundle\Controller\MultimediaObjectController as Base;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Broadcast;
@@ -12,7 +13,10 @@ class MultimediaObjectController extends Base
     public function preExecute(MultimediaObject $multimediaObject, Request $request)
     {
         if ($opencasturl = $multimediaObject->getProperty("opencasturl")) {
-            $this->testBroadcast($multimediaObject, $request);
+            $authorized = $this->testBroadcast($multimediaObject, $request);
+            if (!$authorized) {
+                return new Response($this->render("PumukitWebTVBundle:Index:401unauthorized.html.twig", array()), 401);
+            }
             $this->updateBreadcrumbs($multimediaObject);
             $this->incNumView($multimediaObject);
             $this->dispatch($multimediaObject);
@@ -81,8 +85,9 @@ class MultimediaObjectController extends Base
         \phpCAS::forceAuthentication();
 
         if(!in_array(\phpCAS::getUser(), array($broadcast->getName(), "tv", "prueba", "adminmh", "admin", "sistemas.uvigo"))) {
-          throw $this->createAccessDeniedException('Unable to access this page!');        
+            return false;
         }
       }
+      return true;
     }
 }
