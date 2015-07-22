@@ -4,6 +4,8 @@ namespace Pumukit\Cmar\WebTVBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\WebTVBundle\Controller\MultimediaObjectController as Base;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Broadcast;
@@ -89,5 +91,14 @@ class MultimediaObjectController extends Base
         }
       }
       return true;
+    }
+
+   /**
+     * @Route("/mmobj/iframe/{id}", name="pumukit_webtv_multimediaobject_mmobjiframe")
+     * @Template()
+     */
+    public function mmobjiframeAction(MultimediaObject $multimediaObject, Request $request)
+    {
+        return array('mm' => $multimediaObject);
     }
 }
