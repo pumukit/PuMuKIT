@@ -44,7 +44,7 @@
       </trans-unit>
       <trans-unit id="d8b432ad04a16f807bd4f10794c069fa" resname="Record Date">
         <source>Record Date</source>
-        <target>__Record Date</target>
+        <target>Data de grabación</target>
       </trans-unit>
       <trans-unit id="34e2d1989a1dbf75cd631596133ee5ee" resname="Video">
         <source>Video</source>
@@ -93,6 +93,86 @@
       <trans-unit id="2c17c6393771ee3048ae34d6b380c5ec" resname="private">
         <source>private</source>
         <target>privado</target>
+      </trans-unit>
+      <trans-unit id="987ec9e1c847709406571048e5a96a18" resname="401 Unauthorized">
+        <source>401 Unauthorized</source>
+        <target>401 Non autorizado</target>
+      </trans-unit>
+      <trans-unit id="bae8ed4159c5b1341ce7fe680c4c572d" resname="No permission to access this video">
+        <source>No permission to access this video</source>
+        <target>Sen permisos para acceder a ese vídeo</target>
+      </trans-unit>
+      <trans-unit id="0b60091a7f70b3d4ad0e3cd7060ffb67" resname="404 Not found">
+        <source>404 Not found</source>
+        <target>404 Non atopado</target>
+      </trans-unit>
+      <trans-unit id="13348442cc6a27032d2b4aa28b75a5d3" resname="Search">
+        <source>Search</source>
+        <target>Buscar</target>
+      </trans-unit>
+      <trans-unit id="189f63f277cd73395561651753563065" resname="Tags">
+        <source>Tags</source>
+        <target>Categorías</target>
+      </trans-unit>
+      <trans-unit id="e02d2ae03de9d493df2b6b2d2813d302" resname="Duration">
+        <source>Duration</source>
+        <target>Duración</target>
+      </trans-unit>
+      <trans-unit id="b1c94ca2fbc3e78fc30069c8d0f01680" resname="All">
+        <source>All</source>
+        <target>Todos</target>
+      </trans-unit>
+      <trans-unit id="3e000e0356839ea63a017d6fd3592c6b" resname="Up to 5 minutes">
+        <source>Up to 5 minutes</source>
+        <target>Ata 5 minutos</target>
+      </trans-unit>
+      <trans-unit id="90838b30df0e321ec70b13542ab732c6" resname="Up to 10 minutes">
+        <source>Up to 10 minutes</source>
+        <target>Ata 10 minutos</target>
+      </trans-unit>
+      <trans-unit id="cf0e47fa01c0301688b0988a34f05556" resname="Up to 30 minutes">
+        <source>Up to 30 minutes</source>
+        <target>Ata 30 minutos</target>
+      </trans-unit>
+      <trans-unit id="0379225ae7d7c577c4fcf72e5cbf026e" resname="Up to 60 minutes">
+        <source>Up to 60 minutes</source>
+        <target>Ata 60 minutos</target>
+      </trans-unit>
+      <trans-unit id="33cfc2709fe67cc82cf324f9c7f57cef" resname="More than 60 minutes">
+        <source>More than 60 minutes</source>
+        <target>Máis de 60 minutos</target>
+      </trans-unit>
+      <trans-unit id="24105bbb65df055ed4fe0eea90c13f75" resname="Video/Audio">
+        <source>Video/Audio</source>
+        <target>Vídeo/Audio</target>
+      </trans-unit>
+      <trans-unit id="4d34f1097f6c8b9cee28bca8b78bbee9" resname="Start date">
+        <source>Start date</source>
+        <target>Data de comezo</target>
+      </trans-unit>
+      <trans-unit id="70936d272892e3873e7c8c77991e5518" resname="Finish date">
+        <source>Finish date</source>
+        <target>Data de finalización</target>
+      </trans-unit>
+      <trans-unit id="268d1dca05a4dd6c3d647a4de01bf9d5" resname="Reset filters">
+        <source>Reset filters</source>
+        <target>Limpar filtros</target>
+      </trans-unit>
+      <trans-unit id="7da5e0c74a08ab8ede2f33fa2644c181" resname="Series search">
+        <source>Series search</source>
+        <target>Buscar series</target>
+      </trans-unit>
+      <trans-unit id="12b214e7c67af198fa672b60161eac75" resname="Multimedia object search">
+        <source>Multimedia object search</source>
+        <target>Buscar obxetos multimedia</target>
+      </trans-unit>
+      <trans-unit id="633e57bd46fdbfeb7b92ee75c5a5386e" resname="Not series found">
+        <source>Not series found</source>
+        <target>Non se atopou ningunha serie</target>
+      </trans-unit>
+      <trans-unit id="9b248b04a66449e2826a663ecd5fe41a" resname="Not multimedia objects found.">
+        <source>Not multimedia objects found.</source>
+        <target>Non se atopou ningún obxeto multimedia.</target>
       </trans-unit>
     </body>
   </file>
