@@ -120,9 +120,13 @@ class CmarWebTVExtension extends \Twig_Extension
         }
         $placeTag = $precinctTag->getParent();
         $address = '';
-        $i18nAddress = $placeTag->getProperty("address");
-        if ($i18nAddress && (!empty(array_filter($i18nAddress)))) {
-            $address = ($i18nAddress[$locale] == '')?'':' - '.$i18nAddress[$locale];
+        if (null != $placeTag) {
+            $i18nAddress = $placeTag->getProperty("address");
+            if (null != $i18nAddress && (!empty(array_filter($i18nAddress)))) {
+                if (isset($i18nAddress[$locale])) {
+                    $address = (null == $i18nAddress[$locale])?'':' - '.$i18nAddress[$locale];
+                }
+            }
         }
         $precinct = ($precinctTag->getTitle() == '')?'':$precinctTag->getTitle().', ';
         return $precinct . $placeTag->getTitle().$address;

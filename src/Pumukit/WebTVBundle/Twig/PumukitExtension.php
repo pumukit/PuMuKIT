@@ -111,7 +111,7 @@ class PumukitExtension extends \Twig_Extension
         $precinctTag = null;
 
         foreach ($embeddedTags as $tag) {
-            if ((0 === strpos($tag->getCod(), 'PRECINCT')) && ('PRECINCT' !== $tag->getCod())) {
+            if ((0 === strpos($tag->getCod(), 'PLACE')) && (0 < strpos($tag->getCod(), 'PRECINCT'))) {
                 return $tag;
             }
         }
