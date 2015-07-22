@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="es" datatype="plaintext" original="file.ext">
     <body>
-      <trans-unit id="28d0cabca3861781b4d2f0cb6d020033" resname="FEATUREED VIDEOS">
-        <source>FEATUREED VIDEOS</source>
-        <target>VIDEOS DESTACADOS</target>
-      </trans-unit>
       <trans-unit id="e3cf434f4a7120e24f06be35fb1f77fb" resname="Most viewed in last month">
         <source>Most viewed in last month</source>
         <target>Más vistos en el último mes</target>
@@ -178,10 +174,6 @@
         <source>Date of holding</source>
         <target>Fecha de celebración</target>
       </trans-unit>
-      <trans-unit id="22b79e4afa28e9c7950108e6f6bf8354" resname="All videos">
-        <source>All videos</source>
-        <target>Todos</target>
-      </trans-unit>
       <trans-unit id="ad8783089f828b927473fb61d51940ec" resname="Use">
         <source>Use</source>
         <target>Utilice</target>
@@ -213,6 +205,10 @@
       <trans-unit id="d56b699830e77ba53855679cb1d252da" resname="login">
         <source>login</source>
         <target>login</target>
+      </trans-unit>
+      <trans-unit id="a77578f1da755789a49528d75c1a8023" resname="FEATURED VIDEOS">
+        <source>FEATURED VIDEOS</source>
+        <target>VÍDEOS DESTACADOS</target>
       </trans-unit>
     </body>
   </file>
