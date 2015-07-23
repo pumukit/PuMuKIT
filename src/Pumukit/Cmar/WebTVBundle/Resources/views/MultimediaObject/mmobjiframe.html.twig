@@ -38,7 +38,7 @@
                {% trans %}private{% endtrans %}
                {% endif %}
              {% endspaceless %}</a>
-             &nbsp;|&nbsp;&nbsp;<span class="language">{{ mm.getProperty('opencastlanguage')?(mm.getProperty('opencastlanguage')|lower):'en'|language_name }}</span>
+             &nbsp;|&nbsp;&nbsp;<span class="language">{{ (mm.getProperty('opencastlanguage')?(mm.getProperty('opencastlanguage')|lower):'en')|language_name }}</span>
              &nbsp;|&nbsp; {{ mm.getDuration()|duration_minutes_seconds }}
 	         &nbsp;|&nbsp; {% trans %}Viewed{% endtrans %}: <span class="numView">{{ mm.getNumview() }}</span>
              {% if (mm.getNumview() == 1) %}{% trans %}time{% endtrans %}{% else %}{% trans %}times{% endtrans %}{% endif %}
