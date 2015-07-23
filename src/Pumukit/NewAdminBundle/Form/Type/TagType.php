@@ -4,6 +4,8 @@ namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -32,8 +34,28 @@ class TagType extends AbstractType
             ->add('i18n_title', 'texti18n',
                   array('label' => $this->translator->trans('Title', array(), null, $this->locale)))
             ->add('i18n_description', 'textareai18n',
-                  array('required' => false, 'label' => $this->translator->trans('Description', array(), null, $this->locale)))
-      ;
+                  array('required' => false, 'label' => $this->translator->trans('Description', array(), null, $this->locale)));
+
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+            $tag = $event->getData();
+
+            $fields = $tag->getProperty("customfield");
+            foreach(array_filter(preg_split('/[,\s]+/', $fields)) as $field) {
+                $event->getForm()->add($field, 'text', array('mapped' => false, 'required' => false, 'data' => $tag->getProperty($field)));
+            }
+        });
+
+        
+        $builder->addEventListener(FormEvents::SUBMIT, function(FormEvent $event) {
+            $tag = $event->getData();
+
+            $fields = $tag->getProperty("customfield");
+            foreach(array_filter(preg_split('/[,\s]+/', $fields)) as $field) {
+                $data = $event->getForm()->get($field)->getData();
+                $tag->setProperty($field, $data);
+            }
+        });
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
