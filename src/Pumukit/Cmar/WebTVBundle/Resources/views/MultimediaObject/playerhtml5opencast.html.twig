@@ -11,7 +11,7 @@
    <div class="mm_player">
      <div class="num_view">
        <div style="float:left">
-         {% trans %}Video language{% endtrans %}: <span class="num_view_number">{{ multimediaObject.getProperty('opencastlanguage')?(mm.getProperty('opencastlanguage')|lower):'en'|language_name }}</span>
+         {% trans %}Video language{% endtrans %}: <span class="num_view_number">{{ (multimediaObject.getProperty('opencastlanguage')?(mm.getProperty('opencastlanguage')|lower):'en')|language_name }}</span>
        </div>
        {% trans %}Viewed{% endtrans %}:
        <span class="num_view_number">{{ multimediaObject.getNumview() }}</span>&nbsp;
@@ -24,7 +24,11 @@
    <p class="description">
      {{ multimediaObject.getDescription() }}
    </p>
-   {% include 'PumukitWebTVBundle:MultimediaObject:multimediaobjectbody.html.twig' with {'multimediaObject': multimediaObject} %}
+   {% set last_date = date('1/1/1900') %}
+   {% set last_precinct = '' %}
+   {% set last_subseriestitle = '' %}
+   {% set series_precinct = '' %}
+   {% include 'PumukitWebTVBundle:MultimediaObject:multimediaobjectbody.html.twig' with {'multimediaObject': multimediaObject, 'last_date': last_date, 'last_precinct': last_precinct, 'last_subseriestitle': last_subseriestitle, 'template': multimediaObject.getSeries().getProperty('template'), 'is_series': false} %}
 {% else %}
  <h1 class="cS_h1_error">{% trans %}VIDEO NOT AVAILABLE{% endtrans %}</h1>
 {% endif %}

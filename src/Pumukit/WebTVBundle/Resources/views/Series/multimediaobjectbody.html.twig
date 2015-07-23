@@ -5,6 +5,7 @@
   {% trans %}Date of holding{% endtrans %}: {{ mm.getRecordDate()|date('d/m/Y') }}
 </div>
 {% endif %}
+{% if is_series %}
 <!-- SUBSERIAL -->
 {% if not mm.getProperty("subseries") %}
   <div class="inter_mm"></div>
@@ -32,7 +33,7 @@
     {% endif %}
   {% endfor %}
 {% endif %}
-
+{% endif %}
 <!-- PIC -->
 <div class="serial_mm">
   <table>
