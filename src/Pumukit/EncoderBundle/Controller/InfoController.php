@@ -32,12 +32,15 @@ class InfoController extends Controller
         $pendingStates = array();
         if ($request->query->get('show_waiting', true)) $pendingStates[] = Job::STATUS_WAITING;
         if ($request->query->get('show_paused', true)) $pendingStates[] = Job::STATUS_PAUSED;
-        $pendingJobs = $jobRepo->createQueryWithStatus($pendingStates, true);
-        $executingJobs = $jobRepo->createQueryWithStatus(array(Job::STATUS_EXECUTING));
+        $pendingSort = array('priority' => 'desc', 'timeini' => 'asc');
+        $pendingJobs = $jobRepo->createQueryWithStatus($pendingStates, $pendingSort);
+        $executingSort = array('timestart' => 'desc');
+        $executingJobs = $jobRepo->createQueryWithStatus(array(Job::STATUS_EXECUTING), $executingSort);
         $pendingStates = array();
         if ($request->query->get('show_error', true)) $pendingStates[] = Job::STATUS_ERROR;
         if ($request->query->get('show_finished', false)) $pendingStates[] = Job::STATUS_FINISHED;
-        $executedJobs = $jobRepo->createQueryWithStatus($pendingStates);
+        $executedSort = array('timeend' => 'desc');
+        $executedJobs = $jobRepo->createQueryWithStatus($pendingStates, $executedSort);
 
         $jobService = $this->get('pumukitencoder.job');
         $stats = $jobService->getAllJobsStatus();
