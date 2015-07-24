@@ -43,7 +43,7 @@
            style="color: #FFF; font-size: 16px; padding: 8px; border-radius: 100%; background: {{ macros.job_status_color(job.getStatus()) }}"></i>
         {{ job.getStatusText()|trans }}
       </td>
-      <td>{{ job.getMmId() }}</td>
+      <td><a href="{{ path('pumukit_encoder_mm', {'id':job.getMmId()}) }}">{{ job.getMmId() }}</a></td>
       <td>{{ job.getProfile() }}</td>
       <td>{{ job.getCpu() }}</td>
       <td>{{ job.getPriority() }}</td>

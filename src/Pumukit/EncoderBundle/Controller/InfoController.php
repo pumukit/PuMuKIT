@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * @Route("/admin")
@@ -109,5 +110,13 @@ class InfoController extends Controller
         $flashMessage = $this->get('pumukitencoder.job')->retryJob($job);
 
         return new JsonResponse(array("jobId" => $job.getId(), 'mesage' => $flashMessage));
+    }
+
+    /**
+     * @Route("/encoder/mm/{id}", methods="GET", name="pumukit_encoder_mm")
+     */
+    public function multimediaObjectAction(MultimediaObject $multimediaObject, Request $request)
+    {
+        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_index', array('id' => $multimediaObject->getSeries()->getId(), 'mmid' => $multimediaObject->getId())));
     }
 }
