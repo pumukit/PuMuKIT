@@ -16,14 +16,13 @@ class JobRepository extends DocumentRepository
     /**
      * Create query builder for all jobs with given status
      */
-    public function createQueryWithStatus(array $status, $sort = false)
+    public function createQueryWithStatus(array $status, $sort = array())
     {
         $qb = $this->createQueryBuilder()
             ->field('status')->in($status);
 
-        if($sort) {
-            $qb->sort('priority', 'desc')
-                ->sort('timeini', 'asc');
+        if (null != $sort) {
+          $qb->sort($sort);
         }
         
         return $qb;
@@ -32,7 +31,7 @@ class JobRepository extends DocumentRepository
     /**
      * Find all jobs with given status
      */
-    public function findWithStatus(array $status, $sort = false)
+    public function findWithStatus(array $status, $sort = array())
     {
         return $this->createQueryWithStatus($status, $sort)
           ->getQuery()
