@@ -67,7 +67,7 @@
   {% if resource_name != 'event' %}
   <div id="pics_to_add_list">
     {% set picstoaddlistaction = "PumukitNewAdminBundle:"~(resource_name == 'mms' ? 'MultimediaObject':(resource_name|capitalize))~"Pic:picstoaddlist" %}
-    {{ render(controller(picstoaddlistaction, {'id': resource.id})) }}
+    {{ render(controller(picstoaddlistaction, {'id': resource.id, 'page':1})) }}
   </div>
   {% endif %}
   <div class="modal-footer">
