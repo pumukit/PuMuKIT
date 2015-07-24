@@ -17,28 +17,10 @@ class SeriesPicController extends Controller
      */
     public function createAction(Series $series, Request $request)
     {
-      $picService = $this->get('pumukitschema.seriespic');
-
-      // TODO search in picservice according to page (in criteria)
-      if ($request->get('page', null)) {
-          $this->get('session')->set('admin/seriespic/page', $request->get('page', 1));
-      }
-      $page = intval($this->get('session')->get('admin/seriespic/page', 1));
-      $limit = 12;
-
-      $urlPics = $picService->getRecommendedPics($series);
-
-      $total = intval(ceil(count($urlPics) / $limit));
-
-      $pics = $this->getPaginatedPics($urlPics, $limit, $page);
-
-      return array(
-                   'resource' => $series,
-                   'resource_name' => 'series',
-                   'pics' => $pics,
-                   'page' => $page,
-                   'total' => $total
-                   );
+        return array(
+                     'resource' => $series,
+                     'resource_name' => 'series'
+                     );
     }
 
     /**
@@ -165,6 +147,35 @@ class SeriesPicController extends Controller
         $dm->flush();
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_seriespic_list', array('id' => $series->getId())));
+    }
+
+    /**
+     * @Template("PumukitNewAdminBundle:Pic:picstoaddlist.html.twig")
+     */
+    public function picstoaddlistAction(Series $series, Request $request)
+    {
+        $picService = $this->get('pumukitschema.seriespic');
+
+        // TODO search in picservice according to page (in criteria)
+        if ($request->get('page', null)) {
+            $this->get('session')->set('admin/seriespic/page', $request->get('page', 1));
+        }
+        $page = intval($this->get('session')->get('admin/seriespic/page', 1));
+        $limit = 12;
+
+        $urlPics = $picService->getRecommendedPics($series);
+
+        $total = intval(ceil(count($urlPics) / $limit));
+
+        $pics = $this->getPaginatedPics($urlPics, $limit, $page);
+
+        return array(
+                     'resource' => $series,
+                     'resource_name' => 'series',
+                     'pics' => $pics,
+                     'page' => $page,
+                     'total' => $total
+                     );
     }
 
     /**

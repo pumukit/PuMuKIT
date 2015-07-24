@@ -65,64 +65,12 @@
 
   <div style="clear:both"></div>
   {% if resource_name != 'event' %}
-  <div id="tv_admin_container">
-
-    <fieldset>
-      <div class="form-group">
-	    <label for="other">{% trans %}Use Image{% endtrans %}:</label>
-        <div class="">
-          {% if 0 == pics|length %}
-            {% trans %}There are no images in the database.{% endtrans %}
-          {% endif %}
-          {% for pic_url in pics %}
-	      <div style="padding: 18px; float:left">
-            <div class="wrap0">
-              <div class="wrap1">
-                <div class="wrap2">
-                  <div class="wrap3">
-		            <a href="#" data-dismiss="modal" onclick="$('#pic_{{ resource_name }}_{{ resource.id }}').load('{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id, 'picUrl': pic_url}) }}', function(){success('{% trans %}New Pic added.{% endtrans %}');}); return false;">
-                      <img src="{{ pic_url }}" alt="{{ pic_url|split('/')|last }}" height="82" width="100"/>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          {% endfor %}
-
-          <div style="clear: left"></div>
-        </div>
-      </div>
-    </fieldset>
-
-    <div class="modal-footer">
-      <div class="pagerfanta">
-        {{ pagerfanta(pics, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_#{resource_name}pic_create", "routeParams": {'id': resource.id}}) }}
-      </div>
-
-      <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-
-    </div>
-
-{#
-    <ul class="tv_admin_actions">
-      <li>
-        {% if ((total == page) or (0 == total)) %}
-        <a class="MB_focusable" style="display: none" title="" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitnewadmin_'~resource_name~'pic_create', {'id': resource.id, 'page': (page + 1)}) }}">{% trans %}Previous{% endtrans %}</a>
-        {% else %}
-        <a class="tv_admin_action_previous MB_focusable" style="color: blue; font-weight: normal" title="{% trans %}New Image{% endtrans %}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitnewadmin_'~resource_name~'pic_create', {'id': resource.id, 'page': (page + 1)}) }}">{% trans %}Previous{% endtrans %}</a>
-        {% endif %}
-      </li>
-      <li>
-        {% if (1 == page) %}
-        <a class="MB_focusable" style="display: none" title="" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitnewadmin_'~resource_name~'pic_create', {'id': resource.id, 'page': (page - 1)}) }}">{% trans %}Next{% endtrans %}</a>
-        {% else %}
-        <a class="tv_admin_action_next MB_focusable" style="color: blue; font-weight: normal" title="{% trans %}New Image{% endtrans %}" onclick="Modalbox.show(this.href, {title:this.title, width:800}); return false;" href="{{ path('pumukitnewadmin_'~resource_name~'pic_create', {'id': resource.id, 'page': (page - 1)}) }}">{% trans %}Next{% endtrans %}</a>
-        {% endif %}
-      </li>
-    </ul>
-#}
-
+  <div id="pics_to_add_list">
+    {% set picstoaddlistaction = "PumukitNewAdminBundle:"~(resource_name == 'mms' ? 'MultimediaObject':(resource_name|capitalize))~"Pic:picstoaddlist" %}
+    {{ render(controller(picstoaddlistaction, {'id': resource.id})) }}
   </div>
   {% endif %}
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+  </div>
 </div>

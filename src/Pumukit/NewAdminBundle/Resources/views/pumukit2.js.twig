@@ -1605,3 +1605,8 @@ $(document).on('click', '#pumukitnewadmin_track_ok_button', function(event){
         return false;
     }
 });
+
+window.change_pics_page = function(route)
+{
+    $('#pics_to_add_list').load(route);
+}
