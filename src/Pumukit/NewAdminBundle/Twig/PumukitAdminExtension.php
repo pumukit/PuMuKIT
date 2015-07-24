@@ -6,21 +6,25 @@ use Symfony\Component\Intl\Intl;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class PumukitAdminExtension extends \Twig_Extension
 {
     private $dm;
     private $languages;
     private $profileService;
+    private $translator;
 
     /**
      * Constructor
      */
-    public function __construct(ProfileService $profileService, DocumentManager $documentManager)
+    public function __construct(ProfileService $profileService, DocumentManager $documentManager, TranslatorInterface $translator)
     {
         $this->dm = $documentManager;
         $this->languages = Intl::getLanguageBundle()->getLanguageNames();
         $this->profileService = $profileService;
+        $this->translator = $translator;
     }
 
     /**
@@ -134,7 +138,15 @@ class PumukitAdminExtension extends \Twig_Extension
      */
     public function getLanguageName($code)
     {
-        return ucfirst($this->languages[$code]);
+        $addonLanguages = CustomLanguageType::$addonLanguages;
+
+        if (isset($this->languages[$code])) {
+            return ucfirst($this->languages[$code]);
+        } elseif (isset($addonLanguages[$code])) {
+            return ucfirst($this->translator->trans($addonLanguages[$code]));
+        }
+
+        return $code;
     }
 
     /**

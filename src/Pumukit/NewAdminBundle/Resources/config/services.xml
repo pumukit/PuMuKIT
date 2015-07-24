@@ -33,6 +33,7 @@
       <tag name="twig.extension"/>
       <argument type="service" id="pumukitencoder.profile"/>
       <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+      <argument type="service" id="translator" />
     </service>
   </services>
 </container>
