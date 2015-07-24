@@ -30,34 +30,34 @@ class TrackUpdateType extends AbstractType
                   array(
                         'required' => false,
                         'label' => $this->translator->trans('Hide', array(), null, $this->locale)))
-            ->add('language', 'language',
+            ->add('language', 'customlanguage',
                   array(
                         'required' => false,
                         'label' => $this->translator->trans('Language', array(), null, $this->locale)))
           ->add('durationinminutesandseconds', new TrackdurationType(),
                 array(
                       'required' => true,
-                      'read_only' => true,
+                      'disabled' => true,
                       'label' => $this->translator->trans('Duration', array(), null, $this->locale)))
           ->add('resolution', new TrackresolutionType(),
                 array(
                       'required' => true,
-                      'read_only' => true,
+                      'disabled' => true,
                       'label' => $this->translator->trans('Resolution', array(), null, $this->locale)))
           ->add('size', 'integer',
                 array(
                       'required' => true,
-                      'read_only' => true,
+                      'disabled' => true,
                       'label' => $this->translator->trans('Size', array(), null, $this->locale)))
           ->add('path', 'text',
                 array(
                       'required' => true,
-                      'read_only' => true,
+                      'disabled' => true,
                       'label' => $this->translator->trans('File', array(), null, $this->locale)))
           ->add('url', 'text',
                 array(
                       'required' => true,
-                      'read_only' => true,
+                      'disabled' => true,
                       'label' => $this->translator->trans('URL', array(), null, $this->locale)));
     }
     

@@ -31,7 +31,6 @@ class Person
      *
      * @MongoDB\String
      * @Assert\Email
-     * //@Assert\NotEmpty
      */
     protected $email;
 

@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * @Route("/admin")
@@ -31,12 +32,15 @@ class InfoController extends Controller
         $pendingStates = array();
         if ($request->query->get('show_waiting', true)) $pendingStates[] = Job::STATUS_WAITING;
         if ($request->query->get('show_paused', true)) $pendingStates[] = Job::STATUS_PAUSED;
-        $pendingJobs = $jobRepo->createQueryWithStatus($pendingStates, true);
-        $executingJobs = $jobRepo->createQueryWithStatus(array(Job::STATUS_EXECUTING));
+        $pendingSort = array('priority' => 'desc', 'timeini' => 'asc');
+        $pendingJobs = $jobRepo->createQueryWithStatus($pendingStates, $pendingSort);
+        $executingSort = array('timestart' => 'desc');
+        $executingJobs = $jobRepo->createQueryWithStatus(array(Job::STATUS_EXECUTING), $executingSort);
         $pendingStates = array();
         if ($request->query->get('show_error', true)) $pendingStates[] = Job::STATUS_ERROR;
         if ($request->query->get('show_finished', false)) $pendingStates[] = Job::STATUS_FINISHED;
-        $executedJobs = $jobRepo->createQueryWithStatus($pendingStates);
+        $executedSort = array('timeend' => 'desc');
+        $executedJobs = $jobRepo->createQueryWithStatus($pendingStates, $executedSort);
 
         $jobService = $this->get('pumukitencoder.job');
         $stats = $jobService->getAllJobsStatus();
@@ -68,8 +72,14 @@ class InfoController extends Controller
      */
     public function infoJobAction(Job $job, Request $request)
     {
-        $command = $this->get('pumukitencoder.job')->renderBat($job);
-        return array('job' => $job, 'command' => $command);
+        $deletedMultimediaObject = false;
+        try {
+            $command = $this->get('pumukitencoder.job')->renderBat($job);
+        } catch (\Exception $e) {
+            $command = $e->getMessage();
+            $deletedMultimediaObject = true;
+        }
+        return array('job' => $job, 'command' => $command, 'deletedMultimediaObject' => $deletedMultimediaObject);
     }
 
     /**
@@ -103,5 +113,13 @@ class InfoController extends Controller
         $flashMessage = $this->get('pumukitencoder.job')->retryJob($job);
 
         return new JsonResponse(array("jobId" => $job.getId(), 'mesage' => $flashMessage));
+    }
+
+    /**
+     * @Route("/encoder/mm/{id}", methods="GET", name="pumukit_encoder_mm")
+     */
+    public function multimediaObjectAction(MultimediaObject $multimediaObject, Request $request)
+    {
+        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_index', array('id' => $multimediaObject->getSeries()->getId(), 'mmid' => $multimediaObject->getId())));
     }
 }

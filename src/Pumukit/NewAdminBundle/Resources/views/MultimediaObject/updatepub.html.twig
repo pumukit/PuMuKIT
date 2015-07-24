@@ -34,7 +34,7 @@
 
 	<fieldset>
       <div class="col-md-5">
-	    {{ form_row(form_pub['status'], {disabled: not is_granted('ROLE_SUPER_ADMIN') }) }}
+	    {{ form_row(form_pub['status']) }}
 
 	    <div class="form-group" id="pumukitnewadmin_mms_pub_channel" {{ (mm.getStatus() == 1)?'style="background-color: #f2f2f2"':'' }}>
 	      <label for="pub" class="control-label">{% trans %}Publication Channels{% endtrans %}:</label>

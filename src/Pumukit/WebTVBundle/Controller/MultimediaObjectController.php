@@ -57,7 +57,25 @@ class MultimediaObjectController extends Controller
      */
     public function iframeAction(MultimediaObject $multimediaObject, Request $request)
     {
-      return $this->indexAction($multimediaObject, $request);
+        $track = $request->query->has('track_id') ?
+          $multimediaObject->getTrackById($request->query->get('track_id')) :
+          $multimediaObject->getFilteredTrackWithTags(array('display'));
+
+        if (!$track)
+            throw $this->createNotFoundException();
+
+        $response = $this->testBroadcast($multimediaObject, $request);
+        if($response instanceof Response) {
+            return $response;
+        }
+
+        $this->incNumView($multimediaObject, $track);
+        $this->dispatch($multimediaObject, $track);
+
+        return array('autostart' => $request->query->get('autostart', 'true'),
+                     'intro' => $this->getIntro($request->query->get('intro')),
+                     'multimediaObject' => $multimediaObject,
+                     'track' => $track);
     }
 
 
@@ -168,6 +186,10 @@ class MultimediaObjectController extends Controller
       if($opencasturl = $multimediaObject->getProperty("opencasturl")) {
           $this->incNumView($multimediaObject);
           $this->dispatch($multimediaObject);
+          if($invert = $multimediaObject->getProperty('opencastinvert')) {
+              $opencasturl .= '&display=invert';
+          }
+
           return $this->redirect($opencasturl);
       }
     }

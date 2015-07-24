@@ -148,7 +148,7 @@ class MediaLibraryController extends Controller
         $this->get('pumukit_web_tv.breadcrumbs')->addList($title, $routeName, array(), true);
 
         // NOTE: Review if the number of SeriesType increases
-        $allSeriesType = $dm->getRepository('PumukitSchemaBundle:SeriesType')->findAll();
+        $allSeriesType = $dm->getRepository('PumukitSchemaBundle:SeriesType')->findBy(array(), array("cod" => 1));
         $subseries = array();
         foreach ($allSeriesType as $seriesType) {
             $series = $dm->getRepository('PumukitSchemaBundle:Series')->findWithTagAndSeriesType($tag, $seriesType, $sort);

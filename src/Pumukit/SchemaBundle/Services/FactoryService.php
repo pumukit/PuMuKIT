@@ -244,14 +244,6 @@ class FactoryService
          
         $multimediaObjects = $repoMmobjs->findBySeries($series);
         foreach($multimediaObjects as $mm){
-            $jobs = $jobRepo->findByMmId($mm->getId());
-            foreach ($jobs as $job) {
-                if (Job::STATUS_EXECUTING !== $job->getStatus()) {
-                    $this->dm->remove($job);
-                } else {
-                    throw new \Exception("Can't delete multimedia object with id'". $mm->getId() . "'. Its job with id '". $job->getId() ."' is executing.");
-                }
-            }
             $this->dm->remove($mm);
         }
          
@@ -266,16 +258,6 @@ class FactoryService
     public function deleteResource($resource)
     {
         $jobRepo = $this->dm->getRepository("PumukitEncoderBundle:Job");
-        if ($resource instanceof MultimediaObject) {
-            $jobs = $jobRepo->findByMmId($resource->getId());
-            foreach ($jobs as $job) {
-                if (Job::STATUS_EXECUTING !== $job->getStatus()) {
-                    $this->dm->remove($job);
-                } else {
-                    throw new \Exception("Can't delete multimedia object with id'". $resource->getId() . "'. Its job with id '". $job->getId() ."' is executing.");
-                }
-            }
-        }
         $this->dm->remove($resource);
         $this->dm->flush();
     }
@@ -334,7 +316,12 @@ class FactoryService
         $new->setI18nKeyword($src->getI18nKeyword());
         $new->setCopyright($src->getCopyright());
         $new->setLicense($src->getLicense());
-        $new->setProperties($src->getProperties());
+
+        // NOTE: #7408 Specify which properties are clonable
+        $new->setProperty("subseries", $src->getProperty("subseries"));
+        $new->setProperty("subseriestitle", $src->getProperty("subseriestitle"));
+
+        $new->setProperty("clonedfrom", $src->getId());
 
         foreach ($src->getTags() as $tag) {
           $tagAdded = $this->tagService->addTagToMultimediaObject($new, $tag->getId(), false);

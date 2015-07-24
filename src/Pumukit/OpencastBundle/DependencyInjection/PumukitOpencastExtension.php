@@ -52,8 +52,11 @@ class PumukitOpencastExtension extends Extension
             ->addArgument(new Reference("pumukitschema.tag"))
             ->addArgument(new Reference("pumukit_opencast.client"))
             ->addArgument(new Reference("pumukit_opencast.job"))
+            ->addArgument(new Reference("pumukit.inspection"))
             ->addArgument(new Parameter("pumukit2.locales"));
         }
 
+        $container->setParameter('pumukit_opencast.generate_sbs', $config['generate_sbs'] ? $config['generate_sbs'] : false);
+        $container->setParameter('pumukit_opencast.profile', $config['generate_sbs'] ? $config['profile'] : null);
     }
 }

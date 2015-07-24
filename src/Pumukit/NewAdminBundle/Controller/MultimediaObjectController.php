@@ -3,6 +3,7 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
@@ -130,12 +131,13 @@ class MultimediaObjectController extends SortableAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $resource);
-        $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource);
+        $options = array('not_admin' => !$this->isGranted('ROLE_SUPER_ADMIN'));
+        $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource, $options);
 
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
 
-        $jobs = $this->get('pumukitencoder.job')->getJobsByMultimediaObjectId($resource->getId());
+        $jobs = $this->get('pumukitencoder.job')->getNotFinishedJobsByMultimediaObjectId($resource->getId());
 
         $notMasterProfiles = $this->get('pumukitencoder.profile')->getProfiles(null, true, false);
 
@@ -183,7 +185,8 @@ class MultimediaObjectController extends SortableAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $resource);
-        $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource);
+        $options = array('not_admin' => !$this->isGranted('ROLE_SUPER_ADMIN'));
+        $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource, $options);
 
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
@@ -249,10 +252,12 @@ class MultimediaObjectController extends SortableAdminController
         $parentTags = $factoryService->getParentTags();
 
         $resource = $this->findOr404($request);
+
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $resource);
-        $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource);
+        $options = array('not_admin' => !$this->isGranted('ROLE_SUPER_ADMIN'));
+        $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource, $options);
 
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
@@ -481,7 +486,12 @@ class MultimediaObjectController extends SortableAdminController
         $resourceId = $resource->getId();
         $seriesId = $resource->getSeries()->getId();
 
-        $this->get('pumukitschema.factory')->deleteResource($resource);
+        try {
+            $this->get('pumukitschema.factory')->deleteResource($resource);
+        } catch (\Exception $e) {
+            return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
+
         if ($resourceId === $this->get('session')->get('admin/mms/id')){
             $this->get('session')->remove('admin/mms/id');
         }

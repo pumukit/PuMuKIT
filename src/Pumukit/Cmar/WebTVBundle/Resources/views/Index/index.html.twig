@@ -2,7 +2,7 @@
 
 {% block body %}
 <div id="pumukit_m_index" class="pumukit_m">
-  <p class="titulo_widget">{% trans %}FEATUREED VIDEOS{% endtrans %}</p>
+  <p class="titulo_widget">{% trans %}FEATURED VIDEOS{% endtrans %}</p>
   {% include 'PumukitCmarWebTVBundle:Index:videosindex.html.twig' with {'event': event} %}
   <div class="index_tab">
     {% render(controller('PumukitWebTVBundle:Index:recentlyadded')) %}

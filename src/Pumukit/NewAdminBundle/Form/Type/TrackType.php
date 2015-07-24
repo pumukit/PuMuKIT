@@ -24,7 +24,7 @@ class TrackType extends AbstractType
                   array(
                         'required' => false,
                         'label' => $this->translator->trans('Description', array(), null, $this->locale)))
-          ->add('language', 'language',
+          ->add('language', 'customlanguage',
                 array(
                       'required' => true,
                       'label' => $this->translator->trans('Language', array(), null, $this->locale)));

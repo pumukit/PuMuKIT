@@ -16,14 +16,13 @@ class JobRepository extends DocumentRepository
     /**
      * Create query builder for all jobs with given status
      */
-    public function createQueryWithStatus(array $status, $sort = false)
+    public function createQueryWithStatus(array $status, $sort = array())
     {
         $qb = $this->createQueryBuilder()
             ->field('status')->in($status);
 
-        if($sort) {
-            $qb->sort('priority', 'desc')
-                ->sort('timeini', 'asc');
+        if (null != $sort) {
+          $qb->sort($sort);
         }
         
         return $qb;
@@ -32,7 +31,7 @@ class JobRepository extends DocumentRepository
     /**
      * Find all jobs with given status
      */
-    public function findWithStatus(array $status, $sort = false)
+    public function findWithStatus(array $status, $sort = array())
     {
         return $this->createQueryWithStatus($status, $sort)
           ->getQuery()
@@ -53,9 +52,9 @@ class JobRepository extends DocumentRepository
     }
 
     /**
-     * Find all jobs except finished with given multimedia object id
+     * Find not finished jobs with given multimedia object id
      */
-    public function findByMultimediaObjectId($mmId)
+    public function findNotFinishedByMultimediaObjectId($mmId)
     {
         return $this->createQueryBuilder()
           ->field('mm_id')->equals($mmId)
@@ -65,12 +64,24 @@ class JobRepository extends DocumentRepository
     }
 
     /**
-     * Find all jobs with given multimedia object id
+     * Find all jobs with given status and multimedia object id
      */
-    public function findByMmId($mmId)
+    public function findByStatusAndMultimediaObjectId($status, $multimediaObjectId)
     {
         return $this->createQueryBuilder()
-          ->field('mm_id')->equals($mmId)
+          ->field('mm_id')->equals($multimediaObjectId)
+          ->field('status')->equals($status)
+          ->getQuery()
+          ->execute();
+    }
+
+    /**
+     * Find all jobs with given multimedia object id
+     */
+    public function findByMultimediaObjectId($multimediaObjectId)
+    {
+        return $this->createQueryBuilder()
+          ->field('mm_id')->equals($multimediaObjectId)
           ->getQuery()
           ->execute();
     }

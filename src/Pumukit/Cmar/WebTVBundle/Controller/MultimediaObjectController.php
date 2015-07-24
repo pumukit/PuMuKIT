@@ -3,6 +3,9 @@
 namespace Pumukit\Cmar\WebTVBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\WebTVBundle\Controller\MultimediaObjectController as Base;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Broadcast;
@@ -12,16 +15,23 @@ class MultimediaObjectController extends Base
     public function preExecute(MultimediaObject $multimediaObject, Request $request)
     {
         if ($opencasturl = $multimediaObject->getProperty("opencasturl")) {
-            $this->testBroadcast($multimediaObject, $request);
+            $response = $this->testBroadcast($multimediaObject, $request);
+            if($response instanceof Response) {
+                return $response;
+            }
+
             $this->updateBreadcrumbs($multimediaObject);
             $this->incNumView($multimediaObject);
             $this->dispatch($multimediaObject);
             $userAgent = $this->getRequest()->headers->get('user-agent');
+            $technologyService = $this->get('pumukit_web_tv.technology');
+            $mobileDevice = $technologyService->isMobileDevice($userAgent);
             $isOldBrowser = $this->getIsOldBrowser($userAgent);
             return $this->render("PumukitCmarWebTVBundle:MultimediaObject:opencast.html.twig",
                                  array(
                                        "multimediaObject" => $multimediaObject,
-                                       "is_old_browser" => $isOldBrowser
+                                       "is_old_browser" => $isOldBrowser,
+                                       "mobile_device" => $mobileDevice
                                        )
                                  );
         }
@@ -78,8 +88,18 @@ class MultimediaObjectController extends Base
         \phpCAS::forceAuthentication();
 
         if(!in_array(\phpCAS::getUser(), array($broadcast->getName(), "tv", "prueba", "adminmh", "admin", "sistemas.uvigo"))) {
-          throw $this->createAccessDeniedException('Unable to access this page!');        
+            return new Response($this->render("PumukitWebTVBundle:Index:401unauthorized.html.twig", array()), 401);
         }
       }
+      return true;
+    }
+
+   /**
+     * @Route("/mmobj/iframe/{id}", name="pumukit_webtv_multimediaobject_mmobjiframe")
+     * @Template()
+     */
+    public function mmobjiframeAction(MultimediaObject $multimediaObject, Request $request)
+    {
+        return array('mm' => $multimediaObject);
     }
 }

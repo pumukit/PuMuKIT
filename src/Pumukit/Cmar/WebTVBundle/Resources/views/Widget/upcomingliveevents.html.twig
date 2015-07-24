@@ -1,0 +1,15 @@
+<div class="caixa">
+  <div class="titulo">{% trans %}Upcoming live events{% endtrans %}</div>
+  <div style="padding: 2px 5px">
+  {% for event in events %}
+    <div style="margin-bottom: 8px;">
+      {{ event.getDate()|date('d/m/Y H:i:s') }}
+      {{ event.getName() }}
+    </div>
+  {% else %}
+    <ul>
+      <li>{% trans %}No scheduled broadcasts.{% endtrans %}</li>
+  	</ul>
+  {% endfor %}
+  </div>
+</div>

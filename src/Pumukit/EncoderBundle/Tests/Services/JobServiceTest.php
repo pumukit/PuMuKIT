@@ -251,8 +251,8 @@ class JobServiceTest extends WebTestCase
         $this->dm->persist($job3);
         $this->dm->flush();
 
-        $this->assertEquals(2, count($this->jobService->getJobsByMultimediaObjectId($mm_id1)));
-        $this->assertEquals(1, count($this->jobService->getJobsByMultimediaObjectId($mm_id2)));
+        $this->assertEquals(2, count($this->jobService->getNotFinishedJobsByMultimediaObjectId($mm_id1)));
+        $this->assertEquals(1, count($this->jobService->getNotFinishedJobsByMultimediaObjectId($mm_id2)));
     }
 
     public function testGetStatusError()
