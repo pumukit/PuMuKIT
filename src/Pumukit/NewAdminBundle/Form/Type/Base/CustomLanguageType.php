@@ -9,11 +9,11 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class CustomLanguageType extends AbstractType
 {
-    protected static $addonLanguages = array(
+    public static $addonLanguages = array(
       'lse' => 'Spanish Sign Language',
       'ssp' => 'Spanish Sign Language',
-      'lsi' => 'Sign Language',
-      'sgn' => 'Sign Language'
+      'lsi' => 'International Sign Language',
+      'sgn' => 'International Sign Language'
     );
     
     private $translator;
@@ -31,23 +31,29 @@ class CustomLanguageType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        $resolver->setDefaults(array(
+                                     'choices' => self::getLanguageNames($this->customLanguages, $this->translator),
+                                     ));
+    }
+
+    // TODO FIX THIS
+    public static function getLanguageNames($customLanguages, $translator)
+    {
         $languageNames = Intl::getLanguageBundle()->getLanguageNames();
 
-        if($this->customLanguages) {
-          $choices = array();
-          foreach($this->customLanguages as $aux) {
-              $code = strtolower($aux);
-              $choices[$code] = isset($languageNames[$code]) ? 
-                $languageNames[$code] : 
-                (isset(self::$addonLanguages[$code]) ? $this->translator->trans(self::$addonLanguages[$code]) : $code);
-          }
+        if ($customLanguages) {
+            $choices = array();
+            foreach($customLanguages as $aux) {
+                $code = strtolower($aux);
+                $choices[$code] = isset($languageNames[$code]) ? 
+                  $languageNames[$code] : 
+                  (isset(self::$addonLanguages[$code]) ? $translator->trans(self::$addonLanguages[$code]) : $code);
+            }
         } else {
-          $choices = $languageNames;
+            $choices = $languageNames;
         }
 
-        $resolver->setDefaults(array(
-            'choices' => $choices,
-        ));
+        return $choices;
     }
 
     /**
