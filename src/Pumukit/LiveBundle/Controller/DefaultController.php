@@ -18,8 +18,8 @@ class DefaultController extends Controller
         $this->updateBreadcrumbs($live->getName(), "pumukit_live_id", array("id" => $live->getId()));
 
         $userAgent = $this->getRequest()->headers->get('user-agent');
-        $technologyService = $this->get('pumukit_web_tv.technology');
-        $mobileDevice = $technologyService->isMobileDevice($userAgent);
+        $mobileDetectorService = $this->get('mobile_detect.mobile_detector');
+        $mobileDevice = ($mobileDetectorService->isMobile($userAgent) || $mobileDetectorService->isTablet($userAgent));
 
         return array(
                      'live' => $live,
@@ -45,8 +45,8 @@ class DefaultController extends Controller
         $this->updateBreadcrumbs($live->getName(), "pumukit_live", array("id" => $live->getId()));
 
         $userAgent = $this->getRequest()->headers->get('user-agent');
-        $technologyService = $this->get('pumukit_web_tv.technology');
-        $mobileDevice = $technologyService->isMobileDevice($userAgent);
+        $mobileDetectorService = $this->get('mobile_detect.mobile_detector');
+        $mobileDevice = ($mobileDetectorService->isMobile($userAgent) || $mobileDetectorService->isTablet($userAgent));
 
         return array(
                      'live' => $live,

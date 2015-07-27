@@ -24,8 +24,8 @@ class MultimediaObjectController extends Base
             $this->incNumView($multimediaObject);
             $this->dispatch($multimediaObject);
             $userAgent = $this->getRequest()->headers->get('user-agent');
-            $technologyService = $this->get('pumukit_web_tv.technology');
-            $mobileDevice = $technologyService->isMobileDevice($userAgent);
+            $mobileDetectorService = $this->get('mobile_detect.mobile_detector');
+            $mobileDevice = ($mobileDetectorService->isMobile($userAgent) || $mobileDetectorService->isTablet($userAgent));
             $isOldBrowser = $this->getIsOldBrowser($userAgent);
             return $this->render("PumukitCmarWebTVBundle:MultimediaObject:opencast.html.twig",
                                  array(
