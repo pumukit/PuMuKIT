@@ -81,6 +81,13 @@ fos_user:
     firewall_name: main
     user_class: Pumukit\SchemaBundle\Document\User
 
+# MobileDetectBundle Configuration
+mobile_detect:
+    redirect:
+        mobile: ~
+        tablet: ~
+    switch_device_view: ~
+
 # Pumukit2 parameters
 parameters:
     pumukit2.info:
