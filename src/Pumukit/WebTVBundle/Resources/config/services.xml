@@ -30,8 +30,5 @@
           <argument>%pumukit_web_tv.breadcrumbs_all_route%</argument>
           <argument type="service" id="translator" />
         </service>
-
-        <service id="pumukit_web_tv.technology" class="Pumukit\WebTVBundle\Services\TechnologyService">
-        </service>
     </services>
 </container>
