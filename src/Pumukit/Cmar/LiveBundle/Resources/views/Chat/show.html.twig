@@ -1,5 +1,5 @@
 <table border="0" cellspacing="0" cellpadding="0" style="table-layout:fixed; height: 100%">
-  <form id="chatForm" onsubmit="postMessage(); return false;" action="{{ path('pumukit_cmar_live_chat_post', {'channel': channel}) }}" method="post">
+  <form id="chatForm" onsubmit="postChatMessage(); return false;" action="{{ path('pumukit_cmar_live_chat_post', {'channel': channel}) }}" method="post">
     <tbody>
       <tr style="overflow: hidden;">
         <td id="chatList" class="chatBox" frameborder="0" style="overflow: hidden;">
@@ -46,12 +46,12 @@ var timer = null;
 document.addEventListener('DOMContentLoaded', function() {
    $('chatMessage').observe('keypress', function(event){
       if ( event.keyCode == Event.KEY_RETURN  || event.which == Event.KEY_RETURN ) {
-         postMessage();
+         postChatMessage();
          Event.stop(event);
       }
    });
 });
-postMessage = function()
+postChatMessage = function()
 {
     if ($("chatName").value != '') {
         var route = "{{ path('pumukit_cmar_live_chat_post', {'channel': channel, 'name': '__NAME__', 'message': '__MESSAGE__'})|raw }}";
