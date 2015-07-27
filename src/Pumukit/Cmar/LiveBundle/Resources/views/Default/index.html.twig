@@ -19,10 +19,15 @@
   <div style="float: right; width: 314px;">
     {% render(controller('PumukitCmarLiveBundle:Chat:show', {'channel' : live.id})) %}
   </div>
+  {% if isIE and versionIE < 9.0 %}
+  <div style="width:100%; margin: 0px auto; color:red;">{% trans %}JWPlayer does not support your browser version{% endtrans %} {{ isIE }}. {% trans %}Please use 9.0 or higher version or use another browser.{% endtrans %}</div>
+  {% else %}
   <div id="directo-sbs" style="width:100%; margin: 0px auto;"></div>
+  {% endif %}
 </div>
 </div>
 {% include('PumukitLiveBundle:Default:info.html.twig') %}
+
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function(){
   jwplayer("directo-sbs").setup({

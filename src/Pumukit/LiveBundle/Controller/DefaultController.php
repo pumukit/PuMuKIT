@@ -20,10 +20,17 @@ class DefaultController extends Controller
         $userAgent = $this->getRequest()->headers->get('user-agent');
         $mobileDetectorService = $this->get('mobile_detect.mobile_detector');
         $mobileDevice = ($mobileDetectorService->isMobile($userAgent) || $mobileDetectorService->isTablet($userAgent));
+        $isIE = $mobileDetectorService->version('IE');
+        $versionIE = 11.0;
+        if ($isIE) {
+            $versionIE = floatval($isIE);
+        }
 
         return array(
                      'live' => $live,
-                     'mobile_device' => $mobileDevice
+                     'mobile_device' => $mobileDevice,
+                     'isIE' => $isIE,
+                     'versionIE' => $versionIE
                      );
     }
 
@@ -47,10 +54,17 @@ class DefaultController extends Controller
         $userAgent = $this->getRequest()->headers->get('user-agent');
         $mobileDetectorService = $this->get('mobile_detect.mobile_detector');
         $mobileDevice = ($mobileDetectorService->isMobile($userAgent) || $mobileDetectorService->isTablet($userAgent));
+        $isIE = $mobileDetectorService->version('IE');
+        $versionIE = 11.0;
+        if ($isIE) {
+            $versionIE = floatval($isIE);
+        }
 
         return array(
                      'live' => $live,
-                     'mobile_device' => $mobileDevice
+                     'mobile_device' => $mobileDevice,
+                     'isIE' => $isIE,
+                     'versionIE' => $versionIE
                      );
     }
 
