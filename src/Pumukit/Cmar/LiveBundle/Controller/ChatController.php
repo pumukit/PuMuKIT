@@ -68,7 +68,7 @@ class ChatController extends Controller
         $repo = $dm->getRepository('PumukitCmarLiveBundle:Message');
         $messages = $repo->findBy(
                                   array('channel' => $channel),
-                                  array('insert_date' => 'asc')
+                                  array('insertDate' => 'asc')
                                   );
 
         return array(
