@@ -26,6 +26,7 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->syncNumberMultimediaObjectsOnTags($input, $output);
+        $this->syncNumberMultimediaObjectsOnBroadcast($input, $output);
     }
 
     private function syncNumberMultimediaObjectsOnTags(InputInterface $input, OutputInterface $output)
@@ -34,13 +35,37 @@ EOT
         $tagRepo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:Tag");
         $mmRepo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:MultimediaObject");
 
+        $output->writeln("----------------------------TAGS-----------------------------");
+
         $tags = $tagRepo->findAll();
         foreach ($tags as $tag) {
             $mms = $mmRepo->findWithTag($tag);
-            $output->writeln($tag->getCod().": ".$tag->getNumberMultimediaObjects()." -> ".count($mms));
+            if(count($mms) != 0){
+                $output->writeln($tag->getCod().": ".$tag->getNumberMultimediaObjects()." -> ".count($mms));
+            }
             $tag->setNumberMultimediaObjects(count($mms));
             $dm->persist($tag);
         }
         $dm->flush();
+    }
+
+    private function syncNumberMultimediaObjectsOnBroadcast(InputInterface $input, OutputInterface $output)
+    {
+        $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+        $broadcastRepo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:Broadcast");
+        $mmRepo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:MultimediaObject");
+    
+        $output->writeln("--------------------------BROADCAST--------------------------");
+
+        $broadcasts = $broadcastRepo->findAll();
+        foreach ($broadcasts as $broadcast) {
+            $mms = $mmRepo->findByBroadcast($broadcast);
+            if(count($mms) != 0){
+                $output->writeln($broadcast->getName().": ".$broadcast->getNumberMultimediaObjects()." -> ".count($mms));
+            }
+            $broadcast->setNumberMultimediaObjects(count($mms));
+            $dm->persist($broadcast);
+        }
+        $dm->flush(); 
     }
 }
