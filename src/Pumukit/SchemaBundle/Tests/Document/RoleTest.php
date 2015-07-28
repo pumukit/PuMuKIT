@@ -68,5 +68,8 @@ class RoleTest extends \PHPUnit_Framework_TestCase
 
         $role->decreaseNumberPeopleInMultimediaObject();
         $this->assertEquals(2, $role->getNumberPeopleInMultimediaObject());
+
+        $role->setNumberPeopleInMultimediaObject(3);
+        $this->assertEquals(3, $role->getNumberPeopleInMultimediaObject());
     }
 }
