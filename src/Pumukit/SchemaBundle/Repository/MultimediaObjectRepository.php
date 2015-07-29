@@ -122,7 +122,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param string $roleCod
      * @return ArrayCollection
      */
-    public function findPersonWithRoleCod($role)
+    public function findPersonsWithRoleCod($role)
     {
         return $this->createQueryBuilder()
             ->field('people._id')->equals(new \MongoId($role->getId()))
