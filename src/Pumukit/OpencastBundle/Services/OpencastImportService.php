@@ -86,6 +86,10 @@ class OpencastImportService
                         $track->setAcodec($acodec);
                     }
 
+                    if (isset($mediaPackage["language"])) {
+                        $track->setLanguage(strtolower($mediaPackage["language"]));
+                    }
+
                     if( isset($mediaPackage["media"]["track"][$i]["video"])) {
                         $vcodec = $mediaPackage["media"]["track"][$i]["video"]["encoder"]["type"];
                         $track->setVcodec($vcodec);
