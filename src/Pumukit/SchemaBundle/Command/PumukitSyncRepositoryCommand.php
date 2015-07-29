@@ -39,9 +39,7 @@ EOT
         $tags = $tagRepo->findAll();
         foreach ($tags as $tag) {
             $mms = $mmRepo->findWithTag($tag);
-            if(count($mms) != 0){
-                $output->writeln($tag->getCod().": ".$tag->getNumberMultimediaObjects()." -> ".count($mms));
-            }
+            $output->writeln($tag->getCod().": ".count($mms));
             $tag->setNumberMultimediaObjects(count($mms));
             $dm->persist($tag);
         }
@@ -59,9 +57,7 @@ EOT
         $broadcasts = $broadcastRepo->findAll();
         foreach ($broadcasts as $broadcast) {
             $mms = $mmRepo->findByBroadcast($broadcast);
-            if(count($mms) != 0){
-                $output->writeln($broadcast->getName().": ".$broadcast->getNumberMultimediaObjects()." -> ".count($mms));
-            }
+            $output->writeln($broadcast->getName().": ".count($mms));
             $broadcast->setNumberMultimediaObjects(count($mms));
             $dm->persist($broadcast);
         }
@@ -79,9 +75,7 @@ EOT
         $roles = $rolesRepo->findAll();
         foreach ($roles as $role) {
             $persons = $mmRepo->findPersonsWithRoleCod($role);
-            if(count($persons) != 0){
-                $output->writeln($role->getName().": ".$role->getNumberPeopleInMultimediaObject()." -> ".count($persons));
-            }
+            $output->writeln($role->getName().": ".count($persons));
             $role->setNumberPeopleInMultimediaObject(count($persons));
             $dm->persist($role);
         }
