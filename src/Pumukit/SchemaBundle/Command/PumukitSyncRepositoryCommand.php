@@ -78,7 +78,7 @@ EOT
 
         $roles = $rolesRepo->findAll();
         foreach ($roles as $role) {
-            $persons = $mmRepo->findPersonWithRoleCod($role);
+            $persons = $mmRepo->findPersonsWithRoleCod($role);
             if(count($persons) != 0){
                 $output->writeln($role->getName().": ".$role->getNumberPeopleInMultimediaObject()." -> ".count($persons));
             }
