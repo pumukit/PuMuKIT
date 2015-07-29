@@ -14,6 +14,21 @@ parameters:
     debug_redirects:        false
     use_assetic_controller: true
 
+    pumukit2.info:
+        title:        "UCies.tv"
+        description:  "Cíes University TV Website"
+        keywords:     "webtv, Tv, Cies University, uvigo, uvigotv, pumukit"
+        email:        "tv@ucies.tv"
+        logo:         "/bundles/pumukitwebtv/images/UCies/logo.png"
+    pumukit2.locales:
+        - es
+        - en
+    pumukit2.uploads_dir: "%kernel.root_dir%/../web/uploads"
+    pumukit2.uploads_url: "/uploads"
+    pumukit2.inbox:   "%kernel.root_dir%/../web/storage/inbox"
+    pumukit2.tmp:     "%kernel.root_dir%/../web/storage/tmp"
+    pumukit2.delete_on_disk: true
+
     opencast_host:  ''
     opencast_username: ''
     opencast_password: ''
