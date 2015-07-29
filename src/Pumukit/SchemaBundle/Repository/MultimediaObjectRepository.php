@@ -116,6 +116,21 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
+     * Find persons in multimedia objects
+     * with given role
+     *
+     * @param string $roleCod
+     * @return ArrayCollection
+     */
+    public function findPersonWithRoleCod($role)
+    {
+        return $this->createQueryBuilder()
+            ->field('people._id')->equals(new \MongoId($role->getId()))
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
      * Find series by person id
      *
      * @param string $personId

@@ -27,6 +27,7 @@ EOT
     {
         $this->syncNumberMultimediaObjectsOnTags($input, $output);
         $this->syncNumberMultimediaObjectsOnBroadcast($input, $output);
+        $this->syncNumberMultimediaObjectsOnRoles($input, $output);
     }
 
     private function syncNumberMultimediaObjectsOnTags(InputInterface $input, OutputInterface $output)
@@ -34,8 +35,6 @@ EOT
         $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $tagRepo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:Tag");
         $mmRepo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:MultimediaObject");
-
-        $output->writeln("----------------------------TAGS-----------------------------");
 
         $tags = $tagRepo->findAll();
         foreach ($tags as $tag) {
@@ -55,7 +54,7 @@ EOT
         $broadcastRepo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:Broadcast");
         $mmRepo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:MultimediaObject");
     
-        $output->writeln("--------------------------BROADCAST--------------------------");
+        $output->writeln(" ");
 
         $broadcasts = $broadcastRepo->findAll();
         foreach ($broadcasts as $broadcast) {
@@ -67,5 +66,24 @@ EOT
             $dm->persist($broadcast);
         }
         $dm->flush(); 
+    }
+
+    private function syncNumberMultimediaObjectsOnRoles(InputInterface $input, OutputInterface $output)
+    {
+        $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+        $rolesRepo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:Role");
+        $mmRepo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:MultimediaObject");
+    
+        $output->writeln(" ");
+
+        $roles = $rolesRepo->findAll();
+        foreach ($roles as $role) {
+            $persons = $mmRepo->findPersonWithRoleCod($role);
+            if(count($persons) != 0){
+                $output->writeln($role->getName().": ".$role->getNumberPeopleInMultimediaObject()." -> ".count($persons));
+            }
+            $role->setNumberPeopleInMultimediaObject(count($persons));
+            $dm->persist($role);
+        }
     }
 }
