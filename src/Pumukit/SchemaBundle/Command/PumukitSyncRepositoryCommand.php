@@ -85,5 +85,6 @@ EOT
             $role->setNumberPeopleInMultimediaObject(count($persons));
             $dm->persist($role);
         }
+        $dm->flush();
     }
 }
