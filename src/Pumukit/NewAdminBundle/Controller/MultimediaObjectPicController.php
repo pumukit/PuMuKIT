@@ -75,7 +75,8 @@ class MultimediaObjectPicController extends Controller
                          'resource' => $multimediaObject,
                          'resource_name' => 'mms',
                          'uploaded' => 'failed',
-                         'message' => $e->getMessage()
+                         'message' => $e->getMessage(),
+                         'isBanner' => false
                          );
         }
         
@@ -83,7 +84,8 @@ class MultimediaObjectPicController extends Controller
                      'resource' => $multimediaObject,
                      'resource_name' => 'mms',
                      'uploaded' => 'success',
-                     'message' => 'New Pic added.'
+                     'message' => 'New Pic added.',
+                     'isBanner' => false
                      );
     }
   

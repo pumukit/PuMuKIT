@@ -74,3 +74,9 @@ pumukitnewadmin_seriespic_picstoaddlist:
     methods: [GET, POST]
     defaults:
         _controller: pumukitnewadmin.controller.seriespic:picstoaddlistAction
+
+pumukitnewadmin_seriespic_banner:
+    pattern: /{id}/banner
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.seriespic:bannerAction
