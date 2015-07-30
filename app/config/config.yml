@@ -94,3 +94,6 @@ pumukit_opencast:
     username: "%opencast_username%"
     password: "%opencast_password%"
     player: "%opencast_player%"
+    generate_sbs: "%opencast_generate_sbs%"
+    profile: "%opencast_profile%"
+    url_mapping: "%opencast_url_mapping%"
