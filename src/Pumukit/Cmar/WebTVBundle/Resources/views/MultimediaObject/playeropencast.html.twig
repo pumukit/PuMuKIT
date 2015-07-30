@@ -11,7 +11,7 @@
   <div class="mm_player">
     <div class="num_view">
       <div style="float:left">
-        {% trans %}Video language{% endtrans %}: <span class="num_view_number">{{ (multimediaObject.getProperty('opencastlanguage')?(mm.getProperty('opencastlanguage')|lower):'en')|language_name }}</span>
+        {% trans %}Video language{% endtrans %}: <span class="num_view_number">{{ (multimediaObject.getProperty('opencastlanguage')?(multimediaObject.getProperty('opencastlanguage')|lower):'en')|language_name }}</span>
       </div>
       {% trans %}Viewed{% endtrans %}:
       <span class="num_view_number">{{ multimediaObject.getNumview() }}</span>&nbsp;
