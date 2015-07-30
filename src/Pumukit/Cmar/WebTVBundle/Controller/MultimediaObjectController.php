@@ -27,6 +27,7 @@ class MultimediaObjectController extends Base
             $mobileDetectorService = $this->get('mobile_detect.mobile_detector');
             $mobileDevice = ($mobileDetectorService->isMobile($userAgent) || $mobileDetectorService->isTablet($userAgent));
             $isOldBrowser = $this->getIsOldBrowser($userAgent);
+
             return $this->render("PumukitCmarWebTVBundle:MultimediaObject:opencast.html.twig",
                                  array(
                                        "multimediaObject" => $multimediaObject,
@@ -35,6 +36,53 @@ class MultimediaObjectController extends Base
                                        )
                                  );
         }
+    }
+
+   /**
+    * @Route("/iframe/{id}", name="pumukit_webtv_multimediaobject_iframe")
+    * @Template()
+    */
+    public function iframeAction(MultimediaObject $multimediaObject, Request $request)
+    {
+        $response = $this->testBroadcast($multimediaObject, $request);
+        if($response instanceof Response) {
+            return $response;
+        }
+
+        if ($multimediaObject->getProperty('opencast')) {
+            $this->updateBreadcrumbs($multimediaObject);
+            $this->incNumView($multimediaObject);
+            $this->dispatch($multimediaObject);
+            $userAgent = $this->getRequest()->headers->get('user-agent');
+            $mobileDetectorService = $this->get('mobile_detect.mobile_detector');
+            $mobileDevice = ($mobileDetectorService->isMobile($userAgent) || $mobileDetectorService->isTablet($userAgent));
+            $isOldBrowser = $this->getIsOldBrowser($userAgent);
+            $track = $multimediaObject->getTrackWithTag('sbs');
+
+            return $this->render("PumukitCmarWebTVBundle:MultimediaObject:opencastiframe.html.twig",
+                                 array(
+                                       "multimediaObject" => $multimediaObject,
+                                       "track" => $track,
+                                       "is_old_browser" => $isOldBrowser,
+                                       "mobile_device" => $mobileDevice
+                                       )
+                                 );
+        }
+
+        $track = $request->query->has('track_id') ?
+          $multimediaObject->getTrackById($request->query->get('track_id')) :
+          $multimediaObject->getFilteredTrackWithTags(array('display'));
+
+        if (!$track)
+            throw $this->createNotFoundException();
+
+        $this->incNumView($multimediaObject, $track);
+        $this->dispatch($multimediaObject, $track);
+
+        return array('autostart' => $request->query->get('autostart', 'true'),
+                     'intro' => $this->getIntro($request->query->get('intro')),
+                     'multimediaObject' => $multimediaObject,
+                     'track' => $track);
     }
 
     private function getIsOldBrowser($userAgent)
