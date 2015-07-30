@@ -5,6 +5,7 @@ namespace Pumukit\LiveBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 use Pumukit\LiveBundle\Document\Live;
 
 class DefaultController extends Controller
@@ -88,5 +89,13 @@ class DefaultController extends Controller
       return array('live' => $live, 'intro' => $intro);
     }
 
-    
+    /**
+     * @Route("/live/jwplayer/error", name="pumukit_live_jwplayererror")
+     * @Template("PumukitLiveBundle:Default:jwplayererror.html.twig")
+     */
+    public function jwplayererrorAction(Request $request)
+    {
+        $errorMessage = $request->query->get('errorMessage');
+        return array('error' => $errorMessage);
+    }
 }

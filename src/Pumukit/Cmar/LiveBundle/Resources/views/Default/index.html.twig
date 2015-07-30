@@ -19,6 +19,7 @@
   <div style="float: right; width: 314px;">
     {% render(controller('PumukitCmarLiveBundle:Chat:show', {'channel' : live.id})) %}
   </div>
+  <div id="jwplayererror" style="width:100%; margin: 0px auto;"></div>
   {% if isIE and versionIE < 9.0 %}
   <div style="width:100%; margin: 0px auto; color:red;">{% trans %}JWPlayer does not support your browser version{% endtrans %} {{ isIE }}. {% trans %}Please use 9.0 or higher version or use another browser.{% endtrans %}</div>
   {% else %}
@@ -30,27 +31,41 @@
 
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function(){
-  jwplayer("directo-sbs").setup({
-      {% if live.broadcasting %}
-      {% if mobile_device %}
-      file: "{{ live.url|replace({'rtmp://':'http://', 'rtmpt://': 'http://'}) }}/{{ live.sourcename }}/playlist.m3u8",
-      {% else %}
-      file: "{{ live.url }}/{{ live.sourcename }}",
-      {% endif %}
-      {% else %}
-      playlist: "{{ path('pumukit_live_playlist_id', { 'id': live.id }) }}", 
-      {% endif %}
-      {% if isIE and versionIE == 10 %}
-      autostart: 'true',
-      {% else %}
-      autostart: true,
-      {% endif %}
-      width: "640",
-      height:  "540",
-      controlbar: "bottom",
-      logo: {hide: true},
-      analytics: {enabled: false}
-  });
+    if ("undefined" !== typeof window.ActiveXObject) {
+        var livePlayerInstance = jwplayer("directo-sbs").setup({
+            {% if live.broadcasting %}
+            {% if mobile_device %}
+            file: "{{ live.url|replace({'rtmp://':'http://', 'rtmpt://': 'http://'}) }}/{{ live.sourcename }}/playlist.m3u8",
+            {% else %}
+            file: "{{ live.url }}/{{ live.sourcename }}",
+            {% endif %}
+            {% else %}
+            playlist: "{{ path('pumukit_live_playlist_id', { 'id': live.id }) }}",
+            {% endif %}
+            {% if isIE and versionIE == 10 %}
+            autostart: 'true',
+            {% else %}
+            autostart: true,
+            {% endif %}
+            width: "640",
+            height:  "540",
+            controlbar: "bottom",
+            logo: {hide: true},
+            analytics: {enabled: false}
+        });
+
+        livePlayerInstance.onError(function(error){
+            // TODO: Check it works when 'ID not found on server' (Live channel with status LiveBroadcasting and channel not streaming)
+            var route = "{{ path('pumukit_live_jwplayererror', {'errorMessage': '___ERROR___'}) }}";
+            new Ajax.Updater('jwplayererror', route.replace('___ERROR___', error['message']));
+            livePlayerInstance.stop();
+        });
+    } else {
+        // TODO: Translate message here or in controller
+        {% set errorMessage = "Flash is not installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream." %}
+        var route = "{{ path('pumukit_live_jwplayererror', {'errorMessage': errorMessage}) }}";
+        new Ajax.Updater('jwplayererror', route);
+    }
 });
 
 </script>
