@@ -40,7 +40,11 @@ document.addEventListener('DOMContentLoaded', function(){
       {% else %}
       playlist: "{{ path('pumukit_live_playlist_id', { 'id': live.id }) }}", 
       {% endif %}
+      {% if isIE and versionIE == 10 %}
+      autostart: 'true',
+      {% else %}
       autostart: true,
+      {% endif %}
       width: "640",
       height:  "540",
       controlbar: "bottom",
