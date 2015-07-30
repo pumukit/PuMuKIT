@@ -43,7 +43,7 @@ class ChatController extends Controller
         $message = new Message();
         $message->setAuthor($request->get('name'));
         $message->setChannel($channel);
-        $message->setMessage($request->get('message'));
+        $message->setMessage(urldecode($request->get('message')));
         $message->setInsertDate(new \DateTime());
 
         try {
