@@ -27,7 +27,7 @@ EOT
     {
         $this->syncNumberMultimediaObjectsOnTags($input, $output);
         $this->syncNumberMultimediaObjectsOnBroadcast($input, $output);
-        $this->syncNumberMultimediaObjectsOnRoles($input, $output);
+        $this->syncNumberPeopleInMultimediaObjectsOnRoles($input, $output);
     }
 
     private function syncNumberMultimediaObjectsOnTags(InputInterface $input, OutputInterface $output)
@@ -64,7 +64,7 @@ EOT
         $dm->flush(); 
     }
 
-    private function syncNumberMultimediaObjectsOnRoles(InputInterface $input, OutputInterface $output)
+    private function syncNumberPeopleInMultimediaObjectsOnRoles(InputInterface $input, OutputInterface $output)
     {
         $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $rolesRepo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:Role");
@@ -74,9 +74,9 @@ EOT
 
         $roles = $rolesRepo->findAll();
         foreach ($roles as $role) {
-            $persons = $mmRepo->findPersonsWithRoleCod($role);
-            $output->writeln($role->getName().": ".count($persons));
-            $role->setNumberPeopleInMultimediaObject(count($persons));
+            $people = $mmRepo->countPeopleWithRoleCode($role->getCod());
+            $output->writeln($role->getName().": ".count($people));
+            $role->setNumberPeopleInMultimediaObject(count($people));
             $dm->persist($role);
         }
         $dm->flush();
