@@ -88,14 +88,4 @@ class DefaultController extends Controller
         null;
       return array('live' => $live, 'intro' => $intro);
     }
-
-    /**
-     * @Route("/live/jwplayer/error", name="pumukit_live_jwplayererror")
-     * @Template("PumukitLiveBundle:Default:jwplayererror.html.twig")
-     */
-    public function jwplayererrorAction(Request $request)
-    {
-        $errorMessage = $request->query->get('errorMessage');
-        return array('error' => $errorMessage);
-    }
 }
