@@ -44,6 +44,7 @@ class TagTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($tag_parent, $tag->getParent());
         $this->assertEquals($display, $tag->getDisplay());
         $this->assertEquals($properties, $tag->getProperties());
+        $this->assertEquals(null, $tag->getLockTime());
 
         $this->assertEquals('', $tag->getTitle('fr'));
         $this->assertEquals('', $tag->getDescription('fr'));
@@ -65,6 +66,10 @@ class TagTest extends \PHPUnit_Framework_TestCase
         $tag->setProperty('test', $testProperty);
         $this->assertEquals($youtubeProperty, $tag->getProperty('youtube'));
         $this->assertEquals($testProperty, $tag->getProperty('test'));
+
+        $testProperty = null;
+        $tag->setProperty('test', $testProperty);
+        $this->assertEquals($testProperty, $tag->getProperty('test'));
     }
 
     public function testNumberMultimediaObjects()
@@ -83,5 +88,9 @@ class TagTest extends \PHPUnit_Framework_TestCase
 
         $tag->decreaseNumberMultimediaObjects();
         $this->assertEquals(0, $tag->getNumberMultimediaObjects());
+
+        $count = 5;
+        $tag->setNumberMultimediaObjects($count);
+        $this->assertEquals(5, $tag->getNumberMultimediaObjects());
     }
 }
