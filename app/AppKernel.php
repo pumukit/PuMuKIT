@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
             new Sylius\Bundle\ResourceBundle\SyliusResourceBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new SunCat\MobileDetectBundle\MobileDetectBundle(),
             new Pumukit\EncoderBundle\PumukitEncoderBundle(),
             new Pumukit\InspectionBundle\PumukitInspectionBundle(),
             new Pumukit\NewAdminBundle\PumukitNewAdminBundle(),

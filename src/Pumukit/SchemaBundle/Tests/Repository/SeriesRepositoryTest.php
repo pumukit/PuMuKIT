@@ -915,6 +915,28 @@ class SeriesRepositoryTest extends WebTestCase
         $this->assertEquals(1, count($this->repo->findWithTagAndSeriesType($tag3, $seriesType2)));
     }
 
+    public function testFindOneBySeriesProperty()
+    {
+        $series1 = $this->createSeries('Series 1');
+        $series1->setProperty('dataexample', "title1");
+
+        $series2 = $this->createSeries('Series 2');
+        $series2->setProperty('dataexample', "title2");
+
+        $series3 = $this->createSeries('Series 3');
+        $series3->setProperty('dataexample', "title3");
+
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->persist($series3);
+        $this->dm->flush();
+
+        $this->assertEquals(1, count($this->repo->findOneBySeriesProperty('dataexample', $series1->getProperty('dataexample'))));
+        $this->assertEquals(0, count($this->repo->findOneBySeriesProperty('data', $series2->getProperty('dataexample'))));
+        $this->assertEquals(0, count($this->repo->findOneBySeriesProperty('dataexample', $series3->getProperty('data'))));
+        $this->assertEquals(1, count($this->repo->findOneBySeriesProperty('dataexample', $series3->getProperty('dataexample'))));
+    }
+
     private function createSeriesType($name)
     {
         $description = 'description';

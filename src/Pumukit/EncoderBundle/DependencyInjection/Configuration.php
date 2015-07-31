@@ -68,7 +68,7 @@ class Configuration implements ConfigurationInterface
                             ->booleanNode('audio')->defaultValue(false)
                                 ->info('The track is only audio')->end()
                             ->scalarNode('bat')->isRequired()->cannotBeEmpty()
-                                ->info('Command line to execute transcodification of track')->end()
+                                ->info('Command line to execute transcodification of track. Available variables: {{ input }}, {{ output }}, {{ tmpfile1 }}, {{ tmpfile2 }}, ... {{ tmpfile9 }}.')->end()
                             ->scalarNode('file_cfg')->info('Configuration file')->end()
                             ->arrayNode('streamserver')
                                 ->isRequired()->cannotBeEmpty()

@@ -316,7 +316,12 @@ class FactoryService
         $new->setI18nKeyword($src->getI18nKeyword());
         $new->setCopyright($src->getCopyright());
         $new->setLicense($src->getLicense());
-        $new->setProperties($src->getProperties());
+
+        // NOTE: #7408 Specify which properties are clonable
+        $new->setProperty("subseries", $src->getProperty("subseries"));
+        $new->setProperty("subseriestitle", $src->getProperty("subseriestitle"));
+
+        $new->setProperty("clonedfrom", $src->getId());
 
         foreach ($src->getTags() as $tag) {
           $tagAdded = $this->tagService->addTagToMultimediaObject($new, $tag->getId(), false);

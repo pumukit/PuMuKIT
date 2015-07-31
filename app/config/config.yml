@@ -81,25 +81,19 @@ fos_user:
     firewall_name: main
     user_class: Pumukit\SchemaBundle\Document\User
 
-# Pumukit2 parameters
-parameters:
-    pumukit2.info:
-        title:        "UCies.tv"
-        description:  "Cíes University TV Website"
-        keywords:     "webtv, Tv, Cies University, uvigo, uvigotv, pumukit"
-        email:        "tv@ucies.tv"
-        logo:         "/bundles/pumukitwebtv/images/UCies/logo.png"
-    pumukit2.locales:
-        - es
-        - en
-    pumukit2.uploads_dir: "%kernel.root_dir%/../web/uploads"
-    pumukit2.uploads_url: "/uploads"
-    pumukit2.inbox:   "%kernel.root_dir%/../web/storage/inbox"
-    pumukit2.tmp:     "%kernel.root_dir%/../web/storage/tmp"
-    pumukit2.delete_on_disk: true
+# MobileDetectBundle Configuration
+mobile_detect:
+    redirect:
+        mobile: ~
+        tablet: ~
+    switch_device_view: ~
 
+# Pumukit Opencast Configuration
 pumukit_opencast:
     host: "%opencast_host%"
     username: "%opencast_username%"
     password: "%opencast_password%"
     player: "%opencast_player%"
+    generate_sbs: "%opencast_generate_sbs%"
+    profile: "%opencast_profile%"
+    url_mapping: "%opencast_url_mapping%"

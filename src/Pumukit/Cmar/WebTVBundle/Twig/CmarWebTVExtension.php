@@ -6,19 +6,23 @@ use Symfony\Component\Intl\Intl;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\Tag;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class CmarWebTVExtension extends \Twig_Extension
 {
     private $dm;
     private $languages;
+    private $translator;
 
     /**
      * Constructor
      */
-    public function __construct(DocumentManager $documentManager)
+    public function __construct(DocumentManager $documentManager, TranslatorInterface $translator)
     {
         $this->dm = $documentManager;
         $this->languages = Intl::getLanguageBundle()->getLanguageNames();
+        $this->translator = $translator;
     }
   
     /**
@@ -59,7 +63,15 @@ class CmarWebTVExtension extends \Twig_Extension
      */
     public function getLanguageName($code)
     {
-        return ucfirst($this->languages[$code]);
+        $addonLanguages = CustomLanguageType::$addonLanguages;
+
+        if (isset($this->languages[$code])) {
+            return ucfirst($this->languages[$code]);
+        } elseif (isset($addonLanguages[$code])) {
+            return ucfirst($this->translator->trans($addonLanguages[$code]));
+        }
+
+        return $code;
     }
 
     /**

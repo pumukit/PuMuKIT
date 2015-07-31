@@ -41,7 +41,9 @@ class PersonType extends AbstractType
                         'required' => false,
                         'label' => $this->translator->trans('Bio', array(), null, $this->locale)))
             ->add('email', 'email',
-                  array('label' => $this->translator->trans('Email', array(), null, $this->locale)))
+                  array(
+                        'required' => false,
+                        'label' => $this->translator->trans('Email', array(), null, $this->locale)))
             ->add('web', 'url',
                   array(
                         'required' => false,

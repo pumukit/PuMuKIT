@@ -5,6 +5,7 @@ namespace Pumukit\LiveBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 use Pumukit\LiveBundle\Document\Live;
 
 class DefaultController extends Controller
@@ -18,12 +19,19 @@ class DefaultController extends Controller
         $this->updateBreadcrumbs($live->getName(), "pumukit_live_id", array("id" => $live->getId()));
 
         $userAgent = $this->getRequest()->headers->get('user-agent');
-        $technologyService = $this->get('pumukit_web_tv.technology');
-        $mobileDevice = $technologyService->isMobileDevice($userAgent);
+        $mobileDetectorService = $this->get('mobile_detect.mobile_detector');
+        $mobileDevice = ($mobileDetectorService->isMobile($userAgent) || $mobileDetectorService->isTablet($userAgent));
+        $isIE = $mobileDetectorService->version('IE');
+        $versionIE = 11.0;
+        if ($isIE) {
+            $versionIE = floatval($isIE);
+        }
 
         return array(
                      'live' => $live,
-                     'mobile_device' => $mobileDevice
+                     'mobile_device' => $mobileDevice,
+                     'isIE' => $isIE,
+                     'versionIE' => $versionIE
                      );
     }
 
@@ -45,12 +53,19 @@ class DefaultController extends Controller
         $this->updateBreadcrumbs($live->getName(), "pumukit_live", array("id" => $live->getId()));
 
         $userAgent = $this->getRequest()->headers->get('user-agent');
-        $technologyService = $this->get('pumukit_web_tv.technology');
-        $mobileDevice = $technologyService->isMobileDevice($userAgent);
+        $mobileDetectorService = $this->get('mobile_detect.mobile_detector');
+        $mobileDevice = ($mobileDetectorService->isMobile($userAgent) || $mobileDetectorService->isTablet($userAgent));
+        $isIE = $mobileDetectorService->version('IE');
+        $versionIE = 11.0;
+        if ($isIE) {
+            $versionIE = floatval($isIE);
+        }
 
         return array(
                      'live' => $live,
-                     'mobile_device' => $mobileDevice
+                     'mobile_device' => $mobileDevice,
+                     'isIE' => $isIE,
+                     'versionIE' => $versionIE
                      );
     }
 
@@ -73,6 +88,4 @@ class DefaultController extends Controller
         null;
       return array('live' => $live, 'intro' => $intro);
     }
-
-    
 }
