@@ -340,7 +340,7 @@ class JobService
             $job->setTimeend(new \DateTime('now'));
             $job->setStatus(Job::STATUS_ERROR);
 
-            $job->setOutput($e->getMessage());
+            $job->appendOutput($e->getMessage());
             $this->logger->addError('[execute] error job output: '.$e->getMessage());
             $this->dispatch(false, $job);
         }
