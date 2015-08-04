@@ -14,13 +14,11 @@ class LocalExecutor
       $process->setIdleTimeout(null);
       $process->run();
 
-      // executes after the command finishes
       if (!$process->isSuccessful()) {
           throw new \RuntimeException($process->getErrorOutput());
       }
 
-      //TODO $process->getErrorOutput();
-
-      return $process->getOutput();
+      //TODO mix strerr and strout.
+      return sprintf("%s\n%s", $process->getOutput(), $process->getErrorOutput());
   }
 }
