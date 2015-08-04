@@ -585,7 +585,15 @@ class JobService
 
     private function getProfile($job)
     {
-        return $this->profileService->getProfile($job->getProfile());
+        $profile = $this->profileService->getProfile($job->getProfile());
+
+        if(!$profile) {
+          $errorMsg = sprintf("[createTrackWithJob] Profile %s not found when the job %s creates the track", $job->getProfile(), $job->getId());
+          $this->logger->addError($errorMsg);
+          throw new \Exception($errorMsg);
+        }
+
+        return $profile;
     }
 
     private function getMultimediaObject($job)
@@ -593,7 +601,7 @@ class JobService
         $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
         
         if(!$multimediaObject) {
-          $errorMsg = sprintf("[createTrackWithJob] Multimedia object %s not found when the job $s creates the track", $job->getId(), $job->getMmId());
+          $errorMsg = sprintf("[createTrackWithJob] Multimedia object %s not found when the job %s creates the track", $job->getMmId(), $job->getId());
           $this->logger->addError($errorMsg);
           throw new \Exception($errorMsg);
         }
