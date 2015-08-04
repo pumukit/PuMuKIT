@@ -899,8 +899,8 @@ class MultimediaObject
      */
     public function containsAllTagsWithCodes(array $tagCodes)
     {
-        foreach ($tagCodes as $tag) {
-            if (!($this->containsTagWithCod($tag))) {
+        foreach ($tagCodes as $tagCode) {
+            if (!($this->containsTagWithCod($tagCode))) {
                 return false;
             }
         }
@@ -937,8 +937,8 @@ class MultimediaObject
      */
     public function containsAnyTagWithCodes(array $tagCodes)
     {
-        foreach ($tagCodes as $tag) {
-            if ($this->containsTagWithCod($tag)) {
+        foreach ($tagCodes as $tagCode) {
+            if ($this->containsTagWithCod($tagCode)) {
                 return true;
             }
         }
