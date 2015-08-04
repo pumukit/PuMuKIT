@@ -116,6 +116,46 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
+     * Count people in multimedia objects
+     * with given role
+     *
+     * @param string $roleCod
+     * @return ArrayCollection
+     */
+    public function countPeopleWithRoleCode($roleCode)
+    {
+        $dm = $this->getDocumentManager();
+        $collection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+
+        $pipeline = array(
+                          array('$match' => array('people.cod' => "$roleCode")),
+                          array('$project' => array('_id' => 0, 'people.cod' => 1, 'people.people._id' => 1)),
+                          array('$unwind' => '$people')
+                          );
+
+        $aggregation = $collection->aggregate($pipeline);
+
+        $people = array();
+
+        foreach ($aggregation as $element) {
+            if (null !== $element['people']) {
+              if ((null !== $element['people']['cod']) && (null !== $element['people']['people'])) {
+                    if (0 === strpos($element['people']['cod'], $roleCode)) {
+                        foreach ($element['people']['people'] as $person) {
+                            if (!in_array($person['_id']->{'$id'}, $people)) {
+                                $people[] = $person['_id']->{'$id'};
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $people;
+
+    }
+
+    /**
      * Find series by person id
      *
      * @param string $personId

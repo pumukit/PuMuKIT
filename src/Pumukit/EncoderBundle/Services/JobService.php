@@ -379,25 +379,31 @@ class JobService
 
         $vars = array();
 
+        $vars['tracks'] = array();
         foreach ($mmobj->getTracks() as $track) {
             foreach($track->getTags() as $tag) {
-                $vars['{{' . $tag . '}}'] = $track->getPath();
+                $vars['tracks'][$tag] = $track->getPath();
             }
         }
+
+        $vars['properties'] = $mmobj->getProperties();
         
-        $vars['{{input}}'] = $job->getPathIni();
-        $vars['{{output}}'] = $job->getPathEnd();
+        $vars['input'] = $job->getPathIni();
+        $vars['output'] = $job->getPathEnd();
 
         foreach(range(1, 9) as $identifier){
-            $vars['{{temfile' . $identifier. '}}'] = $this->tmp_path . '/' . rand();
+            $vars['temfile' . $identifier] = $this->tmp_path . '/' . rand();
         }
 
-        $commandLine = str_replace(array_keys($vars), array_values($vars), $profile['bat']);
-        $this->logger->addInfo('[renderBat] CommandLine: '.$commandLine);
+        $loader = new \Twig_Loader_Array(array('bat' => $profile['bat']));
+        $twig = new \Twig_Environment($loader);
+
+        $commandLine = $twig->render('bat', $vars);
+        $this->logger->addInfo('[renderBat] CommandLine: ' . $commandLine);
     
         $cpu = $this->cpuService->getCpuByName($job->getCpu());
         if(CpuService::TYPE_WINDOWS === $cpu['type']){
-            // TODO - PATH UNIX TRANSCODER and PATH WIN TRANSCODER
+            //TODO - PATH UNIX TRANSCODER and PATH WIN TRANSCODER
         }
         
         return $commandLine;

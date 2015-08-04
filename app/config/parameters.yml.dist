@@ -33,3 +33,6 @@ parameters:
     opencast_username: ''
     opencast_password: ''
     opencast_player: ''
+    opencast_generate_sbs: false
+    opencast_profile: sbs
+    opencast_url_mapping: {}

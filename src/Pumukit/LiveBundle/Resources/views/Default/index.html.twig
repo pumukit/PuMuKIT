@@ -9,32 +9,6 @@
 
 {% block body_without_bar %}
   <h1>{{ live.name()|default("No title"|trans) }}</h1>
-  <div id="directo-sbs" style="width:100%; margin: 0px auto;"></div>
-
-<script type="text/javascript">
-document.addEventListener('DOMContentLoaded', function(){
-  jwplayer("directo-sbs").setup({
-      {% if live.broadcasting %}
-      {% if mobile_device %}
-      file: "{{ live.url|replace({'rtmp://':'http://', 'rtmpt://': 'http://'}) }}/{{ live.sourcename }}/playlist.m3u8",
-      {% else %}
-      file: "{{ live.url }}/{{ live.sourcename }}",
-      {% endif %}
-      {% else %}
-      playlist: "{{ path('pumukit_live_playlist_id', { 'id': live.id }) }}", 
-      {% endif %}
-      autostart: true,
-      width: "100%",
-      stretching: "exactfit",
-      aspectratio: "16:9",
-      logo: {hide: true},
-      analytics: {enabled: false},
-      androidhls: true
-  });
-});
-
-</script>
-
-{% include('PumukitLiveBundle:Default:info.html.twig') %}
-
+  {% include('PumukitLiveBundle:Default:liveplayer.html.twig') with {stretching: 'exactfit', aspectratio: '16:9'} %}
+  {% include('PumukitLiveBundle:Default:info.html.twig') %}
 {% endblock %}

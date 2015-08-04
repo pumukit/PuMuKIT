@@ -13,13 +13,16 @@ class SeriesPicService
 {
     private $dm;
     private $repoMmobj;
+    private $locales;
     private $targetPath;
     private $targetUrl;
     private $forceDeleteOnDisk;
+    private $defaultBanner = "<a href=\"#\"><img  style=\"width:100%\" src=\"___banner_url___\" border=\"0\"/></a>";
 
-    public function __construct(DocumentManager $documentManager, $targetPath, $targetUrl, $forceDeleteOnDisk=true)
+    public function __construct(DocumentManager $documentManager, $locales=array(), $targetPath, $targetUrl, $forceDeleteOnDisk=true)
     {
         $this->dm = $documentManager;
+        $this->locales = $locales;
         $this->targetPath = realpath($targetPath);
         if (!$this->targetPath){
             throw new \InvalidArgumentException("The path '".$targetPath."' for storing Pics does not exist.");
@@ -40,11 +43,16 @@ class SeriesPicService
   /**
    * Set a pic from an url into the series
    */
-  public function addPicUrl(Series $series, $picUrl)
+  public function addPicUrl(Series $series, $picUrl, $isBanner=false, $bannerTargetUrl="")
   {
       $pic = new Pic();
       $pic->setUrl($picUrl);
-
+      if ($isBanner) {
+          $pic->setHide(true);
+          $pic->addTag('banner');
+          $series = $this->addBanner($series, $pic->getUrl(), $bannerTargetUrl);
+      }
+      // TODO: add pic the latest if it is banner
       $series->addPic($pic);
       $this->dm->persist($series);
       $this->dm->flush();
@@ -55,7 +63,7 @@ class SeriesPicService
   /**
    * Set a pic from an url into the series
    */
-  public function addPicFile(Series $series, UploadedFile $picFile)
+  public function addPicFile(Series $series, UploadedFile $picFile, $isBanner=false, $bannerTargetUrl="")
   {
       if(UPLOAD_ERR_OK != $picFile->getError()) {
           throw new \Exception($picFile->getErrorMessage());
@@ -70,7 +78,12 @@ class SeriesPicService
       $pic = new Pic();
       $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
       $pic->setPath($path);
-
+      if ($isBanner) {
+          $pic->setHide(true);
+          $pic->addTag('banner');
+          $series = $this->addBanner($series, $pic->getUrl(), $bannerTargetUrl);
+      }
+      // TODO: add pic the latest if it is banner
       $series->addPic($pic);
       $this->dm->persist($series);
       $this->dm->flush();
@@ -85,6 +98,14 @@ class SeriesPicService
     {
         $pic = $series->getPicById($picId);
         $picPath = $pic->getPath();
+        $picUrl = $pic->getUrl();
+        if (in_array('banner', $pic->getTags())) {
+            foreach ($this->locales as $locale) {
+                if (0 < strpos($series->getHeader($locale), $picUrl)) {
+                    $series->setHeader('', $locale);
+                }
+            }
+        }
 
         $series->removePicById($picId);
         $this->dm->persist($series);
@@ -118,5 +139,20 @@ class SeriesPicService
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
+    }
+
+    private function addBanner(Series $series, $picUrl="", $bannerTargetUrl="")
+    {
+        if ($picUrl) {
+            $banner = str_replace('___banner_url___', $picUrl, $this->defaultBanner);
+            if ($bannerTargetUrl) {
+                $banner = str_replace('#', $bannerTargetUrl, $banner);
+            }
+            foreach ($this->locales as $locale){
+                $series->setHeader($banner, $locale);
+            }
+        }
+
+        return $series;
     }
 }

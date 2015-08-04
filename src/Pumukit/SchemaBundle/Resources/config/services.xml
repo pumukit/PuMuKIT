@@ -30,6 +30,7 @@
 
         <service id="pumukitschema.seriespic" class="Pumukit\SchemaBundle\Services\SeriesPicService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument>%pumukit2.locales%</argument>
 	        <argument>%pumukit2.uploads_dir%/pic/</argument>
 	        <argument>%pumukit2.uploads_url%/pic</argument>
             <argument>%pumukit2.delete_on_disk%</argument>

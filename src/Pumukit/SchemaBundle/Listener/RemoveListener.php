@@ -26,7 +26,7 @@ class RemoveListener
         if ($document instanceof Series) {
             $seriesPicService = $this->container->get("pumukitschema.seriespic");
             foreach ($document->getPics() as $pic) {
-                $document = $seriesPicService->removePicFromMultimediaObject($document, $pic->getId());
+                $document = $seriesPicService->removePicFromSeries($document, $pic->getId());
             }
         }
 

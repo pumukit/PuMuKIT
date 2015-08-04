@@ -312,6 +312,14 @@ class Role
     }
 
     /**
+     * Set number_people_in_multimedia_object
+     */
+    public function setNumberPeopleInMultimediaObject($number_people_in_multimedia_object)
+    {
+        $this->number_people_in_multimedia_object = $number_people_in_multimedia_object;
+    }
+
+    /**
      * Clone Role
      *
      * @return Role
