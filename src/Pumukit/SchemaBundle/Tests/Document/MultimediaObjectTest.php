@@ -148,6 +148,9 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $pic1 = new Pic();
         $pic2 = new Pic();
         $pic3 = new Pic();
+        $pic4 = new Pic();
+
+        $pic4->setUrl("/url/of/pic4");
 
         $this->assertEquals(0, count($mm->getPics()));
 
@@ -167,6 +170,10 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
 
         $picsArray = array(0 => $pic1, 2 => $pic3);
         $this->assertEquals($picsArray, $mm->getPics()->toArray());
+        $this->assertEquals($pic1, $mm->getPic());
+
+        $mm->addPic($pic4);
+        $this->assertEquals("/url/of/pic4", $mm->getFirstUrlPic());
     }
 
     public function testMaterialsInMultimediaObject()
@@ -283,6 +290,15 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, count($mm->getFilteredTracksWithTags(array(), array(), array('flv', 'master'))));
         $this->assertEquals(5, count($mm->getFilteredTracksWithTags(array(), array(), array(), array('flv', 'master'))));
         $this->assertEquals(1, count($mm->getFilteredTracksWithTags(array('mosca', 'old'), array(), array(), array('old'))));
+    
+        $this->assertEquals(1, count($mm->getFilteredTrackWithTags()));
+        $this->assertEquals(1, count($mm->getFilteredTrackWithTags(array('master'))));
+        $this->assertEquals(1, count($mm->getFilteredTrackWithTags(array('master'), array('mosca', 'old'))));
+        $this->assertEquals(0, count($mm->getFilteredTrackWithTags(array(), array('mosca', 'old'), array('master'))));
+        $this->assertEquals(1, count($mm->getFilteredTrackWithTags(array(), array(), array('flv'))));
+        $this->assertEquals(0, count($mm->getFilteredTrackWithTags(array(), array(), array('flv', 'master'))));
+        $this->assertEquals(1, count($mm->getFilteredTrackWithTags(array(), array(), array(), array('flv', 'master'))));
+        $this->assertEquals(1, count($mm->getFilteredTrackWithTags(array('mosca', 'old'), array(), array(), array('old'))));
     }
 
     public function testGetPicsWithTag()
@@ -568,18 +584,18 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($mm->containsAllTags(array($tag0, $tag2)));
         $this->assertFalse($mm->containsAllTags(array($tag0, $tag1, $tag2, $tag3)));
 
-        //containsAllTagsWithCod and containsAnyTagWithCod
+        //containsAllTagsWithCodes and containsAnyTagWithCodes
         $mm->removeTag($tag1);
         $mm->removeTag($tag2);
         $mm->removeTag($tag3);
         $mm->addTag($tag1);
         $mm->addTag($tag4);
-        $this->assertTrue($mm->containsAllTagsWithCod(array($tag1, $tag4)));
+        $this->assertTrue($mm->containsAllTagsWithCodes(array($tag1->getCod(), $tag4->getCod())));
         $mm->removeTag($tag4);
-        $this->assertFalse($mm->containsAllTagsWithCod(array($tag4)));
-        $this->assertTrue($mm->containsAllTagsWithCod(array($tag1)));
-        $this->assertFalse($mm->containsAnyTagWithCod(array($tag4)));
-        $this->assertTrue($mm->containsAnyTagWithCod(array($tag1)));
+        $this->assertFalse($mm->containsAllTagsWithCodes(array($tag4->getCod())));
+        $this->assertTrue($mm->containsAllTagsWithCodes(array($tag1->getCod())));
+        $this->assertFalse($mm->containsAnyTagWithCodes(array($tag4->getCod())));
+        $this->assertTrue($mm->containsAnyTagWithCodes(array($tag1->getCod())));
     }
 
     public function testIsOnlyAudio()
