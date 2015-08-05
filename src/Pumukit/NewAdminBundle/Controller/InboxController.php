@@ -18,7 +18,7 @@ class InboxController extends Controller
     {
         $dir = $request->query->get("dir", "");
         $type = $request->query->get("type", "file");
-        $baseDir = $this->container->getParameter('pumukit2.inbox');
+        $baseDir = realpath($this->container->getParameter('pumukit2.inbox'));
 
         if(0 !== strpos($dir, $baseDir)) {
             throw $this->createAccessDeniedException();
@@ -60,7 +60,7 @@ class InboxController extends Controller
             return $this->render('@PumukitNewAdmin/Inbox/form_noconf.html.twig');
         }
         
-        $dir = $this->container->getParameter('pumukit2.inbox');
+        $dir = realpath($this->container->getParameter('pumukit2.inbox'));
 
         if (!file_exists($dir)) {
             return $this->render('@PumukitNewAdmin/Inbox/form_nofile.html.twig', array('dir' => $dir));
