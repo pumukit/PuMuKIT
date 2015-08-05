@@ -104,6 +104,25 @@ class TrackTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($track->containsAllTags(array('t0', 't1', 't2', 't3')));
     }
 
+    public function testIsOnlyAudio()
+    {
+        $t1 = new Track();
+        $t1->setOnlyAudio(true);
+        
+        $this->assertTrue($t1->isOnlyAudio());
+        $t1->setOnlyAudio(false);
+        $this->assertFalse($t1->isOnlyAudio());
+    }
+
+    public function testIncNumview()
+    {
+        $t1 = new Track();
+        $t1->setNumview(5);
+        $t1->incNumview();
+
+        $this->assertEquals(6, $t1->getNumview());
+    }
+
     /*public function testRef()
     {
         $t1 = new Track();
