@@ -3,7 +3,6 @@
 namespace Pumukit\SchemaBundle\Tests\Document;
 
 use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\SchemaBundle\Document\Tag;
 
 class TrackTest extends \PHPUnit_Framework_TestCase
 {
