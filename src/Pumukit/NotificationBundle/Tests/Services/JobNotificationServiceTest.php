@@ -33,8 +33,6 @@ class JobNotificationServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $this->jobNotificationService = $this->container
-          ->get('pumukit_notification.listener');
         $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')->remove(array());
         $this->dm->flush();
     }
@@ -42,6 +40,9 @@ class JobNotificationServiceTest extends WebTestCase
     public function testOnJobSuccess()
     {
         $this->markTestSkipped('S');
+
+        $this->jobNotificationService = $this->container
+          ->get('pumukit_notification.listener');
 
         $multimediaObject= $this->createNewMultimediaObjectWithTrack();
 
@@ -61,6 +62,9 @@ class JobNotificationServiceTest extends WebTestCase
     public function testOnJobError()
     {
         $this->markTestSkipped('S');
+
+        $this->jobNotificationService = $this->container
+          ->get('pumukit_notification.listener');
 
         $multimediaObject= $this->createNewMultimediaObjectWithTrack();
 
