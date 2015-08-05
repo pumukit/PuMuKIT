@@ -5,6 +5,7 @@ namespace Pumukit\WorkflowBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
 use Pumukit\EncoderBundle\Services\JobService;
+use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -14,12 +15,14 @@ class WorkflowService
     private $dm;
     private $logger;
     private $jobService;
+    private $profileService;
 
-    public function __construct(DocumentManager $documentManager, JobService $jobService, LoggerInterface $logger) 
+    public function __construct(DocumentManager $documentManager, JobService $jobService, ProfileService $profileService, LoggerInterface $logger) 
     {
         $this->dm = $documentManager;
         $this->jobService = $jobService;
         $this->logger = $logger;
+        $this->profiles = $profileService->getProfiles();
     }
 
 
@@ -43,15 +46,25 @@ class WorkflowService
         $master = $multimediaObject->getTrackWithTag("master");
         $publicTracks = $multimediaObject->getTracksWithTag("display");
 
-        if(($multimediaObject->containsTagWithCod("PUCHWEBTV"))
-           && ($master)
-           && (!$publicTracks)) {
+        $repository = $this->dm->getRepository('PumukitSchemaBundle:Tag');
+        $tag = $repository->findOneByCod("PUBCHANNELS");
+        if(!$tag) return;
 
-            $targetProfile = $multimediaObject->isOnlyAudio() ? "audio_aac" : "video_h264";
-            $this->logger->info(sprintf("WorkflowService creates new job (%s) for multimedia object %s", $targetProfile, $multimediaObject->getId()));
-            $this->jobService->addUniqueJob($master->getPath(), $targetProfile, 2, $multimediaObject, $master->getLanguage());
+        foreach($tag->getChildren() as $pubchannel) {
+            if(($multimediaObject->containsTag($pubchannel))
+               && ($master)
+               && (!$publicTracks)) {
+
+                foreach($this->profiles as $targetProfile => $profile) {
+                    if((in_array($pubchannel->getCod(), array_filter(preg_split('/[,\s]+/', $profile['target']))))
+                       && ($multimediaObject->isOnlyAudio() == $profile['audio'])) {
+
+                        $this->logger->info(sprintf("WorkflowService creates new job (%s) for multimedia object %s", $targetProfile, $multimediaObject->getId()));
+                        $this->jobService->addUniqueJob($master->getPath(), $targetProfile, 2, $multimediaObject, $master->getLanguage());
+                    }
+                }
+            }
         }
-
     }
 }
 
