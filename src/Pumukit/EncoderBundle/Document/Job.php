@@ -722,6 +722,16 @@ class Job
     }
 
     /**
+     * Append output
+     *
+     * @param string $output
+     */
+    public function appendOutput($output)
+    {
+        $this->output .= $output;
+    }
+
+    /**
      * Get output
      *
      * @return string

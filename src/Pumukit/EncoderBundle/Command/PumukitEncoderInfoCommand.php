@@ -31,6 +31,9 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+      $jobService = $this->getContainer()->get('pumukitencoder.job');
+      $jobService->executeNextJob();
+
       if ($id = $input->getArgument('id')){
         $this->showInfo($input->getArgument('id'), $output);
       }else{
