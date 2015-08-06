@@ -56,9 +56,13 @@
     </div>
     {% if not resource.isCollection() %}
     <div style="color:#A2A2A2; position: absolute; left:160px; bottom: 32px; ">
-      {% set master_track = resource.getTrackWithTag('master') %}
-      {% if master_track %}
-        {{ master_track.getLanguage()|language_name }}
+      {% if resource.getProperty('opencastlanguage') %}
+        {{ resource.getProperty('opencastlanguage')|lower|language_name }}
+      {% else %}
+        {% set master_track = resource.getTrackWithTag('master') %}
+        {% if master_track %}
+          {{ master_track.getLanguage()|language_name }}
+        {% endif %}
       {% endif %}
     </div>
     {% endif %}
