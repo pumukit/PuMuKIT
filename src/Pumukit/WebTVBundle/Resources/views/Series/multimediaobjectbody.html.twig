@@ -1,6 +1,6 @@
 <a name="{{ mm.id }}"></a>
 <!-- DATE -->
-{% if (("date_all" == template) or (((mm.getRecordDate()|date('d/m/Y')) is not empty) and ((last_date|date('Y-m-d')) != (mm.getRecordDate()|date('Y-m-d'))))) %}
+{% if (("date_all" == template) or ((template not in ["subserial", "multisubserial"]) and ((mm.getRecordDate()|date('d/m/Y')) is not empty) and ((last_date|date('Y-m-d')) != (mm.getRecordDate()|date('Y-m-d'))))) %}
 <div class="date">
   {% trans %}Date of holding{% endtrans %}: {{ mm.getRecordDate()|date('d/m/Y') }}
 </div>
