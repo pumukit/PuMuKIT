@@ -40,10 +40,14 @@ class MultimediaObjectController extends Controller
         return $response;
       }
 
-      $this->updateBreadcrumbs($multimediaObject);
       $this->incNumView($multimediaObject, $track);
       $this->dispatch($multimediaObject, $track);      
-        
+
+      if($track->containsTag("download")) {       
+          return $this->redirect($track->getUrl());
+      }
+
+      $this->updateBreadcrumbs($multimediaObject);        
       return array('autostart' => $request->query->get('autostart', 'true'),
                    'intro' => $this->getIntro($request->query->get('intro')),
                    'multimediaObject' => $multimediaObject,
@@ -72,6 +76,10 @@ class MultimediaObjectController extends Controller
         $this->incNumView($multimediaObject, $track);
         $this->dispatch($multimediaObject, $track);
 
+        if($track->containsTag("download")) {       
+            return $this->redirect($track->getUrl());
+        }
+
         return array('autostart' => $request->query->get('autostart', 'true'),
                      'intro' => $this->getIntro($request->query->get('intro')),
                      'multimediaObject' => $multimediaObject,
@@ -94,10 +102,14 @@ class MultimediaObjectController extends Controller
         $multimediaObject->getTrackById($request->query->get('track_id')) :
         $multimediaObject->getTrackWithTag('display');
 
-      $this->updateBreadcrumbs($multimediaObject);
       $this->incNumView($multimediaObject, $track);
       $this->dispatch($multimediaObject, $track);            
 
+      if($track->containsTag("download")) {       
+          return $this->redirect($track->getUrl());
+      }
+
+      $this->updateBreadcrumbs($multimediaObject);
       return array('autostart' => $request->query->get('autostart', 'true'),
                    'intro' => $this->getIntro($request->query->get('intro')),
                    'multimediaObject' => $multimediaObject, 

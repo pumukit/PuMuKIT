@@ -55,6 +55,7 @@ pumukit_encoder:
             wizard: true
             master: false
             tags: html5
+            target: PUCHWEBTV
             format: mp4
             codec: h264
             mime_type: 'video/x-mp4'
@@ -82,6 +83,7 @@ pumukit_encoder:
             wizard: true
             master: false
             tags: html5 audio
+            target: PUCHWEBTV
             format: mp4
             codec: aac
             mime_type: 'audio/x-mp4'

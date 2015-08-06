@@ -11,18 +11,21 @@ use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 
-class NotificationServiceTest extends WebTestCase
+class JobNotificationServiceTest extends WebTestCase
 {
     private $dm;
     private $repo;
+    private $container;
+    private $jobNotificationService;
 
     public function __construct()
     {
         $options = array('environment' => 'test');
         $kernel = static::createKernel($options);
         $kernel->boot();
+        $this->container = $kernel->getContainer();
 
-        $this->dm = $kernel->getContainer()
+        $this->dm = $this->container
           ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
           ->getRepository('PumukitEncoderBundle:Job');
@@ -34,9 +37,12 @@ class NotificationServiceTest extends WebTestCase
         $this->dm->flush();
     }
 
-    public function testSendEmail()
+    public function testOnJobSuccess()
     {
         $this->markTestSkipped('S');
+
+        $this->jobNotificationService = $this->container
+          ->get('pumukit_notification.listener');
 
         $multimediaObject= $this->createNewMultimediaObjectWithTrack();
 
@@ -47,11 +53,33 @@ class NotificationServiceTest extends WebTestCase
         $this->dm->flush();
 
         $event = new JobEvent($job);
-        $this->notificationService->onJobSuccess($event);
+        $output = $this->jobNotificationService->onJobSuccess($event);
 
+        $this->assertEquals(1, $output);
         $this->assertEquals(1, count($this->repo->findAll()));
     }
 
+    public function testOnJobError()
+    {
+        $this->markTestSkipped('S');
+
+        $this->jobNotificationService = $this->container
+          ->get('pumukit_notification.listener');
+
+        $multimediaObject= $this->createNewMultimediaObjectWithTrack();
+
+        $job = $this->createNewJob(Job::STATUS_WAITING, $multimediaObject);
+
+        $job->setStatus(Job::STATUS_ERROR);
+        $this->dm->persist($job);
+        $this->dm->flush();
+
+        $event = new JobEvent($job);
+        $output = $this->jobNotificationService->onJobError($event);
+
+        $this->assertEquals(2, $output);
+        $this->assertEquals(1, count($this->repo->findAll()));
+    }
 
     private function createNewJob($status = null, $multimediaObject)
     {
