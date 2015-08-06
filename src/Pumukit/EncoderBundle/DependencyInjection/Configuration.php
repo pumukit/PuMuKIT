@@ -42,6 +42,7 @@ class Configuration implements ConfigurationInterface
         $node
             ->children()
                 ->arrayNode('profiles')
+                    ->normalizeKeys(false)
                     ->useAttributeAsKey('name')
                     ->prototype('array')
                         ->children()
