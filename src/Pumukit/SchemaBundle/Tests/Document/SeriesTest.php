@@ -23,6 +23,7 @@ class SeriesTest extends \PHPUnit_Framework_TestCase
         $keyword = 'keyword';
         $line2 = 'line2';
         $locale = 'en';
+        $properties = array('property1', 'property2');
 
         $series = new Series();
 
@@ -38,6 +39,7 @@ class SeriesTest extends \PHPUnit_Framework_TestCase
         $series->setKeyword($keyword);
         $series->setLine2($line2);
         $series->setLocale($locale);
+        $series->setProperties($properties);
 
         $this->assertEquals($series_type, $series->getSeriesType());
         $this->assertEquals($announce, $series->getAnnounce());
@@ -51,6 +53,7 @@ class SeriesTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($keyword, $series->getKeyword());
         $this->assertEquals($line2, $series->getLine2());
         $this->assertEquals($locale, $series->getLocale());
+        $this->assertEquals($properties, $series->getProperties());
 
         $titleEs = 'título';
         $subtitleEs = 'subtítulo';
@@ -146,10 +149,6 @@ class SeriesTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(2, count($series->getPics()));
         $this->assertEquals($url, $series->getFirstUrlPic());
-
-        $series->addPic($pic1);
-        $series->addPic($pic2);
-        $this->assertEquals($pic, $series->getPic());
     }
 
     public function testIsCollection()
