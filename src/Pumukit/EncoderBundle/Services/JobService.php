@@ -392,7 +392,7 @@ class JobService
         $vars['output'] = $job->getPathEnd();
 
         foreach(range(1, 9) as $identifier){
-            $vars['temfile' . $identifier] = $this->tmp_path . '/' . rand();
+            $vars['tmpfile' . $identifier] = $this->tmp_path . '/' . rand();
         }
 
         $loader = new \Twig_Loader_Array(array('bat' => $profile['bat']));
