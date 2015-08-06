@@ -34,6 +34,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $locale = 'en';
         $line2 = 'line2';
         $keyword = 'keyword';
+        $properties = array('property1', 'property2');
 
         $tag1 = new Tag();
         $tag1->setCod('tag1');
@@ -67,6 +68,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $mm->setLocale($locale);
         $mm->setLine2($line2);
         $mm->setKeyword($keyword);
+        $mm->setProperties($properties);
 
         $this->assertEquals($series, $mm->getSeries());
         $this->assertEquals($rank, $mm->getRank());
@@ -83,6 +85,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($locale, $mm->getLocale());
         $this->assertEquals($line2, $mm->getLine2());
         $this->assertEquals($keyword, $mm->getKeyword());
+        $this->assertEquals($properties, $mm->getProperties());
 
         $title = null;
         $subtitle = null;
@@ -655,5 +658,20 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $mm->incNumview();
 
         $this->assertEquals(6, $mm->getNumview());
+    }
+
+    public function testDurationInMinutesAndSeconds()
+    {
+        $duration = 120;
+        $duration_in_minutes_and_seconds1 = array('minutes' => 2, 'seconds' => 0);
+        $duration_in_minutes_and_seconds2 = array('minutes' => 5, 'seconds' => 30);
+
+        $mm = new MultimediaObject();
+        $mm->setDuration($duration);
+
+        $this->assertEquals($duration_in_minutes_and_seconds1, $mm->getDurationInMinutesAndSeconds());
+        
+        $mm->setDurationInMinutesAndSeconds($duration_in_minutes_and_seconds2);
+        $this->assertEquals($duration_in_minutes_and_seconds2, $mm->getDurationInMinutesAndSeconds());
     }
 }
