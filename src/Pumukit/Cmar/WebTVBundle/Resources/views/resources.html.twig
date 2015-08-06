@@ -73,7 +73,7 @@
         {{ resource.getRecordDate()|date('d-m-Y') }}
       {% endif %}
     </div>
-    <div class="mmobj_bottom">
+    <div class="date" style="bottom: 8px; left: 265px;">
       {% if resource.isCollection() %}
       {% set tags = [] %}
         {% for mm in resource %}
@@ -89,4 +89,3 @@
   </div>
 {% endfor %}
 </div>
-
