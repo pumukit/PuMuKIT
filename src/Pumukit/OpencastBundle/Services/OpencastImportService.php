@@ -128,7 +128,7 @@ class OpencastImportService
                 if( isset($mediaPackage["media"]["track"]["video"])) {
                     $vcodec = $mediaPackage["media"]["track"]["video"]["encoder"]["type"];
                     $track->setVcodec($vcodec);
-                    $framerate = $mediaPackage["media"]["track"][$i]["video"]["framerate"];
+                    $framerate = $mediaPackage["media"]["track"]["video"]["framerate"];
                     $track->setFramerate($framerate);
                 }
 
