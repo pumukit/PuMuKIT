@@ -44,6 +44,12 @@
             {% trans %}See Multimedia Object data{% endtrans %}
           </a>
         </li>
+        {% elseif series is not empty %}
+        <li>
+          <a href="{{ path('pumukitnewadmin_mms_index', {'id': series.getId()}) }}">
+            {% trans %}Back to Series{% endtrans %}
+          </a>
+        </li>
         {% endif %}
         {% if series is not empty %}
         <li>
