@@ -36,11 +36,6 @@ class WorkflowService
         $this->checkMultimediaObject($event->getMultimediaObject());
     }
 
-    /**
-     * 
-     * TODO Add doc.
-     *
-     */
     private function checkMultimediaObject(MultimediaObject $multimediaObject)
     {
         $master = $multimediaObject->getTrackWithTag("master");
@@ -55,16 +50,49 @@ class WorkflowService
                && ($master)
                && (!$publicTracks)) {
 
-                foreach($this->profiles as $targetProfile => $profile) {
-                    if((in_array($pubchannel->getCod(), array_filter(preg_split('/[,\s]+/', $profile['target']))))
-                       && ($multimediaObject->isOnlyAudio() == $profile['audio'])) {
-
-                        $this->logger->info(sprintf("WorkflowService creates new job (%s) for multimedia object %s", $targetProfile, $multimediaObject->getId()));
-                        $this->jobService->addUniqueJob($master->getPath(), $targetProfile, 2, $multimediaObject, $master->getLanguage());
-                    }
-                }
+              $this->generateJobs($multimediaObject, $pubchannel->getCod());
             }
         }
+    }
+
+
+    private function generateJobs(MultimediaObject $multimediaObject, $pubChannelCod)
+    {
+
+        
+        foreach($this->profiles as $targetProfile => $profile) {
+            $targets = $this->getTargets($profile['target']);
+            if(((in_array($pubChannelCod, $targets['standard']))
+                 && ($multimediaObject->isOnlyAudio() == $profile['audio'])) 
+               || (in_array($pubChannelCod, $targets['force'])){
+
+                $master = $multimediaObject->getTrackWithTag("master");
+                $this->logger->info(sprintf("WorkflowService creates new job (%s) for multimedia object %s", $targetProfile, $multimediaObject->getId()));
+                $this->jobService->addUniqueJob($master->getPath(), $targetProfile, 2, $multimediaObject, $master->getLanguage());
+            }
+        }        
+    }
+
+
+    /**
+     * Process the target string
+     * "TAGA* TAGB, TAGC*, TAGD" => array('standard' => array('TAGB', 'TAGD'), 'force' => array('TAGA', 'TAGC'))
+     * 
+     * @return array
+     */
+    private function getTargets($targets)
+    {
+        $return = array('standard' => array(), 'force' => array());
+
+        foreach(array_filter(preg_split('/[,\s]+/', $targets)) as $target) {
+            if (substr($target, -1) == '*') {
+                $return['force'][] = substr($target, 0 , -1);
+            } else {
+                $return['standard'][] = $target;
+            }
+        }
+
+        return $return;
     }
 }
 
