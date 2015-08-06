@@ -85,6 +85,36 @@ class SeriesTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($footerI18n, $series->getI18nFooter());
         $this->assertEquals($keywordI18n, $series->getI18nKeyword());
         $this->assertEquals($line2I18n, $series->getI18nLine2());
+
+        $title = null;
+        $subtitle = null;
+        $description = null;
+        $header = null;
+        $footer = null;
+        $keyword = null;
+        $line2 = null;
+
+        $series->setTitle($title);
+        $series->setSubtitle($subtitle);
+        $series->setDescription($description);
+        $series->setHeader($header);
+        $series->setFooter($footer);
+        $series->setKeyword($keyword);
+        $series->setLine2($line2);
+
+        $this->assertEquals(null, $series->getTitle());
+        $this->assertEquals(null, $series->getSubtitle());
+        $this->assertEquals(null, $series->getDescription());
+        $this->assertEquals(null, $series->getHeader());
+        $this->assertEquals(null, $series->getFooter());
+        $this->assertEquals(null, $series->getKeyword());
+        $this->assertEquals(null, $series->getLine2());
+    }
+
+    public function testToString()
+    {
+        $series = new Series();
+        $this->assertEquals($series->getTitle(), $series->__toString());
     }
 
     public function testPicsInSeries()
@@ -94,6 +124,8 @@ class SeriesTest extends \PHPUnit_Framework_TestCase
         $pic->setUrl($url);
 
         $series = new Series();
+        $pic1 = new Pic();
+        $pic2 = new Pic();
         
         $this->assertEquals(0, count($series->getPics()));
 
@@ -114,5 +146,15 @@ class SeriesTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(2, count($series->getPics()));
         $this->assertEquals($url, $series->getFirstUrlPic());
+
+        $series->addPic($pic1);
+        $series->addPic($pic2);
+        $this->assertEquals($pic, $series->getPic());
+    }
+
+    public function testIsCollection()
+    {
+        $series = new Series();
+        $this->assertEquals(true, $series->isCollection());
     }
 }
