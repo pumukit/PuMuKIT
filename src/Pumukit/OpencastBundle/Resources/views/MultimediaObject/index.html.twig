@@ -16,13 +16,13 @@
   </td>
   <td>
     <div class="dropdown">
-      <i class="mdi-image-camera-alt" id="list_capture_frame_{{ mm.getTrackWithTag('presenter/delivery').getId() }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-      <ul class="dropdown-menu" role="menu" aria-labelledby="list_capture_frame_{{ mm.getTrackWithTag('presenter/delivery').getId() }}">
+      <i class="mdi-image-camera-alt" id="list_capture_frame_{{ (mm.getTrackWithTag('presenter/delivery'))?mm.getTrackWithTag('presenter/delivery').getId(): 'null' }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+      <ul class="dropdown-menu" role="menu" aria-labelledby="list_capture_frame_{{ (mm.getTrackWithTag('presenter/delivery'))?mm.getTrackWithTag('presenter/delivery').getId(): 'null' }}">
         <li>&nbsp;&nbsp;<strong>{% trans %}Capture frame from{% endtrans %}:</strong></li>
         {% set percentages = ['Auto', '10%', '25%', '50%', '75%', '90%'] %}
         {% for percentage in percentages %}
         <li>
-          <a href="#" onclick="extract_pic('{{ mm.getTrackWithTag('presenter/delivery').getId() }}', '{{ mm.id }}', '{{ (percentage == 'Auto')?0:percentage }}'); return false;">
+          <a href="#" onclick="extract_pic('{{ (mm.getTrackWithTag('presenter/delivery'))?mm.getTrackWithTag('presenter/delivery').getId(): 'null' }}', '{{ mm.id }}', '{{ (percentage == 'Auto')?0:percentage }}'); return false;">
             <i class="mdi-image-camera"></i> {{ percentage }}
           </a>
         </li>
