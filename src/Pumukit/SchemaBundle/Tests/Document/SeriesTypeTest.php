@@ -49,16 +49,6 @@ class SeriesTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(null, $series_type->getDescription());
     }
 
-    public function testContainsSeries()
-    {
-        $series = new Series();
-        $series_type = new SeriesType();
-
-        $series->setSeriesType($series_type);
-
-        $this->assertTrue($series_type->containsSeries($series));
-    }
-
     public function testToString()
     {
         $series_type = new SeriesType();

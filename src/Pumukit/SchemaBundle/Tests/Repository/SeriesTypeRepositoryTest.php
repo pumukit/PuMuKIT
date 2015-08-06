@@ -8,6 +8,7 @@ class SeriesTypeRepositoryTest extends WebTestCase
 {
     private $dm;
     private $repo;
+    private $factoryService;
 
     public function __construct()
     {
@@ -18,6 +19,8 @@ class SeriesTypeRepositoryTest extends WebTestCase
             ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
             ->getRepository('PumukitSchemaBundle:SeriesType');
+        $this->factoryService = $kernel->getContainer()
+            ->get('pumukitschema.factory');
     }
 
     public function setUp()
@@ -49,5 +52,22 @@ class SeriesTypeRepositoryTest extends WebTestCase
 
         $this->assertEquals(1, count($this->repo->findAll()));
         $this->assertEquals($seriesType, $this->repo->find($seriesType->getId()));
+    }
+
+    public function testContainsSeries()
+    {
+        $this->markTestSkipped('S');
+
+        $seriesType = new SeriesType();
+        $this->dm->persist($seriesType);
+        $this->dm->flush();
+
+        $series = $this->factoryService->createSeries();
+        $series->setSeriesType($seriesType);
+        $this->dm->persist($series);
+        $this->dm->persist($seriesType);
+        $this->dm->flush();
+
+        $this->assertTrue($seriesType->containsSeries($series));
     }
 }
