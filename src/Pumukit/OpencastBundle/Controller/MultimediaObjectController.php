@@ -99,7 +99,8 @@ class MultimediaObjectController extends Controller
      */
     public function generateSbsAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $this->get('pumukit_opencast.job')->genSbs($multimediaObject);
+        $opencastUrls = $this->get('pumukit_opencast.import')->getOpencastUrls($multimediaObject->getProperty('opencast'));
+        $this->get('pumukit_opencast.job')->genSbs($multimediaObject, $opencastUrls);
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', array('id' => $multimediaObject->getId())));
     }
