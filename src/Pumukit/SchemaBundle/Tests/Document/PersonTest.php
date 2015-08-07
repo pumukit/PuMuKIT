@@ -19,7 +19,7 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
         $person = new Person();
 
-        $person->setlocale($locale);
+        $person->setLocale($locale);
         $person->setEmail($email);
         $person->setName($name);
         $person->setWeb($web);

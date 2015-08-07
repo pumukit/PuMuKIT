@@ -182,6 +182,7 @@ class MultimediaObjectController extends SortableAdminController
         $parentTags = $factoryService->getParentTags();
 
         $resource = $this->findOr404($request);
+        $this->get('session')->set('admin/mms/id', $resource->getId());
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $resource);
@@ -252,6 +253,7 @@ class MultimediaObjectController extends SortableAdminController
         $parentTags = $factoryService->getParentTags();
 
         $resource = $this->findOr404($request);
+        $this->get('session')->set('admin/mms/id', $resource->getId());
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
