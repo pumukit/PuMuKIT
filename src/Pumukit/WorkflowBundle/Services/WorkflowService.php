@@ -58,13 +58,11 @@ class WorkflowService
 
     private function generateJobs(MultimediaObject $multimediaObject, $pubChannelCod)
     {
-
-        
         foreach($this->profiles as $targetProfile => $profile) {
             $targets = $this->getTargets($profile['target']);
             if(((in_array($pubChannelCod, $targets['standard']))
-                 && ($multimediaObject->isOnlyAudio() == $profile['audio'])) 
-               || (in_array($pubChannelCod, $targets['force'])){
+                && ($multimediaObject->isOnlyAudio() == $profile['audio']))
+               || (in_array($pubChannelCod, $targets['force']))){
 
                 $master = $multimediaObject->getTrackWithTag("master");
                 $this->logger->info(sprintf("WorkflowService creates new job (%s) for multimedia object %s", $targetProfile, $multimediaObject->getId()));
