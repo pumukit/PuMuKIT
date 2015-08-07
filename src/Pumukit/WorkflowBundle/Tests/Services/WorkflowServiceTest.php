@@ -3,7 +3,11 @@
 namespace Pumukit\WorkflowBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Pumukit\EncoderBundle\Services\ProfileService;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\WorkflowBundle\Services\WorkflowService;
+
 
 /**
  * @IgnoreAnnotation("dataProvider")
@@ -26,69 +30,106 @@ class WorkflowServiceTest extends WebTestCase
 
     public function setUp()
     {
-        //$this->profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
+
+        $streamserver = array('dir_out' => sys_get_temp_dir());
+        $testProfiles = array('video' => array('target' => 'TAGA TAGC', 'audio' => false, 'streamserver' => $streamserver),
+                              'video2' => array('target' => 'TAGB*, TAGC', 'audio' => false, 'streamserver' => $streamserver),
+                              'audio' => array('target' => 'TAGA TAGC', 'audio' => true, 'streamserver' => $streamserver),
+                              'audio2' => array('target' => 'TAGB*, TAGC', 'audio' => true, 'streamserver' => $streamserver));
+        $profileService = new ProfileService($testProfiles, $this->dm);
       
-        $jobSerive = $this->getMockBuilder('Pumukit\EncoderBundle\Services\JobService')
+        $jobService = $this->getMockBuilder('Pumukit\EncoderBundle\Services\JobService')
                           ->disableOriginalConstructor()
                           ->getMock();
-        $profileService = $this->getMockBuilder('Pumukit\EncoderBundle\Services\ProfileService')
-                               ->disableOriginalConstructor()
-                               ->getMock();              
+        $jobService->expects($this->any())
+                   ->method('addUniqueJob')
+                   ->will($this->returnArgument(1));
+
+        
         $logger = $this->getMockBuilder('Symfony\Component\HttpKernel\Log\LoggerInterface')
                        ->disableOriginalConstructor()
                        ->getMock();
                 
-        $this->workflowService = new WorkflowService($this->dm, $jobSerive, $profileService, $logger);
-    }
-
-
-    /**
-     * @dataProvider providerTestFoo
-     */
-    public function testFoo($variableOne, $variableTwo)
-    {
-        // 
-        dump(2);
-        dump(func_get_args());       
-    }
-
-    public function providerTestFoo()
-    {
-        return array(
-            array('test 1, variable one', 'test 1, variable two'),
-            array('test 2, variable one', 'test 2, variable two'),
-            array('test 3, variable one', 'test 3, variable two'),
-            array('test 4, variable one', 'test 4, variable two'),
-            array('test 5, variable one', 'test 5, variable two'),
-        );
+        $this->workflowService = new WorkflowService($this->dm, $jobService, $profileService, $logger);
     }
 
     
-    /**
-     * @dataProvider providerTestGetTargets
-     */
     public function testGetTargets()
     {
-        dump(1);
-        dump(func_get_args());
-        $this->assertEquals(1, 1);
-        //$this->assertEquals($out, $this->invokeMethod($this->workflowService, 'getTargets', array($in)));
-    }
-
-    public function providerTestGetTargets()
-    {
-        
-        return array(
-            array(1,2)
-        );
-        return array(        
+        //TODO workaround to solve problems with @dataProvider
+        $data = array(        
             array('', array('standard' => array(), 'force' => array())),
-            array('TAG', array('standard' => array(), 'force' => array())),
+            array('TAG', array('standard' => array('TAG'), 'force' => array())),
+            array('TAG1 TAG2', array('standard' => array('TAG1', 'TAG2'), 'force' => array())),
+            array('TAG1, TAG2', array('standard' => array('TAG1', 'TAG2'), 'force' => array())),
+            array('TAG1* TAG2*', array('standard' => array(), 'force' => array('TAG1', 'TAG2'))),
+            array('TAG1*, TAG2*', array('standard' => array(), 'force' => array('TAG1', 'TAG2'))),
+            array('TAG1*, TAG2* TAG3', array('standard' => array('TAG3'), 'force' => array('TAG1', 'TAG2'))),
+            array('TAG0 TAG1*, TAG2* TAG3', array('standard' => array('TAG0', 'TAG3'), 'force' => array('TAG1', 'TAG2'))),
+            array('TAG0 TAG1**, TAG2* TAG*3', array('standard' => array('TAG0', 'TAG*3'), 'force' => array('TAG1*', 'TAG2'))),
         );
+        foreach($data as $d) {
+            $targets = $this->invokeMethod($this->workflowService, 'getTargets', array($d[0]));
+            $this->assertEquals($d[1], $targets);
+        }
     }
 
 
-    public function invokeMethod(&$object, $methodName, array $parameters = array())
+    public function testGenerateJobsForVideo()
+    {
+        $track = new Track();
+        $track->addTag("master");
+        $track->setPath("path");
+        $track->setOnlyAudio(false);
+        $mmobj = new MultimediaObject();
+        $mmobj->addTrack($track);
+
+        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGA'));      
+        $this->assertEquals(array('video'), $jobs);
+
+        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGC'));
+        $this->assertEquals(array('video', 'video2'), $jobs);
+
+        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGB'));
+        $this->assertEquals(array('video2', 'audio2'), $jobs);
+    }
+
+
+    public function testGenerateJobsForAudio()
+    {
+        $track = new Track();
+        $track->addTag("master");
+        $track->setPath("path");
+        $track->setOnlyAudio(true);
+        $mmobj = new MultimediaObject();
+        $mmobj->addTrack($track);
+
+        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGA'));
+        $this->assertEquals(array('audio'), $jobs);
+
+        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGC'));
+        $this->assertEquals(array('audio', 'audio2'), $jobs);
+
+        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGB'));
+        $this->assertEquals(array('audio2'), $jobs); //generate a video2 from an audio has no sense.
+    }
+
+
+
+    public function notestGenerateJobsAudioMultimediaObjectGenerateForce()
+    {
+        $track = new Track();
+        $track->addTag("master");
+        $track->setPath("path");
+        $track->setOnlyAudio(true);
+        $mmobj = new MultimediaObject();
+        $mmobj->addTrack($track);
+
+        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGA'));      
+        $this->assertEquals(array('audio'), $jobs);
+    }
+
+    private function invokeMethod(&$object, $methodName, array $parameters = array())
     {
         $reflection = new \ReflectionClass(get_class($object));
         $method = $reflection->getMethod($methodName);

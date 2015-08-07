@@ -56,24 +56,30 @@ class WorkflowService
     }
 
 
+    /**
+     * TODO add doc
+     */
     private function generateJobs(MultimediaObject $multimediaObject, $pubChannelCod)
     {
+        $jobs = array();
         foreach($this->profiles as $targetProfile => $profile) {
             $targets = $this->getTargets($profile['target']);
             if(((in_array($pubChannelCod, $targets['standard']))
                 && ($multimediaObject->isOnlyAudio() == $profile['audio']))
-               || (in_array($pubChannelCod, $targets['force']))){
+               || (in_array($pubChannelCod, $targets['force']))
+                && (!$multimediaObject->isOnlyAudio() || ($multimediaObject->isOnlyAudio() && $profile['audio']))){
 
                 $master = $multimediaObject->getTrackWithTag("master");
                 $this->logger->info(sprintf("WorkflowService creates new job (%s) for multimedia object %s", $targetProfile, $multimediaObject->getId()));
-                $this->jobService->addUniqueJob($master->getPath(), $targetProfile, 2, $multimediaObject, $master->getLanguage());
+                $jobs[] = $this->jobService->addUniqueJob($master->getPath(), $targetProfile, 2, $multimediaObject, $master->getLanguage());
             }
-        }        
+        }
+        return $jobs;
     }
 
 
     /**
-     * Process the target string
+     * Process the target string (See test)
      * "TAGA* TAGB, TAGC*, TAGD" => array('standard' => array('TAGB', 'TAGD'), 'force' => array('TAGA', 'TAGC'))
      * 
      * @return array
