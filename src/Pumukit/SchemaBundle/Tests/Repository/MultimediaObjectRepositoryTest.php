@@ -93,6 +93,70 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->flush();
 
         $this->assertEquals(1, count($this->repo->findAll()));
+
+        $this->assertEquals($broadcast, $mmobj->getBroadcast());
+
+        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
+        $mmobj->setBroadcast($broadcast);
+        $this->dm->persist($mmobj);
+        $this->dm->flush();
+
+        $this->assertEquals($broadcast, $mmobj->getBroadcast());
+
+        $t1 = new Track();
+        $t1->setTags(array('master'));
+        $t2 = new Track();
+        $t2->setTags(array('mosca', 'master', 'old'));
+        $t3 = new Track();
+        $t3->setTags(array('master', 'mosca'));
+        $t4 = new Track();
+        $t4->setTags(array('flv', 'itunes', 'hide'));
+        $t5 = new Track();
+        $t5->setTags(array('flv', 'webtv'));
+        $t6 = new Track();
+        $t6->setTags(array('track6'));
+        $t6->setHide(true);
+
+        $this->dm->persist($t1);
+        $this->dm->persist($t2);
+        $this->dm->persist($t3);
+        $this->dm->persist($t4);
+        $this->dm->persist($t5);
+        $this->dm->persist($t6);
+
+        $mmobj->addTrack($t3);
+        $mmobj->addTrack($t2);
+        $mmobj->addTrack($t1);
+        $mmobj->addTrack($t4);
+        $mmobj->addTrack($t5);
+        $mmobj->addTrack($t6);
+
+        $this->dm->persist($mmobj);
+
+        $this->dm->flush();
+
+        $this->assertEquals(5, count($mmobj->getFilteredTracksWithTags()));
+        $this->assertEquals(3, count($mmobj->getFilteredTracksWithTags(array('master'))));
+        $this->assertEquals(1, count($mmobj->getFilteredTracksWithTags(array('master'), array('mosca', 'old'))));
+        $this->assertEquals(0, count($mmobj->getFilteredTracksWithTags(array(), array('mosca', 'old'), array('master'))));
+        $this->assertEquals(3, count($mmobj->getFilteredTracksWithTags(array(), array(), array('flv'))));
+        $this->assertEquals(0, count($mmobj->getFilteredTracksWithTags(array(), array(), array('flv', 'master'))));
+        $this->assertEquals(5, count($mmobj->getFilteredTracksWithTags(array(), array(), array(), array('flv', 'master'))));
+        $this->assertEquals(1, count($mmobj->getFilteredTracksWithTags(array('mosca', 'old'), array(), array(), array('old'))));
+    
+        $this->assertEquals(1, count($mmobj->getFilteredTrackWithTags()));
+        $this->assertEquals(1, count($mmobj->getFilteredTrackWithTags(array('master'))));
+        $this->assertEquals(1, count($mmobj->getFilteredTrackWithTags(array('master'), array('mosca', 'old'))));
+        $this->assertEquals(0, count($mmobj->getFilteredTrackWithTags(array(), array('mosca', 'old'), array('master'))));
+        $this->assertEquals(1, count($mmobj->getFilteredTrackWithTags(array(), array(), array('flv'))));
+        $this->assertEquals(0, count($mmobj->getFilteredTrackWithTags(array(), array(), array('flv', 'master'))));
+        $this->assertEquals(1, count($mmobj->getFilteredTrackWithTags(array(), array(), array(), array('flv', 'master'))));
+        $this->assertEquals(1, count($mmobj->getFilteredTrackWithTags(array('mosca', 'old'), array(), array(), array('old'))));
+
+        $this->assertEquals(1, count($mmobj->getFilteredTrackWithTags(array(), array(), array(), array('master', 'mosca'))));
+
+        $this->assertEquals(null, count($mmobj->getFilteredTrackWithTags(array('track6'))));
+        $this->assertEquals(null, count($mmobj->getFilteredTracksWithTags(array('track6'))));
     }
 
     public function testCreateMultimediaObjectAndFindByCriteria()
