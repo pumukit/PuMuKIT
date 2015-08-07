@@ -67,6 +67,26 @@ class SeriesRepositoryTest extends WebTestCase
 
         $this->assertEquals(1, count($this->repo->findAll()));
         $this->assertEquals($series, $this->repo->find($series->getId()));
+
+        $pic1 = new Pic();
+        $pic1->setUrl('http://domain.com/pic1.png');
+
+        $pic2 = new Pic();
+        $pic2->setUrl('http://domain.com/pic2.png');
+
+        $pic3 = new Pic();
+        $pic3->setUrl('http://domain.com/pic3.png');
+
+        $series->addPic($pic1);
+        $series->addPic($pic2);
+        $series->addPic($pic3);
+
+        $this->dm->persist($series);
+        $this->dm->flush();
+
+        $this->assertEquals($pic1, $series->getPic());
+        $this->assertEquals($pic2, $series->getPicById($pic2->getId()));
+        $this->assertEquals(null, $series->getPicById(null));
     }
 
     public function testFindSeriesWithTags()
@@ -935,6 +955,20 @@ class SeriesRepositoryTest extends WebTestCase
         $this->assertEquals(0, count($this->repo->findOneBySeriesProperty('data', $series2->getProperty('dataexample'))));
         $this->assertEquals(0, count($this->repo->findOneBySeriesProperty('dataexample', $series3->getProperty('data'))));
         $this->assertEquals(1, count($this->repo->findOneBySeriesProperty('dataexample', $series3->getProperty('dataexample'))));
+    }
+
+    public function testCount()
+    {
+        $series1 = $this->createSeries('Series 1');
+        $series2 = $this->createSeries('Series 2');
+        $series3 = $this->createSeries('Series 3');
+
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->persist($series3);
+        $this->dm->flush();
+
+        $this->assertEquals(3, $this->repo->count());
     }
 
     private function createSeriesType($name)

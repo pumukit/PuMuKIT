@@ -24,6 +24,7 @@ class SeriesTest extends \PHPUnit_Framework_TestCase
         $line2 = 'line2';
         $locale = 'en';
         $properties = array('property1', 'property2');
+        $license = 'license';
 
         $series = new Series();
 
@@ -40,6 +41,7 @@ class SeriesTest extends \PHPUnit_Framework_TestCase
         $series->setLine2($line2);
         $series->setLocale($locale);
         $series->setProperties($properties);
+        $series->setLicense($license);
 
         $this->assertEquals($series_type, $series->getSeriesType());
         $this->assertEquals($announce, $series->getAnnounce());
@@ -54,6 +56,7 @@ class SeriesTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($line2, $series->getLine2());
         $this->assertEquals($locale, $series->getLocale());
         $this->assertEquals($properties, $series->getProperties());
+        $this->assertEquals($license, $series->getLicense());
 
         $titleEs = 'título';
         $subtitleEs = 'subtítulo';
