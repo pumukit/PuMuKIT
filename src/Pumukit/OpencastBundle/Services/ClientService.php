@@ -16,7 +16,6 @@ class ClientService
       $this->user  = $user;
       $this->passwd  = $passwd;
       $this->player  = $player;
-      $this->adminUrl = $this->getAdminUrl();
   }
 
   public function getUrl()
@@ -114,6 +113,7 @@ class ClientService
 
   public function getMediapackageFromArchive($id)
   {
+      $this->adminUrl = $this->getAdminUrl();
       $sal = $this->request("/episode/episode.json?id=" . $id, true);
 
       if ($sal["status"] !== 200) return false;
