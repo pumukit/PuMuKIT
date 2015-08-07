@@ -65,7 +65,11 @@ class OpencastImportService
             $multimediaObject->setProperty("opencast", $properties);
             $multimediaObject->setProperty("opencasturl", $this->opencastClient->getPlayerUrl() . "?id=" . $properties);
             $multimediaObject->setTitle($title);
-            if (isset($mediaPackage["language"])) $multimediaObject->setProperty("opencastlanguage", strtolower($mediaPackage["language"]));
+            if (isset($mediaPackage["language"])) {
+                $multimediaObject->setProperty("opencastlanguage", strtolower($mediaPackage["language"]));
+            } else {
+                $multimediaObject->setProperty("opencastlanguage", 'en');
+            }
             foreach($this->otherLocales as $locale) {
                 $multimediaObject->setTitle($title, $locale);
             }
@@ -149,17 +153,15 @@ class OpencastImportService
             }
 
             for($j = 0; $j < count($mediaPackage["attachments"]["attachment"]); $j++){
-
-                if($mediaPackage["attachments"]["attachment"][$j]["type"] == "presenter/search+preview"){
-
-                    $tags = $mediaPackage["attachments"]["attachment"][$j]["tags"];
-                    $url = $mediaPackage["attachments"]["attachment"][$j]["url"];
-
-                    $pic = new Pic();
-                    $pic->setTags(array($tags));
-                    $pic->setUrl($url);
-
-                    $multimediaObject->addPic($pic);
+                if (isset($mediaPackage["attachments"]["attachment"][$j]["type"])) {
+                    if($mediaPackage["attachments"]["attachment"][$j]["type"] == "presenter/search+preview"){
+                        $tags = $mediaPackage["attachments"]["attachment"][$j]["tags"];
+                        $url = $mediaPackage["attachments"]["attachment"][$j]["url"];
+                        $pic = new Pic();
+                        $pic->setTags(array($tags));
+                        $pic->setUrl($url);
+                        $multimediaObject->addPic($pic);
+                    }
                 }
             }
 
@@ -173,9 +175,9 @@ class OpencastImportService
             $this->dm->flush();
 
             if($track) {
-                $this->opencastService->genSbs($multimediaObject);
+                $opencastUrls = $this->getOpencastUrls($opencastId);
+                $this->opencastService->genSbs($multimediaObject, $opencastUrls);
             }
-
         }
     }
 
@@ -206,5 +208,38 @@ class OpencastImportService
         $this->dm->flush();
 
         return $series;
+    }
+
+    public function getOpencastUrls($opencastId='')
+    {
+        $opencastUrls = array();
+        if (null != $opencastId) {
+            try {
+                $archiveMediaPackage = $this->opencastClient->getMediapackageFromArchive($opencastId);
+            } catch (\Exception $e){
+                dump('error: ' . $e->getMessage());
+                dump($e);
+                return $opencastUrls;
+            }
+            if(isset($archiveMediaPackage["media"]["track"][0])){
+                for($i=0; $i<count($archiveMediaPackage["media"]["track"]); $i++) {
+                    $track = $archiveMediaPackage["media"]["track"][$i];
+                    $opencastUrls = $this->addOpencastUrl($opencastUrls, $track);
+                }
+            } else {
+                $track = $archiveMediaPackage["media"]["track"];
+                $opencastUrls = $this->addOpencastUrl($opencastUrls, $track);
+            }
+        }
+
+        return $opencastUrls;
+    }
+
+    private function addOpencastUrl($opencastUrls=array(), $track=array())
+    {
+        if ((isset($track["type"])) && (isset($track["url"]))) {
+            $opencastUrls[$track["type"]] = $track["url"];
+        }
+        return $opencastUrls;
     }
 }
