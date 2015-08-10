@@ -12,4 +12,14 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
  */
 class PersonRepository extends DocumentRepository
 {
+    public function findByCodAndEmail($roleCode, $email)
+    {
+        $person = $this->getDocumentManager()
+            ->getRepository('PumukitSchemaBundle:MultimediaObject')
+            ->findOnePersonWithRoleCodeAndEmail($roleCode, $email);
+        // TODO
+        /* $byEmail = $this->createQueryBuilder() */
+        /*   ->field('email')->equals($email); */
+        return $person;
+    }
 }

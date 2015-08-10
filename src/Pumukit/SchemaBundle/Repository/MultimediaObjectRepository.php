@@ -152,7 +152,31 @@ class MultimediaObjectRepository extends DocumentRepository
         }
 
         return $people;
+    }
 
+    /**
+     * Find one person in multimedia objects
+     * with given role and given email
+     *
+     * @param string $roleCod
+     * @param string $email
+     * @return ArrayCollection
+     */
+    public function findOnePersonWithRoleCodeAndEmail($roleCode, $email)
+    {
+        $dm = $this->getDocumentManager();
+        $collection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+
+        $pipeline = array(
+                          array('$match' => array('people.cod' => "$roleCode")),
+                          array('$project' => array('_id' => 0, 'people.cod' => 1, 'people.people._id' => 1)),
+                          array('$unwind' => '$people'),
+                          array('$match' => array('people.cod' => "$roleCode", 'people.people.email' => "$email")),
+                          );
+
+        $aggregation = $collection->aggregate($pipeline);
+        // TODO FINISH
+        return $aggregation;
     }
 
     /**
