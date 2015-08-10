@@ -167,11 +167,6 @@ class DefaultController extends Controller
                     if ($multimediaObject && $pubchannel){
                         foreach($pubchannel as $tagCode => $valueOn){
                             $addedTags = $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
-                            // TODO #6465 : Review addition of Publication Channel (create service)
-                            // * If MultimediaObject didn't contained PUCHWEBTV tag and now it does:
-                            //   - execute job (master_copy to video_h264)
-                            // * If MultimediaObject didn't contained ARCA tag and now it does:
-                            //   - execute corresponding job
                         }
                     }
                 }elseif ('multiple' === $option){
@@ -195,11 +190,6 @@ class DefaultController extends Controller
                             }
                             foreach($pubchannel as $tagCode => $valueOn){
                                 $addedTags = $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
-                                // TODO #6465 : Review addition of Publication Channel (create service)
-                                // * If MultimediaObject didn't contained PUCHWEBTV tag and now it does:
-                                //   - execute job (master_copy to video_h264)
-                                // * If MultimediaObject didn't contained ARCA tag and now it does:
-                                //   - execute corresponding job
                             }
                         }
                     }
