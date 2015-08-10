@@ -78,11 +78,7 @@ function mh_animacion(){
  </div>
   {% if multimediaObject.getProperty('opencastdisplay') %}
     {% if mobile_device and track %}
-      {% if track.containsTag('html5') %}
-        {% include 'PumukitCmarWebTVBundle:MultimediaObject:playerhtml5opencast.html.twig' with {'multimediaObject': multimediaObject, 'roles': multimediaObject.getRoles(), 'track': track} %}
-      {% else %}{# TODO maybe throw 404 #}
-        {% include 'PumukitCmarWebTVBundle:MultimediaObject:playeropencast.html.twig' with {'multimediaObject': multimediaObject, 'roles': multimediaObject.getRoles(), 'is_old_browser': false} %}
-      {% endif %}
+      {% include 'PumukitCmarWebTVBundle:MultimediaObject:playerhtml5opencast.html.twig' with {'multimediaObject': multimediaObject, 'roles': multimediaObject.getRoles(), 'track': track} %}
     {% else %}
       {% include 'PumukitCmarWebTVBundle:MultimediaObject:playeropencast.html.twig' with {'multimediaObject': multimediaObject, 'roles': multimediaObject.getRoles(), 'is_old_browser': is_old_browser} %}
     {% endif %}
