@@ -34,16 +34,20 @@ class InboxController extends Controller
             foreach ($finder as $f) {
                 $res[] = array('path' => $f->getRealpath(),
                                'relativepath' => $f->getRelativePathname(),
-                               'is_file' => $f->isFile());
+                               'is_file' => $f->isFile(),
+                               'content' => false);
             }
         }else{
             $finder->directories()->in($dir);
             $finder->sortByName();
             foreach ($finder as $f) {
                 if (0 !== (count(glob("$f/*")))){
+                    $contentFinder = new Finder();
+                    $contentFinder->files()->in($f->getRealpath());
                     $res[] = array('path' => $f->getRealpath(),
                                    'relativepath' => $f->getRelativePathname(),
-                                   'is_file' => $f->isFile());
+                                   'is_file' => $f->isFile(),
+                                   'content' => $contentFinder->count());
                 }
             }
         }
