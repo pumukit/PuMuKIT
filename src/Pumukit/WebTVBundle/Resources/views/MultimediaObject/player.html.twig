@@ -5,18 +5,18 @@
     {% if intro %}
     playlist: [{
       file: "{{intro}}",
-      {% if multimediaObject.getFirstUrlPic() %}
+      {% if multimediaObject.getFirstUrlPic() and not autostart %}
       image: "{{ multimediaObject.getFirstUrlPic() }}",
       {% endif %}
     },{
       file: "{{track.url}}",
-      {% if multimediaObject.getFirstUrlPic() %}
+      {% if multimediaObject.getFirstUrlPic() and not autostart %}
       image: "{{ multimediaObject.getFirstUrlPic() }}",
       {% endif %}
     }],
     {% else %}
     file: "{{track.url}}",
-    {% if multimediaObject.getFirstUrlPic() %}
+    {% if multimediaObject.getFirstUrlPic() and not autostart %}
     image: "{{ multimediaObject.getFirstUrlPic() }}",
     {% endif %}
     {% endif %}

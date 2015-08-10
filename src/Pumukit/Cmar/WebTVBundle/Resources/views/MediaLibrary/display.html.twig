@@ -13,7 +13,7 @@
     {% set series_precinct = precinct_of_series(oneseries.getMultimediaObjects()) %}
     {% for mm in oneseries.getMultimediaObjects() %}
       {% if mm.containsTagWithCod(tag_cod) %}
-        {% include 'PumukitWebTVBundle:Series:multimediaobjectbody.html.twig' with {'mm': mm, 'last_date': last_date, 'last_precinct': last_precinct, 'last_subseriestitle': last_subseriestitle, 'template': oneseries.getProperty('template'), 'series_precinct': series_precinct} %}
+        {% include 'PumukitWebTVBundle:Series:multimediaobjectbody.html.twig' with {'mm': mm, 'last_date': last_date, 'last_precinct': last_precinct, 'last_subseriestitle': last_subseriestitle, 'template': oneseries.getProperty('template'), 'series_precinct': series_precinct, 'is_series': false} %}
         {% set last_date = mm.getRecordDate() %}
         {% set last_precinct = precinct(mm.getTags()) %}
         {% set last_subseriestitle = mm.getProperty('subseriestitle') %}

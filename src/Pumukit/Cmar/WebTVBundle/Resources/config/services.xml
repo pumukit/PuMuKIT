@@ -12,6 +12,7 @@
     <services>
       <service id="pumukit_cmar_web_tv.twig_extension" class="Pumukit\Cmar\WebTVBundle\Twig\CmarWebTVExtension">
         <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+        <argument type="service" id="translator" />
         <tag name="twig.extension"/>
       </service>
 

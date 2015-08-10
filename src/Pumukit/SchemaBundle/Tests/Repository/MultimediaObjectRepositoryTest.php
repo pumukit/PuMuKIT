@@ -1315,6 +1315,64 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(4, $this->repo->countInSeries($series2));
     }
 
+    public function testCountPeopleWithRoleCode()
+    {
+        $series_type = $this->createSeriesType("Medieval Fantasy Sitcom");
+
+        $series_main = $this->createSeries("Stark's growing pains");
+        $series_wall = $this->createSeries("The Wall");
+        $series_lhazar = $this->createSeries("A quiet life");
+
+        $series_main->setSeriesType($series_type);
+        $series_wall->setSeriesType($series_type);
+        $series_lhazar->setSeriesType($series_type);
+
+        $this->dm->persist($series_main);
+        $this->dm->persist($series_wall);
+        $this->dm->persist($series_lhazar);
+        $this->dm->persist($series_type);
+        $this->dm->flush();
+
+        $person_ned = $this->createPerson('Ned');
+        $person_benjen = $this->createPerson('Benjen');
+        $person_mark = $this->createPerson('Mark');
+
+        $role_lord = $this->createRole("Lord");
+        $role_ranger = $this->createRole("Ranger");
+        $role_hand = $this->createRole("Hand");
+
+        $mm1 = $this->createMultimediaObjectAssignedToSeries('MmObject 1', $series_main);
+        $mm2 = $this->createMultimediaObjectAssignedToSeries('MmObject 2', $series_wall);
+        $mm3 = $this->createMultimediaObjectAssignedToSeries('MmObject 3', $series_main);
+        $mm4 = $this->createMultimediaObjectAssignedToSeries('MmObject 4', $series_lhazar);
+
+        $mm1->addPersonWithRole($person_ned, $role_lord);
+        $mm1->addPersonWithRole($person_mark, $role_lord);
+        $mm1->addPersonWithRole($person_benjen, $role_lord);
+        $mm1->addPersonWithRole($person_ned, $role_ranger);
+        $mm2->addPersonWithRole($person_ned, $role_lord);
+        $mm2->addPersonWithRole($person_ned, $role_ranger);
+        $mm2->addPersonWithRole($person_benjen, $role_ranger);
+        $mm2->addPersonWithRole($person_mark, $role_hand);
+        $mm3->addPersonWithRole($person_ned, $role_lord);
+        $mm3->addPersonWithRole($person_benjen, $role_ranger);
+        $mm4->addPersonWithRole($person_mark, $role_ranger);
+        $mm4->addPersonWithRole($person_ned, $role_hand);
+
+        $this->dm->persist($mm1);
+        $this->dm->persist($mm2);
+        $this->dm->persist($mm3);
+        $this->dm->persist($mm4);
+        $this->dm->flush();
+
+        $peopleLord = $this->repo->countPeopleWithRoleCode($role_lord->getCod());
+        $this->assertEquals(3, count($peopleLord));
+        $peopleRanger = $this->repo->countPeopleWithRoleCode($role_ranger->getCod());
+        $this->assertEquals(3, count($peopleRanger));
+        $peopleHand = $this->repo->countPeopleWithRoleCode($role_hand->getCod());
+        $this->assertEquals(2, count($peopleHand));
+    }
+
     private function createPerson($name)
     {
         $email = $name.'@mail.es';

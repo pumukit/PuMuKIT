@@ -44,6 +44,11 @@ class ProfileServiceTest extends WebTestCase
         $this->assertEquals(0, count($this->profileService->getProfiles(null, true, false)));
         $this->assertEquals(0, count($this->profileService->getProfiles(false, null, false)));
         $this->assertEquals(2, count($this->profileService->getProfiles(false, true, true)));
+
+        $this->assertEquals(2, count($this->profileService->getProfilesByTags(array())));
+        $this->assertEquals(2, count($this->profileService->getProfilesByTags('uno')));
+        $this->assertEquals(1, count($this->profileService->getProfilesByTags(array('tres'))));
+        $this->assertEquals(1, count($this->profileService->getProfilesByTags(array('uno', 'tres'))));
     }
 
     public function testGetMasterProfiles()
@@ -78,6 +83,7 @@ class ProfileServiceTest extends WebTestCase
                                                  'display' => false,
                                                  'wizard' => true,
                                                  'master' => true,
+                                                 'tags' => 'uno,dos tres',
                                                  'resolution_hor' => 0,
                                                  'resolution_ver' => 0,
                                                  'framerate' => '0',
@@ -98,6 +104,7 @@ class ProfileServiceTest extends WebTestCase
                                                        'display' => false,
                                                        'wizard' => true,
                                                        'master' => true,
+                                                       'tags' => 'uno',
                                                        'format' => 'mp4',
                                                        'codec' => 'h264',
                                                        'mime_type' => 'video/x-mp4',

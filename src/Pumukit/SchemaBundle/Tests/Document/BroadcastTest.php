@@ -84,6 +84,13 @@ class BroadcastTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, $privateBroadcast->getNumberMultimediaObjects());
         $this->assertEquals(1, $publicBroadcast->getNumberMultimediaObjects());
         $this->assertEquals(1, $corporativeBroadcast->getNumberMultimediaObjects());
+
+        $publicBroadcast->setNumberMultimediaObjects(3);
+        $this->assertEquals(3, $publicBroadcast->getNumberMultimediaObjects());
+
+        $privateBroadcast->setNumberMultimediaObjects(3);
+        $privateBroadcast->decreaseNumberMultimediaObjects();
+        $this->assertEquals(2, $privateBroadcast->getNumberMultimediaObjects());
     }
 
     private function createBroadcast($broadcastTypeId)

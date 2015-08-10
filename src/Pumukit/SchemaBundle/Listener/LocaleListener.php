@@ -6,6 +6,7 @@ use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -25,17 +26,22 @@ class LocaleListener implements EventSubscriberInterface
 
     public function onKernelRequest(GetResponseEvent $event)
     {
-      $request = $event->getRequest();
-      if (!$request->hasPreviousSession()) {
-        return;
+      if ($event->getRequestType() !== HttpKernelInterface::MASTER_REQUEST) {
+          return;
       }
+
+      $request = $event->getRequest();
 
       // try to see if the locale has been set as a _locale routing parameter
       if ($locale = $request->attributes->get('_locale')) {
-        $request->getSession()->set('_locale', $locale);
+          $request->getSession()->set('_locale', $locale);
       } else {
-        // if no explicit locale has been set on this request, use one from the session
-        $request->setLocale($request->getSession()->get('_locale', $this->defaultLocale));
+          $sessionLocale = $request->getSession()->get('_locale');
+          if(!$sessionLocale) {
+              $request->getSession()->set('_locale', $this->defaultLocale);
+          }
+          
+          $request->setLocale($request->getSession()->get('_locale'));
       }
     }
 

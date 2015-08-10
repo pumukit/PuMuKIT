@@ -26,6 +26,8 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->syncNumberMultimediaObjectsOnTags($input, $output);
+        $this->syncNumberMultimediaObjectsOnBroadcast($input, $output);
+        $this->syncNumberPeopleInMultimediaObjectsOnRoles($input, $output);
     }
 
     private function syncNumberMultimediaObjectsOnTags(InputInterface $input, OutputInterface $output)
@@ -37,9 +39,45 @@ EOT
         $tags = $tagRepo->findAll();
         foreach ($tags as $tag) {
             $mms = $mmRepo->findWithTag($tag);
-            $output->writeln($tag->getCod().": ".$tag->getNumberMultimediaObjects()." -> ".count($mms));
+            $output->writeln($tag->getCod().": ".count($mms));
             $tag->setNumberMultimediaObjects(count($mms));
             $dm->persist($tag);
+        }
+        $dm->flush();
+    }
+
+    private function syncNumberMultimediaObjectsOnBroadcast(InputInterface $input, OutputInterface $output)
+    {
+        $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+        $broadcastRepo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:Broadcast");
+        $mmRepo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:MultimediaObject");
+    
+        $output->writeln(" ");
+
+        $broadcasts = $broadcastRepo->findAll();
+        foreach ($broadcasts as $broadcast) {
+            $mms = $mmRepo->findByBroadcast($broadcast);
+            $output->writeln($broadcast->getName().": ".count($mms));
+            $broadcast->setNumberMultimediaObjects(count($mms));
+            $dm->persist($broadcast);
+        }
+        $dm->flush(); 
+    }
+
+    private function syncNumberPeopleInMultimediaObjectsOnRoles(InputInterface $input, OutputInterface $output)
+    {
+        $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+        $rolesRepo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:Role");
+        $mmRepo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:MultimediaObject");
+    
+        $output->writeln(" ");
+
+        $roles = $rolesRepo->findAll();
+        foreach ($roles as $role) {
+            $people = $mmRepo->countPeopleWithRoleCode($role->getCod());
+            $output->writeln($role->getName().": ".count($people));
+            $role->setNumberPeopleInMultimediaObject(count($people));
+            $dm->persist($role);
         }
         $dm->flush();
     }

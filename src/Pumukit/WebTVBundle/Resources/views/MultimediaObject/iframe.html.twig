@@ -1,14 +1,14 @@
 {% extends 'PumukitWebTVBundle::layout.html.twig' %}
 
+{% block stylesheets %}{% endblock %}
+
+{% block javascripts %}
+  <script src="{{ asset('bundles/pumukitwebtv/js/jwplayer/jwplayer.js') }}" type="text/javascript"></script>
+{% endblock%}
+
 {% block title %}{{ parent() }} - {{ multimediaObject.title }}{% endblock %}
 {% block keywords %}{{ parent() }} - {{ multimediaObject.keyword }}{% endblock %}
 
 {% block body_base %}
-<div id="serial_body">
-      {% set last_date = date('1/1/1900') %}
-      {% set last_precinct = '' %}
-      {% set last_subseriestitle = '' %}
-      {% set series_precinct = precinct_of_series(multimediaObject.getSeries().getMultimediObjects()) %}
-      {% include 'PumukitWebTVBundle:Series:multimediaobjectbody.html.twig' with {'mm': mm, 'last_date': last_date, , 'last_precinct': last_precinct, 'last_subseriestitle': last_subseriestitle, 'template': series.getProperty('template'), 'series_precinct': series_precinct} %}
-</div>
+    {% include 'PumukitWebTVBundle:MultimediaObject:player.html.twig' with {'width': 'window.document.documentElement.clientWidth', 'height': 'window.document.documentElement.clientHeight', 'autostart': autostart} %}
 {% endblock %}

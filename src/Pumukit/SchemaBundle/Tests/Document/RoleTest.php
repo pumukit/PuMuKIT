@@ -13,6 +13,7 @@ class RoleTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('0', $role->getCod());
         $this->assertTrue($role->getDisplay());
         $this->assertEquals(0, $role->getNumberPeopleInMultimediaObject());
+        $this->assertEquals($role, $role->cloneResource());
     }
 
     public function testGetterAndSetter()
@@ -23,28 +24,36 @@ class RoleTest extends \PHPUnit_Framework_TestCase
         $cod = 'rol1'; //String - max length = 5
         $xml = 'string <xml>';
         $display = true;
-        $name = 'Presenter';
-        $text = 'Presenter Role 1';
+        $name1 = 'Presenter';
+        $name2 = null;
+        $text1 = 'Presenter Role 1';
+        $text2 = null;
 
         $role->setLocale($locale);
         $role->setCod($cod);
         $role->setXml($xml);
         $role->setDisplay($display);
-        $role->setName($name);
-        $role->setText($text);
+        $role->setName($name1);
+        $role->setText($text1);
 
         $this->assertEquals($locale, $role->getLocale());
         $this->assertEquals($cod, $role->getCod());
         $this->assertEquals($xml, $role->getXml());
         $this->assertEquals($display, $role->getDisplay());
-        $this->assertEquals($name, $role->getName());
-        $this->assertEquals($text, $role->getText());
+        $this->assertEquals($name1, $role->getName());
+        $this->assertEquals($text1, $role->getText());
+
+        $role->setName($name2);
+        $role->setText($text2);
+
+        $this->assertEquals($name2, $role->getName());
+        $this->assertEquals($text2, $role->getText());
 
         $nameEs = 'Presentador';
         $textEs = 'Rol de presentador 1';
 
-        $i18nName = array('en' => $name, 'es' => $nameEs);
-        $i18nText = array('en' => $text, 'es' => $textEs);
+        $i18nName = array('en' => $name1, 'es' => $nameEs);
+        $i18nText = array('en' => $text1, 'es' => $textEs);
 
         $role->setI18nName($i18nName);
         $role->setI18nText($i18nText);
@@ -68,5 +77,8 @@ class RoleTest extends \PHPUnit_Framework_TestCase
 
         $role->decreaseNumberPeopleInMultimediaObject();
         $this->assertEquals(2, $role->getNumberPeopleInMultimediaObject());
+
+        $role->setNumberPeopleInMultimediaObject(3);
+        $this->assertEquals(3, $role->getNumberPeopleInMultimediaObject());
     }
 }

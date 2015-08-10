@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Intl\Intl;
 use Symfony\Component\Finder\Finder;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 
 class DefaultController extends Controller
 {
@@ -98,7 +99,7 @@ class DefaultController extends Controller
         $factoryService = $this->get('pumukitschema.factory');
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
 
-        $languages = Intl::getLanguageBundle()->getLanguageNames();
+        $languages = CustomLanguageType::getLanguageNames($this->container->getParameter('pumukit2.customlanguages'), $this->get('translator'));
 
         return array(
                      'form_data' => $formData,

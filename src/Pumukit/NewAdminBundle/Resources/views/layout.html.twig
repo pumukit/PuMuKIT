@@ -1,63 +1,50 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Pumukit2 admin{% endblock %}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        {% block stylesheets %}
-        <!-- Twitter Bootstrap -->
-        <link href="{{ asset('/bundles/pumukitnewadmin/css/bootstrap.min.css') }}" rel="stylesheet">
-
-        <!-- Material Design for Bootstrap -->
-        <link href="{{ asset('/bundles/pumukitnewadmin/css/material-wfont.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('/bundles/pumukitnewadmin/css/ripples.min.css') }}" rel="stylesheet">
-
-        <!-- Dropdown.js -->
-        <link href="{{ asset('/bundles/pumukitnewadmin/css/jquery.dropdown.css') }}" rel="stylesheet">
-
-        <!-- Pumukit CSS modifications -->
-        <link href="{{ path('pumukitnewadmin_css') }}" rel="stylesheet">
-
-        <!-- jQuery UI custom (autocomplete) -->
-        <link href="{{ asset('/bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('/bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom.structure.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('/bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom.theme.min.css') }}" rel="stylesheet">
-
-        <!-- SnackbarJS CSS core -->
-        <link href="{{ asset('/bundles/pumukitnewadmin/css/snackbar.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('/bundles/pumukitnewadmin/css/material.css') }}" rel="stylesheet">
-        {% endblock %}
-
-        {% block javascripts %}
-        <script src="{{ asset('/bundles/pumukitnewadmin/js/jquery-1.10.2.min.js') }}"></script>
-        <script src="{{ asset('/bundles/pumukitnewadmin/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('/bundles/pumukitnewadmin/js/ripples.min.js') }}"></script>
-        <script src="{{ asset('/bundles/pumukitnewadmin/js/material.min.js') }}"></script>
-        <script src="{{ asset('/bundles/pumukitnewadmin/js/snackbar.min.js') }}"></script>
-        <script src="{{ asset('/bundles/pumukitnewadmin/js/jquery.nouislider.min.js') }}"></script>
-        <script type="text/javascript" src="{{ path('pumukitnewadmin_js') }}"></script>
-        <script src="{{ asset('/bundles/pumukitnewadmin/js/hinclude.js') }}"></script>
-        <script src="{{ asset('/bundles/pumukitnewadmin/js/jquery-ui-1.11.3.custom.min.js') }}"></script>
-        {% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body style="padding-bottom: 60px;">
-
-        {% include 'PumukitNewAdminBundle::menu.html.twig' %}
-
-        <div class="container-fluid main">
-            {% block body %}{% endblock %}
-        </div>
-
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-            </div>
-          </div>
-        </div>
-
-        {% include 'PumukitNewAdminBundle::footer.html.twig' %}
-
-    </body>
-</html>
+{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+{% block meta %}
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+{% endblock meta %}
+{% block title %}Pumukit2 admin{% endblock %}
+{% block stylesheets %}
+<!-- Twitter Bootstrap -->
+<link href="{{ asset('/bundles/pumukitnewadmin/css/bootstrap.min.css') }}" rel="stylesheet">
+<!-- Material Design for Bootstrap -->
+<link href="{{ asset('/bundles/pumukitnewadmin/css/material-wfont.min.css') }}" rel="stylesheet">
+<link href="{{ asset('/bundles/pumukitnewadmin/css/ripples.min.css') }}" rel="stylesheet">
+<!-- Dropdown.js -->
+<link href="{{ asset('/bundles/pumukitnewadmin/css/jquery.dropdown.css') }}" rel="stylesheet">
+<!-- Pumukit CSS modifications -->
+<link href="{{ path('pumukitnewadmin_css') }}" rel="stylesheet">
+<!-- jQuery UI custom (autocomplete) -->
+<link href="{{ asset('/bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom.min.css') }}" rel="stylesheet">
+<link href="{{ asset('/bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom.structure.min.css') }}" rel="stylesheet">
+<link href="{{ asset('/bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom.theme.min.css') }}" rel="stylesheet">
+<!-- SnackbarJS CSS core -->
+<link href="{{ asset('/bundles/pumukitnewadmin/css/snackbar.min.css') }}" rel="stylesheet">
+<link href="{{ asset('/bundles/pumukitnewadmin/css/material.css') }}" rel="stylesheet">
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset('/bundles/pumukitnewadmin/js/jquery-1.10.2.min.js') }}"></script>
+<script src="{{ asset('/bundles/pumukitnewadmin/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('/bundles/pumukitnewadmin/js/ripples.min.js') }}"></script>
+<script src="{{ asset('/bundles/pumukitnewadmin/js/material.min.js') }}"></script>
+<script src="{{ asset('/bundles/pumukitnewadmin/js/snackbar.min.js') }}"></script>
+<script src="{{ asset('/bundles/pumukitnewadmin/js/jquery.nouislider.min.js') }}"></script>
+<script type="text/javascript" src="{{ path('pumukitnewadmin_js') }}"></script>
+<script src="{{ asset('/bundles/pumukitnewadmin/js/hinclude.js') }}"></script>
+<script src="{{ asset('/bundles/pumukitnewadmin/js/jquery-ui-1.11.3.custom.min.js') }}"></script>
+{% endblock %}
+{% block body_base %}
+{% include 'PumukitNewAdminBundle::menu.html.twig' %}
+<div class="container-fluid main">
+  {% block body %}{% endblock %}
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>
+{% include 'PumukitNewAdminBundle::footer.html.twig' %}
+{% endblock body_base %}

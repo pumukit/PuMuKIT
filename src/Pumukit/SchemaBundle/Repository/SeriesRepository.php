@@ -345,4 +345,19 @@ class SeriesRepository extends DocumentRepository
         }
         return $qb;
     }
+
+    /**
+     * Find series with the same propertyName
+     *
+     * @param string $propertyName
+     * @param string $propertyValue
+     * @return QueryBuilder
+     */
+    public function findOneBySeriesProperty($propertyName, $propertyValue)
+    {
+        return $this->createQueryBuilder()
+          ->field('properties.'.$propertyName)->equals($propertyValue)
+          ->getQuery()
+          ->getSingleResult();
+    }
 }

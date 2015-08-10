@@ -1,17 +1,18 @@
 <a name="{{ mm.id }}"></a>
 <!-- DATE -->
-{% if (("date_all" == template) or (((mm.getRecordDate()|date('d/m/Y')) is not empty) and ((last_date|date('Y-m-d')) != (mm.getRecordDate()|date('Y-m-d'))))) %}
+{% if (("date_all" == template) or ((template not in ["subserial", "multisubserial"]) and ((mm.getRecordDate()|date('d/m/Y')) is not empty) and ((last_date|date('Y-m-d')) != (mm.getRecordDate()|date('Y-m-d'))))) %}
 <div class="date">
   {% trans %}Date of holding{% endtrans %}: {{ mm.getRecordDate()|date('d/m/Y') }}
 </div>
 {% endif %}
+{% if is_series %}
 <!-- SUBSERIAL -->
 {% if not mm.getProperty("subseries") %}
   <div class="inter_mm"></div>
 {% endif %}
 <!-- PRECINCT -->
 {% set mm_precinct = precinct(mm.getTags()) %}
-{% if ((mm_precinct) and ((mm_precinct != last_precinct) or ((last_date|date('Y-m-d')) != (mm.getRecordDate()|date('Y-m-d')))) and (mm_precinct.getCod() != 'PRECINCT1') and (not series_precinct)) %}
+{% if ((mm_precinct) and ((mm_precinct != last_precinct) or ((last_date|date('Y-m-d')) != (mm.getRecordDate()|date('Y-m-d')))) and (mm_precinct.getCod() != 'PLACE0001PRECINCT01') and (not series_precinct)) %}
   <div class="serial_place">
     {{ mm_precinct|precinct_fulltitle }}
   </div>
@@ -32,7 +33,7 @@
     {% endif %}
   {% endfor %}
 {% endif %}
-
+{% endif %}
 <!-- PIC -->
 <div class="serial_mm">
   <table>
@@ -66,7 +67,7 @@
                {% trans %}private{% endtrans %}
                {% endif %}
              {% endspaceless %}</a>
-             &nbsp;|&nbsp;&nbsp;<span class="language">{{ mm.getProperty('opencastlanguage')?(mm.getProperty('opencastlanguage')|lower):'en'|language_name }}</span>
+             &nbsp;|&nbsp;&nbsp;<span class="language">{{ (mm.getProperty('opencastlanguage')?(mm.getProperty('opencastlanguage')|lower):'en')|language_name }}</span>
              &nbsp;|&nbsp; {{ mm.getDuration()|duration_minutes_seconds }}
 	         &nbsp;|&nbsp; {% trans %}Viewed{% endtrans %}: <span class="numView">{{ mm.getNumview() }}</span>
              {% if (mm.getNumview() == 1) %}{% trans %}time{% endtrans %}{% else %}{% trans %}times{% endtrans %}{% endif %}

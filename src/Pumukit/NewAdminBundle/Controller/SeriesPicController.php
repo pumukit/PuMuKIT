@@ -17,28 +17,10 @@ class SeriesPicController extends Controller
      */
     public function createAction(Series $series, Request $request)
     {
-      $picService = $this->get('pumukitschema.seriespic');
-
-      // TODO search in picservice according to page (in criteria)
-      if ($request->get('page', null)) {
-          $this->get('session')->set('admin/seriespic/page', $request->get('page', 1));
-      }
-      $page = intval($this->get('session')->get('admin/seriespic/page', 1));
-      $limit = 12;
-
-      $urlPics = $picService->getRecommendedPics($series);
-
-      $total = intval(ceil(count($urlPics) / $limit));
-
-      $pics = $this->getPaginatedPics($urlPics, $limit, $page);
-
-      return array(
-                   'resource' => $series,
-                   'resource_name' => 'series',
-                   'pics' => $pics,
-                   'page' => $page,
-                   'total' => $total
-                   );
+        return array(
+                     'resource' => $series,
+                     'resource_name' => 'series'
+                     );
     }
 
     /**
@@ -60,15 +42,22 @@ class SeriesPicController extends Controller
      */
     public function updateAction(Series $series, Request $request)
     {
-      if (($url = $request->get('url')) || ($url = $request->get('picUrl'))) {
-        $picService = $this->get('pumukitschema.seriespic');
-        $series = $picService->addPicUrl($series, $url);
-      }
+        $isBanner = false;
+        if (($url = $request->get('url')) || ($url = $request->get('picUrl'))) {
+            $picService = $this->get('pumukitschema.seriespic');
+            $isBanner =  $request->query->get('banner', false);
+            $bannerTargetUrl = $request->get('url_bannerTargetUrl', null);
+            $series = $picService->addPicUrl($series, $url, $isBanner, $bannerTargetUrl);
+        }
 
-      return array(
-                   'resource' => $series,
-                   'resource_name' => 'series',
-                   );
+        if ($isBanner) {
+            return $this->redirect($this->generateUrl('pumukitnewadmin_series_update', array('id' => $series->getId())));
+        }
+
+        return array(
+                     'resource' => $series,
+                     'resource_name' => 'series',
+                     );
     }
 
     /**
@@ -77,20 +66,24 @@ class SeriesPicController extends Controller
      */
     public function uploadAction(Series $series, Request $request)
     {
+        $isBanner = false;
         try{
             if (empty($_FILES) && empty($_POST)){
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
             }
             if ($request->files->has("file")) {
                 $picService = $this->get('pumukitschema.seriespic');
-                $media = $picService->addPicFile($series, $request->files->get("file"));
+                $isBanner =  $request->query->get('banner', false);
+                $bannerTargetUrl = $request->get('file_bannerTargetUrl', null);
+                $media = $picService->addPicFile($series, $request->files->get("file"), $isBanner, $bannerTargetUrl);
             }
         }catch (\Exception $e){
             return array(
                          'resource' => $series,
                          'resource_name' => 'series',
                          'uploaded' => 'failed',
-                         'message' => $e->getMessage()
+                         'message' => $e->getMessage(),
+                         'isBanner' => $isBanner
                          );
         }
 
@@ -98,7 +91,8 @@ class SeriesPicController extends Controller
                      'resource' => $series,
                      'resource_name' => 'series',
                      'uploaded' => 'success',
-                     'message' => 'New Pic added.'
+                     'message' => 'New Pic added.',
+                     'isBanner' => $isBanner
                      );
     }
 
@@ -118,7 +112,7 @@ class SeriesPicController extends Controller
 
         $series = $this->get('pumukitschema.seriespic')->removePicFromSeries($series, $picId);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_seriespic_list', array('id' => $series->getId())));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_series_update', array('id' => $series->getId())));
     }
 
     /**
@@ -165,6 +159,47 @@ class SeriesPicController extends Controller
         $dm->flush();
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_seriespic_list', array('id' => $series->getId())));
+    }
+
+    /**
+     * @Template("PumukitNewAdminBundle:Pic:picstoaddlist.html.twig")
+     */
+    public function picstoaddlistAction(Series $series, Request $request)
+    {
+        $picService = $this->get('pumukitschema.seriespic');
+
+        // TODO search in picservice according to page (in criteria)
+        if ($request->get('page', null)) {
+            $this->get('session')->set('admin/seriespic/page', $request->get('page', 1));
+        }
+        $page = intval($this->get('session')->get('admin/seriespic/page', 1));
+        $limit = 12;
+
+        $urlPics = $picService->getRecommendedPics($series);
+
+        $total = intval(ceil(count($urlPics) / $limit));
+
+        $pics = $this->getPaginatedPics($urlPics, $limit, $page);
+
+        return array(
+                     'resource' => $series,
+                     'resource_name' => 'series',
+                     'pics' => $pics,
+                     'page' => $page,
+                     'total' => $total
+                     );
+    }
+
+    /**
+     *
+     * @Template("PumukitNewAdminBundle:Pic:banner.html.twig")
+     */
+    public function bannerAction(Series $series, Request $request)
+    {
+        return array(
+                     'resource' => $series,
+                     'resource_name' => 'series'
+                     );
     }
 
     /**

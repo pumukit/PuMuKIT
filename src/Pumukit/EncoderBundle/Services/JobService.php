@@ -56,21 +56,21 @@ class JobService
     /**
      * Add job checking if not exists.
      */
-    public function addUniqueJob($pathFile, $profile, $priority, MultimediaObject $multimediaObject, $language = null, $description = array())
+    public function addUniqueJob($pathFile, $profile, $priority, MultimediaObject $multimediaObject, $language = null, $description = array(), $initVars = array())
     {
         $job = $this->repo->findOneBy(array("profile" => $profile, "mm_id" => $multimediaObject->getId()));
 
         if ($job) {
             return $job;
         } else {
-            return $this->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description);
+            return $this->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description, $initVars);
         }
     }
 
     /**
      * Add job
      */
-    public function addJob($pathFile, $profile, $priority, MultimediaObject $multimediaObject, $language = null, $description = array())
+    public function addJob($pathFile, $profile, $priority, MultimediaObject $multimediaObject, $language = null, $description = array(), $initVars = array())
     {
         $this->checkService();
 
@@ -102,6 +102,7 @@ class JobService
         $job->setPathIni($pathFile);
         $job->setDuration($duration);
         $job->setPriority($priority);
+        $job->setInitVars($initVars);
         if (null !== $language){
             //TODO languageId is only language "es", "en", "gl"
             $job->setLanguageId($language);
@@ -340,7 +341,7 @@ class JobService
             $job->setTimeend(new \DateTime('now'));
             $job->setStatus(Job::STATUS_ERROR);
 
-            $job->setOutput($e->getMessage());
+            $job->appendOutput($e->getMessage());
             $this->logger->addError('[execute] error job output: '.$e->getMessage());
             $this->dispatch(false, $job);
         }
@@ -377,27 +378,33 @@ class JobService
         $profile = $this->getProfile($job);
         $mmobj = $this->getMultimediaObject($job);
 
-        $vars = array();
+        $vars = $job->getInitVars();
 
+        $vars['tracks'] = array();
         foreach ($mmobj->getTracks() as $track) {
             foreach($track->getTags() as $tag) {
-                $vars['{{' . $tag . '}}'] = $track->getPath();
+                $vars['tracks'][$tag] = $track->getPath();
             }
         }
+
+        $vars['properties'] = $mmobj->getProperties();
         
-        $vars['{{input}}'] = $job->getPathIni();
-        $vars['{{output}}'] = $job->getPathEnd();
+        $vars['input'] = $job->getPathIni();
+        $vars['output'] = $job->getPathEnd();
 
         foreach(range(1, 9) as $identifier){
-            $vars['{{temfile' . $identifier. '}}'] = $this->tmp_path . '/' . rand();
+            $vars['tmpfile' . $identifier] = $this->tmp_path . '/' . rand();
         }
 
-        $commandLine = str_replace(array_keys($vars), array_values($vars), $profile['bat']);
-        $this->logger->addInfo('[renderBat] CommandLine: '.$commandLine);
+        $loader = new \Twig_Loader_Array(array('bat' => $profile['bat']));
+        $twig = new \Twig_Environment($loader);
+
+        $commandLine = $twig->render('bat', $vars);
+        $this->logger->addInfo('[renderBat] CommandLine: ' . $commandLine);
     
         $cpu = $this->cpuService->getCpuByName($job->getCpu());
         if(CpuService::TYPE_WINDOWS === $cpu['type']){
-            // TODO - PATH UNIX TRANSCODER and PATH WIN TRANSCODER
+            //TODO - PATH UNIX TRANSCODER and PATH WIN TRANSCODER
         }
         
         return $commandLine;
@@ -579,7 +586,15 @@ class JobService
 
     private function getProfile($job)
     {
-        return $this->profileService->getProfile($job->getProfile());
+        $profile = $this->profileService->getProfile($job->getProfile());
+
+        if(!$profile) {
+          $errorMsg = sprintf("[createTrackWithJob] Profile %s not found when the job %s creates the track", $job->getProfile(), $job->getId());
+          $this->logger->addError($errorMsg);
+          throw new \Exception($errorMsg);
+        }
+
+        return $profile;
     }
 
     private function getMultimediaObject($job)
@@ -587,7 +602,7 @@ class JobService
         $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
         
         if(!$multimediaObject) {
-          $errorMsg = sprintf("[createTrackWithJob] Multimedia object %s not found when the job $s creates the track", $job->getId(), $job->getMmId());
+          $errorMsg = sprintf("[createTrackWithJob] Multimedia object %s not found when the job %s creates the track", $job->getMmId(), $job->getId());
           $this->logger->addError($errorMsg);
           throw new \Exception($errorMsg);
         }

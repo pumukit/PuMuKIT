@@ -206,6 +206,13 @@ class Job
     private $output = '';
 
     /**
+     * @var array $initVars
+     *
+     * @MongoDB\Raw
+     */
+    private $initVars = array();
+
+    /**
      * @var locale $locale
      */
     private $locale = 'en';
@@ -722,6 +729,16 @@ class Job
     }
 
     /**
+     * Append output
+     *
+     * @param string $output
+     */
+    public function appendOutput($output)
+    {
+        $this->output .= $output;
+    }
+
+    /**
      * Get output
      *
      * @return string
@@ -729,6 +746,26 @@ class Job
     public function getOutput()
     {
         return $this->output;
+    }
+
+    /**
+     * Set initVars
+     *
+     * @param string $initVars
+     */
+    public function setInitVars($initVars)
+    {
+        $this->initVars = $initVars;
+    }
+
+    /**
+     * Get initVars
+     *
+     * @return string
+     */
+    public function getInitVars()
+    {
+        return $this->initVars;
     }
 
     /**

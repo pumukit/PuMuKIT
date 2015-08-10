@@ -19,29 +19,9 @@ class MultimediaObjectPicController extends Controller
      */
     public function createAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $picService = $this->get('pumukitschema.mmspic');
-      
-        // TODO search in picservice according to page (in criteria)
-        if ($request->get('page', null)) {
-            $this->get('session')->set('admin/mmspic/page', $request->get('page', 1));
-        }
-        $page = intval($this->get('session')->get('admin/mmspic/page', 1));
-        $limit = 12;
-        
-        $series = $multimediaObject->getSeries();
-        
-        $urlPics = $picService->getRecommendedPics($series);
-        
-        $total = intval(ceil(count($urlPics) / $limit));
-        
-        $pics = $this->getPaginatedPics($urlPics, $limit, $page);
-
         return array(
                      'resource' => $multimediaObject,
-                     'resource_name' => 'mms',
-                     'pics' => $pics,
-                     'page' => $page,
-                     'total' => $total
+                     'resource_name' => 'mms'
                      );
     }
 
@@ -95,7 +75,8 @@ class MultimediaObjectPicController extends Controller
                          'resource' => $multimediaObject,
                          'resource_name' => 'mms',
                          'uploaded' => 'failed',
-                         'message' => $e->getMessage()
+                         'message' => $e->getMessage(),
+                         'isBanner' => false
                          );
         }
         
@@ -103,7 +84,8 @@ class MultimediaObjectPicController extends Controller
                      'resource' => $multimediaObject,
                      'resource_name' => 'mms',
                      'uploaded' => 'success',
-                     'message' => 'New Pic added.'
+                     'message' => 'New Pic added.',
+                     'isBanner' => false
                      );
     }
   
@@ -170,6 +152,37 @@ class MultimediaObjectPicController extends Controller
         $dm->flush();
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_mmspic_list', array('id' => $multimediaObject->getId())));
+    }
+
+    /**
+     * @Template("PumukitNewAdminBundle:Pic:picstoaddlist.html.twig")
+     */
+    public function picstoaddlistAction(MultimediaObject $multimediaObject, Request $request)
+    {
+        $picService = $this->get('pumukitschema.mmspic');
+
+        // TODO search in picservice according to page (in criteria)
+        if ($request->get('page', null)) {
+            $this->get('session')->set('admin/mmspic/page', $request->get('page', 1));
+        }
+        $page = intval($this->get('session')->get('admin/mmspic/page', 1));
+        $limit = 12;
+
+        $series = $multimediaObject->getSeries();
+
+        $urlPics = $picService->getRecommendedPics($series);
+
+        $total = intval(ceil(count($urlPics) / $limit));
+
+        $pics = $this->getPaginatedPics($urlPics, $limit, $page);
+
+        return array(
+                     'resource' => $multimediaObject,
+                     'resource_name' => 'mms',
+                     'pics' => $pics,
+                     'page' => $page,
+                     'total' => $total
+                     );
     }
 
     /**
