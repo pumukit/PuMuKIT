@@ -11,6 +11,7 @@ use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\Link;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\EmbeddedPerson;
+use Pumukit\SchemaBundle\Document\EmbeddedRole;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Broadcast;
@@ -1521,6 +1522,88 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals($firm, $embeddedPerson->getFirm());
         $this->assertEquals($post, $embeddedPerson->getPost());
         $this->assertEquals($bio, $embeddedPerson->getBio());
+    }
+
+    public function testEmbeddedRole()
+    {
+        $role = $this->createRole('Role'); 
+        $embeddedRole = new EmbeddedRole($role);
+
+        $name = 'EmbeddedRole';
+        $cod = 'EmbeddedRole';
+        $xml = '<xml content and definition of this/>';
+        $text = 'Black then white are all i see in my infancy.';
+        $locale= 'en';
+
+        $embeddedRole->setName($name);
+        $embeddedRole->setCod($cod);
+        $embeddedRole->setXml($xml);
+        $embeddedRole->setText($text);
+        $embeddedRole->setLocale($locale);
+
+        $this->dm->persist($embeddedRole);
+        $this->dm->flush();
+
+        $this->assertEquals($name, $embeddedRole->getName());
+        $this->assertEquals($cod, $embeddedRole->getCod());
+        $this->assertEquals($xml, $embeddedRole->getXml());
+        $this->assertEquals($text, $embeddedRole->getText());
+        $this->assertEquals($locale, $embeddedRole->getLocale());
+
+        $localeEs = 'es';
+        $nameEs = 'RolEmbebido';
+        $textEs = 'Blano y negro es todo lo que vi en mi infancia.';
+
+        $nameI18n = array($locale => $name, $localeEs => $nameEs);
+        $textI18n = array($locale => $text, $localeEs => $textEs);
+
+        $embeddedRole->setI18nName($nameI18n);
+        $embeddedRole->setI18nText($textI18n);
+
+        $this->dm->persist($embeddedRole);
+        $this->dm->flush();
+
+        $this->assertEquals($nameI18n, $embeddedRole->getI18nName());
+        $this->assertEquals($textI18n, $embeddedRole->getI18nText());
+
+        $name = null;
+        $text = null;
+
+        $embeddedRole->setName($name);
+        $embeddedRole->setText($text);
+
+        $this->dm->persist($embeddedRole);
+        $this->dm->flush();
+
+        $this->assertEquals($name, $embeddedRole->getName());
+        $this->assertEquals($text, $embeddedRole->getText());
+
+        $person_ned = $this->createPerson('Ned');
+        $embeddedRole->addPerson($person_ned);
+
+        $this->assertTrue($embeddedRole->containsPerson($person_ned));
+
+        $person_benjen = $this->createPerson('Benjen');
+        $embeddedRole->addPerson($person_benjen);
+        $person_mark = $this->createPerson('Mark');
+        $embeddedRole->addPerson($person_mark);
+        $person_cris = $this->createPerson('Cris');
+
+        $this->dm->persist($embeddedRole);
+        $this->dm->flush();
+
+        $people1 = array($person_ned, $person_benjen, $person_mark);
+        $people2 = array($person_ned, $person_benjen, $person_mark, $person_cris);
+        $people3 = array($person_cris);
+
+        $this->assertTrue($embeddedRole->containsAllPeople($people1));
+        $this->assertFalse($embeddedRole->containsAllPeople($people2));
+        $this->assertFalse($embeddedRole->containsAnyPerson($people1));
+        $this->assertTrue($embeddedRole->containsAnyPerson($people3));
+        $this->assertFalse($embeddedRole->getEmbeddedPerson($person_cris));
+
+        $role = new Role();
+        //var_dump($embeddedRole->createEmbeddedPerson($role));
     }
 
     private function createPerson($name)
