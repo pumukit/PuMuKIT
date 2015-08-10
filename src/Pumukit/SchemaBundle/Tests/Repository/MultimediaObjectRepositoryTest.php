@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\Link;
 use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Document\EmbeddedPerson;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Broadcast;
@@ -1435,6 +1436,91 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(3, count($peopleRanger));
         $peopleHand = $this->repo->countPeopleWithRoleCode($role_hand->getCod());
         $this->assertEquals(2, count($peopleHand));
+    }
+
+    public function testEmbeddedPerson()
+    {
+        $person = $this->createPerson('Person'); 
+        $embeddedPerson = new EmbeddedPerson($person);
+
+        $name = 'EmbeddedPerson';
+        $web = 'http://www.url.com';
+        $phone = '+34986123456';
+        $honorific = 'honorific';
+        $firm = 'firm';
+        $post = 'post';
+        $bio = 'biography';
+        $locale = 'en';
+
+        $embeddedPerson->setName($name);
+        $embeddedPerson->setWeb($web);
+        $embeddedPerson->setPhone($phone);
+        $embeddedPerson->setHonorific($honorific);
+        $embeddedPerson->setFirm($firm);
+        $embeddedPerson->setPost($post);
+        $embeddedPerson->setBio($bio);
+        $embeddedPerson->setLocale($locale);
+
+        $this->dm->persist($embeddedPerson);
+        $this->dm->flush();
+
+        $hname = $embeddedPerson->getHonorific().' '.$embeddedPerson->getName();
+        $other = $embeddedPerson->getPost().' '.$embeddedPerson->getFirm().' '.$embeddedPerson->getBio();
+        $info = $embeddedPerson->getPost().', '.$embeddedPerson->getFirm().', '.$embeddedPerson->getBio();
+
+        $this->assertEquals($name, $embeddedPerson->getName());
+        $this->assertEquals($web, $embeddedPerson->getWeb());
+        $this->assertEquals($phone, $embeddedPerson->getPhone());
+        $this->assertEquals($honorific, $embeddedPerson->getHonorific());
+        $this->assertEquals($firm, $embeddedPerson->getFirm());
+        $this->assertEquals($post, $embeddedPerson->getPost());
+        $this->assertEquals($bio, $embeddedPerson->getBio());
+        $this->assertEquals($locale, $embeddedPerson->getLocale());
+        $this->assertEquals($hname, $embeddedPerson->getHName());
+        $this->assertEquals($other, $embeddedPerson->getOther());
+        $this->assertEquals($info, $embeddedPerson->getInfo());
+
+        $localeEs = 'es';
+        $honorificEs = 'honores';
+        $firmEs = 'firma';
+        $postEs = 'publicacion';
+        $bioEs = 'biografia';
+
+        $honorificI18n = array($locale => $honorific, $localeEs => $honorificEs);
+        $firmI18n = array($locale => $firm, $localeEs => $firmEs);
+        $postI18n = array($locale => $post, $localeEs => $postEs);
+        $bioI18n = array($locale => $bio, $localeEs => $bioEs);
+
+        $embeddedPerson->setI18nHonorific($honorificI18n);
+        $embeddedPerson->setI18nFirm($firmI18n);
+        $embeddedPerson->setI18nPost($postI18n);
+        $embeddedPerson->setI18nBio($bioI18n);
+
+        $this->dm->persist($embeddedPerson);
+        $this->dm->flush();
+
+        $this->assertEquals($honorificI18n, $embeddedPerson->getI18nHonorific());
+        $this->assertEquals($firmI18n, $embeddedPerson->getI18nFirm());
+        $this->assertEquals($postI18n, $embeddedPerson->getI18nPost());
+        $this->assertEquals($bioI18n, $embeddedPerson->getI18nBio());
+
+        $honorific = null;
+        $firm = null;
+        $post = null;
+        $bio = null;
+
+        $embeddedPerson->setHonorific($honorific);
+        $embeddedPerson->setFirm($firm);
+        $embeddedPerson->setPost($post);
+        $embeddedPerson->setBio($bio);
+
+        $this->dm->persist($embeddedPerson);
+        $this->dm->flush();
+
+        $this->assertEquals($honorific, $embeddedPerson->getHonorific());
+        $this->assertEquals($firm, $embeddedPerson->getFirm());
+        $this->assertEquals($post, $embeddedPerson->getPost());
+        $this->assertEquals($bio, $embeddedPerson->getBio());
     }
 
     private function createPerson($name)
