@@ -116,13 +116,13 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
-     * Count people in multimedia objects
+     * Find people in multimedia objects
      * with given role
      *
      * @param string $roleCod
      * @return ArrayCollection
      */
-    public function countPeopleWithRoleCode($roleCode)
+    public function findPeopleWithRoleCode($roleCode)
     {
         $dm = $this->getDocumentManager();
         $collection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
@@ -155,14 +155,14 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
-     * Find one person in multimedia objects
+     * Find person in multimedia objects
      * with given role and given email
      *
      * @param string $roleCod
      * @param string $email
      * @return ArrayCollection
      */
-    public function findOnePersonWithRoleCodeAndEmail($roleCode, $email)
+    public function findPersonWithRoleCodeAndEmail($roleCode, $email)
     {
         $dm = $this->getDocumentManager();
         $collection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');

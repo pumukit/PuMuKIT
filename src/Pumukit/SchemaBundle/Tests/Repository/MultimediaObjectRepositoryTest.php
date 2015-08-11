@@ -1365,15 +1365,15 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mm4);
         $this->dm->flush();
 
-        $peopleLord = $this->repo->countPeopleWithRoleCode($role_lord->getCod());
+        $peopleLord = $this->repo->findPeopleWithRoleCode($role_lord->getCod());
         $this->assertEquals(3, count($peopleLord));
-        $peopleRanger = $this->repo->countPeopleWithRoleCode($role_ranger->getCod());
+        $peopleRanger = $this->repo->findPeopleWithRoleCode($role_ranger->getCod());
         $this->assertEquals(3, count($peopleRanger));
-        $peopleHand = $this->repo->countPeopleWithRoleCode($role_hand->getCod());
+        $peopleHand = $this->repo->findPeopleWithRoleCode($role_hand->getCod());
         $this->assertEquals(2, count($peopleHand));
     }
 
-    public function testFindPeopleWithRoleCodeAndEmail()
+    public function testFindPersonWithRoleCodeAndEmail()
     {
         $series_type = $this->createSeriesType("Medieval Fantasy Sitcom");
 
