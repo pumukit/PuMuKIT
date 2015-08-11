@@ -194,6 +194,24 @@ class MultimediaObjectRepository extends DocumentRepository
           ->execute();
     }
 
+    /**
+     * Find series by person id
+     *
+     * @param string $personId
+     * @param string $roleCod
+     * @return ArrayCollection
+     */
+    public function findSeriesFieldByPersonIdAndRoleCod($personId, $roleCod)
+    {
+        $qb = $this->createQueryBuilder();
+        $qb->field('people')->elemMatch(
+            $qb->expr()->field('people._id')->equals(new \MongoId($personId))
+                ->field('cod')->equals($roleCod)
+                                        );
+        return $qb->distinct('series')
+          ->getQuery()
+          ->execute();
+    }
 
     // Find Multimedia Objects with Tags
 
