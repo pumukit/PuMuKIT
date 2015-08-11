@@ -540,6 +540,43 @@ class SeriesRepositoryTest extends WebTestCase
         $seriesBob = $this->repo->findSeriesByPersonId($personBob->getId());
         $this->assertEquals(2, count($seriesBob));
         $this->assertEquals(array($series1, $series3), array_values($seriesBob->toArray()));
+
+        $seriesJohnActor = $this->repo->findByPersonIdAndRoleCod($personJohn->getId(), $roleActor->getCod());
+        $seriesJohnPresenter = $this->repo->findByPersonIdAndRoleCod($personJohn->getId(), $rolePresenter->getCod());
+        $seriesBobActor = $this->repo->findByPersonIdAndRoleCod($personBob->getId(), $roleActor->getCod());
+        $seriesBobPresenter = $this->repo->findByPersonIdAndRoleCod($personBob->getId(), $rolePresenter->getCod());
+        $seriesKateActor = $this->repo->findByPersonIdAndRoleCod($personKate->getId(), $roleActor->getCod());
+        $seriesKatePresenter = $this->repo->findByPersonIdAndRoleCod($personKate->getId(), $rolePresenter->getCod());
+
+        $this->assertEquals(2, count($seriesJohnActor));
+        $this->assertTrue(in_array($series1, $seriesJohnActor->toArray()));
+        $this->assertFalse(in_array($series2, $seriesJohnActor->toArray()));
+        $this->assertTrue(in_array($series3, $seriesJohnActor->toArray()));
+
+        $this->assertEquals(2, count($seriesJohnPresenter));
+        $this->assertTrue(in_array($series1, $seriesJohnPresenter->toArray()));
+        $this->assertFalse(in_array($series2, $seriesJohnPresenter->toArray()));
+        $this->assertTrue(in_array($series3, $seriesJohnPresenter->toArray()));
+
+        $this->assertEquals(2, count($seriesBobActor));
+        $this->assertTrue(in_array($series1, $seriesBobActor->toArray()));
+        $this->assertFalse(in_array($series2, $seriesBobActor->toArray()));
+        $this->assertTrue(in_array($series3, $seriesBobActor->toArray()));
+
+        $this->assertEquals(1, count($seriesBobPresenter));
+        $this->assertTrue(in_array($series1, $seriesBobPresenter->toArray()));
+        $this->assertFalse(in_array($series2, $seriesBobPresenter->toArray()));
+        $this->assertFalse(in_array($series3, $seriesBobPresenter->toArray()));
+
+        $this->assertEquals(2, count($seriesKateActor));
+        $this->assertTrue(in_array($series1, $seriesKateActor->toArray()));
+        $this->assertTrue(in_array($series2, $seriesKateActor->toArray()));
+        $this->assertFalse(in_array($series3, $seriesKateActor->toArray()));
+
+        $this->assertEquals(1, count($seriesKatePresenter));
+        $this->assertFalse(in_array($series1, $seriesKatePresenter->toArray()));
+        $this->assertTrue(in_array($series2, $seriesKatePresenter->toArray()));
+        $this->assertFalse(in_array($series3, $seriesKatePresenter->toArray()));
     }
 
     public function testFindBySeriesType()
