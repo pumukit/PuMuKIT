@@ -25,7 +25,7 @@ class PumukitMoodleExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
-        $container->setParameter('pumukitmoodle.password', $config['password']);
-        $container->setParameter('pumukitmoodle.role', $config['role']);
+        $container->setParameter('pumukit_moodle.password', $config['password']);
+        $container->setParameter('pumukit_moodle.role', $config['role']);
     }
 }
