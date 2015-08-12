@@ -116,6 +116,27 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
+     * Find multimedia objects by person id
+     * with given role in given series
+     *
+     * @param Series $series
+     * @param string $personId
+     * @param string $roleCod
+     * @return ArrayCollection
+     */
+    public function findBySeriesAndPersonIdWithRoleCod($series, $personId, $roleCod)
+    {
+        $qb = $this->createQueryBuilder()
+            ->field('series')->references($series);
+        $qb->field('people')->elemMatch(
+            $qb->expr()->field('people._id')->equals(new \MongoId($personId))
+                ->field('cod')->equals($roleCod)
+        );
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
      * Find people in multimedia objects
      * with given role
      *
