@@ -5,7 +5,8 @@ namespace Pumukit\MoodleBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/pumoodle")
@@ -25,36 +26,38 @@ class MoodleController extends Controller
     {
         $email = $request->get('professor_email');
         $ticket  = $request->get('ticket');
-        $culture = $request->get('lang');
+        $locale = $request->get('lang', $this->get('session')->get('_locale'));
 
-        $this->setCultureIfPresent($culture);
+        $roleCode = $this->container->getParameter('pumukit_moodle.role');
+        $seriesRepo = $this->get('doctrine_mongodb.odm.document_manager')
+        ->getRepository('PumukitSchemaBundle:Series');
+        $mmobjRepo = $this->get('doctrine_mongodb.odm.document_manager')
+        ->getRepository('PumukitSchemaBundle:MultimediaObject');
 
-        if ($professor = $this->findProfessorEmailTicket($email, $ticket)){
-            // TODO - CONTINUE IN HERE
-            $series = $professor->getSeries(self::ROLE_ID);
-            $total_mm = 0;
-            $array_series_mm = array();
+        $this->setLocaleIfPresent($locale);
+
+        if ($professor = $this->findProfessorEmailTicket($email, $ticket, $roleCode)){
+            $series = $seriesRepo->findByPersonIdAndRoleCod($professor->getId(), $roleCode);
+            $numberMultimediaObjects = 0;
+            $multimediaObjectsArray = array();
             $out = array();
-          
-            foreach ($series as $s){
-                $serial_title = $s->getTitle();
-                $array_series_mm[$serial_title] = array();
-                $mms = $s->getMmsByPerson($professor->getId(), self::ROLE_ID);
-        
-                foreach ($mms as $mm) {
-
-                  $mm_title = $mm->getRecordDate('Y-m-d') . ' ' . $mm->getTitle();
-                  if ($mm->getSubtitle() != ''){
-                    $mm_title .= " - " . $mm->getSubtitle();
-                  }
-                  $array_series_mm[$serial_title][$mm_title] = url_for('pumoodle/embed?m=' . $mm->getId(), true) . '/lang/' . $this->vculture;
-                  $total_mm++;
+            foreach ($series as $oneseries){
+                $seriesTitle = $oneseries->getTitle();
+                $multimediaObjectsArray[$seriesTitle] = array();
+                $multimediaObjects = $mmobjRepo->findBySeriesAndPersonIdWithRoleCod($oneseries, $professor->getId(), $roleCode);
+                foreach ($multimediaObjects as $multimediaObject) {
+                  $multimediaObjectTitle = $multimediaObject->getRecordDate()->format('Y-m-d') . ' ' . $multimediaObject->getTitle();
+                    if ($multimediaObject->getSubtitle() != ''){
+                        $multimediaObjectTitle .= " - " . $multimediaObject->getSubtitle();
+                    }
+                    $multimediaObjectsArray[$seriesTitle][$multimediaObjectTitle] = $this->generateUrl('pumukit_moodle_pumoodle_embed', array('multimediaObject' => $multimediaObject->getId(), 'lang' => $locale), true);
+                    $numberMultimediaObjects++;
                 }
             }
             
             $out['status']     = "OK";
-            $out['status_txt'] = $total_mm;
-            $out['out']        = $array_series_mm;
+            $out['status_txt'] = $numberMultimediaObjects;
+            $out['out']        = $multimediaObjectsArray;
             
             return new JsonResponse($out, 200);          
         } 
@@ -76,17 +79,18 @@ class MoodleController extends Controller
 
 
     /**
-     * @Route("/embed")
+     * @Route("/embed", name="pumukit_moodle_pumoodle_embed")
      */
     public function embedAction(Request $request)
     {
-      
+        $multimediaObject = $request->get('multimediaObject');
+        $locale = $request->get('lang');
     }
 
     private function checkEmailTicket($email, $ticket)
     {
       $check = "";
-      $password = $this->container->getParameter('pumukitmoodle.password');
+      $password = $this->container->getParameter('pumukit_moodle.password');
       $check = md5($password . date("Y-m-d") . $email);
       return ($check === $ticket);
     }
@@ -95,21 +99,26 @@ class MoodleController extends Controller
     {
     }
 
-    private function findProfessorEmailTicket($email, $ticket)
+    private function findProfessorEmailTicket($email, $ticket, $roleCode)
     {
-        $roleCode = $this->container->getParameter('pumukitmoodle.actor');
         $repo = $this->get('doctrine_mongodb.odm.document_manager')
         ->getRepository('PumukitSchemaBundle:Person');
 
-        $professor = $repo->findOneByCodAndEmail($roleCode, $email);
+        $professor = $repo->findByRoleCodAndEmail($roleCode, $email);
         if ($this->checkEmailTicket($email, $ticket)) {
             return $professor;
         }
         return null;
     }
 
-    private function setCultureIfPresent($culture)
+    private function setLocaleIfPresent($locale)
     {
-        // TODO
+        $session = $this->get('session');
+        $previousLocale = $session->get('_locale');
+        try {
+            $session->set('_locale', $locale);
+        } catch (\Exception $e) {
+            $session->set('_locale', $previousLocale);
+        }
     }
 }
