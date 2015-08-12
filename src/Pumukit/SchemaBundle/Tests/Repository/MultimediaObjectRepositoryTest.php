@@ -12,6 +12,7 @@ use Pumukit\SchemaBundle\Document\Link;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\EmbeddedPerson;
 use Pumukit\SchemaBundle\Document\EmbeddedRole;
+use Pumukit\SchemaBundle\Document\EmbeddedTag;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Broadcast;
@@ -1604,6 +1605,29 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         $role = new Role();
         //var_dump($embeddedRole->createEmbeddedPerson($role));
+    }
+
+    public function testEmbeddedTag()
+    {
+        $tag = new Tag();
+        $tag->setCod('tag');
+
+        $tag1 = new Tag();
+        $tag1->setCod('embeddedTag');
+
+        $this->dm->persist($tag);
+        $this->dm->persist($tag1);
+
+        $this->dm->flush();
+
+        $embeddedTag = new EmbeddedTag($tag);
+        $embeddedTag->setCod('embeddedTag');
+
+        $this->dm->persist($embeddedTag);
+        $this->dm->flush();
+
+        $this->assertTrue($embeddedTag->isDescendantOf($tag));
+        $this->assertFalse($embeddedTag->isDescendantOf($tag1));
     }
 
     private function createPerson($name)
