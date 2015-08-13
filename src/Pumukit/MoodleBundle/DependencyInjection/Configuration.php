@@ -26,7 +26,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
           ->children()
             ->scalarNode('password')
-              ->isRequired()
+              ->defaultValue('ThisIsASecretPasswordChangeMe')
               ->info('shared secret  between Moodle and Pumukit')
             ->end()
           ->end()
