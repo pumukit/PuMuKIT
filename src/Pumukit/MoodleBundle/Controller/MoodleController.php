@@ -118,11 +118,10 @@ class MoodleController extends Controller
             $out['out']        = $multimediaObjectsArray;
             return new JsonResponse($out, 200);
         }
-        $out['status']     = "ERROR";
-        // TO DO - añadir host, más estados de error.
-        $out['status_txt'] = "Error de autenticación - profesor no encontrado en el servidor de vídeo pumukit";
-        $out['out']        = null;
-        //echo json_encode ($out);
+        $out['status'] = "ERROR";
+        $out['status_txt'] = "Authentication error: professor with email " . $email  . " not found in Pumukit video server.";
+        $out['out'] = null;
+
         return new JsonResponse($out, 404);
     }
 
