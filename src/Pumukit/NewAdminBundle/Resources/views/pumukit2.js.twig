@@ -637,16 +637,18 @@ window.change_select = function(element, selector, pluralName)
                 var route = '{{ path('pumukitnewadmin_mms_invert_announce', {'ids': '__ids__'})|raw }}';
             $('#list_'+pluralName).load(route.replace('__ids__', JSON.stringify(ids)));
         }
+        var editSeriesId = $("#inputROId").val();
+        var editMmId = $("#inputMMId").val();
         for (var i = 0; i < ids.length; i++) {
             id = ids[i];
-            if ('mm' == element) {
+            if (('mm' == element) && (id == editMmId)){
                 var puDeNew = $("#list_pubdecisions_"+id+" #pub_decisions_PUDENEW");
                 if (1 == puDeNew.length){
                     var checkedValue = puDeNew[0].checked;
                     if (checkedValue) puDeNew[0].checked = false;
                     else puDeNew[0].checked = true;
                 }
-            } else if ('series' == element) {
+            } else if (('series' == element) && (id == editSeriesId)) {
                 var announcedSeries = $("#pumukitnewadmin_series_announce");
                 if (1 == announcedSeries.length){
                     var checkedValue = announcedSeries[0].checked;
