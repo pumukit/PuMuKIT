@@ -242,6 +242,31 @@ class FactoryServiceTest extends WebTestCase
         $this->assertTrue($this->factory->getMultimediaObjectPrototype($series)->isPrototype());
     }
 
+    public function testGetTagsByCod()
+    {
+        $tagA = new Tag();
+        $tagA->setCod("A");
+        $this->dm->persist($tagA);
+        $this->dm->flush();
+
+        $tagB = new Tag();
+        $tagB->setCod("A");
+        $this->dm->persist($tagB);
+        $this->dm->flush();
+
+        $tagC = new Tag();
+        $tagC->setCod("A");
+        $this->dm->persist($tagC);
+        $this->dm->flush();
+
+        $this->assertEquals($tagA, $this->factory->getTagsByCod('A', false));
+
+        $tagA->addChild($tagB);
+        $tagA->addChild($tagC);
+
+        $this->assertEquals(2, count($this->factory->getTagsByCod('A', true)));
+    }
+
     public function testDeleteSeries()
     {
         $this->createBroadcasts();
