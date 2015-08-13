@@ -357,6 +357,47 @@ class PersonServiceTest extends WebTestCase
         $this->assertEquals(array($personJohn, $personBobby), $this->personService->autoCompletePeopleByName('sm'));
     }
 
+    public function testDeleteRelation()
+    {
+        $personBob = new Person();
+        $nameBob = 'Bob Clark';
+        $personBob->setName($nameBob);
+
+        $personBob = $this->personService->savePerson($personBob);
+
+        $roleActor = new Role();
+        $codActor = 'actor';
+        $roleActor->setCod($codActor);
+
+        $this->dm->persist($roleActor);
+        $this->dm->flush();
+
+        $broadcast = new Broadcast();
+        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
+        $broadcast->setDefaultSel(true);
+        $this->dm->persist($broadcast);
+        $this->dm->flush();
+
+        $series = $this->factoryService->createSeries();
+
+        $mm1 = $this->factoryService->createMultimediaObject($series);
+        $title1 = 'Multimedia Object 1';
+        $mm1->setTitle($title1);
+        $mm1->addPersonWithRole($personBob, $roleActor);
+
+        $this->dm->persist($mm1);
+        $this->dm->flush();
+
+        $personBobId = $personBob->getId();
+
+        $this->assertEquals(1, count($this->repoMmobj->findByPersonId($personBobId)));
+        $this->assertEquals($personBob, $this->repo->find($personBobId));
+
+        $this->personService->deleteRelation($personBob, $roleActor, $mm1);
+
+        $this->assertEquals(0, count($this->repoMmobj->findByPersonId($personBobId)));
+    }
+
     public function testBatchDeletePerson()
     {
         $personJohn = new Person();
