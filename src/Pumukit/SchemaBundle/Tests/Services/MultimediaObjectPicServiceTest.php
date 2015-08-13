@@ -145,6 +145,29 @@ class MultimediaObjectPicServiceTest extends WebTestCase
         $this->deleteCreatedFiles();
     }
 
+    public function testRemovePicFromMultimediaObject()
+    {
+        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
+
+        $series = $this->factoryService->createSeries();
+        $mm = $this->factoryService->createMultimediaObject($series);
+
+        $picPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'picCopy.png';
+        if (copy($this->originalPicPath, $picPath)){
+            $picFile = new UploadedFile($picPath, 'pic.png', null, null, null, true);
+            $mm = $this->mmsPicService->addPicFile($mm, $picFile);
+
+            $this->assertEquals(1, count($mm->getPics()));
+
+            $pic = $mm->getPics()[0];
+            $mm = $this->mmsPicService->removePicFromMultimediaObject($mm, $pic->getId());
+
+            $this->assertEquals(0, count($mm->getPics()));
+        }
+
+        $this->deleteCreatedFiles();
+    }
+
     /**
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage for storing Pics does not exist
