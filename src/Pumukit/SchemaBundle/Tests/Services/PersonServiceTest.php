@@ -478,6 +478,32 @@ class PersonServiceTest extends WebTestCase
         $this->assertNull($this->repo->find($personJohnId));
     }
 
+    public function testCountMultimediaObjectsWithPerson()
+    {
+        $personJohn = new Person();
+        $nameJohn = 'John Smith';
+        $personJohn->setName($nameJohn);
+
+        $roleActor = new Role();
+        $codActor = 'actor';
+        $roleActor->setCod($codActor);
+
+        $this->dm->persist($roleActor);
+        $this->dm->flush();
+
+        $personJohn = $this->personService->savePerson($personJohn);
+
+        $series = $this->factoryService->createSeries();
+        $mm1 = $this->factoryService->createMultimediaObject($series);
+
+        $mm1->addPersonWithRole($personJohn, $roleActor);
+
+        $this->dm->persist($mm1);
+        $this->dm->flush();
+
+        $this->assertEquals(1, count($this->personService->countMultimediaObjectsWithPerson($personJohn)));
+    }
+
     public function testUpAndDownPersonWithRole()
     {
         $personJohn = new Person();
