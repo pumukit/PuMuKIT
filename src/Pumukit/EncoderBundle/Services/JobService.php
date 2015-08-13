@@ -632,7 +632,7 @@ class JobService
 
         foreach($jobs as $job) {
           if($job->getTimestart() < $yesterday) {  
-            $this->logger->addError(sprintf('[checkService] Job executing for a long time %s', $job-getId()));
+            $this->logger->addError(sprintf('[checkService] Job executing for a long time %s', $job->getId()));
           }
         }
     }

@@ -174,6 +174,121 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(2, count($seriesNed));
         $this->assertTrue(in_array($series_main->getId(), $seriesNed->toArray()));
         $this->assertTrue(in_array($series_lhazar->getId(), $seriesNed->toArray()));
+
+        $seriesBenjenRanger = $this->repo->findSeriesFieldByPersonIdAndRoleCod($person_benjen->getId(), $role_ranger->getCod());
+        $seriesNedRanger = $this->repo->findSeriesFieldByPersonIdAndRoleCod($person_ned->getId(), $role_ranger->getCod());
+        $seriesBenjenLord = $this->repo->findSeriesFieldByPersonIdAndRoleCod($person_benjen->getId(), $role_lord->getCod());
+        $seriesNedLord = $this->repo->findSeriesFieldByPersonIdAndRoleCod($person_ned->getId(), $role_lord->getCod());
+        $seriesBenjenHand = $this->repo->findSeriesFieldByPersonIdAndRoleCod($person_benjen->getId(), $role_hand->getCod());
+        $seriesNedHand = $this->repo->findSeriesFieldByPersonIdAndRoleCod($person_ned->getId(), $role_hand->getCod());
+
+        $this->assertEquals(2, count($seriesBenjenRanger));
+        $this->assertTrue(in_array($series_wall->getId(), $seriesBenjenRanger->toArray()));
+        $this->assertTrue(in_array($series_main->getId(), $seriesBenjenRanger->toArray()));
+        $this->assertFalse(in_array($series_lhazar->getId(), $seriesBenjenRanger->toArray()));
+
+        $this->assertEquals(0, count($seriesNedRanger));
+        $this->assertFalse(in_array($series_wall->getId(), $seriesNedRanger->toArray()));
+        $this->assertFalse(in_array($series_main->getId(), $seriesNedRanger->toArray()));
+        $this->assertFalse(in_array($series_lhazar->getId(), $seriesNedRanger->toArray()));
+
+        $this->assertEquals(0, count($seriesBenjenLord));
+        $this->assertFalse(in_array($series_wall->getId(), $seriesBenjenLord->toArray()));
+        $this->assertFalse(in_array($series_main->getId(), $seriesBenjenLord->toArray()));
+        $this->assertFalse(in_array($series_lhazar->getId(), $seriesBenjenLord->toArray()));
+
+        $this->assertEquals(1, count($seriesNedLord));
+        $this->assertFalse(in_array($series_wall->getId(), $seriesNedLord->toArray()));
+        $this->assertTrue(in_array($series_main->getId(), $seriesNedLord->toArray()));
+        $this->assertFalse(in_array($series_lhazar->getId(), $seriesNedLord->toArray()));
+
+        $this->assertEquals(0, count($seriesBenjenHand));
+        $this->assertFalse(in_array($series_wall->getId(), $seriesBenjenHand->toArray()));
+        $this->assertFalse(in_array($series_main->getId(), $seriesBenjenHand->toArray()));
+        $this->assertFalse(in_array($series_lhazar->getId(), $seriesBenjenHand->toArray()));
+
+        $this->assertEquals(1, count($seriesNedHand));
+        $this->assertFalse(in_array($series_wall->getId(), $seriesNedHand->toArray()));
+        $this->assertFalse(in_array($series_main->getId(), $seriesNedHand->toArray()));
+        $this->assertTrue(in_array($series_lhazar->getId(), $seriesNedHand->toArray()));
+
+        $mmobjsMainNedLord = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_main, $person_ned->getId(), $role_lord->getCod());
+        $this->assertEquals(2, count($mmobjsMainNedLord));
+        $this->assertTrue(in_array($mm1, $mmobjsMainNedLord->toArray()));
+        $this->assertTrue(in_array($mm3, $mmobjsMainNedLord->toArray()));
+
+        $mmobjsMainNedRanger = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_main, $person_ned->getId(), $role_ranger->getCod());
+        $this->assertEquals(0, count($mmobjsMainNedRanger));
+        $this->assertFalse(in_array($mm1, $mmobjsMainNedRanger->toArray()));
+        $this->assertFalse(in_array($mm3, $mmobjsMainNedRanger->toArray()));
+
+        $mmobjsMainNedHand = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_main, $person_ned->getId(), $role_hand->getCod());
+        $this->assertEquals(0, count($mmobjsMainNedHand));
+        $this->assertFalse(in_array($mm1, $mmobjsMainNedHand->toArray()));
+        $this->assertFalse(in_array($mm3, $mmobjsMainNedHand->toArray()));
+
+        $mmobjsMainBenjenLord = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_main, $person_benjen->getId(), $role_lord->getCod());
+        $this->assertEquals(0, count($mmobjsMainBenjenLord));
+        $this->assertFalse(in_array($mm1, $mmobjsMainBenjenLord->toArray()));
+        $this->assertFalse(in_array($mm3, $mmobjsMainBenjenLord->toArray()));
+
+        $mmobjsMainBenjenRanger = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_main, $person_benjen->getId(), $role_ranger->getCod());
+        $this->assertEquals(1, count($mmobjsMainBenjenRanger));
+        $this->assertFalse(in_array($mm1, $mmobjsMainBenjenRanger->toArray()));
+        $this->assertTrue(in_array($mm3, $mmobjsMainBenjenRanger->toArray()));
+
+        $mmobjsMainBenjenHand = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_main, $person_benjen->getId(), $role_hand->getCod());
+        $this->assertEquals(0, count($mmobjsMainBenjenHand));
+        $this->assertFalse(in_array($mm1, $mmobjsMainBenjenHand->toArray()));
+        $this->assertFalse(in_array($mm3, $mmobjsMainBenjenHand->toArray()));
+
+        $mmobjsWallNedLord = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_wall, $person_ned->getId(), $role_lord->getCod());
+        $this->assertEquals(0, count($mmobjsWallNedLord));
+        $this->assertFalse(in_array($mm2, $mmobjsWallNedLord->toArray()));
+
+        $mmobjsWallNedRanger = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_wall, $person_ned->getId(), $role_ranger->getCod());
+        $this->assertEquals(0, count($mmobjsWallNedRanger));
+        $this->assertFalse(in_array($mm2, $mmobjsWallNedRanger->toArray()));
+
+        $mmobjsWallNedHand = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_wall, $person_ned->getId(), $role_hand->getCod());
+        $this->assertEquals(0, count($mmobjsWallNedHand));
+        $this->assertFalse(in_array($mm2, $mmobjsWallNedHand->toArray()));
+
+        $mmobjsWallBenjenLord = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_wall, $person_benjen->getId(), $role_lord->getCod());
+        $this->assertEquals(0, count($mmobjsWallBenjenLord));
+        $this->assertFalse(in_array($mm2, $mmobjsWallBenjenLord->toArray()));
+
+        $mmobjsWallBenjenRanger = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_wall, $person_benjen->getId(), $role_ranger->getCod());
+        $this->assertEquals(1, count($mmobjsWallBenjenRanger));
+        $this->assertTrue(in_array($mm2, $mmobjsWallBenjenRanger->toArray()));
+
+        $mmobjsWallBenjenHand = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_wall, $person_benjen->getId(), $role_hand->getCod());
+        $this->assertEquals(0, count($mmobjsWallBenjenHand));
+        $this->assertFalse(in_array($mm2, $mmobjsWallBenjenHand->toArray()));
+
+        $mmobjsLhazarNedLord = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_lhazar, $person_ned->getId(), $role_lord->getCod());
+        $this->assertEquals(0, count($mmobjsLhazarNedLord));
+        $this->assertFalse(in_array($mm4, $mmobjsLhazarNedLord->toArray()));
+
+        $mmobjsLhazarNedRanger = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_lhazar, $person_ned->getId(), $role_ranger->getCod());
+        $this->assertEquals(0, count($mmobjsLhazarNedRanger));
+        $this->assertFalse(in_array($mm4, $mmobjsLhazarNedRanger->toArray()));
+
+        $mmobjsLhazarNedHand = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_lhazar, $person_ned->getId(), $role_hand->getCod());
+        $this->assertEquals(1, count($mmobjsLhazarNedHand));
+        $this->assertTrue(in_array($mm4, $mmobjsLhazarNedHand->toArray()));
+
+        $mmobjsLhazarBenjenLord = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_lhazar, $person_benjen->getId(), $role_lord->getCod());
+        $this->assertEquals(0, count($mmobjsLhazarBenjenLord));
+        $this->assertFalse(in_array($mm4, $mmobjsLhazarBenjenLord->toArray()));
+
+        $mmobjsLhazarBenjenRanger = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_lhazar, $person_benjen->getId(), $role_ranger->getCod());
+        $this->assertEquals(0, count($mmobjsLhazarBenjenRanger));
+        $this->assertFalse(in_array($mm4, $mmobjsLhazarBenjenRanger->toArray()));
+
+        $mmobjsLhazarBenjenHand = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_lhazar, $person_benjen->getId(), $role_hand->getCod());
+        $this->assertEquals(0, count($mmobjsLhazarBenjenHand));
+        $this->assertFalse(in_array($mm4, $mmobjsLhazarBenjenHand->toArray()));
     }
 
     public function testPeopleInMultimediaObjectCollection()
@@ -1365,11 +1480,11 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mm4);
         $this->dm->flush();
 
-        $peopleLord = $this->repo->countPeopleWithRoleCode($role_lord->getCod());
+        $peopleLord = $this->repo->findPeopleWithRoleCode($role_lord->getCod());
         $this->assertEquals(3, count($peopleLord));
-        $peopleRanger = $this->repo->countPeopleWithRoleCode($role_ranger->getCod());
+        $peopleRanger = $this->repo->findPeopleWithRoleCode($role_ranger->getCod());
         $this->assertEquals(3, count($peopleRanger));
-        $peopleHand = $this->repo->countPeopleWithRoleCode($role_hand->getCod());
+        $peopleHand = $this->repo->findPeopleWithRoleCode($role_hand->getCod());
         $this->assertEquals(2, count($peopleHand));
     }
 

@@ -4,20 +4,20 @@
   jwplayer("player1").setup({
     {% if intro %}
     playlist: [{
-      file: "{{intro}}",
+      file: "{{ asset(intro, absolute=true) }}",
       {% if multimediaObject.getFirstUrlPic() and not autostart %}
-      image: "{{ multimediaObject.getFirstUrlPic() }}",
+      image: "{{ asset(multimediaObject.getFirstUrlPic(), absolute=true) }}",
       {% endif %}
     },{
-      file: "{{track.url}}",
+      file: "{{ asset(track.url, absolute=true) }}",
       {% if multimediaObject.getFirstUrlPic() and not autostart %}
-      image: "{{ multimediaObject.getFirstUrlPic() }}",
+      image: "{{ asset(multimediaObject.getFirstUrlPic(), absolute=true) }}",
       {% endif %}
     }],
     {% else %}
-    file: "{{track.url}}",
+    file: "{{ asset(track.url, absolute=true) }}",
     {% if multimediaObject.getFirstUrlPic() and not autostart %}
-    image: "{{ multimediaObject.getFirstUrlPic() }}",
+    image: "{{ asset(multimediaObject.getFirstUrlPic(), absolute=true) }}",
     {% endif %}
     {% endif %}
     startparam: "start",

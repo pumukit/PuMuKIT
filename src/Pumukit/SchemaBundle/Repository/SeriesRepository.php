@@ -257,6 +257,24 @@ class SeriesRepository extends DocumentRepository
     }
 
     /**
+     * Find series by person id and role cod
+     *
+     * @param string $personId
+     * @param string $roleCod
+     * @return ArrayCollection
+     */
+    public function findByPersonIdAndRoleCod($personId, $roleCod)
+    {
+        $repoMmobj = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCod($personId, $roleCod);
+
+        return $this->createQueryBuilder()
+            ->field('_id')->in($referencedSeries->toArray())
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
      * Find series with given series type
      *
      * @param SeriesType $series_type
