@@ -195,6 +195,16 @@ class FactoryServiceTest extends WebTestCase
         $this->assertEquals($series, $this->factory->findSeriesById($series->getId(), null));
     }
 
+    public function testFindMultimediaObjectById()
+    {
+        $this->createBroadcasts();
+
+        $series = $this->factory->createSeries();
+        $mm = $this->factory->createMultimediaObject($series);
+
+        $this->assertEquals($mm, $this->factory->findMultimediaObjectById($mm->getId()));
+    }
+
     public function testGetParentTags()
     {
         $tag = new Tag();
