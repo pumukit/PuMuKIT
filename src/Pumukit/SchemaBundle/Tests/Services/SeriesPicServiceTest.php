@@ -114,11 +114,17 @@ class SeriesPicServiceTest extends WebTestCase
         $this->assertEquals(0, count($series->getPics()));
 
         $url = 'http://domain.com/pic.png';
+        $bannerTargetUrl = 'http://domain.com/banner';
 
         $series = $this->seriesPicService->addPicUrl($series, $url);
 
         $this->assertEquals(1, count($series->getPics()));
         $this->assertEquals(1, count($this->repo->findAll()[0]->getPics()));
+
+        $series = $this->seriesPicService->addPicUrl($series, $url, true, $bannerTargetUrl);
+
+        $this->assertEquals(2, count($series->getPics()));
+        $this->assertEquals(2, count($this->repo->findAll()[0]->getPics()));
     }
 
     public function testAddPicFile()
