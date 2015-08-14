@@ -163,6 +163,33 @@ class SeriesPicServiceTest extends WebTestCase
         $this->deleteCreatedFiles();
     }
 
+    public function testRemovePicFromSeries()
+    {
+        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
+
+        $series = $this->factoryService->createSeries();
+
+        $this->assertEquals(0, count($series->getPics()));
+
+        $pic = new Pic();
+        $url = 'http://domain.com/pic.png';
+        $pic->setUrl($url);
+
+        $pic->addTag('tag1');
+        $pic->addTag('tag2');
+        $pic->addTag('tag3');
+        $pic->addTag('banner');
+
+        $this->dm->persist($pic);
+        $this->dm->flush();
+
+        $series->addPic($pic);
+        $this->assertEquals(1, count($series->getPics()));
+
+        $series = $this->seriesPicService->removePicFromSeries($series, $pic->getId());
+        $this->assertEquals(0, count($series->getPics()));
+    }
+
     /**
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage for storing Pics does not exist
