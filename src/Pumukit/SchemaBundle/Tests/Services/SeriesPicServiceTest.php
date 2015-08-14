@@ -150,6 +150,16 @@ class SeriesPicServiceTest extends WebTestCase
             $this->assertEquals($uploadedPic, $pic->getUrl());
         }
 
+        $picPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'picCopy2.png';
+        if (copy($this->originalPicPath, $picPath)){
+            $picFile = new UploadedFile($picPath, 'pic2.png', null, null, null, true);
+
+            $bannerTargetUrl = 'http://domain.com/banner';
+            $series = $this->seriesPicService->addPicFile($series, $picFile, true, $bannerTargetUrl);
+        
+            $this->assertEquals(2, count($series->getPics()));
+        }
+
         $this->deleteCreatedFiles();
     }
 
