@@ -450,6 +450,29 @@ class SeriesRepositoryTest extends WebTestCase
         $this->assertEquals(1, count($this->repo->createBuilderWithTag($tag3, $sortDesc)));
     }
 
+    public function testFindByPicId()
+    {
+        $broadcast = new Broadcast();
+        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
+        $broadcast->setDefaultSel(true);
+        $this->dm->persist($broadcast);
+        $this->dm->flush();
+
+        $series1 = $this->factoryService->createSeries();
+        $title1 = 'Series 1';
+        $series1->setTitle($title1);
+
+        $pic = new Pic();
+        $this->dm->persist($pic);
+
+        $series1->addPic($pic);
+
+        $this->dm->persist($series1);
+        $this->dm->flush();
+
+        $this->assertEquals(1, count($this->repo->findByPicId($pic->getId())));
+    }
+
     public function testFindSeriesByPersonId()
     {
         $broadcast = new Broadcast();
