@@ -107,6 +107,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
 
         $properties = array('prop2' => 'property2');
         $mm->setProperties($properties);
+        $key = 'prop2';
 
         $this->assertEquals($properties[$key], $mm->getProperty($key));
     }
