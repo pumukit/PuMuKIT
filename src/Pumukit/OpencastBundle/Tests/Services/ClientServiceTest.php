@@ -35,11 +35,9 @@ class ClientServiceTest extends WebTestCase
 
     public function testGetMediaPackages()
     {
-      /*
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
+        $this->markTestSkipped(
+          'Integration test.'
         );
-      */
     
         $media = $this->clientService->getMediaPackages(0,0,0);
     }
