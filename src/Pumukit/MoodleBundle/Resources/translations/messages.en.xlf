@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+    <body>
+      <trans-unit id="8d598266a0deeab26f751bf80d76af11" resname="Currently you don't have permission to see this video. Contact %email% pointing out the name of the series and the video that previously it was displayed at this page.">
+        <source>Currently you don't have permission to see this video. Contact %email% pointing out the name of the series and the video that previously it was displayed at this page.</source>
+        <target>Currently you don't have permission to see this video. Contact %email% pointing out the name of the series and the video that previously it was displayed at this page.</target>
+      </trans-unit>
+      <trans-unit id="90aa781625da639f3b3f82d60de85791" resname="Error: Multimedia Object with id %id% not found">
+        <source>Error: Multimedia Object with id %id% not found</source>
+        <target>Error: Multimedia Object with id %id% not found</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

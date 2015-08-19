@@ -116,13 +116,34 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
-     * Count people in multimedia objects
+     * Find multimedia objects by person id
+     * with given role in given series
+     *
+     * @param Series $series
+     * @param string $personId
+     * @param string $roleCod
+     * @return ArrayCollection
+     */
+    public function findBySeriesAndPersonIdWithRoleCod($series, $personId, $roleCod)
+    {
+        $qb = $this->createQueryBuilder()
+            ->field('series')->references($series);
+        $qb->field('people')->elemMatch(
+            $qb->expr()->field('people._id')->equals(new \MongoId($personId))
+                ->field('cod')->equals($roleCod)
+        );
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
+     * Find people in multimedia objects
      * with given role
      *
      * @param string $roleCod
      * @return ArrayCollection
      */
-    public function countPeopleWithRoleCode($roleCode)
+    public function findPeopleWithRoleCode($roleCode)
     {
         $dm = $this->getDocumentManager();
         $collection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
@@ -152,7 +173,31 @@ class MultimediaObjectRepository extends DocumentRepository
         }
 
         return $people;
+    }
 
+    /**
+     * Find person in multimedia objects
+     * with given role and given email
+     *
+     * @param string $roleCod
+     * @param string $email
+     * @return ArrayCollection
+     */
+    public function findPersonWithRoleCodeAndEmail($roleCode, $email)
+    {
+        $dm = $this->getDocumentManager();
+        $collection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+
+        $pipeline = array(
+                          array('$match' => array('people.cod' => "$roleCode")),
+                          array('$project' => array('_id' => 0, 'people.cod' => 1, 'people.people._id' => 1)),
+                          array('$unwind' => '$people'),
+                          array('$match' => array('people.cod' => "$roleCode", 'people.people.email' => "$email")),
+                          );
+
+        $aggregation = $collection->aggregate($pipeline);
+        // TODO FINISH
+        return $aggregation;
     }
 
     /**
@@ -170,6 +215,24 @@ class MultimediaObjectRepository extends DocumentRepository
           ->execute();
     }
 
+    /**
+     * Find series by person id
+     *
+     * @param string $personId
+     * @param string $roleCod
+     * @return ArrayCollection
+     */
+    public function findSeriesFieldByPersonIdAndRoleCod($personId, $roleCod)
+    {
+        $qb = $this->createQueryBuilder();
+        $qb->field('people')->elemMatch(
+            $qb->expr()->field('people._id')->equals(new \MongoId($personId))
+                ->field('cod')->equals($roleCod)
+                                        );
+        return $qb->distinct('series')
+          ->getQuery()
+          ->execute();
+    }
 
     // Find Multimedia Objects with Tags
 

@@ -8,7 +8,7 @@
         {% set mms = resource.getMultimediaObjects() %}
         {% if series_pic is empty and mms is not empty %}
           {% for mm in mms if mm.getFirstUrlPic() and not series_pic %}
-            {% set series_pic = mm.getFirstUrlPic() %}
+            {% set series_pic = mm.getFirstUrlPic('/images/folder.png') %}
           {% endfor %}
         {% endif %}
         <div class="picture"><img src="{{ series_pic }}" /></div>
@@ -21,7 +21,7 @@
       <a href="{{ url('pumukit_webtv_multimediaobject_index', {'id': resource.id}) }}" >
         <img class="play_icon_shadow" alt="" width="30" src="{{ asset('bundles/pumukitcmarwebtv/images/webtv/sombra.png') }}"/>
         <img class="play_icon" alt="" width="15" src="{{ asset('bundles/pumukitcmarwebtv/images/webtv/play.png') }}"/>
-        <img class="serial" alt="serial_pic" src="{{ resource.getFirstUrlPic() }}" />
+        <img class="serial" alt="serial_pic" src="{{ resource.getFirstUrlPic('/images/folder.png') }}" />
       </a>
     </div>
     {% endif %}
@@ -43,8 +43,10 @@
     <div class="serial_title">
       {% if ((resource.getLine2()|length) > 1) %}
         {% set aux = resource.getLine2() %}
-      {% else %}
+      {% elseif resource.isCollection() %}
         {% set aux = resource.getTitle() %}
+      {% else %}
+        {% set aux = resource.getSeries().getTitle() %}
       {% endif %}
       {% if ((aux|length) < 27) %}
         {{ aux }}

@@ -75,7 +75,9 @@ class TagService
           if (!($mmobj->containsAnyTag($children->toArray()))) {
               $removeTags[] = $tag;
               $mmobj->removeTag($tag);
-              $tag->decreaseNumberMultimediaObjects();
+              if (!$mmobj->isPrototype()) {              
+                  $tag->decreaseNumberMultimediaObjects();
+              }
               $this->dm->persist($tag);
           } else {
               break;
@@ -103,19 +105,22 @@ class TagService
     $modifyTags = array();
 
     foreach($mmobjs as $mmobj) {
-        foreach($mmobj->getTags() as $originalEmbeddedTag) {
-            $originalTag = $this->repository->find($originalEmbeddedTag->getId());
-            $originalTag->decreaseNumberMultimediaObjects();
-            $this->dm->persist($originalTag);
+        if (!$mmobj->isPrototype()) {              
+            foreach($mmobj->getTags() as $originalEmbeddedTag) {
+                $originalTag = $this->repository->find($originalEmbeddedTag->getId());
+                $originalTag->decreaseNumberMultimediaObjects();
+                $this->dm->persist($originalTag);
+            }
         }
         $mmobj->setTags($tags);
         $this->dm->persist($mmobj);
-        foreach($tags as $embeddedTag) {
-            $tag = $this->repository->find($embeddedTag->getId());
-            $tag->increaseNumberMultimediaObjects();
-            $this->dm->persist($tag);
-        }
-
+        if (!$mmobj->isPrototype()) {        
+            foreach($tags as $embeddedTag) {
+                $tag = $this->repository->find($embeddedTag->getId());
+                $tag->increaseNumberMultimediaObjects();
+                $this->dm->persist($tag);
+            }
+        } 
     }
     
     $this->dm->flush();

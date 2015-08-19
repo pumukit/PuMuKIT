@@ -1485,19 +1485,21 @@ class MultimediaObject
      * @param  array           $all_tags
      * @param  array           $not_any_tags
      * @param  array           $not_all_tags
+     * @param  boolean         $all
      * @return ArrayCollection
      */
     public function getFilteredTracksWithTags(
                                             array $any_tags = array(),
                                             array $all_tags = array(),
                                             array $not_any_tags = array(),
-                                            array $not_all_tags = array())
+                                            array $not_all_tags = array(),
+                                            $all=true)
     {
         $r = array();
 
         foreach ($this->tracks as $track) {
             // TODO Move 'hide' field to tag 'hidden' in track (see hidden vs display tag)
-            if ($track->getHide()) {
+            if ($track->getHide() && $all) {
                 continue;
             }
             if ($any_tags && !$track->containsAnyTag($any_tags)) {
@@ -1527,17 +1529,19 @@ class MultimediaObject
      * @param  array           $all_tags
      * @param  array           $not_any_tags
      * @param  array           $not_all_tags
+     * @param  boolean         $all
      * @return Track|null
      */
     public function getFilteredTrackWithTags(
                                             array $any_tags = array(),
                                             array $all_tags = array(),
                                             array $not_any_tags = array(),
-                                            array $not_all_tags = array())
+                                            array $not_all_tags = array(),
+                                            $all=true)
     {
         foreach ($this->tracks as $track) {
             // TODO Move 'hide' field to tag 'hidden' in track (see hidden vs display tag)
-            if ($track->getHide()) {
+            if ($track->getHide() && $all) {
                 continue;
             }
             if ($any_tags && !$track->containsAnyTag($any_tags)) {

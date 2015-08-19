@@ -20,7 +20,7 @@ class OpencastService
     }
 
 
-    public function genSbs(MultimediaObject $multimediaObject)
+    public function genSbs(MultimediaObject $multimediaObject, $opencastUrls=array())
     {
         if (!$this->sbsProfile)
         return false;
@@ -34,7 +34,12 @@ class OpencastService
 
         $language = $multimediaObject->getProperty('opencastlanguage')?strtolower($multimediaObject->getProperty('opencastlanguage')):'en';
 
-        return $this->jobService->addUniqueJob($path, $this->sbsProfile, 0, $multimediaObject, $language);
+        $vars = array();
+        if ($opencastUrls) {
+            $vars = array('ocurls' => $opencastUrls);
+        }
+
+        return $this->jobService->addJob($path, $this->sbsProfile, 2, $multimediaObject, $language, array(), $vars);
     }
 
 

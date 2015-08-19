@@ -1,0 +1,4 @@
+pumukit_moodle_bundle:
+    resource: "@PumukitMoodleBundle/Controller/"
+    type:     annotation
+    prefix:   /

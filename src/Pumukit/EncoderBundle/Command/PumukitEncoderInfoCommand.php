@@ -90,7 +90,8 @@ EOT
         }else{
             $status = array(Job::STATUS_EXECUTING);
         }
-        $jobs = $jobRepo->findWithStatus($status);
+        $sort = array('timeini' => 'asc');
+        $jobs = $jobRepo->findWithStatus($status, $sort);
 
         $output->writeln("<info>JOBS:</info>");
         $table = new Table($output);

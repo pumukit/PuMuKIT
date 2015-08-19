@@ -9,28 +9,12 @@ PumukitNotificationBundle sends emails when a job finished, whether it failed or
 How to configure NotificationBundle
 -----------------------------------
 
-1.- Enable NotificationBundle by uncommenting the following line in the `app/AppKernel.php` file of your project:
+1.- Install the bundle into your Pumukit2 root project:
 
 ```
-php
-<?php
-// app/AppKernel.php
-
-// ...
-class AppKernel extends Kernel
-{
-    public function registerBundles()
-    {
-        $bundles = array(
-            // ...
-            new Pumukit\NotificationBundle\PumukitNotificationBundle(),
-        );
-
-        // ...
-    }
-
-    // ...
-}
+bash
+$ cd /path/to/pumukit2/
+$ php app/console pumukit:install:bundle Pumukit/NotificationBundle/PumukitNotificationBundle
 ```
 
 2.- Add these parameters to your `app/config/config.yml` file:

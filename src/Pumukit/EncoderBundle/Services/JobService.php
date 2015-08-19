@@ -56,21 +56,21 @@ class JobService
     /**
      * Add job checking if not exists.
      */
-    public function addUniqueJob($pathFile, $profile, $priority, MultimediaObject $multimediaObject, $language = null, $description = array())
+    public function addUniqueJob($pathFile, $profile, $priority, MultimediaObject $multimediaObject, $language = null, $description = array(), $initVars = array())
     {
         $job = $this->repo->findOneBy(array("profile" => $profile, "mm_id" => $multimediaObject->getId()));
 
         if ($job) {
             return $job;
         } else {
-            return $this->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description);
+            return $this->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description, $initVars);
         }
     }
 
     /**
      * Add job
      */
-    public function addJob($pathFile, $profile, $priority, MultimediaObject $multimediaObject, $language = null, $description = array())
+    public function addJob($pathFile, $profile, $priority, MultimediaObject $multimediaObject, $language = null, $description = array(), $initVars = array())
     {
         $this->checkService();
 
@@ -102,6 +102,7 @@ class JobService
         $job->setPathIni($pathFile);
         $job->setDuration($duration);
         $job->setPriority($priority);
+        $job->setInitVars($initVars);
         if (null !== $language){
             //TODO languageId is only language "es", "en", "gl"
             $job->setLanguageId($language);
@@ -377,7 +378,7 @@ class JobService
         $profile = $this->getProfile($job);
         $mmobj = $this->getMultimediaObject($job);
 
-        $vars = array();
+        $vars = $job->getInitVars();
 
         $vars['tracks'] = array();
         foreach ($mmobj->getTracks() as $track) {
@@ -631,7 +632,7 @@ class JobService
 
         foreach($jobs as $job) {
           if($job->getTimestart() < $yesterday) {  
-            $this->logger->addError(sprintf('[checkService] Job executing for a long time %s', $job-getId()));
+            $this->logger->addError(sprintf('[checkService] Job executing for a long time %s', $job->getId()));
           }
         }
     }

@@ -637,16 +637,18 @@ window.change_select = function(element, selector, pluralName)
                 var route = '{{ path('pumukitnewadmin_mms_invert_announce', {'ids': '__ids__'})|raw }}';
             $('#list_'+pluralName).load(route.replace('__ids__', JSON.stringify(ids)));
         }
+        var editSeriesId = $("#inputROId").val();
+        var editMmId = $("#inputMMId").val();
         for (var i = 0; i < ids.length; i++) {
             id = ids[i];
-            if ('mm' == element) {
+            if (('mm' == element) && (id == editMmId)){
                 var puDeNew = $("#list_pubdecisions_"+id+" #pub_decisions_PUDENEW");
                 if (1 == puDeNew.length){
                     var checkedValue = puDeNew[0].checked;
                     if (checkedValue) puDeNew[0].checked = false;
                     else puDeNew[0].checked = true;
                 }
-            } else if ('series' == element) {
+            } else if (('series' == element) && (id == editSeriesId)) {
                 var announcedSeries = $("#pumukitnewadmin_series_announce");
                 if (1 == announcedSeries.length){
                     var checkedValue = announcedSeries[0].checked;
@@ -760,7 +762,7 @@ function add_tree_tag(tag_id, mm_id, block_tag_id)
   $.post(route, {"tag": tag_id}, function(data, textStatus, jqXHR){
     for (var i=0; i < data.added.length; i++) {
       var c = data.added[i];
-      inc_num_mm(c.id, 1);
+      !data.prototype && inc_num_mm(c.id, 1);
       var aux = c.group.split("|");
       if(aux[1] && aux.length > 3) create_element_in_select(c, aux[1], mm_id);
     }
@@ -783,7 +785,7 @@ function del_tree_tag(tag_id, mm_id)
         var c = response.deleted[i];
         var $_element = $("#select_li_" + c.id);
         if ($_element)  $_element.remove();
-        inc_num_mm(c.id, -1);
+        !response.prototype && inc_num_mm(c.id, -1);
       }
       var url = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'}) }}";
       $('#preview_mm').load(url.replace('__mmId__', mm_id));
@@ -1248,6 +1250,7 @@ window.fileServerTree = function(element, type, dir, num, input)
                          '\'); return false;" href="#"><span style="padding-left: 20px"><i class="mdi- tag_icon"></i></span><span title="' +
                          file.relativepath + '">' +
                          ((file.relativepath.length > 50) ? (file.relativepath.slice(0, 35) + '...' + file.relativepath.slice(-15)) : (file.relativepath)) +
+                         ((file.content) ? ' [' + (file.content) + ' video(s)]' : '') +
                          '</span></a>';
                   links += link;
                 }

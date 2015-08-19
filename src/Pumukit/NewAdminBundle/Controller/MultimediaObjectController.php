@@ -359,6 +359,7 @@ class MultimediaObjectController extends SortableAdminController
                                      );
         }
 
+        $json['prototype'] = $resource->isPrototype();
         return new JsonResponse($json);
     }
 
@@ -388,7 +389,8 @@ class MultimediaObjectController extends SortableAdminController
                                        'group' => $n->getPath()
                                        );
         }
-
+        
+        $json['prototype'] = $resource->isPrototype();
         return new JsonResponse($json);
     }
 
