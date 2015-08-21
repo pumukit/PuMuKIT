@@ -64,15 +64,40 @@ class WorkflowService
         $jobs = array();
         foreach($this->profiles as $targetProfile => $profile) {
             $targets = $this->getTargets($profile['target']);
-            if(((in_array($pubChannelCod, $targets['standard']))
-                && ($multimediaObject->isOnlyAudio() == $profile['audio']))
-               || (in_array($pubChannelCod, $targets['force']))
-                && (!$multimediaObject->isOnlyAudio() || ($multimediaObject->isOnlyAudio() && $profile['audio']))){
+            
+            if((in_array($pubChannelCod, $targets['standard']))
+               && ($multimediaObject->isOnlyAudio() == $profile['audio'])){
 
+                if (!$multimediaObject->isOnlyAudio() && 0 != $profile['resolution_ver']) {
+                    $profileAspectRatio = $profile['resolution_hor']/$profile['resolution_ver'];
+                    $multimediaObjectAspectRatio = $multimediaObject->getTrackWithTag("master")->getAspectRatio();
+                    if ((1.5 > $profileAspectRatio) !== (1.5 > $multimediaObjectAspectRatio)) {
+                        $this->logger->info(sprintf("WorkflowService can't create a new job (%s) for multimedia object %s using standard target, ".
+                                                    "because a video profile aspect ratio(%f) is diferent to video aspect ratio (%f)",
+                                                    $targetProfile, $multimediaObject->getId(), $profileAspectRatio, $multimediaObjectAspectRatio));
+
+                        continue;
+                    }
+                }
+                
                 $master = $multimediaObject->getTrackWithTag("master");
-                $this->logger->info(sprintf("WorkflowService creates new job (%s) for multimedia object %s", $targetProfile, $multimediaObject->getId()));
+                $this->logger->info(sprintf("WorkflowService creates new job (%s) for multimedia object %s using standard target", $targetProfile, $multimediaObject->getId()));
                 $jobs[] = $this->jobService->addUniqueJob($master->getPath(), $targetProfile, 2, $multimediaObject, $master->getLanguage());
             }
+            
+            if(in_array($pubChannelCod, $targets['force'])) {
+
+                if ($multimediaObject->isOnlyAudio() && !$profile['audio']){
+                    $this->logger->info(sprintf("WorkflowService can't create a new job (%s) for multimedia object %s using forced target, because a video profile can't be created from an audio",
+                                                $targetProfile, $multimediaObject->getId()));
+                    continue;
+                }
+            
+                $master = $multimediaObject->getTrackWithTag("master");
+                $this->logger->info(sprintf("WorkflowService creates new job (%s) for multimedia object %s using forced target", $targetProfile, $multimediaObject->getId()));
+                $jobs[] = $this->jobService->addUniqueJob($master->getPath(), $targetProfile, 2, $multimediaObject, $master->getLanguage());
+            }
+            
         }
         return $jobs;
     }

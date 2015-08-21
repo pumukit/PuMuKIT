@@ -16,6 +16,7 @@ class WorkflowServiceTest extends WebTestCase
 {
     private $dm;
     private $repo;
+    private $logger;
     private $profileService;
 
     public function __construct()
@@ -24,18 +25,21 @@ class WorkflowServiceTest extends WebTestCase
         $kernel = static::createKernel($options);
         $kernel->boot();
 
-        $this->dm = $kernel->getContainer()
-          ->get('doctrine_mongodb')->getManager();
+        $this->dm = $kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $this->logger = $kernel->getContainer()->get('logger');
+        
     }
 
     public function setUp()
     {
 
         $streamserver = array('dir_out' => sys_get_temp_dir());
-        $testProfiles = array('video' => array('target' => 'TAGA TAGC', 'audio' => false, 'streamserver' => $streamserver),
-                              'video2' => array('target' => 'TAGB*, TAGC', 'audio' => false, 'streamserver' => $streamserver),
-                              'audio' => array('target' => 'TAGA TAGC', 'audio' => true, 'streamserver' => $streamserver),
-                              'audio2' => array('target' => 'TAGB*, TAGC', 'audio' => true, 'streamserver' => $streamserver));
+        $testProfiles = array('video' => array('target' => 'TAGA TAGC', 'resolution_hor' => 0, 'resolution_ver' => 0, 'audio' => false, 'streamserver' => $streamserver),
+                              'video2' => array('target' => 'TAGB*, TAGC', 'resolution_hor' => 0, 'resolution_ver' => 0, 'audio' => false, 'streamserver' => $streamserver),
+                              'videoSD' => array('target' => 'TAGP, TAGFP*', 'resolution_hor' => 640, 'resolution_ver' => 480, 'audio' => false, 'streamserver' => $streamserver),
+                              'videoHD' => array('target' => 'TAGP, TAGFP*', 'resolution_hor' => 1920, 'resolution_ver' => 1024, 'audio' => false, 'streamserver' => $streamserver),
+                              'audio' => array('target' => 'TAGA TAGC', 'resolution_hor' => 0, 'resolution_ver' => 0, 'audio' => true, 'streamserver' => $streamserver),
+                              'audio2' => array('target' => 'TAGB*, TAGC', 'resolution_hor' => 0, 'resolution_ver' => 0, 'audio' => true, 'streamserver' => $streamserver));
         $profileService = new ProfileService($testProfiles, $this->dm);
       
         $jobService = $this->getMockBuilder('Pumukit\EncoderBundle\Services\JobService')
@@ -50,7 +54,7 @@ class WorkflowServiceTest extends WebTestCase
                        ->disableOriginalConstructor()
                        ->getMock();
                 
-        $this->workflowService = new WorkflowService($this->dm, $jobService, $profileService, $logger);
+        $this->workflowService = new WorkflowService($this->dm, $jobService, $profileService, $this->logger);
     }
 
     
@@ -75,12 +79,14 @@ class WorkflowServiceTest extends WebTestCase
     }
 
 
-    public function testGenerateJobsForVideo()
+    public function testGenerateJobsForSDVideo()
     {
         $track = new Track();
         $track->addTag("master");
         $track->setPath("path");
         $track->setOnlyAudio(false);
+        $track->setWidth(640);
+        $track->setHeight(480);
         $mmobj = new MultimediaObject();
         $mmobj->addTrack($track);
 
@@ -92,7 +98,42 @@ class WorkflowServiceTest extends WebTestCase
 
         $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGB'));
         $this->assertEquals(array('video2', 'audio2'), $jobs);
+
+        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGP'));
+        $this->assertEquals(array('videoSD'), $jobs);
+
+        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGFP'));
+        $this->assertEquals(array('videoSD', 'videoHD'), $jobs);
     }
+
+
+    public function testGenerateJobsForHDVideo()
+    {
+        $track = new Track();
+        $track->addTag("master");
+        $track->setPath("path");
+        $track->setOnlyAudio(false);
+        $track->setWidth(1280);
+        $track->setHeight(720);
+        $mmobj = new MultimediaObject();
+        $mmobj->addTrack($track);
+
+        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGA'));      
+        $this->assertEquals(array('video'), $jobs);
+
+        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGC'));
+        $this->assertEquals(array('video', 'video2'), $jobs);
+
+        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGB'));
+        $this->assertEquals(array('video2', 'audio2'), $jobs);
+
+        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGP'));
+        $this->assertEquals(array('videoHD'), $jobs);
+
+        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGFP'));
+        $this->assertEquals(array('videoSD', 'videoHD'), $jobs);
+    }
+    
 
 
     public function testGenerateJobsForAudio()
@@ -112,21 +153,13 @@ class WorkflowServiceTest extends WebTestCase
 
         $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGB'));
         $this->assertEquals(array('audio2'), $jobs); //generate a video2 from an audio has no sense.
-    }
 
+        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGP'));
+        $this->assertEquals(array(), $jobs); //generate a video from an audio has no sense.
 
-
-    public function notestGenerateJobsAudioMultimediaObjectGenerateForce()
-    {
-        $track = new Track();
-        $track->addTag("master");
-        $track->setPath("path");
-        $track->setOnlyAudio(true);
-        $mmobj = new MultimediaObject();
-        $mmobj->addTrack($track);
-
-        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGA'));      
-        $this->assertEquals(array('audio'), $jobs);
+        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGFP'));
+        $this->assertEquals(array(), $jobs);  //generate a video from an audio has no sense.
+        
     }
 
     private function invokeMethod(&$object, $methodName, array $parameters = array())

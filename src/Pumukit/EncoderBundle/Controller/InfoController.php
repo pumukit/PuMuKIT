@@ -13,12 +13,12 @@ use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
- * @Route("/admin")
+ * @Route("/admin/encoder")
  */
 class InfoController extends Controller
 {
     /**
-     * @Route("/encoder", name="pumukit_encoder_info")
+     * @Route("/", name="pumukit_encoder_info")
      * @Template()
      */
     public function indexAction(Request $request)
@@ -67,7 +67,7 @@ class InfoController extends Controller
   	}
 
     /**
-     * @Route("/encoder/job/{id}", methods="GET", name="pumukit_encoder_job")
+     * @Route("/job/{id}", methods="GET", name="pumukit_encoder_job")
      * @Template
      */
     public function infoJobAction(Job $job, Request $request)
@@ -83,7 +83,7 @@ class InfoController extends Controller
     }
 
     /**
-     * @Route("/encoder/job", methods="POST", name="pumukit_encoder_update_job")
+     * @Route("/job", methods="POST", name="pumukit_encoder_update_job")
      */    
     public function updateJobPriorityAction(Request $request)
     {
@@ -95,7 +95,7 @@ class InfoController extends Controller
     }
 
     /**
-     * @Route("/encoder/job", methods="DELETE", name="pumukit_encoder_delete_job")
+     * @Route("/job", methods="DELETE", name="pumukit_encoder_delete_job")
      */        
     public function deleteJobAction(Request $request)
     {
@@ -106,7 +106,7 @@ class InfoController extends Controller
     }
 
     /**
-     * @Route("/encoder/job/retry/{id}", methods="POST", name="pumukit_encoder_retry_job")
+     * @Route("/job/retry/{id}", methods="POST", name="pumukit_encoder_retry_job")
      */
     public function retryJobAction(Job $job, Request $request)
     {
@@ -116,7 +116,7 @@ class InfoController extends Controller
     }
 
     /**
-     * @Route("/encoder/mm/{id}", methods="GET", name="pumukit_encoder_mm")
+     * @Route("/mm/{id}", methods="GET", name="pumukit_encoder_mm")
      */
     public function multimediaObjectAction(MultimediaObject $multimediaObject, Request $request)
     {

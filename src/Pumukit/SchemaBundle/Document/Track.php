@@ -361,6 +361,16 @@ class Track extends Element
   }
 
   /**
+   * Get video aspect ratio
+   *
+   * @return float
+   */
+  public function getAspectRatio()
+  {
+      return (0 == $this->height) ? 0 : $this->width/$this->height;
+  }
+    
+  /**
    * Get duration in minutes and seconds
    *
    * @return array
