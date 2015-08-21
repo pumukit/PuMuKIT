@@ -1555,6 +1555,25 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(2, count($peopleHand));
     }
 
+    public function testCount()
+    {
+        $series1 = $this->createSeries('Series 1');
+        $series2 = $this->createSeries('Series 2');
+        $series3 = $this->createSeries('Series 3');
+
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->persist($series3);
+        $this->dm->flush();
+
+        $mm1 = $this->createMultimediaObjectAssignedToSeries('mm1', $series1);
+        $mm2 = $this->createMultimediaObjectAssignedToSeries('mm2', $series1);
+        $mm3 = $this->createMultimediaObjectAssignedToSeries('mm3', $series2);
+        $mm4 = $this->createMultimediaObjectAssignedToSeries('mm4', $series3);
+
+        $this->assertEquals(4, $this->repo->count());
+    }
+
     public function testEmbeddedPerson()
     {
         $person = $this->createPerson('Person'); 
