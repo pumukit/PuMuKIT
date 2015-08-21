@@ -701,10 +701,12 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $pic1 = new Pic();
         $pic2 = new Pic();
         $pic3 = new Pic();
+        $pic4 = new Pic();
 
         $this->dm->persist($pic1);
         $this->dm->persist($pic2);
         $this->dm->persist($pic3);
+        $this->dm->persist($pic4);
 
         $mm = new MultimediaObject();
         $mm->addPic($pic1);
@@ -714,6 +716,9 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mm);
 
         $this->dm->flush();
+
+        $this->assertEquals($mm, $this->repo->findByPicId($pic1->getId()));
+        $this->assertEquals(null, $this->repo->findByPicId($pic4->getId()));
 
         $this->assertEquals($pic1, $this->repo->find($mm->getId())->getPicById($pic1->getId()));
         $this->assertEquals($pic2, $this->repo->find($mm->getId())->getPicById($pic2->getId()));
