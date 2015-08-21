@@ -1572,6 +1572,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mm4 = $this->createMultimediaObjectAssignedToSeries('mm4', $series3);
 
         $this->assertEquals(4, $this->repo->count());
+        $this->assertEquals(492, $this->repo->countDuration());
     }
 
     public function testEmbeddedPerson()
