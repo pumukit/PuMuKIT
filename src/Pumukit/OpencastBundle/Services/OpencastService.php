@@ -11,12 +11,14 @@ class OpencastService
     private $sbsProfile;
     private $jobService;
     private $urlPathMapping;
+    private $defaultVars;
 
-    public function __construct($sbsProfile, JobService $jobService, array $urlPathMapping=array())
+    public function __construct($sbsProfile, JobService $jobService, array $urlPathMapping = array(), array $defaultVars = array())
     {
         $this->sbsProfile = $sbsProfile;
         $this->jobService = $jobService;
         $this->urlPathMapping = $urlPathMapping;
+        $this->defaultVars = $defaultVars;
     }
 
 
@@ -34,7 +36,7 @@ class OpencastService
 
         $language = $multimediaObject->getProperty('opencastlanguage')?strtolower($multimediaObject->getProperty('opencastlanguage')):'en';
 
-        $vars = array();
+        $vars = $this->defaultVars;
         if ($opencastUrls) {
             $vars = array('ocurls' => $opencastUrls);
         }
