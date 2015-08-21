@@ -1031,6 +1031,25 @@ class SeriesRepositoryTest extends WebTestCase
         $this->assertEquals(3, $this->repo->count());
     }
 
+    public function testCountPublic()
+    {
+        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
+
+        $series1 = $this->createSeries('Series 1');
+        $series2 = $this->createSeries('Series 2');
+        $series3 = $this->createSeries('Series 3');
+
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->persist($series3);
+        $this->dm->flush();
+
+        $mm = $this->createMultimediaObjectAssignedToSeries('mm_public1', $series1);
+        $mm2 = $this->createMultimediaObjectAssignedToSeries('mm_public2', $series2);
+
+        $this->assertEquals(2, $this->repo->countPublic());
+    }
+
     private function createSeriesType($name)
     {
         $description = 'description';
