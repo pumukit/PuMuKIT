@@ -210,6 +210,34 @@
         <source>FEATURED VIDEOS</source>
         <target>VÍDEOS DESTACADOS</target>
       </trans-unit>
+      <trans-unit id="2c17c6393771ee3048ae34d6b380c5ec" resname="private">
+        <source>private</source>
+        <target>privado</target>
+      </trans-unit>
+      <trans-unit id="b22f0418e8ac915eb66f829d262d14a2" resname="Audio">
+        <source>Audio</source>
+        <target>Audio</target>
+      </trans-unit>
+      <trans-unit id="46ff8516a0561d872c57da1f6f5db25c" resname="{0}times|{1}time|]1,Inf]times">
+        <source>{0}times|{1}time|]1,Inf]times</source>
+        <target>{0}veces|{1}vez|]1,Inf]veces</target>
+      </trans-unit>
+      <trans-unit id="61ee777e7f71dc466c3b2c685d8d313b" resname="INSERT">
+        <source>INSERT</source>
+        <target>INSERTAR</target>
+      </trans-unit>
+      <trans-unit id="e2687632d3f5cb6e7d6c8078d92296c9" resname="Spanish Sign Language">
+        <source>Spanish Sign Language</source>
+        <target>Lingua de Signos Española</target>
+      </trans-unit>
+      <trans-unit id="860b918fdae8371e66c317159ae71dfd" resname="International Sign Language">
+        <source>International Sign Language</source>
+        <target>Lingua de Signos Internacional</target>
+      </trans-unit>
+      <trans-unit id="fd456406745d816a45cae554c788e754" resname="download">
+        <source>download</source>
+        <target>descarga</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
