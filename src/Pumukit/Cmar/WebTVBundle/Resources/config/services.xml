@@ -1,28 +1,38 @@
 <?xml version="1.0" ?>
 
 <container xmlns="http://symfony.com/schema/dic/services"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <parameters>
-        <parameter key="pumukit_web_tv.breadcrumbs_all_title">All videos</parameter>
-        <parameter key="pumukit_web_tv.breadcrumbs_all_route">pumukit_cmar_web_tv_library_all</parameter>
-    </parameters>
+  <parameters>
+    <parameter key="pumukit_web_tv.breadcrumbs_all_title">All videos</parameter>
+    <parameter key="pumukit_web_tv.breadcrumbs_all_route">pumukit_cmar_web_tv_library_all</parameter>
+    <parameter key="pumukit_cmar_web_tv.workflow_sbs_profile">OC-Intro-SideBySide</parameter>
+  </parameters>
 
-    <services>
-      <service id="pumukit_cmar_web_tv.twig_extension" class="Pumukit\Cmar\WebTVBundle\Twig\CmarWebTVExtension">
-        <argument type="service" id="doctrine_mongodb.odm.document_manager" />
-        <argument type="service" id="translator" />
-        <tag name="twig.extension"/>
-      </service>
+  <services>
+    <service id="pumukit_cmar_web_tv.twig_extension" class="Pumukit\Cmar\WebTVBundle\Twig\CmarWebTVExtension">
+      <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+      <argument type="service" id="translator" />
+      <tag name="twig.extension"/>
+    </service>
 
-        <service id="pumukit_cmar_web_tv.caslistener" class="Pumukit\Cmar\WebTVBundle\Listener\CASListener">
-          <argument>%pumukit_cmar_web_tv.cas_url%</argument>
-          <argument>%pumukit_cmar_web_tv.cas_port%</argument>
-          <argument>%pumukit_cmar_web_tv.cas_uri%</argument>
-          <argument>%pumukit_cmar_web_tv.cas_allowed_ip_clients%</argument>
-          <tag name="kernel.event_listener" event="kernel.request" />
-        </service>
-    </services>
+    <service id="pumukit_cmar_web_tv.caslistener" class="Pumukit\Cmar\WebTVBundle\Listener\CASListener">
+      <argument>%pumukit_cmar_web_tv.cas_url%</argument>
+      <argument>%pumukit_cmar_web_tv.cas_port%</argument>
+      <argument>%pumukit_cmar_web_tv.cas_uri%</argument>
+      <argument>%pumukit_cmar_web_tv.cas_allowed_ip_clients%</argument>
+      <tag name="kernel.event_listener" event="kernel.request" />
+    </service>
+
+    <service id="pumukit_cmar_web_tv.workflow_listener" class="Pumukit\Cmar\WebTVBundle\Services\WorkflowService">
+      <argument>%pumukit_cmar_web_tv.workflow_sbs_profile%</argument>
+      <argument type="service" id="pumukitencoder.job" />
+      <argument type="service" id="pumukitencoder.profile" />
+      <argument type="service" id="logger"/>
+      <tag name="kernel.event_listener" event="job.success" method="onJobSuccess" />
+      <tag name="kernel.event_listener" event="multimediaobject.update" method="onMultimediaobjectUpdate" />
+    </service>
+  </services>
 
 </container>
