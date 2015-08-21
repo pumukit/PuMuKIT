@@ -81,6 +81,8 @@
                    <a href="{{ url('pumukit_webtv_multimediaobject_index', {'id': mm.id, 'track_id': track.id}) }}">{% spaceless %}
                      {% if track.isOnlyAudio %}
                      {% trans %}Audio{% endtrans %}
+                     {% elseif track.containsTag('download') %}
+                     {% trans %}Download master{% endtrans %}
                      {% else %}
                      {% trans %}Video{% endtrans %}
                      {% endif %}
