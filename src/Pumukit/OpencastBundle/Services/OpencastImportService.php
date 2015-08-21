@@ -183,7 +183,6 @@ class OpencastImportService
 
     private function importSeries($mediaPackage)
     {
-        $announce = true;
         $publicDate = new \DateTime("now");
 
         if(isset($mediaPackage["series"])){
@@ -195,7 +194,6 @@ class OpencastImportService
         }
 
         $series = $this->factoryService->createSeries();
-        $series->setAnnounce($announce);
         $series->setPublicDate($publicDate);
         $series->setTitle($title);
         foreach($this->otherLocales as $locale) {
