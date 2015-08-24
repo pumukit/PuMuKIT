@@ -572,6 +572,9 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         $this->assertEquals(4, count($this->repo->findBySeries($series1)));
         $this->assertEquals(3, count($this->repo->findBySeries($series2)));
+
+        $this->assertEquals(3, count($this->repo->findStandardBySeries($series1)));
+        $this->assertEquals(2, count($this->repo->findStandardBySeries($series2)));
     }
 
     public function testFindWithStatus()
