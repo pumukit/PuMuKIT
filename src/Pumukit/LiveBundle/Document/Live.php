@@ -394,7 +394,7 @@ class Live
           $locale = $this->locale;
       }
       if (!isset($this->name[$locale])) {
-          return;
+          return '';
       }
 
       return $this->name[$locale];
@@ -444,7 +444,7 @@ class Live
           $locale = $this->locale;
       }
       if (!isset($this->description[$locale])) {
-          return;
+          return '';
       }
 
       return $this->description[$locale];
