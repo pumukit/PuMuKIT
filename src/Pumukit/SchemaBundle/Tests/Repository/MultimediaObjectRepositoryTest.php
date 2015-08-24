@@ -1523,6 +1523,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $person_ned = $this->createPerson('Ned');
         $person_benjen = $this->createPerson('Benjen');
         $person_mark = $this->createPerson('Mark');
+        $person_catherin = $this->createPerson('Ned');
 
         $role_lord = $this->createRole("Lord");
         $role_ranger = $this->createRole("Ranger");
@@ -1545,6 +1546,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mm3->addPersonWithRole($person_benjen, $role_ranger);
         $mm4->addPersonWithRole($person_mark, $role_ranger);
         $mm4->addPersonWithRole($person_ned, $role_hand);
+        $mm4->addPersonWithRole($person_catherin, $role_lord);
 
         $this->dm->persist($mm1);
         $this->dm->persist($mm2);
@@ -1553,11 +1555,17 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->flush();
 
         $peopleLord = $this->repo->findPeopleWithRoleCode($role_lord->getCod());
-        $this->assertEquals(3, count($peopleLord));
+        $this->assertEquals(4, count($peopleLord));
         $peopleRanger = $this->repo->findPeopleWithRoleCode($role_ranger->getCod());
         $this->assertEquals(3, count($peopleRanger));
         $peopleHand = $this->repo->findPeopleWithRoleCode($role_hand->getCod());
         $this->assertEquals(2, count($peopleHand));
+
+
+        $person = $this->repo->findPersonWithRoleCodeAndEmail($role_ranger->getCod(), $person_mark->getEmail());
+        $this->assertEquals(1, count($person));
+        $person = $this->repo->findPersonWithRoleCodeAndEmail($role_lord->getCod(), $person_ned->getEmail());
+        $this->assertEquals(2, count($person));
     }
 
     public function testCount()
