@@ -577,6 +577,16 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(2, count($this->repo->findStandardBySeries($series2)));
     }
 
+    public function testFindByBroadcast()
+    {
+        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
+        $series1 = $this->createSeries('Series 1');
+        $mm11 = $this->factoryService->createMultimediaObject($series1);
+        $mm12 = $this->factoryService->createMultimediaObject($series1);
+
+        $this->assertEquals(3, count($this->repo->findByBroadcast($broadcast)));
+    }
+
     public function testFindWithStatus()
     {
         $broadcast = new Broadcast();
