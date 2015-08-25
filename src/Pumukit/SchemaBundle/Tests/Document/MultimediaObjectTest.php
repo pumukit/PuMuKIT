@@ -104,8 +104,6 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(null, $mm->getDescription());
         $this->assertEquals(null, $mm->getLine2());
         $this->assertEquals(null, $mm->getKeyword());
-
-        $this->assertTrue($mm->getCreatedAt() <= $mm->getUpdatedAt());
     }
 
     public function testToString()

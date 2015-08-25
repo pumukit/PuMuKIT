@@ -13,7 +13,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @MongoDB\Indexes({
  *   @MongoDB\Index(name="text_index", keys={"$**"="text"}, options={"language_override"="english"})
  * })
- * @MongoDB\HasLifecycleCallbacks()
  */
 class MultimediaObject
 {
@@ -193,20 +192,6 @@ class MultimediaObject
     private $people;
 
     /**
-     * @var date $createdAt
-     *
-     * @MongoDB\Date
-     */
-    private $createdAt;
-
-    /**
-     * @var date $updatedAt
-     *
-     * @MongoDB\Date
-     */
-    private $updatedAt;
-
-    /**
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property
      * @var locale $locale
@@ -222,8 +207,6 @@ class MultimediaObject
         $this->links = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->people = new ArrayCollection();
-        $this->createdAt = new \DateTime('now');
-        $this->updatedAt = new \DateTime('now');
     }
 
     public function __toString()
@@ -744,47 +727,6 @@ class MultimediaObject
     public function getNumview()
     {
         return $this->numview;
-    }
-
-    /**
-     * Set createdAt
-     *
-     * @MongoDB\PrePersist
-     */
-    public function setCreatedAt()
-    {
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return datetime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @MongoDB\PreUpdate
-     */
-    public function setUpdatedAt()
-    {
-        $this->updatedAt = new \DateTime();
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return datetime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
     }
 
     // End of basic setter & getters
