@@ -1581,6 +1581,71 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(2, count($person));
     }
 
+    public function testFindRelatedMultimediaObjects()
+    {
+        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
+
+        $tagUNESCO = new Tag();
+        $tagUNESCO->setCod('UNESCO');
+        $tag1 = new Tag();
+        $tag1->setCod('tag1');
+        $tag2 = new Tag();
+        $tag2->setCod('tag2');
+        $tag3 = new Tag();
+        $tag3->setCod('tag3');
+
+        $tag1->setParent($tagUNESCO);
+        $tag2->setParent($tagUNESCO);
+        $tag3->setParent($tagUNESCO);
+
+        $this->dm->persist($tag1);
+        $this->dm->persist($tag2);
+        $this->dm->persist($tag3);
+        $this->dm->persist($tagUNESCO);
+        $this->dm->flush();
+
+        $series1 = $this->createSeries('Series 1');
+        $mm11 = $this->factoryService->createMultimediaObject($series1);
+        $mm12 = $this->factoryService->createMultimediaObject($series1);
+        $mm13 = $this->factoryService->createMultimediaObject($series1);
+
+        $series2 = $this->createSeries('Series 2');
+        $mm21 = $this->factoryService->createMultimediaObject($series2);
+        $mm22 = $this->factoryService->createMultimediaObject($series2);
+        $mm23 = $this->factoryService->createMultimediaObject($series2);
+
+        $series3 = $this->createSeries('Series 3');
+        $mm31 = $this->factoryService->createMultimediaObject($series3);
+        $mm32 = $this->factoryService->createMultimediaObject($series3);
+        $mm33 = $this->factoryService->createMultimediaObject($series3);
+
+        $mm11->addTag($tag1);
+        $mm12->addTag($tag2);
+        $mm13->addTag($tag1);
+        $mm21->addTag($tag3);
+        $mm22->addTag($tag1);
+        $mm23->addTag($tag1);
+        $mm31->addTag($tag1);
+        $mm32->addTag($tag3);
+        $mm33->addTag($tag3);
+
+        $this->dm->persist($mm11);
+        $this->dm->persist($mm12);
+        $this->dm->persist($mm13);
+        $this->dm->persist($mm21);
+        $this->dm->persist($mm22);
+        $this->dm->persist($mm23);
+        $this->dm->persist($mm31);
+        $this->dm->persist($mm32);
+        $this->dm->persist($mm33);
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->persist($series3);
+        $this->dm->flush();
+
+        $this->assertEquals(1, count($this->repo->findRelatedMultimediaObjects($mm33)));
+    }
+
     public function testCount()
     {
         $series1 = $this->createSeries('Series 1');
