@@ -1488,6 +1488,22 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(2, count($peopleHand));
     }
 
+    public function testCreatedAndUpdatedAtDates()
+    {
+        $series = $this->createSeries('Series');
+        $multimediaObject = $this->factoryService->createMultimediaObject($series);
+
+        $this->assertTrue($multimediaObject->getCreatedAt() <= $multimediaObject->getUpdatedAt());
+
+        sleep(1);
+
+        $multimediaObject->setTitle('New title', 'en');
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        $this->assertTrue($multimediaObject->getCreatedAt() < $multimediaObject->getUpdatedAt());
+    }
+
     private function createPerson($name)
     {
         $email = $name.'@mail.es';
