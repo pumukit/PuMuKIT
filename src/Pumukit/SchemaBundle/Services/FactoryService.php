@@ -59,10 +59,7 @@ class FactoryService
         $this->dm->persist($series);
         $this->dm->flush();
 
-        //Workaround to fix reference method initialization.
-        $this->dm->clear(get_class($series));
-
-        return $this->dm->find('PumukitSchemaBundle:Series', $series->getId());
+        return $series;
     }
 
     /**
@@ -120,6 +117,8 @@ class FactoryService
         $mm->setStatus(MultimediaObject::STATUS_BLOQ);
 
         $mm->setSeries($series);
+        $series->addMultimediaObject($mm);
+        
 
         $this->dm->persist($mm);
         $this->dm->persist($series);

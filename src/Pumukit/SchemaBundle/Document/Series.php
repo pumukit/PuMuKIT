@@ -33,7 +33,7 @@ class Series
   /**
    * @var ArrayCollection $multimedia_objects
    *
-   * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="series", repositoryMethod="findWithoutPrototype", sort={"rank"=1}, simple=true, orphanRemoval=true, cascade={"persist"})
+   * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="series", strategy="set", repositoryMethod="findWithoutPrototype", sort={"rank"=1}, simple=true, orphanRemoval=true, cascade={"persist"})
    */
   private $multimedia_objects;
 
@@ -208,7 +208,28 @@ class Series
   {
     return $this->multimedia_objects->contains($multimedia_object);
   }
+ 
+  /**
+   * Add multimedia object
+   *
+   * @param MultimediaObject $multimedia_object
+   */   
+  public function addMultimediaObject(MultimediaObject $multimedia_object)
+  {
+    return $this->multimedia_objects->add($multimedia_object);
+  }
 
+  /**
+   * Remove multimedia object
+   *
+   * @param MultimediaObject $multimedia_object
+   */
+  public function removeMultimediaObject(MultimediaObject $multimedia_object)
+  {
+    $this->multimedia_objects-->removeElement($multimedia_object);
+  }
+    
+    
   /**
    * Get multimedia_objects
    *
