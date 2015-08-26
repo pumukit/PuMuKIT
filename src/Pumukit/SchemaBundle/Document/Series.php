@@ -26,14 +26,14 @@ class Series
   private $secret;
 
   /**
-   * @MongoDB\ReferenceOne(targetDocument="SeriesType", inversedBy="series", simple=true)
+   * @MongoDB\ReferenceOne(targetDocument="SeriesType", inversedBy="series", simple=true, cascade={"persist"})
    */
   private $series_type;
 
   /**
    * @var ArrayCollection $multimedia_objects
    *
-   * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="series", repositoryMethod="findWithoutPrototype", sort={"rank"=1}, simple=true, orphanRemoval=true, cascade="ALL")
+   * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="series", repositoryMethod="findWithoutPrototype", sort={"rank"=1}, simple=true, orphanRemoval=true, cascade={"persist"})
    */
   private $multimedia_objects;
 
