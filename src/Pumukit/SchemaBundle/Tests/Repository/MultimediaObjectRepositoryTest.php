@@ -557,7 +557,12 @@ class MultimediaObjectRepositoryTest extends WebTestCase
     {
         $this->assertEquals(0, count($this->repo->findAll()));
 
-        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
+        $broadcast = new Broadcast();
+        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
+        $broadcast->setDefaultSel(true);
+        $this->dm->persist($broadcast);
+        $this->dm->flush();
+
         $series1 = $this->createSeries('Series 1');
         $mm11 = $this->factoryService->createMultimediaObject($series1);
         $mm12 = $this->factoryService->createMultimediaObject($series1);
@@ -575,6 +580,35 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         $this->assertEquals(3, count($this->repo->findStandardBySeries($series1)));
         $this->assertEquals(2, count($this->repo->findStandardBySeries($series2)));
+
+        $tag1 = new Tag();
+        $tag1->setCod('tag1');
+        $tag2 = new Tag();
+        $tag2->setCod('tag2');
+        $tag3 = new Tag();
+        $tag3->setCod('tag3');
+
+        $mm11->addTag($tag1);
+        $mm11->addTag($tag2);
+        $mm12->addTag($tag3);
+        $mm13->addTag($tag3);
+        $mm21->addTag($tag1);
+        $mm22->addTag($tag2);
+        $mm22->addTag($tag3);
+
+        $this->dm->persist($mm11);
+        $this->dm->persist($mm12);
+        $this->dm->persist($mm13);
+        $this->dm->persist($mm21);
+        $this->dm->persist($mm22);
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->flush();
+
+        $this->assertEquals(2, count($this->repo->findBySeriesByTagCodAndStatus($series1, 'tag3')));
+        $this->assertEquals(1, count($this->repo->findBySeriesByTagCodAndStatus($series2, 'tag1')));
+        $this->assertEquals(1, count($this->repo->findBySeriesByTagCodAndStatus($series2, 'tag3')));
+        $this->assertEquals(1, count($this->repo->findBySeriesByTagCodAndStatus($series1, 'tag2')));
     }
 
     public function testFindByBroadcast()
@@ -1643,7 +1677,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($series3);
         $this->dm->flush();
 
-        $this->assertEquals(1, count($this->repo->findRelatedMultimediaObjects($mm33)));
+        $this->assertEquals(0, count($this->repo->findRelatedMultimediaObjects($mm33)));
     }
 
     public function testCount()
