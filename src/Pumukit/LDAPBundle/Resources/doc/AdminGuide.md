@@ -1,13 +1,18 @@
 PumukitLDAPBundle AdminGuide
-====================================
+============================
 
 Description
 -----------
 
-PumukitLDAPBundle sends emails when a job finished, whether it failed or succeed.
+The PumukitLDAPBundle allows to connect to a LDAP Server
+and to retrieve data from the server.
 
-How to configure LDAPBundle
------------------------------------
+This bundle is disabled by default. To install it and
+configure it, read the below section.
+
+
+How to install and configure LDAPBundle
+---------------------------------------
 
 1.- Install the bundle into your Pumukit2 root project:
 
@@ -16,7 +21,7 @@ $ cd /path/to/pumukit2/
 $ php app/console pumukit:install:bundle Pumukit/LDAPBundle/PumukitLDAPBundle
 ```
 
-2.- Add and configure these parameters into your `app/config/parameter.yml` file
+2.- Add and configure these parameters into your `app/config/parameters.yml` file
 with your LDAP server parameters:
 
 ```
