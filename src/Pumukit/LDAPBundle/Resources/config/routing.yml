@@ -1,0 +1,12 @@
+pumukit_ldap_bundle:
+    resource: "@PumukitLDAPBundle/Controller/"
+    type:     annotation
+    prefix:   /ldap
+
+pumukit_ldap_js:
+    pattern: /ldap/ldap.js
+    methods: [GET]
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'PumukitLDAPBundle::ldap.js.twig'
+        _format: js

@@ -68,6 +68,20 @@ class PersonServiceTest extends WebTestCase
         $this->assertEquals($person, $this->personService->findPersonById($person->getId()));
     }
 
+    public function testFindPersonByEmail()
+    {
+        $person = new Person();
+
+        $name = 'John Smith';
+        $email = 'john.smith@mail.com';
+        $person->setName($name);
+        $person->setEmail($email);
+
+        $person = $this->personService->savePerson($person);
+
+        $this->assertEquals($person, $this->personService->findPersonByEmail($email));
+    }
+
     public function testUpdatePerson()
     {
         $personJohn = new Person();
