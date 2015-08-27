@@ -62,6 +62,25 @@ class MultimediaObjectInSeriesTest extends WebTestCase
         $this->assertEquals(1, $i);
     }
 
+    public function testRelationSimple()
+    {
+        $series1 = $this->factoryService->createSeries();
+        $mm11 = $this->factoryService->createMultimediaObject($series1);
+        $mm12 = $this->factoryService->createMultimediaObject($series1);
+        $mm13 = $this->factoryService->createMultimediaObject($series1);
+
+        $id = $series1->getId();
+        $this->dm->clear();
+
+        $i = 0;
+        foreach($this->repo->findAll() as $s){
+          foreach($s->getMultimediaObjects() as $mm) {
+            $i++;
+          }
+        }
+        $this->assertEquals(3, $i);
+    }
+
     private function createBroadcast()
     {
         $broadcast = new Broadcast();
