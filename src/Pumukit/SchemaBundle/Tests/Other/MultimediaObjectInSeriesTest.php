@@ -73,7 +73,7 @@ class MultimediaObjectInSeriesTest extends WebTestCase
         $this->dm->clear();
 
         $i = 0;
-        foreach($this->repo->findAll() as $s){
+        foreach($this->seriesRepo->findAll() as $s){
           foreach($s->getMultimediaObjects() as $mm) {
             $i++;
           }
