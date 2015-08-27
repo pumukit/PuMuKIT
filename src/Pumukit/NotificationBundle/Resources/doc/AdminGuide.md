@@ -17,7 +17,7 @@ $ cd /path/to/pumukit2/
 $ php app/console pumukit:install:bundle Pumukit/NotificationBundle/PumukitNotificationBundle
 ```
 
-2.- Add these parameters to your `app/config/config.yml` file:
+2.- Add these parameters to your `app/config/parameters.yml` file:
 
 ```
 pumukit_notification:
