@@ -23,9 +23,9 @@ class PumukitLDAPExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('pumukit_ldap.server', $config['server']);
-        $container->setParameter('pumukit_ldap.dn_search_engine', $config['dn_search_engine']);
-        $container->setParameter('pumukit_ldap.pass_search_engine', $config['pass_search_engine']);
-        $container->setParameter('pumukit_ldap.dn_user', $config['dn_user']);
+        $container->setParameter('pumukit_ldap.bind_rdn', $config['bind_rdn']);
+        $container->setParameter('pumukit_ldap.bind_password', $config['bind_password']);
+        $container->setParameter('pumukit_ldap.base_dn', $config['base_dn']);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');

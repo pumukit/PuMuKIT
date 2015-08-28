@@ -5,16 +5,16 @@ namespace Pumukit\LDAPBundle\Services;
 class LDAPService
 {
     private $server;
-    private $dnSearchEngine;
-    private $passSearchEngine;
-    private $dnUser;
+    private $bindRdn;
+    private $bindPassword;
+    private $baseDn;
 
-    public function __construct($server, $dnSearchEngine, $passSearchEngine, $dnUser)
+    public function __construct($server, $bindRdn, $bindPassword, $baseDn)
     {
         $this->server = $server;
-        $this->dnSearchEngine = $dnSearchEngine;
-        $this->passSearchEngine = $passSearchEngine;
-        $this->dnUser = $dnUser;
+        $this->bindRdn = $bindRdn;
+        $this->bindPassword = $bindPassword;
+        $this->baseDn = $baseDn;
     }
 
     /**
@@ -25,9 +25,9 @@ class LDAPService
     public function isConfigured()
     {
         if ($this->server &&
-            $this->dnSearchEngine &&
-            $this->passSearchEngine &&
-            $this->dnUser) return true;
+            $this->bindRdn &&
+            $this->bindPassword &&
+            $this->baseDn) return true;
         return false;
     }
 
@@ -43,7 +43,7 @@ class LDAPService
                 $linkIdentifier = ldap_connect($this->server);
                 ldap_set_option($linkIdentifier, LDAP_OPT_PROTOCOL_VERSION, 3);
                 if ($linkIdentifier) {
-                    $result = ldap_bind($linkIdentifier, $this->dnSearchEngine, $this->passSearchEngine);
+                    $result = ldap_bind($linkIdentifier, $this->bindRdn, $this->bindPassword);
                     ldap_close($linkIdentifier);
                     return $result;
                 }
@@ -72,8 +72,8 @@ class LDAPService
             $linkIdentifier = ldap_connect($this->server);
             ldap_set_option($linkIdentifier, LDAP_OPT_PROTOCOL_VERSION, 3);
             if ($linkIdentifier) {
-                $result = ldap_bind($linkIdentifier, $this->dnSearchEngine, $this->passSearchEngine);
-                $searchResult = ldap_search($linkIdentifier, $this->dnUser, "uid=" . $user);
+                $result = ldap_bind($linkIdentifier, $this->bindRdn, $this->bindPassword);
+                $searchResult = ldap_search($linkIdentifier, $this->baseDn, "uid=" . $user);
                 if ($searchResult){
                     $info = ldap_get_entries($linkIdentifier, $searchResult);          
                     if (($info)&&($info["count"] != 0)){
@@ -105,8 +105,8 @@ class LDAPService
             $linkIdentifier = ldap_connect( $this->server ); 
             ldap_set_option($linkIdentifier, LDAP_OPT_PROTOCOL_VERSION, 3);
             if ($linkIdentifier) {
-                $result = ldap_bind($linkIdentifier, $this->dnSearchEngine, $this->passSearchEngine);
-                $searchResult = ldap_search($linkIdentifier, $this->dnUser, "uid=" . $user);
+                $result = ldap_bind($linkIdentifier, $this->bindRdn, $this->bindPassword);
+                $searchResult = ldap_search($linkIdentifier, $this->baseDn, "uid=" . $user);
                 if ($searchResult){
                     $info = ldap_get_entries($linkIdentifier, $searchResult);
                     if (($info)&&(count($info) != 0)){
@@ -138,8 +138,8 @@ class LDAPService
             $linkIdentifier = ldap_connect( $this->server ); 
             ldap_set_option($linkIdentifier, LDAP_OPT_PROTOCOL_VERSION, 3);
             if ($linkIdentifier) {
-                $result = ldap_bind($linkIdentifier, $this->dnSearchEngine, $this->passSearchEngine);
-                $searchResult = ldap_search($linkIdentifier, $this->dnUser, "uid=" . $user);
+                $result = ldap_bind($linkIdentifier, $this->bindRdn, $this->bindPassword);
+                $searchResult = ldap_search($linkIdentifier, $this->baseDn, "uid=" . $user);
                 if ($searchResult){
                     $info = ldap_get_entries($linkIdentifier, $searchResult);
                     if (($info)&&(count($info) != 0)){
@@ -168,8 +168,8 @@ class LDAPService
             $linkIdentifier = ldap_connect( $this->server ); 
             ldap_set_option($linkIdentifier, LDAP_OPT_PROTOCOL_VERSION, 3);
             if ($linkIdentifier) {
-                $result=ldap_bind($linkIdentifier, $this->dnSearchEngine, $this->passSearchEngine);
-                $searchResult = ldap_search($linkIdentifier, $this->dnUser, "mail=" . $cn);
+                $result=ldap_bind($linkIdentifier, $this->bindRdn, $this->bindPassword);
+                $searchResult = ldap_search($linkIdentifier, $this->baseDn, "mail=" . $cn);
                 if ($searchResult){
                     $info = ldap_get_entries($linkIdentifier, $searchResult);
                     if (($info)&&(count($info) != 0)){
@@ -201,8 +201,8 @@ class LDAPService
             $linkIdentifier = ldap_connect( $this->server ); 
             ldap_set_option($linkIdentifier, LDAP_OPT_PROTOCOL_VERSION, 3);
             if ($linkIdentifier) {
-                $result = ldap_bind($linkIdentifier, $this->dnSearchEngine, $this->passSearchEngine);
-                $searchResult = ldap_search($linkIdentifier, $this->dnUser, "mail=" . $mail);
+                $result = ldap_bind($linkIdentifier, $this->bindRdn, $this->bindPassword);
+                $searchResult = ldap_search($linkIdentifier, $this->baseDn, "mail=" . $mail);
                 if ($searchResult){
                     $info = ldap_get_entries($linkIdentifier, $searchResult);
                     if (($info)&&(count($info) != 0)){

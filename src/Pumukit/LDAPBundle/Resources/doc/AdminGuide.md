@@ -27,12 +27,12 @@ with your LDAP server parameters:
 ```
 pumukit_ldap:
     server: 'ldap://localhost'
-    dn_search_engine: 'cn=readonly,ou=teachers,dc=campusdomar,dc=es'
-    pass_search_engine: 'readonly'
-    dn_user: 'ou=teachers,dc=campusdomar,dc=es'
+    bind_rdn: 'cn=readonly,ou=teachers,dc=campusdomar,dc=es'
+    bind_password: 'readonly'
+    base_dn: 'ou=teachers,dc=campusdomar,dc=es'
 ```
 
 * `server` defines the DNS address of the LDAP Server.
-* `dn_search_engine` defines the DN of the search engine.
-* `pass_search_engine` defines the password of the search engine.
-* `dn_user` defines an user DN of the LDAP Server.
+* `bind_rdn` defines the DN of the search engine.
+* `bind_password` defines the password of the search engine.
+* `base_dn` defines an user DN of the LDAP Server.
