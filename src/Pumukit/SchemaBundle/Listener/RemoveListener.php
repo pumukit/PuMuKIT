@@ -42,7 +42,9 @@ class RemoveListener
 
             $tagService = $this->container->get("pumukitschema.tag");
             foreach($document->getTags() as $tag) {
-                $tagService->removeTagFromMultimediaObject($document, $tag->getId());
+                if ($document->containsTag($tag)) {
+                    $tagService->removeTagFromMultimediaObject($document, $tag->getId());
+                }
             }
 
             $jobService = $this->container->get("pumukitencoder.job");
