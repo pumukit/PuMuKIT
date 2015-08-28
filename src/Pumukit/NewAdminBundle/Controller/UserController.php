@@ -5,7 +5,7 @@ namespace Pumukit\NewAdminBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-
+use Pumukit\SchemaBundle\Document\User;
 
 /**
  * @Security("has_role('ROLE_SUPER_ADMIN')")
@@ -60,15 +60,67 @@ class UserController extends AdminController
      */
     public function deleteAction(Request $request)
     {
-        $repo = $this
-          ->get('doctrine_mongodb.odm.document_manager')
-          ->getRepository('PumukitSchemaBundle:User');
+        $userToDelete = $this->findOr404($request);
 
-        if( 1 == $repo->createQueryBuilder()->getQuery()->execute()->count()){
-          return new Response('Can not delete this unique user', 409);
+        $response = $this->isAllowedToBeDeleted($userToDelete);
+        if ($response instanceof Response) {
+            return $response;
         }
 
         return parent::deleteAction($request);
     }
 
+    /**
+     * Batch Delete action
+     */
+    public function batchDeleteAction(Request $request)
+    {
+        $repo = $this
+          ->get('doctrine_mongodb.odm.document_manager')
+          ->getRepository('PumukitSchemaBundle:User');
+
+        $ids = $this->getRequest()->get('ids');
+
+        if ('string' === gettype($ids)){
+            $ids = json_decode($ids, true);
+        }
+
+        foreach ($ids as $id) {
+            $userToDelete = $repo->find($id);
+            $response = $this->isAllowedToBeDeleted($userToDelete);
+            if ($response instanceof Response) {
+                return $response;
+            }
+        }
+
+        return parent::deleteAction($request);
+    }
+
+    private function isAllowedToBeDeleted(User $userToDelete)
+    {
+        $repo = $this
+          ->get('doctrine_mongodb.odm.document_manager')
+          ->getRepository('PumukitSchemaBundle:User');
+
+        $loggedInUser = $this->container->get('security.context')->getToken()->getUser();
+
+        if ($loggedInUser === $userToDelete){
+            return new Response("Can not delete the logged in user '".$loggedInUser->getUsername()."'", 409);
+        }
+        if (1 === $repo->createQueryBuilder()->getQuery()->execute()->count()){
+            return new Response("Can not delete this unique user '".$userToDelete->getUsername()."'", 409);
+        }
+
+        $numberAdminUsers = $repo->createQueryBuilder()
+          ->where("function(){for ( var k in this.roles ) { if ( this.roles[k] == 'ROLE_SUPER_ADMIN' ) return true;}}")
+          ->count()
+          ->getQuery()
+          ->execute();
+
+        if ((1 === $numberAdminUsers) && ($userToDelete->isSuperAdmin())){
+            return new Response("Can not delete this unique admin user '".$userToDelete->getUsername()."'", 409);
+        }
+
+        return true;
+    }
 }
