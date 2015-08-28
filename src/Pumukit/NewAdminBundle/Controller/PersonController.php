@@ -180,12 +180,14 @@ class PersonController extends AdminController
         $resources = $this->getResources($request, $config, $criteria);
 
         $template = $multimediaObject->isPrototype() ? '_template' : '';
+        $ldapEnabled = $this->container->has('pumukit_ldap.ldap') ? true : false;
 
         return array(
                      'people' => $resources,
                      'mm' => $multimediaObject,
                      'role' => $role,
-                     'template' => $template
+                     'template' => $template,
+                     'ldap_enabled' => $ldapEnabled
                      );
     }
 
