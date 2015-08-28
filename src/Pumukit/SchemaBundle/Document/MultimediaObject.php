@@ -810,7 +810,9 @@ class MultimediaObject
         if (!($this->containsTag($tag))) {
             $embedTag = EmbeddedTag::getEmbeddedTag($this->tags, $tag);
             $this->tags[] = $embedTag;
+            return true;
         }
+        return false;
     }
 
     /**
