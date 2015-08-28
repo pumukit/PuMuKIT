@@ -491,10 +491,6 @@ window.change_select = function(element, selector, pluralName)
             });
         }
         break;
-    case 'create':
-        $('.modal-content').load(get_create_route(element));
-        $('#myModal').modal('show');
-        break;
     case 'series_preview':
         var url = "{{ url('pumukit_webtv_series_magicindex', {secret: '__mmSecret__'}) }}";
         var secret = selector.find(':selected').attr('id');
@@ -1197,37 +1193,6 @@ get_batch_delete_route = function(element, ids)
     }
 
     return route.replace('__ids__', JSON.stringify(ids)) ;
-}
-
-/**
- * Get create route according to element
- */
-get_create_route = function(element)
-{
-    var route = '';
-
-    switch (element) {
-        case 'person':
-            route = '{{ path('pumukitnewadmin_person_create')|raw }}';
-            break;
-        case 'user':
-            route = '{{ path('pumukitnewadmin_user_create')|raw }}';
-            break;
-        case 'live':
-            route = '{{ path('pumukitnewadmin_live_create')|raw }}';
-            break;
-        case 'event':
-            route = '{{ path('pumukitnewadmin_event_create')|raw }}';
-            break;
-        case 'role':
-            route = '{{ path('pumukitnewadmin_role_create')|raw }}';
-            break;
-        case 'broadcast':
-            route = '{{ path('pumukitnewadmin_broadcast_create')|raw }}';
-            break;
-    }
-
-    return route;
 }
 
 window.fileServerSelect = function(element, path)
