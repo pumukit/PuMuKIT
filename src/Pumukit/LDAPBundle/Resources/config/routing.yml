@@ -1,7 +1,7 @@
 pumukit_ldap_bundle:
     resource: "@PumukitLDAPBundle/Controller/"
     type:     annotation
-    prefix:   /ldap
+    prefix:   /admin/ldap
 
 pumukit_ldap_js:
     pattern: /ldap/ldap.js
