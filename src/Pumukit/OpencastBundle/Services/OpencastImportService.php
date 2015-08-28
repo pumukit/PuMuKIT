@@ -215,8 +215,7 @@ class OpencastImportService
             try {
                 $archiveMediaPackage = $this->opencastClient->getMediapackageFromArchive($opencastId);
             } catch (\Exception $e){
-                dump('error: ' . $e->getMessage());
-                dump($e);
+                // TODO - Trace error
                 return $opencastUrls;
             }
             if(isset($archiveMediaPackage["media"]["track"][0])){
