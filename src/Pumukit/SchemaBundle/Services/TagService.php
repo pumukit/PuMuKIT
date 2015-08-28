@@ -37,9 +37,9 @@ class TagService
         do {
             if (!$mmobj->containsTag($tag)) {
                 $tagAdded[] = $tag;
-                $mmobj->addTag($tag);
-                if (!$mmobj->isPrototype()) {
-                  $tag->increaseNumberMultimediaObjects();
+                $added = $mmobj->addTag($tag);
+                if ($added && !$mmobj->isPrototype()) {
+                    $tag->increaseNumberMultimediaObjects();
                 }
                 $this->dm->persist($tag);
             }
@@ -74,8 +74,8 @@ class TagService
           $children = $tag->getChildren();
           if (!($mmobj->containsAnyTag($children->toArray()))) {
               $removeTags[] = $tag;
-              $mmobj->removeTag($tag);
-              if (!$mmobj->isPrototype()) {              
+              $removed = $mmobj->removeTag($tag);
+              if ($removed && !$mmobj->isPrototype()) {
                   $tag->decreaseNumberMultimediaObjects();
               }
               $this->dm->persist($tag);
