@@ -196,6 +196,10 @@ class MultimediaObjectController extends Controller
     public function preExecute(MultimediaObject $multimediaObject, Request $request)
     {
       if($opencasturl = $multimediaObject->getProperty("opencasturl")) {
+          $response = $this->testBroadcast($multimediaObject, $request);
+          if($response instanceof Response) {
+              return $response;
+          }
           $this->incNumView($multimediaObject);
           $this->dispatch($multimediaObject);
           if($invert = $multimediaObject->getProperty('opencastinvert')) {
@@ -210,8 +214,9 @@ class MultimediaObjectController extends Controller
     {
       if (($broadcast = $multimediaObject->getBroadcast()) && 
           (Broadcast::BROADCAST_TYPE_PUB !== $broadcast->getBroadcastTypeId()) &&
-          ((!($request->headers->get('PHP_AUTH_USER', false))) ||
-           ($request->headers->get('PHP_AUTH_PW') !== $broadcast->getPasswd() )))
+          ((!($broadcastName = $request->headers->get('PHP_AUTH_USER', false))) ||
+           ($request->headers->get('PHP_AUTH_PW') !== $broadcast->getPasswd() ) ||
+           ($broadcastName !== $broadcast->getName() )))
         return new Response("", 401, array('WWW-Authenticate' => 'Basic realm="Resource not public."'));
     }
 }
