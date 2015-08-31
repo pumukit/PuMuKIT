@@ -4,6 +4,7 @@ namespace Pumukit\OpencastBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -42,11 +43,14 @@ class MediaPackageController extends Controller
         $page =  $request->get("page", 1);
         $criteria = $this->getCriteria($request);
 
-
-        list($total, $mediaPackages) = $opencastClient->getMediaPackages(
+        try {
+            list($total, $mediaPackages) = $opencastClient->getMediaPackages(
                 (isset($criteria["name"])) ? $criteria["name"]->regex : "",
                 $limit,
                 ($page -1) * $limit);
+        } catch (\Exception $e) {
+            return new Response($this->render('PumukitOpencastBundle:MediaPackage:error.html.twig', array('message' => $e->getMessage())), 400);
+        }
 
         $currentPageOpencastIds = array();
         foreach ($mediaPackages as $mediaPackage) {
