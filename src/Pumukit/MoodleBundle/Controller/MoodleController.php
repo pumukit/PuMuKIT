@@ -14,10 +14,6 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
  */
 class MoodleController extends Controller
 {
-    const PERFIL_ID = 2;
-
-    public $embed_mini = false;
-
     /**
      * @Route("/index")
      */
