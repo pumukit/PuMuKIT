@@ -44,7 +44,7 @@
           <label for="pumukitwizard_track_profile" class="control-label">{% trans %}Profile{% endtrans %}</label>
           {% for key in master_profiles|keys %}
           <div class="radio">
-            <label><input type="radio" name="pumukitwizard_form_data[track][profile]" id="pumukitwizard_track_profile_{{ key }}" value="{{ key }}" {{ ("master_copy"==key)?'checked':'' }}>{{ key }}</label>
+            <label><input type="radio" name="pumukitwizard_form_data[track][profile]" id="pumukitwizard_track_profile_{{ key }}" value="{{ key }}" {{ (loop.first)?'checked':'' }}>{{ key }}</label>
           </div>
           {% endfor %}
         </div>
