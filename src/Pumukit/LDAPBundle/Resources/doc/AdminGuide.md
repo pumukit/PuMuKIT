@@ -33,6 +33,6 @@ pumukit_ldap:
 ```
 
 * `server` defines the DNS address of the LDAP Server.
-* `bind_rdn` defines the DN of the search engine.
-* `bind_password` defines the password of the search engine.
+* `bind_rdn` defines the DN of the search engine. If not specified, anonymous bind is attempted.
+* `bind_password` defines the password of the search engine. If not specified, anonymous bind is attempted.
 * `base_dn` defines an user DN of the LDAP Server.

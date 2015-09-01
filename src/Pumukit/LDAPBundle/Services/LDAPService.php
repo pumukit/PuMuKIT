@@ -24,11 +24,7 @@ class LDAPService
      */
     public function isConfigured()
     {
-        if ($this->server &&
-            $this->bindRdn &&
-            $this->bindPassword &&
-            $this->baseDn) return true;
-        return false;
+        return ($this->server) ? true : false;
     }
 
     /**
