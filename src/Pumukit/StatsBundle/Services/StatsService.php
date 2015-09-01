@@ -40,9 +40,10 @@ class StatsService
             $criteria['_id'] = $element['_id'];
             $multimediaObject = $this->repo->findBy($criteria, null, 1);
 
-            if ($multimediaObject) $mostViewed[] = $multimediaObject[0];
-            
-            if (0 == --$limit) break;
+            if ($multimediaObject) {
+                $mostViewed[] = $multimediaObject[0];
+                if (0 == --$limit) break;
+            }
         }
 
         return $mostViewed;
