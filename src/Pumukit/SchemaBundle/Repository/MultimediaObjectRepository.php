@@ -126,7 +126,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function findBySeriesAndPersonIdWithRoleCod($series, $personId, $roleCod)
     {
-        $qb = $this->createQueryBuilder()
+        $qb = $this->createStandardQueryBuilder()
             ->field('series')->references($series);
         $qb->field('people')->elemMatch(
             $qb->expr()->field('people._id')->equals(new \MongoId($personId))
