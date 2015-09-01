@@ -20,6 +20,7 @@ class StatsService
 
     private function doGetMostViewed(array $criteria = array(), $days = 30, $limit = 3)
     {
+        $ids = array();
         $fromDate = new \DateTime(sprintf("-%s days", $days));
         $fromMongoDate = new \MongoDate($fromDate->format('U'), $fromDate->format('u'));
         $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
@@ -34,9 +35,9 @@ class StatsService
         $aggregation = $viewsLogColl->aggregate($pipeline);
 
         $mostViewed = array();
-
         
         foreach($aggregation as $element) {
+            $ids[] =  $element['_id'];
             $criteria['_id'] = $element['_id'];
             $multimediaObject = $this->repo->findBy($criteria, null, 1);
 
@@ -44,6 +45,11 @@ class StatsService
                 $mostViewed[] = $multimediaObject[0];
                 if (0 == --$limit) break;
             }
+        }
+
+        if (0 !== $limit) {
+          $criteria['_id'] = array('$nin' => $ids);
+          return array_merge($mostViewed, $this->repo->findStandardBy($criteria, null, $limit));
         }
 
         return $mostViewed;
