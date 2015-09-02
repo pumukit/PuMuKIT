@@ -107,7 +107,7 @@ class SeriesPicController extends Controller
       ->getRepository('PumukitSchemaBundle:Series');
 
         if (!$series = $repo->findByPicId($picId)) {
-            throw new NotFoundHttpException('Requested series does not exist');
+            throw $this->createNotFoundException('Requested series does not exist');
         }
 
         $series = $this->get('pumukitschema.seriespic')->removePicFromSeries($series, $picId);
@@ -126,7 +126,7 @@ class SeriesPicController extends Controller
       ->getRepository('PumukitSchemaBundle:Series');
 
         if (!$series = $repo->findByPicId($picId)) {
-            throw new NotFoundHttpException('Requested series does not exist');
+            throw $this->createNotFoundException('Requested series does not exist');
         }
 
         $series->upPicById($picId);
@@ -146,10 +146,10 @@ class SeriesPicController extends Controller
         $picId = $this->getRequest()->get('id');
 
         $repo = $this->get('doctrine_mongodb')
-      ->getRepository('PumukitSchemaBundle:Series');
+          ->getRepository('PumukitSchemaBundle:Series');
 
         if (!$series = $repo->findByPicId($picId)) {
-            throw new NotFoundHttpException('Requested series does not exist');
+            throw $this->createNotFoundException('Requested series does not exist');
         }
 
         $series->downPicById($picId);

@@ -157,14 +157,4 @@ class MediaLibraryController extends Controller
 
         return array('title' => $title, 'subseries' => $subseries, 'tag_cod' => $tagName);
     }
-
-    private function createPager($objects, $page)
-    {
-        $adapter = new DoctrineODMMongoDBAdapter($objects);
-        $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage($this->limit);
-        $pagerfanta->setCurrentPage($page);
-
-        return $pagerfanta;
-    }
 }

@@ -218,7 +218,7 @@ EOT
                                 $output->writeln("Role persisted - new id: ".$role->getId()." code: ".$role->getCod());
                                 break;
                         }
-                    } catch (Exception $e) {
+                    } catch (\Exception $e) {
                         $output->writeln("<error>".$repoName.': '.$e->getMessage()."</error>");
                     }
                 } else {

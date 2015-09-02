@@ -115,7 +115,7 @@ EOT
                         $tag = $this->createTagFromCsvArray($currentRow, $parent);
                         $idCodMapping[$currentRow[0]] = $tag;
                         $output->writeln("Tag persisted - new id: ".$tag->getId()." cod: ".$tag->getCod());
-                    } catch (Exception $e) {
+                    } catch (\Exception $e) {
                         $output->writeln("<error>Tag: ".$e->getMessage()."</error>");
                     }
                 } else {

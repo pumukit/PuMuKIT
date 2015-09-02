@@ -72,7 +72,7 @@ class ClientService
     $decode = json_decode($sal["var"], true);
 
     if (!($decode)) {
-      throw new sfException("Matterhorn communication error");
+      throw new \Exception("Matterhorn communication error");
     }
 
     $return = array(0, array());
@@ -100,7 +100,7 @@ class ClientService
     $decode = json_decode($sal["var"], true);
 
     if (!($decode)) {
-      throw new sfException("Matterhorn communication error");
+      throw new \Exception("Matterhorn communication error");
     }
 
     if ($decode["search-results"]["total"] == 0)
@@ -120,7 +120,7 @@ class ClientService
       $decode = json_decode($sal["var"], true);
 
       if (!($decode)) {
-          throw new sfException("Matterhorn communication error");
+          throw new \Exception("Matterhorn communication error");
       }
 
       if ($decode["search-results"]["total"] == 0)
@@ -137,7 +137,7 @@ class ClientService
       if ($output["status"] !== 200) return false;
       $decode = json_decode($output["var"], true);
       if (!($decode)) {
-          throw new sfException("Matterhorn communication error");
+          throw new \Exception("Matterhorn communication error");
       }
       if (isset($decode['services'])) {
           if (isset($decode['services']['service'])) {
