@@ -86,6 +86,10 @@ class StatsServiceTest extends WebTestCase
 
     private function initTags($list)
     {
+        $globalTag = new Tag();
+        $globalTag->setCod('tv');
+        $this->dm->persist($globalTag);
+
         $tags = array();
         foreach($list as $i => $mm) {
             $tag = new Tag();
@@ -96,13 +100,14 @@ class StatsServiceTest extends WebTestCase
         $this->dm->flush();
 
         foreach($list as $i => $mm) {
+            $mm->addTag($globalTag);
             $mm->addTag($tags[$i]);
             $this->dm->persist($mm);            
         }
         $this->dm->flush();        
     }
 
-    public function testStarsService()
+    public function testSimpleStatsService()
     {
         $list = $this->initContext();
 
@@ -121,10 +126,31 @@ class StatsServiceTest extends WebTestCase
         $this->assertEquals($mv, array($list[5], $list[4], $list[3]));
 
         $mv = $service->getMostViewed(array(), 30, 30);
+        $this->assertEquals(5, count($mv));
         $this->assertEquals($mv, array($list[5], $list[4], $list[3], $list[2], $list[1]));        
     }
 
-    public function testStarsServiceWithTags()
+    public function testStatsServiceWithBlockedVideos()
+    {
+        $list = $this->initContext();
+        $this->initTags($list);
+
+        $service = new StatsService($this->dm);
+        $mv = $service->getMostViewed(array('tv'), 30, 3);
+        $this->assertEquals($mv, array($list[5], $list[4], $list[3]));
+
+        $mm = $list[5];
+        foreach($mm->getTags() as $tag) {
+          $mm->removeTag($tag);
+        }
+        $this->dm->persist($mm);
+        $this->dm->flush();        
+
+        $mv = $service->getMostViewed(array('tv'), 30, 3);
+        $this->assertEquals($mv, array($list[4], $list[3], $list[2]));
+    }
+
+    public function testStatsServiceWithTags()
     {
         $list = $this->initContext();
         $this->initTags($list);
@@ -141,7 +167,7 @@ class StatsServiceTest extends WebTestCase
         $this->assertEquals($mv, array($list[1]));        
     }
 
-    public function testStarsServiceUsingFilters()
+    public function testStatsServiceUsingFilters()
     {
         $list = $this->initContext();
         $this->initTags($list);
