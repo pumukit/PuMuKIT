@@ -11,6 +11,7 @@ use Pumukit\SchemaBundle\Services\TrackService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\EncoderBundle\Services\JobService;
+use Pumukit\EncoderBundle\Document\Job;
 
 class TrackServiceTest extends WebTestCase
 {
@@ -175,15 +176,23 @@ class TrackServiceTest extends WebTestCase
         $multimediaObject = $this->factoryService->createMultimediaObject($series);
 
         $this->assertEquals(0, count($multimediaObject->getTracks()));
+        $this->assertEquals(0, count($this->repoJobs->findAll()));
+
+        $job = new Job();
+        $job->setMmId($multimediaObject->getId());
+        $job->setStatus(Job::STATUS_FINISHED);
+        $job->setProfile('master');
 
         $track = new Track();
-
+        $track->addTag('profile:master');
         $multimediaObject->addTrack($track);
 
+        $this->dm->persist($job);
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
         $this->assertEquals(1, count($multimediaObject->getTracks()));
+        $this->assertEquals(1, count($this->repoJobs->findAll()));
 
         $multimediaObject = $this->repoMmobj->find($multimediaObject->getId());
         $track = $multimediaObject->getTracks()[0];
@@ -191,6 +200,7 @@ class TrackServiceTest extends WebTestCase
         $this->trackService->removeTrackFromMultimediaObject($multimediaObject, $track->getId());
 
         $this->assertEquals(0, count($multimediaObject->getTracks()));
+        $this->assertEquals(0, count($this->repoJobs->findAll()));
     }
 
     public function testUpAndDownTrackInMultimediaObject()

@@ -18,6 +18,7 @@ class TrackService
     private $jobService;
     private $profileService;
     private $forceDeleteOnDisk;
+    private $jobRepo;
 
     public function __construct(DocumentManager $documentManager, JobService $jobService, ProfileService $profileService, $tmpPath=null, $forceDeleteOnDisk=true)
     {
@@ -26,6 +27,7 @@ class TrackService
         $this->profileService = $profileService;
         $this->tmpPath = $tmpPath ? realpath($tmpPath) : sys_get_temp_dir();
         $this->forceDeleteOnDisk = $forceDeleteOnDisk;
+        $this->jobRepo = $this->dm->getRepository('PumukitEncoderBundle:Job');
     }
 
     /**
@@ -105,11 +107,18 @@ class TrackService
     {
         $track = $multimediaObject->getTrackById($trackId);
         $trackPath = $track->getPath();
+        $trackProfile = str_replace('profile:', '', preg_grep('/^profile:*/', $track->getTags())[0]);
+
         $isNotOpencast = !$track->containsTag('opencast');
 
         $multimediaObject->removeTrackById($trackId);
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
+
+        $allJobs = $this->jobRepo->findByMultimediaObjectIdAndProfile($multimediaObject->getId(), $trackProfile);
+        foreach ($allJobs as $job) {
+            $this->jobService->deleteJob($job->getId());
+        }
 
         if ($this->forceDeleteOnDisk && $trackPath && $isNotOpencast) {
             $this->deleteFileOnDisk($trackPath);
