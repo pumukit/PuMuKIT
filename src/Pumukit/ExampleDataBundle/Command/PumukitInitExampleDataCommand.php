@@ -77,7 +77,7 @@ EOT
             }
 
 
-            if ($input->getOption('force') or $input->getOption('append')) {
+            if ($input->getOption('force') || $input->getOption('append')) {
 
                   if(!$input->getOption('reusezip')){
                         if (!$this->download(self::PATH_VIDEO, $newFile, $output)) {
