@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * @Route("/podcast")
@@ -26,7 +27,7 @@ class DefaultController extends Controller
         $multimediaObjects = $this->getPodcastMultimediaObjectsByAudio(false);
         try {
             $values = $this->getValues($request, 'video', null);
-            $xml = $this->getXMLElement($multimediaObjects, $values);
+            $xml = $this->getXMLElement($multimediaObjects, $values, 'video');
         } catch (\Exception $e) {
             $xml = $this->getXMLErrorElement($e);
             return new Response($xml->asXML(), 400, array('Content-Type' => 'text/xml'));
@@ -42,7 +43,7 @@ class DefaultController extends Controller
         $multimediaObjects = $this->getPodcastMultimediaObjectsByAudio(true);
         try {
             $values = $this->getValues($request, 'audio', null);
-            $xml = $this->getXMLElement($multimediaObjects, $values);
+            $xml = $this->getXMLElement($multimediaObjects, $values, 'audio');
         } catch (\Exception $e) {
             $xml = $this->getXMLErrorElement($e);
             return new Response($xml->asXML(), 400, array('Content-Type' => 'text/xml'));
@@ -58,7 +59,7 @@ class DefaultController extends Controller
         $multimediaObjects = $this->getPodcastMultimediaObjectsByAudioAndSeries(false, $series);
         try {
             $values = $this->getValues($request, 'video', $series);
-            $xml = $this->getXMLElement($multimediaObjects, $values);
+            $xml = $this->getXMLElement($multimediaObjects, $values, 'video');
         } catch (\Exception $e) {
             $xml = $this->getXMLErrorElement($e);
             return new Response($xml->asXML(), 400, array('Content-Type' => 'text/xml'));
@@ -74,7 +75,7 @@ class DefaultController extends Controller
         $multimediaObjects = $this->getPodcastMultimediaObjectsByAudioAndSeries(true, $series);
         try {
             $values = $this->getValues($request, 'audio', $series);
-            $xml = $this->getXMLElement($multimediaObjects, $values);
+            $xml = $this->getXMLElement($multimediaObjects, $values, 'audio');
         } catch (\Exception $e) {
             $xml = $this->getXMLErrorElement($e);
             return new Response($xml->asXML(), 400, array('Content-Type' => 'text/xml'));
@@ -85,13 +86,12 @@ class DefaultController extends Controller
     /**
      * @Route("/series/{id}/collection.xml", defaults={"_format": "xml"}, name="pumukit_podcast_series_collection")
      */
-    public function seriesAction(Series $series, Request $request)
+    public function seriesCollectionAction(Series $series, Request $request)
     {
-        // TODO : multimedia objects from Series. If one has video and audio, take video.
-        $multimediaObjects = $this->getPodcastMultimediaObjectsByAudioAndSeries(true, $series);
+        $multimediaObjects = $this->getPodcastMultimediaObjectsBySeries($series);
         try {
             $values = $this->getValues($request, 'video', $series);
-            $xml = $this->getXMLElement($multimediaObjects, $values);
+            $xml = $this->getXMLElement($multimediaObjects, $values, 'all');
         } catch (\Exception $e) {
             $xml = $this->getXMLErrorElement($e);
             return new Response($xml->asXML(), 400, array('Content-Type' => 'text/xml'));
@@ -120,6 +120,16 @@ class DefaultController extends Controller
     {
         $qb = $this->createPodcastMultimediaObjectByAudioQueryBuilder($isOnlyAudio);
         $qb->field('series')->references($series);
+        return $qb->getQuery()->execute();
+    }
+
+    private function getPodcastMultimediaObjectsBySeries(Series $series)
+    {
+        $mmObjRepo = $this->get('doctrine_mongodb.odm.document_manager')
+          ->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $qb = $mmObjRepo->createStandardQueryBuilder()
+          ->field('series')->references($series)
+          ->field('tracks.tags')->equals('podcast');
         return $qb->getQuery()->execute();
     }
 
@@ -167,7 +177,7 @@ class DefaultController extends Controller
         return $values;
     }
 
-    private function getXMLElement($multimediaObjects, $values)
+    private function getXMLElement($multimediaObjects, $values, $trackType='video')
     {
         $xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?>'
                                      .'<rss xmlns:itunes="'.self::ITUNES_DTD_URL
@@ -209,18 +219,19 @@ class DefaultController extends Controller
 
         $channel->addChild('itunes:explicit', $values['itunes_explicit'], self::ITUNES_DTD_URL);
 
-        $channel = $this->completeTracksInfo($channel, $multimediaObjects, $values);
+        $channel = $this->completeTracksInfo($channel, $multimediaObjects, $values, $trackType);
 
         return $xml;
     }
 
-    private function completeTracksInfo($channel, $multimediaObjects, $values)
+    private function completeTracksInfo($channel, $multimediaObjects, $values, $trackType='video')
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $tagRepo = $dm->getRepository('PumukitSchemaBundle:Tag');
         $itunesTag = $tagRepo->findOneByCod('ITUNES');
         foreach ($multimediaObjects as $multimediaObject) {
-            $track = $multimediaObject->getTrackWithTag('display');
+            $track = $this->getPodcastTrack($multimediaObject, $trackType);
+
             $item = $channel->addChild('item');
 
             $title = (strlen($multimediaObject->getTitle()) === 0) ?
@@ -266,5 +277,45 @@ class DefaultController extends Controller
     {
         $xml = new \SimpleXMLElement('<error>'.$e->getMessage().'</error>');
         return $xml;
+    }
+
+    private function getPodcastTrack(MultimediaObject $multimediaObject, $trackType='video')
+    {
+        if ('all' === $trackType) {
+            $track = $this->getVideoTrack($multimediaObject);
+            if (null === $track) {
+                $track = $this->getAudioTrack($multimediaObject);
+            }
+        } elseif ('video' === $trackType) {
+            $track = $this->getVideoTrack($multimediaObject);
+        } else {
+            $track = $this->getAudioTrack($multimediaObject);
+        }
+
+        return $track;
+    }
+
+    private function getVideoTrack(MultimediaObject $multimediaObject)
+    {
+        $video_all_tags = array('display', 'podcast');
+        $video_not_all_tags = array('audio');
+        return $multimediaObject->getFilteredTrackWithTags(
+                                                           array(),
+                                                           $video_all_tags,
+                                                           array(),
+                                                           $video_not_all_tags,
+                                                           false);
+    }
+
+    private function getAudioTrack(MultimediaObject $multimediaObject)
+    {
+        $audio_all_tags = array('display', 'podcast', 'audio');
+        $audio_not_all_tags = array();
+        return $multimediaObject->getFilteredTrackWithTags(
+                                                           array(),
+                                                           $audio_all_tags,
+                                                           array(),
+                                                           $audio_not_all_tags,
+                                                           false);
     }
 }
