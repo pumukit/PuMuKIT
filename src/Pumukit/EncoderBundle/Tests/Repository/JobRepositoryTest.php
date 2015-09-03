@@ -251,6 +251,46 @@ class JobRepositoryTest extends WebTestCase
         $this->assertEquals(1, count($this->repo->findByMultimediaObjectId($mm_id2)));
     }
 
+    public function testFindByMultimediaObjectIdAndProfile()
+    {
+        $mm_id1 = '54ad3f5e6e4cd68a278b4573';
+        $mm_id2 = '54ad3f5e6e4cd68a278b4574';
+
+        $job1 = new Job();
+        $job2 = new Job();
+        $job3 = new Job();
+        $job4 = new Job();
+
+        $job1->setMmId($mm_id1);
+        $job2->setMmId($mm_id2);
+        $job3->setMmId($mm_id1);
+        $job4->setMmId($mm_id1);
+
+        $job1->setStatus(Job::STATUS_FINISHED);
+        $job2->setStatus(Job::STATUS_EXECUTING);
+        $job3->setStatus(Job::STATUS_WAITING);
+        $job4->setStatus(Job::STATUS_WAITING);
+
+        $job1->setProfile('master');
+        $job2->setProfile('video_h264');
+        $job3->setProfile('master');
+        $job4->setProfile('video_h264');
+
+        $this->dm->persist($job1);
+        $this->dm->persist($job2);
+        $this->dm->persist($job3);
+        $this->dm->persist($job4);
+        $this->dm->flush();
+
+        $masterProfile = 'master';
+        $videoH264Profile = 'video_h264';
+
+        $this->assertEquals(2, count($this->repo->findByMultimediaObjectIdAndProfile($mm_id1, $masterProfile)));
+        $this->assertEquals(1, count($this->repo->findByMultimediaObjectIdAndProfile($mm_id1, $videoH264Profile)));
+        $this->assertEquals(0, count($this->repo->findByMultimediaObjectIdAndProfile($mm_id2, $masterProfile)));
+        $this->assertEquals(1, count($this->repo->findByMultimediaObjectIdAndProfile($mm_id2, $videoH264Profile)));
+    }
+
     private function newJob($mm_id, $name)
     {
         $job = new Job();
