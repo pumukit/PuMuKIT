@@ -10,7 +10,7 @@
         </div>
       </td>
       <td>
-          <a href="#" title="{% trans %}delete{% endtrans %}" onclick="return tag_delete('{{ tag.id }}', '{{ tag.cod }}', '{{ tag.parent.id }}')">
+          <a href="#" title="{% trans %}delete{% endtrans %}" onclick="return tag_delete('{{ tag.id }}', '{{ tag.cod }}', '{{ tag.parent.id }}', parseInt('{{ tag.getNumberMultimediaObjects() }}'));">
             <i class="mdi-content-clear"></i>
           </a>
       </td>

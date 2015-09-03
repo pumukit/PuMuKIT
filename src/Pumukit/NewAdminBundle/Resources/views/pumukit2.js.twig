@@ -1276,8 +1276,10 @@ function toggle_section_tag(id, element, level, cod) {
 }
 
 
-function tag_delete(id, cod, pid) {
-  if (window.confirm('{% trans %}Are you sure you want to delete the tag with code{% endtrans %} ' + cod + '?')) {
+function tag_delete(id, cod, pid, numberMultimediaObjects) {
+  if (0 < numberMultimediaObjects) {
+    window.alert('{% trans %}Can not delete tag with code{% endtrans %} ' + cod + '. ' + numberMultimediaObjects + ' {% trans %}Multimedia Object(s) has/have this tag{% endtrans %}.');
+  } else  if (window.confirm('{% trans %}Are you sure you want to delete the tag with code{% endtrans %} ' + cod + '?')) {
     var url = '{{ path('pumukitnewadmin_tag_delete', {'id': '___id___'}) }}';
     $.ajax(url.replace('___id___', id), {
       type: 'DELETE',
