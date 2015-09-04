@@ -93,7 +93,7 @@ class UserController extends AdminController
             }
         }
 
-        return parent::deleteAction($request);
+        return parent::batchDeleteAction($request);
     }
 
     private function isAllowedToBeDeleted(User $userToDelete)
