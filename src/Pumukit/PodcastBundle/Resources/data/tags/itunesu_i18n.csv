@@ -1,0 +1,175 @@
+id;cod;tree_parent_id;metacategory;display;name_es;name_gl;name_en
+2627;ITUNESU;0;1;1;ITUNESU;ITUNESU;ITUNESU
+2628;100;2627;0;1;Business;Negocios;Negocios
+2641;100100;2628;0;1;Economics;Económicas;Económicas
+2642;100101;2628;0;1;Finance;Finanzas;Finanzas
+2643;100102;2628;0;1;Hospitality;Servicios;Servizos
+2644;100103;2628;0;1;Management;Gestión;Xestión
+2645;100104;2628;0;1;Marketing;Marketing;Marketing
+2646;100105;2628;0;1;Personal Finance;Finanzas Personales;Finanzas Persoais
+2647;100106;2628;0;1;Real Estate;Bienes Inmuebles;Bens Inmobles
+12647;100107;2628;0;1;Entrepreneurship;Emprendimiento;Emprendemento
+2629;101;2627;0;1;Engineering;Ingeniería;Enxeñaría
+2648;101100;2629;0;1;Chemical & Petroleum Engineering;Química y Petróleo;Química e Petróleo
+2649;101101;2629;0;1;Civil Engineering;Civil;Civil
+2650;101102;2629;0;1;Computer Science;Informática;Informática
+2651;101103;2629;0;1;Electrical Engineering;Eléctrica;Eléctrica
+2652;101104;2629;0;1;Environmental Engineering;Medioambiental;Medioambiental
+2653;101105;2629;0;1;Mechanical Engineering;Mecánica;Mecánica
+2630;102;2627;0;1;Art & Architecture;Arte y Arquitectura;Arte e Arquitectura
+2654;102100;2630;0;1;Architecture;Arquitectura;Arquitectura
+2655;102101;2630;0;1;Art;Arte;Arte
+2656;102102;2630;0;1;Art History;Historia del Arte;Historia da Arte
+2657;102103;2630;0;1;Dance;Baile;Baile
+2658;102104;2630;0;1;Film;Cine;Cine
+2659;102105;2630;0;1;Design;Diseño;Deseño
+2660;102106;2630;0;1;Interior Design;Diseño de Interiores;Deseño de Interiores
+2661;102107;2630;0;1;Music;Música;Música
+2662;102108;2630;0;1;Theater;Teatro;Teatro
+12662;102109;2630;0;1;Culinary Arts;Artes culinarias;Artes culinarias
+22662;102110;2630;0;1;Visual Art;Arte Visual;Arte Visual
+32662;102111;2630;0;1;Fashion;Moda;Moda
+42662;102112;2630;0;1;Media Arts;Media Arts;Media Arts
+52662;102113;2630;0;1;Photography;Fotografía;Fotografía
+2631;103;2627;0;1;Health & Medicine;Salud y Medicina;Saúde e Medicina
+2663;103100;2631;0;1;Anatomy & Physiology;Anatomía y Fisiología;Anatomía e Fisioloxía
+2664;103101;2631;0;1;Behavioral Science;Ciencia del Comportamiento;Ciencia do Comportamento
+2665;103102;2631;0;1;Dentistry;Odontología;Odontoloxía
+2666;103103;2631;0;1;Diet & Nutrition;Dieta y Nutrición;Dieta e Nutrición
+2667;103104;2631;0;1;Emergency Medicine;Medicina de Urgencia;Medicina de Urxencia
+2668;103105;2631;0;1;Genetics;Genética;Xenética
+2669;103106;2631;0;1;Gerontology;Gerontología;Xerontoloxía
+2670;103107;2631;0;1;Health & Exercise Science;Ciencias de la Actividad Física y de la Salud;Ciencias da Actividade Física e da Saúde
+2671;103108;2631;0;1;Immunology;Inmunología;Inmunoloxía
+2672;103109;2631;0;1;Neuroscience;Neurología;Neuroloxía
+2673;103110;2631;0;1;Pharmacology & Toxicology;Farmacología y Toxicología;Farmacoloxía e Toxicoloxía
+2674;103111;2631;0;1;Psychiatry;Psiquiatría;Psiquiatría
+2675;103112;2631;0;1;Global Health;Sanidad Pública;Sanidade Pública
+2676;103113;2631;0;1;Radiology;Radiología;Radioloxía
+12676;103114;2631;0;1;Nursing;Enfermería;Enfermería
+2632;104;2627;0;1;History;Historia;Historia
+2677;104100;2632;0;1;Ancient History;Antigua;Antiga
+2678;104101;2632;0;1;Medieval History;Medieval;Medieval
+2679;104102;2632;0;1;Military History;Militar;Militar
+2680;104103;2632;0;1;Modern History;Moderna;Moderna
+2681;104104;2632;0;1;African History;Africana;Africana
+2682;104105;2632;0;1;Asia-Pacific History;Asiática;Asiática
+2683;104106;2632;0;1;European History;Europea;Europea
+2684;104107;2632;0;1;Middle Eastern History;Oriente Medio;Oriente Medio
+2685;104108;2632;0;1;North American History;América del Norte;América do Norte
+2686;104109;2632;0;1;South American History;América del Sur;América do Sur
+2634;106;2627;0;1;Language;Lenguaje;Linguaxe
+2690;106100;2634;0;1;African Languages;Africano;Africano
+2691;106101;2634;0;1;Ancient Languages;Antiguo;Antigo
+2692;106102;2634;0;1;Asian;Asiático;Asiático
+2693;106103;2634;0;1;Eastern European/Slavic;Europeo del Este / Eslavo;Europeo do Este / Eslavo
+2694;106104;2634;0;1;English;Inglés;Inglés
+2695;106105;2634;0;1;English Language Learners;Inglés para Aprendices;Inglés para Aprendices
+2696;106106;2634;0;1;French;Francés;Francés
+2697;106107;2634;0;1;German;Alemán;Alemán
+2698;106108;2634;0;1;Italian;Italiano;Italiano
+2699;106109;2634;0;1;Linguistics;Lingüística;Lingüística
+2700;106110;2634;0;1;Middle Eastern;Oriente Medio;Oriente Medio
+2701;106111;2634;0;1;Spanish;Español;Español
+2702;106112;2634;0;1;Speech Pathology;Patología del Lenguaje;Patoloxía da Linguaxe
+12702;106113;2634;0;1;Chinese;Chino;Chino
+22702;106114;2634;0;1;Arabic;Árabe;Arábico
+32702;106115;2634;0;1;Hebrew;Hebreo;Hebreo
+42702;106116;2634;0;1;Hindi;Hindi;Hindi
+52702;106117;2634;0;1;Indigenous Languages;Lenguas Indígenas;Linguas Indíxenas
+62702;106118;2634;0;1;Japanese;Japonés;Xaponés
+72702;106119;2634;0;1;Korean;Coreano;Coreano
+82702;106120;2634;0;1;Other Languages;Otros Idiomas;Outros Idiomas
+92702;106121;2634;0;1;Portuguese;Portugués;Portugués
+102702;106122;2634;0;1;Russian;Ruso;Ruso
+2635;107;2627;0;1;Literature;Literatura;Literatura
+2703;107100;2635;0;1;Anthologies;Antologías;Antoloxías
+2704;107101;2635;0;1;Biography;Biografía;Biografía
+2705;107102;2635;0;1;Classics;Clásicos;Clásicos
+2706;107103;2635;0;1;Literary Criticism;Crítica;Crítica
+2707;107104;2635;0;1;Fiction;Ficción;Ficción
+2708;107105;2635;0;1;Poetry;Poesía;Poesía
+12708;107106;2635;0;1;Comparative Literature;Literatura Comparada;Literatura Comparada
+2636;108;2627;0;1;Mathematics;Matemáticas;Matemáticas
+2709;108100;2636;0;1;Advanced Mathematics;Matemáticas Avanzadas;Matemáticas Avanzadas
+2710;108101;2636;0;1;Algebra;Álgebra;Álxebra
+2711;108102;2636;0;1;Arithmetic;Aritmética;Aritmética
+2712;108103;2636;0;1;Calculus;Cálculo;Cálculo
+2713;108104;2636;0;1;Geometry;Geometría;Xeometría
+2714;108105;2636;0;1;Statistics;Estadística;Estadística
+2637;109;2627;0;1;Science;Ciencias;Ciencias
+2715;109100;2637;0;1;Agricultural;Agrícola;Agrícola
+2716;109101;2637;0;1;Astronomy;Astronomía;Astronomía
+2717;109102;2637;0;1;Atmospheric;Atmosférica;Atmosférica
+2718;109103;2637;0;1;Biology;Biología;Bioloxía
+2719;109104;2637;0;1;Chemistry;Química;Química
+2720;109105;2637;0;1;Ecology;Ecología;Ecoloxía
+2721;109106;2637;0;1;Geography;Geografía;Xeografía
+2722;109107;2637;0;1;Geology;Geología;Xeoloxía
+2723;109108;2637;0;1;Physics;Física;Física
+12723;109109;2637;0;1;Environment;Medio Ambiente;Medio Ambiente
+2638;110;2627;0;1;Psychology & Social Science;Ciencias Sociale y Psicologías;Ciencias Sociais e Psicoloxía
+2724;110100;2638;0;1;Law;Derecho;Dereito
+2725;110101;2638;0;1;Political Science;Ciencias Políticas;Ciencias Políticas
+2726;110102;2638;0;1;Public Administration;Administración Pública;Administración Pública
+2727;110103;2638;0;1;Psychology;Psicología;Psicoloxía
+2728;110104;2638;0;1;Social Welfare;Seguridad Social;Seguridade Social
+2729;110105;2638;0;1;Sociology;Sociología;Socioloxía
+12729;110106;2638;0;1;Archaeology;Arqueología;Arqueoloxía
+22729;110107;2638;0;1;Anthropology;Antropología;Antropoloxía
+2639;111;2627;0;1;Society;Sociedad;Sociedade
+2731;111101;2639;0;1;Asia Pacific Studies;Estudios Asiáticos;Estudos Asiáticos
+2732;111102;2639;0;1;European Studies;Estudios Europeos;Estudos Europeos
+2733;111103;2639;0;1;Indigenous Studies;Estudios Indígenas;Estudos Indíxenas
+2734;111104;2639;0;1;Latin & Caribbean Studies;Estudios Latinos y Caribeños;Estudos Latinos e Caribeños
+2735;111105;2639;0;1;Middle Eastern Studies;Estudios de Oriente Medio;Estudos de Oriente Medio
+2736;111106;2639;0;1;Women’s Studies;Estudios sobre mujeres;Estudos sobre mulleres
+12736;111107;2639;0;1;African Studies;Estudios de África;Estudios de África
+22736;111108;2639;0;1;American Studies;Estudios de América;Estudios de América
+32736;111109;2639;0;1;Cross-cultural Studies;Estudos Transculturales;Estudos Transculturais
+42736;111110;2639;0;1;Immigration & Emigration;Inmigración e Emigración;Inmigración e Emigración
+52736;111111;2639;0;1;Race & Ethnicity Studies;Estudios de raza y etnia;Estudios de raza e etnia.
+62736;111112;2639;0;1;Sexuality Studies;Estudios de Sexsualidad;Estudios de Sexualidade
+2640;112;2627;0;1;Teaching & Learning;Enseñanza y Educación;Ensinanza e Educación
+2737;112100;2640;0;1;Curriculum & Teaching;Curriculum y Enseñanza;Curriculum e Ensinanza
+2738;112101;2640;0;1;Educational Leadership;Liderazgo Educativo;Liderazgo Educativo
+2739;112102;2640;0;1;Family & Childcare;Cuidado de los niños y la familia;Coidado dos miniños e a familia
+2740;112103;2640;0;1;Learning Resources;Recursos Educativos;Recursos Educativos
+2741;112104;2640;0;1;Psychology & Research;Psicología e Investigación;Psicoloxía e Investigación
+2742;112105;2640;0;1;Special Education;Educación Especial;Educación Especial
+2743;112106;2640;0;1;Educational Technology;Tecnología Educativa;Tecnoloxía Educativa
+2744;112107;2640;0;1;Information/Library Science;Ciencia de la información/Biblioteconomia;Ciencia da información/Biblioteconomia
+2745;113;2627;0;1;Communications & Media;Comunicaciones y Medios;Comunicacións e Medios
+2746;113101;2745;0;1;Broadcasting;Radiodifusión;Radiodifusión
+2747;113102;2745;0;1;Digital Media;Medios Digitales;Medios Dixitais
+2748;113103;2745;0;1;Journalism;Periodismo;Xornalismo
+2749;113104;2745;0;1;Photojournalism;Fotoperiodismo;Fotoxornalismo
+2750;113105;2745;0;1;Print;Impresión;Impresión
+2751;113106;2745;0;1;Speech;Discurso;Discurso
+2752;113107;2745;0;1;Writing;Escritura;Escritura
+2753;114;2627;0;1;Philosophy;Filosofía;Filosofía
+2754;114100;2753;0;1;Aesthetics;Estética;Estética
+2755;114101;2753;0;1;Epistemology;Epistemología;Epistemología
+2756;114102;2753;0;1;Ethics;Ética;Ética
+2757;114103;2753;0;1;Metaphysics;Metafísica;Metafísica
+2758;114104;2753;0;1;Political Philosophy;Filosofía Política;Filosofía Política
+2759;114105;2753;0;1;Logic;Lógica;Lógica
+2760;114106;2753;0;1;Philosophy of Language;Filosofía del Lenguaje;Filosofía do Linguaxe
+2761;114107;2753;0;1;Philosophy of Religion;Filosofía de la Religión;Filosofía do Relixión
+2762;115;2627;0;1;Religion & Spirituality;Religión y Espiritualidad;Relixión e Espiritualidade
+2763;115100;2762;0;1;Buddhism;Budismo;Budismo
+2764;115101;2762;0;1;Christianity;Cristianismo;Cristianismo
+2765;115102;2762;0;1;Comparative Religion;Religión Comparativa;Relixión Comparativa
+2766;115103;2762;0;1;Hinduism;Hinduismo;Hinduismo
+2767;115104;2762;0;1;Islam;Islam;Islam
+2768;115105;2762;0;1;Judaism;Judaísmo;Judaísmo
+2769;115106;2762;0;1;Other Religions;otras Religiones;Outras Relixiones
+2770;115107;2762;0;1;Spirituality;Espiritualidad;Espiritualidad
+2771;116;2627;0;1;Law & Politics;Ley y Política;Lei e Política
+2772;116100;2771;0;1;Foreign Policy & International Relations;Política Exterior y Relaciones Internacionales;Política Exterior e Relacións Internacionais
+2773;116101;2771;0;1;Law;Ley;Lei
+2774;116102;2771;0;1;Local Governments;Política Local;Política Local
+2775;116103;2771;0;1;National Governments;Política Nacional;Política Nacional
+2776;116104;2771;0;1;Political Science;Ciencias Políticas;Ciencias Políticas
+2777;116105;2771;0;1;Public Administration;Administración Pública;Administración Pública
+2778;116106;2771;0;1;World Affairs;Politica Internacional;Politica Internacional
