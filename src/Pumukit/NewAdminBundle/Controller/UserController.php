@@ -31,6 +31,10 @@ class UserController extends AdminController
         $form = $this->getForm($user);
 
         if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+            $response = $this->isAllowedToBeUpdated($user);
+            if ($response instanceof Response) {
+                return $response;
+            }
             // false to not flush
             $userManager->updateUser($user, false);
             // To update aditional fields added
@@ -111,16 +115,50 @@ class UserController extends AdminController
             return new Response("Can not delete this unique user '".$userToDelete->getUsername()."'", 409);
         }
 
-        $numberAdminUsers = $repo->createQueryBuilder()
-          ->where("function(){for ( var k in this.roles ) { if ( this.roles[k] == 'ROLE_SUPER_ADMIN' ) return true;}}")
-          ->count()
-          ->getQuery()
-          ->execute();
+        $numberAdminUsers = $this->getNumberAdminUsers();
 
         if ((1 === $numberAdminUsers) && ($userToDelete->isSuperAdmin())){
             return new Response("Can not delete this unique admin user '".$userToDelete->getUsername()."'", 409);
         }
 
         return true;
+    }
+
+    private function isAllowedToBeUpdated(User $userToUpdate)
+    {
+        $numberAdminUsers = $this->getNumberAdminUsers();
+
+        if ((1 === $numberAdminUsers)) {
+            if (($userToUpdate === $this->getUniqueAdminUser()) && (!$userToUpdate->isSuperAdmin())) {
+                return new Response("Can not update this unique admin user '".$userToUpdate->getUsername()."'", 409);
+            }
+        }
+
+        return true;
+    }
+
+    private function getNumberAdminUsers()
+    {
+        $repo = $this
+          ->get('doctrine_mongodb.odm.document_manager')
+          ->getRepository('PumukitSchemaBundle:User');
+
+        return $repo->createQueryBuilder()
+          ->where("function(){for ( var k in this.roles ) { if ( this.roles[k] == 'ROLE_SUPER_ADMIN' ) return true;}}")
+          ->count()
+          ->getQuery()
+          ->execute();
+    }
+
+    private function getUniqueAdminUser()
+    {
+        $repo = $this
+          ->get('doctrine_mongodb.odm.document_manager')
+          ->getRepository('PumukitSchemaBundle:User');
+
+        return $repo->createQueryBuilder()
+          ->where("function(){for ( var k in this.roles ) { if ( this.roles[k] == 'ROLE_SUPER_ADMIN' ) return true;}}")
+          ->getQuery()
+          ->getSingleResult();
     }
 }
