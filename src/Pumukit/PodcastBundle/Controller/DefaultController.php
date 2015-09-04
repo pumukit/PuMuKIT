@@ -228,7 +228,7 @@ class DefaultController extends Controller
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $tagRepo = $dm->getRepository('PumukitSchemaBundle:Tag');
-        $itunesTag = $tagRepo->findOneByCod('ITUNES');
+        $itunesUTag = $tagRepo->findOneByCod('ITUNESU');
         foreach ($multimediaObjects as $multimediaObject) {
             $track = $this->getPodcastTrack($multimediaObject, $trackType);
 
@@ -242,9 +242,9 @@ class DefaultController extends Controller
             $item->addChild('itunes:summary', $multimediaObject->getDescription(), self::ITUNES_DTD_URL);
             $item->addChild('description', $multimediaObject->getDescription());
 
-            if ($itunesTag !== null) {
+            if ($itunesUTag !== null) {
                 foreach ($multimediaObject->getTags() as $tag) {
-                    if ($tag->isDescendantOf($itunesTag)){
+                    if ($tag->isDescendantOf($itunesUTag)){
                         $embeddedTag = $tag;
                         break;
                     }
