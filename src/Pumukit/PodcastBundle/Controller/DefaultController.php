@@ -245,13 +245,10 @@ class DefaultController extends Controller
             if ($itunesUTag !== null) {
                 foreach ($multimediaObject->getTags() as $tag) {
                     if ($tag->isDescendantOf($itunesUTag)){
-                        $embeddedTag = $tag;
-                        break;
+                        $itunesUCategory = $item->addChild('itunesu:category', null, self::ITUNESU_FEED_URL);
+                        $itunesUCategory->addAttribute('itunesu:code', $tag->getCod(), self::ITUNESU_FEED_URL);
                     }
                 }
-                $itunesUCategory = $item->addChild('itunesu:category', null, self::ITUNESU_FEED_URL);
-                // TODO review adding itunesUFeedUrl
-                $itunesUCategory->addAttribute('itunesu:code', $embeddedTag->getCod(), self::ITUNESU_FEED_URL);
             }
 
             $item->addChild('link', $values['base_url'] . $track->getUrl());
