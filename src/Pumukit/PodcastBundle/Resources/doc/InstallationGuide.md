@@ -32,3 +32,17 @@ pumukit_podcast:
 * `itunes_subtitle` defines the Itunes subtitle. If not defined, it will take pumukit2.info values.
 * `itunes_author` defines the Itunes author of the channel. Default value: 'PuMuKIT-TV'.
 * `itunes_explicit` defines whether Itunes is explicit or not. Default value: false.
+
+3.- Init Podcast tags:
+
+```
+$ cd /path/to/pumukit2/
+$ php app/console podcast:init:tags --force
+```
+
+4.- [OPTIONAL] Init ItunesU tags:
+
+```
+$ cd /path/to/pumukit2/
+$ php app/console podcast:init:itunesu --force
+```
