@@ -16,7 +16,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 class DefaultController extends Controller
 {
     const ITUNES_DTD_URL = 'http://www.itunes.com/dtds/podcast-1.0.dtd';
-    const ITUNESU_FEED_URL = 'https://www.itunesu.com/feed';
+    const ITUNESU_FEED_URL = 'http://www.itunesu.com/feed';
     const ATOM_URL = 'http://www.w3.org/2005/Atom';
 
     /**
@@ -141,7 +141,7 @@ class DefaultController extends Controller
 
         $values = array();
         $values['base_url'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
-        $values['requestURI'] = $request->get('reguestURI');
+        $values['requestURI'] = $values['base_url'] . $request->getRequestUri();
         $values['image_url'] = $values['base_url'] . $assetsHelper->getUrl('/bundles/pumukitpodcast/images/gc_'.$audioVideoType.'.jpg');
         $values['language'] = $request->getLocale();
         $values['itunes_author'] = $container->getParameter('pumukit_podcast.itunes_author');
@@ -155,22 +155,22 @@ class DefaultController extends Controller
             $values['itunes_category'] = $series->getProperty('itunescategory') ? $series->getProperty('itunescategory') : $container->getParameter('pumukit_podcast.itunes_category');
             $values['itunes_summary'] = $series->getDescription();
             $values['itunes_subtitle'] = $series->getSubtitle() ? $series->getSubtitle() :
-              ($container->hasParameter('pumukit_podcast.itunes_subtitle') ? $container->getParameter('pumukit_podcast.itunes_subtitle') : $values['channel_description']);
+              ($container->getParameter('pumukit_podcast.itunes_subtitle') ? $container->getParameter('pumukit_podcast.itunes_subtitle') : $values['channel_description']);
         } else {
-            $values['channel_title'] = $container->hasParameter('pumukit_podcast.channel_title') ?
+            $values['channel_title'] = $container->getParameter('pumukit_podcast.channel_title') ?
               $container->getParameter('pumukit_podcast.channel_title') :
               $pumukit2Info['title'];
-            $values['channel_description'] = $container->hasParameter('pumukit_podcast.channel_description') ?
+            $values['channel_description'] = $container->getParameter('pumukit_podcast.channel_description') ?
               $container->getParameter('pumukit_podcast.channel_description') :
               $pumukit2Info['description'];
-            $values['copyright'] = $container->hasParameter('pumukit_podcast.channel_copyright') ?
+            $values['copyright'] = $container->getParameter('pumukit_podcast.channel_copyright') ?
               $container->getParameter('pumukit_podcast.channel_copyright') :
               (isset($pumukit2Info['copyright']) ? $pumukit2Info['copyright'] : 'PuMuKIT2 2015');
             $values['itunes_category'] = $container->getParameter('pumukit_podcast.itunes_category');
-            $values['itunes_summary'] = $container->hasParameter('pumukit_podcast.itunes_summary') ?
+            $values['itunes_summary'] = $container->getParameter('pumukit_podcast.itunes_summary') ?
               $container->getParameter('pumukit_podcast.itunes_summary') :
               $values['channel_description'];
-            $values['itunes_subtitle'] = $container->hasParameter('pumukit_podcast.itunes_subtitle') ?
+            $values['itunes_subtitle'] = $container->getParameter('pumukit_podcast.itunes_subtitle') ?
               $container->getParameter('pumukit_podcast.itunes_subtitle') : $values['channel_description'];
         }
 
@@ -185,11 +185,11 @@ class DefaultController extends Controller
                                      .'" xmlns:atom="'.self::ATOM_URL
                                      .'" xml:lang="en" version="2.0"></rss>'
                                      );
-        $atomLink = $xml->addChild('atom:link', null, self::ATOM_URL);
+        $channel = $xml->addChild('channel');
+        $atomLink = $channel->addChild('atom:link', null, self::ATOM_URL);
         $atomLink->addAttribute('href', $values['requestURI']);
         $atomLink->addAttribute('rel', 'self');
         $atomLink->addAttribute('type', 'application/rss+xml');
-        $channel = $xml->addChild('channel');
         $channel->addChild('title', $values['channel_title']);
         $channel->addChild('link', $values['base_url']);
         $channel->addChild('description', $values['channel_description']);
@@ -259,8 +259,8 @@ class DefaultController extends Controller
             $enclosure->addAttribute('type', $track->getMimeType());
 
             $item->addChild('guid', $values['base_url'] . $track->getUrl());
-            $item->addChild('itunes:duration', $multimediaObject->getDurationString(), self::ITUNES_DTD_URL);
-            $item->addChild('author', $multimediaObject->getCopyright());
+            $item->addChild('itunes:duration', $this->getDurationString($multimediaObject), self::ITUNES_DTD_URL);
+            $item->addChild('author', $values['email'] . ' (' . $values['channel_title'] . ')');
             $item->addChild('itunes:author', $multimediaObject->getCopyright(), self::ITUNES_DTD_URL);
             $item->addChild('itunes:keywords', $multimediaObject->getKeyword(), self::ITUNES_DTD_URL);
             $item->addChild('itunes:explicit', $values['itunes_explicit'], self::ITUNES_DTD_URL);
@@ -314,5 +314,12 @@ class DefaultController extends Controller
                                                            array(),
                                                            $audio_not_all_tags,
                                                            false);
+    }
+
+    private function getDurationString(MultimediaObject $multimediaObject)
+    {
+        $minutes = floor($multimediaObject->getDuration() / 60);
+        $seconds = $multimediaObject->getDuration() % 60;
+        return $minutes . ':' . $seconds;
     }
 }
