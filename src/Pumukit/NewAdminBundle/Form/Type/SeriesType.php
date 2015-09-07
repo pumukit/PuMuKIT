@@ -28,7 +28,7 @@ class SeriesType extends AbstractType
             ->add('announce', 'checkbox',
                   array(
                         'required' => false,
-                        'label' => $this->translator->trans('New', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('Last Added (Announced)', array(), null, $this->locale)))
             ->add('i18n_title', 'texti18n',
                   array('label' => $this->translator->trans('Title', array(), null, $this->locale)))
             ->add('i18n_subtitle', 'texti18n',
