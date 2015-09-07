@@ -1,4 +1,0 @@
-pumukit_cmar_podcast_bundle:
-    resource: "@PumukitCmarPodcastBundle/Controller/"
-    type:     annotation
-    prefix:   /
