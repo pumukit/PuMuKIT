@@ -1890,6 +1890,26 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertFalse($embeddedTag->isDescendantOf($tag1));
     }
 
+    public function testFindByTagCod()
+    {
+        $tag = new Tag();
+        $tag->setCod('tag');
+
+        $this->dm->persist($tag);
+        $this->dm->flush();
+
+        $series = $this->createSeries('Series');
+        $multimediaObject = $this->factoryService->createMultimediaObject($series);
+
+        $sort = array('public_date' => -1);
+        $this->assertCount(0, $this->repo->findByTagCod($tag, $sort));
+
+        $addedTags = $this->tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());
+        $multimediaObjects = $this->repo->findByTagCod($tag, $sort)->toArray();
+        $this->assertCount(1, $multimediaObjects);
+        $this->assertTrue(in_array($multimediaObject, $multimediaObjects));
+    }
+
     private function createPerson($name)
     {
         $email = $name.'@mail.es';
