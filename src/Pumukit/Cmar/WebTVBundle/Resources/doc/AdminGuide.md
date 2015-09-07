@@ -13,54 +13,11 @@ How to enable and configure this bundle
 1.- Enable Cmar bundles (WebTVBundle, SonarBundle and LiveBundle) by uncommeting the following line in the `app/AppKernel.php` file of your project:
 
 ```
-php
-<?php
-// app/AppKernel.php
-
-// ...
-class AppKernel extends Kernel
-{
-    public function registerBundles()
-    {
-        $bundles = array(
-            // ...
-
-            new Pumukit\Cmar\WebTVBundle\PumukitCmarWebTVBundle(),
-            new Pumukit\Cmar\SonarBundle\PumukitCmarSonarBundle(),
-            new Pumukit\Cmar\PodcastBundle\PumukitCmarPodcastBundle(),
-            new Pumukit\Cmar\LiveBundle\PumukitCmarLiveBundle(),
-        );
-
-        // ...
-    }
-
-    // ...
-}
+$ cd /path/to/pumukit2
+$ php app/console pumukit:install:bundle Pumukit/Cmar/WebTVBundle/PumukitCmarWebTVBundle
 ```
 
-2.- Uncomment these lines in the `app/config/routing.yml` file of your project:
-
-```
-pumukit_cmar_web_tv:
-    resource: "@PumukitCmarWebTVBundle/Resources/config/routing.yml"
-
-pumukit_cmar_podcast:
-    resource: "@PumukitCmarPodcastBundle/Resources/config/routing.yml"
-
-pumukit_cmar_sonar:
-    resource: "@PumukitCmarSonarBundle/Resources/config/routing.yml"
-```
-
-3.- Add your Cmar Live channel configuration for the chat in your `app/config/config.yml` file:
-
-```
-pumukit_cmar_live:
-    chat:
-        enable: true
-        update_interval: 5000
-```
-
-4.- Add your Opencast server configuration to your `app/config/parameters.yml` files:
+2.- Add your Opencast server configuration to your `app/config/parameters.yml` files:
 
 ```
     opencast_host: ''
@@ -75,7 +32,7 @@ pumukit_cmar_live:
    - `opencast_player` is the Opencast player URL or path (default /engage/ui/watch.html).
 
 
-5.- Add your CAS server configuration to your `app/config/config.yml` files:
+3.- Add your CAS server configuration to your `app/config/parameters.yml` files:
 
 ```
 pumukit_cmar_web_tv:
@@ -93,16 +50,16 @@ pumukit_cmar_web_tv:
    - `cas_allowed_ip_clients` is an array of allowed IPs of the clients.
 
 
-6.- Go to root Pumukit2 folder and init bundle tags
+4.- Go to root Pumukit2 folder and init bundle tags
 
 ```
-$ cd /var/www/pumukit2-cmar
+$ cd /path/to/pumukit2
 $ php app/console podcast:init:tags --force
 $ php app/console sonar:init:tags --force
 $ php app/console webtv:init:tags --force
 ```
 
-7.- OPTIONAL: Add locales. By default, Pumukit2 brings Spanish and English as locales. For CMAR there is Galician translation file as well. You can add Galician in your `app/config/config.yml` file from root project directory:
+5.- OPTIONAL: Add locales. By default, Pumukit2 brings Spanish and English as locales. For CMAR there is Galician translation file as well. You can add Galician in your `app/config/config.yml` file from root project directory:
 
 ```
 parameters:
