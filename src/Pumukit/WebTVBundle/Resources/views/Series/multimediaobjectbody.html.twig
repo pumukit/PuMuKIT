@@ -78,7 +78,7 @@
            {% for track in tracks if not track.getHide() %}
                <div>{# TODO class="file audio|video" and move out gif images to serial.css file, put it in twig #}
                    <img src="{{ mm.isOnlyAudio() ? asset('bundles/pumukitwebtv/images/iconos/altavoz2.gif') : asset('bundles/pumukitwebtv/images/iconos/movie2.gif') }}"/>
-                   <a href="{{ url('pumukit_webtv_multimediaobject_index', {'id': mm.id, 'track_id': track.id}) }}">{% spaceless %}
+                   <a href="{{ url('pumukit_webtv_multimediaobject_index', {'id': mm.id, 'track_id': track.id}) }}" {{ track.containsTag('download') ? 'download' }}>{% spaceless %}
                      {% if track.isOnlyAudio %}
                      {% trans %}Audio{% endtrans %}
                      {% elseif track.containsTag('download') %}
