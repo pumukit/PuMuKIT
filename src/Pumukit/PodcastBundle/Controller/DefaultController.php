@@ -101,7 +101,8 @@ class DefaultController extends Controller
 
     private function createPodcastMultimediaObjectByAudioQueryBuilder($isOnlyAudio=false)
     {
-	    $mmObjRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+	    $mmObjRepo = $this->get('doctrine_mongodb.odm.document_manager')
+          ->getRepository('PumukitSchemaBundle:MultimediaObject');
         $qb = $mmObjRepo->createStandardQueryBuilder();
         $qb->field('tracks')->elemMatch(
             $qb->expr()->field('only_audio')->equals($isOnlyAudio)
@@ -192,7 +193,7 @@ class DefaultController extends Controller
         $atomLink->addAttribute('type', 'application/rss+xml');
         $channel->addChild('title', $values['channel_title']);
         $channel->addChild('link', $values['base_url']);
-        $channel->addChild('description', $values['channel_description']);
+        $channel->addChild('description', htmlspecialchars($values['channel_description']));
         $channel->addChild('generator', 'PuMuKiT');
         $channel->addChild('lastBuildDate', (new \DateTime('now'))->format('r'));
         $channel->addChild('language', $values['language']);
@@ -209,9 +210,9 @@ class DefaultController extends Controller
         $itunesCategory = $channel->addChild('itunes:category', null, self::ITUNES_DTD_URL);
         $itunesCategory->addAttribute('text', $values['itunes_category']);
 
-        $channel->addChild('itunes:summary', $values['itunes_summary'], self::ITUNES_DTD_URL);
-        $channel->addChild('itunes:subtitle', $values['itunes_subtitle'], self::ITUNES_DTD_URL);
-        $channel->addChild('itunes:author', $values['itunes_author'], self::ITUNES_DTD_URL);
+        $channel->addChild('itunes:summary', htmlspecialchars($values['itunes_summary']), self::ITUNES_DTD_URL);
+        $channel->addChild('itunes:subtitle', htmlspecialchars($values['itunes_subtitle']), self::ITUNES_DTD_URL);
+        $channel->addChild('itunes:author', htmlspecialchars($values['itunes_author']), self::ITUNES_DTD_URL);
 
         $itunesOwner = $channel->addChild('itunes:owner', null, self::ITUNES_DTD_URL);
         $itunesOwner->addChild('itunes:name', $values['itunes_author'], self::ITUNES_DTD_URL);
@@ -231,42 +232,43 @@ class DefaultController extends Controller
         $itunesUTag = $tagRepo->findOneByCod('ITUNESU');
         foreach ($multimediaObjects as $multimediaObject) {
             $track = $this->getPodcastTrack($multimediaObject, $trackType);
+            if ($track) {
+                $item = $channel->addChild('item');
 
-            $item = $channel->addChild('item');
+                $title = (strlen($multimediaObject->getTitle()) === 0) ?
+                  $multimediaObject->getSeries()->getTitle() :
+                  $multimediaObject->getTitle();
+                $item->addChild('title', $title);
+                $item->addChild('itunes:subtitle', htmlspecialchars($multimediaObject->getSubtitle()), self::ITUNES_DTD_URL);
+                $item->addChild('itunes:summary', htmlspecialchars($multimediaObject->getDescription()), self::ITUNES_DTD_URL);
+                $item->addChild('description', htmlspecialchars($multimediaObject->getDescription()));
 
-            $title = (strlen($multimediaObject->getTitle()) === 0) ?
-              $multimediaObject->getSeries()->getTitle() :
-              $multimediaObject->getTitle();
-            $item->addChild('title', $title);
-            $item->addChild('itunes:subtitle', $multimediaObject->getSubtitle(), self::ITUNES_DTD_URL);
-            $item->addChild('itunes:summary', $multimediaObject->getDescription(), self::ITUNES_DTD_URL);
-            $item->addChild('description', $multimediaObject->getDescription());
-
-            if ($itunesUTag !== null) {
-                foreach ($multimediaObject->getTags() as $tag) {
-                    if ($tag->isDescendantOf($itunesUTag)){
-                        $itunesUCategory = $item->addChild('itunesu:category', null, self::ITUNESU_FEED_URL);
-                        $itunesUCategory->addAttribute('itunesu:code', $tag->getCod(), self::ITUNESU_FEED_URL);
+                if ($itunesUTag !== null) {
+                    foreach ($multimediaObject->getTags() as $tag) {
+                        if ($tag->isDescendantOf($itunesUTag)){
+                            $itunesUCategory = $item->addChild('itunesu:category', null, self::ITUNESU_FEED_URL);
+                            $itunesUCategory->addAttribute('itunesu:code', $tag->getCod(), self::ITUNESU_FEED_URL);
+                        }
                     }
                 }
+
+                $item->addChild('link', $values['base_url'] . $track->getUrl());
+
+                $enclosure = $item->addChild('enclosure');
+                $enclosure->addAttribute('url', $values['base_url'] . $track->getUrl());
+                $enclosure->addAttribute('length', $track->getSize());
+                $enclosure->addAttribute('type', $track->getMimeType());
+
+                $item->addChild('guid', $values['base_url'] . $track->getUrl());
+                $item->addChild('itunes:duration', $this->getDurationString($multimediaObject), self::ITUNES_DTD_URL);
+                $item->addChild('author', $values['email'] . ' (' . $values['channel_title'] . ')');
+                $item->addChild('itunes:author', $multimediaObject->getCopyright(), self::ITUNES_DTD_URL);
+                $item->addChild('itunes:keywords', $multimediaObject->getKeyword(), self::ITUNES_DTD_URL);
+                $item->addChild('itunes:explicit', $values['itunes_explicit'], self::ITUNES_DTD_URL);
+                $item->addChild('pubDate', $multimediaObject->getRecordDate()->format('r'));
             }
-
-            $item->addChild('link', $values['base_url'] . $track->getUrl());
-
-            $enclosure = $item->addChild('enclosure');
-            $enclosure->addAttribute('url', $values['base_url'] . $track->getUrl());
-            $enclosure->addAttribute('length', $track->getSize());
-            $enclosure->addAttribute('type', $track->getMimeType());
-
-            $item->addChild('guid', $values['base_url'] . $track->getUrl());
-            $item->addChild('itunes:duration', $this->getDurationString($multimediaObject), self::ITUNES_DTD_URL);
-            $item->addChild('author', $values['email'] . ' (' . $values['channel_title'] . ')');
-            $item->addChild('itunes:author', $multimediaObject->getCopyright(), self::ITUNES_DTD_URL);
-            $item->addChild('itunes:keywords', $multimediaObject->getKeyword(), self::ITUNES_DTD_URL);
-            $item->addChild('itunes:explicit', $values['itunes_explicit'], self::ITUNES_DTD_URL);
-            $item->addChild('pubDate', $multimediaObject->getRecordDate()->format('r'));
+            $dm->clear();
         }
-
         return $channel;
     }
 
@@ -294,7 +296,7 @@ class DefaultController extends Controller
 
     private function getVideoTrack(MultimediaObject $multimediaObject)
     {
-        $video_all_tags = array('display', 'podcast');
+        $video_all_tags = array('podcast');
         $video_not_all_tags = array('audio');
         return $multimediaObject->getFilteredTrackWithTags(
                                                            array(),
@@ -306,7 +308,7 @@ class DefaultController extends Controller
 
     private function getAudioTrack(MultimediaObject $multimediaObject)
     {
-        $audio_all_tags = array('display', 'podcast', 'audio');
+        $audio_all_tags = array('podcast', 'audio');
         $audio_not_all_tags = array();
         return $multimediaObject->getFilteredTrackWithTags(
                                                            array(),
