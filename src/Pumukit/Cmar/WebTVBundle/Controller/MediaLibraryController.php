@@ -15,6 +15,13 @@ use Pumukit\SchemaBundle\Document\Broadcast;
  */
 class MediaLibraryController extends Controller
 {
+    const MAIN_CONFERENCES = 'PUDEMAINCONF';
+    const PROMOTIONAL = 'PUDEPROMO';
+    const PRESS_AREA = 'PUDEPRESS';
+    const PROJECT_SUPPORT = 'PUDESUPPORT';
+    const CONGRESSES = 'PUDECONGRESSES';
+    const LECTURES = 'TECHOPENCAST';
+
     /**
      * @Route("/", name="pumukit_webtv_medialibrary_index")
      * @Route("/", name="pumukit_cmar_web_tv_library_index")
@@ -31,9 +38,7 @@ class MediaLibraryController extends Controller
      */
     public function mainConferencesAction(Request $request)
     {
-        $tagName = 'PUDEMAINCONF';
-
-        return $this->action(null, $tagName, "pumukit_cmar_web_tv_library_mainconferences", $request);
+        return $this->action(null, self::MAIN_CONFERENCES, "pumukit_cmar_web_tv_library_mainconferences", $request, array('public_date' => -1), false);
     }
 
 
@@ -44,9 +49,7 @@ class MediaLibraryController extends Controller
      */
     public function promotionalAction(Request $request)
     {
-        $tagName = 'PUDEPROMO';
-
-        return $this->action(null, $tagName, "pumukit_cmar_web_tv_library_promotional", $request);
+        return $this->action(null, self::PROMOTIONAL, "pumukit_cmar_web_tv_library_promotional", $request);
     }
 
 
@@ -57,9 +60,7 @@ class MediaLibraryController extends Controller
      */
     public function pressAreaAction(Request $request)
     {
-        $tagName = 'PUDEPRESS';
-
-        return $this->action(null, $tagName, "pumukit_cmar_web_tv_library_pressarea", $request);
+        return $this->action(null, self::PRESS_AREA, "pumukit_cmar_web_tv_library_pressarea", $request);
     }
 
 
@@ -70,9 +71,7 @@ class MediaLibraryController extends Controller
      */
     public function projectSupportAction(Request $request)
     {
-        $tagName = 'PUDESUPPORT';
-
-        return $this->action(null, $tagName, "pumukit_cmar_web_tv_library_projectsupport", $request);
+        return $this->action(null, self::PROJECT_SUPPORT, "pumukit_cmar_web_tv_library_projectsupport", $request);
     }
 
     /**
@@ -82,9 +81,7 @@ class MediaLibraryController extends Controller
      */
     public function congressesAction(Request $request)
     {
-        $tagName = 'PUDECONGRESSES';
-        
-        return $this->action(null, $tagName, "pumukit_cmar_web_tv_library_congresses", $request);
+        return $this->action(null, self::CONGRESSES, "pumukit_cmar_web_tv_library_congresses", $request);
     }
 
     /**
@@ -94,9 +91,7 @@ class MediaLibraryController extends Controller
      */
     public function lecturesAction(Request $request)
     {
-        $tagName = 'TECHOPENCAST';
-        
-        return $this->actionOpencast("Recorded lectures", $tagName, "pumukit_cmar_web_tv_library_lectures");
+        return $this->actionOpencast("Recorded lectures", self::LECTURES, "pumukit_cmar_web_tv_library_lectures");
     }
 
     /**
@@ -115,7 +110,7 @@ class MediaLibraryController extends Controller
     }
 
 
-    private function action($title, $tagName, $routeName, Request $request, array $sort=array('public_date' => -1))
+    private function action($title, $tagName, $routeName, Request $request, array $sort=array('public_date' => -1), $showSeries=true)
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
 
@@ -128,7 +123,11 @@ class MediaLibraryController extends Controller
         
         $this->get('pumukit_web_tv.breadcrumbs')->addList($title, $routeName);
 
-        $sort = array('public_date' => -1);
+        if (!$showSeries) {
+            $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findByTagCod($tag, $sort);
+            return array('title' => $title, 'multimedia_objects' => $multimediaObjects, 'tag_cod' => $tagName);
+        }
+
         $series = $dm->getRepository('PumukitSchemaBundle:Series')->findWithTag($tag, $sort);
 
         return array('title' => $title, 'series' => $series, 'tag_cod' => $tagName);
