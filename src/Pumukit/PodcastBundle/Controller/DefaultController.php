@@ -25,13 +25,8 @@ class DefaultController extends Controller
     public function videoAction(Request $request)
     {
         $multimediaObjects = $this->getPodcastMultimediaObjectsByAudio(false);
-        try {
-            $values = $this->getValues($request, 'video', null);
-            $xml = $this->getXMLElement($multimediaObjects, $values, 'video');
-        } catch (\Exception $e) {
-            $xml = $this->getXMLErrorElement($e);
-            return new Response($xml->asXML(), 400, array('Content-Type' => 'text/xml'));
-        }
+        $values = $this->getValues($request, 'video', null);
+        $xml = $this->getXMLElement($multimediaObjects, $values, 'video');
         return new Response($xml->asXML(), 200, array('Content-Type' => 'text/xml'));
     }
 
@@ -41,13 +36,8 @@ class DefaultController extends Controller
     public function audioAction(Request $request)
     {
         $multimediaObjects = $this->getPodcastMultimediaObjectsByAudio(true);
-        try {
-            $values = $this->getValues($request, 'audio', null);
-            $xml = $this->getXMLElement($multimediaObjects, $values, 'audio');
-        } catch (\Exception $e) {
-            $xml = $this->getXMLErrorElement($e);
-            return new Response($xml->asXML(), 400, array('Content-Type' => 'text/xml'));
-        }
+        $values = $this->getValues($request, 'audio', null);
+        $xml = $this->getXMLElement($multimediaObjects, $values, 'audio');
         return new Response($xml->asXML(), 200, array('Content-Type' => 'text/xml'));
     }
 
@@ -57,13 +47,8 @@ class DefaultController extends Controller
     public function seriesVideoAction(Series $series, Request $request)
     {
         $multimediaObjects = $this->getPodcastMultimediaObjectsByAudioAndSeries(false, $series);
-        try {
-            $values = $this->getValues($request, 'video', $series);
-            $xml = $this->getXMLElement($multimediaObjects, $values, 'video');
-        } catch (\Exception $e) {
-            $xml = $this->getXMLErrorElement($e);
-            return new Response($xml->asXML(), 400, array('Content-Type' => 'text/xml'));
-        }
+        $values = $this->getValues($request, 'video', $series);
+        $xml = $this->getXMLElement($multimediaObjects, $values, 'video');
         return new Response($xml->asXML(), 200, array('Content-Type' => 'text/xml'));
     }
 
@@ -73,13 +58,8 @@ class DefaultController extends Controller
     public function seriesAudioAction(Series $series, Request $request)
     {
         $multimediaObjects = $this->getPodcastMultimediaObjectsByAudioAndSeries(true, $series);
-        try {
-            $values = $this->getValues($request, 'audio', $series);
-            $xml = $this->getXMLElement($multimediaObjects, $values, 'audio');
-        } catch (\Exception $e) {
-            $xml = $this->getXMLErrorElement($e);
-            return new Response($xml->asXML(), 400, array('Content-Type' => 'text/xml'));
-        }
+        $values = $this->getValues($request, 'audio', $series);
+        $xml = $this->getXMLElement($multimediaObjects, $values, 'audio');
         return new Response($xml->asXML(), 200, array('Content-Type' => 'text/xml'));
     }
 
@@ -89,13 +69,8 @@ class DefaultController extends Controller
     public function seriesCollectionAction(Series $series, Request $request)
     {
         $multimediaObjects = $this->getPodcastMultimediaObjectsBySeries($series);
-        try {
-            $values = $this->getValues($request, 'video', $series);
-            $xml = $this->getXMLElement($multimediaObjects, $values, 'all');
-        } catch (\Exception $e) {
-            $xml = $this->getXMLErrorElement($e);
-            return new Response($xml->asXML(), 400, array('Content-Type' => 'text/xml'));
-        }
+        $values = $this->getValues($request, 'video', $series);
+        $xml = $this->getXMLElement($multimediaObjects, $values, 'all');
         return new Response($xml->asXML(), 200, array('Content-Type' => 'text/xml'));
     }
 
