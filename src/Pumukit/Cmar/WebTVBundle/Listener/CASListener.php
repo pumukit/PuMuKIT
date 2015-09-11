@@ -13,7 +13,7 @@ class CASListener
     private $casAllowedIpClients;
     private $environment;
 
-    public function __construct($casUrl, $casPort, $casUri, $casAllowedIpClients, $environment = 'test')
+    public function __construct($casUrl, $casPort, $casUri, $casAllowedIpClients, $environment = 'prod')
     {
         $this->casUrl = $casUrl;
         $this->casPort = $casPort;
