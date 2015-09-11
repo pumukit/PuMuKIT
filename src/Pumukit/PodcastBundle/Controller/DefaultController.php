@@ -166,7 +166,7 @@ class DefaultController extends Controller
         $atomLink->addAttribute('href', $values['requestURI']);
         $atomLink->addAttribute('rel', 'self');
         $atomLink->addAttribute('type', 'application/rss+xml');
-        $channel->addChild('title', $values['channel_title']);
+        $channel->addChild('title', htmlspecialchars($values['channel_title']));
         $channel->addChild('link', $values['base_url']);
         $channel->addChild('description', htmlspecialchars($values['channel_description']));
         $channel->addChild('generator', 'PuMuKiT');
@@ -179,7 +179,7 @@ class DefaultController extends Controller
 
         $image = $channel->addChild('image');
         $image->addChild('url', $values['image_url']);
-        $image->addChild('title', $values['channel_title']);
+        $image->addChild('title', htmlspecialchars($values['channel_title']));
         $image->addChild('link', $values['base_url']);
 
         $itunesCategory = $channel->addChild('itunes:category', null, self::ITUNES_DTD_URL);
@@ -213,7 +213,7 @@ class DefaultController extends Controller
                 $title = (strlen($multimediaObject->getTitle()) === 0) ?
                   $multimediaObject->getSeries()->getTitle() :
                   $multimediaObject->getTitle();
-                $item->addChild('title', $title);
+                $item->addChild('title', htmlspecialchars($title));
                 $item->addChild('itunes:subtitle', htmlspecialchars($multimediaObject->getSubtitle()), self::ITUNES_DTD_URL);
                 $item->addChild('itunes:summary', htmlspecialchars($multimediaObject->getDescription()), self::ITUNES_DTD_URL);
                 $item->addChild('description', htmlspecialchars($multimediaObject->getDescription()));
