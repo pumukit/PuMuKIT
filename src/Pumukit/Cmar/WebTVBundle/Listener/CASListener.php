@@ -11,18 +11,20 @@ class CASListener
     private $casPort;
     private $casUri;
     private $casAllowedIpClients;
+    private $environment;
 
-    public function __construct($casUrl, $casPort, $casUri, $casAllowedIpClients)
+    public function __construct($casUrl, $casPort, $casUri, $casAllowedIpClients, $environment = 'test')
     {
         $this->casUrl = $casUrl;
         $this->casPort = $casPort;
         $this->casUri = $casUri;
         $this->casAllowedIpClients = $casAllowedIpClients;
+        $this->environment = $environment;
     }
 
     public function onKernelRequest(GetResponseEvent $event)
     {
-        if ($event->getRequestType() === HttpKernelInterface::MASTER_REQUEST) {
+        if (($event->getRequestType() === HttpKernelInterface::MASTER_REQUEST) && ('test' !== $this->environment)){
             \phpCAS::client(CAS_VERSION_2_0, $this->casUrl, $this->casPort, $this->casUri, false);
             //\phpCAS::setDebug('/tmp/cas.log');
             \phpCAS::setNoCasServerValidation();

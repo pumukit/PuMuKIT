@@ -22,6 +22,7 @@
       <argument>%pumukit_cmar_web_tv.cas_port%</argument>
       <argument>%pumukit_cmar_web_tv.cas_uri%</argument>
       <argument>%pumukit_cmar_web_tv.cas_allowed_ip_clients%</argument>
+      <argument>%kernel.environment%</argument>
       <tag name="kernel.event_listener" event="kernel.request" />
     </service>
 
