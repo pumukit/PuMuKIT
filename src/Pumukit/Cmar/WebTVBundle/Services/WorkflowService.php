@@ -46,9 +46,9 @@ class WorkflowService
         $sbs = $multimediaObject->getTrackWithTag('sbs');
         $publicTracks = $multimediaObject->getTracksWithTag('profile:' .  $this->targetProfile);
 
-        if ($master && !$publicTracks) {
+        if ($sbs && !$publicTracks) {
             $this->logger->info(sprintf("CMAR WorkflowService creates new job (%s) for SbS in multimedia object %s", $this->targetProfile, $multimediaObject->getId()));
-            $jobs[] = $this->jobService->addUniqueJob($master->getPath(), $this->targetProfile, 2, $multimediaObject, $master->getLanguage());        
+            $jobs[] = $this->jobService->addUniqueJob($sbs->getPath(), $this->targetProfile, 2, $multimediaObject, $sbs->getLanguage());        
         }
     }
 }
