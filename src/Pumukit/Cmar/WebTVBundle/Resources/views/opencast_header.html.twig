@@ -1,0 +1,24 @@
+<div id="headerbar">
+  <div class="usctv_cab" style="margin: 10 auto; width: auto; overflow: hidden; min-width: 1220px">
+    <div class="grid_10 logo" style="width: 100%; background-color: #015267">
+      <div class="busca" style="position: absolute; top: 52px; right: 1%">
+        <form name="searchhead"
+              method="post"
+              action="{{ path('pumukit_cmar_web_tv_search_index') }}">
+          <div class="search-cont">
+            <label accesskey="t" for="busca" class="salto">"{% trans %}Search{% endtrans %}:"</label>
+            <input style="height:16px" placeholder="{% trans %}Search{% endtrans %}..." name="indexSearch" maxlength="30" type="text" />
+            <input type="image" src="{{ asset('bundles/pumukitcmarwebtv/images/webtv/lupa.png') }}" style="position: relative; top: 4px; left: -4px;" name="startsearch" />
+          </div>
+        </form>
+      </div>
+      <a href="{{ url('pumukit_webtv_index_index') }}"
+         style="text-align: center;
+                width:100%;
+                display: block;
+                height:120px;
+                background: #015267 url({{ asset('bundles/pumukitcmarwebtv/images/webtv/cmartvL.jpg') }}) no-repeat center center;"
+         >&nbsp;</a>
+    </div>
+  </div>
+</div>
