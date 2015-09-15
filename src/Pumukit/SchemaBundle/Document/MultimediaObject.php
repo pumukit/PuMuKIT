@@ -2498,6 +2498,18 @@ class MultimediaObject
     }
 
     /**
+     * Remove property
+     *
+     * @param string $key
+     */
+    public function removeProperty($key)
+    {
+        if (isset($this->properties[$key])) {
+            unset($this->properties[$key]);
+        }
+    }
+
+    /**
      * Get duration in minutes and seconds
      *
      * @return array
