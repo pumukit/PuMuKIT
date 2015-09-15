@@ -145,13 +145,13 @@ EOT
         }
         // NOTE Take care of csv language order!
         if (isset($csv_array[5])) {
-            $tag->setTitle($csv_array[5], 'es');
+            $tag->setTitle($csv_array[5], 'en');
         }
         if (isset($csv_array[6])) {
-            $tag->setTitle($csv_array[6], 'gl');
+            $tag->setTitle($csv_array[6], 'es');
         }
         if (isset($csv_array[7])) {
-            $tag->setTitle($csv_array[7], 'en');
+            $tag->setTitle($csv_array[7], 'gl');
         }
 
         $this->dm->persist($tag);
