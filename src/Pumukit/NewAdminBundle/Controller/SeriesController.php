@@ -293,31 +293,7 @@ class SeriesController extends AdminController
         }
         $criteria = $this->get('session')->get('admin/series/criteria', array());
 
-        $new_criteria = array();
-        foreach ($criteria as $property => $value) {
-            //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
-            if (('' !== $value) && ('title' === $property)) {
-                $new_criteria['$text'] = array('$search' => $value);
-            } elseif (('' !== $value) && ('date' == $property)) {
-                if ('' !== $value['from']) $date_from = new \DateTime($value['from']);
-                if ('' !== $value['to']) $date_to = new \DateTime($value['to']);
-                if (('' !== $value['from']) && ('' !== $value['to']))
-                    $new_criteria['public_date'] = array('$gte' => $date_from, '$lt' => $date_to);
-                elseif ('' !== $value['from'])
-                    $new_criteria['public_date'] = array('$gte' => $date_from);
-                elseif ('' !== $value['to'])
-                    $new_criteria['public_date'] = array('$lt' => $date_to);
-            } elseif (('' !== $value) && ('announce' === $property)) {
-                if ('true' === $value) {
-                    $new_criteria[$property] = true;
-                } elseif ('false' === $value){
-                    $new_criteria[$property] = false;
-                }
-            } elseif(('' !== $value) && ('status' === $property)) {
-            } elseif(('' !== $value) && ('_id' === $property)) {
-                $new_criteria['_id'] = $value;
-            }
-        }
+        $new_criteria = $this->get('pumukitnewadmin.series_search')->processCriteria($criteria, true);
 
         return $new_criteria;
     }

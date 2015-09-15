@@ -233,6 +233,25 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
+     * Search series using text index
+     *
+     * @param string $text
+     * @return ArrayCollection
+     */
+    public function searchSeriesField($text, $limit = 0, $page = 0)
+    {
+        $qb = $this->createQueryBuilder()
+            ->field('$text')->equals(array('$search' => $text))
+            ->distinct('series');
+
+        if ($limit > 0){
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
      * Find series by person id
      *
      * @param string $personId
