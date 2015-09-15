@@ -30,7 +30,7 @@
          {% endif %}
          <div class="objects">
            <!-- MATTERHORN -->
-           {% if mm.getProperty('opencast') is not empty and mm.getProperty('opencastdisplay') %}
+           {% if mm.getProperty('opencast') is not empty and not mm.getProperty('opencasthide') %}
            <div id="material" class="file matterhorn">
              <a href="{{ url('pumukit_webtv_multimediaobject_index', {'id': mm.id}) }}">{% spaceless %}
                {% trans %}Video{% endtrans %}
