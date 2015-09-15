@@ -1,18 +1,6 @@
 {% extends 'PumukitWebTVBundle::layout.html.twig' %}
-{% block stylesheets %}
-<link href="{{ asset('bundles/pumukitcmarwebtv/css/960.css') }}" type="text/css" rel="stylesheet" media="screen"/>
-<link href="{{ asset('bundles/pumukitcmarwebtv/css/iefix.css') }}" type="text/css" rel="stylesheet" media="screen"/>
-<link href="{{ path('pumukit_cmar_web_tv_opencast_css') }}" rel="stylesheet">
-<link href="{{ path('pumukit_cmar_web_tv_series_css') }}" rel="stylesheet">
-<link href="{{ path('pumukit_cmar_web_tv_style_css') }}" rel="stylesheet">
-<link href="{{ asset('bundles/pumukitcmarwebtv/css/pumukittv.css') }}" type="text/css" rel="stylesheet" media="screen"/>
-{% endblock %}
-{% block javascripts %}
-<script type="text/javascript" src="{{ asset('bundles/pumukitcmarwebtv/js/prototype.js') }}"></script>
-{% endblock %}
-
 {% block body_base %}
-{% include 'PumukitCmarWebTVBundle::header.html.twig' %}
+{% include 'PumukitCmarWebTVBundle::opencast_header.html.twig' %}
 <div id="tvusc">
   <div class="pumukit_cab" style="margin: 10 auto; width: auto; overflow: hidden; min-width: 1220px">
     {% include 'PumukitCmarWebTVBundle::opencast_header_menu.html.twig' %}
