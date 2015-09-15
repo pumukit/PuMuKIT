@@ -35,5 +35,9 @@
       <argument type="service" id="doctrine_mongodb.odm.document_manager" />
       <argument type="service" id="translator" />
     </service>
+
+    <service id="pumukitnewadmin.series_search" class="Pumukit\NewAdminBundle\Services\SeriesSearchService">
+      <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+    </service>
   </services>
 </container>
