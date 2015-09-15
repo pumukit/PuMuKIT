@@ -38,7 +38,7 @@ class MediaLibraryController extends Controller
      */
     public function mainConferencesAction(Request $request)
     {
-        return $this->action(null, self::MAIN_CONFERENCES, "pumukit_cmar_web_tv_library_mainconferences", $request, array('public_date' => -1), false);
+        return $this->action(null, self::MAIN_CONFERENCES, "pumukit_cmar_web_tv_library_mainconferences", $request, array('record_date' => -1), false);
     }
 
 
