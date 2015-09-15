@@ -31,7 +31,7 @@ class SeriesSearchService
                     $new_criteria['$text'] = array('$search' => $value);
                 }
             } elseif (('date' == $property) && ('' !== $value)) {
-                $new_criteria = array_merge($new_criteria, $this->processDates($value));
+                $new_criteria += $this->processDates($value);
             } elseif (('announce' === $property) && ('' !== $value)) {
                 if ('true' === $value) {
                     $new_criteria[$property] = true;
