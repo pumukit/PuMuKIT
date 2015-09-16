@@ -312,7 +312,7 @@ div.library div.list a:hover{
 */
 
 div.cab_serial h1.title{ 
-  background:transparent url(/images/tv/iconos/tri.gif) no-repeat scroll 10px 0px !important;
+  background:transparent url(/bundles/pumukitwebtv/images/iconos/tri.gif) no-repeat scroll 10px 0px !important;
   color:#003399 !important;
   font-size:13px !important;
   font-variant:normal !important;
@@ -508,76 +508,76 @@ table#directo_announces tfoot tr{
 
 .audio { 
   -moz-background-inline-policy: continuous;
-  background: url('/images/tv/iconos/altavoz2.gif') no-repeat scroll left top transparent;
+  background: url('/bundles/pumukitwebtv/images/iconos/altavoz2.gif') no-repeat scroll left top transparent;
 }       
 
 .book { 
   -moz-background-inline-policy: continuous;
-  background: url('/images/tv/iconos/book2.gif') no-repeat scroll left top transparent;
+  background: url('/bundles/pumukitwebtv/images/iconos/book2.gif') no-repeat scroll left top transparent;
 }       
         
 .doc { 
   -moz-background-inline-policy: continuous;
-  background: url('/images/tv/iconos/doc.gif') no-repeat scroll left top transparent;
+  background: url('/bundles/pumukitwebtv/images/iconos/doc.gif') no-repeat scroll left top transparent;
 }       
        
 .video { 
   -moz-background-inline-policy: continuous;
-  background: url('/images/tv/iconos/movie2.gif') no-repeat scroll left top transparent;
+  background: url('/bundles/pumukitwebtv/images/iconos/movie2.gif') no-repeat scroll left top transparent;
 }       
          
 .link { 
   -moz-background-inline-policy: continuous;
-  background: url('/images/tv/iconos/url.gif') no-repeat scroll left top transparent;
+  background: url('/bundles/pumukitwebtv/images/iconos/url.gif') no-repeat scroll left top transparent;
 }               
 
 .mp3 { 
   -moz-background-inline-policy: continuous;
-  background: url('/images/tv/iconos/mp3.gif') no-repeat scroll left top transparent;
+  background: url('/bundles/pumukitwebtv/images/iconos/mp3.gif') no-repeat scroll left top transparent;
 }       
        
 .pdf { 
   -moz-background-inline-policy: continuous;
-  background: url('/images/tv/iconos/pdf.gif') no-repeat scroll left top transparent;
+  background: url('/bundles/pumukitwebtv/images/iconos/pdf.gif') no-repeat scroll left top transparent;
 }       
        
 .pps { 
   -moz-background-inline-policy: continuous;
-  background: url('/images/tv/iconos/pps.gif') no-repeat scroll left top transparent;
+  background: url('/bundles/pumukitwebtv/images/iconos/pps.gif') no-repeat scroll left top transparent;
 }       
        
 .ppt { 
   -moz-background-inline-policy: continuous;
-  background: url('/images/tv/iconos/ppt.gif') no-repeat scroll left top transparent;
+  background: url('/bundles/pumukitwebtv/images/iconos/ppt.gif') no-repeat scroll left top transparent;
 }       
        
 .url { 
   -moz-background-inline-policy: continuous;
-  background: url('/images/tv/iconos/url.gif') no-repeat scroll left top transparent;
+  background: url('/bundles/pumukitwebtv/images/iconos/url.gif') no-repeat scroll left top transparent;
 }       
        
 .txt { 
   -moz-background-inline-policy: continuous;
-  background: url('/images/tv/iconos/txt.gif') no-repeat scroll left top transparent;
+  background: url('/bundles/pumukitwebtv/images/iconos/txt.gif') no-repeat scroll left top transparent;
 }       
        
 .swf { 
   -moz-background-inline-policy: continuous;
-  background: url('/images/tv/iconos/swf.gif') no-repeat scroll left top transparent;
+  background: url('/bundles/pumukitwebtv/images/iconos/swf.gif') no-repeat scroll left top transparent;
 }       
        
 .xlm { 
   -moz-background-inline-policy: continuous;
-  background: url('/images/tv/iconos/swf.xlm') no-repeat scroll left top transparent;
+  background: url('/bundles/pumukitwebtv/images/iconos/swf.xlm') no-repeat scroll left top transparent;
 }       
        
 .zip { 
   -moz-background-inline-policy: continuous;
-  background: url('/images/tv/iconos/zip.gif') no-repeat scroll left top transparent;
+  background: url('/bundles/pumukitwebtv/images/iconos/zip.gif') no-repeat scroll left top transparent;
 }
 .download {
   -moz-background-inline-policy: continuous;
-  background: url("/images/tv/iconos/url.gif") no-repeat scroll left top transparent;
+  background: url("/bundles/pumukitwebtv/images/iconos/url.gif") no-repeat scroll left top transparent;
 }       
 
 
@@ -588,7 +588,7 @@ table#directo_announces tfoot tr{
 
 
 div.pri {
-  background:transparent url(/images/tv/iconos/candado.gif) no-repeat scroll right top;
+  background:transparent url(/bundles/pumukitwebtv/images/iconos/candado.gif) no-repeat scroll right top;
   height:33px;
   position:absolute;
   right:0px;
@@ -597,7 +597,7 @@ div.pri {
 }
 
 div.cor {
-  background:transparent url(/images/tv/iconos/candado.gif) no-repeat scroll right top;
+  background:transparent url(/bundles/pumukitwebtv/images/iconos/candado.gif) no-repeat scroll right top;
   height:33px;
   position:absolute;
   right:0px;
