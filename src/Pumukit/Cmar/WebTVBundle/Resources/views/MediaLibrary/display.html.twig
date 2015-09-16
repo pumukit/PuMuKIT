@@ -3,22 +3,21 @@
 <p class="titulo_widget titulo_widget_grande">
 {{ title }}
 </p>
-
-{% set last_date = 'next year' %}
-{% for oneseries in series %}
-  <div class="serial_body">
-    {% set last_date = date('1/1/1900') %}
-    {% set last_precinct = '' %}
-    {% set last_subseriestitle = '' %}
-    {% set series_precinct = precinct_of_series(oneseries.getMultimediaObjects()) %}
-    {% for mm in oneseries.getMultimediaObjects() %}
-      {% if mm.containsTagWithCod(tag_cod) %}
-        {% include 'PumukitWebTVBundle:Series:multimediaobjectbody.html.twig' with {'mm': mm, 'last_date': last_date, 'last_precinct': last_precinct, 'last_subseriestitle': last_subseriestitle, 'template': oneseries.getProperty('template'), 'series_precinct': series_precinct, 'is_series': false} %}
+{% set series_precinct = precinct_of_series(multimedia_objects) %}
+{% set last_date = date('1/1/1900') %}
+{% set last_precinct = '' %}
+{% set last_subseriestitle = '' %}
+<div class="serial_body">
+  {% for mm in multimedia_objects %}
+    {% if mm.containsTagWithCod(tag_cod) %}
+        {% if (last_date|date('Y-m-d') != mm.getRecordDate()|date('Y-m-d')) %}
+           <div class="inter_mm"></div>
+        {% endif %}
+        {% include 'PumukitWebTVBundle:Series:multimediaobjectbody.html.twig' with {'mm': mm, 'last_date': last_date, 'last_precinct': last_precinct, 'last_subseriestitle': last_subseriestitle, 'template': mm.getSeries().getProperty('template'), 'series_precinct': series_precinct, 'is_series': false} %}
         {% set last_date = mm.getRecordDate() %}
         {% set last_precinct = precinct(mm.getTags()) %}
         {% set last_subseriestitle = mm.getProperty('subseriestitle') %}
       {% endif %}
-    {% endfor %}
-  </div>
 {% endfor %}
+</div>
 {% endblock body %}

@@ -16,7 +16,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 class DefaultController extends Controller
 {
     const ITUNES_DTD_URL = 'http://www.itunes.com/dtds/podcast-1.0.dtd';
-    const ITUNESU_FEED_URL = 'https://www.itunesu.com/feed';
+    const ITUNESU_FEED_URL = 'http://www.itunesu.com/feed';
     const ATOM_URL = 'http://www.w3.org/2005/Atom';
 
     /**
@@ -25,13 +25,8 @@ class DefaultController extends Controller
     public function videoAction(Request $request)
     {
         $multimediaObjects = $this->getPodcastMultimediaObjectsByAudio(false);
-        try {
-            $values = $this->getValues($request, 'video', null);
-            $xml = $this->getXMLElement($multimediaObjects, $values, 'video');
-        } catch (\Exception $e) {
-            $xml = $this->getXMLErrorElement($e);
-            return new Response($xml->asXML(), 400, array('Content-Type' => 'text/xml'));
-        }
+        $values = $this->getValues($request, 'video', null);
+        $xml = $this->getXMLElement($multimediaObjects, $values, 'video');
         return new Response($xml->asXML(), 200, array('Content-Type' => 'text/xml'));
     }
 
@@ -41,13 +36,8 @@ class DefaultController extends Controller
     public function audioAction(Request $request)
     {
         $multimediaObjects = $this->getPodcastMultimediaObjectsByAudio(true);
-        try {
-            $values = $this->getValues($request, 'audio', null);
-            $xml = $this->getXMLElement($multimediaObjects, $values, 'audio');
-        } catch (\Exception $e) {
-            $xml = $this->getXMLErrorElement($e);
-            return new Response($xml->asXML(), 400, array('Content-Type' => 'text/xml'));
-        }
+        $values = $this->getValues($request, 'audio', null);
+        $xml = $this->getXMLElement($multimediaObjects, $values, 'audio');
         return new Response($xml->asXML(), 200, array('Content-Type' => 'text/xml'));
     }
 
@@ -57,13 +47,8 @@ class DefaultController extends Controller
     public function seriesVideoAction(Series $series, Request $request)
     {
         $multimediaObjects = $this->getPodcastMultimediaObjectsByAudioAndSeries(false, $series);
-        try {
-            $values = $this->getValues($request, 'video', $series);
-            $xml = $this->getXMLElement($multimediaObjects, $values, 'video');
-        } catch (\Exception $e) {
-            $xml = $this->getXMLErrorElement($e);
-            return new Response($xml->asXML(), 400, array('Content-Type' => 'text/xml'));
-        }
+        $values = $this->getValues($request, 'video', $series);
+        $xml = $this->getXMLElement($multimediaObjects, $values, 'video');
         return new Response($xml->asXML(), 200, array('Content-Type' => 'text/xml'));
     }
 
@@ -73,13 +58,8 @@ class DefaultController extends Controller
     public function seriesAudioAction(Series $series, Request $request)
     {
         $multimediaObjects = $this->getPodcastMultimediaObjectsByAudioAndSeries(true, $series);
-        try {
-            $values = $this->getValues($request, 'audio', $series);
-            $xml = $this->getXMLElement($multimediaObjects, $values, 'audio');
-        } catch (\Exception $e) {
-            $xml = $this->getXMLErrorElement($e);
-            return new Response($xml->asXML(), 400, array('Content-Type' => 'text/xml'));
-        }
+        $values = $this->getValues($request, 'audio', $series);
+        $xml = $this->getXMLElement($multimediaObjects, $values, 'audio');
         return new Response($xml->asXML(), 200, array('Content-Type' => 'text/xml'));
     }
 
@@ -89,19 +69,15 @@ class DefaultController extends Controller
     public function seriesCollectionAction(Series $series, Request $request)
     {
         $multimediaObjects = $this->getPodcastMultimediaObjectsBySeries($series);
-        try {
-            $values = $this->getValues($request, 'video', $series);
-            $xml = $this->getXMLElement($multimediaObjects, $values, 'all');
-        } catch (\Exception $e) {
-            $xml = $this->getXMLErrorElement($e);
-            return new Response($xml->asXML(), 400, array('Content-Type' => 'text/xml'));
-        }
+        $values = $this->getValues($request, 'video', $series);
+        $xml = $this->getXMLElement($multimediaObjects, $values, 'all');
         return new Response($xml->asXML(), 200, array('Content-Type' => 'text/xml'));
     }
 
     private function createPodcastMultimediaObjectByAudioQueryBuilder($isOnlyAudio=false)
     {
-	    $mmObjRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+	    $mmObjRepo = $this->get('doctrine_mongodb.odm.document_manager')
+          ->getRepository('PumukitSchemaBundle:MultimediaObject');
         $qb = $mmObjRepo->createStandardQueryBuilder();
         $qb->field('tracks')->elemMatch(
             $qb->expr()->field('only_audio')->equals($isOnlyAudio)
@@ -141,7 +117,7 @@ class DefaultController extends Controller
 
         $values = array();
         $values['base_url'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
-        $values['requestURI'] = $request->get('reguestURI');
+        $values['requestURI'] = $values['base_url'] . $request->getRequestUri();
         $values['image_url'] = $values['base_url'] . $assetsHelper->getUrl('/bundles/pumukitpodcast/images/gc_'.$audioVideoType.'.jpg');
         $values['language'] = $request->getLocale();
         $values['itunes_author'] = $container->getParameter('pumukit_podcast.itunes_author');
@@ -155,22 +131,22 @@ class DefaultController extends Controller
             $values['itunes_category'] = $series->getProperty('itunescategory') ? $series->getProperty('itunescategory') : $container->getParameter('pumukit_podcast.itunes_category');
             $values['itunes_summary'] = $series->getDescription();
             $values['itunes_subtitle'] = $series->getSubtitle() ? $series->getSubtitle() :
-              ($container->hasParameter('pumukit_podcast.itunes_subtitle') ? $container->getParameter('pumukit_podcast.itunes_subtitle') : $values['channel_description']);
+              ($container->getParameter('pumukit_podcast.itunes_subtitle') ? $container->getParameter('pumukit_podcast.itunes_subtitle') : $values['channel_description']);
         } else {
-            $values['channel_title'] = $container->hasParameter('pumukit_podcast.channel_title') ?
+            $values['channel_title'] = $container->getParameter('pumukit_podcast.channel_title') ?
               $container->getParameter('pumukit_podcast.channel_title') :
               $pumukit2Info['title'];
-            $values['channel_description'] = $container->hasParameter('pumukit_podcast.channel_description') ?
+            $values['channel_description'] = $container->getParameter('pumukit_podcast.channel_description') ?
               $container->getParameter('pumukit_podcast.channel_description') :
               $pumukit2Info['description'];
-            $values['copyright'] = $container->hasParameter('pumukit_podcast.channel_copyright') ?
+            $values['copyright'] = $container->getParameter('pumukit_podcast.channel_copyright') ?
               $container->getParameter('pumukit_podcast.channel_copyright') :
               (isset($pumukit2Info['copyright']) ? $pumukit2Info['copyright'] : 'PuMuKIT2 2015');
             $values['itunes_category'] = $container->getParameter('pumukit_podcast.itunes_category');
-            $values['itunes_summary'] = $container->hasParameter('pumukit_podcast.itunes_summary') ?
+            $values['itunes_summary'] = $container->getParameter('pumukit_podcast.itunes_summary') ?
               $container->getParameter('pumukit_podcast.itunes_summary') :
               $values['channel_description'];
-            $values['itunes_subtitle'] = $container->hasParameter('pumukit_podcast.itunes_subtitle') ?
+            $values['itunes_subtitle'] = $container->getParameter('pumukit_podcast.itunes_subtitle') ?
               $container->getParameter('pumukit_podcast.itunes_subtitle') : $values['channel_description'];
         }
 
@@ -185,14 +161,14 @@ class DefaultController extends Controller
                                      .'" xmlns:atom="'.self::ATOM_URL
                                      .'" xml:lang="en" version="2.0"></rss>'
                                      );
-        $atomLink = $xml->addChild('atom:link', null, self::ATOM_URL);
+        $channel = $xml->addChild('channel');
+        $atomLink = $channel->addChild('atom:link', null, self::ATOM_URL);
         $atomLink->addAttribute('href', $values['requestURI']);
         $atomLink->addAttribute('rel', 'self');
         $atomLink->addAttribute('type', 'application/rss+xml');
-        $channel = $xml->addChild('channel');
-        $channel->addChild('title', $values['channel_title']);
+        $channel->addChild('title', htmlspecialchars($values['channel_title']));
         $channel->addChild('link', $values['base_url']);
-        $channel->addChild('description', $values['channel_description']);
+        $channel->addChild('description', htmlspecialchars($values['channel_description']));
         $channel->addChild('generator', 'PuMuKiT');
         $channel->addChild('lastBuildDate', (new \DateTime('now'))->format('r'));
         $channel->addChild('language', $values['language']);
@@ -203,15 +179,15 @@ class DefaultController extends Controller
 
         $image = $channel->addChild('image');
         $image->addChild('url', $values['image_url']);
-        $image->addChild('title', $values['channel_title']);
+        $image->addChild('title', htmlspecialchars($values['channel_title']));
         $image->addChild('link', $values['base_url']);
 
         $itunesCategory = $channel->addChild('itunes:category', null, self::ITUNES_DTD_URL);
         $itunesCategory->addAttribute('text', $values['itunes_category']);
 
-        $channel->addChild('itunes:summary', $values['itunes_summary'], self::ITUNES_DTD_URL);
-        $channel->addChild('itunes:subtitle', $values['itunes_subtitle'], self::ITUNES_DTD_URL);
-        $channel->addChild('itunes:author', $values['itunes_author'], self::ITUNES_DTD_URL);
+        $channel->addChild('itunes:summary', htmlspecialchars($values['itunes_summary']), self::ITUNES_DTD_URL);
+        $channel->addChild('itunes:subtitle', htmlspecialchars($values['itunes_subtitle']), self::ITUNES_DTD_URL);
+        $channel->addChild('itunes:author', htmlspecialchars($values['itunes_author']), self::ITUNES_DTD_URL);
 
         $itunesOwner = $channel->addChild('itunes:owner', null, self::ITUNES_DTD_URL);
         $itunesOwner->addChild('itunes:name', $values['itunes_author'], self::ITUNES_DTD_URL);
@@ -231,45 +207,43 @@ class DefaultController extends Controller
         $itunesUTag = $tagRepo->findOneByCod('ITUNESU');
         foreach ($multimediaObjects as $multimediaObject) {
             $track = $this->getPodcastTrack($multimediaObject, $trackType);
+            if ($track) {
+                $item = $channel->addChild('item');
 
-            $item = $channel->addChild('item');
+                $title = (strlen($multimediaObject->getTitle()) === 0) ?
+                  $multimediaObject->getSeries()->getTitle() :
+                  $multimediaObject->getTitle();
+                $item->addChild('title', htmlspecialchars($title));
+                $item->addChild('itunes:subtitle', htmlspecialchars($multimediaObject->getSubtitle()), self::ITUNES_DTD_URL);
+                $item->addChild('itunes:summary', htmlspecialchars($multimediaObject->getDescription()), self::ITUNES_DTD_URL);
+                $item->addChild('description', htmlspecialchars($multimediaObject->getDescription()));
 
-            $title = (strlen($multimediaObject->getTitle()) === 0) ?
-              $multimediaObject->getSeries()->getTitle() :
-              $multimediaObject->getTitle();
-            $item->addChild('title', $title);
-            $item->addChild('itunes:subtitle', $multimediaObject->getSubtitle(), self::ITUNES_DTD_URL);
-            $item->addChild('itunes:summary', $multimediaObject->getDescription(), self::ITUNES_DTD_URL);
-            $item->addChild('description', $multimediaObject->getDescription());
-
-            if ($itunesUTag !== null) {
-                foreach ($multimediaObject->getTags() as $tag) {
-                    if ($tag->isDescendantOf($itunesUTag)){
-                        $embeddedTag = $tag;
-                        break;
+                if ($itunesUTag !== null) {
+                    foreach ($multimediaObject->getTags() as $tag) {
+                        if ($tag->isDescendantOf($itunesUTag)){
+                            $itunesUCategory = $item->addChild('itunesu:category', null, self::ITUNESU_FEED_URL);
+                            $itunesUCategory->addAttribute('itunesu:code', $tag->getCod(), self::ITUNESU_FEED_URL);
+                        }
                     }
                 }
-                $itunesUCategory = $item->addChild('itunesu:category', null, self::ITUNESU_FEED_URL);
-                // TODO review adding itunesUFeedUrl
-                $itunesUCategory->addAttribute('itunesu:code', $embeddedTag->getCod(), self::ITUNESU_FEED_URL);
+
+                $item->addChild('link', $values['base_url'] . $track->getUrl());
+
+                $enclosure = $item->addChild('enclosure');
+                $enclosure->addAttribute('url', $values['base_url'] . $track->getUrl());
+                $enclosure->addAttribute('length', $track->getSize());
+                $enclosure->addAttribute('type', $track->getMimeType());
+
+                $item->addChild('guid', $values['base_url'] . $track->getUrl());
+                $item->addChild('itunes:duration', $this->getDurationString($multimediaObject), self::ITUNES_DTD_URL);
+                $item->addChild('author', $values['email'] . ' (' . $values['channel_title'] . ')');
+                $item->addChild('itunes:author', $multimediaObject->getCopyright(), self::ITUNES_DTD_URL);
+                $item->addChild('itunes:keywords', $multimediaObject->getKeyword(), self::ITUNES_DTD_URL);
+                $item->addChild('itunes:explicit', $values['itunes_explicit'], self::ITUNES_DTD_URL);
+                $item->addChild('pubDate', $multimediaObject->getRecordDate()->format('r'));
             }
-
-            $item->addChild('link', $values['base_url'] . $track->getUrl());
-
-            $enclosure = $item->addChild('enclosure');
-            $enclosure->addAttribute('url', $values['base_url'] . $track->getUrl());
-            $enclosure->addAttribute('length', $track->getSize());
-            $enclosure->addAttribute('type', $track->getMimeType());
-
-            $item->addChild('guid', $values['base_url'] . $track->getUrl());
-            $item->addChild('itunes:duration', $multimediaObject->getDurationString(), self::ITUNES_DTD_URL);
-            $item->addChild('author', $multimediaObject->getCopyright());
-            $item->addChild('itunes:author', $multimediaObject->getCopyright(), self::ITUNES_DTD_URL);
-            $item->addChild('itunes:keywords', $multimediaObject->getKeyword(), self::ITUNES_DTD_URL);
-            $item->addChild('itunes:explicit', $values['itunes_explicit'], self::ITUNES_DTD_URL);
-            $item->addChild('pubDate', $multimediaObject->getRecordDate()->format('r'));
+            $dm->clear();
         }
-
         return $channel;
     }
 
@@ -297,7 +271,7 @@ class DefaultController extends Controller
 
     private function getVideoTrack(MultimediaObject $multimediaObject)
     {
-        $video_all_tags = array('display', 'podcast');
+        $video_all_tags = array('podcast');
         $video_not_all_tags = array('audio');
         return $multimediaObject->getFilteredTrackWithTags(
                                                            array(),
@@ -309,7 +283,7 @@ class DefaultController extends Controller
 
     private function getAudioTrack(MultimediaObject $multimediaObject)
     {
-        $audio_all_tags = array('display', 'podcast', 'audio');
+        $audio_all_tags = array('podcast', 'audio');
         $audio_not_all_tags = array();
         return $multimediaObject->getFilteredTrackWithTags(
                                                            array(),
@@ -317,5 +291,12 @@ class DefaultController extends Controller
                                                            array(),
                                                            $audio_not_all_tags,
                                                            false);
+    }
+
+    private function getDurationString(MultimediaObject $multimediaObject)
+    {
+        $minutes = floor($multimediaObject->getDuration() / 60);
+        $seconds = $multimediaObject->getDuration() % 60;
+        return $minutes . ':' . $seconds;
     }
 }

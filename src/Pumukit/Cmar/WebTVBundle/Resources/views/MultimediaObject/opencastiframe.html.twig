@@ -1,4 +1,4 @@
-{% if multimediaObject.getProperty('opencastdisplay') %}
+{% if not multimediaObject.getProperty('opencasthide') %}
   {% if mobile_device and track %}
     {% if track.containsTag('html5') %}
     <video 

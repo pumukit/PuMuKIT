@@ -4,6 +4,7 @@ namespace Pumukit\Cmar\WebTVBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 use Pumukit\SchemaBundle\Document\Series;
@@ -70,5 +71,27 @@ class LegacyController extends Controller
         }
 
         return $this->redirect($this->generateUrl("pumukit_webtv_multimediaobject_index", array("id" => $multimediaObject->getId())));
+    }
+
+    /**
+     * @Route("/podcast/conferencevideo.xml")
+     */
+    public function podcastVideoAction()
+    {
+        if (!array_key_exists("PumukitPodcastBundle", $this->container->getParameter('kernel.bundles'))) {
+            return new Response($this->render("PumukitWebTVBundle:Index:404notfound.html.twig", array()), 404, array('Content-Type' => 'text/html'));
+        }
+        return $this->redirect($this->generateUrl("pumukit_podcast_video", array()));
+    }
+
+    /**
+     * @Route("/podcast/conferenceaudio.xml")
+     */
+    public function podcastAudioAction()
+    {
+        if (!array_key_exists("PumukitPodcastBundle", $this->container->getParameter('kernel.bundles'))) {
+            return new Response($this->render("PumukitWebTVBundle:Index:404notfound.html.twig", array()), 404, array('Content-Type' => 'text/html'));
+        }
+        return $this->redirect($this->generateUrl("pumukit_podcast_audio", array()));
     }
 }

@@ -25,14 +25,7 @@
         {% for mediaPackage in mediaPackages %}
         <tr> 
           <td>
-            {% set url_set = false %}
-            {% if mediaPackage.attachments.attachment.0.url is not empty %}
-              <img class="mini" src="{{ mediaPackage.attachments.attachment.0.url }}" height="23" width="30">
-              {% set url_set = true %}
-            {% endif %}
-            {% if not url_set %}
-            <img class="mini" src="{{ asset('/bundles/pumukitnewadmin/images/none.jpg') }}" alt="{% trans %}No_pic{% endtrans %}" height="23" width="30">
-            {% endif %}
+            <img class="mini" src="{{ mediaPackage.attachments.attachment.0.url|default(asset('/bundles/pumukitnewadmin/images/none.jpg')) }}" height="23" width="30">
           </td>
           <td>
             {{ mediaPackage.id }}

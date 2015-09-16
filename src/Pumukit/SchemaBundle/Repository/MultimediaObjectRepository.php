@@ -233,6 +233,25 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
+     * Search series using text index
+     *
+     * @param string $text
+     * @return ArrayCollection
+     */
+    public function searchSeriesField($text, $limit = 0, $page = 0)
+    {
+        $qb = $this->createQueryBuilder()
+            ->field('$text')->equals(array('$search' => $text))
+            ->distinct('series');
+
+        if ($limit > 0){
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
      * Find series by person id
      *
      * @param string $personId
@@ -814,5 +833,46 @@ class MultimediaObjectRepository extends DocumentRepository
         ->count()
         ->getQuery()
         ->execute();
+    }
+
+    /**
+     * Find by tag query builder
+     *
+     * @param Tag|EmbeddedTag $tag
+     * @return QueryBuilder
+     */
+    public function findByTagCodQueryBuilder($tag)
+    {
+        return $this->createStandardQueryBuilder()
+          ->field('tags.cod')->equals($tag->getCod());
+    }
+
+    /**
+     * Find by tag query
+     *
+     * @param Tag|EmbeddedTag $tag
+     * @param array $sort
+     * @return Query
+     */
+    public function findByTagCodQuery($tag, $sort=array())
+    {
+        $qb = $this->findByTagCodQueryBuilder($tag);
+        if ($sort) {
+            $qb->sort($sort);
+        }
+        return $qb->getQuery();
+    }
+
+    /**
+     * Find by tag code
+     *
+     * @param Tag|EmbeddedTag $tag
+     * @param array $sort
+     * @return Cursor
+     */
+    public function findByTagCod($tag, $sort=array())
+    {
+        return $this->findByTagCodQuery($tag, $sort)
+          ->execute();
     }
 }

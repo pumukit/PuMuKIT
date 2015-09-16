@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+  <file source-language="es" target-language="en" datatype="plaintext" original="file.ext">
     <body>
       <trans-unit id="8fa0d7386b6c6c16d0acfcc76c65946f" resname="create new broadcast">
         <source>create new broadcast</source>
@@ -1453,6 +1453,154 @@
       <trans-unit id="1ce5275a34f518c105ff88bbb5d415df" resname="Multimedia Object saved ERROR: Public Date can not be lower than Date of holding.">
         <source>Multimedia Object saved ERROR: Public Date can not be lower than Date of holding.</source>
         <target>Multimedia Object saved ERROR: Public Date can not be lower than Date of holding.</target>
+      </trans-unit>
+      <trans-unit id="a4ecfc70574394990cf17bd83df499f7" resname="Event">
+        <source>Event</source>
+        <target>Event</target>
+      </trans-unit>
+      <trans-unit id="dced274206df19eb00e30d000ffb5c90" resname="Add pic">
+        <source>Add pic</source>
+        <target>Add pic</target>
+      </trans-unit>
+      <trans-unit id="a9932d5110cdbc60678b5201ffe4a0ef" resname="Delete pic">
+        <source>Delete pic</source>
+        <target>Delete pic</target>
+      </trans-unit>
+      <trans-unit id="a888f5af1c0cf0cc113b99f1be636e83" resname="Back to series list">
+        <source>Back to series list</source>
+        <target>Back to series list</target>
+      </trans-unit>
+      <trans-unit id="2a7981bf2eade9177034e99bd34a4851" resname="« Back to series">
+        <source>« Back to series</source>
+        <target>« Back to series</target>
+      </trans-unit>
+      <trans-unit id="c7289c9d553165a3928e2a90e50fb6c7" resname="Clone multimedia object">
+        <source>Clone multimedia object</source>
+        <target>Clone multimedia object</target>
+      </trans-unit>
+      <trans-unit id="e9db93e67639a40b42e45e12f5cbf3be" resname="Apply these tags to all multimedia objects of this series.">
+        <source>Apply these tags to all multimedia objects of this series.</source>
+        <target>Apply these tags to all multimedia objects of this series.</target>
+      </trans-unit>
+      <trans-unit id="41a95201a6491434c5a0f1db23806427" resname="Sync in this series">
+        <source>Sync in this series</source>
+        <target>Sync in this series</target>
+      </trans-unit>
+      <trans-unit id="c533b741603850aded05731c3de35dec" resname="add new banner">
+        <source>add new banner</source>
+        <target>add new banner</target>
+      </trans-unit>
+      <trans-unit id="d25a2f2a0de6d3d37d55cca1c16380d8" resname="Banner from URL">
+        <source>Banner from URL</source>
+        <target>Banner from URL</target>
+      </trans-unit>
+      <trans-unit id="05e496590ca0fdbba1f85fcbd918ced2" resname="Banner from local hard drive">
+        <source>Banner from local hard drive</source>
+        <target>Banner from local hard drive</target>
+      </trans-unit>
+      <trans-unit id="0bd7517939e9fcca3a2cc396c35935d7" resname="Banner URL">
+        <source>Banner URL</source>
+        <target>Banner URL</target>
+      </trans-unit>
+      <trans-unit id="de8e6433c82e085b0dfbf7b8ca3294a3" resname="Write the target URL">
+        <source>Write the target URL</source>
+        <target>Write the target URL</target>
+      </trans-unit>
+      <trans-unit id="02c034940aac141addaeaa267422b5d1" resname="Update the event to show the image">
+        <source>Update the event to show the image</source>
+        <target>Update the event to show the image</target>
+      </trans-unit>
+      <trans-unit id="be202fe9414be76f5c729710893b753a" resname="Click to show or add header/banner and footer">
+        <source>Click to show or add header/banner and footer</source>
+        <target>Click to show or add header/banner and footer</target>
+      </trans-unit>
+      <trans-unit id="bff13b03e3e759a6dffcbfbf9abefb47" resname="Add banner">
+        <source>Add banner</source>
+        <target>Add banner</target>
+      </trans-unit>
+      <trans-unit id="3d27fefdc3ee4ae9360ee429c6c6ec10" resname="create new series type">
+        <source>create new series type</source>
+        <target>create new series type</target>
+      </trans-unit>
+      <trans-unit id="f477a6ea644871f63462d22d7dbddade" resname="Series types">
+        <source>Series types</source>
+        <target>Series types</target>
+      </trans-unit>
+      <trans-unit id="968bc1f0e9a0c185b709fe60a4f54f91" resname="Create new series type">
+        <source>Create new series type</source>
+        <target>Create new series type</target>
+      </trans-unit>
+      <trans-unit id="ce8ac28fdf9d472f902fe5c2c9e73402" resname="Select any type.">
+        <source>Select any type.</source>
+        <target>Select any type.</target>
+      </trans-unit>
+      <trans-unit id="a660a21039b071f0270003f3941694f7" resname="There are no series types with those values.">
+        <source>There are no series types with those values.</source>
+        <target>There are no series types with those values.</target>
+      </trans-unit>
+      <trans-unit id="0de6b5e6b72e9a91eed9778a20f833d6" resname="Edit seriestype channel">
+        <source>Edit seriestype channel</source>
+        <target>Edit seriestype channel</target>
+      </trans-unit>
+      <trans-unit id="cee525b9e2d94e7c51c05d7d37dc8a83" resname="{0} series types|{1} series type |]1,Inf] series types">
+        <source>{0} series types|{1} series type |]1,Inf] series types</source>
+        <target>{0} series types|{1} series type |]1,Inf] series types</target>
+      </trans-unit>
+      <trans-unit id="e7ef1f171b86c156054a23ba566a6728" resname="modify series type">
+        <source>modify series type</source>
+        <target>modify series type</target>
+      </trans-unit>
+      <trans-unit id="f48ad79328ffcfdb95218d530002562a" resname="There was an error in updating the series type.">
+        <source>There was an error in updating the series type.</source>
+        <target>There was an error in updating the series type.</target>
+      </trans-unit>
+      <trans-unit id="2a46c982ffe210d08adb21dbf7703c27" resname="Series type successfully updated.">
+        <source>Series type successfully updated.</source>
+        <target>Series type successfully updated.</target>
+      </trans-unit>
+      <trans-unit id="08f935001020133c14d4d97e789f105a" resname="Edit priority">
+        <source>Edit priority</source>
+        <target>Edit priority</target>
+      </trans-unit>
+      <trans-unit id="befcc65c57d8bf87d3b1cc3f52dcff0b" resname="Track successfully updated.">
+        <source>Track successfully updated.</source>
+        <target>Track successfully updated.</target>
+      </trans-unit>
+      <trans-unit id="c85ade026c48483d072971924a625f36" resname="Are you sure you want to delete this series type?">
+        <source>Are you sure you want to delete this series type?</source>
+        <target>Are you sure you want to delete this series type?</target>
+      </trans-unit>
+      <trans-unit id="28d2f69e53f39af1cba01d6b685d2c53" resname="Series type successfully deleted.">
+        <source>Series type successfully deleted.</source>
+        <target>Series type successfully deleted.</target>
+      </trans-unit>
+      <trans-unit id="76999272eb740b7956a06487d1ee26f0" resname="Are you sure you want to sync this tags? The tags in other objects from this series will be lost.">
+        <source>Are you sure you want to sync this tags? The tags in other objects from this series will be lost.</source>
+        <target>Are you sure you want to sync this tags? The tags in other objects from this series will be lost.</target>
+      </trans-unit>
+      <trans-unit id="5b596e0eca7ef3c519dcb017eda806f1" resname="Are you sure you want to clone this multimedia object?">
+        <source>Are you sure you want to clone this multimedia object?</source>
+        <target>Are you sure you want to clone this multimedia object?</target>
+      </trans-unit>
+      <trans-unit id="e6131184d559cb3ecf67dbf94b291747" resname="Multimedia Object successfully cloned.">
+        <source>Multimedia Object successfully cloned.</source>
+        <target>Multimedia Object successfully cloned.</target>
+      </trans-unit>
+      <trans-unit id="a154683a56716bd2c2b2471133259d0e" resname="Error extracting pic">
+        <source>Error extracting pic</source>
+        <target>Error extracting pic</target>
+      </trans-unit>
+      <trans-unit id="332cc2f9b5e98c611de9770e8751ee5f" resname="Can not delete tag with code">
+        <source>Can not delete tag with code</source>
+        <target>Can not delete tag with code</target>
+      </trans-unit>
+      <trans-unit id="958bb6db0834f2884df5ee7d8d3afca2" resname="Multimedia Object(s) has/have this tag">
+        <source>Multimedia Object(s) has/have this tag</source>
+        <target>Multimedia Object(s) has/have this tag</target>
+      </trans-unit>
+      <trans-unit id="e43d4b8c75dd3765e8be1a1b7b890636" resname="Series type channel successfully created.">
+        <source>Series type channel successfully created.</source>
+        <target>Series type channel successfully created.</target>
       </trans-unit>
     </body>
   </file>
