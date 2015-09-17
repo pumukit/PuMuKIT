@@ -22,10 +22,20 @@ class SchemaFilter extends BsonFilter
                          "status" => MultimediaObject::STATUS_PUBLISHED,
                          "tags.cod" => $this->getParameter("pub_channel_tag")
                           );
-        $privateBroadcastCriteria = $this->getParameter("private_broadcast");
-        if (null != $privateBroadcastCriteria) {
-            $criteria['broadcast'] = $privateBroadcastCriteria;
+        if ($this->hasParameter('private_broadcast')) {
+            $privateBroadcastCriteria = $this->getParameter("private_broadcast");
+            if (null != $privateBroadcastCriteria) {
+                $criteria['broadcast'] = $privateBroadcastCriteria;
+            }
         }
         return $criteria;
+    }
+
+    private function hasParameter($name)
+    {
+        if (isset($this->parameters[$name])) {
+            return true;
+        }
+        return false;
     }
 }

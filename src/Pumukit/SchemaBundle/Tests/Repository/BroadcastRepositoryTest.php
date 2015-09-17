@@ -34,20 +34,20 @@ class BroadcastRepositoryTest extends WebTestCase
 
     public function testRepository()
     {
-        $broadcastPrivate = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
+        $broadcastPrivate = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI, 'private');
         $this->assertEquals(1, count($this->repo->findAll()));
 
-        $broadcastPublic = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
+        $broadcastPublic = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB, 'public');
         $this->assertEquals(2, count($this->repo->findAll()));
     }
 
     public function testFindDistinctIdsByBroadcastTypeId()
     {
-        $private1 = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
-        $public1 = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
-        $public2 = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
-        $private2 = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
-        $corporative1 = $this->createBroadcast(Broadcast::BROADCAST_TYPE_COR);
+        $private1 = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI, 'private1');
+        $public1 = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB, 'public1');
+        $public2 = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB, 'public2');
+        $private2 = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI, 'private2');
+        $corporative1 = $this->createBroadcast(Broadcast::BROADCAST_TYPE_COR, 'corporative1');
 
         $privates = $this->repo->findDistinctIdsByBroadcastTypeId(Broadcast::BROADCAST_TYPE_PRI)->toArray();
 
@@ -74,10 +74,9 @@ class BroadcastRepositoryTest extends WebTestCase
         $this->assertTrue(in_array($corporative1->getId(), $corporatives));
     }
 
-    private function createBroadcast($broadcastTypeId)
+    private function createBroadcast($broadcastTypeId, $name)
     {
         $locale = 'en';
-        $name = ucfirst($broadcastTypeId);
         $passwd = 'password';
         $defaultSel = $broadcastTypeId == Broadcast::BROADCAST_TYPE_PRI;
         $description = ucfirst($broadcastTypeId).' broadcast';

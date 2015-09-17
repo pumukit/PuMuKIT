@@ -204,9 +204,9 @@ class TagServiceTest extends WebTestCase
         $mmobj1 = $this->createMultimediaObject('mmobj1');
         $mmobj2 = $this->createMultimediaObject('mmobj2');
         $mmobj3 = $this->createMultimediaObject('mmobj3');
-        $tag1 = $this->createTagWithTree('tag1');
-        $tag2 = $this->createTagWithTree('tag2');
-        $tag3 = $this->createTagWithTree('tag3');
+        $tag1 = $this->createTagWithTree('tag1', true);
+        $tag2 = $this->createTagWithTree('tag2', false);
+        $tag3 = $this->createTagWithTree('tag3', false);
 
         $this->tagService->addTagToMultimediaObject($mmobj1, $tag1->getId());
         $this->tagService->addTagToMultimediaObject($mmobj1, $tag2->getId());
@@ -259,9 +259,9 @@ class TagServiceTest extends WebTestCase
         $mmobj1 = $this->createMultimediaObject('mmobj1', true);
         $mmobj2 = $this->createMultimediaObject('mmobj2');
         $mmobj3 = $this->createMultimediaObject('mmobj3');
-        $tag1 = $this->createTagWithTree('tag1');
-        $tag2 = $this->createTagWithTree('tag2');
-        $tag3 = $this->createTagWithTree('tag3');
+        $tag1 = $this->createTagWithTree('tag1', true);
+        $tag2 = $this->createTagWithTree('tag2', false);
+        $tag3 = $this->createTagWithTree('tag3', false);
 
         $this->tagService->addTagToMultimediaObject($mmobj1, $tag1->getId());
         $this->tagService->addTagToMultimediaObject($mmobj1, $tag2->getId());
@@ -324,22 +324,33 @@ class TagServiceTest extends WebTestCase
 
     private function createTagWithTree($cod, $withROOT = true)
     {
-        $rootTag = new Tag();
         if ($withROOT) {
-            $rootTag->setCod('ROOT');
+            $rootTag = $this->tagRepo->findOneByCod('ROOT');
+            if (null == $rootTag) {
+                $rootTag = new Tag();
+                $rootTag->setCod('ROOT');
+                $this->dm->persist($rootTag);
+            }
         } else {
-            $rootTag->setCod('grandparent');
+            $rootTag = $this->tagRepo->findOneByCod('grandparent');
+            if (null == $rootTag) {
+              $rootTag = new Tag();
+              $rootTag->setCod('grandparent');
+              $this->dm->persist($rootTag);
+            }
         }
-        $this->dm->persist($rootTag);
 
         $locale = 'en';
 
-        $parentTag = new Tag();
-        $parentTag->setLocale($locale);
-        $parentTag->setCod('parent');
-        $parentTag->setTitle('Parent');
-        $parentTag->setParent($rootTag);
-        $this->dm->persist($parentTag);
+        $parentTag = $this->tagRepo->findOneByCod('parent');
+        if (null == $parentTag) {
+            $parentTag = new Tag();
+            $parentTag->setLocale($locale);
+            $parentTag->setCod('parent');
+            $parentTag->setTitle('Parent');
+            $parentTag->setParent($rootTag);
+            $this->dm->persist($parentTag);
+        }
 
         $tag = new Tag();
         $tag->setLocale($locale);
@@ -348,12 +359,15 @@ class TagServiceTest extends WebTestCase
         $tag->setParent($parentTag);
         $this->dm->persist($tag);
 
-        $broTag = new Tag();
-        $broTag->setLocale($locale);
-        $broTag->setCod('brother');
-        $broTag->setTitle('Brother');
-        $broTag->setParent($parentTag);
-        $this->dm->persist($broTag);
+        $broTag = $this->tagRepo->findOneByCod('brother');
+        if (null == $broTag) {
+            $broTag = new Tag();
+            $broTag->setLocale($locale);
+            $broTag->setCod('brother');
+            $broTag->setTitle('Brother');
+            $broTag->setParent($parentTag);
+            $this->dm->persist($broTag);
+        }
 
         $this->dm->flush();
 

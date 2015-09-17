@@ -263,12 +263,12 @@ class FactoryServiceTest extends WebTestCase
         $this->dm->flush();
 
         $tagB = new Tag();
-        $tagB->setCod("A");
+        $tagB->setCod("B");
         $this->dm->persist($tagB);
         $this->dm->flush();
 
         $tagC = new Tag();
-        $tagC->setCod("A");
+        $tagC->setCod("C");
         $this->dm->persist($tagC);
         $this->dm->flush();
 
@@ -349,7 +349,7 @@ class FactoryServiceTest extends WebTestCase
         $this->dm->flush();
 
         $tagB = new Tag();
-        $tagB->setCod("A");
+        $tagB->setCod("B");
         $this->dm->persist($tagB);
         $this->dm->flush();
 

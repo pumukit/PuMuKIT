@@ -34,6 +34,8 @@ class StatsServiceTest extends WebTestCase
             ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
             ->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')
+            ->remove(array());
     }
 
     private function logView($when, MultimediaObject $multimediaObject, Track $track = null)
@@ -174,10 +176,10 @@ class StatsServiceTest extends WebTestCase
 
         $filter = $this->dm->getFilterCollection()->enable('frontend');
         $filter->setParameter('pub_channel_tag', '1');
+        $filter->setParameter('private_broadcast', array('$nin' => array('1', '2', '3')));
 
         $filter = $this->dm->getFilterCollection()->enable('channel');
         $filter->setParameter('channel_tag', '1');
-        
 
         $service = new StatsService($this->dm);
 
