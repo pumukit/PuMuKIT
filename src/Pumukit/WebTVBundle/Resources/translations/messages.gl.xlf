@@ -178,6 +178,14 @@
         <source>Download master</source>
         <target>Descarga master</target>
       </trans-unit>
+      <trans-unit id="6351030f724f6f42fd11ec9aa6ee8c76" resname="403 Forbidden">
+        <source>403 Forbidden</source>
+        <target>403 Prohibido</target>
+      </trans-unit>
+      <trans-unit id="3f23f5e89e88dba25ea0f44e359452b6" resname="Forbidden to access this video">
+        <source>Forbidden to access this video</source>
+        <target>Prohibido acceder a este vídeo</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
