@@ -41,6 +41,39 @@ class BroadcastRepositoryTest extends WebTestCase
         $this->assertEquals(2, count($this->repo->findAll()));
     }
 
+    public function testFindDistinctIdsByBroadcastTypeId()
+    {
+        $private1 = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
+        $public1 = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
+        $public2 = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
+        $private2 = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
+        $corporative1 = $this->createBroadcast(Broadcast::BROADCAST_TYPE_COR);
+
+        $privates = $this->repo->findDistinctIdsByBroadcastTypeId(Broadcast::BROADCAST_TYPE_PRI)->toArray();
+
+        $this->assertTrue(in_array($private1->getId(), $privates));
+        $this->assertTrue(in_array($private2->getId(), $privates));
+        $this->assertFalse(in_array($public1->getId(), $privates));
+        $this->assertFalse(in_array($public2->getId(), $privates));
+        $this->assertFalse(in_array($corporative1->getId(), $privates));
+
+        $publics = $this->repo->findDistinctIdsByBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB)->toArray();
+
+        $this->assertFalse(in_array($private1->getId(), $publics));
+        $this->assertFalse(in_array($private2->getId(), $publics));
+        $this->assertTrue(in_array($public1->getId(), $publics));
+        $this->assertTrue(in_array($public2->getId(), $publics));
+        $this->assertFalse(in_array($corporative1->getId(), $publics));
+
+        $corporatives = $this->repo->findDistinctIdsByBroadcastTypeId(Broadcast::BROADCAST_TYPE_COR)->toArray();
+
+        $this->assertFalse(in_array($private1->getId(), $corporatives));
+        $this->assertFalse(in_array($private2->getId(), $corporatives));
+        $this->assertFalse(in_array($public1->getId(), $corporatives));
+        $this->assertFalse(in_array($public2->getId(), $corporatives));
+        $this->assertTrue(in_array($corporative1->getId(), $corporatives));
+    }
+
     private function createBroadcast($broadcastTypeId)
     {
         $locale = 'en';
