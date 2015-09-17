@@ -218,5 +218,8 @@ class MultimediaObjectController extends Controller
            ($request->headers->get('PHP_AUTH_PW') !== $broadcast->getPasswd() ) ||
            ($broadcastName !== $broadcast->getName() )))
         return new Response("", 401, array('WWW-Authenticate' => 'Basic realm="Resource not public."'));
-    }
+      if ($broadcast && (Broadcast::BROADCAST_TYPE_PRI === $broadcast->getBroadcastTypeId()))
+        return new Response($this->render("PumukitWebTVBundle:Index:403forbidden.html.twig", array()), 403);
+      return true;
+   }
 }
