@@ -95,7 +95,7 @@ EOT
         if (($file = fopen($file, "r")) !== false) {
             while (($currentRow = fgetcsv($file, 300, ";")) !== false) {
                 $number = count($currentRow);
-                if (('tag' === $repoName) && ($number == 6 || $number == 8)){
+                if (('tag' === $repoName) && ($number == 6 || $number == 9)){
                     //Check header rows
                     if (trim($currentRow[0]) == "id") {
                         continue;
@@ -153,6 +153,10 @@ EOT
         if (isset($csv_array[7])) {
             $tag->setTitle($csv_array[7], 'gl');
         }
+       if (isset($csv_array[8])) {
+            $tag->setTitle($csv_array[7], 'de');
+        }
+
 
         $this->dm->persist($tag);
 
