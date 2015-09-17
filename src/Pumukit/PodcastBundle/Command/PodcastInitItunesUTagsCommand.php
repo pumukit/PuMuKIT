@@ -154,7 +154,7 @@ EOT
             $tag->setTitle($csv_array[7], 'gl');
         }
        if (isset($csv_array[8])) {
-            $tag->setTitle($csv_array[7], 'de');
+            $tag->setTitle($csv_array[8], 'de');
         }
 
 
