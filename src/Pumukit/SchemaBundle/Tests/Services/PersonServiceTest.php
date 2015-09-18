@@ -39,6 +39,7 @@ class PersonServiceTest extends WebTestCase
     {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Person')->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:Role')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')->remove(array());
         $this->dm->flush();

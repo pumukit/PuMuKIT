@@ -26,7 +26,7 @@ class LegacyController extends Controller
           ->getQuery()->getSingleResult();
 
         if (!$series) {
-            return new Response($this->render("PumukitWebTVBundle:Index:404notfound.html.twig", array()), 404);
+            throw $this->createNotFoundException();
         }
 
         return $this->redirect($this->generateUrl("pumukit_webtv_series_index", array("id" => $series->getId())));
@@ -47,7 +47,7 @@ class LegacyController extends Controller
           ->getQuery()->getSingleResult();
 
         if (!$multimediaObject) {
-            return new Response($this->render("PumukitWebTVBundle:Index:404notfound.html.twig", array()), 404);
+            throw $this->createNotFoundException();
         }
 
         return $this->redirect($this->generateUrl("pumukit_webtv_multimediaobject_index", array("id" => $multimediaObject->getId())));
@@ -67,7 +67,7 @@ class LegacyController extends Controller
           ->getQuery()->getSingleResult();
 
         if (!$multimediaObject) {
-            return new Response($this->render("PumukitWebTVBundle:Index:404notfound.html.twig", array()), 404);
+            throw $this->createNotFoundException();
         }
 
         return $this->redirect($this->generateUrl("pumukit_webtv_multimediaobject_index", array("id" => $multimediaObject->getId())));
@@ -79,7 +79,7 @@ class LegacyController extends Controller
     public function podcastVideoAction()
     {
         if (!array_key_exists("PumukitPodcastBundle", $this->container->getParameter('kernel.bundles'))) {
-            return new Response($this->render("PumukitWebTVBundle:Index:404notfound.html.twig", array()), 404, array('Content-Type' => 'text/html'));
+            throw $this->createNotFoundException();
         }
         return $this->redirect($this->generateUrl("pumukit_podcast_video", array()));
     }
@@ -90,7 +90,7 @@ class LegacyController extends Controller
     public function podcastAudioAction()
     {
         if (!array_key_exists("PumukitPodcastBundle", $this->container->getParameter('kernel.bundles'))) {
-            return new Response($this->render("PumukitWebTVBundle:Index:404notfound.html.twig", array()), 404, array('Content-Type' => 'text/html'));
+            throw $this->createNotFoundException();
         }
         return $this->redirect($this->generateUrl("pumukit_podcast_audio", array()));
     }

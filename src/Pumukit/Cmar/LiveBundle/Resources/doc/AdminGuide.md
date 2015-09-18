@@ -133,12 +133,12 @@ Steps after the live event: How to export chat messages and disable the chat
     > exit
     ```
 
-2.- If there aren't other live channels with live events on that moment, set the `pumukit_cmar_live.chat.enable` parameter to `true` in your `app/config/config.yml` file to enable the chat:
+2.- If there aren't other live channels with live events on that moment, set the `pumukit_cmar_live.chat.enable` parameter to `false` in your `app/config/config.yml` file to disable the chat:
 
    ```
    pumukit_cmar_live:
        chat:
-           enable: true
+           enable: false
    ```
 
 3.- Clear the cache. For production environment:

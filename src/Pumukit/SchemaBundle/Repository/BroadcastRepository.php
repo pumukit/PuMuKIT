@@ -37,4 +37,19 @@ class BroadcastRepository extends DocumentRepository
       ->getQuery()
       ->getSingleResult();
   }
+
+  /**
+   * Find distinct ids by broadcast type id
+   *
+   * @param string $broadcastTypeId
+   * @return Cursor
+   */
+  public function findDistinctIdsByBroadcastTypeId($broadcastTypeId)
+  {
+      return $this->createQueryBuilder()
+        ->field('broadcast_type_id')->equals($broadcastTypeId)
+        ->distinct('_id')
+        ->getQuery()
+        ->execute();
+  }
 }

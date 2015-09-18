@@ -139,6 +139,9 @@ class MultimediaObjectController extends Base
             return new Response($this->render("PumukitWebTVBundle:Index:401unauthorized.html.twig", array()), 401);
         }
       }
+      if ($broadcast && (Broadcast::BROADCAST_TYPE_PRI === $broadcast->getBroadcastTypeId()))
+        return new Response($this->render("PumukitWebTVBundle:Index:403forbidden.html.twig", array()), 403);
+
       return true;
     }
 
