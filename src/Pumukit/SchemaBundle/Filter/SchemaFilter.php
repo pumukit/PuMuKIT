@@ -28,6 +28,9 @@ class SchemaFilter extends BsonFilter
                 $criteria['broadcast'] = $privateBroadcastCriteria;
             }
         }
+        if ($this->hasParameter('display_track')) {
+            $criteria['tracks.tags'] = $this->getParameter('display_track');
+        }
         return $criteria;
     }
 
