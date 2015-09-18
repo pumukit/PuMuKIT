@@ -29,6 +29,7 @@ class Filter
       $filter = $this->dm->getFilterCollection()->enable("frontend");
       $filter->setParameter("pub_channel_tag", "PUCHWEBTV");
       $filter->setParameter("private_broadcast", $this->getBroadcastCriteria());
+      $filter->setParameter("display_track", new \MongoRegex('/\bdisplay\b/'));
     }
   }
 
