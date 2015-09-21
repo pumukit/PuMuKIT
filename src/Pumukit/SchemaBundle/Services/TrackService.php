@@ -5,6 +5,7 @@ namespace Pumukit\SchemaBundle\Services;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -117,7 +118,9 @@ class TrackService
 
         $allJobs = $this->jobRepo->findByMultimediaObjectIdAndProfile($multimediaObject->getId(), $trackProfile);
         foreach ($allJobs as $job) {
-            $this->jobService->deleteJob($job->getId());
+            if (Job::STATUS_FINISHED === $job->getStatus()) {
+                $this->jobService->deleteJob($job->getId());
+            }
         }
 
         if ($this->forceDeleteOnDisk && $trackPath && $isNotOpencast) {
