@@ -36,7 +36,7 @@ class CpuServiceTest extends WebTestCase
     {
         $cpus = $this->getDemoCpus();
 
-        $this->assertEquals('CPU_LOCAL', $this->cpuService->getFreeCpu());
+        $this->assertEquals('CPU_REMOTE', $this->cpuService->getFreeCpu());
 
         $job = new Job();
         $job->setCpu('CPU_LOCAL');

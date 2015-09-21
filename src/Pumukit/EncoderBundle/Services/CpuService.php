@@ -32,6 +32,7 @@ class CpuService
     {
         $executingJobs = $this->repo->findWithStatus(array(Job::STATUS_EXECUTING));
 
+        $freeCpus = array();
         foreach ($this->cpus as $name => $cpu){
             $busy = 0;
             foreach ($executingJobs as $job){
@@ -40,11 +41,14 @@ class CpuService
                 }
             }
             if (($busy < $cpu['max']) && (($cpu['type'] == $type) || (null == $type))){
-                return $name;
+                $freeCpus[] = array(
+                                    'name' => $name,
+                                    'busy' => $busy,
+                                    'max' => $cpu['max']
+                                    );
             }
         }
-
-        return null;
+        return $this->getOptimalCpu($freeCpus);
     }
 
     /**
@@ -77,5 +81,24 @@ class CpuService
     {
         // TODO
         return true;
+    }
+
+    private function getOptimalCpu($freeCpus=array())
+    {
+        $optimalCpu = null;
+        foreach ($freeCpus as $cpu) {
+            if (null == $optimalCpu) {
+                $optimalCpu = $cpu;
+            }
+            if (($cpu['busy']/$cpu['max']) < ($optimalCpu['busy']/$optimalCpu['max'])) {
+                $optimalCpu = $cpu['name'];
+            } elseif (($cpu['busy'] === 0) && ($optimalCpu['busy'] === 0) && ($cpu['max'] > $optimalCpu['max'])) {
+                $optimalCpu = $cpu['name'];
+            }
+        }
+        if (isset($optimalCpu['name'])) {
+            return $optimalCpu['name'];
+        }
+        return $optimalCpu;
     }
 }
