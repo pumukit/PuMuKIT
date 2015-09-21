@@ -1,4 +1,12 @@
 {% if mm is not empty %}
+  {% set display_track = false %}
+  {% if mm.getProperty('opencast') is not empty and not mm.getProperty('opencasthide') %}
+    {% set display_track = true %}
+  {% else %}
+    {% set display_track = mm.getFilteredTracksWithTags(['display'], [], [], []) %}
+  {% endif %}
+  {% set video_url = url('pumukit_webtv_multimediaobject_index', {id: mm.id}) %}
+  {% set magic_url = url('pumukit_webtv_multimediaobject_magicindex', {secret: mm.secret}) %}
 <div class="well">
 
   {#
@@ -19,13 +27,17 @@
             </div>
             <label for="inputROUrl" class="col-lg-2 control-label">Url:</label>
             <div class="col-lg-10 input-group">
-              <input type="text" class="form-control" id="inputROUrl" readonly onclick="select()" value="{{ url('pumukit_webtv_multimediaobject_index', {id: mm.id}) }}">
-              <span class="input-group-addon"><a href="{{ url('pumukit_webtv_multimediaobject_index', {id: mm.id}) }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
+              <input type="text" class="form-control" id="inputROUrl" readonly onclick="select()" value="{{ display_track ? video_url : '' }}">
+              {% if display_track %}
+              <span class="input-group-addon"><a href="{{ video_url }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
+              {% endif %}
             </div>
             <label for="inputROMagicUrl" class="col-lg-2 control-label" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">Magic Url:</label>
             <div class="col-lg-10 input-group">
-              <input type="text" class="form-control" id="inputROMagicUrl" readonly onclick="select()" value="{{ url('pumukit_webtv_multimediaobject_magicindex', {secret: mm.secret}) }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}"> 
-              <span class="input-group-addon"><a href="{{ url('pumukit_webtv_multimediaobject_magicindex', {secret: mm.secret}) }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
+              <input type="text" class="form-control" id="inputROMagicUrl" readonly onclick="select()" value="{{ display_track ? magic_url : '' }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">
+              {% if display_track %}
+              <span class="input-group-addon"><a href="{{ magic_url }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
+              {% endif %}
             </div>
           </div>            
           {# TODO add info: iframe...
