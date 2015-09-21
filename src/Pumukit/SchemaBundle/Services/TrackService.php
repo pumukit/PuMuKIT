@@ -95,6 +95,12 @@ class TrackService
      */
     public function updateTrackInMultimediaObject(MultimediaObject $multimediaObject)
     {
+        if ($multimediaObject->getProperty('opencast')) {
+            $track = $multimediaObject->getTrackWithTag('display');
+            if ($track->getHide() != $hide = $multimediaObject->getProperty('opencasthide')) {
+                $track->setHide($hide);
+            }
+        }
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
