@@ -48,7 +48,7 @@ class CpuService
                                     );
             }
         }
-        return $this->getOptimalCpu($freeCpus);
+        return $this->getOptimalCpuName($freeCpus);
     }
 
     /**
@@ -83,22 +83,23 @@ class CpuService
         return true;
     }
 
-    private function getOptimalCpu($freeCpus=array())
+    private function getOptimalCpuName($freeCpus=array())
     {
         $optimalCpu = null;
         foreach ($freeCpus as $cpu) {
-            if (null == $optimalCpu) {
+            if (!$optimalCpu) {
                 $optimalCpu = $cpu;
+                continue;
             }
             if (($cpu['busy']/$cpu['max']) < ($optimalCpu['busy']/$optimalCpu['max'])) {
-                $optimalCpu = $cpu['name'];
+                $optimalCpu = $cpu;
             } elseif (($cpu['busy'] === 0) && ($optimalCpu['busy'] === 0) && ($cpu['max'] > $optimalCpu['max'])) {
-                $optimalCpu = $cpu['name'];
+                $optimalCpu = $cpu;
             }
         }
         if (isset($optimalCpu['name'])) {
             return $optimalCpu['name'];
         }
-        return $optimalCpu;
+        return null;
     }
 }
