@@ -1,4 +1,4 @@
-{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+{% extends ['PumukitWebTVBundle::layout.html.twig', '::base.html.twig'] %}
 {% block body %}
     <p class="titulo_widget titulo_widget_grande">
       {% trans %}404 Not found{% endtrans %}
