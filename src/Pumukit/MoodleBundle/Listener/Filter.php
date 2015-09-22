@@ -26,8 +26,7 @@ class Filter
       
           $filter = $this->dm->getFilterCollection()->enable("frontend");
           $filter->setParameter("pub_channel_tag", "PUCHWEBTV");
-          $filter->setParameter("display_track_tag", new \MongoRegex('/\bdisplay\b/'));
-          $filter->setParameter("hide_track", false);
+          $filter->setParameter("display_track_tag", "display");
         }
     }
 }
