@@ -1,0 +1,121 @@
+<?php
+
+namespace Pumukit\Responsive\WebTVBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
+use Pagerfanta\Pagerfanta;
+use Pumukit\SchemaBundle\Document\Tag;
+
+class ByTagController extends Controller
+{
+
+  private $limit = 10;
+
+  /**
+   * @Route("/multimediaobjects/tag/{cod}", name="pumukit_webtv_bytag_multimediaobjects")
+   * @Template("PumukitWebTVBundle:ByTag:index.html.twig")
+   */
+  public function multimediaObjectsAction(Tag $tag, Request $request)
+  {
+    $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+    $mmobjs = $repo->createBuilderWithTag($tag, array('record_date' => 1));
+    
+    $pagerfanta = $this->createPager($mmobjs, $request->query->get("page", 1));
+    $this->updateBreadcrumbs($tag->getTitle(), "pumukit_webtv_bytag_multimediaobjects", array("cod" => $tag->getCod()));
+    
+    return array('title' => 'Multimedia objects with tag',
+                 'objects' => $pagerfanta, 
+                 'tag' => $tag);
+  }
+  
+  /**
+   * @Route("/series/tag/{cod}", name="pumukit_webtv_bytag_series")
+   * @Template("PumukitWebTVBundle:ByTag:index.html.twig")
+   */
+  public function seriesAction(Tag $tag, Request $request)
+  {  
+    $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
+    $series = $repo->createBuilderWithTag($tag, array('public_date' => +1));
+    
+    $pagerfanta = $this->createPager($series, $request->query->get("page", 1));
+    $this->updateBreadcrumbs($tag->getTitle(), "pumukit_webtv_bytag_series", array("cod" => $tag->getCod()));
+    
+    return array('title' => 'Series with tag',
+                 'objects' => $pagerfanta,
+                 'tag' => $tag);
+  }
+
+
+  private function updateBreadcrumbs($title, $routeName, array $routeParameters = array())
+  {
+      $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
+      $breadcrumbs->addList($title, $routeName, $routeParameters);
+  }
+  
+
+  private function createPager($objects, $page)
+  {
+    $adapter = new DoctrineODMMongoDBAdapter($objects);
+    $pagerfanta = new Pagerfanta($adapter);
+    $pagerfanta->setMaxPerPage($this->limit);
+    $pagerfanta->setCurrentPage($page);    
+
+    return $pagerfanta;
+  }
+
+  /**
+   * @Route("/series/channel/{cod}", name="pumukit_webtv_series_byvirtualtag")
+   * @Template("PumukitWebTVBundle:ByTag:seriesByVirtualTag.html.twig")
+   */
+    public function seriesByVirtualTagAction(Tag $tag, Request $request)
+    {
+	$cod = $request->attributes->get('cod');
+	
+	$vGroundParent = $this->getDoctrine()
+	    ->getRepository('PumukitSchemaBundle:Tag')
+	    ->findOneByCod($cod);
+	
+	$vGroundParentTitle = $vGroundParent->getTitle();
+	
+      	$this->get('pumukit_web_tv.breadcrumbs')->addList( $vGroundParentTitle, 'pumukit_webtv_series_byvirtualtag', array("cod" => $cod) );
+	
+	$allVGrounds = $vGroundParent->getChildren();
+	$allTags = array();
+	foreach ($allVGrounds as $vGround) {
+	    $cod = $vGround->getProperty('target_cod');
+	    $cod = isset( $cod ) ? $cod : '';
+	    $parentTag = $this->getDoctrine()
+		->getRepository('PumukitSchemaBundle:Tag')
+		->findOneByCod($cod);
+	    
+	    if( isset( $parentTag ) ){
+		$allTags[] =$parentTag;
+	    }
+	}
+	
+	$allSeriesByTags = array();
+	foreach( $allTags as $tag ){
+	    $allSeries = $this->getDoctrine()
+	    ->getRepository('PumukitSchemaBundle:Series')
+	    ->findWithTag( $tag );
+	    
+	    $allSeriesByTags[ $tag->getCod() ] = array();
+	    $allSeriesByTags[ $tag->getCod() ][ 'title' ] = $tag->getTitle();
+	    $allSeriesByTags[ $tag->getCod() ][ 'cod' ] = $tag->getCod();
+	    $allSeriesByTags[ $tag->getCod() ][ 'num_mmobjs' ] = $tag->getNumberMultimediaObjects();
+	    $allSeriesByTags[ $tag->getCod() ][ 'series' ] = $allSeries;
+	    
+	}
+
+	return array(
+	    'channel_title' => $vGroundParentTitle, 
+	    'allTags' => $allTags, 
+	    'allSeriesByTags' => $allSeriesByTags );
+    }
+
+
+}

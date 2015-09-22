@@ -1,0 +1,39 @@
+{% set row_class="" %}
+{% if rows is defined %}
+  {% if rows == 4 %}
+    {% set row_class="col-md-3 " %}
+  {% elseif rows == 3 %}
+    {% set row_class="col-md-4 " %}
+  {% elseif rows == 2 %}
+    {% set row_class="col-md-6 " %}
+  {% elseif rows == 1 %}
+    {% set row_class="col-md-12" %}
+  {% endif %}
+{% endif %}
+<a href="{{ path('pumukit_webtv_series_index', {'id': object.id}) }}">
+  <div class="{{ row_class }} pumukit_mmobj">
+    <figure class="pumukit_album">
+      <div class="thumbnail thumbnailo"><div class="thumbnailholder" ></div><img class="thumbnailimg" src="{{ object|first_url_pic(true) }}" /></div>
+      <div class="thumbnail thumbnailo"><div class="thumbnailholder" ></div><img class="thumbnailimg" src="{{ object|first_url_pic(true) }}" /></div>
+      <div class="thumbnail thumbnailo"><div class="thumbnailholder" ></div><img class="thumbnailimg" src="{{ object|first_url_pic(true) }}" /></div>
+    </figure>
+    <div class="info serial">
+      <div class="title">
+        {{object.title | default('No title')|trans}}
+      </div>
+      <div class="serial_title">
+        <abbr title="{{object.title}}">
+          {{object.line2}}
+        </abbr>
+      </div>
+
+    </div>
+    <span class="number-videos serial">
+      {{object|count_multimedia_objects}} {{object|count_multimedia_objects>1?'videos':'video'}}
+    </span>
+
+    <div class="date serial">
+      {{object.publicDate|date("d/m/Y")}}
+    </div>
+  </div>
+</a>

@@ -1,0 +1,34 @@
+<!--Objeto multimedia-->
+{% set row_class="" %}
+{% if rows is defined %}
+  {% if rows == 4 %}
+    {% set row_class="col-md-3 " %}
+  {% elseif rows == 3 %}
+    {% set row_class="col-md-4 " %}
+  {% elseif rows == 2 %}
+    {% set row_class="col-md-6 " %}
+  {% elseif rows == 1 %}
+    {% set row_class="col-md-12" %}
+  {% endif %}
+{% endif %}
+<a href="{{ path('pumukit_webtv_multimediaobject_index', {'id': object.id}) }}">
+  <div class="{{ row_class }} pumukit_mmobj">
+    <div class="thumbnail">
+      <img class="play_icon" alt="" src="{{ asset('bundles/pumukitkoelnwebtv/images/icons/play_icon.png')}}" />
+      <span class="video-duration">{{ object.durationString }}</span>
+      <img alt="serial_pic" class="serial thumbnailimg" src="{{ object|first_url_pic(true) }}"/>
+      <div class="thumbnailholder" ></div>
+    </div>
+    <div class="info">
+      <div class="title">
+        {{object.title | default('No title')|trans}}
+      </div>
+      <div class="subtitle">
+        <abbr title="{{object.subtitle}}">{{object.subtitle}}</abbr>
+      </div>
+      <div class="date mmobj">
+        {{object.recordDate|date("d/m/Y")}}
+      </div>
+    </div>
+  </div>  
+</a>

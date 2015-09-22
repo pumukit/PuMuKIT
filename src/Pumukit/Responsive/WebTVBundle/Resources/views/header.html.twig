@@ -1,0 +1,122 @@
+<div class="row header visible-lg"> 
+  <div class="header-content">
+    <div class="col-sm-9">
+      <div class="row">
+        <div class="col-xs-3">
+          <span class="thumbnail">
+            <img src="{{ asset('bundles/pumukitresponsivewebtv/images/logo_cies.png') }}">
+          </span>
+        </div>
+        <div class="col-xs-9">
+          <span>
+            <h2>{% trans %} University Islas Cíes {% endtrans %}</h2>
+          </span>
+          <span class="hidden-xs">
+            <h2>
+              <small> "The university of your dreams..."</small>
+            </h2>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="language_select_wrapper">
+        <div class="btn-group">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ app.request.getLocale()=='en'?'English':'Deutsch' }} <span class="glyphicon glyphicon-globe"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="{{ path('pumukit_locale', {'locale': 'de' } ) }}" > Deutsch </a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="{{ path('pumukit_locale', {'locale': 'en' } ) }}" > English </a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row header sticky">
+  <div class="header-content">
+    <div class="col-xs-6 col-xs-offset-1">
+      <span>
+        <h2 style="margin-top:10px;">{% trans %} University Islas Cíes {% endtrans %}</h2>
+      </span>
+    </div>
+    <div class="col-xs-4">
+      <div style="float:right;";>
+        {% include 'PumukitResponsiveWebTVBundle::search_box.html.twig' %}
+      </div>
+    </div>
+    <div class="col-xs-1" style="margin-top:8px;">
+      <div class="language_select_wrapper" style="min-height:10px;display:table-cell;vertical-align:middle;float:right;">
+        <div class="btn-group">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ app.request.getLocale()=='en'?'English':'Deutsch' }} <span class="glyphicon glyphicon-globe"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="{{ path('pumukit_locale', {'locale': 'de' } ) }}" > Deutsch </a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="{{ path('pumukit_locale', {'locale': 'en' } ) }}" > English </a></li>
+          </ul>
+        </div>
+      </div>  
+    </div>
+  </div>
+</div>
+<!--STICKY HEADER-->
+<script>
+ // Hide Header on on scroll down
+ var didScroll;
+ var lastScrollTop = 0;
+ var delta = 5;
+ $('.header.sticky').removeClass('hidden');
+ var navbarHeight = $('.header.sticky').outerHeight();
+ $(window).scroll(function(event){
+     didScroll = true;
+ });
+
+ setInterval(function() {
+     if (didScroll) {
+         hasScrolled();
+         didScroll = false;
+     }
+     wawawa = $('.row.header').first();
+     caca = wawawa.offset().top + wawawa.outerHeight() - $(window).scrollTop();
+     if ( caca > 0 ) {
+         console.log("caca:"+ ( caca ) );
+         $('.row.header.sticky').hide();
+     }
+     else {
+         $('.row.header.sticky').show();
+     }
+ }, 250);
+
+ function hasScrolled() {
+     var st = $(this).scrollTop();
+     
+     // Make sure they scroll more than delta
+     if(Math.abs(lastScrollTop - st) <= delta)
+         return;
+     
+     // If they scrolled down and are past the navbar, add class .nav-up.
+     // This is necessary so you never see what is "behind" the navbar.
+     if (st > lastScrollTop && st > navbarHeight){
+         // Scroll Down
+         $('.header.sticky').removeClass('nav-down').addClass('nav-up');
+     } else {
+         // Scroll Up
+         if(st + $(window).height() < $(document).height()) {
+             $('.header.sticky').removeClass('nav-up').addClass('nav-down');
+         }
+     }
+     
+     lastScrollTop = st;
+ }
+</script>
+
+<!--BREADCRUMBS-->
+<div class="row">
+  <div class="row" role="navigation" style="margin:0 auto;max-width:1400px">
+    {% render(controller('PumukitResponsiveWebTVBundle:Widget:breadcrumbs')) %}
+  </div>
+</div>

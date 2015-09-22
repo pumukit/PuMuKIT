@@ -1,0 +1,9 @@
+<div class="col-no-padding col-lg-6">
+  <h1 style="font-size: 32px">{% trans %} Most viewed {% endtrans %}</h1>
+  <div class="view-content">
+    {% for object in multimediaObjectsSortedByNumview %}
+      <!--Objeto multimedia-->
+      {% include 'PumukitResponsiveWebTVBundle:Misc:multimediaobject.html.twig' with {'rows':1}%}
+    {% endfor %}
+  </div>
+</div>

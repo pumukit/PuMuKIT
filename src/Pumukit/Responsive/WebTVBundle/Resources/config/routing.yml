@@ -1,0 +1,3 @@
+pumukit_responsive_web_tv_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: PumukitResponsiveWebTVBundle:Default:index }
