@@ -1,59 +1,63 @@
-
 <h1>{% trans %} Categories {% endtrans %}</h1>
-<div class="pumukit_index row">
+<div class="row">
   {# ROW 1 #}
-  <div class="index_container col-md-4">
-    <div class="img_category" style="margin:47px 3px">
+  <div class="index_container col-md-4" >
+    <div class="img_category">
       <a href="{{ path('pumukit_webtv_series_byvirtualtag', {'cod': categories[0].cod }) }}">
-        <img alt="University" src="{{ asset('bundles/pumukitkoelnwebtv/images/0.jpg') }}" />
-        <div class="cover"><div>{{ categories[0].title }}</div></div>
+        <img alt="University" src="{{ asset('bundles/pumukitresponsivewebtv/images/0.jpg') }}" />
+        <span class="cover">
+          <div>
+            {% trans %} Health Sciences {% endtrans %}
+          </div>
+        </span>
       </a>
     </div>
     
   </div>
   {# ROW 2 #}
-  <div class="index_container three col-md-4">
-    <div class="img_category">
+  <div class="index_container col-md-4">
+    <div class="img_category two" >
       <a href="{{ path('pumukit_webtv_series_byvirtualtag', {'cod': categories[1].cod }) }}"> 
-        <img alt="Management, Economics and Social Science" src="{{ asset('bundles/pumukitkoelnwebtv/images/1.jpg') }}" />
-        <div class="cover"><div> {{ categories[1].title }} </div></div>
+        <img alt="Management, Economics and Social Science" src="{{ asset('bundles/pumukitresponsivewebtv/images/1.jpg') }}" />
+        <span class="cover">
+          <div>
+            {% trans %} Humanities {% endtrans %}
+          </div>
+        </span>
       </a>
     </div>
 
-    <div class="img_category">
+    <div class="img_category two" >
       <a href="{{ path('pumukit_webtv_series_byvirtualtag', {'cod': categories[2].cod }) }}">
-        <img alt="Mathematics and Natural Sciences" src="{{ asset('bundles/pumukitkoelnwebtv/images/2.jpg') }}" />
-        <div class="cover"><div>{{ categories[2].title }}</div></div>
-      </a>
-    </div>
-
-    <div class="img_category">
-      <a href="{{ path('pumukit_webtv_series_byvirtualtag', {'cod': categories[3].cod }) }}">
-        <img alt="Law" src="{{ asset('bundles/pumukitkoelnwebtv/images/3.jpg') }}" />
-        <div class="cover"><div>{{ categories[3].title }}</div></div>
+        <img alt="Mathematics and Natural Sciences" src="{{ asset('bundles/pumukitresponsivewebtv/images/2.jpg') }}" />
+        <span class="cover">
+          <div>
+            {% trans %} Technical science {% endtrans %}
+          </div>
+        </span>
       </a>
     </div>
   </div>
   {# ROW 3 #}
-  <div class="index_container three col-md-4">
-    <div class="img_category">
+  <div class="index_container col-md-4" >
+    <div class="img_category two" >
+      <a href="{{ path('pumukit_webtv_series_byvirtualtag', {'cod': categories[3].cod }) }}">
+        <img alt="Law" src="{{ asset('bundles/pumukitresponsivewebtv/images/3.jpg') }}" />
+        <span class="cover">
+          <div>
+            {% trans %} Experimental sciences {% endtrans %}
+          </div>
+        </span>
+      </a>
+    </div>
+    <div class="img_category two" >
       <a href="{{ path('pumukit_webtv_series_byvirtualtag', {'cod': categories[4].cod }) }}">
-        <img alt="Arts and Humanities" src="{{ asset('bundles/pumukitkoelnwebtv/images/4.jpg') }}" />
-        <div class="cover"><div>{{ categories[4].title }}</div></div>
-      </a>
-    </div>
-
-    <div class="img_category">
-      <a href="{{ path('pumukit_webtv_series_byvirtualtag', {'cod': categories[5].cod }) }}">
-        <img alt="Medicine" src="{{ asset('bundles/pumukitkoelnwebtv/images/5.jpg') }}" />
-        <div class="cover"><div>{{ categories[5].title }}</div></div>
-      </a>
-    </div>
-
-    <div class="img_category">
-      <a href="{{ path('pumukit_webtv_series_byvirtualtag', {'cod': categories[6].cod }) }}">
-        <img alt="Human Sciences" src="{{ asset('bundles/pumukitkoelnwebtv/images/6.jpg') }}" />
-        <div class="cover"><div>{{ categories[6].title }}</div></div>
+        <img alt="Arts and Humanities" src="{{ asset('bundles/pumukitresponsivewebtv/images/4.jpg') }}" />
+        <span class="cover">
+          <div>
+            {% trans %} Social and Legal sciences {% endtrans %}
+          </div>
+        </span>
       </a>
     </div>
   </div>
