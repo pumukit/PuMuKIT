@@ -1,0 +1,17 @@
+<div>
+
+{% set lastDate = '--' %}
+{% set lastSubserialTitle = 0 %}
+
+  {% for object in objects %}
+    {% if object.isCollection() %}
+      {% include 'PumukitResponsiveWebTVBundle:Misc:series.html.twig' with {'rows' : 2} %}
+      {% set lastDate = object.getPublicDate()|date("d/m/Y") %}
+    {% else %}
+      {% include 'PumukitResponsiveWebTVBundle:Misc:multimediaobject.html.twig' with {'rows' : 2} %}
+      {% set lastDate = object.getRecordDate()|date("d/m/Y") %}
+    {% endif %}
+
+  {% endfor %}
+
+</div>
