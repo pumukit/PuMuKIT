@@ -19,9 +19,11 @@ class SchemaFilter extends BsonFilter
     private function getCriteria()
     {
         $criteria = array(
-                         'status' => MultimediaObject::STATUS_PUBLISHED,
                          'tags.cod' => $this->getParameter('pub_channel_tag'),
                           );
+        if ($this->hasParameter('status')) {
+            $criteria['status'] = $this->getParameter('status');
+        }
         if ($this->hasParameter('private_broadcast')) {
             $privateBroadcastCriteria = $this->getParameter('private_broadcast');
             if (null != $privateBroadcastCriteria) {
