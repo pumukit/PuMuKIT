@@ -116,7 +116,7 @@ class TrackService
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
-        $relatedJob = $this->jobRepo->findOneBy(array('path_end' => $trackPath));
+        $relatedJob = $this->jobRepo->findOneBy(array('path_end' => $trackPath, 'mm_id' => $multimediaObject->getId()));
         if ($relatedJob) {
             $this->jobService->deleteJob($relatedJob->getId());
         }
