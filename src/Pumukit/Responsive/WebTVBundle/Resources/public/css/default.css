@@ -56,11 +56,12 @@ ul, ol {
 .main-content {
    max-width:1400px;
    margin: 0 auto;
-   overflow: auto;
+/*   overflow: auto;*/
    background: #fff;
 }
 .wrapper-center {
    display: inline-block;
+   width: 100%;
    vertical-align: middle;
 }
 footer .parent-centering {
@@ -279,10 +280,26 @@ footer .parent-centering:nth-child(2) {
    background-color: red;
 }
 /* CUSTOM INDEX */
+
 .index_container .img_category:nth-child(2){
    padding-top: 28.2%;
 }
 .index_container:nth-child(3) .img_category:nth-child(2){
    padding-top: 22.2%
 }
+
+@media screen and (max-device-width: 1119px) {
+   .index_container .img_category:nth-child(2){
+      padding-top: 0%;
+   }
+   .index_container:nth-child(3) .img_category:nth-child(2){
+      padding-top: 0%
+   }
+   .index_container .img_category {
+      padding-top: 8%;
+   }
+}
 /* END CUSTOM INDEX*/
+.col-no-padding {
+   overflow: auto;
+}

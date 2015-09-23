@@ -1,8 +1,10 @@
 <!-- Serie multimedia -->
 {% set row_mapper = {'1': 'col-md-12', '2': 'col-md-6', '3': 'col-md-4', '4': 'col-md-3'} %}
 {% set row_class = ( row_mapper[rows] | default(row_mapper['1'] ) ) %}
-<a href="{{ path('pumukit_webtv_series_index', {'id': object.id}) }}">
-  <div class="{{ row_class }} pumukit_mmobj">
+<div class="{{ row_class }}">
+<a href="{{ path('pumukit_responsive_webtv_series_index', {'id': object.id}) }}">
+  <div class=" pumukit_mmobj">
+
     <figure class="pumukit_album">
       <div class="thumbnail thumbnailo"><div class="thumbnailholder" ></div><img class="thumbnailimg" src="{{ object|first_url_pic(true) }}" /></div>
       <div class="thumbnail thumbnailo"><div class="thumbnailholder" ></div><img class="thumbnailimg" src="{{ object|first_url_pic(true) }}" /></div>
@@ -26,5 +28,7 @@
     <div class="date serial">
       {{object.publicDate|date("d/m/Y")}}
     </div>
+
   </div>
 </a>
+</div>
