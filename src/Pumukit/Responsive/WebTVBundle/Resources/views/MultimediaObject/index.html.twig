@@ -1,0 +1,23 @@
+{% extends 'PumukitResponsiveWebTVBundle::layout.html.twig' %}
+{% set hide_slidebar = true %}
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('bundles/pumukitresponsivewebtv/js/jwplayer/jwplayer.js') }}" type="text/javascript"></script>
+  {% if jwplayer_key is defined %}<script type="text/javascript">jwplayer.key="{{ jwplayer_key }}";</script>{% endif %}
+{% endblock%}
+
+{% block title %}{{ parent() }} - {{ multimediaObject.title }}{% endblock %}
+{% block keywords %}{{ parent() }} - {{ multimediaObject.keyword }}{% endblock %}
+
+{% block body_without_bar %}
+    <div class="col-lg-8 col-md-7 nopadding">
+      <span class="hidden-sm hidden-xs"></br></span>
+      {% include 'PumukitResponsiveWebTVBundle:MultimediaObject:player.html.twig' with {'width': '620', 'height': '465'} %}
+      {% include 'PumukitResponsiveWebTVBundle:MultimediaObject:info.html.twig' %}
+    </div>
+    <div class="col-lg-4 col-md-5">
+      {% include 'PumukitResponsiveWebTVBundle:MultimediaObject:share.html.twig' %}
+      {% render(controller('PumukitResponsiveWebTVBundle:MultimediaObject:series', {'multimediaObject': multimediaObject })) %}
+      {% render(controller('PumukitResponsiveWebTVBundle:MultimediaObject:related', {'multimediaObject': multimediaObject})) %}
+    </div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% if track %}
+<video class="video-player" id="player1" controls>
+
+</video>
+
+<script type="text/javascript">
+  jwplayer("player1").setup({
+    {% if intro %}
+    playlist: [{
+      file: "{{ asset(intro, absolute=true) }}",
+      {% if multimediaObject.getFirstUrlPic() and not autostart %}
+      image: "{{ asset(multimediaObject.getFirstUrlPic(), absolute=true) }}",
+      {% endif %}
+    },{
+      file: "{{ asset(track.url, absolute=true) }}",
+      {% if multimediaObject.getFirstUrlPic() and not autostart %}
+      image: "{{ asset(multimediaObject.getFirstUrlPic(), absolute=true) }}",
+      {% endif %}
+    }],
+    {% else %}
+    file: "{{ asset(track.url, absolute=true) }}",
+    {% if multimediaObject.getFirstUrlPic() and not autostart %}
+    image: "{{ asset(multimediaObject.getFirstUrlPic(), absolute=true) }}",
+    {% endif %}
+    {% endif %}
+    startparam: "start",
+    autostart: {{ autostart|default("true") }},
+    repeat: "false",
+    width: '100%',
+    aspectratio: '16:9',
+    logo: { hide: true }
+  });
+</script>
+{% else %}
+<div style="color: white; background: black; width: {{ width|default('620') }}px; height: {{ height|default('465') }}px; text-align: center;vertical-align: middle;display: table-cell;">
+{% trans %}  No track. {% endtrans %}
+</div>
+{% endif %}

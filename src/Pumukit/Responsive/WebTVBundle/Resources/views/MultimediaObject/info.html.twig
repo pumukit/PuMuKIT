@@ -1,0 +1,68 @@
+<div>
+  <div style="margin-bottom: 10px; overflow: hidden;">
+
+    <!--Multimedia object tags-->
+    <div class="video-subjects">
+      {% for tag in multimediaObject.tags if tag.display and not tag.metatag %}
+        <a href="{{ path('pumukit_webtv_bytag_multimediaobjects', {'cod': tag.cod})}}">
+          <div title="{{ tag.title }}" class="video-tag ">
+            {{ tag.title }}
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+    <div class="date">
+      {% trans %}Recording date{% endtrans %}: {{ multimediaObject.getRecordDate().format("d/m/Y") }}
+    </div>
+
+    <div class="num_views">
+      {% trans %}Viewed{% endtrans %}: {{ multimediaObject.getNumview() }} 
+      {% if multimediaObject.getNumview() > 1 %} 
+        {% trans %} times {% endtrans %} 
+      {% else %} 
+        {% trans %} time {% endtrans %} 
+      {% endif %}
+    </div>
+
+    <div class="mmobj-title">
+      <h3> {{ multimediaObject.getSubtitle() }} </h3>
+    </div> 
+    <p class="description">
+      {{ multimediaObject.getDescription() }}
+    </p>
+    <div class="serial_mm_info">
+      <div class="materials">
+        <h3>{% trans %} Materials {% endtrans %}</h3>
+        <!--MATERIALS-->
+        {% for material in multimediaObject.getMaterials() if not material.getHide() %}
+          <div id="material">
+            <span class="glyphicon glyphicon-file"></span>
+            <a href="{{ material.getUrl() }}">{{ material.getName() }}</a>
+          </div>
+        {% else %}
+          <strong>{% trans %} There is no materials {% endtrans %}</strong>
+        {% endfor %}
+      </div>
+      <!--LINKS-->
+      {% for link in multimediaObject.getLinks() %}
+        <div id="link" class="link">
+          <a target="_blank" href="{{ link.getUrl() }}">{{ link.getName() }}</a>
+        </div>
+      {% endfor %}
+      <!-- PERSONS ACT -->
+      <div class="persons" style="overflow: hidden;">
+        {% for role in multimediaObject.getRoles() if role.getDisplay() %}
+          {% for person in multimediaObject.getPeopleByRole(role) %}
+            <div>
+              <div class="person">
+                {{ role.getText() }}
+                {{ person.getHName() }}
+              </div>
+              {{ person.getInfo() }}
+            </div>
+          {% endfor %}
+        {% endfor %}
+      </div>
+    </div>    
+  </div>
+</div>
