@@ -24,11 +24,6 @@ class MultimediaObjectType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('opencasthide', 'checkbox',
-                  array(
-                        'required' => false,
-                        'mapped' => false,
-                        'label' => $this->translator->trans('Hide', array(), null, $this->locale)))
             ->add('opencastinvert', 'checkbox',
                   array(
                         'required' => false,
@@ -48,18 +43,15 @@ class MultimediaObjectType extends AbstractType
 
         $builder->addEventListener(FormEvents::POST_SET_DATA, function(FormEvent $event) {
             $multimediaObject = $event->getData();
-            $event->getForm()->get("opencasthide")->setData($multimediaObject->getProperty("opencasthide"));
             $event->getForm()->get("opencastinvert")->setData($multimediaObject->getProperty("opencastinvert"));
             $event->getForm()->get("opencastlanguage")->setData($multimediaObject->getProperty("opencastlanguage"));
         });
 
         
         $builder->addEventListener(FormEvents::SUBMIT, function(FormEvent $event) {
-            $opencastHide = $event->getForm()->get("opencasthide")->getData();
             $opencastInvert = $event->getForm()->get("opencastinvert")->getData();
             $opencastLanguage = strtolower($event->getForm()->get("opencastlanguage")->getData());
             $multimediaObject = $event->getData();
-            $multimediaObject->setProperty("opencasthide", $opencastHide);
             $multimediaObject->setProperty("opencastinvert", $opencastInvert);
             $multimediaObject->setProperty("opencastlanguage", $opencastLanguage);
         });

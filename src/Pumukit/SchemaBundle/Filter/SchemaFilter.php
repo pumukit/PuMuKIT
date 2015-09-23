@@ -12,26 +12,26 @@ class SchemaFilter extends BsonFilter
     public function addFilterCriteria(ClassMetadata $targetDocument)
     {
         if ("Pumukit\SchemaBundle\Document\MultimediaObject" === $targetDocument->reflClass->name) {
-          return $this->getCriteria();
+            return $this->getCriteria();
         }
     }
 
     private function getCriteria()
     {
         $criteria = array(
-                         "status" => MultimediaObject::STATUS_PUBLISHED,
-                         "tags.cod" => $this->getParameter("pub_channel_tag")
+                         'status' => MultimediaObject::STATUS_PUBLISHED,
+                         'tags.cod' => $this->getParameter('pub_channel_tag'),
                           );
         if ($this->hasParameter('private_broadcast')) {
-            $privateBroadcastCriteria = $this->getParameter("private_broadcast");
+            $privateBroadcastCriteria = $this->getParameter('private_broadcast');
             if (null != $privateBroadcastCriteria) {
                 $criteria['broadcast'] = $privateBroadcastCriteria;
             }
         }
         if ($this->hasParameter('display_track_tag')) {
             $criteria['$or'] = array(
-                                     array( 'tracks' => array('$elemMatch' => array('tags' => $this->getParameter('display_track_tag'), "hide" => false)), 'properties.opencast' => array('$exists' => false)),
-                                     array( 'properties.opencast' => array('$exists' => true), 'properties.opencasthide' => false)
+                                     array('tracks' => array('$elemMatch' => array('tags' => $this->getParameter('display_track_tag'), 'hide' => false)), 'properties.opencast' => array('$exists' => false)),
+                                     array('properties.opencast' => array('$exists' => true)),
                                      );
         }
 
@@ -43,6 +43,7 @@ class SchemaFilter extends BsonFilter
         if (isset($this->parameters[$name])) {
             return true;
         }
+
         return false;
     }
 }
