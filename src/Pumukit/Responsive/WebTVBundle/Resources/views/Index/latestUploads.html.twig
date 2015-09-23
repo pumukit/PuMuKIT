@@ -1,0 +1,16 @@
+{% extends 'PumukitResponsiveWebTVBundle::layout.html.twig' %}
+
+{% block body %}  
+  <h1 id="announces_h1">{% trans %} Latest uploads {% endtrans %}</h1>
+  <div class="announces">
+    {% for object in last %}
+      {% if object.isCollection() %}
+        <!-- Series -->
+        {% include 'PumukitResponsiveWebTVBundle:Misc:series.html.twig' with {'rows':2}%}
+      {% else %}
+        <!-- Multimedia object -->
+        {% include 'PumukitResponsiveWebTVBundle:Misc:multimediaobject.html.twig' with {'rows':2}%}
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endblock %}
