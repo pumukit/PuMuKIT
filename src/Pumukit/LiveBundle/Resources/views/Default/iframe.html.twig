@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
 <style>
-body { margin: 0; padding: 0; }
+body { margin: 0; padding:0; }
 </style>
 {% endblock %}
 
@@ -11,9 +11,8 @@ body { margin: 0; padding: 0; }
   {% if jwplayer_key is defined %}<script type="text/javascript">jwplayer.key="{{ jwplayer_key }}";</script>{% endif %}
 {% endblock%}
 
-{% block title %}{{ parent() }} - {{ multimediaObject.title }}{% endblock %}
-{% block keywords %}{{ parent() }} - {{ multimediaObject.keyword }}{% endblock %}
+{% block title %}{{ parent() }} - {{ live.name }}{% endblock %}
 
 {% block body_base %}
-    {% include 'PumukitWebTVBundle:MultimediaObject:player.html.twig' with {'width': 'window.document.documentElement.clientWidth', 'height': 'window.document.documentElement.clientHeight', 'autostart': autostart} %}
+  {% include('PumukitLiveBundle:Default:liveplayer.html.twig') with {stretching: 'exactfit', aspectratio: '16:9'} %}
 {% endblock %}

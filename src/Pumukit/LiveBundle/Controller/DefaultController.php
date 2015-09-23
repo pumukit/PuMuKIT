@@ -18,14 +18,21 @@ class DefaultController extends Controller
     {
         $this->updateBreadcrumbs($live->getName(), "pumukit_live_id", array("id" => $live->getId()));
 
+        return $this->iframeAction($live);
+    }
+
+
+    /**
+     * @Route("/live/iframe/{id}", name="pumukit_live_iframe_id")
+     * @Template("PumukitLiveBundle:Default:iframe.html.twig")
+     */
+    public function iframeAction(Live $live)
+    {
         $userAgent = $this->getRequest()->headers->get('user-agent');
         $mobileDetectorService = $this->get('mobile_detect.mobile_detector');
         $mobileDevice = ($mobileDetectorService->isMobile($userAgent) || $mobileDetectorService->isTablet($userAgent));
         $isIE = $mobileDetectorService->version('IE');
-        $versionIE = 11.0;
-        if ($isIE) {
-            $versionIE = floatval($isIE);
-        }
+        $versionIE = $isIE ? floatval($isIE) : 11.0;
 
         return array(
                      'live' => $live,
@@ -52,21 +59,7 @@ class DefaultController extends Controller
         
         $this->updateBreadcrumbs($live->getName(), "pumukit_live", array("id" => $live->getId()));
 
-        $userAgent = $this->getRequest()->headers->get('user-agent');
-        $mobileDetectorService = $this->get('mobile_detect.mobile_detector');
-        $mobileDevice = ($mobileDetectorService->isMobile($userAgent) || $mobileDetectorService->isTablet($userAgent));
-        $isIE = $mobileDetectorService->version('IE');
-        $versionIE = 11.0;
-        if ($isIE) {
-            $versionIE = floatval($isIE);
-        }
-
-        return array(
-                     'live' => $live,
-                     'mobile_device' => $mobileDevice,
-                     'isIE' => $isIE,
-                     'versionIE' => $versionIE
-                     );
+        return $this->iframeAction($live);
     }
 
 
