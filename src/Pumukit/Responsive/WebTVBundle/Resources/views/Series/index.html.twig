@@ -1,0 +1,30 @@
+{% extends 'PumukitResponsiveWebTVBundle::layout.html.twig' %}
+
+{% block title %}{{ parent() }} - {{ series.title }}{% endblock %}
+{% block keywords %}{{ parent() }} - {{ series.keyword }}{% endblock %}
+
+{% block body %}
+    {% set series_precinct = precinct_of_series(multimediaObjects) %}
+    {% include 'PumukitResponsiveWebTVBundle:Series:header.html.twig' with {'series_precinct': series_precinct} %}
+    <div id="serial_header">
+      {{ series.header|raw }}
+    </div>
+    
+    <div class="serial_body">
+      {% set last_date = date('1/1/1900') %}
+      {% set last_precinct = '' %}
+      {% set last_subseriestitle = '' %}
+      {% for mm in multimediaObjects %}
+        {% if not (mm.getProperty('opencast') and mm.getProperty('opencasthide')) %}
+          {% include 'PumukitResponsiveWebTVBundle:Series:multimediaobjectbody.html.twig' with {'mm': mm, 'last_date': last_date, 'last_precinct': last_precinct, 'last_subseriestitle': last_subseriestitle, 'template': series.getProperty('template'), 'series_precinct': series_precinct, 'is_series': true} %}
+          {% set last_date = mm.getRecordDate() %}
+          {% set last_precinct = precinct(mm.getTags()) %}
+          {% set last_subseriestitle = mm.getProperty('subseriestitle') %}
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <div id="serial_footer">
+      {{ series.footer|raw }}
+    </div>
+{% endblock %}
