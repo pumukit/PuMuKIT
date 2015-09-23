@@ -116,11 +116,9 @@ class TrackService
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
-        $allJobs = $this->jobRepo->findByMultimediaObjectIdAndProfile($multimediaObject->getId(), $trackProfile);
-        foreach ($allJobs as $job) {
-            if (Job::STATUS_FINISHED === $job->getStatus()) {
-                $this->jobService->deleteJob($job->getId());
-            }
+        $relatedJob = $this->jobRepo->findOneBy(array('path_end' => $trackPath));
+        if ($relatedJob) {
+            $this->jobService->deleteJob($relatedJob->getId());
         }
 
         if ($this->forceDeleteOnDisk && $trackPath && $isNotOpencast) {
