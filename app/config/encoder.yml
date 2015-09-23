@@ -122,7 +122,7 @@ pumukit_encoder:
             channels: 1
             audio: false
             bat: |
-                avconv -i {{ tracks['presenter/delivery'] }}  -i {{ tracks['presentation/delivery'] }} -filter_complex "[0:v]scale=640:-1[a],[a]pad=1280:720:0:120+((480-in_h)/2) [bg],[1:v]scale=640:-1[b],[bg][b]overlay=w:120+((480-h)/2)" -r 25 -vcodec libx264 -preset medium -crf 22 -maxrate 1100k -bufsize 1835k -acodec libvo_aacenc -ac 2 -ar 44100 -b:a 128k -f mp4 -y "{{output}}"
+                avconv -i {{ properties.opencastinvert ? tracks['presenter/delivery'] : tracks['presentation/delivery']  }}  -i {{ properties.opencastinvert ? tracks['presentation/delivery'] : tracks['presenter/delivery']  }} -filter_complex "[0:v]scale=640:-1[a],[a]pad=1280:720:0:120+((480-in_h)/2) [bg],[1:v]scale=640:-1[b],[bg][b]overlay=w:120+((480-h)/2)" -r 25 -vcodec libx264 -preset medium -crf 22 -maxrate 1100k -bufsize 1835k -acodec libvo_aacenc -ac 2 -ar 44100 -b:a 128k -f mp4 -y "{{output}}"
             streamserver:
                 name: Localhost
                 type: download
