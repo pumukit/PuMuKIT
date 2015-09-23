@@ -36,7 +36,7 @@ class IndexController extends Controller
      */
     public function listByCategoryAction()
     {
-        $this->get('pumukit_web_tv.breadcrumbs')->addList('Videos by Category', 'pumukit_webtv_index_listbycategory');
+        $this->get('pumukit_responsive_web_tv.breadcrumbs')->addList('Videos by Category', 'pumukit_responsive_webtv_index_listbycategory');
 
         $vGroundParent = $this->getDoctrine()
                               ->getRepository('PumukitSchemaBundle:Tag')
@@ -78,16 +78,7 @@ class IndexController extends Controller
      * @Template()
      */
     public function categoriesAction(){
-
-        $vGroundParent = $this->getDoctrine()
-                              ->getRepository('PumukitSchemaBundle:Tag')
-                              ->findOneByCod("VIRTUALGROUNDS");
-
-        if( isset( $vGroundParent ) ){
-            $allVGrounds = $vGroundParent->getChildren();
-        }
-
-        return array('categories' => $allVGrounds);
+        return array();
     }
 
     /**

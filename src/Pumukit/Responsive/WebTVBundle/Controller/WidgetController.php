@@ -24,7 +24,7 @@ class WidgetController extends Controller
      */
     public function breadcrumbsAction()
     {
-        $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
+        $breadcrumbs = $this->get('pumukit_responsive_web_tv.breadcrumbs');
         return array('breadcrumbs' => $breadcrumbs->getBreadcrumbs());
     }
 
