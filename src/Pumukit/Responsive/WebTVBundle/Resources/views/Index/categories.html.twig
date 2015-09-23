@@ -3,11 +3,12 @@
   {# ROW 1 #}
   <div class="index_container col-md-4" >
     <div class="img_category">
-      <a href="{{ path('pumukit_webtv_series_byvirtualtag', {'cod': categories[0].cod }) }}">
-        <img alt="University" src="{{ asset('bundles/pumukitresponsivewebtv/images/0.jpg') }}" />
+      {% set title = "Health Sciences" %}
+      <a href="{{ path('pumukit_responsive_webtv_bytag_series', {'cod': 'DHealth' }) }}">
+        <img alt="{{ title | trans }}" src="{{ asset('bundles/pumukitresponsivewebtv/images/0.jpg') }}" />
         <span class="cover">
           <div>
-            {% trans %} Health Sciences {% endtrans %}
+            {{ title | trans }}
           </div>
         </span>
       </a>
@@ -17,22 +18,23 @@
   {# ROW 2 #}
   <div class="index_container col-md-4">
     <div class="img_category two" >
-      <a href="{{ path('pumukit_webtv_series_byvirtualtag', {'cod': categories[1].cod }) }}"> 
-        <img alt="Management, Economics and Social Science" src="{{ asset('bundles/pumukitresponsivewebtv/images/1.jpg') }}" />
+      {% set title = "Humanities" %}
+      <a href="{{ path('pumukit_responsive_webtv_bytag_series', {'cod': 'Dhumanities'  }) }}"> 
+        <img alt="{{ title | trans }}" src="{{ asset('bundles/pumukitresponsivewebtv/images/1.jpg') }}" />
         <span class="cover">
           <div>
-            {% trans %} Humanities {% endtrans %}
+            {{ title | trans }}
           </div>
         </span>
       </a>
     </div>
-
     <div class="img_category two" >
-      <a href="{{ path('pumukit_webtv_series_byvirtualtag', {'cod': categories[2].cod }) }}">
-        <img alt="Mathematics and Natural Sciences" src="{{ asset('bundles/pumukitresponsivewebtv/images/2.jpg') }}" />
+      {% set title = "Technical science" %}
+      <a href="{{ path('pumukit_responsive_webtv_bytag_series', {'cod': 'Dscience' }) }}">
+        <img alt="{{ title | trans }}" src="{{ asset('bundles/pumukitresponsivewebtv/images/2.jpg') }}" />
         <span class="cover">
           <div>
-            {% trans %} Technical science {% endtrans %}
+            {{ title | trans }}
           </div>
         </span>
       </a>
@@ -41,21 +43,23 @@
   {# ROW 3 #}
   <div class="index_container col-md-4" >
     <div class="img_category two" >
-      <a href="{{ path('pumukit_webtv_series_byvirtualtag', {'cod': categories[3].cod }) }}">
-        <img alt="Law" src="{{ asset('bundles/pumukitresponsivewebtv/images/3.jpg') }}" />
+      {% set title = "Experimental sciences" %}
+      <a href="{{ path('pumukit_responsive_webtv_bytag_series', {'cod': 'Dsocial' }) }}">
+        <img alt="{{ title | trans }}" src="{{ asset('bundles/pumukitresponsivewebtv/images/3.jpg') }}" />
         <span class="cover">
           <div>
-            {% trans %} Experimental sciences {% endtrans %}
+            {{ title | trans }}
           </div>
         </span>
       </a>
     </div>
     <div class="img_category two" >
-      <a href="{{ path('pumukit_webtv_series_byvirtualtag', {'cod': categories[4].cod }) }}">
-        <img alt="Arts and Humanities" src="{{ asset('bundles/pumukitresponsivewebtv/images/4.jpg') }}" />
+      {% set title = "Social and Legal sciences" %}
+      <a href="{{ path('pumukit_responsive_webtv_bytag_series', {'cod': 'Dtechnical' }) }}">
+        <img alt="{{ title | trans }}" src="{{ asset('bundles/pumukitresponsivewebtv/images/4.jpg') }}" />
         <span class="cover">
           <div>
-            {% trans %} Social and Legal sciences {% endtrans %}
+            {{ title | trans }}
           </div>
         </span>
       </a>
