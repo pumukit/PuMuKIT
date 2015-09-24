@@ -30,6 +30,10 @@
     </div>
   </div>
 </div>
+<div class="row breadcrumb_wrapper visible-lg" role="navigation">
+  {% render(controller('PumukitResponsiveWebTVBundle:Widget:breadcrumbs')) %}
+</div>
+
 <!--STICKY HEADER-->
 <div class="row header sticky hidden-xs hidden-md hidden-sm" style="display: none">
   <div class="header-content">
@@ -109,12 +113,3 @@
      lastScrollTop = st;
  }
 </script>
-
-<!--BREADCRUMBS-->
-<div class="row">
-  <div class="col-xs-12">
-    <div class="row breadcrumb_wrapper" role="navigation">
-      {% render(controller('PumukitResponsiveWebTVBundle:Widget:breadcrumbs')) %}
-    </div>
-  </div>
-</div>

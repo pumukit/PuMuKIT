@@ -40,6 +40,10 @@
             <span class="{{ hide_slidebar is defined ? 'hidden-lg':'' }}">
               {% include 'PumukitResponsiveWebTVBundle::slidebar.html.twig'%}
             </span>
+            <!--BREADCRUMBS-->
+            <div class="row breadcrumb_wrapper hidden-lg" role="navigation">
+              {% render(controller('PumukitResponsiveWebTVBundle:Widget:breadcrumbs')) %}
+            </div>
             <!--MAIN BODY-->
             <div class="main-content {{ hide_slidebar is defined ? 'row':'col-lg-9' }}">
               {% block body_without_bar %}
