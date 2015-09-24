@@ -68,9 +68,6 @@ footer .parent-centering:nth-child(2) {
    margin-top: 15px;
    margin-bottom: 15px;
 }
-.main-content {
-   max-width: 1400px;
-}
 
 @media screen and (max-device-width: 1119px) {
    .index_container .img_category:nth-child(2){

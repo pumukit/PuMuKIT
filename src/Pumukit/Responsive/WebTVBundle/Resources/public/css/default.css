@@ -19,6 +19,10 @@ ul, ol {
    color:white;
 }
 /*END BOOSTRAP OVERRIDE*/
+.breadcrumb_wrapper {
+   margin: 0 auto;
+   max-width: 1200px;
+}
 .col-no-padding {
    overflow: auto;
 }
@@ -77,6 +81,7 @@ ul, ol {
    overflow: auto;
    background: #fff;
    min-height: 600px;
+   max-width: 1200px;
 }
 .mms-thumbnail {
    display: inline;
