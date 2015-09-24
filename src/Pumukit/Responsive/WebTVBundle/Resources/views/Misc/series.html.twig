@@ -1,6 +1,6 @@
 <!-- Serie multimedia -->
 {% set row_mapper = {'1': 'col-md-12', '2': 'col-md-6', '3': 'col-md-4', '4': 'col-md-3'} %}
-{% set row_class = ( row_mapper[rows] | default(row_mapper['1'] ) ) %}
+{% set row_class = ( row_mapper[rows|default('1')] | default(row_mapper['1'] ) ) %}
 <div class="{{ row_class }}">
 <a href="{{ path('pumukit_responsive_webtv_series_index', {'id': object.id}) }}">
   <div class=" pumukit_mmobj">
