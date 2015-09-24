@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\WebTVBundle\Twig;
+namespace Pumukit\Responsive\WebTVBundle\Twig;
 
 use Symfony\Component\Routing\RequestContext;
 use Pumukit\SchemaBundle\Document\Broadcast;

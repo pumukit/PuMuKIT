@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\WebTVBundle\Listener;
+namespace Pumukit\Responsive\WebTVBundle\Listener;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
