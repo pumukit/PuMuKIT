@@ -1,0 +1,7 @@
+{% extends 'PumukitResponsiveWebTVBundle::layout.html.twig' %}
+
+{% block body %}
+  <h1 id="index_h1">{% trans %}Full Catalogue{% endtrans %}</h1>
+  {% include 'PumukitResponsiveWebTVBundle:MediaLibrary:sort_series.html.twig' %}
+  {% include 'PumukitResponsiveWebTVBundle:MediaLibrary:library.html.twig' %}
+{% endblock %}

@@ -1,0 +1,45 @@
+<div class="library">
+
+  {% if sort == 'alphabetically' %}
+
+    {% set lastChar = '--' %}
+
+    {% for serie in series %}
+      {% set num_mmobj = serie|count_multimedia_objects %}
+      {% if num_mmobj != 0 %}
+
+        {% if serie.title|slice(0,1)|title != lastChar %}
+          <div class="name col-xs-12">
+            <h2>{{serie.title|slice(0,1)|title}}</h2>
+          </div>
+        {% endif %}
+        {% set object = serie %}
+        {% include 'PumukitResponsiveWebTVBundle:Misc:series.html.twig' with {'rows':2}%}
+        {% set lastChar = serie.title|slice(0,1)|title %}
+
+      {% endif %}
+    {% endfor %}
+
+  {% else %}
+
+    {% set lastDate = '--' %}
+
+    {% for serie in series %}
+      {% set num_mmobj = serie|count_multimedia_objects %}
+      {% if num_mmobj != 0 %}
+
+        {% if serie.getPublicDate()|date("d/m/Y") != lastDate %}
+          <div class="name col-xs-12">
+            <h2>{{ serie.getPublicDate()|date("d/m/Y") }}</h2>
+          </div>
+        {% endif %}
+        {% set object = serie %}
+        {% include 'PumukitResponsiveWebTVBundle:Misc:series.html.twig' with {'rows':2}%}
+        {% set lastDate = serie.getPublicDate()|date("d/m/Y") %}
+
+      {% endif %}
+    {% endfor %}
+
+  {% endif %}
+
+</div>
