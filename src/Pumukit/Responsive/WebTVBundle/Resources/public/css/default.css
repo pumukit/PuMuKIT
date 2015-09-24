@@ -95,6 +95,9 @@ ul, ol {
    position: absolute;
    padding: 10px;
 }
+.play_icon.small {
+   padding: 5px;
+}
 .pumukit_mmobjs{
    margin: 0 0%;
    overflow: hidden;
