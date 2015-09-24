@@ -70,11 +70,13 @@ ul, ol {
 }
 .language_select_wrapper {
    float: right;
+   margin: 8px;
 }
 .main-content {
    margin: 0 auto;
    overflow: auto;
    background: #fff;
+   min-height: 600px;
 }
 .mms-thumbnail {
    display: inline;
@@ -133,6 +135,9 @@ ul, ol {
 }
 .row.pumukit {
    margin: 0 auto;
+}
+.search-box {
+   margin: 8px;
 }
 /*Thumbnails*/
 .thumbnail {
