@@ -51,11 +51,10 @@ class ChatController extends Controller
             $dm->persist($message);
             $dm->flush();
         } catch (\Exception $e) {
-
+            return new JsonResponse(array('message' => 'Error'), 500);
         }
-        $response = array('message' => 'Successful');
 
-        return new JsonResponse($response);
+        return new JsonResponse(array('message' => 'Successful'));
     }
 
     /**
