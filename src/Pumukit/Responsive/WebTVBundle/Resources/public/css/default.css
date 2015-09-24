@@ -11,7 +11,14 @@ ul, ol {
    padding: 0px;
 }
 /*END BASE CSS*/
-
+/*BOOTSTRAP OVERRIDE*/
+.label {
+   margin: 2px;
+}
+.label a{
+   color:white;
+}
+/*END BOOSTRAP OVERRIDE*/
 .col-no-padding {
    overflow: auto;
 }
