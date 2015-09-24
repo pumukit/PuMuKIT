@@ -1,9 +1,15 @@
 <div class="col-no-padding col-lg-6">
-  <h1 style="font-size: 32px">{% trans %} Most viewed {% endtrans %}</h1>
-  <div class="view-content">
-    {% for object in multimediaObjectsSortedByNumview %}
-      <!--Objeto multimedia-->
-      {% include 'PumukitResponsiveWebTVBundle:Misc:multimediaobject.html.twig' with {'rows':1}%}
-    {% endfor %}
+  <div class="row">
+    <div class="col-xs-12">
+      <h1 style="font-size: 32px">{% trans %} Most viewed {% endtrans %}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="view-content">
+      {% for object in multimediaObjectsSortedByNumview %}
+        <!--Objeto multimedia-->
+        {% include 'PumukitResponsiveWebTVBundle:Misc:multimediaobject.html.twig' with {'rows':1}%}
+      {% endfor %}
+    </div>
   </div>
 </div>
