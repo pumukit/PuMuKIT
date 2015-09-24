@@ -49,6 +49,19 @@ class TagServiceTest extends WebTestCase
         $this->assertEquals(0, count($this->tagService->addTagToMultimediaObject($mmobj, $tag->getId())));
         $this->assertEquals(1, $tag->getNumberMultimediaObjects());        
     }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  not found
+     */
+    public function testTagFindNotExistinAdd()
+    {
+        $mmobj = $this->createMultimediaObject('titulo cualquiera');
+        $tag = null;
+
+        $this->tagService->addTagToMultimediaObject($mmobj, $tag);
+        $this->tagService->removeTagFromMultimediaObject($mmobj, $tag);
+    }
     
     public function testAddTagWithoutRoot()
     {
@@ -227,6 +240,18 @@ class TagServiceTest extends WebTestCase
         $this->assertEquals(0, $tag2->getNumberMultimediaObjects());
         $this->assertEquals(0, $tag3->getNumberMultimediaObjects());
         
+    }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  not found
+     */
+    public function testTagFindNotExistInRemove()
+    {
+        $mmobj = $this->createMultimediaObject('titulo cualquiera');
+        $tag = null;
+
+        $this->tagService->removeTagFromMultimediaObject($mmobj, $tag);
     }
 
     public function testResetTagsWithPrototypes()

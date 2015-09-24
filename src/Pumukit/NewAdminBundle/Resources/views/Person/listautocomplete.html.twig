@@ -13,7 +13,7 @@
     </div>
   </fieldset>
   <div class="modal-footer">
-    <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+    {% render(controller('PumukitLDAPBundle:Person:button', {'mmId': mm.id, 'roleId': role.id})) %}
     <button type="button" class="btn btn-primary btn-raised"
             onclick="if('' != $('#person_id').val()){
                                                      var route = '{{ path('pumukitnewadmin_person_link', {'id': '__personId__', 'roleId': role.id, 'mmId': mm.id} ) }}';
@@ -36,6 +36,7 @@
                      $('#create_relation').attr('href', encodeURI(route.replace('__aux__', aux))); return true;">
       {% trans %}New{% endtrans %}
     </button>
+    <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
   </div>
 </div>
 

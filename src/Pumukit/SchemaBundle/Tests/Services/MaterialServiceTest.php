@@ -153,10 +153,21 @@ class MaterialServiceTest extends WebTestCase
 
         $materials = $mm->getMaterials();
         $material = $materials[0];
+        
+        $materialPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'materialCopy';
+        if (copy($this->originalFilePath, $materialPath)){
+            $materialFile = new UploadedFile($materialPath, 'material', null, null, null, true);
+            $mm = $this->materialService->addMaterialFile($mm, $materialFile, $formData);
+            $mm = $this->repoMmobj->find($mm->getId());
+            
+            $this->assertEquals(2, count($mm->getMaterials()));
 
-        $mm = $this->materialService->removeMaterialFromMultimediaObject($mm, $material->getId());
+            $material = $mm->getMaterials()[1];
+            $this->assertTrue($mm->containsMaterial($material));
 
-        $this->assertEquals(0, count($mm->getMaterials()));
+            $mm = $this->materialService->removeMaterialFromMultimediaObject($mm, $material->getId());
+            $this->assertEquals(1, count($mm->getMaterials()));
+        }
     }
 
     public function testUpAndDownMaterialInMultimediaObject()

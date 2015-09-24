@@ -53,6 +53,17 @@ class PersonService
     }
 
     /**
+     * Find person by email
+     *
+     * @param  string $email
+     * @return Person
+     */
+    public function findPersonByEmail($email)
+    {
+        return $this->repo->findOneByEmail($email);
+    }
+
+    /**
      * Update update person
      *
      * @param  Person $person

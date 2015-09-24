@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\Person;
 
 class FactoryServiceTest extends WebTestCase
 {
@@ -193,6 +194,18 @@ class FactoryServiceTest extends WebTestCase
         $series = $this->factory->createSeries();
 
         $this->assertEquals($series, $this->factory->findSeriesById($series->getId(), null));
+        $this->assertEquals($series, $this->factory->findSeriesById(null, $series->getId()));
+        $this->assertEquals(null, $this->factory->findSeriesById(null, null));
+    }
+
+    public function testFindMultimediaObjectById()
+    {
+        $this->createBroadcasts();
+
+        $series = $this->factory->createSeries();
+        $mm = $this->factory->createMultimediaObject($series);
+
+        $this->assertEquals($mm, $this->factory->findMultimediaObjectById($mm->getId()));
     }
 
     public function testGetParentTags()
@@ -240,6 +253,31 @@ class FactoryServiceTest extends WebTestCase
         $series = $this->factory->createSeries();
 
         $this->assertTrue($this->factory->getMultimediaObjectPrototype($series)->isPrototype());
+    }
+
+    public function testGetTagsByCod()
+    {
+        $tagA = new Tag();
+        $tagA->setCod("A");
+        $this->dm->persist($tagA);
+        $this->dm->flush();
+
+        $tagB = new Tag();
+        $tagB->setCod("A");
+        $this->dm->persist($tagB);
+        $this->dm->flush();
+
+        $tagC = new Tag();
+        $tagC->setCod("A");
+        $this->dm->persist($tagC);
+        $this->dm->flush();
+
+        $this->assertEquals($tagA, $this->factory->getTagsByCod('A', false));
+
+        $tagA->addChild($tagB);
+        $tagA->addChild($tagC);
+
+        $this->assertEquals(2, count($this->factory->getTagsByCod('A', true)));
     }
 
     public function testDeleteSeries()
@@ -298,14 +336,34 @@ class FactoryServiceTest extends WebTestCase
         $this->assertEquals(0, count($this->dm->getRepository('PumukitSchemaBundle:Role')->findAll()));
     }
 
-
     public function testClone()
     {
         $this->createBroadcasts();
 
         $series = $this->factory->createSeries();
         $src = $this->factory->createMultimediaObject($series);
-       
+
+        $tagA = new Tag();
+        $tagA->setCod("A");
+        $this->dm->persist($tagA);
+        $this->dm->flush();
+
+        $tagB = new Tag();
+        $tagB->setCod("A");
+        $this->dm->persist($tagB);
+        $this->dm->flush();
+
+        $personA = new Person();
+        $personB = new Person();
+
+        $roleA = new Role();
+        $roleB = new Role();
+
+        $src->addTag($tagA);
+        $src->addTag($tagB);
+        $src->addPersonWithRole($personA, $roleA);
+        $src->addPersonWithRole($personB, $roleB);
+
         $new = $this->factory->cloneMultimediaObject($src);
 
         $this->assertEquals($new->getI18nTitle(), $src->getI18nTitle());
@@ -322,7 +380,6 @@ class FactoryServiceTest extends WebTestCase
         $this->assertEquals($new->getBroadcast(), $src->getBroadcast());
         $this->assertEquals(count($new->getRoles()), count($src->getRoles()));
         $this->assertEquals(count($new->getTags()), count($src->getTags()));
-        
     }
 
     private function createBroadcasts()

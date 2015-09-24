@@ -114,11 +114,17 @@ class SeriesPicServiceTest extends WebTestCase
         $this->assertEquals(0, count($series->getPics()));
 
         $url = 'http://domain.com/pic.png';
+        $bannerTargetUrl = 'http://domain.com/banner';
 
         $series = $this->seriesPicService->addPicUrl($series, $url);
 
         $this->assertEquals(1, count($series->getPics()));
         $this->assertEquals(1, count($this->repo->findAll()[0]->getPics()));
+
+        $series = $this->seriesPicService->addPicUrl($series, $url, true, $bannerTargetUrl);
+
+        $this->assertEquals(2, count($series->getPics()));
+        $this->assertEquals(2, count($this->repo->findAll()[0]->getPics()));
     }
 
     public function testAddPicFile()
@@ -144,7 +150,61 @@ class SeriesPicServiceTest extends WebTestCase
             $this->assertEquals($uploadedPic, $pic->getUrl());
         }
 
+        $picPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'picCopy2.png';
+        if (copy($this->originalPicPath, $picPath)){
+            $picFile = new UploadedFile($picPath, 'pic2.png', null, null, null, true);
+
+            $bannerTargetUrl = 'http://domain.com/banner';
+            $series = $this->seriesPicService->addPicFile($series, $picFile, true, $bannerTargetUrl);
+        
+            $this->assertEquals(2, count($series->getPics()));
+        }
+
         $this->deleteCreatedFiles();
+    }
+
+    public function testRemovePicFromSeries()
+    {
+        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
+
+        $series = $this->factoryService->createSeries();
+
+        $this->assertEquals(0, count($series->getPics()));
+
+        $pic = new Pic();
+        $url = 'http://domain.com/pic.png';
+        $pic->setUrl($url);
+
+        $pic->addTag('tag1');
+        $pic->addTag('tag2');
+        $pic->addTag('tag3');
+        $pic->addTag('banner');
+
+        $this->dm->persist($pic);
+        $this->dm->flush();
+
+        $series->addPic($pic);
+        $this->assertEquals(1, count($series->getPics()));
+
+        $series = $this->seriesPicService->removePicFromSeries($series, $pic->getId());
+        $this->assertEquals(0, count($series->getPics()));
+
+        $picPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'picCopy2.png';
+        if (copy($this->originalPicPath, $picPath)){
+            $picFile = new UploadedFile($picPath, 'pic2.png', null, null, null, true);
+
+            $bannerTargetUrl = 'http://domain.com/banner';
+            $series = $this->seriesPicService->addPicFile($series, $picFile, true, $bannerTargetUrl);
+            $series = $this->repo->find($series->getId());
+
+            $this->assertEquals(1, count($series->getPics()));
+
+            $pic = $series->getPics()[0];
+            $this->assertTrue($series->containsPic($pic));
+
+            $series = $this->seriesPicService->removePicFromSeries($series, $pic->getId());
+            $this->assertEquals(0, count($series->getPics()));
+        }
     }
 
     /**

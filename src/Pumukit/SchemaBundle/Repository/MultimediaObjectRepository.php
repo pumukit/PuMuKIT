@@ -189,15 +189,32 @@ class MultimediaObjectRepository extends DocumentRepository
         $collection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
 
         $pipeline = array(
-                          array('$match' => array('people.cod' => "$roleCode")),
-                          array('$project' => array('_id' => 0, 'people.cod' => 1, 'people.people._id' => 1)),
-                          array('$unwind' => '$people'),
                           array('$match' => array('people.cod' => "$roleCode", 'people.people.email' => "$email")),
+                          array('$project' => array('_id' => 0, 'people.cod' => 1, 'people.people.email' => 1, 'people.people._id' => 1)),
+                          array('$unwind' => '$people')
                           );
 
         $aggregation = $collection->aggregate($pipeline);
-        // TODO FINISH
-        return $aggregation;
+
+        $persons = array();
+
+        foreach($aggregation as $element) {
+            if(null !== $element['people']) {
+                if ((null !== $element['people']['cod']) && (null !== $element['people']['people'])) {
+                    if ((0 === strpos($element['people']['cod'], $roleCode))) {
+                        foreach ($element['people']['people'] as $person) {
+                            if($person['email'] === $email){
+                                if (!in_array($person['_id']->{'$id'}, $persons)) {
+                                    $persons[] = $person['_id']->{'$id'};
+                                }
+                            }
+                        }
+                    }
+                }
+            } 
+        }
+
+        return $persons;
     }
 
     /**

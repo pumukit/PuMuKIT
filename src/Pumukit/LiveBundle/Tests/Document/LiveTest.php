@@ -19,9 +19,10 @@ class LiveTest extends \PHPUnit_Framework_TestCase
         $index_play = 1;
         $broadcasting = 1;
         $debug = 1;
-        $locale = 'es';
+        $locale = 'en';
         $name = 'liveo 1';
-        $description = 'canal de liveo';
+        $description = 'liveo channel';
+        $resolution = array('width' => $width, 'height' => $height);
 
         $liveo = new Live();
 
@@ -39,6 +40,7 @@ class LiveTest extends \PHPUnit_Framework_TestCase
         $liveo->setLocale($locale);
         $liveo->setName($name, $locale);
         $liveo->setDescription($description, $locale);
+        $liveo->setResolution($resolution);
 
         $this->assertEquals($url, $liveo->getUrl());
         $this->assertEquals($passwd, $liveo->getPasswd());
@@ -53,6 +55,54 @@ class LiveTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($debug, $liveo->getDebug());
         $this->assertEquals($locale, $liveo->getLocale());
         $this->assertEquals($name, $liveo->getName($liveo->getLocale()));
+        $this->assertEquals($name, $liveo->getName());
         $this->assertEquals($description, $liveo->getDescription($liveo->getLocale()));
+        $this->assertEquals($description, $liveo->getDescription());
+        $this->assertEquals($resolution, $liveo->getResolution());
+
+        $liveo->setDescription($description);
+        $this->assertEquals($description, $liveo->getDescription($liveo->getLocale()));
+
+        $nameEs = 'directo 1';
+        $i18nName = array('en' => $name, 'es' => $nameEs);
+        $liveo->setI18nName($i18nName);
+        $this->assertEquals($i18nName, $liveo->getI18nName());
+
+        $descriptionEs = 'canal de directos';
+        $i18nDescription = array('en' => $description, 'es' => $descriptionEs);
+        $liveo->setI18nDescription($i18nDescription);
+        $this->assertEquals($i18nDescription, $liveo->getI18nDescription());
+
+        $name = null;
+        $liveo->setName($name, $locale);
+        $this->assertEquals(null, $liveo->getName($liveo->getLocale()));
+
+        $description = null;
+        $liveo->setDescription($description, $locale);
+        $this->assertEquals(null, $liveo->getDescription($liveo->getLocale()));
+    }
+
+    public function testCloneResource()
+    {
+        $live = new Live();
+
+        $this->assertEquals($live, $live->cloneResource());
+    }
+
+    public function testToString()
+    {
+        $live = new Live();
+
+        $this->assertEquals($live->getName(), $live->__toString());
+    }
+
+    public function testIsValidLiveType()
+    {
+        $live = new Live();
+
+        $live_type = Live::LIVE_TYPE_FMS;
+        $live->setLiveType($live_type);
+
+        $this->assertTrue($live->isValidLiveType());
     }
 }

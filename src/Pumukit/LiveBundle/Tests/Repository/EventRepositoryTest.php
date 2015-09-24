@@ -102,6 +102,9 @@ class EventRepositoryTest extends WebTestCase
         $this->dm->flush();
 
         $events = array($event4);
+        $this->assertEquals($events, array_values($this->repo->findFutureAndNotFinished(1)->toArray()));
+
+        $events = array($event4);
         $this->assertEquals($events, array_values($this->repo->findFutureAndNotFinished(1, $date)->toArray()));
 
         $events = array($event4, $event1);
@@ -158,6 +161,8 @@ class EventRepositoryTest extends WebTestCase
         $this->dm->persist($event3);
         $this->dm->persist($event4);
         $this->dm->flush();
+
+        $this->assertEquals(null, $this->repo->findOneByHoursEvent(1));
 
         $this->assertEquals($event4, $this->repo->findOneByHoursEvent(3, $date));
     }

@@ -197,6 +197,8 @@ class MultimediaObjectController extends SortableAdminController
             $formMeta->submit($request, !$request->isMethod('PATCH'))->isValid()) {
           $this->domainManager->update($resource);
 
+          $this->dispatchUpdate($resource);
+
           if ($config->isApiRequest()) {
             return $this->handleView($this->view($formMeta));
           }
