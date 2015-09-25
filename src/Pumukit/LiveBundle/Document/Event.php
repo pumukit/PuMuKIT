@@ -52,7 +52,7 @@ class Event
    *
    * @MongoDB\Int
    */
-  private $duration;
+  private $duration = 60;
 
   /**
    * @var boolean $display
