@@ -21,14 +21,14 @@
       <li class="list-group-item">
         <div class="share_url">   
           <span>{% trans %} URL: {% endtrans %}</span>
-          <input type="text" value="{{ url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id}) }}" 
+          <input type="text" value="{{ url('pumukit_responsive_webtv_multimediaobject_index', {'id': multimediaObject.id}) }}" 
                  onclick="this.select()" style="width: 70%; border: 1px solid #ccc; float:right; padding: 0; margin: 0;" readonly="readonly"/>
         </div>
       </li>
       <li class="list-group-item">
         <div class="share_url">   
           <span>{% trans %} IFRAME: {% endtrans %}</span>
-          <input type="text" value="<iframe src=&quot;{{ url('pumukit_webtv_multimediaobject_iframe', {'id': multimediaObject.id, 'track_id': track.id}) }}&quot; style=&quot;border:0px #FFFFFF none;&quot; scrolling=&quot;no&quot; frameborder=&quot;1&quot; height=&quot;270&quot; width=&quot;480&quot; allowfullscreen webkitallowfullscreen></iframe>" 
+          <input type="text" value="<iframe src=&quot;{{ url('pumukit_responsive_webtv_multimediaobject_iframe', {'id': multimediaObject.id, 'track_id': track.id}) }}&quot; style=&quot;border:0px #FFFFFF none;&quot; scrolling=&quot;no&quot; frameborder=&quot;1&quot; height=&quot;270&quot; width=&quot;480&quot; allowfullscreen webkitallowfullscreen></iframe>" 
                  onclick="this.select()" style="width: 70%; border: 1px solid #ccc; float:right; padding: 0; margin: 0;" readonly="readonly"/>
         </div>
       </li>
