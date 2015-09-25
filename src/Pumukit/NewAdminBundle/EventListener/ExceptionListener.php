@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\NewAdminBundle\Listener;
+namespace Pumukit\NewAdminBundle\EventListener;
 
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;

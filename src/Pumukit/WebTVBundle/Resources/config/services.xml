@@ -11,7 +11,7 @@
     </parameters>
 
     <services>
-        <service id="pumukit_web_tv.filter" class="Pumukit\WebTVBundle\Listener\Filter">
+        <service id="pumukit_web_tv.filter" class="Pumukit\WebTVBundle\EventListener\FilterListener">
           <argument type="service" id="doctrine_mongodb.odm.document_manager" />
           <tag name="kernel.event_listener" event="kernel.request" />
         </service>
