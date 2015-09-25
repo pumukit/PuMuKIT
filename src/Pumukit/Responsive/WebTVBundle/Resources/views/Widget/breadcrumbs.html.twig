@@ -4,10 +4,9 @@
       {{ breadcrumbs[0]["title"]}}
     </a>
   </li>
-
+       
   {% if breadcrumbs|length > 1 %}
     <li>
-      &nbsp;»&nbsp; 
       <a href="{{ breadcrumbs[1]["link"] }}" {% if breadcrumbs|length == 2 %}class="active"{% endif %} >
         {{ breadcrumbs[1]["title"]}}
       </a>
@@ -16,7 +15,6 @@
 
   {% if breadcrumbs|length > 2 %}
     <li>
-      &nbsp;»&nbsp; 
       <a id="tvpumukites_breadcrumbs_series_a" href="{{ breadcrumbs[2]["link"] }}" {% if breadcrumbs|length == 3 %}class="active" {% endif %} >
         {{ breadcrumbs[2]["title"]}}
       </a>
@@ -25,7 +23,6 @@
 
   {% if breadcrumbs|length > 3 %}
     <li id="tvpumukites_breadcrumbs_mmobj">
-      &nbsp;»&nbsp; 
       <a id="tvpumukites_breadcrumbs_mmobj_a" href="{{ breadcrumbs[3]["link"] }}" {% if breadcrumbs|length == 4 %}class="active" {% endif %} >
         {{ breadcrumbs[3]["title"]}}
       </a>
