@@ -6,7 +6,7 @@
 
 
     <services>
-        <service id="pumukit_workflow.listener" class="Pumukit\WorkflowBundle\Services\WorkflowService">
+        <service id="pumukit_workflow.job_generator_listener" class="Pumukit\WorkflowBundle\EventListener\JobGeneratorListener">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="pumukitencoder.job" />
             <argument type="service" id="pumukitencoder.profile" />
