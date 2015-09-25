@@ -22,7 +22,6 @@ class MediaLibraryController extends Controller
           array('title.' . $request->getLocale() => new \MongoRegex(sprintf("/%s/", $request->query->get('search')))):
           array();
 
-        dump($criteria);
         $series = $repo->findBy($criteria, array($sortField => 1));        
 
         $this->get('pumukit_web_tv.breadcrumbs')->addList("All", "pumukit_webtv_medialibrary_index");
