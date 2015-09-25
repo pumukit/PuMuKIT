@@ -18,9 +18,10 @@ class UtilsController extends Controller
      */
     public function userAction(Request $request, $opencast=false)
     {
-        $casIsAuthenticated = \phpCAS::isAuthenticated();
+        $casService = $this->get('pumukit_cmar_web_tv.casservice');
+        $casIsAuthenticated = $casService->isAuthenticated();
         if ($casIsAuthenticated) {
-            $username = \phpCAS::getUser();
+            $username = $casService->getUser();
         } else {
             $username = '';
         }
@@ -46,10 +47,11 @@ class UtilsController extends Controller
      */
     public function loginAction(Request $request)
     {
+        $casService = $this->get('pumukit_cmar_web_tv.casservice');
         $url = $request->server->get("HTTP_REFERER");
-        \phpCAS::setFixedServiceURL($url);
-        \phpCAS::forceAuthentication();
-        if(!in_array(\phpCAS::getUser(), array("tv", "prueba", "adminmh", "admin", "sistemas.uvigo"))) {
+        $casService->setFixedServiceURL($url);
+        $casService->forceAuthentication();
+        if(!in_array($casService->getUser(), array("tv", "prueba", "adminmh", "admin", "sistemas.uvigo"))) {
             throw $this->createAccessDeniedException('Unable to access this page!');        
         }
 
@@ -61,8 +63,9 @@ class UtilsController extends Controller
      */
     public function logoutAction(Request $request)
     {
+        $casService = $this->get('pumukit_cmar_web_tv.casservice');
         $url = $this->generateUrl('pumukit_webtv_index_index', array(), true);
-        \phpCAS::logoutWithRedirectService($url);
+        $casService->logoutWithRedirectService($url);
 
         return $this->redirect($url);
     }

@@ -17,13 +17,11 @@
       <tag name="twig.extension"/>
     </service>
 
-    <service id="pumukit_cmar_web_tv.caslistener" class="Pumukit\Cmar\WebTVBundle\Listener\CASListener">
+    <service id="pumukit_cmar_web_tv.casservice" class="Pumukit\Cmar\WebTVBundle\Services\CASService">
       <argument>%pumukit_cmar_web_tv.cas_url%</argument>
       <argument>%pumukit_cmar_web_tv.cas_port%</argument>
       <argument>%pumukit_cmar_web_tv.cas_uri%</argument>
       <argument>%pumukit_cmar_web_tv.cas_allowed_ip_clients%</argument>
-      <argument>%kernel.environment%</argument>
-      <tag name="kernel.event_listener" event="kernel.request" />
     </service>
 
     <service id="pumukit_cmar_web_tv.workflow_listener" class="Pumukit\Cmar\WebTVBundle\Services\WorkflowService">
