@@ -17,7 +17,7 @@
     </div>
     <div class="col-lg-4 col-md-5">
       {% include 'PumukitResponsiveWebTVBundle:MultimediaObject:share.html.twig' %}
-      {% render(controller('PumukitResponsiveWebTVBundle:MultimediaObject:series', {'multimediaObject': multimediaObject })) %}
-      {% render(controller('PumukitResponsiveWebTVBundle:MultimediaObject:related', {'multimediaObject': multimediaObject})) %}
+      {% render(controller('PumukitResponsiveWebTVBundle:MultimediaObject:series', {'multimediaObject': multimediaObject , 'box_title': 'Videos in the same series:'| trans })) %}
+      {% render(controller('PumukitResponsiveWebTVBundle:MultimediaObject:related', {'multimediaObject': multimediaObject, 'box_title': 'You may also be interested in:'| trans })) %}
     </div>
 {% endblock %}

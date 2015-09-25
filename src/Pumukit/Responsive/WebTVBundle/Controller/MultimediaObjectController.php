@@ -118,9 +118,9 @@ class MultimediaObjectController extends Controller
 
 
     /**
-     * @Template()
+     * @Template("PumukitResponsiveWebTVBundle:MultimediaObject:mini_mmobjs.html.twig")
      */
-    public function seriesAction(MultimediaObject $multimediaObject)
+    public function seriesAction(MultimediaObject $multimediaObject, $box_title)
     {
       $series = $multimediaObject->getSeries();
       $multimediaObjects = $series->getMultimediaObjects();
@@ -132,13 +132,14 @@ class MultimediaObjectController extends Controller
 
       return array('series' => $series,
                    'multimediaObjects' => $multimediaObjects,
-                   'unescoTag' => $unescoTag);
+                   'unescoTag' => $unescoTag,
+                   'box_title' => $box_title);
     }
 
     /**
-     * @Template()
+     * @Template("PumukitResponsiveWebTVBundle:MultimediaObject:mini_mmobjs.html.twig")
      */
-    public function relatedAction(MultimediaObject $multimediaObject)
+    public function relatedAction(MultimediaObject $multimediaObject, $box_title)
     {
       $mmobjRepo = $this
         ->get('doctrine_mongodb.odm.document_manager')
@@ -151,7 +152,8 @@ class MultimediaObjectController extends Controller
       $unescoTag = $tagRepo->findOneByCod("UNESCO");
 
       return array('multimediaObjects' => $relatedMms,
-                   'unescoTag' => $unescoTag);
+                   'unescoTag' => $unescoTag,
+                   'box_title' => $box_title);
     }
 
 
