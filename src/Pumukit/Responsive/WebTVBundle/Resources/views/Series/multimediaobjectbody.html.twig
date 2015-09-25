@@ -55,7 +55,7 @@
   {% endif %}
   <div class="objects">
     <!-- MATTERHORN -->
-    {% if mm.getProperty('opencast') is not empty and mm.getProperty('opencastdisplay') %}
+    {% if mm.getProperty('opencast') is not empty %}
       <div id="material" class="file matterhorn">
         <a href="{{ url('pumukit_responsive_webtv_multimediaobject_index', {'id': mm.id}) }}">
           <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>
