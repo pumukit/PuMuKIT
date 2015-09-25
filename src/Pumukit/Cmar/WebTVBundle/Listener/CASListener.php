@@ -25,9 +25,7 @@ class CASListener
     public function onKernelRequest(GetResponseEvent $event)
     {
         if (($event->getRequestType() === HttpKernelInterface::MASTER_REQUEST) && ('test' !== $this->environment)){
-            ob_start();
             try {
-                \CAS_GracefullTerminationException::throwInsteadOfExiting();
                 \phpCAS::client(CAS_VERSION_2_0, $this->casUrl, $this->casPort, $this->casUri, false);
                 //\phpCAS::setDebug('/tmp/cas.log');
                 \phpCAS::setNoCasServerValidation();
@@ -36,7 +34,6 @@ class CASListener
                 \phpCAS::handleLogoutRequests(true, $this->casAllowedIpClients);
             } catch (\Exception $e) {
             }
-            ob_end_clean();
         }
     }
 }
