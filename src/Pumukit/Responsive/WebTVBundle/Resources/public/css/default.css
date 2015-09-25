@@ -83,10 +83,6 @@ ul, ol {
    min-height: 600px;
    max-width: 1200px;
 }
-.mms-thumbnail {
-   display: inline;
-   float: left;
-}
 
 .number-videos.serial {
    position: absolute;
