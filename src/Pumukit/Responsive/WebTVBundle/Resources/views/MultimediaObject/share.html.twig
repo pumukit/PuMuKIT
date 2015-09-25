@@ -1,9 +1,23 @@
 <!--Share multimedia object in facebook, google+ and twitter-->
 <div class="panel panel-default share_mmobj">
   <div class="panel-heading" data-toggle="collapse" data-target="#shareBars" aria-expanded="false" aria-controls="shareBars" role="button">
-    <strong>    {% trans %} Share this video {% endtrans %} </strong>
+    <strong>
+      {% trans %} Share this video {% endtrans %}
+      <span class="glyphicon glyphicon-chevron-down pull-right"></span>
+    </strong>
   </div>
     <ul class="list-group collapse" id="shareBars">
+      <script>
+       function toggleChevron(e) {
+           $(e.target)
+              .prev('.panel-heading')
+              .find('span.glyphicon')
+              .toggleClass('glyphicon-chevron-down glyphicon-chevron-up');
+       }
+       $('#shareBars').on('hidden.bs.collapse', toggleChevron);
+       $('#shareBars').on('shown.bs.collapse', toggleChevron);
+      </script>
+
       <li class="list-group-item">
         <div class="silly-buttons">
           <div style="width: 84px; height: 19px; float: left;">

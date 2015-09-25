@@ -1,4 +1,4 @@
-
+<!--INFO-->
 <!--Multimedia object tags-->
 <div class="row">
   <div class="col-xs-12">
@@ -11,6 +11,7 @@
     {% endfor %}
   </div>
 </div>
+<!--VIEWED/DATE-->
 <div class="row">
   <div class="col-xs-6">
     <div class="num_views">
@@ -28,45 +29,57 @@
     </div>
   </div>
 </div>
+<!--SUBTITLE/DESCRIPTION-->
 <div class="row">
-  <div class="mmobj-title">
-    <h3> {{ multimediaObject.getSubtitle() }} </h3>
-  </div> 
-  <p class="description">
-    {{ multimediaObject.getDescription() }}
-  </p>
-  <div class="serial_mm_info">
-    <div class="materials">
-      <h3>{% trans %} Materials {% endtrans %}</h3>
-      <!--MATERIALS-->
-      {% for material in multimediaObject.getMaterials() if not material.getHide() %}
-        <div id="material">
-          <span class="glyphicon glyphicon-file"></span>
-          <a href="{{ material.getUrl() }}">{{ material.getName() }}</a>
-        </div>
-        {% else %}
-        <strong>{% trans %} There is no materials {% endtrans %}</strong>
-      {% endfor %}
-    </div>
-    <!--LINKS-->
-    {% for link in multimediaObject.getLinks() %}
-      <div id="link" class="link">
-        <a target="_blank" href="{{ link.getUrl() }}">{{ link.getName() }}</a>
-      </div>
-    {% endfor %}
-    <!-- PERSONS ACT -->
-    <div class="persons" style="overflow: hidden;">
-      {% for role in multimediaObject.getRoles() if role.getDisplay() %}
-        {% for person in multimediaObject.getPeopleByRole(role) %}
-          <div>
-            <div class="person">
-              {{ role.getText() }}
-              {{ person.getHName() }}
-            </div>
-            {{ person.getInfo() }}
-          </div>
-        {% endfor %}
-      {% endfor %}
-    </div>
-  </div>    
+  <div class="col-xs-12">
+    <div class="mmobj-title">
+      <h3> {{ multimediaObject.getSubtitle() }} </h3>
+    </div> 
+    <p class="description">
+      {{ multimediaObject.getDescription() }}
+    </p>
+  </div>
 </div>
+<div class="row">
+  <div class="col-xs-12">
+    <!--MATERIALS-->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        {% trans %} Materials {% endtrans %}
+      </div>
+      <div class="panel-body">
+        {% for material in multimediaObject.getMaterials() if not material.getHide() %}
+          <div id="material">
+            <span class="glyphicon glyphicon-paperclip"></span>
+            <a href="{{ material.getUrl() }}">{{ material.getName() }}</a>
+          </div>
+        {% else %}
+          <strong>{% trans %} There is no materials {% endtrans %}</strong>
+        {% endfor %}
+      <!--LINKS-->
+      {% for link in multimediaObject.getLinks() %}
+        <div id="link" class="link">
+          <a target="_blank" href="{{ link.getUrl() }}">
+            <span class="glyphicon glyphicon-globe"></span>
+            {{ link.getName() }}
+          </a>
+        </div>
+      {% endfor %}
+      </div>
+    </div>
+      <!-- PERSONS ACT -->
+      <div class="persons">
+        {% for role in multimediaObject.getRoles() if role.getDisplay() %}
+          {% for person in multimediaObject.getPeopleByRole(role) %}
+            <div>
+              <div class="person"><span class="glyphicon glyphicon-user"></span>
+                {{ role.getText() }}
+                {{ person.getHName() }}
+              </div>
+              {{ person.getInfo() }}
+            </div>
+          {% endfor %}
+        {% endfor %}
+      </div>
+    </div>    
+  </div>
