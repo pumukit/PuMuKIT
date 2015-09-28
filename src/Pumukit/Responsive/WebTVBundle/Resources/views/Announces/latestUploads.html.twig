@@ -1,0 +1,23 @@
+{% extends 'PumukitResponsiveWebTVBundle::layout.html.twig' %}
+
+{% block javascript %}
+  {{ parent() }}
+  <script src="{{ asset('bundles/pumukitresponsivewebtv/js/announces_ajax.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block body %}  
+  <h1 id="announces_h1">{% trans %} Latest uploads {% endtrans %}</h1>
+  <div class="announces">
+    {% for object in last %}
+      {% if object.isCollection() %}
+        <!-- Series -->
+        {% include 'PumukitResponsiveWebTVBundle:Misc:series.html.twig' with {'rows':1}%}
+      {% else %}
+        <!-- Multimedia object -->
+        {% include 'PumukitResponsiveWebTVBundle:Misc:multimediaobject.html.twig' with {'rows':1}%}
+      {% endif %}
+    {% endfor %}
+  </div>
+  <div id="cargando" style="display:none"><img class="center-block" src="{{ asset('bundles/pumukitresponsivewebtv/images/icons/spinner.gif') }}"/></div>
+
+{% endblock %}
