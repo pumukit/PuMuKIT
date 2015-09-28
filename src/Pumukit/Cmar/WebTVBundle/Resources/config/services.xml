@@ -24,7 +24,7 @@
       <argument>%pumukit_cmar_web_tv.cas_allowed_ip_clients%</argument>
     </service>
 
-    <service id="pumukit_cmar_web_tv.workflow_listener" class="Pumukit\Cmar\WebTVBundle\Services\WorkflowService">
+    <service id="pumukit_cmar_web_tv.job_generator_listener" class="Pumukit\Cmar\WebTVBundle\EventListener\JobGeneratorListener">
       <argument>%pumukit_cmar_web_tv.workflow_sbs_profile%</argument>
       <argument type="service" id="pumukitencoder.job" />
       <argument type="service" id="pumukitencoder.profile" />
