@@ -19,17 +19,6 @@ class IndexController extends Controller
         return array();
     }
 
-
-    /**
-     * @Route("/latestuploads", name="pumukit_responsive_webtv_index_latestuploads")
-     * @Template()
-     */
-    public function latestUploadsAction()
-    {
-        $last = $this->get('pumukitschema.announce')->getLast(10000000000);
-        return array('last' => $last);
-    }
-
     /**
      * @Route("/listby_category", name="pumukit_responsive_webtv_index_listbycategory")
      * @Template()

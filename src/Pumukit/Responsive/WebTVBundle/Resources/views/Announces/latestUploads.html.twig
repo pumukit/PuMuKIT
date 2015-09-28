@@ -1,23 +1,57 @@
 {% extends 'PumukitResponsiveWebTVBundle::layout.html.twig' %}
 
-{% block javascript %}
+{% block javascripts %}
   {{ parent() }}
+  <script type="text/javascript" src="{{ asset('bundles/pumukitresponsivewebtv/js/prototype.js') }}"></script>
   <script src="{{ asset('bundles/pumukitresponsivewebtv/js/announces_ajax.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block body %}  
   <h1 id="announces_h1">{% trans %} Latest uploads {% endtrans %}</h1>
-  <div class="announces">
-    {% for object in last %}
-      {% if object.isCollection() %}
-        <!-- Series -->
-        {% include 'PumukitResponsiveWebTVBundle:Misc:series.html.twig' with {'rows':1}%}
-      {% else %}
-        <!-- Multimedia object -->
-        {% include 'PumukitResponsiveWebTVBundle:Misc:multimediaobject.html.twig' with {'rows':1}%}
-      {% endif %}
-    {% endfor %}
+  <div class="announces" id="announces">
   </div>
   <div id="cargando" style="display:none"><img class="center-block" src="{{ asset('bundles/pumukitresponsivewebtv/images/icons/spinner.gif') }}"/></div>
+  <script type="text/javascript">
+   jQuery(document).ready(function() {  
+       var cargando = $('cargando');
+       var announces_div = $('announces');
+       var cur_page = 0;
+       function reloadMoreData()
+       {
+           cargando.show();
+           new Ajax.Request("{{ path('pumukit_responsive_webtv_announces_latestuploads_pager') }}", 
+                            {
+                                method: 'get', 
+                                parameters: {page: cur_page},
+                                onSuccess: function(respuesta){
+                                    cargando.hide();
+                                    announces_div.innerHTML = announces_div.innerHTML + respuesta.responseText;
 
+                                    if( document.viewport.getHeight() >= ( jQuery('footer').offset().top ) && cur_page < {{ max_page }} )
+                                    {
+                                        reloadMoreData();
+                                    }
+                                }
+                            }
+           );
+           cur_page++;
+
+       }
+
+       reloadMoreData();
+       Event.observe(window, 'scroll', function(){
+           var topOffset = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+           var scrollBottom = document.viewport.getHeight() + topOffset > jQuery('footer').offset().top;
+           if ( scrollBottom && (cur_page < {{ max_page }}) ){
+               reloadMoreData();
+           }
+           else {
+               if((cur_page > {{ max_page }}))
+                   {
+                       console.log({{max_page}});
+                   }
+           }
+       });
+   });
+  </script>
 {% endblock %}
