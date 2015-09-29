@@ -1,3 +1,7 @@
+<div class="date" name="{{ date | date("m/Y") }}">
+{{ date | localizeddate('full', 'none' , app.request.locale, null,"MMMM  Y" ) }}
+</div>
+<div class="announces">
 {% for object in last %}
   {% if object.isCollection() %}
     <!-- Series -->
@@ -7,3 +11,4 @@
     {% include 'PumukitResponsiveWebTVBundle:Misc:multimediaobject.html.twig' with {'rows':1}%}
   {% endif %}
 {% endfor %}
+</div>

@@ -8,10 +8,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
+use Pagerfanta\Pagerfanta;
+use Pumukit\SchemaBundle\Document\Tag;
+
 
 class AnnouncesController extends Controller
 {
-    private $page_elem = 2;
     /**
      * @Route("/latestuploads", name="pumukit_responsive_webtv_announces_latestuploads")
      * @Template()
@@ -19,25 +24,71 @@ class AnnouncesController extends Controller
     public function latestUploadsAction(Request $request)
     {
         $this->get('pumukit_responsive_web_tv.breadcrumbs')->addList('Latest Uploads', 'pumukit_responsive_webtv_announces_latestuploads');
-        $last = $this->get('pumukitschema.announce')->getLast(100000000000);
-        dump($last);
-        $max_page = count( $last )/$this->page_elem;
-        return array('last' => $last,
-                     'max_page' => $max_page);
     }
     /**
      * @Route("/latestuploads/pager", name="pumukit_responsive_webtv_announces_latestuploads_pager")
      * @Template()
      */
-    public function latestUploadsPagerAction(Request $request, $page = 1)
+    public function latestUploadsPagerAction(Request $request)
     {
-        $page = $request->query->get("page", 0);
+        $date_request = $request->query->get("date", 0);
+        $repository_mms = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $queryBuilderMms = $repository_mms->createQueryBuilder();
+        $repository_series = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
+        $queryBuilderSeries = $repository_series->createQueryBuilder();
 
-        $this->get('pumukit_responsive_web_tv.breadcrumbs')->addList('Latest Uploads', 'pumukit_responsive_webtv_announces_latestuploads');
-        $last = $this->get('pumukitschema.announce')->getLast(100000000000);
+        $date_ini = \DateTime::createFromFormat("d/m/Y", "01/$date_request");
+        $date_fin = clone $date_ini;
+        $date_ini->modify('first day of next month');
+        $date_ini->modify('-1 day');
+        $date_fin->modify('last day of next month');
         
-        $last = array_slice( $last, $page*$this->page_elem, $this->page_elem);
-        return array('last' => $last);
+        $counter=0;
+        do {
+            $counter++;
+            $date_ini->modify('last day of last month');
+            $date_fin->modify('last day of last month');
+            
+            $queryBuilderMms->field('public_date')->range($date_ini, $date_fin);
+            $queryBuilderSeries->field('pùblic_date')->range($date_ini, $date_fin);
+            $queryBuilderSeries->field('announce')->equals(true);
+            $queryBuilderMms->field('tags.cod')->equals('PUDENEW');
+            $lastMms = $queryBuilderMms->getQuery()->execute();
+            $lastSeries = $queryBuilderSeries->getQuery()->execute();
+            $last = array();
+            foreach( $lastSeries as $serie ){
+                $last[] = $serie;
+            }
+            foreach( $lastMms as $mm ){
+                $last[] = $mm;
+            }
+        } while( empty( $last ) && $counter < 24);
+        
+        
+        if( empty( $last ) )
+        {
+            $date_header = "---";
+        }
+        else
+        {
+            $date_header = $date_fin->format("m/Y");
+        }
+
+        usort( $last, function($a, $b){
+            $date_a = $a->getPublicDate();
+            $date_b = $b->getPublicDate();
+            if($date_a == $date_b)
+            {
+                return 0;
+            }
+            return $date_a < $date_b ? 1 : -1;
+        });
+        
+        $response = new Response( $this->renderView( "PumukitResponsiveWebTVBundle:Announces:latestUploadsPager.html.twig", array( 'last' => $last, 'date' => $date_fin ) ), 200 );
+        $response->headers->set('X-Date', $date_header );
+        $response->headers->set('X-Date-Month', $date_fin->format("m") );
+        $response->headers->set('X-Date-Year', $date_fin->format("Y") );
+        return $response;
     }
 
 }
