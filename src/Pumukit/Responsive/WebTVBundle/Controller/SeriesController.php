@@ -17,15 +17,15 @@ class SeriesController extends Controller
      */
     public function indexAction(Series $series, Request $request)
     {
-      $mmobjRepo = $this
+        $mmobjRepo = $this
         ->get('doctrine_mongodb.odm.document_manager')
         ->getRepository('PumukitSchemaBundle:MultimediaObject');
-      $multimediaObjects = $mmobjRepo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED));
+        $multimediaObjects = $mmobjRepo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED));
 
-      $this->updateBreadcrumbs($series);
-    	
-      return array('series' => $series, 
-                   'multimediaObjects' => $multimediaObjects);
+        $this->updateBreadcrumbs($series);
+
+        return array('series' => $series,
+                   'multimediaObjects' => $multimediaObjects, );
     }
 
     /**
@@ -34,20 +34,20 @@ class SeriesController extends Controller
      */
     public function magicIndexAction(Series $series, Request $request)
     {
-      $mmobjRepo = $this
+        $mmobjRepo = $this
         ->get('doctrine_mongodb.odm.document_manager')
         ->getRepository('PumukitSchemaBundle:MultimediaObject');
-      $multimediaObjects = $mmobjRepo->findStandardBySeries($series);
+        $multimediaObjects = $mmobjRepo->findStandardBySeries($series);
 
-      $this->updateBreadcrumbs($series);
+        $this->updateBreadcrumbs($series);
 
-      return array('series' => $series, 
-                   'multimediaObjects' => $multimediaObjects);
+        return array('series' => $series,
+                   'multimediaObjects' => $multimediaObjects, );
     }
 
     private function updateBreadcrumbs(Series $series)
     {
-      $breadcrumbs = $this->get('pumukit_responsive_web_tv.breadcrumbs');
-      $breadcrumbs->addSeries($series);
+        $breadcrumbs = $this->get('pumukit_responsive_web_tv.breadcrumbs');
+        $breadcrumbs->addSeries($series);
     }
 }

@@ -17,14 +17,14 @@ class MediaLibraryController extends Controller
     {
         $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
 
-        $sortField = "alphabetically" == $sort ? 'title.' . $request->getLocale() : "public_date";
-        $series = $repo->findBy(array(), array($sortField => 1));        
+        $sortField = 'alphabetically' == $sort ? 'title.'.$request->getLocale() : 'public_date';
+        $series = $repo->findBy(array(), array($sortField => 1));
         $criteria = $request->query->get('search', false) ?
-                    array('title.' . $request->getLocale() => new \MongoRegex(sprintf("/%s/i", $request->query->get('search')))):
+                    array('title.'.$request->getLocale() => new \MongoRegex(sprintf('/%s/i', $request->query->get('search')))) :
                     array();
-        $series = $repo->findBy($criteria, array($sortField => 1));   
+        $series = $repo->findBy($criteria, array($sortField => 1));
 
-        $this->get('pumukit_responsive_web_tv.breadcrumbs')->addList("All", "pumukit_responsive_webtv_medialibrary_index");
+        $this->get('pumukit_responsive_web_tv.breadcrumbs')->addList('All', 'pumukit_responsive_webtv_medialibrary_index');
 
         return array('series' => $series, 'sort' => $sort);
     }

@@ -16,15 +16,17 @@ class WidgetController extends Controller
     {
         $channels = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Live')->findAll();
         $selected = $this->container->get('request_stack')->getMasterRequest()->get('_route');
+
         return array('live_channels' => $channels, 'menu_selected' => $selected);
     }
-    
+
     /**
      * @Template()
      */
     public function breadcrumbsAction()
     {
         $breadcrumbs = $this->get('pumukit_responsive_web_tv.breadcrumbs');
+
         return array('breadcrumbs' => $breadcrumbs->getBreadcrumbs());
     }
 
@@ -38,7 +40,8 @@ class WidgetController extends Controller
 
         $counts = array('series' => $seriesRepo->countPublic(),
                         'mms' => $mmRepo->count(),
-                        'hours' => bcdiv($mmRepo->countDuration(), 3600, 2));
+                        'hours' => bcdiv($mmRepo->countDuration(), 3600, 2), );
+
         return array('counts' => $counts);
     }
 
@@ -61,5 +64,4 @@ class WidgetController extends Controller
 
         return array('events' => $events);
     }
-
 }
