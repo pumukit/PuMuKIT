@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\WorkflowBundle\Tests\Listener;
+namespace Pumukit\WorkflowBundle\Tests\EventListener;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\EncoderBundle\Services\ProfileService;
