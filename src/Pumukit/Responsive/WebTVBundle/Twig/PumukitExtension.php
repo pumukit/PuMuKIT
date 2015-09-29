@@ -8,14 +8,13 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 
 class PumukitExtension extends \Twig_Extension
 {
-
     /**
      * @var string
      */
     protected $defaultPic;
 
     /**
-     * @var RequestContext 
+     * @var RequestContext
      */
     protected $context;
 
@@ -44,7 +43,7 @@ class PumukitExtension extends \Twig_Extension
     }
 
     /**
-     * Get functions
+     * Get functions.
      */
     public function getFunctions()
     {
@@ -56,42 +55,39 @@ class PumukitExtension extends \Twig_Extension
     }
 
     /**
-     *
-     * @param Series|MultimediaObject $object    Object to get the url (using $object->getPics())
-     * @param boolean                 $absolute  return absolute path.
+     * @param Series|MultimediaObject $object   Object to get the url (using $object->getPics())
+     * @param bool                    $absolute return absolute path.
      *
      * @return string
      */
-    public function getFirstUrlPicFilter($object, $absolute=false)
+    public function getFirstUrlPicFilter($object, $absolute = false)
     {
-      $pics = $object->getPics();
-      if(0 == count($pics)) {
-          $picUrl = $this->defaultPic;
-      }else{
-          $pic = $pics[0];
-          $picUrl = $pic->getUrl();
-      }
+        $pics = $object->getPics();
+        if (0 == count($pics)) {
+            $picUrl = $this->defaultPic;
+        } else {
+            $pic = $pics[0];
+            $picUrl = $pic->getUrl();
+        }
 
-      if($absolute && "/" == $picUrl[0]) {
-          $scheme = $this->context->getScheme();
-          $host = $this->context->getHost();
-          $port = '';
-          if ('http' === $scheme && 80 != $this->context->getHttpPort()) {
-              $port = ':'.$this->context->getHttpPort();
-          } elseif ('https' === $scheme && 443 != $this->context->getHttpsPort()) {
-              $port = ':'.$this->context->getHttpsPort();
-          }
+        if ($absolute && '/' == $picUrl[0]) {
+            $scheme = $this->context->getScheme();
+            $host = $this->context->getHost();
+            $port = '';
+            if ('http' === $scheme && 80 != $this->context->getHttpPort()) {
+                $port = ':'.$this->context->getHttpPort();
+            } elseif ('https' === $scheme && 443 != $this->context->getHttpsPort()) {
+                $port = ':'.$this->context->getHttpsPort();
+            }
 
-          return $scheme."://".$host.$port.$picUrl;
-      }
+            return $scheme.'://'.$host.$port.$picUrl;
+        }
 
-      return $picUrl;
-        
-
+        return $picUrl;
     }
 
     /**
-     * Get public broadcast
+     * Get public broadcast.
      *
      * @return string
      */
@@ -101,9 +97,10 @@ class PumukitExtension extends \Twig_Extension
     }
 
     /**
-     * Get precinct
+     * Get precinct.
      *
      * @param ArrayCollection $embeddedTags
+     *
      * @return EmbbededTag|null
      */
     public function getPrecinct($embeddedTags)
@@ -120,9 +117,10 @@ class PumukitExtension extends \Twig_Extension
     }
 
     /**
-     * Get precinct of Series
+     * Get precinct of Series.
      *
      * @param ArrayCollection $multimediaObjects
+     *
      * @return EmbbededTag|null
      */
     public function getPrecinctOfSeries($multimediaObjects)
@@ -133,12 +131,16 @@ class PumukitExtension extends \Twig_Extension
         foreach ($multimediaObjects as $multimediaObject) {
             if ($first) {
                 $precinctTag = $this->getPrecinct($multimediaObject->getTags());
-                if (!$precinctTag) return false;
+                if (!$precinctTag) {
+                    return false;
+                }
                 $precinctCode = $precinctTag->getCod();
                 $first = false;
             } else {
                 $precinctTag = $this->getPrecinct($multimediaObject->getTags());
-                if (!$precinctTag) return false;
+                if (!$precinctTag) {
+                    return false;
+                }
                 if ($precinctCode != $precinctTag->getCod()) {
                     return false;
                 }
@@ -149,9 +151,10 @@ class PumukitExtension extends \Twig_Extension
     }
 
     /**
-     * Get precinct fulltitle
+     * Get precinct fulltitle.
      *
      * @param EmbbededTag $precinctEmbeddedTag
+     *
      * @return string
      */
     public function getPrecinctFulltitle($precinctEmbeddedTag)
@@ -169,7 +172,7 @@ class PumukitExtension extends \Twig_Extension
                 if ($placeTag) {
                     if ($placeTag->getTitle()) {
                         if ($fulltitle) {
-                            $fulltitle .= ', ' . $placeTag->getTitle();
+                            $fulltitle .= ', '.$placeTag->getTitle();
                         } else {
                             $fulltitle = $placeTag->getTitle();
                         }
@@ -184,10 +187,11 @@ class PumukitExtension extends \Twig_Extension
     }
 
     /**
-     * Count Multimedia Objects
+     * Count Multimedia Objects.
      *
      * @param Series $series
-     * @return integer
+     *
+     * @return int
      */
     public function countMultimediaObjects($series)
     {
@@ -195,18 +199,21 @@ class PumukitExtension extends \Twig_Extension
     }
 
     /**
-     * Get duration in minutes and seconds
+     * Get duration in minutes and seconds.
      *
      * @param int $duration
+     *
      * @return string
      */
     public function getDurationInMinutesSeconds($duration)
     {
-      $minutes = floor($duration / 60);
+        $minutes = floor($duration / 60);
 
-      $seconds = $duration % 60;
-      if ($seconds < 10 ) $seconds = '0' . $seconds;
+        $seconds = $duration % 60;
+        if ($seconds < 10) {
+            $seconds = '0'.$seconds;
+        }
 
-      return $minutes ."' ". $seconds . "''";
-   }
+        return $minutes."' ".$seconds."''";
+    }
 }
