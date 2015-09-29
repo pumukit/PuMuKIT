@@ -18,6 +18,8 @@
     file: "{{ asset(track.url, absolute=true) }}",
     {% if multimediaObject.getFirstUrlPic() and not autostart %}
     image: "{{ asset(multimediaObject.getFirstUrlPic(), absolute=true) }}",
+    {% elseif multimediaObject.getFirstUrlPic() and track.isOnlyAudio() %}
+    image: "{{ asset(multimediaObject.getFirstUrlPic(), absolute=true) }}",
     {% endif %}
     {% endif %}
     startparam: "start",
