@@ -20,42 +20,6 @@ class IndexController extends Controller
     }
 
     /**
-     * @Route("/listby_category", name="pumukit_responsive_webtv_index_listbycategory")
-     * @Template()
-     */
-    public function listByCategoryAction()
-    {
-        $this->get('pumukit_responsive_web_tv.breadcrumbs')->addList('Videos by Category', 'pumukit_responsive_webtv_index_listbycategory');
-
-        $vGroundParent = $this->getDoctrine()
-                              ->getRepository('PumukitSchemaBundle:Tag')
-                              ->findOneByCod("VIRTUALGROUNDS");
-
-        $allVGrounds = $vGroundParent->getChildren();
-
-        $ground_children = array();
-        foreach ( $allVGrounds as $id=>$channel ){
-            
-            $allChannels[$id] = array();
-            $allChannels[$id]['title'] = $channel->getTitle();
-            $allChannels[$id]['cod'] = $channel->getCod();
-            $allChannels[$id]['children'] = array();
-
-            foreach ($channel->getChildren() as $child ) {
-                $cod = $child->getProperty('target_cod');
-                $cod = isset( $cod ) ? $cod : substr( $child->getCod(), 1);
-
-                $parentTag =$this->getDoctrine()
-                                 ->getRepository('PumukitSchemaBundle:Tag')
-                                 ->findOneByCod($cod);
-
-                $allChannels[$id]['children'][] = $parentTag;
-            }
-        }
-        return array('allVGrounds' => $allChannels);
-    }
-
-    /**
      * @Template()
      */
     public function infoAction()
