@@ -1,29 +1,21 @@
 <div class="library">
   {% set lastTitle = '--' %}
-  {% for serie in series if serie|count_multimedia_objects != 0%}
-
-      {% if sort == 'alphabetically' %}
-        {% set currentTitle = serie.title|slice(0,1)|title %}
-      {% elseif sort == 'date' %}
-        {% set currentTitle = serie.getPublicDate() | localizeddate('full', 'none' , app.request.locale, null,"MMMM - Y" ) %}
-      {% endif %}
-
-      {% if currentTitle != lastTitle %}
-        <div class="name col-xs-12">
-          <h2>{{ currentTitle }}</h2>
-        </div>
-      {% endif %}
-      {% set lastTitle = currentTitle %}
+  {% for key, series in objects%}
+    <div class="name col-xs-12">
+      <h2>{{ key }}</h2>
+    </div>
+    {% for serie in series  %}
       {% set object = serie %}
-
       {% if show_thumbnails is defined %}
         {% include 'PumukitResponsiveWebTVBundle:Misc:series.html.twig' %}
       {% else %}
         {% include 'PumukitResponsiveWebTVBundle:Misc:series_text.html.twig' %}
       {% endif %}
+    {% endfor %}
+
       {% else %}
-      <div class="row text-center">
-        {% trans %}Not series found{% endtrans %}.
-      </div>
+    <div class="row text-center">
+      {% trans %}Not series found{% endtrans %}.
+    </div>
   {% endfor %}
 </div>

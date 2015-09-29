@@ -1,0 +1,5 @@
+parameters:
+    responsivewebtv.media_library.filter_tags:
+        - DIRECTRIZ
+        - UNESCO
+        - Cologne
