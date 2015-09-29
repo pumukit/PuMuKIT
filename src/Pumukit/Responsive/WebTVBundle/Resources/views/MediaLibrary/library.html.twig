@@ -21,5 +21,9 @@
       {% else %}
         {% include 'PumukitResponsiveWebTVBundle:Misc:series_text.html.twig' %}
       {% endif %}
+      {% else %}
+      <div class="row text-center">
+        {% trans %}Not series found{% endtrans %}.
+      </div>
   {% endfor %}
 </div>

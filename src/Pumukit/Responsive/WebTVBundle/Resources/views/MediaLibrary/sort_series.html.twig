@@ -20,10 +20,12 @@
 <div id="search_div" style="margin: 10px; padding: 5px 0px; border: 2px solid #999999; background-color: #eee;overflow: hidden;">
   <form>
     <div class="input-group" style="width: 50%; margin: 0 auto;">
-      <input type="text" class="form-control" name="search" maxlength="100" value="" placeholder="" style="height:30px;">
-      <span class="input-group-addon" style="cursor:pointer;">
-        <span class="glyphicon glyphicon-search">
-        </span>
+      <input type="text" class="form-control" name="search" maxlength="100" value="{{app.request.query.get('search')}}" placeholder="" style="height:30px;">
+      <span class="input-group-btn" style="cursor:pointer;">
+        <button class="btn btn-default" type="button">
+          <span class="glyphicon glyphicon-search">
+          </span>
+        </button>
       </span>
     </div>
   </form>
