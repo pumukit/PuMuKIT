@@ -12,6 +12,16 @@
    font-size: 120%;
    opacity: .8;
 }
+.media-heading.subtitle{
+   line-height:0.5;
+}
+.media-heading.title{
+   line-height:1;
+}
+.media-body .date{
+   line-height: 1;
+   padding-top: 10px;
+}
 footer .parent-centering {
    padding-top:10px;
 }

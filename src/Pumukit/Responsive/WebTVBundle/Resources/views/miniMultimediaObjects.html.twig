@@ -10,10 +10,16 @@
         </dt> 
 
         <dd class="media-body">
-          <div class="media-heading">
+          <div class="media-heading title">
             <a href="{{ url('pumukit_responsive_webtv_multimediaobject_index', {'id': multimediaObject.id}) }}">
               {{ multimediaObject.getTitle()[:50] }}{% if (50 == (multimediaObject.getTitle()|length)) %}...{% endif %}
             </a>
+          </div>
+          <div class="media-heading subtitle">
+            <small>{{ multimediaObject.getSubtitle()[:50] }}{% if (50 == (multimediaObject.getSubtitle()|length)) %}...{% endif %}</small>
+          </div>
+          <div class="pull-left date">
+            <small>{{ multimediaObject.publicDate | localizeddate('full', 'none' , app.request.locale, null,"d/MM/Y" ) }}</small>
           </div>
         </dd>
       </dl>
