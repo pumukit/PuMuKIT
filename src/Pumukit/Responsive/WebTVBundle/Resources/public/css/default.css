@@ -21,7 +21,7 @@ ul, ol {
 /*END BOOSTRAP OVERRIDE*/
 .breadcrumb_wrapper {
    margin: 0 auto;
-   max-width: 1200px;
+   max-width: 1400px;
 }
 .col-no-padding {
    overflow: auto;
@@ -52,8 +52,8 @@ ul, ol {
    text-align: inherit;
 }
 .header-content{
-   margin:0 auto;
-   max-width:1400px;
+   margin: 0 auto;
+   max-width: 1400px;
    min-height: 20px;
 }
 .info {
@@ -81,7 +81,7 @@ ul, ol {
    overflow: auto;
    background: #fff;
    min-height: 600px;
-   max-width: 1200px;
+   max-width: 1400px;
 }
 .mmobj_objects {
    margin-left: 3%;
@@ -205,6 +205,18 @@ ul, ol {
    left: 14px;
    top: 6px;
 }
+#tvpumukites_breadcrumbs_mmobj:before{
+   content: "";
+}
+#tvpumukites_breadcrumbs_mmobj {
+   display: block;
+   font-size: 3em;
+}
+
+/*#tvpumukites_breadcrumbs_mmobj a{
+   display: block;
+   font-size: 40px;
+}*/
 .video-duration {
    position: absolute;
    bottom: 8%;

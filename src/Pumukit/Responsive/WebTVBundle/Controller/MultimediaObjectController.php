@@ -208,7 +208,6 @@ class MultimediaObjectController extends Controller
           if($invert = $multimediaObject->getProperty('opencastinvert')) {
               $opencasturl .= '&display=invert';
           }
-
           return $this->redirect($opencasturl);
       }
     }

@@ -1,4 +1,4 @@
-<form id="form_buscador" name="busqueda" method="get" action="{{ path('pumukit_responsive_webtv_search_series') }}" class="row">
+<form id="form_search" name="busqueda" method="get" action="{{ path('pumukit_responsive_webtv_search_series') }}" class="row">
   <input type="submit" style="display:none"/>
   <div class="form-group col-md-4">
     <label for="search">{% trans %}Search{% endtrans %}:</label>
@@ -12,7 +12,7 @@
     </div>
   </div>
 
-  <div class="form-group col-md-3">
+  <div class="form-group col-md-3 col-sm-5 col-xs-6">
     <label for="start">{% trans %}Start date{% endtrans %}:</label>
     <div class="input-group date" id='start'>
       <input type='text' class="form-control" name="start" value="{{ app.request.query.get('start') }}" placeholder="From" onblur="javascript:this.form.submit();"/>
@@ -22,7 +22,7 @@
     </div>
   </div>
 
-  <div class="form-group col-md-3">
+  <div class="form-group col-md-3 col-sm-5 col-xs-6">
     <label for="end">{% trans %}Finish date{% endtrans %}:</label>
     <div class="input-group date" id="end">
       <input type="text" class="form-control" name="end" value="{{ app.request.query.get('end') }}" placeholder="Until" onblur="javascript:this.form.submit();"/>
@@ -32,7 +32,7 @@
     </div>
   </div>
 
-  <div class="form-group col-md-2">
+  <div class="form-group col-md-2 col-sm-2">
     <label for="reset">{% trans %}Reset filters{% endtrans %}:</label>
     <input type="button" class="btn btn-default form-control" id="exampleInputEmail1" placeholder="Email" value="{% trans %}Reset filters{% endtrans %}"
            onclick="window.location.href=window.location.pathname">
@@ -40,8 +40,10 @@
 
 <script type="text/javascript">
   $(function() {
-    $( "#start" ).datetimepicker({viewMode: 'years', format: 'DD/MM/YYYY'});
-    $( "#end" ).datetimepicker({viewMode: 'years', format: 'DD/MM/YYYY'});
+      $( "#start" ).datetimepicker({useCurrent: false, viewMode: 'years', format: 'DD/MM/YYYY'});
+      $( "#start" ).on("dp.change", function(e){$("#form_search").submit();});
+      $( "#end" ).datetimepicker({useCurrent: false, viewMode: 'years', format: 'DD/MM/YYYY'});
+      $( "#end" ).on("dp.change", function(e){$("#form_search").submit();});
   });
 </script>
 

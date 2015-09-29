@@ -1,4 +1,4 @@
-<form id="form_buscador" name="busqueda" method="get" action="{{ path('pumukit_responsive_webtv_search_multimediaobjects') }}" class="row">
+<form id="form_search" name="busqueda" method="get" action="{{ path('pumukit_responsive_webtv_search_multimediaobjects') }}" class="row">
 
   <input type="submit" style="display:none"/>
   <div class="form-group col-md-4">
@@ -23,7 +23,7 @@
       </select>
   </div>
 
-  <div class="form-group col-md-4">
+  <div class="form-group col-md-4 col-sm-6">
     <label for="duration">{% trans %}Duration{% endtrans %}:</label>
     <select id="duration" name="duration" class="form-control" onchange="javascript:this.form.submit();">
       <option value="all" {% if app.request.query.get('duration') == "all" %} selected="selected" {% endif %}>{% trans%}All{% endtrans %}</option>
@@ -35,7 +35,7 @@
 	  </select>
   </div>
 
-  <div class="form-group col-md-4">
+  <div class="form-group col-md-4 col-sm-6">
     <label for="type">{% trans %}Video/Audio{% endtrans %}:</label>
     <select id="type" name="type" class="form-control"  onchange="javascript:this.form.submit();">
       <option {% if type_found == "" %} selected="selected" {% endif %}>{% trans %}All{% endtrans %}</option>
@@ -44,7 +44,7 @@
 	  </select>
   </div>
 
-  <div class="form-group col-md-3">
+  <div class="form-group col-md-3 col-sm-5 col-xs-6">
     <label for="start">{% trans %}Start date{% endtrans %}:</label>
     <div class="input-group date" id='start'>
       <input type='text' class="form-control" name="start" value="{{ app.request.query.get('start') }}" placeholder="From" onblur="javascript:this.form.submit();"/>
@@ -54,7 +54,7 @@
     </div>
   </div>
 
-  <div class="form-group col-md-3">
+  <div class="form-group col-md-3 col-sm-5 col-xs-6">
     <label for="end">{% trans %}Finish date{% endtrans %}:</label>
     <div class="input-group date" id="end">
       <input type="text" class="form-control" name="end" value="{{ app.request.query.get('end') }}" placeholder="Until" onblur="javascript:this.form.submit();"/>
@@ -64,7 +64,7 @@
     </div>
   </div>
 
-  <div class="form-group col-md-2">
+  <div class="form-group col-md-2 col-sm-2">
     <label for="reset">{% trans %}Reset filters{% endtrans %}:</label>
     <input type="button" class="btn btn-default form-control" id="exampleInputEmail1" placeholder="Email" value="{% trans %}Reset filters{% endtrans %}"
            onclick="window.location.href=window.location.pathname">
@@ -72,8 +72,11 @@
 
 <script type="text/javascript">
   $(function() {
-    $( "#start" ).datetimepicker({viewMode: 'years', format: 'DD/MM/YYYY'});
-    $( "#end" ).datetimepicker({viewMode: 'years', format: 'DD/MM/YYYY'});
+      $( "#start" ).datetimepicker({useCurrent: false, viewMode: 'years', format: 'DD/MM/YYYY'});
+      $( "#start" ).on("dp.change", function(e){$("#form_search").submit();});
+      $( "#end" ).datetimepicker({useCurrent: false, viewMode: 'years', format: 'DD/MM/YYYY'});
+      $( "#end" ).on("dp.change", function(e){$("#form_search").submit();});
+
   });
 </script>
 
