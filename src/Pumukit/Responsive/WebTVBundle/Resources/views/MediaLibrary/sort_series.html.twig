@@ -1,9 +1,12 @@
 <div class="lib_menu">
 
+{# Remove 'if' after making search work for series #}
+{% if sort != "tags" %}
   <!--Toggle whit filter (SIN ACABAR)-->
   <div style="float: right" class="lib_menu_view">
     <a href="#" onclick="$('#search_div').toggle('slow','linear');">Filter</a>
   </div>
+{% endif %}
 
   <!--Methods to order series -->
   <div class="lib_menu_sort">
@@ -19,7 +22,8 @@
 
   <div style="clear: right"></div>
 </div>
-
+{# Remove 'if' after making search work for series #}
+{% if sort != "tags" %}
 <!--Searching series by title-->
 <div id="search_div" style="margin: 10px; padding: 5px 0px; border: 2px solid #999999; background-color: #eee;overflow: hidden;">
   <form>
@@ -35,3 +39,4 @@
   </form>
 
 </div>
+{% endif %}
