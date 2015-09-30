@@ -140,6 +140,9 @@ class MaterialService
         if (array_key_exists('hide', $formData)) {
             $material->setHide($formData['hide']);
         }
+        if (array_key_exists('language', $formData)) {
+            $material->setLanguage($formData['language']);
+        }
         if (array_key_exists('mime_type', $formData)) {
             $material->setMimeType($formData['mime_type']);
         }
