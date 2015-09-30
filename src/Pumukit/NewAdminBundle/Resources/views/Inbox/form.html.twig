@@ -1,7 +1,7 @@
 {% extends 'PumukitNewAdminBundle:Inbox:base.html.twig' %}
 
 {% block inbox_body %}
-<a class="list-group-item collapsed noload" href="#"
+<a data-hash="root" data-path="root" class="list-group-item collapsed noload" href="#"
    onclick="javascript:fileServerTree(this, '{{ onlyDir ? 'dir' : 'file'}}', '{{ dir }}', 1, 'explorer_videoserv'); return false;">
   <span style="padding-left: 0px">
     <i class="mdi- tag_icon"></i>

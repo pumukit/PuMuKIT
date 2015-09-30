@@ -35,10 +35,11 @@ class InboxController extends Controller
                 $res[] = array('path' => $f->getRealpath(),
                                'relativepath' => $f->getRelativePathname(),
                                'is_file' => $f->isFile(),
+                               'hash' => hash('md5', $f->getRealpath()),
                                'content' => false);
             }
         }else{
-            $finder->directories()->followLinks()->in($dir);
+            $finder->depth('< 1')->directories()->followLinks()->in($dir);
             $finder->sortByName();
             foreach ($finder as $f) {
                 if (0 !== (count(glob("$f/*")))){
@@ -47,6 +48,7 @@ class InboxController extends Controller
                     $res[] = array('path' => $f->getRealpath(),
                                    'relativepath' => $f->getRelativePathname(),
                                    'is_file' => $f->isFile(),
+                                   'hash' => hash('md5', $f->getRealpath()),
                                    'content' => $contentFinder->count());
                 }
             }
