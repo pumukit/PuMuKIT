@@ -46,7 +46,9 @@ class PicExtractorListener
         if ($multimediaObject->getPics()->isEmpty() && $this->autoExtractPic) {
             try {
                 if ($multimediaObject->isOnlyAudio() || $track->isOnlyAudio()) {
-                    return $this->addDefaultAudioPic($multimediaObject, $track);
+                    // TODO: Change return values when adding final default audio image
+                    //return $this->addDefaultAudioPic($multimediaObject, $track);
+                    return false;
                 } else {
                     return $this->generatePicFromVideo($multimediaObject, $track);
                 }
