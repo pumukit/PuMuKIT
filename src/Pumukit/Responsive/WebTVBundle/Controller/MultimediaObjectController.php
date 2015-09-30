@@ -16,13 +16,13 @@ use Pumukit\WebTVBundle\Event\ViewedEvent;
 use Pumukit\WebTVBundle\Event\WebTVEvents;
 
 class MultimediaObjectController extends Controller
-{
+{ 
     /**
      * @Route("/video/{id}", name="pumukit_responsive_webtv_multimediaobject_index")
      * @Template("PumukitResponsiveWebTVBundle:MultimediaObject:index.html.twig")
      */
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
-    {
+     { 
         $response = $this->preExecute($multimediaObject, $request);
         if ($response instanceof Response) {
             return $response;
@@ -205,8 +205,9 @@ class MultimediaObjectController extends Controller
             if ($invert = $multimediaObject->getProperty('opencastinvert')) {
                 $opencasturl .= '&display=invert';
             }
-
-            return $this->redirect($opencasturl);
+            if( $this->container->getParameter('pumukit.opencast.use_redirect') ) {
+                return $this->redirect($opencasturl);
+            }
         }
     }
 

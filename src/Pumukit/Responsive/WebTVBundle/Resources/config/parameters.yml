@@ -1,4 +1,5 @@
 parameters:
+    pumukit.opencast.use_redirect:  false
     responsivewebtv.media_library.filter_tags:
         - DIRECTRIZ
         - UNESCO
