@@ -8,15 +8,19 @@
 
 {% block title %}{{ parent() }} - {{ multimediaObject.title }}{% endblock %}
 {% block keywords %}{{ parent() }} - {{ multimediaObject.keyword }}{% endblock %}
+{% block body_class %}
+
+{% endblock %}
 
 {% block body_without_bar %}
     <div class="col-lg-8 col-md-7 nopadding">
       <span class="hidden-sm hidden-xs"></br></span>
-      {% include 'PumukitResponsiveWebTVBundle:MultimediaObject:player.html.twig' with {'width': '620', 'height': '465'} %}
+      {% include 'PumukitResponsiveWebTVBundle:MultimediaObject:player.html.twig' %}
       {% include 'PumukitResponsiveWebTVBundle:MultimediaObject:info.html.twig' %}
       <hr>
     </div>
     <div class="col-lg-4 col-md-5">
+      <span class="hidden-sm hidden-xs"></br></span>
       {% include 'PumukitResponsiveWebTVBundle:MultimediaObject:share.html.twig' %}
       {% render(controller('PumukitResponsiveWebTVBundle:MultimediaObject:series', {'multimediaObject': multimediaObject , 'box_title': 'Videos in the same series:'| trans })) %}
       {% render(controller('PumukitResponsiveWebTVBundle:MultimediaObject:related', {'multimediaObject': multimediaObject, 'box_title': 'You may also be interested in:'| trans })) %}

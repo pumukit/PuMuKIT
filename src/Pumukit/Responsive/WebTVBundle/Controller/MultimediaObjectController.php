@@ -200,13 +200,54 @@ class MultimediaObjectController extends Controller
             if ($response instanceof Response) {
                 return $response;
             }
-            $this->incNumView($multimediaObject);
-            $this->dispatch($multimediaObject);
-            if ($invert = $multimediaObject->getProperty('opencastinvert')) {
-                $opencasturl .= '&display=invert';
-            }
             if( $this->container->getParameter('pumukit.opencast.use_redirect') ) {
+                $this->incNumView($multimediaObject);
+                $this->dispatch($multimediaObject);
+                if ($invert = $multimediaObject->getProperty('opencastinvert')) {
+                    $opencasturl .= '&display=invert';
+                }
                 return $this->redirect($opencasturl);
+            }
+
+            //Detect if it's mobile: (Refactor this using javascript... )
+            
+            $userAgent = $this->getRequest()->headers->get('user-agent');
+            $mobileDetectorService = $this->get('mobile_detect.mobile_detector');
+            $isMobileDevice = ($mobileDetectorService->isMobile($userAgent) || $mobileDetectorService->isTablet($userAgent));
+            $isOldBrowser = $this->getIsOldBrowser($userAgent);
+
+            if( !$isMobileDevice ) 
+            {
+                
+                $track = $request->query->has('track_id') ?
+                         $multimediaObject->getTrackById($request->query->get('track_id')) :
+                         $multimediaObject->getFilteredTrackWithTags(array('display'));
+
+                if (!$track) {
+                    throw $this->createNotFoundException();
+                }
+
+                $response = $this->testBroadcast($multimediaObject, $request);
+                if ($response instanceof Response) {
+                    return $response;
+                }
+
+                $this->incNumView($multimediaObject, $track);
+                $this->dispatch($multimediaObject, $track);
+
+                if ($track->containsTag('download')) {
+                    return $this->redirect($track->getUrl());
+                }
+
+                $this->updateBreadcrumbs($multimediaObject);
+
+                return $this->render('PumukitResponsiveWebTVBundle:MultimediaObject:index_opencast.html.twig',
+                                     array('autostart' => $request->query->get('autostart', 'true'),
+                                           'intro' => $this->getIntro($request->query->get('intro')),
+                                           'multimediaObject' => $multimediaObject,
+                                           "is_old_browser" => $isOldBrowser,
+                                           "is_mobile_device" => $isMobileDevice,
+                                           'track' => $track, ) );
             }
         }
     }
@@ -230,4 +271,41 @@ class MultimediaObjectController extends Controller
 
         return true;
     }
+
+    //Refactor this using javascript.
+    private function getIsOldBrowser($userAgent)
+    {
+        $isOldBrowser = false;
+        $webExplorer = $this->getWebExplorer($userAgent);
+        $version = $this->getVersion($userAgent, $webExplorer);
+        if (($webExplorer == 'IE') || ($webExplorer == 'MSIE') || $webExplorer == 'Firefox' || $webExplorer == 'Opera' || ($webExplorer == 'Safari' && $version<4)){
+            $isOldBrowser = true;
+        }
+
+        return $isOldBrowser;
+    }
+
+    private function getWebExplorer($userAgent)
+    {
+        if (preg_match('/MSIE/i', $userAgent))         $webExplorer = "MSIE";
+        if (preg_match('/Opera/i', $userAgent))        $webExplorer = 'Opera';
+        if (preg_match('/Firefox/i', $userAgent))      $webExplorer = 'Firefox';
+        if (preg_match('/Safari/i', $userAgent))       $webExplorer = 'Safari';
+        if (preg_match('/Chrome/i', $userAgent))       $webExplorer = 'Chrome';
+
+        return $webExplorer;
+    }
+
+    private function getVersion($userAgent, $webExplorer)
+    {
+        $version = null;
+
+        if($webExplorer!=='Opera' && preg_match("#(".strtolower($webExplorer).")[/ ]?([0-9.]*)#", $userAgent, $match))
+            $version = floor($match[2]);
+        if($webExplorer=='Opera' || $webExplorer=='Safari' && preg_match("#(version)[/ ]?([0-9.]*)#", $userAgent, $match))
+            $version = floor($match[2]);
+
+        return $version;
+    }
+
 }
