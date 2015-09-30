@@ -6,7 +6,7 @@
     {% if intro %}
     playlist: [{
       file: "{{ asset(intro, absolute=true) }}",
-      {% if multimediaObject.getFirstUrlPic() and not autostart %}
+      {% if multimediaObject.getFirstUrlPic() and (('true' != autostart) or track.isOnlyAudio()) %}
       image: "{{ asset(multimediaObject.getFirstUrlPic(), absolute=true) }}",
       {% endif %}
     },{
@@ -22,7 +22,7 @@
       {% endfor %}
       ],
       {% endif %}
-      {% if multimediaObject.getFirstUrlPic() and not autostart %}
+      {% if multimediaObject.getFirstUrlPic() and (('true' != autostart) or track.isOnlyAudio()) %}
       image: "{{ asset(multimediaObject.getFirstUrlPic(), absolute=true) }}",
       {% endif %}
     }],
@@ -39,9 +39,7 @@
     {% endfor %}
     ],
     {% endif %}
-    {% if multimediaObject.getFirstUrlPic() and not autostart %}
-    image: "{{ asset(multimediaObject.getFirstUrlPic(), absolute=true) }}",
-    {% elseif multimediaObject.getFirstUrlPic() and track.isOnlyAudio() %}
+    {% if multimediaObject.getFirstUrlPic() and (('true' != autostart) or track.isOnlyAudio()) %}
     image: "{{ asset(multimediaObject.getFirstUrlPic(), absolute=true) }}",
     {% endif %}
     {% endif %}
