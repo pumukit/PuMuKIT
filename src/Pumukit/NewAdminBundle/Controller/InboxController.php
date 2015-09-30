@@ -29,7 +29,7 @@ class InboxController extends Controller
         $res = array();
 
         if ("file" == $type) {
-            $finder->files()->followLinks()->in($dir);
+            $finder->depth('< 1')->followLinks()->in($dir);
             $finder->sortByName();
             foreach ($finder as $f) {
                 $res[] = array('path' => $f->getRealpath(),

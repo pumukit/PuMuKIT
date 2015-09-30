@@ -1211,12 +1211,22 @@ window.fileServerTree = function(element, type, dir, num, input)
                 links = "";
                 for(var i in files) {
                   var file = files[i];
-                  link = '<a class="list-group-item elem" onclick="fileServerSelect(this, \'' + file.path +
-                         '\'); return false;" href="#"><span style="padding-left: 20px"><i class="mdi- tag_icon"></i></span><span title="' +
-                         file.relativepath + '">' +
-                         ((file.relativepath.length > 50) ? (file.relativepath.slice(0, 35) + '...' + file.relativepath.slice(-15)) : (file.relativepath)) +
-                         ((file.content) ? ' [' + (file.content) + ' video(s)]' : '') +
-                         '</span></a>';
+                  if (file.is_file) {
+                    link = '<a class="list-group-item elem" onclick="fileServerSelect(this, \'' + file.path +
+                           '\'); return false;" href="#"><span style="padding-left: ' + (20 *num)  + 'px"><i class="mdi- tag_icon"></i></span><span title="' +
+                           file.relativepath + '">' +
+                           ((file.relativepath.length > 50) ? (file.relativepath.slice(0, 35) + '...' + file.relativepath.slice(-15)) : (file.relativepath)) +
+                           ((file.content) ? ' [' + (file.content) + ' video(s)]' : '') +
+                           '</span></a>';
+                  } else {
+                    debugger;      
+                    link = '<a class="list-group-item collapsed noload" onclick="fileServerTree(this, \'' + type + '\', \'' + file.path +
+                           '\', ' + (num + 1) + ', \'' + input + '\'); return false;" href="#"><span style="padding-left: ' + (20 *num)  + 'px"><i class="mdi- tag_icon"></i></span><span title="' +
+                           file.relativepath + '">' +
+                           ((file.relativepath.length > 50) ? (file.relativepath.slice(0, 35) + '...' + file.relativepath.slice(-15)) : (file.relativepath)) +
+                           ((file.content) ? ' [' + (file.content) + ' video(s)]' : '') +
+                           '</span></a>';
+                  }
                   links += link;
                 }
                 baseelement.after(links);
@@ -1227,9 +1237,11 @@ window.fileServerTree = function(element, type, dir, num, input)
 
             });
         } else {
+            //show loaded
             $('.list-group-item.elem').show();
         }
     } else {
+        //hide
         baseelement.addClass("collapsed").removeClass("expanded");
         $('.list-group-item.elem').hide();
     }
