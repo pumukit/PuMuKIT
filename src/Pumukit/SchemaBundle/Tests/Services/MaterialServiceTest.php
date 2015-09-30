@@ -5,6 +5,7 @@ namespace Pumukit\SchemaBundle\Tests\Services;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Pumukit\SchemaBundle\Services\MaterialService;
 
@@ -234,6 +235,41 @@ class MaterialServiceTest extends WebTestCase
     public function testInvalidTargetPath()
     {
         $materialService = new MaterialService($this->dm, "/non/existing/path", "/uploads/material", true);
+    }
+
+    public function testGetCaptions()
+    {
+        $mm = new MultimediaObject();
+
+        $material1 = new Material();
+        $material2 = new Material();
+        $material3 = new Material();
+        $material4 = new Material();
+        $material5 = new Material();
+
+        $material1->setMimeType('pdf');
+        $material2->setMimeType('vtt');
+        $material3->setMimeType('vtt');
+        $material4->setMimeType('pdf');
+        $material5->setMimeType('vtt');
+
+        $mm->addMaterial($material1);
+        $mm->addMaterial($material2);
+        $mm->addMaterial($material3);
+        $mm->addMaterial($material4);
+        $mm->addMaterial($material5);
+
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $captions = $this->materialService->getCaptions($mm)->toArray();
+        $this->assertEquals(3, count($captions));
+
+        $this->assertFalse(in_array($material1, $captions));
+        $this->assertTrue(in_array($material2, $captions));
+        $this->assertTrue(in_array($material3, $captions));
+        $this->assertFalse(in_array($material4, $captions));
+        $this->assertTrue(in_array($material5, $captions));
     }
 
     private function createBroadcast($broadcastTypeId)
