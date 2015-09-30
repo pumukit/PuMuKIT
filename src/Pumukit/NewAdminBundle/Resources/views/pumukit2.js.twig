@@ -1212,16 +1212,17 @@ window.fileServerTree = function(element, type, dir, num, input)
                 for(var i in files) {
                   var file = files[i];
                   if (file.is_file) {
-                    link = '<a class="list-group-item elem" onclick="fileServerSelect(this, \'' + file.path +
-                           '\'); return false;" href="#"><span style="padding-left: ' + (20 *num)  + 'px"><i class="mdi- tag_icon"></i></span><span title="' +
+                    link = '<a data-hash="' + file.hash + '" data-path="' + baseelement.data('path') + ' ' + file.hash + ' " ' +
+                           ' class="list-group-item elem ' + baseelement.data('path') + ' p_' + baseelement.data('hash') + '" onclick="fileServerSelect(this, \'' + file.path +
+                           '\'); return false;" href="#"><span style="padding-left: ' + (10 *num)  + 'px"><i class="mdi- tag_icon"></i></span><span title="' +
                            file.relativepath + '">' +
                            ((file.relativepath.length > 50) ? (file.relativepath.slice(0, 35) + '...' + file.relativepath.slice(-15)) : (file.relativepath)) +
                            ((file.content) ? ' [' + (file.content) + ' video(s)]' : '') +
                            '</span></a>';
                   } else {
-                    debugger;      
-                    link = '<a class="list-group-item collapsed noload" onclick="fileServerTree(this, \'' + type + '\', \'' + file.path +
-                           '\', ' + (num + 1) + ', \'' + input + '\'); return false;" href="#"><span style="padding-left: ' + (20 *num)  + 'px"><i class="mdi- tag_icon"></i></span><span title="' +
+                    link = '<a data-hash="' + file.hash + '" data-path="' + baseelement.data('path') + ' ' + file.hash + ' " ' +
+                           ' class="list-group-item collapsed noload ' + baseelement.data('path') + ' p_' + baseelement.data('hash') + '" onclick="fileServerTree(this, \'' + type + '\', \'' + file.path +
+                           '\', ' + (num + 1) + ', \'' + input + '\'); return false;" href="#"><span style="padding-left: ' + (10 *num)  + 'px"><i class="mdi- tag_icon"></i></span><span title="' +
                            file.relativepath + '">' +
                            ((file.relativepath.length > 50) ? (file.relativepath.slice(0, 35) + '...' + file.relativepath.slice(-15)) : (file.relativepath)) +
                            ((file.content) ? ' [' + (file.content) + ' video(s)]' : '') +
@@ -1238,12 +1239,13 @@ window.fileServerTree = function(element, type, dir, num, input)
             });
         } else {
             //show loaded
-            $('.list-group-item.elem').show();
+            $(".p_" + baseelement.data('hash')).show();
+            baseelement.addClass("expanded").removeClass("collapsed");
         }
     } else {
         //hide
+        $("." + baseelement.data('hash')).hide().addClass("collapsed").removeClass("expanded");
         baseelement.addClass("collapsed").removeClass("expanded");
-        $('.list-group-item.elem').hide();
     }
 
 }
