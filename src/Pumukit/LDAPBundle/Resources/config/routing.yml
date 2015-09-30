@@ -10,11 +10,3 @@ pumukit_ldap_js:
         _controller: FrameworkBundle:Template:template
         template: 'PumukitLDAPBundle::ldap.js.twig'
         _format: js
-
-pumukit_ldap_css:
-    pattern: /ldap/ldap.css
-    methods: [GET]
-    defaults:
-        _controller: FrameworkBundle:Template:template
-        template: 'PumukitLDAPBundle::ldap.css.twig'
-        _format: css
