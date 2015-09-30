@@ -241,6 +241,12 @@ class MaterialServiceTest extends WebTestCase
     {
         $mm = new MultimediaObject();
 
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $captions = $this->materialService->getCaptions($mm)->toArray();
+        $this->assertEquals(0, count($captions));
+
         $material1 = new Material();
         $material2 = new Material();
         $material3 = new Material();
