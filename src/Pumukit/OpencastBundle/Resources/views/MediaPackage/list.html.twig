@@ -3,13 +3,13 @@
 
       <thead>
         <tr>
+          <th width="10%"></th>
           <th >{% trans %}Img{% endtrans %}</th>
           <th >{% trans %}Id{% endtrans %}</th>
           <th >{% trans %}Name{% endtrans %}</th>
           <th >{% trans %}Series{% endtrans %}</th>
           <th >{% trans %}Duration{% endtrans %}</th>
           <th width="7%">{% trans %}Date{% endtrans %}</th>
-          <th width="10%"></th>
         </tr>
       </thead>
   
@@ -24,6 +24,44 @@
 
         {% for mediaPackage in mediaPackages %}
         <tr> 
+          <td>
+            <a title="{% trans %}play in opencast{% endtrans %}" target="black" href="{{player}}?id={{mediaPackage.id}}">{% trans %}play{% endtrans %}</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            {% set import = 'import' %}
+            {% for  multimediaObject in multimediaObjects %}
+              {% if (multimediaObject.properties != null) and (multimediaObject.properties['opencast'] == mediaPackage.id) %}
+                <a title="{% trans %}View on Pumukit{% endtrans %}" href="{{ url('pumukitnewadmin_mms_index', {id: multimediaObject.series.id, mmid: multimediaObject.id}) }}">
+                  {% trans %}Imported{% endtrans %}
+                </a>
+                {% set import = 'imported' %}
+              {% endif %} 
+            {% endfor %}
+
+            {% if import != 'imported' %}
+              <span class="dropdown dropleft">
+                <a href="#" id="list_mediaPackage_{{ mediaPackage.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {% trans %}Import{% endtrans %}
+                </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="list_mediaPackage_{{ mediaPackage.id }}">  
+                  <li>
+                    <a href="{{ path('pumukitopencast_import', {'id': mediaPackage.id}) }}">
+                      <i class="mdi-editor-format-align-left"></i>{% trans %}Import{% endtrans %}
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{{ path('pumukitopencast_import', {'id': mediaPackage.id, 'invert': true}) }}">
+                      <i class="mdi-editor-format-align-right"></i>{% trans %}Import inverted{% endtrans %}
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" onclick="return false;">
+                      <strong>{% trans %}Cancel{% endtrans %}...</strong>
+                    </a>
+                  </li>
+                </ul>
+              </span>
+            {% endif %}
+            
+          </td>
           <td>
             <img class="mini" src="{{ mediaPackage.attachments.attachment.0.url|default(asset('/bundles/pumukitnewadmin/images/none.jpg')) }}" height="23" width="30">
           </td>
@@ -41,21 +79,6 @@
           </td>
           <td>
             {{ mediaPackage.start|date("d-m-Y") }}
-          </td>
-          <td>
-            <a target="black" href="{{player}}?id={{mediaPackage.id}}">{% trans %}Play{% endtrans %}</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-            {% set import = 'import' %}
-            {% for  multimediaObject in multimediaObjects %}
-              {% if (multimediaObject.properties != null) and (multimediaObject.properties['opencast'] == mediaPackage.id) %}
-                <a href="{{ url('pumukitnewadmin_mms_index', {id: multimediaObject.series.id, mmid: multimediaObject.id}) }}">{% trans %}Imported{% endtrans %}</a>
-                {% set import = 'imported' %}
-              {% endif %} 
-            {% endfor %}
-
-            {% if import != 'imported' %}
-              <a href="{{ path('pumukitopencast_import', {'id': mediaPackage.id}) }}">{% trans %}Import{% endtrans %}</a>
-            {% endif %}
-            
           </td>
         </tr>
         {% endfor %}
