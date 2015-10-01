@@ -20,9 +20,13 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('pumukit_workflow');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+          ->children()
+            ->booleanNode('auto_extract_pic')
+              ->defaultTrue()
+              ->info('Extract thumbnail automatically')
+            ->end()
+          ->end();
 
         return $treeBuilder;
     }

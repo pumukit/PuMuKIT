@@ -41,7 +41,7 @@
           <i id="table_mms_status_{{ mm.id }}" class="{{ mm.status|status_icon }}" data-toggle="tooltip" data-placement="right" title="{{ mm.status|status_text }}"></i>
         </td>
         <td>
-	      {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-editor-format-color-text">':'&nbsp;' }}
+	      {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-action-spellcheck">':'&nbsp;' }}
         </td>
         <td>
           <a href="#" onclick="window.submit_delete_mms('{{ mm.id }}'); return false;">

@@ -8,7 +8,7 @@
         <!-- See #5826 -->
         <service id="doctrine" alias="doctrine_mongodb" />
 
-        <service id="pumukitschema.schema.locale" class="Pumukit\SchemaBundle\Listener\LocaleListener">
+        <service id="pumukitschema.schema.locale" class="Pumukit\SchemaBundle\EventListener\LocaleListener">
             <argument type="service" id="request_stack" />
             <argument>%kernel.default_locale%</argument>
             <argument>%pumukit2.locales%</argument>
@@ -16,7 +16,7 @@
             <tag name="kernel.event_subscriber" />
         </service>
 
-        <service id="pumukitschema.schema.remove" class="Pumukit\SchemaBundle\Listener\RemoveListener">
+        <service id="pumukitschema.schema.remove" class="Pumukit\SchemaBundle\EventListener\RemoveListener">
             <argument type="service" id="service_container" />
             <tag name="doctrine_mongodb.odm.event_listener" event="preRemove" />
         </service>

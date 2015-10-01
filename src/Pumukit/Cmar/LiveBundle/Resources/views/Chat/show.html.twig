@@ -55,7 +55,7 @@ postChatMessage = function()
 {
     if ($("chatName").value != '') {
         var route = "{{ path('pumukit_cmar_live_chat_post', {'channel': channel, 'name': '__NAME__', 'message': '__MESSAGE__'})|raw }}";
-        route = route.replace('__NAME__', $("chatName").value);
+        route = route.replace('__NAME__', encodeURIComponent($("chatName").value));
         route = route.replace('__MESSAGE__', encodeURIComponent($("chatMessage").value));
         new Ajax.Request(route, {method: 'post', onSuccess: function(data) {
                 var responseJson = data.responseJSON;

@@ -32,7 +32,7 @@ class TrackUpdateType extends AbstractType
                         'label' => $this->translator->trans('Hide', array(), null, $this->locale)))
             ->add('language', 'customlanguage',
                   array(
-                        'required' => false,
+                        'required' => true,
                         'label' => $this->translator->trans('Language', array(), null, $this->locale)))
           ->add('durationinminutesandseconds', new TrackdurationType(),
                 array(

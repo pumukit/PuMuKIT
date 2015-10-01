@@ -7,7 +7,7 @@
       <service id="pumukit_moodle.twig_extension" class="Pumukit\MoodleBundle\Twig\PumukitMoodleExtension">
         <tag name="twig.extension"/>
       </service>
-        <service id="pumukit_moodle.filter" class="Pumukit\MoodleBundle\Listener\Filter">
+        <service id="pumukit_moodle.filter" class="Pumukit\MoodleBundle\EventListener\FilterListener">
           <argument type="service" id="doctrine_mongodb.odm.document_manager" />
           <tag name="kernel.event_listener" event="kernel.request" />
         </service>

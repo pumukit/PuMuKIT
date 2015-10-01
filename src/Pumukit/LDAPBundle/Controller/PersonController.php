@@ -63,7 +63,7 @@ class PersonController extends Controller
         $login = $request->get('term');
         $out = [];
         try{
-            $people = $ldapService->getListUsers('*'.$login.'*');
+            $people = $ldapService->getListUsers('*'.$login.'*', '*'.$login.'*');
             foreach($people as $person){
                 $out[] = array(
                                "value" => $person['cn'],
@@ -88,12 +88,13 @@ class PersonController extends Controller
      */
     public function linkAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
+        $cn = $request->get('cn');
         $email = $request->get('mail');
         $personService = $this->get('pumukitschema.person');
         try{
             $person = $personService->findPersonByEmail($email);
             if (null == $person) {
-                $person = $this->createPersonFromLDAP($email);
+                $person = $this->createPersonFromLDAP($cn, $email);
             }
             $multimediaObject = $personService->createRelationPerson($person, $role, $multimediaObject);
         }catch(\Excepction $e){
@@ -110,14 +111,14 @@ class PersonController extends Controller
                                    ));
     }
 
-    private function createPersonFromLDAP($mail='')
+    private function createPersonFromLDAP($cn='', $mail='')
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $ldapService = $this->get('pumukit_ldap.ldap');
         try {
-            $aux = $ldapService->getListUsersByMail($mail);
+            $aux = $ldapService->getListUsers('', $mail);
             if (0 === count($aux)) {
-                throw new \InvalidArgumentException('There is no LDAP user with the email '.$mail);
+                throw new \InvalidArgumentException('There is no LDAP user with the name "'. $cn . '" and email "'.$mail.'"');
             }
             $person = new Person();
             $person->setName($aux[0]['cn']);

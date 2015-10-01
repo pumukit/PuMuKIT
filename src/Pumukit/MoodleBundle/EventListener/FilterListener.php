@@ -1,12 +1,12 @@
 <?php
 
-namespace Pumukit\MoodleBundle\Listener;
+namespace Pumukit\MoodleBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-class Filter
+class FilterListener
 {
     private $dm;
 

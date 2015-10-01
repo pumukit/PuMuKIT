@@ -14,6 +14,15 @@ pumukitnewadmin_css:
         template: 'PumukitNewAdminBundle::pumukit2.css.twig'
         _format: css
 
+
+pumukit_jquery_ui_autocomplete_css:
+    pattern: /admin/jquery_ui_autocomplete.css
+    methods: [GET]
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'PumukitNewAdminBundle::jquery-ui-autocomplete.css.twig'
+        _format: css
+
 pumukitnewadmin_user:
     resource: @PumukitNewAdminBundle/Resources/config/routes/user.yml
     prefix: /admin/user

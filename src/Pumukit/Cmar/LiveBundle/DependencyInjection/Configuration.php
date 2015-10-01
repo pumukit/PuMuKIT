@@ -30,7 +30,7 @@ class Configuration implements ConfigurationInterface
                   ->defaultFalse()
                   ->info('Enable chat in live channel')
                 ->end()
-                ->integerNode('update_interval')->isRequired()
+                ->integerNode('update_interval')
                   ->defaultValue(5000)
                   ->info('Interval in milliseconds to refresh the content of the chat.')
                 ->end()

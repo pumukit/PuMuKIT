@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\SchemaBundle\Tests\Listener;
+namespace Pumukit\SchemaBundle\Tests\EventListener;
 
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use Symfony\Component\HttpFoundation\RequestStack;

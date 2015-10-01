@@ -23,7 +23,11 @@ class MaterialType extends AbstractType
         $builder
           ->add('i18n_name', 'texti18n', array('required' => true, 'label' => $this->translator->trans('Name', array(), null, $this->locale)))
           ->add('hide', 'checkbox', array('required' => false, 'label' => $this->translator->trans('Hide', array(), null, $this->locale)))
-      ->add('mime_type', 'choice', array(
+          ->add('language', 'customlanguage',
+                array(
+                      'required' => true,
+                      'label' => $this->translator->trans('Language', array(), null, $this->locale)))
+          ->add('mime_type', 'choice', array(
                 'choices' => array(
                                    'xxx' => 'xxx - ',
                                    'zip' => 'zip - Compress file',
@@ -37,7 +41,8 @@ class MaterialType extends AbstractType
                                    'mp3' => 'mp3 - MP3 file',
                                    'gz' => 'gz - Compress file',
                                    'doc' => 'doc - Word file',
-                                   'srt' => 'srt - Text-captions srt'
+                                   'srt' => 'srt - Text-captions srt',
+                                   'vtt' => 'vtt - Video Text Tracks'
                                    ),
                 'label' => $this->translator->trans('Type')))
       ;

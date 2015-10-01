@@ -12,6 +12,7 @@
       <input type="text" name="login" id="login" placeholder="{% trans %}login to search for{% endtrans %}" class="form-control"/>
       <span id="indicator1" style="display: none" class="input-group-addon"><img alt="{% trans %}working{% endtrans %}..." src="{{ asset('/bundles/pumukitnewadmin/images/admin/load/spinner.gif') }}" height="18" width="18"></span>
       <input type="hidden" name="ldap_person_mail" value="" id="ldap_person_mail"/>
+      <input type="hidden" name="ldap_person_cn" value="" id="ldap_person_cn"/>
       <input type="hidden" name="ldap_mm_id" value="{{ mm.id }}" id="ldap_mm_id"/>
       <input type="hidden" name="ldap_role_id" value="{{ role.id }}" id="ldap_role_id"/>
       <input type="hidden" name="ldap_mm_title" value="{{ mm.getTitle() }}" id="ldap_mm_title"/>

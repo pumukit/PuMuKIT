@@ -1,24 +1,13 @@
-{% if not multimediaObject.getProperty('opencasthide') %}
-  {% if mobile_device and track %}
-    {% if track.containsTag('html5') %}
-    <video 
-       id = "player"
-       style = "width: 100%; min-height: 400px"
-       controls = "controls"
-       poster = "{{ asset('bundles/pumukitcmarwebtv/cmar/poster.png', absolute=true) }}" >
-      <source src="{{ track.url }}" type="video/mp4"/>
-     </video>
-    {% else %}{# TODO maybe throw 404 #}
-    <iframe src="{{ iframeurl(multimediaObject, not is_old_browser, true) }}"
-            id="mh_iframe"
-            style="border:0px #FFFFFF none; width:100%; height:950px;" 
-            name="Opencast Matterhorn - Media Player" 
-            scrolling="no" frameborder="0" marginheight="0px" marginwidth="0px" 
-            webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true"
-            >
-    </iframe>
-    {% endif %}
-  {% else %}
+{% if mobile_device and track %}
+  {% if track.containsTag('html5') %}
+  <video 
+     id = "player"
+     style = "width: 100%; min-height: 400px"
+     controls = "controls"
+     poster = "{{ asset('bundles/pumukitcmarwebtv/cmar/poster.png', absolute=true) }}" >
+    <source src="{{ track.url }}" type="video/mp4"/>
+   </video>
+  {% else %}{# TODO maybe throw 404 #}
   <iframe src="{{ iframeurl(multimediaObject, not is_old_browser, true) }}"
           id="mh_iframe"
           style="border:0px #FFFFFF none; width:100%; height:950px;" 
@@ -28,4 +17,13 @@
           >
   </iframe>
   {% endif %}
+{% else %}
+<iframe src="{{ iframeurl(multimediaObject, not is_old_browser, true) }}"
+        id="mh_iframe"
+        style="border:0px #FFFFFF none; width:100%; height:950px;" 
+        name="Opencast Matterhorn - Media Player" 
+        scrolling="no" frameborder="0" marginheight="0px" marginwidth="0px" 
+        webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true"
+        >
+</iframe>
 {% endif %}

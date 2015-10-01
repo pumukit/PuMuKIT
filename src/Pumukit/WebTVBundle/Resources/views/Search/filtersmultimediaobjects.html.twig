@@ -72,8 +72,10 @@
 
 <script type="text/javascript">
   $(function() {
-    $( "#start" ).datetimepicker({viewMode: 'years', format: 'DD/MM/YYYY'});
-    $( "#end" ).datetimepicker({viewMode: 'years', format: 'DD/MM/YYYY'});
+    $( "#start" ).datetimepicker({useCurrent: false, viewMode: 'years', format: 'DD/MM/YYYY'});
+    $( "#start" ).on("dp.change", function(e){$("#form_buscador").submit();});
+    $( "#end" ).datetimepicker({useCurrent: false, viewMode: 'years', format: 'DD/MM/YYYY'});
+    $( "#end" ).on("dp.change", function(e){$("#form_buscador").submit();});
   });
 </script>
 

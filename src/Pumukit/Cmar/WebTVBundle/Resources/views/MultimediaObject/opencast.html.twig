@@ -76,12 +76,10 @@ function mh_animacion(){
     {% render(controller('PumukitWebTVBundle:MultimediaObject:related', {'multimediaObject': multimediaObject})) %}
   </div>
  </div>
-  {% if not multimediaObject.getProperty('opencasthide') %}
-    {% if mobile_device and track %}
-      {% include 'PumukitCmarWebTVBundle:MultimediaObject:playerhtml5opencast.html.twig' with {'multimediaObject': multimediaObject, 'roles': multimediaObject.getRoles(), 'track': track} %}
-    {% else %}
-      {% include 'PumukitCmarWebTVBundle:MultimediaObject:playeropencast.html.twig' with {'multimediaObject': multimediaObject, 'roles': multimediaObject.getRoles(), 'is_old_browser': is_old_browser} %}
-    {% endif %}
+  {% if mobile_device and track %}
+    {% include 'PumukitCmarWebTVBundle:MultimediaObject:playerhtml5opencast.html.twig' with {'multimediaObject': multimediaObject, 'roles': multimediaObject.getRoles(), 'track': track} %}
+  {% else %}
+    {% include 'PumukitCmarWebTVBundle:MultimediaObject:playeropencast.html.twig' with {'multimediaObject': multimediaObject, 'roles': multimediaObject.getRoles(), 'is_old_browser': is_old_browser} %}
   {% endif %}
  </div>
 </div>

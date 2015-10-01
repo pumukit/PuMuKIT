@@ -1,12 +1,12 @@
 <?php
 
-namespace Pumukit\ArcaBundle\Listener;
+namespace Pumukit\PodcastBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-class Filter
+class FilterListener
 {
 
   private $dm;
@@ -19,12 +19,14 @@ class Filter
   public function onKernelRequest(GetResponseEvent $event)
   {
     $req = $event->getRequest();
-    if ($event->getRequestType() === HttpKernelInterface::MASTER_REQUEST && 
-        "Pumukit\ArcaBundle" === substr($req->attributes->get("_controller"), 0, 18)) {
-      
+    $routeParams = $req->attributes->get("_route_params");
+
+    if ($event->getRequestType() === HttpKernelInterface::MASTER_REQUEST 
+        && (false !== strpos($req->attributes->get("_controller"), 'PodcastBundle'))
+        && (!isset($routeParams["filter"]) || $routeParams["filter"])) {
       
       $filter = $this->dm->getFilterCollection()->enable("frontend");
-      $filter->setParameter("pub_channel_tag", "PUCHARCA");
+      $filter->setParameter("pub_channel_tag", "PUCHPODCAST");
     }
   }
 }

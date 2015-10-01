@@ -178,9 +178,9 @@
     border: none !important;
   }
 }
-.nav-pills>li>a {
+.nav-wizard>li>a {
   border-radius: 0px;
 }
-.nav>li>a {
+.nav-wizard>li>a {
   padding: 30px 30px;
 }

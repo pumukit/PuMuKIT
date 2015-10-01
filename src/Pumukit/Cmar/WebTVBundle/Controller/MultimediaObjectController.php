@@ -133,11 +133,12 @@ class MultimediaObjectController extends Base
               throw $this->createNotFoundException('PumukitCmarWebTVBundle not configured.');
           }
 
-        \phpCAS::forceAuthentication();
+          $casService = $this->get('pumukit_cmar_web_tv.casservice');
+          $casService->forceAuthentication();
 
-        if(!in_array(\phpCAS::getUser(), array($broadcast->getName(), "tv", "prueba", "adminmh", "admin", "sistemas.uvigo"))) {
-            return new Response($this->render("PumukitWebTVBundle:Index:401unauthorized.html.twig", array()), 401);
-        }
+          if(!in_array($casService->getUser(), array($broadcast->getName(), "tv", "prueba", "adminmh", "admin", "sistemas.uvigo"))) {
+              return new Response($this->render("PumukitWebTVBundle:Index:401unauthorized.html.twig", array()), 401);
+          }
       }
       if ($broadcast && (Broadcast::BROADCAST_TYPE_PRI === $broadcast->getBroadcastTypeId()))
         return new Response($this->render("PumukitWebTVBundle:Index:403forbidden.html.twig", array()), 403);

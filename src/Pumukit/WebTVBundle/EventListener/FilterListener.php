@@ -1,13 +1,14 @@
 <?php
 
-namespace Pumukit\WebTVBundle\Listener;
+namespace Pumukit\WebTVBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
-class Filter
+class FilterListener
 {
 
   private $dm;
@@ -27,6 +28,7 @@ class Filter
         && (!isset($routeParams["filter"]) || $routeParams["filter"])) {
       
       $filter = $this->dm->getFilterCollection()->enable("frontend");
+      $filter->setParameter("status", MultimediaObject::STATUS_PUBLISHED);
       $filter->setParameter("pub_channel_tag", "PUCHWEBTV");
       $filter->setParameter("private_broadcast", $this->getBroadcastCriteria());
       $filter->setParameter("display_track_tag", "display");

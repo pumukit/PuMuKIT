@@ -18,17 +18,21 @@ class SeriesSearchService
         $new_criteria = array();
 
         foreach ($reqCriteria as $property => $value) {
-            if (('title' === $property) && ('' !== $value)) {
+            if (('search' === $property) && ('' !== $value)) {
                 if ($searchInObjects) {
                     $mmRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-                    $ids = $mmRepo->searchSeriesField($value, 100);
+                    $ids = $mmRepo->searchSeriesByIdOrField($value, 100)->toArray();
+                    $ids[] = $value;
 
                     $new_criteria['$or'] = array(
-                      array('_id' => array('$in' => ($ids->toArray()))),
+                      array('_id' => array('$in' => $ids)),
                       array('$text' => array('$search' => $value)),
                     );
                 } else {
-                    $new_criteria['$text'] = array('$search' => $value);
+                    $new_criteria['$or'] = array(
+                      array('_id' => $value),
+                      array('$text' => array('$search' => $value)),
+                    );
                 }
             } elseif (('date' == $property) && ('' !== $value)) {
                 $new_criteria += $this->processDates($value);

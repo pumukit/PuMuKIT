@@ -11,7 +11,7 @@
     </parameters>
 
     <services>
-        <service id="pumukit_web_tv.filter" class="Pumukit\WebTVBundle\Listener\Filter">
+        <service id="pumukit_web_tv.filter" class="Pumukit\WebTVBundle\EventListener\FilterListener">
           <argument type="service" id="doctrine_mongodb.odm.document_manager" />
           <tag name="kernel.event_listener" event="kernel.request" />
         </service>
@@ -20,6 +20,7 @@
           <argument type="service" id="doctrine_mongodb.odm.document_manager" />
           <argument type="service" id="router.request_context" on-invalid="ignore" />
           <argument>%pumukit_web_tv.default_pic%</argument>
+          <argument type="service" id="pumukitschema.material" />
           <tag name="twig.extension" />
         </service>
 
