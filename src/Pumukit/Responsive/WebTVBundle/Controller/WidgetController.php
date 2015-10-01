@@ -64,4 +64,11 @@ class WidgetController extends Controller
 
         return array('events' => $events);
     }
+    /**
+     * @Template()
+     */
+    public function languageselectAction(){
+        $array_locales = $this->container->getParameter('pumukit2.locales');
+        return array( 'languages' => $array_locales );
+    }
 }

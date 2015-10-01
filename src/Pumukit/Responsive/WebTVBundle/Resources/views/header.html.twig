@@ -9,18 +9,7 @@
     </div>
     <div class="col-sm-8">
       <div class="row">
-        <div class="language_select_wrapper">
-          <div class="btn-group">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {{ app.request.getLocale()=='en'?'English':'Deutsch' }} <span class="glyphicon glyphicon-globe"></span>
-            </button>
-            <ul class="dropdown-menu">
-              <li><a href="{{ path('pumukit_locale', {'locale': 'de' } ) }}" > Deutsch </a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="{{ path('pumukit_locale', {'locale': 'en' } ) }}" > English </a></li>
-            </ul>
-          </div>
-        </div>
+        {% render( controller( 'PumukitResponsiveWebTVBundle:Widget:languageselect') ) %}
       </div>
       <div class="row">
         <div class="col-sm-6" style="float:right;";>
@@ -50,18 +39,7 @@
       </div>
     </div>
     <div class="col-xs-1">
-      <div class="language_select_wrapper" style="min-height:10px;display:table-cell;vertical-align:middle;float:right;">
-        <div class="btn-group">
-          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{ app.request.getLocale()=='en'?'English':'Deutsch' }} <span class="glyphicon glyphicon-globe"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li><a href="{{ path('pumukit_locale', {'locale': 'de' } ) }}" > Deutsch </a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="{{ path('pumukit_locale', {'locale': 'en' } ) }}" > English </a></li>
-          </ul>
-        </div>
-      </div>  
+      {% render( controller( 'PumukitResponsiveWebTVBundle:Widget:languageselect') ) %}
     </div>
   </div>
 </div>
