@@ -74,6 +74,14 @@
         <service id="pumukitschema.announce" class="Pumukit\SchemaBundle\Services\AnnounceService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
+
+        <service id="pumukitschema.pic" class="Pumukit\SchemaBundle\Services\PicService">
+          <argument type="service" id="router.request_context" on-invalid="ignore" />
+          <argument>%pumukitschema.default_series_pic%</argument>
+          <argument>%pumukitschema.default_video_pic%</argument>
+          <argument>%pumukitschema.default_audio_hd_pic%</argument>
+          <argument>%pumukitschema.default_audio_sd_pic%</argument>
+        </service>
     </services>
 
 </container>

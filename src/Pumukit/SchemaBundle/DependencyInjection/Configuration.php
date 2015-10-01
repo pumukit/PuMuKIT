@@ -20,9 +20,26 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('pumukit_schema');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+          ->children()
+            ->scalarNode('default_series_pic')
+              ->defaultValue('/images/series_folder.png')
+              ->info('Default Series picture')
+            ->end()
+            ->scalarNode('default_video_pic')
+              ->defaultValue('/images/video_none.jpg')
+              ->info('Default video picture')
+            ->end()
+            ->scalarNode('default_audio_hd_pic')
+              ->defaultValue('/images/audio_hd.svg')
+              ->info('Default audio HD picture')
+            ->end()
+            ->scalarNode('default_audio_sd_pic')
+              ->defaultValue('/images/audio_sd.svg')
+              ->info('Default audio SD picture')
+            ->end()
+          ->end();
+
         return $treeBuilder;
     }
 }
