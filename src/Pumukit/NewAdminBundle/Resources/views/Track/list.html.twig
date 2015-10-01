@@ -77,7 +77,8 @@
       </td>
 
       <td>
-        <a href="{{ path('pumukitnewadmin_track_download', {'id': track.id, 'mmId': mm.id}) }}" download>
+        <a title="{% trans %}Download track{% endtrans %} {{ track.id }}"
+           href="{{ path('pumukitnewadmin_track_download', {'id': track.id, 'mmId': mm.id}) }}" download>
           <i class="mdi-file-file-download"></i>
         </a>
       </td>
