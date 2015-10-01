@@ -217,7 +217,7 @@ class PumukitExtension extends \Twig_Extension
 
         return $minutes."' ".$seconds."''";
     }
-    public function getIframeUrl($multimediaObject, $isHTML5=false, $isDownloadable=false)
+    public function getIframeUrl($multimediaObject, $isHTML5 = false, $isDownloadable = false)
     {
         $url = str_replace('%id%', $multimediaObject->getProperty('opencast'), $multimediaObject->getProperty('opencasturl'));
 
@@ -234,12 +234,12 @@ class PumukitExtension extends \Twig_Extension
         }
 
         if ($isDownloadable) {
-          $url = $url . "&videomode=progressive";
+            $url = $url.'&videomode=progressive';
         }
 
         $invert = $multimediaObject->getProperty('opencastinvert');
         if ($invert && $isHTML5) {
-            $url = $url . "&display=invert";
+            $url = $url.'&display=invert';
         }
 
         return $url;
