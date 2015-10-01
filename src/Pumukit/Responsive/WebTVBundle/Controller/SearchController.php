@@ -17,11 +17,13 @@ class SearchController extends Controller
     private $limit = 10;
 
     /**
-     * @Route("/searchseries")
+     * @Route("/searchseries"), name="pumukit_responsive_webtv_search_series")
      * @Template("PumukitResponsiveWebTVBundle:Search:index.html.twig")
      */
     public function seriesAction(Request $request)
     {
+        $this->get('pumukit_responsive_web_tv.breadcrumbs')->addList('Series search', 'pumukit_responsive_webtv_search_series');
+
         $search_found = $request->query->get('search');
         $start_found = $request->query->get('start');
         $end_found = $request->query->get('end');
@@ -54,11 +56,13 @@ class SearchController extends Controller
     }
 
     /**
-     * @Route("/searchmultimediaobjects")
+     * @Route("/searchmultimediaobjects"), name="pumukit_responsive_webtv_search_multimediaobjects")
      * @Template("PumukitResponsiveWebTVBundle:Search:index.html.twig")
      */
     public function multimediaObjectsAction(Request $request)
     {
+        $this->get('pumukit_responsive_web_tv.breadcrumbs')->addList('Multimedia object search', 'pumukit_responsive_webtv_search_multimediaobjects');
+
         $tag_search = new Tag();
 
         //Recogemos los campos de búsqueda de los filtros

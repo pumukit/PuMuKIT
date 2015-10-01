@@ -5,8 +5,9 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="pumukit_responsive_web_tv.breadcrumbs_all_title">All</parameter>
+        <parameter key="pumukit_responsive_web_tv.breadcrumbs_all_title">Full Catalogue</parameter>
         <parameter key="pumukit_responsive_web_tv.breadcrumbs_all_route">pumukit_responsive_webtv_medialibrary_index</parameter>
+        <parameter key="pumukit_responsive_web_tv.breadcrumbs_home_title">Cíes WebTV</parameter>
         <parameter key="pumukit_responsive_web_tv.default_pic">/bundles/pumukitresponsivewebtv/images/no_pic.jpg</parameter>
     </parameters>
 
@@ -32,6 +33,7 @@
           <argument type="service" id="session" />
           <argument>%pumukit_responsive_web_tv.breadcrumbs_all_title%</argument>
           <argument>%pumukit_responsive_web_tv.breadcrumbs_all_route%</argument>
+          <argument>%pumukit_responsive_web_tv.breadcrumbs_home_title%</argument>
           <argument type="service" id="translator" />
         </service>
     </services>

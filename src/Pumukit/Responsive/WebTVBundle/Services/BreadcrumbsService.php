@@ -16,12 +16,13 @@ class BreadcrumbsService
     private $breadcrumbs;
     private $translator;
 
-    public function __construct(Router $router, Session $session, $allTitle = 'All', $allRoute = 'pumukit_responsive_webtv_medialibrary_index', $translator)
+    public function __construct(Router $router, Session $session, $allTitle = 'All', $allRoute = 'pumukit_responsive_webtv_medialibrary_index', $homeTitle = 'home', $translator)
     {
         $this->session = $session;
         $this->router = $router;
         $this->allTitle = $allTitle;
         $this->allRoute = $allRoute;
+        $this->homeTitle = $homeTitle;
         $this->translator = $translator;
 
         $this->init();
@@ -39,7 +40,7 @@ class BreadcrumbsService
             $this->session->set('breadcrumbs/routeParameters', array());
         }
 
-        $this->breadcrumbs = array(array('title' => 'Home', 'link' => $this->router->generate('pumukit_responsive_webtv_index_index')));
+        $this->breadcrumbs = array(array('title' => $this->homeTitle, 'link' => $this->router->generate('pumukit_responsive_webtv_index_index')));
     }
 
     public function reset()
@@ -47,7 +48,7 @@ class BreadcrumbsService
         $this->session->set('breadcrumbs/title', $this->translator->trans($this->allTitle));
         $this->session->set('breadcrumbs/routeName', $this->allRoute);
         $this->session->set('breadcrumbs/routeParameters', array());
-        $this->breadcrumbs = array(array('title' => 'Home', 'link' => $this->router->generate('pumukit_responsive_webtv_index_index')));
+        $this->breadcrumbs = array(array('title' => $this->homeTitle, 'link' => $this->router->generate('pumukit_responsive_webtv_index_index')));
     }
 
     public function addList($title, $routeName, array $routeParameters = array(), $forceTranslation = false)

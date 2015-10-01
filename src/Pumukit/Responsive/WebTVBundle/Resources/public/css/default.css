@@ -23,6 +23,25 @@ ul, ol {
    margin: 0 auto;
    max-width: 1400px;
 }
+.breadcrumb > li:last-of-type {
+   display: block;
+   font-size: 3em;
+   content: "";
+}
+.breadcrumb > li:last-of-type:after  {
+   content: "";
+}
+.breadcrumb > li:after {
+   content: "»\00a0";
+   padding: 0px 5px;
+   
+}
+.breadcrumb > li + li:before {
+   content: "\00a0";
+   padding: 0px;
+   
+}
+
 .col-no-padding {
    overflow: auto;
 }
@@ -218,18 +237,6 @@ body.opencast-layout .breadcrumb_wrapper {
    left: 14px;
    top: 6px;
 }
-#tvpumukites_breadcrumbs_mmobj:before{
-   content: "";
-}
-#tvpumukites_breadcrumbs_mmobj {
-   display: block;
-   font-size: 3em;
-}
-
-/*#tvpumukites_breadcrumbs_mmobj a{
-   display: block;
-   font-size: 40px;
-}*/
 .video-duration {
    position: absolute;
    bottom: 8%;

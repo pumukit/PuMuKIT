@@ -15,7 +15,7 @@ class MediaLibraryController extends Controller
      */
     public function indexAction($sort, Request $request)
     {
-        $this->get('pumukit_responsive_web_tv.breadcrumbs')->addList('All', 'pumukit_responsive_webtv_medialibrary_index');
+        $this->get('pumukit_responsive_web_tv.breadcrumbs')->addList('Full catalogue', 'pumukit_responsive_webtv_medialibrary_index');
         $series_repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
         $tags_repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
 
