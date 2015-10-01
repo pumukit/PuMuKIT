@@ -65,7 +65,7 @@ class DefaultController extends Controller
 
     private function updateBreadcrumbs($title, $routeName, array $routeParameters = array())
     {
-        $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
+        $breadcrumbs = $this->get('pumukit_responsive_web_tv.breadcrumbs');
         $breadcrumbs->addList($title, $routeName, $routeParameters);
     }
 
