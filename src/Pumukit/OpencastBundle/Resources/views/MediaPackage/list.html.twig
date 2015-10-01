@@ -25,7 +25,7 @@
         {% for mediaPackage in mediaPackages %}
         <tr> 
           <td>
-            <a title="{% trans %}play in opencast{% endtrans %}" target="black" href="{{player}}?id={{mediaPackage.id}}">{% trans %}play{% endtrans %}</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <a title="{% trans %}play in opencast{% endtrans %}" target="black" href="{{player}}?id={{mediaPackage.id}}">{% trans %}Play{% endtrans %}</a>&nbsp;&nbsp;|&nbsp;&nbsp;
             {% set import = 'import' %}
             {% for  multimediaObject in multimediaObjects %}
               {% if (multimediaObject.properties != null) and (multimediaObject.properties['opencast'] == mediaPackage.id) %}
