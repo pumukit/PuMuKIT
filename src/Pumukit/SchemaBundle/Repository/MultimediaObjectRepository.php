@@ -251,6 +251,27 @@ class MultimediaObjectRepository extends DocumentRepository
         return $qb->getQuery()->execute();
     }
 
+
+    /**
+     * Search series using text index or the _id
+     *
+     * @param string $text or _id
+     * @return ArrayCollection
+     */
+    public function searchSeriesByIdOrField($text, $limit = 0, $page = 0)
+    {
+        $qb = $this->createQueryBuilder();
+        $qb->addOr($qb->expr()->field('$text')->equals(array('$search' => $text)));
+        $qb->addOr($qb->expr()->field('_id')->equals($text));
+        $qb->distinct('series');
+
+        if ($limit > 0){
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
+        return $qb->getQuery()->execute();
+    }
+
     /**
      * Find series by person id
      *

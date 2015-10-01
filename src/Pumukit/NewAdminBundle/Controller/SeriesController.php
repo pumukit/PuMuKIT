@@ -465,7 +465,7 @@ class SeriesController extends AdminController
     public function searchAction(Request $req)
     {
         $q = $req->get('q');
-        $this->get('session')->set('admin/series/criteria', array('title' => $q));
+        $this->get('session')->set('admin/series/criteria', array('search' => $q));
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_series_index'));
     }

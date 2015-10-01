@@ -15,27 +15,27 @@
           </div>
           <div id="collapseSearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSearch">
             <div class="panel-body">
-              <div class="form-group">
-                <label for="id" class="control-label">{% trans %}Id{% endtrans %}:</label>
+              {# <div class="form-group">
+                <label for="filters_id" class="control-label">{% trans %}Id{% endtrans %}:</label>
                 <div>
                   <input type="text" class="form-control" name="criteria[_id]" id="filters_id" value="{{ criteria['_id']|default("") }}">
                 </div>
-              </div>
+              </div> #}
               <div class="form-group">
-                <label for="title" class="control-label">{% trans %}Title{% endtrans %}:</label>
+                <label for="filters_search" class="control-label">{% trans %}Search{% endtrans %}:</label>
                 <div>
-                  <input type="text" class="form-control" name="criteria[title]" id="filters_title" value="{{ criteria['title']|default("") }}">
+                  <input type="text" class="form-control" name="criteria[search]" id="filters_search" value="{{ criteria['search']|default("") }}">
                 </div>
               </div>
               
               {# <div class="form-group">
-                <label for="person" class="control-label">{% trans %}Person{% endtrans %}:</label>
+                <label for="filters_person" class="control-label">{% trans %}Person{% endtrans %}:</label>
                 <div>
                   <input type="text" class="form-control" name="criteria[person]" id="filters_person" value="{{ criteria['person']|default("") }}">
                 </div>
               </div> #}
 	          <div class="form-group">
-	            <label for="publicdate" class="control-label">{% trans %}Date{% endtrans %}:</label>
+	            <label for="filters_date" class="control-label">{% trans %}Date{% endtrans %}:</label>
                 <div class="row">
 	              <div class="col-md-11 col-md-offset-1">
 	                {% trans %}From{% endtrans %}:&nbsp;<input type="datetime-local" class="form-control" pattern="(\d\d\d\d)-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)" title="Format YYYY-MM-DDThh:mm:ss"
@@ -61,7 +61,7 @@
           <div id="collapseOthers" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOthers">
             <div class="panel-body container-fluid">
               <div class="form-group">
- 	            <label for="announce" class="control-label">{% trans %}Announced{% endtrans %}:</label>
+ 	            <label for="filters_announce" class="control-label">{% trans %}Announced{% endtrans %}:</label>
                 <div>
 	              <select class="form-control" name="criteria[announce]" id="filters_announce"><option value="diff" selected="selected">{% trans %}Indifferent{% endtrans %}</option>
 		            <option value="true">{% trans %}Yes{% endtrans %}</option>

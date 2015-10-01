@@ -4,6 +4,8 @@ namespace Pumukit\WebTVBundle\Twig;
 
 use Symfony\Component\Routing\RequestContext;
 use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Services\MaterialService;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
 class PumukitExtension extends \Twig_Extension
@@ -20,12 +22,14 @@ class PumukitExtension extends \Twig_Extension
     protected $context;
 
     private $dm;
+    private $materialService;
 
-    public function __construct(DocumentManager $documentManager, RequestContext $context, $defaultPic)
+    public function __construct(DocumentManager $documentManager, RequestContext $context, $defaultPic, MaterialService $materialService)
     {
         $this->dm = $documentManager;
         $this->context = $context;
         $this->defaultPic = $defaultPic;
+        $this->materialService = $materialService;
     }
 
     public function getName()
@@ -52,6 +56,7 @@ class PumukitExtension extends \Twig_Extension
                      new \Twig_SimpleFunction('public_broadcast', array($this, 'getPublicBroadcast')),
                      new \Twig_SimpleFunction('precinct', array($this, 'getPrecinct')),
                      new \Twig_SimpleFunction('precinct_of_series', array($this, 'getPrecinctOfSeries')),
+                     new \Twig_SimpleFunction('captions', array($this, 'getCaptions')),
                      );
     }
 
@@ -209,4 +214,15 @@ class PumukitExtension extends \Twig_Extension
 
       return $minutes ."' ". $seconds . "''";
    }
+
+    /**
+     * Get captions
+     *
+     * @param MultimediaObject $multimediaObject
+     * @return ArrayCollection
+     */
+    public function getCaptions(MultimediaObject $multimediaObject)
+    {
+        return $this->materialService->getCaptions($multimediaObject);
+    }
 }

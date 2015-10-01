@@ -521,6 +521,7 @@ class JobService
         $track->setOnlyAudio($track->getWidth() == 0);
         $track->setHide(!$profile['display']);
 
+        $multimediaObject->setDuration($track->getDuration());
         $multimediaObject->addTrack($track);
      
         $this->dm->persist($multimediaObject);

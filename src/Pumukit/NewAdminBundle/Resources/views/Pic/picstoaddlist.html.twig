@@ -37,7 +37,10 @@
       </li>
       {% endif %}
 
-      {% for i in 1..total %}
+
+      {% set ini = (page - 2 < 1) ? 1 : page - 2 %}
+      {% set final = (page + 2 > total) ? total : page + 2%}
+      {% for i in ini..final %}
         {% if (i == page) %}
           <li class="active">
             <span>{{ i }} <span class="sr-only">(current)</span></span>

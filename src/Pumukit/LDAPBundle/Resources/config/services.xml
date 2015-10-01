@@ -10,6 +10,7 @@
             <argument>%pumukit_ldap.bind_rdn%</argument>
             <argument>%pumukit_ldap.bind_password%</argument>
             <argument>%pumukit_ldap.base_dn%</argument>
+            <argument type="service" id="logger"/>
         </service>
     </services>
 </container>

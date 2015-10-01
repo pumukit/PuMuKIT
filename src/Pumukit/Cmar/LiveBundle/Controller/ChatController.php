@@ -43,7 +43,7 @@ class ChatController extends Controller
         $message = new Message();
         $message->setAuthor($request->get('name'));
         $message->setChannel($channel);
-        $message->setMessage(urldecode($request->get('message')));
+        $message->setMessage($request->get('message'));
         $message->setInsertDate(new \DateTime());
 
         try {
@@ -51,11 +51,10 @@ class ChatController extends Controller
             $dm->persist($message);
             $dm->flush();
         } catch (\Exception $e) {
-
+            return new JsonResponse(array('message' => 'Error'), 500);
         }
-        $response = array('message' => 'Successful');
 
-        return new JsonResponse($response);
+        return new JsonResponse(array('message' => 'Successful'));
     }
 
     /**

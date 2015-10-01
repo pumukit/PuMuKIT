@@ -88,7 +88,7 @@ EOT
         if ($all) {
             $status = array_keys(Job::$statusTexts);
         }else{
-            $status = array(Job::STATUS_EXECUTING);
+            $status = array(Job::STATUS_PAUSED, Job::STATUS_WAITING, Job::STATUS_EXECUTING, Job::STATUS_ERROR);
         }
         $sort = array('timeini' => 'asc');
         $jobs = $jobRepo->findWithStatus($status, $sort);

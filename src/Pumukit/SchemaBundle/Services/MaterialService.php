@@ -11,6 +11,8 @@ use Symfony\Component\Finder\Finder;
 
 class MaterialService
 {
+    const MIME_TYPE_CAPTIONS = 'vtt';
+
     private $dm;
     private $targetPath;
     private $targetUrl;
@@ -128,6 +130,20 @@ class MaterialService
     }
 
     /**
+     * Get VTT captions
+     *
+     * @param MultimediaObject $multimediaObjet
+     * @return array
+     */
+    public function getCaptions(MultimediaObject $multimediaObject)
+    {
+        $mimeTypeCaptions = self::MIME_TYPE_CAPTIONS;
+        return $multimediaObject->getMaterials()->filter(function ($material) use ($mimeTypeCaptions) {
+            return $material->getMimeType() === $mimeTypeCaptions;
+          });
+    }
+
+    /**
      * Save form data of Material
      *
      * @return Material $material
@@ -139,6 +155,9 @@ class MaterialService
         }
         if (array_key_exists('hide', $formData)) {
             $material->setHide($formData['hide']);
+        }
+        if (array_key_exists('language', $formData)) {
+            $material->setLanguage($formData['language']);
         }
         if (array_key_exists('mime_type', $formData)) {
             $material->setMimeType($formData['mime_type']);

@@ -114,6 +114,7 @@ class OpencastImportService
 
                     $this->inspectionService->autocompleteTrack($track);
 
+                    $multimediaObject->setDuration($track->getDuration());
                     $multimediaObject->addTrack($track);
                 }
             } else {
@@ -149,6 +150,7 @@ class OpencastImportService
 
                 $this->inspectionService->autocompleteTrack($track);
 
+                $multimediaObject->setDuration($track->getDuration());
                 $multimediaObject->addTrack($track);
             }
 

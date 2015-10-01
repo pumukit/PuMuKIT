@@ -1,18 +1,18 @@
 <?php
 
-namespace Pumukit\WorkflowBundle\Tests\Services;
+namespace Pumukit\WorkflowBundle\Tests\EventListener;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\WorkflowBundle\Services\WorkflowService;
+use Pumukit\WorkflowBundle\EventListener\JobGeneratorListener;
 
 
 /**
  * @IgnoreAnnotation("dataProvider")
  */
-class WorkflowServiceTest extends WebTestCase
+class JobGeneratorListenerTest extends WebTestCase
 {
     private $dm;
     private $repo;
@@ -54,7 +54,7 @@ class WorkflowServiceTest extends WebTestCase
                        ->disableOriginalConstructor()
                        ->getMock();
                 
-        $this->workflowService = new WorkflowService($this->dm, $jobService, $profileService, $this->logger);
+        $this->jobGeneratorListener = new JobGeneratorListener($this->dm, $jobService, $profileService, $this->logger);
     }
 
     
@@ -73,7 +73,7 @@ class WorkflowServiceTest extends WebTestCase
             array('TAG0 TAG1**, TAG2* TAG*3', array('standard' => array('TAG0', 'TAG*3'), 'force' => array('TAG1*', 'TAG2'))),
         );
         foreach($data as $d) {
-            $targets = $this->invokeMethod($this->workflowService, 'getTargets', array($d[0]));
+            $targets = $this->invokeMethod($this->jobGeneratorListener, 'getTargets', array($d[0]));
             $this->assertEquals($d[1], $targets);
         }
     }
@@ -90,19 +90,19 @@ class WorkflowServiceTest extends WebTestCase
         $mmobj = new MultimediaObject();
         $mmobj->addTrack($track);
 
-        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGA'));      
+        $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGA'));      
         $this->assertEquals(array('video'), $jobs);
 
-        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGC'));
+        $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGC'));
         $this->assertEquals(array('video', 'video2'), $jobs);
 
-        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGB'));
+        $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGB'));
         $this->assertEquals(array('video2', 'audio2'), $jobs);
 
-        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGP'));
+        $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGP'));
         $this->assertEquals(array('videoSD'), $jobs);
 
-        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGFP'));
+        $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGFP'));
         $this->assertEquals(array('videoSD', 'videoHD'), $jobs);
     }
 
@@ -118,19 +118,19 @@ class WorkflowServiceTest extends WebTestCase
         $mmobj = new MultimediaObject();
         $mmobj->addTrack($track);
 
-        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGA'));      
+        $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGA'));      
         $this->assertEquals(array('video'), $jobs);
 
-        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGC'));
+        $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGC'));
         $this->assertEquals(array('video', 'video2'), $jobs);
 
-        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGB'));
+        $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGB'));
         $this->assertEquals(array('video2', 'audio2'), $jobs);
 
-        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGP'));
+        $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGP'));
         $this->assertEquals(array('videoHD'), $jobs);
 
-        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGFP'));
+        $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGFP'));
         $this->assertEquals(array('videoSD', 'videoHD'), $jobs);
     }
     
@@ -145,19 +145,19 @@ class WorkflowServiceTest extends WebTestCase
         $mmobj = new MultimediaObject();
         $mmobj->addTrack($track);
 
-        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGA'));
+        $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGA'));
         $this->assertEquals(array('audio'), $jobs);
 
-        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGC'));
+        $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGC'));
         $this->assertEquals(array('audio', 'audio2'), $jobs);
 
-        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGB'));
+        $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGB'));
         $this->assertEquals(array('audio2'), $jobs); //generate a video2 from an audio has no sense.
 
-        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGP'));
+        $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGP'));
         $this->assertEquals(array(), $jobs); //generate a video from an audio has no sense.
 
-        $jobs = $this->invokeMethod($this->workflowService, 'generateJobs', array($mmobj, 'TAGFP'));
+        $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGFP'));
         $this->assertEquals(array(), $jobs);  //generate a video from an audio has no sense.
         
     }

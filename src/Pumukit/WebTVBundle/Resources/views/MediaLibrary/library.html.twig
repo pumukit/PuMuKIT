@@ -50,6 +50,10 @@
 	{% set lastDate = serie.getPublicDate()|date("d/m/Y") %}
 
     {% endif %}
+    {% else %}
+      <div class="row text-center">
+        {% trans %}Not series found{% endtrans %}.
+      </div>
 	{% endfor %}
 
 {% endif %}

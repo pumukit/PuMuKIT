@@ -52,7 +52,7 @@ class Configuration implements ConfigurationInterface
                                 ->info('Shown in wizard')->end()
                             ->booleanNode('master')->defaultValue(true)
                                 ->info('The track is master copy')->end()
-                            //Used in WorkflowService            
+                            //Used in JobGeneratorListener
                             ->scalarNode('target')->defaultValue('')
                                 ->info('Profile is used to generate a new track when a multimedia object is tagged with a publication channel tag name with this value. List of names')->end()
                             ->scalarNode('tags')->defaultValue('')->info('Tags used in tracks created with this profiles')->end()
@@ -60,10 +60,10 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('codec')->info('Codec of the track')->end()
                             ->scalarNode('mime_type')->info('Mime Type of the track')->end()
                             ->scalarNode('extension')->info('Extension of the track. If empty the input file extension is used.')->end()
-                            //Used in WorkflowService
+                            //Used in JobGeneratorListener
                             ->integerNode('resolution_hor')->min(0)->defaultValue(0)
                                 ->info('Horizontal resolution of the track, 0 if it depends from original video')->end()
-                            //Used in WorkflowService            
+                            //Used in JobGeneratorListener
                             ->integerNode('resolution_ver')->min(0)->defaultValue(0)
                                 ->info('Vertical resolution of the track, 0 if it depends from original video')->end()
                             ->scalarNode('bitrate')->info('Bit rate of the track')->end()
@@ -71,7 +71,7 @@ class Configuration implements ConfigurationInterface
                                 ->info('Framerate of the track')->end()
                             ->integerNode('channels')->min(0)->defaultValue(1)
                                 ->info('Available Channels')->end()
-                            //Used in WorkflowService            
+                            //Used in JobGeneratorListener
                             ->booleanNode('audio')->defaultValue(false)
                                 ->info('The track is only audio')->end()
                             ->scalarNode('bat')->isRequired()->cannotBeEmpty()

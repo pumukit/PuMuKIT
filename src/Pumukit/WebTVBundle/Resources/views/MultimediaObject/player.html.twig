@@ -1,22 +1,45 @@
 {% if track %}
+{% set captions = captions(multimediaObject) %}
 <video id="player1" controls></video>
 <script type="text/javascript">
   jwplayer("player1").setup({
     {% if intro %}
     playlist: [{
       file: "{{ asset(intro, absolute=true) }}",
-      {% if multimediaObject.getFirstUrlPic() and not autostart %}
+      {% if multimediaObject.getFirstUrlPic() and ('true' != autostart) %}
       image: "{{ asset(multimediaObject.getFirstUrlPic(), absolute=true) }}",
       {% endif %}
     },{
       file: "{{ asset(track.url, absolute=true) }}",
-      {% if multimediaObject.getFirstUrlPic() and not autostart %}
+      {% if captions is not empty %}
+      tracks: [
+      {% for caption in captions %}
+        {
+          file: "{{ caption.url }}",
+          label: "{{ caption.language|language_name }}",
+          kind: "captions"
+        },
+      {% endfor %}
+      ],
+      {% endif %}
+      {% if multimediaObject.getFirstUrlPic() and (('true' != autostart) or track.isOnlyAudio()) %}
       image: "{{ asset(multimediaObject.getFirstUrlPic(), absolute=true) }}",
       {% endif %}
     }],
     {% else %}
     file: "{{ asset(track.url, absolute=true) }}",
-    {% if multimediaObject.getFirstUrlPic() and not autostart %}
+    {% if captions is not empty %}
+    tracks: [
+    {% for caption in captions %}
+      {
+        file: "{{ caption.url }}",
+        label: "{{ caption.language|language_name }}",
+        kind: "captions"
+      },
+    {% endfor %}
+    ],
+    {% endif %}
+    {% if multimediaObject.getFirstUrlPic() and (('true' != autostart) or track.isOnlyAudio()) %}
     image: "{{ asset(multimediaObject.getFirstUrlPic(), absolute=true) }}",
     {% endif %}
     {% endif %}

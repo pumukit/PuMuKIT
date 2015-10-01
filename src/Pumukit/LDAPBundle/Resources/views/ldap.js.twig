@@ -19,6 +19,7 @@ $(function() {
         minLength: 2,
         select: function(event, ui) {
             $("#ldap_person_mail").val(ui.item.mail);
+            $("#ldap_person_cn").val(ui.item.cn);
         }
     }).autocomplete("instance")._renderItem = function( ul, item ) {
         return $("<li>")
@@ -28,16 +29,19 @@ $(function() {
 
     $("#login").on("input", function(){
         $("#ldap_person_mail").val("");
+        $("#ldap_person_cn").val("");
     });
 
     $('#create_ldap_relation').on('click', function(){
-        if('' != $('#ldap_person_mail').val()){
-            var route = '{{ path('pumukit_ldap_person_link', {'mail': '__personMail__', 'roleId': '__roleId__', 'mmId': '__mmId__'} )|raw }}';
+        if(('' != $('#ldap_person_mail').val()) || ('' != $('#ldap_person_cn').val())){
+            var route = '{{ path('pumukit_ldap_person_link', {'cn': '__personCn__', 'mail': '__personMail__', 'roleId': '__roleId__', 'mmId': '__mmId__'} )|raw }}';
             var mmId = $('#ldap_mm_id').val();
             var roleId = $('#ldap_role_id').val();
             var personMail = $('#ldap_person_mail').val();
+            var personCn = $('#ldap_person_cn').val();
             route = route.replace('__mmId__', mmId);
             route = route.replace('__roleId__', roleId);
+            route = route.replace('__personCn__', personCn);
             $.ajax({
                 url: route.replace('__personMail__', personMail),
                 type: 'POST',

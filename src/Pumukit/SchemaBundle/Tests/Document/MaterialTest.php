@@ -14,6 +14,7 @@ class MaterialTest extends \PHPUnit_Framework_TestCase
         $path = '/mnt/video/123/23435.mp4';
         $mime = 'video/mpeg4';
         $hide = false;
+        $language = 'en';
 
         $material = new material();
 
@@ -23,6 +24,7 @@ class MaterialTest extends \PHPUnit_Framework_TestCase
         $material->setPath($path);
         $material->setMimeType($mime);
         $material->setHide($hide);
+        $material->setLanguage($language);
 
         $this->assertEquals($name, $material->getName());
         $this->assertEquals($tags, $material->getTags());
@@ -30,6 +32,7 @@ class MaterialTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($path, $material->getPath());
         $this->assertEquals($mime, $material->getMimeType());
         $this->assertFalse($hide, $material->getHide());
+        $this->assertEquals($language, $material->getLanguage());
 
         $name = null;
         $material->setName(null);

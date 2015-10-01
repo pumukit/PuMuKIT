@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\WorkflowBundle\Services;
+namespace Pumukit\WorkflowBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
@@ -10,7 +10,7 @@ use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
-class WorkflowService
+class JobGeneratorListener
 {
     private $dm;
     private $logger;
@@ -72,7 +72,7 @@ class WorkflowService
                     $profileAspectRatio = $profile['resolution_hor']/$profile['resolution_ver'];
                     $multimediaObjectAspectRatio = $multimediaObject->getTrackWithTag("master")->getAspectRatio();
                     if ((1.5 > $profileAspectRatio) !== (1.5 > $multimediaObjectAspectRatio)) {
-                        $this->logger->info(sprintf("WorkflowService can't create a new job (%s) for multimedia object %s using standard target, ".
+                        $this->logger->info(sprintf("JobGeneratorListener can't create a new job (%s) for multimedia object %s using standard target, ".
                                                     "because a video profile aspect ratio(%f) is diferent to video aspect ratio (%f)",
                                                     $targetProfile, $multimediaObject->getId(), $profileAspectRatio, $multimediaObjectAspectRatio));
 
@@ -81,20 +81,20 @@ class WorkflowService
                 }
                 
                 $master = $multimediaObject->getTrackWithTag("master");
-                $this->logger->info(sprintf("WorkflowService creates new job (%s) for multimedia object %s using standard target", $targetProfile, $multimediaObject->getId()));
+                $this->logger->info(sprintf("JobGeneratorListener creates new job (%s) for multimedia object %s using standard target", $targetProfile, $multimediaObject->getId()));
                 $jobs[] = $this->jobService->addUniqueJob($master->getPath(), $targetProfile, 2, $multimediaObject, $master->getLanguage());
             }
             
             if(in_array($pubChannelCod, $targets['force'])) {
 
                 if ($multimediaObject->isOnlyAudio() && !$profile['audio']){
-                    $this->logger->info(sprintf("WorkflowService can't create a new job (%s) for multimedia object %s using forced target, because a video profile can't be created from an audio",
+                    $this->logger->info(sprintf("JobGeneratorListener can't create a new job (%s) for multimedia object %s using forced target, because a video profile can't be created from an audio",
                                                 $targetProfile, $multimediaObject->getId()));
                     continue;
                 }
             
                 $master = $multimediaObject->getTrackWithTag("master");
-                $this->logger->info(sprintf("WorkflowService creates new job (%s) for multimedia object %s using forced target", $targetProfile, $multimediaObject->getId()));
+                $this->logger->info(sprintf("JobGeneratorListener creates new job (%s) for multimedia object %s using forced target", $targetProfile, $multimediaObject->getId()));
                 $jobs[] = $this->jobService->addUniqueJob($master->getPath(), $targetProfile, 2, $multimediaObject, $master->getLanguage());
             }
             

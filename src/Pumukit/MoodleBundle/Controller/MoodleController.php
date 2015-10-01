@@ -56,7 +56,7 @@ class MoodleController extends Controller
         } 
         
         $out['status'] = "ERROR";
-        $out['status_txt'] = "Authentication error: professor with email " . $email  . " not found in Pumukit video server.";
+        $out['status_txt'] = "Error: professor with email " . $email  . " does not have any video on WebTV Channel in the Pumukit server.";
         $out['out'] = null;
         
         return new JsonResponse($out, 404);
@@ -117,7 +117,7 @@ class MoodleController extends Controller
             return new JsonResponse($out, 200);
         }
         $out['status'] = "ERROR";
-        $out['status_txt'] = "Authentication error: professor with email " . $email  . " not found in Pumukit video server.";
+        $out['status_txt'] = "Error: professor with email " . $email  . " does not have any video on WebTV Channel in the Pumukit server.";
         $out['out'] = null;
 
         return new JsonResponse($out, 404);

@@ -2,19 +2,23 @@
 
 namespace Pumukit\LDAPBundle\Services;
 
+use Symfony\Component\HttpKernel\Log\LoggerInterface;
+
 class LDAPService
 {
     private $server;
     private $bindRdn;
     private $bindPassword;
     private $baseDn;
+    private $logger;
 
-    public function __construct($server, $bindRdn, $bindPassword, $baseDn)
+    public function __construct($server, $bindRdn, $bindPassword, $baseDn, LoggerInterface $logger)
     {
         $this->server = $server;
         $this->bindRdn = $bindRdn;
         $this->bindPassword = $bindPassword;
         $this->baseDn = $baseDn;
+        $this->logger = $logger;
     }
 
     /**
@@ -44,7 +48,7 @@ class LDAPService
                     return $result;
                 }
             } catch (\Exception $e) {
-                // TODO log exception
+                $this->logger->debug(__CLASS__.' ['.__FUNCTION__.'] '. $e->getMessage());
                 return false;
             }
         }
@@ -80,6 +84,7 @@ class LDAPService
                 ldap_close($linkIdentifier);
             }
         } catch (\Exception $e) {
+            $this->logger->error(__CLASS__.' ['.__FUNCTION__.'] '. $e->getMessage());
             throw $e;
         }
 
@@ -112,6 +117,7 @@ class LDAPService
                 ldap_close($linkIdentifier);
             }
         } catch (\Exception $e) {
+            $this->logger->error(__CLASS__.' ['.__FUNCTION__.'] '. $e->getMessage());
             throw $e;
         }
 
@@ -145,6 +151,7 @@ class LDAPService
                 ldap_close($linkIdentifier);
             }
         } catch (\Exception $e) {
+            $this->logger->error(__CLASS__.' ['.__FUNCTION__.'] '. $e->getMessage());
             throw $e;
         }
 
@@ -154,10 +161,19 @@ class LDAPService
     /**
      * Get list of users
      *
+     * Searches LDAP users by CN or MAIL
+     * If CN is an empty string or null and MAIL a given string:
+     * - Returns LDAP users with given MAIL
+     * If MAIL is an empty string or null and CN a given string:
+     * - Returns LDAP users with given CN
+     * If CN and MAIL are strings (equal or different):
+     * - Returns LDAP users with given CN and LDAP users with given MAIL
+     *
      * @param string $cn
+     * @param string $mail
      * @return array
      */
-    public function getListUsers($cn='')
+    public function getListUsers($cn='', $mail='')
     {
         $out = array();
         try {
@@ -165,7 +181,8 @@ class LDAPService
             ldap_set_option($linkIdentifier, LDAP_OPT_PROTOCOL_VERSION, 3);
             if ($linkIdentifier) {
                 $result=ldap_bind($linkIdentifier, $this->bindRdn, $this->bindPassword);
-                $searchResult = ldap_search($linkIdentifier, $this->baseDn, "mail=" . $cn);
+                $filter = $this->getFilter($cn, $mail);
+                $searchResult = ldap_search($linkIdentifier, $this->baseDn, $filter);
                 if ($searchResult){
                     $info = ldap_get_entries($linkIdentifier, $searchResult);
                     if (($info)&&(count($info) != 0)){
@@ -181,6 +198,7 @@ class LDAPService
                 ldap_close($linkIdentifier);
             }
         } catch (\Exception $e) {
+            $this->logger->error(__CLASS__.' ['.__FUNCTION__.'] '. $e->getMessage());
             throw $e;
         }
 
@@ -188,35 +206,31 @@ class LDAPService
     }
 
     /**
-     * Get list users by mail
+     * Get filter
+     *
+     * Builds LDAP filter by CN or MAIL
+     * If CN is an empty string or null and MAIL a given string:
+     * - Returns LDAP query with given MAIL
+     * If MAIL is an empty string or null and CN a given string:
+     * - Returns LDAP query with given CN
+     * If CN and MAIL are strings (equal or different):
+     * - Returns LDAP query with given CN and LDAP users with given MAIL
+     *
+     * @param string $cn
+     * @param string $mail
+     * @return string
      */
-    public function getListUsersByMail($mail='')
+    private function getFilter($cn='', $mail='')
     {
-        $out = array();
-        try {
-            $linkIdentifier = ldap_connect( $this->server ); 
-            ldap_set_option($linkIdentifier, LDAP_OPT_PROTOCOL_VERSION, 3);
-            if ($linkIdentifier) {
-                $result = ldap_bind($linkIdentifier, $this->bindRdn, $this->bindPassword);
-                $searchResult = ldap_search($linkIdentifier, $this->baseDn, "mail=" . $mail);
-                if ($searchResult){
-                    $info = ldap_get_entries($linkIdentifier, $searchResult);
-                    if (($info)&&(count($info) != 0)){
-                        foreach($info as $k=>$i) {
-                            if($k === "count") continue;
-                            $out[] = array(
-                                           'mail' => $i["mail"][0],
-                                           'cn' => $i["cn"][0]
-                                           );
-                        }
-                    }
-                }
-                ldap_close($linkIdentifier);
+        $filter = ($cn ? "cn=".$cn : '');
+        if ($mail) {
+            if ($filter) {
+                $filter = "(|(".$filter.")(mail=".$mail."))";
+            } else {
+                $filter = "mail=".$mail;
             }
-        } catch (\Exception $e) {
-            throw $e;
         }
 
-        return $out;
+        return $filter;
     }
 }
