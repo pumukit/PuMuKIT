@@ -36,7 +36,7 @@ class OpencastImportService
     }
 
 
-    public function importRecording($opencastId)
+    public function importRecording($opencastId, $invert=false)
     {
         $mediaPackage = $this->opencastClient->getMediaPackage($opencastId);
         $seriesRepo = $this->dm->getRepository('PumukitSchemaBundle:Series');
@@ -63,6 +63,7 @@ class OpencastImportService
             $multimediaObject->setSeries($series);
             $multimediaObject->setRecordDate($recDate);
             $multimediaObject->setProperty("opencast", $properties);
+            $multimediaObject->setProperty("opencastinvert", $invert);
             $multimediaObject->setProperty("opencasturl", $this->opencastClient->getPlayerUrl() . "?id=" . $properties);
             $multimediaObject->setTitle($title);
             if (isset($mediaPackage["language"])) {
