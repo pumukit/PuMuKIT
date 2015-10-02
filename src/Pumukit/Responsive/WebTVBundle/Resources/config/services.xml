@@ -25,6 +25,7 @@
           <argument type="service" id="doctrine_mongodb.odm.document_manager" />
           <argument type="service" id="router.request_context" on-invalid="ignore" />
           <argument>%pumukit_responsive_web_tv.default_pic%</argument>
+          <argument type="service" id="pumukitschema.material" />
           <tag name="twig.extension" />
         </service>
 

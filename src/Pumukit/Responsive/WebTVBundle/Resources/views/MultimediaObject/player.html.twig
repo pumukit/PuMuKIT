@@ -1,4 +1,5 @@
 {% if track %}
+{% set captions = captions(multimediaObject) %}
 <video class="video-player" id="player1" controls>
 
 </video>
@@ -13,12 +14,34 @@
       {% endif %}
     },{
       file: "{{ asset(track.url, absolute=true) }}",
+        {% if captions is not empty %}
+        tracks: [
+            {% for caption in captions %}
+            {
+                file: "{{ caption.url }}",
+                label: "{{ caption.language|language_name }}",
+                kind: "captions"
+            },
+            {% endfor %}
+        ],
+        {% endif %}
       {% if multimediaObject.getFirstUrlPic() and not autostart %}
       image: "{{ asset(multimediaObject.getFirstUrlPic(), absolute=true) }}",
       {% endif %}
     }],
     {% else %}
     file: "{{ asset(track.url, absolute=true) }}",
+      {% if captions is not empty %}
+      tracks: [
+          {% for caption in captions %}
+          {
+              file: "{{ caption.url }}",
+              label: "{{ caption.language|language_name }}",
+              kind: "captions"
+          },
+          {% endfor %}
+      ],
+      {% endif %}
     {% if multimediaObject.getFirstUrlPic() and not autostart %}
     image: "{{ asset(multimediaObject.getFirstUrlPic(), absolute=true) }}",
     {% endif %}
