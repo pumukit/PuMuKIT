@@ -63,7 +63,7 @@ class OpencastImportService
             $multimediaObject->setSeries($series);
             $multimediaObject->setRecordDate($recDate);
             $multimediaObject->setProperty("opencast", $properties);
-            $multimediaObject->setProperty("opencastinvert", $invert);
+            $multimediaObject->setProperty("opencastinvert", boolval($invert));
             $multimediaObject->setProperty("opencasturl", $this->opencastClient->getPlayerUrl() . "?id=" . $properties);
             $multimediaObject->setTitle($title);
             if (isset($mediaPackage["language"])) {

@@ -46,13 +46,15 @@
         </a>
       </td>
       <td>
-          <a href="#" onclick="window.submit_delete_track('{{ track.id }}', '{{ mm.id }}', '{{ mm.getSeries().getId() }}'); return false;">
+          <a title="{% trans %}Delete track{% endtrans %} {{ track.id }}" href="#" 
+             onclick="window.submit_delete_track('{{ track.id }}', '{{ mm.id }}', '{{ mm.getSeries().getId() }}'); return false;">
              <i class="mdi-content-clear"></i>
           </a>
       </td>
       <td>
-        <a href="#" onclick="$('#tracks_mms_{{ mm.id }}').load('{{ path('pumukitnewadmin_track_autocomplete', {'id': track.id, 'mmId': mm.id, 'preview': 1, 'mod': 'mm'}) }}'); return false;">
-          <i class="mdi-action-spellcheck"></i>
+        <a title="{% trans %}Autocomplete technical metadata of track{% endtrans %} {{ track.id }}" href="#" 
+           onclick="$('#tracks_mms_{{ mm.id }}').load('{{ path('pumukitnewadmin_track_autocomplete', {'id': track.id, 'mmId': mm.id, 'preview': 1, 'mod': 'mm'}) }}'); return false;">
+          <i class="mdi-hardware-keyboard-return"></i>
         </a>
       </td>
 
@@ -75,7 +77,8 @@
       </td>
 
       <td>
-        <a href="{{ path('pumukitnewadmin_track_download', {'id': track.id, 'mmId': mm.id}) }}" download>
+        <a title="{% trans %}Download track{% endtrans %} {{ track.id }}"
+           href="{{ path('pumukitnewadmin_track_download', {'id': track.id, 'mmId': mm.id}) }}" download>
           <i class="mdi-file-file-download"></i>
         </a>
       </td>
