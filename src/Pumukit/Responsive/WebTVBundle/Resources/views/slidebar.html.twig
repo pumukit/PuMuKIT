@@ -1,13 +1,16 @@
 <nav class="navbar navbar-default col-lg-3">
+  <br>
   <div class="navbar-header">    
     <div class="row">
       <span class="hidden-lg collapsed">
         <h2>
-          {%trans%} University Islas Cíes {%endtrans%}
+          {%trans%} University Islas Cíes {%endtrans%}       
+          
         </h2>
       </span>
       <span class="hidden-lg collapsed">
         {% include 'PumukitResponsiveWebTVBundle::search_box.html.twig' %}
+        {% render( controller( 'PumukitResponsiveWebTVBundle:Widget:languageselect') ) %}
       </span>
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#pumukit-navbar-collapse-1">
         <span class="sr-only">TOGGLE NAVIGATION</span>
@@ -20,4 +23,5 @@
   <div class="collapse navbar-collapse" id="pumukit-navbar-collapse-1">
     {% render(controller('PumukitResponsiveWebTVBundle:Widget:menu')) %}
   </div><!--END navbar-collapse-->
+  <br>
 </nav>

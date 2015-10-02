@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Symfony\Component\HttpFoundation\Response;
 
 class WidgetController extends Controller
 {
@@ -69,6 +70,10 @@ class WidgetController extends Controller
      */
     public function languageselectAction(){
         $array_locales = $this->container->getParameter('pumukit2.locales');
+        if( count($array_locales) <= 1)
+        {
+            return new Response('');
+        }
         return array( 'languages' => $array_locales );
     }
 }
