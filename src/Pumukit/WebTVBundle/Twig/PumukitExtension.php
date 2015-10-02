@@ -6,6 +6,7 @@ use Symfony\Component\Routing\RequestContext;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\MaterialService;
+use Pumukit\SchemaBundle\Services\PicService;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
 class PumukitExtension extends \Twig_Extension
@@ -23,13 +24,15 @@ class PumukitExtension extends \Twig_Extension
 
     private $dm;
     private $materialService;
+    private $picService;
 
-    public function __construct(DocumentManager $documentManager, RequestContext $context, $defaultPic, MaterialService $materialService)
+    public function __construct(DocumentManager $documentManager, RequestContext $context, $defaultPic, MaterialService $materialService, PicService $picService)
     {
         $this->dm = $documentManager;
         $this->context = $context;
         $this->defaultPic = $defaultPic;
         $this->materialService = $materialService;
+        $this->picService = $picService;
     }
 
     public function getName()
@@ -64,35 +67,13 @@ class PumukitExtension extends \Twig_Extension
      *
      * @param Series|MultimediaObject $object    Object to get the url (using $object->getPics())
      * @param boolean                 $absolute  return absolute path.
+     * @param boolean                 $hd        return HD image.
      *
      * @return string
      */
-    public function getFirstUrlPicFilter($object, $absolute=false)
+    public function getFirstUrlPicFilter($object, $absolute=false, $hd=true)
     {
-      $pics = $object->getPics();
-      if(0 == count($pics)) {
-          $picUrl = $this->defaultPic;
-      }else{
-          $pic = $pics[0];
-          $picUrl = $pic->getUrl();
-      }
-
-      if($absolute && "/" == $picUrl[0]) {
-          $scheme = $this->context->getScheme();
-          $host = $this->context->getHost();
-          $port = '';
-          if ('http' === $scheme && 80 != $this->context->getHttpPort()) {
-              $port = ':'.$this->context->getHttpPort();
-          } elseif ('https' === $scheme && 443 != $this->context->getHttpsPort()) {
-              $port = ':'.$this->context->getHttpsPort();
-          }
-
-          return $scheme."://".$host.$port.$picUrl;
-      }
-
-      return $picUrl;
-        
-
+        return $this->picService->getFirstUrlPic($object, $absolute, $hd);
     }
 
     /**
