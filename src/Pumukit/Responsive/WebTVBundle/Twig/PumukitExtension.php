@@ -43,7 +43,6 @@ class PumukitExtension extends \Twig_Extension
             new \Twig_SimpleFilter('precinct_fulltitle', array($this, 'getPrecinctFulltitle')),
             new \Twig_SimpleFilter('count_multimedia_objects', array($this, 'countMultimediaObjects')),
             new \Twig_SimpleFilter('duration_minutes_seconds', array($this, 'getDurationInMinutesSeconds')),
-            new \Twig_SimpleFunction('captions', array($this, 'getCaptions')),
         );
     }
 
@@ -57,6 +56,7 @@ class PumukitExtension extends \Twig_Extension
                      new \Twig_SimpleFunction('precinct', array($this, 'getPrecinct')),
                      new \Twig_SimpleFunction('precinct_of_series', array($this, 'getPrecinctOfSeries')),
                      new \Twig_SimpleFunction('iframeurl', array($this, 'getIframeUrl')),
+                     new \Twig_SimpleFunction('captions', array($this, 'getCaptions')),
                      );
     }
 
