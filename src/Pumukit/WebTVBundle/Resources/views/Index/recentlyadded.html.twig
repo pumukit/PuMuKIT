@@ -11,13 +11,13 @@
               <figure class="album">  
                 <a href="{{ path('pumukit_webtv_series_index', {'id': element.getId()}) }}">
                   <div class="picture">
-                    <img src="{{ element|first_url_pic(true) }}"></img>
+                    <img src="{{ element|first_url_pic(true, false) }}"></img>
                   </div>
                   <div class="picture">
-                    <img src="{{ element|first_url_pic(true) }}"></img>
+                    <img src="{{ element|first_url_pic(true, false) }}"></img>
                   </div>
                   <div class="picture">
-                    <img src="{{ element|first_url_pic(true) }}"></img>
+                    <img src="{{ element|first_url_pic(true, false) }}"></img>
                   </div>
                 </a>
               </figure>
@@ -46,7 +46,7 @@
             		margin: 10px;
             		margin-right: 20px;">
             		<a href="{{ path('pumukit_webtv_multimediaobject_index', {'id': element.getId})}}">
-              			<img src="{{ element|first_url_pic(true) }}"></img>
+              			<img src="{{ element|first_url_pic(true, false) }}"></img>
                 		<span class="video-duration" style="top: 4px;
                      		position: absolute;
                       		z-index:10; 

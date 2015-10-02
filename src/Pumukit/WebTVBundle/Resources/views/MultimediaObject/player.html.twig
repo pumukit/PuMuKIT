@@ -6,8 +6,8 @@
     {% if intro %}
     playlist: [{
       file: "{{ asset(intro, absolute=true) }}",
-      {% if multimediaObject.getFirstUrlPic() and ('true' != autostart) %}
-      image: "{{ asset(multimediaObject.getFirstUrlPic(), absolute=true) }}",
+      {% if 'true' != autostart %}
+      image: "{{ multimediaObject|first_url_pic(true) }}",
       {% endif %}
     },{
       file: "{{ asset(track.url, absolute=true) }}",
@@ -22,8 +22,8 @@
       {% endfor %}
       ],
       {% endif %}
-      {% if multimediaObject.getFirstUrlPic() and (('true' != autostart) or track.isOnlyAudio()) %}
-      image: "{{ asset(multimediaObject.getFirstUrlPic(), absolute=true) }}",
+      {% if ('true' != autostart) or track.isOnlyAudio() %}
+      image: "{{ multimediaObject|first_url_pic(true) }}",
       {% endif %}
     }],
     {% else %}
@@ -39,8 +39,8 @@
     {% endfor %}
     ],
     {% endif %}
-    {% if multimediaObject.getFirstUrlPic() and (('true' != autostart) or track.isOnlyAudio()) %}
-    image: "{{ asset(multimediaObject.getFirstUrlPic(), absolute=true) }}",
+    {% if (('true' != autostart) or track.isOnlyAudio()) %}
+    image: "{{ multimediaObject|first_url_pic(true) }}",
     {% endif %}
     {% endif %}
     startparam: "start",
