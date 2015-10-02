@@ -54,11 +54,7 @@
 	      <a href="{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}">{% trans %}videos{% endtrans %}</a>
         </td>
         <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
-          {% if oneseries.getFirstUrlPic() is not empty %}
-          <img src="{{ oneseries.getFirstUrlPic() }}" height="23" width="23" />
-          {% else %}
-          <i class="mini mdi-file-folder" height="23" width="23"></i>
-          {% endif %}
+          <img src="{{ oneseries|first_url_pic }}" height="23" width="23" />
         </td>
         <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
 	      {{ oneseries.getTitle() }}
