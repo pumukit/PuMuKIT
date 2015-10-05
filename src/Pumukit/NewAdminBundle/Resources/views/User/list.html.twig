@@ -57,7 +57,9 @@
                 {% if 'ROLE_SUPER_ADMIN' == role %}
                     {% trans %}Administrator{% endtrans %}
                 {% elseif 'ROLE_ADMIN' == role %}
-                    {% trans %}Publisher{% endtrans %}
+                    {% trans %}Administrator without publishing privileges{% endtrans %}
+                {% elseif 'ROLE_AUTO_PUBLISHER' == role %}
+                    {% trans %}Auto Publisher{% endtrans %}
                 {% elseif 'ROLE_USER' == role %}
                     {% trans %}User{% endtrans %}
                 {% endif %}
