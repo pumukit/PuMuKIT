@@ -518,6 +518,19 @@ class Tag
   }
 
   /**
+   * Returns true if given node cod is descendant of tag
+   *
+   * @param EmbeddedTag|Tag $tag
+   *
+   * @return bool
+   */
+  public function isDescendantOfByCod($tagCod)
+  {
+      return strpos($this->getPath(), $tagCod) === false ? false : true;
+  }
+
+
+  /**
    * Get properties, null if none.
    *
    * @return array
