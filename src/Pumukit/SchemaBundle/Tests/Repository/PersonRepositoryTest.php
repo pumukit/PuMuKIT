@@ -5,6 +5,7 @@ namespace Pumukit\SchemaBundle\Tests\Repository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\User;
 
 class PersonRepositoryTest extends WebTestCase
 {
@@ -46,6 +47,27 @@ class PersonRepositoryTest extends WebTestCase
         $person = $this->createNewPerson();
 
         $this->assertEquals(1, count($this->repo->findAll()));
+    }
+
+    public function testUser()
+    {
+        $person = new Person();
+        $user = new User();
+
+        $this->dm->persist($person);
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $person->setUser($user);
+        $user->setPerson($person);
+
+        $this->dm->persist($person);
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $person = $this->repo->find($person->getId());
+
+        $this->assertEquals($user, $person->getUser());
     }
 
     public function testFindByRoleCodAndEmail()
