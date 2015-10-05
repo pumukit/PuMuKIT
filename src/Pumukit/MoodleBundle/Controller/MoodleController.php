@@ -82,15 +82,12 @@ class MoodleController extends Controller
             $numberMultimediaObjects = 0;
             $multimediaObjectsArray = array();
             $out = array();
-            $assetsHelper = $this->container->get('templating.helper.assets');
-            $baseUrl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
-            $defaultSeriesPicUrl = $baseUrl . $assetsHelper->getUrl('/images/folder.png');
-            $defaultMultimediaObjectsPicUrl = $baseUrl . $assetsHelper->getUrl('/images/none.jpg');
+            $picService = $this->get('pumukitschema.pic');
             foreach ($series as $oneseries){
                 $oneSeriesArray = array();
                 $oneSeriesArray["title"] = $oneseries->getTitle($locale);
                 $oneSeriesArray["url"]   = $this->generateUrl('pumukit_webtv_series_index', array('id' => $oneseries->getId()), true);
-                $oneSeriesArray["pic"]   = $oneseries->getFirstUrlPic('') ? $baseUrl . $oneseries->getFirstUrlPic('') : $defaultSeriesPicUrl;
+                $oneSeriesArray["pic"]   = $picService->getFirstUrlPic($oneseries, true, false);
                 $oneSeriesArray["mms"]   = array();
                 $multimediaObjects = $mmobjRepo->findBySeriesAndPersonIdWithRoleCod($oneseries, $professor->getId(), $roleCode);
                 foreach ($multimediaObjects as $multimediaObject){
@@ -98,7 +95,7 @@ class MoodleController extends Controller
                     $mmArray['title'] = $multimediaObject->getTitle($locale);
                     $mmArray['date']  = $multimediaObject->getRecordDate()->format('Y-m-d');
                     $mmArray['url']   = $this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId()), true);
-                    $mmArray['pic']   = $multimediaObject->getFirstUrlPic('') ? $baseUrl . $multimediaObject->getFirstUrlPic('') : $defaultMultimediaObjectsPicUrl;
+                    $mmArray['pic']   = $picService->getFirstUrlPic($multimediaObject, true, false);
                     $mmArray['embed'] = $this->generateUrl('pumukit_moodle_moodle_embed',
                                                            array(
                                                                  'id' => $multimediaObject->getId(),

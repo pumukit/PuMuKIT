@@ -2,7 +2,7 @@
   <dt class="thumbnail">
     <figure class="album">
       <a href="{{ url('pumukit_webtv_series_index', {'id': series.id}) }}">
-        {% set series_pic = series.getFirstUrlPic('/images/folder.png') %}
+        {% set series_pic = (series|first_url_pic) %}
         <div class="picture"><img src="{{ series_pic }}"/></div>
         <div class="picture"><img src="{{ series_pic }}"/></div>
         <div class="picture"><img src="{{ series_pic }}"/></div>

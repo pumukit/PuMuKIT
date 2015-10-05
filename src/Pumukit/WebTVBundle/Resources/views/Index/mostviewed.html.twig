@@ -14,7 +14,7 @@
             		margin: 10px;
             		margin-right: 20px;">
             		<a href="{{ path('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.getId()}) }}">
-              			<img src="{{ multimediaObject|first_url_pic(true) }}"></img>
+                        <img src="{{ multimediaObject|first_url_pic(true, false) }}"></img>
                 		<span class="video-duration" style="top: 4px;
                      	position: absolute;
                       z-index:10; 
