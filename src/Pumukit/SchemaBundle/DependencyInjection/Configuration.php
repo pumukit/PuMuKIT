@@ -38,6 +38,10 @@ class Configuration implements ConfigurationInterface
               ->defaultValue('/bundles/pumukitschema/images/audio_sd.svg')
               ->info('Default audio SD picture')
             ->end()
+            ->scalarNode('auto_publisher_role_code')
+              ->defaultValue('owner')
+              ->info('Role code related to Auto Publisher User to use as EmbeddedPerson')
+            ->end()
           ->end();
 
         return $treeBuilder;
