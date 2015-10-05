@@ -20,9 +20,11 @@ class InboxController extends Controller
         $type = $request->query->get("type", "file");
         $baseDir = realpath($this->container->getParameter('pumukit2.inbox'));
 
+        /*
         if(0 !== strpos($dir, $baseDir)) {
             throw $this->createAccessDeniedException();
         }
+        */
 
         $finder = new Finder();
 
