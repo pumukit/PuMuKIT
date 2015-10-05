@@ -52,7 +52,9 @@ class UserType extends AbstractType
                   array(
                         'choices' => array(
                                            'ROLE_SUPER_ADMIN' => $this->translator->trans('Administrator', array(), null, $this->locale),
-                                           'ROLE_ADMIN' => $this->translator->trans('Publisher', array(), null, $this->locale)),
+                                           'ROLE_ADMIN' => $this->translator->trans('Administrator without publishing privileges', array(), null, $this->locale),
+                                           'ROLE_AUTO_PUBLISHER' => $this->translator->trans('Auto Publisher', array(), null, $this->locale),
+                                           ),
                         'multiple' => true,
                         'expanded' => true,
                         'label' => $this->translator->trans('Type', array(), null, $this->locale)));
