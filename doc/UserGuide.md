@@ -273,3 +273,246 @@ In this case, a new series (“MediaPackages without series”) without any kind
 If you don’t edit any metadata of this series, the following videos without a series in Opencast will be added to this series after import them. When you edit any metadata of this default series, another series with this name will be created with the following video imported.
 
 If you wanted to move the video to other series, you would have to select the video, cut the multimedia object, go to the new series and paste it there.
+
+## 2.2 Metadata edition
+
+### 2.2.1 Series metadata edition
+
+The administration of all series is made in their module. This module has two utilities:
+
+-   *Administration*: Creating, deleting and editing the series in which multimedia objects are catalogued in the application.
+
+-   *Access*: This utility provides access to the administration module of the multimedia objects of each series. Multimedia objects are not administrated all together at a time. Instead, the series are listed in the administration module. Using this utility, one series can be selected and a list with the objects of that series will be accessed. This means that, in the administration module of multimedia objects, you can only administrate the multimedia objects of a series.
+
+The administration interface of the series of multimedia objects is divided into: listing of series in pages, previewing of the selected series, filtering form and administration form of the selected series.
+
+In contrast with the other modules, whereas those appeared when it’s necessary in a higher layer in a modal way, in this module and the one of multimedia objects, the form is shown permanently on the bottom of the interface. This enables a faster access.
+
+The listing of series is the main part of the interface and is made up of a table with a row for each entry. It is very easy to use due to the division in pages used, the filtering and the management of data. The listing includes pages to guarantee a good performance of the application, because you can only obtain the data of the rows shown in the current page. It also allows a good usability because you can manage even a list with millions of rows with the help of the previous/net
+buttons to access pages one at time.
+
+You can select the number of videos shown in each page.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_32f3b410.png)
+
+**Figure Page buttons**
+
+The columns which form the header of the table are links that you can use to rearrange the data in the listing in several ways: in ascending or descending order of according the title of the series, the date of publication or the number of multimedia objects it has. To change this order, you simply have to click on the header of the column you want to
+arrange in ascending order. If it was already arranged according to this column, data will be arranged in a descending order. In each entry of the table, the following columns are detailed, as it’s shown in this image.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m6cae0a38.png)
+
+**Figure Multimedia series's column options**
+
+-   *Checkbox* to simultaneously delete several series.
+
+-   *Newness indicator*: A blue «A» indicates that the series is announced and a grey «A» that the series has just some multimedia object announced.
+
+-   *Broadcasting of the series indicator*. The broadcasting of a series depends on the broadcasting of their multimedia objects. It allows to modify the broadcasting of every multimedia object of the series simultaneously, e.g. to move all the multimedia objects from “Blocked” to “Published”.
+
+-   *Edition of the series button*.
+
+-   *Link to videos*: access to the edition module of multimedia objects which belong to a series. If you make double click in the row of a series, you can also have access to the module of the edition of multimedia objects. Thus, the accessibility is increased.
+
+-   *Thumbnail*: represents a series.
+
+-   *Title of the series*.
+
+-   *Date of publication* of the series.
+
+-   *Number of multimedia objects* in the series.
+
+Thanks to the filters, you can see fewer results and obtain quickly what you are looking for. You can configure the filters with a form. In this form, you can create filters depending on the title, involved people, recording places, channels, broadcasting, states… To reduce the size that may occupy the form if all configuring fields are shown the form
+has the shape of an accordion. Therefore, the usability of the system is improved. Each brand of the accordion is shown separated from the next image. The fields of the filtering form are case or accent mark insensitive and use "\*" as wildcard character.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m98064fc.png)
+
+**Figure Multimedia series’s filters**
+
+If you make double click on an item of the list of series, you have access to the edition module of multimedia objects which belong to that series. With one click, you select the item in the list of the selected series. Inside all the different metadata of the series structure, which you can modify through the form, we can distinguish two types: firstly,
+the descriptive metadata of content such as title, subtitle, etc. And, secondly, the metadata representing the portal as design, header of HTML
+
+As it’s shown in the image, there are the following fields:
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_5bc6c027.png)
+
+**Figure Multimedia series’s info edition form**
+
+-   *Title*: Field of text which can be adapted internationally. It is used to insert the title of a series and it’s mandatory.
+
+-   *Keywords*: Field of text which can be adapted internationally and include keywords separated by semicolons. It is used to improve the efficiency of the searches.
+
+-   *Copyright*: Field in which the copyright of the contents of a series is defined.
+
+-   *License*
+
+-   *Channel*: List with the types of series, where you can select the one that correspond with the series. These types of series are administrated with their corresponding module.
+
+-   *Date of publication*: it is initialized on the date of the creation of the series. It’s easy to modify due to a calendar. Its structure is validated.
+
+-   *Description*: Text area which can be adapted internationally and describes briefly the series.
+
+-   *Images*: List of images related to the series. You can modify the order, delete or insert new ones. See section 3.2.3.
+
+-   *HTML texts*: In these text boxes, you can add HTML both for the header and footer of the series.
+
+-   *Headline*
+
+#### 2.2.1.1 Edition of the series options
+
+When clicking on the series options icon it will show this option:
+
+-   Delete series: Delete the series and all its multimedia objects. If the multimedia objects are Opencast videos it wouldn’t delete the video, just its importation to PuMuKIT.
+
+#### 2.2.1.2 Videos Template
+
+It allows to set common metadata for every multimedia object of the series. (See section 2.2.2 for further details)
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m281cc647.png)
+
+**Figure Multimedia series’s metadata edition form**
+
+When creating or importing a multimedia object of the series from Opencast, metadata will be assigned to each one of them, except for the “Description” field. When importing a video from Opencast, the default “Description” field will be used only if the video “Description” field of Opencast is empty, in this case it will keep the metadata.
+
+### 2.2.2 Multimedia object metadata edition
+
+This is a module to administrate multimedia objects of series. You can access through the series administration module and it shows only multimedia objects of series. The title of the series whose objects are administrated is on the interface header and by clicking on it allows you to move back to the module of the administration of series.
+
+The administration interface of multimedia objects is very similar to the series administration module. The interface is divided into the sequential list of multimedia objects, the previewing and the administrator of the selected multimedia object. The order of multimedia objects inside a series is defined by the cataloguer and consequently the list is shown in that way. This module does not have a form to make the filtering because generally a series doesn’t have many multimedia
+objects and, making it unnecessary.
+
+In the image you can see in more detail a row of the list of multimedia objects. The following items are included in that:
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_20a2adc2.png)
+
+**Figure Multimedia object's column options**
+
+-   *Checkbox* to simultaneously delete several series.
+
+-   *Indicator of the multimedia object broadcasting*.
+
+-   *Newness indicator*: A black «A» indicates that the multimedia object is announced.
+
+-   *Delete button*of the multimedia object*.*After confirmation the elimination, a recursive elimination is performed, deleting all video files, materials and images to which the object is related.
+
+-   *Edition button*of the multimedia object. This includes one option: delete.
+
+-   *Buttons to move up*the multimedia object a position or place it the first. It is used to modify the order of multimedia objects of series.
+
+-   *Buttons to move*down the multimedia object or placed it the last. It is used to modify the order of multimedia objects of series.
+
+-   *Thumbnail* which represents the multimedia object.
+
+-   *Title of the multimedia object*.
+
+-   *Recording date* of the multimedia object.
+
+-   *Publication date*of the multimedia object.
+
+Below this list, there is a button to create new multimedia objects inside the series you are administrating and a button to execute the wizard inside the series. There is also a list of rapid-access that allows you to delete, announce and rearrange multimedia objects of series.
+
+When you click on an item of the multimedia objects’ list, this is selected, updating the previewing and the administration section with the contents of this multimedia object. The previewing has a similar design as the block shown in the public web portal when the items of a series are listed. Since the multimedia object is the core part of the database, the administration section now is very big. Therefore, it is divided into five tabs: publication metadata, descriptive metadata,
+tags, people and technical metadata.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m33e5f137.png)
+
+**Figure Multimedia object’s metadata tab**
+
+#### 2.2.2.1 Publication metadata
+
+Tag with metadata related to the publication of a multimedia object:
+
+-   *Status*: It indicates the state of a multimedia object. The states are “Published”, "Blocked" or “Hidden”. See section 2.3 Content publication.
+
+-   *Publication channels*: a set of options which allow you to publish a multimedia object in the different channels. See section 2.3 Content publication.
+
+-   *Publishing decisions*: Set of selectors that allow to catalogue the multimedia object by globalizing it into one category as the frontend of the website is displayed
+
+-   *Broadcast profile*: With this, you indicate the ACLs of the video.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_14aa138b.png)
+
+**Figure Multimedia object’s publication tab**
+
+#### 2.2.2.2 Descriptive and style metadata
+
+The tag of descriptive and style metadata which is shown in the next image is made up of a form with the following fields:
+
+-   *Title*: Field of text which can be adapted internationally. It’s used to insert the title of a multimedia object and it’s mandatory.
+
+-   *Subtitle*: Field of text which can be adapted internationally. It’s used to insert the title of a multimedia object, if this has one.
+
+-   *Keywords*: Field of text which can be adapted internationally and include keywords separated by semicolons. It’s used to improve the efficiency of the searches.
+
+-   *Copyright*: Field in which the copyright of the contents of a multimedia object is defined.
+
+-   *License*
+
+-   *Public date*: Publication date of multimedia objects. It is initialized on the date of the creation of the series. It’s easy to modify due to a calendar. Its structure is validated.
+
+-   *Record date*: Recording date of the multimedia object. It is initialized with multimedia object’s creation date. It’s easy to modify due to a calendar. You have to make sure this date is not bigger than the publication date and it has a valid format.
+
+-   *Description*: Text area which can be adapted internationally and describes briefly the multimedia object.
+
+-   *Headline*
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m1e20cbe8.png)
+
+**Figure Multimedia object’s metadata edition form**
+
+#### 2.2.2.3 Tags
+
+This tag allows you to catalogue multimedia objects depending on the defined categories. You can add, edit and delete categories at any time through this module. Knowledge areas are divided in domains. A multimedia object can be catalogued in more that one knowledge area at the same time.
+
+In the interface, where you can observe an entry for each type of area, there are two lists; the second one with all knowledge areas of this type and the first one with the areas in which the multimedia object is catalogued. If you want to catalogue a multimedia object in a specific area, you just have to select it in the second list and click on the
+arrow which points to the first list. If you want to change the catalogue of a multimedia object, you have to do the opposite. To increase the speed of cataloguing, the previous process can be simplified in making double click in the area.
+
+If the areas of knowledge will be the same for all the multimedia objects of a series, it is recommended to modify this value in "Videos Template" tag of that series. With this, every new multimedia object of the series will have this value when it is created.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_3bd61557.png)
+
+**Figure Multimedia object’s tags tab**
+
+#### 2.2.2.4 People
+
+As the “Tags” tag, the area to catalogue people is divided in blocks, corresponding each block to each of the roles that a person can have inside a video. There is an entry for each role and inside that there is a list of people related to the multimedia object. You can modify the order of the people listed in each role with the arrows in the list. You can also edit the attributes of the people, without using the people module (directly from the multimedia objects administrator). In addition, you can decouple a person from the multimedia object. If you decouple a person which is not related to another multimedia object, it gets deleted from the database. In the “new” button, you can insert a new person or an existing person in the object.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_41cbe086.png)
+
+**Figure Multimedia object’s people tab**
+
+If you click on the “new” button, you access to a form where you can write the name of people you wish to add; while you are typing the name, you can see a list with catalogued people with this name in the database. For example, after typing “ruben” you will see listed all “Rubén” in the database and after typing «ruben go» you will only see listed those people with a surname which starts with “go” as González or Gómez. After typing the full name, if the person is already in the database, he or she will be listed. After selecting him/her and press the “use” button, he/she will be linked to the multimedia object. If he or she is not in the database, after typing you will not see a list and you would click on the “new” buttom to finish filling the data of the person and linking him/her to the multimedia object. You have to be careful with the position you give to the people because it’s not the same Rubén González González as a student or as a programmer.
+
+The next image illustrates this process:
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m5b9ec300.png)
+
+**Figure People search form**
+
+#### 2.2.2.5 Technical metadata
+
+The last tag of the multimedia object technical metadata is made up of four entries:
+
+-   *Images*: List of images linked to the multimedia object. You can modify its order, delete them or insert new images. See section 2.2.3.
+
+-   *Video files*: List of multimedia files of the multimedia object. You can create new ones, modify, arrange, preview or delete them.
+
+-   *Materials*: List of materials of the multimedia object. You can create new ones, modify, arrange or delete them.
+
+-   *Links*: List of links of the multimedia object. You can create new ones, modify, arrange or delete them.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_6fdd7353.png)
+
+**Figure Multimedia object’s multimedia tab**
+
+##### 2.2.2.5.1 **Download a master and a publishing copy of a mono-stream video**
+
+For those videos that are not imported from Opencast, you can download a copy of the master and publication file of the recording on this tab.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m594847d7.png)
+
+**Figure Download a video**
+
+We can see from video files to various icons appear to us before the name and identifier of the video. If you click on the arrow icon down, it downloads a copy of this video.
+
+This would also be true for SBS generated from imported files from Opencast.
