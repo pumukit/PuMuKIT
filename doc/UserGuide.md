@@ -516,3 +516,65 @@ For those videos that are not imported from Opencast, you can download a copy of
 We can see from video files to various icons appear to us before the name and identifier of the video. If you click on the arrow icon down, it downloads a copy of this video.
 
 This would also be true for SBS generated from imported files from Opencast.
+
+### 2.3.2 Series and multimedia object image edition
+
+This module is used by the series module and the multimedia object module to list images linked to different multimedia objects or series. This also allows you to link new images.
+
+Both series and multimedia objects have a certain number of little representative images, mainly obtained from a frame of the video or the logo of which you record. These images can be arranged from the “Multimedia” tab in order to change the order in which they appear on the Web portal.
+
+There are three different ways to link new images:
+
+-   Indicating the URL of the image: This is used to indicate an existing image in another HTTP server.
+
+-   Uploading a local image: Uploading a new image of the client server is the most used method. These images are resized in the server to save space and reduce the bandwidth needed to show the portal.
+
+-   Using an existing image: The last used images are listed in pages so you could reuse them. You can advance throughout the different pages with the “previous” and “next” buttons.
+
+These three methods to link images correspond to the three parts of the form to insert images. You can see it afterwards.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_6753099c.png)
+
+**Figure Picture edition form**
+
+In the next image, you can see the partial item of the series and multimedia object forms in the four tags. This allows you to link new images clicking on the link of new image. It also allows you to delete existing images clicking on the delete button and to modify their order with the corresponding arrows.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_73582573.png)
+
+**Figure Multimedia object’s picture options**
+
+An image can be linked to more than a multimedia object. If an image is decoupled of an item, but it is linked to another one, it is not deleted. If it is only linked to an item, when it is decoupled, it will be deleted.
+
+At the multimedia objects management module, the new thumbnail can be selected in two different ways:
+
+-   If the content of the multimedia object is a video, you can extract thumbnail from the video frames. Using the "Photo" button, an image will be extracted at the selected instant of the video.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m190fe2b4.png)
+
+**Figure Multimedia object’s publication tab**
+
+-   The image can be uploaded to the server from your computer by clicking on “New Image”. These images are resized on the server to take up less space and reduce the bandwidth needed to display the portal.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_6753099c.png)
+
+**Figure Picture edition form**
+
+In the next picture we show the element appearing in the “Multimedia” tab (form both the series and the multimedia objects administrators) from which you can order the images (clicking on the arrows below them).To associate new images by clicking on the link “New Image” also deletes existing images by clicking the delete button and modify your order with dates.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_73582573.png)
+
+**Figure Multimedia object’s picture options**
+
+## 2.3 Content publication
+
+The content publication is carried out through the publication tag of the edition form in the multimedia objects module. The publication is conducted for each multimedia object in unique and independent way.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_14aa138b.png)
+
+**Figure Multimedia object’s publication tab**
+
+There are different publication channels where you can publish multimedia objects. A multimedia object can be published in one or several defined channels. When a publication channel is selected, before publishing it, the file is coded to the needed profile. Multimedia objects are not published until this transcoding is finished.
+
+As well as the publication channels, in order to not to publish a multimedia object, you have the state, whose default value is regular. You can modify the state of a blocked multimedia object so it can’t be accessible in any channel. The utility of the channel is allowing you to unpublish a multimedia object of all publication channels in a temporary way.
+
+You can also define access profiles for the videos and select them in the last pull-down menu. A profile can be public or private. In this private profile, you have to define a password.
