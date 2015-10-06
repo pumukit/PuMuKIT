@@ -578,3 +578,189 @@ There are different publication channels where you can publish multimedia object
 As well as the publication channels, in order to not to publish a multimedia object, you have the state, whose default value is regular. You can modify the state of a blocked multimedia object so it can’t be accessible in any channel. The utility of the channel is allowing you to unpublish a multimedia object of all publication channels in a temporary way.
 
 You can also define access profiles for the videos and select them in the last pull-down menu. A profile can be public or private. In this private profile, you have to define a password.
+
+## 2.4 Other administration modules
+
+The administrative application also has other modules to perform less common administrative tasks than the publication and administration of live videos. In this section, the different existing modules will be summarized.
+
+### 2.4.1 Access module
+
+It is a module to have access to the application of administration. The interface is simply an access form, which is used to validate the login and the password with the list of users of the server database.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_3e814977.png)
+
+**Figure Access module**
+
+### 2.4.2 Dashboard module
+
+It is a module that allows you to see a timeline of the recordings in Pumukit and information about them.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m1e7d0faa.png)
+
+**Figure Dashboard module**
+
+### 2.4.3 Multimedia series module
+
+It is a module to administrate series and their multimedia objects.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_145e32b4.png)
+
+**Figure Multimedia series module**
+
+### 2.4.4 Live channels module (Live streaming)
+
+It is a module that allows you to administrate real-time channels of the Web portal.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_20d1356e.png)
+
+**Figure Live channels module**
+
+#### 2.4.4.1 Live channel configuration
+
+From the Live channels module it can be configured the following parameters:
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_34781e32.png)
+
+**Figure Live channel configuration**
+
+-   Name: Live channel name shown in the frontend.
+
+-   Description: Information about the channel.
+
+-   URL: Streaming server’s Url. This Url uses a rtmp protocol. We recommend using the AMS technology (Adobe Media Server) because it delivers multimedia content to desk and mobile devices. The Url by default is rtmp://\<URL\>/livepkgr .
+
+It also supports FMS technology (Flash Media Server) and WMS technology (Windows Media Services).
+
+-   STREAM: Name that identifies the video flow on the streaming server.
+
+-   Status: There are two possible states for the channel:
+
+    -   Live broadcasting: Enables the live streaming on the channel.
+
+    -   On Hold: Disables the live streaming on the channel. It can be configured to play videos (waiting playlist) while there is not any live streaming on the channel.
+
+**NOTE**: When the live streaming source is not available it is recommended to change the channel state to “On Hold”.
+
+-   Technology: It supports FMS technology (Flash Media Server) and WMS technology (Windows Media Services). To use AMS technology you have to choose FMS. AMS is the new version of FMS that delivers multimedia content to mobile devices.
+
+-   Resolution: Player resolution of the live channel on the Web TV portal.
+
+-   Qualities: It allows multi-quality streams. Multi-quality streams are useful to deliver video streaming to slow Internet connections or mobile devices. Width band in kbps and width in pixels. If the width band is not configured, by default is set up to 1 Mbps.
+
+-   IP Source: IP address of the streaming server. This parameter configures the live channel to stream only from the Ip address introduced.
+
+-   Index play: The live streaming is announced in the Home site while it is happening. A live event must be created and configured with date and duration.
+
+#### 2.4.4.2 Streaming encoder configuration
+
+The streaming encoder delivers multimedia content to the streaming server. The streaming server relies the multimedia content to the user’s desktop computers and mobile devices. We recommend Adobe Media Server (AMS) as Pumukit live streaming server.
+
+As streaming encoder Adobe Flash Media Live Encoder (FME), Wirecast and other applications can be used.
+
+Streaming encoder configuration recommendations for AMS:
+
+-   Select AMS technology
+
+-   Select H.264 video codec with the following parameters:
+
+    -   Profile: Main
+
+    -   Level: 4.1
+
+    -   Keyframe Frecuency: 4 seconds
+
+-   Select AAC audio codec if available. AAC format is fully compatible with desktop computers, Android and iOS devices. Mp3 format at 44100 Hz sample rate can also be used but it might have problems with older devices (iPad 1).
+
+### 2.4.5 Live events module
+
+It is a module that allows you to administrate the next events that will be broadcasted through real-time channels.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_116c19e4.png)
+
+**Figure Live events module**
+
+### 2.4.6 Encoder jobs module
+
+It is a module that summarizes transcoding jobs: those in progress, those pending for transcoding and those finished (both correctly and incorrectly).
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_1172fa0c.png)
+
+**Figure Encoder jobs module**
+
+### 2.4.7 People module
+
+It is a module to administrate data of people linked to a multimedia object, whether they present a lecture, they are short-film actors or they have a much more technical role as producers, directors, etc. People are linked to the multimedia object through the roles that are administrated in their corresponding module.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_b337d.png)
+
+**Figure People module**
+
+This module allows the creation, edition and elimination of information related to people. It also should be noted that the information storage in the database is not linked to the person but to the position. This is to say that a person with two different positions have two different entries, one per position. This is because we want to solve the problem of temporary positions as Chancellor of the University. This person has two entries: one for Chancellor and another for teacher.
+
+### 2.4.8 Tags module
+
+It is a module that allows you to administrate Tags areas used to catalogue multimedia objects.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_305eb328.png)
+
+**Figure Tags module**
+
+The different areas of knowledge are grouped depending on types, creating domains as the different grades of UNESCO’s knowledge areas, the principal domain or even the departments of an institution.
+
+### 2.4.9 Access Profiles module
+
+It is a module that allows you to administrate the broadcasting of multimedia objects. Broadcasting defines the scope or privacy of multimedia objects.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m2c38dcb0.png)
+
+**Figure Access profiles module**
+
+Click on “new” to create a new broadcast profile, the next window will open:
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m64d6a754.png)
+
+**Figure Create new broadcast**
+
+-   Name: name of the profile, if the profile is private it will match the user name used to sign up.
+
+-   Type: “public” for free access profiles and “private” for private profiles.
+
+-   Passwd: password for private profiles.
+
+-   Description: usually a descriptive phrase to know what the profile is used for. This field is not mandatory.
+
+### 2.4.10 Series types module
+
+It is a module that allows you to administrate the types of series (also designated as channels) in which multimedia object series of the catalogue are classified.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m761f57ba.png)
+
+**Figure Series types module**
+
+### 2.4.11 Admin users module
+
+It is a module to configure users who have access to the administration application. With this module, you can create, edit and delete users and their authorizations.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_1c9b8e45.png)
+
+**Figure Admin users module**
+
+### 2.4.12 Roles module
+
+It is a module that allows you to administrate roles with people linked to multimedia objects. These roles can be as follow:
+
+-   Public: these are shown to everybody through the *feeds* and the Web portal.
+
+-   Private: these are used internally to administrate and catalogue multimedia objects in a better way. They are not shown in the Web portal.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_4973185c.png)
+
+**Figure Roles module**
+
+### 2.4.13 Opencast ingester module
+
+It allows to import videos from an associated Opencast to publish them.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_5078c770.png)
+
+**Figure Opencast ingester module**
