@@ -13,6 +13,44 @@ use Pumukit\SchemaBundle\Document\User;
 class UserController extends AdminController
 {
     /**
+     * Create Action
+     * Overwrite to create Person
+     * referenced to User
+     *
+     * @param Request $request
+     *
+     * @return RedirectResponse|Response
+     */
+    public function createAction(Request $request)
+    {
+        $config = $this->getConfiguration();
+
+        $user = $this->createNew();
+        $form = $this->getForm($user);
+
+        if ($form->handleRequest($request)->isValid()) {
+            $user = $this->domainManager->create($user);
+            $user = $this->get('pumukitschema.person')->referencePersonIntoUser($user);
+
+            if ($this->config->isApiRequest()) {
+                return $this->handleView($this->view($user, 201));
+            }
+
+            return $this->redirect($this->generateUrl('pumukitnewadmin_user_list'));
+        }
+
+        if ($this->config->isApiRequest()) {
+            return $this->handleView($this->view($form));
+        }
+
+        return $this->render("PumukitNewAdminBundle:User:create.html.twig",
+                             array(
+                                   'user' => $user,
+                                   'form' => $form->createView()
+                                   ));
+    }
+
+    /**
      * Update Action
      * Overwrite to update it with user manager
      * Checks plain password and updates encoded password
@@ -120,6 +158,15 @@ class UserController extends AdminController
         if ((1 === $numberAdminUsers) && ($userToDelete->isSuperAdmin())){
             return new Response("Can not delete this unique admin user '".$userToDelete->getUsername()."'", 409);
         }
+
+        if (null != $person = $userToDelete->getPerson()) {
+            try {
+                $this->get('pumukitschema.person')->deletePerson($person, true);
+            } catch (\Exception $e) {
+                return new Response("Can not delete the user '".$userToDelete->getUsername()."'. ".$e->getMessage(), 409);
+            }
+        }
+
 
         return true;
     }

@@ -449,9 +449,39 @@ class PersonController extends AdminController
         try{
             if (0 === $personService->countMultimediaObjectsWithPerson($person)){
                 $personService->deletePerson($person);
+            } else {
+                return new Response("Can not delete Person '".$person->getName()."'. There are Multimedia objects with this Person.", 409);
             }
         }catch (\Exception $e){
-            $this->get('session')->getFlashBag()->add('error', $e->getMessage());          
+            return new Response("Can not delete Person '".$person->getName()."'. ".$e->getMessage(), 409);
+        }
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_person_list'));
+    }
+
+    /**
+     * Batch delete Person
+     * Overwrite to use PersonService
+     */
+    public function batchDeleteAction(Request $request)
+    {
+        $ids = $this->getRequest()->get('ids');
+
+        if ('string' === gettype($ids)){
+            $ids = json_decode($ids, true);
+        }
+
+        $personService = $this->get('pumukitschema.person');
+        foreach ($ids as $id) {
+            $person = $this->find($id);
+            try{
+                $personService->deletePerson($person);
+            } catch (\Exception $e) {
+                return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
+            }
+            if ($id === $this->get('session')->get('admin/person/id')){
+                $this->get('session')->remove('admin/person/id');
+            }
         }
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_person_list'));
