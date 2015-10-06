@@ -693,6 +693,12 @@ class PersonServiceTest extends WebTestCase
         $this->assertEquals($person, $user->getPerson());
         $this->assertEquals($user, $person->getUser());
 
+        $this->assertEquals($fullname, $user->getFullname());
+        $this->assertEquals($fullname, $person->getName());
+
+        $this->assertEquals($email, $user->getEmail());
+        $this->assertEquals($email, $person->getEmail());
+
         $user = $this->personService->referencePersonIntoUser($user);
         $people = $this->repo->findAll();
         $this->assertEquals(1, count($people));
