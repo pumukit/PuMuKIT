@@ -295,11 +295,9 @@ window.submit_delete_person = function(id, countMm, personHName)
             var url = "{{ path('pumukitnewadmin_person_delete', {'id': '__id__'})|raw }}";
             $('#list_people').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
                 if(XMLHttpRequest.status >= 400){
-                    var error_message = '{% trans %}Error deleting Person{% endtrans %} "'+personHNname+'": ' + responseText;
-                    no_success(error_message);
+                    no_success('{% trans %}Error deleting Person{% endtrans %} "'+personHName+'": ' + responseText);
                 }else{
-                    var success_message = '{% trans %}Person{% endtrans %} "'+personHNname+'" {% trans %}successfully deleted.{% endtrans %}';
-                    success(success_message);
+                    success('{% trans %}Person{% endtrans %} "'+personHName+'" {% trans %}successfully deleted.{% endtrans %}');
                 }
             });
     }

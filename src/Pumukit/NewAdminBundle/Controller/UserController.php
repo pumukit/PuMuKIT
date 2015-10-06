@@ -167,7 +167,6 @@ class UserController extends AdminController
             }
         }
 
-
         return true;
     }
 
