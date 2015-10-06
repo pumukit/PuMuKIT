@@ -24,7 +24,10 @@
         <service id="pumukitschema.factory" class="Pumukit\SchemaBundle\Services\FactoryService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager" />
             <argument type="service" id="pumukitschema.tag" />
+            <argument type="service" id="pumukitschema.person" />
+            <argument type="service" id="security.context" />
             <argument type="service" id="translator" />
+            <argument>%pumukitschema.auto_publisher_role_code%</argument>
             <argument>%pumukit2.locales%</argument>
             <argument type="expression">parameter('pumukit2.info')['title']</argument>
         </service>

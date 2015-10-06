@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Services;
 
 use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Security\Core\SecurityContext;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -17,16 +18,21 @@ class FactoryService
     private $dm;
     private $tagService;
     private $translator;
+    private $contenxt;
     private $locales;
     private $defaultCopyright;
+    private $defaultRoleCode;
 
-    public function __construct(DocumentManager $documentManager, TagService $tagService, TranslatorInterface $translator, array $locales = array(), $defaultCopyright = "")
+    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, SecurityContext $context, TranslatorInterface $translator, $defaultRoleCode='', array $locales = array(), $defaultCopyright = "")
     {
         $this->dm = $documentManager;
         $this->tagService = $tagService;
+        $this->personService = $personService;
+        $this->context = $context;
         $this->translator = $translator;
         $this->locales = $locales;
         $this->defaultCopyright = $defaultCopyright;
+        $this->defaultRoleCode = $defaultRoleCode;
     }
 
     /**
@@ -86,6 +92,7 @@ class FactoryService
             $title = $this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE, array(), null, $locale);
             $mm->setTitle($title, $locale);
         }
+        $mm = $this->addLoggedInUserAsPerson($mm);
 
         $mm->setSeries($series);
 
@@ -118,6 +125,8 @@ class FactoryService
         $mm->setPublicDate(new \DateTime("now"));
         $mm->setRecordDate($mm->getPublicDate());
         $mm->setStatus(MultimediaObject::STATUS_BLOQ);
+
+        $mm = $this->addLoggedInUserAsPerson($mm);
 
         $mm->setSeries($series);
 
@@ -347,5 +356,35 @@ class FactoryService
         $this->dm->flush();
 
         return $new;
+    }
+
+    private function addLoggedInUserAsPerson(MultimediaObject $multimediaObject)
+    {
+        if (null != $person = $this->getUserPerson()) {
+            if (null != $role = $this->getDefaultRole()) {
+                $multimediaObject->addPersonWithRole($person, $role);
+            }
+        }
+
+        return $multimediaObject;
+    }
+
+    private function getUserPerson()
+    {
+        if (null != $token = $this->context->getToken()) {
+            if (null != $user = $token->getUser()) {
+                if (null == $person = $user->getPerson()) {
+                    $person = $this->personService->referencePersonIntoUser($user);
+                    return $person;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private function getDefaultRole()
+    {
+        return $this->dm->getRepository('PumukitSchemaBundle:Role')->findOneByCod($this->defaultRoleCode);
     }
 }
