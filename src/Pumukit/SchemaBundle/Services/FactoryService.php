@@ -257,7 +257,6 @@ class FactoryService
      */
     public function deleteResource($resource)
     {
-        $jobRepo = $this->dm->getRepository("PumukitEncoderBundle:Job");
         $this->dm->remove($resource);
         $this->dm->flush();
     }
