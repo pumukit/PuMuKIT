@@ -15,7 +15,7 @@
       tracks: [
       {% for caption in captions %}
         {
-          file: "{{ caption.url }}",
+          file: "{{ asset(caption.url, absolute=true) }}",
           label: "{{ caption.language|language_name }}",
           kind: "captions"
         },
