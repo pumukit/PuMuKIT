@@ -71,7 +71,7 @@ Documentation under costruction
 
   2.4.13 Opencast ingester module
   
-  # 1.  General Introduction
+# 1.  General Introduction
 
 
 ## 1.1  PuMuKIT’s overview 
@@ -149,3 +149,127 @@ This application is divided into independent modules. These modules can have a s
 ![](PuMuKit_2_Content_Admin_Guide_v1.1_html_5926ae12.png)
 
 **Figure Backend modules**
+
+# 2. PuMuKIT User Manual
+
+## 2.1. Content Import
+
+### 2.1.1. Manual import of mono-stream content
+
+Multimedia objects and series are created from the administration portal inside the module "Multimedia series". To automate the process there is a wizard that guides you through the steps for creating and cataloging content. This wizard will start after clicking the button "Wizard" next to “Create a new series” button, as shown in the picture below:
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_2fab8148.png)
+
+**Figure Wizard button**
+
+This wizard is composed of three steps:
+
+-   **STEP 0**: The wizard will show you a new window to complete the metadata title and description of the series that will contain the new multimedia object. If the wizard is run from within an existing series this step will not be displayed and the new media object is stored in said series.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m23c5cf20.png)
+
+**Figure Wizard Step 1**
+
+-   **STEP 1**: In this step, you can select if you want to upload one single multimedia object or a group of them in the series.
+    
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_6aa0e25d.png)
+
+**Figure Wizard Step 2**
+
+-   **STEP 2**: A window to complete the metadata title, subtitle, description of new object and headline. This step will not be displayed if you select “Add multiple multimedia objects” in the previous step.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_684d7db7.png)
+
+**Figure Wizard Step 3**
+
+-   **STEP 3**: Finally, a window to complete technical metadata about the publication of the video. The metadata to complete are:
+
+    -   *Master*: Quality video/audio master; you can store a copy of the video to catalog with "master-copy" or compress a bit using "master-video-h264". If the video takes up much space you should use "master-video-h264". You can upload audio files using “master-audio-aac” profile.
+
+    -   *Publication**Channels*: Multimedia channels where newly created object will be published: Web TV, ARCA…
+
+    -   *Priority*: Priority of transcoding. It is used to set the priority of the video in the transcode queue.
+
+    -   *Language*: Audio language of multimedia files being catalogued with the wizard.
+
+    -   *Mode*: The way in which the file is uploaded to create the multimedia object. It may be "Local hard drive" to upload a file stored on the local computer or "Inbox on Server" to select a file stored on the server file.
+
+    -   *Resource (local or server):* Field used to select the local file or server, depending on the selected mode.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m3ce9bdda.png)
+
+**Figure Wizard Step 4**
+
+-   **FINAL STEP**: This window shows the result of the wizard and it allows you to choose some actions:
+
+    -   See Multimedia Object data
+
+    -   Create another Multimedia Object in same Series
+
+    -   Create another Multimedia Object in a new Series
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m3ac7e07c.png)
+
+**Figure Wizard Final Step**
+
+After completing the wizard, the multimedia object with the specified metadata is created, the file is transcoded, catalogued and when it ends you can see in the "Multimedia" tab on the block “Video Files”.
+
+### 2.1.2 Importing videos from Opencast
+
+Once the video processing has finished in Opencast, click on the “Ingester” module to go to the next window:
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m32076da.png)
+
+**Figure Opencast Ingester module**
+
+A list of the videos already processed in Opencast can be seen sorted by recording date.
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_71e2c3e.png)
+
+Information showed about the video:
+
+-   Opencast id.
+
+-   Title of the video in Opencast.
+
+-   Opencast series name.
+
+-   Duration of the video.
+
+-   Recording date.
+
+-   “Import” (or “Imported”) and “play”. Click on “play” to open a window with the playback of the video in Opencast. Click on “import” to add the video to its corresponding series and ready to be edited, changing its state to “Imported”. Click on “Imported” to go to the PuMuKIT series where the video is placed (see sections 2.1.2.1, 2.1.2.2 and 2.1.2.3).
+
+There is also a searcher that allows us to find videos sorted by any of the Opencast data (presenter, title, id…).
+
+![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m4b356bdf.png)
+
+**Figure Opencast ingester video searcher**
+
+When importing the video, the program will behave differently depending on which of these cases is true:
+
+-   It is the first imported video of the series.
+
+-   There are already more videos of the series.
+
+-   The video doesn’t have a series in Opencast.
+
+#### 2.1.2.1 First video of the series
+
+In this case, a new series will have been created in PuMuKIT associated to the Opencast series (from now on all the videos from that Opencast series will be imported in this series).
+
+In this case, the data of the series in PuMuKIT and the metadata of the video must be edited. Both the series and the video will keep some of the data they had in Opencast: title, description, date... However, other fields must be filled in, like person, photo…
+
+In series with more than one video, it is recommended to edit the default values of the multimedia objects before importing the rest of the videos of the series.
+
+#### 2.1.2.2 More videos of the same series
+
+In this case, it is only necessary to edit the metadata of the video (because the series will be already created in PuMuKIT). The generic data of the series will be updated automatically when importing the video and will also keep the data from Opencast: title, description, date...
+
+#### 2.1.2.3 Videos without a series in Opencast
+
+In this case, a new series (“MediaPackages without series”) without any kind of information will be created in PuMuKIT. (See more in editing metadata of a series).
+
+If you don’t edit any metadata of this series, the following videos without a series in Opencast will be added to this series after import them. When you edit any metadata of this default series, another series with this name will be created with the following video imported.
+
+If you wanted to move the video to other series, you would have to select the video, cut the multimedia object, go to the new series and paste it there.
