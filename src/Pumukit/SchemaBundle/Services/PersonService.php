@@ -6,6 +6,7 @@ use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\EmbeddedPerson;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\User;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -205,12 +206,17 @@ class PersonService
     /**
      * Delete Person
      */
-    public function deletePerson(Person $person)
+    public function deletePerson(Person $person, $deleteFromUser=false)
     {
         if (null !== $person) {
             if (0 !== count($this->repoMmobj->findByPersonId($person->getId()))) {
                 throw new \Exception("Couldn't remove Person with id ".$person->getId().". There are multimedia objects with this person");
             }
+ 
+            if ((null != $user = $person->getUser()) && !$deleteFromUser) {
+                throw new \Exception('Could not remove Person with id "'.$person->getId().'". There is an User with id "'.$user->getId().'" and usernname "'.$user->getUsername().'" referenced. Delete the user to delete this Person.');
+            }
+
             $this->dm->remove($person);
             $this->dm->flush();
         }
@@ -247,6 +253,47 @@ class PersonService
     public function countMultimediaObjectsWithPerson($person)
     {
         return count($this->repoMmobj->findByPersonId($person->getId()));
+    }
+
+    /**
+     * Reference Person into User
+     *
+     * @param User $user
+     * @return User
+     */
+    public function referencePersonIntoUser(User $user)
+    {
+        if (null == $person = $user->getPerson()) {
+            $person = $this->createFromUser($user);
+
+            $user->setPerson($person);
+            $person->setUser($user);
+
+            $this->dm->persist($user);
+            $this->dm->persist($person);
+            $this->dm->flush();
+        }
+
+        return $user;
+    }
+
+    /**
+     * Create from User
+     *
+     * @param User $user
+     * @return Person
+     */
+    private function createFromUser(User $user)
+    {
+        $person = new Person();
+
+        $person->setName($user->getFullname());
+        $person->setEmail($user->getEmail());
+
+        $this->dm->persist($person);
+        $this->dm->flush();
+
+        return $person;
     }
 
     /**
