@@ -358,7 +358,7 @@ class FactoryService
     private function addLoggedInUserAsPerson(MultimediaObject $multimediaObject)
     {
         if ($this->addUserAsPerson && (null != $person = $this->personService->getPersonFromLoggedInUser())) {
-            if (null != $role = $this->personService->getDefaultRole()) {
+            if (null != $role = $this->personService->getAutoPublisherRole()) {
                 $multimediaObject->addPersonWithRole($person, $role);
             }
         }

@@ -17,18 +17,18 @@ class PersonService
     private $repo;
     private $repoMmobj;
     private $securityContext;
-    private $defaultRoleCode;
+    private $autoPublisherRoleCode;
 
     /**
      * Constructor
      *
      * @param DocumentManager $documentManager
      */
-    public function __construct(DocumentManager $documentManager, SecurityContext $securityContext, $defaultRoleCode='owner')
+    public function __construct(DocumentManager $documentManager, SecurityContext $securityContext, $autoPublisherRoleCode='owner')
     {
         $this->dm = $documentManager;
         $this->securityContext = $securityContext;
-        $this->defaultRoleCode = $defaultRoleCode;
+        $this->autoPublisherRoleCode = $autoPublisherRoleCode;
         $this->repo = $documentManager->getRepository('PumukitSchemaBundle:Person');
         $this->repoMmobj = $documentManager->getRepository('PumukitSchemaBundle:MultimediaObject');
     }
@@ -308,7 +308,7 @@ class PersonService
     }
 
     /**
-     * Get Default Role
+     * Get Auto Publisher Role
      *
      * Gets the default role
      * to add the User as Person
@@ -316,9 +316,9 @@ class PersonService
      *
      * @return Role
      */
-    public function getDefaultRole()
+    public function getAutoPublisherRole()
     {
-        return $this->dm->getRepository('PumukitSchemaBundle:Role')->findOneByCod($this->defaultRoleCode);
+        return $this->dm->getRepository('PumukitSchemaBundle:Role')->findOneByCod($this->autoPublisherRoleCode);
     }
 
     /**
