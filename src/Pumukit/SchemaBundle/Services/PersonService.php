@@ -283,6 +283,18 @@ class PersonService
     }
 
     /**
+     * Get logged in user
+     */
+    public function getLoggedInUser()
+    {
+        if (null != $token = $this->securityContext->getToken()) {
+            return $token->getUser();
+        }
+
+        return null;
+    }
+
+    /**
      * Get Person from logged in User
      *
      * Get the Person referenced
@@ -293,15 +305,13 @@ class PersonService
      */
     public function getPersonFromLoggedInUser()
     {
-        if (null != $token = $this->securityContext->getToken()) {
-            if (null != $user = $token->getUser()) {
-                if (null == $person = $user->getPerson()) {
-                    $user = $this->referencePersonIntoUser($user);
-                    $person = $user->getPerson();
-                }
-
-                return $person;
+        if (null != $user = $this->getLoggedInUser()) {
+            if (null == $person = $user->getPerson()) {
+                $user = $this->referencePersonIntoUser($user);
+                $person = $user->getPerson();
             }
+
+            return $person;
         }
 
         return null;
@@ -319,6 +329,20 @@ class PersonService
     public function getAutoPublisherRole()
     {
         return $this->dm->getRepository('PumukitSchemaBundle:Role')->findOneByCod($this->autoPublisherRoleCode);
+    }
+
+    /**
+     * Get Auto Publisher Role
+     *
+     * Gets the default role code
+     * to add the User as Person
+     * to MultimediaObject
+     *
+     * @return Role
+     */
+    public function getAutoPublisherRoleCode()
+    {
+        return $this->autoPublisherRoleCode;
     }
 
     /**
