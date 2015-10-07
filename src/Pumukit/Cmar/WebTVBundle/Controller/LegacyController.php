@@ -118,7 +118,7 @@ class LegacyController extends Controller
     }
 
     /**
-     * @Route("directo.html")
+     * @Route("/directo.html")
      */
     public function directoAction()
     {
