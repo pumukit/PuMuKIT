@@ -25,10 +25,8 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager" />
             <argument type="service" id="pumukitschema.tag" />
             <argument type="service" id="pumukitschema.person" />
-            <argument type="service" id="security.context" />
             <argument type="service" id="translator" />
             <argument>%pumukitschema.enable_add_user_as_person%</argument>
-            <argument>%pumukitschema.auto_publisher_role_code%</argument>
             <argument>%pumukit2.locales%</argument>
             <argument type="expression">parameter('pumukit2.info')['title']</argument>
         </service>
@@ -73,6 +71,8 @@
 
         <service id="pumukitschema.person" class="Pumukit\SchemaBundle\Services\PersonService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="security.context" />
+            <argument>%pumukitschema.auto_publisher_role_code%</argument>
         </service>
 
         <service id="pumukitschema.announce" class="Pumukit\SchemaBundle\Services\AnnounceService">

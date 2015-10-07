@@ -3,7 +3,6 @@
 namespace Pumukit\SchemaBundle\Services;
 
 use Symfony\Component\Translation\TranslatorInterface;
-use Symfony\Component\Security\Core\SecurityContext;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -18,23 +17,19 @@ class FactoryService
     private $dm;
     private $tagService;
     private $translator;
-    private $securityContext;
     private $locales;
     private $defaultCopyright;
     private $addUserAsPerson;
-    private $defaultRoleCode;
 
-    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, SecurityContext $securityContext, TranslatorInterface $translator, $addUserAsPerson=true, $defaultRoleCode='', array $locales = array(), $defaultCopyright = "")
+    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, TranslatorInterface $translator, $addUserAsPerson=true, array $locales = array(), $defaultCopyright = "")
     {
         $this->dm = $documentManager;
         $this->tagService = $tagService;
         $this->personService = $personService;
-        $this->securityContext = $securityContext;
         $this->translator = $translator;
         $this->locales = $locales;
         $this->defaultCopyright = $defaultCopyright;
         $this->addUserAsPerson = $addUserAsPerson;
-        $this->defaultRoleCode = $defaultRoleCode;
     }
 
     /**
@@ -362,31 +357,12 @@ class FactoryService
 
     private function addLoggedInUserAsPerson(MultimediaObject $multimediaObject)
     {
-        if ($this->addUserAsPerson && (null != $person = $this->getUserPerson())) {
-            if (null != $role = $this->getDefaultRole()) {
+        if ($this->addUserAsPerson && (null != $person = $this->personService->getPersonFromLoggedInUser())) {
+            if (null != $role = $this->personService->getDefaultRole()) {
                 $multimediaObject->addPersonWithRole($person, $role);
             }
         }
 
         return $multimediaObject;
-    }
-
-    private function getUserPerson()
-    {
-        if (null != $token = $this->securityContext->getToken()) {
-            if (null != $user = $token->getUser()) {
-                if (null == $person = $user->getPerson()) {
-                    $person = $this->personService->referencePersonIntoUser($user);
-                    return $person;
-                }
-            }
-        }
-
-        return null;
-    }
-
-    private function getDefaultRole()
-    {
-        return $this->dm->getRepository('PumukitSchemaBundle:Role')->findOneByCod($this->defaultRoleCode);
     }
 }

@@ -9,21 +9,26 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\SecurityContext;
 
 class PersonService
 {
     private $dm;
     private $repo;
     private $repoMmobj;
+    private $securityContext;
+    private $defaultRoleCode;
 
     /**
      * Constructor
      *
      * @param DocumentManager $documentManager
      */
-    public function __construct(DocumentManager $documentManager)
+    public function __construct(DocumentManager $documentManager, SecurityContext $securityContext, $defaultRoleCode='owner')
     {
         $this->dm = $documentManager;
+        $this->securityContext = $securityContext;
+        $this->defaultRoleCode = $defaultRoleCode;
         $this->repo = $documentManager->getRepository('PumukitSchemaBundle:Person');
         $this->repoMmobj = $documentManager->getRepository('PumukitSchemaBundle:MultimediaObject');
     }
@@ -275,6 +280,45 @@ class PersonService
         }
 
         return $user;
+    }
+
+    /**
+     * Get Person from logged in User
+     *
+     * Get the Person referenced
+     * in the logged in User
+     * It there is none, it creates it
+     *
+     * @return Person|null
+     */
+    public function getPersonFromLoggedInUser()
+    {
+        if (null != $token = $this->securityContext->getToken()) {
+            if (null != $user = $token->getUser()) {
+                if (null == $person = $user->getPerson()) {
+                    $user = $this->referencePersonIntoUser($user);
+                    $person = $user->getPerson();
+                }
+
+                return $person;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Get Default Role
+     *
+     * Gets the default role
+     * to add the User as Person
+     * to MultimediaObject
+     *
+     * @return Role
+     */
+    public function getDefaultRole()
+    {
+        return $this->dm->getRepository('PumukitSchemaBundle:Role')->findOneByCod($this->defaultRoleCode);
     }
 
     /**
