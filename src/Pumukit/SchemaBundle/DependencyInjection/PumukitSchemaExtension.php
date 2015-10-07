@@ -27,6 +27,7 @@ class PumukitSchemaExtension extends Extension
         $container->setParameter('pumukitschema.default_audio_hd_pic', $config['default_audio_hd_pic']);
         $container->setParameter('pumukitschema.default_audio_sd_pic', $config['default_audio_sd_pic']);
         $container->setParameter('pumukitschema.auto_publisher_role_code', $config['auto_publisher_role_code']);
+        $container->setParameter('pumukitschema.enable_add_user_as_person', $config['enable_add_user_as_person']);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');

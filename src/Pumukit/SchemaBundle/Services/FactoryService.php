@@ -21,9 +21,10 @@ class FactoryService
     private $contenxt;
     private $locales;
     private $defaultCopyright;
+    private $addUserAsPerson;
     private $defaultRoleCode;
 
-    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, SecurityContext $context, TranslatorInterface $translator, $defaultRoleCode='', array $locales = array(), $defaultCopyright = "")
+    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, SecurityContext $context, TranslatorInterface $translator, $addUserAsPerson=true, $defaultRoleCode='', array $locales = array(), $defaultCopyright = "")
     {
         $this->dm = $documentManager;
         $this->tagService = $tagService;
@@ -32,6 +33,7 @@ class FactoryService
         $this->translator = $translator;
         $this->locales = $locales;
         $this->defaultCopyright = $defaultCopyright;
+        $this->addUserAsPerson = $addUserAsPerson;
         $this->defaultRoleCode = $defaultRoleCode;
     }
 
@@ -360,7 +362,7 @@ class FactoryService
 
     private function addLoggedInUserAsPerson(MultimediaObject $multimediaObject)
     {
-        if (null != $person = $this->getUserPerson()) {
+        if ($this->addUserAsPerson && (null != $person = $this->getUserPerson())) {
             if (null != $role = $this->getDefaultRole()) {
                 $multimediaObject->addPersonWithRole($person, $role);
             }
