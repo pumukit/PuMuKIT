@@ -15,11 +15,6 @@ class MultimediaObjectController extends Base
     public function preExecute(MultimediaObject $multimediaObject, Request $request)
     {
         if ($opencasturl = $multimediaObject->getProperty("opencasturl")) {
-            $response = $this->testBroadcast($multimediaObject, $request);
-            if($response instanceof Response) {
-                return $response;
-            }
-
             $this->updateBreadcrumbs($multimediaObject);
             $this->incNumView($multimediaObject);
             $this->dispatch($multimediaObject);

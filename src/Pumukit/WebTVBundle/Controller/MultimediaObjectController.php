@@ -24,6 +24,11 @@ class MultimediaObjectController extends Controller
      */
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
     {
+      $response = $this->testBroadcast($multimediaObject, $request);
+      if($response instanceof Response) {
+        return $response;
+      }
+
       $response = $this->preExecute($multimediaObject, $request);
       if($response instanceof Response) {
         return $response;
@@ -35,11 +40,6 @@ class MultimediaObjectController extends Controller
 
       if (!$track)
         throw $this->createNotFoundException();
-
-      $response = $this->testBroadcast($multimediaObject, $request);
-      if($response instanceof Response) {
-        return $response;
-      }
 
       $this->incNumView($multimediaObject, $track);
       $this->dispatch($multimediaObject, $track);      
@@ -62,17 +62,17 @@ class MultimediaObjectController extends Controller
      */
     public function iframeAction(MultimediaObject $multimediaObject, Request $request)
     {
+        $response = $this->testBroadcast($multimediaObject, $request);
+        if($response instanceof Response) {
+            return $response;
+        }
+
         $track = $request->query->has('track_id') ?
           $multimediaObject->getTrackById($request->query->get('track_id')) :
           $multimediaObject->getFilteredTrackWithTags(array('display'));
 
         if (!$track)
             throw $this->createNotFoundException();
-
-        $response = $this->testBroadcast($multimediaObject, $request);
-        if($response instanceof Response) {
-            return $response;
-        }
 
         $this->incNumView($multimediaObject, $track);
         $this->dispatch($multimediaObject, $track);
@@ -197,10 +197,6 @@ class MultimediaObjectController extends Controller
     public function preExecute(MultimediaObject $multimediaObject, Request $request)
     {
       if($opencasturl = $multimediaObject->getProperty("opencasturl")) {
-          $response = $this->testBroadcast($multimediaObject, $request);
-          if($response instanceof Response) {
-              return $response;
-          }
           $this->incNumView($multimediaObject);
           $this->dispatch($multimediaObject);
           if($invert = $multimediaObject->getProperty('opencastinvert')) {
