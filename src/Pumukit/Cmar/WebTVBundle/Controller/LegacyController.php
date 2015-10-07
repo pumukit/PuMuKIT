@@ -33,6 +33,7 @@ class LegacyController extends Controller
     }
 
     /**
+     * @Route("/mmobj/index/id/{pumukit1id}")
      * @Route("/{_locale}/video/{pumukit1id}.html")
      * {_locale} matches current locale
      * {pumukit1id} matches multimediaObject.properties("pumukit1id")
