@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
@@ -18,6 +19,7 @@ class PersonController extends AdminController
     /**
      * Index
      *
+     * @Security("has_role('ROLE_ADMIN')")
      * @Template("PumukitNewAdminBundle:Person:index.html.twig")
      */
     public function indexAction(Request $request)
@@ -42,6 +44,7 @@ class PersonController extends AdminController
     /**
      * Create new person
      *
+     * @Security("has_role('ROLE_ADMIN')")
      * @Template("PumukitNewAdminBundle:Person:create.html.twig")
      */
     public function createAction(Request $request)
@@ -80,6 +83,7 @@ class PersonController extends AdminController
 
     /**
      * Update person
+     * @Security("has_role('ROLE_ADMIN')")
      * @Template("PumukitNewAdminBundle:Person:update.html.twig")
      */
     public function updateAction(Request $request)
@@ -119,6 +123,7 @@ class PersonController extends AdminController
     /**
      * Show person
      *
+     * @Security("has_role('ROLE_ADMIN')")
      * @Template("PumukitNewAdminBundle:Person:show.html.twig")
      */
     public function showAction(Request $request)
@@ -137,6 +142,7 @@ class PersonController extends AdminController
     /**
      * List people
      *
+     * @Security("has_role('ROLE_ADMIN')")
      * @Template("PumukitNewAdminBundle:Person:list.html.twig")
      */
     public function listAction(Request $request)
