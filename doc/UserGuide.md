@@ -130,7 +130,7 @@ The Web TV application is made up of several applications:
 
 The backend, or application of administration, is a modular Web and an interactive application with two main functions: administrating and cataloguing. It has a private access. Thus, it’s necessary to be registered and to initialize a session. Due to these two functions, the backend is used by two types of users:
 
--   **Content administrator**: he is in charge of configuring the users with access and their priorities, the real-time channels, the news and the design of the Web portal.
+-   **Content manager**: he is in charge of configuring the users with access and their priorities, the real-time channels, the news and the design of the Web portal.
 
 -   **Publisher**: he is in charge of administrating the series and multimedia objects employed as sources in the application of publication.
 
