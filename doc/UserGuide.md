@@ -1,18 +1,6 @@
 PuMuKIT-2 User Guide
 ====================
 
-*This page is updated to the XXX release*
-
-Main URLs of a PuMuKIT deployment
----------------------------------
-* Frontend: `http://{MyPuMuKIT_IP}/`
-* Backend (admin interface): `http://{MyPuMuKIT_IP}/admin`
-* Opencast: `http://{MyPuMuKIT_IP}/admin/opencast/mediapackage`
-* Wizard: `http://{MyPuMuKIT_IP}/admin/wizard/series`
-* ARCA: `http://{MyPuMuKIT_IP}/arca.xml`
-
-Documentation under costruction
-
 # PuMuKIT Content Manager Manual
 
 ## Table of contents
@@ -809,3 +797,10 @@ It allows to import videos from an associated Opencast to publish them.
 
 <div align="center"><font size=1 color="Blue">Figure 46. Opencast ingester module</font></div>
 
+Main URLs of a PuMuKIT deployment
+---------------------------------
+* Frontend: `http://{MyPuMuKIT_IP}/`
+* Backend (admin interface): `http://{MyPuMuKIT_IP}/admin`
+* Opencast: `http://{MyPuMuKIT_IP}/admin/opencast/mediapackage`
+* Wizard: `http://{MyPuMuKIT_IP}/admin/wizard/series`
+* ARCA: `http://{MyPuMuKIT_IP}/arca.xml`
