@@ -137,11 +137,11 @@ class MultimediaObjectController extends Base
           $casService->forceAuthentication();
 
           if(!in_array($casService->getUser(), array($broadcast->getName(), "tv", "prueba", "adminmh", "admin", "sistemas.uvigo"))) {
-              return new Response($this->render("PumukitWebTVBundle:Index:401unauthorized.html.twig", array()), 401);
+              return new Response($this->renderView("PumukitWebTVBundle:Index:401unauthorized.html.twig", array()), 401);
           }
       }
       if ($broadcast && (Broadcast::BROADCAST_TYPE_PRI === $broadcast->getBroadcastTypeId()))
-        return new Response($this->render("PumukitWebTVBundle:Index:403forbidden.html.twig", array()), 403);
+        return new Response($this->renderView("PumukitWebTVBundle:Index:403forbidden.html.twig", array()), 403);
 
       return true;
     }
