@@ -127,7 +127,7 @@ The Web TV application is made up of several applications:
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m25972adc.png)
 
-**Figure PuMuKit’s frontend**
+<div align="center"><font size=2 color='Blue'>Figure 1. PuMuKit’s frontend</font></div>
 
 -   **BACKEND**: Private portal of administration where multimedia
     contents of the database are catalogued and published. It also
