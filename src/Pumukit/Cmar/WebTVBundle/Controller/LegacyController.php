@@ -94,4 +94,12 @@ class LegacyController extends Controller
         }
         return $this->redirect($this->generateUrl("pumukit_podcast_audio", array()));
     }
+
+    /**
+     * @Route("directo.html")
+     */
+    public function directoAction()
+    {
+        return $this->redirect($this->generateUrl("pumukit_live", array()));
+    }
 }
