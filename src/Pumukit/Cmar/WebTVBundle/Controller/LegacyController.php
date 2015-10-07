@@ -54,6 +54,27 @@ class LegacyController extends Controller
         return $this->redirect($this->generateUrl("pumukit_webtv_multimediaobject_index", array("id" => $multimediaObject->getId())));
     }
 
+    
+    /**
+     * @Route("/pumoodle/embed/m/{pumukit1id}")
+     */
+    public function multimediaObjectIframeAction($pumukit1id)
+    {
+        $dm = $this->get("doctrine_mongodb.odm.document_manager");
+        $mmobjRepo = $dm->getRepository("PumukitSchemaBundle:MultimediaObject");
+
+        $multimediaObject = $mmobjRepo->createQueryBuilder()
+          ->field("properties.pumukit1id")->equals($pumukit1id)
+          ->getQuery()->getSingleResult();
+
+        if (!$multimediaObject) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->redirect($this->generateUrl("pumukit_webtv_multimediaobject_iframe", array("id" => $multimediaObject->getId())));
+    }
+    
+
     /**
      * @Route("/mmobj/index/file_id/{pumukit1id}")
      * {pumukit1id} matches the tag "pumukit1id:{pumukit1id}" in track.getTags()
