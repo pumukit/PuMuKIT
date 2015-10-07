@@ -127,7 +127,8 @@ The Web TV application is made up of several applications:
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m25972adc.png)
 
-<div align="center"><font size=2 color='Blue'>Figure 1. PuMuKit’s frontend</font></div>
+<div align="center"><font size=1 color="Blue">Figure 1. PuMuKit’s frontend</font></div>
+
 
 -   **BACKEND**: Private portal of administration where multimedia
     contents of the database are catalogued and published. It also
@@ -136,7 +137,8 @@ The Web TV application is made up of several applications:
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m44fbcb69.png)
 
-**Figure PuMuKit’s backend**
+<div align="center"><font size=1 color="Blue">Figure 2. PuMuKit’s backend</font></div>
+
 
 The backend, or application of administration, is a modular Web and an interactive application with two main functions: administrating and cataloguing. It has a private access. Thus, it’s necessary to be registered and to initialize a session. Due to these two functions, the backend is used by two types of users:
 
@@ -148,7 +150,8 @@ This application is divided into independent modules. These modules can have a s
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_5926ae12.png)
 
-**Figure Backend modules**
+<div align="center"><font size=1 color="Blue">Figure 3. Backend modules</font></div>
+
 
 # 2. PuMuKIT User Manual
 
@@ -160,7 +163,8 @@ Multimedia objects and series are created from the administration portal inside 
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_2fab8148.png)
 
-**Figure Wizard button**
+<div align="center"><font size=1 color="Blue">Figure 4. Wizard button</font></div>
+
 
 This wizard is composed of three steps:
 
@@ -168,19 +172,22 @@ This wizard is composed of three steps:
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m23c5cf20.png)
 
-**Figure Wizard Step 1**
+<div align="center"><font size=1 color="Blue">Figure 5. Wizard Step 1</font></div>
+
 
 -   **STEP 1**: In this step, you can select if you want to upload one single multimedia object or a group of them in the series.
     
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_6aa0e25d.png)
 
-**Figure Wizard Step 2**
+<div align="center"><font size=1 color="Blue">Figure 6. Wizard Step 2</font></div>
+
 
 -   **STEP 2**: A window to complete the metadata title, subtitle, description of new object and headline. This step will not be displayed if you select “Add multiple multimedia objects” in the previous step.
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_684d7db7.png)
 
-**Figure Wizard Step 3**
+<div align="center"><font size=1 color="Blue">Figure 7. Wizard Step 3</font></div>
+
 
 -   **STEP 3**: Finally, a window to complete technical metadata about the publication of the video. The metadata to complete are:
 
@@ -198,7 +205,8 @@ This wizard is composed of three steps:
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m3ce9bdda.png)
 
-**Figure Wizard Step 4**
+<div align="center"><font size=1 color="Blue">Figure 8. Wizard Step 4</font></div>
+
 
 -   **FINAL STEP**: This window shows the result of the wizard and it allows you to choose some actions:
 
@@ -210,7 +218,8 @@ This wizard is composed of three steps:
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m3ac7e07c.png)
 
-**Figure Wizard Final Step**
+<div align="center"><font size=1 color="Blue">Figure 9. Wizard Final Step</font></div>
+
 
 After completing the wizard, the multimedia object with the specified metadata is created, the file is transcoded, catalogued and when it ends you can see in the "Multimedia" tab on the block “Video Files”.
 
@@ -220,7 +229,8 @@ Once the video processing has finished in Opencast, click on the “Ingester” 
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m32076da.png)
 
-**Figure Opencast Ingester module**
+<div align="center"><font size=1 color="Blue">Figure 10. Opencast Ingester module</font></div>
+
 
 A list of the videos already processed in Opencast can be seen sorted by recording date.
 
@@ -244,7 +254,8 @@ There is also a searcher that allows us to find videos sorted by any of the Open
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m4b356bdf.png)
 
-**Figure Opencast ingester video searcher**
+<div align="center"><font size=1 color="Blue">Figure 11. Opencast Ingester video searcher</font></div>
+
 
 When importing the video, the program will behave differently depending on which of these cases is true:
 
@@ -295,14 +306,16 @@ You can select the number of videos shown in each page.
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_32f3b410.png)
 
-**Figure Page buttons**
+<div align="center"><font size=1 color="Blue">Figure 12. Page buttons</font></div>
+
 
 The columns which form the header of the table are links that you can use to rearrange the data in the listing in several ways: in ascending or descending order of according the title of the series, the date of publication or the number of multimedia objects it has. To change this order, you simply have to click on the header of the column you want to
 arrange in ascending order. If it was already arranged according to this column, data will be arranged in a descending order. In each entry of the table, the following columns are detailed, as it’s shown in this image.
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m6cae0a38.png)
 
-**Figure Multimedia series's column options**
+<div align="center"><font size=1 color="Blue">Figure 13. Multimedia series's column options</font></div>
+
 
 -   *Checkbox* to simultaneously delete several series.
 
@@ -327,7 +340,8 @@ has the shape of an accordion. Therefore, the usability of the system is improve
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m98064fc.png)
 
-**Figure Multimedia series’s filters**
+<div align="center"><font size=1 color="Blue">Figure 14. Multimedia series's filters</font></div>
+
 
 If you make double click on an item of the list of series, you have access to the edition module of multimedia objects which belong to that series. With one click, you select the item in the list of the selected series. Inside all the different metadata of the series structure, which you can modify through the form, we can distinguish two types: firstly,
 the descriptive metadata of content such as title, subtitle, etc. And, secondly, the metadata representing the portal as design, header of HTML
@@ -336,7 +350,8 @@ As it’s shown in the image, there are the following fields:
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_5bc6c027.png)
 
-**Figure Multimedia series’s info edition form**
+<div align="center"><font size=1 color="Blue">Figure 15. Multimedia series's info edition form</font></div>
+
 
 -   *Title*: Field of text which can be adapted internationally. It is used to insert the title of a series and it’s mandatory.
 
@@ -370,7 +385,8 @@ It allows to set common metadata for every multimedia object of the series. (See
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m281cc647.png)
 
-**Figure Multimedia series’s metadata edition form**
+<div align="center"><font size=1 color="Blue">Figure 16. Multimedia series’s metadata edition form</font></div>
+
 
 When creating or importing a multimedia object of the series from Opencast, metadata will be assigned to each one of them, except for the “Description” field. When importing a video from Opencast, the default “Description” field will be used only if the video “Description” field of Opencast is empty, in this case it will keep the metadata.
 
@@ -385,7 +401,8 @@ In the image you can see in more detail a row of the list of multimedia objects.
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_20a2adc2.png)
 
-**Figure Multimedia object's column options**
+<div align="center"><font size=1 color="Blue">Figure 17. Multimedia object's column options</font></div>
+
 
 -   *Checkbox* to simultaneously delete several series.
 
@@ -416,7 +433,8 @@ tags, people and technical metadata.
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m33e5f137.png)
 
-**Figure Multimedia object’s metadata tab**
+<div align="center"><font size=1 color="Blue">Figure 18. Multimedia object's metadata tab</font></div>
+
 
 #### 2.2.2.1 Publication metadata
 
@@ -432,7 +450,8 @@ Tag with metadata related to the publication of a multimedia object:
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_14aa138b.png)
 
-**Figure Multimedia object’s publication tab**
+<div align="center"><font size=1 color="Blue">Figure 19. Multimedia object's publication tab</font></div>
+
 
 #### 2.2.2.2 Descriptive and style metadata
 
@@ -458,7 +477,7 @@ The tag of descriptive and style metadata which is shown in the next image is ma
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m1e20cbe8.png)
 
-**Figure Multimedia object’s metadata edition form**
+<div align="center"><font size=1 color="Blue">Figure 20. Multimedia object's metadata edition form</font></div>
 
 #### 2.2.2.3 Tags
 
@@ -471,7 +490,8 @@ If the areas of knowledge will be the same for all the multimedia objects of a s
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_3bd61557.png)
 
-**Figure Multimedia object’s tags tab**
+<div align="center"><font size=1 color="Blue">Figure 21. Multimedia object’s tags tab</font></div>
+
 
 #### 2.2.2.4 People
 
@@ -479,7 +499,8 @@ As the “Tags” tag, the area to catalogue people is divided in blocks, corres
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_41cbe086.png)
 
-**Figure Multimedia object’s people tab**
+<div align="center"><font size=1 color="Blue">Figure 22. Multimedia object’s people tab</font></div>
+
 
 If you click on the “new” button, you access to a form where you can write the name of people you wish to add; while you are typing the name, you can see a list with catalogued people with this name in the database. For example, after typing “ruben” you will see listed all “Rubén” in the database and after typing «ruben go» you will only see listed those people with a surname which starts with “go” as González or Gómez. After typing the full name, if the person is already in the database, he or she will be listed. After selecting him/her and press the “use” button, he/she will be linked to the multimedia object. If he or she is not in the database, after typing you will not see a list and you would click on the “new” buttom to finish filling the data of the person and linking him/her to the multimedia object. You have to be careful with the position you give to the people because it’s not the same Rubén González González as a student or as a programmer.
 
@@ -487,7 +508,8 @@ The next image illustrates this process:
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m5b9ec300.png)
 
-**Figure People search form**
+<div align="center"><font size=1 color="Blue">Figure 23. People search form</font></div>
+
 
 #### 2.2.2.5 Technical metadata
 
@@ -503,7 +525,8 @@ The last tag of the multimedia object technical metadata is made up of four entr
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_6fdd7353.png)
 
-**Figure Multimedia object’s multimedia tab**
+<div align="center"><font size=1 color="Blue">Figure 24. Multimedia object’s multimedia tab</font></div>
+
 
 ##### 2.2.2.5.1 **Download a master and a publishing copy of a mono-stream video**
 
@@ -511,7 +534,8 @@ For those videos that are not imported from Opencast, you can download a copy of
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m594847d7.png)
 
-**Figure Download a video**
+<div align="center"><font size=1 color="Blue">Figure 25. Download a video</font></div>
+
 
 We can see from video files to various icons appear to us before the name and identifier of the video. If you click on the arrow icon down, it downloads a copy of this video.
 
@@ -535,13 +559,15 @@ These three methods to link images correspond to the three parts of the form to 
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_6753099c.png)
 
-**Figure Picture edition form**
+<div align="center"><font size=1 color="Blue">Figure 26. Picture edition form</font></div>
+
 
 In the next image, you can see the partial item of the series and multimedia object forms in the four tags. This allows you to link new images clicking on the link of new image. It also allows you to delete existing images clicking on the delete button and to modify their order with the corresponding arrows.
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_73582573.png)
 
-**Figure Multimedia object’s picture options**
+<div align="center"><font size=1 color="Blue">Figure 27. Multimedia object’s picture options</font></div>
+
 
 An image can be linked to more than a multimedia object. If an image is decoupled of an item, but it is linked to another one, it is not deleted. If it is only linked to an item, when it is decoupled, it will be deleted.
 
@@ -551,19 +577,22 @@ At the multimedia objects management module, the new thumbnail can be selected i
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m190fe2b4.png)
 
-**Figure Multimedia object’s publication tab**
+<div align="center"><font size=1 color="Blue">Figure 28. Multimedia object’s publication tab</font></div>
+
 
 -   The image can be uploaded to the server from your computer by clicking on “New Image”. These images are resized on the server to take up less space and reduce the bandwidth needed to display the portal.
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_6753099c.png)
 
-**Figure Picture edition form**
+<div align="center"><font size=1 color="Blue">Figure 29. Picture edition form</font></div>
+
 
 In the next picture we show the element appearing in the “Multimedia” tab (form both the series and the multimedia objects administrators) from which you can order the images (clicking on the arrows below them).To associate new images by clicking on the link “New Image” also deletes existing images by clicking the delete button and modify your order with dates.
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_73582573.png)
 
-**Figure Multimedia object’s picture options**
+<div align="center"><font size=1 color="Blue">Figure 30. Multimedia object’s picture options</font></div>
+
 
 ## 2.3 Content publication
 
@@ -571,7 +600,8 @@ The content publication is carried out through the publication tag of the editio
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_14aa138b.png)
 
-**Figure Multimedia object’s publication tab**
+<div align="center"><font size=1 color="Blue">Figure 31. Multimedia object’s publication tab</font></div>
+
 
 There are different publication channels where you can publish multimedia objects. A multimedia object can be published in one or several defined channels. When a publication channel is selected, before publishing it, the file is coded to the needed profile. Multimedia objects are not published until this transcoding is finished.
 
@@ -589,7 +619,8 @@ It is a module to have access to the application of administration. The interfac
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_3e814977.png)
 
-**Figure Access module**
+<div align="center"><font size=1 color="Blue">Figure 32. Access module</font></div>
+
 
 ### 2.4.2 Dashboard module
 
@@ -597,7 +628,8 @@ It is a module that allows you to see a timeline of the recordings in Pumukit an
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m1e7d0faa.png)
 
-**Figure Dashboard module**
+<div align="center"><font size=1 color="Blue">Figure 33. Dashboard module</font></div>
+
 
 ### 2.4.3 Multimedia series module
 
@@ -605,7 +637,8 @@ It is a module to administrate series and their multimedia objects.
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_145e32b4.png)
 
-**Figure Multimedia series module**
+<div align="center"><font size=1 color="Blue">Figure 34. Multimedia series module</font></div>
+
 
 ### 2.4.4 Live channels module (Live streaming)
 
@@ -613,7 +646,8 @@ It is a module that allows you to administrate real-time channels of the Web por
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_20d1356e.png)
 
-**Figure Live channels module**
+<div align="center"><font size=1 color="Blue">Figure 35. Live channels module</font></div>
+
 
 #### 2.4.4.1 Live channel configuration
 
@@ -621,7 +655,8 @@ From the Live channels module it can be configured the following parameters:
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_34781e32.png)
 
-**Figure Live channel configuration**
+<div align="center"><font size=1 color="Blue">Figure 36. Live channels configuration</font></div>
+
 
 -   Name: Live channel name shown in the frontend.
 
@@ -677,7 +712,8 @@ It is a module that allows you to administrate the next events that will be broa
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_116c19e4.png)
 
-**Figure Live events module**
+<div align="center"><font size=1 color="Blue">Figure 37. Live events module</font></div>
+
 
 ### 2.4.6 Encoder jobs module
 
@@ -685,7 +721,8 @@ It is a module that summarizes transcoding jobs: those in progress, those pendin
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_1172fa0c.png)
 
-**Figure Encoder jobs module**
+<div align="center"><font size=1 color="Blue">Figure 38. Encoder jobs module</font></div>
+
 
 ### 2.4.7 People module
 
@@ -693,7 +730,8 @@ It is a module to administrate data of people linked to a multimedia object, whe
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_b337d.png)
 
-**Figure People module**
+<div align="center"><font size=1 color="Blue">Figure 39. People module</font></div>
+
 
 This module allows the creation, edition and elimination of information related to people. It also should be noted that the information storage in the database is not linked to the person but to the position. This is to say that a person with two different positions have two different entries, one per position. This is because we want to solve the problem of temporary positions as Chancellor of the University. This person has two entries: one for Chancellor and another for teacher.
 
@@ -703,7 +741,8 @@ It is a module that allows you to administrate Tags areas used to catalogue mult
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_305eb328.png)
 
-**Figure Tags module**
+<div align="center"><font size=1 color="Blue">Figure 40. Tags module</font></div>
+
 
 The different areas of knowledge are grouped depending on types, creating domains as the different grades of UNESCO’s knowledge areas, the principal domain or even the departments of an institution.
 
@@ -713,13 +752,15 @@ It is a module that allows you to administrate the broadcasting of multimedia ob
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m2c38dcb0.png)
 
-**Figure Access profiles module**
+<div align="center"><font size=1 color="Blue">Figure 41. Access profiles module</font></div>
+
 
 Click on “new” to create a new broadcast profile, the next window will open:
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m64d6a754.png)
 
-**Figure Create new broadcast**
+<div align="center"><font size=1 color="Blue">Figure 42. Create new broadcast</font></div>
+
 
 -   Name: name of the profile, if the profile is private it will match the user name used to sign up.
 
@@ -735,7 +776,8 @@ It is a module that allows you to administrate the types of series (also designa
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m761f57ba.png)
 
-**Figure Series types module**
+<div align="center"><font size=1 color="Blue">Figure 43. Series types module</font></div>
+
 
 ### 2.4.11 Admin users module
 
@@ -743,7 +785,8 @@ It is a module to configure users who have access to the administration applicat
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_1c9b8e45.png)
 
-**Figure Admin users module**
+<div align="center"><font size=1 color="Blue">Figure 44. Admin users module</font></div>
+
 
 ### 2.4.12 Roles module
 
@@ -755,7 +798,8 @@ It is a module that allows you to administrate roles with people linked to multi
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_4973185c.png)
 
-**Figure Roles module**
+<div align="center"><font size=1 color="Blue">Figure 45. Roles module</font></div>
+
 
 ### 2.4.13 Opencast ingester module
 
@@ -763,4 +807,5 @@ It allows to import videos from an associated Opencast to publish them.
 
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_5078c770.png)
 
-**Figure Opencast ingester module**
+<div align="center"><font size=1 color="Blue">Figure 46. Opencast ingester module</font></div>
+
