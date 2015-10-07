@@ -18,18 +18,18 @@ class FactoryService
     private $dm;
     private $tagService;
     private $translator;
-    private $contenxt;
+    private $securityContext;
     private $locales;
     private $defaultCopyright;
     private $addUserAsPerson;
     private $defaultRoleCode;
 
-    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, SecurityContext $context, TranslatorInterface $translator, $addUserAsPerson=true, $defaultRoleCode='', array $locales = array(), $defaultCopyright = "")
+    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, SecurityContext $securityContext, TranslatorInterface $translator, $addUserAsPerson=true, $defaultRoleCode='', array $locales = array(), $defaultCopyright = "")
     {
         $this->dm = $documentManager;
         $this->tagService = $tagService;
         $this->personService = $personService;
-        $this->context = $context;
+        $this->securityContext = $securityContext;
         $this->translator = $translator;
         $this->locales = $locales;
         $this->defaultCopyright = $defaultCopyright;
@@ -373,7 +373,7 @@ class FactoryService
 
     private function getUserPerson()
     {
-        if (null != $token = $this->context->getToken()) {
+        if (null != $token = $this->securityContext->getToken()) {
             if (null != $user = $token->getUser()) {
                 if (null == $person = $user->getPerson()) {
                     $person = $this->personService->referencePersonIntoUser($user);
