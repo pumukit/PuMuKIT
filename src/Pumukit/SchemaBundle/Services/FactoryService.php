@@ -243,6 +243,7 @@ class FactoryService
          
         $multimediaObjects = $repoMmobjs->findBySeries($series);
         foreach($multimediaObjects as $mm){
+            $series->removeMultimediaObject($mm);
             $this->dm->remove($mm);
         }
          

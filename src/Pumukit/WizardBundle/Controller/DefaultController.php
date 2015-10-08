@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Intl\Intl;
 use Symfony\Component\Finder\Finder;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 
 class DefaultController extends Controller
@@ -184,7 +185,7 @@ class DefaultController extends Controller
                             }catch(\Exception $e){
                                 // TODO: filter invalid files another way
                                 if (!strpos($e->getMessage(), 'Unknown error')){
-                                    $this->removeInvalidMultimediaObject($multimediaObject);
+                                    $this->removeInvalidMultimediaObject($multimediaObject, $series);
                                     throw $e;
                                 }
                             }
@@ -414,8 +415,9 @@ class DefaultController extends Controller
     /**
      * Remove Invalid Multimedia Object
      */
-    private function removeInvalidMultimediaObject(MultimediaObject $multimediaObject)
+    private function removeInvalidMultimediaObject(MultimediaObject $multimediaObject, Series $series)
     {
+        $series->removeMultimediaObject($multimediaObject);
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $dm->remove($multimediaObject);
         $dm->flush();
