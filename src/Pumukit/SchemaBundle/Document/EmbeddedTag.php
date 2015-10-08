@@ -447,7 +447,15 @@ class EmbeddedTag
    */
   public function isDescendantOfByCod($tagCod)
   {
-      return strpos($this->getPath(), $tagCod) === false ? false : true;
+       if( $tagCod == $this->getCod() )
+      {
+          return false;
+      }
+      if( strpos( $this->getPath(), sprintf('%s|',$tagCod ) ) === 0 )
+      {
+          return true;
+      }
+      return strpos($this->getPath(), sprintf('|%s|', $tagCod)) === false ? false : true;     
   }
 
 
