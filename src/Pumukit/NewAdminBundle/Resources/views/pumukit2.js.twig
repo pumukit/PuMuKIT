@@ -921,10 +921,8 @@ $(function() {
   });
 
   $('#pumukitnewadmin_series_new_button').on('click', function () {
-    var seriesId = $('#series_series_id').val();
-    var route = "{{ path('pumukitnewadmin_series_create', {'id': '__seriesId__'}) }}";
+    var route = "{{ path('pumukitnewadmin_series_create') }}";
     $('#filter_series')[0].reset();
-    route = route.replace('__seriesId__', seriesId);
     $.ajax(route, {
             type: 'GET',
             error: function(jqXHR, textStatus, errorThrown){
