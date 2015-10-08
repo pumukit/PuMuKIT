@@ -125,7 +125,7 @@ The Web TV application is made up of several applications:
 -   **FRONTEND**: Public portal where users can surf the series and see
     the videos. (http://{MyPuMuKIT\_IP}/)
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m25972adc.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m25972adc.png)
 
 **Figure PuMuKit’s frontend**
 
@@ -134,7 +134,7 @@ The Web TV application is made up of several applications:
     allows you to modify the configuration and appearance of the Web
     portal. (http://{MyPuMuKIT\_IP}/admin)
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m44fbcb69.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m44fbcb69.png)
 
 **Figure PuMuKit’s backend**
 
@@ -146,7 +146,7 @@ The backend, or application of administration, is a modular Web and an interacti
 
 This application is divided into independent modules. These modules can have a section associated and share a common layout. This layout contains a header, an access menu to different modules and a link to logging off and closes the application.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_5926ae12.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_5926ae12.png)
 
 **Figure Backend modules**
 
@@ -158,7 +158,7 @@ This application is divided into independent modules. These modules can have a s
 
 Multimedia objects and series are created from the administration portal inside the module "Multimedia series". To automate the process there is a wizard that guides you through the steps for creating and cataloging content. This wizard will start after clicking the button "Wizard" next to “Create a new series” button, as shown in the picture below:
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_2fab8148.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_2fab8148.png)
 
 **Figure Wizard button**
 
@@ -166,19 +166,19 @@ This wizard is composed of three steps:
 
 -   **STEP 0**: The wizard will show you a new window to complete the metadata title and description of the series that will contain the new multimedia object. If the wizard is run from within an existing series this step will not be displayed and the new media object is stored in said series.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m23c5cf20.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m23c5cf20.png)
 
 **Figure Wizard Step 1**
 
 -   **STEP 1**: In this step, you can select if you want to upload one single multimedia object or a group of them in the series.
     
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_6aa0e25d.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_6aa0e25d.png)
 
 **Figure Wizard Step 2**
 
 -   **STEP 2**: A window to complete the metadata title, subtitle, description of new object and headline. This step will not be displayed if you select “Add multiple multimedia objects” in the previous step.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_684d7db7.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_684d7db7.png)
 
 **Figure Wizard Step 3**
 
@@ -196,7 +196,7 @@ This wizard is composed of three steps:
 
     -   *Resource (local or server):* Field used to select the local file or server, depending on the selected mode.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m3ce9bdda.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m3ce9bdda.png)
 
 **Figure Wizard Step 4**
 
@@ -208,7 +208,7 @@ This wizard is composed of three steps:
 
     -   Create another Multimedia Object in a new Series
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m3ac7e07c.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m3ac7e07c.png)
 
 **Figure Wizard Final Step**
 
@@ -218,13 +218,13 @@ After completing the wizard, the multimedia object with the specified metadata i
 
 Once the video processing has finished in Opencast, click on the “Ingester” module to go to the next window:
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m32076da.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m32076da.png)
 
 **Figure Opencast Ingester module**
 
 A list of the videos already processed in Opencast can be seen sorted by recording date.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_71e2c3e.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_71e2c3e.png)
 
 Information showed about the video:
 
@@ -242,7 +242,7 @@ Information showed about the video:
 
 There is also a searcher that allows us to find videos sorted by any of the Opencast data (presenter, title, id…).
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m4b356bdf.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m4b356bdf.png)
 
 **Figure Opencast ingester video searcher**
 
@@ -293,14 +293,14 @@ buttons to access pages one at time.
 
 You can select the number of videos shown in each page.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_32f3b410.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_32f3b410.png)
 
 **Figure Page buttons**
 
 The columns which form the header of the table are links that you can use to rearrange the data in the listing in several ways: in ascending or descending order of according the title of the series, the date of publication or the number of multimedia objects it has. To change this order, you simply have to click on the header of the column you want to
 arrange in ascending order. If it was already arranged according to this column, data will be arranged in a descending order. In each entry of the table, the following columns are detailed, as it’s shown in this image.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m6cae0a38.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m6cae0a38.png)
 
 **Figure Multimedia series's column options**
 
@@ -325,7 +325,7 @@ arrange in ascending order. If it was already arranged according to this column,
 Thanks to the filters, you can see fewer results and obtain quickly what you are looking for. You can configure the filters with a form. In this form, you can create filters depending on the title, involved people, recording places, channels, broadcasting, states… To reduce the size that may occupy the form if all configuring fields are shown the form
 has the shape of an accordion. Therefore, the usability of the system is improved. Each brand of the accordion is shown separated from the next image. The fields of the filtering form are case or accent mark insensitive and use "\*" as wildcard character.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m98064fc.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m98064fc.png)
 
 **Figure Multimedia series’s filters**
 
@@ -334,7 +334,7 @@ the descriptive metadata of content such as title, subtitle, etc. And, secondly,
 
 As it’s shown in the image, there are the following fields:
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_5bc6c027.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_5bc6c027.png)
 
 **Figure Multimedia series’s info edition form**
 
@@ -368,7 +368,7 @@ When clicking on the series options icon it will show this option:
 
 It allows to set common metadata for every multimedia object of the series. (See section 2.2.2 for further details)
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m281cc647.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m281cc647.png)
 
 **Figure Multimedia series’s metadata edition form**
 
@@ -383,7 +383,7 @@ objects and, making it unnecessary.
 
 In the image you can see in more detail a row of the list of multimedia objects. The following items are included in that:
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_20a2adc2.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_20a2adc2.png)
 
 **Figure Multimedia object's column options**
 
@@ -414,7 +414,7 @@ Below this list, there is a button to create new multimedia objects inside the s
 When you click on an item of the multimedia objects’ list, this is selected, updating the previewing and the administration section with the contents of this multimedia object. The previewing has a similar design as the block shown in the public web portal when the items of a series are listed. Since the multimedia object is the core part of the database, the administration section now is very big. Therefore, it is divided into five tabs: publication metadata, descriptive metadata,
 tags, people and technical metadata.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m33e5f137.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m33e5f137.png)
 
 **Figure Multimedia object’s metadata tab**
 
@@ -430,7 +430,7 @@ Tag with metadata related to the publication of a multimedia object:
 
 -   *Broadcast profile*: With this, you indicate the ACLs of the video.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_14aa138b.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_14aa138b.png)
 
 **Figure Multimedia object’s publication tab**
 
@@ -456,7 +456,7 @@ The tag of descriptive and style metadata which is shown in the next image is ma
 
 -   *Headline*
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m1e20cbe8.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m1e20cbe8.png)
 
 **Figure Multimedia object’s metadata edition form**
 
@@ -469,7 +469,7 @@ arrow which points to the first list. If you want to change the catalogue of a m
 
 If the areas of knowledge will be the same for all the multimedia objects of a series, it is recommended to modify this value in "Videos Template" tag of that series. With this, every new multimedia object of the series will have this value when it is created.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_3bd61557.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_3bd61557.png)
 
 **Figure Multimedia object’s tags tab**
 
@@ -477,7 +477,7 @@ If the areas of knowledge will be the same for all the multimedia objects of a s
 
 As the “Tags” tag, the area to catalogue people is divided in blocks, corresponding each block to each of the roles that a person can have inside a video. There is an entry for each role and inside that there is a list of people related to the multimedia object. You can modify the order of the people listed in each role with the arrows in the list. You can also edit the attributes of the people, without using the people module (directly from the multimedia objects administrator). In addition, you can decouple a person from the multimedia object. If you decouple a person which is not related to another multimedia object, it gets deleted from the database. In the “new” button, you can insert a new person or an existing person in the object.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_41cbe086.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_41cbe086.png)
 
 **Figure Multimedia object’s people tab**
 
@@ -485,7 +485,7 @@ If you click on the “new” button, you access to a form where you can write t
 
 The next image illustrates this process:
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m5b9ec300.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m5b9ec300.png)
 
 **Figure People search form**
 
@@ -501,7 +501,7 @@ The last tag of the multimedia object technical metadata is made up of four entr
 
 -   *Links*: List of links of the multimedia object. You can create new ones, modify, arrange or delete them.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_6fdd7353.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_6fdd7353.png)
 
 **Figure Multimedia object’s multimedia tab**
 
@@ -509,7 +509,7 @@ The last tag of the multimedia object technical metadata is made up of four entr
 
 For those videos that are not imported from Opencast, you can download a copy of the master and publication file of the recording on this tab.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m594847d7.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m594847d7.png)
 
 **Figure Download a video**
 
@@ -533,13 +533,13 @@ There are three different ways to link new images:
 
 These three methods to link images correspond to the three parts of the form to insert images. You can see it afterwards.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_6753099c.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_6753099c.png)
 
 **Figure Picture edition form**
 
 In the next image, you can see the partial item of the series and multimedia object forms in the four tags. This allows you to link new images clicking on the link of new image. It also allows you to delete existing images clicking on the delete button and to modify their order with the corresponding arrows.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_73582573.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_73582573.png)
 
 **Figure Multimedia object’s picture options**
 
@@ -549,19 +549,19 @@ At the multimedia objects management module, the new thumbnail can be selected i
 
 -   If the content of the multimedia object is a video, you can extract thumbnail from the video frames. Using the "Photo" button, an image will be extracted at the selected instant of the video.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m190fe2b4.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m190fe2b4.png)
 
 **Figure Multimedia object’s publication tab**
 
 -   The image can be uploaded to the server from your computer by clicking on “New Image”. These images are resized on the server to take up less space and reduce the bandwidth needed to display the portal.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_6753099c.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_6753099c.png)
 
 **Figure Picture edition form**
 
 In the next picture we show the element appearing in the “Multimedia” tab (form both the series and the multimedia objects administrators) from which you can order the images (clicking on the arrows below them).To associate new images by clicking on the link “New Image” also deletes existing images by clicking the delete button and modify your order with dates.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_73582573.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_73582573.png)
 
 **Figure Multimedia object’s picture options**
 
@@ -569,7 +569,7 @@ In the next picture we show the element appearing in the “Multimedia” tab (f
 
 The content publication is carried out through the publication tag of the edition form in the multimedia objects module. The publication is conducted for each multimedia object in unique and independent way.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_14aa138b.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_14aa138b.png)
 
 **Figure Multimedia object’s publication tab**
 
@@ -587,7 +587,7 @@ The administrative application also has other modules to perform less common adm
 
 It is a module to have access to the application of administration. The interface is simply an access form, which is used to validate the login and the password with the list of users of the server database.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_3e814977.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_3e814977.png)
 
 **Figure Access module**
 
@@ -595,7 +595,7 @@ It is a module to have access to the application of administration. The interfac
 
 It is a module that allows you to see a timeline of the recordings in Pumukit and information about them.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m1e7d0faa.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m1e7d0faa.png)
 
 **Figure Dashboard module**
 
@@ -603,7 +603,7 @@ It is a module that allows you to see a timeline of the recordings in Pumukit an
 
 It is a module to administrate series and their multimedia objects.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_145e32b4.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_145e32b4.png)
 
 **Figure Multimedia series module**
 
@@ -611,7 +611,7 @@ It is a module to administrate series and their multimedia objects.
 
 It is a module that allows you to administrate real-time channels of the Web portal.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_20d1356e.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_20d1356e.png)
 
 **Figure Live channels module**
 
@@ -619,7 +619,7 @@ It is a module that allows you to administrate real-time channels of the Web por
 
 From the Live channels module it can be configured the following parameters:
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_34781e32.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_34781e32.png)
 
 **Figure Live channel configuration**
 
@@ -675,7 +675,7 @@ Streaming encoder configuration recommendations for AMS:
 
 It is a module that allows you to administrate the next events that will be broadcasted through real-time channels.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_116c19e4.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_116c19e4.png)
 
 **Figure Live events module**
 
@@ -683,7 +683,7 @@ It is a module that allows you to administrate the next events that will be broa
 
 It is a module that summarizes transcoding jobs: those in progress, those pending for transcoding and those finished (both correctly and incorrectly).
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_1172fa0c.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_1172fa0c.png)
 
 **Figure Encoder jobs module**
 
@@ -691,7 +691,7 @@ It is a module that summarizes transcoding jobs: those in progress, those pendin
 
 It is a module to administrate data of people linked to a multimedia object, whether they present a lecture, they are short-film actors or they have a much more technical role as producers, directors, etc. People are linked to the multimedia object through the roles that are administrated in their corresponding module.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_b337d.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_b337d.png)
 
 **Figure People module**
 
@@ -701,7 +701,7 @@ This module allows the creation, edition and elimination of information related 
 
 It is a module that allows you to administrate Tags areas used to catalogue multimedia objects.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_305eb328.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_305eb328.png)
 
 **Figure Tags module**
 
@@ -711,13 +711,13 @@ The different areas of knowledge are grouped depending on types, creating domain
 
 It is a module that allows you to administrate the broadcasting of multimedia objects. Broadcasting defines the scope or privacy of multimedia objects.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m2c38dcb0.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m2c38dcb0.png)
 
 **Figure Access profiles module**
 
 Click on “new” to create a new broadcast profile, the next window will open:
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m64d6a754.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m64d6a754.png)
 
 **Figure Create new broadcast**
 
@@ -733,7 +733,7 @@ Click on “new” to create a new broadcast profile, the next window will open:
 
 It is a module that allows you to administrate the types of series (also designated as channels) in which multimedia object series of the catalogue are classified.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_m761f57ba.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_m761f57ba.png)
 
 **Figure Series types module**
 
@@ -741,7 +741,7 @@ It is a module that allows you to administrate the types of series (also designa
 
 It is a module to configure users who have access to the administration application. With this module, you can create, edit and delete users and their authorizations.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_1c9b8e45.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_1c9b8e45.png)
 
 **Figure Admin users module**
 
@@ -753,7 +753,7 @@ It is a module that allows you to administrate roles with people linked to multi
 
 -   Private: these are used internally to administrate and catalogue multimedia objects in a better way. They are not shown in the Web portal.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_4973185c.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_4973185c.png)
 
 **Figure Roles module**
 
@@ -761,6 +761,6 @@ It is a module that allows you to administrate roles with people linked to multi
 
 It allows to import videos from an associated Opencast to publish them.
 
-![](PuMuKit_2_Content_Admin_Guide_v1.1_html_5078c770.png)
+![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_5078c770.png)
 
 **Figure Opencast ingester module**
