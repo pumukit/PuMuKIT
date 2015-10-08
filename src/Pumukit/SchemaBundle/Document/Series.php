@@ -226,7 +226,7 @@ class Series
    */
   public function removeMultimediaObject(MultimediaObject $multimedia_object)
   {
-    $this->multimedia_objects-->removeElement($multimedia_object);
+    $this->multimedia_objects->removeElement($multimedia_object);
   }
     
     
