@@ -493,7 +493,7 @@ class MultimediaObjectController extends SortableAdminController
         $seriesId = $resource->getSeries()->getId();
 
         try {
-            $this->get('pumukitschema.factory')->deleteResource($resource);
+            $this->get('pumukitschema.factory')->deleteMultimediaObject($resource);
         } catch (\Exception $e) {
             return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
@@ -504,6 +504,30 @@ class MultimediaObjectController extends SortableAdminController
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list', 
                                                   array('seriesId' => $seriesId)));
+    }
+
+    public function batchDeleteAction(Request $request)
+    {
+        $ids = $this->getRequest()->get('ids');
+
+        if ('string' === gettype($ids)){
+            $ids = json_decode($ids, true);
+        }
+
+        $factory = $this->get('pumukitschema.factory');
+        foreach ($ids as $id) {
+            $resource = $this->find($id);
+            try{
+                $factory->deleteMultimediaObject($resource);
+            } catch (\Exception $e) {
+                return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
+            }
+            if ($id === $this->get('session')->get('admin/mms/id')){
+                $this->get('session')->remove('admin/mms/id');
+            }
+        }
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));
     }
 
     /**

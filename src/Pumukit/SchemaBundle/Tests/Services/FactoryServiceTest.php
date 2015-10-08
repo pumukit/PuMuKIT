@@ -307,7 +307,7 @@ class FactoryServiceTest extends WebTestCase
         $this->assertEquals(1, count($this->seriesRepo->findAll()));
         $this->assertEquals(2, count($this->mmobjRepo->findAll()));
 
-        $this->factory->deleteResource($mmobj);
+        $this->factory->deleteMultimediaObject($mmobj);
 
         $this->assertEquals(1, count($this->mmobjRepo->findAll()));
 

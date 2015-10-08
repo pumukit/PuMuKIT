@@ -215,9 +215,6 @@ class AdminController extends ResourceController
 
         $config = $this->getConfiguration();
         $resourceName = $config->getResourceName();
-        if ('multimediaobject' === $resourceName){
-            $resourceName = 'mms';
-        }
 
         $factory = $this->get('pumukitschema.factory');
         foreach ($ids as $id) {
@@ -231,8 +228,6 @@ class AdminController extends ResourceController
                 $this->get('session')->remove('admin/'.$resourceName.'/id');
             }
         }
-
-        $this->addFlash('success', 'delete');
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
     }
