@@ -38,7 +38,13 @@ class FilterListener
                     $filter->setParameter("people", $people);
                 }
 
-                $filter->setParameter("series_ids", $this->getSeriesMongoQuery());
+                if (null != $person = $this->personService->getPersonFromLoggedInUser()) {
+                    $filter->setParameter("person_id", $person->getId());
+                }
+
+                if (null != $roleCode = $this->personService->getAutoPublisherRoleCode()) {
+                    $filter->setParameter("role_code", $roleCode);
+                }
             }
         }
     }
@@ -63,26 +69,5 @@ class FilterListener
         }
 
         return $people;
-    }
-
-    /**
-     * Get series mongo query
-     * Match the Series
-     * with given ids
-     *
-     * Query in MongoDB:
-     * db.Series.find({ "_id": { "$in": [ ObjectId("__id_1__"), ObjectId("__id_2__")... ] } });
-     */
-    private function getSeriesMongoQuery()
-    {
-        $seriesIds = array();
-        if ((null != ($person = $this->personService->getPersonFromLoggedInUser()))
-            && (null != ($roleCode = $this->personService->getAutoPublisherRoleCode()))) {
-            $repoMmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-            $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCod($person->getId(), $roleCode);
-            $seriesIds['$in'] = $referencedSeries->toArray();
-        }
-
-        return $seriesIds;
     }
 }
