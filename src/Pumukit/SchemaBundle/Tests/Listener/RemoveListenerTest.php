@@ -69,7 +69,7 @@ class RemoveListenerTest extends WebTestCase
         $this->assertEquals(2, count($this->repoMmobj->findAll()));
         $this->assertEquals(1, count($this->repoJobs->findAll()));
 
-        $this->factoryService->deleteResource($multimediaObject);
+        $this->factoryService->deleteMultimediaObject($multimediaObject);
 
         $this->assertEquals(1, count($this->repoSeries->findAll()));
         $this->assertEquals(1, count($this->repoMmobj->findAll()));
@@ -92,7 +92,7 @@ class RemoveListenerTest extends WebTestCase
         $this->assertEquals(2, count($this->repoMmobj->findAll()));
         $this->assertEquals(1, count($this->repoJobs->findAll()));
 
-        $this->factoryService->deleteResource($multimediaObject);
+        $this->factoryService->deleteMultimediaObject($multimediaObject);
 
         $this->assertEquals(1, count($this->repoSeries->findAll()));
         $this->assertEquals(2, count($this->repoMmobj->findAll()));

@@ -239,7 +239,6 @@ class FactoryService
     public function deleteSeries(Series $series)
     {      
         $repoMmobjs = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $jobRepo = $this->dm->getRepository("PumukitEncoderBundle:Job");
          
         $multimediaObjects = $repoMmobjs->findBySeries($series);
         foreach($multimediaObjects as $mm){
@@ -248,6 +247,24 @@ class FactoryService
         }
          
         $this->dm->remove($series);
+
+        $this->dm->flush();
+    }
+
+    /**
+     * Delete MultimediaObject
+     *
+     * @param MultimediaObject $multimediaObject
+     */
+    public function deleteMultimediaObject(MultimediaObject $multimediaObject)
+    {
+        $repoMmobjs = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+
+        if (null != $series = $multimediaObject->getSeries()) {
+            $series->removeMultimediaObject($multimediaObject);
+            $this->dm->persist($series);
+        }
+        $this->dm->remove($multimediaObject);
 
         $this->dm->flush();
     }
