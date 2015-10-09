@@ -96,6 +96,25 @@ class LegacyController extends Controller
     }
 
     /**
+     * @Route("/serial/index/hash/{hash}")
+     */
+    public function magicAction($hash)
+    {
+        $dm = $this->get("doctrine_mongodb.odm.document_manager");
+        $seriesRepo = $dm->getRepository("PumukitSchemaBundle:Series");
+
+        $series = $seriesRepo->createQueryBuilder()
+          ->field('properties.pumukit1magic')->equals($hash)
+          ->getQuery()->getSingleResult();
+
+        if (null == $series) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->redirect($this->generateUrl('pumukit_webtv_series_magicindex', array('secret' => $series->getSecret())));
+    }
+
+    /**
      * @Route("/podcast/conferencevideo.xml")
      */
     public function podcastVideoAction()
