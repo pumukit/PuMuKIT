@@ -19,7 +19,7 @@ use Pumukit\WebTVBundle\Event\WebTVEvents;
 class MultimediaObjectController extends Controller
 {
     /**
-     * @Route("/video/{id}", name="pumukit_webtv_multimediaobject_index")
+     * @Route("/video/{id}", name="pumukit_webtv_multimediaobject_index", defaults={"show_hide": true})
      * @Template("PumukitWebTVBundle:MultimediaObject:index.html.twig")
      */
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
@@ -57,7 +57,7 @@ class MultimediaObjectController extends Controller
 
 
    /**
-     * @Route("/iframe/{id}", name="pumukit_webtv_multimediaobject_iframe")
+     * @Route("/iframe/{id}", name="pumukit_webtv_multimediaobject_iframe", defaults={"show_hide": true})
      * @Template()
      */
     public function iframeAction(MultimediaObject $multimediaObject, Request $request)
