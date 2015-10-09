@@ -158,7 +158,8 @@ class UserService
                 if ($object->isCollection()) {
                     // NOTE: Check all MultimediaObjects from the Series, even the prototype
                     $mmObjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-                    $multimediaObjects = $mmObjRepo->findBySeries($object);
+                    $multimediaObjects = $mmObjRepo->createQueryBuilder()
+                      ->field('series')->equals($object);
                     $deleteOwnerInSeries = true;
                     foreach ($multimediaObjects as $multimediaObject) {
                         if (null != $owners = $multimediaObject->getProperty('owners')) {
