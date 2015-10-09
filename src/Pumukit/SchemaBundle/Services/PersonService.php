@@ -7,27 +7,29 @@ use Pumukit\SchemaBundle\Document\EmbeddedPerson;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Services\UserService;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Security\Core\SecurityContext;
 
 class PersonService
 {
     private $dm;
     private $repo;
     private $repoMmobj;
-    private $securityContext;
+    private $userService;
     private $autoPublisherRoleCode;
 
     /**
      * Constructor
      *
      * @param DocumentManager $documentManager
+     * @param UserService     $userService
+     * @param string          $autoPublisherRoleCode
      */
-    public function __construct(DocumentManager $documentManager, SecurityContext $securityContext, $autoPublisherRoleCode='owner')
+    public function __construct(DocumentManager $documentManager, UserService $userService, $autoPublisherRoleCode='owner')
     {
         $this->dm = $documentManager;
-        $this->securityContext = $securityContext;
+        $this->userService = $userService;
         $this->autoPublisherRoleCode = $autoPublisherRoleCode;
         $this->repo = $documentManager->getRepository('PumukitSchemaBundle:Person');
         $this->repoMmobj = $documentManager->getRepository('PumukitSchemaBundle:MultimediaObject');
@@ -134,6 +136,9 @@ class PersonService
             $this->dm->flush();
             $multimediaObject->addPersonWithRole($person, $role);
             $role->increaseNumberPeopleInMultimediaObject();
+            if ($this->autoPublisherRoleCode === $role->getCod()) {
+                $this->userService->addOwnerUserToMultimediaObject($multimediaObject, $person->getUser(), false);
+            }
             $this->dm->persist($multimediaObject);
             $this->dm->persist($role);
             $this->dm->flush();
@@ -199,11 +204,21 @@ class PersonService
      */
     public function deleteRelation(Person $person, Role $role, MultimediaObject $multimediaObject)
     {
-        $flag = $multimediaObject->removePersonWithRole($person, $role);
-        $role->decreaseNumberPeopleInMultimediaObject();
-        $this->dm->persist($multimediaObject);
-        $this->dm->persist($role);
-        $this->dm->flush();
+        if (null != $person && null != $role && null != $multimediaObject) {
+            if (!$this->allowToBeDeleted($person, $role)) {
+                throw new \Exception('Not allowed');
+            }
+            $hasBeenRemoved = $multimediaObject->removePersonWithRole($person, $role);
+            if ($hasBeenRemoved) {
+                $role->decreaseNumberPeopleInMultimediaObject();
+                if ($this->autoPublisherRoleCode === $role->getCod()) {
+                    $this->userService->removeOwnerUserFromMultimediaObject($multimediaObject, $person->getUser(), false);
+                }
+            }
+            $this->dm->persist($multimediaObject);
+            $this->dm->persist($role);
+            $this->dm->flush();
+        }
 
         return $multimediaObject;
     }
@@ -283,18 +298,6 @@ class PersonService
     }
 
     /**
-     * Get logged in user
-     */
-    public function getLoggedInUser()
-    {
-        if (null != $token = $this->securityContext->getToken()) {
-            return $token->getUser();
-        }
-
-        return null;
-    }
-
-    /**
      * Get Person from logged in User
      *
      * Get the Person referenced
@@ -305,7 +308,7 @@ class PersonService
      */
     public function getPersonFromLoggedInUser()
     {
-        if (null != $user = $this->getLoggedInUser()) {
+        if (null != $user = $this->userService->getLoggedInUser()) {
             if (null == $person = $user->getPerson()) {
                 $user = $this->referencePersonIntoUser($user);
                 $person = $user->getPerson();
@@ -385,5 +388,23 @@ class PersonService
         }
 
         return $embeddedPerson;
+    }
+
+    /**
+     * Allow to be deleted
+     *
+     * Checks if the user has the rights
+     * to delete this person with this role
+     * in case of the auto publisher role
+     */
+    private function allowToBeDeleted(Person $person, Role $role)
+    {
+        if (null != $person && null != $role) {
+            if ($this->autoPublisherRoleCode === $role->getCod()) {
+                return $this->userService->allowToDeleteOwner($person->getUser());
+            }
+        }
+
+        return true;
     }
 }

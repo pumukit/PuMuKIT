@@ -8,16 +8,19 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\PersonService;
+use Pumukit\SchemaBundle\Services\UserService;
 
 class FilterListener
 {
     private $dm;
     private $personService;
+    private $userService;
 
-    public function __construct(DocumentManager $documentManager, PersonService $personService)
+    public function __construct(DocumentManager $documentManager, PersonService $personService, UserService $userService)
     {
         $this->dm = $documentManager;
         $this->personService = $personService;
+        $this->userService = $userService;
     }
 
     public function onKernelRequest(GetResponseEvent $event)
@@ -30,7 +33,7 @@ class FilterListener
             && (false !== strpos($req->attributes->get("_controller"), 'pumukitnewadmin'))
             && (!isset($routeParams["filter"]) || $routeParams["filter"])) {
 
-            $loggedInUser = $this->personService->getLoggedInUser();
+            $loggedInUser = $this->userService->getLoggedInUser();
             if ($loggedInUser->hasRole('ROLE_AUTO_PUBLISHER') && !$loggedInUser->hasRole('ROLE_ADMIN')) {
                 $filter = $this->dm->getFilterCollection()->enable("backend");
 

@@ -46,6 +46,10 @@ class Configuration implements ConfigurationInterface
               ->defaultValue('owner')
               ->info('Role code related to Auto Publisher User to use as EmbeddedPerson')
             ->end()
+            ->booleanNode('auto_publisher_delete_owners')
+              ->defaultFalse()
+              ->info('Allow Auto Publisher users to delete other owners of Series and MultimediaObjects')
+            ->end()
           ->end();
 
         return $treeBuilder;

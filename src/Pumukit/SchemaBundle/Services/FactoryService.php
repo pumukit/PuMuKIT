@@ -7,6 +7,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\EncoderBundle\Document\Job;
 
 class FactoryService
@@ -86,9 +87,9 @@ class FactoryService
             $title = $this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE, array(), null, $locale);
             $mm->setTitle($title, $locale);
         }
-        $mm = $this->addLoggedInUserAsPerson($mm);
 
         $mm->setSeries($series);
+        $mm = $this->addLoggedInUserAsPerson($mm);
 
         return $mm;
     }
@@ -120,11 +121,9 @@ class FactoryService
         $mm->setRecordDate($mm->getPublicDate());
         $mm->setStatus(MultimediaObject::STATUS_BLOQ);
 
-        $mm = $this->addLoggedInUserAsPerson($mm);
-
         $mm->setSeries($series);
         $series->addMultimediaObject($mm);
-        
+        $mm = $this->addLoggedInUserAsPerson($mm);
 
         $this->dm->persist($mm);
         $this->dm->persist($series);
@@ -376,7 +375,7 @@ class FactoryService
     {
         if ($this->addUserAsPerson && (null != $person = $this->personService->getPersonFromLoggedInUser())) {
             if (null != $role = $this->personService->getAutoPublisherRole()) {
-                $multimediaObject->addPersonWithRole($person, $role);
+                $multimediaObject = $this->personService->createRelationPerson($person, $role, $multimediaObject);
             }
         }
 
