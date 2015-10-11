@@ -206,7 +206,7 @@ class PersonService
     {
         if (null != $person && null != $role && null != $multimediaObject) {
             if (!$this->allowToBeDeleted($person, $role)) {
-                throw new \Exception('Not allowed');
+  	        throw new \Exception('Not allowed to remove the relation of Person with id "'.$user->getName().'"  with role "'.$role->getCod().'" from MultimediaObject "'.$multimediaObject->getId().'". You are not that User.');
             }
             $hasBeenRemoved = $multimediaObject->removePersonWithRole($person, $role);
             if ($hasBeenRemoved) {

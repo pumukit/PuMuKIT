@@ -141,7 +141,7 @@ class UserService
     public function removeOwnerUserFromMultimediaObject(MultimediaObject $multimediaObject, User $user, $executeFlush=true)
     {
         if ($user != $this->getLoggedInUser()) {
-            throw new \Exception('Not allowed');
+	    throw new \Exception('Not allowed to remove owner User with id "'.$user->getUsername().'" from MultimediaObject "'.$multimediaObject->getId().'". You are not that User.');
         }
 
         $multimediaObject = $this->removeOwnerUserFromObject($multimediaObject, $user, $executeFlush);
