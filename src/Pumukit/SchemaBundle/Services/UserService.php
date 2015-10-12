@@ -194,4 +194,36 @@ class UserService
 
         return $object;
     }
+
+    /**
+     * Is Auto Publisher
+     *
+     * Checks if the logged in user
+     * has role AUTO_PUBLISHER and
+     * has not ADMIN privileges
+     *
+     * @return boolean
+     */
+    public function isAutoPublisher($user=null)
+    {
+        if (null == $user) {
+            $loggedInUser = $this->getLoggedInUser();
+            return $this->checkAutoPublisher($loggedInUser);
+        } else {
+            return $this->checkAutoPublisher($user);
+        }
+
+        return false;
+    }
+
+    private function checkAutoPublisher($user = null)
+    {
+        if (null != $user) {
+            if ($user->hasRole('ROLE_AUTO_PUBLISHER') && !$user->hasRole('ROLE_ADMIN')) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

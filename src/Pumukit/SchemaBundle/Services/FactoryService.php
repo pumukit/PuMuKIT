@@ -17,16 +17,19 @@ class FactoryService
 
     private $dm;
     private $tagService;
+    private $personService;
+    private $userService;
     private $translator;
     private $locales;
     private $defaultCopyright;
     private $addUserAsPerson;
 
-    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, TranslatorInterface $translator, $addUserAsPerson=true, array $locales = array(), $defaultCopyright = "")
+    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, TranslatorInterface $translator, $addUserAsPerson=true, array $locales = array(), $defaultCopyright = "")
     {
         $this->dm = $documentManager;
         $this->tagService = $tagService;
         $this->personService = $personService;
+        $this->userService = $userService;
         $this->translator = $translator;
         $this->locales = $locales;
         $this->defaultCopyright = $defaultCopyright;
@@ -242,7 +245,10 @@ class FactoryService
      * @param Series $series
      */
     public function deleteSeries(Series $series)
-    {      
+    {
+        if (!$this->allowToDeleteObject($series)) {
+            throw new \Exception('You are not allowed to delete this Series. It has  more owners.');
+        }
         $repoMmobjs = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
          
         $multimediaObjects = $repoMmobjs->findBySeries($series);
@@ -263,6 +269,9 @@ class FactoryService
      */
     public function deleteMultimediaObject(MultimediaObject $multimediaObject)
     {
+        if (!$this->allowToDeleteObject($multimediaObject)) {
+            throw new \Exception('You are not allowed to delete this MultimediaObject. It has  more owners.');
+        }
         $repoMmobjs = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
 
         if (null != $series = $multimediaObject->getSeries()) {
@@ -380,5 +389,29 @@ class FactoryService
         }
 
         return $multimediaObject;
+    }
+
+    /**
+     * Allow to delete object
+     *
+     * Checks whether the logged in user
+     * is allowed to delete the object or not
+     *
+     * @param Series|MultimediaObject $object
+     * @return boolean
+     */
+    private function allowToDeleteObject($object=null)
+    {
+        $user = $this->userService->getLoggedInUser();
+        if ($this->userService->isAutoPublisher($user) && (null != $object)) {
+            $owners = $object->getProperty('owners');
+            if (null != $owners) {
+	        if (!in_array($user->getId(), $owners) || (1 != count($owners))) {
+		    return false;
+	        }
+            }
+	}
+
+	return true;
     }
 }
