@@ -45,7 +45,7 @@ class MultimediaObject
     /**
      * @var Broadcast $broadcast
      *
-     * @MongoDB\ReferenceOne(targetDocument="Broadcast", inversedBy="multimedia_object", simple=true, cascade={"all"})
+     * @MongoDB\ReferenceOne(targetDocument="Broadcast", inversedBy="multimedia_object", simple=true, cascade={"persist"})
      */
     private $broadcast;
 
