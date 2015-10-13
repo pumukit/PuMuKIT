@@ -975,6 +975,8 @@ class Series
   }
 
   /**
+   * DEPRECATED: Use PicService, function getFirstUrlPic($object, $absolute, $hd)
+   *
    * Get first pic url
    *
    * @param $default string url returned if series without pics.

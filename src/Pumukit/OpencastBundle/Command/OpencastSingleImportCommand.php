@@ -16,11 +16,8 @@ class OpencastSingleImportCommand extends ContainerAwareCommand
         $this
             ->setName('pumukit:opencast:import')
             ->setDescription('Import a single opencast recording')
-            ->addArgument(
-                'id',
-                InputArgument::REQUIRED,
-                'Opencast id to import'
-            )
+            ->addArgument('id', InputArgument::REQUIRED, 'Opencast id to import')
+            ->addOption('invert', 'i', InputOption::VALUE_NONE, 'Inverted recording (CAMERA <-> SCREEN)')
         ;
     }
 
@@ -31,6 +28,6 @@ class OpencastSingleImportCommand extends ContainerAwareCommand
             $output->writeln("Importing opencast recording: " . $opencastId);
         }
         $opencastImportService = $this->getContainer()->get('pumukit_opencast.import');
-        $opencastImportService->importRecording($opencastId);
+        $opencastImportService->importRecording($opencastId, $input->getOption('invert'));
     }
 }

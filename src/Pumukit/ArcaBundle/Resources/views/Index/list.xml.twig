@@ -29,7 +29,7 @@
       <arca:course>
         <arca:title>{{ multimediaObject.getSeries().getTitle() }}</arca:title>
 	   	<arca:description>{{ multimediaObject.getSeries().getDescription() }}</arca:description>
-        <arca:image>{{ asset( multimediaObject.getSeries().getFirstUrlPic(), absolute=true)}}</arca:image>
+        <arca:image>{{ multimediaObject.getSeries()|first_url_pic(true) }}</arca:image>
         <arca:order>{{ multimediaObject.getRank() }}</arca:order>
       </arca:course>
 
@@ -41,9 +41,7 @@
       <author>{{ multimediaObject.getCopyright() }}</author>
       
       <source url="{{ app.request.getSchemeAndHttpHost() }}">{{ pumukit2_info['title'] }}</source> 
-      {% if multimediaObject.getFirstUrlPic() %}
-      <media:thumbnail url="{{ multimediaObject.getFirstUrlPic() }}" height="{{ multimediaObject.getPic().getHeight()|default(82) }}" width="{{ multimediaObject.getPic().getWidth()|default(100) }}" /> 
-      {% endif %}
+      <media:thumbnail url="{{ multimediaObject|first_url_pic(true) }}" height="{{ multimediaObject.getPic().getHeight()|default(82) }}" width="{{ multimediaObject.getPic().getWidth()|default(100) }}" /> 
       <media:copyright>{{ multimediaObject.getCopyright() }}</media:copyright>
       <guid isPermaLink="true">{{ url('pumukit_webtv_multimediaobject_index', {id: multimediaObject.id}) }}</guid>
       

@@ -71,18 +71,7 @@
           <span>{{ mm.isOnlyAudio() ? 'Audio':'Video' }}</span>
         </td>
         <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
-        {% set url_set = false %}
-	    {% if mm.getPics() is not empty %}
-	    {% for pic in mm.getPics() if not url_set %}
-	    {% if pic.url is not empty %}
-        <img class="mini" src="{{ pic.url }}" alt="{{ pic.size }}" height="23" width="30">
-	    {% set url_set = true %}
-        {% endif %}
-        {% endfor %}
-	    {% endif %}
-	    {% if not url_set %}
-        <img class="mini" src="{{ asset('/bundles/pumukitnewadmin/images/none.jpg') }}" alt="{% trans %}No_pic{% endtrans %}" height="23" width="30">
-	    {% endif %}
+        <img class="mini" src="{{ mm|first_url_pic(false, false) }}" alt="{% trans %}No_pic{% endtrans %}" height="23" width="30">
         </td>
         <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
           {{ mm.getTitle() }}

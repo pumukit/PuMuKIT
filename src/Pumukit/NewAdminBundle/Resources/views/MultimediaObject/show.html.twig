@@ -12,7 +12,7 @@
   {% else %}
     <div class="well" style="padding: 3px;">
       <div class="embed-responsive embed-responsive-16by9">
-        <img src="{{ mm.getFirstUrlPic('/images/none.jpg') }}" class="img-responsive" style="width: 100%">
+        <img src="{{ mm|first_url_pic(false, false) }}" class="img-responsive" style="width: 100%">
       </div>
     </div>
   {% endif %}

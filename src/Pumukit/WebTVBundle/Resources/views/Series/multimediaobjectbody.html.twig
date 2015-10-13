@@ -44,7 +44,7 @@
          <a href="{{ url('pumukit_webtv_multimediaobject_index', {'id': mm.id}) }}" class="serial_mm_pics" > 
                <img class="play_icon_shadow" alt="" width="30" src="/bundles/pumukitwebtv/images/webtv/sombra.png">
                <img class="play_icon" alt="" width="15" src="/bundles/pumukitwebtv/images/webtv/play.png">
-               {% for pic in mm.getPics() if pic.getUrl() is not empty %}<img src="{{ pic.getUrl() }}" class="serial"></br>{% else %}<img src="/bundles/pumukitwebtv/images/no_pic.jpg" class="serial">{% endfor %}
+               {% for pic in mm.getPics() if pic.getUrl() is not empty %}<img src="{{ pic.getUrl() }}" class="serial"></br>{% else %}<img src="{{ mm|first_url_pic(false, false) }}" class="serial">{% endfor %}
          </a>
        </div>
      </td>

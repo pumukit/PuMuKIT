@@ -20,25 +20,28 @@ class InboxController extends Controller
         $type = $request->query->get("type", "file");
         $baseDir = realpath($this->container->getParameter('pumukit2.inbox'));
 
+        /*
         if(0 !== strpos($dir, $baseDir)) {
             throw $this->createAccessDeniedException();
         }
+        */
 
         $finder = new Finder();
 
         $res = array();
 
         if ("file" == $type) {
-            $finder->files()->followLinks()->in($dir);
+            $finder->depth('< 1')->followLinks()->in($dir);
             $finder->sortByName();
             foreach ($finder as $f) {
                 $res[] = array('path' => $f->getRealpath(),
                                'relativepath' => $f->getRelativePathname(),
                                'is_file' => $f->isFile(),
+                               'hash' => hash('md5', $f->getRealpath()),
                                'content' => false);
             }
         }else{
-            $finder->directories()->followLinks()->in($dir);
+            $finder->depth('< 1')->directories()->followLinks()->in($dir);
             $finder->sortByName();
             foreach ($finder as $f) {
                 if (0 !== (count(glob("$f/*")))){
@@ -47,6 +50,7 @@ class InboxController extends Controller
                     $res[] = array('path' => $f->getRealpath(),
                                    'relativepath' => $f->getRelativePathname(),
                                    'is_file' => $f->isFile(),
+                                   'hash' => hash('md5', $f->getRealpath()),
                                    'content' => $contentFinder->count());
                 }
             }

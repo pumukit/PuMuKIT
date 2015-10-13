@@ -1,5 +1,5 @@
 {% if mm is not empty %}
-  {% set display_track = mm.getFilteredTracksWithTags(['display'], [], [], []) %}
+  {% set display_track = mm.getFilteredTracksWithTags(['display', 'audio'], [], [], []) %}
   {% set video_url = url('pumukit_webtv_multimediaobject_index', {id: mm.id}) %}
   {% set magic_url = url('pumukit_webtv_multimediaobject_magicindex', {secret: mm.secret}) %}
 <div class="well">

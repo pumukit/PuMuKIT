@@ -32,9 +32,9 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $kernel = $this->getContainer()->get('kernel');      
-        foreach($input->getArgument('bundle') as $bundleName) {
-            $bundle = str_replace('/', '\\', $bundleName);
+        $kernel = $this->getContainer()->get('kernel');
+        foreach ($input->getArgument('bundle') as $bundleName) {
+            $bundle = $this->prepareBundleName($bundleName);
 
             if (!class_exists($bundle)) {
                 throw new \RuntimeException(sprintf('Class "%s" doesn\'t exist.', $bundle));
@@ -46,14 +46,20 @@ EOT
             }
         }
 
-        foreach($input->getArgument('bundle') as $bundleName) {
-            $bundle = str_replace('/', '\\', $bundleName);
+        foreach ($input->getArgument('bundle') as $bundleName) {
+            $bundle = $this->prepareBundleName($bundleName);
             $this->updateKernel($input, $output, $kernel, $bundle);
             $this->updateRouting($input, $output, $bundle);
         }
     }
 
-  
+    private function prepareBundleName($bundleName)
+    {
+        //Helper to autocomplete in a shell: delete "src/" from the begin and ".php" from the tail.
+        $bundleName = preg_replace('/^src\/(.*?)\.php$/i', '${1}', $bundleName);
+        return str_replace('/', '\\', $bundleName);
+    }
+
     protected function updateKernel(InputInterface $input, OutputInterface $output, KernelInterface $kernel, $bundle)
     {
         $manip = new KernelManipulator($kernel);
@@ -74,18 +80,14 @@ EOT
         }
     }
 
-
-    
-
-    protected function updateRouting(InputInterface $input, OutputInterface $output, $bundle, $format="yml")
+    protected function updateRouting(InputInterface $input, OutputInterface $output, $bundle, $format = 'yml')
     {
         $refClass = new \ReflectionClass($bundle);
-        $bundleRoutingFile = sprintf("%s/Resources/config/routing.%s", dirname($refClass->getFileName()), $format);
+        $bundleRoutingFile = sprintf('%s/Resources/config/routing.%s', dirname($refClass->getFileName()), $format);
 
         if (is_file($bundleRoutingFile)) {
-
             $routing = new RoutingManipulator($this->getContainer()->getParameter('kernel.root_dir').'/config/routing.yml');
-            $bundleName = substr($bundle, 1+ strrpos($bundle, "\\"));;
+            $bundleName = substr($bundle, 1 + strrpos($bundle, '\\'));
             try {
                 $ret = $routing->addResource($bundleName, $format);
                 if (!$ret) {
@@ -95,13 +97,13 @@ EOT
                         $help = sprintf("        <comment>resource: \"@%s/Resources/config/routing.%s\"</comment>\n", $bundle, $format);
                     }
                     $help .= "        <comment>prefix:   /</comment>\n";
-                
+
                     $output->writeln("- Import the bundle\'s routing resource in the app main routing file:\n");
                     $output->writeln(sprintf("    <comment>%s:</comment>\n", $bundle));
                     $output->writeln($help);
                 }
             } catch (\RuntimeException $e) {
-                $output->writeln(sprintf("Bundle <comment>%s</comment> is already imported.", $bundle));
+                $output->writeln(sprintf('Bundle <comment>%s</comment> is already imported.', $bundle));
                 throw $e;
             }
         }

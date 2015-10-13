@@ -22,6 +22,11 @@ class PumukitSchemaExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('pumukitschema.default_series_pic', $config['default_series_pic']);
+        $container->setParameter('pumukitschema.default_video_pic', $config['default_video_pic']);
+        $container->setParameter('pumukitschema.default_audio_hd_pic', $config['default_audio_hd_pic']);
+        $container->setParameter('pumukitschema.default_audio_sd_pic', $config['default_audio_sd_pic']);
+
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
     }
