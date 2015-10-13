@@ -3,6 +3,7 @@
 namespace Pumukit\WebTVBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
@@ -14,17 +15,20 @@ class WidgetController extends Controller
      */
     public function menuAction()
     {
-      $channels = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Live')->findAll();
-      return array('live_channels' => $channels);
+        $channels = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Live')->findAll();
+        $selected = $this->container->get('request_stack')->getMasterRequest()->get('_route');
+
+        return array('live_channels' => $channels, 'menu_selected' => $selected);
     }
-    
+
     /**
      * @Template()
      */
     public function breadcrumbsAction()
     {
-      $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
-      return array('breadcrumbs' => $breadcrumbs->getBreadcrumbs());
+        $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
+
+        return array('breadcrumbs' => $breadcrumbs->getBreadcrumbs());
     }
 
     /**
@@ -32,13 +36,14 @@ class WidgetController extends Controller
      */
     public function statsAction()
     {
-      $mmRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
-      $seriesRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:series');
+        $mmRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $seriesRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:series');
 
-      $counts = array('series' => $seriesRepo->countPublic(),
-                      'mms' => $mmRepo->count(),
-                      'hours' => bcdiv($mmRepo->countDuration(), 3600, 2));
-      return array('counts' => $counts);
+        $counts = array('series' => $seriesRepo->countPublic(),
+                        'mms' => $mmRepo->count(),
+                        'hours' => bcdiv($mmRepo->countDuration(), 3600, 2), );
+
+        return array('counts' => $counts);
     }
 
     /**
@@ -46,7 +51,7 @@ class WidgetController extends Controller
      */
     public function contactAction()
     {
-      return array();
+        return array();
     }
 
     /**
@@ -59,5 +64,18 @@ class WidgetController extends Controller
         $events = $eventRepo->findFutureAndNotFinished(5);
 
         return array('events' => $events);
+    }
+
+    /**
+     * @Template()
+     */
+    public function languageselectAction()
+    {
+        $array_locales = $this->container->getParameter('pumukit2.locales');
+        if (count($array_locales) <= 1) {
+            return new Response('');
+        }
+
+        return array('languages' => $array_locales);
     }
 }
