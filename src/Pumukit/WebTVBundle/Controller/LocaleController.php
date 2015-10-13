@@ -18,9 +18,19 @@ class LocaleController extends Controller
     $this->get('session')->set('_locale', $locale);
     
     $referer = $request->headers->get("referer");
-    $base = $request->getUriForPath("");
-    $lastPath = str_replace($base, "", $referer);
+    if(!$referer) {
+        return $this->redirect('/');      
+    }
+
+
+    $paseReferer = parse_url($referer);
+    $refererPath = $paseReferer['path'];
+    $lastPath = str_replace($request->getBaseUrl(), "", $refererPath);
     $route = $this->get('router')->getMatcher()->match($lastPath);    
+
+    if(!isset($route["_route"])) {
+        return $this->redirect('/');      
+    }
 
     //array_filter ARRAY_FILTER_USE_BOTH only in 5.6
     $params = array();
@@ -29,8 +39,16 @@ class LocaleController extends Controller
         $params[$k] = $v;
       }
     }
-
     $url = $this->generateUrl($route["_route"], $params);
+
+    if(isset($paseReferer['query'])) {
+      $url .= '?' . $paseReferer['query'];
+    }
+
+    if(isset($paseReferer['fragment'])) {
+      $url .= '#' . $paseReferer['fragment'];
+    }
+
     return $this->redirect($url);
   }
 }

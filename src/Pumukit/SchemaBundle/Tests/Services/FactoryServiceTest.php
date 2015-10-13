@@ -274,9 +274,9 @@ class FactoryServiceTest extends WebTestCase
 
         $this->assertEquals($tagA, $this->factory->getTagsByCod('A', false));
 
-        $tagA->addChild($tagB);
-        $tagA->addChild($tagC);
-
+        $tagB->setParent($tagA);
+        $tagC->setParent($tagA);
+        
         $this->assertEquals(2, count($this->factory->getTagsByCod('A', true)));
     }
 

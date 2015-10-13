@@ -33,6 +33,7 @@ class LegacyController extends Controller
     }
 
     /**
+     * @Route("/mmobj/index/id/{pumukit1id}")
      * @Route("/{_locale}/video/{pumukit1id}.html")
      * {_locale} matches current locale
      * {pumukit1id} matches multimediaObject.properties("pumukit1id")
@@ -52,6 +53,27 @@ class LegacyController extends Controller
 
         return $this->redirect($this->generateUrl("pumukit_webtv_multimediaobject_index", array("id" => $multimediaObject->getId())));
     }
+
+    
+    /**
+     * @Route("/pumoodle/embed/m/{pumukit1id}")
+     */
+    public function multimediaObjectIframeAction($pumukit1id)
+    {
+        $dm = $this->get("doctrine_mongodb.odm.document_manager");
+        $mmobjRepo = $dm->getRepository("PumukitSchemaBundle:MultimediaObject");
+
+        $multimediaObject = $mmobjRepo->createQueryBuilder()
+          ->field("properties.pumukit1id")->equals($pumukit1id)
+          ->getQuery()->getSingleResult();
+
+        if (!$multimediaObject) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->redirect($this->generateUrl("pumukit_webtv_multimediaobject_iframe", array("id" => $multimediaObject->getId())));
+    }
+    
 
     /**
      * @Route("/mmobj/index/file_id/{pumukit1id}")
@@ -74,6 +96,25 @@ class LegacyController extends Controller
     }
 
     /**
+     * @Route("/serial/index/hash/{hash}")
+     */
+    public function magicAction($hash)
+    {
+        $dm = $this->get("doctrine_mongodb.odm.document_manager");
+        $seriesRepo = $dm->getRepository("PumukitSchemaBundle:Series");
+
+        $series = $seriesRepo->createQueryBuilder()
+          ->field('properties.pumukit1magic')->equals($hash)
+          ->getQuery()->getSingleResult();
+
+        if (null == $series) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->redirect($this->generateUrl('pumukit_webtv_series_magicindex', array('secret' => $series->getSecret())));
+    }
+
+    /**
      * @Route("/podcast/conferencevideo.xml")
      */
     public function podcastVideoAction()
@@ -93,5 +134,13 @@ class LegacyController extends Controller
             throw $this->createNotFoundException();
         }
         return $this->redirect($this->generateUrl("pumukit_podcast_audio", array()));
+    }
+
+    /**
+     * @Route("/directo.html")
+     */
+    public function directoAction()
+    {
+        return $this->redirect($this->generateUrl("pumukit_live", array()));
     }
 }
