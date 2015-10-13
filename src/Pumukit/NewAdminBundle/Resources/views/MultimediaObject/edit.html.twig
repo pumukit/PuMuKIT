@@ -22,16 +22,20 @@
             </div>
             <label for="inputROUrl" class="col-lg-2 control-label">Url:</label>
             <div class="col-lg-10 input-group">
-              <input type="text" class="form-control" id="inputROUrl" readonly onclick="select()" value="{{ display_track ? video_url : '' }}">
+              <input type="text" class="form-control" id="inputROUrl" readonly onclick="select()" value="{{ video_url }}">
               {% if display_track %}
-              <span class="input-group-addon"><a href="{{ video_url }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
+                <span class="input-group-addon"><a href="{{ video_url }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
+              {% else %}
+                <span class="input-group-addon"><i class="mdi-action-report-problem" title="{% trans %}Warning: This link will give a 404 error until a display track is added.{% endtrans %}"></i></span>
               {% endif %}
             </div>
             <label for="inputROMagicUrl" class="col-lg-2 control-label" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">Magic Url:</label>
             <div class="col-lg-10 input-group">
-              <input type="text" class="form-control" id="inputROMagicUrl" readonly onclick="select()" value="{{ display_track ? magic_url : '' }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">
+              <input type="text" class="form-control" id="inputROMagicUrl" readonly onclick="select()" value="{{ magic_url }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">
               {% if display_track %}
-              <span class="input-group-addon"><a href="{{ magic_url }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
+                <span class="input-group-addon"><a href="{{ magic_url }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
+              {% else %}
+                <span class="input-group-addon"><i class="mdi-action-report-problem" title="{% trans %}Warning: This link will show a player with no video until a display track is added.{% endtrans %}" ></i></span>
               {% endif %}
             </div>
           </div>            
@@ -45,6 +49,17 @@
           #}
         </fieldset>
       </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 "></br>
+      {% if not display_track %}
+        <span class="alert alert-dismissable alert-warning">
+          <i class="mdi-action-report-problem"></i>
+          {% trans %}WARNING, this multimedia object does not have a display track.{% endtrans %} 
+          <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close">-->          
+        </span>&nbsp;</br></br>
+      {% endif %}
     </div>
   </div>
 
