@@ -17,8 +17,8 @@
         {{ pub.getTitle() }}
         
         {% if pub.getProperty('modal_path') %}
-        <a title="{% trans %}Edit Pub Channel {% endtrans %} {{pub.cod}}" href="{{ path( pub.getProperty('modal_path'), { 'id': mm.id }) }}" data-toggle="modal" data-target="#myTagModal">
-          <i class="mdi-action-info"></i><i class="mdi-action-settings"></i>
+        <a title="{% trans %}Edit Pub Channel {% endtrans %} {{pub.cod}}" href="{{ path( pub.getProperty('modal_path'), { 'id': mm.id }) }}" data-toggle="modal" data-target="#myModal">
+          <i class="mdi-action-info"></i>
         </a>
         {% endif %}
 
