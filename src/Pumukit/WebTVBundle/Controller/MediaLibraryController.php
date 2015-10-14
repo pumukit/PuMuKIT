@@ -24,7 +24,7 @@ class MediaLibraryController extends Controller
 
         $series = $repo->findBy($criteria, array($sortField => 1));        
 
-        $this->get('pumukit_web_tv.breadcrumbs')->addList("All", "pumukit_webtv_medialibrary_index");
+        $this->get('pumukit_web_tv.breadcrumbs')->addList("All", "pumukit_webtv_medialibrary_index", array("sort" => $sort));
 
         return array('series' => $series, 'sort' => $sort);
     }
