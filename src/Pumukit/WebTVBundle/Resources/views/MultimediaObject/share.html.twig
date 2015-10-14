@@ -26,7 +26,11 @@
          <tr>
            <td>EMBED:</td>
            <td>
-             <input type="text" value="<iframe src=&quot;{{ url('pumukit_webtv_multimediaobject_iframe', {'id': multimediaObject.id, 'track_id': track.id}) }}&quot; style=&quot;border:0px #FFFFFF none;&quot; scrolling=&quot;no&quot; frameborder=&quot;1&quot; height=&quot;270&quot; width=&quot;480&quot; allowfullscreen webkitallowfullscreen></iframe>" onclick="this.select()" style="border: 1px solid #ccc; font-size: 12px;" readonly="readonly">
+             {% if track %}
+               <input type="text" value="<iframe src=&quot;{{ url('pumukit_webtv_multimediaobject_iframe', {'id': multimediaObject.id, 'track_id': track.id}) }}&quot; style=&quot;border:0px #FFFFFF none;&quot; scrolling=&quot;no&quot; frameborder=&quot;1&quot; height=&quot;270&quot; width=&quot;480&quot; allowfullscreen webkitallowfullscreen></iframe>" onclick="this.select()" style="border: 1px solid #ccc; font-size: 12px;" readonly="readonly">
+             {% else %}
+               {% trans %} No Track.{% endtrans %}
+             {% endif %}
            </td>
          </tr>
        </tbody>
