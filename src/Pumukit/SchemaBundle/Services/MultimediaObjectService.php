@@ -46,5 +46,15 @@ class MultimediaObjectService
         return $mm->getFilteredTracksWithTags(['display']) || $mm->getProperty('opencast');
     }
 
+    /**
+     * Returns true if the $mm is being displayed on the webtv frontend. ( Keep updated with SchemaFilter->getCriteria() )
+     * @param MultimediaObject
+     * @param String
+     * @return boolean
+     */
+    public function canBeDisplayed($mm, $pubChannelCod){
+        return $this->isPublished($mm, $pubChannelCod) && $this->hasPlayableResource($mm);
+    }
+
     
 }
