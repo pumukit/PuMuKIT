@@ -4,6 +4,7 @@
 {% block keywords %}{{ parent() }} - {{ series.keyword }}{% endblock %}
 
 {% block body %}
+    {% include 'PumukitWebTVBundle:Misc:magic_url_disclaimer.html.twig' %}
     {% set series_precinct = precinct_of_series(multimediaObjects) %}
     {% include 'PumukitWebTVBundle:Series:header.html.twig' with {'series_precinct': series_precinct} %}
     <div id="serial_header">
@@ -19,6 +20,8 @@
           {% set last_date = mm.getRecordDate() %}
           {% set last_precinct = precinct(mm.getTags()) %}
           {% set last_subseriestitle = mm.getProperty('subseriestitle') %}
+      {% else %}
+        {% trans %} Esta serie no tiene objetos multimedia. {% endtrans %}
       {% endfor %}
     </div>
 
