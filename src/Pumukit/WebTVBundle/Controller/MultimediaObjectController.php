@@ -103,12 +103,16 @@ class MultimediaObjectController extends Controller
         $multimediaObject->getTrackById($request->query->get('track_id')) :
         $multimediaObject->getTrackWithTag('display');
 
-      $this->incNumView($multimediaObject, $track);
-      $this->dispatch($multimediaObject, $track);            
+        if($track){
+            
 
-      if($track->containsTag("download")) {       
-          return $this->redirect($track->getUrl());
-      }
+            $this->incNumView($multimediaObject, $track);
+            $this->dispatch($multimediaObject, $track);            
+            if($track->containsTag("download")) {       
+                return $this->redirect($track->getUrl());
+            }
+            
+        }
 
       $this->updateBreadcrumbs($multimediaObject);
       return array('autostart' => $request->query->get('autostart', 'true'),
