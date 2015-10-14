@@ -1,5 +1,4 @@
 {% if mm is not empty %}
-  {% set display_track = mm.getFilteredTracksWithTags(['display', 'audio'], [], [], []) %}
   {% set video_url = url('pumukit_webtv_multimediaobject_index', {id: mm.id}) %}
   {% set magic_url = url('pumukit_webtv_multimediaobject_magicindex', {secret: mm.secret}) %}
 <div class="well">
@@ -23,16 +22,16 @@
             <label for="inputROUrl" class="col-lg-2 control-label">Url:</label>
             <div class="col-lg-10 input-group">
               <input type="text" class="form-control" id="inputROUrl" readonly onclick="select()" value="{{ video_url }}">
-              {% if display_track %}
+              {% if is_published %}
                 <span class="input-group-addon"><a href="{{ video_url }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
               {% else %}
-                <span class="input-group-addon"><i class="mdi-action-report-problem" title="{% trans %}Warning: This link will give a 404 error until a display track is added.{% endtrans %}"></i></span>
+                <span class="input-group-addon"><i class="mdi-action-report-problem" title="{% trans %}Warning: This link will give a 404 error until this multimedia object is correctly published.{% endtrans %}"></i></span>
               {% endif %}
             </div>
             <label for="inputROMagicUrl" class="col-lg-2 control-label" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">Magic Url:</label>
             <div class="col-lg-10 input-group">
               <input type="text" class="form-control" id="inputROMagicUrl" readonly onclick="select()" value="{{ magic_url }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">
-              {% if display_track %}
+              {% if is_playable %}
                 <span class="input-group-addon"><a href="{{ magic_url }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
               {% else %}
                 <span class="input-group-addon"><i class="mdi-action-report-problem" title="{% trans %}Warning: This link will show a player with no video until a display track is added.{% endtrans %}" ></i></span>
@@ -53,10 +52,10 @@
   </div>
   <div class="row">
     <div class="col-xs-12 "></br>
-      {% if not display_track %}
+      {% if not is_published or not is_playable %}
         <span class="alert alert-dismissable alert-warning">
           <i class="mdi-action-report-problem"></i>
-          {% trans %}WARNING, this multimedia object does not have a display track.{% endtrans %} 
+          {% trans %}WARNING, this multimedia object is not yet published on WebTV, or does not have a playable resource.{% endtrans %} 
           <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close">-->          
         </span>&nbsp;</br></br>
       {% endif %}
