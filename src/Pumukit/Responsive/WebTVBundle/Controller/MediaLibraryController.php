@@ -20,10 +20,7 @@ class MediaLibraryController extends Controller
         $tags_repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
 
         $array_tags = $this->container->getParameter('responsivewebtv.media_library.filter_tags');
-        $selectionTags = array();
-        foreach ($array_tags as $cod) {
-            $selectionTags[] = $tags_repo->findOneBy(array('cod' => $cod));
-        }
+        $selectionTags = $tags_repo->findBy(array('cod' => array('$in'=> $array_tags)));
 
         $criteria = $request->query->get('search', false) ?
                     array('title.'.$request->getLocale() => new \MongoRegex(sprintf('/%s/i', $request->query->get('search')))) :
