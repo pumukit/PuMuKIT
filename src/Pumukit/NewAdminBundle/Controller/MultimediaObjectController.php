@@ -143,6 +143,12 @@ class MultimediaObjectController extends SortableAdminController
 
         $template = $resource->isPrototype() ? '_template' : '';
 
+        if ($resource){
+            $mmService = $this->get('pumukitschema.multimedia_object');
+            $isPublished = $mmService->isPublished($resource, 'PUCHWEBTV');
+            $playableResource = $mmService->hasPlayableResource($resource);
+        }
+
         return array(
                      'mm'            => $resource,
                      'form_meta'     => $formMeta->createView(),
@@ -154,7 +160,9 @@ class MultimediaObjectController extends SortableAdminController
                      'parent_tags'   => $parentTags,
                      'jobs'          => $jobs,
                      'not_master_profiles' => $notMasterProfiles,
-                     'template' => $template
+                     'template' => $template,
+                     'is_published' => $isPublished,
+                     'is_playable' => $playableResource
                      );
     }
 
