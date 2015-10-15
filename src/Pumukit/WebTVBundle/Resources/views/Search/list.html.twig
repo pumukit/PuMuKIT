@@ -1,31 +1,27 @@
-<div id="serial_body">
+<div>
 
-{% set lastDate = '--' %}
-{% set lastSubserialTitle = 0 %}
+  {% set lastDate = '--' %}
+  {% set lastSubserialTitle = 0 %}
 
-	<div>
-
+  <div class="col-xs-12">
     {% if type == 'series' %}
-        {% include 'PumukitWebTVBundle:Search:filtersseries.html.twig' %}
+      {% include 'PumukitWebTVBundle:Search:filtersseries.html.twig' %}
     {% else %}
-        {% include 'PumukitWebTVBundle:Search:filtersmultimediaobjects.html.twig' %}
+      {% include 'PumukitWebTVBundle:Search:filtersmultimediaobjects.html.twig' %}
     {% endif %}
+  </div>
 
-    <div class="col-md-12">
-	{% for object in objects %}
-		{% if object.isCollection() %}
-			{% include 'PumukitWebTVBundle:Misc:series.html.twig' %}
-			{% set lastDate = object.getPublicDate()|date("d/m/Y") %}
-		{% else %}
-			{% include 'PumukitWebTVBundle:Misc:multimediaobject.html.twig' %}
-			{% set lastDate = object.getPublicDate()|date("d/m/Y") %}
-		{% endif %}
+  {% for object in objects %}
+    {% if object.isCollection() %}
+      {% include 'PumukitWebTVBundle:Misc:series.html.twig' with{ 'rows': 2 } %}
+      {% set lastDate = object.getPublicDate()|date("d/m/Y") %}
     {% else %}
-      <div class="row text-center">
+      {% include 'PumukitWebTVBundle:Misc:multimediaobject.html.twig' with{ 'rows': 2 } %}
+      {% set lastDate = object.getPublicDate()|date("d/m/Y") %}
+    {% endif %}
+    {% else %}
+    <div class="row text-center">
       {% if type == "series"%}{% trans %}Not series found{% endtrans %}{% else %}{% trans %}Not multimedia objects found.{% endtrans %}{% endif %}.
-      </div>
-	{% endfor %}
-	</div>
-	</div>
-
+    </div>
+  {% endfor %}
 </div>
