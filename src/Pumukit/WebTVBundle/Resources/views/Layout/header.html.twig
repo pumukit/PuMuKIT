@@ -3,7 +3,9 @@
     <div class="col-sm-4">
       <div class="row">
         <div class="col-xs-12">
-          {% block logo %}{% endblock %}
+          {% if logo_url is defined %}
+            <img src="{{ logo_url }}" class="img-responsive">
+          {% endif %}
         </div>
       </div>
     </div>
