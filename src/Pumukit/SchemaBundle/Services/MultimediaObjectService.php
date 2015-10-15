@@ -55,6 +55,18 @@ class MultimediaObjectService
     public function canBeDisplayed($mm, $pubChannelCod){
         return $this->isPublished($mm, $pubChannelCod) && $this->hasPlayableResource($mm);
     }
-
+    
+    /**
+     * Resets the magic url for a given multimedia object. Returns the secret id.
+     *
+     * @param MultimediaObject
+     * @return String
+     */
+    public function resetMagicUrl($mm){
+        $mm->resetSecret();
+        $this->dm->persist($mm);
+        $this->dm->flush();
+        return $mm->getSecret();
+    }
     
 }
