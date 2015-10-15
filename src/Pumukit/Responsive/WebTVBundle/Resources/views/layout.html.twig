@@ -28,8 +28,9 @@
       <script src="{{ asset('bundles/pumukitresponsivewebtv/js/bootstrap-datetimepicker.js') }}" type="text/javascript"></script>
     {% endblock %}
 
-    <link rel="shortcut icon" href="/favicon.ico" />  
-    <link rel="icon" type="image/x-icon" href="{{ asset('bundles/pumukitresponsivewebtv/images/favicon.ico') }}" />    
+    {% block favicon %}
+      <link rel="icon" type="image/x-icon" href="{{ asset('bundles/pumukitwebtv/images/favicon.ico') }}" />
+    {% endblock %}
   </head>
   <body class="{% block body_class %}{% endblock %}">
     {% block body_base %} 
