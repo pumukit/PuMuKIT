@@ -260,7 +260,7 @@ class MultimediaObjectController extends Controller
 
                 $this->updateBreadcrumbs($multimediaObject);
 
-                return $this->render('PumukitResponsiveWebTVBundle:MultimediaObject:index_opencast.html.twig',
+                return $this->render('PumukitWebTVBundle:MultimediaObject:index_opencast.html.twig',
                                      array('autostart' => $request->query->get('autostart', 'true'),
                                            'intro' => $this->getIntro($request->query->get('intro')),
                                            'multimediaObject' => $multimediaObject,

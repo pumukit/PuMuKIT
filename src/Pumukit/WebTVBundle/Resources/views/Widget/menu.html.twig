@@ -2,17 +2,17 @@
   <ul>
     <!-- Principal -->
 
-    <a href="{{ path('pumukit_responsive_webtv_index_index')}}" {{menu_selected=="pumukit_responsive_webtv_index_index"?'class="selected"':''}}>
+    <a href="{{ path('pumukit_webtv_index_index')}}" {{menu_selected=="pumukit_webtv_index_index"?'class="selected"':''}}>
       {% trans %} Home{% endtrans %}
     </a> 
 
     <!-- Announces -->    <!--<?php echo link_to('<li >'.__('Latest Uploads').'', 'announces/index', (($value == 'announces') ? 'class="selected"' : ''))?>-->
     
-    <a href="{{ path('pumukit_responsive_webtv_announces_latestuploads') }}" class="{{menu_selected == 'pumukit_responsive_webtv_index_latestuploads'? 'selected' : ''}}">{% trans %} Latest Uploads {% endtrans %}</a>
+    <a href="{{ path('pumukit_webtv_announces_latestuploads') }}" class="{{menu_selected == 'pumukit_webtv_index_latestuploads'? 'selected' : ''}}">{% trans %} Latest Uploads {% endtrans %}</a>
     
     <!-- Search -->
     
-    <a href="{{ path('pumukit_responsive_webtv_search_multimediaobjects')}}" class="{{menu_selected=="pumukit_responsive_webtv_search_multimediaobjects"?'selected':''}}">{% trans %} Search {% endtrans %}</a>
+    <a href="{{ path('pumukit_webtv_search_multimediaobjects')}}" class="{{menu_selected=="pumukit_webtv_search_multimediaobjects"?'selected':''}}">{% trans %} Search {% endtrans %}</a>
     
 
     <!-- Live Channels -->
@@ -26,7 +26,7 @@
 
     <!-- Mediateca -->
     
-    <a href="{{ path('pumukit_responsive_webtv_medialibrary_index') }}" class="{{menu_selected=="pumukit_responsive_webtv_medialibrary_index"?'selected':''}}">{% trans %} Full Catalogue {% endtrans %}</a>
+    <a href="{{ path('pumukit_webtv_medialibrary_index') }}" class="{{menu_selected=="pumukit_webtv_medialibrary_index"?'selected':''}}">{% trans %} Full Catalogue {% endtrans %}</a>
         
   </ul>
 </div>
