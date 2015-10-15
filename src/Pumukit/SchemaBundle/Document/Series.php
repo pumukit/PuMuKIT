@@ -176,6 +176,17 @@ class Series
     return $this->secret;
   }
 
+    /**
+     * Resets secret
+     *
+     * @return string
+     */
+    public function resetSecret()
+    {
+        $this->secret = new \MongoId();
+        return $this->secret;
+    }
+
   /**
    * Set series_type
    *
