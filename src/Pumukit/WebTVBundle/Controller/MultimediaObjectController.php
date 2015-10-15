@@ -71,13 +71,10 @@ class MultimediaObjectController extends Controller
           $multimediaObject->getTrackById($request->query->get('track_id')) :
           $multimediaObject->getFilteredTrackWithTags(array('display'));
 
-        if (!$track)
-            throw $this->createNotFoundException();
-
         $this->incNumView($multimediaObject, $track);
         $this->dispatch($multimediaObject, $track);
 
-        if($track->containsTag("download")) {       
+        if($track && $track->containsTag("download")) {       
             return $this->redirect($track->getUrl());
         }
 
@@ -97,7 +94,7 @@ class MultimediaObjectController extends Controller
         if($multimediaObject->getStatus() != MultimediaObject::STATUS_HIDE){
             $mmobjService = $this->get('pumukitschema.multimedia_object');
             if($mmobjService->isPublished($multimediaObject,'PUCHWEBTV')){
-                if($mmobjService->hasPlayableTrack($multimediaObject)){
+                if($mmobjService->hasPlayableResource($multimediaObject)){
                     return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId(), true)));
                 }
             }
