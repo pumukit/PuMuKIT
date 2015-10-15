@@ -3,7 +3,7 @@
     <div class="col-sm-4">
       <div class="row">
         <div class="col-xs-12">
-          <img src="{{ asset('bundles/pumukitwebtv/images/logo_cies.png') }}" class="img-responsive">
+          {% block logo %}{% endblock %}
         </div>
       </div>
     </div>
@@ -25,6 +25,7 @@
   </div>
 </div>
 
+{#
 <!--STICKY HEADER-->
 <div class="row header sticky hidden-xs hidden-md hidden-sm" style="display: none">
   <div class="header-content">
@@ -92,3 +93,4 @@
      lastScrollTop = st;
  }
 </script>
+#}
