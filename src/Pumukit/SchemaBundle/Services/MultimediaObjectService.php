@@ -29,7 +29,7 @@ class MultimediaObjectService
      */
     public function isPublished($mm, $pubChannelCod)
     {
-        $hasStatus = $mm->getStatus() == MultimediaObject::STATUS_PUBLISHED || $mm->getStatus() == MultimediaObject::STATUS_HIDE;
+        $hasStatus = $mm->getStatus() == MultimediaObject::STATUS_PUBLISHED;
         $broadcastType = $mm->getBroadcast()->getBroadcastTypeId();
         $hasBroadcast = $broadcastType  == Broadcast::BROADCAST_TYPE_PUB || $broadcastType == Broadcast::BROADCAST_TYPE_COR;
         $hasPubChannel = $mm->containsTagWithCod($pubChannelCod);

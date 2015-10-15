@@ -91,17 +91,18 @@ class MultimediaObjectController extends Controller
      */
     public function magicIndexAction(MultimediaObject $multimediaObject, Request $request)
     {
-        if($multimediaObject->getStatus() != MultimediaObject::STATUS_HIDE){
-            $mmobjService = $this->get('pumukitschema.multimedia_object');
-            if($mmobjService->isPublished($multimediaObject,'PUCHWEBTV')){
-                if($mmobjService->hasPlayableResource($multimediaObject)){
-                    return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId(), true)));
-                }
+        $mmobjService = $this->get('pumukitschema.multimedia_object');
+        if($mmobjService->isPublished($multimediaObject,'PUCHWEBTV')){
+            if($mmobjService->hasPlayableResource($multimediaObject)){
+                return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId(), true)));
             }
-            else {
-                return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
-            }
+        }        
+        else if( ($multimediaObject->getStatus() != MultimediaObject::STATUS_PUBLISHED 
+                 && $multimediaObject->getStatus() != MultimediaObject::STATUS_HIDE
+                 ) || !$multimediaObject->containsTagWithCod('PUCHWEBTV')) {
+            return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
         }
+
         $response = $this->preExecute($multimediaObject, $request);
         if($response instanceof Response) {
             return $response;

@@ -33,9 +33,13 @@ class FilterListener
       } else {
         $filter->setParameter("status", MultimediaObject::STATUS_PUBLISHED);
       }
+      if(!isset($routeParams["broadcast"]) || $routeParams["broadcast"]) {        
+          $filter->setParameter("private_broadcast", $this->getBroadcastCriteria());
+      }
+      if(!isset($routeParams["track"]) || $routeParams["track"]) {        
+          $filter->setParameter("display_track_tag", "display");
+      }
       $filter->setParameter("pub_channel_tag", "PUCHWEBTV");
-      $filter->setParameter("private_broadcast", $this->getBroadcastCriteria());
-      $filter->setParameter("display_track_tag", "display");
     }
   }
 
