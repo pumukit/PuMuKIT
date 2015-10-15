@@ -1,26 +1,29 @@
-<div class="pumukit_mini_mmobjs">
+<div class="col-xs-12">
   {% for multimediaObject in multimediaObjects %}
-  <dl class="pumukit_mini_mmobj" style="cursor:pointer;" onclick="window.location='{{ url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.getId()}) }}'">
+    <div class="row">
+      <dl class="media" style="cursor:pointer;" onclick="window.location='{{ url('pumukit_responsive_webtv_multimediaobject_index', {'id': multimediaObject.getId()}) }}'">
+        <dt class="media-left">
+          <a href="{{ url('pumukit_responsive_webtv_multimediaobject_index', {'id': multimediaObject.id}) }}">
+            <img class="media-object play_icon small" alt="" src="/bundles/pumukitresponsivewebtv/images/icons/play_icon.png">
+            <img class="media-object" src="{{multimediaObject|first_url_pic()}}" width="75 px" height="56 px">
+          </a>
+        </dt> 
 
-    <dt class="pmk_thumbnail">
-      <a href="{{ url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id}) }}">
-        <img class="play_icon_shadow" alt="" width="30" src="/bundles/pumukitwebtv/images/webtv/sombra.png">
-        <img class="play_icon" alt="" width="15" src="/bundles/pumukitwebtv/images/webtv/play.png">
-        <img class="mm_img" src="{{multimediaObject|first_url_pic(false, false)}}" width="75 px" height="56 px">
-      </a>
-    </dt> 
-
-    <dd class="info">
-      <div class="title">
-        <a href="{{ url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id}) }}">
-          {{ multimediaObject.getTitle()[:50] }}{% if (50 == (multimediaObject.getTitle()|length)) %}...{% endif %}
-        </a>
-      </div>
-      <div class="mini_mmobj_bottom">
-        {% include 'PumukitWebTVBundle::tags.html.twig' with {'show_tag': true, 'tags': multimediaObject.getTags()} %}
-      </div>
-    </dd>
-  </dl>
+        <dd class="media-body">
+          <div class="media-heading title">
+            <a href="{{ url('pumukit_responsive_webtv_multimediaobject_index', {'id': multimediaObject.id}) }}">
+              {{ multimediaObject.getTitle()[:50] }}{% if (50 == (multimediaObject.getTitle()|length)) %}...{% endif %}
+            </a>
+          </div>
+          <div class="media-heading subtitle">
+            <small>{{ multimediaObject.getSubtitle()[:50] }}{% if (50 == (multimediaObject.getSubtitle()|length)) %}...{% endif %}</small>
+          </div>
+          <div class="pull-left date">
+            <small>{{ multimediaObject.publicDate | localizeddate('full', 'none' , app.request.locale, null,"d/MM/Y" ) }}</small>
+          </div>
+        </dd>
+      </dl>
+    </div>
   {% else %}
     {% trans %}There are no videos with these specifications{% endtrans %}.
   {% endfor %}
