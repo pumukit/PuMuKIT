@@ -4,25 +4,41 @@
 {% block keywords %}{{ parent() }} - {{ series.keyword }}{% endblock %}
 
 {% block body %}
-    {% set series_precinct = precinct_of_series(multimediaObjects) %}
-    {% include 'PumukitWebTVBundle:Series:header.html.twig' with {'series_precinct': series_precinct} %}
-    <div id="serial_header">
-      {{ series.header|raw }}
+  {% set series_precinct = precinct_of_series(multimediaObjects) %}
+  <div class="row">
+    <div class="col-xs-12">
+      {% include 'PumukitWebTVBundle:Series:header.html.twig' with {'series_precinct': series_precinct} %}
     </div>
-    
-    <div class="serial_body">
-      {% set last_date = date('1/1/1900') %}
-      {% set last_precinct = '' %}
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div id="serial_header">
+        {{ series.header|raw }}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      {% set last_date = date( '1/1/1900' ) %}
       {% set last_subseriestitle = '' %}
+      {% set template = series.getProperty('template') %}
       {% for mm in multimediaObjects %}
-          {% include 'PumukitWebTVBundle:Series:multimediaobjectbody.html.twig' with {'mm': mm, 'last_date': last_date, 'last_precinct': last_precinct, 'last_subseriestitle': last_subseriestitle, 'template': series.getProperty('template'), 'series_precinct': series_precinct, 'is_series': true} %}
-          {% set last_date = mm.getRecordDate() %}
-          {% set last_precinct = precinct(mm.getTags()) %}
-          {% set last_subseriestitle = mm.getProperty('subseriestitle') %}
+        {% set current_date = mm.getRecordDate() | localizeddate('full', 'none' , app.request.locale, null,"dd MMMM Y" )%}
+        {% set subserie_title = mm.getProperty('subseriestitle')[app.request.getLocale()]|default('') %}
+        {% set mm_id = mm.id %}
+          <div class="col-xs-12">
+            {% include 'PumukitWebTVBundle:Series:group_by.html.twig' with {'mm_id': mm_id,'current_date': current_date, 
+                'last_date' : last_date, 'subserie_title': subserie_title, 'last_subseriestitle' : last_subseriestitle, 'template': template , 'subseries': false } %}
+            {% include 'PumukitWebTVBundle:Series:multimediaobjectbody.html.twig' with {'mm': mm } %}
+            {% set last_date = current_date %}
+            {% set last_subseriestitle =  subserie_title %}
+          </div>
       {% endfor %}
     </div>
-
-    <div id="serial_footer">
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
       {{ series.footer|raw }}
     </div>
+  </div>
 {% endblock %}
