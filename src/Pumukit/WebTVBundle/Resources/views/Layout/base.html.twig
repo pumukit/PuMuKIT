@@ -36,6 +36,11 @@
         <!--HEADER-->
         {% include 'PumukitWebTVBundle:Layout:header.html.twig' %}
         <div class="row">
+          <div class="breadcrumb_wrapper visible-lg" role="navigation">
+            {% render(controller('PumukitWebTVBundle:Widget:breadcrumbs')) %}
+          </div>
+        </div>        
+        <div class="row">
           <div class="main-content wrapper-center">
             <!--LATERAL_MENU-->
             <span class="{{ hide_slidebar is defined ? 'hidden-lg':'' }}">
