@@ -173,6 +173,17 @@ class SeriesController extends AdminController
     }
 
     /**
+     * Generate Magic Url action
+     */
+    public function generateMagicUrlAction(Request $request)
+    {
+        $resource = $this->findOr404($request);
+        $mmobjService = $this->get('pumukitschema.series');
+        $response = $mmobjService->resetMagicUrl($resource);
+        return new Response($response);        
+    }
+
+    /**
      * Batch delete action
      * Overwrite to delete multimedia objects inside series
      */
