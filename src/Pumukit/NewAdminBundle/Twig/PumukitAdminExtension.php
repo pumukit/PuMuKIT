@@ -189,10 +189,10 @@ class PumukitAdminExtension extends \Twig_Extension
                 $iconText = "Published: is listed in the Series and can be played with published URL";
                 break;
             case MultimediaObject::STATUS_HIDE:
-                $iconText = "Hidden: is not listed in the Series but can be played with published URL";
+                $iconText = "Hidden: is not listed in the Series but can be played with magic URL";
                 break;
             case MultimediaObject::STATUS_BLOQ:
-                $iconText = "Blocked: is not listed in the Series but can be played with magic URL";
+                $iconText = "Blocked: cannot be accessed outside the back-end";
                 break;
         }
 
