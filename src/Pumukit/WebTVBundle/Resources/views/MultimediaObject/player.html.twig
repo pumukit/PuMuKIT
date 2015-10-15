@@ -39,13 +39,18 @@
     startparam: "start",
     autostart: {{ autostart|default("true") }},
     repeat: "false",
+    {% if responsive is defined %}
+    width: '100%',
+    aspectratio: '16:9',
+    {% else %}
     width: {{ width|default("620") }},
     height: {{ height|default("465") }},
+    {% endif %}
     logo: { hide: true }
   });
 </script>
 {% else %}
-<div style="color: white; background: black; width: {{ width|default('620') }}px; height: {{ height|default('465') }}px; text-align: center;vertical-align: middle;display: table-cell;">
+<div style="color: white; background: black; {% if responsive %} width: 100%; height: 300px; {% else %}width: {{ width|default('620') }}px; height: {{ height|default('465') }}px;{% endif %} text-align: center;vertical-align: middle;display: table-cell;">
   No track.
 </div>
 {% endif %}
