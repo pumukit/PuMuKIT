@@ -35,21 +35,18 @@
       <div class="container-fluid">
         <!--HEADER-->
         {% include 'PumukitWebTVBundle:Layout:header.html.twig' %}
+        <!--BREADCRUMBS-->
         <div class="row">
-          <div class="breadcrumb_wrapper visible-lg" role="navigation">
+          <div class="breadcrumb_wrapper" role="navigation">
             {% render(controller('PumukitWebTVBundle:Widget:breadcrumbs')) %}
           </div>
         </div>        
         <div class="row">
           <div class="main-content wrapper-center">
             <!--LATERAL_MENU-->
-            <span class="{{ hide_slidebar is defined ? 'hidden-lg':'' }}">
+            <span class="{{ hide_slidebar is defined ? 'hidden':'visible-lg' }}">
               {% include 'PumukitWebTVBundle:Layout:slidebar.html.twig'%}
             </span>
-            <!--BREADCRUMBS-->
-            <div class="row breadcrumb_wrapper hidden-lg" role="navigation">
-              {% render(controller('PumukitWebTVBundle:Widget:breadcrumbs')) %}
-            </div>
             <!--MAIN BODY-->
             <div class="main-content {{ hide_slidebar is defined ? 'row':'col-lg-9' }}">
               {% block body_without_bar %}

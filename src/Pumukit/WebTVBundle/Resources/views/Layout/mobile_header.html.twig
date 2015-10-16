@@ -1,0 +1,29 @@
+<nav class="navbar navbar-default col-lg-3">
+  <br>
+  <div class="navbar-header" >    
+    <div class="row">
+      <span class="navbar-brand">
+      {{ pumukit2_info['description'] | trans }} {# TODO use title #}
+      </span>
+      {% render( controller( 'PumukitWebTVBundle:Widget:languageselect') ) %}
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#pumukit-navbar-collapse-1">
+        <span class="sr-only">TOGGLE NAVIGATION</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#pumukit-navbar-collapse-2">
+        <span class="sr-only">TOGGLE SEARCH</span>
+        <span class="glyphicon glyphicon-search"></span>
+      </button>
+
+    </div>
+    <div class="collapse navbar-collapse" id="pumukit-navbar-collapse-2">
+      {% include 'PumukitWebTVBundle:Layout:search_box.html.twig' %}
+    </div>
+  </div>
+  <div class="collapse navbar-collapse" id="pumukit-navbar-collapse-1">
+    {% render(controller('PumukitWebTVBundle:Widget:menu')) %}
+  </div><!--END navbar-collapse-->
+  <br>
+</nav>
