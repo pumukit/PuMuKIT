@@ -26,59 +26,28 @@ class AnnouncesController extends Controller
      */
     public function latestUploadsPagerAction(Request $request)
     {
-        $date_request = $request->query->get('date', 0);
-        $repository_mms = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $queryBuilderMms = $repository_mms->createQueryBuilder();
-        $repository_series = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
-        $queryBuilderSeries = $repository_series->createQueryBuilder();
+        $announcesService = $this->get('pumukitschema.announce');
 
-        $date_ini = \DateTime::createFromFormat('d/m/Y', "01/$date_request");
-        $date_fin = clone $date_ini;
-        $date_ini->modify('first day of next month');
-        $date_ini->modify('-1 day');
-        $date_fin->modify('last day of next month');
+        $dateRequest = $request->query->get('date', 0);
 
-        $counter = 0;
-        do {
-            ++$counter;
-            $date_ini->modify('last day of last month');
-            $date_fin->modify('last day of last month');
+        $dateStart = \DateTime::createFromFormat('d/m/Y', "01/$dateRequest");
+        $dateEnd = clone $dateStart;
+        $dateStart->modify('first day of next month');
+        $dateStart->modify('-1 day');
+        $dateEnd->modify('last day of next month');
 
-            $queryBuilderMms->field('public_date')->range($date_ini, $date_fin);
-            $queryBuilderSeries->field('public_date')->range($date_ini, $date_fin);
-            $queryBuilderSeries->field('announce')->equals(true);
-            $queryBuilderMms->field('tags.cod')->equals('PUDENEW');
-            $lastMms = $queryBuilderMms->getQuery()->execute();
-            $lastSeries = $queryBuilderSeries->getQuery()->execute();
-            $last = array();
-            foreach ($lastSeries as $serie) {
-                $last[] = $serie;
-            }
-            foreach ($lastMms as $mm) {
-                $last[] = $mm;
-            }
-        } while (empty($last) && $counter < 24);
+        list($dateStart, $dateEnd, $last) = $announcesService->getNextLatestUploads($dateStart, $dateEnd);
 
         if (empty($last)) {
-            $date_header = '---';
+            $dateHeader = '---';
         } else {
-            $date_header = $date_fin->format('m/Y');
+            $dateHeader = $dateEnd->format('m/Y');
         }
 
-        usort($last, function ($a, $b) {
-            $date_a = $a->getPublicDate();
-            $date_b = $b->getPublicDate();
-            if ($date_a == $date_b) {
-                return 0;
-            }
-
-            return $date_a < $date_b ? 1 : -1;
-        });
-
-        $response = new Response($this->renderView('PumukitWebTVBundle:Announces:latestUploadsPager.html.twig', array('last' => $last, 'date' => $date_fin)), 200);
-        $response->headers->set('X-Date', $date_header);
-        $response->headers->set('X-Date-Month', $date_fin->format('m'));
-        $response->headers->set('X-Date-Year', $date_fin->format('Y'));
+        $response = new Response($this->renderView('PumukitWebTVBundle:Announces:latestUploadsPager.html.twig', array('last' => $last, 'date' => $dateEnd)), 200);
+        $response->headers->set('X-Date', $dateHeader);
+        $response->headers->set('X-Date-Month', $dateEnd->format('m'));
+        $response->headers->set('X-Date-Year', $dateEnd->format('Y'));
 
         return $response;
     }
