@@ -45,7 +45,7 @@ class AnnouncesController extends Controller
             $date_fin->modify('last day of last month');
 
             $queryBuilderMms->field('public_date')->range($date_ini, $date_fin);
-            $queryBuilderSeries->field('pùblic_date')->range($date_ini, $date_fin);
+            $queryBuilderSeries->field('public_date')->range($date_ini, $date_fin);
             $queryBuilderSeries->field('announce')->equals(true);
             $queryBuilderMms->field('tags.cod')->equals('PUDENEW');
             $lastMms = $queryBuilderMms->getQuery()->execute();
