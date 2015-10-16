@@ -126,7 +126,8 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('host')->isRequired()->cannotBeEmpty()
                                 ->info('Encoder Hostnames (or IPs)')->end()
                             ->integerNode('number')->min(0)->defaultValue(1)
-                                ->info('Maximum number of concurrent encoding jobs')->end()
+                                //BC Delete in Pumukit 2.2
+                                ->info('Deprecated since version 2, to be removed in 2.2.')->end()
                             ->integerNode('max')->min(0)->defaultValue(1)
                                 ->info('Top for the maximum number of concurrent encoding jobs')->end()
                             ->enumNode('type')->values(array(CpuService::TYPE_LINUX, CpuService::TYPE_WINDOWS, CpuService::TYPE_GSTREAMER))
