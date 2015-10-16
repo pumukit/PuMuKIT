@@ -61,7 +61,7 @@ $ php app/console assets:install web --symlink
 #### 2.1 Load CSS in the layout
 Override the `src/Pumukit/Teltek/WebTVBundle/Resources/views/layout.html.twig` template:
 
-```php
+```html
 {% extends 'PumukitWebTVBundle:Layout:base.html.twig' %}
 
 {% block stylesheets %}
@@ -78,7 +78,7 @@ Add your HTML on `src/Pumukit/Teltek/WebTVBundle/Resources/views/Layout/footer.h
 ### 4.- logo_url
 Override the `Pumukit/Teltek/WebTVBundle/Resources/views/layout.html.twig` template.
 
-```
+```html
 {% extends 'PumukitWebTVBundle:Layout:baseheader.html.twig' %}
 
 {% block logo_url %}
@@ -91,7 +91,7 @@ Override the `Pumukit/Teltek/WebTVBundle/Resources/views/layout.html.twig` templ
 
 Add your HTML on `src/Pumukit/Teltek/WebTVBundle/Resources/views/Layout/header.html.twig` and the CSS in the base css file.
 
-```
+```html
 <div>
   <!-- TOPHEADER -->
 </div>
