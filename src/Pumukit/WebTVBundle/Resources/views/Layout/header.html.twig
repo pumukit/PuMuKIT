@@ -1,23 +1,5 @@
-<div class="row header visible-lg"> 
-  <div class="header-content">
-    <div class="col-sm-4">
-      <div class="row">
-        <div class="col-xs-12">
-          {% if logo_url is defined %}
-            <img src="{{ logo_url }}" class="img-responsive">
-          {% endif %}
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-8">
-      <div class="row">
-        {% render( controller( 'PumukitWebTVBundle:Widget:languageselect') ) %}
-      </div>
-      <div class="row">
-        <div class="col-sm-6" style="float:right;";>
-          {% include 'PumukitWebTVBundle:Layout:search_box.html.twig' %}
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+{% extends 'PumukitWebTVBundle:Layout:baseheader.html.twig' %}
+
+{% block logo_url %}
+    <img src="{{ asset('bundles/pumukitwebtv/images/logo_cies.png') }}" class="img-responsive">
+{% endblock %}
