@@ -19,8 +19,8 @@ class AnnounceService
 
       public function getLast($limit = 3)
       {
-          $lastMms = $this->mmRepo->findStandardBy(array('tags.cod' => 'PUDENEW'), array('public_date' => -1), 3, 0);
-          $lastSeries = $this->seriesRepo->findBy(array('announce' => true), array('public_date' => -1), 3, 0);
+          $lastMms = $this->mmRepo->findStandardBy(array('tags.cod' => 'PUDENEW'), array('public_date' => -1), $limit, 0);
+          $lastSeries = $this->seriesRepo->findBy(array('announce' => true), array('public_date' => -1), $limit, 0);
 
           $return = array();
           $i = 0;
