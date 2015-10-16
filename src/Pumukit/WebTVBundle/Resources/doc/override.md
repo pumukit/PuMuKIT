@@ -15,7 +15,7 @@ Process
 
 ### 1.- Create new webtv bundle.
 
-####1.1 Generate bundle.
+#### 1.1 Generate bundle.
 
 `
 $ php app/console  generate:bundle --namespace=Pumukit/Teltek/WebTVBundle --dir=src --no-interaction
@@ -59,9 +59,9 @@ $ php app/console assets:install web --symlink
 
 
 #### 2.1 Load CSS in the layout
+Override the `src/Pumukit/Teltek/WebTVBundle/Resources/views/layout.html.twig` template:
 
 ```php
-#src/Pumukit/Teltek/WebTVBundle/Resources/views/layout.html.twig
 {% extends 'PumukitWebTVBundle:Layout:base.html.twig' %}
 
 {% block stylesheets %}
@@ -76,15 +76,38 @@ Add your HTML on `src/Pumukit/Teltek/WebTVBundle/Resources/views/Layout/footer.h
 
 
 ### 4.- logo_url
-Add in Pumukit/Teltek/WebTVBundle/Resources/views/layout.html.twig
+Override the `Pumukit/Teltek/WebTVBundle/Resources/views/layout.html.twig` template.
 
 ```
-{% set logo_url = 'http://teltek.es/wp-content/uploads/2015/03/Logo-TELTEK-22_OK.png' %}
+{% extends 'PumukitWebTVBundle:Layout:baseheader.html.twig' %}
+
+{% block logo_url %}
+    <img src="{{ asset('bundles/pumukitteltekwebtv/images/logo.png') }}" class="img-responsive">
+{% endblock %}
 ```
 
-5.- Header (advanced)
 
-Add your HTML on src/Pumukit/Teltek/WebTVBundle/Resources/views/Layout/header.html.twig and the CSS in the base css file.
+### 5.- Header (advanced)
+
+Add your HTML on `src/Pumukit/Teltek/WebTVBundle/Resources/views/Layout/header.html.twig` and the CSS in the base css file.
+
+```
+<div>
+  <!-- TOPHEADER -->
+</div>
+
+{% embed 'PumukitWebTVBundle:Layout:baseheader.html.twig' %}
+  {% block logo_url %}
+     <img src="{{ asset('bundles/pumukitwebtv/images/logo_cies.png') }}" class="img-responsive">
+  {% endblock %}
+{% endembed %}
+
+<div>
+  <!-- OTHERHEADER -->
+</div>
+
+```
+
 
 
 
