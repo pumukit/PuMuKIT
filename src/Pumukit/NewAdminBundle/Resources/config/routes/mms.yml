@@ -46,6 +46,12 @@ pumukitnewadmin_mms_delete:
     defaults:
         _controller: pumukitnewadmin.controller.mms:deleteAction
 
+pumukitnewadmin_mms_generate_magic_url:
+    pattern: /{id}/generatemagic
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:generateMagicUrlAction
+
 pumukitnewadmin_mms_clone:
     pattern: /{id}/clone
     methods: [POST]

@@ -19,7 +19,7 @@ use Pumukit\WebTVBundle\Event\WebTVEvents;
 class MultimediaObjectController extends Controller
 {
     /**
-     * @Route("/video/{id}", name="pumukit_webtv_multimediaobject_index", defaults={"show_hide": true})
+     * @Route("/video/{id}", name="pumukit_webtv_multimediaobject_index" )
      * @Template("PumukitWebTVBundle:MultimediaObject:index.html.twig")
      */
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
@@ -57,7 +57,7 @@ class MultimediaObjectController extends Controller
 
 
    /**
-     * @Route("/iframe/{id}", name="pumukit_webtv_multimediaobject_iframe", defaults={"show_hide": true})
+     * @Route("/iframe/{id}", name="pumukit_webtv_multimediaobject_iframe" )
      * @Template()
      */
     public function iframeAction(MultimediaObject $multimediaObject, Request $request)
@@ -71,13 +71,10 @@ class MultimediaObjectController extends Controller
           $multimediaObject->getTrackById($request->query->get('track_id')) :
           $multimediaObject->getFilteredTrackWithTags(array('display'));
 
-        if (!$track)
-            throw $this->createNotFoundException();
-
         $this->incNumView($multimediaObject, $track);
         $this->dispatch($multimediaObject, $track);
 
-        if($track->containsTag("download")) {       
+        if($track && $track->containsTag("download")) {       
             return $this->redirect($track->getUrl());
         }
 
@@ -94,27 +91,41 @@ class MultimediaObjectController extends Controller
      */
     public function magicIndexAction(MultimediaObject $multimediaObject, Request $request)
     {
-      $response = $this->preExecute($multimediaObject, $request);
-      if($response instanceof Response) {
-        return $response;
-      }
+        $mmobjService = $this->get('pumukitschema.multimedia_object');
+        if($mmobjService->isPublished($multimediaObject,'PUCHWEBTV')){
+            if($mmobjService->hasPlayableResource($multimediaObject)){
+                return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId(), true)));
+            }
+        }        
+        else if( ($multimediaObject->getStatus() != MultimediaObject::STATUS_PUBLISHED 
+                 && $multimediaObject->getStatus() != MultimediaObject::STATUS_HIDE
+                 ) || !$multimediaObject->containsTagWithCod('PUCHWEBTV')) {
+            return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
+        }
 
-      $track = $request->query->has('track_id') ?
-        $multimediaObject->getTrackById($request->query->get('track_id')) :
-        $multimediaObject->getTrackWithTag('display');
+        $response = $this->preExecute($multimediaObject, $request);
+        if($response instanceof Response) {
+            return $response;
+        }
 
-      $this->incNumView($multimediaObject, $track);
-      $this->dispatch($multimediaObject, $track);            
+        $track = $request->query->has('track_id') ?
+                 $multimediaObject->getTrackById($request->query->get('track_id')) :
+                 $multimediaObject->getTrackWithTag('display');
 
-      if($track->containsTag("download")) {       
-          return $this->redirect($track->getUrl());
-      }
+        if($track){
+            $this->incNumView($multimediaObject, $track);
+            $this->dispatch($multimediaObject, $track);            
+            if($track->containsTag("download")) {       
+                return $this->redirect($track->getUrl());
+            }            
+        }
 
-      $this->updateBreadcrumbs($multimediaObject);
-      return array('autostart' => $request->query->get('autostart', 'true'),
-                   'intro' => $this->getIntro($request->query->get('intro')),
-                   'multimediaObject' => $multimediaObject, 
-                   'track' => $track);
+        $this->updateBreadcrumbs($multimediaObject);
+        return array('autostart' => $request->query->get('autostart', 'true'),
+                     'intro' => $this->getIntro($request->query->get('intro')),
+                     'multimediaObject' => $multimediaObject, 
+                     'track' => $track,
+                     'magic_url' => true);
     }
 
 

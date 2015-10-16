@@ -29,7 +29,7 @@ class SeriesController extends Controller
     }
 
     /**
-     * @Route("/series/magic/{secret}", name="pumukit_webtv_series_magicindex", defaults={"filter": false})
+     * @Route("/series/magic/{secret}", name="pumukit_webtv_series_magicindex", defaults={"show_hide":true, "broadcast":false, "track":false})
      * @Template("PumukitWebTVBundle:Series:index.html.twig")
      */
     public function magicIndexAction(Series $series, Request $request)
@@ -42,7 +42,8 @@ class SeriesController extends Controller
       $this->updateBreadcrumbs($series);
 
       return array('series' => $series, 
-                   'multimediaObjects' => $multimediaObjects);
+                   'multimediaObjects' => $multimediaObjects,
+                   'magic_url' => true);
     }
 
     private function updateBreadcrumbs(Series $series)

@@ -143,6 +143,14 @@ class MultimediaObjectController extends SortableAdminController
 
         $template = $resource->isPrototype() ? '_template' : '';
 
+        $isPublished = null;
+        $playableResource = null;
+        if ($resource){
+            $mmService = $this->get('pumukitschema.multimedia_object');
+            $isPublished = $mmService->isPublished($resource, 'PUCHWEBTV');
+            $playableResource = $mmService->hasPlayableResource($resource);
+        }
+
         return array(
                      'mm'            => $resource,
                      'form_meta'     => $formMeta->createView(),
@@ -154,7 +162,9 @@ class MultimediaObjectController extends SortableAdminController
                      'parent_tags'   => $parentTags,
                      'jobs'          => $jobs,
                      'not_master_profiles' => $notMasterProfiles,
-                     'template' => $template
+                     'template' => $template,
+                     'is_published' => $isPublished,
+                     'is_playable' => $playableResource
                      );
     }
 
@@ -505,6 +515,18 @@ class MultimediaObjectController extends SortableAdminController
         return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list', 
                                                   array('seriesId' => $seriesId)));
     }
+
+    /**
+     * Generate Magic Url action
+     */
+    public function generateMagicUrlAction(Request $request)
+    {
+        $resource = $this->findOr404($request);
+        $mmobjService = $this->get('pumukitschema.multimedia_object');
+        $response = $mmobjService->resetMagicUrl($resource);
+        return new Response($response);
+    }
+
 
     /**
      * Clone action
