@@ -45,7 +45,6 @@ class PumukitExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFilter('first_url_pic', array($this, 'getFirstUrlPicFilter')),
             new \Twig_SimpleFilter('precinct_fulltitle', array($this, 'getPrecinctFulltitle')),
-            new \Twig_SimpleFilter('count_multimedia_objects', array($this, 'countMultimediaObjects')),
             new \Twig_SimpleFilter('duration_minutes_seconds', array($this, 'getDurationInMinutesSeconds')),
         );
     }
@@ -169,16 +168,6 @@ class PumukitExtension extends \Twig_Extension
         return $fulltitle;
     }
 
-    /**
-     * Count Multimedia Objects
-     *
-     * @param Series $series
-     * @return integer
-     */
-    public function countMultimediaObjects($series)
-    {
-        return $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->countInSeries($series);
-    }
 
     /**
      * Get duration in minutes and seconds

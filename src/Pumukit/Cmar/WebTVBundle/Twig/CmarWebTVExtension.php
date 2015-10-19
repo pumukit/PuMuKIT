@@ -14,6 +14,7 @@ class CmarWebTVExtension extends \Twig_Extension
     private $dm;
     private $languages;
     private $translator;
+    private $multimediaObjectNumInSeriesCache = array();
 
     /**
      * Constructor
@@ -115,7 +116,12 @@ class CmarWebTVExtension extends \Twig_Extension
      */
     public function countMultimediaObjects($series)
     {
-        return $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->countInSeries($series);
+        if (array_key_exists($series->getId(), $this->multimediaObjectNumInSeriesCache)){
+            return $this->multimediaObjectNumInSeriesCache[$series->getId()];
+        }
+        $num = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->countInSeries($series);
+        $this->multimediaObjectNumInSeriesCache[$series->getId()] = $num;
+        return $num;
     }
 
     /**
