@@ -23,11 +23,15 @@ class ClientServiceTest extends WebTestCase
     private $resourcesDir;
     private $clientService;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         $kernel = static::createKernel($options);
         $kernel->boot();
+
+        if(!$kernel->getContainer()->has('pumukitopencast.client')) {
+            $this->markTestSkipped("Opencast is not propertly configured.");
+        }
 
         $this->clientService = $kernel->getContainer()->get('pumukitopencast.client');
 
