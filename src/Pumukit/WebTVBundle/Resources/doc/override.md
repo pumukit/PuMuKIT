@@ -1,21 +1,24 @@
 Override manual
 ===============
 
-Override the PumukitWebTvBundle allow you to change:
+Overriding the PumukitWebTvBundle allows you to change:
 
-* CSS base
+* Base CSS
 * Footer
 * Logo
 * Header (advanced)
+* Number of columns for the Latest uploads, Search and ByTag templates
+* Number of objects per page on the Search, Most viewed, Recently added and ByTag templates
+* Stats widget (added by default)
 
 
 
 Process
 --------
 
-### 1.- Create new webtv bundle.
+### 1.- Create new WebTV bundle.
 
-#### 1.1 Generate bundle.
+#### 1.1 Generate the bundle.
 
 `
 $ php app/console  generate:bundle --namespace=Pumukit/Teltek/WebTVBundle --dir=src --no-interaction
@@ -75,7 +78,7 @@ Override the `src/Pumukit/Teltek/WebTVBundle/Resources/views/layout.html.twig` t
 Add your HTML on `src/Pumukit/Teltek/WebTVBundle/Resources/views/Layout/footer.html.twig` and its CSS in the base css file.
 
 
-### 4.- logo_url
+### 4.- Logo
 Override the `Pumukit/Teltek/WebTVBundle/Resources/views/layout.html.twig` template.
 
 ```html
