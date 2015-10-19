@@ -6,10 +6,10 @@
 {% for object in last %}
   {% if object.isCollection() %}
     <!-- Series -->
-    {% include 'PumukitWebTVBundle:Misc:series.html.twig' with {'rows':1}%}
+    {% include 'PumukitWebTVBundle:Misc:series.html.twig' with {'cols': number_cols }%}
   {% else %}
     <!-- Multimedia object -->
-    {% include 'PumukitWebTVBundle:Misc:multimediaobject.html.twig' with {'rows':1}%}
+    {% include 'PumukitWebTVBundle:Misc:multimediaobject.html.twig' with {'cols': number_cols }%}
   {% endif %}
 {% endfor %}
 </div>

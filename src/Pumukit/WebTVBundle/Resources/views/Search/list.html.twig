@@ -13,10 +13,10 @@
 
   {% for object in objects %}
     {% if object.isCollection() %}
-      {% include 'PumukitWebTVBundle:Misc:series.html.twig' with{ 'rows': 2 } %}
+      {% include 'PumukitWebTVBundle:Misc:series.html.twig' with{ 'cols': number_cols } %}
       {% set lastDate = object.getPublicDate()|date("d/m/Y") %}
     {% else %}
-      {% include 'PumukitWebTVBundle:Misc:multimediaobject.html.twig' with{ 'rows': 2 } %}
+      {% include 'PumukitWebTVBundle:Misc:multimediaobject.html.twig' with{ 'cols': number_cols } %}
       {% set lastDate = object.getPublicDate()|date("d/m/Y") %}
     {% endif %}
     {% else %}

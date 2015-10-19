@@ -40,8 +40,12 @@ class IndexController extends Controller
      */
     public function mostviewedAction()
     {
+        $limit = 3;
+        if ($this->container->hasParameter('limit_objs_mostviewed')){
+            $limit = $this->container->getParameter('limit_objs_mostviewed');
+        }
         $repository = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $multimediaObjectsSortedByNumview = $repository->findStandardBy(array(), array('numview' => -1), 3, 0);
+        $multimediaObjectsSortedByNumview = $repository->findStandardBy(array(), array('numview' => -1), $limit, 0);
 
         return array('multimediaObjectsSortedByNumview' => $multimediaObjectsSortedByNumview);
     }
@@ -51,7 +55,11 @@ class IndexController extends Controller
      */
     public function mostviewedlastmonthAction()
     {
-        $multimediaObjectsSortedByNumview = $this->get('pumukit_stats.stats')->getMostViewedUsingFilters(30, 3);
+        $limit = 3;
+        if ($this->container->hasParameter('limit_objs_mostviewed')){
+            $limit = $this->container->getParameter('limit_objs_mostviewed');
+        }
+        $multimediaObjectsSortedByNumview = $this->get('pumukit_stats.stats')->getMostViewedUsingFilters(30, $limit);
 
         return array('multimediaObjectsSortedByNumview' => $multimediaObjectsSortedByNumview);
     }
@@ -61,7 +69,11 @@ class IndexController extends Controller
      */
     public function recentlyaddedAction()
     {
-        $last = $this->get('pumukitschema.announce')->getLast(3);
+        $limit = 3;
+        if ($this->container->hasParameter('limit_objs_recentlyadded')){
+            $limit = $this->container->getParameter('limit_objs_recentlyadded');
+        }
+        $last = $this->get('pumukitschema.announce')->getLast($limit);
 
         return array('last' => $last);
     }

@@ -21,6 +21,11 @@ class SearchController extends Controller
    */
   public function seriesAction(Request $request)
   {
+      $numberCols = 2;
+      if( $this->container->hasParameter('columns_objs_search')){
+          $numberCols = $this->container->getParameter('columns_objs_search');
+      }
+
       $this->get('pumukit_web_tv.breadcrumbs')->addList('Series search', 'pumukit_webtv_search_series');
 
       $search_found = $request->query->get('search');
@@ -48,7 +53,8 @@ class SearchController extends Controller
       $pagerfanta = $this->createPager($queryBuilder, $request->query->get('page', 1));
 
       return array('type' => 'series',
-         'objects' => $pagerfanta, );
+                   'objects' => $pagerfanta,
+                   'number_cols' => $numberCols);
   }
 
   /**
@@ -57,6 +63,11 @@ class SearchController extends Controller
    */
   public function multimediaObjectsAction(Request $request)
   {
+      $numberCols = 2;
+      if( $this->container->hasParameter('columns_objs_search')){
+          $numberCols = $this->container->getParameter('columns_objs_search');
+      }
+
       $this->get('pumukit_web_tv.breadcrumbs')->addList('Multimedia object search', 'pumukit_webtv_search_multimediaobjects');
 
       $tag_search = new Tag();
@@ -128,14 +139,15 @@ class SearchController extends Controller
          'tags' => $tags,
          'tag_found' => $tag_found,
          'type_found' => $type_found,
-         'duration_found' => $duration_found, );
+         'duration_found' => $duration_found,
+         'number_cols' => $numberCols);
     }
 
     private function createPager($objects, $page)
     {
         $limit = 10;
-        if ($this->container->hasParameter('limit_objs_bytag')){
-            $limit = $this->container->getParameter('limit_objs_bytag');
+        if ($this->container->hasParameter('limit_objs_search')){
+            $limit = $this->container->getParameter('limit_objs_search');
         }
         $adapter = new DoctrineODMMongoDBAdapter($objects);
         $pagerfanta = new Pagerfanta($adapter);

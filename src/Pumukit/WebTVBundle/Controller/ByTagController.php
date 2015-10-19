@@ -19,6 +19,11 @@ class ByTagController extends Controller
    */
   public function multimediaObjectsAction(Tag $tag, Request $request)
   {
+      $numberCols = 2;
+      if( $this->container->hasParameter('columns_objs_bytag')){
+          $numberCols = $this->container->getParameter('columns_objs_bytag');
+      }
+
       $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
       $mmobjs = $repo->createBuilderWithTag($tag, array('record_date' => 1));
 
@@ -27,7 +32,8 @@ class ByTagController extends Controller
 
       return array('title' => 'Multimedia objects with tag',
                  'objects' => $pagerfanta,
-                 'tag' => $tag, );
+                 'tag' => $tag,
+                 'number_cols' => $numberCols);
   }
 
   /**
@@ -36,6 +42,11 @@ class ByTagController extends Controller
    */
   public function seriesAction(Tag $tag, Request $request)
   {
+
+      $numberCols = 2;
+      if( $this->container->hasParameter('columns_objs_bytag')){
+          $numberCols = $this->container->getParameter('columns_objs_bytag');
+      }
       $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
       $series = $repo->createBuilderWithTag($tag, array('public_date' => +1));
 
@@ -44,7 +55,8 @@ class ByTagController extends Controller
 
       return array('title' => 'Series with tag',
                  'objects' => $pagerfanta,
-                 'tag' => $tag, );
+                 'tag' => $tag,
+                 'number_cols' => $numberCols);
   }
 
     private function updateBreadcrumbs($title, $routeName, array $routeParameters = array())
