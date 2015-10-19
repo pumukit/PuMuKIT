@@ -55,18 +55,19 @@ class AnnounceService
         $queryBuilderSeries = $this->seriesRepo->createQueryBuilder();
 
         $queryBuilderMms->field('public_date')->range($dateStart, $dateEnd);
+        $queryBuilderMms->field('tags.cod')->equals('PUDENEW');
         $queryBuilderSeries->field('public_date')->range($dateStart, $dateEnd);
         $queryBuilderSeries->field('announce')->equals(true);
-        $queryBuilderMms->field('tags.cod')->equals('PUDENEW');
 
         $lastMms = $queryBuilderMms->getQuery()->execute();
         $lastSeries = $queryBuilderSeries->getQuery()->execute();
+
         $last = array();
 
         foreach ($lastSeries as $serie) {
             $last[] = $serie;
         }
-        foreach ($lastMms as $mm) {
+       foreach ($lastMms as $mm) {
             $last[] = $mm;
         }
 
@@ -83,16 +84,27 @@ class AnnounceService
         return $last;
     }
 
-    public function getNextLatestUploads($dateStart, $dateEnd)
+    /**
+    * Gets the next latest uploads, starting with the month given and looking 24 months forward.
+    * If not, returns an empty array.
+    * @return array
+    */
+    public function getNextLatestUploads($date)
     {
         $counter = 0;
+        $dateStart = clone $date;
+        $dateStart->modify('first day of next month');
+        $dateEnd = clone $date;
+        $dateEnd->modify('last day of next month');
+        $dateEnd->setTime(23,59,59);
         do {
             ++$counter;
-            $dateStart->modify('last day of last month');
-            $dateEnd->modify('last day of last month');            
+            $dateStart->modify('first day of last month');
+            $dateEnd->modify('last day of last month');
             $last = $this->getLatestUploadsByDates($dateStart, $dateEnd);
+
         } while (empty($last) && $counter < 24);
 
-        return array($dateStart, $dateEnd, $last);
+        return array($dateEnd, $last);
     }
 }

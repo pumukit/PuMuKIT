@@ -28,26 +28,19 @@ class AnnouncesController extends Controller
     {
         $announcesService = $this->get('pumukitschema.announce');
 
-        $dateRequest = $request->query->get('date', 0);
-
-        $dateStart = \DateTime::createFromFormat('d/m/Y', "01/$dateRequest");
-        $dateEnd = clone $dateStart;
-        $dateStart->modify('first day of next month');
-        $dateStart->modify('-1 day');
-        $dateEnd->modify('last day of next month');
-
-        list($dateStart, $dateEnd, $last) = $announcesService->getNextLatestUploads($dateStart, $dateEnd);
-
+        $dateRequest = $request->query->get('date', 0);//Use to queries for month and year to reduce formatting and unformatting.
+        $date = \DateTime::createFromFormat('d/m/Y H:i:s', "01/$dateRequest 00:00:00");
+        list($date, $last) = $announcesService->getNextLatestUploads($date);
         if (empty($last)) {
             $dateHeader = '---';
         } else {
-            $dateHeader = $dateEnd->format('m/Y');
+            $dateHeader = $date->format('m/Y');
         }
 
-        $response = new Response($this->renderView('PumukitWebTVBundle:Announces:latestUploadsPager.html.twig', array('last' => $last, 'date' => $dateEnd)), 200);
+        $response = new Response($this->renderView('PumukitWebTVBundle:Announces:latestUploadsPager.html.twig', array('last' => $last, 'date' => $date)), 200);
         $response->headers->set('X-Date', $dateHeader);
-        $response->headers->set('X-Date-Month', $dateEnd->format('m'));
-        $response->headers->set('X-Date-Year', $dateEnd->format('Y'));
+        $response->headers->set('X-Date-Month', $date->format('m'));
+        $response->headers->set('X-Date-Year', $date->format('Y'));
 
         return $response;
     }

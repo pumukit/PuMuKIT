@@ -1,4 +1,13 @@
-jQuery(document).ready(function() {  
+jQuery(document).ready(function() {
+  function in_array(needle, haystack) {
+      for (var i = 0, maxi = haystack.length; i < maxi; ++i) {
+        if (haystack[i] == needle) {
+          return true;
+        }
+      }
+      return false;
+    }
+
     var cargando = $('#announces_loading');
     var announces_div = $('#announces');
     var loaded_months = [];
@@ -26,13 +35,14 @@ jQuery(document).ready(function() {
 
     function reloadMoreData()
     {
-        if( month_loaded ) 
+        if( month_loaded && !in_array(anDate,loaded_months))
         {
+
             month_loaded = false;
             cargando.show();
             $.get( url_latestuploads_pager, {date: anDate.toStringParameter()}).success(function(data, textStatus, response){
                 cargando.hide();
-                if( response.getResponseHeader( 'X-Date' ) != "---" ) 
+                if( response.getResponseHeader( 'X-Date' ) != "---" )
                 {
                     date_month = response.getResponseHeader('X-Date-Month');
                     date_year = response.getResponseHeader('X-Date-Year');
@@ -40,7 +50,7 @@ jQuery(document).ready(function() {
                     anDate.initialize( date_month, date_year );
                     anDate.decMonth();
                     month_loaded = true;
-                    if( $(window).height() >= $('#footerbar').offset().top ) {                                        
+                    if( $(window).height() >= $('footer').offset().top ) {
                         reloadMoreData();
                     }
                 }
