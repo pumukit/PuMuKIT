@@ -17,8 +17,11 @@ class WidgetController extends Controller
     {
         $channels = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Live')->findAll();
         $selected = $this->container->get('request_stack')->getMasterRequest()->get('_route');
-
-        return array('live_channels' => $channels, 'menu_selected' => $selected);
+        $menuStats = true;
+        if($this->container->hasParameter('menu_stats')) {
+          $menuStats = $this->container->getParameter('menu_stats');
+        }
+        return array('live_channels' => $channels, 'menu_selected' => $selected, 'menu_stats' => $menuStats);
     }
 
     /**

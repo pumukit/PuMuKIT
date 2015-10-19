@@ -16,7 +16,6 @@ class IndexController extends Controller
     public function indexAction()
     {
         $this->get('pumukit_web_tv.breadcrumbs')->reset();
-
         return array();
     }
 
