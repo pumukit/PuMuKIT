@@ -21,7 +21,7 @@ Process
 $ php app/console  generate:bundle --namespace=Pumukit/Teltek/WebTVBundle --dir=src --no-interaction
 `
 
-#### 1.2 Registering the new bundle as the "parent" of Pumukit bundle:
+#### 1.2 Register the new bundle as the "parent" of the Pumukit bundle:
 
 
 ```php
@@ -41,13 +41,13 @@ class PumukitTeltekWebTVBundle extends Bundle
 }
 ```
 
-More info see: http://symfony.com/doc/current/cookbook/bundles/inheritance.html
+For more info see: http://symfony.com/doc/current/cookbook/bundles/inheritance.html
 
-#### 1.3 Install the new bundle (if necesary).
+#### 1.3 Install the new bundle (if necessary).
 `
 $ php app/console  pumukit:install:bundle Pumukit/Teltek/WebTVBundle/PumukitTeltekWebTVBundle
 `
-### 2.- Create a custom CSS
+### 2.- Create your custom CSS rules
 
 #### 2.1 Create base css file
 
@@ -72,7 +72,7 @@ Override the `src/Pumukit/Teltek/WebTVBundle/Resources/views/layout.html.twig` t
 
 
 ### 3.- Change the footer
-Add your HTML on `src/Pumukit/Teltek/WebTVBundle/Resources/views/Layout/footer.html.twig` and the CSS in the base css file.
+Add your HTML on `src/Pumukit/Teltek/WebTVBundle/Resources/views/Layout/footer.html.twig` and its CSS in the base css file.
 
 
 ### 4.- logo_url
@@ -89,7 +89,7 @@ Override the `Pumukit/Teltek/WebTVBundle/Resources/views/layout.html.twig` templ
 
 ### 5.- Header (advanced)
 
-Add your HTML on `src/Pumukit/Teltek/WebTVBundle/Resources/views/Layout/header.html.twig` and the CSS in the base css file.
+Add your HTML on `src/Pumukit/Teltek/WebTVBundle/Resources/views/Layout/header.html.twig` and its CSS in the base css file.
 
 ```html
 <div>
@@ -107,7 +107,30 @@ Add your HTML on `src/Pumukit/Teltek/WebTVBundle/Resources/views/Layout/header.h
 </div>
 
 ```
+### 6.- Parameters:
+Simply add the following sentences to your parameters.yml file to change the default values.
 
+#### 6.1 Number of columns
+The number of columns for almost every multimedia object and series listing.
+```yaml
+    columns_objs_bytag:        3             # Number of columns for bytag.  (Default 2)
+    columns_objs_search:       3             # Number of columns for search. (Default 2)
+    columns_objs_announces:    3             # Number of columns for announces. (Default 1); 
+```
 
+#### 6.2 Objects per page
+The number of objects per page in the templates using the pager.
+```yaml
+    limit_objs_bytag:          3             # ByTag Pager limit.   (Default 10)
+    limit_objs_search:         6             # Search Pager limit.  (Default 10)
+    limit_objs_mostviewed:     6             # Mostviewed limit.     (Default 3)
+    limit_objs_recentlyadded:  4             # Recentlyadded limit.    (Default 3)
+```
+
+#### 6.3 Menu Statistics
+The statistics viewed at the bottom of the lateral menu.
+```yaml
+    menu_stats:                true          # To show stats on the menu or not. (Default true)
+```
 
 
