@@ -14,7 +14,6 @@ use Pumukit\SchemaBundle\Document\Tag;
 
 class SearchController extends Controller
 {
-  private $limit = 10;
 
   /**
    * @Route("/searchseries")
@@ -134,9 +133,13 @@ class SearchController extends Controller
 
     private function createPager($objects, $page)
     {
+        $limit = 10;
+        if ($this->container->hasParameter('limit_objs_bytag')){
+            $limit = $this->container->getParameter('limit_objs_bytag');
+        }
         $adapter = new DoctrineODMMongoDBAdapter($objects);
         $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage($this->limit);
+        $pagerfanta->setMaxPerPage($limit);
         $pagerfanta->setCurrentPage($page);
 
         return $pagerfanta;
