@@ -151,7 +151,9 @@ class FactoryService
      */
     public function getRoles()
     {
-        return $this->dm->getRepository('PumukitSchemaBundle:Role')->findAll();
+        $criteria = array();
+        $sort = array('rank' => 1);
+        return $this->dm->getRepository('PumukitSchemaBundle:Role')->findBy($criteria, $sort);
     }
 
     /**
