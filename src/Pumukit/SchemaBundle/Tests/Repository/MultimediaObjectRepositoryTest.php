@@ -215,6 +215,26 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mmobj_ned = $this->repo->findByPersonId($person_ned->getId());
         $this->assertEquals(3, count($mmobj_ned));
 
+        // Test find by role
+        $mmobj_lord = $this->repo->findByRoleCod($role_lord->getCod())->toArray();
+        $mmobj_ranger = $this->repo->findByRoleCod($role_ranger->getCod())->toArray();
+        $mmobj_hand = $this->repo->findByRoleCod($role_hand->getCod())->toArray();
+        $this->assertEquals(2, count($mmobj_lord));
+        $this->assertEquals(2, count($mmobj_ranger));
+        $this->assertEquals(1, count($mmobj_hand));
+        $this->assertTrue(in_array($mm1, $mmobj_lord));
+        $this->assertFalse(in_array($mm2, $mmobj_lord));
+        $this->assertTrue(in_array($mm3, $mmobj_lord));
+        $this->assertFalse(in_array($mm4, $mmobj_lord));
+        $this->assertFalse(in_array($mm1, $mmobj_ranger));
+        $this->assertTrue(in_array($mm2, $mmobj_ranger));
+        $this->assertTrue(in_array($mm3, $mmobj_ranger));
+        $this->assertFalse(in_array($mm4, $mmobj_ranger));
+        $this->assertFalse(in_array($mm1, $mmobj_hand));
+        $this->assertFalse(in_array($mm2, $mmobj_hand));
+        $this->assertFalse(in_array($mm3, $mmobj_hand));
+        $this->assertTrue(in_array($mm4, $mmobj_hand));
+
         // Test find by person and role
         $mmobj_benjen_ranger = $this->repo->findByPersonIdWithRoleCod($person_benjen->getId(), $role_ranger->getCod());
         $mmobj_ned_lord = $this->repo->findByPersonIdWithRoleCod($person_ned->getId(), $role_lord->getCod());
