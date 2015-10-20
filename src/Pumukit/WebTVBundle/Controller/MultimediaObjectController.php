@@ -163,7 +163,7 @@ class MultimediaObjectController extends PlayerController
     public function preExecute(MultimediaObject $multimediaObject, Request $request)
     {
         if ($opencasturl = $multimediaObject->getProperty('opencasturl')) {
-          $this->forward('WebTVBundle:Opencast:index', array('request' => $request, 'multimediaObject' => $multimediaObject));
+          return $this->forward('PumukitWebTVBundle:Opencast:index', array('request' => $request, 'multimediaObject' => $multimediaObject));
         }
     }
 }

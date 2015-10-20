@@ -18,7 +18,7 @@ class PumukitExtension extends \Twig_Extension
     protected $defaultPic;
 
     /**
-     * @var RequestContext 
+     * @var RequestContext
      */
     protected $context;
 
@@ -60,6 +60,7 @@ class PumukitExtension extends \Twig_Extension
                      new \Twig_SimpleFunction('precinct', array($this, 'getPrecinct')),
                      new \Twig_SimpleFunction('precinct_of_series', array($this, 'getPrecinctOfSeries')),
                      new \Twig_SimpleFunction('captions', array($this, 'getCaptions')),
+                     new \Twig_SimpleFunction('iframeurl', array($this, 'getIframeUrl')),
                      );
     }
 
@@ -206,4 +207,41 @@ class PumukitExtension extends \Twig_Extension
     {
         return $this->materialService->getCaptions($multimediaObject);
     }
+
+    /**
+     * Get Iframe Url of a Multimedia Object
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param boolean $isHTML5  default=false
+     * @param boolean $isDownloadable  default=false
+     * @return ArrayCollection
+     */
+    public function getIframeUrl($multimediaObject, $isHTML5 = false, $isDownloadable = false)
+    {
+        $url = str_replace('%id%', $multimediaObject->getProperty('opencast'), $multimediaObject->getProperty('opencasturl'));
+
+        $broadcast_type = $multimediaObject->getBroadcast()->getBroadcastTypeId();
+        if (Broadcast::BROADCAST_TYPE_PUB == $broadcast_type) {
+            $url_player = '/cmarwatch.html';
+        } else {
+            $url_player = '/securitywatch.html';
+        }
+        $url = str_replace('/watch.html', $url_player, $url);
+
+        if ($isHTML5) {
+            $url = str_replace('/engage/ui/', '/paellaengage/ui/', $url);
+        }
+
+        if ($isDownloadable) {
+            $url = $url.'&videomode=progressive';
+        }
+
+        $invert = $multimediaObject->getProperty('opencastinvert');
+        if ($invert && $isHTML5) {
+            $url = $url.'&display=invert';
+        }
+
+        return $url;
+    }
+
 }

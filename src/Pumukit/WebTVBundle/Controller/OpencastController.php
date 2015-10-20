@@ -16,6 +16,10 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class OpencastController extends PlayerController
 {
+  /**
+   * @Route("/video_opencast/{id}", name="pumukit_webtv_opencast_index", defaults={"show_hide": true})
+   * @Template("PumukitWebTVBundle:MultimediaObject:index_opencast.html.twig")
+   */
   public function indexAction( MultimediaObject $multimediaObject, Request $request ){
     $response = $this->testBroadcast($multimediaObject, $request);
     if ($response instanceof Response) {
