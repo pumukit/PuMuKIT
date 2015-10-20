@@ -36,6 +36,10 @@ EOT
 
         if ($input->getOption('force')){
             $podcastPublicationChannelTag = $this->createTagWithCode('PUCHPODCAST', 'PodcastEDU', 'PUBCHANNELS', false);
+            $podcastPublicationChannelTag->setProperty('modal_path', 'pumukitpodcast_modal_index');
+            $this->dm->persist($podcastPublicationChannelTag);
+            $this->dm->flush();
+
             $output->writeln("Tag persisted - new id: ".$podcastPublicationChannelTag->getId()." cod: ".$podcastPublicationChannelTag->getCod());
         } else {
             $output->writeln('<error>ATTENTION:</error> This operation should not be executed in a production environment without backup.');

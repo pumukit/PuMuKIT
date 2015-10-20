@@ -13,7 +13,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 /**
  * @Route("/podcast")
  */
-class DefaultController extends Controller
+class FeedController extends Controller
 {
     const ITUNES_DTD_URL = 'http://www.itunes.com/dtds/podcast-1.0.dtd';
     const ITUNESU_FEED_URL = 'http://www.itunesu.com/feed';
