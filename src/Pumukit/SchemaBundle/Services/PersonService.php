@@ -301,6 +301,16 @@ class PersonService
     }
 
     /**
+     * Get all roles
+     */
+    public function getRoles()
+    {
+        $criteria = array();
+        $sort = array('rank' => 1);
+        return $this->repoRole->findBy($criteria, $sort);
+    }
+
+    /**
      * Update embedded person
      *
      * @param  Person         $person

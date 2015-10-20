@@ -168,25 +168,6 @@ class FactoryServiceTest extends WebTestCase
         $this->assertEquals(1, count($series_type2->getSeries()));
     }
 
-    public function testGetRoles()
-    {
-        $role1 = new Role();
-        $role1->setCod('role1');
-
-        $role2 = new Role();
-        $role2->setCod('role2');
-
-        $role3 = new Role();
-        $role3->setCod('role3');
-
-        $this->dm->persist($role1);
-        $this->dm->persist($role2);
-        $this->dm->persist($role3);
-        $this->dm->flush();
-
-        $this->assertEquals(3, count($this->factory->getRoles()));
-    }
-
     public function testFindSeriesById()
     {
         $this->createBroadcasts();
