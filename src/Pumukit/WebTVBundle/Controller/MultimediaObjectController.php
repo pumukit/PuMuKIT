@@ -12,8 +12,8 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\Broadcast;
-use Pumukit\WebTVBundle\Event\ViewedEvent;
-use Pumukit\WebTVBundle\Event\WebTVEvents;
+
+
 
 class MultimediaObjectController extends Controller
 {
@@ -24,6 +24,7 @@ class MultimediaObjectController extends Controller
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
     {
         $response = $this->testBroadcast($multimediaObject, $request);
+        $mmobjService = $this->get('pumukitschema.multimedia_object');
         if ($response instanceof Response) {
             return $response;
         }
@@ -41,8 +42,8 @@ class MultimediaObjectController extends Controller
             throw $this->createNotFoundException();
         }
 
-        $this->incNumView($multimediaObject, $track);
-        $this->dispatch($multimediaObject, $track);
+        $mmobjService->incNumView($multimediaObject, $track);
+        $mmobjService->dispatch($multimediaObject, $track);
 
         if ($track->containsTag('download')) {
             return $this->redirect($track->getUrl());
@@ -63,6 +64,7 @@ class MultimediaObjectController extends Controller
     public function iframeAction(MultimediaObject $multimediaObject, Request $request)
     {
         $response = $this->testBroadcast($multimediaObject, $request);
+        $mmobjService = $this->get('pumukitschema.multimedia_object');
         if ($response instanceof Response) {
             return $response;
         }
@@ -75,8 +77,8 @@ class MultimediaObjectController extends Controller
             throw $this->createNotFoundException();
         }
 
-        $this->incNumView($multimediaObject, $track);
-        $this->dispatch($multimediaObject, $track);
+        $mmobjService->incNumView($multimediaObject, $track);
+        $mmobjService->dispatch($multimediaObject, $track);
 
         if ($track->containsTag('download')) {
             return $this->redirect($track->getUrl());
@@ -95,6 +97,7 @@ class MultimediaObjectController extends Controller
     public function magicIndexAction(MultimediaObject $multimediaObject, Request $request)
     {
         $response = $this->preExecute($multimediaObject, $request);
+        $mmobjService = $this->get('pumukitschema.multimedia_object');
         if ($response instanceof Response) {
             return $response;
         }
@@ -103,8 +106,8 @@ class MultimediaObjectController extends Controller
                $multimediaObject->getTrackById($request->query->get('track_id')) :
                $multimediaObject->getTrackWithTag('display');
 
-        $this->incNumView($multimediaObject, $track);
-        $this->dispatch($multimediaObject, $track);
+        $mmobjService->incNumView($multimediaObject, $track);
+        $mmobjService->dispatch($multimediaObject, $track);
 
         if ($track->containsTag('download')) {
             return $this->redirect($track->getUrl());
@@ -170,21 +173,6 @@ class MultimediaObjectController extends Controller
         return $intro;
     }
 
-    protected function incNumView(MultimediaObject $multimediaObject, Track $track = null)
-    {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $multimediaObject->incNumview();
-        $track && $track->incNumview();
-        $dm->persist($multimediaObject);
-        $dm->flush();
-    }
-
-    protected function dispatch(MultimediaObject $multimediaObject, Track $track = null)
-    {
-        $event = new ViewedEvent($multimediaObject, $track);
-        $this->get('event_dispatcher')->dispatch(WebTVEvents::MULTIMEDIAOBJECT_VIEW, $event);
-    }
-
     protected function updateBreadcrumbs(MultimediaObject $multimediaObject)
     {
         $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
@@ -213,14 +201,16 @@ class MultimediaObjectController extends Controller
 
     public function preExecute(MultimediaObject $multimediaObject, Request $request)
     {
+        $mmobjService = $this->get('pumukitschema.multimedia_object');
+
         if ($opencasturl = $multimediaObject->getProperty('opencasturl')) {
             $response = $this->testBroadcast($multimediaObject, $request);
             if ($response instanceof Response) {
                 return $response;
             }
             if ($this->container->getParameter('pumukit.opencast.use_redirect')) {
-                $this->incNumView($multimediaObject);
-                $this->dispatch($multimediaObject);
+                $mmobjService->incNumView($multimediaObject);
+                $mmobjService->dispatch($multimediaObject);
                 if ($invert = $multimediaObject->getProperty('opencastinvert')) {
                     $opencasturl .= '&display=invert';
                 }
@@ -250,8 +240,8 @@ class MultimediaObjectController extends Controller
                     return $response;
                 }
 
-                $this->incNumView($multimediaObject, $track);
-                $this->dispatch($multimediaObject, $track);
+                $mmobjService->incNumView($multimediaObject, $track);
+                $mmobjService->dispatch($multimediaObject, $track);
 
                 if ($track->containsTag('download')) {
                     return $this->redirect($track->getUrl());
