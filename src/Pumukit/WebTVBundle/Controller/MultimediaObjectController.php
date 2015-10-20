@@ -203,7 +203,7 @@ class MultimediaObjectController extends Controller
 
             return new Response($redReq->getContent(), 401, array('WWW-Authenticate' => 'Basic realm="Resource not public."'));
         }
-        
+
         if ($broadcast && (Broadcast::BROADCAST_TYPE_PRI === $broadcast->getBroadcastTypeId())) {
             return new Response($this->render('PumukitWebTVBundle:Index:403forbidden.html.twig', array()), 403);
         }
@@ -232,8 +232,9 @@ class MultimediaObjectController extends Controller
 
             $userAgent = $this->getRequest()->headers->get('user-agent');
             $mobileDetectorService = $this->get('mobile_detect.mobile_detector');
+            $userAgentParserService = $this->get('pumukit_web_tv.useragent_parser');
             $isMobileDevice = ($mobileDetectorService->isMobile($userAgent) || $mobileDetectorService->isTablet($userAgent));
-            $isOldBrowser = $this->getIsOldBrowser($userAgent);
+            $isOldBrowser = $userAgentParserService->getIsOldBrowser($userAgent);
 
             if (!$isMobileDevice) {
                 $track = $request->query->has('track_id') ?
@@ -268,52 +269,4 @@ class MultimediaObjectController extends Controller
             }
         }
     }
-
-    //Refactor this using javascript.
-    private function getIsOldBrowser($userAgent)
-    {
-        $isOldBrowser = false;
-        $webExplorer = $this->getWebExplorer($userAgent);
-        $version = $this->getVersion($userAgent, $webExplorer);
-        if (($webExplorer == 'IE') || ($webExplorer == 'MSIE') || $webExplorer == 'Firefox' || $webExplorer == 'Opera' || ($webExplorer == 'Safari' && $version < 4)) {
-            $isOldBrowser = true;
-        }
-
-        return $isOldBrowser;
-    }
-
-    private function getWebExplorer($userAgent)
-    {
-        if (preg_match('/MSIE/i', $userAgent)) {
-            $webExplorer = 'MSIE';
-        }
-        if (preg_match('/Opera/i', $userAgent)) {
-            $webExplorer = 'Opera';
-        }
-        if (preg_match('/Firefox/i', $userAgent)) {
-            $webExplorer = 'Firefox';
-        }
-        if (preg_match('/Safari/i', $userAgent)) {
-            $webExplorer = 'Safari';
-        }
-        if (preg_match('/Chrome/i', $userAgent)) {
-            $webExplorer = 'Chrome';
-        }
-
-        return $webExplorer;
-    }
-
-    private function getVersion($userAgent, $webExplorer)
-    {
-        $version = null;
-
-        if ($webExplorer !== 'Opera' && preg_match('#('.strtolower($webExplorer).')[/ ]?([0-9.]*)#', $userAgent, $match)) {
-            $version = floor($match[2]);
-        }
-        if ($webExplorer == 'Opera' || $webExplorer == 'Safari' && preg_match('#(version)[/ ]?([0-9.]*)#', $userAgent, $match)) {
-            $version = floor($match[2]);
-        }
-
-        return $version;
-    }    
 }

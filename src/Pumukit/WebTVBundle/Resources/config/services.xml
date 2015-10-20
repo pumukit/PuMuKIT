@@ -43,5 +43,8 @@
           <argument>%pumukit_web_tv.breadcrumbs_home_title%</argument>
           <argument type="service" id="translator" />
         </service>
+
+        <service id="pumukit_web_tv.useragent_parser" class="Pumukit\WebTVBundle\Services\UserAgentParserService">
+        </service>
     </services>
 </container>
