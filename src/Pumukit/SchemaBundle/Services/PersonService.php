@@ -13,8 +13,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 class PersonService
 {
     private $dm;
-    private $repo;
+    private $repoPerson;
     private $repoMmobj;
+    private $repoRole;
 
     /**
      * Constructor
@@ -24,8 +25,9 @@ class PersonService
     public function __construct(DocumentManager $documentManager)
     {
         $this->dm = $documentManager;
-        $this->repo = $documentManager->getRepository('PumukitSchemaBundle:Person');
+        $this->repoPerson = $documentManager->getRepository('PumukitSchemaBundle:Person');
         $this->repoMmobj = $documentManager->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->repoRole = $documentManager->getRepository('PumukitSchemaBundle:Role');
     }
 
     /**
@@ -57,14 +59,25 @@ class PersonService
     }
 
     /**
-     * Find person
+     * Find person by id
      *
      * @param  string $id
      * @return Person
      */
     public function findPersonById($id)
     {
-        return $this->repo->find($id);
+        return $this->repoPerson->find($id);
+    }
+
+    /**
+     * Find role by id
+     *
+     * @param  string $id
+     * @return Role
+     */
+    public function findRoleById($id)
+    {
+        return $this->repoRole->find($id);
     }
 
     /**
@@ -75,7 +88,7 @@ class PersonService
      */
     public function findPersonByEmail($email)
     {
-        return $this->repo->findOneByEmail($email);
+        return $this->repoPerson->findOneByEmail($email);
     }
 
     /**
@@ -184,7 +197,7 @@ class PersonService
      */
     public function autoCompletePeopleByName($name)
     {
-        return $this->repo->findByName(new \MongoRegex('/'.$name.'/i'));
+        return $this->repoPerson->findByName(new \MongoRegex('/'.$name.'/i'));
     }
 
     /**
