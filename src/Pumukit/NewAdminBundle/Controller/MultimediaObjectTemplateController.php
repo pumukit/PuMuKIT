@@ -19,7 +19,7 @@ class MultimediaObjectTemplateController extends MultimediaObjectController
         $config = $this->getConfiguration();
 
         $factoryService = $this->get('pumukitschema.factory');
-        $personService = $this->get('pumukischema.person');
+        $personService = $this->get('pumukitschema.person');
 
         $roles = $personService->getRoles();
         if (null === $roles){
