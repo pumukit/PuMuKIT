@@ -62,7 +62,7 @@ $ php app/console assets:install web --symlink
 
 
 #### 2.1 Load CSS in the layout
-Override the `src/Pumukit/Teltek/WebTVBundle/Resources/views/layout.html.twig` template:
+Override the `src/Pumukit/Teltek/WebTVBundle/Resources/views/Layout/header.html.twig` template:
 
 ```html
 {% extends 'PumukitWebTVBundle:Layout:base.html.twig' %}
@@ -118,7 +118,7 @@ The number of columns for almost every multimedia object and series listing.
 ```yaml
     columns_objs_bytag:        3             # Number of columns for bytag.  (Default 2)
     columns_objs_search:       3             # Number of columns for search. (Default 2)
-    columns_objs_announces:    3             # Number of columns for announces. (Default 1); 
+    columns_objs_announces:    3             # Number of columns for announces. (Default 1);
 ```
 
 #### 6.2 Objects per page
@@ -135,5 +135,3 @@ The statistics viewed at the bottom of the lateral menu.
 ```yaml
     menu_stats:                true          # To show stats on the menu or not. (Default true)
 ```
-
-
