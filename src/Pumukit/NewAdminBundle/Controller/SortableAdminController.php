@@ -15,8 +15,6 @@ class SortableAdminController extends AdminController
         $resource->setRank($new_rank);
         $this->domainManager->update($resource);
 
-        $this->addFlash('success', 'up');
-
         return $this->redirectToRoute(
             $config->getRedirectRoute('index'),
             $config->getRedirectParameters()
@@ -31,8 +29,6 @@ class SortableAdminController extends AdminController
         $new_rank = $resource->getRank() - 1;
         $resource->setRank($new_rank);
         $this->domainManager->update($resource);
-
-        $this->addFlash('success', 'up');
 
         return $this->redirectToRoute(
             $config->getRedirectRoute('index'),
@@ -49,8 +45,6 @@ class SortableAdminController extends AdminController
         $resource->setRank($new_rank);
         $this->domainManager->update($resource);
 
-        $this->addFlash('success', 'up');
-
         return $this->redirectToRoute(
             $config->getRedirectRoute('index'),
             $config->getRedirectParameters()
@@ -65,8 +59,6 @@ class SortableAdminController extends AdminController
         $new_rank = 0;
         $resource->setRank($new_rank);
         $this->domainManager->update($resource);
-
-        $this->addFlash('success', 'up');
 
         return $this->redirectToRoute(
             $config->getRedirectRoute('index'),
