@@ -19,8 +19,9 @@ class MultimediaObjectTemplateController extends MultimediaObjectController
         $config = $this->getConfiguration();
 
         $factoryService = $this->get('pumukitschema.factory');
+        $personService = $this->get('pumukischema.person');
 
-        $roles = $factoryService->getRoles();
+        $roles = $personService->getRoles();
         if (null === $roles){
             throw new \Exception('Not found any role.');
         }

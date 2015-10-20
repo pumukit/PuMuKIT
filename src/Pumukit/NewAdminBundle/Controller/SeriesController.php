@@ -103,8 +103,9 @@ class SeriesController extends AdminController
 
         // EDIT MULTIMEDIA OBJECT TEMPLATE CONTROLLER SOURCE CODE
         $factoryService = $this->get('pumukitschema.factory');
+        $personService = $this->get('pumukitschema.person');
 
-        $roles = $factoryService->getRoles();
+        $roles = $personService->getRoles();
         if (null === $roles){
             throw new \Exception('Not found any role.');
         }

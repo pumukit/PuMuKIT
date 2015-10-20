@@ -94,7 +94,7 @@ class MultimediaObjectController extends SortableAdminController
 
       $this->get('session')->set('admin/mms/id', $data->getId());
 
-      $roles = $this->get('pumukitschema.factory')->getRoles();
+      $roles = $this->get('pumukitschema.person')->getRoles();
 
       return array(
                    'mm' => $data,
@@ -111,8 +111,9 @@ class MultimediaObjectController extends SortableAdminController
         $config = $this->getConfiguration();
 
         $factoryService = $this->get('pumukitschema.factory');
+        $personService = $this->get('pumukitschema.person');
         
-        $roles = $factoryService->getRoles();
+        $roles = $personService->getRoles();
         if (null === $roles){
             throw new \Exception('Not found any role.');
         }
@@ -176,8 +177,9 @@ class MultimediaObjectController extends SortableAdminController
         $config = $this->getConfiguration();
 
         $factoryService = $this->get('pumukitschema.factory');
+        $personService = $this->get('pumukischema.person');
 
-        $roles = $factoryService->getRoles();
+        $roles = $personService->getRoles();
         if (null === $roles){
             throw new \Exception('Not found any role.');
         }
@@ -254,6 +256,7 @@ class MultimediaObjectController extends SortableAdminController
         $config = $this->getConfiguration();
 
         $factoryService = $this->get('pumukitschema.factory');
+        $personService = $this->get('pumukischema.person');
 
         $sessionId = $this->get('session')->get('admin/series/id', null);
         $series = $factoryService->findSeriesById(null, $sessionId);
@@ -304,7 +307,7 @@ class MultimediaObjectController extends SortableAdminController
             return $this->handleView($this->view($formPub));
         }
 
-        $roles = $factoryService->getRoles();
+        $roles = $personService->getRoles();
         if (null === $roles){
             throw new \Exception('Not found any role.');
         }
