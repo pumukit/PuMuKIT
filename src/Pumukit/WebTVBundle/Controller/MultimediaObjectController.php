@@ -234,7 +234,7 @@ class MultimediaObjectController extends Controller
             $mobileDetectorService = $this->get('mobile_detect.mobile_detector');
             $userAgentParserService = $this->get('pumukit_web_tv.useragent_parser');
             $isMobileDevice = ($mobileDetectorService->isMobile($userAgent) || $mobileDetectorService->isTablet($userAgent));
-            $isOldBrowser = $userAgentParserService->getIsOldBrowser($userAgent);
+            $isOldBrowser = $userAgentParserService->isOldBrowser($userAgent);
 
             if (!$isMobileDevice) {
                 $track = $request->query->has('track_id') ?

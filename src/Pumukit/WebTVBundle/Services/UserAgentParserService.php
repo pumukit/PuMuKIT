@@ -16,10 +16,11 @@ class UserAgentParserService
 
   /**
   * Returns true if the userAgent belongs to an 'old' browser.
+  * This function is used in PuMuKIT ONLY for the player_matterhorn template (to show a warning if it's 'old'. This can be better solved using a script to check for feature support)
   * @param String
   * @return boolean
   */
-  public function getIsOldBrowser($userAgent)
+  public function isOldBrowser($userAgent)
   {
     $isOldBrowser = false;
     $webExplorer = $this->getWebExplorer($userAgent);
@@ -41,6 +42,7 @@ class UserAgentParserService
   */
   public function getWebExplorer($userAgent)
   {
+    $webExplorer = 'unknown';
     if (preg_match('/MSIE/i', $userAgent)) {
       $webExplorer = 'MSIE';
     }
@@ -71,13 +73,12 @@ class UserAgentParserService
   {
     $version = null;
 
-    if ($webExplorer !== 'Opera' && preg_match('#('.strtolower($webExplorer).')[/ ]?([0-9.]*)#', $userAgent, $match)) {
+    if ($webExplorer !== 'Opera' && preg_match('#('.$webExplorer.')[/ ]?([0-9.]*)#', $userAgent, $match)) {
       $version = floor($match[2]);
     }
-    if ($webExplorer == 'Opera' || $webExplorer == 'Safari' && preg_match('#(version)[/ ]?([0-9.]*)#', $userAgent, $match)) {
-      $version = floor($match[2]);
+    if (($webExplorer == 'Opera' || $webExplorer == 'Safari') && preg_match('#(Version)[/ ]?([0-9.]*)#', $userAgent, $match)) {
+      $version = floor($match[2]);echo "\nVERSIOON:".$version."\n";
     }
-
     return $version;
   }
 }
