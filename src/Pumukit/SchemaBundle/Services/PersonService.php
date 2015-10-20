@@ -5,6 +5,7 @@ namespace Pumukit\SchemaBundle\Services;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\EmbeddedPerson;
 use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\EmbeddedRole;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -39,6 +40,20 @@ class PersonService
         $this->dm->flush();
 
         return $person;
+    }
+
+    /**
+     * Save Role
+     *
+     * @param  Role $role
+     * @return Role
+     */
+    public function saveRole(Role $role)
+    {
+        $this->dm->persist($role);
+        $this->dm->flush();
+
+        return $role;
     }
 
     /**
@@ -82,6 +97,29 @@ class PersonService
         $this->dm->flush();
 
         return $person;
+    }
+
+    /**
+     * Update update role
+     *
+     * @param  Role $role
+     * @return Role
+     */
+    public function updateRole(Role $role)
+    {
+        $role = $this->saveRole($role);
+
+        foreach ($this->repoMmobj->findByRoleId($role->getId()) as $mmobj) {
+            foreach ($mmobj->getRoles() as $embeddedRole) {
+                if ($role->getId() === $embeddedRole->getId()) {
+                    $embeddedRole = $this->updateEmbeddedRole($role, $embeddedRole);
+                    $this->dm->persist($mmobj);
+                }
+            }
+        }
+        $this->dm->flush();
+
+        return $role;
     }
 
     /**
@@ -270,5 +308,25 @@ class PersonService
         }
 
         return $embeddedPerson;
+    }
+
+    /**
+     * Update embedded role
+     *
+     * @param  Role         $role
+     * @param  EmbeddedRole $embeddedRole
+     * @return EmbeddedRole
+     */
+    private function updateEmbeddedRole(Role $role, EmbeddedRole $embeddedRole)
+    {
+        if (null !== $role) {
+            $embeddedRole->setCod($role->getCod());
+            $embeddedRole->setXml($role->getXml());
+            $embeddedRole->setDisplay($role->getDisplay());
+            $embeddedRole->setI18nName($role->getI18nName());
+            $embeddedRole->setLocale($role->getLocale());
+        }
+
+        return $embeddedRole;
     }
 }
