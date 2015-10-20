@@ -111,6 +111,20 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
+     * Find multimedia objects by role id
+     *
+     * @param string $roleId
+     * @return ArrayCollection
+     */
+    public function findByRoleId($roleId)
+    {
+        return $this->createStandardQueryBuilder()
+          ->field('people._id')->equals(new \MongoId($roleId))
+          ->getQuery()
+          ->execute();
+    }
+
+    /**
      * Find multimedia objects by person id
      * with given role
      *
