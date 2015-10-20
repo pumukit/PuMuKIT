@@ -1,29 +1,14 @@
 Opencast configuration
 ======================
 
-Add your Opencast server configuration to your `app/config/parameters.yml` files during installation:
-
-```
-    opencast_host: ''
-    opencast_username: ''
-    opencast_password: ''
-    opencast_player: ''
-```
-
-   - `opencast_host` is the Opencast Matterhorn server URL (Engage node in cluster).
-   - `opencast_username` is the name of the account used to operate the Matterhron REST endpoints (org.opencastproject.security.digest.user).
-   - `opencast_password` is the password for the account used to operate the Matterhorn REST endpoints (org.opencastproject.security.digest.pass).
-   - `opencast_player` is the Opencast player URL or path (default /engage/ui/watch.html).
-
-
-Add optional Opencast configuration to your `app/config/config.yml` file:
+Add your Opencast server configuration to your `app/config/parameters.yml` file:
 
 ```
 pumukit_opencast:
-    host: "%opencast_host%"
-    username: "%opencast_username%"
-    password: "%opencast_password%"
-    player: "%opencast_player%"
+    host: 'http://demo.opencast.org:8080'
+    username: 'matterhorn_system_account'
+    password: 'CHANGE_ME'
+    player: /engage/ui/watch.html
     generate_sbs: false
     profile: sbs
     url_mapping:
@@ -32,6 +17,10 @@ pumukit_opencast:
         ...
 ```
 
+   - `opencast_host` is the Opencast Matterhorn server URL (Engage node in cluster).
+   - `opencast_username` is the name of the account used to operate the Matterhron REST endpoints (org.opencastproject.security.digest.user). If user is null, the connection is as an annonymous user.
+   - `opencast_password` is the password for the account used to operate the Matterhorn REST endpoints (org.opencastproject.security.digest.pass).
+   - `opencast_player` is the Opencast player URL or path (default /engage/ui/watch.html).
    - `generate_sbs` when set to true, generates side by side video when MP is imported.
    - `profile` is the profile name to generate the side by side video.
    - `url_mappging` is a list of url-path mappging.
