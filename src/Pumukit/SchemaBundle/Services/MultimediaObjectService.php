@@ -8,6 +8,7 @@ use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\WebTVBundle\Event\WebTVEvents;
 use Pumukit\WebTVBundle\Event\ViewedEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class MultimediaObjectService
 {
@@ -34,4 +35,5 @@ class MultimediaObjectService
         $event = new ViewedEvent($multimediaObject, $track);
         $this->dispatcher->dispatch(WebTVEvents::MULTIMEDIAOBJECT_VIEW, $event);
     }
+
 }
