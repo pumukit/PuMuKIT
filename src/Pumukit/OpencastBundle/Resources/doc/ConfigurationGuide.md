@@ -13,7 +13,7 @@ Add your Opencast server configuration to your `app/config/parameters.yml` files
    - `opencast_host` is the Opencast Matterhorn server URL (Engage node in cluster).
    - `opencast_username` is the name of the account used to operate the Matterhron REST endpoints (org.opencastproject.security.digest.user).
    - `opencast_password` is the password for the account used to operate the Matterhorn REST endpoints (org.opencastproject.security.digest.pass).
-   - `opencast_player` is the Opencast player URL or path (default /engage/ui/watch.html).
+   - `opencast_player` is the Opencast player URL or path (default `/engage/ui/watch.html`). Use `/engage/theodul/ui/core.html` for Opencast 2.x and `/paella/ui/watch.html` if [paella player](http://paellaplayer.upv.es/) are been used.
 
 
 Add optional Opencast configuration to your `app/config/config.yml` file:
