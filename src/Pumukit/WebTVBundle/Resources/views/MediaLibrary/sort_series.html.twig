@@ -8,12 +8,12 @@
 
   <!--Methods to order series -->
   <div class="lib_menu_sort">
-    <span>{% trans %}Sort by{% endtrans %}:</span>  
+    <span>{% trans %}Sort by{% endtrans %}:</span>
     <a href="{{ path('pumukit_webtv_medialibrary_index', {'sort': 'date'}) }}">{% trans %}Date{% endtrans %}</a>,
     <a href="{{ path('pumukit_webtv_medialibrary_index', {'sort': 'alphabetically'}) }}">{% trans %}Alphabetically{% endtrans %}</a>
-    {%- for tag in tags -%}
+    {% for tag in tags %}
       , <a href="{{ path('pumukit_webtv_medialibrary_index', {'sort': 'tags', 'p_tag': tag.cod }) }}">{{ tag.title }}</a>
-    {%- endfor -%}.
+    {% endfor %}.
   </div>
 
   <div style="clear: right"></div>
@@ -38,4 +38,3 @@
   </form>
 
 </div>
-

@@ -28,6 +28,15 @@ class MediaLibraryController extends Controller
                     array();
         $result = array();
 
+        $numberCols = 1;
+        if( $this->container->hasParameter('columns_objs_catalogue')) {
+            $numberCols = $this->container->getParameter('columns_objs_catalogue');
+        }
+        $hasCatalogueThumbnails = false;
+        if( $this->container->hasParameter('catalogue_thumbnails')) {
+            $hasCatalogueThumbnails = $this->container->hasParameter('catalogue_thumbnails');
+        }
+
         switch ($sort) {
             case 'alphabetically':
                 $sortField = 'title.'.$request->getLocale();
@@ -72,13 +81,13 @@ class MediaLibraryController extends Controller
                         continue;
                     }
                     $key = $tag->getTitle();
-    
+
                     $seriesQB = $series_repo->createBuilderWithTag($tag, array('public_date' => +1));
                     if ($criteria) {
                         $seriesQB->addAnd($criteria);
                     }
                     $series = $seriesQB->getQuery()->execute();
-                    
+
 
                     if (!$series) {
                       continue;
@@ -97,6 +106,6 @@ class MediaLibraryController extends Controller
                 break;
         }
 
-        return array('objects' => $result, 'sort' => $sort, 'tags' => $selectionTags);
+        return array('objects' => $result, 'sort' => $sort, 'tags' => $selectionTags, 'number_cols' => $numberCols, 'catalogue_thumbnails' => $hasCatalogueThumbnails );
     }
 }

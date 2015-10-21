@@ -1,10 +1,41 @@
 {% extends 'PumukitWebTVBundle::layout.html.twig' %}
 
 {% block body %}
-  <div class="col-xs-12">
-    <h1 id="index_h1">{% trans %}Full Catalogue{% endtrans %}</h1>
-    {% include 'PumukitWebTVBundle:MediaLibrary:sort_series.html.twig' %}
-    {% include 'PumukitWebTVBundle:MediaLibrary:library.html.twig' %}
-    <br>
-  </div>
+  <h1>{% trans %} Categories {% endtrans %}</h1>
+  {% for ground in allVGrounds %}
+    <div class="col-md-6 channel-list">
+      <a href="{{ path('pumukit_webtv_bytag_multimediaobjects', {'cod' : ground.cod })}}">
+        <h2>{{ ground.title }}</h2>
+      </a>
+      <ul>
+        {% for child in ground.children %}{% dump( child) %}
+          {% set num_mmobjs = child.numberMultimediaObjects %}
+          <li>
+            {% if num_mmobjs > 0 %}
+              <a href="{{ path('pumukit_webtv_bytag_multimediaobjects', {'cod' : child.cod })}}">
+                <h3>{{ child.title }} ({%trans%} All {% endtrans %} {{ num_mmobjs }})</h3>
+              </a>
+            {% else %}
+              <h3>{{ child.title }} ({%trans%} All {% endtrans %} {{ num_mmobjs }})</h3>
+            {% endif %}
+
+            <ul>
+              {% for baby in child.children %}
+                {% set num_mmobjs = baby.numberMultimediaObjects %}
+                <li>
+                  {% if num_mmobjs > 0 %}
+                    <a href="{{ path('pumukit_webtv_bytag_multimediaobjects', {'cod' : baby.cod })}}">
+                      {{ baby.title }} ({{ num_mmobjs }})
+                    </a>
+                  {% else %}
+                    {{ baby.title }} ({{ num_mmobjs }})
+                  {% endif %}
+              {% endfor %}
+            </ul>
+
+                </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endfor %}
 {% endblock %}
