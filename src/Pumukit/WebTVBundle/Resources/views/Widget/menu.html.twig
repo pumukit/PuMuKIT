@@ -25,12 +25,14 @@
     {% endfor %}
 
     <!-- Mediateca -->
-
     <a href="{{ path('pumukit_webtv_medialibrary_index') }}" class="{{menu_selected=="pumukit_webtv_medialibrary_index"?'selected':''}}">{% trans %} Full Catalogue {% endtrans %}</a>
+
+    <!-- Videos by category -->
+    <a href="{{ path('pumukit_webtv_categories_index') }}" class="{{menu_selected=="pumukit_webtv_categories_index"?'selected':''}}">{% trans %} Videos by category {% endtrans %}</a>
 
   </ul>
 </div>
-{% if menu_stats %}
+{% if menu_stats |default("false") %}
 <div class="row widget slidebar">
   {% render(controller('PumukitWebTVBundle:Widget:stats')) %}
 </div>

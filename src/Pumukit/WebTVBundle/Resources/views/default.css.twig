@@ -11,6 +11,7 @@
 {% set header_background = header_background | default("#fff") %}
 {% set menu_background = menu_background | default("#004361") %}
 {% set menu_font_color = menu_font_color | default("#fff") %}
+{% set menu_selected_font_color = menu_selected_font_color | default(menu_background) %}
 {% set menu_padding = menu_padding | default("10px 10px 10px 20px") %}
 {% set menu_selected_background = menu_selected_background | default("#888") %}
 {% set page_background = page_background | default("#ddd") %}
@@ -20,10 +21,12 @@
 {% set breadcrumbs_back_background = breadcrumbs_back_background | default(breadcrumbs_background) %}
 {% set breadcrumbs_max_width = breadcrumbs_max_width | default(content_max_width) %}
 {% set header_max_width = header_max_width | default(content_max_width) %}
-
+{% set mmobjs_font_color = mmobjs_font_color | default(font_base_color) %}
+{% set mmobjs_selected_font_color = mmobjs_selected_font_color | default(font_base_color) %}
 
 body {
    background: {{ page_background }};
+   color: {{ font_base_color }};
 }
 a:hover, a:focus {
    text-decoration: none;
@@ -41,6 +44,15 @@ h1 {
     font-size: 40px;
     font-weight: bold;
     border-bottom: 4px solid {{ font_base_color }};
+    color: {{ font_base_color }};
+}
+h2 {
+    color: {{ font_base_color }};
+
+}
+h3 {
+    font-size: 1em;
+    font-weight: bold;
     color: {{ font_base_color }};
 }
 /*END BASE CSS*/
@@ -199,8 +211,10 @@ body.opencast-layout .breadcrumb_wrapper {
 .pumukit_mmobjs{
    margin: 0 0%;
    overflow: hidden;
+   color: {{ mmobjs_font_color }};
 }
 .pumukit_mmobj {
+   color: {{ mmobjs_font_color }};
    height: 120px;
    overflow: hidden;
    margin: 10px 0px;
@@ -209,14 +223,18 @@ body.opencast-layout .breadcrumb_wrapper {
    transition: background 0.3s ease;
    position: relative;
 }
+.pumukit_mmobj a{
+   color: {{ mmobjs_font_color }};
+}
 @media screen and (max-device-width: 320px) {
    .pumukit_mmobj {
       padding-left: 0px;
       padding-right: 0px;
    }
 }
-.pumukit_mmobj:hover {
+.pumukit_mmobj:hover, .pumukit_mmobj:focus {
    background: rgb(233, 233, 233);
+   color: {{ mmobjs_selected_font_color }};
 }
 .pumukit_album {
    margin:2px 20px 2px 2px;

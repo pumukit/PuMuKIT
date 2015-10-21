@@ -1,5 +1,3 @@
-<a name="{{ mm_id }}" ></a>
-
 {% if template == "date" or template == "date_subserial" %}
   <!--DATE-->
   {% if current_date != last_date  %}
@@ -18,9 +16,9 @@
 {% elseif template == "multisubserial" %}
   <!-- MULTISUBSERIAL -->
   {% set subseries_now = ( subserie_title | split("\\n") ) %}
-  {% set subseries_before = ( last_subseriestitle  | split("\\n") ) %} 
+  {% set subseries_before = ( last_subseriestitle  | split("\\n") ) %}
   {% for key, subserie_title in subseries_now %}
-    {%  if subserie_title is not same as ( subseries_before[key] | default('') ) %} 
+    {%  if subserie_title is not same as ( subseries_before[key] | default('') ) %}
       <div class="row">
         <h4 class="text-center"> {{ subserie_title }} </h4>
       </div>
