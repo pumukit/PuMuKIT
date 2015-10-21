@@ -1,9 +1,0 @@
-{% extends 'PumukitResponsiveWebTVBundle::layout.html.twig' %}
-
-{% block body %}
-  {% render(controller('PumukitResponsiveWebTVBundle:Index:categories')) %}
-  <div class="pumukit_announce row">
-    {% render(controller('PumukitResponsiveWebTVBundle:Index:mostviewedlastmonth')) %}
-    {% render(controller('PumukitResponsiveWebTVBundle:Index:recentlyadded')) %} 
-  </div>
-{% endblock %}

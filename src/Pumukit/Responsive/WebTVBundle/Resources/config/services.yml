@@ -1,4 +1,0 @@
-services:
-#    pumukit_responsive_web_tv.example:
-#        class: Pumukit\Responsive\WebTVBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
