@@ -24,7 +24,7 @@ Mandatory:
    - `opencast_host` is the Opencast Matterhorn server URL (Engage node in cluster).
    - `opencast_username` is the name of the account used to operate the Matterhron REST endpoints (org.opencastproject.security.digest.user). If empty, the connection is as an anonymous user.
    - `opencast_password` is the password for the account used to operate the Matterhorn REST endpoints (org.opencastproject.security.digest.pass).
-   - `opencast_player` is the Opencast player URL or path (default `/engage/ui/watch.html`). Use `/engage/theodul/ui/core.html` for Opencast 2.x and `/paella/ui/watch.html` if [paella player](http://paellaplayer.upv.es/) is been used.
+   - `opencast_player` is the Opencast player URL or path (default `/engage/ui/watch.html`). Use `/engage/theodul/ui/core.html` for Opencast 2.x and `/paella/ui/watch.html` if [paella player](http://paellaplayer.upv.es/) is being used.
 
 Optional:
    - `generate_sbs` when set to true, generates side by side video when MP is imported according to the profile below.
