@@ -34,6 +34,7 @@
       <argument type="service" id="pumukitencoder.profile"/>
       <argument type="service" id="doctrine_mongodb.odm.document_manager" />
       <argument type="service" id="translator" />
+      <argument type="service" id="router" />
     </service>
 
     <service id="pumukitnewadmin.series_search" class="Pumukit\NewAdminBundle\Services\SeriesSearchService">

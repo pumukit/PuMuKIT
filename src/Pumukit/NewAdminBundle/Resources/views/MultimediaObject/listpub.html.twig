@@ -16,7 +16,7 @@
                />
         {{ pub.getTitle() }}
         
-        {% if pub.getProperty('modal_path') %}
+        {% if pub.getProperty('modal_path') and path_exists(pub.getProperty('modal_path')) %}
         <a title="{% trans %}Edit Pub Channel {% endtrans %} {{pub.cod}}" href="{{ path( pub.getProperty('modal_path'), { 'id': mm.id }) }}" data-toggle="modal" data-target="#myModal">
           <i class="mdi-action-info"></i>
         </a>
