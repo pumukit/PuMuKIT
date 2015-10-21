@@ -1,10 +1,13 @@
 {% block body %}
 {# SETTERS #}
+{% set a_link_font_color = a_link_font_color | default("#337ab7") %}
+{% set a_link_selected_font_color = a_link_selected_font_color | default("#23527c") %}
 {% set breadcrumbs_background = breadcrumbs_background | default("#ed1556") %}
 {% set breadcrumbs_font_color = breadcrumbs_font_color | default("white") %}
 {% set breadcrumbs_separator = breadcrumbs_separator | default('»') %}
 {% set content_background = content_background | default("#fff") %}
 {% set content_max_width = content_max_width | default("1400px") %}
+{% set font_base_color = font_base_color | default("#000") %}
 {% set header_background = header_background | default("#fff") %}
 {% set menu_background = menu_background | default("#004361") %}
 {% set menu_font_color = menu_font_color | default("#fff") %}
@@ -18,11 +21,16 @@
 {% set breadcrumbs_max_width = breadcrumbs_max_width | default(content_max_width) %}
 {% set header_max_width = header_max_width | default(content_max_width) %}
 
+
 body {
    background: {{ page_background }};
 }
-a:hover {
+a:hover, a:focus {
    text-decoration: none;
+   color: {{ a_link_selected_font_color }};
+}
+a {
+   color: {{ a_link_font_color }};
 }
 ul, ol {
    list-style:none;
@@ -32,7 +40,8 @@ ul, ol {
 h1 {
     font-size: 40px;
     font-weight: bold;
-    border-bottom: 4px solid #32475b;
+    border-bottom: 4px solid {{ font_base_color }};
+    color: {{ font_base_color }};
 }
 /*END BASE CSS*/
 /*BOOTSTRAP OVERRIDE*/
@@ -386,6 +395,9 @@ footer .parent-centering:nth-child(2) {
 }
 .widget.slidebar {
    text-align: left;
+}
+.widget.slidebar #total{
+   text-align: center;
 }
 .widget.slidebar a {
    display: block;
