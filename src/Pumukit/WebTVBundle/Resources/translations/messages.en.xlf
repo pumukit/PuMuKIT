@@ -186,6 +186,18 @@
         <source>Forbidden to access this video</source>
         <target>Forbidden to access this video</target>
       </trans-unit>
+      <trans-unit id="9a19d5d5280f20e67fc97cea5212ebae" resname="Warning: This URL is not for public use.">
+        <source>Warning: This URL is not for public use.</source>
+        <target>__Warning: This URL is not for public use.</target>
+      </trans-unit>
+      <trans-unit id="4758dceaf837bdcdc9761caa8e71f0dc" resname="No Track.">
+        <source>No Track.</source>
+        <target>__No Track.</target>
+      </trans-unit>
+      <trans-unit id="c1a65631c7c397dd4cc3be65afd6a54b" resname="This series does not have any multimedia objects.">
+        <source>This series does not have any multimedia objects.</source>
+        <target>__This series does not have any multimedia objects.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
