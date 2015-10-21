@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\WebTVBundle\Controller\PlayerController;
+use Pumukit\WebTVBundle\Event\WebTVEvents;
+use Pumukit\WebTVBundle\Event\ViewedEvent;
 
 class MultimediaObjectController extends PlayerController
 {
@@ -26,7 +28,6 @@ class MultimediaObjectController extends PlayerController
         if ($response instanceof Response) {
             return $response;
         }
-        $mmobjService = $this->get('pumukitschema.multimedia_object');
         $response = $this->preExecute($multimediaObject, $request);
         if ($response instanceof Response) {
             return $response;
@@ -40,8 +41,7 @@ class MultimediaObjectController extends PlayerController
             throw $this->createNotFoundException();
         }
 
-        $mmobjService->incNumView($multimediaObject, $track);
-        $mmobjService->dispatch($multimediaObject, $track);
+        $this->dispatchViewEvent($multimediaObject, $track);
 
         if ($track->containsTag('download')) {
             return $this->redirect($track->getUrl());
@@ -65,7 +65,6 @@ class MultimediaObjectController extends PlayerController
         if ($response instanceof Response) {
             return $response;
         }
-        $mmobjService = $this->get('pumukitschema.multimedia_object');
 
         $track = $request->query->has('track_id') ?
           $multimediaObject->getTrackById($request->query->get('track_id')) :
@@ -75,8 +74,7 @@ class MultimediaObjectController extends PlayerController
             throw $this->createNotFoundException();
         }
 
-        $mmobjService->incNumView($multimediaObject, $track);
-        $mmobjService->dispatch($multimediaObject, $track);
+        $this->dispatchViewEvent($multimediaObject, $track);
 
         if ($track->containsTag('download')) {
             return $this->redirect($track->getUrl());
@@ -102,14 +100,12 @@ class MultimediaObjectController extends PlayerController
         if ($response instanceof Response) {
             return $response;
         }
-        $mmobjService = $this->get('pumukitschema.multimedia_object');
 
         $track = $request->query->has('track_id') ?
                $multimediaObject->getTrackById($request->query->get('track_id')) :
                $multimediaObject->getTrackWithTag('display');
 
-        $mmobjService->incNumView($multimediaObject, $track);
-        $mmobjService->dispatch($multimediaObject, $track);
+        $this->dispatchViewEvent($multimediaObject, $track);
 
         if ($track->containsTag('download')) {
             return $this->redirect($track->getUrl());
@@ -165,5 +161,11 @@ class MultimediaObjectController extends PlayerController
         if ($opencasturl = $multimediaObject->getProperty('opencasturl')) {
           return $this->forward('PumukitWebTVBundle:Opencast:index', array('request' => $request, 'multimediaObject' => $multimediaObject));
         }
+    }
+
+    public function dispatchViewEvent(MultimediaObject $multimediaObject, Track $track = null)
+    {
+        $event = new ViewedEvent($multimediaObject, $track);
+        $this->get('event_dispatcher')->dispatch(WebTVEvents::MULTIMEDIAOBJECT_VIEW, $event);
     }
 }

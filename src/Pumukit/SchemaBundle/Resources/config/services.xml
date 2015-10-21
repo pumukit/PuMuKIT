@@ -46,7 +46,7 @@
 
         <service id="pumukitschema.multimedia_object" class="Pumukit\SchemaBundle\Services\MultimediaObjectService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
-            <argument type="service" id="event_dispatcher"/>
+            <tag name="kernel.event_listener" event="multimediaobject.view" method="onMultimediaObjectViewed" />
         </service>
 
         <service id="pumukitschema.tag" class="Pumukit\SchemaBundle\Services\TagService">
