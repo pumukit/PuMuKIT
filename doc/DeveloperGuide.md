@@ -48,7 +48,7 @@ Custom events added to PuMuKIT-2:
 * *multimediaobject.update*: thrown each time a multimedia object is updated.
 * *multimediaobject.view*: thrown each time a multimedia object is played in the webtv portal.
 * *job.success*: thrown each time a job is finished successfully in the system.
-* s*job.error*: thrown each time a job fails in the system.
+* *job.error*: thrown each time a job fails in the system.
 
 To add more events, read the Symfony documentation about creating [custom events](http://symfony.com/doc/current/components/event_dispatcher/introduction.html#creating-and-dispatching-an-event) and [listeners](http://symfony.com/doc/current/cookbook/event_dispatcher/event_listener.html).
 
