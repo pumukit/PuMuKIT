@@ -17,6 +17,7 @@
       <div class="date">
         {% trans %}Date of holding{% endtrans %}: {{ multimediaObject.getRecordDate()|date("d/m/Y")}}
       </div>
+      {% include 'PumukitWebTVBundle:Misc:magic_url_disclaimer.html.twig' %}
 	  {% include 'PumukitWebTVBundle:MultimediaObject:player.html.twig' with {'width': '620', 'height': '465'} %}
 	  {% include 'PumukitWebTVBundle:MultimediaObject:info.html.twig' %}
 	</div>
