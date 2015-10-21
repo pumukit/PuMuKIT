@@ -21,21 +21,20 @@ Process
 #### 1.1 Generate the bundle.
 
 `
-$ php app/console  generate:bundle --namespace=Pumukit/Teltek/WebTVBundle --dir=src --no-interaction
+$ php app/console  generate:bundle --namespace=Pumukit/ExampleOrg/WebTVBundle --dir=src --no-interaction
 `
 
 #### 1.2 Register the new bundle as the "parent" of the Pumukit bundle:
 
 
 ```php
-#PumukitTeltekWebTVBundle.php
+#PumukitExampleOrgWebTVBundle.php
 <?php
-
-namespace Pumukit\Teltek\WebTVBundle;
+namespace Pumukit\ExampleOrg\WebTVBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class PumukitTeltekWebTVBundle extends Bundle
+class PumukitExampleOrgWebTVBundle extends Bundle
 {
   public function getParent()
   {
@@ -48,51 +47,86 @@ For more info see: http://symfony.com/doc/current/cookbook/bundles/inheritance.h
 
 #### 1.3 Install the new bundle (if necessary).
 `
-$ php app/console  pumukit:install:bundle Pumukit/Teltek/WebTVBundle/PumukitTeltekWebTVBundle
+$ php app/console  pumukit:install:bundle Pumukit/ExampleOrg/WebTVBundle/PumukitExampleOrgWebTVBundle
 `
 ### 2.- Create your custom CSS rules
 
-#### 2.1 Create base css file
+#### 2.1 Override 'custom.css.twig'
+Override the `src/Pumukit/WebTVBundle/Resources/views/custom.css.twig`
 
-```
-$ mkdir -p src/Pumukit/Teltek/WebTVBundle/Resources/public/{css,images,js}
-$ cp src/Pumukit/WebTVBundle/Resources/public/css/cies.css src/Pumukit/Teltek/WebTVBundle/Resources/public/css/
-$ php app/console assets:install web --symlink
-```
+`
+$ touch src/Pumukit/ExampleOrg/WebTVBundle/Resources/views/custom.css.twig
+`
 
+```twig
+{#s rc/Pumukit/ExampleOrg/WebTVBundle/Resources/views/custom.css.twig #}
+{% extends 'PumukitWebTVBundle::default.css.twig' %}
 
-#### 2.1 Load CSS in the layout
-Override the `src/Pumukit/Teltek/WebTVBundle/Resources/views/Layout/header.html.twig` template:
+{% block body %}
 
-```html
-{% extends 'PumukitWebTVBundle:Layout:base.html.twig' %}
+{# HERE you can set your variables to be overrided #}
+{# Examples: #}
 
-{% block stylesheets %}
-  {{ parent() }}
-  <link href="{{ asset('bundles/pumukitteltekwebtv/css/cies.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+{% set content_max_width = "1200px" %}
+{% set font_base_color = "#131" %}
+
+{{ parent() }}
 {% endblock %}
 ```
+#### List of available variables:
 
+##### Most common
+```twig
+a_link_font_color                 default("#337ab7")  {# css rule  for a links #}
+a_link_selected_font_color        default("#23527c")  {# css rule  for selected a links #}
+breadcrumbs_background            default("#ed1556")  {# css rule  for a breadcrumbs background  #}
+breadcrumbs_font_color            default("white")    {# css rule  for a breadcrumbs font color  #}
+font_base_color                   default("#000")     {# css rule  for base font color  #}
+header_background                 default("#fff")     {# css rule  for header background  #}
+menu_background                   default("#004361")  {# css rule  for menu background  #}
+menu_font_color                   default("#fff")     {# css rule for menu font color  #}
+page_background                   default("#ddd")     {# css rule for body background  #}
+```
+##### All
+```
+a_link_font_color                 default("#337ab7")
+a_link_selected_font_color        default("#23527c")  
+breadcrumbs_background            default("#ed1556")  
+breadcrumbs_font_color            default("white")  
+breadcrumbs_separator             default('»')  
+content_background                default("#fff")  
+content_max_width                 default("1400px")  
+font_base_color                   default("#000")  
+header_background                 default("#fff")  
+menu_background                   default("#004361")  
+menu_font_color                   default("#fff")  
+menu_padding                      default("10px 10px 10px 20px")  
+menu_selected_background          default("#888")  
+page_background                   default("#ddd")  
 
+breadcrumbs_back_background       default(breadcrumbs_background)  
+breadcrumbs_max_width             default(content_max_width)  
+header_max_width                  default(content_max_width)  
+```
 ### 3.- Change the footer
-Add your HTML on `src/Pumukit/Teltek/WebTVBundle/Resources/views/Layout/footer.html.twig` and its CSS in the base css file.
+Add your HTML on `src/Pumukit/ExampleOrg/WebTVBundle/Resources/views/Layout/footer.html.twig` and its CSS in the base css file.
 
 
 ### 4.- Logo
-Override the `Pumukit/Teltek/WebTVBundle/Resources/views/layout.html.twig` template.
+Override the `Pumukit/ExampleOrg/WebTVBundle/Resources/views/layout.html.twig` template.
 
 ```html
 {% extends 'PumukitWebTVBundle:Layout:baseheader.html.twig' %}
 
 {% block logo_url %}
-    <img src="{{ asset('bundles/pumukitteltekwebtv/images/logo.png') }}" class="img-responsive">
+    <img src="{{ asset('bundles/pumukitexampleorgwebtv/images/logo.png') }}" class="img-responsive">
 {% endblock %}
 ```
 
 
 ### 5.- Header (advanced)
 
-Add your HTML on `src/Pumukit/Teltek/WebTVBundle/Resources/views/Layout/header.html.twig` and its CSS in the base css file.
+Add your HTML on `src/Pumukit/ExampleOrg/WebTVBundle/Resources/views/Layout/header.html.twig` and its CSS in the base css file.
 
 ```html
 <div>
@@ -101,7 +135,7 @@ Add your HTML on `src/Pumukit/Teltek/WebTVBundle/Resources/views/Layout/header.h
 
 {% embed 'PumukitWebTVBundle:Layout:baseheader.html.twig' %}
   {% block logo_url %}
-     <img src="{{ asset('bundles/pumukitwebtv/images/logo_cies.png') }}" class="img-responsive">
+     <img src="{{ asset('bundles/pumukitwebtv/images/logo.png') }}" class="img-responsive">
   {% endblock %}
 {% endembed %}
 
