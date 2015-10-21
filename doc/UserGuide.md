@@ -796,11 +796,3 @@ It allows to import videos from an associated Opencast to publish them.
 ![](images/PuMuKit_2_Content_Admin_Guide_v1.1_html_5078c770.png)
 
 <div align="center"><font size=1 color="Blue">Figure 46. Opencast ingester module</font></div>
-
-Main URLs of a PuMuKIT deployment
----------------------------------
-* Frontend: `http://{MyPuMuKIT_IP}/`
-* Backend (admin interface): `http://{MyPuMuKIT_IP}/admin`
-* Opencast: `http://{MyPuMuKIT_IP}/admin/opencast/mediapackage`
-* Wizard: `http://{MyPuMuKIT_IP}/admin/wizard/series`
-* ARCA: `http://{MyPuMuKIT_IP}/arca.xml`
