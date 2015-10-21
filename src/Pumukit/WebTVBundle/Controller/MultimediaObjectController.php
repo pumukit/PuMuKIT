@@ -93,11 +93,10 @@ class MultimediaObjectController extends Controller
     {
         $mmobjService = $this->get('pumukitschema.multimedia_object');
         if($mmobjService->isPublished($multimediaObject,'PUCHWEBTV')){
-            if($mmobjService->hasPlayableResource($multimediaObject)){
-                return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId(), true)));
+            if($mmobjService->hasPlayableResource($multimediaObject) && Broadcast::BROADCAST_TYPE_PUB === $multimediaObject->getBroadcast()->getBroadcastTypeId()){
+                return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId())));
             }
-        }        
-        else if( ($multimediaObject->getStatus() != MultimediaObject::STATUS_PUBLISHED 
+        } elseif( ($multimediaObject->getStatus() != MultimediaObject::STATUS_PUBLISHED 
                  && $multimediaObject->getStatus() != MultimediaObject::STATUS_HIDE
                  ) || !$multimediaObject->containsTagWithCod('PUCHWEBTV')) {
             return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
