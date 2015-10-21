@@ -1,3 +1,11 @@
+pumukit_teltek_web_tv:
+    resource: "@PumukitTeltekWebTVBundle/Resources/config/routing.xml"
+    prefix:   /
+
+pumukit_podcast:
+    resource: "@PumukitPodcastBundle/Resources/config/routing.yml"
+    prefix:   /
+
 pumukit_opencast:
     resource: "@PumukitOpencastBundle/Controller/"
     type:     annotation
@@ -26,14 +34,8 @@ pumukit_new_admin_tmp:
     type:     annotation
     prefix:   /admin
 
-pumukit_web_tv_parent:
-    resource: "../../src/Pumukit/WebTVBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-pumukit_web_tv:
-    resource: "@PumukitWebTVBundle/Controller/"
-    type:     annotation
+pumukit_web_tv_file:
+    resource: @PumukitWebTVBundle/Resources/config/routing.yml
     prefix:   /
 
 pumukit_encoder:
