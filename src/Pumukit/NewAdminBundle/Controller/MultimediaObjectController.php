@@ -146,11 +146,6 @@ class MultimediaObjectController extends SortableAdminController
 
         $isPublished = null;
         $playableResource = null;
-        if ($resource){
-            $mmService = $this->get('pumukitschema.multimedia_object');
-            $isPublished = $mmService->isPublished($resource, 'PUCHWEBTV');
-            $playableResource = $mmService->hasPlayableResource($resource);
-        }
 
         return array(
                      'mm'            => $resource,
@@ -164,10 +159,29 @@ class MultimediaObjectController extends SortableAdminController
                      'jobs'          => $jobs,
                      'not_master_profiles' => $notMasterProfiles,
                      'template' => $template,
-                     'is_published' => $isPublished,
-                     'is_playable' => $playableResource
                      );
     }
+
+
+    /**
+     *
+     * @Template
+     */
+    public function linksAction(MultimediaObject $resource)
+    {
+        $mmService = $this->get('pumukitschema.multimedia_object');
+        $isPublished = $mmService->isPublished($resource, 'PUCHWEBTV');
+        $isHidden = $mmService->isHidden($resource, 'PUCHWEBTV');
+        $playableResource = $mmService->hasPlayableResource($resource);
+
+        return array(
+             'mm' => $resource,
+             'is_published' => $isPublished,
+             'is_hidden' => $isHidden,
+             'is_playable' => $playableResource             
+        );
+    }
+
 
     /**
      * Display the form for editing or update the resource.

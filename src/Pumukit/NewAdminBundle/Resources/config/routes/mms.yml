@@ -20,6 +20,12 @@ pumukitnewadmin_mms_edit:
     defaults:
         _controller: pumukitnewadmin.controller.mms:editAction
 
+pumukitnewadmin_mms_links:
+    pattern: /{id}/links
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:linksAction
+
 pumukitnewadmin_mms_update_meta:
     pattern: /{id}/update/meta
     methods: [POST]

@@ -27,7 +27,8 @@ class MultimediaObjectController extends Base
                                  array(
                                        "multimediaObject" => $multimediaObject,
                                        "is_old_browser" => $isOldBrowser,
-                                       "mobile_device" => $mobileDevice
+                                       "mobile_device" => $mobileDevice,
+                                       "magic_url" => ("pumukit_webtv_multimediaobject_magicindex" === $request->attributes->get('_route')) ? true : null
                                        )
                                  );
         }
