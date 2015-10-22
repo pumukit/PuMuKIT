@@ -1,41 +1,56 @@
 {% extends 'PumukitWebTVBundle::layout.html.twig' %}
 
 {% block body %}
-  <h1>{% trans %} Categories {% endtrans %}</h1>
-  {% for ground in allVGrounds %}
-    <div class="col-md-6 channel-list">
-      <a href="{{ path('pumukit_webtv_bytag_multimediaobjects', {'cod' : ground.cod })}}">
-        <h2>{{ ground.title }}</h2>
-      </a>
-      <ul>
-        {% for child in ground.children %}{% dump( child) %}
-          {% set num_mmobjs = child.numberMultimediaObjects %}
-          <li>
-            {% if num_mmobjs > 0 %}
-              <a href="{{ path('pumukit_webtv_bytag_multimediaobjects', {'cod' : child.cod })}}">
-                <h3>{{ child.title }} ({%trans%} All {% endtrans %} {{ num_mmobjs }})</h3>
-              </a>
+<h1>{{ title|trans }}</h1>
+{% for parent in allGrounds %}
+{% if loop.index0 is even %}
+<div style="clear:both"></div>
+{% endif %}
+<div class="col-md-6 channel-list">
+    <a href="{{ path('pumukit_webtv_bytag_multimediaobjects', {'cod' : parent.cod })}}">
+        <h2>
+            {{ parent.title }}
+            {% set count = parent.num_mmobjs %}
+            <small>
+                ({% transchoice count %}
+                {0}no videos yet|{1}1 video|]1,Inf[%count% videos
+                {% endtranschoice %})
+            </small>
+        </h2>
+    </a>
+    <ul>
+        {% for child in parent.children %}
+        {% if child.children is empty %}
+        {% set markdown = 'p' %}
+        {% else %}
+        {% set markdown = 'h3' %}
+        {% endif %}
+        <li>
+            {% if child.num_mmobjs > 0 %}
+            <a href="{{ path('pumukit_webtv_bytag_multimediaobjects', {'cod' : child.cod })}}">
+                <{{markdown}}>{{ child.title }} ({%trans%} All {% endtrans %} {{ child.num_mmobjs }})</{{markdown}}>
+            </a>
             {% else %}
-              <h3>{{ child.title }} ({%trans%} All {% endtrans %} {{ num_mmobjs }})</h3>
+            <{{markdown}}>{{ child.title }} ({%trans%} All {% endtrans %} {{ child.num_mmobjs }})</{{markdown}}>
             {% endif %}
 
             <ul>
-              {% for baby in child.children %}
-                {% set num_mmobjs = baby.numberMultimediaObjects %}
+                {% for grandchild in child.children %}
                 <li>
-                  {% if num_mmobjs > 0 %}
-                    <a href="{{ path('pumukit_webtv_bytag_multimediaobjects', {'cod' : baby.cod })}}">
-                      {{ baby.title }} ({{ num_mmobjs }})
+                    {% if grandchild.num_mmobjs > 0 %}
+                    <a href="{{ path('pumukit_webtv_bytag_multimediaobjects', {'cod' : grandchild.cod })}}">
+                        {{ grandchild.title }} ({{grandchild.num_mmobjs }})
                     </a>
-                  {% else %}
-                    {{ baby.title }} ({{ num_mmobjs }})
-                  {% endif %}
-              {% endfor %}
-            </ul>
-
+                    {% else %}
+                    {{ grandchild.title }} ({{grandchild.num_mmobjs }})
+                    {% endif %}
                 </li>
-        {% endfor %}
-      </ul>
+                {% endfor %}
+            </ul>
+            {% endfor %}
+        </ul>
     </div>
-  {% endfor %}
+    {% endfor %}
+    <div style="clear:both"></div>
+    <hr>
 {% endblock %}

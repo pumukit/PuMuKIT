@@ -17,31 +17,45 @@ class CategoriesController extends Controller
     {
         $this->get('pumukit_web_tv.breadcrumbs')->addList('Videos by Category', 'pumukit_webtv_categories_index');
 
-        $vGroundParent = $this->getDoctrine()
+        $parentCod = $this->container->getParameter('categories_tag_cod');
+
+        $groundsRoot = $this->getDoctrine()
                               ->getRepository('PumukitSchemaBundle:Tag')
-                              ->findOneByCod("VIRTUALGROUNDS");
+                              ->findOneByCod($parentCod);
 
-        $allVGrounds = $vGroundParent->getChildren();
+        if(!isset($groundsRoot)){
+            throw $this->createNotFoundException('The parent with cod: '.$parentCod.' was not found. Please add it to the Tags database or configure another categories_tag_cod in parameters.yml');
+        }
 
-        $ground_children = array();
-        foreach ( $allVGrounds as $id=>$channel ){
+        $allGrounds = array();
 
-            $allChannels[$id] = array();
-            $allChannels[$id]['title'] = $channel->getTitle();
-            $allChannels[$id]['cod'] = $channel->getCod();
-            $allChannels[$id]['children'] = array();
+        // Use getTree to optimize queries. Two level nesting 'getChildren' creates too many queries.
+        // The children/grandchildren tree should be a single query. (getDescendants()?)
+        foreach ( $groundsRoot->getChildren() as $id=>$parent ){
+            $allGrounds[$id] = array();
+            $allGrounds[$id]['title'] = $parent->getTitle();
+            $allGrounds[$id]['cod'] = $parent->getCod();
+            // This data is not correct. getNumberMultimediaObjects() Returns all mmobjs. Should return only published ones. Reimplement using Mongo aggregate.
+            $allGrounds[$id]['num_mmobjs'] = $parent->getNumberMultimediaObjects();
+            $allGrounds[$id]['children'] = array();
 
-            foreach ($channel->getChildren() as $child ) {
-                $cod = $child->getProperty('target_cod');
-                $cod = isset( $cod ) ? $cod : substr( $child->getCod(), 1);
+            foreach ($parent->getChildren() as $id2=>$child ) {
+                $allGrounds[$id]['children'][$id2] = array();
+                $allGrounds[$id]['children'][$id2]['title'] = $child->getTitle();
+                $allGrounds[$id]['children'][$id2]['cod'] = $child->getCod();
+                // This data is not correct. getNumberMultimediaObjects() Returns all mmobjs. Should return only published ones. Reimplement using Mongo aggregate.
+                $allGrounds[$id]['children'][$id2]['num_mmobjs'] = $child->getNumberMultimediaObjects();
+                $allGrounds[$id]['children'][$id2]['children'] = array();
 
-                $parentTag =$this->getDoctrine()
-                                 ->getRepository('PumukitSchemaBundle:Tag')
-                                 ->findOneByCod($cod);
-
-                $allChannels[$id]['children'][] = $parentTag;
+                foreach($child->getChildren() as $id3=>$grandchild ){
+                  $allGrounds[$id]['children'][$id2]['children'][$id3] = array();
+                  $allGrounds[$id]['children'][$id2]['children'][$id3]['title'] = $grandchild->getTitle();
+                  $allGrounds[$id]['children'][$id2]['children'][$id3]['cod'] = $grandchild->getCod();
+                  // This data is not correct. getNumberMultimediaObjects () Returns all mmobjs. Should return only published ones. Reimplement using Mongo aggregate.
+                  $allGrounds[$id]['children'][$id2]['children'][$id3]['num_mmobjs'] = $grandchild->getNumberMultimediaObjects();
+                }
             }
         }
-        return array('allVGrounds' => $allChannels);
+        return array('allGrounds' => $allGrounds, 'title' => $groundsRoot->getTitle() );
     }
 }
