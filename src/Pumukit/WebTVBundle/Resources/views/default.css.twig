@@ -97,6 +97,10 @@ h4 {
 .breadcrumbs_color {
     background: {{ breadcrumbs_back_background }};
 }
+{% if big_breadcrumbs is defined %}
+.title-for-crumbs {
+    display: none;
+}
 .breadcrumb > li:last-of-type {
     display: block;
     font-size: 3em;
@@ -115,6 +119,8 @@ h4 {
     padding: 0px;
 
 }
+{% endif %}
+
 .label {
     background: {{ label_background }};
     color: {{ label_font }};
@@ -491,10 +497,5 @@ footer .parent-centering:nth-child(2) {
         text-align: center;
     }
 }
-
-.title-for-crumbs {
-    display: none;
-}
-
 
 {% endblock %}

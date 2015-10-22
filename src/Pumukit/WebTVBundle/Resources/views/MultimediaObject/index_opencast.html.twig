@@ -15,8 +15,11 @@
 {% block keywords %}{{ parent() }} - {{ multimediaObject.keyword }}{% endblock %}
 
 {% block body_class %}opencast-layout{% endblock %}
-  
+
 {% block body_without_bar %}
+<div class="col-xs-12">
+    <h1 class="title-for-crumbs">{{ multimediaObject.title|default("No title"|trans) }}</h1>
+</div>
   <span class="hidden-sm hidden-xs"></br></span>
   <div id ="mh_player" class="col-lg-9 mh_player collapsed">
     {% include 'PumukitWebTVBundle:MultimediaObject:player_opencast.html.twig' %}
