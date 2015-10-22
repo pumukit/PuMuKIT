@@ -76,6 +76,7 @@ function mh_animacion(){
     {% render(controller('PumukitWebTVBundle:MultimediaObject:related', {'multimediaObject': multimediaObject})) %}
   </div>
  </div>
+  {% include 'PumukitWebTVBundle:Misc:magic_url_disclaimer.html.twig' %}
   {% if mobile_device and track %}
     {% include 'PumukitCmarWebTVBundle:MultimediaObject:playerhtml5opencast.html.twig' with {'multimediaObject': multimediaObject, 'roles': multimediaObject.getRoles(), 'track': track} %}
   {% else %}

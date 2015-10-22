@@ -38,6 +38,20 @@ class MultimediaObjectService
     }
 
     /**
+     * Returns true if the $mm is hidden. Not 404 on its magic url. ( Keep updated with MultimediaObjectController:magicIndexAction )
+     * @param MultimediaObject
+     * @param Publication channel code
+     * @return boolean
+     */
+    public function isHidden($mm, $pubChannelCod)
+    {
+        $hasStatus = in_array($mm->getStatus(), array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDE));
+        $hasPubChannel = $mm->containsTagWithCod($pubChannelCod);
+
+        return $hasStatus && $hasPubChannel;
+    }
+
+    /**
      * Returns true if the $mm has a playable resource. ( Keep updated with SchemaFilter->getCriteria() )
      * @param MultimediaObject
      * @return boolean

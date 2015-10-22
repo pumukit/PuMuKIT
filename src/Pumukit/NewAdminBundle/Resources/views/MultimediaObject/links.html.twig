@@ -23,7 +23,7 @@
           <label for="inputROMagicUrl" class="col-lg-2 control-label" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">Magic Url:</label>
           <div class="col-lg-10 input-group">
             <input type="text" class="form-control" id="inputROMagicUrl" readonly onclick="select()" value="{{ magic_url }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">
-            {% if is_playable %}
+            {% if is_hidden %}
               <span class="input-group-addon"><a id="alinkROMagicUrl" href="{{ magic_url }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
             {% else %}
               <span class="input-group-addon"><i class="mdi-action-report-problem" title="{% trans %}Warning: This link will show a player with no video until a display track is added.{% endtrans %}" ></i></span>
