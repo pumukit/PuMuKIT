@@ -1,441 +1,495 @@
 {% block body %}
-{# SETTERS #}
-{% set a_link_font_color = a_link_font_color | default("#337ab7") %}
-{% set a_link_selected_font_color = a_link_selected_font_color | default("#23527c") %}
-{% set breadcrumbs_background = breadcrumbs_background | default("#ed1556") %}
-{% set breadcrumbs_font_color = breadcrumbs_font_color | default("white") %}
+{# SET VARIABLES #}
+{% set default_contrast_background = default_contrast_background | default("#23527c") %}
+{% set default_light_background = default_light_background | default("#32475b") %}
+{% set default_content_background = default_content_background | default("#fff") %}
+
+{% set default_contrast_font = default_contrast_font | default("#fff") %}
+{% set default_light_font = default_light_font | default("#fff") %}
+{% set default_content_font = default_content_font | default("#111") %}
+{% set default_content_link_font = default_content_link_font | default("#222") %}
+{% set default_content_link_selected_font = default_content_link_selected_font | default("#444") %}
+
 {% set breadcrumbs_separator = breadcrumbs_separator | default('»') %}
-{% set content_background = content_background | default("#fff") %}
 {% set content_max_width = content_max_width | default("1400px") %}
-{% set font_base_color = font_base_color | default("#000") %}
-{% set header_background = header_background | default("#fff") %}
-{% set menu_background = menu_background | default("#004361") %}
-{% set menu_font_color = menu_font_color | default("#fff") %}
-{% set menu_selected_font_color = menu_selected_font_color | default(menu_background) %}
+
 {% set menu_padding = menu_padding | default("10px 10px 10px 20px") %}
-{% set menu_selected_background = menu_selected_background | default("#888") %}
 {% set page_background = page_background | default("#ddd") %}
 
-
-{# DEPENDABLE: If not set they will use other variables #}
+{# DEPENDABLE: If not set they will use other variables as default #}
+{% set breadcrumbs_background = breadcrumbs_background | default(default_contrast_background) %}
+{% set breadcrumbs_font_color = breadcrumbs_font_color | default(default_contrast_font) %}
 {% set breadcrumbs_back_background = breadcrumbs_back_background | default(breadcrumbs_background) %}
 {% set breadcrumbs_max_width = breadcrumbs_max_width | default(content_max_width) %}
+{% set content_background = content_background | default(default_content_background) %}
 {% set header_max_width = header_max_width | default(content_max_width) %}
-{% set mmobjs_font_color = mmobjs_font_color | default(font_base_color) %}
-{% set mmobjs_selected_font_color = mmobjs_selected_font_color | default(font_base_color) %}
+{% set header_background = header_background | default(default_light_background) %}
+{% set label_background = label_background | default(default_contrast_background) %}
+{% set label_font = label_font | default(default_contrast_font) %}
+{% set menu_background = menu_background | default(default_light_background) %}
+{% set menu_font_color = menu_font_color | default(default_light_font) %}
+{% set menu_selected_background = menu_selected_background | default(default_light_font) %}
+{% set menu_selected_font_color = menu_selected_font_color | default(default_light_background) %}
+{% set mmobj_font_color = mmobj_font_color | default(default_content_font) %}
+{% set mmobj_selected_font_color = mmobjs_selected_font_color | default(default_content_font) %}
+{% set mmobj_selected_background = mmobj_selected_background | default(page_background) %}
+{% set mmobj_serie_background = mmobj_serie_background | default(mmobj_selected_background) %}
+{% set mmobj_serie_font = mmobj_serie_font | default(mmobj_selected_font_color) %}
+{% set navbar_background = navbar_background | default(default_light_background) %}
+{% set navbar_font = navbar_background | default(default_light_font) %}
+{% set panel_default_background = panel_default_background | default(default_light_background) %}
+{% set panel_default_font = panel_default_font | default(default_light_font) %}
 
+{# END SET VARIABLES#}
 body {
-   background: {{ page_background }};
-   color: {{ font_base_color }};
+    background: {{ page_background }};
 }
 a:hover, a:focus {
-   text-decoration: none;
-   color: {{ a_link_selected_font_color }};
+    text-decoration: none;
+    color: {{ default_content_link_selected_font }};
 }
 a {
-   color: {{ a_link_font_color }};
+    color: {{ default_content_link_font }};
 }
 ul, ol {
-   list-style:none;
-   margin: 0px;
-   padding: 0px;
+    list-style:none;
+    margin: 0px;
+    padding: 0px;
 }
 h1 {
     font-size: 40px;
     font-weight: bold;
-    border-bottom: 4px solid {{ font_base_color }};
-    color: {{ font_base_color }};
+    border-bottom: 4px solid {{ default_content_font }};
+    color: {{ default_content_font }};
 }
 h2 {
-    color: {{ font_base_color }};
+    color: {{ default_content_font }};
 
 }
 h3 {
     font-size: 1em;
     font-weight: bold;
-    color: {{ font_base_color }};
+    color: {{ default_content_font }};
 }
 /*END BASE CSS*/
+
 /*BOOTSTRAP OVERRIDE*/
 .label {
-   margin: 2px;
+    margin: 2px;
 }
 .label a{
-   color:white;
+    color:white;
 }
 .breadcrumb {
-  color: {{ breadcrumbs_font_color }};
-  background: {{ breadcrumbs_background }};
+    color: {{ breadcrumbs_font_color }};
+    background: {{ breadcrumbs_background }};
 }
 .breadcrumb a{
-  color: {{ breadcrumbs_font_color }};
+    color: {{ breadcrumbs_font_color }};
 }
-/*END BOOSTRAP OVERRIDE*/
+
 .breadcrumbs_wrapper {
-   margin: 0 auto;
-   max-width: {{ content_max_width }};
+    margin: 0 auto;
+    max-width: {{ content_max_width }};
 }
 .breadcrumbs_color {
-   background: {{ breadcrumbs_back_background }};
+    background: {{ breadcrumbs_back_background }};
 }
 .breadcrumb > li:last-of-type {
-   display: block;
-   font-size: 3em;
-   content: "";
+    display: block;
+    font-size: 3em;
+    content: "";
 }
 .breadcrumb > li:last-of-type:after  {
-   content: "";
+    content: "";
 }
 .breadcrumb > li:after {
-   content: "{{ breadcrumbs_separator }}";
-   padding: 0px 5px;
+    content: "{{ breadcrumbs_separator }}";
+    padding: 0px 5px;
 
 }
 .breadcrumb > li + li:before {
-   content: "\00a0";
-   padding: 0px;
+    content: "\00a0";
+    padding: 0px;
 
 }
+.label {
+    background: {{ label_background }};
+    color: {{ label_font }};
+}
+.navbar {
+    margin-bottom: 0px;
+}
+.navbar-brand {
+    padding: 5px 5px 5px 15px;
+}
+.navbar-default {
+    background-color: {{ navbar_background }};
+    border-color: {{ navbar_background }};
+    border: none;
+}
+
+.navbar-collapse {
+    box-shadow: none;
+    border: none;
+}
+.panel-default > .panel-heading {
+    background: {{ panel_default_background }};
+    color: {{ panel_default_font }};
+}
+
+/*END BOOTSTRAP OVERRIDE*/
 
 .col-no-padding {
-   overflow: auto;
+    overflow: auto;
 }
 .nomargin {
-   margin: 0;
+    margin: 0;
 }
 .nopadding {
-   padding: 0;
+    padding: 0;
 }
 .cover {
-   position: absolute;
-   bottom: 0px;
-   right: 0px;
-   width: 100%;
-   padding: 10px 5px;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 100%;
+    padding: 10px 5px;
 }
 .date {
-   text-align: right;
+    text-align: right;
 }
 .date.mmobj {
-   font-size: 1.2em;
-   position: absolute;
-   bottom: 10%;
-   left: 150px;
-   position: absolute;
-   text-align: left;
+    font-size: 1.2em;
+    position: absolute;
+    bottom: 10%;
+    left: 150px;
+    position: absolute;
+    text-align: left;
 }
 .date.serial {
-   left: 160px;
-   bottom: 9%;
-   position: absolute;
-   font-size: 1.2em;
-   text-align: inherit;
+    left: 160px;
+    bottom: 9%;
+    position: absolute;
+    font-size: 1.2em;
+    text-align: inherit;
 }
 .header-content{
-   margin: 0 auto;
-   max-width: {{ header_max_width }};
-   min-height: 20px;
+    margin: 0 auto;
+    max-width: {{ header_max_width }};
+    min-height: 80px;
 }
 .info {
-   float: left;
-   padding-left: 10px;
-   max-width: 55%;
-   min-height: 60px;
-   overflow: hidden;
-   display: inline;
-   word-wrap: break-word;
+    float: left;
+    padding-left: 10px;
+    max-width: 55%;
+    min-height: 60px;
+    overflow: hidden;
+    display: inline;
+    word-wrap: break-word;
 }
 .info .title{
-   font-weight: bold;
+    font-weight: bold;
 }
 .info.serial {
-   position: absolute;
-   left: 150px;
+    position: absolute;
+    left: 150px;
 }
 .language_select_wrapper {
-   float: right;
-   margin: 8px;
+    float: right;
+    margin: 8px;
 }
-.main-content {
-   margin: 0 auto;
-   background: {{ content_background }};
-   min-height: 600px;
-   max-width: {{ content_max_width }};
-}
-.menu {
-   background: {{ menu_background }};
-   border: 0;
+.language_select_wrapper .btn{
+    background: none;
+    border: none;
 }
 
+.main-content {
+    margin: 0 auto;
+    background: {{ content_background }};
+    min-height: 600px;
+    max-width: {{ content_max_width }};
+}
+.menu {
+    background: {{ menu_background }};
+    border: 0;
+}
+.mobile_header {
+    background: {{ header_background }};
+}
+/**/
 body.opencast-layout .main-content {
-   max-width: 100%;
+    max-width: 100%;
 }
 body.opencast-layout .breadcrumb_wrapper {
-   max-width: 100%;
+    max-width: 100%;
 }
 
 .mmobj_objects {
-   margin-left: 3%;
+    margin-left: 3%;
 }
 .mmobj_serie {
-   background: #e9e9e9;
-   padding: 3% 2%;
+    background: {{ mmobj_serie_background }};
+    padding: 3% 2%;
 }
 .media-body {
-   padding-left: 3%;
+    padding-left: 3%;
 }
 .number-videos.serial {
-   position: absolute;
-   bottom: 8%;
-   right: 5%;
+    position: absolute;
+    bottom: 8%;
+    right: 5%;
 }
 .parent-centering {
-   text-align: center;
-  /* May want to do this if there is risk the container may be narrower than the element inside */
-   white-space: nowrap;
+    text-align: center;
+    /* May want to do this if there is risk the container may be narrower than the element inside */
+    white-space: nowrap;
 }
 .parent-centering:before {
-   content: '';
-   display: inline-block;
-   height: 100%;
-   vertical-align: middle;
-   margin-right: -0.25em; /* Adjusts for spacing */
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -0.25em; /* Adjusts for spacing */
 }
 .play_icon {
-   position: absolute;
-   padding: 10px;
+    position: absolute;
+    padding: 10px;
 }
 .play_icon.small {
-   padding: 5px;
+    padding: 5px;
 }
 .pumukit_mmobjs{
-   margin: 0 0%;
-   overflow: hidden;
-   color: {{ mmobjs_font_color }};
+    margin: 0 0%;
+    overflow: hidden;
+    color: {{ mmobj_font_color }};
 }
 .pumukit_mmobj {
-   color: {{ mmobjs_font_color }};
-   height: 120px;
-   overflow: hidden;
-   margin: 10px 0px;
-   padding: 5px;
-   border-radius: 10px;
-   transition: background 0.3s ease;
-   position: relative;
+    color: {{ mmobj_font_color }};
+    height: 120px;
+    overflow: hidden;
+    margin: 10px 0px;
+    padding: 5px;
+    border-radius: 10px;
+    transition: background 0.3s ease;
+    position: relative;
 }
 .pumukit_mmobj a{
-   color: {{ mmobjs_font_color }};
+    color: {{ mmobj_font_color }};
 }
 @media screen and (max-device-width: 320px) {
-   .pumukit_mmobj {
-      padding-left: 0px;
-      padding-right: 0px;
-   }
+    .pumukit_mmobj {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
 }
 .pumukit_mmobj:hover, .pumukit_mmobj:focus {
-   background: rgb(233, 233, 233);
-   color: {{ mmobjs_selected_font_color }};
+    background: {{ mmobj_selected_background }};
+    color: {{ mmobj_selected_font_color }};
 }
 .pumukit_album {
-   margin:2px 20px 2px 2px;
-   position: relative;
+    margin:2px 20px 2px 2px;
+    position: relative;
 }
 .row.pumukit {
-   margin: 0 auto;
+    margin: 0 auto;
 }
 .search-box {
-   margin: 8px;
+    margin: 8px;
 }
 /*Thumbnails*/
 .thumbnail {
-   width: 135px;
-   height: 98px;
-   float: left;
-   display: inline;
-   margin-bottom:0px;
-   text-align: center;
-   border: 0;
-   border-radius: 0px;
-   box-shadow: 1px 1px 2px #666;
-   background: #F3F3F3;
-   padding: 4px;
-   z-index: 3;
-   position: relative;
+    width: 135px;
+    height: 98px;
+    float: left;
+    display: inline;
+    margin-bottom:0px;
+    text-align: center;
+    border: 0;
+    border-radius: 0px;
+    box-shadow: 1px 1px 2px #666;
+    background: #F3F3F3;
+    padding: 4px;
+    z-index: 3;
+    position: relative;
 }
 .thumbnailwrapper {
-   padding-left: 0px;
-   min-width:132px;
+    padding-left: 0px;
+    min-width:132px;
 }
 .thumbnail.bodyMm {
-   margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 .thumbnail img.thumbnailimg{
-   margin: 0 auto;
-   max-width: 120px;
-   max-height: 90px;
-   display: inline-block;
-   vertical-align: middle;
+    margin: 0 auto;
+    max-width: 120px;
+    max-height: 90px;
+    display: inline-block;
+    vertical-align: middle;
 }
 .thumbnailholder {
-   position: absolute;
-   top: 4px;
-   width: 127px;
-   height: 90px;
-   background:#000;
-   z-index: -1;
+    position: absolute;
+    top: 4px;
+    width: 127px;
+    height: 90px;
+    background:#000;
+    z-index: -1;
 }
 .thumbnailo:nth-child(1) {
-   z-index: 3;
-   position: relative;
+    z-index: 3;
+    position: relative;
 }
 .thumbnailo:nth-child(2) {
-   z-index: 2;
-   transform: scale(0.97);
-   position: absolute;
-   left: 7px;
-   top: 3px;
+    z-index: 2;
+    transform: scale(0.97);
+    position: absolute;
+    left: 7px;
+    top: 3px;
 }
 .thumbnailo:nth-child(3) {
-   z-index: 1;
-   transform: scale(0.94);
-   position: absolute;
-   left: 14px;
-   top: 6px;
+    z-index: 1;
+    transform: scale(0.94);
+    position: absolute;
+    left: 14px;
+    top: 6px;
 }
 .video-duration {
-   position: absolute;
-   bottom: 8%;
-   right: 8%;
-   color: white;
-   font-size: 0.8em;
-   background:rgba(0,0,0,0.65);
-   padding: 1px 3px;
+    position: absolute;
+    bottom: 8%;
+    right: 8%;
+    color: white;
+    font-size: 0.8em;
+    background:rgba(0,0,0,0.65);
+    padding: 1px 3px;
 }
 .wrapper-center {
-   width: 100%;
-   vertical-align: middle;
-   background: {{ menu_background }}; /* Trick to color the menu's length */
+    width: 100%;
+    vertical-align: middle;
+    background: {{ menu_background }}; /* Trick to color the menu's length */
 }
 
 /*CIES*/
 .announces {
-   margin-top: 40px;
+    margin-top: 40px;
 }
 .breadcrumb {
-   margin: 0px;
-   border-radius: 0px;
+    margin: 0px;
+    border-radius: 0px;
 }
 .cover {
-   background: #000;
-   color: #fff;
-   font-weight: bold;
-   font-size: 120%;
-   opacity: .8;
+    background: #000;
+    color: #fff;
+    font-weight: bold;
+    font-size: 120%;
+    opacity: .8;
 }
 .media-heading.subtitle{
-   line-height:0.5;
+    line-height:0.5;
 }
 .media-heading.title{
-   line-height:1;
+    line-height:1;
 }
 .media-body .date{
-   line-height: 1;
-   padding-top: 10px;
+    line-height: 1;
+    padding-top: 10px;
 }
 footer .parent-centering {
-   padding-top:10px;
+    padding-top:10px;
 }
 footer .parent-centering:nth-child(1) {
-   background: #e1e1e2;
+    background: #e1e1e2;
 }
 footer .parent-centering:nth-child(2) {
-   background: #c1c1c2;
+    background: #c1c1c2;
 }
 .header {
-   background: {{ header_background }};
+    background: {{ header_background }};
 }
 .header.sticky {
-   position: fixed;
-   top: 0;
-   transition: top 0.2s ease-in-out;
-   width: 100%;
-   z-index:6;
+    position: fixed;
+    top: 0;
+    transition: top 0.2s ease-in-out;
+    width: 100%;
+    z-index:6;
 }
 .header.sticky.nav-up {
-   top: -60px;
+    top: -60px;
 }
 .header.sticky.nav-up {
-   top: 0;
+    top: 0;
 }
 .img_category img{
-   width: 100%;
+    width: 100%;
 }
 .img_category{
-   position: relative;
-   height: 100%;
+    position: relative;
+    height: 100%;
 }
 .img_category.two {
-   height: 50%;
+    height: 50%;
 }
 .index_container {
-   position: relative;
+    position: relative;
 }
 .index_container a{
-   position: relative;
-   display: block;
-   overflow: auto;
+    position: relative;
+    display: block;
+    overflow: auto;
 }
 .index_container {
-   display: block;
+    display: block;
 }
 .index_container.three {
-   margin-top:10px;
+    margin-top:10px;
 }
 .index_container .img_category:nth-child(2){
-   padding-top: 12.1%;
+    padding-top: 12.1%;
 }
 .index_widget {
-   margin-top: 15px;
-   margin-bottom: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 @media (max-width: 992px) {
-   .index_container .img_category:nth-child(2){
-      padding-top: 0%;
-   }
-   .index_container .img_category {
-      padding-top: 8% !important;
-   }
+    .index_container .img_category:nth-child(2){
+        padding-top: 0%;
+    }
+    .index_container .img_category {
+        padding-top: 8% !important;
+    }
 }
 .pumukit_announce {
-   margin-top: 35px;
-   overflow: auto;
+    margin-top: 35px;
+    overflow: auto;
 }
 .widget.slidebar {
-   text-align: left;
+    text-align: left;
+    background: {{menu_background}};
 }
 .widget.slidebar #total{
-   text-align: center;
+    text-align: center;
 }
 .widget.slidebar a {
-   display: block;
-   font-size: 1.7em;
-   padding: {{ menu_padding }};
-   color: {{ menu_font_color }};
+    display: block;
+    font-size: 1.7em;
+    padding: {{ menu_padding }};
+    color: {{ menu_font_color }};
 }
 .widget.slidebar a:hover, .widget.slidebar a.selected {
-   background: {{ menu_selected_background }};
-   color: {{ menu_selected_font_color }};
-   margin-left: -65px;
-   padding-left: 85px;
-   z-index:10;
-   transition: background 0.3s ease;
+    background: {{ menu_selected_background }};
+    color: {{ menu_selected_font_color }};
+    margin-left: -65px;
+    padding-left: 85px;
+    z-index:10;
+    transition: background 0.3s ease;
 }
 
 @media (max-width: 1199px) {
-   .widget.slidebar {
-      text-align: center;
-   }
+    .widget.slidebar {
+        text-align: center;
+    }
 }
+
+
 
 {% endblock %}
