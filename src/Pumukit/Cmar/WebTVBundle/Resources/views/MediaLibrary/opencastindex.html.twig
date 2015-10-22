@@ -5,7 +5,7 @@
     {% for key, series in subseries if (series|length) != 0 %}
       {% set countMultimediaObjects = 0 %}
       {% for oneseries in series %}
-        {% set countMultimediaObjects = countMultimediaObjects + (oneseries|count_multimedia_objects) %}
+        {% set countMultimediaObjects = countMultimediaObjects + mmobj_count[oneseries.getId()] %}
       {% endfor %}
       <li>
         <a href="#{{ key }}">{{ key }}</a>
@@ -30,7 +30,7 @@
       <a name="{{ key }}">{{key }}</a> 
     </p>
     {% for oneseries in series %}
-      {% include 'PumukitCmarWebTVBundle:MediaLibrary:series.html.twig' with {'series': oneseries} %}
+      {% include 'PumukitCmarWebTVBundle:MediaLibrary:series.html.twig' with {'series': oneseries, 'count': mmobj_count[oneseries.getId()]} %}
     {% endfor %}
   {% endfor %}
 </div>
