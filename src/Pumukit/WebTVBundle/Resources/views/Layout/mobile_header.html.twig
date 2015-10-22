@@ -1,9 +1,8 @@
 <nav class="navbar navbar-default col-lg-3">
-  <br>
-  <div class="navbar-header" >    
-    <div class="row">
+  <div class="navbar-header" >
+    <div class="row mobile_header">
       <span class="navbar-brand">
-      {{ pumukit2_info['description'] | trans }} {# TODO use title #}
+          {% include 'PumukitWebTVBundle:Layout:logo.html.twig' %}
       </span>
       {% render( controller( 'PumukitWebTVBundle:Widget:languageselect') ) %}
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#pumukit-navbar-collapse-1">
@@ -22,8 +21,9 @@
       {% include 'PumukitWebTVBundle:Layout:search_box.html.twig' %}
     </div>
   </div>
+  <div class="row">
   <div class="collapse navbar-collapse" id="pumukit-navbar-collapse-1">
-    {% render(controller('PumukitWebTVBundle:Widget:menu')) %}
+          {% render(controller('PumukitWebTVBundle:Widget:menu')) %}
   </div><!--END navbar-collapse-->
-  <br>
+  </div>
 </nav>
