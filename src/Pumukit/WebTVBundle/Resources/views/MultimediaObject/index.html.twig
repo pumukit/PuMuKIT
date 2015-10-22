@@ -11,7 +11,7 @@
 {% block keywords %}{{ parent() }} - {{ multimediaObject.keyword }}{% endblock %}
 
 {% block body_without_bar %}
-	<h1>{{ multimediaObject.title|default("No title"|trans) }}</h1>
+	<h1 class="title-for-crumbs">{{ multimediaObject.title|default("No title"|trans) }}</h1>
     <div class="col-lg-8 col-md-7">
       <span class="hidden-sm hidden-xs"></br></span>
 		{% include 'PumukitWebTVBundle:MultimediaObject:player.html.twig' with {'responsive': true} %}

@@ -21,9 +21,9 @@
   </div>
   <div class="media-body">
     <!-- TITLE & SUBTITLE -->
-    <h3 class="media-heading">"{{ mm.getTitle() | default ('No title' | trans )}}"</h3>
-    <h4 class="media-heading"><small>{{ mm.getSubtitle() | default ('') }}</small></h4>
-    
+    <h4 class="media-heading">"{{ mm.getTitle() | default ('No title' | trans )}}"</h4>
+    <h5 class="media-heading"><small>{{ mm.getSubtitle() | default ('') }}</small></h5>
+
     <ul class="mmobj_objects">
       <!-- MATTERHORN -->
       {% if mm.getProperty('opencast') is not empty %}
@@ -70,7 +70,7 @@
       {% endif %}
       <!-- MATERIAL -->
       {% for material in mm.getMaterials() if not material.getHide() %}
-        <div id="material"> 
+        <div id="material">
           <span class="glyphicon glyphicon-paperclip"></span>
             <a target="_blank" href="{{ material.getUrl() }}">{{ material.getName() }}</a>
         </div>
