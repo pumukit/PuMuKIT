@@ -1,6 +1,14 @@
 Installation Guide
 ==================
 
+PumukitMoodleBundle allows to share PuMuKIT videos whitin a Moodle.
+To accomplish this, the Moodle instance requires the installation of
+a module, a repository and a filter of PuMoodle.
+
+PuMoodle GitHub repo will be available soon containing that module,
+repository and filter.
+
+
 Steps to install and configure this bundle:
 
 1.- Install the bundle into your Pumukit2 root project:
