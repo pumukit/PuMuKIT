@@ -35,14 +35,14 @@ Activated by default:
 * [OpencastBundle](../src/Pumukit/OpencastBundle/Resources/doc/ConfigurationGuide.md): provides a service to import multimedia content of an Opencast Server.
 * SchemaBundle: defines the schema of classes and services.
 * StatsBundle: provides a service to log the statistics.
-* WebTVBundle: defines the portal web.
+* [WebTVBundle](../src/Pumukit/WebTVBundle/Resources/doc/OverrideGuide.md): defines the portal web.
 * WizardBundle: provides a service to guide the user on uploading multimedia content.
 * [WorkflowBundle](../src/Pumukit/WorkflowBundle/Resources/doc/ConfigurationGuide.md): provides a service to automatically extract a picture from a video that just has been transcoded if the MultimediaObject does not have any picture yet.
 
 
 Not activated by default:
 * [LDAPBundle](../src/Pumukit/LDAPBundle/Resources/doc/AdminGuide.md): provides a service to connect to a LDAP Server and to retrieve data from the server.
-* [MoodleBundle](../src/Pumukit/NotificationBundle/Resources/doc/InstallationGuide.md): allows to share PuMuKIT videos whitin a Moodle.
+* [MoodleBundle](../src/Pumukit/MoodleBundle/Resources/doc/InstallationGuide.md): allows to share PuMuKIT videos whitin a Moodle.
 * [NotificationBundle](../src/Pumukit/NotificationBundle/Resources/doc/AdminGuide.md): sends emails when a job finished, whether it failed or succeed
 * [PodcastBundle](../src/Pumukit/PodcastBundle/Resources/doc/InstallationGuide.md): provides a service to add PuMuKIT videos into Podcast channel.
 
@@ -75,62 +75,13 @@ src/Pumukit/ExampleOrg/Feature3Bundle
 ```
 
 
-Override WebTVBundle manual
----------------------------
+Override a Bundle
+-----------------
 
-Overriding the PumukitWebTVBundle allows you to change:
-
-* Footer
-* Header
+See an example in [WebTVBundle](../src/Pumukit/WebTVBundle/Resources/doc/OverrideGuide.md../src/Pumukit/WebTVBundle/Resources/doc/OverrideGuide.md).
 
 
-Process
---------
-
-### 1.- Create new WebTV bundle.
-
-#### 1.1 Generate the bundle.
-
-`
-$ php app/console  generate:bundle --namespace=Pumukit/ExampleOrg/WebTVBundle --dir=src --no-interaction
-`
-
-#### 1.2 Register the new bundle as the "parent" of the Pumukit bundle:
-
-
-```php
-#src/Pumukit/ExampleOrg/WebTVBundle/PumukitExampleOrgWebTVBundle.php
-<?php
-namespace Pumukit\ExampleOrg\WebTVBundle;
-
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-
-class PumukitExampleOrgWebTVBundle extends Bundle
-{
-    public function getParent()
-    {
-        return 'PumukitWebTVBundle';
-    }
-}
-```
-
-For more info see: http://symfony.com/doc/current/cookbook/bundles/inheritance.html
-
-#### 1.3 Install the new bundle (if necessary).
-`
-$ php app/console  pumukit:install:bundle Pumukit/ExampleOrg/WebTVBundle/PumukitExampleOrgWebTVBundle
-`
-
-### 2.- Header
-
-Add your HTML on `src/Pumukit/ExampleOrg/WebTVBundle/Resources/views/header.html.twig`.
-
-
-### 3.- Change the footer
-Add your HTML on `src/Pumukit/ExampleOrg/WebTVBundle/Resources/views/footer.html.twig`.
-
-
-Create your own bundle
+Create a new Bundle
 ----------------------
 
 #### 1.1 Generate the bundle.
@@ -143,6 +94,10 @@ $ php app/console  generate:bundle --namespace=Pumukit/ExampleOrg/FeatureBundle 
 `
 $ php app/console  pumukit:install:bundle Pumukit/ExampleOrg/FeatureBundle/PumukitExampleOrgFeatureBundle
 `
+
+#### 1.3 Develop the bundle
+
+Create all Documents, [Services](http://symfony.com/doc/current/book/service_container.html), Events, Event Listeners, [Controllers](http://symfony.com/doc/current/book/controller.html), [Commands](http://symfony.com/doc/current/bundles/SensioGeneratorBundle/commands/generate_command.html) and HTML Twig templates as needed, following the bundles structured defined by Symfony.
 
 Examples
 --------
