@@ -1,21 +1,21 @@
 PuMuKIT-2 Installation Guide
 ====================================
 
-*This page is updated to the 2.1 release* 
+*This page is updated to the 2.1 release*
 
 Requirements
 -------------------------------------
 
-PuMuKIT-2 is a LAMP application, created with the Symfony2 framework. It uses libav-tools (or ffmpeg) to analyze the audiovisual data, as well as to transcode them.
+PuMuKIT-2 is a LEMP (Linux, nginx, MongoDB, PHP) application, created with the Symfony2 framework. It uses libav-tools (or ffmpeg) to analyze the audiovisual data, as well as to transcode the data.
 
 The requirements for installation are linux, nginx, libav-tools, php5 and mongo. Libav-tools with h264 and aac support is needed. Also the following php5 modules are required: php5-json, php5-cli, php5-mongo, php5-ldap, php5-curl and php5-intl. Make sure text search is enabled for your mongodb (version 2.6+).
 
 Use [composer](https://getcomposer.org/) to check and install the dependencies
 
-PuMuKIT-2 has been developed and is often installed on Linux Ubuntu but its use is not essential.
+PuMuKIT-2 has been developed and is often installed on Linux Ubuntu but its use is not essential. It is known it works on Ubuntu 14.04. If it is installed on other Linux distributions, additional libraries may be required.
 
-Installation
--------------------------------------
+Installation on Linux Ubuntu 14.04
+----------------------------------
 
 Setup a development environment on Ubuntu 14.04:
 
@@ -31,11 +31,11 @@ Setup a development environment on Ubuntu 14.04:
 2. Install dependencies of PuMuKIT-2 (see requirements):
 
     ```
-    sudo apt-get install git curl nginx-full
-    sudo apt-get install php5-fpm php5-cli php5-curl php5-intl php5-json
-    sudo apt-get install php5-intl php5-xdebug php5-curl
-    sudo apt-get install mongodb-org php5-mongo
-    sudo apt-get install libav-tools libavcodec-extra
+    sudo apt-get install -y git curl nginx-full
+    sudo apt-get install -y php5-fpm php5-cli php5-curl php5-intl php5-json
+    sudo apt-get install -y php5-intl php5-xdebug php5-curl
+    sudo apt-get install -y mongodb-org php5-mongo
+    sudo apt-get install -y libav-tools libavcodec-extra
     ```
 
 3. Download the last version of PuMuKIT-2:
@@ -43,7 +43,7 @@ Setup a development environment on Ubuntu 14.04:
     ```
     git clone https://github.com/campusdomar/PuMuKIT2.git /var/www/pumukit2
     cd /var/www/pumukit2
-    git checkout master
+    git checkout 2.1.x
     ```
 
 4. Install [composer](https://getcomposer.org/).
@@ -71,7 +71,7 @@ Setup a development environment on Ubuntu 14.04:
     ```
     php app/console fos:user:create admin --super-admin
     ```
-    
+
 8. Load default values (tags, broadcasts and roles).
 
     ```
@@ -83,7 +83,7 @@ Setup a development environment on Ubuntu 14.04:
     ```
     php app/console pumukit:init:example  --force    
     ```
-    
+
 10. Add NGINX config file.
 
     ```
@@ -94,7 +94,7 @@ Setup a development environment on Ubuntu 14.04:
 
     ```
     sudo service php5-fpm restart
-    sudo service nginx restart 
+    sudo service nginx restart
     ```
 
 12. Connect and enjoy
