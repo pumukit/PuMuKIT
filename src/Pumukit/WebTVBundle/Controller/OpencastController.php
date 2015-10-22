@@ -2,13 +2,14 @@
 
 namespace Pumukit\WebTVBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\WebTVBundle\Controller\PlayerController;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\WebTVBundle\Controller\PlayerController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -62,8 +63,7 @@ class OpencastController extends PlayerController
             return $response;
         }
 
-        $mmobjService->incNumView($multimediaObject, $track);
-        $mmobjService->dispatch($multimediaObject, $track);
+        $this->dispatchViewEvent($multimediaObject, $track);
 
         if ($track->containsTag('download')) {
             return $this->redirect($track->getUrl());
