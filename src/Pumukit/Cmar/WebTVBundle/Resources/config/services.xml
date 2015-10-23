@@ -8,6 +8,7 @@
     <parameter key="pumukit_web_tv.breadcrumbs_all_title">All videos</parameter>
     <parameter key="pumukit_web_tv.breadcrumbs_all_route">pumukit_cmar_web_tv_library_all</parameter>
     <parameter key="pumukit_cmar_web_tv.workflow_sbs_profile">BroadCast SbS</parameter>
+    <parameter key="pumukit2.warning_on_unpublished">true</parameter>
   </parameters>
 
   <services>

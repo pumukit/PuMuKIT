@@ -170,15 +170,14 @@ class MultimediaObjectController extends SortableAdminController
     public function linksAction(MultimediaObject $resource)
     {
         $mmService = $this->get('pumukitschema.multimedia_object');
-        $isPublished = $mmService->isPublished($resource, 'PUCHWEBTV');
-        $isHidden = $mmService->isHidden($resource, 'PUCHWEBTV');
-        $playableResource = $mmService->hasPlayableResource($resource);
+        $warningOnUnpublished = $this->container->getParameter('pumukit2.warning_on_unpublished');
 
         return array(
              'mm' => $resource,
-             'is_published' => $isPublished,
-             'is_hidden' => $isHidden,
-             'is_playable' => $playableResource             
+             'is_published' => $mmService->isPublished($resource, 'PUCHWEBTV'),
+             'is_hidden' => $mmService->isHidden($resource, 'PUCHWEBTV'),
+             'is_playable' => $mmService->hasPlayableResource($resource),
+             'warning_on_unpublished' => $warningOnUnpublished
         );
     }
 
