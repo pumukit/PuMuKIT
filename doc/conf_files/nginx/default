@@ -40,6 +40,12 @@ server {
         internal;
     }
 
+    # Media: images, icons, video, audio, HTC
+    location ~* \.(?:jpg|jpeg|gif|png|ico|cur|gz|svg|svgz|mp4|ogg|ogv|webm|htc)$ {
+            access_log off;
+            add_header Cache-Control "public, max-age=86400";
+    }
+
     error_log /var/log/nginx/pumukit2_error.log;
     access_log /var/log/nginx/pumukit2_access.log;
 }
