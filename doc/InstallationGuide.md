@@ -83,7 +83,7 @@ Setup a development environment on Ubuntu 14.04. Go to [F.A.Q. section](#faq) if
 
 10. Check environment requirements. Fix errors if any and check again. Repeat until output it is OK. Fix warnings if necessary (PDO drivers are not necessary for PuMuKIT-2 to work).
 
-    * Go to http://{PuMuKIT-2-IP}/config.php for checking requirements.
+    * Go to `http://{PuMuKIT-2-IP}/config.php` for checking requirements.
 
 11. Give cache and log directories the right permissions.
 
