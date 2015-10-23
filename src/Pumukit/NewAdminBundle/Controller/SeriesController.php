@@ -400,6 +400,7 @@ class SeriesController extends AdminController
             $mm = $repo->find($id);
             if ($mm){
                 foreach($value['channels'] as $channelId => $mustContainsTag){
+                    $mustContainsTag = ("true" == $mustContainsTag);
                     $tag = $repoTags->find($channelId);
                     if ($mustContainsTag && (!($mm->containsTag($tag)))) {
                         $tagAdded = $tagService->addTagToMultimediaObject($mm, $tag->getId());

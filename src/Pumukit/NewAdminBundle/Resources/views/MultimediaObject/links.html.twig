@@ -49,7 +49,7 @@
 </div>
 <div class="row">
   <div class="col-xs-12 "></br>
-    {% if not is_published or not is_playable %}
+    {% if warning_on_unpublished and not is_published or not is_playable %}
       <span class="alert alert-dismissable alert-warning">
         <i class="mdi-action-report-problem"></i>
         {% trans %}WARNING, this multimedia object is not yet published on WebTV, or does not have a playable resource.{% endtrans %} 

@@ -4,6 +4,8 @@ pumukit_cmar_web_tv_opencast_css:
     defaults:
         _controller: FrameworkBundle:Template:template
         template: 'PumukitCmarWebTVBundle::opencast.css.twig'
+        maxAge:       86400
+        sharedAge:    86400
         _format: css
 
 pumukit_cmar_web_tv_series_css:
@@ -12,6 +14,8 @@ pumukit_cmar_web_tv_series_css:
     defaults:
         _controller: FrameworkBundle:Template:template
         template: 'PumukitCmarWebTVBundle::series.css.twig'
+        maxAge:       86400
+        sharedAge:    86400
         _format: css
 
 pumukit_cmar_web_tv_style_css:
@@ -20,4 +24,6 @@ pumukit_cmar_web_tv_style_css:
     defaults:
         _controller: FrameworkBundle:Template:template
         template: 'PumukitCmarWebTVBundle::style.css.twig'
+        maxAge:       86400
+        sharedAge:    86400
         _format: css

@@ -408,9 +408,8 @@ window.submit_series_change_pub = function()
     });
     if (values.size == 0) return false;
 
-    var route = '{{ path('pumukitnewadmin_series_updatepub', {'id': '__seriesId__', 'values': '__values__'}) }}';
-    route = route.replace('__values__', JSON.stringify(values));
-    $('#list_series').load(route, {'_method':'POST'});
+    var route = '{{ path('pumukitnewadmin_series_updatepub') }}';
+    $('#list_series').load(route, {'_method':'POST', 'values': values});
 
     return false;
 }
