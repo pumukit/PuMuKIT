@@ -69,18 +69,27 @@ Setup a development environment on Ubuntu 14.04. Go to [F.A.Q. section](#faq) if
     php composer.phar install
     ```
 
-8. Check environment requirements. Fix errors if any and check again.
-   Repeat until output it is OK. Fix warnings if necessary.
+8. Set the "date.timezone" setting in php.ini with your timezone (e.g. Europe/Madrid):
 
     ```
-    php app/check.php
+    sudo sed -i "s/;date.timezone =/date.timezone = Europe\/Madrid/g" /etc/php5/fpm/php.ini 
     ```
 
-9. Give cache and log directories the right permissions.
+9. Set "xdebug.max_nesting_level" to e.g. "1000" in PHP configuration to stop Xdebug's infinite recursion protection erroneously throwing a fatal error:
 
-   * Follow the instructions at Symfony [documentation](http://symfony.com/doc/current/book/installation.html#checking-symfony-application-configuration-and-setup) and clear cache:   
+    ```
+    echo "xdebug.max_nesting_level=1000" | sudo tee -a /etc/php5/fpm/conf.d/20-xdebug.ini
+    ```
 
-10. Prepare environment (init mongo db, clear cache)
+10. Check environment requirements. Fix errors if any and check again. Repeat until output it is OK. Fix warnings if necessary (PDO drivers are not necessary for PuMuKIT-2 to work).
+
+    * Go to http://{PuMuKIT-2-IP}/config.php for checking requirements.
+
+11. Give cache and log directories the right permissions.
+
+   * Follow the instructions at Symfony [documentation](http://symfony.com/doc/current/book/installation.html#checking-symfony-application-configuration-and-setup).
+
+12. Prepare environment (init mongo db, clear cache)
 
     ```
     php app/console doctrine:mongodb:schema:create
@@ -88,41 +97,41 @@ Setup a development environment on Ubuntu 14.04. Go to [F.A.Q. section](#faq) if
     php app/console cache:clear --env=prod
     ```
 
-11. Create the admin user
+13. Create the admin user
 
     ```
     php app/console fos:user:create admin --super-admin
     ```
 
-12. Load default values (tags, broadcasts and roles).
+14. Load default values (tags, broadcasts and roles).
 
     ```
     php app/console pumukit:init:repo all --force
     ```
 
-13. [Optional] Load example data (series and multimedia objects)
+15. [Optional] Load example data (series and multimedia objects)
 
     ```
     php app/console pumukit:init:example  --force    
     ```
 
-14. Add NGINX config file.
+16. Add NGINX config file.
 
     ```
     sudo cp doc/conf_files/nginx/default /etc/nginx/sites-available/default
     ```
 
-15. Restart server
+17. Restart server
 
     ```
     sudo service php5-fpm restart
     sudo service nginx restart
     ```
 
-16. Connect and enjoy
+18. Connect and enjoy
 
-    * Connect to the frontend here: `http://{MyPuMuKIT_IP}/`
-    * Connect to the backend (Admin UI) with the user created on step 6 here: `http://{MyPuMuKIT_IP}/admin`
+    * Connect to the frontend here: `http://{PuMuKIT-2-IP}/`
+    * Connect to the backend (Admin UI) with the user created on step 6 here: `http://{PuMuKIT-2-IP}/admin`
 
 
 ## Installation of a development environment
@@ -253,6 +262,28 @@ if (isset($_SERVER['HTTP_CLIENT_IP']) || isset($_SERVER['HTTP_X_FORWARDED_FOR'])
 ) {
 header('HTTP/1.0 403 Forbidden');
 exit('You are not allowed to access this file. Check '.basename(FILE).' for more information.');
+}
+*/
+```
+
+
+**Not allowed to access config.php via web**
+
+If you get this message when trying to access http://{PuMuKIT-2-IP}/config.php:
+```
+This script is only accessible from localhost.
+```
+
+Comment the following code in `web/config.php` file:
+
+```php
+/*
+if (!in_array(@$_SERVER['REMOTE_ADDR'], array(
+    '127.0.0.1',
+    '::1',
+))) {
+    header('HTTP/1.0 403 Forbidden');
+    exit('This script is only accessible from localhost.');
 }
 */
 ```
