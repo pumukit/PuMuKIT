@@ -50,11 +50,11 @@ Setup a development environment on Ubuntu 14.04. Go to [F.A.Q. section](#faq) if
     git clone https://github.com/campusdomar/PuMuKIT2.git /var/www/pumukit2
     ```
 
-5. Activate the 2.1.0-RC1 tag:
+5. Activate the 2.1.x branch:
 
     ```
     cd /var/www/pumukit2
-    git checkout 2.1.0-RC1
+    git checkout 2.1.x
     ```
 
 6. Install [composer](https://getcomposer.org/).
