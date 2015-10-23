@@ -6,7 +6,7 @@ To get the diff for a specific change, go to https://github.com/campusdomar/PuMu
 To get the diff between two versions, go to https://github.com/campusdomar/PuMuKIT2/compare/2.0.0...2.1.0-rc1
 
 
-* 2.1.0-rc1 (2015-10-23)
+* 2.1.0-RC1 (2015-10-23)
   * Production version
   * Bootstrap based Material design AdminUI
 
