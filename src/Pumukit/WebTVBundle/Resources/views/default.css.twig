@@ -1,11 +1,11 @@
 {% block body %}
 {# SET VARIABLES #}
-{% set default_contrast_background = default_contrast_background | default("#23527c") %}
-{% set default_light_background = default_light_background | default("#32475b") %}
+{% set default_contrast_background = default_contrast_background | default("#004162") %}
+{% set default_light_background = default_light_background | default("#fff") %}
 {% set default_content_background = default_content_background | default("#fff") %}
 
 {% set default_contrast_font = default_contrast_font | default("#fff") %}
-{% set default_light_font = default_light_font | default("#fff") %}
+{% set default_light_font = default_light_font | default("#004162") %}
 {% set default_content_font = default_content_font | default("#111") %}
 {% set default_content_link_font = default_content_link_font | default("#222") %}
 {% set default_content_link_selected_font = default_content_link_selected_font | default("#444") %}
@@ -13,7 +13,7 @@
 {% set breadcrumbs_separator = breadcrumbs_separator | default('»') %}
 {% set content_max_width = content_max_width | default("1400px") %}
 
-{% set menu_padding = menu_padding | default("10px 10px 10px 20px") %}
+{% set menu_padding = menu_padding | default("10px 10px 10px 30px") %}
 {% set page_background = page_background | default("#ddd") %}
 
 {# DEPENDABLE: If not set they will use other variables as default #}
@@ -39,7 +39,7 @@
 {% set navbar_font = navbar_background | default(default_light_font) %}
 {% set panel_default_background = panel_default_background | default(default_light_background) %}
 {% set panel_default_font = panel_default_font | default(default_light_font) %}
-
+{% set footer_max_width = footer_max_width | default(content_max_width) %}
 {# END SET VARIABLES#}
 body {
     background: {{ page_background }};
@@ -401,15 +401,6 @@ body.opencast-layout .breadcrumb_wrapper {
     line-height: 1;
     padding-top: 10px;
 }
-footer .parent-centering {
-    padding-top:10px;
-}
-footer .parent-centering:nth-child(1) {
-    background: #e1e1e2;
-}
-footer .parent-centering:nth-child(2) {
-    background: #c1c1c2;
-}
 .header {
     background: {{ header_background }};
 }
@@ -479,7 +470,7 @@ footer .parent-centering:nth-child(2) {
 }
 .widget.slidebar a {
     display: block;
-    font-size: 1.7em;
+    font-size: 1.3em;
     padding: {{ menu_padding }};
     color: {{ menu_font_color }};
 }
