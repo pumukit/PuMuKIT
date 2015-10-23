@@ -1,10 +1,8 @@
-PuMuKIT-2 Installation Guide
-====================================
+# PuMuKIT-2 Installation Guide
 
 *This page is updated to the 2.1 release*
 
-Requirements
--------------------------------------
+## Requirements
 
 PuMuKIT-2 is a LEMP (Linux, nginx, MongoDB, PHP) application, created with the Symfony2 framework. It uses libav-tools (or ffmpeg) to analyze the audiovisual data, as well as to transcode the data.
 
@@ -14,10 +12,9 @@ Use [composer](https://getcomposer.org/) to check and install the dependencies
 
 PuMuKIT-2 has been developed and is often installed on Linux Ubuntu but its use is not essential. It is known it works on Ubuntu 14.04. If it is installed on other Linux distributions, additional libraries may be required.
 
-Installation on Linux Ubuntu 14.04
-----------------------------------
+## Installation on Linux Ubuntu 14.04
 
-Setup a development environment on Ubuntu 14.04:
+Setup a development environment on Ubuntu 14.04. Go to [F.A.Q. section](## F.A.Q.) if any error is thrown:
 
 1. Update APT source list to install last version of MongoDB.
 
@@ -26,7 +23,6 @@ Setup a development environment on Ubuntu 14.04:
     echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
     sudo apt-get update
     ```
-
 
 2. Install dependencies of PuMuKIT-2 (see requirements):
 
@@ -38,73 +34,98 @@ Setup a development environment on Ubuntu 14.04:
     sudo apt-get install -y libav-tools libavcodec-extra
     ```
 
-3. Download the last version of PuMuKIT-2:
+3. Create web directory and give the right permissions:
+
+    ```
+    sudo mkdir -p /var/www
+    sudo adduser `whoami` www-data
+    sudo chown `whoami`:www-data -R /var/www
+    sudo chmod 0755 -R /var/www
+    sudo chmod g+s -R /var/www
+    ```
+
+4. Download the last version of PuMuKIT-2:
 
     ```
     git clone https://github.com/campusdomar/PuMuKIT2.git /var/www/pumukit2
+    ```
+
+5. Activate the 2.1.x branch:
+
+    ```
     cd /var/www/pumukit2
     git checkout 2.1.x
     ```
 
-4. Install [composer](https://getcomposer.org/).
+6. Install [composer](https://getcomposer.org/).
 
     ```
     curl -sS https://getcomposer.org/installer | php
     ```
 
-5. Install dependencies
+7. Install dependencies and provide PuMuKIT-2 parameters:
 
     ```
     php composer.phar install
     ```
 
-6. Prepare environment (check requirements, init mongo db, clear cache)
+8. Check environment requirements. Fix errors if any and check again.
+   Repeat until output it is OK. Fix warnings if necessary.
 
     ```
     php app/check.php
-    php app/console doctrine:mongodb:schema:create
-    php app/console cache:clear
     ```
 
-7. Create the admin user
+9. Give cache and log directories the right permissions.
+
+   * Follow the instructions at Symfony [documentation](http://symfony.com/doc/current/book/installation.html#checking-symfony-application-configuration-and-setup) and clear cache:   
+
+10. Prepare environment (init mongo db, clear cache)
+
+    ```
+    php app/console doctrine:mongodb:schema:create
+    php app/console cache:clear
+    php app/console cache:clear --env=prod
+    ```
+
+11. Create the admin user
 
     ```
     php app/console fos:user:create admin --super-admin
     ```
 
-8. Load default values (tags, broadcasts and roles).
+12. Load default values (tags, broadcasts and roles).
 
     ```
     php app/console pumukit:init:repo all --force
     ```
 
-9. [Optional] Load example data (series and multimedia objects)
+13. [Optional] Load example data (series and multimedia objects)
 
     ```
     php app/console pumukit:init:example  --force    
     ```
 
-10. Add NGINX config file.
+14. Add NGINX config file.
 
     ```
     sudo cp doc/conf_files/nginx/default /etc/nginx/sites-available/default
     ```
 
-11. Restart server
+15. Restart server
 
     ```
     sudo service php5-fpm restart
     sudo service nginx restart
     ```
 
-12. Connect and enjoy
+16. Connect and enjoy
 
     * Connect to the frontend here: `http://{MyPuMuKIT_IP}/`
     * Connect to the backend (Admin UI) with the user created on step 6 here: `http://{MyPuMuKIT_IP}/admin`
 
 
-Installation a development environment
--------------------------------------
+## Installation of a development environment
 
 To quick develop you could use the PHP built-in web server.
 
@@ -125,8 +146,7 @@ php bin/phpunit -c app
 php app/console server:run
 ```
 
-F.A.Q.
--------------------------------------
+## F.A.Q.
 
 **Configure max upload filesize**
 
@@ -187,3 +207,52 @@ Use MongoDB 2.6 or upper, the text search feature is enabled by default. In Ubun
 **403 Forbidden access to config.php and app_dev.php**
 
  * Uncomment code in `web/config.php` and `web/app_dev.php`
+
+
+**Add GitHub token**
+
+In case the `php composer.phar install` asks for a token with a  message like:
+
+```
+Could not fetch https://api.github.com/repos/VENDOR_NAME/NAME_Bundle/zipball/HASH_CODE, please create a GitHub OAuth token to go over the API rate limit
+Head to https://github.com/settings/tokens/new?scopes=repo&description=Composer+on+HOST_ID+DATE+TIME
+to retrieve a token. It will be stored in "/home/USER/.composer/auth.json" for future use by Composer.
+Token (hidden):
+```
+
+There is a rate limit on GitHub's API for downloading repos. In case of reaching that limit, Composer prompts the above message asking for authentication to download a repo.
+
+It is necessary to create a token and add it to composer.
+
+1.- Create an OAuth token on GitHub. Follow the instructions on [GitHub Help page](https://help.github.com/articles/creating-an-access-token-for-command-line-use/).
+
+2.- Add the token to the configuration running:
+
+```
+cd /var/www/pumukit2
+php composer.phar config -g github-oauth.github.com <oauthtoken>
+```
+
+Now Composer should install/update without asking for authentication.
+
+
+**Not allowed to access app_dev.php via web**
+
+If you get this message when trying to access http://{PuMuKIT-2-IP}/app_dev.php:
+```
+You are not allowed to access this file. Check app_dev.php for more information.
+```
+
+Comment the following code in `web/app_dev.php` file:
+
+```php
+/*
+// This check prevents access to debug front controllers that are deployed by accident to production servers.
+// Feel free to remove this, extend it, or make something more sophisticated.
+if (isset($_SERVER['HTTP_CLIENT_IP']) || isset($_SERVER['HTTP_X_FORWARDED_FOR']) || !(in_array(@$_SERVER['REMOTE_ADDR'], array('127.0.0.1', 'fe80::1', '::1')) || php_sapi_name() === 'cli-server')
+) {
+header('HTTP/1.0 403 Forbidden');
+exit('You are not allowed to access this file. Check '.basename(FILE).' for more information.');
+}
+*/
+```
