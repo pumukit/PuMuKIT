@@ -69,25 +69,31 @@ Setup a development environment on Ubuntu 14.04. Go to [F.A.Q. section](#faq) if
     php composer.phar install
     ```
 
-8. Set the "date.timezone" setting in php.ini with your timezone (e.g. Europe/Madrid):
+8. Give cache and log directories the right permissions.
+
+   * Follow the instructions at Symfony [documentation](http://symfony.com/doc/current/book/installation.html#checking-symfony-application-configuration-and-setup).
+
+9. Set the "date.timezone" setting in php.ini with your timezone (e.g. Europe/Madrid):
 
     ```
     sudo sed -i "s/;date.timezone =/date.timezone = Europe\/Madrid/g" /etc/php5/fpm/php.ini 
     ```
 
-9. Set "xdebug.max_nesting_level" to e.g. "1000" in PHP configuration to stop Xdebug's infinite recursion protection erroneously throwing a fatal error:
+10. Set "xdebug.max_nesting_level" to "1000" in PHP configuration to stop Xdebug's infinite recursion protection erroneously throwing a fatal error:
 
     ```
     echo "xdebug.max_nesting_level=1000" | sudo tee -a /etc/php5/fpm/conf.d/20-xdebug.ini
     ```
 
-10. Check environment requirements. Fix errors if any and check again. Repeat until output it is OK. Fix warnings if necessary (PDO drivers are not necessary for PuMuKIT-2 to work).
+11. Check environment requirements:
 
-    * Go to `http://{PuMuKIT-2-IP}/config.php` for checking requirements.
-
-11. Give cache and log directories the right permissions.
-
-   * Follow the instructions at Symfony [documentation](http://symfony.com/doc/current/book/installation.html#checking-symfony-application-configuration-and-setup).
+    * Go to `http://{PuMuKIT-2-HOST}/config.php` for checking requirements.
+    * Fix errors if any and restart PHP5-FPM service. Fix warnings if necessary (PDO drivers are not necessary for PuMuKIT-2 to work).
+      ```
+      sudo service php5-fpm restart
+      ```
+    * Check requirements again
+    * Repeat all steps until the MAJOR PROBLEMS list disappears.
 
 12. Prepare environment (init mongo db, clear cache)
 
@@ -130,8 +136,8 @@ Setup a development environment on Ubuntu 14.04. Go to [F.A.Q. section](#faq) if
 
 18. Connect and enjoy
 
-    * Connect to the frontend here: `http://{PuMuKIT-2-IP}/`
-    * Connect to the backend (Admin UI) with the user created on step 6 here: `http://{PuMuKIT-2-IP}/admin`
+    * Connect to the frontend here: `http://{PuMuKIT-2-HOST}/`
+    * Connect to the backend (Admin UI) with the user created on step 6 here: `http://{PuMuKIT-2-HOST}/admin`
 
 
 ## Installation of a development environment
@@ -247,7 +253,7 @@ Now Composer should install/update without asking for authentication.
 
 **Not allowed to access app_dev.php via web**
 
-If you get this message when trying to access http://{PuMuKIT-2-IP}/app_dev.php:
+If you get this message when trying to access http://{PuMuKIT-2-HOST}/app_dev.php:
 ```
 You are not allowed to access this file. Check app_dev.php for more information.
 ```
@@ -269,7 +275,7 @@ exit('You are not allowed to access this file. Check '.basename(FILE).' for more
 
 **Not allowed to access config.php via web**
 
-If you get this message when trying to access http://{PuMuKIT-2-IP}/config.php:
+If you get this message when trying to access http://{PuMuKIT-2-HOST}/config.php:
 ```
 This script is only accessible from localhost.
 ```
