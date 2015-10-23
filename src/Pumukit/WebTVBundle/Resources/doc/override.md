@@ -59,7 +59,7 @@ $ touch src/Pumukit/ExampleOrg/WebTVBundle/Resources/views/custom.css.twig
 `
 
 ```twig
-{#s rc/Pumukit/ExampleOrg/WebTVBundle/Resources/views/custom.css.twig #}
+{# src/Pumukit/ExampleOrg/WebTVBundle/Resources/views/custom.css.twig #}
 {% extends 'PumukitWebTVBundle::default.css.twig' %}
 
 {% block body %}
@@ -71,56 +71,64 @@ $ touch src/Pumukit/ExampleOrg/WebTVBundle/Resources/views/custom.css.twig
 {% set font_base_color = "#131" %}
 
 {{ parent() }}
+{# Add your own CSS rules #}
 {% endblock %}
 ```
 #### List of available variables:
 
-##### Most common
+##### Basic ones
 ```twig
-a_link_font_color                 default("#337ab7")  {# css rule  for a links #}
-a_link_selected_font_color        default("#23527c")  {# css rule  for selected a links #}
-breadcrumbs_background            default("#ed1556")  {# css rule  for a breadcrumbs background  #}
-breadcrumbs_font_color            default("white")    {# css rule  for a breadcrumbs font color  #}
-font_base_color                   default("#000")     {# css rule  for base font color  #}
-header_background                 default("#fff")     {# css rule  for header background  #}
-menu_background                   default("#004361")  {# css rule  for menu background  #}
-menu_font_color                   default("#fff")     {# css rule for menu font color  #}
-page_background                   default("#ddd")     {# css rule for body background  #}
-```
-##### All
-```
-a_link_font_color                 default("#337ab7")
-a_link_selected_font_color        default("#23527c")  
-breadcrumbs_background            default("#ed1556")  
-breadcrumbs_font_color            default("white")  
-breadcrumbs_separator             default('»')  
-content_background                default("#fff")  
-content_max_width                 default("1400px")  
-font_base_color                   default("#000")  
-header_background                 default("#fff")  
-menu_background                   default("#004361")  
-menu_font_color                   default("#fff")  
-menu_padding                      default("10px 10px 10px 20px")  
-menu_selected_background          default("#888")  
-page_background                   default("#ddd")  
+default_contrast_background              {# Breadcrumbs and a few other details #}
+default_light_background                 {# Slidebar and others background #}
+default_content_background               {# content background #}
 
-breadcrumbs_back_background       default(breadcrumbs_background)  
-breadcrumbs_max_width             default(content_max_width)  
-header_max_width                  default(content_max_width)  
+default_contrast_font                    {# Font color for the contrast background #}
+default_light_font                       {# Font color for the light background #}
+default_content_font                     {# Font color for the main content #}  
+default_content_link_font                {# Font color for links in the main content #}
+default_content_link_selected_font       {# Font color for selected links in the main content #}
+
+breadcrumbs_separator                    {# String to use as separator for breadcrumbs #}
+content_max_width                        {# Max width of your webpage content #}
+
+menu_padding                             {# Customized menu padding #}
+page_background                          {# Background for the body (behind the content) #}
+```
+##### Other rules
+```
+breadcrumbs_background            default(default_contrast_background)
+breadcrumbs_font_color            default(default_contrast_font)
+breadcrumbs_back_background       default(breadcrumbs_background)
+breadcrumbs_max_width             default(content_max_width)
+content_background                default(default_content_background)
+header_max_width                  default(content_max_width)
+header_background                 default(default_light_background)
+label_background                  default(default_contrast_background)
+label_font                        default(default_contrast_font)
+menu_background                   default(default_light_background)
+menu_font_color                   default(default_light_font)
+menu_selected_background          default(default_light_font)
+menu_selected_font_color          default(default_light_background)
+mmobj_font_color                  default(default_content_font)
+mmobj_selected_font_color         default(default_content_font)
+mmobj_selected_background         default(page_background)
+mmobj_serie_background            default(mmobj_selected_background)
+mmobj_serie_font                  default(mmobj_selected_font_color)
+navbar_background                 default(default_light_background)
+navbar_font                       default(default_light_font)
+panel_default_background          default(default_light_background)
+panel_default_font                default(default_light_font)
+
 ```
 ### 3.- Change the footer
 Add your HTML on `src/Pumukit/ExampleOrg/WebTVBundle/Resources/views/Layout/footer.html.twig` and its CSS in the base css file.
 
 
 ### 4.- Logo
-Override the `Pumukit/ExampleOrg/WebTVBundle/Resources/views/layout.html.twig` template.
+Override the `Pumukit/ExampleOrg/WebTVBundle/Resources/views/logo.html.twig` template.
 
 ```html
-{% extends 'PumukitWebTVBundle:Layout:baseheader.html.twig' %}
-
-{% block logo_url %}
-    <img src="{{ asset('bundles/pumukitexampleorgwebtv/images/logo.png') }}" class="img-responsive">
-{% endblock %}
+<img src="{{ asset('bundles/pumukitwebtv/images/logo_cies.png') }}" class="img-responsive" style="max-height:100%">
 ```
 
 
@@ -153,6 +161,7 @@ The number of columns for almost every multimedia object and series listing.
     columns_objs_bytag:        3             # Number of columns for bytag.  (Default 2)
     columns_objs_search:       3             # Number of columns for search. (Default 2)
     columns_objs_announces:    3             # Number of columns for announces. (Default 1);
+    columns_objs_catalogue:    2             # Number of columns for full catalogue. (Default 1)
 ```
 
 #### 6.2 Objects per page
@@ -168,4 +177,12 @@ The number of objects per page in the templates using the pager.
 The statistics viewed at the bottom of the lateral menu.
 ```yaml
     menu_stats:                true          # To show stats on the menu or not. (Default true)
+```
+
+#### 6.4 Misc
+Other values
+```yaml
+    catalogue_thumbnails:      true          # If set to true, the full catalogue will list thumbnails instead of text.
+    menu_stats:                true          # To show stats on the menu or not. (Default true)
+    categories_tag_cod:        UNESCO       # Cod of Root Tag to create the Categories page.
 ```
