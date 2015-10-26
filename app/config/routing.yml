@@ -11,11 +11,6 @@ pumukit_encoder:
 pumukitwizard:
     resource: "@PumukitWizardBundle/Resources/config/routing.yml"
 
-pumukit_arca:
-    resource: "@PumukitArcaBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
 pumukit_live:
     resource: "@PumukitLiveBundle/Controller/"
     type:     annotation
