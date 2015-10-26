@@ -313,6 +313,25 @@ class MultimediaObjectRepository extends DocumentRepository
         return $qb->getQuery()->execute();
     }
 
+    /**
+     * Find multimedia objects by tag id without tag children
+     *
+     * @param Tag|EmbeddedTag $tag
+     * @param array $sort
+     * @param int $limit
+     * @param int $page
+     * @return ArrayCollection
+     */
+    public function findWithGeneralTag(Tag $tag, $sort = array(), $limit = 0, $page = 0)
+    {
+        $qb = $this->createBuilderWithGeneralTag($tag, $sort);
+
+        if ($limit > 0){
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
+        return $qb->getQuery()->execute();
+    }
 
     /**
      * Create QueryBuilder to find multimedia objects by tag id
