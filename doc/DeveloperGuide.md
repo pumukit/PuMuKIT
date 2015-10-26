@@ -84,7 +84,37 @@ src/Pumukit/MyUniversityName/Feature3Bundle
 Override a Bundle
 -----------------
 
-You can see an example on how to override a Bundle in [WebTVBundle](../src/Pumukit/WebTVBundle/Resources/doc/OverrideGuide.md../src/Pumukit/WebTVBundle/Resources/doc/OverrideGuide.md).
+#### 1. Create the new override-bundle.
+
+`
+$ php app/console  generate:bundle --namespace=Pumukit/MyUniversityName/OverridenBundle --dir=src --no-interaction
+`
+
+#### 2. Register the new bundle as the "parent" of the original Pumukit bundle (overriden-bundle):
+
+
+```php
+#src/Pumukit/MyUniversityName/OverridenBundle/PumukitMyUniversityNameOverridenBundle.php
+<?php
+namespace Pumukit\MyUniversityName\OverridenBundle;
+
+use Symfony\Component\HttpKernel\Bundle\Bundle;
+
+class PumukitMyUniversityNameOverridenBundle extends Bundle
+{
+    public function getParent()
+    {
+        return 'PumukitOverridenBundle';
+    }
+}
+```
+
+For more info see: http://symfony.com/doc/current/cookbook/bundles/inheritance.html
+
+#### 3. Install the new bundle (if necessary).
+`
+$ php app/console  pumukit:install:bundle Pumukit/MyUniversityName/OverridenBundle/PumukitMyUniversityNameOverridenBundle
+`
 
 #### Examples:
 
