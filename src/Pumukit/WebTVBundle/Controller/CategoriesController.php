@@ -26,6 +26,11 @@ class CategoriesController extends Controller
         if(!isset($groundsRoot)){
             throw $this->createNotFoundException('The parent with cod: '.$parentCod.' was not found. Please add it to the Tags database or configure another categories_tag_cod in parameters.yml');
         }
+        
+        $listGeneralParam = null;
+        if($this->container->hasParameter('categories.list_general_tags')) {
+            $listGeneralParam = $this->container->getParameter('categories.list_general_tags');
+        }
 
         $allGrounds = array();
 
@@ -56,6 +61,6 @@ class CategoriesController extends Controller
                 }
             }
         }
-        return array('allGrounds' => $allGrounds, 'title' => $groundsRoot->getTitle() );
+        return array('allGrounds' => $allGrounds, 'title' => $groundsRoot->getTitle(), 'list_general_tags' => $listGeneralParam );
     }
 }
