@@ -23,27 +23,22 @@ class ByTagController extends Controller
       if( $this->container->hasParameter('columns_objs_bytag')){
           $numberCols = $this->container->getParameter('columns_objs_bytag');
       }
+      $limit = 10;
+      if ($this->container->hasParameter('limit_objs_bytag')){
+        $limit = $this->container->getParameter('limit_objs_bytag');
+      }
 
       $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
 
       if( $request->get('list_only_general') ){
         //This should be included on SchemaBundle:MultimediaObjectRepository.
-        $tags = $tag->getChildren();
-        $mongoIds = array();
-        foreach($tags as $document){
-            $mongoIds[] = new \MongoId($document->getId());
-        }
-        $mmobjs = $repo->createStandardQueryBuilder()
-            ->field('tags._id')->in(array(new \MongoId($tag->getId())))
-            ->field('tags._id')->notIn($mongoIds);
-
-        $mmobjs->sort(array('record_date' => 1));
+        $mmobjs = $repo->createBuilderWithGeneralTag($tag, array('record_date' => 1));
       }
       else {
         $mmobjs = $repo->createBuilderWithTag($tag, array('record_date' => 1));
       }
 
-      $pagerfanta = $this->createPager($mmobjs, $request->query->get('page', 1));
+      $pagerfanta = $this->createPager($mmobjs, $request->query->get('page', 1), $limit);
       $this->updateBreadcrumbs($tag->getTitle(), 'pumukit_webtv_bytag_multimediaobjects', array('cod' => $tag->getCod()));
 
       return array('title' => 'Multimedia objects with tag',
@@ -81,12 +76,8 @@ class ByTagController extends Controller
         $breadcrumbs->addList($title, $routeName, $routeParameters);
     }
 
-    private function createPager($objects, $page)
+    private function createPager($objects, $page, $limit = 10)
     {
-        $limit = 10;
-        if ($this->container->hasParameter('limit_objs_bytag')){
-          $limit = $this->container->getParameter('limit_objs_bytag');
-        }
         $adapter = new DoctrineODMMongoDBAdapter($objects);
         $pagerfanta = new Pagerfanta($adapter);
         $pagerfanta->setMaxPerPage($limit);

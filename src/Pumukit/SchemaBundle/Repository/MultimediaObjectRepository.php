@@ -32,7 +32,7 @@ class MultimediaObjectRepository extends DocumentRepository
           ->getQuery()
           ->execute();
     }
-    
+
     /**
      * Find multimedia object prototype
      *
@@ -64,7 +64,7 @@ class MultimediaObjectRepository extends DocumentRepository
           ->sort('rank', 1)
           ->getQuery()
           ->execute();
-        
+
         return $aux;
     }
 
@@ -81,7 +81,7 @@ class MultimediaObjectRepository extends DocumentRepository
           ->getQuery()
           ->getSingleResult();
     }
-    
+
     /**
      * Find multimedia objects by person id
      *
@@ -211,7 +211,7 @@ class MultimediaObjectRepository extends DocumentRepository
                         }
                     }
                 }
-            } 
+            }
         }
 
         return $persons;
@@ -325,10 +325,30 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $qb = $this->createStandardQueryBuilder()
             ->field('tags._id')->equals(new \MongoId($tag->getId()));
-        
+
         if (0 !== count($sort) ){
           $qb->sort($sort);
-        }        
+        }
+
+        return $qb;
+    }
+
+    /**
+    * Create QueryBuilder to find multimedia objects with Tag and without any Tag children.
+    *
+    * @param Tag|EmbeddeTag $tag
+    * @param array $sort
+    * @return QueryBuilder
+    */
+    public function createBuilderWithGeneralTag(Tag $tag, $sort = array())
+    {
+        $qb = $this->createStandardQueryBuilder()
+            ->field('tags._id')->in(array(new \MongoId($tag->getId())))
+            ->field('tags.path')->notIn(array(new \MongoRegex('/'.preg_quote($tag->getPath()). '.*\|/')));
+
+        if (0 !== count($sort) ){
+          $qb->sort($sort);
+        }
 
         return $qb;
     }
@@ -361,11 +381,11 @@ class MultimediaObjectRepository extends DocumentRepository
         $mongoIds = $this->getMongoIds($tags);
         $qb =  $this->createStandardQueryBuilder()
           ->field('tags._id')->in($mongoIds);
-        
+
         if (0 !== count($sort) ){
           $qb->sort($sort);
-        }        
-        
+        }
+
         if ($limit > 0){
             $qb->limit($limit)->skip($limit * $page);
         }
@@ -387,10 +407,10 @@ class MultimediaObjectRepository extends DocumentRepository
         $mongoIds = $this->getMongoIds($tags);
         $qb =  $this->createStandardQueryBuilder()
           ->field('tags._id')->all($mongoIds);
-        
+
         if (0 !== count($sort) ){
             $qb->sort($sort);
-        }        
+        }
 
         if ($limit > 0){
             $qb->limit($limit)->skip($limit * $page);
@@ -410,7 +430,7 @@ class MultimediaObjectRepository extends DocumentRepository
         $mongoIds = $this->getMongoIds($tags);
         $qb =  $this->createStandardQueryBuilder()
           ->field('tags._id')->all($mongoIds);
-        
+
         return $qb->getQuery()->getSingleResult();
     }
 
@@ -427,10 +447,10 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $qb =  $this->createStandardQueryBuilder()
           ->field('tags._id')->notEqual(new \MongoId($tag->getId()));
-        
+
         if (0 !== count($sort) ){
             $qb->sort($sort);
-        }        
+        }
 
         if ($limit > 0){
             $qb->limit($limit)->skip($limit * $page);
@@ -467,10 +487,10 @@ class MultimediaObjectRepository extends DocumentRepository
         $mongoIds = $this->getMongoIds($tags);
         $qb =  $this->createStandardQueryBuilder()
           ->field('tags._id')->notIn($mongoIds);
-        
+
         if (0 !== count($sort) ){
             $qb->sort($sort);
-        }        
+        }
 
         if ($limit > 0){
             $qb->limit($limit)->skip($limit * $page);
@@ -657,7 +677,7 @@ class MultimediaObjectRepository extends DocumentRepository
 
         return $multimediaObjects;
     }
-    
+
 
     /**
      * Find by broadcast
@@ -725,7 +745,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * having status different than PROTOTYPE.
      * These are the multimedia objects we need to show
      * in series.
-     * 
+     *
      * @return QueryBuilder
      */
     public function createStandardQueryBuilder()
@@ -747,7 +767,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findStandardBy(array $criteria, array $sort = null, $limit = null, $skip = null)
     {
       $criteria["status"] = MultimediaObject::STATUS_PUBLISHED;
-      return $this->getDocumentPersister()->loadAll($criteria, $sort, $limit, $skip)->toArray(false);      
+      return $this->getDocumentPersister()->loadAll($criteria, $sort, $limit, $skip)->toArray(false);
     }
 
     /**
@@ -823,7 +843,7 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
-     * Count total duration of standard (not prototype) multimedia objects. 
+     * Count total duration of standard (not prototype) multimedia objects.
      *
      * @return integer total of seconds
      */
