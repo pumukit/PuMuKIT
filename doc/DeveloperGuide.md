@@ -81,8 +81,8 @@ src/Pumukit/MyUniversityName/Feature3Bundle
 ```
 
 
-Override a Bundle
------------------
+How to override a Bundle
+------------------------
 
 #### 1. Create the new override-bundle.
 
@@ -122,8 +122,8 @@ $ php app/console  pumukit:install:bundle Pumukit/MyUniversityName/OverridenBund
 * [Cmar/WebTVBundle](../src/Pumukit/Cmar/WebTVBundle/Resources/doc/AdminGuide.md) It is a new custom-Bundle developed by the Cmar organization that overrides WebTVBundle
 
 
-Create a new Bundle
-----------------------
+How to create a new Bundle
+--------------------------
 
 #### 1.1 Create the bundle scheleton.
 
