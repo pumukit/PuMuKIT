@@ -1,15 +1,17 @@
 ﻿PuMuKIT-2 Developer & Architecture Guide
 ========================================
 
+*This page is updated to the 2.1 release*
+
 Architecture
 ============
 
 Technologies
 ------------
 
-PuMuKIT-2 has been built using the below technologies. It is recommended to read the documentation of each technology in order to extend PuMuKIT-2 or create new features.
+PuMuKIT-2 has been built using the below technologies. It is recommended to read the documentation of each technology if you are interested on extending PuMuKIT-2 or create new features.
 
-* Symfony 2.6: [web](http://symfony.com) | [doc](http://symfony.com/doc/2.6/index.html)
+* Symfony 2: [web](http://symfony.com) | [doc](http://symfony.com/doc/current/index.html)
 * PHP5: [web](http://php.net/) | [doc](http://php.net/manual/en/)
 * MongoDB 3.0: [web](https://www.mongodb.org/) | [doc](https://docs.mongodb.org/v3.0/)
 * Doctrine MongoDB ODM 1.0: [web](http://www.doctrine-project.org/projects/mongodb-odm.html) | [doc](http://doctrine-mongodb-odm.readthedocs.org/en/latest/)
@@ -22,7 +24,7 @@ PuMuKIT-2 has been built using the below technologies. It is recommended to read
 List of Bundles
 ---------------
 
-PuMuKIT-2 has been developed with the Symfony framework. Symfony 2.x is based on bundles, and so, PuMuKIT-2 is structured in bundles. There is a list of bundles that come activated by default with the project, these are mandatory for the code to work. There is also a list of optional bundles that come deactivated. In order to install/activate them, follow the instructions in the guide of each bundle.
+PuMuKIT-2 has been developed with the Symfony 2 framework. Symfony 2 is based on bundles, and so, PuMuKIT-2 is structured in bundles too. There is a list of bundles that are activated by default in a standard PuMuKIT installation. There is also a list of optional bundles that will not be activated by default. In order to install/activate them, follow the instructions in each bundle guide.
 
 Activated by default:
 * ArcaBundle: provides a service to add RSS for the Academic Community.
@@ -50,7 +52,7 @@ Not activated by default:
 List of Events
 --------------
 
-Custom events added to PuMuKIT-2:
+Symfony 2 works with events to listen to and to take actions when these events are dispatched. Along with Symfony 2 events there are custom events added to PuMuKIT-2:
 * *multimediaobject.update*: thrown each time a multimedia object is updated.
 * *multimediaobject.view*: thrown each time a multimedia object is played in the webtv portal.
 * *job.success*: thrown each time a job is finished successfully in the system.
