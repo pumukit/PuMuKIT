@@ -388,11 +388,16 @@ body.opencast-layout .breadcrumb_wrapper {
     border-radius: 0px;
 }
 .cover {
-    background: #000;
-    color: #fff;
+    background: {{ default_light_background }};
+    color: {{ default_light_font }};
     font-weight: bold;
     font-size: 120%;
     opacity: .8;
+}
+a:hover .cover {
+    background: {{ default_light_font }};
+    color: {{ default_light_background }};
+
 }
 .media-heading.subtitle{
     line-height:0.5;
