@@ -7,7 +7,7 @@
 <div style="clear:both"></div>
 {% endif %}
 <div class="col-md-6 channel-list">
-    <a href="{{ path('pumukit_webtv_bytag_multimediaobjects', {'cod' : parent.cod })}}">
+    <a href="{{ parent.url }}">
         <h2>
             {{ parent.title }}
             {% set count = parent.num_mmobjs %}
@@ -19,17 +19,6 @@
         </h2>
     </a>
     <ul>
-        {% if list_general_tags |default(false) %}
-        <li>
-            {% if parent.num_mmobjs > 0 %}
-            <a href="{{ path('pumukit_webtv_bytag_multimediaobjects', {'cod' : parent.cod, 'list_only_general': true })}}">
-                <p>{% trans %} General {% endtrans %} {{ parent.title }} ({%trans%} All {% endtrans %} {{ parent.num_mmobjs }})</p>
-            </a>
-            {% else %}
-            <p class="disabled">{% trans %} General {% endtrans %} {{ parent.title }} ({%trans%} All {% endtrans %} {{ parent.num_mmobjs }})</p>
-            {% endif %}
-        </li>
-        {% endif %}
         {% for child in parent.children %}
         {% if child.children is empty %}
         {% set markdown = 'p' %}
@@ -38,7 +27,7 @@
         {% endif %}
         <li>
             {% if child.num_mmobjs > 0 %}
-            <a href="{{ path('pumukit_webtv_bytag_multimediaobjects', {'cod' : child.cod })}}">
+            <a href="{{ child.url }}">
                 <{{markdown}}>{{ child.title }} ({%trans%} All {% endtrans %} {{ child.num_mmobjs }})</{{markdown}}>
             </a>
             {% else %}
@@ -49,7 +38,7 @@
                 {% for grandchild in child.children %}
                 <li>
                     {% if grandchild.num_mmobjs > 0 %}
-                    <a href="{{ path('pumukit_webtv_bytag_multimediaobjects', {'cod' : grandchild.cod })}}">
+                    <a href="{{ grandchild.url }}">
                         <p>{{ grandchild.title }} ({{grandchild.num_mmobjs }})</p>
                     </a>
                     {% else %}
