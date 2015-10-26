@@ -33,15 +33,19 @@ class ByTagController extends Controller
       if( $request->get('list_only_general') ){
         //This should be included on SchemaBundle:MultimediaObjectRepository.
         $mmobjs = $repo->createBuilderWithGeneralTag($tag, array('record_date' => 1));
+        $title = $this->get('translator')->trans("General %title%", array('%title%' => $tag->getTitle()));
+        $this->updateBreadcrumbs($title, 'pumukit_webtv_bytag_multimediaobjects', array('cod' => $tag->getCod(), 'list_only_general' => true));
       }
       else {
         $mmobjs = $repo->createBuilderWithTag($tag, array('record_date' => 1));
+        $this->updateBreadcrumbs($tag->getTitle(), 'pumukit_webtv_bytag_multimediaobjects', array('cod' => $tag->getCod()));
+        $title = $tag->getTitle();
       }
 
       $pagerfanta = $this->createPager($mmobjs, $request->query->get('page', 1), $limit);
-      $this->updateBreadcrumbs($tag->getTitle(), 'pumukit_webtv_bytag_multimediaobjects', array('cod' => $tag->getCod()));
 
-      return array('title' => 'Multimedia objects with tag',
+      $title = $this->get('translator')->trans('Multimedia objects with tag: %title%', array('%title%' => $title));
+      return array('title' => $title,
                  'objects' => $pagerfanta,
                  'tag' => $tag,
                  'number_cols' => $numberCols);
@@ -64,7 +68,10 @@ class ByTagController extends Controller
       $pagerfanta = $this->createPager($series, $request->query->get('page', 1));
       $this->updateBreadcrumbs($tag->getTitle(), 'pumukit_webtv_bytag_series', array('cod' => $tag->getCod()));
 
-      return array('title' => 'Series with tag',
+      $title = $tag->getTitle();
+      $title = $this->get('translator')->trans('Series with tag: %title%', array('%title%' => $title));
+      
+      return array('title' => $title,
                  'objects' => $pagerfanta,
                  'tag' => $tag,
                  'number_cols' => $numberCols);
@@ -73,7 +80,7 @@ class ByTagController extends Controller
     private function updateBreadcrumbs($title, $routeName, array $routeParameters = array())
     {
         $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
-        $breadcrumbs->addList($title, $routeName, $routeParameters);
+        $breadcrumbs->add($title, $routeName, $routeParameters);
     }
 
     private function createPager($objects, $page, $limit = 10)
