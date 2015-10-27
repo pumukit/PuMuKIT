@@ -1,4 +1,4 @@
-PUMUKIT-2
+PuMuKIT-2
 =========
 
 PuMuKIT-2 is an Open Source Video Platform that provides unparalleled organization, flexibility, accessibility, and scalability.
