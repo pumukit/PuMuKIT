@@ -11,4 +11,4 @@ http://pumukit.org
 
 PuMuKIT-2 Documentation Project
 -------------------------------
-https://github.com/campusdomar/PuMuKIT2-doc
+https://github.com/campusdomar/PuMuKIT2-doc/tree/2.1.x
