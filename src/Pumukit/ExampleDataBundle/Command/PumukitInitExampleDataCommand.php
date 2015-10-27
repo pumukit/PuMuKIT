@@ -105,7 +105,7 @@ EOT
                         $multimediaObject = $factoryService->createMultimediaObject($series);
                         $this->load_multimediaobject($multimediaObject, $series, "Access grid");
                         $this->load_track_multimediaobject($multimediaObject, '8', '24', false);
-                        $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUBDECISIONS","PUBCHANNELS","PUCHARCA","Dscience","Dhealth"));
+                        $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUBDECISIONS","PUBCHANNELS","PUCHWEBTV","Dscience","Dhealth"));
                         $this->load_people_multimediaobject($multimediaObject, 'Will', $actorRole);
                         $this->load_pic_multimediaobject($multimediaObject, '17');
                   }
@@ -187,7 +187,7 @@ EOT
                         $multimediaObject = $factoryService->createMultimediaObject($series);
                         $this->load_multimediaobject($multimediaObject, $series, "Energy materials and environment");
                         $this->load_track_multimediaobject($multimediaObject, '12', '40', false);
-                        $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUCHARCA","Dhealth","Dtechnical"));
+                        $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUCHWEBTV","Dhealth","Dtechnical"));
                         $this->load_people_multimediaobject($multimediaObject, 'Marcos', $presenterRole);
                         $this->load_pic_multimediaobject($multimediaObject, '28');
                   }
@@ -222,7 +222,7 @@ EOT
                         $multimediaObject = $factoryService->createMultimediaObject($series);
                         $this->load_multimediaobject($multimediaObject, $series, "Promo");
                         $this->load_track_multimediaobject($multimediaObject, '14', '47', false);
-                        $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUCHARCA","Dscience","Dtechnical"));
+                        $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUCHWEBTV","Dscience","Dtechnical"));
                         $this->load_pic_multimediaobject($multimediaObject, '30');
                   }
 
@@ -250,7 +250,7 @@ EOT
                         $multimediaObject = $factoryService->createMultimediaObject($series);
                         $this->load_multimediaobject($multimediaObject, $series, "First");
                         $this->load_track_multimediaobject($multimediaObject, '16', '53', false);
-                        $this->load_tags_multimediaobject($multimediaObject, array("PUDEPD3","PUCHARCA","Dtechnical","Dhumanities"));
+                        $this->load_tags_multimediaobject($multimediaObject, array("PUDEPD3","PUCHWEBTV","Dtechnical","Dhumanities"));
                         $this->load_people_multimediaobject($multimediaObject, 'Ana', $actorRole);
                         $this->load_pic_multimediaobject($multimediaObject, '33');
 
@@ -271,7 +271,7 @@ EOT
                         $multimediaObject = $factoryService->createMultimediaObject($series);
                         $this->load_multimediaobject($multimediaObject, $series, "Conference");
                         $this->load_track_multimediaobject($multimediaObject, '17', '54', false);
-                        $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEREV","PUDEPD3","PUCHARCA","Dscience","Dhumanities"));
+                        $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEREV","PUDEPD3","PUCHWEBTV","Dscience","Dhumanities"));
                         $this->load_pic_multimediaobject($multimediaObject, '35');
                   }
 

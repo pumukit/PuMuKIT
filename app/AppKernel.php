@@ -31,7 +31,6 @@ class AppKernel extends Kernel
             new Pumukit\OpencastBundle\PumukitOpencastBundle(),
             new Pumukit\WorkflowBundle\PumukitWorkflowBundle(),
             new Pumukit\WizardBundle\PumukitWizardBundle(),
-            new Pumukit\ArcaBundle\PumukitArcaBundle(),
             new Pumukit\WebTVBundle\PumukitWebTVBundle(),
             new Pumukit\StatsBundle\PumukitStatsBundle(),
         );

@@ -1,0 +1,4 @@
+pumukit_arca_bundle:
+    resource: "@PumukitArcaBundle/Controller/"
+    type:     annotation
+    prefix:   /

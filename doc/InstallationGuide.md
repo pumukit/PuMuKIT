@@ -14,7 +14,7 @@ PuMuKIT-2 has been developed and is often installed on Linux Ubuntu but its use 
 
 ## Installation on Linux Ubuntu 14.04
 
-Setup a development environment on Ubuntu 14.04. Go to [F.A.Q. section](#faq) if any error is thrown:
+Step by step instructions for setting up a single-server PuMuKIT deployment. (Go to [F.A.Q. section](#faq) if any error is thrown):
 
 1. Update APT source list to install last version of MongoDB.
 
@@ -142,7 +142,8 @@ Setup a development environment on Ubuntu 14.04. Go to [F.A.Q. section](#faq) if
 
 ## Installation of a development environment
 
-To quick develop you could use the PHP built-in web server.
+If you want set up a PuMuKIT development environment, additionally to the previous steps you should:
+ 
 
 ```
 # Use develop
@@ -156,7 +157,10 @@ php app/console cache:clear
 
 # Execute tests
 php bin/phpunit -c app
+```
 
+To quick develop you could use the PHP built-in web server:
+```
 # Start server
 php app/console server:run
 ```
