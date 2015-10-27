@@ -1,10 +1,14 @@
-PUMUKIT2
-========
+PuMuKIT-2
+=========
 
-Site
-----
+PuMuKIT-2 is an Open Source Video Platform that provides unparalleled organization, flexibility, accessibility, and scalability.
+Well-designed and well-engineered PuMuKIT-2 is the ideal solution for any organization with large collections of video or audio.
+
+Project Website
+---------------
 http://pumukit.org
 
-Source
-------
-https://github.com/campusdomar/PuMuKIT2
+
+PuMuKIT-2 Documentation Project
+-------------------------------
+https://github.com/campusdomar/PuMuKIT2-doc
