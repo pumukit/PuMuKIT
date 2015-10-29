@@ -100,7 +100,14 @@ p.disabled {
     background: {{ breadcrumbs_back_background }};
 }
 {% if big_breadcrumbs is defined %}
+@media (max-width: 1199px) {
 .title-for-crumbs {
+
+    display: none;
+}
+}
+.title-for-crumbs.always-hide {
+
     display: none;
 }
 .breadcrumb > li:last-of-type {
@@ -192,7 +199,7 @@ p.disabled {
 .info {
     float: left;
     padding-left: 10px;
-    max-width: 55%;
+    max-width: 65%;
     min-height: 60px;
     overflow: hidden;
     display: inline;
