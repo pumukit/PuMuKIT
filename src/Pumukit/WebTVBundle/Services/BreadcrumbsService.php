@@ -17,7 +17,7 @@ class BreadcrumbsService
     private $breadcrumbs;
     private $translator;
 
-    public function __construct(Router $router, Session $session, $allTitle = 'All', $allRoute = 'pumukit_webtv_medialibrary_index', $homeTitle = 'home', $translator)
+    public function __construct(Router $router, Session $session, $translator, $allTitle = 'All', $allRoute = 'pumukit_webtv_medialibrary_index', $homeTitle = 'home', $parentWeb = null)
     {
         $this->session = $session;
         $this->router = $router;
@@ -25,7 +25,7 @@ class BreadcrumbsService
         $this->allRoute = $allRoute;
         $this->homeTitle = $homeTitle;
         $this->translator = $translator;
-
+        $this->parentWeb = $parentWeb;
         $this->init();
     }
 
@@ -40,8 +40,12 @@ class BreadcrumbsService
         if (!$this->session->has('breadcrumbs/routeParameters')) {
             $this->session->set('breadcrumbs/routeParameters', array());
         }
+        $this->breadcrumbs = array();
+        if($this->parentWeb !== null) {
+            $this->breadcrumbs = array(array('title' => $this->parentWeb['title'], 'link' => $this->parentWeb['url']));
+        }
+        $this->breadcrumbs[] = array('title' => $this->homeTitle, 'link' => $this->router->generate('pumukit_webtv_index_index'));
 
-        $this->breadcrumbs = array(array('title' => $this->homeTitle, 'link' => $this->router->generate('pumukit_webtv_index_index')));
     }
 
     public function reset()
@@ -49,7 +53,11 @@ class BreadcrumbsService
         $this->session->set('breadcrumbs/title', $this->translator->trans($this->allTitle));
         $this->session->set('breadcrumbs/routeName', $this->allRoute);
         $this->session->set('breadcrumbs/routeParameters', array());
-        $this->breadcrumbs = array(array('title' => $this->homeTitle, 'link' => $this->router->generate('pumukit_webtv_index_index')));
+        $this->breadcrumbs = array();
+        if($this->parentWeb !== null) {
+            $this->breadcrumbs = array(array('title' => $this->parentWeb['title'], 'link' => $this->parentWeb['url']));
+        }
+        $this->breadcrumbs[] = array('title' => $this->homeTitle, 'link' => $this->router->generate('pumukit_webtv_index_index'));
     }
 
     public function addList($title, $routeName, array $routeParameters = array(), $forceTranslation = false)

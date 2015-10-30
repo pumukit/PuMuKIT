@@ -38,10 +38,10 @@
         <service id="pumukit_web_tv.breadcrumbs" class="Pumukit\WebTVBundle\Services\BreadcrumbsService">
           <argument type="service" id="router" />
           <argument type="service" id="session" />
+          <argument type="service" id="translator" />
           <argument>%pumukit_web_tv.breadcrumbs_all_title%</argument>
           <argument>%pumukit_web_tv.breadcrumbs_all_route%</argument>
           <argument>%pumukit_web_tv.breadcrumbs_home_title%</argument>
-          <argument type="service" id="translator" />
         </service>
 
         <service id="pumukit_web_tv.useragent_parser" class="Pumukit\WebTVBundle\Services\UserAgentParserService">
