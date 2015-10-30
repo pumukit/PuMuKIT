@@ -11,9 +11,9 @@
         <div class="thumbnailholder" ></div>
       </div>
       <div class="info">
-        <div class="title">
+        <a class="title" title="{{object.description}}">
           {{object.title | default('No title')|trans}}
-        </div>
+        </a>
         <div class="subtitle">
           <abbr title="{{object.subtitle}}">{{object.subtitle}}</abbr>
         </div>
@@ -21,7 +21,6 @@
           {{object.recordDate|date("d/m/Y")}}
         </div>
       </div>
-
     </div>
   </a>
 </div>
