@@ -1,11 +1,3 @@
-pumukit_teltek_web_tv:
-    resource: "@PumukitTeltekWebTVBundle/Resources/config/routing.xml"
-    prefix:   /
-
-pumukit_podcast:
-    resource: "@PumukitPodcastBundle/Resources/config/routing.yml"
-    prefix:   /
-
 pumukit_opencast:
     resource: "@PumukitOpencastBundle/Controller/"
     type:     annotation
