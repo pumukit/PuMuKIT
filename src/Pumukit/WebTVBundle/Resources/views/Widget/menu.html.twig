@@ -32,8 +32,7 @@
 
   </ul>
 </div>
-{% if menu_stats |default("false") %}
-<div class="row widget slidebar">
+
+<div class="row widget slidebar stats">
   {% render(controller('PumukitWebTVBundle:Widget:stats')) %}
 </div>
-{% endif %}

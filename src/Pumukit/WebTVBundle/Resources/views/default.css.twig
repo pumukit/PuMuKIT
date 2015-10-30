@@ -12,7 +12,7 @@
 
 {% set breadcrumbs_separator = breadcrumbs_separator | default('»') %}
 {% set content_max_width = content_max_width | default("1400px") %}
-
+{% set menu_stats = menu_stats | default(true) %}
 {% set menu_padding = menu_padding | default("10px 10px 10px 30px") %}
 {% set page_background = page_background | default("#ddd") %}
 
@@ -87,6 +87,8 @@ p.disabled {
 .breadcrumb {
     color: {{ breadcrumbs_font_color }};
     background: {{ breadcrumbs_background }};
+    vertical-align:middle;
+    line-height: 100%;
 }
 .breadcrumb a{
     color: {{ breadcrumbs_font_color }};
@@ -114,6 +116,7 @@ p.disabled {
     display: block;
     font-size: 3em;
     content: "";
+    line-height: 100%;
 }
 .breadcrumb > li:last-of-type:after  {
     content: "";
@@ -450,15 +453,13 @@ a:hover .cover {
 .img_category.two {
     height: 50%;
 }
-.index_container {
-    position: relative;
-}
 .index_container a{
     position: relative;
     display: block;
     overflow: auto;
 }
 .index_container {
+    position: relative;
     display: block;
 }
 .index_container.three {
@@ -496,6 +497,11 @@ a:hover .cover {
     text-align: left;
     background: {{menu_background}};
 }
+{% if menu_stats %}
+.widget.slidebar.stats {
+    display: none;
+}
+{% endif %}
 .widget.slidebar #total{
     text-align: center;
 }
