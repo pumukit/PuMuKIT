@@ -10,7 +10,7 @@
       {% include 'PumukitWebTVBundle:Search:filtersmultimediaobjects.html.twig' %}
     {% endif %}
   </div>
-
+<div style="clear:both">{# PREVENTS MMOBJS FROM EXTENDING TO TOP #}</div>
   {% for object in objects %}
     {% if object.isCollection() %}
       {% include 'PumukitWebTVBundle:Misc:series.html.twig' with{ 'cols': number_cols } %}
