@@ -210,6 +210,8 @@ p.disabled {
 }
 .info .title{
     font-weight: bold;
+    font-size: 0.9em;
+    height: 2.5em;
 }
 .info.serial {
     position: absolute;
@@ -300,7 +302,6 @@ body.opencast-layout .breadcrumb_wrapper {
     margin: 10px 0px;
     padding: 5px;
     border-radius: 10px;
-    transition: background 0.3s ease;
     position: relative;
 }
 .pumukit_mmobj a{
@@ -420,6 +421,11 @@ a:hover .cover {
 .media-heading.subtitle{
     line-height:0.5;
 }
+.info .subtitle {
+    font-weight: 100;
+    margin: 10px 5px;
+    font-size: 1.2em;
+}
 .media-heading.title{
     line-height:1;
 }
@@ -524,6 +530,66 @@ a:hover .cover {
     .widget.slidebar {
         text-align: center;
     }
+}
+{# MAGIC CSS TO ELLIPSE TEXT #}
+.ellipsedtext-parent {
+    overflow: hidden;
+    width: 100%;
+    height: 120%;
+}
+.ellipsedtext-leftmargin {
+    float: left;
+    width: 2%;
+    height: 100%;
+}
+.ellipsedtext-testwrapper {
+    float: right;
+    width: 98%;
+}
+.ellipsedtext-text {
+    width: 800%;
+}
+.ellipsedtext-textstopper {
+    width: 87.5%;
+    height: 1em;
+    float: right;
+}
+.ellipsedtext-endtext {
+    display:inline-block;
+    width: 87.5%;
+    height: 1em;
+}
+.ellipsedtext-overflowdetector {
+    float: right;
+    width: 2%;
+    height: 20%;
+    position:relative;
+}
+.ellipsedtext-ellipse {
+    position: absolute;
+    top: -1.5em;
+    left: 4520%;
+    z-index: 2;
+    padding: 0 10px 0 15px;
+    background: rgba(255,255,255,0);
+    background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 40%, rgba(255,255,255,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,255,0)), color-stop(40%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,1)));
+    background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 40%, rgba(255,255,255,1) 100%);
+    background: -o-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 40%, rgba(255,255,255,1) 100%);
+    background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 40%, rgba(255,255,255,1) 100%);
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 40%, rgba(255,255,255,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=1 );
+}
+
+.pumukit_mmobj:hover .ellipsedtext-ellipse {
+    background: rgba(255,255,255,0);
+    background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 40%, {{ mmobj_selected_background }} 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,255,0)), color-stop(40%, {{ mmobj_selected_background }}), color-stop(100%, {{ mmobj_selected_background }}));
+    background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 40%, {{ mmobj_selected_background }} 100%);
+    background: -o-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 40%, {{ mmobj_selected_background }} 100%);
+    background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 40%, {{ mmobj_selected_background }} 100%);
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 40%, {{ mmobj_selected_background }} 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='{{ mmobj_selected_background }}', endColorstr='{{ mmobj_selected_background }}', GradientType=1 );
 }
 
 {% endblock %}
