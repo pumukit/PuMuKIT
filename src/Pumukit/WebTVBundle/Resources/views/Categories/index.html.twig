@@ -1,7 +1,7 @@
 {% extends 'PumukitWebTVBundle::layout.html.twig' %}
 
 {% block body %}
-<h1>{{ title|trans }}</h1>
+<h1 class="title-for-crumbs">{{ title|trans }}</h1>
 {% for parent in allGrounds %}
 {% if loop.index0 is even %}
 <div style="clear:both"></div>
@@ -35,7 +35,7 @@
             {% else %}
             <{{markdown}} class="disabled">{{ child.title }} ({%trans%} All {% endtrans %} {{ child.num_mmobjs }})</{{markdown}}>
             {% endif %}
-
+            {% if child.children |length > 0 %}
             <ul>
                 {% for grandchild in child.children %}
                 <li>
@@ -51,6 +51,7 @@
                 </li>
                 {% endfor %}
             </ul>
+            {% endif %}
             {% endfor %}
         </ul>
     </div>

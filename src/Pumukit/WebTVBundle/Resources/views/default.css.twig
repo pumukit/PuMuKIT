@@ -93,6 +93,10 @@ p.disabled {
 .breadcrumb a{
     color: {{ breadcrumbs_font_color }};
 }
+.breadcrumb a:hover{
+    color: {{ breadcrumbs_font_color }};
+    text-decoration: none;
+}
 
 .breadcrumbs_wrapper {
     margin: 0 auto;
@@ -487,9 +491,9 @@ a:hover .cover {
         padding-top: 8% !important;
     }
 }
-.pumukit_announce {
-    margin-top: 35px;
+.panel-series, .panel-related {
     overflow: auto;
+    max-height: 300px;
 }
 .powered_by {
     max-width: {{content_max_width }};
@@ -498,6 +502,10 @@ a:hover .cover {
     padding: 10px 10px 10px 10px;
     font-size: 11px;
     position: relative;
+}
+.pumukit_announce {
+    margin-top: 35px;
+    overflow: auto;
 }
 .widget.slidebar {
     text-align: left;
@@ -531,7 +539,7 @@ a:hover .cover {
         text-align: center;
     }
 }
-{# MAGIC CSS TO ELLIPSE TEXT #}
+{# ==== MAGIC CSS TO ELLIPSE TEXT ==== #}
 .ellipsedtext-parent {
     overflow: hidden;
     width: 100%;
@@ -591,5 +599,5 @@ a:hover .cover {
     background: linear-gradient(to right, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 40%, {{ mmobj_selected_background }} 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='{{ mmobj_selected_background }}', endColorstr='{{ mmobj_selected_background }}', GradientType=1 );
 }
-
+{# ==== END MAGIC CSS TO ELLIPSE TEXT ==== #}
 {% endblock %}
