@@ -27,9 +27,11 @@
         {% endif %}
         <li>
             {% if child.num_mmobjs > 0 %}
-            <a href="{{ child.url }}">
-                <{{markdown}}>{{ child.title }} ({%trans%} All {% endtrans %} {{ child.num_mmobjs }})</{{markdown}}>
-            </a>
+            <{{markdown}}>
+                <a href="{{ child.url }}">
+                    {{ child.title }} ({%trans%} All {% endtrans %} {{ child.num_mmobjs }})
+                </a>
+            </{{markdown}}>
             {% else %}
             <{{markdown}} class="disabled">{{ child.title }} ({%trans%} All {% endtrans %} {{ child.num_mmobjs }})</{{markdown}}>
             {% endif %}
@@ -38,9 +40,11 @@
                 {% for grandchild in child.children %}
                 <li>
                     {% if grandchild.num_mmobjs > 0 %}
-                    <a href="{{ grandchild.url }}">
-                        <p>{{ grandchild.title }} ({{grandchild.num_mmobjs }})</p>
-                    </a>
+                    <p>
+                        <a href="{{ grandchild.url }}">
+                            {{ grandchild.title }} ({{grandchild.num_mmobjs }})
+                        </a>
+                    </p>
                     {% else %}
                     <p class="disabled">{{ grandchild.title }} ({{grandchild.num_mmobjs }})</p>
                     {% endif %}
