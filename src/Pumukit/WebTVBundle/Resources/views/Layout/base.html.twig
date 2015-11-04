@@ -42,19 +42,21 @@
         </div>
         <div class="row">
           <div class="main-content wrapper-center">
-            <!--LATERAL_MENU-->
-            <span class="{{ hide_slidebar is defined ? 'hidden':'visible-lg' }}">
-              {% include 'PumukitWebTVBundle:Layout:slidebar.html.twig'%}
-            </span>
-            <!--MAIN BODY-->
-            <div class="main-content {{ hide_slidebar is defined ? 'row':'col-lg-9' }}">
-              {% block body_without_bar %}
-                {% block body %}
-                {% endblock %}
-              {% endblock %}
-              <div style="clear:both"><!--LETS THE WRAPPER HAVE THE CORRECT HEIGHT--></div>
-            </div>
-            <div style="clear:both"><!--LETS THE WRAPPER HAVE THE CORRECT HEIGHT--></div>
+              <div class="col-xs-12">
+                  <!--LATERAL_MENU-->
+                  <span class="{{ hide_slidebar is defined ? 'hidden':'visible-lg' }}">
+                      {% include 'PumukitWebTVBundle:Layout:slidebar.html.twig'%}
+                  </span>
+                  <!--MAIN BODY-->
+                  <div class="main-content {{ hide_slidebar is defined ? 'row':'col-lg-9' }}">
+                      {% block body_without_bar %}
+                      {% block body %}
+                      {% endblock %}
+                      {% endblock %}
+                      <div style="clear:both"><!--LETS THE WRAPPER HAVE THE CORRECT HEIGHT--></div>
+                  </div>
+                  <div style="clear:both"><!--LETS THE WRAPPER HAVE THE CORRECT HEIGHT--></div>
+              </div>
           </div>
         </div>
         <!--</div>-->
