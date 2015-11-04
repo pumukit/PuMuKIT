@@ -1,7 +1,7 @@
 <form id="form_search" name="busqueda" method="get" action="{{ path('pumukit_webtv_search_multimediaobjects') }}" class="row">
 
     <input type="submit" style="display:none"/>
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-{{ parent_tag2 is null or blocked_tag ? 6 : 3}}">
         <label for="search">{% trans %}Search{% endtrans %}:</label>
         <div class="input-group">
             <input type="text" class="form-control" id="search" name="search" value="{{ app.request.query.get('search') }}" placeholder="Search">
@@ -12,18 +12,37 @@
             </div>
         </div>
     </div>
-
-    <div class="form-group col-md-4 col-sm-4">
+    {% if parent_tag is not null and parent_tag.cod != blocked_tag %}
+    <div class="form-group col-md-3 col-sm-4">
         <label for="tags">{{ parent_tag.title|trans}}:</label>
-        <select id="tags" name="tags" class="form-control" onchange="javascript:this.form.submit();">
-            <option {% if tag_found == "" %} selected="selected" {% endif %}>All</option>
-            {% for tag in parent_tag.children if tag.getTitle() != "" %}
-            <option value="{{tag.cod}}" {% if tag_found == tag.cod %} selected="selected" {% endif %}>{{ tag.getTitle() }}</option>
+        <select id="tags" name="tags[]" class="form-control" onchange="javascript:this.form.submit();">
+            <option {% if tags_found == "" %} selected="selected" {% endif %}>All</option>
+            {% for tag in parent_tag.children if tag.title != "" %}
+            <option value="{{tag.cod}}" {% if tag.cod in tags_found %} selected="selected" {% endif %}>{{ tag.title }}</option>
             {% endfor %}
         </select>
     </div>
+    {% endif %}
 
-    <div class="form-group col-md-4 col-sm-4">
+    {% if parent_tag2 is not null and parent_tag2.cod != blocked_tag %}
+    <div class="form-group col-md-3 col-sm-4">
+        <label for="tags">{{ parent_tag2.title|trans}}:</label>
+        <select id="tags" name="tags[]" class="form-control" onchange="javascript:this.form.submit();">
+            <option {% if tags_found == "" %} selected="selected" {% endif %}>All</option>
+            {% for tag in parent_tag2.children if tag.title != "" %}
+            <option value="{{tag.cod}}" {% if tag.cod in tags_found %} selected="selected" {% endif %}>{{ tag.title }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    {% endif %}
+
+    {% if blocked_tag is not null %}
+    <input type="hidden" name="blockedTag" value="{{blocked_tag}}"/>
+    <input type="hidden" name="blockedTagValue" value="{{blocked_tag_value}}"/>
+    <input type="hidden" name="useBlockedTagAsGeneral" value="{{use_blocked_tag_as_general}}"/>
+    {% endif %}
+
+    <div class="form-group col-md-3 col-sm-4">
         <label for="duration">{% trans %}Duration{% endtrans %}:</label>
         <select id="duration" name="duration" class="form-control" onchange="javascript:this.form.submit();">
             <option value="all" {% if app.request.query.get('duration') == "all" %} selected="selected" {% endif %}>{% trans%}All{% endtrans %}</option>

@@ -67,13 +67,15 @@ class SearchController extends Controller
       if( $this->container->hasParameter('columns_objs_search')){
           $numberCols = $this->container->getParameter('columns_objs_search');
       }
-
       $this->get('pumukit_web_tv.breadcrumbs')->addList('Multimedia object search', 'pumukit_webtv_search_multimediaobjects');
 
       $tag_search = new Tag();
 
+      $blocked_tag = $request->query->get('blockedTag');
+      $blocked_tag_value = $request->query->get('blockedTagValue');
+      $useBlockedTagAsGeneral = $request->query->get('useBlockedTagAsGeneral');
       $search_found = $request->query->get('search');
-      $tag_found = $request->query->get('tags');
+      $tags_found = $request->query->get('tags');
       $type_found = $request->query->get('type');
       $duration_found = $request->query->get('duration');
       $start_found = $request->query->get('start');
@@ -92,6 +94,21 @@ class SearchController extends Controller
           throw new \Exception(sprintf('The parent Tag with COD:  \' %s  \' does not exist. Check if your tags are initialized and that you added the correct \'cod\' to parameters.yml (search.parent_tag.cod)',$searchByTagCod));
       }
 
+      $parentTag2 = null;
+      if( $this->container->hasParameter('search.parent_tag_2.cod')) {
+          $searchByTagCod2 = $this->container->getParameter('search.parent_tag_2.cod');
+          $parentTag2 = $repository_tags->findOneByCod($searchByTagCod2);
+          if( !isset($parentTag2)) {
+              throw new \Exception(sprintf('The parent Tag with COD:  \' %s  \' does not exist. Check if your tags are initialized and that you added the correct \'cod\' to parameters.yml (search.parent_tag.cod)',$searchByTagCod));
+          }
+      }
+      if( $blocked_tag_value !== null ) {
+          $tags_found[] = $blocked_tag_value;
+      }
+      if($tags_found !== null) {
+          $tags_found = array_values(array_diff($tags_found, array('All')));
+      }
+
       $searchLanguages = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder()->distinct('tracks.language')->getQuery()->execute();
 
       $queryBuilder = $repository_multimediaObjects->createStandardQueryBuilder();
@@ -99,9 +116,16 @@ class SearchController extends Controller
       if ($search_found != '') {
           $queryBuilder->field('$text')->equals(array('$search' => $search_found));
       }
-
-      if ($tag_found != 'All' && $tag_found != '') {
-          $queryBuilder->field('tags.cod')->equals($tag_found);
+      $blockedTag = null;
+      if($blocked_tag_value) {
+          $blockedTag = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag')->findOneByCod($blocked_tag_value);
+          $this->get('pumukit_web_tv.breadcrumbs')->addList($blockedTag->getTitle(), 'pumukit_webtv_search_multimediaobjects');
+      }
+      if (count($tags_found) > 0) {
+          $queryBuilder->field('tags.cod')->all($tags_found);
+          if($useBlockedTagAsGeneral !== null && $blockedTag !== null ) {
+              $queryBuilder->field('tags.path')->notIn(array(new \MongoRegex('/'.preg_quote($blockedTag->getPath()). '.*\|/')));
+          }
       }
 
       if ($type_found != 'All' && $type_found != '') {
@@ -145,12 +169,17 @@ class SearchController extends Controller
       return array('type' => 'multimediaObject',
          'objects' => $pagerfanta,
          'parent_tag' => $parentTag,
-         'tag_found' => $tag_found,
+         'parent_tag2' => $parentTag2,
+         'tags_found' => $tags_found,
          'type_found' => $type_found,
          'duration_found' => $duration_found,
          'number_cols' => $numberCols,
          'languages' => $searchLanguages,
-         'language_found' => $language_found );
+         'language_found' => $language_found,
+         'blocked_tag' => $blocked_tag,
+         'blocked_tag_value' => $blocked_tag_value,
+         'blockedTag' => $blockedTag,
+         'use_blocked_tag_as_general' => $useBlockedTagAsGeneral);
     }
 
     private function createPager($objects, $page)
