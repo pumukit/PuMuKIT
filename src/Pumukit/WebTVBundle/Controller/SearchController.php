@@ -89,15 +89,7 @@ class SearchController extends Controller
 
       $parentTag = $repository_tags->findOneByCod($searchByTagCod);
       if( !isset($parentTag)) {
-          throw new \Exception(sprintf('The parent Tag with COD: %s does not exist. Check if your tags are initialized and that you added the correct \'cod\' to parameters.yml (search.parent_tag.cod)',$parentTag));
-      }
-
-      $tags = $parentTag->getChildren();
-
-      for ($i = 0;$i < count($tags);++$i) {
-          if ($tags[$i]->getTitle() == $tag_found) {
-              $tag_search = $tags[$i];
-          }
+          throw new \Exception(sprintf('The parent Tag with COD:  \' %s  \' does not exist. Check if your tags are initialized and that you added the correct \'cod\' to parameters.yml (search.parent_tag.cod)',$searchByTagCod));
       }
 
       $queryBuilder = $repository_multimediaObjects->createStandardQueryBuilder();
