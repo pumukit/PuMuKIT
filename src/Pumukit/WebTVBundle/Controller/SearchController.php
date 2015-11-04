@@ -78,6 +78,7 @@ class SearchController extends Controller
       $duration_found = $request->query->get('duration');
       $start_found = $request->query->get('start');
       $end_found = $request->query->get('end');
+      $language_found = $request->query->get('language');
 
       $repository_multimediaObjects = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
       $repository_tags = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
@@ -86,11 +87,12 @@ class SearchController extends Controller
       if( $this->container->hasParameter('search.parent_tag.cod')) {
           $searchByTagCod = $this->container->getParameter('search.parent_tag.cod');
       }
-
       $parentTag = $repository_tags->findOneByCod($searchByTagCod);
       if( !isset($parentTag)) {
           throw new \Exception(sprintf('The parent Tag with COD:  \' %s  \' does not exist. Check if your tags are initialized and that you added the correct \'cod\' to parameters.yml (search.parent_tag.cod)',$searchByTagCod));
       }
+
+      $searchLanguages = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder()->distinct('tracks.language')->getQuery()->execute();
 
       $queryBuilder = $repository_multimediaObjects->createStandardQueryBuilder();
 
@@ -134,6 +136,10 @@ class SearchController extends Controller
           $queryBuilder->field('record_date')->lt($end);
       }
 
+      if($language_found != 'All' && $language_found != '') {
+          $queryBuilder->field('tracks.language')->equals($language_found);
+      }
+
       $pagerfanta = $this->createPager($queryBuilder, $request->query->get('page', 1));
 
       return array('type' => 'multimediaObject',
@@ -142,7 +148,9 @@ class SearchController extends Controller
          'tag_found' => $tag_found,
          'type_found' => $type_found,
          'duration_found' => $duration_found,
-         'number_cols' => $numberCols);
+         'number_cols' => $numberCols,
+         'languages' => $searchLanguages,
+         'language_found' => $language_found );
     }
 
     private function createPager($objects, $page)
