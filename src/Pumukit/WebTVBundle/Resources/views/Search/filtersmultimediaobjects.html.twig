@@ -14,11 +14,11 @@
   </div>
 
   <div class="form-group col-md-4">
-    <label for="tags">{% trans %}Tags{% endtrans %}:</label>
+    <label for="tags">{{ parent_tag.title|trans}}:</label>
       <select id="tags" name="tags" class="form-control" onchange="javascript:this.form.submit();">
         <option {% if tag_found == "" %} selected="selected" {% endif %}>All</option>
-        {% for tag in tags if tag.getTitle() != "" %}
-        <option {% if tag_found == tag.getTitle() %} selected="selected" {% endif %}>{{ tag.getTitle() }}</option>
+        {% for tag in parent_tag.children if tag.getTitle() != "" %}
+        <option value="{{tag.cod}}" {% if tag_found == tag.cod %} selected="selected" {% endif %}>{{ tag.getTitle() }}</option>
         {% endfor %}
       </select>
   </div>

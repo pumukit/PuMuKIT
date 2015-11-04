@@ -82,7 +82,17 @@ class SearchController extends Controller
       $repository_multimediaObjects = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
       $repository_tags = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
 
-      $tags = $repository_tags->findall();
+      $searchByTagCod = 'ITUNESU';
+      if( $this->container->hasParameter('search.parent_tag.cod')) {
+          $searchByTagCod = $this->container->getParameter('search.parent_tag.cod');
+      }
+
+      $parentTag = $repository_tags->findOneByCod($searchByTagCod);
+      if( !isset($parentTag)) {
+          throw new \Exception(sprintf('The parent Tag with COD: %s does not exist. Check if your tags are initialized and that you added the correct \'cod\' to parameters.yml (search.parent_tag.cod)',$parentTag));
+      }
+
+      $tags = $parentTag->getChildren();
 
       for ($i = 0;$i < count($tags);++$i) {
           if ($tags[$i]->getTitle() == $tag_found) {
@@ -97,7 +107,7 @@ class SearchController extends Controller
       }
 
       if ($tag_found != 'All' && $tag_found != '') {
-          $queryBuilder->field('tags._id')->equals(new \MongoId($tag_search->getId()));
+          $queryBuilder->field('tags.cod')->equals($tag_found);
       }
 
       if ($type_found != 'All' && $type_found != '') {
@@ -136,7 +146,7 @@ class SearchController extends Controller
 
       return array('type' => 'multimediaObject',
          'objects' => $pagerfanta,
-         'tags' => $tags,
+         'parent_tag' => $parentTag,
          'tag_found' => $tag_found,
          'type_found' => $type_found,
          'duration_found' => $duration_found,
