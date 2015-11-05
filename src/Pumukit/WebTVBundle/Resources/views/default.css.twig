@@ -491,7 +491,11 @@ a:hover .cover {
         padding-top: 8% !important;
     }
 }
-.panel-series, .panel-related {
+.panel-series .panel-body, .panel-related .panel-body{
+    overflow: hidden;
+    max-height: 300px;
+}
+.panel-series:hover .panel-body, .panel-related:hover .panel-body{
     overflow: auto;
     max-height: 300px;
 }
