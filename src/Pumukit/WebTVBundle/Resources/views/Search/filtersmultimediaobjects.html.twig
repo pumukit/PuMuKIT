@@ -24,7 +24,7 @@
     </div>
     {% endif %}
 
-    {% if parent_tag_optional is not null and blocked_tag is null or not blocked_tag.isDescendantOf(parent_tag_optional) %}
+    {% if parent_tag_optional is not null and ( blocked_tag is null or not blocked_tag.isDescendantOf(parent_tag_optional)) %}
     <div class="form-group col-md-3 col-sm-4">
         <label for="tags">{{ parent_tag_optional.title|trans}}:</label>
         <select id="tags" name="tags[]" class="form-control" onchange="javascript:this.form.submit();">
