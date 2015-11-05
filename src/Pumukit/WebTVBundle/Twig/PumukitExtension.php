@@ -7,6 +7,7 @@ use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\MaterialService;
 use Pumukit\SchemaBundle\Services\PicService;
+use Pumukit\WebTVBundle\Services\LinkService;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
 class PumukitExtension extends \Twig_Extension
@@ -25,14 +26,16 @@ class PumukitExtension extends \Twig_Extension
     private $dm;
     private $materialService;
     private $picService;
+    private $linkService;
 
-    public function __construct(DocumentManager $documentManager, RequestContext $context, $defaultPic, MaterialService $materialService, PicService $picService)
+    public function __construct(DocumentManager $documentManager, RequestContext $context, $defaultPic, MaterialService $materialService, PicService $picService, LinkService $linkService)
     {
         $this->dm = $documentManager;
         $this->context = $context;
         $this->defaultPic = $defaultPic;
         $this->materialService = $materialService;
         $this->picService = $picService;
+        $this->linkService = $linkService;
     }
 
     public function getName()
@@ -61,6 +64,7 @@ class PumukitExtension extends \Twig_Extension
                      new \Twig_SimpleFunction('precinct_of_series', array($this, 'getPrecinctOfSeries')),
                      new \Twig_SimpleFunction('captions', array($this, 'getCaptions')),
                      new \Twig_SimpleFunction('iframeurl', array($this, 'getIframeUrl')),
+                     new \Twig_SimpleFunction('path_to_tag', array($this, 'getPathToTag')),
                      );
     }
 
@@ -243,5 +247,8 @@ class PumukitExtension extends \Twig_Extension
 
         return $url;
     }
-
+    public function getPathToTag($tagCod = null, $useBlockedTagAsGeneral = null, $parameters = array(), $relative = false)
+    {
+        return $this->linkService->generatePathToTag($tagCod, $useBlockedTagAsGeneral);
+    }
 }
