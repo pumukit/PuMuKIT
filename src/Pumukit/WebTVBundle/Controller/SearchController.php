@@ -15,130 +15,113 @@ use Pumukit\SchemaBundle\Document\Tag;
 class SearchController extends Controller
 {
     /**
-   * @Route("/searchseries")
-   * @Template("PumukitWebTVBundle:Search:index.html.twig")
-   */
-  public function seriesAction(Request $request)
-  {
-      $numberCols = 2;
-      if ($this->container->hasParameter('columns_objs_search')) {
-          $numberCols = $this->container->getParameter('columns_objs_search');
-      }
-
-      $this->get('pumukit_web_tv.breadcrumbs')->addList('Series search', 'pumukit_webtv_search_series');
-
-      $searchFound = $request->query->get('search');
-      $startFound = $request->query->get('start');
-      $endFound = $request->query->get('end');
-
-      $repository_series = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
-
-      $queryBuilder = $repository_series->createQueryBuilder();
-
-      if ($searchFound != '') {
-          $queryBuilder->field('$text')->equals(array('$search' => $searchFound));
-      }
-
-      if ($startFound != 'All' && $startFound != '') {
-          $start = \DateTime::createFromFormat('d/m/Y', $startFound);
-          $queryBuilder->field('public_date')->gt($start);
-      }
-
-      if ($endFound != 'All' && $endFound != '') {
-          $end = \DateTime::createFromFormat('d/m/Y', $endFound);
-          $queryBuilder->field('public_date')->lt($end);
-      }
-
-      $pagerfanta = $this->createPager($queryBuilder, $request->query->get('page', 1));
-
-      return array('type' => 'series',
-                   'objects' => $pagerfanta,
-                   'number_cols' => $numberCols, );
-  }
-
-   /**
-    * @Route("/searchmultimediaobjects")
-    * @Route("/searchmultimediaobjects/{blockedTagCod}")
-    * @Route("/searchmultimediaobjects/{blockedTagCod}/general", defaults={"useBlockedTagAsGeneral" = true})
+    * @Route("/searchseries")
     * @Template("PumukitWebTVBundle:Search:index.html.twig")
     */
-   public function multimediaObjectsAction($blockedTagCod = null, $useBlockedTagAsGeneral = false, Request $request)
-   {
-       // --- Get blockedTag if exists ---
-       $blockedTag = null;
-       if ($blockedTagCod) {
-           $blockedTag = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag')->findOneByCod($blockedTagCod);
-           if (!isset($blockedTag)) {
-               throw $this->createNotFoundException(sprintf('The Tag with cod \'%s\ does not exist', $blockedTagCod));
-           }
-           $this->get('pumukit_web_tv.breadcrumbs')->addList($blockedTag->getTitle(), 'pumukit_webtv_search_multimediaobjects');
-       }
-       // -- END Get blockedTag if exists ---
+    public function seriesAction(Request $request)
+    {
+        $numberCols = 2;
+        if ($this->container->hasParameter('columns_objs_search')) {
+            $numberCols = $this->container->getParameter('columns_objs_search');
+        }
 
-       // --- Get Tag Parent for Tag Fields ---
-       $tagRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
-       $searchByTagCod = 'ITUNESU';
-       if ($this->container->hasParameter('search.parent_tag.cod')) {
-           $searchByTagCod = $this->container->getParameter('search.parent_tag.cod');
-       }
-       $parentTag = $tagRepo->findOneByCod($searchByTagCod);
-       if (!isset($parentTag)) {
-           throw new \Exception(sprintf('The parent Tag with COD:  \' %s  \' does not exist. Check if your tags are initialized and that you added the correct \'cod\' to parameters.yml (search.parent_tag.cod)', $searchByTagCod));
-       }
-       $parentTagOptional = null;
-       if ($this->container->hasParameter('search.parent_tag_2.cod')) {
-           $searchByTagCod2 = $this->container->getParameter('search.parent_tag_2.cod');
-           $parentTagOptional = $tagRepo->findOneByCod($searchByTagCod2);
-           if (!isset($parentTagOptional)) {
-               throw new \Exception(sprintf('The parent Tag with COD:  \' %s  \' does not exist. Check if your tags are initialized and that you added the correct \'cod\' to parameters.yml (search.parent_tag.cod)', $searchByTagCod));
-           }
-       }
-       // --- END Get Tag Parent for Tag Fields ---
+        $this->get('pumukit_web_tv.breadcrumbs')->addList('Series search', 'pumukit_webtv_search_series');
 
-       // --- Get Variables ---
-       $searchFound = $request->query->get('search');
-       $tagsFound = $request->query->get('tags');
-       $typeFound = $request->query->get('type');
-       $durationFound = $request->query->get('duration');
-       $startFound = $request->query->get('start');
-       $endFound = $request->query->get('end');
-       $languageFound = $request->query->get('language');
-       // --- END Get Variables --
-       // --- Create QueryBuilder ---
-       $mmobjRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
-       $queryBuilder = $mmobjRepo->createStandardQueryBuilder();
-       $queryBuilder = $this->searchQueryBuilder($queryBuilder, $searchFound);
-       $queryBuilder = $this->typeQueryBuilder($queryBuilder, $typeFound);
-       $queryBuilder = $this->durationQueryBuilder($queryBuilder, $durationFound);
-       $queryBuilder = $this->dateQueryBuilder($queryBuilder, $startFound, $endFound);
-       $queryBuilder = $this->languageQueryBuilder($queryBuilder, $languageFound);
-       $queryBuilder = $this->tagsQueryBuilder($queryBuilder, $tagsFound, $blockedTag, $useBlockedTagAsGeneral, $parentTag, $parentTagOptional);
-       // --- END Create QueryBuilder ---
-       // --- Execute QueryBuilder and get paged results ---
-       $pagerfanta = $this->createPager($queryBuilder, $request->query->get('page', 1));
-       // --- Query to get existing languages ---
-       $searchLanguages = $this->get('doctrine_mongodb')
-       ->getRepository('PumukitSchemaBundle:MultimediaObject')
-       ->createStandardQueryBuilder()->distinct('tracks.language')
-       ->getQuery()->execute();
-       // -- Init Number Cols for showing results ---
-       $numberCols = 2;
-       if ($this->container->hasParameter('columns_objs_search')) {
-           $numberCols = $this->container->getParameter('columns_objs_search');
-       }
-       // --- Breadcrumbs ---
-       $this->get('pumukit_web_tv.breadcrumbs')->addList('Multimedia object search', 'pumukit_webtv_search_multimediaobjects');
+        $searchFound = $request->query->get('search');
+        $startFound = $request->query->get('start');
+        $endFound = $request->query->get('end');
 
-       // --- RETURN ---
-       return array('type' => 'multimediaObject',
-       'objects' => $pagerfanta,
-       'parent_tag' => $parentTag,
-       'parent_tag_optional' => $parentTagOptional,
-       'tags_found' => $tagsFound,
-       'number_cols' => $numberCols,
-       'languages' => $searchLanguages,
-       'blocked_tag' => $blockedTag, );
-   }
+        $repository_series = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
+
+        $queryBuilder = $repository_series->createQueryBuilder();
+
+        if ($searchFound != '') {
+            $queryBuilder->field('$text')->equals(array('$search' => $searchFound));
+        }
+
+        if ($startFound != 'All' && $startFound != '') {
+            $start = \DateTime::createFromFormat('d/m/Y', $startFound);
+            $queryBuilder->field('public_date')->gt($start);
+        }
+
+        if ($endFound != 'All' && $endFound != '') {
+            $end = \DateTime::createFromFormat('d/m/Y', $endFound);
+            $queryBuilder->field('public_date')->lt($end);
+        }
+
+        $pagerfanta = $this->createPager($queryBuilder, $request->query->get('page', 1));
+
+        return array('type' => 'series',
+        'objects' => $pagerfanta,
+        'number_cols' => $numberCols, );
+    }
+
+    /**
+    * @Route("/searchmultimediaobjects/{blockedTagCod}/{useBlockedTagAsGeneral}", defaults={"blockedTagCod" = null, "useBlockedTagAsGeneral" = false})
+    * @Template("PumukitWebTVBundle:Search:index.html.twig")
+    */
+    public function multimediaObjectsAction($blockedTagCod, $useBlockedTagAsGeneral = false, Request $request)
+    {
+        // --- Get blockedTag if exists ---
+        $tagRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
+        $blockedTag = null;
+        if ($blockedTagCod) {
+            $blockedTag = $tagRepo->findOneByCod($blockedTagCod);
+            if (!isset($blockedTag)) {
+                throw $this->createNotFoundException(sprintf('The Tag with cod \'%s\ does not exist', $blockedTagCod));
+            }
+            $this->get('pumukit_web_tv.breadcrumbs')->addList($blockedTag->getTitle(), 'pumukit_webtv_search_multimediaobjects');
+        } else {
+            $this->get('pumukit_web_tv.breadcrumbs')->addList('Multimedia object search', 'pumukit_webtv_search_multimediaobjects');
+        }dump($blockedTagCod);dump($useBlockedTagAsGeneral);
+        // -- END Get blockedTag if exists ---
+        // --- Get Tag Parent for Tag Fields ---
+        $parentTag = $this->getParentTag();
+        $parentTagOptional = $this->getOptionalParentTag();
+        // --- END Get Tag Parent for Tag Fields ---
+
+        // --- Get Variables ---
+        $searchFound = $request->query->get('search');
+        $tagsFound = $request->query->get('tags');
+        $typeFound = $request->query->get('type');
+        $durationFound = $request->query->get('duration');
+        $startFound = $request->query->get('start');
+        $endFound = $request->query->get('end');
+        $languageFound = $request->query->get('language');
+        // --- END Get Variables --
+        // --- Create QueryBuilder ---
+        $mmobjRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $queryBuilder = $mmobjRepo->createStandardQueryBuilder();
+        $queryBuilder = $this->searchQueryBuilder($queryBuilder, $searchFound);
+        $queryBuilder = $this->typeQueryBuilder($queryBuilder, $typeFound);
+        $queryBuilder = $this->durationQueryBuilder($queryBuilder, $durationFound);
+        $queryBuilder = $this->dateQueryBuilder($queryBuilder, $startFound, $endFound);
+        $queryBuilder = $this->languageQueryBuilder($queryBuilder, $languageFound);
+        $queryBuilder = $this->tagsQueryBuilder($queryBuilder, $tagsFound, $blockedTag, $useBlockedTagAsGeneral);
+        // --- END Create QueryBuilder ---
+        // --- Execute QueryBuilder and get paged results ---
+        $pagerfanta = $this->createPager($queryBuilder, $request->query->get('page', 1));
+        // --- Query to get existing languages ---
+        $searchLanguages = $this->get('doctrine_mongodb')
+        ->getRepository('PumukitSchemaBundle:MultimediaObject')
+        ->createStandardQueryBuilder()->distinct('tracks.language')
+        ->getQuery()->execute();
+        // -- Init Number Cols for showing results ---
+        $numberCols = 2;
+        if ($this->container->hasParameter('columns_objs_search')) {
+            $numberCols = $this->container->getParameter('columns_objs_search');
+        }
+
+        // --- RETURN ---
+        return array('type' => 'multimediaObject',
+        'objects' => $pagerfanta,
+        'parent_tag' => $parentTag,
+        'parent_tag_optional' => $parentTagOptional,
+        'tags_found' => $tagsFound,
+        'number_cols' => $numberCols,
+        'languages' => $searchLanguages,
+        'blocked_tag' => $blockedTag, );
+    }
 
     private function createPager($objects, $page)
     {
@@ -154,6 +137,35 @@ class SearchController extends Controller
         return $pagerfanta;
     }
 
+
+    private function getParentTag()
+    {
+        $tagRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
+        $searchByTagCod = 'ITUNESU';
+        if ($this->container->hasParameter('search.parent_tag.cod')) {
+            $searchByTagCod = $this->container->getParameter('search.parent_tag.cod');
+        }
+        $parentTag = $tagRepo->findOneByCod($searchByTagCod);
+        if (!isset($parentTag)) {
+            throw new \Exception(sprintf('The parent Tag with COD:  \' %s  \' does not exist. Check if your tags are initialized and that you added the correct \'cod\' to parameters.yml (search.parent_tag.cod)', $searchByTagCod));
+        }
+        return $parentTag;
+    }
+
+    private function getOptionalParentTag()
+    {
+        $tagRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
+        $parentTagOptional = null;
+        if ($this->container->hasParameter('search.parent_tag_2.cod')) {
+            $searchByTagCod2 = $this->container->getParameter('search.parent_tag_2.cod');
+            $parentTagOptional = $tagRepo->findOneByCod($searchByTagCod2);
+            if (!isset($parentTagOptional)) {
+                throw new \Exception(sprintf('The parent Tag with COD:  \' %s  \' does not exist. Check if your tags are initialized and that you added the correct \'cod\' to parameters.yml (search.parent_tag.cod)', $searchByTagCod));
+            }
+        }
+        return $parentTagOptional;
+    }
+
     // ========= queryBuilder functions ==========
 
     private function searchQueryBuilder($queryBuilder, $searchFound)
@@ -167,8 +179,8 @@ class SearchController extends Controller
 
     private function typeQueryBuilder($queryBuilder, $typeFound)
     {
-        if ($typeFound == 'Audio') {
-            $queryBuilder->field('tracks.only_audio')->equals(true);
+        if ($typeFound != '') {
+            $queryBuilder->field('tracks.only_audio')->equals($typeFound == 'Audio');
         }
 
         return $queryBuilder;
@@ -220,14 +232,13 @@ class SearchController extends Controller
         return $queryBuilder;
     }
 
-    private function tagsQueryBuilder($queryBuilder, $tagsFound, $blockedTag, $useBlockedTagAsGeneral, $parentTag, $parentTagOptional)
+    private function tagsQueryBuilder($queryBuilder, $tagsFound, $blockedTag, $useBlockedTagAsGeneral = false)
     {
         $tagRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
-
+        if ($blockedTag !== null) {
+            $tagsFound[] = $blockedTag->getCod();
+        }
         if ($tagsFound !== null) {
-            if ($blockedTag !== null) {
-                $tagsFound[] = $blockedTag->getCod();
-            }
             $tagsFound = array_values(array_diff($tagsFound, array('All', '')));
         }
         if (count($tagsFound) > 0) {
