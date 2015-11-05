@@ -14,15 +14,14 @@ use Pumukit\SchemaBundle\Document\Tag;
 
 class SearchController extends Controller
 {
-
-  /**
+    /**
    * @Route("/searchseries")
    * @Template("PumukitWebTVBundle:Search:index.html.twig")
    */
   public function seriesAction(Request $request)
   {
       $numberCols = 2;
-      if( $this->container->hasParameter('columns_objs_search')){
+      if ($this->container->hasParameter('columns_objs_search')) {
           $numberCols = $this->container->getParameter('columns_objs_search');
       }
 
@@ -54,23 +53,23 @@ class SearchController extends Controller
 
       return array('type' => 'series',
                    'objects' => $pagerfanta,
-                   'number_cols' => $numberCols);
+                   'number_cols' => $numberCols, );
   }
 
-  /**
-   * @Route("/searchmultimediaobjects")
-   * @Route("/searchmultimediaobjects/{blockedTagCod}")
-   * @Route("/searchmultimediaobjects/{blockedTagCod}/general", defaults={"useBlockedTagAsGeneral" = true})
-   * @Template("PumukitWebTVBundle:Search:index.html.twig")
-   */
+   /**
+    * @Route("/searchmultimediaobjects")
+    * @Route("/searchmultimediaobjects/{blockedTagCod}")
+    * @Route("/searchmultimediaobjects/{blockedTagCod}/general", defaults={"useBlockedTagAsGeneral" = true})
+    * @Template("PumukitWebTVBundle:Search:index.html.twig")
+    */
    public function multimediaObjectsAction($blockedTagCod = null, $useBlockedTagAsGeneral = false, Request $request)
    {
        // --- Get blockedTag if exists ---
        $blockedTag = null;
-       if($blockedTagCod) {
+       if ($blockedTagCod) {
            $blockedTag = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag')->findOneByCod($blockedTagCod);
-           if(!isset($blockedTag)) {
-               throw $this->createNotFoundException(sprintf('The Tag with cod \'%s\ does not exist',$blockedTagCod));
+           if (!isset($blockedTag)) {
+               throw $this->createNotFoundException(sprintf('The Tag with cod \'%s\ does not exist', $blockedTagCod));
            }
            $this->get('pumukit_web_tv.breadcrumbs')->addList($blockedTag->getTitle(), 'pumukit_webtv_search_multimediaobjects');
        }
@@ -84,14 +83,14 @@ class SearchController extends Controller
        }
        $parentTag = $tagRepo->findOneByCod($searchByTagCod);
        if (!isset($parentTag)) {
-           throw new \Exception(sprintf('The parent Tag with COD:  \' %s  \' does not exist. Check if your tags are initialized and that you added the correct \'cod\' to parameters.yml (search.parent_tag.cod)',$searchByTagCod));
+           throw new \Exception(sprintf('The parent Tag with COD:  \' %s  \' does not exist. Check if your tags are initialized and that you added the correct \'cod\' to parameters.yml (search.parent_tag.cod)', $searchByTagCod));
        }
        $parentTagOptional = null;
-       if( $this->container->hasParameter('search.parent_tag_2.cod')) {
+       if ($this->container->hasParameter('search.parent_tag_2.cod')) {
            $searchByTagCod2 = $this->container->getParameter('search.parent_tag_2.cod');
            $parentTagOptional = $tagRepo->findOneByCod($searchByTagCod2);
-           if( !isset($parentTagOptional)) {
-               throw new \Exception(sprintf('The parent Tag with COD:  \' %s  \' does not exist. Check if your tags are initialized and that you added the correct \'cod\' to parameters.yml (search.parent_tag.cod)',$searchByTagCod));
+           if (!isset($parentTagOptional)) {
+               throw new \Exception(sprintf('The parent Tag with COD:  \' %s  \' does not exist. Check if your tags are initialized and that you added the correct \'cod\' to parameters.yml (search.parent_tag.cod)', $searchByTagCod));
            }
        }
        // --- END Get Tag Parent for Tag Fields ---
@@ -124,7 +123,7 @@ class SearchController extends Controller
        ->getQuery()->execute();
        // -- Init Number Cols for showing results ---
        $numberCols = 2;
-       if( $this->container->hasParameter('columns_objs_search')){
+       if ($this->container->hasParameter('columns_objs_search')) {
            $numberCols = $this->container->getParameter('columns_objs_search');
        }
        // --- Breadcrumbs ---
@@ -138,13 +137,13 @@ class SearchController extends Controller
        'tags_found' => $tagsFound,
        'number_cols' => $numberCols,
        'languages' => $searchLanguages,
-       'blocked_tag' => $blockedTag);
+       'blocked_tag' => $blockedTag, );
    }
 
     private function createPager($objects, $page)
     {
         $limit = 10;
-        if ($this->container->hasParameter('limit_objs_search')){
+        if ($this->container->hasParameter('limit_objs_search')) {
             $limit = $this->container->getParameter('limit_objs_search');
         }
         $adapter = new DoctrineODMMongoDBAdapter($objects);
@@ -162,6 +161,7 @@ class SearchController extends Controller
         if ($searchFound != '') {
             $queryBuilder->field('$text')->equals(array('$search' => $searchFound));
         }
+
         return $queryBuilder;
     }
 
@@ -170,6 +170,7 @@ class SearchController extends Controller
         if ($typeFound == 'Audio') {
             $queryBuilder->field('tracks.only_audio')->equals(true);
         }
+
         return $queryBuilder;
     }
 
@@ -192,6 +193,7 @@ class SearchController extends Controller
                 $queryBuilder->field('tracks.duration')->gt(3600);
             }
         }
+
         return $queryBuilder;
     }
 
@@ -205,14 +207,16 @@ class SearchController extends Controller
             $end = \DateTime::createFromFormat('d/m/Y', $endFound);
             $queryBuilder->field('record_date')->lt($end);
         }
+
         return $queryBuilder;
     }
 
     private function languageQueryBuilder($queryBuilder, $languageFound)
     {
-        if($languageFound != '') {
+        if ($languageFound != '') {
             $queryBuilder->field('tracks.language')->equals($languageFound);
         }
+
         return $queryBuilder;
     }
 
@@ -224,15 +228,16 @@ class SearchController extends Controller
             if ($blockedTag !== null) {
                 $tagsFound[] = $blockedTag->getCod();
             }
-            $tagsFound = array_values(array_diff($tagsFound, array('All','')));
+            $tagsFound = array_values(array_diff($tagsFound, array('All', '')));
         }
         if (count($tagsFound) > 0) {
             $queryBuilder->field('tags.cod')->all($tagsFound);
         }
 
-        if($useBlockedTagAsGeneral && $blockedTag !== null ) {
-            $queryBuilder->field('tags.path')->notIn(array(new \MongoRegex('/'.preg_quote($blockedTag->getPath()). '.*\|/')));
+        if ($useBlockedTagAsGeneral && $blockedTag !== null) {
+            $queryBuilder->field('tags.path')->notIn(array(new \MongoRegex('/'.preg_quote($blockedTag->getPath()).'.*\|/')));
         }
+
         return $queryBuilder;
     }
     // ========== END queryBuilder functions =========
