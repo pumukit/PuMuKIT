@@ -13,9 +13,14 @@
             <parameter>DIRECTRIZ</parameter>
             <parameter>UNESCO</parameter>
         </parameter>
+        <parameter key="pumukit_web_tv.linktagtosearch">false</parameter>
     </parameters>
 
     <services>
+        <service id="pumukit_web_tv.link_service" class="Pumukit\WebTVBundle\Services\LinkService">
+            <argument type="service" id="router" />
+            <argument >%pumukit_web_tv.linktagtosearch%</argument>
+        </service>
 
         <service id="twig.extension.intl" class="Twig_Extensions_Extension_Intl">
             <tag name="twig.extension" />
@@ -32,6 +37,7 @@
           <argument>%pumukit_web_tv.default_pic%</argument>
           <argument type="service" id="pumukitschema.material" />
           <argument type="service" id="pumukitschema.pic" />
+          <argument type="service" id="pumukit_web_tv.link_service" />
           <tag name="twig.extension" />
         </service>
 
