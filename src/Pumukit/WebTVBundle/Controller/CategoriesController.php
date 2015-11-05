@@ -67,10 +67,11 @@ class CategoriesController extends Controller
         //Count number multimediaObjects
         //TODO Move this logic into a service.
         $counterMmobjs = $this->countMmobjInTags();
+        $linkService = $this->get('pumukit_web_tv.link_service');
         foreach ( $tagsArray as $id=>$parent ){if($id == '__object'){continue;}
             $allGrounds[$id] = array();
             $allGrounds[$id]['title'] = $parent['__object']->getTitle();
-            $allGrounds[$id]['url'] = $this->generateUrl('pumukit_webtv_bytag_multimediaobjects', array('cod' => $parent['__object']->getCod()));
+            $allGrounds[$id]['url'] = $linkService->generatePathToTag($parent['__object']->getCod());
             $numMmobjs = 0;
             $cod = $parent['__object']->getCod();
             if(isset($counterMmobjs[$cod])){
@@ -83,8 +84,7 @@ class CategoriesController extends Controller
             if( $listGeneralParam ){
                 $allGrounds[$id]['children']['general'] = array();
                 $allGrounds[$id]['children']['general']['title'] = $this->get('translator')->trans("General %title%", array('%title%' => $parent['__object']->getTitle()));
-                $allGrounds[$id]['children']['general']['url'] = $this->generateUrl('pumukit_webtv_bytag_multimediaobjects', array('cod' => $parent['__object']->getCod(), 'list_only_general' => true));
-
+                $allGrounds[$id]['children']['general']['url'] = $linkService->generatePathToTag($parent['__object']->getCod(), true);
                 $numMmobjs = 0;
                 if(isset($counterGeneralMmobjs[$cod])){
                     $numMmobjs = $counterMmobjs[$cod];
@@ -95,7 +95,7 @@ class CategoriesController extends Controller
             foreach ($parent as $id2=>$child ) {if($id2 == '__object'){continue;}
                 $allGrounds[$id]['children'][$id2] = array();
                 $allGrounds[$id]['children'][$id2]['title'] = $child['__object']->getTitle();
-                $allGrounds[$id]['children'][$id2]['url'] = $this->generateUrl('pumukit_webtv_bytag_multimediaobjects', array('cod' => $child['__object']->getCod()));
+                $allGrounds[$id]['children'][$id2]['url'] = $linkService->generatePathToTag($child['__object']->getCod());
 
                 $numMmobjs = 0;
                 $cod = $child['__object']->getCod();
@@ -108,7 +108,7 @@ class CategoriesController extends Controller
                 foreach($child as $id3=>$grandchild ){if($id3 == '__object'){continue;}
                   $allGrounds[$id]['children'][$id2]['children'][$id3] = array();
                   $allGrounds[$id]['children'][$id2]['children'][$id3]['title'] = $grandchild['__object']->getTitle();
-                  $allGrounds[$id]['children'][$id2]['children'][$id3]['url'] = $this->generateUrl('pumukit_webtv_bytag_multimediaobjects', array('cod' => $grandchild['__object']->getCod()));
+                  $allGrounds[$id]['children'][$id2]['children'][$id3]['url'] = $linkService->generatePathToTag($grandchild['__object']->getCod());
                   $numMmobjs = 0;
                   $cod = $grandchild['__object']->getCod();
                   if(isset($counterMmobjs[$cod])){
