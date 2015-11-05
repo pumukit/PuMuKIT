@@ -1,4 +1,4 @@
-<form id="form_search" name="busqueda" method="get" action="{{ path('pumukit_webtv_search_multimediaobjects') }}" class="row">
+<form id="form_search" name="busqueda" method="get" class="row">
 
     <input type="submit" style="display:none"/>
     <div class="form-group col-md-{{ parent_tag2 is null or blocked_tag ? 6 : 3}}">
@@ -12,7 +12,7 @@
             </div>
         </div>
     </div>
-    {% if parent_tag is not null and parent_tag.cod != blocked_tag %}
+    {% if parent_tag is not null and blocked_tag is null or not blocked_tag.isDescendantOf(parent_tag) %}
     <div class="form-group col-md-3 col-sm-4">
         <label for="tags">{{ parent_tag.title|trans}}:</label>
         <select id="tags" name="tags[]" class="form-control" onchange="javascript:this.form.submit();">
@@ -24,11 +24,11 @@
     </div>
     {% endif %}
 
-    {% if parent_tag2 is not null and parent_tag2.cod != blocked_tag %}
+    {% if parent_tag2 is not null and blocked_tag is null or not blocked_tag.isDescendantOf(parent_tag2) %}
     <div class="form-group col-md-3 col-sm-4">
         <label for="tags">{{ parent_tag2.title|trans}}:</label>
         <select id="tags" name="tags[]" class="form-control" onchange="javascript:this.form.submit();">
-            <option {% if tags_found == "" %} selected="selected" {% endif %}>All</option>
+            <option value="" {% if tags_found == "" %} selected="selected" {% endif %}>All</option>
             {% for tag in parent_tag2.children if tag.title != "" %}
             <option value="{{tag.cod}}" {% if tag.cod in tags_found %} selected="selected" {% endif %}>{{ tag.title }}</option>
             {% endfor %}
@@ -36,16 +36,10 @@
     </div>
     {% endif %}
 
-    {% if blocked_tag is not null %}
-    <input type="hidden" name="blockedTag" value="{{blocked_tag}}"/>
-    <input type="hidden" name="blockedTagValue" value="{{blocked_tag_value}}"/>
-    <input type="hidden" name="useBlockedTagAsGeneral" value="{{use_blocked_tag_as_general}}"/>
-    {% endif %}
-
     <div class="form-group col-md-3 col-sm-4">
         <label for="duration">{% trans %}Duration{% endtrans %}:</label>
         <select id="duration" name="duration" class="form-control" onchange="javascript:this.form.submit();">
-            <option value="all" {% if app.request.query.get('duration') == "all" %} selected="selected" {% endif %}>{% trans%}All{% endtrans %}</option>
+            <option value="" {% if app.request.query.get('duration') == "" %} selected="selected" {% endif %}>{% trans%}All{% endtrans %}</option>
             <option value="-5"  {% if app.request.query.get('duration') == "-5" %} selected="selected" {% endif %}>{% trans %}Up to 5 minutes{% endtrans %}</option>
             <option value="-10" {% if app.request.query.get('duration') == "-10" %} selected="selected" {% endif %}>{% trans %}Up to 10 minutes{% endtrans %}</option>
             <option value="-30" {% if app.request.query.get('duration') == "-30" %} selected="selected" {% endif %}>{% trans %}Up to 30 minutes{% endtrans %}</option>
@@ -57,7 +51,7 @@
     <div class="form-group col-md-2 col-sm-4 col-xs-6">
         <label for="type">{% trans %}Video/Audio{% endtrans %}:</label>
         <select id="type" name="type" class="form-control"  onchange="javascript:this.form.submit();">
-            <option {% if type_found == "" %} selected="selected" {% endif %}>{% trans %}All{% endtrans %}</option>
+            <option value="" {% if type_found == "" %} selected="selected" {% endif %}>{% trans %}All{% endtrans %}</option>
             <option {% if type_found == "Video" %} selected="selected" {% endif %}>{% trans %}Video{% endtrans %}</option>
             <option {% if type_found == "Audio" %} selected="selected" {% endif %}>{% trans %}Audio{% endtrans %}</option>
         </select>
@@ -65,7 +59,7 @@
     <div class="form-group col-md-2 col-sm-2 col-xs-6">
         <label for="type">{% trans %}Language{% endtrans %}:</label>
         <select id="language" name="language" class="form-control"  onchange="javascript:this.form.submit();">
-            <option {% if language_found == "" %} selected="selected" {% endif %}>All</option>
+            <option value="" {% if language_found == "" %} selected="selected" {% endif %}>All</option>
             {% for language in languages if language != "" %}
             <option value="{{language}}" {% if language_found == language %} selected="selected" {% endif %}>{{ language |language_name }}</option>
             {% endfor %}
