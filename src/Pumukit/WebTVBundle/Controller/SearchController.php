@@ -71,6 +71,7 @@ class SearchController extends Controller
       }
       $this->get('pumukit_web_tv.breadcrumbs')->addList('Multimedia object search', 'pumukit_webtv_search_multimediaobjects');
 
+      // --- Get Variables ---
       $blockedTagCod = $tagCod;
       $useBlockedTagAsGeneral = $general;
       $searchFound = $request->query->get('search');
@@ -80,10 +81,12 @@ class SearchController extends Controller
       $startFound = $request->query->get('start');
       $endFound = $request->query->get('end');
       $languageFound = $request->query->get('language');
+      // --- END Get Variables --
 
       $mmobjRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
       $tagRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
 
+      // --- Get Tag Parent for Tag Fields ---
       $searchByTagCod = 'ITUNESU';
       if ($this->container->hasParameter('search.parent_tag.cod')) {
           $searchByTagCod = $this->container->getParameter('search.parent_tag.cod');
@@ -101,12 +104,22 @@ class SearchController extends Controller
               throw new \Exception(sprintf('The parent Tag with COD:  \' %s  \' does not exist. Check if your tags are initialized and that you added the correct \'cod\' to parameters.yml (search.parent_tag.cod)',$searchByTagCod));
           }
       }
+      // --- END Get Tag Parent for Tag Fields ---
+
+      // --- Edit tagsFound array --
+      $blockedTag = null;
+      if($blockedTagCod) {
+          $tagsFound[] = $blockedTagCod;
+          $blockedTag = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag')->findOneByCod($blockedTagCod);
+          if(!isset($blockedTag)) {
+              throw $this->createNotFoundException(sprintf('The Tag with cod \'%s\ does not exist',$blockedTagCod));
+          }
+          $this->get('pumukit_web_tv.breadcrumbs')->addList($blockedTag->getTitle(), 'pumukit_webtv_search_multimediaobjects');
+      }
       if( $blockedTagCod !== null ) {
           $tagsFound[] = $blockedTagCod;
       }
-      if($tagsFound !== null) {
-          $tagsFound = array_values(array_diff($tagsFound, array('All','')));
-      }
+      // --- END Edit tagsFound array ---
 
       $searchLanguages = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder()->distinct('tracks.language')->getQuery()->execute();
 
@@ -115,13 +128,9 @@ class SearchController extends Controller
       if ($searchFound != '') {
           $queryBuilder->field('$text')->equals(array('$search' => $searchFound));
       }
-      $blockedTag = null;
-      if($blockedTagCod) {
-          $blockedTag = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag')->findOneByCod($blockedTagCod);
-          if(!isset($blockedTag)) {
-              throw $this->createNotFoundException(sprintf('The Tag with cod \'%s\ does not exist',$blockedTagCod));
-          }
-          $this->get('pumukit_web_tv.breadcrumbs')->addList($blockedTag->getTitle(), 'pumukit_webtv_search_multimediaobjects');
+
+      if($tagsFound !== null) {
+          $tagsFound = array_values(array_diff($tagsFound, array('All','')));
       }
       if (count($tagsFound) > 0) {
           $queryBuilder->field('tags.cod')->all($tagsFound);
