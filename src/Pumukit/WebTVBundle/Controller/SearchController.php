@@ -81,23 +81,23 @@ class SearchController extends Controller
       $endFound = $request->query->get('end');
       $languageFound = $request->query->get('language');
 
-      $repository_multimediaObjects = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
-      $repository_tags = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
+      $mmobjRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+      $tagRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
 
       $searchByTagCod = 'ITUNESU';
       if ($this->container->hasParameter('search.parent_tag.cod')) {
           $searchByTagCod = $this->container->getParameter('search.parent_tag.cod');
       }
-      $parentTag = $repository_tags->findOneByCod($searchByTagCod);
+      $parentTag = $tagRepo->findOneByCod($searchByTagCod);
       if (!isset($parentTag)) {
           throw new \Exception(sprintf('The parent Tag with COD:  \' %s  \' does not exist. Check if your tags are initialized and that you added the correct \'cod\' to parameters.yml (search.parent_tag.cod)',$searchByTagCod));
       }
 
-      $parentTag2 = null;
+      $parentTagOptional = null;
       if( $this->container->hasParameter('search.parent_tag_2.cod')) {
           $searchByTagCod2 = $this->container->getParameter('search.parent_tag_2.cod');
-          $parentTag2 = $repository_tags->findOneByCod($searchByTagCod2);
-          if( !isset($parentTag2)) {
+          $parentTagOptional = $tagRepo->findOneByCod($searchByTagCod2);
+          if( !isset($parentTagOptional)) {
               throw new \Exception(sprintf('The parent Tag with COD:  \' %s  \' does not exist. Check if your tags are initialized and that you added the correct \'cod\' to parameters.yml (search.parent_tag.cod)',$searchByTagCod));
           }
       }
@@ -110,7 +110,7 @@ class SearchController extends Controller
 
       $searchLanguages = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder()->distinct('tracks.language')->getQuery()->execute();
 
-      $queryBuilder = $repository_multimediaObjects->createStandardQueryBuilder();
+      $queryBuilder = $mmobjRepo->createStandardQueryBuilder();
 
       if ($searchFound != '') {
           $queryBuilder->field('$text')->equals(array('$search' => $searchFound));
@@ -172,7 +172,7 @@ class SearchController extends Controller
       return array('type' => 'multimediaObject',
          'objects' => $pagerfanta,
          'parent_tag' => $parentTag,
-         'parent_tag2' => $parentTag2,
+         'parent_tag_optional' => $parentTagOptional,
          'tags_found' => $tagsFound,
          'type_found' => $typeFound,
          'number_cols' => $numberCols,

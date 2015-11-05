@@ -1,7 +1,7 @@
 <form id="form_search" name="busqueda" method="get" class="row">
 
     <input type="submit" style="display:none"/>
-    <div class="form-group col-md-{{ parent_tag2 is null or blocked_tag ? 6 : 3}}">
+    <div class="form-group col-md-{{ parent_tag_optional is null or blocked_tag ? 6 : 3}}">
         <label for="search">{% trans %}Search{% endtrans %}:</label>
         <div class="input-group">
             <input type="text" class="form-control" id="search" name="search" value="{{ app.request.query.get('search') }}" placeholder="Search">
@@ -24,12 +24,12 @@
     </div>
     {% endif %}
 
-    {% if parent_tag2 is not null and blocked_tag is null or not blocked_tag.isDescendantOf(parent_tag2) %}
+    {% if parent_tag_optional is not null and blocked_tag is null or not blocked_tag.isDescendantOf(parent_tag_optional) %}
     <div class="form-group col-md-3 col-sm-4">
-        <label for="tags">{{ parent_tag2.title|trans}}:</label>
+        <label for="tags">{{ parent_tag_optional.title|trans}}:</label>
         <select id="tags" name="tags[]" class="form-control" onchange="javascript:this.form.submit();">
             <option value="" {% if tags_found == "" %} selected="selected" {% endif %}>All</option>
-            {% for tag in parent_tag2.children if tag.title != "" %}
+            {% for tag in parent_tag_optional.children if tag.title != "" %}
             <option value="{{tag.cod}}" {% if tag.cod in tags_found %} selected="selected" {% endif %}>{{ tag.title }}</option>
             {% endfor %}
         </select>
