@@ -131,8 +131,8 @@ class SearchController extends Controller
           }
       }
 
-      if ($typeFound != '') {
-          $queryBuilder->field('tracks.only_audio')->equals($typeFound == 'Audio');
+      if ($typeFound == 'Audio') {
+          $queryBuilder->field('tracks.only_audio')->equals(true);
       }
 
       if ($durationFound != '') {
@@ -174,10 +174,8 @@ class SearchController extends Controller
          'parent_tag' => $parentTag,
          'parent_tag_optional' => $parentTagOptional,
          'tags_found' => $tagsFound,
-         'type_found' => $typeFound,
          'number_cols' => $numberCols,
          'languages' => $searchLanguages,
-         'language_found' => $languageFound,
          'blocked_tag' => $blockedTag);
     }
 
