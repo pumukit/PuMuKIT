@@ -5,6 +5,7 @@ namespace Pumukit\WebTVBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
@@ -15,9 +16,9 @@ use Pumukit\SchemaBundle\Document\Tag;
 class SearchController extends Controller
 {
     /**
-    * @Route("/searchseries")
-    * @Template("PumukitWebTVBundle:Search:index.html.twig")
-    */
+     * @Route("/searchseries")
+     * @Template("PumukitWebTVBundle:Search:index.html.twig")
+     */
     public function seriesAction(Request $request)
     {
         $numberCols = 2;
@@ -55,26 +56,16 @@ class SearchController extends Controller
         'objects' => $pagerfanta,
         'number_cols' => $numberCols, );
     }
-
+    
     /**
-    * @Route("/searchmultimediaobjects/{blockedTagCod}/{useBlockedTagAsGeneral}", defaults={"blockedTagCod" = null, "useBlockedTagAsGeneral" = false})
-    * @Template("PumukitWebTVBundle:Search:index.html.twig")
-    */
-    public function multimediaObjectsAction($blockedTagCod, $useBlockedTagAsGeneral = false, Request $request)
+     * @Route("/searchmultimediaobjects/{blockedTagCod}/{useBlockedTagAsGeneral}", defaults={"blockedTagCod": null, "useBlockedTagAsGeneral": false})
+     * @ParamConverter("blockedTag", class="PumukitSchemaBundle:Tag", options={"mapping": {"blockedTagCod": "cod"}})
+     * @Template("PumukitWebTVBundle:Search:index.html.twig")
+     */
+    public function multimediaObjectsAction(Request $request, Tag $blockedTag = null, $useBlockedTagAsGeneral = false)
     {
-        // --- Get blockedTag if exists ---
-        $tagRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
-        $blockedTag = null;
-        if ($blockedTagCod) {
-            $blockedTag = $tagRepo->findOneByCod($blockedTagCod);
-            if (!isset($blockedTag)) {
-                throw $this->createNotFoundException(sprintf('The Tag with cod \'%s\ does not exist', $blockedTagCod));
-            }
-            $this->get('pumukit_web_tv.breadcrumbs')->addList($blockedTag->getTitle(), 'pumukit_webtv_search_multimediaobjects');
-        } else {
-            $this->get('pumukit_web_tv.breadcrumbs')->addList('Multimedia object search', 'pumukit_webtv_search_multimediaobjects');
-        }dump($blockedTagCod);dump($useBlockedTagAsGeneral);
-        // -- END Get blockedTag if exists ---
+        $this->get('pumukit_web_tv.breadcrumbs')->addList($blockedTag ? $blockedTag->getTitle() : 'Multimedia object search', 'pumukit_webtv_search_multimediaobjects');
+
         // --- Get Tag Parent for Tag Fields ---
         $parentTag = $this->getParentTag();
         $parentTagOptional = $this->getOptionalParentTag();
