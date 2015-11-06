@@ -18,7 +18,12 @@ class AnnouncesController extends Controller
      */
     public function latestUploadsAction(Request $request)
     {
-        $this->get('pumukit_web_tv.breadcrumbs')->addList('Latest Uploads', 'pumukit_webtv_announces_latestuploads');
+        $templateTitle = 'Latest Uploads';
+        if($this->container->hasParameter('menu.announces_title')) {
+            $templateTitle = $this->container->getParameter('menu.announces_title');
+        }
+        $this->get('pumukit_web_tv.breadcrumbs')->addList($templateTitle, 'pumukit_webtv_announces_latestuploads');
+        return array('template_title' => $templateTitle);
     }
     /**
      * @Route("/latestuploads/pager", name="pumukit_webtv_announces_latestuploads_pager")

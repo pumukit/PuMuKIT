@@ -21,7 +21,19 @@ class WidgetController extends Controller
         if($this->container->hasParameter('menu_stats')) {
           $menuStats = $this->container->getParameter('menu_stats');
         }
-        return array('live_channels' => $channels, 'menu_selected' => $selected, 'menu_stats' => $menuStats);
+
+        $homeTitle = $this->container->hasParameter('menu.home_title') ? $this->container->getParameter('menu.home_title') : 'Home';
+        $announcesTitle = $this->container->hasParameter('menu.announces_title') ? $this->container->getParameter('menu.announces_title') : 'Latest uploads';
+        $searchTitle = $this->container->hasParameter('menu.search_title') ? $this->container->getParameter('menu.search_title') : 'Search';
+        $mediatecaTitle = $this->container->hasParameter('menu.mediateca_title') ? $this->container->getParameter('menu.mediateca_title') : 'Full Catalogue';
+        $categoriesTitle = $this->container->hasParameter('menu.categories_title') ? $this->container->getParameter('menu.categories_title') : 'Videos by category';
+
+        return array('live_channels' => $channels, 'menu_selected' => $selected, 'menu_stats' => $menuStats,
+        'home_title' => $homeTitle,
+        'announces_title' => $announcesTitle,
+        'search_title' => $searchTitle,
+        'mediateca_title' => $mediatecaTitle,
+        'categories_title' => $categoriesTitle );
     }
 
     /**

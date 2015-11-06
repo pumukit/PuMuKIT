@@ -18,7 +18,11 @@ class CategoriesController extends Controller
      */
     public function indexAction($sort, Request $request)
     {
-        $this->get('pumukit_web_tv.breadcrumbs')->addList('Videos by Category', 'pumukit_webtv_categories_index');
+        $templateTitle = null;
+        if($this->container->hasParameter('menu.categories_title')) {
+            $templateTitle = $this->container->getParameter('menu.categories_title');
+        }
+        $this->get('pumukit_web_tv.breadcrumbs')->addList($templateTitle?:'Videos by Category', 'pumukit_webtv_categories_index');
         $parentCod = $this->container->getParameter('categories_tag_cod');
 
         $groundsRoot = $this->getDoctrine()

@@ -56,7 +56,7 @@ class SearchController extends Controller
         'objects' => $pagerfanta,
         'number_cols' => $numberCols, );
     }
-    
+
     /**
      * @Route("/searchmultimediaobjects/{blockedTagCod}/{useBlockedTagAsGeneral}", defaults={"blockedTagCod": null, "useBlockedTagAsGeneral": false})
      * @ParamConverter("blockedTag", class="PumukitSchemaBundle:Tag", options={"mapping": {"blockedTagCod": "cod"}})
@@ -64,7 +64,11 @@ class SearchController extends Controller
      */
     public function multimediaObjectsAction(Request $request, Tag $blockedTag = null, $useBlockedTagAsGeneral = false)
     {
-        $this->get('pumukit_web_tv.breadcrumbs')->addList($blockedTag ? $blockedTag->getTitle() : 'Multimedia object search', 'pumukit_webtv_search_multimediaobjects');
+        $templateTitle = null;
+        if($this->container->hasParameter('menu.search_title')) {
+            $templateTitle = $this->container->getParameter('menu.search_title');
+        }
+        $this->get('pumukit_web_tv.breadcrumbs')->addList($blockedTag ? $blockedTag->getTitle() : $templateTitle?:'Multimedia object search', 'pumukit_webtv_search_multimediaobjects');
 
         // --- Get Tag Parent for Tag Fields ---
         $parentTag = $this->getParentTag();
@@ -105,6 +109,7 @@ class SearchController extends Controller
 
         // --- RETURN ---
         return array('type' => 'multimediaObject',
+        'template_title' => $templateTitle,
         'objects' => $pagerfanta,
         'parent_tag' => $parentTag,
         'parent_tag_optional' => $parentTagOptional,
