@@ -23,14 +23,19 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param array $status
      * @return ArrayCollection
      */
-    public function findWithStatus(Series $series, array $status)
+    public function findWithStatus(Series $series, array $status, $limit = 0, $page = 1)
     {
-        return $this->createQueryBuilder()
-          ->field('series')->references($series)
-          ->field('status')->in($status)
-          ->sort('rank', 1)
-          ->getQuery()
-          ->execute();
+        $qb = $this->createQueryBuilder()
+        ->field('series')->references($series)
+        ->field('status')->in($status)
+        ->sort('rank', 1);
+
+        if ($limit > 0){
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
+        return $qb->getQuery()
+        ->execute();
     }
 
     /**
@@ -353,6 +358,44 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
+     * Create QueryBuilder to find multimedia objects by series
+     *
+     * @param Series $series
+     * @param array $sort
+     * @return QueryBuilder
+     */
+    public function createBuilderWithSeries(Series $series, $sort = array())
+    {
+        $qb = $this->createStandardQueryBuilder()
+          ->field('series')->references($series);
+
+        if (0 !== count($sort) ){
+          $qb->sort($sort);
+        }
+
+        return $qb;
+    }
+
+    /**
+     * Create QueryBuilder to find multimedia objects by series and status
+     *
+     * @param Series $series
+     * @param array $sort
+     * @return QueryBuilder
+     */
+    public function createBuilderWithSeriesAndStatus(Series $series, $status = array(), $sort = array())
+    {
+        $qb = $this->createQueryBuilder()
+          ->field('series')->references($series)
+          ->field('status')->in($status);
+
+        if (0 !== count($sort) ){
+          $qb->sort($sort);
+        }
+
+        return $qb;
+    }
+    /**
     * Create QueryBuilder to find multimedia objects with Tag and without any Tag children.
     *
     * @param Tag|EmbeddeTag $tag
@@ -655,12 +698,17 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param Series $series
      * @return ArrayCollection
      */
-    public function findStandardBySeries(Series $series)
+    public function findStandardBySeries(Series $series, $limit = 0, $page = 1)
     {
-        return $this->createStandardQueryBuilder()
-          ->field('series')->references($series)
-          ->getQuery()
-          ->execute();
+        $qb = $this->createStandardQueryBuilder()
+        ->field('series')->references($series);
+
+        if ($limit > 0){
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
+        return $qb->getQuery()
+        ->execute();
     }
 
     /**
