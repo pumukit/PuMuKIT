@@ -3,16 +3,20 @@
     <!-- Principal -->
 
     <a href="{{ path('pumukit_webtv_index_index')}}" {{menu_selected=="pumukit_webtv_index_index"?'class="selected"':''}}>
-      {% trans %} Home{% endtrans %}
+        {{ home_title |trans }}
     </a>
 
     <!-- Announces -->
 
-    <a href="{{ path('pumukit_webtv_announces_latestuploads') }}" class="{{menu_selected == 'pumukit_webtv_announces_latestuploads'? 'selected' : ''}}">{% trans %} Latest Uploads {% endtrans %}</a>
+    <a href="{{ path('pumukit_webtv_announces_latestuploads') }}" class="{{menu_selected == 'pumukit_webtv_announces_latestuploads'? 'selected' : ''}}">
+        {{ announces_title |trans }}
+    </a>
 
     <!-- Search -->
 
-    <a href="{{ path('pumukit_webtv_search_multimediaobjects')}}" class="{{menu_selected=="pumukit_webtv_search_multimediaobjects"?'selected':''}}">{% trans %} Search {% endtrans %}</a>
+    <a href="{{ path('pumukit_webtv_search_multimediaobjects')}}" class="{{menu_selected=="pumukit_webtv_search_multimediaobjects"?'selected':''}}">
+        {{ search_title |trans}}
+    </a>
 
 
     <!-- Live Channels -->
@@ -25,10 +29,14 @@
     {% endfor %}
 
     <!-- Mediateca -->
-    <a href="{{ path('pumukit_webtv_medialibrary_index') }}" class="{{menu_selected=="pumukit_webtv_medialibrary_index"?'selected':''}}">{% trans %} Full Catalogue {% endtrans %}</a>
+    <a href="{{ path('pumukit_webtv_medialibrary_index') }}" class="{{menu_selected=="pumukit_webtv_medialibrary_index"?'selected':''}}">
+        {{ mediateca_title |trans }}
+    </a>
 
     <!-- Videos by category -->
-    <a href="{{ path('pumukit_webtv_categories_index') }}" class="{{menu_selected=="pumukit_webtv_categories_index"?'selected':''}}">{% trans %} Videos by category {% endtrans %}</a>
+    <a href="{{ path('pumukit_webtv_categories_index') }}" class="{{menu_selected=="pumukit_webtv_categories_index"?'selected':''}}">
+        {{ categories_title |trans }}
+    </a>
 
   </ul>
 </div>
