@@ -126,14 +126,8 @@ class MultimediaObjectController extends PlayerController
         $series = $multimediaObject->getSeries();
         $multimediaObjects = $series->getMultimediaObjects();
 
-        $tagRepo = $this
-        ->get('doctrine_mongodb.odm.document_manager')
-        ->getRepository('PumukitSchemaBundle:Tag');
-        $unescoTag = $tagRepo->findOneByCod('UNESCO');
-
         return array('series' => $series,
-        'multimediaObjects' => $multimediaObjects,
-        'unescoTag' => $unescoTag);
+        'multimediaObjects' => $multimediaObjects);
     }
 
     /**
@@ -146,13 +140,7 @@ class MultimediaObjectController extends PlayerController
         ->getRepository('PumukitSchemaBundle:MultimediaObject');
         $relatedMms = $mmobjRepo->findRelatedMultimediaObjects($multimediaObject);
 
-        $tagRepo = $this
-        ->get('doctrine_mongodb.odm.document_manager')
-        ->getRepository('PumukitSchemaBundle:Tag');
-        $unescoTag = $tagRepo->findOneByCod('UNESCO');
-
-        return array('multimediaObjects' => $relatedMms,
-        'unescoTag' => $unescoTag);
+        return array('multimediaObjects' => $relatedMms);
     }
 
     public function preExecute(MultimediaObject $multimediaObject, Request $request)
