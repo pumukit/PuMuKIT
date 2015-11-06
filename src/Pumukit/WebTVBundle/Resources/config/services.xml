@@ -14,6 +14,7 @@
             <parameter>UNESCO</parameter>
         </parameter>
         <parameter key="pumukit_web_tv.linktagtosearch">false</parameter>
+        <parameter key="pumukit_web_tv.breadcrumbs_parentweb">null</parameter>
     </parameters>
 
     <services>
@@ -48,6 +49,7 @@
           <argument>%pumukit_web_tv.breadcrumbs_all_title%</argument>
           <argument>%pumukit_web_tv.breadcrumbs_all_route%</argument>
           <argument>%breadcrumbs_home_title%</argument>
+          <argument>%pumukit_web_tv.breadcrumbs_parentweb%</argument>
         </service>
 
         <service id="pumukit_web_tv.useragent_parser" class="Pumukit\WebTVBundle\Services\UserAgentParserService">
