@@ -7,7 +7,7 @@
     <parameters>
         <parameter key="pumukit_web_tv.breadcrumbs_all_title">All</parameter>
         <parameter key="pumukit_web_tv.breadcrumbs_all_route">pumukit_webtv_medialibrary_index</parameter>
-        <parameter key="pumukit_web_tv.breadcrumbs_home_title">Home</parameter>
+        <parameter key="breadcrumbs_home_title">Home</parameter>
         <parameter key="pumukit_web_tv.default_pic">/bundles/pumukitwebtv/images/no_pic.jpg</parameter>
         <parameter key="pumukit_web_tv.media_library.filter_tags" type="collection">
             <parameter>DIRECTRIZ</parameter>
@@ -47,7 +47,7 @@
           <argument type="service" id="translator" />
           <argument>%pumukit_web_tv.breadcrumbs_all_title%</argument>
           <argument>%pumukit_web_tv.breadcrumbs_all_route%</argument>
-          <argument>%pumukit_web_tv.breadcrumbs_home_title%</argument>
+          <argument>%breadcrumbs_home_title%</argument>
         </service>
 
         <service id="pumukit_web_tv.useragent_parser" class="Pumukit\WebTVBundle\Services\UserAgentParserService">
