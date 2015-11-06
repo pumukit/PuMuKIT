@@ -1,5 +1,5 @@
 <div class="col-xs-12">
-  {% for tag in multimediaObject.tags if tag.display and not tag.metatag %}
+  {% for tag in multimediaObject.tags if tag.display and not tag.metatag and not tag.isDescendantOfByCod('PUBCHANNELS') %}
     <span class="label label-primary">
       <a href="{{ path_to_tag(tag.cod)}}">
         {{ tag.title }}
