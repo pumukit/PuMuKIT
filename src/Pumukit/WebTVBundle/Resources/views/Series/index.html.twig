@@ -37,6 +37,10 @@
     </div>
   </div>
   <div class="row">
+      {% set objects = multimediaObjects %}
+    {% include 'PumukitWebTVBundle:Misc:pager.html.twig' %}
+  </div>
+  <div class="row">
     <div class="col-xs-12">
       {{ series.footer|raw }}
     </div>
