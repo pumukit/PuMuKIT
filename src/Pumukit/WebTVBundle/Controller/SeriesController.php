@@ -64,7 +64,11 @@ class SeriesController extends Controller
     {
         $limit = 10;
         if ($this->container->hasParameter('limit_objs_series')) {
-            $limit = $this->container->getParameter('limit_objs_search', 10);
+            $limit = $this->container->getParameter('limit_objs_search');
+        }
+
+        if (0 == $limit) {
+            return $objects->getQuery()->execute();
         }
         $adapter = new DoctrineODMMongoDBAdapter($objects);
         $pagerfanta = new Pagerfanta($adapter);
