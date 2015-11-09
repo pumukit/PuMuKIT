@@ -1,61 +1,22 @@
 <div class="library">
-
-{% if sort == 'alphabetically' %}
-
-	{% set lastChar = '--' %}
-
-	{% for serie in series %}
-    {% set num_mmobj = serie|count_multimedia_objects %}
-    {% if num_mmobj != 0 %}
-
-		{% if serie.title|slice(0,1)|title != lastChar %}
-    	<div class="name">
-      		<div>{{serie.title|slice(0,1)|title}}</div>
-    	</div>
-    {% endif %}
-    <div class="list">
-      <ul>      
-        <li>
-        	<a href="{{ path('pumukit_webtv_series_index', {'id': serie.id}) }}">{{serie.getTitle()}}</a> [{{ num_mmobj }} videos]
-        </li>
-      </ul>
+  {% set lastTitle = '--' %}
+  {% for key, series in objects%}
+    <div class="name row">
+      <h2>{{ key }}</h2>
     </div>
-
-	{% set lastChar = serie.title|slice(0,1)|title %}
-
-    {% endif %}
-	{% endfor %}
-
-{% else %}
-
-	{% set lastDate = '--' %}
-
-	{% for serie in series %}
-    {% set num_mmobj = serie|count_multimedia_objects %}
-    {% if num_mmobj != 0 %}
-
-		{% if serie.getPublicDate()|date("d/m/Y") != lastDate %}
-    	<div class="name">
-      		<div>{{ serie.getPublicDate()|date("d/m/Y") }}</div>
-    	</div>
-    	{% endif %}
-    	<div class="list">
-      	<ul>      
-        	<li>
-        		<a href="{{ path('pumukit_webtv_series_index', {'id': serie.id}) }}">{{serie.getTitle()}}</a> [{{ num_mmobj }} videos]
-        	</li>
-      	</ul>
-    	</div>
-
-	{% set lastDate = serie.getPublicDate()|date("d/m/Y") %}
-
-    {% endif %}
+    <div class="row">
+      {% for serie in series  %}
+      {% set object = serie %}
+      {% if catalogue_thumbnails | default(false) %}
+      {% include 'PumukitWebTVBundle:Misc:series.html.twig' with {'cols': number_cols } %}
+      {% else %}
+      {% include 'PumukitWebTVBundle:Misc:series_text.html.twig' with {'cols': number_cols } %}
+      {% endif %}
+      {% endfor %}
+    </div>
     {% else %}
-      <div class="row text-center">
-        {% trans %}Not series found{% endtrans %}.
-      </div>
-	{% endfor %}
-
-{% endif %}
-
+    <div class="row text-center">
+      {% trans %}Not series found{% endtrans %}.
+    </div>
+  {% endfor %}
 </div>

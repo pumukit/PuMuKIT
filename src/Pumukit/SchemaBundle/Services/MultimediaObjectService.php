@@ -2,14 +2,13 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
-use Pumukit\SchemaBundle\Document\Broadcast;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Pic;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Symfony\Component\Finder\Finder;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\Pic;
+use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\WebTVBundle\Event\ViewedEvent;
+
 
 class MultimediaObjectService
 {
@@ -83,4 +82,15 @@ class MultimediaObjectService
         return $mm->getSecret();
     }
     
+    public function onMultimediaObjectViewed(ViewedEvent $event)
+    {
+      $track = $event->getTrack();
+      $multimediaObject = $event->getMultimediaObject();
+
+      $multimediaObject->incNumview();
+      $track && $track->incNumview();
+      $this->dm->persist($multimediaObject);
+      $this->dm->flush();
+    }
 }
+

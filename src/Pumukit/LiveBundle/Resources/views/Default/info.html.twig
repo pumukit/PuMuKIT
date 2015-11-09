@@ -1,58 +1,50 @@
 {% set event = future_and_not_finished_event(1)|first %}
-<br />
-<br />
-<div id="directo_info" >
-  <table id="directo_announces">		
-    <thead>
-      <tr> 
-        <td valign="top" colspan="2">
-          {% if event %}
-            {% if ((event.date|date('U')) < ('now'|date('U'))) %}
-              {% trans %}Current live event{% endtrans %}
-            {% else %}
-              {% trans %}Next live event{% endtrans %}
-            {% endif %}
-          {% else %}
-            {% trans %}Next live event{% endtrans %}
-          {% endif %}
-        </td>
-      </tr>
-    </thead>
+<div class="panel panel-primary text-center">
+  <div class="panel-heading">
+    {% if event %}
+      {% if ((event.date|date('U')) < ('now'|date('U'))) %}
+        {% trans %}Current live event{% endtrans %}
+      {% else %}
+        {% trans %}Next live event{% endtrans %}
+      {% endif %}
+    {% else %}
+      {% trans %}Next live event{% endtrans %}
+    {% endif %}
+  </div>
+  <table class="table table-striped">
     <tbody>
-      <tr class="impar"> 
-        <td width="25%" valign="top">
-          <div align="right"><font size="1">{% trans %}EVENT{% endtrans %}</font><br/></div>
-        </td>
-        <td width="75%"><div align="center">
-          <strong>{{ event ? event.name : '---' }}</strong></div>
-        </td>
+      <tr>
+        <th>
+          {% trans %}Event{% endtrans %}
+        </th>
+        <th>
+          {{ event ? event.name : '---' }}</div>
+        </th>
       </tr>
-      <tr class="par">
-        <td width="22%" valign="top">
-          <div align="right"><font size="1">{% trans %}PLACE{% endtrans %}</font></div>
-        </td>
-        <td width="78%"><div align="center">
-          <strong>{{ event ? event.place : '---' }}</strong></div>
-        </td>
+      <tr>
+        <th>
+          {% trans %}Place{% endtrans %}
+        </th>
+        <th>
+          {{ event ? event.place : '---' }}
+        </th>
       </tr>
-      <tr class="impar"> 
-        <td valign="top"> 
-          <div align="right"><font size="1">{% trans %}DATE{% endtrans %}</font></div>
-        </td>
-        <td>
-          <div align="center"><strong><font color="#000066">{{ event ? event.date|date('d/m/Y') : '---' }}</font></strong></div>
-        </td>
+      <tr>
+        <th>
+          {% trans %}Date{% endtrans %}
+        </th>
+        <th>
+          {{ event ? event.date|date('d/m/Y') : '---' }}
+        </th>
       </tr>
-      <tr class="par"> 
-        <td valign="top"> 
-          <div align="right"><font size="1">{% trans %}TIME{% endtrans %}</font></div>
-        </td>
-        <td>
-          <div align="center"><strong><font color="#000066">{{ event ? event.date|date('H:i') : '---' }}</font></strong></div>
-        </td>
+      <tr>
+        <th>
+          {% trans %}Time{% endtrans %}
+        </th>
+        <th>
+          {{ event ? event.date|date('H:i') : '---' }}
+        </th>
       </tr>
     </tbody>
   </table>
 </div>
-<br />
-<br />

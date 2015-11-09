@@ -48,7 +48,7 @@ class DefaultController extends Controller
      * @Template("PumukitLiveBundle:Default:index.html.twig")
      */
     public function defaultAction()
-    {      
+    {
         $repo = $this
           ->get('doctrine_mongodb.odm.document_manager')
           ->getRepository('PumukitLiveBundle:Live');
@@ -56,7 +56,7 @@ class DefaultController extends Controller
 
         if(!$live)
           throw $this->createNotFoundException('The live channel does not exist');
-        
+
         $this->updateBreadcrumbs($live->getName(), "pumukit_live", array("id" => $live->getId()));
 
         return $this->iframeAction($live);

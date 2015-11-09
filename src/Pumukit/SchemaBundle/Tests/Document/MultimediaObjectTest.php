@@ -8,8 +8,6 @@ use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\Tag;
-use Pumukit\SchemaBundle\Document\Person;
-use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\Link;
 //use Pumukit\SchemaBundle\Document\PersonInMultimediaObject;

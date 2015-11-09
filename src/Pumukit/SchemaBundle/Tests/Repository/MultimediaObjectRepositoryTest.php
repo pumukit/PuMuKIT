@@ -146,7 +146,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(0, count($mmobj->getFilteredTracksWithTags(array(), array(), array('flv', 'master'))));
         $this->assertEquals(5, count($mmobj->getFilteredTracksWithTags(array(), array(), array(), array('flv', 'master'))));
         $this->assertEquals(1, count($mmobj->getFilteredTracksWithTags(array('mosca', 'old'), array(), array(), array('old'))));
-    
+
         $this->assertEquals(1, count($mmobj->getFilteredTrackWithTags()));
         $this->assertEquals(1, count($mmobj->getFilteredTrackWithTags(array('master'))));
         $this->assertEquals(1, count($mmobj->getFilteredTrackWithTags(array('master'), array('mosca', 'old'))));
@@ -981,9 +981,10 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $tag1->setCod('tag1');
         $tag2 = new Tag();
         $tag2->setCod('tag2');
+        $tag2->setParent($tag1);
         $tag3 = new Tag();
         $tag3->setCod('tag3');
-        
+
         $this->dm->persist($tag1);
         $this->dm->persist($tag2);
         $this->dm->persist($tag3);
@@ -1090,6 +1091,20 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $page = 1;
         $this->assertEquals(1, $this->repo->findWithTag($tag2, $sort, $limit, $page)->count(true));
 
+        //FIND WITH GENERAL TAG
+        $this->assertEquals(6, count($this->repo->findWithGeneralTag($tag1)));
+        $limit = 3;
+        $this->assertEquals(3, $this->repo->findWithGeneralTag($tag1, $sort, $limit)->count(true));
+        $page = 1;
+        $this->assertEquals(3, $this->repo->findWithGeneralTag($tag1, $sort, $limit, $page)->count(true));
+        $this->assertEquals(2, count($this->repo->findWithGeneralTag($tag2)));
+        $this->assertEquals(0, count($this->repo->findWithGeneralTag($tag3)));
+        //FIND WITH GENERAL TAG (SORT)
+        $arrayAsc = array($mm31, $mm33, $mm34);
+        $this->assertEquals($arrayAsc, array_values($this->repo->findWithGeneralTag($tag1, $sortAsc, $limit, $page)->toArray()));
+        $arrayDesc = array($mm23, $mm22, $mm12);
+        $this->assertEquals($arrayDesc, array_values($this->repo->findWithGeneralTag($tag1, $sortDesc, $limit, $page)->toArray()));
+
         // FIND ONE WITH TAG
         $this->assertEquals(1, count($this->repo->findOneWithTag($tag1)));
 
@@ -1120,7 +1135,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $page = 2;
         $arrayAsc = array($mm33, $mm34);
         $this->assertEquals($arrayAsc, array_values($this->repo->findWithAnyTag($arrayTags, $sortAsc, $limit, $page)->toArray()));
-        
+
         $arrayDesc = array($mm34, $mm33, $mm31, $mm23, $mm22, $mm21, $mm12, $mm11);
         $this->assertEquals($arrayDesc, array_values($this->repo->findWithAnyTag($arrayTags, $sortDesc)->toArray()));
         $limit = 5;
@@ -1262,7 +1277,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $tag2->setCod('tag2');
         $tag3 = new Tag();
         $tag3->setCod('tag3');
-        
+
         $this->dm->persist($tag1);
         $this->dm->persist($tag2);
         $this->dm->persist($tag3);
@@ -1741,7 +1756,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
     public function testEmbeddedPerson()
     {
-        $person = $this->createPerson('Person'); 
+        $person = $this->createPerson('Person');
         $embeddedPerson = new EmbeddedPerson($person);
 
         $name = 'EmbeddedPerson';
@@ -1826,7 +1841,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
     public function testEmbeddedRole()
     {
-        $role = $this->createRole('Role'); 
+        $role = $this->createRole('Role');
         $embeddedRole = new EmbeddedRole($role);
 
         $name = 'EmbeddedRole';

@@ -7,6 +7,7 @@ use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\MaterialService;
 use Pumukit\SchemaBundle\Services\PicService;
+use Pumukit\WebTVBundle\Services\LinkService;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
 class PumukitExtension extends \Twig_Extension
@@ -18,21 +19,23 @@ class PumukitExtension extends \Twig_Extension
     protected $defaultPic;
 
     /**
-     * @var RequestContext 
+     * @var RequestContext
      */
     protected $context;
 
     private $dm;
     private $materialService;
     private $picService;
+    private $linkService;
 
-    public function __construct(DocumentManager $documentManager, RequestContext $context, $defaultPic, MaterialService $materialService, PicService $picService)
+    public function __construct(DocumentManager $documentManager, RequestContext $context, $defaultPic, MaterialService $materialService, PicService $picService, LinkService $linkService)
     {
         $this->dm = $documentManager;
         $this->context = $context;
         $this->defaultPic = $defaultPic;
         $this->materialService = $materialService;
         $this->picService = $picService;
+        $this->linkService = $linkService;
     }
 
     public function getName()
@@ -59,6 +62,8 @@ class PumukitExtension extends \Twig_Extension
                      new \Twig_SimpleFunction('precinct', array($this, 'getPrecinct')),
                      new \Twig_SimpleFunction('precinct_of_series', array($this, 'getPrecinctOfSeries')),
                      new \Twig_SimpleFunction('captions', array($this, 'getCaptions')),
+                     new \Twig_SimpleFunction('iframeurl', array($this, 'getIframeUrl')),
+                     new \Twig_SimpleFunction('path_to_tag', array($this, 'getPathToTag')),
                      );
     }
 
@@ -194,5 +199,45 @@ class PumukitExtension extends \Twig_Extension
     public function getCaptions(MultimediaObject $multimediaObject)
     {
         return $this->materialService->getCaptions($multimediaObject);
+    }
+
+    /**
+     * Get Iframe Url of a Multimedia Object
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param boolean $isHTML5  default=false
+     * @param boolean $isDownloadable  default=false
+     * @return ArrayCollection
+     */
+    public function getIframeUrl($multimediaObject, $isHTML5 = false, $isDownloadable = false)
+    {
+        $url = str_replace('%id%', $multimediaObject->getProperty('opencast'), $multimediaObject->getProperty('opencasturl'));
+
+        $broadcast_type = $multimediaObject->getBroadcast()->getBroadcastTypeId();
+        if (Broadcast::BROADCAST_TYPE_PUB == $broadcast_type) {
+            $url_player = '/cmarwatch.html';
+        } else {
+            $url_player = '/securitywatch.html';
+        }
+        $url = str_replace('/watch.html', $url_player, $url);
+
+        if ($isHTML5) {
+            $url = str_replace('/engage/ui/', '/paellaengage/ui/', $url);
+        }
+
+        if ($isDownloadable) {
+            $url = $url.'&videomode=progressive';
+        }
+
+        $invert = $multimediaObject->getProperty('opencastinvert');
+        if ($invert && $isHTML5) {
+            $url = $url.'&display=invert';
+        }
+
+        return $url;
+    }
+    public function getPathToTag($tagCod = null, $useBlockedTagAsGeneral = null, $parameters = array(), $relative = false)
+    {
+        return $this->linkService->generatePathToTag($tagCod, $useBlockedTagAsGeneral);
     }
 }

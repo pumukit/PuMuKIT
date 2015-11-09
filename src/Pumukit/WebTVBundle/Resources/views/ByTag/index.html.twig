@@ -1,9 +1,20 @@
 {% extends 'PumukitWebTVBundle::layout.html.twig' %}
 
 {% block body %}
-	<h1 id="index_h1">
-      {{ title|trans }}: {{tag.getTitle()}}
-    </h1>
-	{% include 'PumukitWebTVBundle:ByTag:list.html.twig' %}
-	{% include 'PumukitWebTVBundle:ByTag:pager.html.twig' %}
+  <div class="row">
+    <div class="col-xs-12">
+        <br>
+      <div class="row">
+        <div class="col-xs-12">
+          <h1 class="title-for-crumbs">{{ title }}</h1>
+        </div>
+      </div>
+      <div class="row">
+        {% include 'PumukitWebTVBundle:ByTag:list.html.twig' %}
+      </div>
+      <div class="row">
+        {% include 'PumukitWebTVBundle:Misc:pager.html.twig' %}
+      </div>
+    </div>
+  </div>
 {% endblock %}

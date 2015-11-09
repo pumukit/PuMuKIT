@@ -1,0 +1,644 @@
+{% block body %}
+{# SET VARIABLES #}
+{% set default_contrast_background = default_contrast_background | default("#ed6d00") %}
+{% set default_light_background = default_light_background | default("#fff") %}
+{% set default_content_background = default_content_background | default("#fff") %}
+
+{% set default_contrast_font = default_contrast_font | default("#fff") %}
+{% set default_light_font = default_light_font | default("#ed6d00") %}
+{% set default_content_font = default_content_font | default("#111") %}
+{% set default_content_link_font = default_content_link_font | default("#222") %}
+{% set default_content_link_selected_font = default_content_link_selected_font | default("#444") %}
+
+{% set breadcrumbs_separator = breadcrumbs_separator | default('»') %}
+{% set content_max_width = content_max_width | default("1400px") %}
+{% set menu_stats = menu_stats | default(true) %}
+{% set menu_padding = menu_padding | default("10px 10px 10px 30px") %}
+{% set page_background = page_background | default("#ddd") %}
+
+{# DEPENDABLE: If not set they will use other variables as default #}
+{% set breadcrumbs_background = breadcrumbs_background | default(default_contrast_background) %}
+{% set breadcrumbs_font_color = breadcrumbs_font_color | default(default_contrast_font) %}
+{% set breadcrumbs_back_background = breadcrumbs_back_background | default(breadcrumbs_background) %}
+{% set breadcrumbs_max_width = breadcrumbs_max_width | default(content_max_width) %}
+{% set content_background = content_background | default(default_content_background) %}
+{% set header_max_width = header_max_width | default(content_max_width) %}
+{% set header_background = header_background | default(default_light_background) %}
+{% set label_background = label_background | default(default_contrast_background) %}
+{% set label_font = label_font | default(default_contrast_font) %}
+{% set menu_background = menu_background | default(default_light_background) %}
+{% set menu_font_color = menu_font_color | default(default_light_font) %}
+{% set menu_selected_background = menu_selected_background | default(default_light_font) %}
+{% set menu_selected_font_color = menu_selected_font_color | default(default_light_background) %}
+{% set mmobj_font_color = mmobj_font_color | default(default_content_font) %}
+{% set mmobj_selected_font_color = mmobjs_selected_font_color | default(default_content_font) %}
+{% set mmobj_selected_background = mmobj_selected_background | default(page_background) %}
+{% set mmobj_serie_background = mmobj_serie_background | default(mmobj_selected_background) %}
+{% set mmobj_serie_font = mmobj_serie_font | default(mmobj_selected_font_color) %}
+{% set navbar_background = navbar_background | default(default_light_background) %}
+{% set navbar_font = navbar_background | default(default_light_font) %}
+{% set panel_default_background = panel_default_background | default(default_light_background) %}
+{% set panel_default_font = panel_default_font | default(default_light_font) %}
+{% set footer_max_width = footer_max_width | default(content_max_width) %}
+{# END SET VARIABLES#}
+body {
+    background: {{ page_background }};
+}
+a:hover, a:focus {
+    text-decoration: none;
+    color: {{ default_content_link_selected_font }};
+}
+a {
+    color: {{ default_content_link_font }};
+}
+ul, ol {
+    list-style:none;
+    margin: 0px;
+    padding: 0px;
+}
+h1 {
+    font-size: 40px;
+    font-weight: bold;
+    border-bottom: 4px solid {{ default_content_font }};
+    color: {{ default_content_font }};
+}
+h2 {
+    color: {{ default_content_font }};
+
+}
+h3 {
+    color: {{ default_content_font }};
+}
+h4 {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+/*END BASE CSS*/
+p.disabled {
+    color: grey;
+}
+/*BOOTSTRAP OVERRIDE*/
+.label {
+    margin: 2px;
+}
+.label a{
+    color:white;
+}
+.breadcrumb {
+    color: {{ breadcrumbs_font_color }};
+    background: {{ breadcrumbs_background }};
+    vertical-align:middle;
+    line-height: 100%;
+}
+.breadcrumb a{
+    color: {{ breadcrumbs_font_color }};
+}
+.breadcrumb a:hover{
+    color: {{ breadcrumbs_font_color }};
+    text-decoration: none;
+}
+
+.breadcrumbs_wrapper {
+    margin: 0 auto;
+    max-width: {{ content_max_width }};
+}
+.breadcrumbs_color {
+    background: {{ breadcrumbs_back_background }};
+}
+{% if big_breadcrumbs is defined %}
+@media (max-width: 1199px) {
+.title-for-crumbs {
+
+    display: none;
+}
+}
+.title-for-crumbs.always-hide {
+
+    display: none;
+}
+.breadcrumb > li:last-of-type {
+    display: block;
+    font-size: 3em;
+    content: "";
+    line-height: 100%;
+}
+.breadcrumb > li:last-of-type:after  {
+    content: "";
+}
+.breadcrumb > li:after {
+    content: "{{ breadcrumbs_separator }}";
+    padding: 0px 5px;
+
+}
+.breadcrumb > li + li:before {
+    content: "\00a0";
+    padding: 0px;
+
+}
+{% endif %}
+
+.label {
+    background: {{ label_background }};
+    color: {{ label_font }};
+}
+.navbar {
+    margin-bottom: 0px;
+}
+.navbar-brand {
+    padding: 5px 5px 5px 15px;
+}
+.navbar-default {
+    background-color: {{ navbar_background }};
+    border-color: {{ navbar_background }};
+    border: none;
+}
+
+.navbar-collapse {
+    box-shadow: none;
+    border: none;
+}
+.panel-default > .panel-heading {
+    background: {{ panel_default_background }};
+    color: {{ panel_default_font }};
+}
+
+/*END BOOTSTRAP OVERRIDE*/
+
+.col-no-padding {
+    overflow: auto;
+}
+.nomargin {
+    margin: 0;
+}
+.nopadding {
+    padding: 0;
+}
+.cover {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 100%;
+    padding: 10px 5px;
+}
+.date {
+    text-align: right;
+}
+.date.mmobj {
+    font-size: 1.2em;
+    position: absolute;
+    bottom: 10%;
+    left: 150px;
+    position: absolute;
+    text-align: left;
+}
+.date.serial {
+    left: 160px;
+    bottom: 9%;
+    position: absolute;
+    font-size: 1.2em;
+    text-align: inherit;
+}
+.header-content{
+    margin: 0 auto;
+    max-width: {{ header_max_width }};
+    min-height: 80px;
+    padding: 15px 0px;
+}
+.info {
+    float: left;
+    padding-left: 10px;
+    width: 68%;
+    min-height: 60px;
+    overflow: hidden;
+    display: inline;
+    word-wrap: break-word;
+}
+.info .title{
+    font-weight: bold;
+    font-size: 0.9em;
+    height: 2.5em;
+}
+.info.serial {
+    position: absolute;
+    left: 150px;
+}
+.language_select_wrapper {
+    float: right;
+    margin: 8px;
+}
+.language_select_wrapper .btn{
+    background: none;
+    border: none;
+}
+
+.main-content {
+    margin: 0 auto;
+    background: {{ content_background }};
+    min-height: 600px;
+    max-width: {{ content_max_width }};
+    padding-bottom: 20px;
+}
+.menu {
+    background: {{ menu_background }};
+    border: 0;
+}
+.mobile_header {
+    background: {{ header_background }};
+}
+/**/
+body.opencast-layout .main-content {
+    max-width: 100%;
+}
+body.opencast-layout .breadcrumb_wrapper {
+    max-width: 100%;
+}
+
+.mmobj_objects {
+    margin-left: 3%;
+}
+.mmobj_serie {
+    background: {{ mmobj_serie_background }};
+    padding: 3% 2%;
+}
+.media-body {
+    padding-left: 3%;
+}
+.number-videos.serial {
+    position: absolute;
+    bottom: 8%;
+    right: 5%;
+}
+.parent-centering {
+    text-align: center;
+    /* May want to do this if there is risk the container may be narrower than the element inside */
+    white-space: nowrap;
+}
+.parent-centering:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -0.25em; /* Adjusts for spacing */
+}
+.play_icon {
+    position: absolute;
+    margin: 10px;
+    left: 0%;
+    background: url("{{asset('bundles/pumukitwebtv/images/icons/play_icon.png')}}") no-repeat center;
+    background-size: contain;
+    width: 28px;
+    height: 28px;
+    /*overflow: auto;*/
+}
+.play_icon.small {
+    margin: 5px;
+    width: 20px;
+    height: 20px;
+}
+.pumukit_mmobjs{
+    margin: 0 0%;
+    overflow: hidden;
+    color: {{ mmobj_font_color }};
+}
+.pumukit_mmobj {
+    color: {{ mmobj_font_color }};
+    height: 120px;
+    overflow: hidden;
+    margin: 10px 0px;
+    padding: 5px;
+    border-radius: 10px;
+    position: relative;
+}
+.pumukit_mmobj a{
+    color: {{ mmobj_font_color }};
+}
+@media screen and (max-device-width: 320px) {
+    .pumukit_mmobj {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}
+.pumukit_mmobj:hover, .pumukit_mmobj:focus {
+    background: {{ mmobj_selected_background }};
+    color: {{ mmobj_selected_font_color }};
+}
+.pumukit_album {
+    margin:2px 20px 2px 2px;
+    position: relative;
+}
+.row.pumukit {
+    margin: 0 auto;
+}
+.search-box {
+    margin: 8px;
+}
+.search-box .input-group {
+    border-radius: 8px;
+    /*overflow: hidden;*/
+}
+.search-box .input-group input.form-control {
+    border-radius: 4px;
+}
+#search-box {
+    border-radius: 4px;
+    border-right: 0;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    box-shadow: none;
+}
+#search-box:focus {
+    border-color: #ccc;
+}
+.input-group-addon {
+    background: white;
+}
+/*Thumbnails*/
+.thumbnail {
+    width: 135px;
+    height: 98px;
+}
+.minithumbnail {
+    width: 75px;
+    height: 56px;
+}
+.minithumbnail, .thumbnail {
+    float: left;
+    display: inline;
+    margin-bottom:0px;
+    text-align: center;
+    border: 0;
+    border-radius: 0px;
+    box-shadow: 1px 1px 2px #666;
+    background: #F3F3F3;
+    padding: 4px;
+    z-index: 3;
+    position: relative;
+}
+.thumbnailwrapper {
+    padding-left: 0px;
+    min-width:132px;
+}
+.minithumbnail.bodyMm, .thumbnail.bodyMm {
+    margin-bottom: 5px;
+}
+.thumbnail img.thumbnailimg{
+    max-width: 120px;
+    max-height: 90px;
+}
+.minithumbnail img.thumbnailimg{
+    max-width: 67px;
+    max-height: 48px;
+}
+.minithumbnail img.thumbnailimg, .thumbnail img.thumbnailimg{
+    margin: 0 auto;
+    display: inline-block;
+    vertical-align: middle;
+}
+.thumbnailholder {
+    width: 127px;
+    height: 90px;
+}
+.minithumbnailholder {
+    width: 67px;
+    height: 48px;
+}
+.minithumbnailholder, .thumbnailholder {
+    position: absolute;
+    top: 4px;
+    background:#000;
+    z-index: -1;
+}
+.thumbnailo:nth-child(1) {
+    z-index: 3;
+    position: relative;
+}
+.thumbnailo:nth-child(2) {
+    z-index: 2;
+    transform: scale(0.97);
+    position: absolute;
+    left: 7px;
+    top: 3px;
+}
+.thumbnailo:nth-child(3) {
+    z-index: 1;
+    transform: scale(0.94);
+    position: absolute;
+    left: 14px;
+    top: 6px;
+}
+.video-duration {
+    position: absolute;
+    bottom: 8%;
+    right: 8%;
+    color: white;
+    font-size: 0.8em;
+    background:rgba(0,0,0,0.65);
+    padding: 1px 3px;
+}
+.wrapper-center {
+    width: 100%;
+    vertical-align: middle;
+    background: {{ menu_background }}; /* Trick to color the menu's length */
+}
+
+/*CIES*/
+.announces {
+    margin-top: 40px;
+}
+.breadcrumb {
+    margin: 0px;
+    border-radius: 0px;
+}
+.cover {
+    background: {{ default_light_background }};
+    color: {{ default_light_font }};
+    font-weight: bold;
+    font-size: 120%;
+    opacity: .8;
+}
+a:hover .cover {
+    background: {{ default_light_font }};
+    color: {{ default_light_background }};
+
+}
+.media-heading.subtitle{
+    line-height:0.5;
+}
+.info .subtitle {
+    font-weight: 100;
+    margin: 10px 5px;
+    font-size: 1.2em;
+}
+.media-heading.title{
+    line-height:1;
+    min-height: 30px;
+}
+.media-body .date{
+    line-height: 1;
+    padding-top: 10px;
+}
+.header {
+    background: {{ header_background }};
+}
+.header.sticky {
+    position: fixed;
+    top: 0;
+    transition: top 0.2s ease-in-out;
+    width: 100%;
+    z-index:6;
+}
+.header.sticky.nav-up {
+    top: -60px;
+}
+.header.sticky.nav-up {
+    top: 0;
+}
+.img_category img{
+    width: 100%;
+}
+.img_category{
+    position: relative;
+    height: 100%;
+}
+.img_category.two {
+    height: 50%;
+}
+.index_container a{
+    position: relative;
+    display: block;
+    overflow: auto;
+}
+.index_container {
+    position: relative;
+    display: block;
+}
+.index_container.three {
+    margin-top:10px;
+}
+.index_container .img_category:nth-child(2){
+    padding-top: 12.1%;
+}
+.index_widget {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 992px) {
+    .index_container .img_category:nth-child(2){
+        padding-top: 0%;
+    }
+    .index_container .img_category {
+        padding-top: 8% !important;
+    }
+}
+.panel-series .panel-body, .panel-related .panel-body{
+    overflow-x: hidden;
+    overflow-y: scroll;
+    max-height: 400px;
+}
+.powered_by {
+    max-width: {{content_max_width }};
+    text-align: right;
+    margin: 0 auto;
+    padding: 10px 10px 10px 10px;
+    font-size: 11px;
+    position: relative;
+}
+.pumukit_announce {
+    margin-top: 35px;
+    overflow: auto;
+}
+.widget.slidebar {
+    text-align: left;
+    background: {{menu_background}};
+}
+{% if menu_stats %}
+.widget.slidebar.stats {
+    display: none;
+}
+{% endif %}
+.widget.slidebar #total{
+    text-align: center;
+}
+.widget.slidebar a {
+    display: block;
+    font-size: 1.3em;
+    padding: {{ menu_padding }};
+    color: {{ menu_font_color }};
+}
+.widget.slidebar a:hover, .widget.slidebar a.selected {
+    background: {{ menu_selected_background }};
+    color: {{ menu_selected_font_color }};
+    margin-left: -65px;
+    padding-left: 85px;
+    z-index:10;
+    transition: background 0.3s ease;
+}
+
+@media (max-width: 1199px) {
+    .widget.slidebar {
+        text-align: center;
+    }
+}
+{# ==== MAGIC CSS TO ELLIPSE TEXT ==== #}
+.ellipsedtext-parent {
+    overflow: hidden;
+    width: 100%;
+    height: 120%;
+}
+.ellipsedtext-leftmargin {
+    float: left;
+    width: 2%;
+    height: 100%;
+}
+.ellipsedtext-testwrapper {
+    float: right;
+    width: 98%;
+}
+.ellipsedtext-text {
+    width: 800%;
+}
+.ellipsedtext-textstopper {
+    width: 87.5%;
+    height: 1em;
+    float: right;
+}
+.ellipsedtext-endtext {
+    display:inline-block;
+    width: 87.5%;
+    height: 1em;
+}
+.ellipsedtext-overflowdetector {
+    float: right;
+    width: 2%;
+    height: 20%;
+    position:relative;
+}
+.ellipsedtext-ellipse {
+    position: absolute;
+    top: -1.5em;
+    left: 4520%;
+    z-index: 2;
+    padding: 0 10px 0 15px;
+    background: rgba(255,255,255,0);
+    background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 40%, rgba(255,255,255,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,255,0)), color-stop(40%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,1)));
+    background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 40%, rgba(255,255,255,1) 100%);
+    background: -o-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 40%, rgba(255,255,255,1) 100%);
+    background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 40%, rgba(255,255,255,1) 100%);
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 40%, rgba(255,255,255,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=1 );
+}
+
+.pumukit_mmobj:hover .ellipsedtext-ellipse {
+    background: rgba(255,255,255,0);
+    background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 40%, {{ mmobj_selected_background }} 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,255,0)), color-stop(40%, {{ mmobj_selected_background }}), color-stop(100%, {{ mmobj_selected_background }}));
+    background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 40%, {{ mmobj_selected_background }} 100%);
+    background: -o-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 40%, {{ mmobj_selected_background }} 100%);
+    background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 40%, {{ mmobj_selected_background }} 100%);
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 40%, {{ mmobj_selected_background }} 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='{{ mmobj_selected_background }}', endColorstr='{{ mmobj_selected_background }}', GradientType=1 );
+}
+{# ==== END MAGIC CSS TO ELLIPSE TEXT ==== #}
+{% endblock %}

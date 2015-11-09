@@ -7,10 +7,26 @@
     <parameters>
         <parameter key="pumukit_web_tv.breadcrumbs_all_title">All</parameter>
         <parameter key="pumukit_web_tv.breadcrumbs_all_route">pumukit_webtv_medialibrary_index</parameter>
+        <parameter key="breadcrumbs_home_title">Home</parameter>
         <parameter key="pumukit_web_tv.default_pic">/bundles/pumukitwebtv/images/no_pic.jpg</parameter>
+        <parameter key="pumukit_web_tv.media_library.filter_tags" type="collection">
+            <parameter>DIRECTRIZ</parameter>
+            <parameter>UNESCO</parameter>
+        </parameter>
+        <parameter key="pumukit_web_tv.linktagtosearch">false</parameter>
+        <parameter key="pumukit_web_tv.breadcrumbs_parentweb">null</parameter>
     </parameters>
 
     <services>
+        <service id="pumukit_web_tv.link_service" class="Pumukit\WebTVBundle\Services\LinkService">
+            <argument type="service" id="router" />
+            <argument >%pumukit_web_tv.linktagtosearch%</argument>
+        </service>
+
+        <service id="twig.extension.intl" class="Twig_Extensions_Extension_Intl">
+            <tag name="twig.extension" />
+        </service>
+
         <service id="pumukit_web_tv.filter" class="Pumukit\WebTVBundle\EventListener\FilterListener">
           <argument type="service" id="doctrine_mongodb.odm.document_manager" />
           <tag name="kernel.event_listener" event="kernel.request" />
@@ -22,15 +38,21 @@
           <argument>%pumukit_web_tv.default_pic%</argument>
           <argument type="service" id="pumukitschema.material" />
           <argument type="service" id="pumukitschema.pic" />
+          <argument type="service" id="pumukit_web_tv.link_service" />
           <tag name="twig.extension" />
         </service>
 
         <service id="pumukit_web_tv.breadcrumbs" class="Pumukit\WebTVBundle\Services\BreadcrumbsService">
           <argument type="service" id="router" />
           <argument type="service" id="session" />
+          <argument type="service" id="translator" />
           <argument>%pumukit_web_tv.breadcrumbs_all_title%</argument>
           <argument>%pumukit_web_tv.breadcrumbs_all_route%</argument>
-          <argument type="service" id="translator" />
+          <argument>%breadcrumbs_home_title%</argument>
+          <argument>%pumukit_web_tv.breadcrumbs_parentweb%</argument>
+        </service>
+
+        <service id="pumukit_web_tv.useragent_parser" class="Pumukit\WebTVBundle\Services\UserAgentParserService">
         </service>
     </services>
 </container>

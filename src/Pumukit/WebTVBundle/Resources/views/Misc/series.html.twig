@@ -1,39 +1,34 @@
-{% if object.getPublicDate()|date("d/m/Y") != lastDate %}
-  <div style="clear:both;"></div>
-  <br />
-  <div class="serial_date">
-    {{ object.getPublicDate()|date("d/m/Y") }}
-  </div>
-{% endif %}
+<!-- Serie multimedia -->
+{% set col_mapper = {'1': 'col-md-12', '2': 'col-md-6', '3': 'col-md-4', '4': 'col-md-3'} %}
+{% set col_class = ( col_mapper[cols|default('1')] | default(col_mapper['1'] ) ) %}
+<div class="{{ col_class }}">
+<a href="{{ path('pumukit_webtv_series_index', {'id': object.id}) }}">
+  <div class=" pumukit_mmobj">
 
-<div style="cursor:pointer;" onclick="window.location='{{ url('pumukit_webtv_series_index', {'id': object.getId()}) }}'">
-  <div class="pumukit_mmobjs" style="width:50%; float:left;">
-    <div class="pumukit_mmobj">
-      <figure class="album" style="margin:2px 20px 2px 2px">  
-        <a href="{{ path('pumukit_webtv_series_index', {'id': object.getId()}) }}">
-          <div class="picture">
-            <img src="{{ object|first_url_pic(true, false) }}"></img>
-          </div>
-          <div class="picture">
-            <img src="{{ object|first_url_pic(true, false) }}"></img>
-          </div>
-          <div class="picture">
-            <img src="{{ object|first_url_pic(true, false) }}"></img>
-          </div>
-        </a>
-      </figure>
-
-      <div class="info">
-        <div class="title">
-          <a href="{{ path('pumukit_webtv_series_index', {'id': object.getId()}) }}">{{object.getTitle()}}</a>
-        </div>
-
-        <div class="serial_title">
-          <abbr title="{{object.getTitle()}}">{{object.getLine2()}}</abbr>
-        </div>
-
-        <div class="mmobj_bottom">{{object.getPublicDate()|date("d/m/Y")}} - {{object|count_multimedia_objects}} videos</div>
+    <figure class="pumukit_album">
+      <div class="thumbnail thumbnailo"><div class="thumbnailholder" ></div><img class="thumbnailimg" src="{{ object|first_url_pic(true) }}" /></div>
+      <div class="thumbnail thumbnailo"><div class="thumbnailholder" ></div><img class="thumbnailimg" src="{{ object|first_url_pic(true) }}" /></div>
+      <div class="thumbnail thumbnailo"><div class="thumbnailholder" ></div><img class="thumbnailimg" src="{{ object|first_url_pic(true) }}" /></div>
+    </figure>
+    <div class="info serial">
+      <div class="title">
+        {{object.title | default('No title')|trans}}
       </div>
+      <div class="serial_title">
+        <abbr title="{{object.title}}">
+          {{object.line2}}
+        </abbr>
+      </div>
+
     </div>
+    <span class="number-videos serial">
+      <p>{{object|count_multimedia_objects}} {{object|count_multimedia_objects>1?'videos':'video'}}</p>
+    </span>
+
+    <div class="date serial">
+      {{object.publicDate|date("d/m/Y")}}
+    </div>
+
   </div>
+</a>
 </div>

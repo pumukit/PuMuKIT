@@ -1,30 +1,46 @@
-<div class="widget_Slidebar" id="menu">
-  <h2>Menu</h2>
-  <div id="menu">
-    <ul>
+<div class="row widget slidebar">
+  <ul>
+    <!-- Principal -->
 
-      <!-- Principal -->
-      <li>
-        <a href="/">Principal</a>
-      </li>
+    <a href="{{ path('pumukit_webtv_index_index')}}" {{menu_selected=="pumukit_webtv_index_index"?'class="selected"':''}}>
+        {{ home_title |trans }}
+    </a>
 
-      <!-- Search -->
-      <li>
-        <a href="{{ path('pumukit_webtv_search_multimediaobjects')}}">Search</a>
-      </li>
+    <!-- Announces -->
 
-      <!-- Direct -->
-      {% for live in live_channels %}
-        <li>
-          <a href="{{ path('pumukit_live_id', {'id': live.id})}}">{{ live.name }}</a>
-        </li>
-      {% endfor %}
+    <a href="{{ path('pumukit_webtv_announces_latestuploads') }}" class="{{menu_selected == 'pumukit_webtv_announces_latestuploads'? 'selected' : ''}}">
+        {{ announces_title |trans }}
+    </a>
 
-      <!-- Mediateca -->
-      <li>
-        <a href="{{ path('pumukit_webtv_medialibrary_index') }}">Mediateca</a>
-      </li>
+    <!-- Search -->
 
-    </ul>
-  </div>
+    <a href="{{ path('pumukit_webtv_search_multimediaobjects')}}" class="{{menu_selected=="pumukit_webtv_search_multimediaobjects"?'selected':''}}">
+        {{ search_title |trans}}
+    </a>
+
+
+    <!-- Live Channels -->
+    {% for live in live_channels %}
+
+      <a href="{{ path('pumukit_live_id', {'id': live.id})}}">
+        {{ live.name | default('No title') | trans }}
+      </a>
+
+    {% endfor %}
+
+    <!-- Mediateca -->
+    <a href="{{ path('pumukit_webtv_medialibrary_index') }}" class="{{menu_selected=="pumukit_webtv_medialibrary_index"?'selected':''}}">
+        {{ mediateca_title |trans }}
+    </a>
+
+    <!-- Videos by category -->
+    <a href="{{ path('pumukit_webtv_categories_index') }}" class="{{menu_selected=="pumukit_webtv_categories_index"?'selected':''}}">
+        {{ categories_title |trans }}
+    </a>
+
+  </ul>
+</div>
+
+<div class="row widget slidebar stats">
+  {% render(controller('PumukitWebTVBundle:Widget:stats')) %}
 </div>
