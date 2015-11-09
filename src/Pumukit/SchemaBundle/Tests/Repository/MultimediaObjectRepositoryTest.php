@@ -1949,6 +1949,38 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertTrue(in_array($multimediaObject, $multimediaObjects));
     }
 
+    public function testFindAllByTag()
+    {
+        $tag = new Tag();
+        $tag->setCod('tag');
+
+        $this->dm->persist($tag);
+        $this->dm->flush();
+
+        $series = $this->createSeries('Series');
+        $multimediaObject = $this->factoryService->createMultimediaObject($series);
+
+        $sort = array('public_date' => -1);
+        $this->assertCount(0, $this->repo->findAllByTag($tag, $sort));
+
+        $addedTags = $this->tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());
+
+        $prototype = $this->repo->findPrototype($series);
+        $addedTagsToPrototype = $this->tagService->addTagToMultimediaObject($prototype, $tag->getId());
+
+        $multimediaObjects = $this->repo->findAllByTag($tag, $sort)->toArray();
+        $this->assertCount(2, $multimediaObjects);
+        $this->assertTrue(in_array($multimediaObject, $multimediaObjects));
+        $this->assertTrue(in_array($prototype, $multimediaObjects));
+
+        $removedTagsFromPrototype = $this->tagService->removeTagFromMultimediaObject($prototype, $tag->getId());
+
+        $multimediaObjects = $this->repo->findAllByTag($tag, $sort)->toArray();
+        $this->assertCount(1, $multimediaObjects);
+        $this->assertTrue(in_array($multimediaObject, $multimediaObjects));
+        $this->assertFalse(in_array($prototype, $multimediaObjects));
+    }
+
     private function createPerson($name)
     {
         $email = $name.'@mail.es';

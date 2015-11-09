@@ -924,4 +924,45 @@ class MultimediaObjectRepository extends DocumentRepository
         return $this->findByTagCodQuery($tag, $sort)
           ->execute();
     }
+
+    /**
+     * Find all by tag query builder
+     *
+     * @param Tag|EmbeddedTag $tag
+     * @return QueryBuilder
+     */
+    public function findAllByTagQueryBuilder($tag)
+    {
+        return $this->createQueryBuilder()
+          ->field('tags._id')->equals(new \MongoId($tag->getId()));
+    }
+
+    /**
+     * Find all by tag query
+     *
+     * @param Tag|EmbeddedTag $tag
+     * @param array $sort
+     * @return Query
+     */
+    public function findAllByTagQuery($tag, $sort=array())
+    {
+        $qb = $this->findAllByTagQueryBuilder($tag);
+        if ($sort) {
+            $qb->sort($sort);
+        }
+        return $qb->getQuery();
+    }
+
+    /**
+     * Find all by tag
+     *
+     * @param Tag|EmbeddedTag $tag
+     * @param array $sort
+     * @return Cursor
+     */
+    public function findAllByTag($tag, $sort=array())
+    {
+        return $this->findAllByTagQuery($tag, $sort)
+          ->execute();
+    }
 }
