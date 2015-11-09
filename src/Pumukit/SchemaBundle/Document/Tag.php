@@ -10,7 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Pumukit\SchemaBundle\Document\Tag
  *
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\TagRepository")
- * @Gedmo\Tree(type="materializedPath", activateLocking=true)
+ * @Gedmo\Tree(type="materializedPath", activateLocking=false)
  */
 class Tag
 {

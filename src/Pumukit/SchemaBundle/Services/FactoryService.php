@@ -59,10 +59,7 @@ class FactoryService
         $this->dm->persist($series);
         $this->dm->flush();
 
-        //Workaround to fix reference method initialization.
-        $this->dm->clear(get_class($series));
-
-        return $this->dm->find('PumukitSchemaBundle:Series', $series->getId());
+        return $series;
     }
 
     /**
@@ -120,6 +117,8 @@ class FactoryService
         $mm->setStatus(MultimediaObject::STATUS_BLOQ);
 
         $mm->setSeries($series);
+        $series->addMultimediaObject($mm);
+        
 
         $this->dm->persist($mm);
         $this->dm->persist($series);
@@ -232,14 +231,32 @@ class FactoryService
     public function deleteSeries(Series $series)
     {      
         $repoMmobjs = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $jobRepo = $this->dm->getRepository("PumukitEncoderBundle:Job");
          
         $multimediaObjects = $repoMmobjs->findBySeries($series);
         foreach($multimediaObjects as $mm){
+            $series->removeMultimediaObject($mm);
             $this->dm->remove($mm);
         }
          
         $this->dm->remove($series);
+
+        $this->dm->flush();
+    }
+
+    /**
+     * Delete MultimediaObject
+     *
+     * @param MultimediaObject $multimediaObject
+     */
+    public function deleteMultimediaObject(MultimediaObject $multimediaObject)
+    {
+        $repoMmobjs = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+
+        if (null != $series = $multimediaObject->getSeries()) {
+            $series->removeMultimediaObject($multimediaObject);
+            $this->dm->persist($series);
+        }
+        $this->dm->remove($multimediaObject);
 
         $this->dm->flush();
     }

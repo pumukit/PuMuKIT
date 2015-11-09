@@ -37,7 +37,7 @@ class MultimediaObject
     private $secret;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="Series", inversedBy="multimedia_objects", simple=true)
+     * @MongoDB\ReferenceOne(targetDocument="Series", inversedBy="multimedia_objects", simple=true, cascade={"persist"})
      * @Gedmo\SortableGroup
      */
     private $series;
@@ -45,7 +45,7 @@ class MultimediaObject
     /**
      * @var Broadcast $broadcast
      *
-     * @MongoDB\ReferenceOne(targetDocument="Broadcast", inversedBy="multimedia_object", simple=true)
+     * @MongoDB\ReferenceOne(targetDocument="Broadcast", inversedBy="multimedia_object", simple=true, cascade={"all"})
      */
     private $broadcast;
 
