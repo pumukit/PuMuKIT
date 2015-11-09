@@ -1,11 +1,11 @@
 {% block body %}
 {# SET VARIABLES #}
-{% set default_contrast_background = default_contrast_background | default("#004162") %}
+{% set default_contrast_background = default_contrast_background | default("#ed6d00") %}
 {% set default_light_background = default_light_background | default("#fff") %}
 {% set default_content_background = default_content_background | default("#fff") %}
 
 {% set default_contrast_font = default_contrast_font | default("#fff") %}
-{% set default_light_font = default_light_font | default("#004162") %}
+{% set default_light_font = default_light_font | default("#ed6d00") %}
 {% set default_content_font = default_content_font | default("#111") %}
 {% set default_content_link_font = default_content_link_font | default("#222") %}
 {% set default_content_link_selected_font = default_content_link_selected_font | default("#444") %}
@@ -202,11 +202,12 @@ p.disabled {
     margin: 0 auto;
     max-width: {{ header_max_width }};
     min-height: 80px;
+    padding: 15px 0px;
 }
 .info {
     float: left;
     padding-left: 10px;
-    max-width: 65%;
+    width: 68%;
     min-height: 60px;
     overflow: hidden;
     display: inline;
