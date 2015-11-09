@@ -53,77 +53,75 @@ class TagService
         return $tagAdded;
     }
 
-  /**
-   * Remove Tag from Multimedia Object
-   *
-   * @param MultimediaObject $mmobj
-   * @param string $tagId
-   * @param  boolean          $executeFlush
-   * @return Array[Tag] removed tags
-   */
-  public function removeTagFromMultimediaObject(MultimediaObject $mmobj, $tagId, $executeFlush=true)
-  {
-      $removeTags = array();
+    /**
+     * Remove Tag from Multimedia Object
+     *
+     * @param MultimediaObject $mmobj
+     * @param string $tagId
+     * @param  boolean          $executeFlush
+     * @return Array[Tag] removed tags
+     */
+    public function removeTagFromMultimediaObject(MultimediaObject $mmobj, $tagId, $executeFlush=true)
+    {
+        $removeTags = array();
 
-      $tag = $this->repository->find($tagId);
-      if (!$tag) {
-          throw new \Exception("Tag with id ".$tagId." not found.");
-      }
-
-      do {
-          $children = $tag->getChildren();
-          if (!($mmobj->containsAnyTag($children->toArray()))) {
-              $removeTags[] = $tag;
-              $removed = $mmobj->removeTag($tag);
-              if ($removed && !$mmobj->isPrototype()) {
-                  $tag->decreaseNumberMultimediaObjects();
-              }
-              $this->dm->persist($tag);
-          } else {
-              break;
-          }
-      } while ($tag = $tag->getParent());
-
-      $this->dm->persist($mmobj);
-      if ($executeFlush) {
-          $this->dm->flush();
-      }
-
-      return $removeTags;
-  }
-  
-
-  /**
-   * Reset the tags of an array of MultimediaObjects
-   *
-   * @param array[MultimediaObject] $mmobjs
-   * @param array[string] $tags
-   * @return array[Tag] removed tags
-   */
-  public function resetTags(array $mmobjs, array $tags)
-  {
-    $modifyTags = array();
-
-    foreach($mmobjs as $mmobj) {
-        if (!$mmobj->isPrototype()) {              
-            foreach($mmobj->getTags() as $originalEmbeddedTag) {
-                $originalTag = $this->repository->find($originalEmbeddedTag->getId());
-                $originalTag->decreaseNumberMultimediaObjects();
-                $this->dm->persist($originalTag);
-            }
+        $tag = $this->repository->find($tagId);
+        if (!$tag) {
+            throw new \Exception("Tag with id ".$tagId." not found.");
         }
-        $mmobj->setTags($tags);
-        $this->dm->persist($mmobj);
-        if (!$mmobj->isPrototype()) {        
-            foreach($tags as $embeddedTag) {
-                $tag = $this->repository->find($embeddedTag->getId());
-                $tag->increaseNumberMultimediaObjects();
+
+        do {
+            $children = $tag->getChildren();
+            if (!($mmobj->containsAnyTag($children->toArray()))) {
+                $removeTags[] = $tag;
+                $removed = $mmobj->removeTag($tag);
+                if ($removed && !$mmobj->isPrototype()) {
+                    $tag->decreaseNumberMultimediaObjects();
+                }
                 $this->dm->persist($tag);
+            } else {
+                break;
             }
-        } 
+        } while ($tag = $tag->getParent());
+
+        $this->dm->persist($mmobj);
+        if ($executeFlush) {
+            $this->dm->flush();
+        }
+
+        return $removeTags;
     }
-    
-    $this->dm->flush();
-  }
   
+    /**
+     * Reset the tags of an array of MultimediaObjects
+     *
+     * @param array[MultimediaObject] $mmobjs
+     * @param array[string] $tags
+     * @return array[Tag] removed tags
+     */
+    public function resetTags(array $mmobjs, array $tags)
+    {
+        $modifyTags = array();
+
+        foreach($mmobjs as $mmobj) {
+            if (!$mmobj->isPrototype()) {              
+                foreach($mmobj->getTags() as $originalEmbeddedTag) {
+                    $originalTag = $this->repository->find($originalEmbeddedTag->getId());
+                    $originalTag->decreaseNumberMultimediaObjects();
+                    $this->dm->persist($originalTag);
+                }
+            }
+            $mmobj->setTags($tags);
+            $this->dm->persist($mmobj);
+            if (!$mmobj->isPrototype()) {        
+                foreach($tags as $embeddedTag) {
+                    $tag = $this->repository->find($embeddedTag->getId());
+                    $tag->increaseNumberMultimediaObjects();
+                    $this->dm->persist($tag);
+                }
+            } 
+        }
+    
+        $this->dm->flush();
+    }
 }
