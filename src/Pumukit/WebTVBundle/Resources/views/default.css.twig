@@ -532,12 +532,9 @@ a:hover .cover {
     }
 }
 .panel-series .panel-body, .panel-related .panel-body{
-    overflow: hidden;
-    max-height: 300px;
-}
-.panel-series:hover .panel-body, .panel-related:hover .panel-body{
-    overflow: auto;
-    max-height: 300px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    max-height: 400px;
 }
 .powered_by {
     max-width: {{content_max_width }};
