@@ -16,19 +16,20 @@ class AnnounceService
         $this->mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
     }
 
-
     public function getLast($limit = 3)
     {
-          $lastMms = $this->mmRepo->findStandardBy(array('tags.cod' => 'PUDENEW'), array('public_date' => -1), $limit, 0);
-          $lastSeries = $this->seriesRepo->findBy(array('announce' => true), array('public_date' => -1), $limit, 0);
+        $lastMms = $this->mmobjRepo->findStandardBy(array('tags.cod' => 'PUDENEW'), array('public_date' => -1), $limit, 0);
+        $lastSeries = $this->seriesRepo->findBy(array('announce' => true), array('public_date' => -1), $limit, 0);
 
         $return = array();
         $i = 0;
         $iMms = 0;
         $iSeries = 0;
 
-        while($i++ < $limit){
-            if ((!isset($lastMms[$iMms])) && (!isset($lastSeries[$iSeries]))) break;
+        while ($i++ < $limit) {
+            if ((!isset($lastMms[$iMms])) && (!isset($lastSeries[$iSeries]))) {
+                break;
+            }
             if (!isset($lastMms[$iMms])) {
                 $return[] = $lastSeries[$iSeries++];
             } elseif (!isset($lastSeries[$iSeries])) {
@@ -36,12 +37,12 @@ class AnnounceService
             } else {
                 $auxMms = $lastMms[$iMms];
                 $auxSeries = $lastSeries[$iSeries];
-                if ($auxMms->getPublicDate() > $auxSeries->getPublicDate() ) {
+                if ($auxMms->getPublicDate() > $auxSeries->getPublicDate()) {
                     $return[] = $auxMms;
-                    $iMms++;
+                    ++$iMms;
                 } else {
                     $return[] = $auxSeries;
-                    $iSeries++;
+                    ++$iSeries;
                 }
             }
         }
@@ -67,7 +68,7 @@ class AnnounceService
         foreach ($lastSeries as $serie) {
             $last[] = $serie;
         }
-       foreach ($lastMms as $mm) {
+        foreach ($lastMms as $mm) {
             $last[] = $mm;
         }
 
@@ -85,10 +86,11 @@ class AnnounceService
     }
 
     /**
-    * Gets the next latest uploads, starting with the month given and looking 24 months forward.
-    * If not, returns an empty array.
-    * @return array
-    */
+     * Gets the next latest uploads, starting with the month given and looking 24 months forward.
+     * If not, returns an empty array.
+     *
+     * @return array
+     */
     public function getNextLatestUploads($date)
     {
         $counter = 0;
@@ -96,13 +98,12 @@ class AnnounceService
         $dateStart->modify('first day of next month');
         $dateEnd = clone $date;
         $dateEnd->modify('last day of next month');
-        $dateEnd->setTime(23,59,59);
+        $dateEnd->setTime(23, 59, 59);
         do {
             ++$counter;
             $dateStart->modify('first day of last month');
             $dateEnd->modify('last day of last month');
             $last = $this->getLatestUploadsByDates($dateStart, $dateEnd);
-
         } while (empty($last) && $counter < 24);
 
         return array($dateEnd, $last);
