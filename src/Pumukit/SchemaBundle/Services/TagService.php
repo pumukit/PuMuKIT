@@ -4,17 +4,20 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\EmbeddedTag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class TagService
 {
     private $dm;
     private $repository;
+    private $mmobjRepo;
 
     public function __construct(DocumentManager $documentManager)
     {
         $this->dm = $documentManager;
         $this->repository = $this->dm->getRepository('PumukitSchemaBundle:Tag');
+        $this->mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
     }
 
     /**
@@ -123,5 +126,69 @@ class TagService
         }
     
         $this->dm->flush();
+    }
+
+    /**
+     * Update Tag
+     *
+     * @param Tag $tag
+     * @return Tag
+     */
+    public function updateTag(Tag $tag)
+    {
+        $tag = $this->saveTag($tag);
+
+        foreach ($this->mmobjRepo->findAllByTag($tag) as $mmobj) {
+            foreach ($mmobj->getTags() as $embeddedTag) {
+                if ($tag->getId() === $embeddedTag->getId()) {
+                    $embeddedTag = $this->updateEmbeddedTag($tag, $embeddedTag);
+                    $this->dm->persist($mmobj);
+                }
+            }
+        }
+        $this->dm->flush();
+
+        return $tag;
+    }
+
+    /**
+     * Save Tag
+     *
+     * @param Tag $tag
+     * @return Tag
+     */
+    public function saveTag(Tag $tag)
+    {
+        $tag->setUpdated(new \Datetime('now'));
+
+        $this->dm->persist($tag);
+        $this->dm->flush();
+
+        return $tag;
+    }
+
+    /**
+     * Update embedded tag
+     *
+     * @param  Tag         $tag
+     * @param  EmbeddedTag $embeddedTag
+     * @return EmbeddedTag
+     */
+    private function updateEmbeddedTag(Tag $tag, EmbeddedTag $embeddedTag)
+    {
+        if (null !== $tag) {
+            $embeddedTag->setI18nTitle($tag->getI18nTitle());
+            $embeddedTag->setI18nDescription($tag->getI18nDescription());
+            $embeddedTag->setSlug($tag->getSlug());
+            $embeddedTag->setCod($tag->getCod());
+            $embeddedTag->setMetatag($tag->getMetatag());
+            $embeddedTag->setDisplay($tag->getDisplay());
+            $embeddedTag->setLocale($tag->getLocale());
+            $embeddedTag->setSlug($tag->getSlug());
+            $embeddedTag->setCreated($tag->getCreated());
+            $embeddedTag->setUpdated($tag->getUpdated());
+        }
+
+        return $embeddedTag;
     }
 }
