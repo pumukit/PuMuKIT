@@ -124,10 +124,21 @@ class MultimediaObjectController extends PlayerController
     public function seriesAction(MultimediaObject $multimediaObject)
     {
         $series = $multimediaObject->getSeries();
-        $multimediaObjects = $series->getMultimediaObjects();
+
+        $mmobjRepo = $this
+          ->get('doctrine_mongodb.odm.document_manager')
+          ->getRepository('PumukitSchemaBundle:MultimediaObject');
+
+        $limit = 10;
+        if ($this->container->hasParameter('limit_objs_series')) {
+            $limit = $this->container->getParameter('limit_objs_search');
+        }        
+
+        $multimediaObjects = $mmobjRepo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED), $limit);
 
         return array('series' => $series,
-        'multimediaObjects' => $multimediaObjects);
+                     'multimediaObjects' => $multimediaObjects
+        );
     }
 
     /**
