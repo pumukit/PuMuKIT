@@ -295,6 +295,64 @@ class TagServiceTest extends WebTestCase
         $this->assertEquals(0, $tag3->getNumberMultimediaObjects());        
     }
     
+    public function testSaveTag()
+    {
+        $cod = 'tag1';
+        $firstTitle = ucfirst($cod);
+        $tag = $this->createTagWithTree($cod);
+
+        $lastUpdatedDate = $tag->getUpdated();
+
+        $newTitle = 'Tag number 1';
+        $tag->setTitle($newTitle);
+
+        $tag = $this->tagService->saveTag($tag);
+
+        $updatedTag = $this->tagRepo->find($tag->getId());
+        $this->assertEquals($newTitle, $updatedTag->getTitle());
+        $this->assertNotEquals($lastUpdatedDate, $updatedTag->getUpdated());
+    }
+
+    public function testUpdateTag()
+    {
+        $cod = 'tag1';
+        $firstTitle = ucfirst($cod);
+        $tag = $this->createTagWithTree($cod);
+
+        $lastUpdatedDate = $tag->getUpdated();
+
+        $multimediaObject = $this->createMultimediaObject('multimedia object 1');
+        $addedTags = $this->tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());
+
+        $multimediaObject = $this->mmobjRepo->find($multimediaObject->getId());
+        $tag = $this->tagRepo->find($tag->getId());
+
+        $embeddedTags = $multimediaObject->getTags();
+        foreach ($embeddedTags as $embeddedTag) {
+            if ($embeddedTag->getId() === $tag->getId()) {
+                $this->assertEquals($firstTitle, $embeddedTag->getTitle());
+            }
+        }
+
+        $lastUpdatedDate = $tag->getUpdated();
+
+        $newTitle = 'Tag number 1';
+        $tag->setTitle($newTitle);
+
+        $tag = $this->tagService->updateTag($tag);
+
+        $multimediaObject = $this->mmobjRepo->find($multimediaObject->getId());
+        $tag = $this->tagRepo->find($tag->getId());
+
+        $embeddedTags = $multimediaObject->getTags();
+        foreach ($embeddedTags as $embeddedTag) {
+            if ($embeddedTag->getId() === $tag->getId()) {
+                $this->assertEquals($newTitle, $embeddedTag->getTitle());
+                $this->assertNotEquals($lastUpdatedDate, $embeddedTag->getUpdated());
+                $this->assertNotEquals($lastUpdatedDate, $tag->getUpdated());
+            }
+        }
+    }
 
     private function createMultimediaObject($title, $prototype=false)
     {
