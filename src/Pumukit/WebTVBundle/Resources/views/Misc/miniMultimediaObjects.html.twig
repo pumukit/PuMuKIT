@@ -3,10 +3,13 @@
     <div class="row">
       <dl class="media" style="cursor:pointer;" onclick="window.location='{{ url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.getId()}) }}'">
         <dt class="media-left">
-          <a href="{{ url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id}) }}">
-            <div class="media-object play_icon small" alt=""></div>
-            <img class="media-object" src="{{multimediaObject|first_url_pic()}}" width="75 px" height="56 px">
-          </a>
+          <div class="minithumbnail">
+            <a href="{{ url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id}) }}">
+              <div class="media-object play_icon small" alt=""></div>
+              <img class="media-object thumbnailimg" src="{{multimediaObject|first_url_pic()}}">
+              <div class="minithumbnailholder"></div>
+            </a>
+          </div>
         </dt>
 
         <dd class="media-body">

@@ -356,6 +356,12 @@ body.opencast-layout .breadcrumb_wrapper {
 .thumbnail {
     width: 135px;
     height: 98px;
+}
+.minithumbnail {
+    width: 75px;
+    height: 56px;
+}
+.minithumbnail, .thumbnail {
     float: left;
     display: inline;
     margin-bottom:0px;
@@ -372,21 +378,33 @@ body.opencast-layout .breadcrumb_wrapper {
     padding-left: 0px;
     min-width:132px;
 }
-.thumbnail.bodyMm {
+.minithumbnail.bodyMm, .thumbnail.bodyMm {
     margin-bottom: 5px;
 }
 .thumbnail img.thumbnailimg{
-    margin: 0 auto;
     max-width: 120px;
     max-height: 90px;
+}
+.minithumbnail img.thumbnailimg{
+    max-width: 67px;
+    max-height: 48px;
+}
+.minithumbnail img.thumbnailimg, .thumbnail img.thumbnailimg{
+    margin: 0 auto;
     display: inline-block;
     vertical-align: middle;
 }
 .thumbnailholder {
-    position: absolute;
-    top: 4px;
     width: 127px;
     height: 90px;
+}
+.minithumbnailholder {
+    width: 67px;
+    height: 48px;
+}
+.minithumbnailholder, .thumbnailholder {
+    position: absolute;
+    top: 4px;
     background:#000;
     z-index: -1;
 }
@@ -453,6 +471,7 @@ a:hover .cover {
 }
 .media-heading.title{
     line-height:1;
+    min-height: 30px;
 }
 .media-body .date{
     line-height: 1;
