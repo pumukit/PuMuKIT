@@ -82,6 +82,7 @@ class SearchController extends Controller
         $durationFound = $request->query->get('duration');
         $startFound = $request->query->get('start');
         $endFound = $request->query->get('end');
+        $yearFound = $request->query->get('year');
         $languageFound = $request->query->get('language');
         // --- END Get Variables --
         // --- Create QueryBuilder ---
@@ -110,10 +111,7 @@ class SearchController extends Controller
         $minRecordDate = $firstMmobj->getRecordDate()->format('m/d/Y');
         $maxRecordDate = date('m/d/Y');
         // -- Init Number Cols for showing results ---
-        $numberCols = 2;
-        if ($this->container->hasParameter('columns_objs_search')) {
-            $numberCols = $this->container->getParameter('columns_objs_search');
-        }
+        $numberCols = $this->container->getParameter('columns_objs_search');
 
         // --- RETURN ---
         return array('type' => 'multimediaObject',
@@ -126,7 +124,8 @@ class SearchController extends Controller
         'languages' => $searchLanguages,
         'blocked_tag' => $blockedTag,
         'min_record_date' => $minRecordDate,
-        'max_record_date' => $maxRecordDate );
+        'max_record_date' => $maxRecordDate,
+        'year_found' => $yearFound );
     }
 
     private function createPager($objects, $page)
