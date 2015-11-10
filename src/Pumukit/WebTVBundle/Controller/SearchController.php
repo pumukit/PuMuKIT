@@ -99,8 +99,16 @@ class SearchController extends Controller
         // --- Query to get existing languages ---
         $searchLanguages = $this->get('doctrine_mongodb')
         ->getRepository('PumukitSchemaBundle:MultimediaObject')
-        ->createStandardQueryBuilder()->distinct('tracks.language')
+        ->createStandardQueryBuilder()
+        ->distinct('tracks.language')
         ->getQuery()->execute();
+        // --- Query to get oldest date ---
+        $firstMmobj = $this->get('doctrine_mongodb')
+        ->getRepository('PumukitSchemaBundle:MultimediaObject')
+        ->createStandardQueryBuilder()->sort('record_date','asc')->limit(1)
+        ->getQuery()->getSingleResult();
+        $minRecordDate = $firstMmobj->getRecordDate()->format('m/d/Y');
+        $maxRecordDate = date('m/d/Y');
         // -- Init Number Cols for showing results ---
         $numberCols = 2;
         if ($this->container->hasParameter('columns_objs_search')) {
@@ -116,7 +124,9 @@ class SearchController extends Controller
         'tags_found' => $tagsFound,
         'number_cols' => $numberCols,
         'languages' => $searchLanguages,
-        'blocked_tag' => $blockedTag, );
+        'blocked_tag' => $blockedTag,
+        'min_record_date' => $minRecordDate,
+        'max_record_date' => $maxRecordDate );
     }
 
     private function createPager($objects, $page)
