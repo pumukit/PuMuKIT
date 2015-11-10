@@ -172,16 +172,17 @@ class PersonService
      * @param  MultimediaObject $multimediaObject
      * @return MultimediaObject
      */
-    public function createRelationPerson(Person $person, Role $role, MultimediaObject $multimediaObject)
+    public function createRelationPerson(Person $person, Role $role, MultimediaObject $multimediaObject, $flush = true)
     {
         if ($person && $role && $multimediaObject) {
             $this->dm->persist($person);
-            $this->dm->flush();
             $multimediaObject->addPersonWithRole($person, $role);
             $role->increaseNumberPeopleInMultimediaObject();
             $this->dm->persist($multimediaObject);
             $this->dm->persist($role);
-            $this->dm->flush();
+	    if($flush) {
+                $this->dm->flush();
+	    }		       
         }
 
         return $multimediaObject;
