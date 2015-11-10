@@ -110,6 +110,13 @@ class SearchController extends Controller
         ->getQuery()->getSingleResult();
         $minRecordDate = $firstMmobj->getRecordDate()->format('m/d/Y');
         $maxRecordDate = date('m/d/Y');
+        $searchYears = array();
+        $maxYear = date('Y');
+        $tempYear = $firstMmobj->getRecordDate()->format('Y');
+        while($tempYear <= $maxYear) {
+            $searchYears[] = $tempYear;
+            $tempYear++;
+        }
         // -- Init Number Cols for showing results ---
         $numberCols = $this->container->getParameter('columns_objs_search');
 
@@ -125,7 +132,7 @@ class SearchController extends Controller
         'blocked_tag' => $blockedTag,
         'min_record_date' => $minRecordDate,
         'max_record_date' => $maxRecordDate,
-        'year_found' => $yearFound );
+        'search_years' => $searchYears );
     }
 
     private function createPager($objects, $page)
