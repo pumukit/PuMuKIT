@@ -91,7 +91,7 @@ class SearchController extends Controller
         $queryBuilder = $this->searchQueryBuilder($queryBuilder, $searchFound);
         $queryBuilder = $this->typeQueryBuilder($queryBuilder, $typeFound);
         $queryBuilder = $this->durationQueryBuilder($queryBuilder, $durationFound);
-        $queryBuilder = $this->dateQueryBuilder($queryBuilder, $startFound, $endFound);
+        $queryBuilder = $this->dateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound);
         $queryBuilder = $this->languageQueryBuilder($queryBuilder, $languageFound);
         $queryBuilder = $this->tagsQueryBuilder($queryBuilder, $tagsFound, $blockedTag, $useBlockedTagAsGeneral);
         // --- END Create QueryBuilder ---
@@ -221,15 +221,23 @@ class SearchController extends Controller
         return $queryBuilder;
     }
 
-    private function dateQueryBuilder($queryBuilder, $startFound, $endFound)
+    private function dateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound)
     {
-        if ($startFound != '') {
-            $start = \DateTime::createFromFormat('d/m/Y', $startFound);
+        if( $yearFound ) {
+            $start = \DateTime::createFromFormat('d/m/Y', sprintf('01/01/%s',$yearFound));
+            $end = \DateTime::createFromFormat('d/m/Y', sprintf('31/12/%s',$yearFound));
             $queryBuilder->field('record_date')->gt($start);
-        }
-        if ($endFound != '') {
-            $end = \DateTime::createFromFormat('d/m/Y', $endFound);
             $queryBuilder->field('record_date')->lt($end);
+        }
+        else {
+            if ($startFound != '') {
+                $start = \DateTime::createFromFormat('d/m/Y', $startFound);
+                $queryBuilder->field('record_date')->gt($start);
+            }
+            if ($endFound != '') {
+                $end = \DateTime::createFromFormat('d/m/Y', $endFound);
+                $queryBuilder->field('record_date')->lt($end);
+            }
         }
 
         return $queryBuilder;
