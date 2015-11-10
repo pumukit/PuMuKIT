@@ -94,7 +94,7 @@ class FactoryService
      *
      * @return MultimediaObject
      */
-    public function createMultimediaObject($series)
+    public function createMultimediaObject($series, $flush = true)
     {
         $prototype = $this->getMultimediaObjectPrototype($series);
 
@@ -122,7 +122,9 @@ class FactoryService
 
         $this->dm->persist($mm);
         $this->dm->persist($series);
-        $this->dm->flush();
+        if($flush) {
+            $this->dm->flush();
+        }
 
         return $mm;
     }

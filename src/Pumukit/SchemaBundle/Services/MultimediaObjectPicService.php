@@ -40,14 +40,16 @@ class MultimediaObjectPicService
   /**
    * Set a pic from an url into the multimediaObject
    */
-  public function addPicUrl(MultimediaObject $multimediaObject, $picUrl)
+  public function addPicUrl(MultimediaObject $multimediaObject, $picUrl, $flush = true)
   {
       $pic = new Pic();
       $pic->setUrl($picUrl);
 
       $multimediaObject->addPic($pic);
       $this->dm->persist($multimediaObject);
-      $this->dm->flush();
+      if($flush) {
+          $this->dm->flush();
+      }		 
 
       return $multimediaObject;
   }

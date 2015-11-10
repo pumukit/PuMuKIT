@@ -37,6 +37,9 @@ class TagService
             throw new \Exception("Tag with id ".$tagId." not found.");
         }
 
+	if( $mmobj->containsTag($tag)) {
+	    return $tagAdded;
+	}
         do {
             if (!$mmobj->containsTag($tag)) {
                 $tagAdded[] = $tag;
