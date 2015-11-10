@@ -110,6 +110,7 @@ class SearchController extends Controller
         ->getQuery()->getSingleResult();
         $minRecordDate = $firstMmobj->getRecordDate()->format('m/d/Y');
         $maxRecordDate = date('m/d/Y');
+        // --- Query to get years for the 'Year' select form. ---
         $searchYears = array();
         $maxYear = date('Y');
         $tempYear = $firstMmobj->getRecordDate()->format('Y');
