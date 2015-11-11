@@ -225,9 +225,9 @@ class SearchController extends Controller
     private function dateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound)
     {
         if( $yearFound ) {
-            $start = \DateTime::createFromFormat('d/m/Y', sprintf('01/01/%s',$yearFound));
-            $end = \DateTime::createFromFormat('d/m/Y', sprintf('31/12/%s',$yearFound));
-            $queryBuilder->field('record_date')->gt($start);
+            $start = \DateTime::createFromFormat('d/m/Y:H:i:s', sprintf('01/01/%s:00:00:01',$yearFound));
+            $end = \DateTime::createFromFormat('d/m/Y:H:i:s', sprintf('01/01/%s:00:00:01',($yearFound)+1));
+            $queryBuilder->field('record_date')->gte($start);
             $queryBuilder->field('record_date')->lt($end);
         }
         else {
