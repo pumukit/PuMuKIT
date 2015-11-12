@@ -42,7 +42,9 @@ class LegacyController extends Controller
     /**
      * @Route("/{_locale}/video/{pumukit1id}.html")
      * @Route("/{_locale}/video/{pumukit1id}")
-     * @Route("/video/{pumukit1id}")
+     * @Route("/video/{pumukit1id}", requirements={
+     *     "pumukit1id": "\d+"
+     * })
      * @Route("/video/index/id/{pumukit1id}")
      * @Route("/video/index/id/{pumukit1id}.html")
      *
