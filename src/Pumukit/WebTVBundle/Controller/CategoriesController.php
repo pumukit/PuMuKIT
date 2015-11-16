@@ -76,7 +76,7 @@ class CategoriesController extends Controller
         foreach ( $tagsArray as $id=>$parent ){if($id == '__object'){continue;}
             $allGrounds[$id] = array();
             $allGrounds[$id]['title'] = $parent['__object']->getTitle();
-            $allGrounds[$id]['url'] = $linkService->generatePathToTag($parent['__object']->getCod());
+            $allGrounds[$id]['url'] = $linkService->generatePathToTag($parent['__object']->getCod(), null, array('tags[]' => $provider));
             $numMmobjs = 0;
             $cod = $parent['__object']->getCod();
             if(isset($counterMmobjs[$cod])){
@@ -89,7 +89,7 @@ class CategoriesController extends Controller
             if( $listGeneralParam ){
                 $allGrounds[$id]['children']['general'] = array();
                 $allGrounds[$id]['children']['general']['title'] = $this->get('translator')->trans("General %title%", array('%title%' => $parent['__object']->getTitle()));
-                $allGrounds[$id]['children']['general']['url'] = $linkService->generatePathToTag($parent['__object']->getCod(), true);
+                $allGrounds[$id]['children']['general']['url'] = $linkService->generatePathToTag($parent['__object']->getCod(), true, array('tags[]' => $provider));
                 $numMmobjs = 0;
                 if(isset($counterGeneralMmobjs[$cod])){
                     $numMmobjs = $counterMmobjs[$cod];
@@ -100,7 +100,7 @@ class CategoriesController extends Controller
             foreach ($parent as $id2=>$child ) {if($id2 == '__object'){continue;}
                 $allGrounds[$id]['children'][$id2] = array();
                 $allGrounds[$id]['children'][$id2]['title'] = $child['__object']->getTitle();
-                $allGrounds[$id]['children'][$id2]['url'] = $linkService->generatePathToTag($child['__object']->getCod());
+                $allGrounds[$id]['children'][$id2]['url'] = $linkService->generatePathToTag($child['__object']->getCod(), null, array('tags[]' => $provider));
 
                 $numMmobjs = 0;
                 $cod = $child['__object']->getCod();
@@ -113,7 +113,7 @@ class CategoriesController extends Controller
                 foreach($child as $id3=>$grandchild ){if($id3 == '__object'){continue;}
                   $allGrounds[$id]['children'][$id2]['children'][$id3] = array();
                   $allGrounds[$id]['children'][$id2]['children'][$id3]['title'] = $grandchild['__object']->getTitle();
-                  $allGrounds[$id]['children'][$id2]['children'][$id3]['url'] = $linkService->generatePathToTag($grandchild['__object']->getCod());
+                  $allGrounds[$id]['children'][$id2]['children'][$id3]['url'] = $linkService->generatePathToTag($grandchild['__object']->getCod(), null, array('tags[]' => $provider));
                   $numMmobjs = 0;
                   $cod = $grandchild['__object']->getCod();
                   if(isset($counterMmobjs[$cod])){
