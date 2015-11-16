@@ -40,8 +40,8 @@ class CategoriesController extends Controller
 
         $allGrounds = array();
         $tagsTree = $this->getDoctrine()
-                              ->getRepository('PumukitSchemaBundle:Tag')
-                              ->getTree($groundsRoot);
+                         ->getRepository('PumukitSchemaBundle:Tag')
+                         ->getTree($groundsRoot);
 
         //Create array structure
         //TODO Move this logic to a service.
@@ -69,8 +69,9 @@ class CategoriesController extends Controller
         //End removes unnecessary parent nodes.
 
         //Count number multimediaObjects
+        $provider = $request->get('provider');dump($provider);
         //TODO Move this logic into a service.
-        $counterMmobjs = $this->countMmobjInTags();
+        $counterMmobjs = $this->countMmobjInTags($provider);
         $linkService = $this->get('pumukit_web_tv.link_service');
         foreach ( $tagsArray as $id=>$parent ){if($id == '__object'){continue;}
             $allGrounds[$id] = array();
@@ -93,7 +94,7 @@ class CategoriesController extends Controller
                 if(isset($counterGeneralMmobjs[$cod])){
                     $numMmobjs = $counterMmobjs[$cod];
                 }
-                $allGrounds[$id]['children']['general']['num_mmobjs'] = $this->countGeneralMmobjsInTag($parent['__object']);
+                $allGrounds[$id]['children']['general']['num_mmobjs'] = $this->countGeneralMmobjsInTag($parent['__object'], $provider);
                 $allGrounds[$id]['children']['general']['children'] = array();
             }
             foreach ($parent as $id2=>$child ) {if($id2 == '__object'){continue;}
@@ -127,7 +128,7 @@ class CategoriesController extends Controller
 
 
     //TODO Move this function into a service.
-    private function countMmobjInTags(){
+    private function countMmobjInTags($provider = null){
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $multimediaObjectsColl = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
         $criteria = array('status' => MultimediaObject::STATUS_PUBLISHED, 'tags.cod' => 'PUCHWEBTV', 'tags.cod' =>'ITUNESU');
@@ -135,6 +136,10 @@ class CategoriesController extends Controller
              array('tracks' => array('$elemMatch' => array('tags' => 'display', 'hide' => false)), 'properties.opencast' => array('$exists' => false)),
              array('properties.opencast' => array('$exists' => true)),
         );
+        if ($provider !== null) {
+            $criteria['$and'] = array(
+                array('tags.cod' => array('$eq' => $provider)));
+        }
         $pipeline = array(
             array('$match' => $criteria),
             array('$unwind' => '$tags' ),
@@ -150,13 +155,16 @@ class CategoriesController extends Controller
     }
 
     //TODO Move this function into a service.
-    private function countGeneralMmobjsInTag($tag){
+    private function countGeneralMmobjsInTag($tag, $provider = null){
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $repo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $qb = $repo->createBuilderWithGeneralTag($tag)
-            ->count()
-            ->getQuery()
-            ->execute();
+        $qb = $repo->createBuilderWithGeneralTag($tag);
+        if($provider !== null) {
+            $qb = $qb->field('tags.cod')->equals($provider);
+        }
+        $qb = $qb->count()
+                 ->getQuery()
+                 ->execute();
 
         return $qb;
     }
