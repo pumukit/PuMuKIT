@@ -12,3 +12,9 @@ http://pumukit.org
 PuMuKIT-2 Documentation Project
 -------------------------------
 https://github.com/campusdomar/PuMuKIT2-doc/tree/2.1.x
+
+
+Third Party Bundles
+-------------------
+
+[Third Party Bundles Guide](ThirdPartyBundlesGuide.md)
