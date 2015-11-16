@@ -15,27 +15,19 @@ class LinkService
         $this->linkTagToSearch = $linkTagToSearch;
     }
 
-    public function generatePathToTag($tagCod = null, $onlyGeneral = null, $parameters = null)
+    public function generatePathToTag($tagCod = null, $onlyGeneral = null, array $parameters = array())
     {
-        if($parameters == null) {
-            $parameters = array();
-        }
         $relative = true;
+        if($tagCod) {
+            $parameters['tagCod'] = $tagCod;
+        }
+        if($onlyGeneral) {
+            $parameters['useTagAsGeneral'] = $onlyGeneral;
+        }
+
         if($this->linkTagToSearch) {
-            if($tagCod) {
-                $parameters['blockedTagCod'] = $tagCod;
-            }
-            if($onlyGeneral) {
-                $parameters['useBlockedTagAsGeneral'] = $onlyGeneral;
-            }
             return $this->generator->generate('pumukit_webtv_search_multimediaobjects', $parameters, $relative ? UrlGeneratorInterface::RELATIVE_PATH : UrlGeneratorInterface::ABSOLUTE_PATH);
         } else {
-            if($tagCod) {
-                $parameters['cod'] = $tagCod;
-            }
-            if($onlyGeneral) {
-                $parameters['list_only_general'] = $onlyGeneral;
-            }
             return $this->generator->generate('pumukit_webtv_bytag_multimediaobjects', $parameters, $relative ? UrlGeneratorInterface::RELATIVE_PATH : UrlGeneratorInterface::ABSOLUTE_PATH);
         }
     }

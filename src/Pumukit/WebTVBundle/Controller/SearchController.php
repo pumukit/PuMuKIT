@@ -58,11 +58,11 @@ class SearchController extends Controller
     }
 
     /**
-     * @Route("/searchmultimediaobjects/{blockedTagCod}/{useBlockedTagAsGeneral}", defaults={"blockedTagCod": null, "useBlockedTagAsGeneral": false})
-     * @ParamConverter("blockedTag", class="PumukitSchemaBundle:Tag", options={"mapping": {"blockedTagCod": "cod"}})
+     * @Route("/searchmultimediaobjects/{tagCod}/{useTagAsGeneral}", defaults={"tagCod": null, "useTagAsGeneral": false})
+     * @ParamConverter("blockedTag", class="PumukitSchemaBundle:Tag", options={"mapping": {"tagCod": "cod"}})
      * @Template("PumukitWebTVBundle:Search:index.html.twig")
      */
-    public function multimediaObjectsAction(Request $request, Tag $blockedTag = null, $useBlockedTagAsGeneral = false)
+    public function multimediaObjectsAction(Request $request, Tag $blockedTag = null, $useTagAsGeneral = false)
     {
         $templateTitle = null;
         if($this->container->hasParameter('menu.search_title')) {
@@ -93,7 +93,7 @@ class SearchController extends Controller
         $queryBuilder = $this->durationQueryBuilder($queryBuilder, $durationFound);
         $queryBuilder = $this->dateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound);
         $queryBuilder = $this->languageQueryBuilder($queryBuilder, $languageFound);
-        $queryBuilder = $this->tagsQueryBuilder($queryBuilder, $tagsFound, $blockedTag, $useBlockedTagAsGeneral);
+        $queryBuilder = $this->tagsQueryBuilder($queryBuilder, $tagsFound, $blockedTag, $useTagAsGeneral);
         // --- END Create QueryBuilder ---
         // --- Execute QueryBuilder and get paged results ---
         $pagerfanta = $this->createPager($queryBuilder, $request->query->get('page', 1));
@@ -253,7 +253,7 @@ class SearchController extends Controller
         return $queryBuilder;
     }
 
-    private function tagsQueryBuilder($queryBuilder, $tagsFound, $blockedTag, $useBlockedTagAsGeneral = false)
+    private function tagsQueryBuilder($queryBuilder, $tagsFound, $blockedTag, $useTagAsGeneral = false)
     {
         $tagRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
         if ($blockedTag !== null) {
@@ -266,7 +266,7 @@ class SearchController extends Controller
             $queryBuilder->field('tags.cod')->all($tagsFound);
         }
 
-        if ($useBlockedTagAsGeneral && $blockedTag !== null) {
+        if ($useTagAsGeneral && $blockedTag !== null) {
             $queryBuilder->field('tags.path')->notIn(array(new \MongoRegex('/'.preg_quote($blockedTag->getPath()).'.*\|/')));
         }
 

@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\Tag;
@@ -14,7 +15,8 @@ class ByTagController extends Controller
 {
 
   /**
-   * @Route("/multimediaobjects/tag/{cod}", name="pumukit_webtv_bytag_multimediaobjects")
+   * @Route("/multimediaobjects/tag/{tagCod}", name="pumukit_webtv_bytag_multimediaobjects", defaults={"tagCod": null})
+   * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"tagCod": "cod"}})
    * @Template("PumukitWebTVBundle:ByTag:index.html.twig")
    */
   public function multimediaObjectsAction(Tag $tag, Request $request)
@@ -30,11 +32,11 @@ class ByTagController extends Controller
 
       $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
 
-      if( $request->get('list_only_general') ){
+      if( $request->get('useTagAsGeneral') ){
         //This should be included on SchemaBundle:MultimediaObjectRepository.
         $mmobjs = $repo->createBuilderWithGeneralTag($tag, array('record_date' => 1));
         $title = $this->get('translator')->trans("General %title%", array('%title%' => $tag->getTitle()));
-        $this->updateBreadcrumbs($title, 'pumukit_webtv_bytag_multimediaobjects', array('cod' => $tag->getCod(), 'list_only_general' => true));
+        $this->updateBreadcrumbs($title, 'pumukit_webtv_bytag_multimediaobjects', array('cod' => $tag->getCod(), 'useTagAsGeneral' => true));
       }
       else {
         $mmobjs = $repo->createBuilderWithTag($tag, array('record_date' => 1));
@@ -52,7 +54,8 @@ class ByTagController extends Controller
   }
 
   /**
-   * @Route("/series/tag/{cod}", name="pumukit_webtv_bytag_series")
+   * @Route("/series/tag/{tagCod}",  name="pumukit_webtv_bytag_series", defaults={"tagCod": null})
+   * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"tagCod": "cod"}})
    * @Template("PumukitWebTVBundle:ByTag:index.html.twig")
    */
   public function seriesAction(Tag $tag, Request $request)
