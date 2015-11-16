@@ -15,9 +15,11 @@ class LinkService
         $this->linkTagToSearch = $linkTagToSearch;
     }
 
-    public function generatePathToTag($tagCod = null, $onlyGeneral = null)
+    public function generatePathToTag($tagCod = null, $onlyGeneral = null, $parameters = null)
     {
-        $parameters = array();
+        if($parameters == null) {
+            $parameters = array();
+        }
         $relative = true;
         if($this->linkTagToSearch) {
             if($tagCod) {
