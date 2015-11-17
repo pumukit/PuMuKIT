@@ -40,6 +40,8 @@
 {% set panel_default_background = panel_default_background | default(default_light_background) %}
 {% set panel_default_font = panel_default_font | default(default_light_font) %}
 {% set footer_max_width = footer_max_width | default(content_max_width) %}
+
+{% set big_breadcrumbs = big_breadcrumbs | default(true) %}
 {# END SET VARIABLES#}
 body {
     background: {{ page_background }};
@@ -105,7 +107,7 @@ p.disabled {
 .breadcrumbs_color {
     background: {{ breadcrumbs_back_background }};
 }
-{% if big_breadcrumbs is defined %}
+{% if big_breadcrumbs is defined and big_breadcrumbs %}
 @media (max-width: 1199px) {
 .title-for-crumbs {
 
@@ -617,27 +619,27 @@ a:hover .cover {
 .ellipsedtext-ellipse {
     position: absolute;
     top: -1.5em;
-    left: 4520%;
+    left: 4387%;
     z-index: 2;
-    padding: 0 10px 0 15px;
+    padding: 0 20px 0 15px;
     background: rgba(255,255,255,0);
-    background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 40%, rgba(255,255,255,1) 100%);
-    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,255,0)), color-stop(40%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,1)));
-    background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 40%, rgba(255,255,255,1) 100%);
-    background: -o-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 40%, rgba(255,255,255,1) 100%);
-    background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 40%, rgba(255,255,255,1) 100%);
-    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 40%, rgba(255,255,255,1) 100%);
+    background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 30%, rgba(255,255,255,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,255,0)), color-stop(30%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,1)));
+    background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 30%, rgba(255,255,255,1) 100%);
+    background: -o-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 30%, rgba(255,255,255,1) 100%);
+    background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 30%, rgba(255,255,255,1) 100%);
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 30%, rgba(255,255,255,1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=1 );
 }
 
 .pumukit_mmobj:hover .ellipsedtext-ellipse {
     background: rgba(255,255,255,0);
-    background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 40%, {{ mmobj_selected_background }} 100%);
-    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,255,0)), color-stop(40%, {{ mmobj_selected_background }}), color-stop(100%, {{ mmobj_selected_background }}));
-    background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 40%, {{ mmobj_selected_background }} 100%);
-    background: -o-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 40%, {{ mmobj_selected_background }} 100%);
-    background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 40%, {{ mmobj_selected_background }} 100%);
-    background: linear-gradient(to right, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 40%, {{ mmobj_selected_background }} 100%);
+    background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 30%, {{ mmobj_selected_background }} 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,255,0)), color-stop(30%, {{ mmobj_selected_background }}), color-stop(100%, {{ mmobj_selected_background }}));
+    background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 30%, {{ mmobj_selected_background }} 100%);
+    background: -o-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 30%, {{ mmobj_selected_background }} 100%);
+    background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 30%, {{ mmobj_selected_background }} 100%);
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 30%, {{ mmobj_selected_background }} 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='{{ mmobj_selected_background }}', endColorstr='{{ mmobj_selected_background }}', GradientType=1 );
 }
 {# ==== END MAGIC CSS TO ELLIPSE TEXT ==== #}
