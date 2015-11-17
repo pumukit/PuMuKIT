@@ -5,7 +5,7 @@ namespace Pumukit\SchemaBundle\Event;
 use Symfony\Component\EventDispatcher\Event;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
-class PersonEvent extends Event
+class PersonWithRoleEvent extends Event
 {
     /**
      * @var MultimediaObject
