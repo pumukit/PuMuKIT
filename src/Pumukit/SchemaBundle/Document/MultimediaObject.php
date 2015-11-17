@@ -2160,7 +2160,7 @@ class MultimediaObject
      * @param  Person $person
      * @return array
      */
-    public function getAllEmbeddedRoleByPerson($person)
+    public function getAllEmbeddedRolesByPerson($person)
     {
         $aux = array();
 

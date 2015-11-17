@@ -631,7 +631,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->flush();
 
         $kateQueryRolesIds = array();
-        foreach ($mm->getAllEmbeddedRoleByPerson($personKate) as $embeddedRole) {
+        foreach ($mm->getAllEmbeddedRolesByPerson($personKate) as $embeddedRole) {
             $kateQueryRolesIds[] = $embeddedRole->getId();
         }
 
@@ -640,7 +640,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertFalse(in_array($roleDirector->getId(), $kateQueryRolesIds));
 
         $lucyQueryRolesIds = array();
-        foreach ($mm->getAllEmbeddedRoleByPerson($personLucy) as $embeddedRole) {
+        foreach ($mm->getAllEmbeddedRolesByPerson($personLucy) as $embeddedRole) {
             $lucyQueryRolesIds[] = $embeddedRole->getId();
         }
 
@@ -649,7 +649,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertTrue(in_array($roleDirector->getId(), $lucyQueryRolesIds));
 
         $peteQueryRolesIds = array();
-        foreach ($mm->getAllEmbeddedRoleByPerson($personPete) as $embeddedRole) {
+        foreach ($mm->getAllEmbeddedRolesByPerson($personPete) as $embeddedRole) {
             $peteQueryRolesIds[] = $embeddedRole->getId();
         }
 
