@@ -15,14 +15,16 @@ class FactoryService
     const DEFAULT_MULTIMEDIAOBJECT_TITLE = 'New';
 
     private $dm;
+    private $dispatcher;
     private $tagService;
     private $translator;
     private $locales;
     private $defaultCopyright;
 
-    public function __construct(DocumentManager $documentManager, TagService $tagService, TranslatorInterface $translator, array $locales = array(), $defaultCopyright = "")
+    public function __construct(DocumentManager $documentManager, MultimediaObjectEventDispatcherService $dispatcher, TagService $tagService, TranslatorInterface $translator, array $locales = array(), $defaultCopyright = "")
     {
         $this->dm = $documentManager;
+        $this->dispatcher = $dispatcher;
         $this->tagService = $tagService;
         $this->translator = $translator;
         $this->locales = $locales;
@@ -126,6 +128,22 @@ class FactoryService
         $this->dm->flush();
 
         return $mm;
+    }
+
+    /**
+     * Update multimedia object
+     *
+     * @param MultimediaObject $multimediaObject
+     * @return MultimediaObject
+     */
+    public function updateMultimediaObject(MultimediaObject $multimediaObject)
+    {
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        $this->dispatcher->dispatchUpdate($multimediaObject);
+
+        return $multimediaObject;
     }
 
     /**

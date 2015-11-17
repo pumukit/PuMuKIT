@@ -15,15 +15,17 @@ use Symfony\Component\Finder\Finder;
 class TrackService
 {
     private $dm;
+    private $dispatcher;
     private $tmpPath;
     private $jobService;
     private $profileService;
     private $forceDeleteOnDisk;
     private $jobRepo;
 
-    public function __construct(DocumentManager $documentManager, JobService $jobService, ProfileService $profileService, $tmpPath=null, $forceDeleteOnDisk=true)
+    public function __construct(DocumentManager $documentManager, TrackEventDispatcherService $dispatcher, JobService $jobService, ProfileService $profileService, $tmpPath=null, $forceDeleteOnDisk=true)
     {
         $this->dm = $documentManager;
+        $this->dispatcher = $dispatcher;
         $this->jobService = $jobService;
         $this->profileService = $profileService;
         $this->tmpPath = $tmpPath ? realpath($tmpPath) : sys_get_temp_dir();
@@ -93,10 +95,12 @@ class TrackService
     /**
      * Update Track in Multimedia Object
      */
-    public function updateTrackInMultimediaObject(MultimediaObject $multimediaObject)
+    public function updateTrackInMultimediaObject(MultimediaObject $multimediaObject, Track $track)
     {
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
+
+        $this->dispatcher->dispatchUpdate($multimediaObject, $track);
 
         return $multimediaObject;
     }
@@ -124,6 +128,8 @@ class TrackService
         if ($this->forceDeleteOnDisk && $trackPath && $isNotOpencast) {
             $this->deleteFileOnDisk($trackPath);
         }
+
+        $this->dispatcher->dispatchDelete($multimediaObject, $track);
 
         return $multimediaObject;
     }

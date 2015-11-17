@@ -91,7 +91,7 @@ class TrackController extends Controller
 
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
             try {
-                $multimediaObject = $this->get('pumukitschema.track')->updateTrackInMultimediaObject($multimediaObject);
+                $multimediaObject = $this->get('pumukitschema.track')->updateTrackInMultimediaObject($multimediaObject, $track);
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), 400);
             }
@@ -250,7 +250,7 @@ class TrackController extends Controller
         $track = $multimediaObject->getTrackById($request->get('id'));
 
         $this->get('pumukit.inspection')->autocompleteTrack($track);
-        $this->get('pumukitschema.track')->updateTrackInMultimediaObject($multimediaObject);
+        $this->get('pumukitschema.track')->updateTrackInMultimediaObject($multimediaObject, $track);
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', array('id' => $multimediaObject->getId())));
     }
@@ -266,7 +266,7 @@ class TrackController extends Controller
 
         $flagTrue = $this->get('pumukitencoder.picextractor')->extractPic($multimediaObject, $track, $numframe);
         if ($flagTrue) {
-            $this->get('pumukitschema.track')->updateTrackInMultimediaObject($multimediaObject);
+            $this->get('pumukitschema.track')->updateTrackInMultimediaObject($multimediaObject, $track);
         }
 
         return array(

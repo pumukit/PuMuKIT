@@ -23,6 +23,7 @@ class TrackServiceTest extends WebTestCase
     private $resourcesDir;
     private $logger;
     private $tokenStorage;
+    private $trackDispatcher;
 
     public function __construct()
     {
@@ -40,6 +41,8 @@ class TrackServiceTest extends WebTestCase
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->factoryService = $kernel->getContainer()
           ->get('pumukitschema.factory');
+        $this->trackDispatcher = $kernel->getContainer()
+          ->get('pumukitschema.track_dispatcher');
         $this->tokenStorage = $kernel->getContainer()
           ->get('security.token_storage');
 
@@ -68,7 +71,7 @@ class TrackServiceTest extends WebTestCase
         $jobService = new JobService($this->dm, $profileService, $cpuService, 
                                      $inspectionService, $dispatcher, $this->logger, 
                                      $this->tokenStorage, "test", null);
-        $this->trackService = new TrackService($this->dm, $jobService, $profileService, null, true);
+        $this->trackService = new TrackService($this->dm, $this->trackDispatcher, $jobService, $profileService, null, true);
 
         $this->tmpDir = $this->trackService->getTempDirs()[0];
     }
@@ -162,7 +165,7 @@ class TrackServiceTest extends WebTestCase
         $newUrl = 'uploads/tracks/track2.mp4';
         $track->setUrl($newUrl);
 
-        $this->trackService->updateTrackInMultimediaObject($multimediaObject);
+        $this->trackService->updateTrackInMultimediaObject($multimediaObject, $track);
         $multimediaObject = $this->repoMmobj->find($multimediaObject->getId());
         $track = $multimediaObject->getTracks()[0];
         $this->assertEquals($newUrl, $track->getUrl());

@@ -9,10 +9,12 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 class LinkService
 {
     private $dm;
+    private $dispatcher;
 
-    public function __construct(DocumentManager $documentManager)
+    public function __construct(DocumentManager $documentManager, LinkEventDispatcherService $dispatcher)
     {
         $this->dm = $documentManager;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -28,6 +30,8 @@ class LinkService
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
+        $this->dispatcher->dispatchCreate($multimediaObject, $link);
+
         // NOTE Workaround to fix embedded documents modifications
         $this->dm->clear(get_class($multimediaObject));
 
@@ -38,12 +42,15 @@ class LinkService
      * Update Link in Multimedia Object
      *
      * @param MultimediaObject $multimediaObject
+     * @param Link $link
      * @return MultimediaObject
      */
-    public function updateLinkInMultimediaObject(MultimediaObject $multimediaObject)
+    public function updateLinkInMultimediaObject(MultimediaObject $multimediaObject, Link $link)
     {
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
+
+        $this->dispatcher->dispatchUpdate($multimediaObject, $link);
 
         // NOTE Workaround to fix embedded documents modifications
         $this->dm->clear(get_class($multimediaObject));
@@ -60,9 +67,13 @@ class LinkService
      */
     public function removeLinkFromMultimediaObject(MultimediaObject $multimediaObject, $linkId)
     {
+        $link = $multimediaObject->getLinkById($linkId);
+
         $multimediaObject->removeLinkById($linkId);
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
+
+        $this->dispatcher->dispatchDelete($multimediaObject, $link);
 
         // NOTE Workaround to fix embedded documents modifications
         $this->dm->clear(get_class($multimediaObject));
