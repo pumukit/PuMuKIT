@@ -56,6 +56,34 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
 
+        <service id="pumukitschema.announce" class="Pumukit\SchemaBundle\Services\AnnounceService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+        </service>
+
+        <!-- EMBEDDED DOCUMENTS EVENT DISPATCHER SERVICES -->
+
+        <service id="pumukitschema.link_dispatcher" class="Pumukit\SchemaBundle\Services\LinkEventDispatcherService">
+            <argument type="service" id="event_dispatcher"/>
+        </service>
+
+        <service id="pumukitschema.material_dispatcher" class="Pumukit\SchemaBundle\Services\MaterialEventDispatcherService">
+            <argument type="service" id="event_dispatcher"/>
+        </service>
+
+        <service id="pumukitschema.personwithrole_dispatcher" class="Pumukit\SchemaBundle\Services\PersonWithRoleEventDispatcherService">
+            <argument type="service" id="event_dispatcher"/>
+        </service>
+
+        <service id="pumukitschema.pic_dispatcher" class="Pumukit\SchemaBundle\Services\PicEventDispatcherService">
+            <argument type="service" id="event_dispatcher"/>
+        </service>
+
+        <service id="pumukitschema.track_dispatcher" class="Pumukit\SchemaBundle\Services\TrackEventDispatcherService">
+            <argument type="service" id="event_dispatcher"/>
+        </service>
+
+        <!-- EMBEDDED DOCUMENTS SERVICES -->
+
         <service id="pumukitschema.link" class="Pumukit\SchemaBundle\Services\LinkService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
@@ -76,10 +104,6 @@
         </service>
 
         <service id="pumukitschema.person" class="Pumukit\SchemaBundle\Services\PersonService">
-            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
-        </service>
-
-        <service id="pumukitschema.announce" class="Pumukit\SchemaBundle\Services\AnnounceService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
 
