@@ -30,6 +30,11 @@ pumukit_encoder:
     type:     annotation
     prefix:   /
 
+pumukit_api:
+    resource: "@PumukitAPIBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 pumukitnewadmin:
     resource: @PumukitNewAdminBundle/Resources/config/routing.yml
     prefix:   /

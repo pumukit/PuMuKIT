@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new Pumukit\EncoderBundle\PumukitEncoderBundle(),
             new Pumukit\InspectionBundle\PumukitInspectionBundle(),
             new Pumukit\NewAdminBundle\PumukitNewAdminBundle(),
+            new Pumukit\APIBundle\PumukitAPIBundle(),
             new Pumukit\LiveBundle\PumukitLiveBundle(),
             new Pumukit\OpencastBundle\PumukitOpencastBundle(),
             new Pumukit\WorkflowBundle\PumukitWorkflowBundle(),

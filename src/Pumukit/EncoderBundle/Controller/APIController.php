@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
- * @Route("/admin/encoder/api")
+ * @Route("/api/encoder")
  */
 class APIController extends Controller
 {
@@ -28,4 +28,15 @@ class APIController extends Controller
         $cpus = $this->get('pumukitencoder.cpu')->getCpus();
         return new JsonResponse($cpus);
     }    
+
+
+    /**
+     * @Route("/jobs.{_format}", defaults={"_format"="json"}, requirements={"_format": "json"})
+     */
+    public function jobsAction()
+    {
+        $jobService = $this->get('pumukitencoder.job');
+        $stats = $jobService->getAllJobsStatus();
+        return new JsonResponse($stats);
+    }
 }
