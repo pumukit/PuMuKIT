@@ -23,7 +23,6 @@
 
         <service id="pumukitschema.factory" class="Pumukit\SchemaBundle\Services\FactoryService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager" />
-            <argument type="service" id="pumukitschema.multimediaobject_dispatcher" />
             <argument type="service" id="pumukitschema.tag" />
             <argument type="service" id="translator" />
             <argument>%pumukit2.locales%</argument>
@@ -52,6 +51,7 @@
 
         <service id="pumukitschema.multimedia_object" class="Pumukit\SchemaBundle\Services\MultimediaObjectService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="pumukitschema.multimediaobject_dispatcher" />
         </service>
 
         <service id="pumukitschema.series" class="Pumukit\SchemaBundle\Services\SeriesService">

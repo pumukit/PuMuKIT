@@ -15,11 +15,13 @@ class MultimediaObjectService
 {
     private $dm;
     private $repo;
+    private $dispatcher;
 
-    public function __construct(DocumentManager $documentManager)
+    public function __construct(DocumentManager $documentManager, MultimediaObjectEventDispatcherService $dispatcher)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->dispatcher = $dispatcher;
     }
     
     /**
@@ -82,5 +84,20 @@ class MultimediaObjectService
         $this->dm->flush();
         return $mm->getSecret();
     }
-    
+
+    /**
+     * Update multimedia object
+     *
+     * @param MultimediaObject $multimediaObject
+     * @return MultimediaObject
+     */
+    public function updateMultimediaObject(MultimediaObject $multimediaObject)
+    {
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        $this->dispatcher->dispatchUpdate($multimediaObject);
+
+        return $multimediaObject;
+    }
 }
