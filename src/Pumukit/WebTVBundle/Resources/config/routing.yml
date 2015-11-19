@@ -15,3 +15,6 @@ pumukit_webtv_default_css:
         _controller: FrameworkBundle:Template:template
         template: 'PumukitWebTVBundle::custom.css.twig'
         _format: css
+
+homepage:
+    pattern: /
