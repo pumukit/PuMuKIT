@@ -1,11 +1,11 @@
 {% block body %}
 {# SET VARIABLES #}
 {% set default_contrast_background = default_contrast_background | default("#ed6d00") %}
-{% set default_light_background = default_light_background | default("#ed6d00") %}
+{% set default_light_background = default_light_background | default("#fff") %}
 {% set default_content_background = default_content_background | default("#fff") %}
 
 {% set default_contrast_font = default_contrast_font | default("#fff") %}
-{% set default_light_font = default_light_font | default("#fff") %}
+{% set default_light_font = default_light_font | default("#858585") %}
 {% set default_content_font = default_content_font | default("#111") %}
 {% set default_content_link_font = default_content_link_font | default("#222") %}
 {% set default_content_link_selected_font = default_content_link_selected_font | default("#444") %}
@@ -29,15 +29,15 @@
 {% set content_background = content_background | default(default_content_background) %}
 {% set header_max_width = header_max_width | default(content_max_width) %}
 {% set header_background = header_background | default(default_content_background) %}
-{% set label_background = label_background | default(default_contrast_background) %}
-{% set label_font = label_font | default(default_contrast_font) %}
+{% set label_background = label_background | default('#8A8A8A') %}
+{% set label_font = label_font | default('#fff') %}
 {% set menu_background = menu_background | default(default_light_background) %}
 {% set menu_font_color = menu_font_color | default(default_light_font) %}
 {% set menu_selected_background = menu_selected_background | default(default_light_font) %}
 {% set menu_selected_font_color = menu_selected_font_color | default(default_light_background) %}
 {% set mmobj_font_color = mmobj_font_color | default(default_content_font) %}
 {% set mmobj_selected_font_color = mmobjs_selected_font_color | default(default_content_font) %}
-{% set mmobj_selected_background = mmobj_selected_background | default(page_background) %}
+{% set mmobj_selected_background = mmobj_selected_background | default('#ededed') %}
 {% set mmobj_serie_background = mmobj_serie_background | default(mmobj_selected_background) %}
 {% set mmobj_serie_font = mmobj_serie_font | default(mmobj_selected_font_color) %}
 {% set navbar_background = navbar_background | default(default_light_background) %}
@@ -45,6 +45,9 @@
 {% set panel_default_background = panel_default_background | default(default_light_background) %}
 {% set panel_default_font = panel_default_font | default(default_light_font) %}
 {% set footer_max_width = footer_max_width | default(content_max_width) %}
+{% set panel_heading_background = panel_heading_background | default('#ededed') %}
+{% set panel_heading_font = panel_heading_font | default('#000') %}
+
 
 {% set big_breadcrumbs = big_breadcrumbs | default(true) %}
 {# END SET VARIABLES#}
@@ -96,9 +99,22 @@ p.disabled {
 /*BOOTSTRAP OVERRIDE*/
 .label {
     margin: 2px;
+    background: {{ label_background }};
+    color: {{ label_font }};
+    border-radius: 5px;
+    padding: 5px;
 }
 .label a{
-    color:white;
+    background: {{ label_background }};
+    color: {{ label_font }};
+}
+.label a:hover{
+    background: grey;
+    color: #ececec;
+}
+.label:hover{
+    background: grey;
+    color: #ececec;
 }
 .breadcrumb {
     color: {{ breadcrumbs_font_color }};
@@ -160,10 +176,7 @@ p.disabled {
 
 {% endif %}
 
-.label {
-    background: {{ label_background }};
-    color: {{ label_font }};
-}
+
 .navbar {
     margin-bottom: 0px;
 }
@@ -181,8 +194,8 @@ p.disabled {
     border: none;
 }
 .panel-default > .panel-heading {
-    background: {{ panel_default_background }};
-    color: {{ panel_default_font }};
+    background: {{ panel_heading_background }};
+    color: {{ panel_heading_font }};
 }
 
 /*END BOOTSTRAP OVERRIDE*/
@@ -350,7 +363,7 @@ body.opencast-layout .breadcrumb_wrapper {
     overflow: hidden;
     margin: 10px 0px;
     padding: 5px;
-    border-radius: 10px;
+/*    border-radius: 10px;*/
     position: relative;
 }
 .pumukit_mmobj a{
@@ -392,6 +405,12 @@ body.opencast-layout .breadcrumb_wrapper {
 }
 #search-box:focus {
     border-color: #ccc;
+}
+.search-form {
+    margin: 10px;
+    padding: 10px;
+    background: {{ mmobj_selected_background }};
+    color: {{ mmobj_selected_font_color }};
 }
 .input-group-addon {
     background: white;
@@ -692,4 +711,5 @@ a:hover .cover {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='{{ mmobj_selected_background }}', endColorstr='{{ mmobj_selected_background }}', GradientType=1 );
 }
 {# ==== END MAGIC CSS TO ELLIPSE TEXT ==== #}
+
 {% endblock %}

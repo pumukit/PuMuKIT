@@ -57,22 +57,22 @@
             <div style="clear:both"><!--LETS THE WRAPPER HAVE THE CORRECT HEIGHT--></div>
           </div>
         </div>
-      </div>
-      <!--END MAIN BODY-->
-      <!--FOOTER-->
-      <div class="row footer_row">
-        {% include 'PumukitWebTVBundle:Layout:footer.html.twig' %}
-      </div>
-      {% block powered_by %}
-        <div class="powered_by row">
-          <div>
-            <img alt="PuMuKIT icon" src="{{ asset('bundles/pumukitwebtv/images/favicon.ico') }}" style="width: 10px;">
-            <a href="http://pumukit.org" >
-              Powered by <span style="font-style: italic">PuMuKIT</span>
-            </a>
-          </div>
+        <!--END MAIN BODY-->
+        <!--FOOTER-->
+        <div class="row footer_row">
+          {% include 'PumukitWebTVBundle:Layout:footer.html.twig' %}
         </div>
-      {% endblock %}
+        {% block powered_by %}
+          <div class="powered_by row">
+            <div>
+              <img alt="PuMuKIT icon" src="{{ asset('bundles/pumukitwebtv/images/favicon.ico') }}" style="width: 10px;">
+              <a href="http://pumukit.org" >
+                Powered by <span style="font-style: italic">PuMuKIT</span>
+              </a>
+            </div>
+          </div>
+        {% endblock %}
+      </div>
     {% endblock %}
   </body>
 </html>
