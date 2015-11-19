@@ -4,11 +4,14 @@
 <div class="{{ col_class }}">
   <a href="{{ path('pumukit_webtv_series_index', {'id': object.id}) }}">
     <div class=" pumukit_mmobj">
-
       <figure class="pumukit_album">
-        <div class="thumbnail thumbnailo"><div class="thumbnailholder" ></div><img class="thumbnailimg" src="{{ object|first_url_pic(true) }}" /></div>
-        <div class="thumbnail thumbnailo"><div class="thumbnailholder" ></div><img class="thumbnailimg" src="{{ object|first_url_pic(true) }}" /></div>
-        <div class="thumbnail thumbnailo"><div class="thumbnailholder" ></div><img class="thumbnailimg" src="{{ object|first_url_pic(true) }}" /></div>
+        <div class="thumbnail thumbnailo">
+          <span class="number-videos serial">
+            {{object|count_multimedia_objects}} {{object|count_multimedia_objects>1?'videos':'video'}}
+          </span>
+          <div class="thumbnailholder" ></div><img class="thumbnailimg" src="{{ object|first_url_pic(true) }}" /></div>
+          <div class="thumbnail thumbnailo"><div class="thumbnailholder" ></div><img class="thumbnailimg" src="{{ object|first_url_pic(true) }}" /></div>
+          <div class="thumbnail thumbnailo"><div class="thumbnailholder" ></div><img class="thumbnailimg" src="{{ object|first_url_pic(true) }}" /></div>
       </figure>
       <div class="info-wrapper">
         <div class="info serial">
@@ -23,9 +26,6 @@
 
         </div>
       </div>
-      <span class="number-videos serial">
-        <p>{{object|count_multimedia_objects}} {{object|count_multimedia_objects>1?'videos':'video'}}</p>
-      </span>
 
       <div class="date serial">
         {{object.publicDate|date("d/m/Y")}}
