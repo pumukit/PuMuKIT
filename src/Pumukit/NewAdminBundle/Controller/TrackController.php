@@ -50,16 +50,16 @@ class TrackController extends Controller
         $formData = $request->get('pumukitnewadmin_track', array());
         list($language, $description) = $this->getArrayData($formData);
 
-        $trackService = $this->get('pumukitschema.track');
+        $jobService = $this->get('pumukitencoder.job');
 
         try{
             if (empty($_FILES) && empty($_POST)){
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
             }
             if (($request->files->has('resource')) && ("file" == $request->get('file_type'))) {
-                $multimediaObject = $trackService->createTrackFromLocalHardDrive($multimediaObject, $request->files->get('resource'), $profile, $priority, $language, $description);
+                $multimediaObject = $jobService->createTrackFromLocalHardDrive($multimediaObject, $request->files->get('resource'), $profile, $priority, $language, $description);
             } elseif (($request->get('file', null)) && ("inbox" == $request->get('file_type'))) {
-                $multimediaObject = $trackService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description);
+                $multimediaObject = $jobService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description);
             }
         }catch (\Exception $e){
             return array(

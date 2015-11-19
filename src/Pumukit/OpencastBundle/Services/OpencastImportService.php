@@ -6,6 +6,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
 use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\TrackService;
 use Pumukit\SchemaBundle\Services\TagService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
@@ -20,15 +21,17 @@ class OpencastImportService
     private $opencastClient;
     private $dm;
     private $factoryService;
+    private $trackService;
     private $tagService;
     private $opencastService;
     private $inspectionService;
     private $otherLocales;
     
-    public function __construct(DocumentManager $documentManager, FactoryService $factoryService, TagService $tagService, ClientService $opencastClient, OpencastService $opencastService, InspectionServiceInterface $inspectionService, array $otherLocales = array()) {
+    public function __construct(DocumentManager $documentManager, FactoryService $factoryService, TrackService $trackService, TagService $tagService, ClientService $opencastClient, OpencastService $opencastService, InspectionServiceInterface $inspectionService, array $otherLocales = array()) {
         $this->opencastClient = $opencastClient;
         $this->dm = $documentManager;
         $this->factoryService = $factoryService;
+        $this->trackService = $trackService;
         $this->tagService = $tagService;
         $this->opencastService = $opencastService;
         $this->inspectionService = $inspectionService;
@@ -116,7 +119,8 @@ class OpencastImportService
                     $this->inspectionService->autocompleteTrack($track);
 
                     $multimediaObject->setDuration($track->getDuration());
-                    $multimediaObject->addTrack($track);
+
+                    $this->trackService->addTrackToMultimediaObject($multimediaObject, $track, false);
                 }
             } else {
                 $tags = $mediaPackage["media"]["track"]["tags"];
@@ -152,7 +156,8 @@ class OpencastImportService
                 $this->inspectionService->autocompleteTrack($track);
 
                 $multimediaObject->setDuration($track->getDuration());
-                $multimediaObject->addTrack($track);
+
+                $this->trackService->addTrackToMultimediaObject($multimediaObject, $track, false);
             }
 
             for($j = 0; $j < count($mediaPackage["attachments"]["attachment"]); $j++){
