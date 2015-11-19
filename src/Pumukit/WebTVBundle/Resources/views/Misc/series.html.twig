@@ -2,33 +2,35 @@
 {% set col_mapper = {'1': 'col-md-12', '2': 'col-md-6', '3': 'col-md-4', '4': 'col-md-3'} %}
 {% set col_class = ( col_mapper[cols|default('1')] | default(col_mapper['1'] ) ) %}
 <div class="{{ col_class }}">
-<a href="{{ path('pumukit_webtv_series_index', {'id': object.id}) }}">
-  <div class=" pumukit_mmobj">
+  <a href="{{ path('pumukit_webtv_series_index', {'id': object.id}) }}">
+    <div class=" pumukit_mmobj">
 
-    <figure class="pumukit_album">
-      <div class="thumbnail thumbnailo"><div class="thumbnailholder" ></div><img class="thumbnailimg" src="{{ object|first_url_pic(true) }}" /></div>
-      <div class="thumbnail thumbnailo"><div class="thumbnailholder" ></div><img class="thumbnailimg" src="{{ object|first_url_pic(true) }}" /></div>
-      <div class="thumbnail thumbnailo"><div class="thumbnailholder" ></div><img class="thumbnailimg" src="{{ object|first_url_pic(true) }}" /></div>
-    </figure>
-    <div class="info serial">
-      <div class="title">
-        {{object.title | default('No title')|trans}}
+      <figure class="pumukit_album">
+        <div class="thumbnail thumbnailo"><div class="thumbnailholder" ></div><img class="thumbnailimg" src="{{ object|first_url_pic(true) }}" /></div>
+        <div class="thumbnail thumbnailo"><div class="thumbnailholder" ></div><img class="thumbnailimg" src="{{ object|first_url_pic(true) }}" /></div>
+        <div class="thumbnail thumbnailo"><div class="thumbnailholder" ></div><img class="thumbnailimg" src="{{ object|first_url_pic(true) }}" /></div>
+      </figure>
+      <div class="info-wrapper">
+        <div class="info serial">
+          <div class="title">
+            {{object.title | default('No title')|trans}}
+          </div>
+          <div class="serial_title">
+            <abbr title="{{object.title}}">
+              {{object.line2}}
+            </abbr>
+          </div>
+
+        </div>
       </div>
-      <div class="serial_title">
-        <abbr title="{{object.title}}">
-          {{object.line2}}
-        </abbr>
+      <span class="number-videos serial">
+        <p>{{object|count_multimedia_objects}} {{object|count_multimedia_objects>1?'videos':'video'}}</p>
+      </span>
+
+      <div class="date serial">
+        {{object.publicDate|date("d/m/Y")}}
       </div>
 
     </div>
-    <span class="number-videos serial">
-      <p>{{object|count_multimedia_objects}} {{object|count_multimedia_objects>1?'videos':'video'}}</p>
-    </span>
-
-    <div class="date serial">
-      {{object.publicDate|date("d/m/Y")}}
-    </div>
-
-  </div>
-</a>
+  </a>
 </div>
