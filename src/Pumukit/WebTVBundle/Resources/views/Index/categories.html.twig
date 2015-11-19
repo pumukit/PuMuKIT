@@ -4,7 +4,7 @@
   <div class="index_container col-md-4 col-sm-6 " >
     <div class="img_category">
       {% set title = "Health Sciences" %}
-      <a href="{{ path('pumukit_webtv_bytag_series', {'cod': 'Dhealth' }) }}">
+      <a href="{{ path_to_tag('Dhealth') }}">
         <img alt="{{ title | trans }}" src="{{ asset('bundles/pumukitwebtv/images/0.jpg') }}" />
         <span class="cover">
           <div>
@@ -19,7 +19,7 @@
   <div class="index_container col-md-4 col-sm-6">
     <div class="img_category two" >
       {% set title = "Humanities" %}
-      <a href="{{ path('pumukit_webtv_bytag_series', {'cod': 'Dhumanities'  }) }}">
+      <a href="{{ path_to_tag('Dhumanities') }}">
         <img alt="{{ title | trans }}" src="{{ asset('bundles/pumukitwebtv/images/1.jpg') }}" />
         <span class="cover">
           <div>
@@ -30,7 +30,7 @@
     </div>
     <div class="img_category two" >
       {% set title = "Technical science" %}
-      <a href="{{ path('pumukit_webtv_bytag_series', {'cod': 'Dtechnical' }) }}">
+      <a href="{{ path_to_tag('Dtechnical') }}">
         <img alt="{{ title | trans }}" src="{{ asset('bundles/pumukitwebtv/images/2.jpg') }}" />
         <span class="cover">
           <div>
@@ -45,7 +45,7 @@
     <div class="row">
       <div class="col-md-12 col-sm-6 img_category two " >
         {% set title = "Experimental sciences" %}
-        <a href="{{ path('pumukit_webtv_bytag_series', {'cod': 'Dscience' }) }}">
+        <a href="{{ path_to_tag('Dscience') }}">
           <img alt="{{ title | trans }}" src="{{ asset('bundles/pumukitwebtv/images/3.jpg') }}" />
           <span class="cover">
             <div>
@@ -56,7 +56,7 @@
       </div>
       <div class="col-md-12 col-sm-6 img_category two " >
         {% set title = "Social and Legal sciences" %}
-        <a href="{{ path('pumukit_webtv_bytag_series', {'cod': 'Dsocial' }) }}">
+        <a href="{{ path_to_tag('Dsocial') }}">
           <img alt="{{ title | trans }}" src="{{ asset('bundles/pumukitwebtv/images/4.jpg') }}" />
           <span class="cover">
             <div>
