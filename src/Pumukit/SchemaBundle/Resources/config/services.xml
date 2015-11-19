@@ -106,7 +106,6 @@
         <service id="pumukitschema.track" class="Pumukit\SchemaBundle\Services\TrackService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="pumukitschema.track_dispatcher"/>
-            <argument type="service" id="pumukitencoder.job"/>
             <argument type="service" id="pumukitencoder.profile"/>
             <argument>%pumukit2.tmp%</argument>
             <argument>%pumukit2.delete_on_disk%</argument>

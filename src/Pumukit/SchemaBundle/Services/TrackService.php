@@ -2,11 +2,9 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\EncoderBundle\Document\Job;
-use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
@@ -17,16 +15,14 @@ class TrackService
     private $dm;
     private $dispatcher;
     private $tmpPath;
-    private $jobService;
     private $profileService;
     private $forceDeleteOnDisk;
     private $jobRepo;
 
-    public function __construct(DocumentManager $documentManager, TrackEventDispatcherService $dispatcher, JobService $jobService, ProfileService $profileService, $tmpPath=null, $forceDeleteOnDisk=true)
+    public function __construct(DocumentManager $documentManager, TrackEventDispatcherService $dispatcher, ProfileService $profileService, $tmpPath=null, $forceDeleteOnDisk=true)
     {
         $this->dm = $documentManager;
         $this->dispatcher = $dispatcher;
-        $this->jobService = $jobService;
         $this->profileService = $profileService;
         $this->tmpPath = $tmpPath ? realpath($tmpPath) : sys_get_temp_dir();
         $this->forceDeleteOnDisk = $forceDeleteOnDisk;
@@ -34,60 +30,23 @@ class TrackService
     }
 
     /**
-     * Create track from local hard drive with job service
-     * 
-     * @param MultimediaObject $multimediaObject
-     * @param UploadedFile $file
-     * @param string $profile
-     * @param int $priority
-     * @param string $language
-     * @param array $description
+     * Add track to multimedia object
+     *
+     * @param  MultimediaObject $multimediaObject
+     * @param  Track            $track
+     * @param  boolean          $executeFlush
      * @return MultimediaObject
      */
-    public function createTrackFromLocalHardDrive(MultimediaObject $multimediaObject, UploadedFile $trackFile, $profile, $priority, $language, $description)
+    public function addTrackToMultimediaObject(MultimediaObject $multimediaObject, Track $track, $executeFlush = true)
     {
+        $multimediaObject->addTrack($track);
 
-        if (null === $this->profileService->getProfile($profile)){
-            throw new \Exception("Can't find given profile with name ".$profile);
+        if ($executeFlush) {
+            $this->dm->persist($multimediaObject);
+            $this->dm->flush();
         }
 
-        if(UPLOAD_ERR_OK != $trackFile->getError()) {
-           throw new \Exception($trackFile->getErrorMessage());
-        }
-
-        if (!is_file($trackFile->getPathname())) {
-            throw new FileNotFoundException($trackFile->getPathname());
-        }
-
-        $pathFile = $trackFile->move($this->tmpPath."/".$multimediaObject->getId(), $trackFile->getClientOriginalName());
-
-        $this->jobService->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description);
-
-        return $multimediaObject;
-    }
-
-    /**
-     * Create track from inbox on server with job service
-     * 
-     * @param MultimediaObject $multimediaObject
-     * @param string $trackUrl
-     * @param string $profile
-     * @param int $priority
-     * @param string $language
-     * @param array $description
-     * @return MultimediaObject
-     */
-    public function createTrackFromInboxOnServer(MultimediaObject $multimediaObject, $trackUrl, $profile, $priority, $language, $description)
-    {
-        if (null === $this->profileService->getProfile($profile)){
-            throw new \Exception("Can't find given profile with name ".$profile);
-        }
-
-        if (!is_file($trackUrl)) {
-            throw new FileNotFoundException($trackUrl);
-        }
-
-        $this->jobService->addJob($trackUrl, $profile, $priority, $multimediaObject, $language, $description);
+        $this->dispatcher->dispatchCreate($multimediaObject, $track);
 
         return $multimediaObject;
     }
@@ -112,18 +71,12 @@ class TrackService
     {
         $track = $multimediaObject->getTrackById($trackId);
         $trackPath = $track->getPath();
-        $trackProfile = str_replace('profile:', '', preg_grep('/^profile:*/', $track->getTags())[0]);
 
         $isNotOpencast = !$track->containsTag('opencast');
 
         $multimediaObject->removeTrackById($trackId);
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
-
-        $relatedJob = $this->jobRepo->findOneBy(array('path_end' => $trackPath, 'mm_id' => $multimediaObject->getId()));
-        if ($relatedJob) {
-            $this->jobService->deleteJob($relatedJob->getId());
-        }
 
         if ($this->forceDeleteOnDisk && $trackPath && $isNotOpencast) {
             $this->deleteFileOnDisk($trackPath);

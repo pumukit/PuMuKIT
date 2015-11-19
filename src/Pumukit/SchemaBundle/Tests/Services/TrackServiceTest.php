@@ -3,14 +3,11 @@
 namespace Pumukit\SchemaBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\TrackService;
 use Pumukit\EncoderBundle\Services\ProfileService;
-use Pumukit\EncoderBundle\Services\CpuService;
-use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Document\Job;
 
 class TrackServiceTest extends WebTestCase
@@ -20,7 +17,6 @@ class TrackServiceTest extends WebTestCase
     private $repoMmobj;
     private $trackService;
     private $factoryService;
-    private $resourcesDir;
     private $logger;
     private $tokenStorage;
     private $trackDispatcher;
@@ -45,8 +41,6 @@ class TrackServiceTest extends WebTestCase
           ->get('pumukitschema.track_dispatcher');
         $this->tokenStorage = $kernel->getContainer()
           ->get('security.token_storage');
-
-        $this->resourcesDir = realpath(__DIR__.'/../Resources');
     }
 
     public function setUp()
@@ -64,81 +58,22 @@ class TrackServiceTest extends WebTestCase
         $this->dm->flush();
         
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
-        $cpuService = new CpuService($this->getDemoCpus(), $this->dm);
-        $dispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $inspectionService = $this->getMock('Pumukit\InspectionBundle\Services\InspectionServiceInterface');
-        $inspectionService->expects($this->any())->method('getDuration')->will($this->returnValue(5));
-        $jobService = new JobService($this->dm, $profileService, $cpuService, 
-                                     $inspectionService, $dispatcher, $this->logger, 
-                                     $this->tokenStorage, "test", null);
-        $this->trackService = new TrackService($this->dm, $this->trackDispatcher, $jobService, $profileService, null, true);
+        $this->trackService = new TrackService($this->dm, $this->trackDispatcher, $profileService, null, true);
 
         $this->tmpDir = $this->trackService->getTempDirs()[0];
     }
 
-    public function testCreateTrackFromLocalHardDrive()
+    public function testAddTrackToMultimediaObject()
     {
-        $this->createBroadcasts();
-
         $series = $this->factoryService->createSeries();
         $multimediaObject = $this->factoryService->createMultimediaObject($series);
 
-        $this->assertEquals(0, count($multimediaObject->getTracks()));
-        $this->assertEquals(0, count($this->repoJobs->findAll()));
+        $track = new Track();
+        $multimediaObject = $this->trackService->addTrackToMultimediaObject($multimediaObject, $track);
 
-        $originalFile = $this->resourcesDir.'/camera.mp4';
-
-        $filePath = $this->resourcesDir.'/cameraCopy.mp4';
-        if (copy($originalFile, $filePath)){
-          $file = new UploadedFile($filePath, 'camera.mp4', null, null, null, true);
-          
-          $profile = 'MASTER_COPY';
-          $priority = 2;
-          $language = 'en';
-          $description = array(
-                                    'en' => 'local track description',
-                                    'es' => 'descripción del archivo local',
-                                    );
-          
-          $multimediaObject = $this->trackService->createTrackFromLocalHardDrive($multimediaObject, $file, $profile, $priority, $language, $description);
-          
-          $this->assertEquals(0, count($multimediaObject->getTracks()));
-          $this->assertEquals(1, count($this->repoJobs->findAll()));
-        }
-
-        $this->deleteCreatedFiles();
-    }
-
-    public function testCreateTrackFromInboxOnServer()
-    {
-        $this->createBroadcasts();
-
-        $series = $this->factoryService->createSeries();
-        $multimediaObject = $this->factoryService->createMultimediaObject($series);
-
-        $this->assertEquals(0, count($multimediaObject->getTracks()));
-        $this->assertEquals(0, count($this->repoJobs->findAll()));
-
-        $originalFile = $this->resourcesDir.DIRECTORY_SEPARATOR.'camera.mp4';
-
-        $filePath = $this->resourcesDir.DIRECTORY_SEPARATOR.'cameraCopy.mp4';
-        if (copy($originalFile, $filePath)){
-          $profile = 'MASTER_COPY';
-          $priority = 2;
-          $language = 'en';
-          $description = array(
-                               'en' => 'track description inbox',
-                               'es' => 'descripción del archivo inbox',
-                               );
-          
-          $multimediaObject = $this->trackService->createTrackFromInboxOnServer($multimediaObject, $filePath, $profile, $priority, $language, $description);
-          
-          $this->assertEquals(0, count($multimediaObject->getTracks()));
-          $this->assertEquals(1, count($this->repoJobs->findAll()));
-        }
-
-        $this->deleteCreatedFiles();
-        unlink($filePath);
+        $multimediaObject = $this->repoMmobj->find($multimediaObject->getId());
+        $embeddedTrack = $multimediaObject->getTrackById($track->getId());
+        $this->assertEquals($track, $embeddedTrack);
     }
 
     public function testUpdateTrackInMultimediaObject()
@@ -380,36 +315,5 @@ class TrackServiceTest extends WebTestCase
                           );
 
         return $profiles;
-    }
-
-    private function deleteCreatedFiles()
-    {
-        $mmobjs = $this->repoMmobj->findAll();
-
-        foreach($mmobjs as $mm){
-            $mmDir = $this->getDemoProfiles()['MASTER_COPY']['streamserver']['dir_out'].'/'.$mm->getSeries()->getId().'/';
-            if (is_dir($mmDir)){
-                $files = glob($mmDir.'*', GLOB_MARK);
-                foreach ($files as $file) {
-                    if (is_writable($file)){
-                      unlink($file);
-                    }
-                }
-
-                rmdir($mmDir);
-            }
-
-            $tmpMmDir = '/tmp/'.$mm->getId().'/';
-            if (is_dir($tmpMmDir)){
-                $files = glob($tmpMmDir.'*', GLOB_MARK);
-                foreach ($files as $file) {
-                    if (is_writable($file)){
-                      unlink($file);
-                    }
-                }
-
-                rmdir($tmpMmDir);
-            }
-        }
     }
 }
