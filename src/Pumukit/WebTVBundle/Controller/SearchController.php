@@ -172,9 +172,6 @@ class SearchController extends Controller
         if ($this->container->hasParameter('search.parent_tag_2.cod')) {
             $searchByTagCod2 = $this->container->getParameter('search.parent_tag_2.cod');
             $parentTagOptional = $tagRepo->findOneByCod($searchByTagCod2);
-            if (!isset($parentTagOptional)) {
-                throw new \Exception(sprintf('The parent Tag with COD:  \' %s  \' does not exist. Check if your tags are initialized and that you added the correct \'cod\' to parameters.yml (search.parent_tag.cod)', $searchByTagCod));
-            }
         }
         return $parentTagOptional;
     }
