@@ -1,20 +1,25 @@
 {% block body %}
 {# SET VARIABLES #}
 {% set default_contrast_background = default_contrast_background | default("#ed6d00") %}
-{% set default_light_background = default_light_background | default("#fff") %}
+{% set default_light_background = default_light_background | default("#ed6d00") %}
 {% set default_content_background = default_content_background | default("#fff") %}
 
 {% set default_contrast_font = default_contrast_font | default("#fff") %}
-{% set default_light_font = default_light_font | default("#ed6d00") %}
+{% set default_light_font = default_light_font | default("#fff") %}
 {% set default_content_font = default_content_font | default("#111") %}
 {% set default_content_link_font = default_content_link_font | default("#222") %}
 {% set default_content_link_selected_font = default_content_link_selected_font | default("#444") %}
 
 {% set breadcrumbs_separator = breadcrumbs_separator | default('»') %}
-{% set content_max_width = content_max_width | default("1400px") %}
+{% set content_max_width = content_max_width | default("1200px") %}
 {% set menu_stats = menu_stats | default(true) %}
 {% set menu_padding = menu_padding | default("10px 10px 10px 30px") %}
 {% set page_background = page_background | default("#ddd") %}
+
+{# DEFAULT ASPECT RATIO: 12:9#}
+{% set thumbnail_width = thumbnail_width|default(152) %}
+{% set thumbnail_height = thumbnail_height|default(114) %}
+{% set thumbnail_border = thumbnail_border|default(2) %}
 
 {# DEPENDABLE: If not set they will use other variables as default #}
 {% set breadcrumbs_background = breadcrumbs_background | default(default_contrast_background) %}
@@ -23,7 +28,7 @@
 {% set breadcrumbs_max_width = breadcrumbs_max_width | default(content_max_width) %}
 {% set content_background = content_background | default(default_content_background) %}
 {% set header_max_width = header_max_width | default(content_max_width) %}
-{% set header_background = header_background | default(default_light_background) %}
+{% set header_background = header_background | default(default_content_background) %}
 {% set label_background = label_background | default(default_contrast_background) %}
 {% set label_font = label_font | default(default_contrast_font) %}
 {% set menu_background = menu_background | default(default_light_background) %}
@@ -61,7 +66,6 @@ ul, ol {
 h1 {
     font-size: 40px;
     font-weight: bold;
-    border-bottom: 4px solid {{ default_content_font }};
     color: {{ default_content_font }};
 }
 h2 {
@@ -75,7 +79,17 @@ h4 {
     font-weight: bold;
     font-size: 1.2em;
 }
+footer {
+    background: black;
+    color: grey;
+}
+
 /*END BASE CSS*/
+.footer-content {
+    margin: 0 auto;
+    max-width: {{footer_max_width}};
+    padding: 20px;
+}
 p.disabled {
     color: grey;
 }
@@ -108,6 +122,9 @@ p.disabled {
     background: {{ breadcrumbs_back_background }};
 }
 {% if big_breadcrumbs is defined and big_breadcrumbs %}
+.title-for-crumbs {
+    display: none;
+}
 @media (max-width: 1199px) {
 .title-for-crumbs {
 
@@ -120,7 +137,7 @@ p.disabled {
 }
 .breadcrumb > li:last-of-type {
     display: block;
-    font-size: 3em;
+    font-size: 3.8em;
     content: "";
     line-height: 100%;
 }
@@ -137,6 +154,10 @@ p.disabled {
     padding: 0px;
 
 }
+.breadcrumb li:first-child {
+    padding-bottom: 10px;
+}
+
 {% endif %}
 
 .label {
@@ -189,12 +210,12 @@ p.disabled {
     font-size: 1.2em;
     position: absolute;
     bottom: 10%;
-    left: 150px;
+    left: {{thumbnail_width+20}}px;
     position: absolute;
     text-align: left;
 }
 .date.serial {
-    left: 160px;
+    left: {{thumbnail_width+30}}px;
     bottom: 9%;
     position: absolute;
     font-size: 1.2em;
@@ -209,7 +230,7 @@ p.disabled {
 .info {
     float: left;
     padding-left: 10px;
-    width: 68%;
+    width: 100%;
     min-height: 60px;
     overflow: hidden;
     display: inline;
@@ -218,11 +239,34 @@ p.disabled {
 .info .title{
     font-weight: bold;
     font-size: 0.9em;
-    height: 2.5em;
+    max-height: 2.7em;
+    word-wrap: break-word;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;   
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
 }
+/*.info .title::before {
+    content: '...';
+    right: 0px;
+    top: 1.3em;
+    position: relative;
+    background: inherit;
+}*/
 .info.serial {
-    position: absolute;
-    left: 150px;
+    margin-left: 10px;
+}
+.info .subtitle {
+    font-weight: 100;
+    margin: 5px 5px;
+    font-size: 1em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.info-wrapper {
+    overflow: hidden;
 }
 .language_select_wrapper {
     float: right;
@@ -234,11 +278,9 @@ p.disabled {
 }
 
 .main-content {
-    margin: 0 auto;
+    overflow: hidden;
     background: {{ content_background }};
     min-height: 600px;
-    max-width: {{ content_max_width }};
-    padding-bottom: 20px;
 }
 .menu {
     background: {{ menu_background }};
@@ -290,7 +332,7 @@ body.opencast-layout .breadcrumb_wrapper {
     background-size: contain;
     width: 28px;
     height: 28px;
-    /*overflow: auto;*/
+    overflow: auto;
 }
 .play_icon.small {
     margin: 5px;
@@ -304,7 +346,7 @@ body.opencast-layout .breadcrumb_wrapper {
 }
 .pumukit_mmobj {
     color: {{ mmobj_font_color }};
-    height: 120px;
+    height: {{thumbnail_height + 20}}px;
     overflow: hidden;
     margin: 10px 0px;
     padding: 5px;
@@ -356,8 +398,8 @@ body.opencast-layout .breadcrumb_wrapper {
 }
 /*Thumbnails*/
 .thumbnail {
-    width: 135px;
-    height: 98px;
+    width: {{thumbnail_width + thumbnail_border*2}}px;
+    height: {{thumbnail_height + thumbnail_border*2}}px;
 }
 .minithumbnail {
     width: 75px;
@@ -372,20 +414,20 @@ body.opencast-layout .breadcrumb_wrapper {
     border-radius: 0px;
     box-shadow: 1px 1px 2px #666;
     background: #F3F3F3;
-    padding: 4px;
+    padding: {{thumbnail_border}}px;
     z-index: 3;
     position: relative;
 }
 .thumbnailwrapper {
     padding-left: 0px;
-    min-width:132px;
+    min-width: 132px;
 }
 .minithumbnail.bodyMm, .thumbnail.bodyMm {
     margin-bottom: 5px;
 }
 .thumbnail img.thumbnailimg{
-    max-width: 120px;
-    max-height: 90px;
+    max-width: {{thumbnail_width}}px;
+    max-height: {{thumbnail_height}}px;
 }
 .minithumbnail img.thumbnailimg{
     max-width: 67px;
@@ -397,8 +439,8 @@ body.opencast-layout .breadcrumb_wrapper {
     vertical-align: middle;
 }
 .thumbnailholder {
-    width: 127px;
-    height: 90px;
+    width: {{thumbnail_width}}px;
+    height: {{thumbnail_height}}px;
 }
 .minithumbnailholder {
     width: 67px;
@@ -406,7 +448,7 @@ body.opencast-layout .breadcrumb_wrapper {
 }
 .minithumbnailholder, .thumbnailholder {
     position: absolute;
-    top: 4px;
+    top: {{thumbnail_border}}px;
     background:#000;
     z-index: -1;
 }
@@ -441,6 +483,9 @@ body.opencast-layout .breadcrumb_wrapper {
     width: 100%;
     vertical-align: middle;
     background: {{ menu_background }}; /* Trick to color the menu's length */
+    margin: 0 auto;
+    min-height: 600px;
+    max-width: {{ content_max_width }};
 }
 
 /*CIES*/
@@ -466,11 +511,7 @@ a:hover .cover {
 .media-heading.subtitle{
     line-height:0.5;
 }
-.info .subtitle {
-    font-weight: 100;
-    margin: 10px 5px;
-    font-size: 1.2em;
-}
+
 .media-heading.title{
     line-height:1;
     min-height: 30px;
@@ -539,6 +580,14 @@ a:hover .cover {
     max-height: 400px;
 }
 .powered_by {
+    background: black;
+    color: white;
+}
+.powered_by a{
+    color: white;
+    text-decoration: none; 
+}
+.powered_by div {
     max-width: {{content_max_width }};
     text-align: right;
     margin: 0 auto;
@@ -552,7 +601,7 @@ a:hover .cover {
 }
 .widget.slidebar {
     text-align: left;
-    background: {{menu_background}};
+    padding-top: 20px;
 }
 {% if menu_stats %}
 .widget.slidebar.stats {
@@ -572,7 +621,7 @@ a:hover .cover {
     background: {{ menu_selected_background }};
     color: {{ menu_selected_font_color }};
     margin-left: -65px;
-    padding-left: 85px;
+    padding-left: 95px;
     z-index:10;
     transition: background 0.3s ease;
 }
