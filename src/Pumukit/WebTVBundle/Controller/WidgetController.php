@@ -17,23 +17,20 @@ class WidgetController extends Controller
     {
         $channels = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Live')->findAll();
         $selected = $this->container->get('request_stack')->getMasterRequest()->get('_route');
-        $menuStats = true;
-        if($this->container->hasParameter('menu_stats')) {
-          $menuStats = $this->container->getParameter('menu_stats');
-        }
 
-        $homeTitle = $this->container->hasParameter('menu.home_title') ? $this->container->getParameter('menu.home_title') : 'Home';
-        $announcesTitle = $this->container->hasParameter('menu.announces_title') ? $this->container->getParameter('menu.announces_title') : 'Latest uploads';
-        $searchTitle = $this->container->hasParameter('menu.search_title') ? $this->container->getParameter('menu.search_title') : 'Search';
-        $mediatecaTitle = $this->container->hasParameter('menu.mediateca_title') ? $this->container->getParameter('menu.mediateca_title') : 'Full Catalogue';
-        $categoriesTitle = $this->container->hasParameter('menu.categories_title') ? $this->container->getParameter('menu.categories_title') : 'Videos by category';
+        $menuStats = $this->container->getParameter('menu.show_stats');
+        $homeTitle =  $this->container->getParameter('menu.home_title');
+        $announcesTitle = $this->container->getParameter('menu.announces_title');
+        $searchTitle = $this->container->getParameter('menu.search_title');
+        $mediatecaTitle = $this->container->getParameter('menu.mediateca_title');
+        $categoriesTitle = $this->container->getParameter('menu.categories_title');
 
         return array('live_channels' => $channels, 'menu_selected' => $selected, 'menu_stats' => $menuStats,
         'home_title' => $homeTitle,
         'announces_title' => $announcesTitle,
         'search_title' => $searchTitle,
         'mediateca_title' => $mediatecaTitle,
-        'categories_title' => $categoriesTitle );
+        'categories_title' => $categoriesTitle);
     }
 
     /**

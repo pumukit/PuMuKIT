@@ -28,14 +28,8 @@ class MediaLibraryController extends Controller
                     array();
         $result = array();
 
-        $numberCols = 1;
-        if( $this->container->hasParameter('columns_objs_catalogue')) {
-            $numberCols = $this->container->getParameter('columns_objs_catalogue');
-        }
-        $hasCatalogueThumbnails = false;
-        if( $this->container->hasParameter('catalogue_thumbnails')) {
-            $hasCatalogueThumbnails = $this->container->hasParameter('catalogue_thumbnails');
-        }
+        $numberCols = $this->container->getParameter('columns_objs_catalogue');
+        $hasCatalogueThumbnails = $this->container->getParameter('catalogue_thumbnails');
 
         switch ($sort) {
             case 'alphabetically':
