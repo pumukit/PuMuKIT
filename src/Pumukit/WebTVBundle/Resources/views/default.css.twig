@@ -12,7 +12,6 @@
 
 {% set breadcrumbs_separator = breadcrumbs_separator | default('»') %}
 {% set content_max_width = content_max_width | default("1200px") %}
-{% set menu_stats = menu_stats | default(true) %}
 {% set menu_padding = menu_padding | default("10px 10px 10px 30px") %}
 {% set page_background = page_background | default("#ddd") %}
 
@@ -626,11 +625,6 @@ a:hover .cover {
     text-align: left;
     padding-top: 20px;
 }
-{% if menu_stats %}
-.widget.slidebar.stats {
-    display: none;
-}
-{% endif %}
 .widget.slidebar #total{
     text-align: center;
 }
