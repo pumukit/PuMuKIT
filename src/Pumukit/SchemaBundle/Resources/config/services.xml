@@ -53,10 +53,6 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
 
-        <service id="pumukitschema.multimedia_object" class="Pumukit\SchemaBundle\Services\MultimediaObjectService">
-            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
-        </service>
-
         <service id="pumukitschema.series" class="Pumukit\SchemaBundle\Services\SeriesService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
