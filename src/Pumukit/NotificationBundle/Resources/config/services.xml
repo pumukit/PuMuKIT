@@ -18,6 +18,7 @@
         <argument type="service" id="pumukit_notification.sender"/>
         <argument type="service" id="pumukitencoder.job"/>
         <argument type="service" id="translator" />
+        <argument type="service" id="router" />
         <argument>%pumukit_notification.enable%</argument>
         <argument>%pumukit_notification.platform_name%</argument>
         <argument>%pumukit_notification.sender_name%</argument>
