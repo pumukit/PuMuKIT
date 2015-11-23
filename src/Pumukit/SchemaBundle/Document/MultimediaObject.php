@@ -2155,6 +2155,28 @@ class MultimediaObject
     }
 
     /**
+     * Get all embedded role in multimedia object by person id
+     *
+     * @param  Person $person
+     * @return array
+     */
+    public function getAllEmbeddedRolesByPerson($person)
+    {
+        $aux = array();
+
+        foreach ($this->people as $embeddedRole) {
+            foreach ($embeddedRole->getPeople() as $embeddedPerson) {
+                if ($embeddedPerson->getId() === $person->getId()) {
+                    $aux[] = $embeddedRole;
+                    break;
+                }
+            }
+        }
+
+        return $aux;
+    }
+
+    /**
      * Contains EmbeddedPerson without mattering the role
      * Use containsPersonWithRole instead.
      *

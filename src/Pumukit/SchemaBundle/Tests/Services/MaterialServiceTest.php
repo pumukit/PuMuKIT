@@ -17,6 +17,7 @@ class MaterialServiceTest extends WebTestCase
     private $factoryService;
     private $originalFilePath;
     private $uploadsPath;
+    private $materialDispatcher;
 
     public function __construct()
     {
@@ -30,6 +31,8 @@ class MaterialServiceTest extends WebTestCase
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->materialService = $kernel->getContainer()
           ->get('pumukitschema.material');
+        $this->materialDispatcher = $kernel->getContainer()
+          ->get('pumukitschema.material_dispatcher');
         $this->factoryService = $kernel->getContainer()
           ->get('pumukitschema.factory');
 
@@ -90,7 +93,7 @@ class MaterialServiceTest extends WebTestCase
         $newI18nName = array('en' => 'Material', 'es' => 'Material');
         $material->setI18nName($newI18nName);
 
-        $mm = $this->materialService->updateMaterialInMultimediaObject($mm);
+        $mm = $this->materialService->updateMaterialInMultimediaObject($mm, $material);
         $mm = $this->repoMmobj->find($mm->getId());
 
         $materials = $mm->getMaterials();
@@ -234,7 +237,7 @@ class MaterialServiceTest extends WebTestCase
      */
     public function testInvalidTargetPath()
     {
-        $materialService = new MaterialService($this->dm, "/non/existing/path", "/uploads/material", true);
+        $materialService = new MaterialService($this->dm, $this->materialDispatcher, "/non/existing/path", "/uploads/material", true);
     }
 
     public function testGetCaptions()
