@@ -1,3 +1,7 @@
+{% set iframe_url = url('pumukit_webtv_multimediaobject_iframe', {id: mm.id, track_id: track.id}) %}
+{% set track_url = url('pumukit_webtv_multimediaobject_index', {id: mm.id, track_id: track.id}) %}
+{% set series_url = url('pumukit_webtv_series_index', {id: mm.series.id}) %}
+
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span>
@@ -8,24 +12,22 @@
   <form>
     <fieldset>
       <div class="form-group">
-        <label for="embed" class="control-label">{% trans %}Embedded IFRAME{% endtrans %}:</label>
-        <textarea id="embed_code" name="embed_code" readonly="readonly" class="form-control" rows="5" onclick="this.select()">
-          <iframe src="{{ url('pumukit_webtv_multimediaobject_iframe', {id: mm.id}) }}" width="560" height="315" frameborder="0" allowfullscreem>
-            {% trans %}Not understand iframes{% endtrans %}
-          </iframe>
-        </textarea>
+        <label for="embed" class="control-label">{% trans %}Embedded Iframe{% endtrans %}:</label>
+        <input id="embed_code" name="embed_code" rows=1 readonly="readonly" class="form-control" onclick="this.select()"
+               value='<iframe src="{{ iframe_url }}" width="560" height="315" frameborder="0" allowfullscreen></iframe>'
+               />
       </div>            
       <div class="form-group">
-        <label for="embed" class="control-label">{% trans %}Video{% endtrans %}:</label>
-        <div class="content">{# TODO CHECK GETURLLINK(TRUE) #}
-          <input type="text" onclick="this.select()" class="form-control" value="{{ url('pumukit_webtv_multimediaobject_index', {id: mm.id, track_id: track.id}) }}" readonly/>
-          <a href="http://localhost:8080/video/564b17b5a4e9d42c488b45f3" target="_blank"><i class="mdi-action-exit-to-app"></i></a>
+        <label for="embed" class="control-label">{% trans %}Video track{% endtrans %}:</label>
+        <div class="input-group">
+          <input type="text" onclick="this.select()" class="form-control" value="{{ track_url }}" readonly/>
+          <span class="input-group-addon"><a id="alinkROMagicUrl" href="{{ track_url }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
         </div>
         <br />
         <label for="embed" class="control-label">{% trans %}Series{% endtrans %}:</label>
-        <div class="content"> {# TODO webtv mms index instead of admin mms index #}
-          <input type="text" onclick="this.select()" class="form-control" value="{{ url('pumukit_webtv_series_index', {id: mm.series.id}) }}" readonly/>
-          <a href="http://localhost:8080/video/564b17b5a4e9d42c488b45f3" target="_blank"><i class="mdi-action-exit-to-app"></i></a>
+        <div class="input-group">
+          <input type="text" onclick="this.select()" class="form-control" value="{{ series_url }}" readonly/>
+          <span class="input-group-addon"><a id="alinkROMagicUrl" href="{{ series_url }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
         </div>
       </div>
     </fieldset>
