@@ -17,4 +17,4 @@ https://github.com/campusdomar/PuMuKIT2-doc/tree/2.1.x
 Third Party Bundles
 -------------------
 
-[Third Party Bundles Guide](ThirdPartyBundlesGuide.md)
+[Third Party Bundles List](https://github.com/campusdomar/PuMuKIT2-doc/tree/2.1.x/ThirdPartyBundlesList.md)
