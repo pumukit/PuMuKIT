@@ -163,7 +163,7 @@ class JobService
         if (!empty($description)){
             $job->setI18nDescription($description);
         }
-        if ($email = $this->getUserEmail()) {
+        if ($email = $this->getUserEmail($job)) {
             $job->setEmail($email);
         }
         $job->setTimeini(new \DateTime('now'));
@@ -692,18 +692,24 @@ class JobService
     /**
      * Get user email
      *
-     * Gets the email of the user who executed the job
+     * Gets the email of the user who executed the job, if no session get the user info from other jobs of the same mm.
      */
-    private function getUserEmail()
+    private function getUserEmail(Job $job=null)
     {
-        $email = null;
         if (null !== $token = $this->tokenStorage->getToken()) {
             if (is_object($user = $token->getUser())) {
-                $email = $user->getEmail();
+                return $user->getEmail();
             }
         }
 
-        return $email;
+        if ($job) {
+            $otherJob = $this->repo->findOneBy(array('mm_id' => $job->getMmId(), 'email' => array('$exists' => true)), array('timeini' => 1));
+            if ($otherJob && $otherJob->getEmail()) {
+                return $otherJob->getEmail();
+            }
+        }
+
+        return null;
     }
 
 
