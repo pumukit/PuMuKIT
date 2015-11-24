@@ -267,16 +267,19 @@ class MultimediaObjectServiceTest extends WebTestCase
     private function createBroadcasts()
     {
         $publicBroadcast = new Broadcast();
+        $publicBroadcast->setName('pub');
         $publicBroadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
         $this->dm->persist($publicBroadcast);
         $this->dm->flush();
 
         $corporativeBroadcast = new Broadcast();
+        $corporativeBroadcast->setName('cor');
         $corporativeBroadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_COR);
         $this->dm->persist($corporativeBroadcast);
         $this->dm->flush();
 
         $privateBroadcast = new Broadcast();
+        $privateBroadcast->setName('pri');
         $privateBroadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PRI);
         $this->dm->persist($privateBroadcast);
         $this->dm->flush();
