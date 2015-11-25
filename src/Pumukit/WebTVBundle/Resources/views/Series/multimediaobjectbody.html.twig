@@ -12,7 +12,7 @@
 {% endif %}
 <!-- PRECINCT -->
 {% set mm_precinct = precinct(mm.getTags()) %}
-{% if ((mm_precinct) and ((mm_precinct != last_precinct) or ((last_date|date('Y-m-d')) != (mm.getRecordDate()|date('Y-m-d')))) and (mm_precinct.getCod() != 'PLACE0001PRECINCT01') and (not series_precinct)) %}
+{% if ((mm_precinct) and ((mm_precinct != last_precinct) or ((last_date|date('Y-m-d')) != (mm.getRecordDate()|date('Y-m-d')))) and (mm_precinct.getCod() != 'PLACE0001PRECINCT001') and (not series_precinct)) %}
   <div class="serial_place">
     {{ mm_precinct|precinct_fulltitle }}
   </div>
