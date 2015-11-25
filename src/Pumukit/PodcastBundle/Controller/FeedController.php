@@ -19,6 +19,30 @@ class FeedController extends Controller
     const ITUNESU_FEED_URL = 'http://www.itunesu.com/feed';
     const ATOM_URL = 'http://www.w3.org/2005/Atom';
 
+
+    /**
+     * @Route("/list.xml", defaults={"_format": "xml"}, name="pumukit_podcast_list")
+     */
+    public function listAction(Request $request)
+    {
+        $router = $this->get('router');
+	    $mmObjRepo = $this->get('doctrine_mongodb.odm.document_manager')
+          ->getRepository('PumukitSchemaBundle:MultimediaObject');
+
+        $qb = $mmObjRepo->createStandardQueryBuilder();
+        $qb->field('tracks.tags')->equals('podcast');
+        $series = $qb->distinct('series')
+          ->getQuery()
+          ->execute();
+
+        $xml = new \SimpleXMLElement('<list/>');
+        foreach($series as $s){
+          $url = $router->generate('pumukit_podcast_series_collection', array('id' => $s), true);
+          $xml->addChild('podcast', $url);
+        }
+        return new Response($xml->asXML(), 200, array('Content-Type' => 'text/xml'));
+    }
+
     /**
      * @Route("/video.xml", defaults={"_format": "xml"}, name="pumukit_podcast_video")
      */
