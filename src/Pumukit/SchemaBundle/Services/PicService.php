@@ -49,7 +49,7 @@ class PicService
             return $this->getDefaultUrlPicForObject($object, $absolute, $hd);
         } else {
             foreach ($pics as $pic) {
-                if ($picUrl = $pic->getUrl() && !$pic->getHide() && !$pic->containsTag('banner')) break;
+                if (($picUrl = $pic->getUrl()) && !$pic->getHide() && !$pic->containsTag('banner')) break;
             }
         }
 
