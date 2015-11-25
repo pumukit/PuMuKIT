@@ -25,7 +25,8 @@ class PersonController extends AdminController
         $config = $this->getConfiguration();
 
         $criteria = $this->getCriteria($config, $request->getLocale());
-        $resources = $this->getResources($request, $config, $criteria);
+        $selectedPersonId = $request->get('selectedPersonId', null);
+        $resources = $this->getResources($request, $config, $criteria, $selectedPersonId);
 
         $personService = $this->get('pumukitschema.person');
         $countMmPeople = array();
@@ -142,15 +143,10 @@ class PersonController extends AdminController
     public function listAction(Request $request)
     {
         $config = $this->getConfiguration();
-
-        $sorting = $request->get('sorting');
-        if (null !== $sorting){
-            $this->get('session')->set('admin/person/type', $sorting[key($sorting)]);
-            $this->get('session')->set('admin/person/sort', key($sorting));
-        }
-
         $criteria = $this->getCriteria($config, $request->getLocale());
-        $resources = $this->getResources($request, $config, $criteria);
+
+        $selectedPersonId = $request->get('selectedPersonId', null);
+        $resources = $this->getResources($request, $config, $criteria, $selectedPersonId);
 
         $personService = $this->get('pumukitschema.person');
         $countMmPeople = array();
@@ -177,7 +173,8 @@ class PersonController extends AdminController
         $pluralName = $config->getPluralResourceName();
         
         $criteria = $this->getCriteria($config, $request->getLocale());
-        $resources = $this->getResources($request, $config, $criteria);
+        $selectedPersonId = $request->get('selectedPersonId', null);
+        $resources = $this->getResources($request, $config, $criteria, $selectedPersonId);
 
         $template = $multimediaObject->isPrototype() ? '_template' : '';
         $ldapEnabled = $this->container->has('pumukit_ldap.ldap');
@@ -501,15 +498,35 @@ class PersonController extends AdminController
 
         return $new_criteria;
     }
-    
+
+    /**
+     * Get sorting for person
+     */
+    private function getSorting(Request $request)
+    {
+        $session = $this->get('session');
+
+        if ($sorting = $request->get('sorting')){
+            $session->set('admin/person/type', $sorting[key($sorting)]);
+            $session->set('admin/person/sort', key($sorting));
+        }
+
+        $value = $session->get('admin/person/type', 'asc');
+        $key = $session->get('admin/person/sort', 'name');
+
+        return array($key => $value);
+    }
+
     /**
      * Gets the list of resources according to a criteria
      */
-    public function getResources(Request $request, $config, $criteria)
+    public function getResources(Request $request, $config, $criteria, $selectedPersonId=null)
     {
-        $sorting = $config->getSorting();
+        $sorting = $this->getSorting($request);
+
         $repository = $this->getRepository();
-        
+        $session = $this->get('session');
+
         if ($config->isPaginated()) {
             $resources = $this
               ->resourceResolver
@@ -517,13 +534,28 @@ class PersonController extends AdminController
               ;
             
             if ($request->get('page', null)) {
-                $this->get('session')->set('admin/person/page', $request->get('page', 1));
+                $session->set('admin/person/page', $request->get('page', 1));
             }
-            
+
+            if ($selectedPersonId) {
+                $newPerson = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:Person')->find($selectedPersonId);
+                $adapter = $resources->getAdapter();
+                $returnedPerson = $adapter->getSlice(0, $adapter->getNbResults());
+                $position = 1;
+                foreach ($returnedPerson as $person) {
+                    if ($selectedPersonId == $person->getId()) break;
+                    ++$position;
+                }
+                $maxPerPage = $session->get('admin/person/paginate', 10);
+                $page = intval(ceil($position/$maxPerPage));
+            } else {
+                $page = $session->get('admin/person/page', 1);
+            }
+
             $resources
               ->setMaxPerPage($config->getPaginationMaxPerPage())
               ->setNormalizeOutOfRangePages(true)
-              ->setCurrentPage($this->get('session')->get('admin/person/page', 1));
+              ->setCurrentPage($session->get('admin/person/page', 1));
               ;
         } else {
             $resources = $this

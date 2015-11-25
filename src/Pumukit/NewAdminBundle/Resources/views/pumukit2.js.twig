@@ -1058,6 +1058,103 @@ $(document).on('click', '#pumukitnewadmin_series_multimedia_objects_sort_not_sel
     return false;
 });
 
+$(document).on('click', '#pumukitnewadmin_person_id_sort_selected', function(){
+    var inputRawId = $('#inputRawId').val();
+    var type = $('#pumukitnewadmin_person_sort_change_type').val();
+    if (inputRawId) {
+        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'id': '__type__'}})|raw }}";
+        route = route.replace('__inputRawId__', inputRawId);
+    } else {
+        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'id': '__type__'}})|raw }}";
+    }
+    $('#list_people').load(route.replace('__type__', type), {'_method':'POST'});
+    return false;
+});
+$(document).on('click', '#pumukitnewadmin_person_id_sort_not_selected', function(){
+    var inputRawId = $('#inputRawId').val();
+    if (inputRawId) {
+        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'id': 'asc'}})|raw }}";
+        route = route.replace('__inputRawId__', inputRawId);
+    } else {
+        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'id': 'asc'}})|raw }}";
+    }
+    $('#list_people').load(route, {'_method':'POST'});
+    return false;
+});
+
+$(document).on('click', '#pumukitnewadmin_person_name_sort_selected', function(){
+    var inputRawId = $('#inputRawId').val();
+    var type = $('#pumukitnewadmin_person_sort_change_type').val();
+    if (inputRawId) {
+        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'name': '__type__'}})|raw }}";
+        route = route.replace('__inputRawId__', inputRawId);
+    } else {
+        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'name': '__type__'}})|raw }}";
+    }
+    $('#list_people').load(route.replace('__type__', type), {'_method':'POST'});
+    return false;
+});
+$(document).on('click', '#pumukitnewadmin_person_name_sort_not_selected', function(){
+    var inputRawId = $('#inputRawId').val();
+    if (inputRawId) {
+        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'name': 'asc'}})|raw }}";
+        route = route.replace('__inputRawId__', inputRawId);
+    } else {
+        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'name': 'asc'}})|raw }}";
+    }
+    $('#list_people').load(route, {'_method':'POST'});
+    return false;
+});
+
+$(document).on('click', '#pumukitnewadmin_person_email_sort_selected', function(){
+    var inputRawId = $('#inputRawId').val();
+    var type = $('#pumukitnewadmin_person_sort_change_type').val();
+    if (inputRawId) {
+        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'email': '__type__'}})|raw }}";
+        route = route.replace('__inputRawId__', inputRawId);
+    } else {
+        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'email': '__type__'}})|raw }}";
+    }
+    $('#list_people').load(route.replace('__type__', type), {'_method':'POST'});
+    return false;
+});
+$(document).on('click', '#pumukitnewadmin_person_email_sort_not_selected', function(){
+    var inputRawId = $('#inputRawId').val();
+    if (inputRawId) {
+        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'email': 'asc'}})|raw }}";
+        route = route.replace('__inputRawId__', inputRawId);
+    } else {
+        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'email': 'asc'}})|raw }}";
+    }
+    $('#list_people').load(route, {'_method':'POST'});
+    return false;
+});
+
+$(document).on('click', '#pumukitnewadmin_person_phone_sort_selected', function(){
+    var inputRawId = $('#inputRawId').val();
+    var type = $('#pumukitnewadmin_person_sort_change_type').val();
+    if (inputRawId) {
+        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'phone': '__type__'}})|raw }}";
+        route = route.replace('__inputRawId__', inputRawId);
+    } else {
+        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'phone': '__type__'}})|raw }}";
+    }
+    $('#list_people').load(route.replace('__type__', type), {'_method':'POST'});
+    return false;
+});
+$(document).on('click', '#pumukitnewadmin_person_phone_sort_not_selected', function(){
+    var inputRawId = $('#inputRawId').val();
+    if (inputRawId) {
+        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'phone': 'asc'}})|raw }}";
+        route = route.replace('__inputRawId__', inputRawId);
+    } else {
+        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'phone': 'asc'}})|raw }}";
+    }
+    $('#list_people').load(route, {'_method':'POST'});
+    return false;
+});
+
+
 /**
  * Tab
  */
