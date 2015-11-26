@@ -3,7 +3,6 @@
 namespace Pumukit\APIBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -15,13 +14,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class APIController extends Controller
 {
     /**
-     * @Route("/stats.{_format}", defaults={"_format"="json"}, requirements={"_format": "json"})
+     * @Route("/stats.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
      */
-    public function statsAction()
+    public function statsAction(Request $request)
     {
         $mmRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
         $seriesRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:series');
         $liveRepo = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Live');
+        $serializer = $this->get('serializer');
 
         $totalSeries = $seriesRepo->countPublic();
         $totalMmobjs = $mmRepo->count();
@@ -36,11 +36,12 @@ class APIController extends Controller
                         'hours' => $totalHours, 
                         'live_channels' => $totalLiveChannels,);
 
-        return new JsonResponse($counts);
+        $data = $serializer->serialize($counts, $request->getRequestFormat());
+        return new Response($data);
     }
 
     /**
-     * @Route("/mmobj.{_format}", defaults={"_format"="json"}, requirements={"_format": "json"})
+     * @Route("/mmobj.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
      */
     public function multimediaObjectsAction(Request $request)
     {
@@ -91,13 +92,12 @@ class APIController extends Controller
                         'sort'  => $sort,
                         'mmobjs' => $mmobjs);
 
-        $data = $serializer->serialize($counts, 'json');
-
-        return new Response($data, 200, array('Content-Type' =>'application/json'));
+        $data = $serializer->serialize($counts, $request->getRequestFormat());
+        return new Response($data);
     }
 
     /**
-     * @Route("/series.{_format}", defaults={"_format"="json"}, requirements={"_format": "json"})
+     * @Route("/series.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
      */
     public function seriesAction(Request $request)
     {
@@ -142,13 +142,12 @@ class APIController extends Controller
                         'sort'  => $sort,
                         'series' => $series,);
 
-        $data = $serializer->serialize($counts, 'json');
-
-        return new Response($data, 200, array('Content-Type' =>'application/json'));
+        $data = $serializer->serialize($counts, $request->getRequestFormat());
+        return new Response($data);
     }
 
     /**
-     * @Route("/live.{_format}", defaults={"_format"="json"}, requirements={"_format": "json"})
+     * @Route("/live.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
      */
     public function liveAction(Request $request)
     {
@@ -180,9 +179,8 @@ class APIController extends Controller
                         'sort'  => $sort,
                         'live' => $live);
 
-        $data = $serializer->serialize($counts, 'json');
-
-        return new Response($data, 200, array('Content-Type' =>'application/json'));
+        $data = $serializer->serialize($counts, $request->getRequestFormat());
+        return new Response($data);
     }
 
 }
