@@ -115,10 +115,14 @@ class TrackController extends Controller
     public function infoAction(MultimediaObject $multimediaObject, Request $request)
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
-        
+        $isPlayable = $track->containsTag('display');
+        $isPublished = $multimediaObject->containsTagWithCod('PUCHWEBTV') && $multimediaObject->getStatus() == MultimediaObject::STATUS_PUBLISHED; 
+
         return array(
                      'track' => $track,
-                     'mm' => $multimediaObject
+                     'mm' => $multimediaObject,
+                     'is_playable' => $isPlayable,
+                     'is_published' => $isPublished,
                      );
     }
 
