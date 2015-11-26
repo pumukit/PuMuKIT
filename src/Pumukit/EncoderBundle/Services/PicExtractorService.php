@@ -115,9 +115,11 @@ class PicExtractorService
         }
 
         //log $process->getOutput()
-        
-        if (file_exists($absCurrentDir .'/' . $picFileName)){
-            $multimediaObject = $this->mmsPicService->addPicUrl($multimediaObject, $this->targetUrl.'/'.$currentDir.'/'.$picFileName);
+        $picUrl = $this->targetUrl.'/'.$currentDir.'/'.$picFileName;
+        $picPath = $absCurrentDir .'/' . $picFileName;
+        if (file_exists($picPath)){
+            $multimediaObject = $this->mmsPicService->addPicUrl($multimediaObject, $picUrl);
+            $multimediaObject = $this->addPathToPic($multimediaObject, $picUrl, $picPath);
         }
         
         return true;
@@ -134,5 +136,28 @@ class PicExtractorService
     private function getAspect(Track $track){
       if (0 == $track->getHeight()) return 0;
       return (1.0 * $track->getWidth() / $track->getHeight());
+    }
+
+    /**
+     * Add path to pic
+     *
+     * Pic service addPicUrl doesn't add the path
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param string $picUrl
+     * @param string $picPath
+     * @return MultimediaObject $multimediaObject
+     */
+    private function addPathToPic(MultimediaObject $multimediaObject, $picUrl='', $picPath='')
+    {
+        foreach ($multimediaObject->getPics() as $pic) {
+            if ($picUrl = $pic->getUrl()) {
+                $pic->setPath($picPath);
+            }
+        }
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        return $multimediaObject;
     }
 }
