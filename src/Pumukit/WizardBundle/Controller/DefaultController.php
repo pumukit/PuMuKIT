@@ -116,6 +116,7 @@ class DefaultController extends Controller
     public function uploadAction(Request $request)
     {
         $jobService = $this->get('pumukitencoder.job');
+        $inspectionService = $this->get('pumukit.inspection');
 
         $series = null;
         $seriesId = null;
@@ -176,6 +177,11 @@ class DefaultController extends Controller
                     $finder->files()->in($selectedPath);
                     foreach ($finder as $f){
                         $filePath = $f->getRealpath();
+                        try {
+                            $duration = $inspectionService->getDuration($filePath);
+                        } catch (\Exception $e) {
+                            continue;
+                        }
                         $titleData = $this->getDefaultFieldValuesInData(array(), 'i18n_title', $f->getRelativePathname(), true);
                         $multimediaObject = $this->createMultimediaObject($titleData, $series);
                         if ($multimediaObject){
