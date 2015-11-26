@@ -19,9 +19,11 @@ use Pumukit\EncoderBundle\Executor\LocalExecutor;
 use Pumukit\EncoderBundle\Executor\RemoteHTTPExecutor;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Services\CpuService;
+use Pumukit\SchemaBundle\Services\TrackService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\InspectionBundle\Services\InspectionServiceInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class JobService
 {
@@ -30,28 +32,79 @@ class JobService
     private $profileService;
     private $cpuService;
     private $inspectionService;
-    private $tmp_path;
+    private $tmpPath;
     private $dispatcher;
+    private $trackService;
     private $logger;
     private $environment;
     private $tokenStorage;
 
     public function __construct(DocumentManager $documentManager, ProfileService $profileService, CpuService $cpuService, 
                                 InspectionServiceInterface $inspectionService, EventDispatcherInterface $dispatcher, LoggerInterface $logger,
-                                TokenStorage $tokenStorage, $environment="dev", $tmp_path=null)
+                                TrackService $trackService, TokenStorage $tokenStorage, $environment="dev", $tmpPath=null)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
         $this->profileService = $profileService;
         $this->cpuService = $cpuService;
         $this->inspectionService = $inspectionService;
-        $this->tmp_path = $tmp_path ? realpath($tmp_path) : sys_get_temp_dir();
+        $this->tmpPath = $tmpPath ? realpath($tmpPath) : sys_get_temp_dir();
         $this->logger = $logger;
+        $this->trackService = $trackService;
         $this->tokenStorage = $tokenStorage;
         $this->dispatcher = $dispatcher;
         $this->environment = $environment;
     }
 
+    /**
+     * Create track from local hard drive with job service
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param UploadedFile $file
+     * @param string $profile
+     * @param int $priority
+     * @param string $language
+     * @param array $description
+     * @return MultimediaObject
+     */
+    public function createTrackFromLocalHardDrive(MultimediaObject $multimediaObject, UploadedFile $trackFile, $profile, $priority, $language, $description)
+    {
+        if(UPLOAD_ERR_OK != $trackFile->getError()) {
+           throw new \Exception($trackFile->getErrorMessage());
+        }
+
+        if (!is_file($trackFile->getPathname())) {
+            throw new FileNotFoundException($trackFile->getPathname());
+        }
+
+        $pathFile = $trackFile->move($this->tmpPath."/".$multimediaObject->getId(), $trackFile->getClientOriginalName());
+
+        $this->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description);
+
+        return $multimediaObject;
+    }
+
+    /**
+     * Create track from inbox on server with job service
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param string $trackUrl
+     * @param string $profile
+     * @param int $priority
+     * @param string $language
+     * @param array $description
+     * @return MultimediaObject
+     */
+    public function createTrackFromInboxOnServer(MultimediaObject $multimediaObject, $trackUrl, $profile, $priority, $language, $description)
+    {
+        if (!is_file($trackUrl)) {
+            throw new FileNotFoundException($trackUrl);
+        }
+
+        $this->addJob($trackUrl, $profile, $priority, $multimediaObject, $language, $description);
+
+        return $multimediaObject;
+    }
 
     /**
      * Add job checking if not exists.
@@ -110,7 +163,7 @@ class JobService
         if (!empty($description)){
             $job->setI18nDescription($description);
         }
-        if ($email = $this->getUserEmail()) {
+        if ($email = $this->getUserEmail($job)) {
             $job->setEmail($email);
         }
         $job->setTimeini(new \DateTime('now'));
@@ -393,7 +446,7 @@ class JobService
         $vars['output'] = $job->getPathEnd();
 
         foreach(range(1, 9) as $identifier){
-            $vars['tmpfile' . $identifier] = $this->tmp_path . '/' . rand();
+            $vars['tmpfile' . $identifier] = $this->tmpPath . '/' . rand();
         }
 
         $loader = new \Twig_Loader_Array(array('bat' => $profile['bat']));
@@ -522,10 +575,8 @@ class JobService
         $track->setHide(!$profile['display']);
 
         $multimediaObject->setDuration($track->getDuration());
-        $multimediaObject->addTrack($track);
-     
-        $this->dm->persist($multimediaObject);
-        $this->dm->flush();
+
+        $this->trackService->addTrackToMultimediaObject($multimediaObject, $track);
         
         return $track;
     }
@@ -641,18 +692,24 @@ class JobService
     /**
      * Get user email
      *
-     * Gets the email of the user who executed the job
+     * Gets the email of the user who executed the job, if no session get the user info from other jobs of the same mm.
      */
-    private function getUserEmail()
+    private function getUserEmail(Job $job=null)
     {
-        $email = null;
         if (null !== $token = $this->tokenStorage->getToken()) {
             if (is_object($user = $token->getUser())) {
-                $email = $user->getEmail();
+                return $user->getEmail();
             }
         }
 
-        return $email;
+        if ($job) {
+            $otherJob = $this->repo->findOneBy(array('mm_id' => $job->getMmId(), 'email' => array('$exists' => true)), array('timeini' => 1));
+            if ($otherJob && $otherJob->getEmail()) {
+                return $otherJob->getEmail();
+            }
+        }
+
+        return null;
     }
 
 

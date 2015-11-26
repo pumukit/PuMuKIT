@@ -115,7 +115,7 @@ class DefaultController extends Controller
      */
     public function uploadAction(Request $request)
     {
-        $trackService = $this->get('pumukitschema.track');
+        $jobService = $this->get('pumukitencoder.job');
 
         $series = null;
         $seriesId = null;
@@ -159,10 +159,10 @@ class DefaultController extends Controller
                     $filetype = $this->getKeyData('filetype', $trackData);
                     if ('file' === $filetype){
                         $selectedPath = $request->get('resource');
-                        $multimediaObject = $trackService->createTrackFromLocalHardDrive($multimediaObject, $request->files->get('resource'), $profile, $priority, $language, $description);
+                        $multimediaObject = $jobService->createTrackFromLocalHardDrive($multimediaObject, $request->files->get('resource'), $profile, $priority, $language, $description);
                     }elseif ('inbox' === $filetype){
                         $selectedPath = $request->get('file');
-                        $multimediaObject = $trackService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description);
+                        $multimediaObject = $jobService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description);
                     }
                     if ($multimediaObject && $pubchannel){
                         foreach($pubchannel as $tagCode => $valueOn){
@@ -180,7 +180,7 @@ class DefaultController extends Controller
                         $multimediaObject = $this->createMultimediaObject($titleData, $series);
                         if ($multimediaObject){
                             try{
-                                $multimediaObject = $trackService->createTrackFromInboxOnServer($multimediaObject, $filePath, $profile, $priority, $language, $description);
+                                $multimediaObject = $jobService->createTrackFromInboxOnServer($multimediaObject, $filePath, $profile, $priority, $language, $description);
                             }catch(\Exception $e){
                                 // TODO: filter invalid files another way
                                 if (!strpos($e->getMessage(), 'Unknown error')){

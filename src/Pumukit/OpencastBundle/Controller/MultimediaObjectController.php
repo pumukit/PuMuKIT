@@ -52,7 +52,7 @@ class MultimediaObjectController extends Controller
         if ($request->isMethod('PUT') || $request->isMethod('POST')) {
             if ($form->bind($request)->isValid()) {
                 try {
-                    $multimediaObject = $this->get('pumukitschema.track')->updateTrackInMultimediaObject($multimediaObject);
+                    $multimediaObject = $this->get('pumukitschema.factory')->updateMultimediaObject($multimediaObject);
                 } catch (\Exception $e) {
                     return new Response($e->getMessage(), 400);
                 }
