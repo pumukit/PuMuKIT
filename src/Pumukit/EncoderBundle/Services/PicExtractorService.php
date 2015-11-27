@@ -4,6 +4,7 @@ namespace Pumukit\EncoderBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\Process\Process;
+use Symfony\Component\Filesystem\Filesystem;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
@@ -78,11 +79,12 @@ class PicExtractorService
     {
         $currentDir = 'series/' . $multimediaObject->getSeries()->getId() . '/video/' . $multimediaObject->getId();
         $absCurrentDir = $this->targetPath."/".$currentDir;
-        
+
         $picFileName = date('ymdGis').'.jpg';
         $aux = null;
         
-        @mkdir($absCurrentDir, 0777, true);
+        $fs = new Filesystem();
+        $fs->mkdir($absCurrentDir);
 
         $aspectTrack = $this->getAspect($track);
         if (0 !== $aspectTrack) {
@@ -119,7 +121,7 @@ class PicExtractorService
         $picPath = $absCurrentDir .'/' . $picFileName;
         if (file_exists($picPath)){
             $multimediaObject = $this->mmsPicService->addPicUrl($multimediaObject, $picUrl);
-            $multimediaObject = $this->addPathToPic($multimediaObject, $picUrl, $picPath);
+            $multimediaObject = $this->completePicMetadata($multimediaObject, $picUrl, $picPath, $newWidth, $newHeight);
         }
         
         return true;
@@ -139,20 +141,24 @@ class PicExtractorService
     }
 
     /**
-     * Add path to pic
+     * Complete pic metadata
      *
      * Pic service addPicUrl doesn't add the path
      *
      * @param MultimediaObject $multimediaObject
      * @param string $picUrl
      * @param string $picPath
+     * @param int    $width
+     * @param int    $height
      * @return MultimediaObject $multimediaObject
      */
-    private function addPathToPic(MultimediaObject $multimediaObject, $picUrl='', $picPath='')
+    private function completePicMetadata(MultimediaObject $multimediaObject, $picUrl='', $picPath='', $width = 0, $height = 0)
     {
         foreach ($multimediaObject->getPics() as $pic) {
             if ($picUrl = $pic->getUrl()) {
                 $pic->setPath($picPath);
+                $pic->setWidth($width);
+                $pic->setHeight($height);
             }
         }
         $this->dm->persist($multimediaObject);
