@@ -28,10 +28,18 @@ class FilterListener
         && (!isset($routeParams["filter"]) || $routeParams["filter"])) {
       
       $filter = $this->dm->getFilterCollection()->enable("frontend");
-      $filter->setParameter("status", MultimediaObject::STATUS_PUBLISHED);
+      if(isset($routeParams["show_hide"]) && $routeParams["show_hide"]) {
+        $filter->setParameter("status", array('$in' => array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDE)));
+      } else {
+        $filter->setParameter("status", MultimediaObject::STATUS_PUBLISHED);
+      }
+      if(!isset($routeParams["broadcast"]) || $routeParams["broadcast"]) {        
+          $filter->setParameter("private_broadcast", $this->getBroadcastCriteria());
+      }
+      if(!isset($routeParams["track"]) || $routeParams["track"]) {        
+          $filter->setParameter("display_track_tag", "display");
+      }
       $filter->setParameter("pub_channel_tag", "PUCHWEBTV");
-      $filter->setParameter("private_broadcast", $this->getBroadcastCriteria());
-      $filter->setParameter("display_track_tag", "display");
     }
   }
 

@@ -151,9 +151,9 @@
 </script>
 {% endif %}
 
-{% if false %} {# TODO (isset($reload_pub_channel)) #}
+{% if reload_links is defined and reload_links %}
 <script type="text/javascript">
-    new Ajax.Updater('list_pub_{{ mm.id }}', ' TODO {# " . url_for('mms/updatelistpub?id=' . $mm.id) . " #}')
+   $('#links_mm_{{mm.id}}').load('{{ path('pumukitnewadmin_mms_links', {'id': mm.id}) }}');
 </script>
 {% endif %}
 

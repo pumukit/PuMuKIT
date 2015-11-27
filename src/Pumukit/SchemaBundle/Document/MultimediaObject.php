@@ -244,6 +244,17 @@ class MultimediaObject
     }
 
     /**
+     * Resets secret
+     *
+     * @return string
+     */
+    public function resetSecret()
+    {
+        $this->secret = new \MongoId();
+        return $this->secret;
+    }
+
+    /**
      * Set locale
      *
      * @param string $locale

@@ -104,6 +104,44 @@ window.submit_delete_mms = function(id)
     }
 }
 
+window.submit_generate_magic_mms = function(id)
+{
+    if (window.confirm("{% trans %}Are you sure you want to regenerate the magic url for this multimedia object?{% endtrans %}")){
+        var url = "{{ path('pumukitnewadmin_mms_generate_magic_url', {'id': '__id__'})|raw }}";
+        var magicUrl =    "{{ url('pumukit_webtv_multimediaobject_magicindex', {secret: '__secret__'})|raw }}";
+        var message = '{% trans %}Magic Url successfully generated.{% endtrans %}';
+        $('#inputROMagicUrl').load(url.replace('__id__', id), {'_method': 'POST'}, function(responseText, textStatus, XMLHttpRequest){
+            if (textStatus !== "error") {
+                success(message);
+                magicUrl = magicUrl.replace('__secret__', responseText)
+                $('#inputROMagicUrl').val(magicUrl);
+                $('#alinkROMagicUrl').attr("href",magicUrl);
+            } else {
+                no_success(XMLHttpRequest['statusText'] + ': ' + responseText);
+            }
+        });
+    }
+}
+
+window.submit_generate_magic_series = function(id, seriesTitle)
+{
+    if (window.confirm("{% trans %}Are you sure you want to regenerate the magic url for the Series: "+seriesTitle+"?{% endtrans %}")){
+        var url = "{{ path('pumukitnewadmin_series_generate_magic_url', {'id': '__id__'})|raw }}";
+        var magicUrl = "{{url('pumukit_webtv_series_magicindex', {secret: '__secret__'})}}"
+        var message = '{% trans %}Magic Url successfully generated.{% endtrans %}';
+        $('#inputROMagicUrl').load(url.replace('__id__', id), {'_method': 'POST'}, function(responseText, textStatus, XMLHttpRequest){
+            if (textStatus !== "error") {
+                success(message);
+                magicUrl = magicUrl.replace('__secret__', responseText)
+                $('#inputROMagicUrl').val(magicUrl);
+                $('#alinkROMagicUrl').attr("href",magicUrl);
+            } else {
+                no_success(XMLHttpRequest['statusText'] + ': ' + responseText);
+            }
+        });
+    }
+}
+
 window.submit_clone_mms = function(id)
 {
     if (window.confirm("{% trans %}Are you sure you want to clone this multimedia object?{% endtrans %}")){
@@ -381,9 +419,8 @@ window.submit_series_change_pub = function()
     });
     if (values.size == 0) return false;
 
-    var route = '{{ path('pumukitnewadmin_series_updatepub', {'id': '__seriesId__', 'values': '__values__'}) }}';
-    route = route.replace('__values__', JSON.stringify(values));
-    $('#list_series').load(route, {'_method':'POST'});
+    var route = '{{ path('pumukitnewadmin_series_updatepub') }}';
+    $('#list_series').load(route, {'_method':'POST', 'values': values});
 
     return false;
 }

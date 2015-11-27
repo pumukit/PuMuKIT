@@ -1,7 +1,33 @@
 {% extends 'PumukitWebTVBundle::layout.html.twig' %}
 
 {% block body %}
-	<h1 id="index_h1">{% if type == "series"%}{% trans %}Series search{% endtrans %}{% else %}{% trans %}Multimedia object search{% endtrans %}{% endif %}</h1>
-	{% include 'PumukitWebTVBundle:Search:list.html.twig' %}
-	{% include 'PumukitWebTVBundle:Search:pager.html.twig' %}
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="row">
+        <div class="col-xs-12">
+            {% if blocked_tag is defined and blocked_tag is not null %}
+            <h1 class="title-for-crumbs">{{ blocked_tag.title }}</h1>
+            {% else %}
+            <h1 class="title-for-crumbs">
+                {% if template_title %}
+                    {{ template_title |trans }}
+                {% else %}
+                    {% if type == "series"%}
+                        {% trans %}Series search{% endtrans %}
+                    {% else %}
+                        {% trans %}Multimedia object search{% endtrans %}
+                    {% endif %}
+                {% endif %}
+            </h1>
+            {% endif %}
+        </div>
+      </div>
+      <div class="row">
+    	{% include 'PumukitWebTVBundle:Search:list.html.twig' %}
+      </div>
+      <div class="row">
+        {% include 'PumukitWebTVBundle:Misc:pager.html.twig' %}
+      </div>
+    </div>
+  </div>
 {% endblock %}

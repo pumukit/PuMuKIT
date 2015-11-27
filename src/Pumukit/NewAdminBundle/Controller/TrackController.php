@@ -96,7 +96,7 @@ class TrackController extends Controller
                 return new Response($e->getMessage(), 400);
             }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', array('id' => $multimediaObject->getId())));
+            return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', array('reload_links' => true, 'id' => $multimediaObject->getId())));
         }
 
         return $this->render('PumukitNewAdminBundle:Track:update.html.twig',
@@ -172,7 +172,7 @@ class TrackController extends Controller
     /**
      * @Template
      */
-    public function listAction(MultimediaObject $multimediaObject)
+    public function listAction(MultimediaObject $multimediaObject, Request $request)
     {
         $jobs = $this->get('pumukitencoder.job')->getNotFinishedJobsByMultimediaObjectId($multimediaObject->getId());
 
@@ -183,7 +183,8 @@ class TrackController extends Controller
                      'tracks' => $multimediaObject->getTracks(),
                      'jobs' => $jobs,
                      'not_master_profiles' => $notMasterProfiles,
-                     'oc' => ''
+                     'oc' => '',
+                     'reload_links' => $request->query->get('reload_links', false)
                      );
     }
 

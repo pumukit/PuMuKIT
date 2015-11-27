@@ -5,15 +5,6 @@ namespace Pumukit\SchemaBundle\Tests\Other;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\SchemaBundle\Document\Pic;
-use Pumukit\SchemaBundle\Document\Material;
-use Pumukit\SchemaBundle\Document\Link;
-use Pumukit\SchemaBundle\Document\Person;
-use Pumukit\SchemaBundle\Document\Role;
-use Pumukit\SchemaBundle\Document\SeriesType;
-use Pumukit\SchemaBundle\Document\Broadcast;
-use Pumukit\SchemaBundle\Document\Tag;
 
 class MultimediaObjectRankTest extends WebTestCase
 {

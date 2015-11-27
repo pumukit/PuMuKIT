@@ -10,6 +10,7 @@
                           success: function(response){
                                                       $('#list_mms').html(response);
                                                       $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}');
+                                                      $('#links_mm_{{mm.id}}').load('{{ path('pumukitnewadmin_mms_links', {'id': mm.id}) }}');
                                                       var message = '{% trans %}Multimedia Object saved OK{% endtrans %}';
                                                       success(message);
                                                       }

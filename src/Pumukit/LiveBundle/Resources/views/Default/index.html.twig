@@ -1,5 +1,5 @@
 {% extends 'PumukitWebTVBundle::layout.html.twig' %}
-
+{% set hide_slidebar = true %}
 {% block javascripts %}
   {{ parent() }}
   <script src="{{ asset('bundles/pumukitwebtv/js/jwplayer/jwplayer.js') }}" type="text/javascript"></script>
@@ -9,7 +9,16 @@
 {% block title %}{{ parent() }} - {{ live.name }}{% endblock %}
 
 {% block body_without_bar %}
-  <h1>{{ live.name()|default("No title"|trans) }}</h1>
-  {% include('PumukitLiveBundle:Default:liveplayer.html.twig') with {stretching: 'exactfit', aspectratio: '16:9'} %}
-  {% include('PumukitLiveBundle:Default:info.html.twig') %}
+  <div class="col-xs-12">
+<!--    <h1>{{ live.name()|default("No title"|trans) }}</h1>-->
+    <br>
+    {% include('PumukitLiveBundle:Default:liveplayer.html.twig') with {stretching: 'exactfit', aspectratio: '16:9'} %}
+    <br>
+    <div class="row">
+      <div class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8 col-xs-12">
+        {% include('PumukitLiveBundle:Default:info.html.twig') %}
+      </div>
+    </div>
+    <br>
+  </div>
 {% endblock %}

@@ -36,13 +36,15 @@ EOT
 
         if ($input->getOption('force')){
             $podcastPublicationChannelTag = $this->createTagWithCode('PUCHPODCAST', 'PodcastEDU', 'PUBCHANNELS', false);
+            $podcastPublicationChannelTag->setProperty('modal_path', 'pumukitpodcast_modal_index');
+            $this->dm->persist($podcastPublicationChannelTag);
+            $this->dm->flush();
+
             $output->writeln("Tag persisted - new id: ".$podcastPublicationChannelTag->getId()." cod: ".$podcastPublicationChannelTag->getCod());
         } else {
-            $output->writeln('<error>ATTENTION:</error> This operation should not be executed in a production environment.');
+            $output->writeln('<error>ATTENTION:</error> This operation should not be executed in a production environment without backup.');
             $output->writeln('');
-            $output->writeln('<info>Would drop the database</info>');
             $output->writeln('Please run the operation with --force to execute.');
-            $output->writeln('<error>All data will be lost!</error>');
 
             return -1;
         }

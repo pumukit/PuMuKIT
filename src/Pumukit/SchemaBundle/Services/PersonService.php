@@ -5,6 +5,7 @@ namespace Pumukit\SchemaBundle\Services;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\EmbeddedPerson;
 use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\EmbeddedRole;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\UserService;
@@ -14,10 +15,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 class PersonService
 {
     private $dm;
-    private $repo;
+    private $repoPerson;
     private $repoMmobj;
     private $userService;
     private $autoPublisherRoleCode;
+    private $repoRole;
 
     /**
      * Constructor
@@ -31,8 +33,9 @@ class PersonService
         $this->dm = $documentManager;
         $this->userService = $userService;
         $this->autoPublisherRoleCode = $autoPublisherRoleCode;
-        $this->repo = $documentManager->getRepository('PumukitSchemaBundle:Person');
+        $this->repoPerson = $documentManager->getRepository('PumukitSchemaBundle:Person');
         $this->repoMmobj = $documentManager->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->repoRole = $documentManager->getRepository('PumukitSchemaBundle:Role');
     }
 
     /**
@@ -50,14 +53,39 @@ class PersonService
     }
 
     /**
-     * Find person
+     * Save Role
+     *
+     * @param  Role $role
+     * @return Role
+     */
+    public function saveRole(Role $role)
+    {
+        $this->dm->persist($role);
+        $this->dm->flush();
+
+        return $role;
+    }
+
+    /**
+     * Find person by id
      *
      * @param  string $id
      * @return Person
      */
     public function findPersonById($id)
     {
-        return $this->repo->find($id);
+        return $this->repoPerson->find($id);
+    }
+
+    /**
+     * Find role by id
+     *
+     * @param  string $id
+     * @return Role
+     */
+    public function findRoleById($id)
+    {
+        return $this->repoRole->find($id);
     }
 
     /**
@@ -68,7 +96,7 @@ class PersonService
      */
     public function findPersonByEmail($email)
     {
-        return $this->repo->findOneByEmail($email);
+        return $this->repoPerson->findOneByEmail($email);
     }
 
     /**
@@ -90,6 +118,29 @@ class PersonService
         $this->dm->flush();
 
         return $person;
+    }
+
+    /**
+     * Update update role
+     *
+     * @param  Role $role
+     * @return Role
+     */
+    public function updateRole(Role $role)
+    {
+        $role = $this->saveRole($role);
+
+        foreach ($this->repoMmobj->findByRoleId($role->getId()) as $mmobj) {
+            foreach ($mmobj->getRoles() as $embeddedRole) {
+                if ($role->getId() === $embeddedRole->getId()) {
+                    $embeddedRole = $this->updateEmbeddedRole($role, $embeddedRole);
+                    $this->dm->persist($mmobj);
+                }
+            }
+        }
+        $this->dm->flush();
+
+        return $role;
     }
 
     /**
@@ -129,11 +180,10 @@ class PersonService
      * @param  MultimediaObject $multimediaObject
      * @return MultimediaObject
      */
-    public function createRelationPerson(Person $person, Role $role, MultimediaObject $multimediaObject)
+    public function createRelationPerson(Person $person, Role $role, MultimediaObject $multimediaObject, $flush = true)
     {
         if ($person && $role && $multimediaObject) {
             $this->dm->persist($person);
-            $this->dm->flush();
             $multimediaObject->addPersonWithRole($person, $role);
             $role->increaseNumberPeopleInMultimediaObject();
             if ($this->autoPublisherRoleCode === $role->getCod()) {
@@ -141,7 +191,9 @@ class PersonService
             }
             $this->dm->persist($multimediaObject);
             $this->dm->persist($role);
-            $this->dm->flush();
+	    if($flush) {
+                $this->dm->flush();
+	    }		       
         }
 
         return $multimediaObject;
@@ -157,7 +209,7 @@ class PersonService
      */
     public function autoCompletePeopleByName($name)
     {
-        return $this->repo->findByName(new \MongoRegex('/'.$name.'/i'));
+        return $this->repoPerson->findByName(new \MongoRegex('/'.$name.'/i'));
     }
 
     /**
@@ -368,6 +420,16 @@ class PersonService
     }
 
     /**
+     * Get all roles
+     */
+    public function getRoles()
+    {
+        $criteria = array();
+        $sort = array('rank' => 1);
+        return $this->repoRole->findBy($criteria, $sort);
+    }
+
+    /**
      * Update embedded person
      *
      * @param  Person         $person
@@ -406,5 +468,25 @@ class PersonService
         }
 
         return true;
+    }
+
+    /**
+     * Update embedded role
+     *
+     * @param  Role         $role
+     * @param  EmbeddedRole $embeddedRole
+     * @return EmbeddedRole
+     */
+    private function updateEmbeddedRole(Role $role, EmbeddedRole $embeddedRole)
+    {
+        if (null !== $role) {
+            $embeddedRole->setCod($role->getCod());
+            $embeddedRole->setXml($role->getXml());
+            $embeddedRole->setDisplay($role->getDisplay());
+            $embeddedRole->setI18nName($role->getI18nName());
+            $embeddedRole->setLocale($role->getLocale());
+        }
+
+        return $embeddedRole;
     }
 }

@@ -1,84 +1,111 @@
-<form id="form_buscador" name="busqueda" method="get" action="{{ path('pumukit_webtv_search_multimediaobjects') }}" class="row">
+<form id="form_search" name="busqueda" method="get" class="row">
 
-  <input type="submit" style="display:none"/>
-  <div class="form-group col-md-4">
-    <label for="search">{% trans %}Search{% endtrans %}:</label>
-    <div class="input-group">
-      <input type="text" class="form-control" id="search" name="search" value="{{ app.request.query.get('search') }}" placeholder="Search">
-      <div class="input-group-btn">
-        <button type="submit" class="btn btn-default">
-          <span class="glyphicon glyphicon-search"></span>
-        </button>
-      </div>
+    <input type="submit" style="display:none"/>
+    <div class="form-group col-md-{{ parent_tag_optional is null or blocked_tag ? 6 : 3}}">
+        <label for="search">{% trans %}Search{% endtrans %}:</label>
+        <div class="input-group">
+            <input type="text" class="form-control" id="search" name="search" value="{{ app.request.query.get('search') }}" placeholder="Search">
+            <div class="input-group-btn">
+                <button type="submit" class="btn btn-default">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
-
-  <div class="form-group col-md-4">
-    <label for="tags">{% trans %}Tags{% endtrans %}:</label>
-      <select id="tags" name="tags" class="form-control" onchange="javascript:this.form.submit();">
-        <option {% if tag_found == "" %} selected="selected" {% endif %}>All</option>
-        {% for tag in tags if tag.getTitle() != "" %}
-        <option {% if tag_found == tag.getTitle() %} selected="selected" {% endif %}>{{ tag.getTitle() }}</option>
-        {% endfor %}
-      </select>
-  </div>
-
-  <div class="form-group col-md-4">
-    <label for="duration">{% trans %}Duration{% endtrans %}:</label>
-    <select id="duration" name="duration" class="form-control" onchange="javascript:this.form.submit();">
-      <option value="all" {% if app.request.query.get('duration') == "all" %} selected="selected" {% endif %}>{% trans%}All{% endtrans %}</option>
-	    <option value="-5"  {% if app.request.query.get('duration') == "-5" %} selected="selected" {% endif %}>{% trans %}Up to 5 minutes{% endtrans %}</option>
-	    <option value="-10" {% if app.request.query.get('duration') == "-10" %} selected="selected" {% endif %}>{% trans %}Up to 10 minutes{% endtrans %}</option>
-	    <option value="-30" {% if app.request.query.get('duration') == "-30" %} selected="selected" {% endif %}>{% trans %}Up to 30 minutes{% endtrans %}</option>
-	    <option value="-60" {% if app.request.query.get('duration') == "-60" %} selected="selected" {% endif %}>{% trans %}Up to 60 minutes{% endtrans %}</option>
-	    <option value="+60" {% if app.request.query.get('duration') == "+60" %} selected="selected" {% endif %}>{% trans %}More than 60 minutes{% endtrans %}</option>
-	  </select>
-  </div>
-
-  <div class="form-group col-md-4">
-    <label for="type">{% trans %}Video/Audio{% endtrans %}:</label>
-    <select id="type" name="type" class="form-control"  onchange="javascript:this.form.submit();">
-      <option {% if type_found == "" %} selected="selected" {% endif %}>{% trans %}All{% endtrans %}</option>
-	    <option {% if type_found == "Video" %} selected="selected" {% endif %}>{% trans %}Video{% endtrans %}</option>
-	    <option {% if type_found == "Audio" %} selected="selected" {% endif %}>{% trans %}Audio{% endtrans %}</option>
-	  </select>
-  </div>
-
-  <div class="form-group col-md-3">
-    <label for="start">{% trans %}Start date{% endtrans %}:</label>
-    <div class="input-group date" id='start'>
-      <input type='text' class="form-control" name="start" value="{{ app.request.query.get('start') }}" placeholder="From" onblur="javascript:this.form.submit();"/>
-      <span class="input-group-addon">
-        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-      </span>
+    {% if parent_tag is not null and blocked_tag is null or not blocked_tag.isDescendantOf(parent_tag) %}
+    <div class="form-group col-md-3 col-sm-4">
+        <label for="tags">{{ parent_tag.title|trans}}:</label>
+        <select id="tags" name="tags[]" class="form-control" onchange="javascript:this.form.submit();">
+            <option value="" {% if tags_found == "" %} selected="selected" {% endif %}>All</option>
+            {% for tag in parent_tag.children if tag.title != "" %}
+            <option value="{{tag.cod}}" {% if tag.cod in tags_found %} selected="selected" {% endif %}>{{ tag.title }}</option>
+            {% endfor %}
+        </select>
     </div>
-  </div>
+    {% endif %}
 
-  <div class="form-group col-md-3">
-    <label for="end">{% trans %}Finish date{% endtrans %}:</label>
-    <div class="input-group date" id="end">
-      <input type="text" class="form-control" name="end" value="{{ app.request.query.get('end') }}" placeholder="Until" onblur="javascript:this.form.submit();"/>
-      <div class="input-group-addon">
-        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-      </div>
+    {% if parent_tag_optional is not null and ( blocked_tag is null or not blocked_tag.isDescendantOf(parent_tag_optional)) %}
+    <div class="form-group col-md-3 col-sm-4">
+        <label for="tags">{{ parent_tag_optional.title|trans}}:</label>
+        <select id="tags" name="tags[]" class="form-control" onchange="javascript:this.form.submit();">
+            <option value="" {% if tags_found == "" %} selected="selected" {% endif %}>All</option>
+            {% for tag in parent_tag_optional.children if tag.title != "" %}
+            <option value="{{tag.cod}}" {% if tag.cod in tags_found %} selected="selected" {% endif %}>{{ tag.title }}</option>
+            {% endfor %}
+        </select>
     </div>
-  </div>
+    {% endif %}
 
-  <div class="form-group col-md-2">
-    <label for="reset">{% trans %}Reset filters{% endtrans %}:</label>
-    <input type="button" class="btn btn-default form-control" id="exampleInputEmail1" placeholder="Email" value="{% trans %}Reset filters{% endtrans %}"
-           onclick="window.location.href=window.location.pathname">
-  </div>
+    <div class="form-group col-md-3 col-sm-4">
+        <label for="duration">{% trans %}Duration{% endtrans %}:</label>
+        <select id="duration" name="duration" class="form-control" onchange="javascript:this.form.submit();">
+            <option value="" {% if app.request.query.get('duration') == "" %} selected="selected" {% endif %}>{% trans%}All{% endtrans %}</option>
+            <option value="-5"  {% if app.request.query.get('duration') == "-5" %} selected="selected" {% endif %}>{% trans %}Up to 5 minutes{% endtrans %}</option>
+            <option value="-10" {% if app.request.query.get('duration') == "-10" %} selected="selected" {% endif %}>{% trans %}Up to 10 minutes{% endtrans %}</option>
+            <option value="-30" {% if app.request.query.get('duration') == "-30" %} selected="selected" {% endif %}>{% trans %}Up to 30 minutes{% endtrans %}</option>
+            <option value="-60" {% if app.request.query.get('duration') == "-60" %} selected="selected" {% endif %}>{% trans %}Up to 60 minutes{% endtrans %}</option>
+            <option value="+60" {% if app.request.query.get('duration') == "+60" %} selected="selected" {% endif %}>{% trans %}More than 60 minutes{% endtrans %}</option>
+        </select>
+    </div>
 
-<script type="text/javascript">
-  $(function() {
-    $( "#start" ).datetimepicker({useCurrent: false, viewMode: 'years', format: 'DD/MM/YYYY'});
-    $( "#start" ).on("dp.change", function(e){$("#form_buscador").submit();});
-    $( "#end" ).datetimepicker({useCurrent: false, viewMode: 'years', format: 'DD/MM/YYYY'});
-    $( "#end" ).on("dp.change", function(e){$("#form_buscador").submit();});
-  });
-</script>
+    <div class="form-group col-md-2 col-sm-4 col-xs-6">
+        <label for="type">{% trans %}Video/Audio{% endtrans %}:</label>
+        <select id="type" name="type" class="form-control"  onchange="javascript:this.form.submit();">
+            <option value="" {% if app.request.query.get('type') == "" %} selected="selected" {% endif %}>{% trans %}All{% endtrans %}</option>
+            <option {% if app.request.query.get('type') == "Video" %} selected="selected" {% endif %}>{% trans %}Video{% endtrans %}</option>
+            <option {% if app.request.query.get('type') == "Audio" %} selected="selected" {% endif %}>{% trans %}Audio{% endtrans %}</option>
+        </select>
+    </div>
+    <div class="form-group col-md-2 col-sm-2 col-xs-6">
+        <label for="type">{% trans %}Language{% endtrans %}:</label>
+        <select id="language" name="language" class="form-control"  onchange="javascript:this.form.submit();">
+            <option value="" {% if app.request.query.get('language') == "" %} selected="selected" {% endif %}>All</option>
+            {% for language in languages if language != "" %}
+            <option value="{{language}}" {% if app.request.query.get('language') == language %} selected="selected" {% endif %}>{{ language |language_name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group col-md-3 col-sm-4 col-xs-6">
+        <label for="start">{% trans %}Start date{% endtrans %}:</label>
+        <div class="input-group date" id='start'>
+            <input type='text' class="form-control" name="start" value="{{ app.request.query.get('start') }}" placeholder="From" onblur="javascript:this.form.submit();"/>
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group col-md-3 col-sm-4 col-xs-6">
+        <label for="end">{% trans %}Finish date{% endtrans %}:</label>
+        <div class="input-group date" id="end">
+            <input type="text" class="form-control" name="end" value="{{ app.request.query.get('end') }}" placeholder="Until" onblur="javascript:this.form.submit();"/>
+            <div class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group col-md-2 col-sm-2">
+        <label for="reset">{% trans %}Reset filters{% endtrans %}:</label>
+        <input type="button" class="btn btn-default form-control" id="exampleInputEmail1" placeholder="Email" value="{% trans %}Reset filters{% endtrans %}"
+        onclick="window.location.href=window.location.pathname">
+    </div>
+
+    <script type="text/javascript">
+    $(function() {
+        $( "#start" ).datetimepicker({useCurrent: false, viewMode: 'years', format: 'DD/MM/YYYY', minDate: '{{min_record_date}}', maxDate: '{{max_record_date}}'  });
+        $( "#start" ).on("dp.change", function(e){$("#form_search").submit();});
+        $( "#end" ).datetimepicker({useCurrent: false, viewMode: 'years', format: 'DD/MM/YYYY', minDate: '{{min_record_date}}', maxDate: '{{max_record_date}}' });
+        $( "#end" ).on("dp.change", function(e){$("#form_search").submit();});
+
+    });
+    </script>
 
 </form>
 
-<a href="{{ path('pumukit_webtv_search_series') }}">Search by series</a>
+<div>
+    <a href="{{ path('pumukit_webtv_search_series') }}">
+        Search by series
+    </a>
+</div>

@@ -47,7 +47,16 @@
             <argument>%pumukit2.delete_on_disk%</argument>
         </service>
 
+        <service id="pumukitschema.multimedia_object" class="Pumukit\SchemaBundle\Services\MultimediaObjectService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <tag name="kernel.event_listener" event="multimediaobject.view" method="onMultimediaObjectViewed" />
+        </service>
+
         <service id="pumukitschema.tag" class="Pumukit\SchemaBundle\Services\TagService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+        </service>
+
+        <service id="pumukitschema.series" class="Pumukit\SchemaBundle\Services\SeriesService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
 

@@ -77,8 +77,7 @@ class TagController extends Controller
 
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
             try {
-                $dm->persist($tag);
-                $dm->flush();
+                $tag = $this->get('pumukitschema.tag')->updateTag($tag);
             } catch (\Exception $e) {
                 return new JsonResponse(array("status" => $e->getMessage()), 409);
             }

@@ -6,7 +6,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\Finder\Finder;
 
@@ -41,14 +40,16 @@ class MultimediaObjectPicService
   /**
    * Set a pic from an url into the multimediaObject
    */
-  public function addPicUrl(MultimediaObject $multimediaObject, $picUrl)
+  public function addPicUrl(MultimediaObject $multimediaObject, $picUrl, $flush = true)
   {
       $pic = new Pic();
       $pic->setUrl($picUrl);
 
       $multimediaObject->addPic($pic);
       $this->dm->persist($multimediaObject);
-      $this->dm->flush();
+      if($flush) {
+          $this->dm->flush();
+      }		 
 
       return $multimediaObject;
   }

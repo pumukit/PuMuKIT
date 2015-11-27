@@ -1,0 +1,23 @@
+parameters:
+    limit_objs_bytag:          10                    # ByTag Pager limit.   (Default 10)
+    limit_objs_search:         10                    # Search Pager limit.  (Default 10)
+    limit_objs_mostviewed:     5                     # Mostviewed limit.     (Default 3)
+    limit_objs_recentlyadded:  5                     # Recentlyadded limit.    (Default 3)
+    columns_objs_bytag:        2                     # Number of columns for bytag.  (Default 2)
+    columns_objs_search:       2                     # Number of columns for search. (Default 2)
+    columns_objs_announces:    2                     # Number of columns for announces. (Default 1)
+    columns_objs_catalogue:    2                     # Number of columns for full catalogue. (Default 1)
+    catalogue_thumbnails:      true                  # If set to true, the full catalogue will list thumbnails instead of text.
+    menu_stats:                false                 # To show stats on the menu or not. (Default true)
+    categories_tag_cod:        ITUNESU               # Cod of Root Tag to create the Categories page.
+    categories.list_general_tags:  true              # If true, adds a 'general tag' to each category.
+    search.parent_tag.cod:     ITUNESU               # Search controller option for the main tag search.
+    search.parent_tag_2.cod:     PROVIDER            # Search controller option for the optional tag search.
+
+    breadcrumbs_home_title:  'Pumukit WebTV'            # 'Home' option title for the breadcrumbs service.
+    menu.home_title:  'Home'                         # 'Home' option title for the menu widget.
+    menu.announces_title:  'Latest Uploads'          # 'Announces' option title for the menu widget.
+    menu.search_title:  'Search'                     # 'Search' option title for the menu widget.
+    menu.mediateca_title:  'Full Catalogue'          # 'Mediateca' option title for the menu widget.
+    menu.categories_title:  'By subject catalogue'   # 'Categories' option title for the menu widget.
+    pumukit_web_tv.linktagtosearch:  true

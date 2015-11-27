@@ -1,5 +1,18 @@
 {% if track %}
-{% set captions = captions(multimediaObject) %}
+  {% set captions = captions(multimediaObject) %}
+  {% set captions_block %}
+  {% if captions is not empty %}
+    tracks: [
+    {% for caption in captions %}
+      {
+      file: "{{ asset(caption.url, absolute=true) }}",
+      label: "{{ caption.language|language_name }}",
+      kind: "captions"
+      },
+    {% endfor %}
+    ],
+  {% endif %}
+{% endset %}
 <video id="player1" controls></video>
 <script type="text/javascript">
   jwplayer("player1").setup({
@@ -11,34 +24,14 @@
       {% endif %}
     },{
       file: "{{ asset(track.url, absolute=true) }}",
-      {% if captions is not empty %}
-      tracks: [
-      {% for caption in captions %}
-        {
-          file: "{{ caption.url }}",
-          label: "{{ caption.language|language_name }}",
-          kind: "captions"
-        },
-      {% endfor %}
-      ],
-      {% endif %}
+      {{ captions_block }}
       {% if ('true' != autostart) or track.isOnlyAudio() %}
       image: "{{ multimediaObject|first_url_pic(true) }}",
       {% endif %}
     }],
     {% else %}
     file: "{{ asset(track.url, absolute=true) }}",
-    {% if captions is not empty %}
-    tracks: [
-    {% for caption in captions %}
-      {
-        file: "{{ caption.url }}",
-        label: "{{ caption.language|language_name }}",
-        kind: "captions"
-      },
-    {% endfor %}
-    ],
-    {% endif %}
+    {{ captions_block }}
     {% if (('true' != autostart) or track.isOnlyAudio()) %}
     image: "{{ multimediaObject|first_url_pic(true) }}",
     {% endif %}
@@ -46,13 +39,18 @@
     startparam: "start",
     autostart: {{ autostart|default("true") }},
     repeat: "false",
+    {% if responsive is defined %}
+    width: '100%',
+    aspectratio: '16:9',
+    {% else %}
     width: {{ width|default("620") }},
     height: {{ height|default("465") }},
+    {% endif %}
     logo: { hide: true }
   });
 </script>
 {% else %}
-<div style="color: white; background: black; width: {{ width|default('620') }}px; height: {{ height|default('465') }}px; text-align: center;vertical-align: middle;display: table-cell;">
+<div style="color: white; background: black; {% if responsive %} width: 100%; height: 300px; {% else %}width: {{ width|default('620') }}px; height: {{ height|default('465') }}px;{% endif %} text-align: center;vertical-align: middle;display: table-cell;">
   No track.
 </div>
 {% endif %}

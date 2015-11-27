@@ -94,7 +94,7 @@ class MultimediaObjectController extends SortableAdminController
 
       $this->get('session')->set('admin/mms/id', $data->getId());
 
-      $roles = $this->get('pumukitschema.factory')->getRoles();
+      $roles = $this->get('pumukitschema.person')->getRoles();
 
       return array(
                    'mm' => $data,
@@ -111,8 +111,9 @@ class MultimediaObjectController extends SortableAdminController
         $config = $this->getConfiguration();
 
         $factoryService = $this->get('pumukitschema.factory');
+        $personService = $this->get('pumukitschema.person');
         
-        $roles = $factoryService->getRoles();
+        $roles = $personService->getRoles();
         if (null === $roles){
             throw new \Exception('Not found any role.');
         }
@@ -143,6 +144,9 @@ class MultimediaObjectController extends SortableAdminController
 
         $template = $resource->isPrototype() ? '_template' : '';
 
+        $isPublished = null;
+        $playableResource = null;
+
         return array(
                      'mm'            => $resource,
                      'form_meta'     => $formMeta->createView(),
@@ -154,9 +158,29 @@ class MultimediaObjectController extends SortableAdminController
                      'parent_tags'   => $parentTags,
                      'jobs'          => $jobs,
                      'not_master_profiles' => $notMasterProfiles,
-                     'template' => $template
+                     'template' => $template,
                      );
     }
+
+
+    /**
+     *
+     * @Template
+     */
+    public function linksAction(MultimediaObject $resource)
+    {
+        $mmService = $this->get('pumukitschema.multimedia_object');
+        $warningOnUnpublished = $this->container->getParameter('pumukit2.warning_on_unpublished');
+
+        return array(
+             'mm' => $resource,
+             'is_published' => $mmService->isPublished($resource, 'PUCHWEBTV'),
+             'is_hidden' => $mmService->isHidden($resource, 'PUCHWEBTV'),
+             'is_playable' => $mmService->hasPlayableResource($resource),
+             'warning_on_unpublished' => $warningOnUnpublished
+        );
+    }
+
 
     /**
      * Display the form for editing or update the resource.
@@ -166,8 +190,9 @@ class MultimediaObjectController extends SortableAdminController
         $config = $this->getConfiguration();
 
         $factoryService = $this->get('pumukitschema.factory');
+        $personService = $this->get('pumukitschema.person');
 
-        $roles = $factoryService->getRoles();
+        $roles = $personService->getRoles();
         if (null === $roles){
             throw new \Exception('Not found any role.');
         }
@@ -244,6 +269,7 @@ class MultimediaObjectController extends SortableAdminController
         $config = $this->getConfiguration();
 
         $factoryService = $this->get('pumukitschema.factory');
+        $personService = $this->get('pumukitschema.person');
 
         $sessionId = $this->get('session')->get('admin/series/id', null);
         $series = $factoryService->findSeriesById(null, $sessionId);
@@ -294,7 +320,7 @@ class MultimediaObjectController extends SortableAdminController
             return $this->handleView($this->view($formPub));
         }
 
-        $roles = $factoryService->getRoles();
+        $roles = $personService->getRoles();
         if (null === $roles){
             throw new \Exception('Not found any role.');
         }
@@ -529,6 +555,18 @@ class MultimediaObjectController extends SortableAdminController
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));
     }
+
+    /**
+     * Generate Magic Url action
+     */
+    public function generateMagicUrlAction(Request $request)
+    {
+        $resource = $this->findOr404($request);
+        $mmobjService = $this->get('pumukitschema.multimedia_object');
+        $response = $mmobjService->resetMagicUrl($resource);
+        return new Response($response);
+    }
+
 
     /**
      * Clone action

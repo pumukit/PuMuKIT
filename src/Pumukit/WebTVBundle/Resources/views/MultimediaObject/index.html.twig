@@ -1,4 +1,5 @@
 {% extends 'PumukitWebTVBundle::layout.html.twig' %}
+{% set hide_slidebar = true %}
 
 {% block javascripts %}
   {{ parent() }}
@@ -10,13 +11,19 @@
 {% block keywords %}{{ parent() }} - {{ multimediaObject.keyword }}{% endblock %}
 
 {% block body_without_bar %}
-	<h1>{{ multimediaObject.title|default("No title"|trans) }}</h1>
-	<div class="grid_10">
-		{% include 'PumukitWebTVBundle:MultimediaObject:player.html.twig' with {'width': '620', 'height': '465'} %}
-		{% include 'PumukitWebTVBundle:MultimediaObject:info.html.twig' %}
-	</div>
-	<div class="grid_5">
-		{% render(controller('PumukitWebTVBundle:MultimediaObject:series', {'multimediaObject': multimediaObject})) %}
-        {% render(controller('PumukitWebTVBundle:MultimediaObject:related', {'multimediaObject': multimediaObject})) %}
-	</div>
+  <div class="col-xs-12">
+    <h1 class="title-for-crumbs always-hide">{{ multimediaObject.title|default("No title"|trans) }}</h1>
+  </div>
+  <div class="col-lg-8 col-md-7">
+    <span class="hidden-sm hidden-xs"></br></span>
+    {% include 'PumukitWebTVBundle:Misc:magic_url_disclaimer.html.twig' %}
+	{% include 'PumukitWebTVBundle:MultimediaObject:player.html.twig' with {'responsive': true} %}
+	{% include 'PumukitWebTVBundle:MultimediaObject:info.html.twig' %}
+  </div>
+  <div class="col-lg-4 col-md-5">
+    <span class="hidden-sm hidden-xs"></br></span>
+    {% include 'PumukitWebTVBundle:MultimediaObject:share.html.twig' %}
+	{% render(controller('PumukitWebTVBundle:MultimediaObject:series', {'multimediaObject': multimediaObject})) %}
+    {% render(controller('PumukitWebTVBundle:MultimediaObject:related', {'multimediaObject': multimediaObject})) %}
+  </div>
 {% endblock %}

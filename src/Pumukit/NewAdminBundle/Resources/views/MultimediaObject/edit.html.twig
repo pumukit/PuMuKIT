@@ -1,7 +1,4 @@
 {% if mm is not empty %}
-  {% set display_track = mm.getFilteredTracksWithTags(['display'], [], [], []) %}
-  {% set video_url = url('pumukit_webtv_multimediaobject_index', {id: mm.id}) %}
-  {% set magic_url = url('pumukit_webtv_multimediaobject_magicindex', {secret: mm.secret}) %}
 <div class="well">
 
   {#
@@ -10,42 +7,8 @@
   </div>
   #}
 
-  <div class="row">
-    <div class="background_id col-md-6">
-      <form class="form-horizontal">
-        <fieldset>
-          <legend>Info</legend>
-          <div class="form-group">
-            <label for="inputMMId" class="col-lg-2 control-label">Id:</label>
-            <div class="col-lg-10 input-group">
-              <input type="text" class="form-control" id="inputMMId" readonly onclick="select()" value="{{ mm.id }}">
-            </div>
-            <label for="inputROUrl" class="col-lg-2 control-label">Url:</label>
-            <div class="col-lg-10 input-group">
-              <input type="text" class="form-control" id="inputROUrl" readonly onclick="select()" value="{{ display_track ? video_url : '' }}">
-              {% if display_track %}
-              <span class="input-group-addon"><a href="{{ video_url }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
-              {% endif %}
-            </div>
-            <label for="inputROMagicUrl" class="col-lg-2 control-label" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">Magic Url:</label>
-            <div class="col-lg-10 input-group">
-              <input type="text" class="form-control" id="inputROMagicUrl" readonly onclick="select()" value="{{ display_track ? magic_url : '' }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">
-              {% if display_track %}
-              <span class="input-group-addon"><a href="{{ magic_url }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
-              {% endif %}
-            </div>
-          </div>            
-          {# TODO add info: iframe...
-          <div class="form-group">
-            <label for="inputMMId" class="col-lg-2 control-label">IFRAME:</label>
-            <div class="col-lg-10 input-group">
-              <input type="text" class="form-control" id="inputMMId" readonly onclick="select()" value="TODO">
-            </div>
-          </div>
-          #}
-        </fieldset>
-      </form>
-    </div>
+  <div id="links_mm_{{ mm.id }}">
+    {% render(url('pumukitnewadmin_mms_links', {'id': mm.id})) %}
   </div>
 
   <div role="tabpanel">

@@ -103,8 +103,9 @@ class SeriesController extends AdminController
 
         // EDIT MULTIMEDIA OBJECT TEMPLATE CONTROLLER SOURCE CODE
         $factoryService = $this->get('pumukitschema.factory');
+        $personService = $this->get('pumukitschema.person');
 
-        $roles = $factoryService->getRoles();
+        $roles = $personService->getRoles();
         if (null === $roles){
             throw new \Exception('Not found any role.');
         }
@@ -170,6 +171,17 @@ class SeriesController extends AdminController
         }
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_series_list', array()));
+    }
+
+    /**
+     * Generate Magic Url action
+     */
+    public function generateMagicUrlAction(Request $request)
+    {
+        $resource = $this->findOr404($request);
+        $mmobjService = $this->get('pumukitschema.series');
+        $response = $mmobjService->resetMagicUrl($resource);
+        return new Response($response);        
     }
 
     /**
@@ -388,6 +400,7 @@ class SeriesController extends AdminController
             $mm = $repo->find($id);
             if ($mm){
                 foreach($value['channels'] as $channelId => $mustContainsTag){
+                    $mustContainsTag = ("true" == $mustContainsTag);
                     $tag = $repoTags->find($channelId);
                     if ($mustContainsTag && (!($mm->containsTag($tag)))) {
                         $tagAdded = $tagService->addTagToMultimediaObject($mm, $tag->getId());

@@ -40,11 +40,9 @@ EOT
         if ($input->getOption('force')){
             return $this->executeTags($input, $output);
         } else {
-            $output->writeln('<error>ATTENTION:</error> This operation should not be executed in a production environment.');
+            $output->writeln('<error>ATTENTION:</error> This operation should not be executed in a production environment without backup.');
             $output->writeln('');
-            $output->writeln('<info>Would drop the database</info>');
             $output->writeln('Please run the operation with --force to execute.');
-            $output->writeln('<error>All data will be lost!</error>');
 
             return -1;
         }
@@ -95,7 +93,7 @@ EOT
         if (($file = fopen($file, "r")) !== false) {
             while (($currentRow = fgetcsv($file, 300, ";")) !== false) {
                 $number = count($currentRow);
-                if (('tag' === $repoName) && ($number == 6 || $number == 8)){
+                if (('tag' === $repoName) && ($number == 6 || $number == 9)){
                     //Check header rows
                     if (trim($currentRow[0]) == "id") {
                         continue;
@@ -153,6 +151,10 @@ EOT
         if (isset($csv_array[7])) {
             $tag->setTitle($csv_array[7], 'gl');
         }
+       if (isset($csv_array[8])) {
+            $tag->setTitle($csv_array[8], 'de');
+        }
+
 
         $this->dm->persist($tag);
 
