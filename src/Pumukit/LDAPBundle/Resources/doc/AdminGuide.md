@@ -5,7 +5,9 @@ Description
 -----------
 
 The PumukitLDAPBundle allows to connect to a LDAP Server
-and to retrieve data from the server.
+and to retrieve data from the server for easy metadata filling.
+Authentication and authorization features are under development
+and will be included soon.
 
 This bundle is disabled by default. To install it and
 configure it, read the below section.
