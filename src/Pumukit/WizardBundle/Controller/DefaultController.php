@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Intl\Intl;
 use Symfony\Component\Finder\Finder;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 
 class DefaultController extends Controller
 {
@@ -98,7 +99,7 @@ class DefaultController extends Controller
         $factoryService = $this->get('pumukitschema.factory');
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
 
-        $languages = Intl::getLanguageBundle()->getLanguageNames();
+        $languages = CustomLanguageType::getLanguageNames($this->container->getParameter('pumukit2.customlanguages'), $this->get('translator'));
 
         return array(
                      'form_data' => $formData,
@@ -114,10 +115,13 @@ class DefaultController extends Controller
      */
     public function uploadAction(Request $request)
     {
-        $trackService = $this->get('pumukitschema.track');
+        $jobService = $this->get('pumukitencoder.job');
+        $inspectionService = $this->get('pumukit.inspection');
 
         $series = null;
         $seriesId = null;
+        $multimediaObject = null;
+        $mmId = null;
         $formData = $request->get('pumukitwizard_form_data');
         if ($formData){
             $seriesData = $this->getKeyData('series', $formData);
@@ -156,19 +160,14 @@ class DefaultController extends Controller
                     $filetype = $this->getKeyData('filetype', $trackData);
                     if ('file' === $filetype){
                         $selectedPath = $request->get('resource');
-                        $multimediaObject = $trackService->createTrackFromLocalHardDrive($multimediaObject, $request->files->get('resource'), $profile, $priority, $language, $description);
+                        $multimediaObject = $jobService->createTrackFromLocalHardDrive($multimediaObject, $request->files->get('resource'), $profile, $priority, $language, $description);
                     }elseif ('inbox' === $filetype){
                         $selectedPath = $request->get('file');
-                        $multimediaObject = $trackService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description);
+                        $multimediaObject = $jobService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description);
                     }
                     if ($multimediaObject && $pubchannel){
                         foreach($pubchannel as $tagCode => $valueOn){
                             $addedTags = $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
-                            // TODO #6465 : Review addition of Publication Channel (create service)
-                            // * If MultimediaObject didn't contained PUCHWEBTV tag and now it does:
-                            //   - execute job (master_copy to video_h264)
-                            // * If MultimediaObject didn't contained ARCA tag and now it does:
-                            //   - execute corresponding job
                         }
                     }
                 }elseif ('multiple' === $option){
@@ -178,11 +177,16 @@ class DefaultController extends Controller
                     $finder->files()->in($selectedPath);
                     foreach ($finder as $f){
                         $filePath = $f->getRealpath();
+                        try {
+                            $duration = $inspectionService->getDuration($filePath);
+                        } catch (\Exception $e) {
+                            continue;
+                        }
                         $titleData = $this->getDefaultFieldValuesInData(array(), 'i18n_title', $f->getRelativePathname(), true);
                         $multimediaObject = $this->createMultimediaObject($titleData, $series);
                         if ($multimediaObject){
                             try{
-                                $multimediaObject = $trackService->createTrackFromInboxOnServer($multimediaObject, $filePath, $profile, $priority, $language, $description);
+                                $multimediaObject = $jobService->createTrackFromInboxOnServer($multimediaObject, $filePath, $profile, $priority, $language, $description);
                             }catch(\Exception $e){
                                 // TODO: filter invalid files another way
                                 if (!strpos($e->getMessage(), 'Unknown error')){
@@ -192,11 +196,6 @@ class DefaultController extends Controller
                             }
                             foreach($pubchannel as $tagCode => $valueOn){
                                 $addedTags = $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
-                                // TODO #6465 : Review addition of Publication Channel (create service)
-                                // * If MultimediaObject didn't contained PUCHWEBTV tag and now it does:
-                                //   - execute job (master_copy to video_h264)
-                                // * If MultimediaObject didn't contained ARCA tag and now it does:
-                                //   - execute corresponding job
                             }
                         }
                     }

@@ -3,22 +3,24 @@
 namespace Pumukit\EncoderBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Broadcast;
 
 class JobServiceTest extends WebTestCase
 {
     private $dm;
     private $repo;
     private $jobService;
-    //private $profileService;
-    //private $cpuService;
     private $resourcesDir;
     private $logger;
+    private $trackService;
+    private $factory;
 
     public function __construct()
     {
@@ -30,13 +32,24 @@ class JobServiceTest extends WebTestCase
           ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
           ->getRepository('PumukitEncoderBundle:Job');
+        $this->repoMmobj = $this->dm
+          ->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->logger = $kernel->getContainer()
           ->get('logger');
+        $this->trackService = $kernel->getContainer()
+          ->get('pumukitschema.track');
+        $this->tokenStorage = $kernel->getContainer()
+          ->get('security.token_storage');
+        $this->factory = $kernel->getContainer()
+          ->get('pumukitschema.factory');
     }
 
     public function setUp()
     {
         $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')->remove(array());
         $this->dm->flush();
         
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
@@ -46,8 +59,73 @@ class JobServiceTest extends WebTestCase
         $inspectionService->expects($this->any())->method('getDuration')->will($this->returnValue(5));
         $this->resourcesDir = realpath(__DIR__.'/../Resources').'/';
         $this->jobService = new JobService($this->dm, $profileService, $cpuService, 
-                                           $inspectionService, $dispatcher, $this->logger, 
-                                           "test", null);
+                                           $inspectionService, $dispatcher, $this->logger,
+                                           $this->trackService, $this->tokenStorage, "test", null);
+    }
+
+    public function testCreateTrackFromLocalHardDrive()
+    {
+        $this->createBroadcasts();
+
+        $series = $this->factory->createSeries();
+        $multimediaObject = $this->factory->createMultimediaObject($series);
+
+        $this->assertEquals(0, count($multimediaObject->getTracks()));
+        $this->assertEquals(0, count($this->repo->findAll()));
+
+        $originalFile = $this->resourcesDir.'CAMERA.mp4';
+
+        $filePath = $this->resourcesDir.'CAMERACopy.mp4';
+        if (copy($originalFile, $filePath)){
+            $file = new UploadedFile($filePath, 'CAMERA.mp4', null, null, null, true);
+
+            $profile = 'MASTER_COPY';
+            $priority = 2;
+            $language = 'en';
+            $description = array(
+                                 'en' => 'local track description',
+                                 'es' => 'descripción del archivo local',
+                                 );
+
+            $multimediaObject = $this->jobService->createTrackFromLocalHardDrive($multimediaObject, $file, $profile, $priority, $language, $description);
+
+            $this->assertEquals(0, count($multimediaObject->getTracks()));
+            $this->assertEquals(1, count($this->repo->findAll()));
+        }
+
+        $this->deleteCreatedFiles();
+    }
+
+    public function testCreateTrackFromInboxOnServer()
+    {
+        $this->createBroadcasts();
+
+        $series = $this->factory->createSeries();
+        $multimediaObject = $this->factory->createMultimediaObject($series);
+
+        $this->assertEquals(0, count($multimediaObject->getTracks()));
+        $this->assertEquals(0, count($this->repo->findAll()));
+
+        $originalFile = $this->resourcesDir.'CAMERA.mp4';
+
+        $filePath = $this->resourcesDir.'CAMERACopy.mp4';
+        if (copy($originalFile, $filePath)){
+            $profile = 'MASTER_COPY';
+            $priority = 2;
+            $language = 'en';
+            $description = array(
+                                 'en' => 'track description inbox',
+                                 'es' => 'descripción del archivo inbox',
+                                 );
+
+            $multimediaObject = $this->jobService->createTrackFromInboxOnServer($multimediaObject, $filePath, $profile, $priority, $language, $description);
+
+            $this->assertEquals(0, count($multimediaObject->getTracks()));
+            $this->assertEquals(1, count($this->repo->findAll()));
+        }
+
+        $this->deleteCreatedFiles();
+        unlink($filePath);
     }
     
     public function testAddJob()
@@ -251,8 +329,8 @@ class JobServiceTest extends WebTestCase
         $this->dm->persist($job3);
         $this->dm->flush();
 
-        $this->assertEquals(2, count($this->jobService->getJobsByMultimediaObjectId($mm_id1)));
-        $this->assertEquals(1, count($this->jobService->getJobsByMultimediaObjectId($mm_id2)));
+        $this->assertEquals(2, count($this->jobService->getNotFinishedJobsByMultimediaObjectId($mm_id1)));
+        $this->assertEquals(1, count($this->jobService->getNotFinishedJobsByMultimediaObjectId($mm_id2)));
     }
 
     public function testGetStatusError()
@@ -308,41 +386,26 @@ class JobServiceTest extends WebTestCase
     {
         $profiles = array(
                           'MASTER_COPY' => array(
-                                                 'id' => 1,
-                                                 'name' => 'master_copy',
-                                                 'rank' => 1,
                                                  'display' => false,
                                                  'wizard' => true,
                                                  'master' => true,
-                                                 'format' => '???',
-                                                 'codec' => '??',
-                                                 'mime_type' => '??',
-                                                 'extension' => '???',
                                                  'resolution_hor' => 0,
                                                  'resolution_ver' => 0,
-                                                 'bitrate' => '??',
-                                                 'framerate' => 0,
+                                                 'framerate' => '0',
                                                  'channels' => 1,
                                                  'audio' => false,
                                                  'bat' => 'cp "{{input}}" "{{output}}"',
-                                                 'file_cfg' => '??',
                                                  'streamserver' => array(
-                                                                         'streamserver_type' => ProfileService::STREAMSERVER_STORE,
-                                                                         'ip' => '127.0.0.1',
+                                                                         'type' => ProfileService::STREAMSERVER_STORE,
+                                                                         'host' => '127.0.0.1',
                                                                          'name' => 'Localmaster',
                                                                          'description' => 'Local masters server',
-                                                                         'dir_out' => __DIR__.'/../Resources/dir_out',
-                                                                         'url_out' => ''
-                                                                         ),
+                                                                         'dir_out' => __DIR__.'/../Resources/dir_out'                                                         ),
                                                  'app' => 'cp',
                                                  'rel_duration_size' => 1,
-                                                 'rel_duration_trans' => 1,
-                                                 'prescript' => '?????'
+                                                 'rel_duration_trans' => 1
                                                  ),
                           'MASTER_VIDEO_H264' => array(
-                                                       'id' => 2,
-                                                       'name' => 'master_video_h264',
-                                                       'rank' => 2,
                                                        'display' => false,
                                                        'wizard' => true,
                                                        'master' => true,
@@ -353,45 +416,83 @@ class JobServiceTest extends WebTestCase
                                                        'resolution_hor' => 0,
                                                        'resolution_ver' => 0,
                                                        'bitrate' => '1 Mbps',
-                                                       'framerate' => 25,
+                                                       'framerate' => '25/1',
                                                        'channels' => 1,
                                                        'audio' => false,
-                                                       'bat' => 'BitRate=$(/usr/local/bin/ffprobe "{{input}}" -v 0 -show_format -print_format default=nk=1:nw=1 | sed -n 9p)
-                                                                     [[ "$(( BitRate ))" -gt 6000000 ]] && : $(( BitRate = 6000000 ))
-
-                                                                     FrameRate=$(/usr/local/bin/ffprobe "{{input}}" -v 0 -show_streams -select_streams v -print_format default=nk=1:nw=1 | sed -n 18p)
-
-                                                                     BufSize=$(( BitRate*20/FrameRate ))
-
-                                                                     AudioSampleRate=$(/usr/local/bin/ffprobe "{{input}}" -v 0 -show_streams -select_streams a -print_format default=nk=1:nw=1 |sed -n 10p)
-
-                                                                     AudioBitRate=$(/usr/local/bin/ffprobe "{{input}}" -v 0 -show_streams -select_streams a -print_format default=nk=1:nw=1 |sed -n 22p)
-
-                                                                     width=$(/usr/local/bin/ffprobe "{{input}}" -v 0 -show_streams -select_streams v  -print_format default=nk=1:nw=1 |sed -n 9p)
-
-                                                                     [[ "$(( width % 2 ))" -ne 0 ]] && : $(( width += 1 ))
-
-                                                                     height=$(/usr/local/bin/ffprobe "{{input}}" -v 0 -show_streams -select_streams v  -print_format default=nk=1:nw=1 |sed -n 10p)
-
-                                                                     [[ "$(( height % 2 ))" -ne 0 ]] && : $(( height += 1 ))
-
-                                                                     /usr/local/bin/ffmpeg -y -i "{{input}}" -acodec libfdk_aac -b:a $AudioBitRate -ac 2 -ar $AudioSampleRate -vcodec libx264 -r 25 -preset slow -crf 15 -maxrate $BitRate -bufsize $BufSize -s $width"x"$height -threads 0 "{{output}}"',
-                                                       'file_cfg' => '',
+                                                       'bat' => 'avconv -y -i "{{input}}" -acodec libvo_aacenc -vcodec libx264 -preset slow -crf 15 -threads 0 "{{output}}"',
                                                        'streamserver' => array(
-                                                                               'streamserver_type' => ProfileService::STREAMSERVER_STORE,
-                                                                               'ip' => '192.168.5.125',
+                                                                               'type' => ProfileService::STREAMSERVER_STORE,
+                                                                               'host' => '192.168.5.125',
                                                                                'name' => 'Download',
                                                                                'description' => 'Download server',
                                                                                'dir_out' => __DIR__.'/../Resources/dir_out',
                                                                                'url_out' => 'http://localhost:8000/downloads/'
                                                                                ),
-                                                       'app' => 'ffmpeg',
+                                                       'app' => 'avconv',
                                                        'rel_duration_size' => 1,
-                                                       'rel_duration_trans' => 1,
-                                                       'prescript' => '?????'
+                                                       'rel_duration_trans' => 1
                                                        )
                           );
 
         return $profiles;
+    }
+
+    private function createBroadcasts()
+    {
+        $locale = 'en';
+
+        $broadcastPrivate = new Broadcast();
+        $broadcastPrivate->setLocale($locale);
+        $broadcastPrivate->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PRI);
+        $broadcastPrivate->setDefaultSel(true);
+        $broadcastPrivate->setName('Private');
+
+        $broadcastPublic = new Broadcast();
+        $broadcastPublic->setLocale($locale);
+        $broadcastPublic->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
+        $broadcastPublic->setDefaultSel(false);
+        $broadcastPublic->setName('Public');
+
+        $broadcastCorporative = new Broadcast();
+        $broadcastCorporative->setLocale($locale);
+        $broadcastCorporative->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_COR);
+        $broadcastCorporative->setDefaultSel(false);
+        $broadcastCorporative->setName('Corporative');
+
+        $this->dm->persist($broadcastPrivate);
+        $this->dm->persist($broadcastPublic);
+        $this->dm->persist($broadcastCorporative);
+        $this->dm->flush();
+    }
+
+    private function deleteCreatedFiles()
+    {
+        $mmobjs = $this->repoMmobj->findAll();
+
+        foreach($mmobjs as $mm){
+            $mmDir = $this->getDemoProfiles()['MASTER_COPY']['streamserver']['dir_out'].'/'.$mm->getSeries()->getId().'/';
+            if (is_dir($mmDir)){
+                $files = glob($mmDir.'*', GLOB_MARK);
+                foreach ($files as $file) {
+                    if (is_writable($file)){
+                      unlink($file);
+                    }
+                }
+
+                rmdir($mmDir);
+            }
+
+            $tmpMmDir = '/tmp/'.$mm->getId().'/';
+            if (is_dir($tmpMmDir)){
+                $files = glob($tmpMmDir.'*', GLOB_MARK);
+                foreach ($files as $file) {
+                    if (is_writable($file)){
+                      unlink($file);
+                    }
+                }
+
+                rmdir($tmpMmDir);
+            }
+        }
     }
 }

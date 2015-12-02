@@ -13,7 +13,7 @@
           <th width="5%">{% trans %}Type{% endtrans %}</th>
           <th>{% trans %}Name{% endtrans %}</th>
           <th>{% trans %}Description{% endtrans %}</th>
-          <th>{% trans %}Series{% endtrans %}</th>
+          <th>{% trans %}Mm.Obj.{% endtrans %}</th>
         </tr>
       </thead>
       
@@ -36,7 +36,7 @@
             </div>            
           </td>
           <td>
-            <a title="{% trans %}Edit Broadcast{% endtrans %} {{ broadcast.name }}" href="{{ path('pumukitnewadmin_broadcast_update', {'id': broadcast.id}) }}" data-toggle="modal" data-target="#myModal">            
+            <a title="{% trans %}Edit Broadcast{% endtrans %} {{ broadcast.name }}" href="{{ path('pumukitnewadmin_broadcast_update', {'id': broadcast.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">            
               <i class="mdi-editor-mode-edit"></i>              
             </a>
           </td>

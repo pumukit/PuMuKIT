@@ -17,7 +17,7 @@
     {# TODO CLASS IMAGE
     <div>
       <span></span>
-      <img src="{{ mm.getFirstUrlPic() }}"/>
+      <img src="{{ mm|first_url_pic }}"/>
       </div>
     #}
     <div>
@@ -42,6 +42,12 @@
         <li>
           <a href="{{ path('pumukitwizard_default_data', {'mmId': mm.getId(), 'seriesId': series.getId()}) }}">
             {% trans %}See Multimedia Object data{% endtrans %}
+          </a>
+        </li>
+        {% elseif series is not empty %}
+        <li>
+          <a href="{{ path('pumukitnewadmin_mms_index', {'id': series.getId()}) }}">
+            {% trans %}Back to Series{% endtrans %}
           </a>
         </li>
         {% endif %}

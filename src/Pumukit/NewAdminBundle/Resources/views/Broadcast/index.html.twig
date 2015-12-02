@@ -5,7 +5,6 @@
 <h1>{% trans %}Broadcasts{% endtrans %}</h1>
 
 <div class="row">
-  {% if is_granted('ROLE_SUPER_ADMIN') %}
   <div class="col-md-10">
     <div class="well">
       <div id="list_broadcasts">
@@ -17,11 +16,10 @@
             <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
             <option disabled="">---</option>
             <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
-            <option value="create">{% trans %}Create new{% endtrans %}</option>
           </select>
         </div>
         <div class="col-md-10 text-right">
-          <a href="{{ path('pumukitnewadmin_broadcast_create') }}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-target="#myModal">{% trans %}New{% endtrans %}</a>
+          <a href="{{ path('pumukitnewadmin_broadcast_create') }}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
         </div>
       </div>
     </div>
@@ -29,13 +27,6 @@
   <div class="col-md-2">
     {% include 'PumukitNewAdminBundle:Broadcast:filters.html.twig' %}
   </div>
-  {% else %}
-  <div class="col-md-12">
-    <div class="well">
-      {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-    </div>
-  </div>
-  {% endif %}
 </div>
 
 {% endblock %}

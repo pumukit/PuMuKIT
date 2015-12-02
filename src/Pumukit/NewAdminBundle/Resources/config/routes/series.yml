@@ -42,6 +42,12 @@ pumukitnewadmin_series_delete:
         _sylius:
             redirect: pumukitnewadmin_series_index
 
+pumukitnewadmin_series_generate_magic_url:
+    pattern: /{id}/generatemagic
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.series:generateMagicUrlAction
+
 pumukitnewadmin_series_copy:
     pattern: /{id}/copy
     methods: [GET, PUT, POST]

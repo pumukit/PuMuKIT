@@ -47,7 +47,7 @@ class SeriesRepository extends DocumentRepository
             ->findSeriesFieldWithTag($tag);
 
         $qb = $this->createQueryBuilder()
-            ->field('id')->in($referencedSeries->toArray());
+            ->field('_id')->in($referencedSeries->toArray());
 
         if (0 !== count($sort) ){
             $qb->sort($sort);
@@ -69,7 +69,7 @@ class SeriesRepository extends DocumentRepository
             ->findOneSeriesFieldWithTag($tag);
 
         return $this->createQueryBuilder()
-            ->field('id')->equals($referencedOneSeries)
+            ->field('_id')->equals($referencedOneSeries)
             ->getQuery()
             ->getSingleResult();
     }
@@ -90,7 +90,7 @@ class SeriesRepository extends DocumentRepository
             ->findSeriesFieldWithAnyTag($tags);
 
         $qb = $this->createQueryBuilder()
-            ->field('id')->in($referencedSeries->toArray());
+            ->field('_id')->in($referencedSeries->toArray());
 
         if (0 !== count($sort) ){
             $qb->sort($sort);
@@ -119,7 +119,7 @@ class SeriesRepository extends DocumentRepository
             ->findSeriesFieldWithAllTags($tags);
 
         $qb = $this->createQueryBuilder()
-            ->field('id')->in($referencedSeries->toArray());
+            ->field('_id')->in($referencedSeries->toArray());
 
         if (0 !== count($sort) ){
             $qb->sort($sort);
@@ -145,7 +145,7 @@ class SeriesRepository extends DocumentRepository
             ->findOneSeriesFieldWithAllTags($tags);
 
         return $this->createQueryBuilder()
-            ->field('id')->equals($referencedOneSeries)
+            ->field('_id')->equals($referencedOneSeries)
             ->getQuery()
             ->getSingleResult();
     }
@@ -166,7 +166,7 @@ class SeriesRepository extends DocumentRepository
             ->findSeriesFieldWithTag($tag);
         
         $qb = $this->createQueryBuilder()
-            ->field('id')->notIn($referencedSeries->toArray());
+            ->field('_id')->notIn($referencedSeries->toArray());
 
         if (0 !== count($sort) ){
             $qb->sort($sort);
@@ -192,7 +192,7 @@ class SeriesRepository extends DocumentRepository
             ->findSeriesFieldWithTag($tag);
 
         return $this->createQueryBuilder()
-            ->field('id')->notIn($referencedSeries->toArray())
+            ->field('_id')->notIn($referencedSeries->toArray())
             ->getQuery()
             ->getSingleResult();
     }
@@ -211,7 +211,7 @@ class SeriesRepository extends DocumentRepository
             ->findSeriesFieldWithAllTags($tags);
 
         $qb = $this->createQueryBuilder()
-            ->field('id')->notIn($referencedSeries->toArray());
+            ->field('_id')->notIn($referencedSeries->toArray());
 
         if (0 !== count($sort) ){
             $qb->sort($sort);
@@ -251,7 +251,25 @@ class SeriesRepository extends DocumentRepository
         $referencedSeries = $repoMmobj->findSeriesFieldByPersonId($personId);
         
         return $this->createQueryBuilder()
-            ->field('id')->in($referencedSeries->toArray())
+            ->field('_id')->in($referencedSeries->toArray())
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * Find series by person id and role cod
+     *
+     * @param string $personId
+     * @param string $roleCod
+     * @return ArrayCollection
+     */
+    public function findByPersonIdAndRoleCod($personId, $roleCod)
+    {
+        $repoMmobj = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCod($personId, $roleCod);
+
+        return $this->createQueryBuilder()
+            ->field('_id')->in($referencedSeries->toArray())
             ->getQuery()
             ->execute();
     }
@@ -281,8 +299,24 @@ class SeriesRepository extends DocumentRepository
         ->createQueryBuilder()
         ->count()
         ->getQuery()
+        ->execute();
+    }
+
+    /**
+     * Count number of series in the repo.
+     *
+     * @return integer
+     */
+    public function countPublic()
+    {
+      return $this
+        ->getDocumentManager()
+        ->getRepository('PumukitSchemaBundle:MultimediaObject')
+        ->createStandardQueryBuilder()
+        ->distinct('series')
+        ->getQuery()
         ->execute()
-        ;
+        ->count();
     }
 
     /**
@@ -321,12 +355,27 @@ class SeriesRepository extends DocumentRepository
             ->findSeriesFieldWithTag($tag);
 
         $qb = $this->createQueryBuilder()
-            ->field('id')->in($referencedSeries->toArray())
+            ->field('_id')->in($referencedSeries->toArray())
             ->field('series_type')->references($seriesType);
 
         if (0 !== count($sort) ){
             $qb->sort($sort);
         }
         return $qb;
+    }
+
+    /**
+     * Find series with the same propertyName
+     *
+     * @param string $propertyName
+     * @param string $propertyValue
+     * @return QueryBuilder
+     */
+    public function findOneBySeriesProperty($propertyName, $propertyValue)
+    {
+        return $this->createQueryBuilder()
+          ->field('properties.'.$propertyName)->equals($propertyValue)
+          ->getQuery()
+          ->getSingleResult();
     }
 }

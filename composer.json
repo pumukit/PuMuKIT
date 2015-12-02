@@ -1,5 +1,5 @@
 {
-    "name": "Pumukit/Pumukit2",
+    "name": "pumukit/pumukit2",
     "license": "GPL",
     "type": "project",
     "description": "Media Portal",
@@ -21,7 +21,9 @@
         "friendsofsymfony/user-bundle": "~1.3",
         "sylius/resource-bundle": "*",
         "knplabs/knp-menu-bundle": "~2.0",
-        "gedmo/doctrine-extensions": "dev-master"
+        "gedmo/doctrine-extensions": "dev-master",
+        "jasig/phpcas": "1.3.*",
+        "suncat/mobile-detect-bundle": "0.10.*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

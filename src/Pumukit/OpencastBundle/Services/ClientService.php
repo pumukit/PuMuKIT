@@ -8,14 +8,14 @@ class ClientService
   private $user;
   private $passwd;
   private $player;
-
+  private $adminUrl;
 
   public function __construct($url, $user="", $passwd="", $player="/engage/ui/watch.html")
   {
-    $this->url  = $url;
-    $this->user  = $user;
-    $this->passwd  = $passwd;
-    $this->player  = $player;
+      $this->url  = $url;
+      $this->user  = $user;
+      $this->passwd  = $passwd;
+      $this->player  = $player;
   }
 
   public function getUrl()
@@ -29,10 +29,14 @@ class ClientService
   }
 
 
-  private function request($path){
+  private function request($path, $useAdminUrl=false){
     $sal = array();
 
-    $ch = curl_init($this->url . $path);
+    if ($useAdminUrl && $this->adminUrl) {
+        $ch = curl_init($this->adminUrl . $path);
+    } else {
+        $ch = curl_init($this->url . $path);
+    }
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
 
@@ -68,7 +72,7 @@ class ClientService
     $decode = json_decode($sal["var"], true);
 
     if (!($decode)) {
-      throw new sfException("Matterhorn communication error");
+      throw new \Exception("Matterhorn communication error");
     }
 
     $return = array(0, array());
@@ -96,15 +100,52 @@ class ClientService
     $decode = json_decode($sal["var"], true);
 
     if (!($decode)) {
-      throw new sfException("Matterhorn communication error");
+      throw new \Exception("Matterhorn communication error");
     }
 
     if ($decode["search-results"]["total"] == 0)
       return null;
     if ($decode["search-results"]["limit"] > 1)
-      return $decode["search-results"]["limit"][0]["mediapackage"];
+      return $decode["search-results"]["result"][0]["mediapackage"];
     else
       return $decode["search-results"]["result"]["mediapackage"];   
   }
 
+  public function getMediapackageFromArchive($id)
+  {
+      $this->adminUrl = $this->getAdminUrl();
+      $sal = $this->request("/episode/episode.json?id=" . $id, true);
+
+      if ($sal["status"] !== 200) return false;
+      $decode = json_decode($sal["var"], true);
+
+      if (!($decode)) {
+          throw new \Exception("Matterhorn communication error");
+      }
+
+      if ($decode["search-results"]["total"] == 0)
+          return null;
+      if ($decode["search-results"]["limit"] > 1)
+          return $decode["search-results"]["result"][0]["mediapackage"];
+      else
+          return $decode["search-results"]["result"]["mediapackage"];
+  }
+
+  private function getAdminUrl()
+  {
+      $output = $this->request('/services/available.json?serviceType=org.opencastproject.episode');
+      if ($output["status"] !== 200) return false;
+      $decode = json_decode($output["var"], true);
+      if (!($decode)) {
+          throw new \Exception("Matterhorn communication error");
+      }
+      if (isset($decode['services'])) {
+          if (isset($decode['services']['service'])) {
+              if (isset($decode['services']['service']['host'])) {
+                  return $decode['services']['service']['host'];
+              }
+          }
+      }
+      return null;
+  }
 }

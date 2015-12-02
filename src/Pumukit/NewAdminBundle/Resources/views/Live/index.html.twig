@@ -16,11 +16,10 @@
             <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
             <option disabled="">---</option>
             <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
-            <option value="create">{% trans %}Create new{% endtrans %}</option>
           </select>
         </div>
         <div class="col-md-10 text-right">
-          <a title="{% trans %}Create new live channel{% endtrans %}" class="btn btn-pumukit btn-raised" href="{{ path('pumukitnewadmin_live_create') }}" data-toggle="modal" data-target="#myModal">{% trans %}New{% endtrans %}</a>
+          <a title="{% trans %}Create new live channel{% endtrans %}" class="btn btn-pumukit btn-raised" href="{{ path('pumukitnewadmin_live_create') }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
         </div>
       </div>
     </div>
@@ -45,4 +44,5 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/pumukitwebtv/js/jwplayer/jwplayer.js') }}" type="text/javascript"></script>
+    {% if jwplayer_key is defined %}<script type="text/javascript">jwplayer.key="{{ jwplayer_key }}";</script>{% endif %}
 {% endblock %}

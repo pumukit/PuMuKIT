@@ -8,25 +8,35 @@ class MaterialTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetterAndSetter()
     {
+        $name = 'name';
         $tags = array('tag_a', 'tag_b');
         $url = '/mnt/video/123/23435.mp4';
         $path = '/mnt/video/123/23435.mp4';
         $mime = 'video/mpeg4';
         $hide = false;
+        $language = 'en';
 
         $material = new material();
 
+        $material->setName($name);
         $material->setTags($tags);
         $material->setUrl($url);
         $material->setPath($path);
         $material->setMimeType($mime);
         $material->setHide($hide);
+        $material->setLanguage($language);
 
+        $this->assertEquals($name, $material->getName());
         $this->assertEquals($tags, $material->getTags());
         $this->assertEquals($url, $material->getUrl());
         $this->assertEquals($path, $material->getPath());
         $this->assertEquals($mime, $material->getMimeType());
         $this->assertFalse($hide, $material->getHide());
+        $this->assertEquals($language, $material->getLanguage());
+
+        $name = null;
+        $material->setName(null);
+        $this->assertEquals($name, $material->getName());
     }
 
     public function testMaxSize()

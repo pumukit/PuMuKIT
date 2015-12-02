@@ -3,21 +3,21 @@
    <tr>
      <td >
        <div class="img_category">
-         <a href="{# echo url_for('serial/index')."/index/id/".$conferencias ;sfConfig::set('app_metas_banner', 'sonar'); #}">
+         <a href="{{ path('pumukit_webtv_series_index', {'id': '5614325d1f56a88005b6b179'}) }}">
           <img alt="Conferencias" src="{{ asset('bundles/pumukitcmarsonar/images/PNG_FINALES/conferencias_' ~ app.session.get('_locale') ~ '.png') }}" style="width:235px;"/>
          </a>
        </div>
      </td>
      <td >
        <div class="img_category">
-	 <a href="{# echo url_for('serial/index')."/index/id/".$microespacios ; sfConfig::set('app_metas_banner', 'sonar');#}">
-	   <img alt="Microespacios" src="{{ asset('bundles/pumukitcmarsonar/images/PNG_FINALES/microespacios_' ~ app.session.get('_locale') ~ '.png') }}" style="width:235px;"/>
+	     <a href="{{ path('pumukit_webtv_series_index', {'id': '561433581f56a88005b6b7a5'}) }}">
+	       <img alt="Microespacios" src="{{ asset('bundles/pumukitcmarsonar/images/PNG_FINALES/microespacios_' ~ app.session.get('_locale') ~ '.png') }}" style="width:235px;"/>
          </a>
        </div>
      </td>
      <td >
        <div class="img_category">
-	 <a href="{# echo url_for('serial/index')."/index/id/".$divulgare ; sfConfig::set('app_metas_banner', 'sonar');  #}">
+	     <a href="{{ path('pumukit_webtv_series_index', {'id': '561433241f56a88005b6b624'}) }}">
            <img alt="Divulgare" src="{{ asset('bundles/pumukitcmarsonar/images/PNG_FINALES/divulgare.png') }}"  style="width:235px;"/>
          </a>
        </div>

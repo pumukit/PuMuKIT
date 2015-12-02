@@ -75,7 +75,7 @@ class LinkServiceTest extends WebTestCase
         $newName = 'New link name';
         $link = $mm->getLinkById($link->getId());
         $link->setName($newName);
-        $mm = $this->linkService->updateLinkInMultimediaObject($mm);
+        $mm = $this->linkService->updateLinkInMultimediaObject($mm, $link);
         $mm = $this->repoMmobj->find($mm->getId());
 
         $this->assertEquals($newName, $mm->getLinkById($link->getId())->getName());

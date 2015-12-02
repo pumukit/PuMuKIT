@@ -10,12 +10,10 @@
     <video id="player" src="{{ html5_track.url  }}" controls="" style="background: black; width: 100%;">
     </video>
   {% else %}
-    <div class="pmk-preview">
-        <div class="pmk-picture">
-            <div class="pmk-img">
-                <img src="{{ mm.getFirstUrlPic('/images/none.jpg') }}" />
-            </div>
-        </div>
+    <div class="well" style="padding: 3px;">
+      <div class="embed-responsive embed-responsive-16by9">
+        <img src="{{ mm|first_url_pic(false, false) }}" class="img-responsive" style="width: 100%">
+      </div>
     </div>
   {% endif %}
 </div>
@@ -43,7 +41,7 @@
 <div>
 <ul>
 {% for role in roles if role.getDisplay() %}
-  {% set actors = mm.getPeopleByRole(role) %}
+  {% set actors = mm.getPeopleByRole(role, true) %}
   {% if actors|length != 0 %}
   <li>{{ role.name }}</li>
   <ul>

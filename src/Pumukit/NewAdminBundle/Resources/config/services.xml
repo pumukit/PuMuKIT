@@ -4,8 +4,29 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
+  <parameters>
+    <parameter key="pumukit2.customlanguages" type="collection"></parameter>
+    <parameter key="pumukit2.warning_on_unpublished">false</parameter>
+  </parameters>
+
   <services>
-    <service id="pumukitnewadmin.kernelexception.listener" class="Pumukit\NewAdminBundle\Listener\ExceptionListener">
+    <service id="form.type.texti18n" class="Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType">
+	  <argument>%pumukit2.locales%</argument>
+      <tag name="form.type" alias="texti18n" />
+    </service>
+
+    <service id="form.type.textareai18n" class="Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType">
+	  <argument>%pumukit2.locales%</argument>
+      <tag name="form.type" alias="textareai18n" />
+    </service>
+
+    <service id="form.type.customlanguage" class="Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType">
+	  <argument type="service" id="translator" />
+	  <argument>%pumukit2.customlanguages%</argument>
+      <tag name="form.type" alias="customlanguage" />
+    </service>
+
+    <service id="pumukitnewadmin.kernelexception.listener" class="Pumukit\NewAdminBundle\EventListener\ExceptionListener">
       <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" priority="255" />
     </service>
 
@@ -13,6 +34,12 @@
       <tag name="twig.extension"/>
       <argument type="service" id="pumukitencoder.profile"/>
       <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+      <argument type="service" id="translator" />
+      <argument type="service" id="router" />
+    </service>
+
+    <service id="pumukitnewadmin.series_search" class="Pumukit\NewAdminBundle\Services\SeriesSearchService">
+      <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
     </service>
   </services>
 </container>

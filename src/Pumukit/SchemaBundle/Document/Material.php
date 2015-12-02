@@ -19,6 +19,13 @@ class Material extends Element
     private $name = array('en' => '');
 
     /**
+     * @var string $language
+     *
+     * @MongoDB\String
+     */
+    private $language;
+
+    /**
      * Set name
      *
      * @param string $name
@@ -44,7 +51,7 @@ class Material extends Element
             $locale = $this->getLocale();
         }
         if (!isset($this->name[$locale])) {
-            return;
+            return '';
         }
 
         return $this->name[$locale];
@@ -68,5 +75,25 @@ class Material extends Element
     public function getI18nName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set language
+     *
+     * @param string $language
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+    }
+
+    /**
+     * Get language
+     *
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
     }
 }

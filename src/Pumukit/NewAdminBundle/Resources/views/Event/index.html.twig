@@ -16,12 +16,11 @@
             <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
             <option disabled="">---</option>
             <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
-            <option value="create">{% trans %}Create new{% endtrans %}</option>
           </select>
         </div>
         <div class="col-md-10 text-right">
-          {# TODO event series <a title="{% trans %}Create new series of live events{% endtrans %}" class="btn btn-pumukit btn-raised" href="{{ path('pumukitnewadmin_event_create_several') }}" data-toggle="modal" data-target="#myModal">{% trans %}New Series{% endtrans %}</a> #}
-          <a title="{% trans %}Create new live event{% endtrans %}" class="btn btn-pumukit btn-raised" href="{{ path('pumukitnewadmin_event_create') }}" data-toggle="modal" data-target="#myModal">{% trans %}New{% endtrans %}</a>
+          {# TODO event series <a title="{% trans %}Create new series of live events{% endtrans %}" class="btn btn-pumukit btn-raised" href="{{ path('pumukitnewadmin_event_create_several') }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New Series{% endtrans %}</a> #}
+          <a title="{% trans %}Create new live event{% endtrans %}" class="btn btn-pumukit btn-raised" href="{{ path('pumukitnewadmin_event_create') }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
         </div>
       </div>
     </div>

@@ -31,7 +31,6 @@ class Person
      *
      * @MongoDB\String
      * @Assert\Email
-     * //@Assert\NotEmpty
      */
     protected $email;
 
@@ -200,7 +199,7 @@ class Person
             $locale = $this->locale;
         }
         if (!isset($this->honorific[$locale])) {
-            return;
+            return '';
         }
 
         return $this->honorific[$locale];
@@ -248,7 +247,7 @@ class Person
             $locale = $this->locale;
         }
         if (!isset($this->firm[$locale])) {
-            return;
+            return '';
         }
 
         return $this->firm[$locale];
@@ -296,7 +295,7 @@ class Person
             $locale = $this->locale;
         }
         if (!isset($this->post[$locale])) {
-            return;
+            return '';
         }
 
         return $this->post[$locale];
@@ -344,7 +343,7 @@ class Person
             $locale = $this->locale;
         }
         if (!isset($this->bio[$locale])) {
-            return;
+            return '';
         }
 
         return $this->bio[$locale];

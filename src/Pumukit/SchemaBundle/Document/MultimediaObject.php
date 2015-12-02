@@ -10,6 +10,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Pumukit\SchemaBundle\Document\MultimediaObject
  *
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\MultimediaObjectRepository")
+ * @MongoDB\Indexes({
+ *   @MongoDB\Index(name="text_index", keys={"$**"="text"}, options={"language_override"="english"})
+ * })
  */
 class MultimediaObject
 {
@@ -179,7 +182,7 @@ class MultimediaObject
      * @MongoDB\Int
      * @MongoDB\Increment
      */
-    private $numview;
+    private $numview = 0;
 
     /**
      * @var ArrayCollection $people
@@ -237,6 +240,17 @@ class MultimediaObject
      */
     public function getSecret()
     {
+        return $this->secret;
+    }
+
+    /**
+     * Resets secret
+     *
+     * @return string
+     */
+    public function resetSecret()
+    {
+        $this->secret = new \MongoId();
         return $this->secret;
     }
 
@@ -376,7 +390,7 @@ class MultimediaObject
             $locale = $this->locale;
         }
         if (!isset($this->title[$locale])) {
-            return;
+            return '';
         }
 
         return $this->title[$locale];
@@ -428,7 +442,7 @@ class MultimediaObject
             $locale = $this->locale;
         }
         if (!isset($this->subtitle[$locale])) {
-            return;
+            return '';
         }
 
         return $this->subtitle[$locale];
@@ -480,7 +494,7 @@ class MultimediaObject
             $locale = $this->locale;
         }
         if (!isset($this->description[$locale])) {
-            return;
+            return '';
         }
 
         return $this->description[$locale];
@@ -532,7 +546,7 @@ class MultimediaObject
             $locale = $this->locale;
         }
         if (!isset($this->line2[$locale])) {
-            return;
+            return '';
         }
 
         return $this->line2[$locale];
@@ -624,7 +638,7 @@ class MultimediaObject
             $locale = $this->locale;
         }
         if (!isset($this->keyword[$locale])) {
-            return;
+            return '';
         }
 
         return $this->keyword[$locale];
@@ -755,11 +769,13 @@ class MultimediaObject
      */
     public function setBroadcast(Broadcast $broadcast)
     {
-        if ($this->broadcast instanceof Broadcast) {
+        if (($this->broadcast instanceof Broadcast) && ($this->status != MultimediaObject::STATUS_PROTOTYPE)){
             $this->broadcast->decreaseNumberMultimediaObjects();
         }
         $this->broadcast = $broadcast;
-        $broadcast->increaseNumberMultimediaObjects();
+        if ($this->status != MultimediaObject::STATUS_PROTOTYPE) {
+            $broadcast->increaseNumberMultimediaObjects();
+        }
     }
 
     /**
@@ -784,6 +800,16 @@ class MultimediaObject
     }
 
     /**
+     * Set tags
+     *
+     * @param array $tags
+     */
+    public function setTags(array $tags)
+    {
+        $this->tags = $tags;
+    }
+
+    /**
      * Add tag
      *
      * The original string tag logic used array_unique to avoid tag duplication.
@@ -795,7 +821,9 @@ class MultimediaObject
         if (!($this->containsTag($tag))) {
             $embedTag = EmbeddedTag::getEmbeddedTag($this->tags, $tag);
             $this->tags[] = $embedTag;
+            return true;
         }
+        return false;
     }
 
     /**
@@ -873,6 +901,25 @@ class MultimediaObject
 
         return true;
     }
+    
+    /**
+     * Contains all tags with codes
+     * The original string tag logic used array_intersect and count to check it.
+     * This function uses doctrine2 arrayCollection contains function instead.
+     *
+     * @param  array   $tags
+     * @return boolean TRUE if this multimedia_object contained all tags, FALSE otherwise.
+     */
+    public function containsAllTagsWithCodes(array $tagCodes)
+    {
+        foreach ($tagCodes as $tagCode) {
+            if (!($this->containsTagWithCod($tagCode))) {
+                return false;
+            }
+        }
+
+        return true;
+    }    
 
     /**
      * Contains any tags
@@ -892,7 +939,26 @@ class MultimediaObject
 
         return false;
     }
+    
+    /**
+     * Contains any tags with codes
+     * The original string tag logic used array_intersect and count to check it.
+     * This function uses doctrine2 arrayCollection contains function instead.
+     *
+     * @param  array   $tags
+     * @return boolean TRUE if this multimedia_object contained any tag of the list, FALSE otherwise.
+     */
+    public function containsAnyTagWithCodes(array $tagCodes)
+    {
+        foreach ($tagCodes as $tagCode) {
+            if ($this->containsTagWithCod($tagCode)) {
+                return true;
+            }
+        }
 
+        return false;
+    }
+    
     // End of tags section
 
 
@@ -1021,10 +1087,12 @@ class MultimediaObject
             }
         }
 
-        return;
+        return null;
     }
 
     /**
+     * DEPRECATED: Use PicService, function getFirstUrlPic($object, $absolute, $hd)
+     *
      * Get first pic url
      *
      * @param $default string url returned if series without pics.
@@ -1067,7 +1135,7 @@ class MultimediaObject
      * Get pic with tag
      *
      * @param  string $tag
-     * @return Pic
+     * @return Pic|null
      */
     public function getPicWithTag($tag)
     {
@@ -1077,7 +1145,7 @@ class MultimediaObject
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -1103,7 +1171,7 @@ class MultimediaObject
      * Get pics with all tags
      *
      * @param  array $tags
-     * @return Pic
+     * @return Pic|null
      */
     public function getPicWithAllTags(array $tags)
     {
@@ -1113,7 +1181,7 @@ class MultimediaObject
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -1139,7 +1207,7 @@ class MultimediaObject
      * Get pic with any tag
      *
      * @param  array $tags
-     * @return Pic
+     * @return Pic|null
      */
     public function getPicWithAnyTag(array $tags)
     {
@@ -1149,7 +1217,7 @@ class MultimediaObject
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -1314,7 +1382,7 @@ class MultimediaObject
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -1340,7 +1408,7 @@ class MultimediaObject
      * Get track with tag
      *
      * @param  string $tag
-     * @return Track
+     * @return Track|null
      */
     public function getTrackWithTag($tag)
     {
@@ -1350,7 +1418,7 @@ class MultimediaObject
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -1376,7 +1444,7 @@ class MultimediaObject
      * Get tracks with all tags
      *
      * @param  array $tags
-     * @return Track
+     * @return Track|null
      */
     public function getTrackWithAllTags(array $tags)
     {
@@ -1386,7 +1454,7 @@ class MultimediaObject
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -1412,7 +1480,7 @@ class MultimediaObject
      * Get track with any tag
      *
      * @param  array $tags
-     * @return Track
+     * @return Track|null
      */
     public function getTrackWithAnyTag(array $tags)
     {
@@ -1422,7 +1490,7 @@ class MultimediaObject
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -1432,19 +1500,21 @@ class MultimediaObject
      * @param  array           $all_tags
      * @param  array           $not_any_tags
      * @param  array           $not_all_tags
+     * @param  boolean         $all
      * @return ArrayCollection
      */
     public function getFilteredTracksWithTags(
                                             array $any_tags = array(),
                                             array $all_tags = array(),
                                             array $not_any_tags = array(),
-                                            array $not_all_tags = array())
+                                            array $not_all_tags = array(),
+                                            $all=true)
     {
         $r = array();
 
         foreach ($this->tracks as $track) {
             // TODO Move 'hide' field to tag 'hidden' in track (see hidden vs display tag)
-            if ($track->getHide()) {
+            if ($track->getHide() && $all) {
                 continue;
             }
             if ($any_tags && !$track->containsAnyTag($any_tags)) {
@@ -1474,17 +1544,19 @@ class MultimediaObject
      * @param  array           $all_tags
      * @param  array           $not_any_tags
      * @param  array           $not_all_tags
-     * @return Track
+     * @param  boolean         $all
+     * @return Track|null
      */
     public function getFilteredTrackWithTags(
                                             array $any_tags = array(),
                                             array $all_tags = array(),
                                             array $not_any_tags = array(),
-                                            array $not_all_tags = array())
+                                            array $not_all_tags = array(),
+                                            $all=true)
     {
         foreach ($this->tracks as $track) {
             // TODO Move 'hide' field to tag 'hidden' in track (see hidden vs display tag)
-            if ($track->getHide()) {
+            if ($track->getHide() && $all) {
                 continue;
             }
             if ($any_tags && !$track->containsAnyTag($any_tags)) {
@@ -1624,7 +1696,7 @@ class MultimediaObject
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -1650,7 +1722,7 @@ class MultimediaObject
      * Get material with tag
      *
      * @param  string   $tag
-     * @return Material
+     * @return Material|null
      */
     public function getMaterialWithTag($tag)
     {
@@ -1660,7 +1732,7 @@ class MultimediaObject
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -1686,7 +1758,7 @@ class MultimediaObject
      * Get material with all tags
      *
      * @param  array    $tags
-     * @return Material
+     * @return Material|null
      */
     public function getMaterialWithAllTags(array $tags)
     {
@@ -1696,7 +1768,7 @@ class MultimediaObject
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -1722,7 +1794,7 @@ class MultimediaObject
      * Get material with any tag
      *
      * @param  array    $tags
-     * @return Material
+     * @return Material|null
      */
     public function getMaterialWithAnyTag(array $tags)
     {
@@ -1732,7 +1804,7 @@ class MultimediaObject
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -1889,7 +1961,7 @@ class MultimediaObject
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -1915,7 +1987,7 @@ class MultimediaObject
      * Get link with tag
      *
      * @param  string $tag
-     * @return Link
+     * @return Link|null
      */
     public function getLinkWithTag($tag)
     {
@@ -1925,7 +1997,7 @@ class MultimediaObject
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -1951,7 +2023,7 @@ class MultimediaObject
      * Get links with all tags
      *
      * @param  array $tags
-     * @return Link
+     * @return Link|null
      */
     public function getLinkWithAllTags(array $tags)
     {
@@ -1961,7 +2033,7 @@ class MultimediaObject
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -1987,7 +2059,7 @@ class MultimediaObject
      * Get link with any tag
      *
      * @param  array $tags
-     * @return Link
+     * @return Link|null
      */
     public function getLinkWithAnyTag(array $tags)
     {
@@ -1997,7 +2069,7 @@ class MultimediaObject
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -2075,6 +2147,28 @@ class MultimediaObject
             foreach ($role->getPeople() as $embeddedPerson) {
                 if ($embeddedPerson->getId() === $person->getId()) {
                     $aux[] = $embeddedPerson;
+                }
+            }
+        }
+
+        return $aux;
+    }
+
+    /**
+     * Get all embedded role in multimedia object by person id
+     *
+     * @param  Person $person
+     * @return array
+     */
+    public function getAllEmbeddedRolesByPerson($person)
+    {
+        $aux = array();
+
+        foreach ($this->people as $embeddedRole) {
+            foreach ($embeddedRole->getPeople() as $embeddedPerson) {
+                if ($embeddedPerson->getId() === $person->getId()) {
+                    $aux[] = $embeddedRole;
+                    break;
                 }
             }
         }
@@ -2416,7 +2510,7 @@ class MultimediaObject
      *
      * @param string $key
      *
-     * @return string
+     * @return string|null
      */
     public function getProperty($key)
     {
@@ -2438,4 +2532,42 @@ class MultimediaObject
       $this->properties[$key] = $value;
     }
 
+    /**
+     * Remove property
+     *
+     * @param string $key
+     */
+    public function removeProperty($key)
+    {
+        if (isset($this->properties[$key])) {
+            unset($this->properties[$key]);
+        }
+    }
+
+    /**
+     * Get duration in minutes and seconds
+     *
+     * @return array
+     */
+    public function getDurationInMinutesAndSeconds()
+    {
+        $minutes = floor($this->getDuration() / 60);
+
+        $seconds = $this->getDuration() % 60;
+        //if ($seconds < 10 ) $minutes = '0' . $seconds;
+
+        return array('minutes' => $minutes, 'seconds' => $seconds);
+    }
+
+    /**
+     * Set duration in minutes and seconds
+     *
+     * @param array
+     */
+    public function setDurationInMinutesAndSeconds($durationInMinutesAndSeconds)
+    {
+        if ((!empty($durationInMinutesAndSeconds['minutes'])) && (!empty($durationInMinutesAndSeconds['seconds']))) {
+            $this->duration = ($durationInMinutesAndSeconds['minutes'] * 60) + $durationInMinutesAndSeconds['seconds'];
+        }
+    }
 }

@@ -23,21 +23,26 @@ class MaterialType extends AbstractType
         $builder
           ->add('i18n_name', 'texti18n', array('required' => true, 'label' => $this->translator->trans('Name', array(), null, $this->locale)))
           ->add('hide', 'checkbox', array('required' => false, 'label' => $this->translator->trans('Hide', array(), null, $this->locale)))
-      ->add('mime_type', 'choice', array(
+          ->add('language', 'customlanguage',
+                array(
+                      'required' => true,
+                      'label' => $this->translator->trans('Language', array(), null, $this->locale)))
+          ->add('mime_type', 'choice', array(
                 'choices' => array(
-                                   '1' => 'xxx - ', 
-                                   '2' => 'zip - Compress file',
-                                   '3' => 'tgz - Compress file',
-                                   '4' => 'tar - Backup file',
-                                   '5' => 'swf - Flash file',
-                                   '6' => 'rar - Compress file',
-                                   '7' => 'ppt - Power Point file',
-                                   '8' => 'pps - Power Point file',
-                                   '9' => 'pdf - PDF file',
-                                   '10' => 'mp3 - MP3 file',
-                                   '11' => 'gz - Compress file',
-                                   '12' => 'doc - Word file',
-                                   '13' => 'srt - Text-captions srt'
+                                   'xxx' => 'xxx - ',
+                                   'zip' => 'zip - Compress file',
+                                   'tgz' => 'tgz - Compress file',
+                                   'tar' => 'tar - Backup file',
+                                   'swf' => 'swf - Flash file',
+                                   'rar' => 'rar - Compress file',
+                                   'ppt' => 'ppt - Power Point file',
+                                   'pps' => 'pps - Power Point file',
+                                   'pdf' => 'pdf - PDF file',
+                                   'mp3' => 'mp3 - MP3 file',
+                                   'gz' => 'gz - Compress file',
+                                   'doc' => 'doc - Word file',
+                                   'srt' => 'srt - Text-captions srt',
+                                   'vtt' => 'vtt - Video Text Tracks'
                                    ),
                 'label' => $this->translator->trans('Type')))
       ;

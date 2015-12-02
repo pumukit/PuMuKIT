@@ -4,6 +4,8 @@ namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\NewAdminBundle\Form\Type\Other\Html5dateType;
@@ -26,7 +28,7 @@ class SeriesType extends AbstractType
             ->add('announce', 'checkbox',
                   array(
                         'required' => false,
-                        'label' => $this->translator->trans('New', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('Last Added (Announced)', array(), null, $this->locale)))
             ->add('i18n_title', 'texti18n',
                   array('label' => $this->translator->trans('Title', array(), null, $this->locale)))
             ->add('i18n_subtitle', 'texti18n',
@@ -68,7 +70,30 @@ class SeriesType extends AbstractType
             ->add('i18n_line2', 'textareai18n',
                   array(
                         'required' => false,
-                        'label' => $this->translator->trans('Headline', array(), null, $this->locale)));
+                        'label' => $this->translator->trans('Headline', array(), null, $this->locale)))
+           ->add('template', 'choice',
+                  array(
+                        'choices' => array('date' => 'date', 'date_all' => 'date_all', 
+                                           'date_subserial' => 'date_subserial', 'subserial' => 'subserial', 
+                                           'multisubserial' => 'multisubserial'),
+                        'empty_data' => null,
+                        'mapped' => false,
+                        'required' => true,
+                        'label' => $this->translator->trans('Template', array(), null, $this->locale)));
+
+
+        $builder->addEventListener(FormEvents::POST_SET_DATA, function(FormEvent $event) {
+            $series = $event->getData();
+            $event->getForm()->get("template")->setData($series->getProperty("template"));
+        });
+
+        
+        $builder->addEventListener(FormEvents::SUBMIT, function(FormEvent $event) {
+            $template = $event->getForm()->get("template")->getData();
+            $series = $event->getData();
+            $series->setProperty("template", $template);
+        });
+        
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

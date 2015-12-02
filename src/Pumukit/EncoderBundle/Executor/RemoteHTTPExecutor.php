@@ -20,10 +20,11 @@ class RemoteHTTPExecutor
 
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_URL, 'http://'.$cpu['host'].'/webserver.php');
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array("Authorization: Basic ".base64_encode($cpu['user'].':'.$cpu['password'])));
+        if(isset($cpu['user']) && isset($cpu['password'])) {
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array("Authorization: Basic ".base64_encode($cpu['user'].':'.$cpu['password'])));
+        }
         curl_setopt($curl, CURLOPT_POST, 1);
-        // TODO - nombre 'ruta'
-        curl_setopt($curl, CURLOPT_POSTFIELDS, "command=$command");
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query(array("command" => $command)));
 
         $response = curl_exec($curl);
 

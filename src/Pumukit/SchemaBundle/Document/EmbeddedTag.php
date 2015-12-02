@@ -149,7 +149,7 @@ class EmbeddedTag
           $locale = $this->locale;
       }
       if (!isset($this->title[$locale])) {
-          return;
+          return "";
       }
 
       return $this->title[$locale];
@@ -201,7 +201,7 @@ class EmbeddedTag
           $locale = $this->locale;
       }
       if (!isset($this->description[$locale])) {
-          return;
+          return "";
       }
 
       return $this->description[$locale];
@@ -437,6 +437,27 @@ class EmbeddedTag
 
       return substr($this->getPath(), 0, strlen($tag->getPath())) === $tag->getPath();
   }
+
+  /**
+   * Returns true if given node cod is descendant of tag
+   *
+   * @param EmbeddedTag|Tag $tag
+   *
+   * @return bool
+   */
+  public function isDescendantOfByCod($tagCod)
+  {
+       if( $tagCod == $this->getCod() )
+      {
+          return false;
+      }
+      if( strpos( $this->getPath(), sprintf('%s|',$tagCod ) ) === 0 )
+      {
+          return true;
+      }
+      return strpos($this->getPath(), sprintf('|%s|', $tagCod)) === false ? false : true;     
+  }
+
 
   /**
    *

@@ -90,8 +90,36 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function findByPersonId($personId)
     {
-        return $this->createQueryBuilder()
+        return $this->createStandardQueryBuilder()
           ->field('people.people._id')->equals(new \MongoId($personId))
+          ->getQuery()
+          ->execute();
+    }
+
+    /**
+     * Find multimedia objects by role code
+     *
+     * @param string $roleCode
+     * @return ArrayCollection
+     */
+    public function findByRoleCod($roleCode)
+    {
+        return $this->createStandardQueryBuilder()
+          ->field('people.cod')->equals($roleCode)
+          ->getQuery()
+          ->execute();
+    }
+
+    /**
+     * Find multimedia objects by role id
+     *
+     * @param string $roleId
+     * @return ArrayCollection
+     */
+    public function findByRoleId($roleId)
+    {
+        return $this->createStandardQueryBuilder()
+          ->field('people._id')->equals(new \MongoId($roleId))
           ->getQuery()
           ->execute();
     }
@@ -116,6 +144,108 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
+     * Find multimedia objects by person id
+     * with given role in given series
+     *
+     * @param Series $series
+     * @param string $personId
+     * @param string $roleCod
+     * @return ArrayCollection
+     */
+    public function findBySeriesAndPersonIdWithRoleCod($series, $personId, $roleCod)
+    {
+        $qb = $this->createStandardQueryBuilder()
+            ->field('series')->references($series);
+        $qb->field('people')->elemMatch(
+            $qb->expr()->field('people._id')->equals(new \MongoId($personId))
+                ->field('cod')->equals($roleCod)
+        );
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
+     * Find people in multimedia objects
+     * with given role
+     *
+     * @param string $roleCod
+     * @return ArrayCollection
+     */
+    public function findPeopleWithRoleCode($roleCode)
+    {
+        $dm = $this->getDocumentManager();
+        $collection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+
+        $pipeline = array(
+                          array('$match' => array('people.cod' => "$roleCode")),
+                          array('$project' => array('_id' => 0, 'people.cod' => 1, 'people.people._id' => 1)),
+                          array('$unwind' => '$people')
+                          );
+
+        $aggregation = $collection->aggregate($pipeline);
+
+        $people = array();
+
+        foreach ($aggregation as $element) {
+            if (null !== $element['people']) {
+              if ((null !== $element['people']['cod']) && (null !== $element['people']['people'])) {
+                    if (0 === strpos($element['people']['cod'], $roleCode)) {
+                        foreach ($element['people']['people'] as $person) {
+                            if (!in_array($person['_id']->{'$id'}, $people)) {
+                                $people[] = $person['_id']->{'$id'};
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $people;
+    }
+
+    /**
+     * Find person in multimedia objects
+     * with given role and given email
+     *
+     * @param string $roleCod
+     * @param string $email
+     * @return ArrayCollection
+     */
+    public function findPersonWithRoleCodeAndEmail($roleCode, $email)
+    {
+        $dm = $this->getDocumentManager();
+        $collection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+
+        $pipeline = array(
+                          array('$match' => array('people.cod' => "$roleCode", 'people.people.email' => "$email")),
+                          array('$project' => array('_id' => 0, 'people.cod' => 1, 'people.people.email' => 1, 'people.people._id' => 1)),
+                          array('$unwind' => '$people')
+                          );
+
+        $aggregation = $collection->aggregate($pipeline);
+
+        $persons = array();
+
+        foreach($aggregation as $element) {
+            if(null !== $element['people']) {
+                if ((null !== $element['people']['cod']) && (null !== $element['people']['people'])) {
+                    if ((0 === strpos($element['people']['cod'], $roleCode))) {
+                        foreach ($element['people']['people'] as $person) {
+                            if($person['email'] === $email){
+                                if (!in_array($person['_id']->{'$id'}, $persons)) {
+                                    $persons[] = $person['_id']->{'$id'};
+                                }
+                            }
+                        }
+                    }
+                }
+            } 
+        }
+
+        return $persons;
+    }
+
+    /**
      * Find series by person id
      *
      * @param string $personId
@@ -130,6 +260,64 @@ class MultimediaObjectRepository extends DocumentRepository
           ->execute();
     }
 
+    /**
+     * Search series using text index
+     *
+     * @param string $text
+     * @return ArrayCollection
+     */
+    public function searchSeriesField($text, $limit = 0, $page = 0)
+    {
+        $qb = $this->createQueryBuilder()
+            ->field('$text')->equals(array('$search' => $text))
+            ->distinct('series');
+
+        if ($limit > 0){
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
+        return $qb->getQuery()->execute();
+    }
+
+
+    /**
+     * Search series using text index or the _id
+     *
+     * @param string $text or _id
+     * @return ArrayCollection
+     */
+    public function searchSeriesByIdOrField($text, $limit = 0, $page = 0)
+    {
+        $qb = $this->createQueryBuilder();
+        $qb->addOr($qb->expr()->field('$text')->equals(array('$search' => $text)));
+        $qb->addOr($qb->expr()->field('_id')->equals($text));
+        $qb->distinct('series');
+
+        if ($limit > 0){
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
+     * Find series by person id
+     *
+     * @param string $personId
+     * @param string $roleCod
+     * @return ArrayCollection
+     */
+    public function findSeriesFieldByPersonIdAndRoleCod($personId, $roleCod)
+    {
+        $qb = $this->createQueryBuilder();
+        $qb->field('people')->elemMatch(
+            $qb->expr()->field('people._id')->equals(new \MongoId($personId))
+                ->field('cod')->equals($roleCod)
+                                        );
+        return $qb->distinct('series')
+          ->getQuery()
+          ->execute();
+    }
 
     // Find Multimedia Objects with Tags
 
@@ -625,11 +813,17 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb->field('broadcast')->references($broadcast);
 
         // Includes PUCHWEBTV code
+        $tagRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
+        $unescoTag = $tagRepo->findOneByCod('UNESCO');
         $codes = array();
         foreach ($multimediaObject->getTags() as $tag) {
-            $codes[] = $tag->getCod();
+            if ($unescoTag) {
+                if ($tag->isDescendantOf($unescoTag)) {
+                    $codes[] = $tag->getCod();
+                }
+            }
         }
-        $qb->field('tags.cod')->all($codes);
+        $qb->field('tags.cod')->in($codes);
 
         // Limit 20 and random order
         $qb
@@ -688,5 +882,87 @@ class MultimediaObjectRepository extends DocumentRepository
         ->count()
         ->getQuery()
         ->execute();
+    }
+
+    /**
+     * Find by tag query builder
+     *
+     * @param Tag|EmbeddedTag $tag
+     * @return QueryBuilder
+     */
+    public function findByTagCodQueryBuilder($tag)
+    {
+        return $this->createStandardQueryBuilder()
+          ->field('tags.cod')->equals($tag->getCod());
+    }
+
+    /**
+     * Find by tag query
+     *
+     * @param Tag|EmbeddedTag $tag
+     * @param array $sort
+     * @return Query
+     */
+    public function findByTagCodQuery($tag, $sort=array())
+    {
+        $qb = $this->findByTagCodQueryBuilder($tag);
+        if ($sort) {
+            $qb->sort($sort);
+        }
+        return $qb->getQuery();
+    }
+
+    /**
+     * Find by tag code
+     *
+     * @param Tag|EmbeddedTag $tag
+     * @param array $sort
+     * @return Cursor
+     */
+    public function findByTagCod($tag, $sort=array())
+    {
+        return $this->findByTagCodQuery($tag, $sort)
+          ->execute();
+    }
+
+    /**
+     * Find all by tag query builder
+     *
+     * @param Tag|EmbeddedTag $tag
+     * @return QueryBuilder
+     */
+    public function findAllByTagQueryBuilder($tag)
+    {
+        return $this->createQueryBuilder()
+          ->field('tags._id')->equals(new \MongoId($tag->getId()));
+    }
+
+    /**
+     * Find all by tag query
+     *
+     * @param Tag|EmbeddedTag $tag
+     * @param array $sort
+     * @return Query
+     */
+    public function findAllByTagQuery($tag, $sort=array())
+    {
+        $qb = $this->findAllByTagQueryBuilder($tag);
+        if ($sort) {
+            $qb->sort($sort);
+        }
+        return $qb->getQuery();
+    }
+
+    /**
+     * Find all by tag
+     *
+     * @param Tag|EmbeddedTag $tag
+     * @param array $sort
+     * @return Cursor
+     */
+    public function findAllByTag($tag, $sort=array())
+    {
+        return $this->findAllByTagQuery($tag, $sort)
+          ->execute();
     }
 }

@@ -4,7 +4,6 @@
 <h1>{% trans %}Tags{% endtrans %}</h1>
 
 <div class="row">
-  {% if is_granted('ROLE_SUPER_ADMIN') %}
   <div class="col-md-12">
     <div class="well">
       <div id="list_tags">
@@ -20,19 +19,12 @@
         </div>
         <div class="col-md-10 text-right">
           {% if root %}
-            <a href="{{ path('pumukitnewadmin_tag_create', {'parent': root.id}) }}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-target="#myModal">{% trans %}New{% endtrans %}</a>
+            <a href="{{ path('pumukitnewadmin_tag_create', {'parent': root.id}) }}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
           {% endif%}
         </div>
       </div>
     </div>
   </div>
-  {% else %}
-  <div class="col-md-12">
-    <div class="well">
-      {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-    </div>
-  </div>
-  {% endif %}
 </div>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

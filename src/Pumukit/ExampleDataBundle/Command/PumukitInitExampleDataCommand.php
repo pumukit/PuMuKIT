@@ -27,6 +27,7 @@ class PumukitInitExampleDataCommand extends ContainerAwareCommand
 
       private $dm = null;
       private $repo = null;
+      private $roleRepo;
 
       protected function configure()
       {
@@ -34,9 +35,8 @@ class PumukitInitExampleDataCommand extends ContainerAwareCommand
             ->setName('pumukit:init:example')
             ->setDescription('Load Pumukit expample data fixtures to your database')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
-            ->addOption('reusezip', null, InputOption::VALUE_NONE, 'Set this parameter to not delete zip file with videos to reuse in the future')
             ->addOption('append', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
-            ->addOption('notClearFiles', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
+            ->addOption('reusezip', null, InputOption::VALUE_NONE, 'Set this parameter to not delete zip file with videos to reuse in the future')
             ->setHelp(<<<EOT
 
             Command to load a data set of data into a database. Useful for init a demo Pumukit environment.
@@ -45,7 +45,7 @@ class PumukitInitExampleDataCommand extends ContainerAwareCommand
 
             The --append parameter has to be used to add examples to database without deleting.
 
-            The --notClearFiles parameter has to be used to undelete files.
+            The --reusezip parameter has to be used to undelete files.
 
 EOT
           );
@@ -56,19 +56,30 @@ EOT
  
             $newFile = $this->getContainer()->getParameter('kernel.cache_dir') . '/tmp_file.zip';
             $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-            $this->repo = $this->getContainer()->get('doctrine_mongodb')->getRepository("PumukitSchemaBundle:Tag");
+            $this->repo = $this->dm->getRepository("PumukitSchemaBundle:Tag");
+            $this->roleRepo = $this->dm->getRepository("PumukitSchemaBundle:Role");
+            $this->seriesRepo = $this->dm->getRepository("PumukitSchemaBundle:Series");
+
             $factoryService = $this->getContainer()->get('pumukitschema.factory'); 
 
             if ($input->getOption('force')) {
-            
-                  if ($input->getOption('append') != 1){
-                        $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')->remove(array());
-                        $this->dm->getDocumentCollection('PumukitSchemaBundle:Person')->remove(array());
-                        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
-                        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
-                  }
+                  $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')->remove(array());
+                  $this->dm->getDocumentCollection('PumukitSchemaBundle:Person')->remove(array());
+                  $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
+                  $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
+            } elseif (!$input->getOption('append')) {
+                  $output->writeln('<error>ATTENTION:</error> This operation should not be executed in a production environment.');
+                  $output->writeln('');
+                  $output->writeln('<info>Would drop the database</info>');
+                  $output->writeln('Please run the operation with --force to execute');
+                  $output->writeln('<error>All data will be lost!</error>');
+                  return -1;
+            }
 
-                  if(!$input->getOption('notClearFiles')){
+
+            if ($input->getOption('force') || $input->getOption('append')) {
+
+                  if(!$input->getOption('reusezip')){
                         if (!$this->download(self::PATH_VIDEO, $newFile, $output)) {
                               echo "Failed to copy $file...\n";
                         }
@@ -80,203 +91,234 @@ EOT
                         }
                   }
 
-                  //Series Access grid
-                  $series = $factoryService->createSeries();
-                  $this->load_series($series, "Access grid");
-                  $this->load_pic_series($series, '39');
+                  // Roles
+                  $actorRole = $this->getRoleWithCode('actor');
+                  $presenterRole = $this->getRoleWithCode('presenter');
 
-                  $multimediaObject = $factoryService->createMultimediaObject($series);
-                  $this->load_multimediaobject($multimediaObject, $series, "Access grid");
-                  $this->load_track_multimediaobject($multimediaObject, '8', '24', false);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUBDECISIONS","PUBCHANNELS","PUCHARCA","Dscience","Dhealth"));
-                  $this->load_people_multimediaobject($multimediaObject, 'Will', 'actor');
-                  $this->load_pic_multimediaobject($multimediaObject, '17');
+                  //Series Access grid
+                  if(!$this->checkSeriesExists("Access grid")){
+                        $series = $factoryService->createSeries();
+                        $this->load_series($series, "Access grid");
+                        $this->load_pic_series($series, '39');
+                        $series->setProperty('dataexample', "Access grid");
+
+                        $multimediaObject = $factoryService->createMultimediaObject($series);
+                        $this->load_multimediaobject($multimediaObject, $series, "Access grid");
+                        $this->load_track_multimediaobject($multimediaObject, '8', '24', false);
+                        $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUBDECISIONS","PUBCHANNELS","PUCHWEBTV","Dscience","Dhealth"));
+                        $this->load_people_multimediaobject($multimediaObject, 'Will', $actorRole);
+                        $this->load_pic_multimediaobject($multimediaObject, '17');
+                  }
 
                   //Series Uvigo
-                  $series = $factoryService->createSeries();
-                  $this->load_series($series, "Uvigo");
-                  $this->load_pic_series($series, '7');
+                  if(!$this->checkSeriesExists("Uvigo")){
+                        $series = $factoryService->createSeries();
+                        $this->load_series($series, "Uvigo");
+                        $this->load_pic_series($series, '7');
+                        $series->setProperty('dataexample', "Uvigo");
 
-                  $multimediaObject = $factoryService->createMultimediaObject($series);
-                  $this->load_multimediaobject($multimediaObject, $series, "Uvigo");
-                  $this->load_track_multimediaobject($multimediaObject, '9', '26', false);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEREV","PUDEPD3","PUCHWEBTV","DIRECTRIZ","Dhealth"));
-                  $this->load_pic_multimediaobject($multimediaObject, '19');
+                        $multimediaObject = $factoryService->createMultimediaObject($series);
+                        $this->load_multimediaobject($multimediaObject, $series, "Uvigo");
+                        $this->load_track_multimediaobject($multimediaObject, '9', '26', false);
+                        $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEREV","PUDEPD3","PUCHWEBTV","DIRECTRIZ","Dhealth"));
+                        $this->load_pic_multimediaobject($multimediaObject, '19');
+                  }
 
                   //Series Robots
-                  $series = $factoryService->createSeries();
-                  $this->load_series($series, "Robots");
-                  $this->load_pic_series($series, '22');
+                  if(!$this->checkSeriesExists("Robots")){
+                        $series = $factoryService->createSeries();
+                        $this->load_series($series, "Robots");
+                        $this->load_pic_series($series, '22');
+                        $series->setProperty('dataexample', "Robots");
 
-                  $multimediaObject = $factoryService->createMultimediaObject($series);
-                  $this->load_multimediaobject($multimediaObject, $series, "AIBO");
-                  $this->load_track_multimediaobject($multimediaObject, '10', '38', false);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD3","Dscience","Dtechnical"));
-                  $this->load_pic_multimediaobject($multimediaObject, '21');
+                        $multimediaObject = $factoryService->createMultimediaObject($series);
+                        $this->load_multimediaobject($multimediaObject, $series, "AIBO");
+                        $this->load_track_multimediaobject($multimediaObject, '10', '38', false);
+                        $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD3","Dscience","Dtechnical"));
+                        $this->load_pic_multimediaobject($multimediaObject, '21');
 
-                  $multimediaObject = $factoryService->createMultimediaObject($series);
-                  $this->load_multimediaobject($multimediaObject, $series, "Movil");
-                  $this->load_track_multimediaobject($multimediaObject, '10', '36', false);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","Dscience","Dhumanities"));
-                  $this->load_people_multimediaobject($multimediaObject, 'Laura', 'presenter');
-                  $this->load_pic_multimediaobject($multimediaObject, '22');
+                        $multimediaObject = $factoryService->createMultimediaObject($series);
+                        $this->load_multimediaobject($multimediaObject, $series, "Movil");
+                        $this->load_track_multimediaobject($multimediaObject, '10', '36', false);
+                        $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","Dscience","Dhumanities"));
+                        $this->load_people_multimediaobject($multimediaObject, 'Laura', $presenterRole);
+                        $this->load_pic_multimediaobject($multimediaObject, '22');
 
-                  $multimediaObject = $factoryService->createMultimediaObject($series);
-                  $this->load_multimediaobject($multimediaObject, $series, "Fanuc");
-                  $this->load_track_multimediaobject($multimediaObject, '10', '28', false);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD3","PUCHWEBTV","DIRECTRIZ","Dhealth","Dtechnical"));
-                  $this->load_pic_multimediaobject($multimediaObject, '23');
+                        $multimediaObject = $factoryService->createMultimediaObject($series);
+                        $this->load_multimediaobject($multimediaObject, $series, "Fanuc");
+                        $this->load_track_multimediaobject($multimediaObject, '10', '28', false);
+                        $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD3","PUCHWEBTV","DIRECTRIZ","Dhealth","Dtechnical"));
+                        $this->load_pic_multimediaobject($multimediaObject, '23');
 
-                  $multimediaObject = $factoryService->createMultimediaObject($series);
-                  $this->load_multimediaobject($multimediaObject, $series, "Concurso");
-                  $this->load_track_multimediaobject($multimediaObject, '10', '30', false);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEREV","PUDEPD3","PUCHWEBTV","Dsocial","Dhumanities"));
-                  $this->load_pic_multimediaobject($multimediaObject, '27');
+                        $multimediaObject = $factoryService->createMultimediaObject($series);
+                        $this->load_multimediaobject($multimediaObject, $series, "Concurso");
+                        $this->load_track_multimediaobject($multimediaObject, '10', '30', false);
+                        $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEREV","PUDEPD3","PUCHWEBTV","Dsocial","Dhumanities"));
+                        $this->load_pic_multimediaobject($multimediaObject, '27');
 
-                  $multimediaObject = $factoryService->createMultimediaObject($series);
-                  $this->load_multimediaobject($multimediaObject, $series, "Robonova");
-                  $this->load_track_multimediaobject($multimediaObject, '10', '35', false);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD3","DIRECTRIZ","Dscience","Dhumanities"));
-                  $this->load_pic_multimediaobject($multimediaObject, '20');
+                        $multimediaObject = $factoryService->createMultimediaObject($series);
+                        $this->load_multimediaobject($multimediaObject, $series, "Robonova");
+                        $this->load_track_multimediaobject($multimediaObject, '10', '35', false);
+                        $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD3","DIRECTRIZ","Dscience","Dhumanities"));
+                        $this->load_pic_multimediaobject($multimediaObject, '20');
+                  }
 
                   //Series Polimedia
-                  $series = $factoryService->createSeries();
-                  $this->load_series($series, "Polimedia");
-                  $this->load_pic_series($series, '37');
+                  if(!$this->checkSeriesExists("Polimedia")){
+                        $series = $factoryService->createSeries();
+                        $this->load_series($series, "Polimedia");
+                        $this->load_pic_series($series, '37');
+                        $series->setProperty('dataexample', "Polimedia");
 
-                  $multimediaObject = $factoryService->createMultimediaObject($series);
-                  $this->load_multimediaobject($multimediaObject, $series, "Armesto");
-                  $this->load_track_multimediaobject($multimediaObject, '11', '34', false);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD3","PUBDECISIONS","Dsocial","Dhumanities"));
-                  $this->load_pic_multimediaobject($multimediaObject, '38');
+                        $multimediaObject = $factoryService->createMultimediaObject($series);
+                        $this->load_multimediaobject($multimediaObject, $series, "Armesto");
+                        $this->load_track_multimediaobject($multimediaObject, '11', '34', false);
+                        $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD3","PUBDECISIONS","Dsocial","Dhumanities"));
+                        $this->load_pic_multimediaobject($multimediaObject, '38');
+                  }
 
                   //Serie Energia de materiales y medio ambiente
-                  $series = $factoryService->createSeries();
-                  $this->load_series($series, "Energy materials and environment");
-                  $this->load_pic_series($series, '32');
+                  if(!$this->checkSeriesExists("Energy materials and environment")){
+                        $series = $factoryService->createSeries();
+                        $this->load_series($series, "Energy materials and environment");
+                        $this->load_pic_series($series, '32');
+                        $series->setProperty('dataexample', "Energy materials and environment");
 
-                  $multimediaObject = $factoryService->createMultimediaObject($series);
-                  $this->load_multimediaobject($multimediaObject, $series, "Energy materials and environment");
-                  $this->load_track_multimediaobject($multimediaObject, '12', '40', false);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUCHARCA","Dhealth","Dtechnical"));
-                  $this->load_people_multimediaobject($multimediaObject, 'Marcos', 'presenter');
-                  $this->load_pic_multimediaobject($multimediaObject, '28');
+                        $multimediaObject = $factoryService->createMultimediaObject($series);
+                        $this->load_multimediaobject($multimediaObject, $series, "Energy materials and environment");
+                        $this->load_track_multimediaobject($multimediaObject, '12', '40', false);
+                        $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUCHWEBTV","Dhealth","Dtechnical"));
+                        $this->load_people_multimediaobject($multimediaObject, 'Marcos', $presenterRole);
+                        $this->load_pic_multimediaobject($multimediaObject, '28');
+                  }
 
                   //Serie Marine sciences
-                  $series = $factoryService->createSeries();
-                  $this->load_series($series, "Marine sciences");
-                  $this->load_pic_series($series, '28');
+                  if(!$this->checkSeriesExists("Marine sciences")){
+                        $series = $factoryService->createSeries();
+                        $this->load_series($series, "Marine sciences");
+                        $this->load_pic_series($series, '28');
+                        $series->setProperty('dataexample', "Marine sciences");
 
-                  $multimediaObject = $factoryService->createMultimediaObject($series);
-                  $this->load_multimediaobject($multimediaObject, $series, "Toralla");
-                  $this->load_track_multimediaobject($multimediaObject, '13', '45', false);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEREV","PUDEPD2","PUDEPD3","PUCHWEBTV","Dscience","Dsocial"));
-                  $this->load_pic_multimediaobject($multimediaObject, '29');
+                        $multimediaObject = $factoryService->createMultimediaObject($series);
+                        $this->load_multimediaobject($multimediaObject, $series, "Toralla");
+                        $this->load_track_multimediaobject($multimediaObject, '13', '45', false);
+                        $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEREV","PUDEPD2","PUDEPD3","PUCHWEBTV","Dscience","Dsocial"));
+                        $this->load_pic_multimediaobject($multimediaObject, '29');
+                  }
 
                   //Serie NOS register
-                  $series = $factoryService->createSeries();
-                  $this->load_series($series, "NOS register");
-                  $this->load_pic_series($series, '41');
+                  if(!$this->checkSeriesExists("NOS register")){
+                        $series = $factoryService->createSeries();
+                        $this->load_series($series, "NOS register");
+                        $this->load_pic_series($series, '41');
+                        $series->setProperty('dataexample', "NOS register");
 
-                  $multimediaObject = $factoryService->createMultimediaObject($series);
-                  $this->load_multimediaobject($multimediaObject, $series, "Isaac Díaz Pardo");
-                  $this->load_track_multimediaobject($multimediaObject, '14', '46', false);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD3","PUCHWEBTV","Dsocial","Dhumanities"));
-                  $this->load_pic_multimediaobject($multimediaObject, '31');
+                        $multimediaObject = $factoryService->createMultimediaObject($series);
+                        $this->load_multimediaobject($multimediaObject, $series, "Isaac Díaz Pardo");
+                        $this->load_track_multimediaobject($multimediaObject, '14', '46', false);
+                        $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD3","PUCHWEBTV","Dsocial","Dhumanities"));
+                        $this->load_pic_multimediaobject($multimediaObject, '31');
 
-                  $multimediaObject = $factoryService->createMultimediaObject($series);
-                  $this->load_multimediaobject($multimediaObject, $series, "Promo");
-                  $this->load_track_multimediaobject($multimediaObject, '14', '47', false);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUCHARCA","Dscience","Dtechnical"));
-                  $this->load_pic_multimediaobject($multimediaObject, '30');
+                        $multimediaObject = $factoryService->createMultimediaObject($series);
+                        $this->load_multimediaobject($multimediaObject, $series, "Promo");
+                        $this->load_track_multimediaobject($multimediaObject, '14', '47', false);
+                        $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUCHWEBTV","Dscience","Dtechnical"));
+                        $this->load_pic_multimediaobject($multimediaObject, '30');
+                  }
 
                   //Serie Zigzag
-                  $series = $factoryService->createSeries();
-                  $this->load_series($series, "ZigZag");
-                  $this->load_pic_series($series, '40');
+                  if(!$this->checkSeriesExists("ZigZag")){
+                        $series = $factoryService->createSeries();
+                        $this->load_series($series, "ZigZag");
+                        $this->load_pic_series($series, '40');
+                        $series->setProperty('dataexample', "ZigZag");
 
-                  $multimediaObject = $factoryService->createMultimediaObject($series);
-                  $this->load_multimediaobject($multimediaObject, $series, "Episode I");
-                  $this->load_track_multimediaobject($multimediaObject, '15', '48', false);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD1","PUBCHANNELS","DIRECTRIZ","Dsocial","Dhealth"));
-                  $this->load_pic_multimediaobject($multimediaObject, '40');
+                        $multimediaObject = $factoryService->createMultimediaObject($series);
+                        $this->load_multimediaobject($multimediaObject, $series, "Episode I");
+                        $this->load_track_multimediaobject($multimediaObject, '15', '48', false);
+                        $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD1","PUBCHANNELS","DIRECTRIZ","Dsocial","Dhealth"));
+                        $this->load_pic_multimediaobject($multimediaObject, '40');
+                  }
 
                   //Serie Quijote
-                  $series = $factoryService->createSeries();
-                  $this->load_series($series, "Quijote");
-                  $this->load_pic_series($series, '35');
+                  if(!$this->checkSeriesExists("Quijote")){
+                        $series = $factoryService->createSeries();
+                        $this->load_series($series, "Quijote");
+                        $this->load_pic_series($series, '35');
+                        $series->setProperty('dataexample', "Quijote");
 
-                  $multimediaObject = $factoryService->createMultimediaObject($series);
-                  $this->load_multimediaobject($multimediaObject, $series, "First");
-                  $this->load_track_multimediaobject($multimediaObject, '16', '53', false);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDEPD3","PUCHARCA","Dtechnical","Dhumanities"));
-                  $this->load_people_multimediaobject($multimediaObject, 'Ana', 'actor');
-                  $this->load_pic_multimediaobject($multimediaObject, '33');
+                        $multimediaObject = $factoryService->createMultimediaObject($series);
+                        $this->load_multimediaobject($multimediaObject, $series, "First");
+                        $this->load_track_multimediaobject($multimediaObject, '16', '53', false);
+                        $this->load_tags_multimediaobject($multimediaObject, array("PUDEPD3","PUCHWEBTV","Dtechnical","Dhumanities"));
+                        $this->load_people_multimediaobject($multimediaObject, 'Ana', $actorRole);
+                        $this->load_pic_multimediaobject($multimediaObject, '33');
 
-                  $multimediaObject = $factoryService->createMultimediaObject($series);
-                  $this->load_multimediaobject($multimediaObject, $series, "Second");
-                  $this->load_track_multimediaobject($multimediaObject, '16', '50', false);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD2","PUCHWEBTV","Dsocial","Dtechnical"));
-                  $this->load_pic_multimediaobject($multimediaObject, '34');
+                        $multimediaObject = $factoryService->createMultimediaObject($series);
+                        $this->load_multimediaobject($multimediaObject, $series, "Second");
+                        $this->load_track_multimediaobject($multimediaObject, '16', '50', false);
+                        $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD2","PUCHWEBTV","Dsocial","Dtechnical"));
+                        $this->load_pic_multimediaobject($multimediaObject, '34');
+                  }
 
                   //Serie autonomic
-                  $series = $factoryService->createSeries();
-                  $this->load_series($series, "Financing economic autonomy statutes");
-                  $this->load_pic_series($series, '33');
+                  if(!$this->checkSeriesExists("Financing economic autonomy statutes")){
+                        $series = $factoryService->createSeries();
+                        $this->load_series($series, "Financing economic autonomy statutes");
+                        $this->load_pic_series($series, '33');
+                        $series->setProperty('dataexample', "Financing economic autonomy statutes");
 
-                  $multimediaObject = $factoryService->createMultimediaObject($series);
-                  $this->load_multimediaobject($multimediaObject, $series, "Conference");
-                  $this->load_track_multimediaobject($multimediaObject, '17', '54', false);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEREV","PUDEPD3","PUCHARCA","Dscience","Dhumanities"));
-                  $this->load_pic_multimediaobject($multimediaObject, '35');
+                        $multimediaObject = $factoryService->createMultimediaObject($series);
+                        $this->load_multimediaobject($multimediaObject, $series, "Conference");
+                        $this->load_track_multimediaobject($multimediaObject, '17', '54', false);
+                        $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEREV","PUDEPD3","PUCHWEBTV","Dscience","Dhumanities"));
+                        $this->load_pic_multimediaobject($multimediaObject, '35');
+                  }
 
                   //Serie HD
-                  $series = $factoryService->createSeries();
-                  $this->load_series($series, "HD");
-                  $this->load_pic_series($series, '36');
+                  if(!$this->checkSeriesExists("HD")){
+                        $series = $factoryService->createSeries();
+                        $this->load_series($series, "HD");
+                        $this->load_pic_series($series, '36');
+                        $series->setProperty('dataexample', "HD");
 
-                  $multimediaObject = $factoryService->createMultimediaObject($series);
-                  $this->load_multimediaobject($multimediaObject, $series, "Presentation");
-                  $this->load_track_multimediaobject($multimediaObject, '18', '56', false);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUBDECISIONS","PUDEPD1","DIRECTRIZ","Dsocial","Dtechnical"));
-                  $this->load_people_multimediaobject($multimediaObject, 'Sara', 'presenter');
-                  $this->load_people_multimediaobject($multimediaObject, 'Carlos', 'actor');
-                  $this->load_pic_multimediaobject($multimediaObject, '36');
+                        $multimediaObject = $factoryService->createMultimediaObject($series);
+                        $this->load_multimediaobject($multimediaObject, $series, "Presentation");
+                        $this->load_track_multimediaobject($multimediaObject, '18', '56', false);
+                        $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUBDECISIONS","PUDEPD1","DIRECTRIZ","Dsocial","Dtechnical"));
+                        $this->load_people_multimediaobject($multimediaObject, 'Sara', $presenterRole);
+                        $this->load_people_multimediaobject($multimediaObject, 'Carlos', $actorRole);
+                        $this->load_pic_multimediaobject($multimediaObject, '36');
+                  }
 
                   //Serie AUDIOS
-                  $series = $factoryService->createSeries();
-                  $this->load_series($series, "Audios");
-                  $this->load_pic_series($series, 'audio');
+                  if(!$this->checkSeriesExists("Audios")){
+                        $series = $factoryService->createSeries();
+                        $this->load_series($series, "Audios");
+                        $this->load_pic_series($series, 'audio');
+                        $series->setProperty('dataexample', "Audios");
 
-                  $multimediaObject = $factoryService->createMultimediaObject($series);
-                  $this->load_multimediaobject($multimediaObject, $series, "Audio1");
-                  $this->load_track_multimediaobject($multimediaObject,'20', 'Audio1', true);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUBDECISIONS","PUDEPD1","DIRECTRIZ","Dsocial","Dtechnical"));
-                  $this->load_people_multimediaobject($multimediaObject, 'Sara', 'presenter');
-                  $this->load_pic_multimediaobject($multimediaObject, 'audio');
+                        $multimediaObject = $factoryService->createMultimediaObject($series);
+                        $this->load_multimediaobject($multimediaObject, $series, "Audio1");
+                        $this->load_track_multimediaobject($multimediaObject,'20', 'Audio1', true);
+                        $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUBDECISIONS","PUDEPD1","DIRECTRIZ","Dsocial","Dtechnical"));
+                        $this->load_people_multimediaobject($multimediaObject, 'Sara', $presenterRole);
+                        $this->load_pic_multimediaobject($multimediaObject, 'audio');
 
-                  $multimediaObject = $factoryService->createMultimediaObject($series);
-                  $this->load_multimediaobject($multimediaObject, $series, "Audio2");
-                  $this->load_track_multimediaobject($multimediaObject,'20', 'Audio2', true);
-                  $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUBDECISIONS","PUDEPD1","DIRECTRIZ","Dsocial","Dtechnical"));
-                  $this->load_people_multimediaobject($multimediaObject, 'Sara', 'presenter');
-                  $this->load_pic_multimediaobject($multimediaObject, 'audio');
+                        $multimediaObject = $factoryService->createMultimediaObject($series);
+                        $this->load_multimediaobject($multimediaObject, $series, "Audio2");
+                        $this->load_track_multimediaobject($multimediaObject,'20', 'Audio2', true);
+                        $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUBDECISIONS","PUDEPD1","DIRECTRIZ","Dsocial","Dtechnical"));
+                        $this->load_people_multimediaobject($multimediaObject, 'Sara', $presenterRole);
+                        $this->load_pic_multimediaobject($multimediaObject, 'audio');
+                  }
 
-
-                  if(!$input->getOption('notClearFiles')){
+                  if(!$input->getOption('reusezip')){
                         unlink($newFile);
                   }
+                  $output->writeln('');
                   $output->writeln('<info>Example data load successful</info>');
             } 
-            else {
-                  $output->writeln('<error>ATTENTION:</error> This operation should not be executed in a production environment.');
-                  $output->writeln('');
-                  $output->writeln('<info>Would drop the database</info>');
-                  $output->writeln('Please run the operation with --force to execute');
-                  $output->writeln('<error>All data will be lost!</error>');
-
-                  return -1;
-            }
       }
 
       private function load_series($series, $title){
@@ -394,12 +436,9 @@ EOT
             $personService = $this->getContainer()->get('pumukitschema.person');
             $person = new Person();
             $person->setName($name);
-
-            $rolePerson = new Role();
-            $rolePerson->setCod($role);
-
-            $multimediaObject->addPersonWithRole($person, $rolePerson);
             $personService->savePerson($person);
+
+            $multimediaObject = $personService->createRelationPerson($person, $role, $multimediaObject);
       }
 
       private function load_pic_multimediaobject($multimediaObject, $pic){
@@ -437,5 +476,22 @@ EOT
             $progress->finish();
             
             return (200 == $statusCode);
+      }
+
+      private function getRoleWithCode($code)
+      {
+          $role = $this->roleRepo->findOneByCod($code);
+          if (null == $role) {
+              throw new \Exception("Role with code '".$code."' not found. Please, init pumukit roles.");
+          }
+
+          return $role;
+      }
+
+      private function checkSeriesExists($seriesTitle)
+      {
+            $exist = $this->seriesRepo->findOneBySeriesProperty("dataexample", $seriesTitle);
+            if (null != $exist) return true;
+            else return false;
       }
 }

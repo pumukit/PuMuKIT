@@ -23,7 +23,22 @@ class BreadcrumbsService
     $this->allTitle = $allTitle;
     $this->allRoute = $allRoute;
     $this->translator = $translator;
-    $this->reset();
+
+    $this->init();
+  }
+
+  public function init() {
+    if (!$this->session->has('breadcrumbs/title')) { 
+      $this->session->set('breadcrumbs/title', $this->translator->trans($this->allTitle));
+    }
+    if (!$this->session->has('breadcrumbs/routeParameters')) {
+      $this->session->set('breadcrumbs/routeName', $this->allRoute);
+    }
+    if (!$this->session->has('breadcrumbs/routeParameters')) {
+      $this->session->set('breadcrumbs/routeParameters', array());
+    }
+
+    $this->breadcrumbs = array(array("title" => "Home", "link" => $this->router->generate("pumukit_webtv_index_index")));
   }
 
   public function reset()

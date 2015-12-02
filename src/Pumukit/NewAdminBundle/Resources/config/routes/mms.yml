@@ -20,6 +20,12 @@ pumukitnewadmin_mms_edit:
     defaults:
         _controller: pumukitnewadmin.controller.mms:editAction
 
+pumukitnewadmin_mms_links:
+    pattern: /{id}/links
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:linksAction
+
 pumukitnewadmin_mms_update_meta:
     pattern: /{id}/update/meta
     methods: [POST]
@@ -45,6 +51,18 @@ pumukitnewadmin_mms_delete:
     methods: [DELETE]
     defaults:
         _controller: pumukitnewadmin.controller.mms:deleteAction
+
+pumukitnewadmin_mms_generate_magic_url:
+    pattern: /{id}/generatemagic
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:generateMagicUrlAction
+
+pumukitnewadmin_mms_clone:
+    pattern: /{id}/clone
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:cloneAction
 
 pumukitnewadmin_mms_copy:
     pattern: /{id}/copy
@@ -141,4 +159,10 @@ pumukitnewadmin_mms_reorder:
     methods: [POST]
     defaults:
         _controller: pumukitnewadmin.controller.mms:reorderAction
+
+pumukitnewadmin_mms_sync_tags:
+    pattern: /synctags
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:syncTagsAction
 

@@ -15,9 +15,11 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $firm = 'firm';
         $post = 'post';
         $bio = 'Biography of this person';
+        $locale = 'es';
 
         $person = new Person();
 
+        $person->setLocale($locale);
         $person->setEmail($email);
         $person->setName($name);
         $person->setWeb($web);
@@ -35,6 +37,15 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($firm, $person->getFirm());
         $this->assertEquals($post, $person->getPost());
         $this->assertEquals($bio, $person->getBio());
+        $this->assertEquals($locale, $person->getLocale());
+
+        $this->assertEquals($honorific.' '.$name, $person->getHName());
+        $this->assertEquals($post.' '.$firm.' '.$bio, $person->getOther());
+        $this->assertEquals($post.', '.$firm.', '.$bio, $person->getInfo());
+
+        $bio = '';
+        $person->setBio($bio);
+        $this->assertEquals($post.', '.$firm, $person->getInfo());
 
         $honorificEs = 'Don';
         $firmEs = 'Firma de esta persona';
@@ -56,12 +67,26 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($i18nPost, $person->getI18nPost());
         $this->assertEquals($i18nBio, $person->getI18nBio());
 
-        $this->assertEquals($honorific.' '.$name, $person->getHName());
-        $this->assertEquals($post.' '.$firm.' '.$bio, $person->getOther());
-        $this->assertEquals($post.', '.$firm.', '.$bio, $person->getInfo());
+        $honorific = null;
+        $firm = null;
+        $post = null;
+        $bio = null;
 
-        $bio = '';
+        $person->setHonorific($honorific);
+        $person->setFirm($firm);
+        $person->setPost($post);
         $person->setBio($bio);
-        $this->assertEquals($post.', '.$firm, $person->getInfo());
+
+        $this->assertEquals($honorific, $person->getHonorific());
+        $this->assertEquals($firm, $person->getFirm());
+        $this->assertEquals($post, $person->getPost());
+        $this->assertEquals($bio, $person->getBio());
+    }
+
+    public function testCloneResource()
+    {
+        $person = new Person();;
+
+        $this->assertEquals($person, $person->cloneResource());
     }
 }

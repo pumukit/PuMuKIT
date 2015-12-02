@@ -7,6 +7,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\EncoderBundle\Document\Job;
 
 class FactoryService
 {
@@ -17,13 +18,15 @@ class FactoryService
     private $tagService;
     private $translator;
     private $locales;
+    private $defaultCopyright;
 
-    public function __construct(DocumentManager $documentManager, TagService $tagService, TranslatorInterface $translator, array $locales = array())
+    public function __construct(DocumentManager $documentManager, TagService $tagService, TranslatorInterface $translator, array $locales = array(), $defaultCopyright = "")
     {
         $this->dm = $documentManager;
         $this->tagService = $tagService;
         $this->translator = $translator;
         $this->locales = $locales;
+        $this->defaultCopyright = $defaultCopyright;
     }
 
     /**
@@ -44,7 +47,7 @@ class FactoryService
         $series = new Series();
 
         $series->setPublicDate(new \DateTime("now"));
-        $series->setCopyright('UdN-TV');
+        $series->setCopyright($this->defaultCopyright);
         foreach ($this->locales as $locale) {
             $title = $this->translator->trans(self::DEFAULT_SERIES_TITLE, array(), null, $locale);
             $series->setTitle($title, $locale);
@@ -78,6 +81,7 @@ class FactoryService
         }
         $mm->setPublicDate(new \DateTime("now"));
         $mm->setRecordDate($mm->getPublicDate());
+        $mm->setCopyright($this->defaultCopyright);        
         foreach ($this->locales as $locale) {
             $title = $this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE, array(), null, $locale);
             $mm->setTitle($title, $locale);
@@ -105,11 +109,11 @@ class FactoryService
                 $title = $this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE, array(), null, $locale);
                 $mm->setTitle($title, $locale);
             }
-        }
-        $broadcast = $this->getDefaultBroadcast();
-        if ($broadcast) {
-            $mm->setBroadcast($broadcast);
-            $this->dm->persist($broadcast);
+            $broadcast = $this->getDefaultBroadcast();
+            if ($broadcast) {
+                $mm->setBroadcast($broadcast);
+                $this->dm->persist($broadcast);
+            }
         }
         $mm->setPublicDate(new \DateTime("now"));
         $mm->setRecordDate($mm->getPublicDate());
@@ -140,14 +144,6 @@ class FactoryService
         }
 
         return $broadcast;
-    }
-
-    /**
-     * Get all roles
-     */
-    public function getRoles()
-    {
-        return $this->dm->getRepository('PumukitSchemaBundle:Role')->findAll();
     }
 
     /**
@@ -236,6 +232,7 @@ class FactoryService
     public function deleteSeries(Series $series)
     {      
         $repoMmobjs = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $jobRepo = $this->dm->getRepository("PumukitEncoderBundle:Job");
          
         $multimediaObjects = $repoMmobjs->findBySeries($series);
         foreach($multimediaObjects as $mm){
@@ -252,6 +249,7 @@ class FactoryService
      */
     public function deleteResource($resource)
     {
+        $jobRepo = $this->dm->getRepository("PumukitEncoderBundle:Job");
         $this->dm->remove($resource);
         $this->dm->flush();
     }
@@ -266,15 +264,18 @@ class FactoryService
     {
         $new = new MultimediaObject();
 
-        //$new->setRank($prototype->getRank()); //SortablePosition
         $new->setI18nTitle($prototype->getI18nTitle());
         $new->setI18nSubtitle($prototype->getI18nSubtitle());
         $new->setI18nDescription($prototype->getI18nDescription());
         $new->setI18nLine2($prototype->getI18nLine2());
         $new->setI18nKeyword($prototype->getI18nKeyword());
         $new->setCopyright($prototype->getCopyright());
-        $new->setDuration($prototype->getDuration());
-        $new->setNumview($prototype->getNumview());
+        $new->setLicense($prototype->getLicense());
+
+        if ($broadcast = $prototype->getBroadcast()) {
+            $new->setBroadcast($broadcast);
+            $this->dm->persist($broadcast);
+        }
 
         foreach ($prototype->getTags() as $tag) {
           $tagAdded = $this->tagService->addTagToMultimediaObject($new, $tag->getId(), false);
@@ -285,6 +286,58 @@ class FactoryService
                 $new->addPersonWithRole($embeddedPerson, $embeddedRole);
             }
         }
+
+        return $new;
+    }
+
+
+    /**
+     * Clone a multimedia object.
+     *
+     * @param  MultimediaObject $src
+     * @return MultimediaObject
+     */
+    public function cloneMultimediaObject(MultimediaObject $src)
+    {
+        $new = new MultimediaObject();
+
+        $new->setI18nTitle($src->getI18nTitle());
+        $new->setI18nSubtitle($src->getI18nSubtitle());
+        $new->setI18nDescription($src->getI18nDescription());
+        $new->setI18nLine2($src->getI18nLine2());
+        $new->setI18nKeyword($src->getI18nKeyword());
+        $new->setCopyright($src->getCopyright());
+        $new->setLicense($src->getLicense());
+
+        // NOTE: #7408 Specify which properties are clonable
+        $new->setProperty("subseries", $src->getProperty("subseries"));
+        $new->setProperty("subseriestitle", $src->getProperty("subseriestitle"));
+
+        $new->setProperty("clonedfrom", $src->getId());
+
+        foreach ($src->getTags() as $tag) {
+          $tagAdded = $this->tagService->addTagToMultimediaObject($new, $tag->getId(), false);
+        }
+
+        foreach ($src->getRoles() as $embeddedRole) {
+            foreach ($embeddedRole->getPeople() as $embeddedPerson) {
+                $new->addPersonWithRole($embeddedPerson, $embeddedRole);
+            }
+        }
+
+        $new->setSeries($src->getSeries());
+
+        if ($broadcast = $src->getBroadcast()) {
+            $new->setBroadcast($broadcast);
+            $this->dm->persist($broadcast);
+        }
+
+        $new->setPublicDate($src->getPublicDate());
+        $new->setRecordDate($src->getRecordDate());
+        $new->setStatus(MultimediaObject::STATUS_BLOQ);
+
+        $this->dm->persist($new);
+        $this->dm->flush();
 
         return $new;
     }

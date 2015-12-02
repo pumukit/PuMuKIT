@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="gl" datatype="plaintext" original="file.ext">
+    <body>
+      <trans-unit id="49ee3087348e8d44e1feda1917443987" resname="Name">
+        <source>Name</source>
+        <target>Nome</target>
+      </trans-unit>
+      <trans-unit id="4c2a8fe7eaf24721cc7a9f0175115bd4" resname="Message">
+        <source>Message</source>
+        <target>Mensaxe</target>
+      </trans-unit>
+      <trans-unit id="c3b975e40cbcc80efebf447590bbf74e" resname="How to use the chat">
+        <source>How to use the chat</source>
+        <target>Cómo empregar o chat</target>
+      </trans-unit>
+      <trans-unit id="0e150ebecd179bcab871f56bc888ab4b" resname="Enter your name, write your message and press Enter.">
+        <source>Enter your name, write your message and press Enter.</source>
+        <target>Introduza o seu nome, escriba a súa mensaxe e pulse Intro.</target>
+      </trans-unit>
+      <trans-unit id="744bb349653a2001187d48840da8051a" resname="Name cannot be empty">
+        <source>Name cannot be empty</source>
+        <target>Debe introducir un nome</target>
+      </trans-unit>
+      <trans-unit id="b024381f0498329c791a3991c10660af" resname="No title">
+        <source>No title</source>
+        <target>Sen título</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

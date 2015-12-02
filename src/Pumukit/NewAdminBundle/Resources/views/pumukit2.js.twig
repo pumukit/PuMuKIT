@@ -47,6 +47,18 @@ window.submit_delete_live = function(id)
     }
 }
 
+
+window.submit_delete_seriestype = function(id)
+{
+    if (window.confirm("{% trans %}Are you sure you want to delete this series type?{% endtrans %}")){
+        var url = "{{ path('pumukitnewadmin_seriestype_delete', {'id': '__id__'})|raw }}";
+        var message = '{% trans %}Series type successfully deleted.{% endtrans %}';
+        $('#list_seriestypes').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
+    }
+}
+
+
+
 window.submit_delete_event = function(id)
 {
     if (window.confirm("{% trans %}Are you sure you want to delete this live event?{% endtrans %}")){
@@ -56,17 +68,86 @@ window.submit_delete_event = function(id)
     }
 }
 
+
+window.sync_tags_mms = function(id)
+{
+    if (window.confirm("{% trans %}Are you sure you want to sync this tags? The tags in other objects from this series will be lost.{% endtrans %}")){
+      var route = "{{ path('pumukitnewadmin_mms_sync_tags', {'id': '__id__'})|raw }}";
+      route = route.replace('__id__', id);
+      $.ajax(route, {
+        type: 'POST',
+        success: function(response, textStatus, jqXHR){
+          window.location.reload();
+        }
+      });
+    }
+}
+
+
 window.submit_delete_mms = function(id)
 {
     if (window.confirm("{% trans %}Are you sure you want to delete this multimedia object?{% endtrans %}")){
         var url = "{{ path('pumukitnewadmin_mms_delete', {'id': '__id__'})|raw }}";
         var message = '{% trans %}Multimedia Object successfully deleted.{% endtrans %}';
         var sessionId = $($('tr.success').find('input.mm_checkbox')[0]).attr('id');
-        $('#list_mms').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){
-            if (id === sessionId) {
-                $('#preview_mm').html('{% trans %}Select any multimedia object.{% endtrans %}');
-                $('#edit_mm').html('');
+        $('#list_mms').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
+            if (textStatus !== "error") {
+                if (id === sessionId) {
+                    $('#preview_mm').html('{% trans %}Select any multimedia object.{% endtrans %}');
+                    $('#edit_mm').html('');
+                }
+                success(message)
+            } else {
+                no_success(XMLHttpRequest['statusText'] + ': ' + responseText);
             }
+        });
+    }
+}
+
+window.submit_generate_magic_mms = function(id)
+{
+    if (window.confirm("{% trans %}Are you sure you want to regenerate the magic url for this multimedia object?{% endtrans %}")){
+        var url = "{{ path('pumukitnewadmin_mms_generate_magic_url', {'id': '__id__'})|raw }}";
+        var magicUrl =    "{{ url('pumukit_webtv_multimediaobject_magicindex', {secret: '__secret__'})|raw }}";
+        var message = '{% trans %}Magic Url successfully generated.{% endtrans %}';
+        $('#inputROMagicUrl').load(url.replace('__id__', id), {'_method': 'POST'}, function(responseText, textStatus, XMLHttpRequest){
+            if (textStatus !== "error") {
+                success(message);
+                magicUrl = magicUrl.replace('__secret__', responseText)
+                $('#inputROMagicUrl').val(magicUrl);
+                $('#alinkROMagicUrl').attr("href",magicUrl);
+            } else {
+                no_success(XMLHttpRequest['statusText'] + ': ' + responseText);
+            }
+        });
+    }
+}
+
+window.submit_generate_magic_series = function(id, seriesTitle)
+{
+    if (window.confirm("{% trans %}Are you sure you want to regenerate the magic url for the Series: "+seriesTitle+"?{% endtrans %}")){
+        var url = "{{ path('pumukitnewadmin_series_generate_magic_url', {'id': '__id__'})|raw }}";
+        var magicUrl = "{{url('pumukit_webtv_series_magicindex', {secret: '__secret__'})}}"
+        var message = '{% trans %}Magic Url successfully generated.{% endtrans %}';
+        $('#inputROMagicUrl').load(url.replace('__id__', id), {'_method': 'POST'}, function(responseText, textStatus, XMLHttpRequest){
+            if (textStatus !== "error") {
+                success(message);
+                magicUrl = magicUrl.replace('__secret__', responseText)
+                $('#inputROMagicUrl').val(magicUrl);
+                $('#alinkROMagicUrl').attr("href",magicUrl);
+            } else {
+                no_success(XMLHttpRequest['statusText'] + ': ' + responseText);
+            }
+        });
+    }
+}
+
+window.submit_clone_mms = function(id)
+{
+    if (window.confirm("{% trans %}Are you sure you want to clone this multimedia object?{% endtrans %}")){
+        var url = "{{ path('pumukitnewadmin_mms_clone', {'id': '__id__'})|raw }}";
+        var message = '{% trans %}Multimedia Object successfully cloned.{% endtrans %}';
+        $('#list_mms').load(url.replace('__id__', id), {'_method': 'POST'}, function(){
             success(message)
         });
     }
@@ -78,12 +159,16 @@ window.submit_delete_series = function(id, seriesTitle, countMm)
         var url = "{{ path('pumukitnewadmin_series_delete', {'id': '__id__'})|raw }}";
         var message = '{% trans %}Series{% endtrans %} "'+seriesTitle+'" {% trans %}successfully deleted{% endtrans %}.';
         var sessionId = $($('tr.success').find('input.series_checkbox')[0]).attr('id');
-        $('#list_series').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){
-            if (id === sessionId) {
-                $('#preview_series').html('{% trans %}Select any series.{% endtrans %}');
-                $('#edit_series').html('');
+        $('#list_series').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
+            if (textStatus !== "error") {
+                if (id === sessionId) {
+                    $('#preview_series').html('{% trans %}Select any series.{% endtrans %}');
+                    $('#edit_series').html('');
+                }
+                success(message);
+            } else {
+                no_success(XMLHttpRequest['statusText'] + ': ' + responseText);
             }
-            success(message);
         });
     }
 }
@@ -104,12 +189,21 @@ window.update_preview = function(id) {
   $('#preview_series').load(route, {method:'POST'});
 }
 
+window.delete_eventpic = function(eventId) {
+    if (window.confirm('{% trans %}Are you sure you want to delete this picture?{% endtrans %}')) {
+        var url = '{{ path('pumukitnewadmin_eventpic_delete', {'id': '___id___'})|raw }}';
+        $('#list_events').load(url.replace('___id___', eventId), {'_method': 'DELETE'}, function(){
+            var show_url = "{{ path('pumukitnewadmin_event_show', {'id': '___id___'})|raw }}";
+            $('#preview_event').load(show_url.replace('___id___', eventId));
+            success('{% trans %}Image removed.{% endtrans %}');
+        });
+    }
+}
+
 window.delete_seriespic = function(id, seriesId) {
     if (window.confirm('{% trans %}Are you sure you want to delete this picture?{% endtrans %}')) {
         var url = '{{ path('pumukitnewadmin_seriespic_delete', {'id': '___id___'})|raw }}';
-        var div_id = '#pic_series___seriesId__';
-        div_id = div_id.replace('__seriesId__', seriesId);
-        $(div_id).load(url.replace('___id___', id), {'_method': 'DELETE'}, function(){success('{% trans %}Image removed.{% endtrans %}');});
+        $('#edit_series').load(url.replace('___id___', id), {'_method': 'DELETE'}, function(){success('{% trans %}Image removed.{% endtrans %}');});
     }
 }
 
@@ -212,6 +306,26 @@ window.submit_delete_track = function(id, mmId, seriesId)
     }
 }
 
+window.extract_pic = function(trackId, mmId, numframe)
+{
+    var url = "{{ path('pumukitnewadmin_track_pic', {'id': '__trackId__', 'mmId': '__mmId__', 'preview': 1, 'numframe': '__numframe__'})|raw }}";
+    $.ajax({
+	url: url.replace('__mmId__', mmId).replace('__trackId__', trackId).replace('__numframe__', numframe),
+        type: 'POST',
+        beforeSend: function(){
+            $('#pic_mms_' + mmId +'_load').show();
+        },
+        success: function(response){
+            $('#pic_mms_' + mmId + '_load').hide();
+            $('#pic_mms_' + mmId).html(response);
+        },
+        error: function(){
+	    $('#pic_mms_' + mmId +'_load').hide();
+            no_success('{% trans %}Error extracting pic{% endtrans %}');
+        }
+    });
+}
+
 window.submit_delete_person = function(id, countMm, personHName)
 {
     if (countMm == 0){
@@ -294,9 +408,8 @@ window.submit_series_change_pub = function()
     });
     if (values.size == 0) return false;
 
-    var route = '{{ path('pumukitnewadmin_series_updatepub', {'id': '__seriesId__', 'values': '__values__'}) }}';
-    route = route.replace('__values__', JSON.stringify(values));
-    $('#list_series').load(route, {'_method':'POST'});
+    var route = '{{ path('pumukitnewadmin_series_updatepub') }}';
+    $('#list_series').load(route, {'_method':'POST', 'values': values});
 
     return false;
 }
@@ -392,8 +505,7 @@ window.change_select = function(element, selector, pluralName)
                             var message = errorThrown+': {% trans %}Tags with children can not be deleted.{% endtrans %} '+statusError;
                             no_success(message);
                         }else{
-                            var message = '{% trans %}There was an error in deleting.{% endtrans %}';
-                            no_success(message);
+                            no_success(errorThrown + ': ' + jqXHR.responseText);
                         }
                     },
                     success: function(response){
@@ -415,10 +527,6 @@ window.change_select = function(element, selector, pluralName)
                     }
             });
         }
-        break;
-    case 'create':
-        $('.modal-content').load(get_create_route(element));
-        $('#myModal').modal('show');
         break;
     case 'series_preview':
         var url = "{{ url('pumukit_webtv_series_magicindex', {secret: '__mmSecret__'}) }}";
@@ -562,16 +670,18 @@ window.change_select = function(element, selector, pluralName)
                 var route = '{{ path('pumukitnewadmin_mms_invert_announce', {'ids': '__ids__'})|raw }}';
             $('#list_'+pluralName).load(route.replace('__ids__', JSON.stringify(ids)));
         }
+        var editSeriesId = $("#inputROId").val();
+        var editMmId = $("#inputMMId").val();
         for (var i = 0; i < ids.length; i++) {
             id = ids[i];
-            if ('mm' == element) {
+            if (('mm' == element) && (id == editMmId)){
                 var puDeNew = $("#list_pubdecisions_"+id+" #pub_decisions_PUDENEW");
                 if (1 == puDeNew.length){
                     var checkedValue = puDeNew[0].checked;
                     if (checkedValue) puDeNew[0].checked = false;
                     else puDeNew[0].checked = true;
                 }
-            } else if ('series' == element) {
+            } else if (('series' == element) && (id == editSeriesId)) {
                 var announcedSeries = $("#pumukitnewadmin_series_announce");
                 if (1 == announcedSeries.length){
                     var checkedValue = announcedSeries[0].checked;
@@ -685,7 +795,7 @@ function add_tree_tag(tag_id, mm_id, block_tag_id)
   $.post(route, {"tag": tag_id}, function(data, textStatus, jqXHR){
     for (var i=0; i < data.added.length; i++) {
       var c = data.added[i];
-      inc_num_mm(c.id, 1);
+      !data.prototype && inc_num_mm(c.id, 1);
       var aux = c.group.split("|");
       if(aux[1] && aux.length > 3) create_element_in_select(c, aux[1], mm_id);
     }
@@ -708,7 +818,7 @@ function del_tree_tag(tag_id, mm_id)
         var c = response.deleted[i];
         var $_element = $("#select_li_" + c.id);
         if ($_element)  $_element.remove();
-        inc_num_mm(c.id, -1);
+        !response.prototype && inc_num_mm(c.id, -1);
       }
       var url = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'}) }}";
       $('#preview_mm').load(url.replace('__mmId__', mm_id));
@@ -874,15 +984,14 @@ $(function() {
   });
 });
 
-{% set titleLocale = 'title.'~app.request.getLocale() %}
 $(document).on('click', '#pumukitnewadmin_series_title_sort_selected', function(){
     var inputROId = $('#inputROId').val();
     var type = $('#pumukitnewadmin_series_sort_change_type').val();
     if (inputROId) {
-        var route = "{{ path('pumukitnewadmin_series_list', {'selectedSeriesId': '__inputROId__', 'sorting': {(titleLocale): '__type__'}})|raw }}";
+        var route = "{{ path('pumukitnewadmin_series_list', {'selectedSeriesId': '__inputROId__', 'sorting': {'title': '__type__'}})|raw }}";
         route = route.replace('__inputROId__', inputROId);
     } else {
-        var route = "{{ path('pumukitnewadmin_series_list', {'sorting': {(titleLocale): '__type__'}})|raw }}";
+        var route = "{{ path('pumukitnewadmin_series_list', {'sorting': {'title': '__type__'}})|raw }}";
     }
     $('#list_series').load(route.replace('__type__', type), {'_method':'POST'});
     return false;
@@ -890,10 +999,10 @@ $(document).on('click', '#pumukitnewadmin_series_title_sort_selected', function(
 $(document).on('click', '#pumukitnewadmin_series_title_sort_not_selected', function(){
     var inputROId = $('#inputROId').val();
     if (inputROId) {
-        var route = "{{ path('pumukitnewadmin_series_list', {'selectedSeriesId': '__inputROId__', 'sorting': {(titleLocale): 'asc'}})|raw }}";
+        var route = "{{ path('pumukitnewadmin_series_list', {'selectedSeriesId': '__inputROId__', 'sorting': {'title': 'asc'}})|raw }}";
         route = route.replace('__inputROId__', inputROId);
     } else {
-        var route = "{{ path('pumukitnewadmin_series_list', {'sorting': {(titleLocale): 'asc'}})|raw }}";
+        var route = "{{ path('pumukitnewadmin_series_list', {'sorting': {'title': 'asc'}})|raw }}";
     }
     $('#list_series').load(route, {'_method':'POST'});
     return false;
@@ -948,6 +1057,103 @@ $(document).on('click', '#pumukitnewadmin_series_multimedia_objects_sort_not_sel
     $('#list_series').load(route, {'_method':'POST'});
     return false;
 });
+
+$(document).on('click', '#pumukitnewadmin_person_id_sort_selected', function(){
+    var inputRawId = $('#inputRawId').val();
+    var type = $('#pumukitnewadmin_person_sort_change_type').val();
+    if (inputRawId) {
+        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'id': '__type__'}})|raw }}";
+        route = route.replace('__inputRawId__', inputRawId);
+    } else {
+        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'id': '__type__'}})|raw }}";
+    }
+    $('#list_people').load(route.replace('__type__', type), {'_method':'POST'});
+    return false;
+});
+$(document).on('click', '#pumukitnewadmin_person_id_sort_not_selected', function(){
+    var inputRawId = $('#inputRawId').val();
+    if (inputRawId) {
+        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'id': 'asc'}})|raw }}";
+        route = route.replace('__inputRawId__', inputRawId);
+    } else {
+        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'id': 'asc'}})|raw }}";
+    }
+    $('#list_people').load(route, {'_method':'POST'});
+    return false;
+});
+
+$(document).on('click', '#pumukitnewadmin_person_name_sort_selected', function(){
+    var inputRawId = $('#inputRawId').val();
+    var type = $('#pumukitnewadmin_person_sort_change_type').val();
+    if (inputRawId) {
+        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'name': '__type__'}})|raw }}";
+        route = route.replace('__inputRawId__', inputRawId);
+    } else {
+        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'name': '__type__'}})|raw }}";
+    }
+    $('#list_people').load(route.replace('__type__', type), {'_method':'POST'});
+    return false;
+});
+$(document).on('click', '#pumukitnewadmin_person_name_sort_not_selected', function(){
+    var inputRawId = $('#inputRawId').val();
+    if (inputRawId) {
+        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'name': 'asc'}})|raw }}";
+        route = route.replace('__inputRawId__', inputRawId);
+    } else {
+        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'name': 'asc'}})|raw }}";
+    }
+    $('#list_people').load(route, {'_method':'POST'});
+    return false;
+});
+
+$(document).on('click', '#pumukitnewadmin_person_email_sort_selected', function(){
+    var inputRawId = $('#inputRawId').val();
+    var type = $('#pumukitnewadmin_person_sort_change_type').val();
+    if (inputRawId) {
+        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'email': '__type__'}})|raw }}";
+        route = route.replace('__inputRawId__', inputRawId);
+    } else {
+        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'email': '__type__'}})|raw }}";
+    }
+    $('#list_people').load(route.replace('__type__', type), {'_method':'POST'});
+    return false;
+});
+$(document).on('click', '#pumukitnewadmin_person_email_sort_not_selected', function(){
+    var inputRawId = $('#inputRawId').val();
+    if (inputRawId) {
+        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'email': 'asc'}})|raw }}";
+        route = route.replace('__inputRawId__', inputRawId);
+    } else {
+        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'email': 'asc'}})|raw }}";
+    }
+    $('#list_people').load(route, {'_method':'POST'});
+    return false;
+});
+
+$(document).on('click', '#pumukitnewadmin_person_phone_sort_selected', function(){
+    var inputRawId = $('#inputRawId').val();
+    var type = $('#pumukitnewadmin_person_sort_change_type').val();
+    if (inputRawId) {
+        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'phone': '__type__'}})|raw }}";
+        route = route.replace('__inputRawId__', inputRawId);
+    } else {
+        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'phone': '__type__'}})|raw }}";
+    }
+    $('#list_people').load(route.replace('__type__', type), {'_method':'POST'});
+    return false;
+});
+$(document).on('click', '#pumukitnewadmin_person_phone_sort_not_selected', function(){
+    var inputRawId = $('#inputRawId').val();
+    if (inputRawId) {
+        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'phone': 'asc'}})|raw }}";
+        route = route.replace('__inputRawId__', inputRawId);
+    } else {
+        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'phone': 'asc'}})|raw }}";
+    }
+    $('#list_people').load(route, {'_method':'POST'});
+    return false;
+});
+
 
 /**
  * Tab
@@ -1123,42 +1329,12 @@ get_batch_delete_route = function(element, ids)
     return route.replace('__ids__', JSON.stringify(ids)) ;
 }
 
-/**
- * Get create route according to element
- */
-get_create_route = function(element)
-{
-    var route = '';
-
-    switch (element) {
-        case 'person':
-            route = '{{ path('pumukitnewadmin_person_create')|raw }}';
-            break;
-        case 'user':
-            route = '{{ path('pumukitnewadmin_user_create')|raw }}';
-            break;
-        case 'live':
-            route = '{{ path('pumukitnewadmin_live_create')|raw }}';
-            break;
-        case 'event':
-            route = '{{ path('pumukitnewadmin_event_create')|raw }}';
-            break;
-        case 'role':
-            route = '{{ path('pumukitnewadmin_role_create')|raw }}';
-            break;
-        case 'broadcast':
-            route = '{{ path('pumukitnewadmin_broadcast_create')|raw }}';
-            break;
-    }
-
-    return route;
-}
-
 window.fileServerSelect = function(element, path)
 {
     $(element).siblings(".active").removeClass("active").end().addClass("active");
     $('#file').val(path);
 }
+
 
 window.fileServerTree = function(element, type, dir, num, input)
 {
@@ -1166,16 +1342,33 @@ window.fileServerTree = function(element, type, dir, num, input)
     if (baseelement.hasClass('collapsed')) {
         baseelement.removeClass("collapsed").addClass("expanded");
         if (baseelement.hasClass('noload')) {
-            $.get('{{ path('pumukit_newadmin_inbox_dir')|raw }}?type=' + type + '&dir=' + dir, function(files){
+            $.get('{{ path('pumukit_newadmin_inbox_dir')|raw }}?type=' + type + '&dir=' + encodeURIComponent(dir), function(files){
                 links = "";
                 for(var i in files) {
                   var file = files[i];
-                  link = '<a class="list-group-item elem" onclick="fileServerSelect(this, \'' + file.path +
-                         '\'); return false;" href="#"><span style="padding-left: 20px"><i class="mdi- tag_icon"></i></span><span title="' +
-                         file.relativepath + '">' +
-                         ((file.relativepath.length > 50) ? (file.relativepath.slice(0, 35) + '...' + file.relativepath.slice(-15)) : (file.relativepath)) +
-                         '</span></a>';
-                  links += link;
+                  if (file.is_file) {
+                    links += '<a data-hash="' + file.hash + '" data-path="' + baseelement.data('path') + ' ' + file.hash + ' " ' +
+                           ' class="list-group-item elem ' + baseelement.data('path') + ' p_' + baseelement.data('hash') + '" onclick="fileServerSelect(this, \'' + file.path +
+                           '\'); return false;" href="#"><span style="padding-left: ' + (10 *num)  + 'px"><i class="mdi- tag_icon"></i></span><span title="' +
+                           file.relativepath + '">' +
+                           ((file.relativepath.length > 50) ? (file.relativepath.slice(0, 35) + '...' + file.relativepath.slice(-15)) : (file.relativepath)) +
+                           ((file.content) ? ' [' + (file.content) + ' video(s)]' : '') +
+                           '</span></a>';
+                  } else {
+                    links += '<a data-hash="' + file.hash + '" data-path="' + baseelement.data('path') + ' ' + file.hash + ' " ' +
+                           ' class="list-group-item collapsed noload ' + baseelement.data('path') + ' p_' + baseelement.data('hash') + '" onclick="fileServerTree(this, \'' + type + '\', \'' + file.path +
+                           '\', ' + (num + 1) + ', \'' + input + '\'); return false;" href="#"><span style="padding-left: ' + (10 *num)  + 'px"><i class="mdi- tag_icon"></i></span><span title="' +
+                           file.relativepath + '">' +
+                           ((file.relativepath.length > 50) ? (file.relativepath.slice(0, 35) + '...' + file.relativepath.slice(-15)) : (file.relativepath)) +
+                           ((file.content) ? ' [' + (file.content) + ' video(s)]' : '') +
+                           '</span></a>';
+                    if(type == 'dir') {
+                        links += '<a style="color:blue; text-decoration: underline" class="list-group-item element" href="#" onclick="fileServerSelect(this, \'' + file.path + '\');">' + 
+                                 '<span style="padding-left: ' + (10 *num)  + 'px"><i class="mdi- tag_icon"></i></span>' + 
+                                 '{% trans %}This directory{% endtrans %}' + 
+                                 '</a>';
+                    }
+                  }
                 }
                 baseelement.after(links);
                 baseelement.removeClass('noload')
@@ -1185,11 +1378,14 @@ window.fileServerTree = function(element, type, dir, num, input)
 
             });
         } else {
-            $('.list-group-item.elem').show();
+            //show loaded
+            $(".p_" + baseelement.data('hash')).show();
+            baseelement.addClass("expanded").removeClass("collapsed");
         }
     } else {
+        //hide
+        $("." + baseelement.data('hash')).hide().addClass("collapsed").removeClass("expanded");
         baseelement.addClass("collapsed").removeClass("expanded");
-        $('.list-group-item.elem').hide();
     }
 
 }
@@ -1234,8 +1430,10 @@ function toggle_section_tag(id, element, level, cod) {
 }
 
 
-function tag_delete(id, cod, pid) {
-  if (window.confirm('{% trans %}Are you sure you want to delete the tag with code{% endtrans %} ' + cod + '?')) {
+function tag_delete(id, cod, pid, numberMultimediaObjects) {
+  if (0 < numberMultimediaObjects) {
+    window.alert('{% trans %}Can not delete tag with code{% endtrans %} ' + cod + '. ' + numberMultimediaObjects + ' {% trans %}Multimedia Object(s) has/have this tag{% endtrans %}.');
+  } else  if (window.confirm('{% trans %}Are you sure you want to delete the tag with code{% endtrans %} ' + cod + '?')) {
     var url = '{{ path('pumukitnewadmin_tag_delete', {'id': '___id___'}) }}';
     $.ajax(url.replace('___id___', id), {
       type: 'DELETE',
@@ -1259,7 +1457,8 @@ function tag_delete(id, cod, pid) {
 // END OF TAG SECTION //
 
 $(document).ready(function(){
-    $('#myModal').on('shown.bs.modal', function () {
+    $('#myModal')
+    .on('shown.bs.modal', function () {
         $('#iframeUpload').on("load", function(){
             var message = $('#iframeUpload').contents().find('title');
             if (message.length != 0) message = message[0].innerHTML;
@@ -1270,6 +1469,9 @@ $(document).ready(function(){
                 no_success('NGINX ERROR: '+message);
             }
         });
+    })
+    .on('show.bs.modal', function() {
+        $('.modal-content').html('');
     });
 });
 
@@ -1321,6 +1523,30 @@ $(document).on('submit', '#pumukitnewadmin_live_create_form', function() {
                         $('#preview_live').load(routeShow.replace('__liveId__', liveId));
                     });
                     var message = '{% trans %}Live channel successfully created.{% endtrans %}';
+                    success(message);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                no_success(errorThrown+': '+textStatus);
+            }
+    });
+    return false;
+});
+
+$(document).on('submit', '#pumukitnewadmin_seriestype_create_form', function() {
+    $(this).find(':submit').prop('disabled', true);
+    $('#myModal').modal('hide');
+    $.ajax({
+            url: "{{ path('pumukitnewadmin_seriestype_create')|raw }}",
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function(response, textStatus, jqXHR){
+                if (jqXHR.responseText.indexOf('modal-header') != -1){
+                    var message = '{% trans %}There was an error in creating the Live channel.{% endtrans %}';
+                    no_success(message);
+                }else{
+                    $('#list_seriestypes').html(response);
+                    var message = '{% trans %}Series type channel successfully created.{% endtrans %}';
                     success(message);
                 }
             },
@@ -1501,3 +1727,8 @@ $(document).on('click', '#pumukitnewadmin_track_ok_button', function(event){
         return false;
     }
 });
+
+window.change_pics_page = function(route)
+{
+    $('#pics_to_add_list').load(route);
+}

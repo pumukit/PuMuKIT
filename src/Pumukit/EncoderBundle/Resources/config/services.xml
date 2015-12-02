@@ -4,6 +4,12 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
+    <parameters>
+        <parameter key="pumukit.picextractor.command.ffmpeg">ffmpeg -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"</parameter>
+        <parameter key="pumukit.picextractor.command.libav">avconv -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"</parameter>
+        <parameter key="pumukit.picextractor.command">%pumukit.picextractor.command.libav%</parameter>
+    </parameters>
+
     <services>
         <service id="pumukitencoder.cpu" class="Pumukit\EncoderBundle\Services\CpuService">
             <argument>%pumukitencode.cpulist%</argument>
@@ -22,6 +28,8 @@
             <argument type="service" id="pumukit.inspection"/>
             <argument type="service" id="event_dispatcher"/>
             <argument type="service" id="logger"/>
+            <argument type="service" id="pumukitschema.track"/>
+            <argument type="service" id="security.token_storage"/>
             <tag name="monolog.logger" channel="encoder"/>
             <argument>%kernel.environment%</argument>
             <argument>%pumukit2.tmp%</argument>
@@ -32,9 +40,14 @@
             <argument type="service" id="pumukitschema.mmspic"/>
             <argument>%pumukitencode.thumbnail.width%</argument>
             <argument>%pumukitencode.thumbnail.height%</argument>
-            <argument type="expression">parameter('kernel.root_dir') ~ '/../web/uploads/pic/'</argument>
-            <argument>/uploads/pic</argument>
-            <argument>ffmpeg -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"</argument>
+            <argument>%pumukit2.uploads_dir%/pic</argument>
+            <argument>%pumukit2.uploads_url%/pic</argument>
+            <argument>%pumukit.picextractor.command%</argument>
+        </service>
+
+        <service id="pumukitencoder.remove" class="Pumukit\EncoderBundle\EventListener\RemoveListener">
+            <argument type="service" id="service_container" />
+            <tag name="kernel.event_listener" event="track.delete" method="postTrackRemove"/>
         </service>
     </services>
 

@@ -14,7 +14,8 @@ class WidgetController extends Controller
      */
     public function menuAction()
     {
-      return array();
+      $channels = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Live')->findAll();
+      return array('live_channels' => $channels);
     }
     
     /**
@@ -34,7 +35,7 @@ class WidgetController extends Controller
       $mmRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
       $seriesRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:series');
 
-      $counts = array('series' => $seriesRepo->count(),
+      $counts = array('series' => $seriesRepo->countPublic(),
                       'mms' => $mmRepo->count(),
                       'hours' => bcdiv($mmRepo->countDuration(), 3600, 2));
       return array('counts' => $counts);
@@ -48,4 +49,15 @@ class WidgetController extends Controller
       return array();
     }
 
+    /**
+     * @Template("PumukitWebTVBundle:Widget:upcomingliveevents.html.twig")
+     */
+    public function upcomingLiveEventsAction()
+    {
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $eventRepo = $dm->getRepository('PumukitLiveBundle:Event');
+        $events = $eventRepo->findFutureAndNotFinished(5);
+
+        return array('events' => $events);
+    }
 }

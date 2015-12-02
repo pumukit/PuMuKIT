@@ -67,6 +67,26 @@ class SeriesRepositoryTest extends WebTestCase
 
         $this->assertEquals(1, count($this->repo->findAll()));
         $this->assertEquals($series, $this->repo->find($series->getId()));
+
+        $pic1 = new Pic();
+        $pic1->setUrl('http://domain.com/pic1.png');
+
+        $pic2 = new Pic();
+        $pic2->setUrl('http://domain.com/pic2.png');
+
+        $pic3 = new Pic();
+        $pic3->setUrl('http://domain.com/pic3.png');
+
+        $series->addPic($pic1);
+        $series->addPic($pic2);
+        $series->addPic($pic3);
+
+        $this->dm->persist($series);
+        $this->dm->flush();
+
+        $this->assertEquals($pic1, $series->getPic());
+        $this->assertEquals($pic2, $series->getPicById($pic2->getId()));
+        $this->assertEquals(null, $series->getPicById(null));
     }
 
     public function testFindSeriesWithTags()
@@ -430,6 +450,29 @@ class SeriesRepositoryTest extends WebTestCase
         $this->assertEquals(1, count($this->repo->createBuilderWithTag($tag3, $sortDesc)));
     }
 
+    public function testFindByPicId()
+    {
+        $broadcast = new Broadcast();
+        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
+        $broadcast->setDefaultSel(true);
+        $this->dm->persist($broadcast);
+        $this->dm->flush();
+
+        $series1 = $this->factoryService->createSeries();
+        $title1 = 'Series 1';
+        $series1->setTitle($title1);
+
+        $pic = new Pic();
+        $this->dm->persist($pic);
+
+        $series1->addPic($pic);
+
+        $this->dm->persist($series1);
+        $this->dm->flush();
+
+        $this->assertEquals(1, count($this->repo->findByPicId($pic->getId())));
+    }
+
     public function testFindSeriesByPersonId()
     {
         $broadcast = new Broadcast();
@@ -540,6 +583,43 @@ class SeriesRepositoryTest extends WebTestCase
         $seriesBob = $this->repo->findSeriesByPersonId($personBob->getId());
         $this->assertEquals(2, count($seriesBob));
         $this->assertEquals(array($series1, $series3), array_values($seriesBob->toArray()));
+
+        $seriesJohnActor = $this->repo->findByPersonIdAndRoleCod($personJohn->getId(), $roleActor->getCod());
+        $seriesJohnPresenter = $this->repo->findByPersonIdAndRoleCod($personJohn->getId(), $rolePresenter->getCod());
+        $seriesBobActor = $this->repo->findByPersonIdAndRoleCod($personBob->getId(), $roleActor->getCod());
+        $seriesBobPresenter = $this->repo->findByPersonIdAndRoleCod($personBob->getId(), $rolePresenter->getCod());
+        $seriesKateActor = $this->repo->findByPersonIdAndRoleCod($personKate->getId(), $roleActor->getCod());
+        $seriesKatePresenter = $this->repo->findByPersonIdAndRoleCod($personKate->getId(), $rolePresenter->getCod());
+
+        $this->assertEquals(2, count($seriesJohnActor));
+        $this->assertTrue(in_array($series1, $seriesJohnActor->toArray()));
+        $this->assertFalse(in_array($series2, $seriesJohnActor->toArray()));
+        $this->assertTrue(in_array($series3, $seriesJohnActor->toArray()));
+
+        $this->assertEquals(2, count($seriesJohnPresenter));
+        $this->assertTrue(in_array($series1, $seriesJohnPresenter->toArray()));
+        $this->assertFalse(in_array($series2, $seriesJohnPresenter->toArray()));
+        $this->assertTrue(in_array($series3, $seriesJohnPresenter->toArray()));
+
+        $this->assertEquals(2, count($seriesBobActor));
+        $this->assertTrue(in_array($series1, $seriesBobActor->toArray()));
+        $this->assertFalse(in_array($series2, $seriesBobActor->toArray()));
+        $this->assertTrue(in_array($series3, $seriesBobActor->toArray()));
+
+        $this->assertEquals(1, count($seriesBobPresenter));
+        $this->assertTrue(in_array($series1, $seriesBobPresenter->toArray()));
+        $this->assertFalse(in_array($series2, $seriesBobPresenter->toArray()));
+        $this->assertFalse(in_array($series3, $seriesBobPresenter->toArray()));
+
+        $this->assertEquals(2, count($seriesKateActor));
+        $this->assertTrue(in_array($series1, $seriesKateActor->toArray()));
+        $this->assertTrue(in_array($series2, $seriesKateActor->toArray()));
+        $this->assertFalse(in_array($series3, $seriesKateActor->toArray()));
+
+        $this->assertEquals(1, count($seriesKatePresenter));
+        $this->assertFalse(in_array($series1, $seriesKatePresenter->toArray()));
+        $this->assertTrue(in_array($series2, $seriesKatePresenter->toArray()));
+        $this->assertFalse(in_array($series3, $seriesKatePresenter->toArray()));
     }
 
     public function testFindBySeriesType()
@@ -913,6 +993,61 @@ class SeriesRepositoryTest extends WebTestCase
         $this->assertEquals(1, count($this->repo->findWithTagAndSeriesType($tag1, $seriesType2)));
         $this->assertEquals(1, count($this->repo->findWithTagAndSeriesType($tag2, $seriesType2)));
         $this->assertEquals(1, count($this->repo->findWithTagAndSeriesType($tag3, $seriesType2)));
+    }
+
+    public function testFindOneBySeriesProperty()
+    {
+        $series1 = $this->createSeries('Series 1');
+        $series1->setProperty('dataexample', "title1");
+
+        $series2 = $this->createSeries('Series 2');
+        $series2->setProperty('dataexample', "title2");
+
+        $series3 = $this->createSeries('Series 3');
+        $series3->setProperty('dataexample', "title3");
+
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->persist($series3);
+        $this->dm->flush();
+
+        $this->assertEquals(1, count($this->repo->findOneBySeriesProperty('dataexample', $series1->getProperty('dataexample'))));
+        $this->assertEquals(0, count($this->repo->findOneBySeriesProperty('data', $series2->getProperty('dataexample'))));
+        $this->assertEquals(0, count($this->repo->findOneBySeriesProperty('dataexample', $series3->getProperty('data'))));
+        $this->assertEquals(1, count($this->repo->findOneBySeriesProperty('dataexample', $series3->getProperty('dataexample'))));
+    }
+
+    public function testCount()
+    {
+        $series1 = $this->createSeries('Series 1');
+        $series2 = $this->createSeries('Series 2');
+        $series3 = $this->createSeries('Series 3');
+
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->persist($series3);
+        $this->dm->flush();
+
+        $this->assertEquals(3, $this->repo->count());
+    }
+
+    public function testCountPublic()
+    {
+        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
+
+        $series1 = $this->createSeries('Series 1');
+        $series2 = $this->createSeries('Series 2');
+        $series3 = $this->createSeries('Series 3');
+
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->persist($series3);
+        $this->dm->flush();
+
+        $mm = $this->createMultimediaObjectAssignedToSeries('mm_public1', $series1);
+        $mm2 = $this->createMultimediaObjectAssignedToSeries('mm_public2', $series2);
+
+        $this->assertEquals(2, $this->repo->countPublic());
     }
 
     private function createSeriesType($name)

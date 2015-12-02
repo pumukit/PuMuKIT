@@ -189,7 +189,7 @@ class Role
             $locale = $this->locale;
         }
         if (!isset($this->name[$locale])) {
-            return;
+            return '';
         }
 
         return $this->name[$locale];
@@ -241,7 +241,7 @@ class Role
             $locale = $this->locale;
         }
         if (!isset($this->text[$locale])) {
-            return;
+            return '';
         }
 
         return $this->text[$locale];
@@ -309,6 +309,14 @@ class Role
     public function getNumberPeopleInMultimediaObject()
     {
         return $this->number_people_in_multimedia_object;
+    }
+
+    /**
+     * Set number_people_in_multimedia_object
+     */
+    public function setNumberPeopleInMultimediaObject($number_people_in_multimedia_object)
+    {
+        $this->number_people_in_multimedia_object = $number_people_in_multimedia_object;
     }
 
     /**

@@ -9,9 +9,10 @@
             </label>
           </div>
         </th>
-        <th colspan="2" width="5%"></th>
+        <th colspan="3" width="5%"></th>
         <th width="8%">{% trans %}Date{% endtrans %}</th>
-        <th>{% trans %}Text{% endtrans %}</th>
+        <th width="1%">{% trans %}Img{% endtrans %}</th>
+        <th>{% trans %}Event{% endtrans %}</th>
         <th width="1%">{% trans %}Public{% endtrans %}</th>
       </tr>
     </thead>
@@ -33,9 +34,14 @@
         </div>
       </td>
       <td onclick="click_fila_url('event', this, '{{ path('pumukitnewadmin_event_show', {'id': event.id}) }}');">
-	    <a title="{% trans %}Edit Event {% endtrans %}{{ event.id }}" href="{{ path('pumukitnewadmin_event_update', {'id': event.id}) }}" data-toggle="modal" data-target="#myModal">
+	    <a title="{% trans %}Edit Event {% endtrans %}{{ event.id }}" href="{{ path('pumukitnewadmin_event_update', {'id': event.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
 	      <i class="mdi-editor-mode-edit"></i>
         </a>
+      </td>
+      <td>
+        <div class="dropdown">
+	      {% include 'PumukitNewAdminBundle:Event:updatemenu.html.twig' with {'event': event} %}
+        </div>
       </td>
       <td>
         <a href="#" onclick="window.submit_delete_event('{{ event.id }}'); return false;">
@@ -44,6 +50,11 @@
       </td>
       <td class="text-nowrap" onclick="click_fila_url('event', this, '{{ path('pumukitnewadmin_event_show', {'id': event.id}) }}');">
 	    {{ event.date|date('d/m/Y-H:i') }}
+      </td>
+      <td onclick="click_fila_url('event', this, '{{ path('pumukitnewadmin_event_show', {'id': event.id}) }}')">
+        {% if event.getPic() is not empty %}
+        <img src="{{ event.getPic() }}" height="23" width="23" />
+        {% endif %}
       </td>
       <td onclick="click_fila_url('event', this, '{{ path('pumukitnewadmin_event_show', {'id': event.id}) }}');">
 	    {{ event.name }}

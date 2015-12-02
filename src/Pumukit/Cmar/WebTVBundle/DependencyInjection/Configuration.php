@@ -23,6 +23,23 @@ class Configuration implements ConfigurationInterface
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
+        $rootNode
+          ->children()
+            ->scalarNode('cas_url')->isRequired()
+              ->info('The hostname of the CAS server')
+            ->end()
+            ->scalarNode('cas_port')->isRequired()
+              ->info('The port the CAS server is running on')
+            ->end()
+            ->scalarNode('cas_uri')->isRequired()
+              ->info('The URI the CAS server is responding on')
+            ->end()
+            ->arrayNode('cas_allowed_ip_clients')->isRequired()->requiresAtLeastOneElement()
+              ->prototype('scalar')
+              ->info('Array of allowed IP clients')
+            ->end()
+          ->end()
+          ;
 
         return $treeBuilder;
     }

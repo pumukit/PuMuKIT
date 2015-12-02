@@ -10,6 +10,9 @@ use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\Link;
 use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Document\EmbeddedPerson;
+use Pumukit\SchemaBundle\Document\EmbeddedRole;
+use Pumukit\SchemaBundle\Document\EmbeddedTag;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Broadcast;
@@ -93,6 +96,70 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->flush();
 
         $this->assertEquals(1, count($this->repo->findAll()));
+
+        $this->assertEquals($broadcast, $mmobj->getBroadcast());
+
+        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
+        $mmobj->setBroadcast($broadcast);
+        $this->dm->persist($mmobj);
+        $this->dm->flush();
+
+        $this->assertEquals($broadcast, $mmobj->getBroadcast());
+
+        $t1 = new Track();
+        $t1->setTags(array('master'));
+        $t2 = new Track();
+        $t2->setTags(array('mosca', 'master', 'old'));
+        $t3 = new Track();
+        $t3->setTags(array('master', 'mosca'));
+        $t4 = new Track();
+        $t4->setTags(array('flv', 'itunes', 'hide'));
+        $t5 = new Track();
+        $t5->setTags(array('flv', 'webtv'));
+        $t6 = new Track();
+        $t6->setTags(array('track6'));
+        $t6->setHide(true);
+
+        $this->dm->persist($t1);
+        $this->dm->persist($t2);
+        $this->dm->persist($t3);
+        $this->dm->persist($t4);
+        $this->dm->persist($t5);
+        $this->dm->persist($t6);
+
+        $mmobj->addTrack($t3);
+        $mmobj->addTrack($t2);
+        $mmobj->addTrack($t1);
+        $mmobj->addTrack($t4);
+        $mmobj->addTrack($t5);
+        $mmobj->addTrack($t6);
+
+        $this->dm->persist($mmobj);
+
+        $this->dm->flush();
+
+        $this->assertEquals(5, count($mmobj->getFilteredTracksWithTags()));
+        $this->assertEquals(3, count($mmobj->getFilteredTracksWithTags(array('master'))));
+        $this->assertEquals(1, count($mmobj->getFilteredTracksWithTags(array('master'), array('mosca', 'old'))));
+        $this->assertEquals(0, count($mmobj->getFilteredTracksWithTags(array(), array('mosca', 'old'), array('master'))));
+        $this->assertEquals(3, count($mmobj->getFilteredTracksWithTags(array(), array(), array('flv'))));
+        $this->assertEquals(0, count($mmobj->getFilteredTracksWithTags(array(), array(), array('flv', 'master'))));
+        $this->assertEquals(5, count($mmobj->getFilteredTracksWithTags(array(), array(), array(), array('flv', 'master'))));
+        $this->assertEquals(1, count($mmobj->getFilteredTracksWithTags(array('mosca', 'old'), array(), array(), array('old'))));
+    
+        $this->assertEquals(1, count($mmobj->getFilteredTrackWithTags()));
+        $this->assertEquals(1, count($mmobj->getFilteredTrackWithTags(array('master'))));
+        $this->assertEquals(1, count($mmobj->getFilteredTrackWithTags(array('master'), array('mosca', 'old'))));
+        $this->assertEquals(0, count($mmobj->getFilteredTrackWithTags(array(), array('mosca', 'old'), array('master'))));
+        $this->assertEquals(1, count($mmobj->getFilteredTrackWithTags(array(), array(), array('flv'))));
+        $this->assertEquals(0, count($mmobj->getFilteredTrackWithTags(array(), array(), array('flv', 'master'))));
+        $this->assertEquals(1, count($mmobj->getFilteredTrackWithTags(array(), array(), array(), array('flv', 'master'))));
+        $this->assertEquals(1, count($mmobj->getFilteredTrackWithTags(array('mosca', 'old'), array(), array(), array('old'))));
+
+        $this->assertEquals(1, count($mmobj->getFilteredTrackWithTags(array(), array(), array(), array('master', 'mosca'))));
+
+        $this->assertEquals(null, count($mmobj->getFilteredTrackWithTags(array('track6'))));
+        $this->assertEquals(null, count($mmobj->getFilteredTracksWithTags(array('track6'))));
     }
 
     public function testCreateMultimediaObjectAndFindByCriteria()
@@ -148,6 +215,45 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mmobj_ned = $this->repo->findByPersonId($person_ned->getId());
         $this->assertEquals(3, count($mmobj_ned));
 
+        // Test find by role cod or id
+        $mmobj_lord = $this->repo->findByRoleCod($role_lord->getCod())->toArray();
+        $mmobj_ranger = $this->repo->findByRoleCod($role_ranger->getCod())->toArray();
+        $mmobj_hand = $this->repo->findByRoleCod($role_hand->getCod())->toArray();
+        $this->assertEquals(2, count($mmobj_lord));
+        $this->assertEquals(2, count($mmobj_ranger));
+        $this->assertEquals(1, count($mmobj_hand));
+        $this->assertTrue(in_array($mm1, $mmobj_lord));
+        $this->assertFalse(in_array($mm2, $mmobj_lord));
+        $this->assertTrue(in_array($mm3, $mmobj_lord));
+        $this->assertFalse(in_array($mm4, $mmobj_lord));
+        $this->assertFalse(in_array($mm1, $mmobj_ranger));
+        $this->assertTrue(in_array($mm2, $mmobj_ranger));
+        $this->assertTrue(in_array($mm3, $mmobj_ranger));
+        $this->assertFalse(in_array($mm4, $mmobj_ranger));
+        $this->assertFalse(in_array($mm1, $mmobj_hand));
+        $this->assertFalse(in_array($mm2, $mmobj_hand));
+        $this->assertFalse(in_array($mm3, $mmobj_hand));
+        $this->assertTrue(in_array($mm4, $mmobj_hand));
+
+        $mmobj_lord = $this->repo->findByRoleId($role_lord->getId())->toArray();
+        $mmobj_ranger = $this->repo->findByRoleId($role_ranger->getId())->toArray();
+        $mmobj_hand = $this->repo->findByRoleId($role_hand->getId())->toArray();
+        $this->assertEquals(2, count($mmobj_lord));
+        $this->assertEquals(2, count($mmobj_ranger));
+        $this->assertEquals(1, count($mmobj_hand));
+        $this->assertTrue(in_array($mm1, $mmobj_lord));
+        $this->assertFalse(in_array($mm2, $mmobj_lord));
+        $this->assertTrue(in_array($mm3, $mmobj_lord));
+        $this->assertFalse(in_array($mm4, $mmobj_lord));
+        $this->assertFalse(in_array($mm1, $mmobj_ranger));
+        $this->assertTrue(in_array($mm2, $mmobj_ranger));
+        $this->assertTrue(in_array($mm3, $mmobj_ranger));
+        $this->assertFalse(in_array($mm4, $mmobj_ranger));
+        $this->assertFalse(in_array($mm1, $mmobj_hand));
+        $this->assertFalse(in_array($mm2, $mmobj_hand));
+        $this->assertFalse(in_array($mm3, $mmobj_hand));
+        $this->assertTrue(in_array($mm4, $mmobj_hand));
+
         // Test find by person and role
         $mmobj_benjen_ranger = $this->repo->findByPersonIdWithRoleCod($person_benjen->getId(), $role_ranger->getCod());
         $mmobj_ned_lord = $this->repo->findByPersonIdWithRoleCod($person_ned->getId(), $role_lord->getCod());
@@ -174,6 +280,121 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(2, count($seriesNed));
         $this->assertTrue(in_array($series_main->getId(), $seriesNed->toArray()));
         $this->assertTrue(in_array($series_lhazar->getId(), $seriesNed->toArray()));
+
+        $seriesBenjenRanger = $this->repo->findSeriesFieldByPersonIdAndRoleCod($person_benjen->getId(), $role_ranger->getCod());
+        $seriesNedRanger = $this->repo->findSeriesFieldByPersonIdAndRoleCod($person_ned->getId(), $role_ranger->getCod());
+        $seriesBenjenLord = $this->repo->findSeriesFieldByPersonIdAndRoleCod($person_benjen->getId(), $role_lord->getCod());
+        $seriesNedLord = $this->repo->findSeriesFieldByPersonIdAndRoleCod($person_ned->getId(), $role_lord->getCod());
+        $seriesBenjenHand = $this->repo->findSeriesFieldByPersonIdAndRoleCod($person_benjen->getId(), $role_hand->getCod());
+        $seriesNedHand = $this->repo->findSeriesFieldByPersonIdAndRoleCod($person_ned->getId(), $role_hand->getCod());
+
+        $this->assertEquals(2, count($seriesBenjenRanger));
+        $this->assertTrue(in_array($series_wall->getId(), $seriesBenjenRanger->toArray()));
+        $this->assertTrue(in_array($series_main->getId(), $seriesBenjenRanger->toArray()));
+        $this->assertFalse(in_array($series_lhazar->getId(), $seriesBenjenRanger->toArray()));
+
+        $this->assertEquals(0, count($seriesNedRanger));
+        $this->assertFalse(in_array($series_wall->getId(), $seriesNedRanger->toArray()));
+        $this->assertFalse(in_array($series_main->getId(), $seriesNedRanger->toArray()));
+        $this->assertFalse(in_array($series_lhazar->getId(), $seriesNedRanger->toArray()));
+
+        $this->assertEquals(0, count($seriesBenjenLord));
+        $this->assertFalse(in_array($series_wall->getId(), $seriesBenjenLord->toArray()));
+        $this->assertFalse(in_array($series_main->getId(), $seriesBenjenLord->toArray()));
+        $this->assertFalse(in_array($series_lhazar->getId(), $seriesBenjenLord->toArray()));
+
+        $this->assertEquals(1, count($seriesNedLord));
+        $this->assertFalse(in_array($series_wall->getId(), $seriesNedLord->toArray()));
+        $this->assertTrue(in_array($series_main->getId(), $seriesNedLord->toArray()));
+        $this->assertFalse(in_array($series_lhazar->getId(), $seriesNedLord->toArray()));
+
+        $this->assertEquals(0, count($seriesBenjenHand));
+        $this->assertFalse(in_array($series_wall->getId(), $seriesBenjenHand->toArray()));
+        $this->assertFalse(in_array($series_main->getId(), $seriesBenjenHand->toArray()));
+        $this->assertFalse(in_array($series_lhazar->getId(), $seriesBenjenHand->toArray()));
+
+        $this->assertEquals(1, count($seriesNedHand));
+        $this->assertFalse(in_array($series_wall->getId(), $seriesNedHand->toArray()));
+        $this->assertFalse(in_array($series_main->getId(), $seriesNedHand->toArray()));
+        $this->assertTrue(in_array($series_lhazar->getId(), $seriesNedHand->toArray()));
+
+        $mmobjsMainNedLord = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_main, $person_ned->getId(), $role_lord->getCod());
+        $this->assertEquals(2, count($mmobjsMainNedLord));
+        $this->assertTrue(in_array($mm1, $mmobjsMainNedLord->toArray()));
+        $this->assertTrue(in_array($mm3, $mmobjsMainNedLord->toArray()));
+
+        $mmobjsMainNedRanger = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_main, $person_ned->getId(), $role_ranger->getCod());
+        $this->assertEquals(0, count($mmobjsMainNedRanger));
+        $this->assertFalse(in_array($mm1, $mmobjsMainNedRanger->toArray()));
+        $this->assertFalse(in_array($mm3, $mmobjsMainNedRanger->toArray()));
+
+        $mmobjsMainNedHand = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_main, $person_ned->getId(), $role_hand->getCod());
+        $this->assertEquals(0, count($mmobjsMainNedHand));
+        $this->assertFalse(in_array($mm1, $mmobjsMainNedHand->toArray()));
+        $this->assertFalse(in_array($mm3, $mmobjsMainNedHand->toArray()));
+
+        $mmobjsMainBenjenLord = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_main, $person_benjen->getId(), $role_lord->getCod());
+        $this->assertEquals(0, count($mmobjsMainBenjenLord));
+        $this->assertFalse(in_array($mm1, $mmobjsMainBenjenLord->toArray()));
+        $this->assertFalse(in_array($mm3, $mmobjsMainBenjenLord->toArray()));
+
+        $mmobjsMainBenjenRanger = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_main, $person_benjen->getId(), $role_ranger->getCod());
+        $this->assertEquals(1, count($mmobjsMainBenjenRanger));
+        $this->assertFalse(in_array($mm1, $mmobjsMainBenjenRanger->toArray()));
+        $this->assertTrue(in_array($mm3, $mmobjsMainBenjenRanger->toArray()));
+
+        $mmobjsMainBenjenHand = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_main, $person_benjen->getId(), $role_hand->getCod());
+        $this->assertEquals(0, count($mmobjsMainBenjenHand));
+        $this->assertFalse(in_array($mm1, $mmobjsMainBenjenHand->toArray()));
+        $this->assertFalse(in_array($mm3, $mmobjsMainBenjenHand->toArray()));
+
+        $mmobjsWallNedLord = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_wall, $person_ned->getId(), $role_lord->getCod());
+        $this->assertEquals(0, count($mmobjsWallNedLord));
+        $this->assertFalse(in_array($mm2, $mmobjsWallNedLord->toArray()));
+
+        $mmobjsWallNedRanger = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_wall, $person_ned->getId(), $role_ranger->getCod());
+        $this->assertEquals(0, count($mmobjsWallNedRanger));
+        $this->assertFalse(in_array($mm2, $mmobjsWallNedRanger->toArray()));
+
+        $mmobjsWallNedHand = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_wall, $person_ned->getId(), $role_hand->getCod());
+        $this->assertEquals(0, count($mmobjsWallNedHand));
+        $this->assertFalse(in_array($mm2, $mmobjsWallNedHand->toArray()));
+
+        $mmobjsWallBenjenLord = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_wall, $person_benjen->getId(), $role_lord->getCod());
+        $this->assertEquals(0, count($mmobjsWallBenjenLord));
+        $this->assertFalse(in_array($mm2, $mmobjsWallBenjenLord->toArray()));
+
+        $mmobjsWallBenjenRanger = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_wall, $person_benjen->getId(), $role_ranger->getCod());
+        $this->assertEquals(1, count($mmobjsWallBenjenRanger));
+        $this->assertTrue(in_array($mm2, $mmobjsWallBenjenRanger->toArray()));
+
+        $mmobjsWallBenjenHand = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_wall, $person_benjen->getId(), $role_hand->getCod());
+        $this->assertEquals(0, count($mmobjsWallBenjenHand));
+        $this->assertFalse(in_array($mm2, $mmobjsWallBenjenHand->toArray()));
+
+        $mmobjsLhazarNedLord = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_lhazar, $person_ned->getId(), $role_lord->getCod());
+        $this->assertEquals(0, count($mmobjsLhazarNedLord));
+        $this->assertFalse(in_array($mm4, $mmobjsLhazarNedLord->toArray()));
+
+        $mmobjsLhazarNedRanger = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_lhazar, $person_ned->getId(), $role_ranger->getCod());
+        $this->assertEquals(0, count($mmobjsLhazarNedRanger));
+        $this->assertFalse(in_array($mm4, $mmobjsLhazarNedRanger->toArray()));
+
+        $mmobjsLhazarNedHand = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_lhazar, $person_ned->getId(), $role_hand->getCod());
+        $this->assertEquals(1, count($mmobjsLhazarNedHand));
+        $this->assertTrue(in_array($mm4, $mmobjsLhazarNedHand->toArray()));
+
+        $mmobjsLhazarBenjenLord = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_lhazar, $person_benjen->getId(), $role_lord->getCod());
+        $this->assertEquals(0, count($mmobjsLhazarBenjenLord));
+        $this->assertFalse(in_array($mm4, $mmobjsLhazarBenjenLord->toArray()));
+
+        $mmobjsLhazarBenjenRanger = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_lhazar, $person_benjen->getId(), $role_ranger->getCod());
+        $this->assertEquals(0, count($mmobjsLhazarBenjenRanger));
+        $this->assertFalse(in_array($mm4, $mmobjsLhazarBenjenRanger->toArray()));
+
+        $mmobjsLhazarBenjenHand = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_lhazar, $person_benjen->getId(), $role_hand->getCod());
+        $this->assertEquals(0, count($mmobjsLhazarBenjenHand));
+        $this->assertFalse(in_array($mm4, $mmobjsLhazarBenjenHand->toArray()));
     }
 
     public function testPeopleInMultimediaObjectCollection()
@@ -371,11 +592,82 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(0, count($mm->getPeople()));
     }
 
+    public function testGetAllEmbeddedRoleByPerson()
+    {
+        $personLucy = new Person();
+        $personLucy->setName('Lucy');
+        $personKate = new Person();
+        $personKate->setName('Kate');
+        $personPete = new Person();
+        $personPete->setName('Pete');
+
+        $roleActor = new Role();
+        $roleActor->setCod('actor');
+        $rolePresenter = new Role();
+        $rolePresenter->setCod('presenter');
+        $roleDirector = new Role();
+        $roleDirector->setCod('director');
+
+        $this->dm->persist($personLucy);
+        $this->dm->persist($personKate);
+        $this->dm->persist($personPete);
+
+        $this->dm->persist($roleActor);
+        $this->dm->persist($rolePresenter);
+        $this->dm->persist($roleDirector);
+
+        $mm = new MultimediaObject();
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $mm->addPersonWithRole($personKate, $roleActor);
+        $mm->addPersonWithRole($personLucy, $roleActor);
+        $mm->addPersonWithRole($personPete, $roleActor);
+        $mm->addPersonWithRole($personKate, $rolePresenter);
+        $mm->addPersonWithRole($personLucy, $rolePresenter);
+        $mm->addPersonWithRole($personLucy, $roleDirector);
+        $mm->addPersonWithRole($personPete, $roleDirector);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $kateQueryRolesIds = array();
+        foreach ($mm->getAllEmbeddedRolesByPerson($personKate) as $embeddedRole) {
+            $kateQueryRolesIds[] = $embeddedRole->getId();
+        }
+
+        $this->assertTrue(in_array($roleActor->getId(), $kateQueryRolesIds));
+        $this->assertTrue(in_array($rolePresenter->getId(), $kateQueryRolesIds));
+        $this->assertFalse(in_array($roleDirector->getId(), $kateQueryRolesIds));
+
+        $lucyQueryRolesIds = array();
+        foreach ($mm->getAllEmbeddedRolesByPerson($personLucy) as $embeddedRole) {
+            $lucyQueryRolesIds[] = $embeddedRole->getId();
+        }
+
+        $this->assertTrue(in_array($roleActor->getId(), $lucyQueryRolesIds));
+        $this->assertTrue(in_array($rolePresenter->getId(), $lucyQueryRolesIds));
+        $this->assertTrue(in_array($roleDirector->getId(), $lucyQueryRolesIds));
+
+        $peteQueryRolesIds = array();
+        foreach ($mm->getAllEmbeddedRolesByPerson($personPete) as $embeddedRole) {
+            $peteQueryRolesIds[] = $embeddedRole->getId();
+        }
+
+        $this->assertTrue(in_array($roleActor->getId(), $peteQueryRolesIds));
+        $this->assertFalse(in_array($rolePresenter->getId(), $peteQueryRolesIds));
+        $this->assertTrue(in_array($roleDirector->getId(), $peteQueryRolesIds));
+    }
+
     public function testFindBySeries()
     {
         $this->assertEquals(0, count($this->repo->findAll()));
 
-        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
+        $broadcast = new Broadcast();
+        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
+        $broadcast->setDefaultSel(true);
+        $this->dm->persist($broadcast);
+        $this->dm->flush();
+
         $series1 = $this->createSeries('Series 1');
         $mm11 = $this->factoryService->createMultimediaObject($series1);
         $mm12 = $this->factoryService->createMultimediaObject($series1);
@@ -390,6 +682,48 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         $this->assertEquals(4, count($this->repo->findBySeries($series1)));
         $this->assertEquals(3, count($this->repo->findBySeries($series2)));
+
+        $this->assertEquals(3, count($this->repo->findStandardBySeries($series1)));
+        $this->assertEquals(2, count($this->repo->findStandardBySeries($series2)));
+
+        $tag1 = new Tag();
+        $tag1->setCod('tag1');
+        $tag2 = new Tag();
+        $tag2->setCod('tag2');
+        $tag3 = new Tag();
+        $tag3->setCod('tag3');
+
+        $mm11->addTag($tag1);
+        $mm11->addTag($tag2);
+        $mm12->addTag($tag3);
+        $mm13->addTag($tag3);
+        $mm21->addTag($tag1);
+        $mm22->addTag($tag2);
+        $mm22->addTag($tag3);
+
+        $this->dm->persist($mm11);
+        $this->dm->persist($mm12);
+        $this->dm->persist($mm13);
+        $this->dm->persist($mm21);
+        $this->dm->persist($mm22);
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->flush();
+
+        $this->assertEquals(2, count($this->repo->findBySeriesByTagCodAndStatus($series1, 'tag3')));
+        $this->assertEquals(1, count($this->repo->findBySeriesByTagCodAndStatus($series2, 'tag1')));
+        $this->assertEquals(1, count($this->repo->findBySeriesByTagCodAndStatus($series2, 'tag3')));
+        $this->assertEquals(1, count($this->repo->findBySeriesByTagCodAndStatus($series1, 'tag2')));
+    }
+
+    public function testFindByBroadcast()
+    {
+        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
+        $series1 = $this->createSeries('Series 1');
+        $mm11 = $this->factoryService->createMultimediaObject($series1);
+        $mm12 = $this->factoryService->createMultimediaObject($series1);
+
+        $this->assertEquals(3, count($this->repo->findByBroadcast($broadcast)));
     }
 
     public function testFindWithStatus()
@@ -519,10 +853,12 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $pic1 = new Pic();
         $pic2 = new Pic();
         $pic3 = new Pic();
+        $pic4 = new Pic();
 
         $this->dm->persist($pic1);
         $this->dm->persist($pic2);
         $this->dm->persist($pic3);
+        $this->dm->persist($pic4);
 
         $mm = new MultimediaObject();
         $mm->addPic($pic1);
@@ -532,6 +868,9 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mm);
 
         $this->dm->flush();
+
+        $this->assertEquals($mm, $this->repo->findByPicId($pic1->getId()));
+        $this->assertEquals(null, $this->repo->findByPicId($pic4->getId()));
 
         $this->assertEquals($pic1, $this->repo->find($mm->getId())->getPicById($pic1->getId()));
         $this->assertEquals($pic2, $this->repo->find($mm->getId())->getPicById($pic2->getId()));
@@ -1313,6 +1652,399 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         $this->assertEquals(3, $this->repo->countInSeries($series1));
         $this->assertEquals(4, $this->repo->countInSeries($series2));
+    }
+
+    public function testCountPeopleWithRoleCode()
+    {
+        $series_type = $this->createSeriesType("Medieval Fantasy Sitcom");
+
+        $series_main = $this->createSeries("Stark's growing pains");
+        $series_wall = $this->createSeries("The Wall");
+        $series_lhazar = $this->createSeries("A quiet life");
+
+        $series_main->setSeriesType($series_type);
+        $series_wall->setSeriesType($series_type);
+        $series_lhazar->setSeriesType($series_type);
+
+        $this->dm->persist($series_main);
+        $this->dm->persist($series_wall);
+        $this->dm->persist($series_lhazar);
+        $this->dm->persist($series_type);
+        $this->dm->flush();
+
+        $person_ned = $this->createPerson('Ned');
+        $person_benjen = $this->createPerson('Benjen');
+        $person_mark = $this->createPerson('Mark');
+        $person_catherin = $this->createPerson('Ned');
+
+        $role_lord = $this->createRole("Lord");
+        $role_ranger = $this->createRole("Ranger");
+        $role_hand = $this->createRole("Hand");
+
+        $mm1 = $this->createMultimediaObjectAssignedToSeries('MmObject 1', $series_main);
+        $mm2 = $this->createMultimediaObjectAssignedToSeries('MmObject 2', $series_wall);
+        $mm3 = $this->createMultimediaObjectAssignedToSeries('MmObject 3', $series_main);
+        $mm4 = $this->createMultimediaObjectAssignedToSeries('MmObject 4', $series_lhazar);
+
+        $mm1->addPersonWithRole($person_ned, $role_lord);
+        $mm1->addPersonWithRole($person_mark, $role_lord);
+        $mm1->addPersonWithRole($person_benjen, $role_lord);
+        $mm1->addPersonWithRole($person_ned, $role_ranger);
+        $mm2->addPersonWithRole($person_ned, $role_lord);
+        $mm2->addPersonWithRole($person_ned, $role_ranger);
+        $mm2->addPersonWithRole($person_benjen, $role_ranger);
+        $mm2->addPersonWithRole($person_mark, $role_hand);
+        $mm3->addPersonWithRole($person_ned, $role_lord);
+        $mm3->addPersonWithRole($person_benjen, $role_ranger);
+        $mm4->addPersonWithRole($person_mark, $role_ranger);
+        $mm4->addPersonWithRole($person_ned, $role_hand);
+        $mm4->addPersonWithRole($person_catherin, $role_lord);
+
+        $this->dm->persist($mm1);
+        $this->dm->persist($mm2);
+        $this->dm->persist($mm3);
+        $this->dm->persist($mm4);
+        $this->dm->flush();
+
+        $peopleLord = $this->repo->findPeopleWithRoleCode($role_lord->getCod());
+        $this->assertEquals(4, count($peopleLord));
+        $peopleRanger = $this->repo->findPeopleWithRoleCode($role_ranger->getCod());
+        $this->assertEquals(3, count($peopleRanger));
+        $peopleHand = $this->repo->findPeopleWithRoleCode($role_hand->getCod());
+        $this->assertEquals(2, count($peopleHand));
+
+
+        $person = $this->repo->findPersonWithRoleCodeAndEmail($role_ranger->getCod(), $person_mark->getEmail());
+        $this->assertEquals(1, count($person));
+        $person = $this->repo->findPersonWithRoleCodeAndEmail($role_lord->getCod(), $person_ned->getEmail());
+        $this->assertEquals(2, count($person));
+    }
+
+    public function testFindRelatedMultimediaObjects()
+    {
+        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
+
+        $tagUNESCO = new Tag();
+        $tagUNESCO->setCod('UNESCO');
+        $tag1 = new Tag();
+        $tag1->setCod('tag1');
+        $tag2 = new Tag();
+        $tag2->setCod('tag2');
+        $tag3 = new Tag();
+        $tag3->setCod('tag3');
+
+        $tag1->setParent($tagUNESCO);
+        $tag2->setParent($tagUNESCO);
+        $tag3->setParent($tagUNESCO);
+
+        $this->dm->persist($tag1);
+        $this->dm->persist($tag2);
+        $this->dm->persist($tag3);
+        $this->dm->persist($tagUNESCO);
+        $this->dm->flush();
+
+        $series1 = $this->createSeries('Series 1');
+        $mm11 = $this->factoryService->createMultimediaObject($series1);
+        $mm12 = $this->factoryService->createMultimediaObject($series1);
+        $mm13 = $this->factoryService->createMultimediaObject($series1);
+
+        $series2 = $this->createSeries('Series 2');
+        $mm21 = $this->factoryService->createMultimediaObject($series2);
+        $mm22 = $this->factoryService->createMultimediaObject($series2);
+        $mm23 = $this->factoryService->createMultimediaObject($series2);
+
+        $series3 = $this->createSeries('Series 3');
+        $mm31 = $this->factoryService->createMultimediaObject($series3);
+        $mm32 = $this->factoryService->createMultimediaObject($series3);
+        $mm33 = $this->factoryService->createMultimediaObject($series3);
+
+        $mm11->addTag($tag1);
+        $mm12->addTag($tag2);
+        $mm13->addTag($tag1);
+        $mm21->addTag($tag3);
+        $mm22->addTag($tag1);
+        $mm23->addTag($tag1);
+        $mm31->addTag($tag1);
+        $mm32->addTag($tag3);
+        $mm33->addTag($tag3);
+
+        $this->dm->persist($mm11);
+        $this->dm->persist($mm12);
+        $this->dm->persist($mm13);
+        $this->dm->persist($mm21);
+        $this->dm->persist($mm22);
+        $this->dm->persist($mm23);
+        $this->dm->persist($mm31);
+        $this->dm->persist($mm32);
+        $this->dm->persist($mm33);
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->persist($series3);
+        $this->dm->flush();
+
+        $this->assertEquals(0, count($this->repo->findRelatedMultimediaObjects($mm33)));
+    }
+
+    public function testCount()
+    {
+        $series1 = $this->createSeries('Series 1');
+        $series2 = $this->createSeries('Series 2');
+        $series3 = $this->createSeries('Series 3');
+
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->persist($series3);
+        $this->dm->flush();
+
+        $mm1 = $this->createMultimediaObjectAssignedToSeries('mm1', $series1);
+        $mm2 = $this->createMultimediaObjectAssignedToSeries('mm2', $series1);
+        $mm3 = $this->createMultimediaObjectAssignedToSeries('mm3', $series2);
+        $mm4 = $this->createMultimediaObjectAssignedToSeries('mm4', $series3);
+
+        $this->assertEquals(4, $this->repo->count());
+        $this->assertEquals(492, $this->repo->countDuration());
+    }
+
+    public function testEmbeddedPerson()
+    {
+        $person = $this->createPerson('Person'); 
+        $embeddedPerson = new EmbeddedPerson($person);
+
+        $name = 'EmbeddedPerson';
+        $web = 'http://www.url.com';
+        $phone = '+34986123456';
+        $honorific = 'honorific';
+        $firm = 'firm';
+        $post = 'post';
+        $bio = 'biography';
+        $locale = 'en';
+
+        $embeddedPerson->setName($name);
+        $embeddedPerson->setWeb($web);
+        $embeddedPerson->setPhone($phone);
+        $embeddedPerson->setHonorific($honorific);
+        $embeddedPerson->setFirm($firm);
+        $embeddedPerson->setPost($post);
+        $embeddedPerson->setBio($bio);
+        $embeddedPerson->setLocale($locale);
+
+        $this->dm->persist($embeddedPerson);
+        $this->dm->flush();
+
+        $hname = $embeddedPerson->getHonorific().' '.$embeddedPerson->getName();
+        $other = $embeddedPerson->getPost().' '.$embeddedPerson->getFirm().' '.$embeddedPerson->getBio();
+        $info = $embeddedPerson->getPost().', '.$embeddedPerson->getFirm().', '.$embeddedPerson->getBio();
+
+        $this->assertEquals($name, $embeddedPerson->getName());
+        $this->assertEquals($web, $embeddedPerson->getWeb());
+        $this->assertEquals($phone, $embeddedPerson->getPhone());
+        $this->assertEquals($honorific, $embeddedPerson->getHonorific());
+        $this->assertEquals($firm, $embeddedPerson->getFirm());
+        $this->assertEquals($post, $embeddedPerson->getPost());
+        $this->assertEquals($bio, $embeddedPerson->getBio());
+        $this->assertEquals($locale, $embeddedPerson->getLocale());
+        $this->assertEquals($hname, $embeddedPerson->getHName());
+        $this->assertEquals($other, $embeddedPerson->getOther());
+        $this->assertEquals($info, $embeddedPerson->getInfo());
+
+        $localeEs = 'es';
+        $honorificEs = 'honores';
+        $firmEs = 'firma';
+        $postEs = 'publicacion';
+        $bioEs = 'biografia';
+
+        $honorificI18n = array($locale => $honorific, $localeEs => $honorificEs);
+        $firmI18n = array($locale => $firm, $localeEs => $firmEs);
+        $postI18n = array($locale => $post, $localeEs => $postEs);
+        $bioI18n = array($locale => $bio, $localeEs => $bioEs);
+
+        $embeddedPerson->setI18nHonorific($honorificI18n);
+        $embeddedPerson->setI18nFirm($firmI18n);
+        $embeddedPerson->setI18nPost($postI18n);
+        $embeddedPerson->setI18nBio($bioI18n);
+
+        $this->dm->persist($embeddedPerson);
+        $this->dm->flush();
+
+        $this->assertEquals($honorificI18n, $embeddedPerson->getI18nHonorific());
+        $this->assertEquals($firmI18n, $embeddedPerson->getI18nFirm());
+        $this->assertEquals($postI18n, $embeddedPerson->getI18nPost());
+        $this->assertEquals($bioI18n, $embeddedPerson->getI18nBio());
+
+        $honorific = null;
+        $firm = null;
+        $post = null;
+        $bio = null;
+
+        $embeddedPerson->setHonorific($honorific);
+        $embeddedPerson->setFirm($firm);
+        $embeddedPerson->setPost($post);
+        $embeddedPerson->setBio($bio);
+
+        $this->dm->persist($embeddedPerson);
+        $this->dm->flush();
+
+        $this->assertEquals($honorific, $embeddedPerson->getHonorific());
+        $this->assertEquals($firm, $embeddedPerson->getFirm());
+        $this->assertEquals($post, $embeddedPerson->getPost());
+        $this->assertEquals($bio, $embeddedPerson->getBio());
+    }
+
+    public function testEmbeddedRole()
+    {
+        $role = $this->createRole('Role'); 
+        $embeddedRole = new EmbeddedRole($role);
+
+        $name = 'EmbeddedRole';
+        $cod = 'EmbeddedRole';
+        $xml = '<xml content and definition of this/>';
+        $text = 'Black then white are all i see in my infancy.';
+        $locale= 'en';
+
+        $embeddedRole->setName($name);
+        $embeddedRole->setCod($cod);
+        $embeddedRole->setXml($xml);
+        $embeddedRole->setText($text);
+        $embeddedRole->setLocale($locale);
+
+        $this->dm->persist($embeddedRole);
+        $this->dm->flush();
+
+        $this->assertEquals($name, $embeddedRole->getName());
+        $this->assertEquals($cod, $embeddedRole->getCod());
+        $this->assertEquals($xml, $embeddedRole->getXml());
+        $this->assertEquals($text, $embeddedRole->getText());
+        $this->assertEquals($locale, $embeddedRole->getLocale());
+
+        $localeEs = 'es';
+        $nameEs = 'RolEmbebido';
+        $textEs = 'Blano y negro es todo lo que vi en mi infancia.';
+
+        $nameI18n = array($locale => $name, $localeEs => $nameEs);
+        $textI18n = array($locale => $text, $localeEs => $textEs);
+
+        $embeddedRole->setI18nName($nameI18n);
+        $embeddedRole->setI18nText($textI18n);
+
+        $this->dm->persist($embeddedRole);
+        $this->dm->flush();
+
+        $this->assertEquals($nameI18n, $embeddedRole->getI18nName());
+        $this->assertEquals($textI18n, $embeddedRole->getI18nText());
+
+        $name = null;
+        $text = null;
+
+        $embeddedRole->setName($name);
+        $embeddedRole->setText($text);
+
+        $this->dm->persist($embeddedRole);
+        $this->dm->flush();
+
+        $this->assertEquals($name, $embeddedRole->getName());
+        $this->assertEquals($text, $embeddedRole->getText());
+
+        $person_ned = $this->createPerson('Ned');
+        $embeddedRole->addPerson($person_ned);
+
+        $this->assertTrue($embeddedRole->containsPerson($person_ned));
+
+        $person_benjen = $this->createPerson('Benjen');
+        $embeddedRole->addPerson($person_benjen);
+        $person_mark = $this->createPerson('Mark');
+        $embeddedRole->addPerson($person_mark);
+        $person_cris = $this->createPerson('Cris');
+
+        $this->dm->persist($embeddedRole);
+        $this->dm->flush();
+
+        $people1 = array($person_ned, $person_benjen, $person_mark);
+        $people2 = array($person_ned, $person_benjen, $person_mark, $person_cris);
+        $people3 = array($person_cris);
+
+        $this->assertTrue($embeddedRole->containsAllPeople($people1));
+        $this->assertFalse($embeddedRole->containsAllPeople($people2));
+        $this->assertFalse($embeddedRole->containsAnyPerson($people1));
+        $this->assertTrue($embeddedRole->containsAnyPerson($people3));
+        $this->assertFalse($embeddedRole->getEmbeddedPerson($person_cris));
+
+        $role = new Role();
+        //var_dump($embeddedRole->createEmbeddedPerson($role));
+    }
+
+    public function testEmbeddedTag()
+    {
+        $tag = new Tag();
+        $tag->setCod('tag');
+
+        $tag1 = new Tag();
+        $tag1->setCod('embeddedTag');
+
+        $this->dm->persist($tag);
+        $this->dm->persist($tag1);
+
+        $this->dm->flush();
+
+        $embeddedTag = new EmbeddedTag($tag);
+        $embeddedTag->setCod('embeddedTag');
+
+        $this->dm->persist($embeddedTag);
+        $this->dm->flush();
+
+        $this->assertTrue($embeddedTag->isDescendantOf($tag));
+        $this->assertFalse($embeddedTag->isDescendantOf($tag1));
+    }
+
+    public function testFindByTagCod()
+    {
+        $tag = new Tag();
+        $tag->setCod('tag');
+
+        $this->dm->persist($tag);
+        $this->dm->flush();
+
+        $series = $this->createSeries('Series');
+        $multimediaObject = $this->factoryService->createMultimediaObject($series);
+
+        $sort = array('public_date' => -1);
+        $this->assertCount(0, $this->repo->findByTagCod($tag, $sort));
+
+        $addedTags = $this->tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());
+        $multimediaObjects = $this->repo->findByTagCod($tag, $sort)->toArray();
+        $this->assertCount(1, $multimediaObjects);
+        $this->assertTrue(in_array($multimediaObject, $multimediaObjects));
+    }
+
+    public function testFindAllByTag()
+    {
+        $tag = new Tag();
+        $tag->setCod('tag');
+
+        $this->dm->persist($tag);
+        $this->dm->flush();
+
+        $series = $this->createSeries('Series');
+        $multimediaObject = $this->factoryService->createMultimediaObject($series);
+
+        $sort = array('public_date' => -1);
+        $this->assertCount(0, $this->repo->findAllByTag($tag, $sort));
+
+        $addedTags = $this->tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());
+
+        $prototype = $this->repo->findPrototype($series);
+        $addedTagsToPrototype = $this->tagService->addTagToMultimediaObject($prototype, $tag->getId());
+
+        $multimediaObjects = $this->repo->findAllByTag($tag, $sort)->toArray();
+        $this->assertCount(2, $multimediaObjects);
+        $this->assertTrue(in_array($multimediaObject, $multimediaObjects));
+        $this->assertTrue(in_array($prototype, $multimediaObjects));
+
+        $removedTagsFromPrototype = $this->tagService->removeTagFromMultimediaObject($prototype, $tag->getId());
+
+        $multimediaObjects = $this->repo->findAllByTag($tag, $sort)->toArray();
+        $this->assertCount(1, $multimediaObjects);
+        $this->assertTrue(in_array($multimediaObject, $multimediaObjects));
+        $this->assertFalse(in_array($prototype, $multimediaObjects));
     }
 
     private function createPerson($name)

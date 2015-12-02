@@ -18,32 +18,40 @@ class InboxController extends Controller
     {
         $dir = $request->query->get("dir", "");
         $type = $request->query->get("type", "file");
-        $baseDir = $this->container->getParameter('pumukit2.inbox');
+        $baseDir = realpath($this->container->getParameter('pumukit2.inbox'));
 
+        /*
         if(0 !== strpos($dir, $baseDir)) {
             throw $this->createAccessDeniedException();
         }
+        */
 
         $finder = new Finder();
 
         $res = array();
 
         if ("file" == $type) {
-            $finder->files()->in($dir);
+            $finder->depth('< 1')->followLinks()->in($dir);
             $finder->sortByName();
             foreach ($finder as $f) {
                 $res[] = array('path' => $f->getRealpath(),
                                'relativepath' => $f->getRelativePathname(),
-                               'is_file' => $f->isFile());
+                               'is_file' => $f->isFile(),
+                               'hash' => hash('md5', $f->getRealpath()),
+                               'content' => false);
             }
         }else{
-            $finder->directories()->in($dir);
+            $finder->depth('< 1')->directories()->followLinks()->in($dir);
             $finder->sortByName();
             foreach ($finder as $f) {
                 if (0 !== (count(glob("$f/*")))){
+                    $contentFinder = new Finder();
+                    $contentFinder->files()->in($f->getRealpath());
                     $res[] = array('path' => $f->getRealpath(),
                                    'relativepath' => $f->getRelativePathname(),
-                                   'is_file' => $f->isFile());
+                                   'is_file' => $f->isFile(),
+                                   'hash' => hash('md5', $f->getRealpath()),
+                                   'content' => $contentFinder->count());
                 }
             }
         }
@@ -60,7 +68,7 @@ class InboxController extends Controller
             return $this->render('@PumukitNewAdmin/Inbox/form_noconf.html.twig');
         }
         
-        $dir = $this->container->getParameter('pumukit2.inbox');
+        $dir = realpath($this->container->getParameter('pumukit2.inbox'));
 
         if (!file_exists($dir)) {
             return $this->render('@PumukitNewAdmin/Inbox/form_nofile.html.twig', array('dir' => $dir));

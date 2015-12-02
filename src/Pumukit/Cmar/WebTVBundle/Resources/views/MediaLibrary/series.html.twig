@@ -1,8 +1,8 @@
-<dl class="usctv_mmobj">
+<dl class="pumukit_mmobj">
   <dt class="thumbnail">
     <figure class="album">
       <a href="{{ url('pumukit_webtv_series_index', {'id': series.id}) }}">
-        {% set series_pic = series.getFirstUrlPic('/images/folder.png') %}
+        {% set series_pic = (series|first_url_pic) %}
         <div class="picture"><img src="{{ series_pic }}"/></div>
         <div class="picture"><img src="{{ series_pic }}"/></div>
         <div class="picture"><img src="{{ series_pic }}"/></div>
@@ -22,8 +22,8 @@
       {{ series.getPublicDate()|date('d/m/Y') }}
     </div>
     <div class="mmobj_bottom">
-      {% set count_mm = (series|count_multimedia_objects) %}
-      [{{ count_mm }}{% if (1 == count_mm) %}{% trans %}Video{% endtrans %}{% else %}{% trans %}Videos{% endtrans %}{% endif %}]
+      {% set count_mm = count is defined ? count : (series|count_multimedia_objects) %}
+      [{{ count_mm }} {% if (1 == count_mm) %}{% trans %}Video{% endtrans %}{% else %}{% trans %}Videos{% endtrans %}{% endif %}]
     </div>
   </dd>
 </dl>

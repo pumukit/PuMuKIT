@@ -14,9 +14,11 @@
       </li>
 
       <!-- Direct -->
-      <li>
-        <a href="{{ path('pumukit_live')}}">Direct</a>
-      </li>
+      {% for live in live_channels %}
+        <li>
+          <a href="{{ path('pumukit_live_id', {'id': live.id})}}">{{ live.name }}</a>
+        </li>
+      {% endfor %}
 
       <!-- Mediateca -->
       <li>

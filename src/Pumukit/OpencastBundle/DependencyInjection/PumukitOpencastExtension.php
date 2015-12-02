@@ -3,6 +3,7 @@
 namespace Pumukit\OpencastBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Parameter;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -42,9 +43,22 @@ class PumukitOpencastExtension extends Extension
             ->register("pumukit_opencast.job", "Pumukit\OpencastBundle\Services\OpencastService")
             ->addArgument($config['generate_sbs'] ? $config['profile'] : null)
             ->addArgument(new Reference('pumukitencoder.job'))
-            ->addArgument($config['url_mapping']);
+            ->addArgument($config['url_mapping'])
+            ->addArgument(array('opencast_host' => $config['host'], 'opencast_username' => $config['username'], 'opencast_password' => $config['password']));
+
+          $container
+            ->register("pumukit_opencast.import", "Pumukit\OpencastBundle\Services\OpencastImportService")
+            ->addArgument(new Reference("doctrine_mongodb.odm.document_manager"))
+            ->addArgument(new Reference("pumukitschema.factory"))
+            ->addArgument(new Reference("pumukitschema.track"))
+            ->addArgument(new Reference("pumukitschema.tag"))
+            ->addArgument(new Reference("pumukit_opencast.client"))
+            ->addArgument(new Reference("pumukit_opencast.job"))
+            ->addArgument(new Reference("pumukit.inspection"))
+            ->addArgument(new Parameter("pumukit2.locales"));
         }
 
-        
+        $container->setParameter('pumukit_opencast.generate_sbs', $config['generate_sbs'] ? $config['generate_sbs'] : false);
+        $container->setParameter('pumukit_opencast.profile', $config['generate_sbs'] ? $config['profile'] : null);
     }
 }

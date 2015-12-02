@@ -27,6 +27,8 @@ class PersonServiceTest extends WebTestCase
           ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
           ->getRepository('PumukitSchemaBundle:Person');
+        $this->roleRepo = $this->dm
+          ->getRepository('PumukitSchemaBundle:Role');
         $this->repoMmobj = $this->dm
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->personService = $kernel->getContainer()
@@ -39,6 +41,7 @@ class PersonServiceTest extends WebTestCase
     {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Person')->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:Role')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')->remove(array());
         $this->dm->flush();
@@ -56,6 +59,18 @@ class PersonServiceTest extends WebTestCase
         $this->assertNotNull($person->getId());
     }
 
+    public function testSaveRole()
+    {
+        $role = new Role();
+
+        $code = 'Actor';
+        $role->setCod($code);
+
+        $role = $this->personService->saveRole($role);
+
+        $this->assertNotNull($role->getId());
+    }
+
     public function testFindPersonById()
     {
         $person = new Person();
@@ -68,7 +83,33 @@ class PersonServiceTest extends WebTestCase
         $this->assertEquals($person, $this->personService->findPersonById($person->getId()));
     }
 
-    public function testUpdatePerson()
+    public function testFindRoleById()
+    {
+        $role = new Role();
+
+        $code = 'actor';
+        $role->setCod($code);
+
+        $role = $this->personService->saveRole($role);
+
+        $this->assertEquals($role, $this->personService->findRoleById($role->getId()));
+    }
+
+    public function testFindPersonByEmail()
+    {
+        $person = new Person();
+
+        $name = 'John Smith';
+        $email = 'john.smith@mail.com';
+        $person->setName($name);
+        $person->setEmail($email);
+
+        $person = $this->personService->savePerson($person);
+
+        $this->assertEquals($person, $this->personService->findPersonByEmail($email));
+    }
+
+    public function testUpdatePersonAndUpdateRole()
     {
         $personJohn = new Person();
         $nameJohn = 'John Smith';
@@ -150,6 +191,7 @@ class PersonServiceTest extends WebTestCase
         $this->assertEquals($emailJohn, $mm2->getPersonWithRole($personJohn, $rolePresenter)->getEmail());
         $this->assertEquals($emailJohn, $mm3->getPersonWithRole($personJohn, $roleActor)->getEmail());
 
+        // Test update embedded person
         $emailBob = 'bobclark@mail.com';
         $personBob->setEmail($emailBob);
 
@@ -164,6 +206,26 @@ class PersonServiceTest extends WebTestCase
         $this->assertEquals($emailBob, $mm2->getPersonWithRole($personBob, $rolePresenter)->getEmail());
         $this->assertEquals($emailJohn, $mm2->getPersonWithRole($personJohn, $rolePresenter)->getEmail());
         $this->assertEquals($emailJohn, $mm3->getPersonWithRole($personJohn, $roleActor)->getEmail());
+
+        // Test update embedded role
+        $newActorCode = 'NewActor';
+        $roleActor->setCod($newActorCode);
+
+        $roleActor = $this->personService->updateRole($roleActor);
+        $this->assertEquals($newActorCode, $this->roleRepo->find($roleActor->getId())->getCod());
+        $this->assertEquals($newActorCode, $mm1->getEmbeddedRole($roleActor)->getCod());
+        $this->assertEquals($newActorCode, $mm2->getEmbeddedRole($roleActor)->getCod());
+        $this->assertEquals($newActorCode, $mm3->getEmbeddedRole($roleActor)->getCod());
+
+        $newPresenterCode = 'NewPresenter';
+        $rolePresenter->setCod($newPresenterCode);
+
+        $rolePresenter = $this->personService->updateRole($rolePresenter);
+        $this->assertEquals($newPresenterCode, $this->roleRepo->find($rolePresenter->getId())->getCod());
+        $this->assertEquals($newPresenterCode, $mm1->getEmbeddedRole($rolePresenter)->getCod());
+        $this->assertEquals($newPresenterCode, $mm2->getEmbeddedRole($rolePresenter)->getCod());
+        $this->assertFalse($mm3->getEmbeddedRole($rolePresenter));
+
     }
 
     public function testFindSeriesWithPerson()
@@ -357,6 +419,47 @@ class PersonServiceTest extends WebTestCase
         $this->assertEquals(array($personJohn, $personBobby), $this->personService->autoCompletePeopleByName('sm'));
     }
 
+    public function testDeleteRelation()
+    {
+        $personBob = new Person();
+        $nameBob = 'Bob Clark';
+        $personBob->setName($nameBob);
+
+        $personBob = $this->personService->savePerson($personBob);
+
+        $roleActor = new Role();
+        $codActor = 'actor';
+        $roleActor->setCod($codActor);
+
+        $this->dm->persist($roleActor);
+        $this->dm->flush();
+
+        $broadcast = new Broadcast();
+        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
+        $broadcast->setDefaultSel(true);
+        $this->dm->persist($broadcast);
+        $this->dm->flush();
+
+        $series = $this->factoryService->createSeries();
+
+        $mm1 = $this->factoryService->createMultimediaObject($series);
+        $title1 = 'Multimedia Object 1';
+        $mm1->setTitle($title1);
+        $mm1->addPersonWithRole($personBob, $roleActor);
+
+        $this->dm->persist($mm1);
+        $this->dm->flush();
+
+        $personBobId = $personBob->getId();
+
+        $this->assertEquals(1, count($this->repoMmobj->findByPersonId($personBobId)));
+        $this->assertEquals($personBob, $this->repo->find($personBobId));
+
+        $this->personService->deleteRelation($personBob, $roleActor, $mm1);
+
+        $this->assertEquals(0, count($this->repoMmobj->findByPersonId($personBobId)));
+    }
+
     public function testBatchDeletePerson()
     {
         $personJohn = new Person();
@@ -435,6 +538,32 @@ class PersonServiceTest extends WebTestCase
         $this->assertEquals(0, count($this->repoMmobj->findByPersonId($personJohnId)));
         $this->assertNull($this->repo->find($personBobId));
         $this->assertNull($this->repo->find($personJohnId));
+    }
+
+    public function testCountMultimediaObjectsWithPerson()
+    {
+        $personJohn = new Person();
+        $nameJohn = 'John Smith';
+        $personJohn->setName($nameJohn);
+
+        $roleActor = new Role();
+        $codActor = 'actor';
+        $roleActor->setCod($codActor);
+
+        $this->dm->persist($roleActor);
+        $this->dm->flush();
+
+        $personJohn = $this->personService->savePerson($personJohn);
+
+        $series = $this->factoryService->createSeries();
+        $mm1 = $this->factoryService->createMultimediaObject($series);
+
+        $mm1->addPersonWithRole($personJohn, $roleActor);
+
+        $this->dm->persist($mm1);
+        $this->dm->flush();
+
+        $this->assertEquals(1, count($this->personService->countMultimediaObjectsWithPerson($personJohn)));
     }
 
     public function testUpAndDownPersonWithRole()
@@ -584,5 +713,24 @@ class PersonServiceTest extends WebTestCase
         $this->personService->deletePerson($personBob);
 
         $this->assertEquals(1, count($this->repo->findAll()));
+    }
+
+    public function testGetRoles()
+    {
+        $role1 = new Role();
+        $role1->setCod('role1');
+
+        $role2 = new Role();
+        $role2->setCod('role2');
+
+        $role3 = new Role();
+        $role3->setCod('role3');
+
+        $this->dm->persist($role1);
+        $this->dm->persist($role2);
+        $this->dm->persist($role3);
+        $this->dm->flush();
+
+        $this->assertEquals(3, count($this->personService->getRoles()));
     }
 }

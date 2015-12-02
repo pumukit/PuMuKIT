@@ -41,6 +41,7 @@ class JobTest extends \PHPUnit_Framework_TestCase
         $duration = 40;
         $size = '12000';
         $email = 'test@mail.com';
+        $initVars = array('ocurls' => array('presenter/master' => 'http://presentatermaster.com', 'presentation/master' => 'http://presentationmaster'));
         $locale = 'en';
 
         $job->setLocale('en');
@@ -64,7 +65,8 @@ class JobTest extends \PHPUnit_Framework_TestCase
         $job->setDuration($duration);
         $job->setSize($size);
         $job->setEmail($email);
-        
+        $job->setInitVars($initVars);
+
         $this->assertEquals($mm_id, $job->getMmId());
         $this->assertEquals($language_id, $job->getLanguageId());
         $this->assertEquals($profile, $job->getProfile());
@@ -85,6 +87,7 @@ class JobTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($duration, $job->getDuration());
         $this->assertEquals($size, $job->getSize());
         $this->assertEquals($email, $job->getEmail());
+        $this->assertEquals($initVars, $job->getInitVars());
         $this->assertEquals($locale, $job->getLocale());
 
         $descriptionI18n = array('en' => 'description', 'es' => 'descripción');

@@ -34,7 +34,7 @@
             </div> 
           </td>
           <td>
-            <a title="{% trans %}Edit Role{% endtrans %} {{ role.cod }}" href="{{ path('pumukitnewadmin_role_update', {'id': role.id}) }}" data-toggle="modal" data-target="#myModal">
+            <a title="{% trans %}Edit Role{% endtrans %} {{ role.cod }}" href="{{ path('pumukitnewadmin_role_update', {'id': role.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
               <i class="mdi-editor-mode-edit"></i>
             </a>
           <td>
@@ -45,16 +45,16 @@
           <td>
 	          {% if roles.getCurrentPage() != 1 or not loop.first %}
 	          {% spaceless %}
-	          <a href="{{ path('pumukitnewadmin_role_up', {'id': role.id}) }}">&#8593;</a>
-	          <a href="{{ path('pumukitnewadmin_role_top', {'id': role.id}) }}"><i class="mdi-editor-vertical-align-top"></i></a>
+	          <a href="{{ path('pumukitnewadmin_role_down', {'id': role.id}) }}">&#8593;</a>
+	          <a href="{{ path('pumukitnewadmin_role_bottom', {'id': role.id}) }}"><i class="mdi-editor-vertical-align-top"></i></a>
 	          {% endspaceless %}
 	          {% endif %}
           </td>
           <td>
 	          {% if (roles.getCurrentPage() != roles.getNbPages()) or (loop.index + ((roles.getCurrentPage() - 1 ) * roles.getMaxPerPage()) != roles.getNbResults())  %}
 	          {% spaceless %}
-	          <a href="{{ path('pumukitnewadmin_role_down', {'id': role.id}) }}">&#8595;</a>
-	          <a href="{{ path('pumukitnewadmin_role_bottom', {'id': role.id}) }}"><i class="mdi-editor-vertical-align-bottom"></i></a>
+	          <a href="{{ path('pumukitnewadmin_role_up', {'id': role.id}) }}">&#8595;</a>
+	          <a href="{{ path('pumukitnewadmin_role_top', {'id': role.id}) }}"><i class="mdi-editor-vertical-align-bottom"></i></a>
 	          {% endspaceless %}
 	          {% endif %}
           </td>

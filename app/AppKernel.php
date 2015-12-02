@@ -22,9 +22,8 @@ class AppKernel extends Kernel
             new JMS\SerializerBundle\JMSSerializerBundle($this),
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
             new Sylius\Bundle\ResourceBundle\SyliusResourceBundle(),
-            new Pumukit\AdminBundle\PumukitAdminBundle(),
-            new Pumukit\DirectBundle\PumukitDirectBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new SunCat\MobileDetectBundle\MobileDetectBundle(),
             new Pumukit\EncoderBundle\PumukitEncoderBundle(),
             new Pumukit\InspectionBundle\PumukitInspectionBundle(),
             new Pumukit\NewAdminBundle\PumukitNewAdminBundle(),
@@ -32,11 +31,8 @@ class AppKernel extends Kernel
             new Pumukit\OpencastBundle\PumukitOpencastBundle(),
             new Pumukit\WorkflowBundle\PumukitWorkflowBundle(),
             new Pumukit\WizardBundle\PumukitWizardBundle(),
-            new Pumukit\ArcaBundle\PumukitArcaBundle(),
             new Pumukit\WebTVBundle\PumukitWebTVBundle(),
-            //new Pumukit\Cmar\WebTVBundle\PumukitCmarWebTVBundle(),
-            //new Pumukit\Cmar\SonarBundle\PumukitCmarSonarBundle(),
-            new Pumukit\Cmar\PodcastBundle\PumukitCmarPodcastBundle(),
+            new Pumukit\StatsBundle\PumukitStatsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
@@ -44,6 +40,7 @@ class AppKernel extends Kernel
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+            $bundles[] = new Pumukit\InstallBundleBundle\PumukitInstallBundleBundle();
             $bundles[] = new Pumukit\ExampleDataBundle\PumukitExampleDataBundle();
         }
 

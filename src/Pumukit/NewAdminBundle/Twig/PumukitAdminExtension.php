@@ -3,36 +3,43 @@
 namespace Pumukit\NewAdminBundle\Twig;
 
 use Symfony\Component\Intl\Intl;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 
 class PumukitAdminExtension extends \Twig_Extension
 {
     private $dm;
     private $languages;
     private $profileService;
+    private $translator;
+    private $router;
 
     /**
-     * Constructor
+     * Constructor.
      */
-    public function __construct(ProfileService $profileService, DocumentManager $documentManager)
+    public function __construct(ProfileService $profileService, DocumentManager $documentManager, TranslatorInterface $translator, RouterInterface $router)
     {
         $this->dm = $documentManager;
         $this->languages = Intl::getLanguageBundle()->getLanguageNames();
         $this->profileService = $profileService;
+        $this->translator = $translator;
+        $this->router = $router;
     }
-  
+
     /**
-     * Get name
+     * Get name.
      */
     public function getName()
     {
         return 'pumukitadmin_extension';
     }
 
-     /**
-     * Get filters
+    /**
+     * Get filters.
      */
     public function getFilters()
     {
@@ -58,19 +65,21 @@ class PumukitAdminExtension extends \Twig_Extension
     }
 
     /**
-     * Get functions
+     * Get functions.
      */
-    function getFunctions()
+    public function getFunctions()
     {
-      return array(
+        return array(
                    new \Twig_SimpleFunction('php_upload_max_filesize', array($this, 'getPhpUploadMaxFilesize')),
+                   new \Twig_SimpleFunction('path_exists', array($this, 'existsRoute')),
                    );
     }
 
     /**
-     * Get basename
-     * 
+     * Get basename.
+     *
      * @param string $path
+     *
      * @return string
      */
     public function getBasename($path)
@@ -79,18 +88,19 @@ class PumukitAdminExtension extends \Twig_Extension
     }
 
     /**
-     * Get profile
+     * Get profile.
      *
      * @param Collection $tags
+     *
      * @return string
      */
     public function getProfile($tags)
     {
         $profile = '';
 
-        foreach($tags as $tag){
-            if (false !== strpos($tag, 'profile:' )) {
-                return substr($tag, strlen('profile:'), strlen($tag)-1);
+        foreach ($tags as $tag) {
+            if (false !== strpos($tag, 'profile:')) {
+                return substr($tag, strlen('profile:'), strlen($tag) - 1);
             }
         }
 
@@ -98,9 +108,22 @@ class PumukitAdminExtension extends \Twig_Extension
     }
 
     /**
-     * Get display
+     * Check if a route exists.
+     *
+     * @param string $name route name
+     *
+     * @return boolena
+     */
+    public function existsRoute($name)
+    {
+        return (null !== $this->router->getRouteCollection()->get($name));
+    }
+
+    /**
+     * Get display.
      *
      * @param string $profileName
+     *
      * @return string
      */
     public function getDisplay($profileName)
@@ -108,7 +131,7 @@ class PumukitAdminExtension extends \Twig_Extension
         $display = false;
         $profile = $this->profileService->getProfile($profileName);
 
-        if (null !== $profile){
+        if (null !== $profile) {
             $display = $profile['display'];
         }
 
@@ -116,50 +139,57 @@ class PumukitAdminExtension extends \Twig_Extension
     }
 
     /**
-     * Get duration string
+     * Get duration string.
      *
      * @param int $duration
+     *
      * @return string
      */
     public function getDurationString($duration)
     {
-        $min = $this->getDurationInMinutes($duration);
-        if ($min == 0 ) $aux = $this->getDurationInSeconds($duration) ."''";
-        else $aux = $min . "' ". $this->getDurationInSeconds($duration) ."''";
-        
-        return $aux;
+        return gmdate('H:i:s', $duration);
     }
 
     /**
-     * Get language name
+     * Get language name.
      *
      * @param string $code
+     *
      * @return string
      */
     public function getLanguageName($code)
     {
-        return ucfirst($this->languages[$code]);
+        $addonLanguages = CustomLanguageType::$addonLanguages;
+
+        if (isset($this->languages[$code])) {
+            return ucfirst($this->languages[$code]);
+        } elseif (isset($addonLanguages[$code])) {
+            return ucfirst($this->translator->trans($addonLanguages[$code]));
+        }
+
+        return $code;
     }
 
     /**
-     * Get status icon
+     * Get status icon.
      *
-     * @param integer $status
+     * @param int $status
+     *
      * @return string
      */
     public function getStatusIcon($status)
     {
-        $iconClass = "mdi-alert-warning";
+        $iconClass = 'mdi-alert-warning';
 
         switch ($status) {
             case MultimediaObject::STATUS_PUBLISHED:
-                $iconClass = "mdi-device-signal-wifi-4-bar";
+                $iconClass = 'mdi-device-signal-wifi-4-bar';
                 break;
             case MultimediaObject::STATUS_HIDE:
-                $iconClass = "mdi-device-signal-wifi-0-bar";
+                $iconClass = 'mdi-device-signal-wifi-0-bar';
                 break;
             case MultimediaObject::STATUS_BLOQ:
-                $iconClass = "mdi-device-wifi-lock";
+                $iconClass = 'mdi-device-wifi-lock';
                 break;
         }
 
@@ -167,24 +197,25 @@ class PumukitAdminExtension extends \Twig_Extension
     }
 
     /**
-     * Get status text
+     * Get status text.
      *
-     * @param integer $status
+     * @param int $status
+     *
      * @return string
      */
     public function getStatusText($status)
     {
-        $iconText = "New";
+        $iconText = 'New';
 
         switch ($status) {
             case MultimediaObject::STATUS_PUBLISHED:
-                $iconText = "Published: is listed in the Series and can be played with published URL";
+                $iconText = 'Published: is listed in the Series and can be played with published URL';
                 break;
             case MultimediaObject::STATUS_HIDE:
-                $iconText = "Hidden: is not listed in the Series but can be played with published URL";
+                $iconText = 'Hidden: is not listed in the Series but can be played with magic URL';
                 break;
             case MultimediaObject::STATUS_BLOQ:
-                $iconText = "Blocked: is not listed in the Series but can be played with magic URL";
+                $iconText = 'Blocked: cannot be accessed outside the back-end';
                 break;
         }
 
@@ -192,9 +223,10 @@ class PumukitAdminExtension extends \Twig_Extension
     }
 
     /**
-     * Get series icon
+     * Get series icon.
      *
      * @param string $series
+     *
      * @return string
      */
     public function getSeriesIcon($series)
@@ -203,7 +235,7 @@ class PumukitAdminExtension extends \Twig_Extension
         $mmobjsHidden = 0;
         $mmobjsBlocked = 0;
 
-        foreach($series->getMultimediaObjects() as $mmobj){
+        foreach ($series->getMultimediaObjects() as $mmobj) {
             switch ($mmobj->getStatus()) {
                 case MultimediaObject::STATUS_PUBLISHED:
                     ++$mmobjsPublished;
@@ -215,36 +247,36 @@ class PumukitAdminExtension extends \Twig_Extension
                     ++$mmobjsBlocked;
                     break;
             }
-
         }
 
-        $iconClass = "mdi-alert-warning";
+        $iconClass = 'mdi-alert-warning';
 
-        if ((0 === $mmobjsPublished) && (0 === $mmobjsHidden) && (0 === $mmobjsBlocked)){
-            $iconClass = "mdi-device-signal-wifi-off pumukit-none";
-        }elseif (($mmobjsPublished > $mmobjsHidden) && ($mmobjsPublished > $mmobjsBlocked)){
-            $iconClass = "mdi-device-signal-wifi-4-bar pumukit-published";
-        }elseif (($mmobjsPublished === $mmobjsHidden) && ($mmobjsPublished > $mmobjsBlocked)){
-            $iconClass = "mdi-device-signal-wifi-0-bar pumukit-hidden-published";
-        }elseif (($mmobjsHidden > $mmobjsPublished) && ($mmobjsHidden > $mmobjsBlocked)){
-            $iconClass = "mdi-device-signal-wifi-0-bar pumukit-hidden";
-        }elseif (($mmobjsPublished === $mmobjsBlocked) && ($mmobjsPublished > $mmobjsHidden)){
-            $iconClass = "mdi-device-wifi-lock pumukit-blocked-published";
-        }elseif (($mmobjsBlocked === $mmobjsHidden) && ($mmobjsBlocked > $mmobjsPublished)){
-            $iconClass = "mdi-device-wifi-lock pumukit-blocked-hidden";
-        }elseif (($mmobjsPublished === $mmobjsBlocked) && ($mmobjsPublished === $mmobjsHidden)){
-            $iconClass = "mdi-device-wifi-lock pumukit-blocked-hidden-published";
-        }elseif (($mmobjsBlocked > $mmobjsPublished) && ($mmobjsBlocked > $mmobjsHidden)){
-            $iconClass = "mdi-device-wifi-lock pumukit-blocked";
+        if ((0 === $mmobjsPublished) && (0 === $mmobjsHidden) && (0 === $mmobjsBlocked)) {
+            $iconClass = 'mdi-device-signal-wifi-off pumukit-none';
+        } elseif (($mmobjsPublished > $mmobjsHidden) && ($mmobjsPublished > $mmobjsBlocked)) {
+            $iconClass = 'mdi-device-signal-wifi-4-bar pumukit-published';
+        } elseif (($mmobjsPublished === $mmobjsHidden) && ($mmobjsPublished > $mmobjsBlocked)) {
+            $iconClass = 'mdi-device-signal-wifi-0-bar pumukit-hidden-published';
+        } elseif (($mmobjsHidden > $mmobjsPublished) && ($mmobjsHidden > $mmobjsBlocked)) {
+            $iconClass = 'mdi-device-signal-wifi-0-bar pumukit-hidden';
+        } elseif (($mmobjsPublished === $mmobjsBlocked) && ($mmobjsPublished > $mmobjsHidden)) {
+            $iconClass = 'mdi-device-wifi-lock pumukit-blocked-published';
+        } elseif (($mmobjsBlocked === $mmobjsHidden) && ($mmobjsBlocked > $mmobjsPublished)) {
+            $iconClass = 'mdi-device-wifi-lock pumukit-blocked-hidden';
+        } elseif (($mmobjsPublished === $mmobjsBlocked) && ($mmobjsPublished === $mmobjsHidden)) {
+            $iconClass = 'mdi-device-wifi-lock pumukit-blocked-hidden-published';
+        } elseif (($mmobjsBlocked > $mmobjsPublished) && ($mmobjsBlocked > $mmobjsHidden)) {
+            $iconClass = 'mdi-device-wifi-lock pumukit-blocked';
         }
 
         return $iconClass;
     }
 
     /**
-     * Get series text
+     * Get series text.
      *
-     * @param integer $series
+     * @param int $series
+     *
      * @return string
      */
     public function getSeriesText($series)
@@ -253,7 +285,7 @@ class PumukitAdminExtension extends \Twig_Extension
         $mmobjsHidden = 0;
         $mmobjsBlocked = 0;
 
-        foreach($series->getMultimediaObjects() as $mmobj){
+        foreach ($series->getMultimediaObjects() as $mmobj) {
             switch ($mmobj->getStatus()) {
                 case MultimediaObject::STATUS_PUBLISHED:
                     ++$mmobjsPublished;
@@ -265,7 +297,6 @@ class PumukitAdminExtension extends \Twig_Extension
                     ++$mmobjsBlocked;
                     break;
             }
-
         }
 
         $iconText = $mmobjsPublished." Published Multimedia Object(s),\n".
@@ -276,9 +307,10 @@ class PumukitAdminExtension extends \Twig_Extension
     }
 
     /**
-     * Get track profile width resolution
+     * Get track profile width resolution.
      *
      * @param Collection $tags
+     *
      * @return string
      */
     public function getProfileWidth($tags)
@@ -286,16 +318,17 @@ class PumukitAdminExtension extends \Twig_Extension
         $profileName = $this->getProfileFromTags($tags);
         $profile = $this->profileService->getProfile($profileName);
         if (null !== $profile) {
-            return $profile['resolution_hor'];          
+            return $profile['resolution_hor'];
         }
-      
+
         return '0';
     }
 
     /**
-     * Get track profile height resolution
+     * Get track profile height resolution.
      *
      * @param Collection $tags
+     *
      * @return string
      */
     public function getProfileHeight($tags)
@@ -307,54 +340,62 @@ class PumukitAdminExtension extends \Twig_Extension
         }
 
         return '0';
-    }    
+    }
 
     /**
      * Get announce icon of Series
-     * and MultimediaObjects inside of it
+     * and MultimediaObjects inside of it.
      *
      * @param Series $series
+     *
      * @return string $icon
      */
     public function getSeriesAnnounceIcon($series)
     {
         $icon = 'mdi-action-done pumukit-transparent';
 
-        if ($series->getAnnounce()) return "mdi-action-spellcheck pumukit-series-announce";
+        if ($series->getAnnounce()) {
+            return 'mdi-action-spellcheck pumukit-series-announce';
+        }
 
         return $icon;
     }
 
     /**
      * Get announce text of Series
-     * and MultimediaObjects inside of it
+     * and MultimediaObjects inside of it.
      *
      * @param Series $series
+     *
      * @return string $text
      */
     public function getSeriesAnnounceText($series)
     {
         $text = '';
 
-        if ($series->getAnnounce()) return "This Series is announced";
+        if ($series->getAnnounce()) {
+            return 'This Series is announced';
+        }
 
         return $text;
     }
 
     /**
      * Get announce icon of Multimedia Objects in Series
-     * and MultimediaObjects inside of it
+     * and MultimediaObjects inside of it.
      *
      * @param Series $series
+     *
      * @return string $icon
      */
     public function getMmsAnnounceIcon($series)
     {
         $icon = 'mdi-action-done pumukit-transparent';
 
-        foreach($series->getMultimediaObjects() as $mm){
-            if ($mm->containsTagWithCod('PUDENEW'))
-              return "mdi-action-spellcheck pumukit-mm-announce";
+        foreach ($series->getMultimediaObjects() as $mm) {
+            if ($mm->containsTagWithCod('PUDENEW')) {
+                return 'mdi-action-spellcheck pumukit-mm-announce';
+            }
         }
 
         return $icon;
@@ -362,9 +403,10 @@ class PumukitAdminExtension extends \Twig_Extension
 
     /**
      * Get announce text of Multimedia Objects in Series
-     * and MultimediaObjects inside of it
+     * and MultimediaObjects inside of it.
      *
      * @param Series $series
+     *
      * @return string $text
      */
     public function getMmsAnnounceText($series)
@@ -372,39 +414,43 @@ class PumukitAdminExtension extends \Twig_Extension
         $text = '';
 
         $count = 0;
-        foreach($series->getMultimediaObjects() as $mm){
-            if ($mm->containsTagWithCod('PUDENEW')) ++$count;
+        foreach ($series->getMultimediaObjects() as $mm) {
+            if ($mm->containsTagWithCod('PUDENEW')) {
+                ++$count;
+            }
         }
 
-        if ($count > 0)
-            return "This Series has ".$count." announced Multimedia Object(s)";
+        if ($count > 0) {
+            return 'This Series has '.$count.' announced Multimedia Object(s)';
+        }
 
         return $text;
     }
 
     /**
-     * Get php upload max filesize
+     * Get php upload max filesize.
      *
      * @return string
      */
     public function getPhpUploadMaxFilesize()
     {
-        return ini_get('upload_max_filesize')."B";
+        return ini_get('upload_max_filesize').'B';
     }
 
     /**
-     * Get profile
+     * Get profile.
      *
      * @param Collection $tags
+     *
      * @return string
      */
     private function getProfileFromTags($tags)
     {
         $profile = '';
 
-        foreach($tags as $tag){
-            if (false !== strpos($tag, 'profile:' )) {
-                return substr($tag, strlen('profile:'), strlen($tag)-1);
+        foreach ($tags as $tag) {
+            if (false !== strpos($tag, 'profile:')) {
+                return substr($tag, strlen('profile:'), strlen($tag) - 1);
             }
         }
 
@@ -413,9 +459,9 @@ class PumukitAdminExtension extends \Twig_Extension
 
     /**
      * Get duration in minutes
-     * Returns duration file in minutes
+     * Returns duration file in minutes.
      *
-     * @return integer minutes
+     * @return int minutes
      */
     private function getDurationInMinutes($duration)
     {
@@ -424,34 +470,36 @@ class PumukitAdminExtension extends \Twig_Extension
 
     /**
      * Get duration in seconds
-     * Returns duration file in seconds
+     * Returns duration file in seconds.
      *
-     * @return integer seconds
+     * @return int seconds
      */
     private function getDurationInSeconds($duration)
     {
         $aux = $duration % 60;
-        if ($aux < 10 ) $aux = '0' . $aux;
-        
+        if ($aux < 10) {
+            $aux = '0'.$aux;
+        }
+
         return $aux;
     }
 
-    
-   /**
+    /**
      * Filter profiles to show only audio profiles.
      *
      * @return array
      */
     public function filterProfiles($profiles, $onlyAudio)
     {
-        return array_filter($profiles, function($elem) use ($onlyAudio){ return !$onlyAudio || $elem['audio'];});
+        return array_filter($profiles, function ($elem) use ($onlyAudio) { return !$onlyAudio || $elem['audio'];});
     }
 
     /**
-     * Count Multimedia Objects
+     * Count Multimedia Objects.
      *
      * @param Series $series
-     * @return integer
+     *
+     * @return int
      */
     public function countMultimediaObjects($series)
     {

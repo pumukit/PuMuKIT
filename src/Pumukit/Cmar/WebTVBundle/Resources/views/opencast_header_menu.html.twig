@@ -1,0 +1,32 @@
+<div class="grid_15 blq-navegacion-superior" style="width: 100%; margin: 0pt; padding: 8px;">
+  {{ render(controller('PumukitCmarWebTVBundle:Utils:user', {'opencast': true})) }}
+  <ul id="idiomas" style="float:right; margin-right: 25px;">
+    <li class="first_child">
+      {% if 'gl' != app.session.get('_locale') %} 
+      <a href="{{ path('pumukit_locale', {'locale': 'gl'}) }}" title="{% trans %}Galician version{% endtrans %}" hreflang="gl">
+        {% trans %}Galician{% endtrans %}
+      </a>
+      {% else %}
+        {% trans %}Galician{% endtrans %}
+      {% endif %}
+    </li>
+    <li>
+      {% if 'es' != app.session.get('_locale') %}
+      <a href="{{ path('pumukit_locale', {'locale': 'es'}) }}" title="{% trans %}Spanish version{% endtrans %}" hreflang="es">
+        {% trans %}Spanish{% endtrans %}
+      </a>
+      {% else %}
+        {% trans %}Spanish{% endtrans %}
+      {% endif %}
+    </li>
+    <li>
+      {% if 'en' != app.session.get('_locale') %}
+      <a href="{{ path('pumukit_locale', {'locale': 'en'}) }}" title="{% trans %}English version{% endtrans %}" hreflang="en">
+        {% trans %}English{% endtrans %}
+      </a>
+      {% else %}
+        {% trans %}English{% endtrans %}
+      {% endif %}
+    </li>
+  </ul>
+</div>

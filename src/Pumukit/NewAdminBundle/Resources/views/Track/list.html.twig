@@ -2,10 +2,10 @@
   {% for job in jobs %}
     <tr>
       <td><ul><li></li></ul></td>
-      <td colspan="11" {% if constant('STATUS_ERROR', job) == job.getStatus() %} style="color:red" {% endif %}>
+      <td colspan="9" {% if constant('STATUS_ERROR', job) == job.getStatus() %} style="color:red" {% endif %}>
         <a title="{% trans %}Encoder Job info{% endtrans %}"
            style="color:inherit"
-           data-toggle="modal" data-dismiss="modal" data-target="#myModal"
+           data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
            href="{{ path('pumukitnewadmin_track_info_job', {'mmId': mm.id, 'jobId': job.id, 'preview': 1}) }}">
             <i class="{% if constant('STATUS_ERROR', job) == job.getStatus() %}mdi-action-info{% else %}mdi-navigation-refresh pmk-job-animate{% endif %}"></i>
         </a>
@@ -33,26 +33,28 @@
       <td><ul><li></li></ul></td>
       <td>
         <a title="{% trans %}Edit file of multimedia object{% endtrans %} {{ track.id }}"
-           data-toggle="modal" data-dismiss="modal" data-target="#myModal"
+           data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
            href="{{ path('pumukitnewadmin_track_update', {'id': track.id, 'mmId': mm.id}) }}">
           <i class="mdi-editor-mode-edit"></i>
         </a>
-      <td>
+      </td>
       <td>
         <a title="{% trans %}File info of multimedia object{% endtrans %} {{ track.id }}"
-           data-toggle="modal" data-dismiss="modal" data-target="#myModal"
+           data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
            href="{{ path('pumukitnewadmin_track_info', {'id': track.id, 'mmId': mm.id}) }}">
           <i class="mdi-action-info"></i>
         </a>
+      </td>
       <td>
-      <td>
-          <a href="#" onclick="window.submit_delete_track('{{ track.id }}', '{{ mm.id }}', '{{ mm.getSeries().getId() }}'); return false;">
+          <a title="{% trans %}Delete track{% endtrans %} {{ track.id }}" href="#" 
+             onclick="window.submit_delete_track('{{ track.id }}', '{{ mm.id }}', '{{ mm.getSeries().getId() }}'); return false;">
              <i class="mdi-content-clear"></i>
           </a>
       </td>
       <td>
-        <a href="#" onclick="$('#tracks_mms_{{ mm.id }}').load('{{ path('pumukitnewadmin_track_autocomplete', {'id': track.id, 'mmId': mm.id, 'preview': 1, 'mod': 'mm'}) }}'); return false;">
-          <i class="mdi-action-spellcheck"></i>
+        <a title="{% trans %}Autocomplete technical metadata of track{% endtrans %} {{ track.id }}" href="#" 
+           onclick="$('#tracks_mms_{{ mm.id }}').load('{{ path('pumukitnewadmin_track_autocomplete', {'id': track.id, 'mmId': mm.id, 'preview': 1, 'mod': 'mm'}) }}'); return false;">
+          <i class="mdi-hardware-keyboard-return"></i>
         </a>
       </td>
 
@@ -61,97 +63,22 @@
           <i class="mdi-image-camera-alt" id="list_capture_frame_{{ track.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
           <ul class="dropdown-menu" role="menu" aria-labelledby="list_capture_frame_{{ track.id }}">
             <li>&nbsp;&nbsp;<strong>{% trans %}Capture frame from{% endtrans %}:</strong></li>
+            {% set percentages = ['Auto', '10%', '25%', '50%', '75%', '90%'] %}
+            {% for percentage in percentages %}
             <li>
-              <a href="#" onclick="$.ajax({
-                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mm.id, 'preview': 1, 'numframe': 0}) }}',
-                                           type: 'POST',
-                                           beforeSend: function(){$('#pic_mms_{{ mm.id }}_load').show();},
-                                           success: function(response){
-                                                                       $('#pic_mms_{{ mm.id }}_load').hide();
-                                                                       $('#pic_mms_{{ mm.id }}').html(response);
-                                           }
-                                   });
-                                   return false;">
-                <i class="mdi-image-camera"></i> {% trans %}Auto{% endtrans %}
+              <a href="#" onclick="extract_pic('{{ track.id }}', '{{ mm.id }}', '{{ (percentage == 'Auto')?0:percentage }}'); return false;">
+                <i class="mdi-image-camera"></i> {{ percentage }}
               </a>
             </li>
-            <li>
-              <a href="#" onclick="$.ajax({
-                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mm.id, 'preview': 1, 'numframe': '10%'}) }}',
-                                           type: 'POST',
-                                           beforeSend: function(){$('#pic_mms_{{ mm.id }}_load').show();},
-                                           success: function(response){
-                                                                       $('#pic_mms_{{ mm.id }}_load').hide();
-                                                                       $('#pic_mms_{{ mm.id }}').html(response);
-                                           }
-                                   });
-                                   return false;">
-                <i class="mdi-image-camera"></i> {% trans %}10%{% endtrans %}
-              </a>
-            </li>
-            <li>
-              <a href="#" onclick="$.ajax({
-                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mm.id, 'preview': 1, 'numframe': '25%'}) }}',
-                                           type: 'POST',
-                                           beforeSend: function(){$('#pic_mms_{{ mm.id }}_load').show();},
-                                           success: function(response){
-                                                                       $('#pic_mms_{{ mm.id }}_load').hide();
-                                                                       $('#pic_mms_{{ mm.id }}').html(response);
-                                           }
-                                   });
-                                   return false;">
-                <i class="mdi-image-camera"></i> {% trans %}25%{% endtrans %}
-              </a>
-            </li>
-            <li>
-              <a href="#" onclick="$.ajax({
-                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mm.id, 'preview': 1, 'numframe': '50%'}) }}',
-                                           type: 'POST',
-                                           beforeSend: function(){$('#pic_mms_{{ mm.id }}_load').show();},
-                                           success: function(response){
-                                                                       $('#pic_mms_{{ mm.id }}_load').hide();
-                                                                       $('#pic_mms_{{ mm.id }}').html(response);
-                                           }
-                                   });
-                                   return false;">
-                <i class="mdi-image-camera"></i> {% trans %}50%{% endtrans %}
-              </a>
-            </li>
-            <li>
-              <a href="#" onclick="$.ajax({
-                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mm.id, 'preview': 1, 'numframe': '75%'}) }}',
-                                           type: 'POST',
-                                           beforeSend: function(){$('#pic_mms_{{ mm.id }}_load').show();},
-                                           success: function(response){
-                                                                       $('#pic_mms_{{ mm.id }}_load').hide();
-                                                                       $('#pic_mms_{{ mm.id }}').html(response);
-                                           }
-                                   });
-                                   return false;">
-                <i class="mdi-image-camera"></i> {% trans %}75%{% endtrans %}
-              </a>
-            </li>
-            <li>
-              <a href="#" onclick="$.ajax({
-                                           url: '{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mm.id, 'preview': 1, 'numframe': '90%'}) }}',
-                                           type: 'POST',
-                                           beforeSend: function(){$('#pic_mms_{{ mm.id }}_load').show();},
-                                           success: function(response){
-                                                                       $('#pic_mms_{{ mm.id }}_load').hide();
-                                                                       $('#pic_mms_{{ mm.id }}').html(response);
-                                           }
-                                   });
-                                   return false;">
-                <i class="mdi-image-camera"></i> {% trans %}90%{% endtrans %}
-              </a>
-            </li>
+            {% endfor %}
             <li class="cancel"><a href="#" onclick="return false;"><strong>{% trans %}Cancel{% endtrans %}...</strong></a></li>
           </ul>
         </div>
       </td>
 
       <td>
-        <a href="{{ path('pumukitnewadmin_track_download', {'id': track.id, 'mmId': mm.id}) }}" download>
+        <a title="{% trans %}Download track{% endtrans %} {{ track.id }}"
+           href="{{ path('pumukitnewadmin_track_download', {'id': track.id, 'mmId': mm.id}) }}" download>
           <i class="mdi-file-file-download"></i>
         </a>
       </td>
@@ -175,7 +102,7 @@
       </td>
       {% else %}
       <td>
-         <a data-toggle="modal" data-target="#myModal" href="{{ path('pumukitnewadmin_track_play', {'id': track.id, 'mmId': mm.id}) }}">
+         <a data-toggle="modal" data-backdrop="static" data-target="#myModal" href="{{ path('pumukitnewadmin_track_play', {'id': track.id, 'mmId': mm.id}) }}">
           <i class="mdi-av-play-arrow"></i>
         </a>
       </td>
@@ -203,15 +130,18 @@
          - {{ (track.getSize() / 1048576)|number_format(2) }} MB
          {% if track.getWidth() and track.getHeight() %}- {{ track.getWidth() }}x{{ track.getHeight() }}{% endif %}
          {% if track.getHide() %}<span class="label label-default">{% trans %}hidden{% endtrans %}</span></i>{% endif %}
-         {% for tag in track.getTags() if tag[0:8] != "profile:" and tag[0:8] != "mysqlid:" %}
+         {% for tag in track.getTags() if tag[0:8] != "profile:" and tag[0:11] != "pumukit1id:" %}
            <span class="label label-primary">{{ tag }}</span>
          {% endfor %}
       </td>
     </tr>
   {% endfor %}
+  {% if mm.getProperty('opencast') %}
+     {% render(controller('PumukitOpencastBundle:MultimediaObject:index', {'id': mm.id })) %}
+  {% endif %}
   <tr>
     <td><ul><li></li></ul></td>
-    <td colspan="11"><a data-toggle="modal" data-target="#myModal" href="{{ path('pumukitnewadmin_track_create', {'id': mm.id}) }}">{% trans %}New master{% endtrans %}...</a></td>
+    <td colspan="11"><a data-toggle="modal" data-backdrop="static" data-target="#myModal" href="{{ path('pumukitnewadmin_track_create', {'id': mm.id}) }}">{% trans %}New master{% endtrans %}...</a></td>
   </tr>
 </tbody></table>
 
@@ -221,9 +151,9 @@
 </script>
 {% endif %}
 
-{% if false %} {# TODO (isset($reload_pub_channel)) #}
+{% if reload_links is defined and reload_links %}
 <script type="text/javascript">
-    new Ajax.Updater('list_pub_{{ mm.id }}', ' TODO {# " . url_for('mms/updatelistpub?id=' . $mm.id) . " #}')
+   $('#links_mm_{{mm.id}}').load('{{ path('pumukitnewadmin_mms_links', {'id': mm.id}) }}');
 </script>
 {% endif %}
 
@@ -231,8 +161,8 @@
 <script type="text/javascript">
   setTimeout(function(){
     $('#tracks_mms_{{ mm.id }}').load('{{ url('pumukitnewadmin_track_list', {'id': mm.id})}}');
-    $('#list_mms').load('{{ path('pumukitnewadmin_mms_list', {'seriesId': mm.getSeries().getId()})|raw }}');
-    $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id })|raw }}');
+    //$('#list_mms').load('{{ path('pumukitnewadmin_mms_list', {'seriesId': mm.getSeries().getId()})|raw }}');
+    //$('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id })|raw }}');
   }, 8000);
 </script>
 {% endif %}

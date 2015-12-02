@@ -1,29 +1,15 @@
-# pumukitcmarwebtv:
-#     resource: "@PumukitCmarWebTVBundle/Resources/config/routing.yml"
-#     prefix: /
-
-pumukit_cmar_podcast:
-    resource: "@PumukitCmarPodcastBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-# pumukit_cmar_sonar:
-#     resource: "@PumukitCmarSonarBundle/Controller/"
-#     type:     annotation
-#     prefix:   /
-
 pumukit_opencast:
     resource: "@PumukitOpencastBundle/Controller/"
     type:     annotation
     prefix:   /
 
-pumukitwizard:
-    resource: "@PumukitWizardBundle/Resources/config/routing.yml"
-
-pumukit_arca:
-    resource: "@PumukitArcaBundle/Controller/"
+pumukit_encoder:
+    resource: "@PumukitEncoderBundle/Controller/"
     type:     annotation
     prefix:   /
+
+pumukitwizard:
+    resource: "@PumukitWizardBundle/Resources/config/routing.yml"
 
 pumukit_live:
     resource: "@PumukitLiveBundle/Controller/"
@@ -35,6 +21,11 @@ pumukit_new_admin_tmp:
     type:     annotation
     prefix:   /admin
 
+pumukit_web_tv_parent:
+    resource: "../../src/Pumukit/WebTVBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 pumukit_web_tv:
     resource: "@PumukitWebTVBundle/Controller/"
     type:     annotation
@@ -44,10 +35,6 @@ pumukit_encoder:
     resource: "@PumukitEncoderBundle/Controller/"
     type:     annotation
     prefix:   /
-
-pumukitadmin:
-    resource: @PumukitAdminBundle/Resources/config/routing.yml
-    prefix:   /old
 
 pumukitnewadmin:
     resource: @PumukitNewAdminBundle/Resources/config/routing.yml

@@ -40,9 +40,9 @@ class Track extends Element
   private $bitrate;
 
   /**
-   * @var int $framerate
+   * @var string $framerate
    *
-   * @MongoDB\Int
+   * @MongoDB\String
    */
   private $framerate;
 
@@ -178,7 +178,7 @@ class Track extends Element
   /**
    * Set framerate
    *
-   * @param integer $framerate
+   * @param string $framerate
    */
   public function setFramerate($framerate)
   {
@@ -188,7 +188,7 @@ class Track extends Element
   /**
    * Get framerate
    *
-   * @return integer
+   * @return string
    */
   public function getFramerate()
   {
@@ -360,6 +360,16 @@ class Track extends Element
       }
   }
 
+  /**
+   * Get video aspect ratio
+   *
+   * @return float
+   */
+  public function getAspectRatio()
+  {
+      return (0 == $this->height) ? 0 : $this->width/$this->height;
+  }
+    
   /**
    * Get duration in minutes and seconds
    *

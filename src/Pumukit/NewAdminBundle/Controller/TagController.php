@@ -72,8 +72,11 @@ class TagController extends Controller
         $form = $this->createForm(new TagType($translator, $locale), $tag);
 
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
-            $dm->persist($tag);
-            $dm->flush();
+            try {
+                $tag = $this->get('pumukitschema.tag')->updateTag($tag);
+            } catch (\Exception $e) {
+                return new JsonResponse(array("status" => $e->getMessage()), 409);
+            }
 
             return $this->redirect($this->generateUrl('pumukitnewadmin_tag_list'));
         }

@@ -17,7 +17,7 @@ class TrackTest extends \PHPUnit_Framework_TestCase
         $acodec = 'aac';
         $vcodec = 'mpeg4-HP';
         $bitrate = 10000;
-        $framerate = 25;
+        $framerate = '25/1';
         $only_audio = false;
         $channels = 1;
         $duration = 66666;
@@ -25,6 +25,7 @@ class TrackTest extends \PHPUnit_Framework_TestCase
         $height = 1080;
         $hide = false;
         $numview = 3;
+        $resolution = array('width' => $width, 'height' => $height);
 
         $track = new Track();
         $track->setTags($tags);
@@ -44,6 +45,7 @@ class TrackTest extends \PHPUnit_Framework_TestCase
         $track->setHeight($height);
         $track->setHide($hide);
         $track->setNumview($numview);
+        $track->setResolution($resolution);
 
         $this->assertEquals($tags, $track->getTags());
         $this->assertEquals($language, $track->getLanguage());
@@ -62,6 +64,7 @@ class TrackTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($height, $track->getHeight());
         $this->assertFalse($hide, $track->getHide());
         $this->assertEquals($numview, $track->getNumview());
+        $this->assertEquals($resolution, $track->getResolution());
     }
 
     public function testMaxSize()
@@ -102,6 +105,51 @@ class TrackTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($track->containsAllTags(array('t1')));
         $this->assertFalse($track->containsAllTags(array('t0', 't2')));
         $this->assertFalse($track->containsAllTags(array('t0', 't1', 't2', 't3')));
+    }
+
+    public function testIsOnlyAudio()
+    {
+        $t1 = new Track();
+        $t1->setOnlyAudio(true);
+        
+        $this->assertTrue($t1->isOnlyAudio());
+        $t1->setOnlyAudio(false);
+        $this->assertFalse($t1->isOnlyAudio());
+    }
+
+    public function testIncNumview()
+    {
+        $t1 = new Track();
+        $t1->setNumview(5);
+        $t1->incNumview();
+
+        $this->assertEquals(6, $t1->getNumview());
+    }
+
+    public function testDurationInMinutesAndSeconds()
+    {
+        $duration = 120;
+        $duration_in_minutes_and_seconds1 = array('minutes' => 2, 'seconds' => 0);
+        $duration_in_minutes_and_seconds2 = array('minutes' => 5, 'seconds' => 30);
+
+        $t1 = new Track();
+        $t1->setDuration($duration);
+
+        $this->assertEquals($duration_in_minutes_and_seconds1, $t1->getDurationInMinutesAndSeconds());
+        
+        $t1->setDurationInMinutesAndSeconds($duration_in_minutes_and_seconds2);
+        $this->assertEquals($duration_in_minutes_and_seconds2, $t1->getDurationInMinutesAndSeconds());
+    }
+
+    public function testIsMaster()
+    {   
+        $t1 = new Track();
+        $t1->addTag('master');
+
+        $this->assertTrue($t1->isMaster());
+
+        $t1->removeTag('master');
+        $this->assertFalse($t1->isMaster());
     }
 
     /*public function testRef()

@@ -68,3 +68,15 @@ pumukitnewadmin_seriespic_upload:
     methods: [GET, POST]
     defaults:
         _controller: pumukitnewadmin.controller.seriespic:uploadAction
+
+pumukitnewadmin_seriespic_picstoaddlist:
+    pattern: /{id}/picstoaddlist
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.seriespic:picstoaddlistAction
+
+pumukitnewadmin_seriespic_banner:
+    pattern: /{id}/banner
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.seriespic:bannerAction

@@ -16,7 +16,6 @@
   {% set total_event = 0 %}
   {% for key,dweek in calendar %}
     <tr>
-    {# {% for dkey,d in dweek %} #}
     {% for dkey in range(0, 6) %} 
       {% if dweek[dkey] is defined %} 
         {% set d = dweek[dkey] %}
@@ -24,7 +23,7 @@
         {% set d = '' %}
       {% endif %}
       <td style="cursor: auto; {{ ((d == 'now'|date('d')) and (m == 'now'|date('m')) and (y == 'now'|date('Y')))?"border:3px solid #000":"" }}" class="table-hover">
-        <div style="overflow: hidden; position: relative; height: 70px;">
+        <div style="overflow-y: auto; position: relative; height: 70px;">
           {% if d is not empty %}
             <span style="position:absolute; top:0px; right:0px">{{ d }}</span>
 	        {% set calendar_events = [] %}
@@ -40,8 +39,16 @@
                   <a href="#" onclick="window.submit_delete_event('{{ day_event.id }}'); return false;">
 	                <i class="mdi-content-clear"></i>
                   </a>
-	              <a title="{% trans %}Edit Event{% endtrans %} {{ day_event.name }}" href="{{ path('pumukitnewadmin_event_update', {'id': day_event.id}) }}" data-toggle="modal" data-target="#myModal">
-	                <i class="mdi-editor-mode-edit"></i> {{ day_event.name }}
+                  <span class="dropdown">
+	                {% include 'PumukitNewAdminBundle:Event:updatemenu.html.twig' with {'event': day_event} %}
+                  </span>
+                  <span onclick="click_fila_url('event', this, '{{ path('pumukitnewadmin_event_show', {'id': day_event.id}) }}')">
+                    {% if day_event.getPic() is not empty %}
+                    <img src="{{ day_event.getPic() }}" height="16" width="18" />
+                    {% endif %}
+                  </span>
+	              <a title="{% trans %}Edit Event{% endtrans %} {{ day_event.name }}" href="{{ path('pumukitnewadmin_event_update', {'id': day_event.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+	                <i class="mdi-editor-mode-edit"></i> {{ day_event.date|date('H:i') }} {{ day_event.name }}
                   </a>
                 </li>
               {% endfor %}

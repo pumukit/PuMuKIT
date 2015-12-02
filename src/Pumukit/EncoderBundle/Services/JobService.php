@@ -4,10 +4,12 @@ namespace Pumukit\EncoderBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Pumukit\EncoderBundle\Document\Job;
@@ -17,9 +19,11 @@ use Pumukit\EncoderBundle\Executor\LocalExecutor;
 use Pumukit\EncoderBundle\Executor\RemoteHTTPExecutor;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Services\CpuService;
+use Pumukit\SchemaBundle\Services\TrackService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\InspectionBundle\Services\InspectionServiceInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class JobService
 {
@@ -28,45 +32,98 @@ class JobService
     private $profileService;
     private $cpuService;
     private $inspectionService;
-    private $tmp_path;
+    private $tmpPath;
     private $dispatcher;
+    private $trackService;
     private $logger;
     private $environment;
+    private $tokenStorage;
 
     public function __construct(DocumentManager $documentManager, ProfileService $profileService, CpuService $cpuService, 
-                                InspectionServiceInterface $inspectionService, EventDispatcherInterface $dispatcher, LoggerInterface $logger, 
-                                $environment="dev", $tmp_path=null)
+                                InspectionServiceInterface $inspectionService, EventDispatcherInterface $dispatcher, LoggerInterface $logger,
+                                TrackService $trackService, TokenStorage $tokenStorage, $environment="dev", $tmpPath=null)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
         $this->profileService = $profileService;
         $this->cpuService = $cpuService;
         $this->inspectionService = $inspectionService;
-        $this->tmp_path = $tmp_path ? realpath($tmp_path) : sys_get_temp_dir();
+        $this->tmpPath = $tmpPath ? realpath($tmpPath) : sys_get_temp_dir();
         $this->logger = $logger;
+        $this->trackService = $trackService;
+        $this->tokenStorage = $tokenStorage;
         $this->dispatcher = $dispatcher;
         $this->environment = $environment;
     }
 
+    /**
+     * Create track from local hard drive with job service
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param UploadedFile $file
+     * @param string $profile
+     * @param int $priority
+     * @param string $language
+     * @param array $description
+     * @return MultimediaObject
+     */
+    public function createTrackFromLocalHardDrive(MultimediaObject $multimediaObject, UploadedFile $trackFile, $profile, $priority, $language, $description)
+    {
+        if(UPLOAD_ERR_OK != $trackFile->getError()) {
+           throw new \Exception($trackFile->getErrorMessage());
+        }
+
+        if (!is_file($trackFile->getPathname())) {
+            throw new FileNotFoundException($trackFile->getPathname());
+        }
+
+        $pathFile = $trackFile->move($this->tmpPath."/".$multimediaObject->getId(), $trackFile->getClientOriginalName());
+
+        $this->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description);
+
+        return $multimediaObject;
+    }
+
+    /**
+     * Create track from inbox on server with job service
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param string $trackUrl
+     * @param string $profile
+     * @param int $priority
+     * @param string $language
+     * @param array $description
+     * @return MultimediaObject
+     */
+    public function createTrackFromInboxOnServer(MultimediaObject $multimediaObject, $trackUrl, $profile, $priority, $language, $description)
+    {
+        if (!is_file($trackUrl)) {
+            throw new FileNotFoundException($trackUrl);
+        }
+
+        $this->addJob($trackUrl, $profile, $priority, $multimediaObject, $language, $description);
+
+        return $multimediaObject;
+    }
 
     /**
      * Add job checking if not exists.
      */
-    public function addUniqueJob($pathFile, $profile, $priority, MultimediaObject $multimediaObject, $language = null, $description = array())
+    public function addUniqueJob($pathFile, $profile, $priority, MultimediaObject $multimediaObject, $language = null, $description = array(), $initVars = array())
     {
         $job = $this->repo->findOneBy(array("profile" => $profile, "mm_id" => $multimediaObject->getId()));
 
         if ($job) {
             return $job;
         } else {
-            return $this->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description);
+            return $this->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description, $initVars);
         }
     }
 
     /**
      * Add job
      */
-    public function addJob($pathFile, $profile, $priority, MultimediaObject $multimediaObject, $language = null, $description = array())
+    public function addJob($pathFile, $profile, $priority, MultimediaObject $multimediaObject, $language = null, $description = array(), $initVars = array())
     {
         $this->checkService();
 
@@ -91,19 +148,23 @@ class JobService
             $this->logger->addError('[addJob] InspectionService getDuration error message: '. $e->getMessage());
             throw new \Exception($e->getMessage());
         }
-        
+
         $job = new Job();
         $job->setMmId($multimediaObject->getId());
         $job->setProfile($profile);
         $job->setPathIni($pathFile);
         $job->setDuration($duration);
         $job->setPriority($priority);
+        $job->setInitVars($initVars);
         if (null !== $language){
             //TODO languageId is only language "es", "en", "gl"
             $job->setLanguageId($language);
         }
         if (!empty($description)){
             $job->setI18nDescription($description);
+        }
+        if ($email = $this->getUserEmail($job)) {
+            $job->setEmail($email);
         }
         $job->setTimeini(new \DateTime('now'));
         $this->dm->persist($job);
@@ -188,6 +249,20 @@ class JobService
         $this->dm->flush();
     }
 
+    public function updateJobPriority($id, $priority)
+    {
+        $job = $this->repo->find($id);
+
+        if (null === $job){
+            $this->logger->addError('[updateJobPriority] Can not find job with id '.$id);
+            throw new \Exception("Can't find job with id ".$id);
+        }
+        
+        $job->setPriority($priority);
+        $this->dm->persist($job);
+        $this->dm->flush();
+    }
+    
     /**
      * Get all jobs status
      */
@@ -291,18 +366,7 @@ class JobService
         $cpu = $this->cpuService->getCpuByName($job->getCpu());
         $commandLine = $this->renderBat($job);
 
-        // TODO - Set pathEnd in some point
-        // TODO - Use Symfony\Component\Filesystem\Filesystem.
-        if (!realpath(dirname($job->getPathEnd())) && !file_exists(dirname($job->getPathEnd()))){
-            $created = @mkdir(dirname($job->getPathEnd()), 0777, true);
-            if ($created){
-                $this->logger->addInfo('[execute] Directory "'.dirname($job->getPathEnd()).'" from job path end "'.$job->getPathEnd().'" successfully created.');
-            }else{
-                $this->logger->addError('[execute] Could not create directory "'.dirname($job->getPathEnd()).'" from job path end "'.$job->getPathEnd().'"');
-            }
-        }else{
-            $this->logger->addWarning('[execute] Directory "'.dirname($job->getPathEnd()).'" already exists or permission denied to access the route.');
-        }
+        $this->mkdir(dirname($job->getPathEnd()));
         
         $executor = $this->getExecutor($profile['app'], $cpu);
         
@@ -330,7 +394,7 @@ class JobService
             $job->setTimeend(new \DateTime('now'));
             $job->setStatus(Job::STATUS_ERROR);
 
-            $job->setOutput($e->getMessage());
+            $job->appendOutput($e->getMessage());
             $this->logger->addError('[execute] error job output: '.$e->getMessage());
             $this->dispatch(false, $job);
         }
@@ -367,27 +431,33 @@ class JobService
         $profile = $this->getProfile($job);
         $mmobj = $this->getMultimediaObject($job);
 
-        $vars = array();
+        $vars = $job->getInitVars();
 
+        $vars['tracks'] = array();
         foreach ($mmobj->getTracks() as $track) {
             foreach($track->getTags() as $tag) {
-                $vars['{{' . $tag . '}}'] = $track->getPath();
+                $vars['tracks'][$tag] = $track->getPath();
             }
         }
+
+        $vars['properties'] = $mmobj->getProperties();
         
-        $vars['{{input}}'] = $job->getPathIni();
-        $vars['{{output}}'] = $job->getPathEnd();
+        $vars['input'] = $job->getPathIni();
+        $vars['output'] = $job->getPathEnd();
 
         foreach(range(1, 9) as $identifier){
-            $vars['{{temfile' . $identifier. '}}'] = $this->tmp_path . '/' . rand();
+            $vars['tmpfile' . $identifier] = $this->tmpPath . '/' . rand();
         }
 
-        $commandLine = str_replace(array_keys($vars), array_values($vars), $profile['bat']);
-        $this->logger->addInfo('[renderBat] CommandLine: '.$commandLine);
+        $loader = new \Twig_Loader_Array(array('bat' => $profile['bat']));
+        $twig = new \Twig_Environment($loader);
+
+        $commandLine = $twig->render('bat', $vars);
+        $this->logger->addInfo('[renderBat] CommandLine: ' . $commandLine);
     
         $cpu = $this->cpuService->getCpuByName($job->getCpu());
         if(CpuService::TYPE_WINDOWS === $cpu['type']){
-            // TODO - PATH UNIX TRANSCODER and PATH WIN TRANSCODER
+            //TODO - PATH UNIX TRANSCODER and PATH WIN TRANSCODER
         }
         
         return $commandLine;
@@ -448,17 +518,7 @@ class JobService
 
         $tempDir = $profile['streamserver']['dir_out'] . '/' . $dir;
 
-        //TODO repeat mkdir (see this->execute) and check error
-        if (!realpath($tempDir) && !file_exists($tempDir)){
-            $created = @mkdir($tempDir, 0777, true);
-            if ($created){
-                $this->logger->addInfo('[setPathEndAndExtensions] Directory "'.$tempDir.'" successfully created.');
-            }else{
-                $this->logger->addError('[setPathEndAndExtensions] Could not create directory: "'.$tempDir.'"');
-            }
-        }else{
-            $this->logger->addWarning('[setPathEndAndExtensions] Directory "'.$tempDir.'" already exists or permission denied to access the route.');
-        }
+        $this->mkdir($tempDir);
 
         return realpath($tempDir) . '/' . $file . '.' . $finalExtension;      
     }
@@ -512,25 +572,24 @@ class JobService
         $this->inspectionService->autocompleteTrack($track);
 
         $track->setOnlyAudio($track->getWidth() == 0);
-        $track->setHide(false);
+        $track->setHide(!$profile['display']);
 
-        $multimediaObject->addTrack($track);
-     
-        $this->dm->persist($multimediaObject);
-        $this->dm->flush();
+        $multimediaObject->setDuration($track->getDuration());
+
+        $this->trackService->addTrackToMultimediaObject($multimediaObject, $track);
         
         return $track;
     }
 
     /**
-     * Get jobs with multimedia object id
+     * Get not finished jobs with multimedia object id
      *
      * @param string $mmId
      * @return ArrayCollection $jobs with mmId
      */
-    public function getJobsByMultimediaObjectId($mmId)
+    public function getNotFinishedJobsByMultimediaObjectId($mmId)
     {
-        return $this->repo->findByMultimediaObjectId($mmId);
+        return $this->repo->findNotFinishedByMultimediaObjectId($mmId);
     }
 
     /**
@@ -556,17 +615,8 @@ class JobService
 
         $profile = $this->getProfile($job);
         $tempDir = $profile['streamserver']['dir_out'] . '/' . $mmobj->getSeries()->getId();
-        //TODO repeat mkdir (see this->execute) and check errors
-        if (!realpath($tempDir) && !file_exists($tempDir)){
-            $created = @mkdir($tempDir, 0777, true);
-            if ($created){
-                $this->logger->addInfo('[retryJob] Directory "'.$tempDir.'" successfully created.');
-            }else{
-                $this->logger->addError('[retryJob] Could not create directory: "'.$tempDir.'"');
-            }
-        }else{
-            $this->logger->addWarning('[retryJob] Directory "'.$tempDir.'" already exists or permission denied to access the route.');
-        }
+        
+        $this->mkdir($tempDir);
 
         $job->setStatus(Job::STATUS_WAITING);
         $job->setPriority(2);
@@ -588,7 +638,15 @@ class JobService
 
     private function getProfile($job)
     {
-        return $this->profileService->getProfile($job->getProfile());
+        $profile = $this->profileService->getProfile($job->getProfile());
+
+        if(!$profile) {
+          $errorMsg = sprintf("[createTrackWithJob] Profile %s not found when the job %s creates the track", $job->getProfile(), $job->getId());
+          $this->logger->addError($errorMsg);
+          throw new \Exception($errorMsg);
+        }
+
+        return $profile;
     }
 
     private function getMultimediaObject($job)
@@ -596,7 +654,7 @@ class JobService
         $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
         
         if(!$multimediaObject) {
-          $errorMsg = sprintf("[createTrackWithJob] Multimedia object %s not found when the job $s creates the track", $job->getId(), $job->getMmId());
+          $errorMsg = sprintf("[createTrackWithJob] Multimedia object %s not found when the job %s creates the track", $job->getMmId(), $job->getId());
           $this->logger->addError($errorMsg);
           throw new \Exception($errorMsg);
         }
@@ -626,10 +684,41 @@ class JobService
 
         foreach($jobs as $job) {
           if($job->getTimestart() < $yesterday) {  
-            $this->logger->addError(sprintf('[checkService] Job executing for a long time %s', $job-getId()));
+            $this->logger->addError(sprintf('[checkService] Job executing for a long time %s', $job->getId()));
           }
         }
-        
-      
+    }
+
+    /**
+     * Get user email
+     *
+     * Gets the email of the user who executed the job, if no session get the user info from other jobs of the same mm.
+     */
+    private function getUserEmail(Job $job=null)
+    {
+        if (null !== $token = $this->tokenStorage->getToken()) {
+            if (is_object($user = $token->getUser())) {
+                return $user->getEmail();
+            }
+        }
+
+        if ($job) {
+            $otherJob = $this->repo->findOneBy(array('mm_id' => $job->getMmId(), 'email' => array('$exists' => true)), array('timeini' => 1));
+            if ($otherJob && $otherJob->getEmail()) {
+                return $otherJob->getEmail();
+            }
+        }
+
+        return null;
+    }
+
+
+    /**
+     * 
+     */
+    private function mkdir($path)
+    {
+      $fs = new Filesystem();
+      $fs->mkdir($path);
     }
 }

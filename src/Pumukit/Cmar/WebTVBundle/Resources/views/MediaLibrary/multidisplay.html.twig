@@ -3,9 +3,12 @@
 <p class="titulo_widget titulo_widget_grande">
 {{ title }}
 </p>
-<div class="usctv_mmobjs usctv_series">
+<div class="pumukit_mmobjs pumukit_series">
   {% for oneseries in series %}
-    {% include 'PumukitCmarWebTVBundle:MediaLibrary:series.html.twig' with {'series': oneseries} %}
+    {% set num_mmobj = oneseries|count_multimedia_objects %}
+    {% if num_mmobj != 0 %}
+      {% include 'PumukitCmarWebTVBundle:MediaLibrary:series.html.twig' with {'series': oneseries} %}
+    {% endif %}
   {% endfor %}
 </div>
 <div style="clear:left"></div>

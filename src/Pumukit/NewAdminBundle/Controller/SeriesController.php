@@ -3,6 +3,7 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -102,8 +103,9 @@ class SeriesController extends AdminController
 
         // EDIT MULTIMEDIA OBJECT TEMPLATE CONTROLLER SOURCE CODE
         $factoryService = $this->get('pumukitschema.factory');
+        $personService = $this->get('pumukitschema.person');
 
-        $roles = $factoryService->getRoles();
+        $roles = $personService->getRoles();
         if (null === $roles){
             throw new \Exception('Not found any role.');
         }
@@ -158,13 +160,28 @@ class SeriesController extends AdminController
             }
         }
 
-        $factoryService->deleteSeries($series);
+        try {
+            $factoryService->deleteSeries($series);
+        } catch (\Exception $e) {
+            return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
 
         if ($config->isApiRequest()) {
             return $this->handleView($this->view());
         }
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_series_list', array()));
+    }
+
+    /**
+     * Generate Magic Url action
+     */
+    public function generateMagicUrlAction(Request $request)
+    {
+        $resource = $this->findOr404($request);
+        $mmobjService = $this->get('pumukitschema.series');
+        $response = $mmobjService->resetMagicUrl($resource);
+        return new Response($response);        
     }
 
     /**
@@ -198,9 +215,12 @@ class SeriesController extends AdminController
                 }
             }
 
-            $factoryService->deleteSeries($series);
+            try {
+                $factoryService->deleteSeries($series);
+            } catch (\Exception $e) {
+                return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
+            }
         }
-        $this->addFlash('success', 'delete');
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_series_list', array()));
     }
@@ -285,31 +305,7 @@ class SeriesController extends AdminController
         }
         $criteria = $this->get('session')->get('admin/series/criteria', array());
 
-        $new_criteria = array();
-        foreach ($criteria as $property => $value) {
-            //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
-            if (('' !== $value) && ('title.en' === $property)) {
-                $new_criteria[$property] = new \MongoRegex('/'.$value.'/i');
-            } elseif (('' !== $value) && ('date' == $property)) {
-                if ('' !== $value['from']) $date_from = new \DateTime($value['from']);
-                if ('' !== $value['to']) $date_to = new \DateTime($value['to']);
-                if (('' !== $value['from']) && ('' !== $value['to']))
-                    $new_criteria['public_date'] = array('$gte' => $date_from, '$lt' => $date_to);
-                elseif ('' !== $value['from'])
-                    $new_criteria['public_date'] = array('$gte' => $date_from);
-                elseif ('' !== $value['to'])
-                    $new_criteria['public_date'] = array('$lt' => $date_to);
-            } elseif (('' !== $value) && ('announce' === $property)) {
-                if ('true' === $value) {
-                    $new_criteria[$property] = true;
-                } elseif ('false' === $value){
-                    $new_criteria[$property] = false;
-                }
-            } elseif(('' !== $value) && ('status' === $property)) {
-            } elseif(('' !== $value) && ('_id' === $property)) {
-                $new_criteria['_id'] = $value;
-            }
-        }
+        $new_criteria = $this->get('pumukitnewadmin.series_search')->processCriteria($criteria, true);
 
         return $new_criteria;
     }
@@ -404,6 +400,7 @@ class SeriesController extends AdminController
             $mm = $repo->find($id);
             if ($mm){
                 foreach($value['channels'] as $channelId => $mustContainsTag){
+                    $mustContainsTag = ("true" == $mustContainsTag);
                     $tag = $repoTags->find($channelId);
                     if ($mustContainsTag && (!($mm->containsTag($tag)))) {
                         $tagAdded = $tagService->addTagToMultimediaObject($mm, $tag->getId());
@@ -481,7 +478,7 @@ class SeriesController extends AdminController
     public function searchAction(Request $req)
     {
         $q = $req->get('q');
-        $this->get('session')->set('admin/series/criteria', array('title.'. $req->getLocale() => $q));
+        $this->get('session')->set('admin/series/criteria', array('search' => $q));
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_series_index'));
     }

@@ -95,46 +95,46 @@ class JobRepositoryTest extends WebTestCase
     public function testFindHigherPriorityWithStatus()
     {
         $mm_id = '54ad3f5e6e4cd68a278b4578';
-        $name = 'video6';
+        $name = 'video0';
         $job0 = $this->newJob($mm_id, $name);
-        $job0->setTimeini(new \DateTime('now'));
+        $job0->setTimeini(new \DateTime("15-12-2015 9:00:00"));
         $job0->setPriority(3);
         $job0->setStatus(Job::STATUS_PAUSED);
 
         $mm_id = '54ad3f5e6e4cd68a278b4573';
         $name = 'video1';
         $job1 = $this->newJob($mm_id, $name);
-        $job1->setTimeini(new \DateTime('now'));
+        $job1->setTimeini(new \DateTime("15-12-2015 9:00:01"));
         $job1->setPriority(2);
         
         $mm_id = '54ad3f5e6e4cd68a278b4574';
         $name = 'video2';
         $job2 = $this->newJob($mm_id, $name);
-        $job2->setTimeini(new \DateTime('now'));
+        $job2->setTimeini(new \DateTime("15-12-2015 9:00:02"));
         $job2->setPriority(1);
 
         $mm_id = '54ad3f5e6e4cd68a278b4575';
         $name = 'video3';
         $job3 = $this->newJob($mm_id, $name);
-        $job3->setTimeini(new \DateTime('now'));
+        $job3->setTimeini(new \DateTime("15-12-2015 9:00:03"));
         $job3->setPriority(3);
 
         $mm_id = '54ad3f5e6e4cd68a278b4576';
         $name = 'video4';
         $job4 = $this->newJob($mm_id, $name);
-        $job4->setTimeini(new \DateTime('now'));
+        $job4->setTimeini(new \DateTime("15-12-2015 9:00:04"));
         $job4->setPriority(2);
 
         $mm_id = '54ad3f5e6e4cd68a278b4577';
         $name = 'video5';
         $job5 = $this->newJob($mm_id, $name);
-        $job5->setTimeini(new \DateTime('now'));
+        $job5->setTimeini(new \DateTime("15-12-2015 9:00:05"));
         $job5->setPriority(1);
 
         $mm_id = '54ad3f5e6e4cd68a278b4578';
         $name = 'video6';
         $job6 = $this->newJob($mm_id, $name);
-        $job6->setTimeini(new \DateTime('now'));
+        $job6->setTimeini(new \DateTime("15-12-2015 9:00:06"));
         $job6->setPriority(2);
 
         $this->dm->persist($job0);
@@ -149,9 +149,9 @@ class JobRepositoryTest extends WebTestCase
         $this->assertEquals($job3, $this->repo->findHigherPriorityWithStatus(array(Job::STATUS_WAITING)));
 
         $mm_id = '54ad3f5e6e4cd68a278b4578';
-        $name = 'video6';
+        $name = 'video7';
         $job7 = $this->newJob($mm_id, $name);
-        $job7->setTimeini(new \DateTime('now'));
+        $job7->setTimeini(new \DateTime("15-12-2015 9:00:07"));
         $job7->setPriority(3);
 
         $this->dm->persist($job7);
@@ -163,7 +163,7 @@ class JobRepositoryTest extends WebTestCase
         $this->assertEquals($job0, $this->repo->findHigherPriorityWithStatus(array(Job::STATUS_PAUSED)));    
   }
 
-    public function testFindByMultimediaObjectId()
+    public function testFindNotFinishedByMultimediaObjectId()
     {
         $mm_id1 = '54ad3f5e6e4cd68a278b4573';
         $mm_id2 = '54ad3f5e6e4cd68a278b4574';
@@ -176,13 +176,119 @@ class JobRepositoryTest extends WebTestCase
         $job2->setMmId($mm_id2);
         $job3->setMmId($mm_id1);
 
+        $job1->setStatus(Job::STATUS_FINISHED);
+        $job2->setStatus(Job::STATUS_WAITING);
+        $job3->setStatus(Job::STATUS_EXECUTING);
+
         $this->dm->persist($job1);
         $this->dm->persist($job2);
         $this->dm->persist($job3);
         $this->dm->flush();
 
-        $this->assertEquals(2, count($this->repo->findByMultimediaObjectId($mm_id1)));
+        $this->assertEquals(1, count($this->repo->findNotFinishedByMultimediaObjectId($mm_id1)));
+        $this->assertEquals(1, count($this->repo->findNotFinishedByMultimediaObjectId($mm_id2)));
+    }
+
+    public function testFindByStatusAndMultimediaObjectId()
+    {
+        $mm_id1 = '54ad3f5e6e4cd68a278b4573';
+        $mm_id2 = '54ad3f5e6e4cd68a278b4574';
+
+        $job1 = new Job();
+        $job2 = new Job();
+        $job3 = new Job();
+        $job4 = new Job();
+
+        $job1->setMmId($mm_id1);
+        $job2->setMmId($mm_id2);
+        $job3->setMmId($mm_id1);
+        $job4->setMmId($mm_id1);
+
+        $job1->setStatus(Job::STATUS_FINISHED);
+        $job2->setStatus(Job::STATUS_EXECUTING);
+        $job3->setStatus(Job::STATUS_WAITING);
+        $job4->setStatus(Job::STATUS_WAITING);
+
+        $this->dm->persist($job1);
+        $this->dm->persist($job2);
+        $this->dm->persist($job3);
+        $this->dm->persist($job4);
+        $this->dm->flush();
+
+        $this->assertEquals(1, count($this->repo->findByStatusAndMultimediaObjectId(Job::STATUS_FINISHED, $mm_id1)));
+        $this->assertEquals(2, count($this->repo->findByStatusAndMultimediaObjectId(Job::STATUS_WAITING, $mm_id1)));
+        $this->assertEquals(0, count($this->repo->findByStatusAndMultimediaObjectId(Job::STATUS_WAITING, $mm_id2)));
+        $this->assertEquals(1, count($this->repo->findByStatusAndMultimediaObjectId(Job::STATUS_EXECUTING, $mm_id2)));
+    }
+
+    public function testFindByMultimediaObjectId()
+    {
+        $mm_id1 = '54ad3f5e6e4cd68a278b4573';
+        $mm_id2 = '54ad3f5e6e4cd68a278b4574';
+
+        $job1 = new Job();
+        $job2 = new Job();
+        $job3 = new Job();
+        $job4 = new Job();
+
+        $job1->setMmId($mm_id1);
+        $job2->setMmId($mm_id2);
+        $job3->setMmId($mm_id1);
+        $job4->setMmId($mm_id1);
+
+        $job1->setStatus(Job::STATUS_FINISHED);
+        $job2->setStatus(Job::STATUS_EXECUTING);
+        $job3->setStatus(Job::STATUS_WAITING);
+        $job4->setStatus(Job::STATUS_WAITING);
+
+        $this->dm->persist($job1);
+        $this->dm->persist($job2);
+        $this->dm->persist($job3);
+        $this->dm->persist($job4);
+        $this->dm->flush();
+
+        $this->assertEquals(3, count($this->repo->findByMultimediaObjectId($mm_id1)));
         $this->assertEquals(1, count($this->repo->findByMultimediaObjectId($mm_id2)));
+    }
+
+    public function testFindByMultimediaObjectIdAndProfile()
+    {
+        $mm_id1 = '54ad3f5e6e4cd68a278b4573';
+        $mm_id2 = '54ad3f5e6e4cd68a278b4574';
+
+        $job1 = new Job();
+        $job2 = new Job();
+        $job3 = new Job();
+        $job4 = new Job();
+
+        $job1->setMmId($mm_id1);
+        $job2->setMmId($mm_id2);
+        $job3->setMmId($mm_id1);
+        $job4->setMmId($mm_id1);
+
+        $job1->setStatus(Job::STATUS_FINISHED);
+        $job2->setStatus(Job::STATUS_EXECUTING);
+        $job3->setStatus(Job::STATUS_WAITING);
+        $job4->setStatus(Job::STATUS_WAITING);
+
+        $job1->setProfile('master');
+        $job2->setProfile('video_h264');
+        $job3->setProfile('master');
+        $job4->setProfile('video_h264');
+
+        $this->dm->persist($job1);
+        $this->dm->persist($job2);
+        $this->dm->persist($job3);
+        $this->dm->persist($job4);
+        $this->dm->flush();
+
+        $masterProfile = 'master';
+        $videoH264Profile = 'video_h264';
+
+        $this->assertEquals(2, count($this->repo->findByMultimediaObjectIdAndProfile($mm_id1, $masterProfile)));
+        $this->assertEquals(1, count($this->repo->findByMultimediaObjectIdAndProfile($mm_id1, $videoH264Profile)));
+        $this->assertEquals(0, count($this->repo->findByMultimediaObjectIdAndProfile($mm_id2, $masterProfile)));
+        $this->assertEquals(1, count($this->repo->findByMultimediaObjectIdAndProfile($mm_id2, $videoH264Profile)));
     }
 
     private function newJob($mm_id, $name)

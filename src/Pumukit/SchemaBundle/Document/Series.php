@@ -3,10 +3,14 @@
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use JMS\Serializer\Annotation as Serializer;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\SeriesRepository")
+ * @MongoDB\Indexes({
+ *   @MongoDB\Index(name="text_index", keys={"$**"="text"}, options={"language_override"="english"})
+ * })
  */
 class Series
 {
@@ -31,6 +35,7 @@ class Series
    * @var ArrayCollection $multimedia_objects
    *
    * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="series", repositoryMethod="findWithoutPrototype", sort={"rank"=1}, simple=true, orphanRemoval=true, cascade="ALL")
+   * @Serializer\Exclude
    */
   private $multimedia_objects;
 
@@ -173,6 +178,17 @@ class Series
     return $this->secret;
   }
 
+    /**
+     * Resets secret
+     *
+     * @return string
+     */
+    public function resetSecret()
+    {
+        $this->secret = new \MongoId();
+        return $this->secret;
+    }
+
   /**
    * Set series_type
    *
@@ -282,7 +298,7 @@ class Series
       $locale = $this->locale;
     }
     if (!isset($this->title[$locale])) {
-      return;
+      return '';
     }
 
     return $this->title[$locale];
@@ -334,7 +350,7 @@ class Series
       $locale = $this->locale;
     }
     if (!isset($this->subtitle[$locale])) {
-      return;
+      return '';
     }
 
     return $this->subtitle[$locale];
@@ -386,7 +402,7 @@ class Series
       $locale = $this->locale;
     }
     if (!isset($this->description[$locale])) {
-      return;
+      return '';
     }
 
     return $this->description[$locale];
@@ -438,7 +454,7 @@ class Series
       $locale = $this->locale;
     }
     if (!isset($this->header[$locale])) {
-      return;
+      return '';
     }
 
     return $this->header[$locale];
@@ -490,7 +506,7 @@ class Series
       $locale = $this->locale;
     }
     if (!isset($this->footer[$locale])) {
-      return;
+      return '';
     }
 
     return $this->footer[$locale];
@@ -582,7 +598,7 @@ class Series
       $locale = $this->locale;
     }
     if (!isset($this->keyword[$locale])) {
-      return;
+      return '';
     }
 
     return $this->keyword[$locale];
@@ -634,7 +650,7 @@ class Series
       $locale = $this->locale;
     }
     if (!isset($this->line2[$locale])) {
-      return;
+      return '';
     }
 
     return $this->line2[$locale];
@@ -720,7 +736,7 @@ class Series
    * Get one multimedia object with tag
    *
    * @param Tag $tag
-   * @return MultimediaObject
+   * @return MultimediaObject|null
    */
   public function getMultimediaObjectWithTag(Tag $tag)
   {
@@ -732,7 +748,7 @@ class Series
       }
     }
 
-    return;
+    return null;
   }
 
   /**
@@ -757,7 +773,7 @@ class Series
    * Get multimediaobject with all tags
    *
    * @param array $tags
-   * @return multimedia_object
+   * @return multimedia_object|null
    */
   public function getMultimediaObjectWithAllTags(array $tags)
   {
@@ -767,7 +783,7 @@ class Series
       }
     }
 
-    return;
+    return null;
   }
 
   /**
@@ -793,7 +809,7 @@ class Series
    * Get multimediaobject with any tag
    *
    * @param array $tags
-   * @return MultimediaObject
+   * @return MultimediaObject|null
    */
   public function getMultimediaObjectWithAnyTag(array $tags)
   {
@@ -803,7 +819,7 @@ class Series
       }
     }
 
-    return;
+    return null;
   }
 
   /**
@@ -968,10 +984,12 @@ class Series
       }
     }
 
-    return;
+    return null;
   }
 
   /**
+   * DEPRECATED: Use PicService, function getFirstUrlPic($object, $absolute, $hd)
+   *
    * Get first pic url
    *
    * @param $default string url returned if series without pics.

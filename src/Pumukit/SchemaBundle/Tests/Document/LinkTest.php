@@ -1,0 +1,33 @@
+<?php
+
+namespace Pumukit\SchemaBundle\Tests\Document;
+
+use Pumukit\SchemaBundle\Document\Link;
+
+class LinkTest extends \PHPUnit_Framework_TestCase
+{
+    public function testGetterAndSetter()
+    {
+        $name = 'name';
+        $locale = 'en';
+
+        $link = new Link();
+        $link->setName($name);
+
+        $this->assertEquals($name, $link->getName());
+
+        $nameEs = 'nombre';
+        $localeEs = 'es';
+
+        $nameI18n = array($locale => $name, $localeEs => $nameEs);
+
+        $link->setI18nName($nameI18n);
+
+        $this->assertEquals($nameI18n, $link->getI18nName());
+
+        $name = null;
+
+        $link->setName($name);
+        $this->assertEquals($name, $link->getName());
+    }
+}

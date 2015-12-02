@@ -3,14 +3,16 @@
 <container xmlns="http://symfony.com/schema/dic/services"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-    <!--
     <services>
-        <service id="pumukit_live.example" class="Pumukit\LiveBundle\Example">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <service id="pumukit_live.twig_extension" class="Pumukit\LiveBundle\Twig\LiveTwigExtension">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+            <tag name="twig.extension"/>
+        </service>
+        <service id="pumukitlive.eventpic" class="Pumukit\LiveBundle\Services\EventPicService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument>%pumukit2.uploads_dir%/pic</argument>
+            <argument>%pumukit2.uploads_url%/pic</argument>
+            <argument>%pumukit2.delete_on_disk%</argument>
         </service>
     </services>
-    -->
 </container>

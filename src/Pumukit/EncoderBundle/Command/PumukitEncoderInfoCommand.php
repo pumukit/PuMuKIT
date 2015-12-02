@@ -31,6 +31,9 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+      $jobService = $this->getContainer()->get('pumukitencoder.job');
+      $jobService->executeNextJob();
+
       if ($id = $input->getArgument('id')){
         $this->showInfo($input->getArgument('id'), $output);
       }else{
@@ -85,13 +88,14 @@ EOT
         if ($all) {
             $status = array_keys(Job::$statusTexts);
         }else{
-            $status = array(Job::STATUS_EXECUTING);
+            $status = array(Job::STATUS_PAUSED, Job::STATUS_WAITING, Job::STATUS_EXECUTING, Job::STATUS_ERROR);
         }
-        $jobs = $jobRepo->findWithStatus($status);
+        $sort = array('timeini' => 'asc');
+        $jobs = $jobRepo->findWithStatus($status, $sort);
 
         $output->writeln("<info>JOBS:</info>");
         $table = new Table($output);
-        $table->setHeaders(array('Id', 'Priority', 'MM', 'Profile', 'Cpu', 'Status',
+        $table->setHeaders(array('Id', 'Status', 'MM', 'Profile', 'Cpu', 'Priority',
                                  'Timeini', 'Timestart', 'Timeend'));
 
         foreach($jobs as $name => $job) {

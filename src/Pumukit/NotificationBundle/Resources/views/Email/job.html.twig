@@ -1,0 +1,36 @@
+<h2>{{ subject }}</h2>
+<br/>
+<strong>{% trans %}Id{% endtrans %}:</strong> {{ job.getId() }}
+<br/>
+<strong>{% trans %}Status{% endtrans %}:</strong> {{ job_status }}
+<br/>
+<strong>{% trans %}Multimedia Object Id{% endtrans %}:</strong> {{ job.getMmId() }}
+<br/>
+<strong>{% trans %}Multimedia Object Admin Link{% endtrans %}:</strong> {{ multimedia_object_admin_link }}
+<br/>
+<strong>{% trans %}Profile{% endtrans %}:</strong> {{ job.getProfile() }}
+<br/>
+<strong>{% trans %}Cpu{% endtrans %}:</strong> {{ job.getCpu() }}
+<br/>
+<strong>{% trans %}Priority{% endtrans %}:</strong> {{ job.getPriority() }}
+<br/>
+<strong>{% trans %}Duration{% endtrans %}:</strong> {{ job.getDuration() }}
+<br/>
+<strong>{% trans %}New Duration{% endtrans %}:</strong> {{ job.getNewDuration() }}
+<br/>
+<strong>{% trans %}Initial Time{% endtrans %}:</strong> {{ job.getTimeini()|date('Y-m-d H:i:s') }}
+<br/>
+<strong>{% trans %}Start Time{% endtrans %}:</strong> {{ job.getTimestart()|date('Y-m-d H:i:s') }}
+<br/>
+<strong>{% trans %}End Time{% endtrans %}:</strong> {{ job.getTimeend()|date('Y-m-d H:i:s') }}
+<br/>
+<strong>{% trans %}Command{% endtrans %}:</strong>
+<br/>
+{{ commandLine }}
+<br/>
+<strong>{% trans %}Output{% endtrans %}:</strong>
+<br/>
+{{ job.getOutput() }}
+<br/>
+<br/>
+{{ sender_name }}

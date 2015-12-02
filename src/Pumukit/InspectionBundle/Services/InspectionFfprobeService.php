@@ -14,7 +14,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
 
     public function __construct($command = null, LoggerInterface $logger = null)
     {
-        $this->command = $command ?: 'ffprobe -v quiet -print_format json -show_format -show_streams "{{file}}"';
+        $this->command = $command ?: 'avprobe -v quiet -of json -show_format -show_streams "{{file}}"';
         $this->logger = $logger;
     }
 
@@ -71,7 +71,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
             switch ((string) $stream->codec_type) {
                 case "video":
                     $track->setVcodec((string)$stream->codec_name);
-                    $track->setFramerate((string)$stream->r_frame_rate);
+                    $track->setFramerate((string)$stream->avg_frame_rate);
                     $track->setWidth(intval($stream->width));
                     $track->setHeight(intval($stream->height));
                     $only_audio = false;
@@ -107,7 +107,8 @@ class InspectionFfprobeService implements InspectionServiceInterface
         $process->setTimeout(60);
         $process->run();
         if (!$process->isSuccessful()) {
-            throw new \RuntimeException($process->getExitCode().' '.$process->getExitCodeText().'. '.$process->getErrorOutput());
+            throw new \RuntimeException('Exception executing "' . $command . '": ' . $process->getExitCode() . ' ' . 
+                $process->getExitCodeText().'. '.$process->getErrorOutput());
         }
 
         return $process->getOutput();

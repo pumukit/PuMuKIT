@@ -1,0 +1,7 @@
+<div style="float:right; margin-right: 25px;">
+  {% if cas_is_authenticated %}
+    <span style="color:#000">{{ cas_username }}  -</span>  <a href="{{ path('pumukit_cmar_web_tv_utils_logout') }}" style="color:#257E94">{% trans %}logout{% endtrans %}</a>
+  {% else %}
+    <a href="{{ path('pumukit_cmar_web_tv_utils_login') }}" style="color:#257E94; float:right; margin-right: 25px;">{% trans %}login{% endtrans %}</a>
+  {% endif %}
+</div>

@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Services;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Material;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -10,19 +11,22 @@ use Symfony\Component\Finder\Finder;
 
 class MaterialService
 {
+    const MIME_TYPE_CAPTIONS = 'vtt';
+
     private $dm;
+    private $dispatcher;
     private $targetPath;
     private $targetUrl;
     private $forceDeleteOnDisk;
 
-    public function __construct(DocumentManager $documentManager, $targetPath, $targetUrl, $forceDeleteOnDisk=true)
+    public function __construct(DocumentManager $documentManager, MaterialEventDispatcherService $dispatcher, $targetPath, $targetUrl, $forceDeleteOnDisk=true)
     {
         $this->dm = $documentManager;
+        $this->dispatcher = $dispatcher;
         $this->targetPath = realpath($targetPath);
         if (!$this->targetPath){
             throw new \InvalidArgumentException("The path '".$targetPath."' for storing Materials does not exist.");
         }
-
         $this->targetUrl = $targetUrl;
         $this->forceDeleteOnDisk = $forceDeleteOnDisk;
     }
@@ -30,10 +34,12 @@ class MaterialService
     /**
      * Update Material in Multimedia Object
      */
-    public function updateMaterialInMultimediaObject(MultimediaObject $multimediaObject)
+    public function updateMaterialInMultimediaObject(MultimediaObject $multimediaObject, Material $material)
     {
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
+
+        $this->dispatcher->dispatchUpdate($multimediaObject, $material);
 
         return $multimediaObject;
     }
@@ -51,6 +57,8 @@ class MaterialService
         $multimediaObject->addMaterial($material);
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
+
+        $this->dispatcher->dispatchCreate($multimediaObject, $material);
 
         return $multimediaObject;
     }
@@ -81,6 +89,8 @@ class MaterialService
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
+        $this->dispatcher->dispatchCreate($multimediaObject, $material);
+
         return $multimediaObject;
     }
 
@@ -99,6 +109,8 @@ class MaterialService
         if ($this->forceDeleteOnDisk && $materialPath) {
             $this->deleteFileOnDisk($materialPath);
         }
+
+        $this->dispatcher->dispatchDelete($multimediaObject, $material);
 
         return $multimediaObject;
     }
@@ -128,6 +140,20 @@ class MaterialService
     }
 
     /**
+     * Get VTT captions
+     *
+     * @param MultimediaObject $multimediaObjet
+     * @return array
+     */
+    public function getCaptions(MultimediaObject $multimediaObject)
+    {
+        $mimeTypeCaptions = self::MIME_TYPE_CAPTIONS;
+        return $multimediaObject->getMaterials()->filter(function ($material) use ($mimeTypeCaptions) {
+            return $material->getMimeType() === $mimeTypeCaptions;
+          });
+    }
+
+    /**
      * Save form data of Material
      *
      * @return Material $material
@@ -139,6 +165,9 @@ class MaterialService
         }
         if (array_key_exists('hide', $formData)) {
             $material->setHide($formData['hide']);
+        }
+        if (array_key_exists('language', $formData)) {
+            $material->setLanguage($formData['language']);
         }
         if (array_key_exists('mime_type', $formData)) {
             $material->setMimeType($formData['mime_type']);

@@ -206,6 +206,13 @@ class Job
     private $output = '';
 
     /**
+     * @var array $initVars
+     *
+     * @MongoDB\Raw
+     */
+    private $initVars = array();
+
+    /**
      * @var locale $locale
      */
     private $locale = 'en';
@@ -722,6 +729,16 @@ class Job
     }
 
     /**
+     * Append output
+     *
+     * @param string $output
+     */
+    public function appendOutput($output)
+    {
+        $this->output .= $output;
+    }
+
+    /**
      * Get output
      *
      * @return string
@@ -729,6 +746,26 @@ class Job
     public function getOutput()
     {
         return $this->output;
+    }
+
+    /**
+     * Set initVars
+     *
+     * @param string $initVars
+     */
+    public function setInitVars($initVars)
+    {
+        $this->initVars = $initVars;
+    }
+
+    /**
+     * Get initVars
+     *
+     * @return string
+     */
+    public function getInitVars()
+    {
+        return $this->initVars;
     }
 
     /**
@@ -760,4 +797,60 @@ class Job
     {
         return self::$statusTexts[$this->getStatus()];
     }
+
+    /**
+     * @return boolean
+     */
+    public function isPending()
+    {
+        return $this->status == self::STATUS_WAITING || $this->status == self::STATUS_PAUSED;
+    }
+
+    /**
+     * @return boolean
+     */    
+    public function isWaiting()
+    {
+        return $this->status == self::STATUS_WAITING;
+    }
+
+    /**
+     * @return boolean
+     */    
+    public function isPaused()
+    {
+        return $this->status == self::STATUS_PAUSED;
+    }
+    
+    /**
+     * @return boolean
+     */
+    public function isExecuting()
+    {
+        return $this->status == self::STATUS_EXECUTING;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isFailed()
+    {
+        return $this->status == self::STATUS_ERROR;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isFinished()
+    {
+        return $this->status == self::STATUS_FINISHED;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isExecuted()
+    {
+        return $this->status == self::STATUS_ERROR || $this->status == self::STATUS_FINISHED;
+    }    
 }

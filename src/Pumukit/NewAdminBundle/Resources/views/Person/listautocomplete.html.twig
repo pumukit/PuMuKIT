@@ -13,7 +13,9 @@
     </div>
   </fieldset>
   <div class="modal-footer">
-    <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+    {% if ldap_enabled %}
+      {% render(controller('PumukitLDAPBundle:Person:button', {'mmId': mm.id, 'roleId': role.id})) %}
+    {% endif %}
     <button type="button" class="btn btn-primary btn-raised"
             onclick="if('' != $('#person_id').val()){
                                                      var route = '{{ path('pumukitnewadmin_person_link', {'id': '__personId__', 'roleId': role.id, 'mmId': mm.id} ) }}';
@@ -29,13 +31,14 @@
                      return false;">
       {% trans %}Use{% endtrans %}
     </button>
-    <button type="button" class="btn btn-pumukit btn-raised" data-toggle="modal" data-dismiss="modal" data-target="#myModal"
+    <button type="button" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
             id="create_relation" href="#"
             onclick="var aux = $('#name').val();
                      var route = '{{ path('pumukitnewadmin_person_create_relation', {'mmId': mm.id, 'roleId': role.id, 'name': '__aux__'}) }}';
                      $('#create_relation').attr('href', encodeURI(route.replace('__aux__', aux))); return true;">
       {% trans %}New{% endtrans %}
     </button>
+    <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
   </div>
 </div>
 

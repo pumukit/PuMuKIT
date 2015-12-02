@@ -31,6 +31,10 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
 			Darth Vader: No. I am your father.
 			Luke Skywalker: No... that's not true! That's impossible!";
         $numview = 2;
+        $locale = 'en';
+        $line2 = 'line2';
+        $keyword = 'keyword';
+        $properties = array('property1', 'property2');
 
         $tag1 = new Tag();
         $tag1->setCod('tag1');
@@ -61,6 +65,10 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $mm->addTag($tag3);
         $mm->setBroadcast($broadcast);
         $mm->setNumview($numview);
+        $mm->setLocale($locale);
+        $mm->setLine2($line2);
+        $mm->setKeyword($keyword);
+        $mm->setProperties($properties);
 
         $this->assertEquals($series, $mm->getSeries());
         $this->assertEquals($rank, $mm->getRank());
@@ -74,6 +82,50 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(count($mm_tags), count($mm->getTags()));
         $this->assertEquals($broadcast, $mm->getBroadcast());
         $this->assertEquals($numview, $mm->getNumview());
+        $this->assertEquals($locale, $mm->getLocale());
+        $this->assertEquals($line2, $mm->getLine2());
+        $this->assertEquals($keyword, $mm->getKeyword());
+        $this->assertEquals($properties, $mm->getProperties());
+
+        $title = null;
+        $subtitle = null;
+        $description = null;
+        $line2 = null;
+        $keyword = null;
+
+        $mm->setTitle($title);
+        $mm->setSubtitle($subtitle);
+        $mm->setDescription($description);
+        $mm->setLine2($line2);
+        $mm->setKeyword($keyword);
+
+        $this->assertEquals(null, $mm->getTitle());
+        $this->assertEquals(null, $mm->getSubtitle());
+        $this->assertEquals(null, $mm->getDescription());
+        $this->assertEquals(null, $mm->getLine2());
+        $this->assertEquals(null, $mm->getKeyword());
+
+        $properties = array('prop2' => 'property2');
+        $mm->setProperties($properties);
+        $key = 'prop2';
+
+        $this->assertEquals($properties[$key], $mm->getProperty($key));
+
+        $property3 = 'property3';
+        $value3 = 'value3';
+        $mm->setProperty($property3, $value3);
+
+        $this->assertEquals($value3, $mm->getProperty($property3));
+
+        $mm->removeProperty($property3);
+
+        $this->assertNull($mm->getProperty($property3));
+    }
+
+    public function testToString()
+    {
+        $mm = new MultimediaObject();
+        $this->assertEquals($mm->getTitle(), $mm->__toString());
     }
 
     public function testDefaultState()
@@ -115,6 +167,9 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $pic1 = new Pic();
         $pic2 = new Pic();
         $pic3 = new Pic();
+        $pic4 = new Pic();
+
+        $pic4->setUrl("/url/of/pic4");
 
         $this->assertEquals(0, count($mm->getPics()));
 
@@ -134,6 +189,10 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
 
         $picsArray = array(0 => $pic1, 2 => $pic3);
         $this->assertEquals($picsArray, $mm->getPics()->toArray());
+        $this->assertEquals($pic1, $mm->getPic());
+
+        $mm->addPic($pic4);
+        $this->assertEquals("/url/of/pic4", $mm->getFirstUrlPic());
     }
 
     public function testMaterialsInMultimediaObject()
@@ -250,6 +309,15 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, count($mm->getFilteredTracksWithTags(array(), array(), array('flv', 'master'))));
         $this->assertEquals(5, count($mm->getFilteredTracksWithTags(array(), array(), array(), array('flv', 'master'))));
         $this->assertEquals(1, count($mm->getFilteredTracksWithTags(array('mosca', 'old'), array(), array(), array('old'))));
+    
+        $this->assertEquals(1, count($mm->getFilteredTrackWithTags()));
+        $this->assertEquals(1, count($mm->getFilteredTrackWithTags(array('master'))));
+        $this->assertEquals(1, count($mm->getFilteredTrackWithTags(array('master'), array('mosca', 'old'))));
+        $this->assertEquals(0, count($mm->getFilteredTrackWithTags(array(), array('mosca', 'old'), array('master'))));
+        $this->assertEquals(1, count($mm->getFilteredTrackWithTags(array(), array(), array('flv'))));
+        $this->assertEquals(0, count($mm->getFilteredTrackWithTags(array(), array(), array('flv', 'master'))));
+        $this->assertEquals(1, count($mm->getFilteredTrackWithTags(array(), array(), array(), array('flv', 'master'))));
+        $this->assertEquals(1, count($mm->getFilteredTrackWithTags(array('mosca', 'old'), array(), array(), array('old'))));
     }
 
     public function testGetPicsWithTag()
@@ -428,8 +496,8 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($tag->getPath(), $mm->getTags()[0]->getPath());
         $this->assertEquals($tag->getLevel(), $mm->getTags()[0]->getLevel());
 
-        $this->assertNull($mm->getTags()[0]->getTitle('fr'));
-        $this->assertNull($mm->getTags()[0]->getDescription('fr'));
+        $this->assertEquals('', $mm->getTags()[0]->getTitle('fr'));
+        $this->assertEquals('', $mm->getTags()[0]->getDescription('fr'));
 
         $this->assertEquals($titleArray, $mm->getTags()[0]->getI18nTitle());
         $this->assertEquals($descriptionArray, $mm->getTags()[0]->getI18nDescription());
@@ -473,8 +541,8 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($updated, $mm->getTags()[0]->getUpdated());
         $this->assertEquals($display, $mm->getTags()[0]->getDisplay());
 
-        $this->assertNull($mm->getTags()[0]->getTitle('fr'));
-        $this->assertNull($mm->getTags()[0]->getDescription('fr'));
+        $this->assertEquals('', $mm->getTags()[0]->getTitle('fr'));
+        $this->assertEquals('', $mm->getTags()[0]->getDescription('fr'));
 
         $this->assertEquals($titleArray, $mm->getTags()[0]->getI18nTitle());
         $this->assertEquals($descriptionArray, $mm->getTags()[0]->getI18nDescription());
@@ -534,6 +602,19 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($mm->containsAllTags(array($tag1)));
         $this->assertFalse($mm->containsAllTags(array($tag0, $tag2)));
         $this->assertFalse($mm->containsAllTags(array($tag0, $tag1, $tag2, $tag3)));
+
+        //containsAllTagsWithCodes and containsAnyTagWithCodes
+        $mm->removeTag($tag1);
+        $mm->removeTag($tag2);
+        $mm->removeTag($tag3);
+        $mm->addTag($tag1);
+        $mm->addTag($tag4);
+        $this->assertTrue($mm->containsAllTagsWithCodes(array($tag1->getCod(), $tag4->getCod())));
+        $mm->removeTag($tag4);
+        $this->assertFalse($mm->containsAllTagsWithCodes(array($tag4->getCod())));
+        $this->assertTrue($mm->containsAllTagsWithCodes(array($tag1->getCod())));
+        $this->assertFalse($mm->containsAnyTagWithCodes(array($tag4->getCod())));
+        $this->assertTrue($mm->containsAnyTagWithCodes(array($tag1->getCod())));
     }
 
     public function testIsOnlyAudio()
@@ -561,5 +642,52 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
 
         $t5->setOnlyAudio(false);
         $this->assertFalse($mm->isOnlyAudio());
+    }
+
+    public function testIsCollection()
+    {
+        $mm = new MultimediaObject();
+        $this->assertEquals(false, $mm->isCollection());
+    }
+
+    public function testGetDurationString()
+    {
+        $duration1 = 120;
+        $duration2 = -6;
+        $duration3 = 30;
+
+        $mm = new MultimediaObject();
+
+        $mm->setDuration($duration2);
+        $this->assertEquals("0''", $mm->getDurationString());
+        $mm->setDuration($duration1);
+        $this->assertEquals("2' 00''", $mm->getDurationString());
+        $mm->setDuration($duration3);
+        $this->assertEquals("30''", $mm->getDurationString());
+    }
+
+    public function testIncNumview()
+    {
+        $mm = new MultimediaObject();
+
+        $mm->setNumview(5);
+        $mm->incNumview();
+
+        $this->assertEquals(6, $mm->getNumview());
+    }
+
+    public function testDurationInMinutesAndSeconds()
+    {
+        $duration = 120;
+        $duration_in_minutes_and_seconds1 = array('minutes' => 2, 'seconds' => 0);
+        $duration_in_minutes_and_seconds2 = array('minutes' => 5, 'seconds' => 30);
+
+        $mm = new MultimediaObject();
+        $mm->setDuration($duration);
+
+        $this->assertEquals($duration_in_minutes_and_seconds1, $mm->getDurationInMinutesAndSeconds());
+        
+        $mm->setDurationInMinutesAndSeconds($duration_in_minutes_and_seconds2);
+        $this->assertEquals($duration_in_minutes_and_seconds2, $mm->getDurationInMinutesAndSeconds());
     }
 }

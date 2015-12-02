@@ -18,9 +18,13 @@ class MediaLibraryController extends Controller
     	$repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
 
         $sortField = "alphabetically" == $sort ? 'title.' . $request->getLocale() : "public_date";
-        $series = $repo->findBy(array(), array($sortField => 1));        
+        $criteria = $request->query->get('search', false) ?
+          array('title.' . $request->getLocale() => new \MongoRegex(sprintf("/%s/i", $request->query->get('search')))):
+          array();
 
-        $this->get('pumukit_web_tv.breadcrumbs')->addList("All", "pumukit_webtv_medialibrary_index");
+        $series = $repo->findBy($criteria, array($sortField => 1));        
+
+        $this->get('pumukit_web_tv.breadcrumbs')->addList("All", "pumukit_webtv_medialibrary_index", array("sort" => $sort));
 
         return array('series' => $series, 'sort' => $sort);
     }

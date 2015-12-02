@@ -16,6 +16,7 @@ class MultimediaObjectPicServiceTest extends WebTestCase
     private $mmsPicService;
     private $originalPicPath;
     private $uploadsPath;
+    private $picDispatcher;
 
     public function __construct()
     {
@@ -31,6 +32,8 @@ class MultimediaObjectPicServiceTest extends WebTestCase
           ->get('pumukitschema.factory');
         $this->mmsPicService = $kernel->getContainer()
           ->get('pumukitschema.mmspic');
+        $this->picDispatcher = $kernel->getContainer()
+          ->get('pumukitschema.pic_dispatcher');
 
         $this->originalPicPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'logo.png';
         $this->uploadsPath = realpath(__DIR__.'/../../../../../web/uploads/pic');
@@ -145,13 +148,36 @@ class MultimediaObjectPicServiceTest extends WebTestCase
         $this->deleteCreatedFiles();
     }
 
+    public function testRemovePicFromMultimediaObject()
+    {
+        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
+
+        $series = $this->factoryService->createSeries();
+        $mm = $this->factoryService->createMultimediaObject($series);
+
+        $picPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'picCopy.png';
+        if (copy($this->originalPicPath, $picPath)){
+            $picFile = new UploadedFile($picPath, 'pic.png', null, null, null, true);
+            $mm = $this->mmsPicService->addPicFile($mm, $picFile);
+
+            $this->assertEquals(1, count($mm->getPics()));
+
+            $pic = $mm->getPics()[0];
+            $mm = $this->mmsPicService->removePicFromMultimediaObject($mm, $pic->getId());
+
+            $this->assertEquals(0, count($mm->getPics()));
+        }
+
+        $this->deleteCreatedFiles();
+    }
+
     /**
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage for storing Pics does not exist
      */
     public function testInvalidTargetPath()
     {
-        $mmspicService = new MultimediaObjectPicService($this->dm, "/non/existing/path", "/uploads/pic", true);
+        $mmspicService = new MultimediaObjectPicService($this->dm, $this->picDispatcher, "/non/existing/path", "/uploads/pic", true);
     }
 
     private function createBroadcast($broadcastTypeId)

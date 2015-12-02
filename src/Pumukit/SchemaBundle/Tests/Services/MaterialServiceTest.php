@@ -5,6 +5,7 @@ namespace Pumukit\SchemaBundle\Tests\Services;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Pumukit\SchemaBundle\Services\MaterialService;
 
@@ -16,6 +17,7 @@ class MaterialServiceTest extends WebTestCase
     private $factoryService;
     private $originalFilePath;
     private $uploadsPath;
+    private $materialDispatcher;
 
     public function __construct()
     {
@@ -29,6 +31,8 @@ class MaterialServiceTest extends WebTestCase
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->materialService = $kernel->getContainer()
           ->get('pumukitschema.material');
+        $this->materialDispatcher = $kernel->getContainer()
+          ->get('pumukitschema.material_dispatcher');
         $this->factoryService = $kernel->getContainer()
           ->get('pumukitschema.factory');
 
@@ -89,7 +93,7 @@ class MaterialServiceTest extends WebTestCase
         $newI18nName = array('en' => 'Material', 'es' => 'Material');
         $material->setI18nName($newI18nName);
 
-        $mm = $this->materialService->updateMaterialInMultimediaObject($mm);
+        $mm = $this->materialService->updateMaterialInMultimediaObject($mm, $material);
         $mm = $this->repoMmobj->find($mm->getId());
 
         $materials = $mm->getMaterials();
@@ -153,10 +157,21 @@ class MaterialServiceTest extends WebTestCase
 
         $materials = $mm->getMaterials();
         $material = $materials[0];
+        
+        $materialPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'materialCopy';
+        if (copy($this->originalFilePath, $materialPath)){
+            $materialFile = new UploadedFile($materialPath, 'material', null, null, null, true);
+            $mm = $this->materialService->addMaterialFile($mm, $materialFile, $formData);
+            $mm = $this->repoMmobj->find($mm->getId());
+            
+            $this->assertEquals(2, count($mm->getMaterials()));
 
-        $mm = $this->materialService->removeMaterialFromMultimediaObject($mm, $material->getId());
+            $material = $mm->getMaterials()[1];
+            $this->assertTrue($mm->containsMaterial($material));
 
-        $this->assertEquals(0, count($mm->getMaterials()));
+            $mm = $this->materialService->removeMaterialFromMultimediaObject($mm, $material->getId());
+            $this->assertEquals(1, count($mm->getMaterials()));
+        }
     }
 
     public function testUpAndDownMaterialInMultimediaObject()
@@ -222,7 +237,48 @@ class MaterialServiceTest extends WebTestCase
      */
     public function testInvalidTargetPath()
     {
-        $materialService = new MaterialService($this->dm, "/non/existing/path", "/uploads/material", true);
+        $materialService = new MaterialService($this->dm, $this->materialDispatcher, "/non/existing/path", "/uploads/material", true);
+    }
+
+    public function testGetCaptions()
+    {
+        $mm = new MultimediaObject();
+
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $captions = $this->materialService->getCaptions($mm)->toArray();
+        $this->assertEquals(0, count($captions));
+
+        $material1 = new Material();
+        $material2 = new Material();
+        $material3 = new Material();
+        $material4 = new Material();
+        $material5 = new Material();
+
+        $material1->setMimeType('pdf');
+        $material2->setMimeType('vtt');
+        $material3->setMimeType('vtt');
+        $material4->setMimeType('pdf');
+        $material5->setMimeType('vtt');
+
+        $mm->addMaterial($material1);
+        $mm->addMaterial($material2);
+        $mm->addMaterial($material3);
+        $mm->addMaterial($material4);
+        $mm->addMaterial($material5);
+
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $captions = $this->materialService->getCaptions($mm)->toArray();
+        $this->assertEquals(3, count($captions));
+
+        $this->assertFalse(in_array($material1, $captions));
+        $this->assertTrue(in_array($material2, $captions));
+        $this->assertTrue(in_array($material3, $captions));
+        $this->assertFalse(in_array($material4, $captions));
+        $this->assertTrue(in_array($material5, $captions));
     }
 
     private function createBroadcast($broadcastTypeId)

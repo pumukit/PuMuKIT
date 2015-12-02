@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\Person;
 
 class FactoryServiceTest extends WebTestCase
 {
@@ -167,25 +168,6 @@ class FactoryServiceTest extends WebTestCase
         $this->assertEquals(1, count($series_type2->getSeries()));
     }
 
-    public function testGetRoles()
-    {
-        $role1 = new Role();
-        $role1->setCod('role1');
-
-        $role2 = new Role();
-        $role2->setCod('role2');
-
-        $role3 = new Role();
-        $role3->setCod('role3');
-
-        $this->dm->persist($role1);
-        $this->dm->persist($role2);
-        $this->dm->persist($role3);
-        $this->dm->flush();
-
-        $this->assertEquals(3, count($this->factory->getRoles()));
-    }
-
     public function testFindSeriesById()
     {
         $this->createBroadcasts();
@@ -193,6 +175,18 @@ class FactoryServiceTest extends WebTestCase
         $series = $this->factory->createSeries();
 
         $this->assertEquals($series, $this->factory->findSeriesById($series->getId(), null));
+        $this->assertEquals($series, $this->factory->findSeriesById(null, $series->getId()));
+        $this->assertEquals(null, $this->factory->findSeriesById(null, null));
+    }
+
+    public function testFindMultimediaObjectById()
+    {
+        $this->createBroadcasts();
+
+        $series = $this->factory->createSeries();
+        $mm = $this->factory->createMultimediaObject($series);
+
+        $this->assertEquals($mm, $this->factory->findMultimediaObjectById($mm->getId()));
     }
 
     public function testGetParentTags()
@@ -240,6 +234,31 @@ class FactoryServiceTest extends WebTestCase
         $series = $this->factory->createSeries();
 
         $this->assertTrue($this->factory->getMultimediaObjectPrototype($series)->isPrototype());
+    }
+
+    public function testGetTagsByCod()
+    {
+        $tagA = new Tag();
+        $tagA->setCod("A");
+        $this->dm->persist($tagA);
+        $this->dm->flush();
+
+        $tagB = new Tag();
+        $tagB->setCod("B");
+        $this->dm->persist($tagB);
+        $this->dm->flush();
+
+        $tagC = new Tag();
+        $tagC->setCod("C");
+        $this->dm->persist($tagC);
+        $this->dm->flush();
+
+        $this->assertEquals($tagA, $this->factory->getTagsByCod('A', false));
+
+        $tagB->setParent($tagA);
+        $tagC->setParent($tagA);
+        
+        $this->assertEquals(2, count($this->factory->getTagsByCod('A', true)));
     }
 
     public function testDeleteSeries()
@@ -296,6 +315,52 @@ class FactoryServiceTest extends WebTestCase
         $this->assertEquals(1, count($this->dm->getRepository('PumukitSchemaBundle:Role')->findAll()));
         $this->factory->deleteResource($role);
         $this->assertEquals(0, count($this->dm->getRepository('PumukitSchemaBundle:Role')->findAll()));
+    }
+
+    public function testClone()
+    {
+        $this->createBroadcasts();
+
+        $series = $this->factory->createSeries();
+        $src = $this->factory->createMultimediaObject($series);
+
+        $tagA = new Tag();
+        $tagA->setCod("A");
+        $this->dm->persist($tagA);
+        $this->dm->flush();
+
+        $tagB = new Tag();
+        $tagB->setCod("B");
+        $this->dm->persist($tagB);
+        $this->dm->flush();
+
+        $personA = new Person();
+        $personB = new Person();
+
+        $roleA = new Role();
+        $roleB = new Role();
+
+        $src->addTag($tagA);
+        $src->addTag($tagB);
+        $src->addPersonWithRole($personA, $roleA);
+        $src->addPersonWithRole($personB, $roleB);
+
+        $new = $this->factory->cloneMultimediaObject($src);
+
+        $this->assertEquals($new->getI18nTitle(), $src->getI18nTitle());
+        $this->assertEquals($new->getI18nSubtitle(), $src->getI18nSubtitle());
+        $this->assertEquals($new->getI18nDescription(), $src->getI18nDescription());
+        $this->assertEquals($new->getI18nLine2(), $src->getI18nLine2());
+        $this->assertEquals($new->getI18nKeyword(), $src->getI18nKeyword());
+        $this->assertEquals($new->getCopyright(), $src->getCopyright());
+        $this->assertEquals($new->getLicense(), $src->getLicense());
+        $this->assertEquals($new->getPublicDate(), $src->getPublicDate());
+        $this->assertEquals($new->getRecordDate(), $src->getRecordDate());
+        $this->assertEquals($new->getStatus(), MultimediaObject::STATUS_BLOQ);
+        
+        $this->assertEquals($new->getBroadcast(), $src->getBroadcast());
+        $this->assertEquals(count($new->getRoles()), count($src->getRoles()));
+        $this->assertEquals(count($new->getTags()), count($src->getTags()));
     }
 
     private function createBroadcasts()
