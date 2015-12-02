@@ -1,12 +1,6 @@
 sudo: false
 language: php
 
-addons:
-  apt:
-    packages:
-      - mediainfo
-    
-
 php:
   - 5.5
   - 5.6
@@ -23,6 +17,7 @@ addons:
       - mongodb-3.0-precise
     packages:
       - mongodb-org-server
+      - mediainfo
 
 before_script:
   - yes '' | pecl -q install -f mongo-${MONGO_VERSION} && echo "extension=mongo.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
