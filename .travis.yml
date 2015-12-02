@@ -2,8 +2,9 @@ sudo: false
 language: php
 
 addons:
-  apt_packages:
-    - mediainfo
+  apt:
+    packages:
+      - mediainfo
     
 
 php:
