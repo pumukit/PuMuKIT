@@ -1,5 +1,4 @@
-sudo: required
-dist: trusty
+sudo: false
 language: php
 
 php:
@@ -11,6 +10,13 @@ env:
 
 services:
   - mongodb
+
+addons:
+  apt:
+    sources:
+      - mongodb-3.0-precise
+    packages:
+      - mongodb-org-server
 
 before_script:
   - composer install --dev
