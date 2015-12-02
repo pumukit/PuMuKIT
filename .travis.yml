@@ -19,6 +19,7 @@ addons:
       - mongodb-org-server
 
 before_script:
+  - composer self-update
   - composer install --dev
   - mongo --version
   - php -i
