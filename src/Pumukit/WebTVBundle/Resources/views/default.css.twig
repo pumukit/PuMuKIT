@@ -44,6 +44,7 @@
 body {
     background: {{ page_background }};
 }
+
 a:hover, a:focus {
     text-decoration: none;
     color: {{ default_content_link_selected_font }};
@@ -234,7 +235,7 @@ p.disabled {
 .main-content {
     margin: 0 auto;
     background: {{ content_background }};
-    min-height: 600px;
+    min-height: 700px;
     max-width: {{ content_max_width }};
     padding-bottom: 20px;
 }
@@ -259,9 +260,6 @@ body.opencast-layout .breadcrumb_wrapper {
 .mmobj_serie {
     background: {{ mmobj_serie_background }};
     padding: 3% 2%;
-}
-.media-body {
-    padding-left: 3%;
 }
 .number-videos.serial {
     position: absolute;
@@ -357,9 +355,30 @@ body.opencast-layout .breadcrumb_wrapper {
     width: 135px;
     height: 98px;
 }
-.minithumbnail {
-    width: 75px;
-    height: 56px;
+.minimmobj {
+    overflow: hidden;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+.miniinfo-wrapper {
+    overflow: hidden;
+}
+.miniinfo {
+    width: 100%;
+    margin-left: 8px;
+}
+.miniinfo .title {
+    height: 1.2em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.miniinfo .subtitle {
+    height: 1.2em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-bottom: 5px;
 }
 .minithumbnail, .thumbnail {
     float: left;
@@ -373,6 +392,11 @@ body.opencast-layout .breadcrumb_wrapper {
     padding: 4px;
     z-index: 3;
     position: relative;
+}
+.minithumbnail {
+    padding: 2px;
+    width: 75px;
+    height: 56px;
 }
 .thumbnailwrapper {
     padding-left: 0px;
@@ -395,16 +419,17 @@ body.opencast-layout .breadcrumb_wrapper {
     vertical-align: middle;
 }
 .thumbnailholder {
+    top: 4px;
     width: 127px;
     height: 90px;
 }
 .minithumbnailholder {
-    width: 67px;
-    height: 48px;
+    top: 2px;
+    width: 71px;
+    height: 52px;
 }
 .minithumbnailholder, .thumbnailholder {
     position: absolute;
-    top: 4px;
     background:#000;
     z-index: -1;
 }
@@ -439,6 +464,7 @@ body.opencast-layout .breadcrumb_wrapper {
     width: 100%;
     vertical-align: middle;
     background: {{ menu_background }}; /* Trick to color the menu's length */
+    min-height: 100%;
 }
 
 /*CIES*/
@@ -461,21 +487,32 @@ a:hover .cover {
     color: {{ default_light_background }};
 
 }
+.media {
+    padding: 2px 2px 15px 2px;
+}
 .media-heading.subtitle{
-    line-height:0.5;
+    height: 1em;
+    font-size: 1em;
+    line-height: 1;
+    overflow: hidden;
 }
 .info .subtitle {
-    font-weight: 100;
+    font-weight: 400;
     margin: 10px 5px;
     font-size: 1.2em;
 }
 .media-heading.title{
-    line-height:1;
-    min-height: 30px;
+    line-height: 1;
+    overflow: hidden;
+    height: 1em;
+    font-size: 1em;
+    white-space: nowrap;  
+    text-overflow: ellipsis;
 }
 .media-body .date{
     line-height: 1;
-    padding-top: 10px;
+    height: 1em;
+    font-size: 1em;
 }
 .header {
     background: {{ header_background }};
@@ -641,4 +678,10 @@ a:hover .cover {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='{{ mmobj_selected_background }}', endColorstr='{{ mmobj_selected_background }}', GradientType=1 );
 }
 {# ==== END MAGIC CSS TO ELLIPSE TEXT ==== #}
+.footer-wrapper {
+    width: 100%;
+    overflow: hidden;
+    color: {{default_contrast_font}};
+    background: {{default_contrast_background}};
+}
 {% endblock %}

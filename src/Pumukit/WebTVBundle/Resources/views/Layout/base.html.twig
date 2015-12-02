@@ -42,36 +42,40 @@
         </div>
         <div class="row">
           <div class="main-content wrapper-center">
-              <div class="col-xs-12">
-                  <!--LATERAL_MENU-->
-                  <span class="{{ hide_slidebar is defined ? 'hidden':'visible-lg' }}">
-                      {% include 'PumukitWebTVBundle:Layout:slidebar.html.twig'%}
-                  </span>
-                  <!--MAIN BODY-->
-                  <div class="main-content {{ hide_slidebar is defined ? 'row':'col-lg-9' }}">
-                      {% block body_without_bar %}
-                      {% block body %}
-                      {% endblock %}
-                      {% endblock %}
-                      <div style="clear:both"><!--LETS THE WRAPPER HAVE THE CORRECT HEIGHT--></div>
-                  </div>
-                  <div style="clear:both"><!--LETS THE WRAPPER HAVE THE CORRECT HEIGHT--></div>
-              </div>
+            <!--LATERAL_MENU-->
+            <span class="{{ hide_slidebar is defined ? 'hidden':'visible-lg' }}">
+              {% include 'PumukitWebTVBundle:Layout:slidebar.html.twig'%}
+            </span>
+            <!--MAIN BODY-->
+            <div class="main-content {{ hide_slidebar is defined ? 'col-xs-12':'col-lg-9' }}">
+              {% block body_without_bar %}
+                {% block body %}
+                {% endblock %}
+              {% endblock %}
+              <div style="clear:both"><!--LETS THE WRAPPER HAVE THE CORRECT HEIGHT--></div>
+            </div>
+            <div style="clear:both"><!--LETS THE WRAPPER HAVE THE CORRECT HEIGHT--></div>
           </div>
         </div>
         <!--</div>-->
         <!--END MAIN BODY-->
 
         <!--FOOTER-->
-        <div class="row footer_row">
-          {% include 'PumukitWebTVBundle:Layout:footer.html.twig' %}
-        </div>
-        {% block powered_by %}
-        <div class="powered_by">
-          <img alt="PuMuKIT icon" src="{{ asset('bundles/pumukitwebtv/images/favicon.ico') }}" style="width: 10px;">
-          <a href="http://pumukit.org" style="color:#000; text-decoration: none; ">
-          Powered by <span style="font-style: italic">PuMuKIT</span>
-          </a>
+        <div class="row">
+          <div class="footer-wrapper">
+            <div class="row footer_row">
+              {% include 'PumukitWebTVBundle:Layout:footer.html.twig' %}
+            </div>
+            {% block powered_by %}
+              <div class="row powered_by-wrapper">
+                <div class="powered_by">
+                  <img alt="PuMuKIT icon" src="{{ asset('bundles/pumukitwebtv/images/favicon.ico') }}" style="width: 10px;">
+                  <a href="http://pumukit.org" style="text-decoration: none; ">
+                    Powered by <span style="font-style: italic">PuMuKIT</span>
+                  </a>
+                </div>
+              </div>
+          </div>
         </div>
         {% endblock %}
       </div>
