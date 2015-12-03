@@ -28,6 +28,7 @@
             <argument type="service" id="pumukit.inspection"/>
             <argument type="service" id="event_dispatcher"/>
             <argument type="service" id="logger"/>
+            <argument type="service" id="pumukitschema.track"/>
             <argument type="service" id="security.token_storage"/>
             <tag name="monolog.logger" channel="encoder"/>
             <argument>%kernel.environment%</argument>
@@ -42,6 +43,11 @@
             <argument>%pumukit2.uploads_dir%/pic</argument>
             <argument>%pumukit2.uploads_url%/pic</argument>
             <argument>%pumukit.picextractor.command%</argument>
+        </service>
+
+        <service id="pumukitencoder.remove" class="Pumukit\EncoderBundle\EventListener\RemoveListener">
+            <argument type="service" id="service_container" />
+            <tag name="kernel.event_listener" event="track.delete" method="postTrackRemove"/>
         </service>
     </services>
 

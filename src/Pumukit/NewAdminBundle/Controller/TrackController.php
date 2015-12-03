@@ -50,16 +50,16 @@ class TrackController extends Controller
         $formData = $request->get('pumukitnewadmin_track', array());
         list($language, $description) = $this->getArrayData($formData);
 
-        $trackService = $this->get('pumukitschema.track');
+        $jobService = $this->get('pumukitencoder.job');
 
         try{
             if (empty($_FILES) && empty($_POST)){
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
             }
             if (($request->files->has('resource')) && ("file" == $request->get('file_type'))) {
-                $multimediaObject = $trackService->createTrackFromLocalHardDrive($multimediaObject, $request->files->get('resource'), $profile, $priority, $language, $description);
+                $multimediaObject = $jobService->createTrackFromLocalHardDrive($multimediaObject, $request->files->get('resource'), $profile, $priority, $language, $description);
             } elseif (($request->get('file', null)) && ("inbox" == $request->get('file_type'))) {
-                $multimediaObject = $trackService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description);
+                $multimediaObject = $jobService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description);
             }
         }catch (\Exception $e){
             return array(
@@ -91,7 +91,7 @@ class TrackController extends Controller
 
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
             try {
-                $multimediaObject = $this->get('pumukitschema.track')->updateTrackInMultimediaObject($multimediaObject);
+                $multimediaObject = $this->get('pumukitschema.track')->updateTrackInMultimediaObject($multimediaObject, $track);
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), 400);
             }
@@ -115,10 +115,14 @@ class TrackController extends Controller
     public function infoAction(MultimediaObject $multimediaObject, Request $request)
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
-        
+        $isPlayable = $track->containsTag('display');
+        $isPublished = $multimediaObject->containsTagWithCod('PUCHWEBTV') && $multimediaObject->getStatus() == MultimediaObject::STATUS_PUBLISHED; 
+
         return array(
                      'track' => $track,
-                     'mm' => $multimediaObject
+                     'mm' => $multimediaObject,
+                     'is_playable' => $isPlayable,
+                     'is_published' => $isPublished,
                      );
     }
 
@@ -250,7 +254,7 @@ class TrackController extends Controller
         $track = $multimediaObject->getTrackById($request->get('id'));
 
         $this->get('pumukit.inspection')->autocompleteTrack($track);
-        $this->get('pumukitschema.track')->updateTrackInMultimediaObject($multimediaObject);
+        $this->get('pumukitschema.track')->updateTrackInMultimediaObject($multimediaObject, $track);
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', array('id' => $multimediaObject->getId())));
     }
@@ -266,7 +270,7 @@ class TrackController extends Controller
 
         $flagTrue = $this->get('pumukitencoder.picextractor')->extractPic($multimediaObject, $track, $numframe);
         if ($flagTrue) {
-            $this->get('pumukitschema.track')->updateTrackInMultimediaObject($multimediaObject);
+            $this->get('pumukitschema.track')->updateTrackInMultimediaObject($multimediaObject, $track);
         }
 
         return array(

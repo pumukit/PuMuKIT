@@ -592,6 +592,72 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(0, count($mm->getPeople()));
     }
 
+    public function testGetAllEmbeddedRoleByPerson()
+    {
+        $personLucy = new Person();
+        $personLucy->setName('Lucy');
+        $personKate = new Person();
+        $personKate->setName('Kate');
+        $personPete = new Person();
+        $personPete->setName('Pete');
+
+        $roleActor = new Role();
+        $roleActor->setCod('actor');
+        $rolePresenter = new Role();
+        $rolePresenter->setCod('presenter');
+        $roleDirector = new Role();
+        $roleDirector->setCod('director');
+
+        $this->dm->persist($personLucy);
+        $this->dm->persist($personKate);
+        $this->dm->persist($personPete);
+
+        $this->dm->persist($roleActor);
+        $this->dm->persist($rolePresenter);
+        $this->dm->persist($roleDirector);
+
+        $mm = new MultimediaObject();
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $mm->addPersonWithRole($personKate, $roleActor);
+        $mm->addPersonWithRole($personLucy, $roleActor);
+        $mm->addPersonWithRole($personPete, $roleActor);
+        $mm->addPersonWithRole($personKate, $rolePresenter);
+        $mm->addPersonWithRole($personLucy, $rolePresenter);
+        $mm->addPersonWithRole($personLucy, $roleDirector);
+        $mm->addPersonWithRole($personPete, $roleDirector);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $kateQueryRolesIds = array();
+        foreach ($mm->getAllEmbeddedRolesByPerson($personKate) as $embeddedRole) {
+            $kateQueryRolesIds[] = $embeddedRole->getId();
+        }
+
+        $this->assertTrue(in_array($roleActor->getId(), $kateQueryRolesIds));
+        $this->assertTrue(in_array($rolePresenter->getId(), $kateQueryRolesIds));
+        $this->assertFalse(in_array($roleDirector->getId(), $kateQueryRolesIds));
+
+        $lucyQueryRolesIds = array();
+        foreach ($mm->getAllEmbeddedRolesByPerson($personLucy) as $embeddedRole) {
+            $lucyQueryRolesIds[] = $embeddedRole->getId();
+        }
+
+        $this->assertTrue(in_array($roleActor->getId(), $lucyQueryRolesIds));
+        $this->assertTrue(in_array($rolePresenter->getId(), $lucyQueryRolesIds));
+        $this->assertTrue(in_array($roleDirector->getId(), $lucyQueryRolesIds));
+
+        $peteQueryRolesIds = array();
+        foreach ($mm->getAllEmbeddedRolesByPerson($personPete) as $embeddedRole) {
+            $peteQueryRolesIds[] = $embeddedRole->getId();
+        }
+
+        $this->assertTrue(in_array($roleActor->getId(), $peteQueryRolesIds));
+        $this->assertFalse(in_array($rolePresenter->getId(), $peteQueryRolesIds));
+        $this->assertTrue(in_array($roleDirector->getId(), $peteQueryRolesIds));
+    }
+
     public function testFindBySeries()
     {
         $this->assertEquals(0, count($this->repo->findAll()));

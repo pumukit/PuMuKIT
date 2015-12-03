@@ -10,6 +10,14 @@ class SenderServiceTest extends WebTestCase
     private $dm;
     private $repo;
     private $senderService;
+    private $mailer;
+    private $templating;
+    private $translator;
+    private $enable;
+    private $senderName;
+    private $senterEmail;
+    private $notificateErrorsToSender;
+    private $environment;
 
     public function __construct()
     {

@@ -37,7 +37,7 @@ class MultimediaObject
     private $secret;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="Series", inversedBy="multimedia_objects", simple=true, cascade={"persist"})
+     * @MongoDB\ReferenceOne(targetDocument="Series", inversedBy="multimedia_objects", simple=true)
      * @Gedmo\SortableGroup
      */
     private $series;
@@ -45,7 +45,7 @@ class MultimediaObject
     /**
      * @var Broadcast $broadcast
      *
-     * @MongoDB\ReferenceOne(targetDocument="Broadcast", inversedBy="multimedia_object", simple=true, cascade={"all"})
+     * @MongoDB\ReferenceOne(targetDocument="Broadcast", inversedBy="multimedia_object", simple=true)
      */
     private $broadcast;
 
@@ -2147,6 +2147,28 @@ class MultimediaObject
             foreach ($role->getPeople() as $embeddedPerson) {
                 if ($embeddedPerson->getId() === $person->getId()) {
                     $aux[] = $embeddedPerson;
+                }
+            }
+        }
+
+        return $aux;
+    }
+
+    /**
+     * Get all embedded role in multimedia object by person id
+     *
+     * @param  Person $person
+     * @return array
+     */
+    public function getAllEmbeddedRolesByPerson($person)
+    {
+        $aux = array();
+
+        foreach ($this->people as $embeddedRole) {
+            foreach ($embeddedRole->getPeople() as $embeddedPerson) {
+                if ($embeddedPerson->getId() === $person->getId()) {
+                    $aux[] = $embeddedRole;
+                    break;
                 }
             }
         }

@@ -13,13 +13,15 @@ class MultimediaObjectPicService
 {
     private $dm;
     private $repo;
+    private $dispatcher;
     private $targetPath;
     private $targetUrl;
     private $forceDeleteOnDisk;
 
-    public function __construct(DocumentManager $documentManager, $targetPath, $targetUrl, $forceDeleteOnDisk=true)
+    public function __construct(DocumentManager $documentManager, PicEventDispatcherService $dispatcher, $targetPath, $targetUrl, $forceDeleteOnDisk=true)
     {
         $this->dm = $documentManager;
+        $this->dispatcher = $dispatcher;
         $this->targetPath = realpath($targetPath);
         if (!$this->targetPath){
             throw new \InvalidArgumentException("The path '".$targetPath."' for storing Pics does not exist.");
@@ -51,6 +53,8 @@ class MultimediaObjectPicService
           $this->dm->flush();
       }		 
 
+      $this->dispatcher->dispatchCreate($multimediaObject, $pic);
+
       return $multimediaObject;
   }
 
@@ -77,6 +81,8 @@ class MultimediaObjectPicService
       $this->dm->persist($multimediaObject);
       $this->dm->flush();
 
+      $this->dispatcher->dispatchCreate($multimediaObject, $pic);
+
       return $multimediaObject;
   }
 
@@ -95,6 +101,8 @@ class MultimediaObjectPicService
         if ($this->forceDeleteOnDisk && $picPath) {
           $this->deleteFileOnDisk($picPath, $multimediaObject);
         }
+
+        $this->dispatcher->dispatchDelete($multimediaObject, $pic);
 
         return $multimediaObject;
     }

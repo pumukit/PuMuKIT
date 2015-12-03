@@ -3,12 +3,14 @@
 namespace Pumukit\EncoderBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Broadcast;
 
 class JobServiceTest extends WebTestCase
 {
@@ -17,6 +19,8 @@ class JobServiceTest extends WebTestCase
     private $jobService;
     private $resourcesDir;
     private $logger;
+    private $trackService;
+    private $factory;
 
     public function __construct()
     {
@@ -28,15 +32,24 @@ class JobServiceTest extends WebTestCase
           ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
           ->getRepository('PumukitEncoderBundle:Job');
+        $this->repoMmobj = $this->dm
+          ->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->logger = $kernel->getContainer()
           ->get('logger');
+        $this->trackService = $kernel->getContainer()
+          ->get('pumukitschema.track');
         $this->tokenStorage = $kernel->getContainer()
           ->get('security.token_storage');
+        $this->factory = $kernel->getContainer()
+          ->get('pumukitschema.factory');
     }
 
     public function setUp()
     {
         $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')->remove(array());
         $this->dm->flush();
         
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
@@ -47,7 +60,72 @@ class JobServiceTest extends WebTestCase
         $this->resourcesDir = realpath(__DIR__.'/../Resources').'/';
         $this->jobService = new JobService($this->dm, $profileService, $cpuService, 
                                            $inspectionService, $dispatcher, $this->logger,
-                                           $this->tokenStorage, "test", null);
+                                           $this->trackService, $this->tokenStorage, "test", null);
+    }
+
+    public function testCreateTrackFromLocalHardDrive()
+    {
+        $this->createBroadcasts();
+
+        $series = $this->factory->createSeries();
+        $multimediaObject = $this->factory->createMultimediaObject($series);
+
+        $this->assertEquals(0, count($multimediaObject->getTracks()));
+        $this->assertEquals(0, count($this->repo->findAll()));
+
+        $originalFile = $this->resourcesDir.'CAMERA.mp4';
+
+        $filePath = $this->resourcesDir.'CAMERACopy.mp4';
+        if (copy($originalFile, $filePath)){
+            $file = new UploadedFile($filePath, 'CAMERA.mp4', null, null, null, true);
+
+            $profile = 'MASTER_COPY';
+            $priority = 2;
+            $language = 'en';
+            $description = array(
+                                 'en' => 'local track description',
+                                 'es' => 'descripción del archivo local',
+                                 );
+
+            $multimediaObject = $this->jobService->createTrackFromLocalHardDrive($multimediaObject, $file, $profile, $priority, $language, $description);
+
+            $this->assertEquals(0, count($multimediaObject->getTracks()));
+            $this->assertEquals(1, count($this->repo->findAll()));
+        }
+
+        $this->deleteCreatedFiles();
+    }
+
+    public function testCreateTrackFromInboxOnServer()
+    {
+        $this->createBroadcasts();
+
+        $series = $this->factory->createSeries();
+        $multimediaObject = $this->factory->createMultimediaObject($series);
+
+        $this->assertEquals(0, count($multimediaObject->getTracks()));
+        $this->assertEquals(0, count($this->repo->findAll()));
+
+        $originalFile = $this->resourcesDir.'CAMERA.mp4';
+
+        $filePath = $this->resourcesDir.'CAMERACopy.mp4';
+        if (copy($originalFile, $filePath)){
+            $profile = 'MASTER_COPY';
+            $priority = 2;
+            $language = 'en';
+            $description = array(
+                                 'en' => 'track description inbox',
+                                 'es' => 'descripción del archivo inbox',
+                                 );
+
+            $multimediaObject = $this->jobService->createTrackFromInboxOnServer($multimediaObject, $filePath, $profile, $priority, $language, $description);
+
+            $this->assertEquals(0, count($multimediaObject->getTracks()));
+            $this->assertEquals(1, count($this->repo->findAll()));
+        }
+
+        $this->deleteCreatedFiles();
+        unlink($filePath);
     }
     
     public function testAddJob()
@@ -357,5 +435,64 @@ class JobServiceTest extends WebTestCase
                           );
 
         return $profiles;
+    }
+
+    private function createBroadcasts()
+    {
+        $locale = 'en';
+
+        $broadcastPrivate = new Broadcast();
+        $broadcastPrivate->setLocale($locale);
+        $broadcastPrivate->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PRI);
+        $broadcastPrivate->setDefaultSel(true);
+        $broadcastPrivate->setName('Private');
+
+        $broadcastPublic = new Broadcast();
+        $broadcastPublic->setLocale($locale);
+        $broadcastPublic->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
+        $broadcastPublic->setDefaultSel(false);
+        $broadcastPublic->setName('Public');
+
+        $broadcastCorporative = new Broadcast();
+        $broadcastCorporative->setLocale($locale);
+        $broadcastCorporative->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_COR);
+        $broadcastCorporative->setDefaultSel(false);
+        $broadcastCorporative->setName('Corporative');
+
+        $this->dm->persist($broadcastPrivate);
+        $this->dm->persist($broadcastPublic);
+        $this->dm->persist($broadcastCorporative);
+        $this->dm->flush();
+    }
+
+    private function deleteCreatedFiles()
+    {
+        $mmobjs = $this->repoMmobj->findAll();
+
+        foreach($mmobjs as $mm){
+            $mmDir = $this->getDemoProfiles()['MASTER_COPY']['streamserver']['dir_out'].'/'.$mm->getSeries()->getId().'/';
+            if (is_dir($mmDir)){
+                $files = glob($mmDir.'*', GLOB_MARK);
+                foreach ($files as $file) {
+                    if (is_writable($file)){
+                      unlink($file);
+                    }
+                }
+
+                rmdir($mmDir);
+            }
+
+            $tmpMmDir = '/tmp/'.$mm->getId().'/';
+            if (is_dir($tmpMmDir)){
+                $files = glob($tmpMmDir.'*', GLOB_MARK);
+                foreach ($files as $file) {
+                    if (is_writable($file)){
+                      unlink($file);
+                    }
+                }
+
+                rmdir($tmpMmDir);
+            }
+        }
     }
 }
