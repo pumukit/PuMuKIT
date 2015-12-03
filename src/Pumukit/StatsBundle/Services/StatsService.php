@@ -91,7 +91,7 @@ class StatsService
             array('$match' => array('date' => array('$gte' => $fromMongoDate, '$lte' => $toMongoDate))),
             array('$group' => array('_id' => '$multimediaObject', 'numView' => array('$sum' => 1))),
             array('$sort' => array('numView' => $sort)),
-            array('$limit' => $limit ), //Get more elements due to tags post-filter.
+            array('$limit' => $limit ),
         );
         $aggregation = $viewsLogColl->aggregate($pipeline);
         $mostViewed = array();
@@ -144,6 +144,57 @@ class StatsService
         }
 
         return $mostViewed;        
+    }
+
+    public function getTotalViewedGrouped(\DateTime $fromDate = null, \DateTime $toDate = null, $limit = 10, array $criteria = array(), $sort = -1, $groupBy = 'month')
+    {
+        $ids = array();
+        if(!$fromDate) {
+            $fromDate = new \DateTime();
+            $fromDate->setTime(0,0,0);
+        }
+        if(!$toDate) {
+            $toDate = new \DateTime();
+        }
+        
+        // 
+        $mongoProject = array();
+        $mongoGroupId = array();
+        switch($groupBy) {
+            case 'hour':
+                $mongoProject['hour'] = array('$hour' => '$date');
+                $mongoGroupId['hour'] = '$hour';
+            case 'day':
+                $mongoProject['day'] = array('$dayOfMonth' => '$date');
+                $mongoGroupId['day'] = '$day';
+            default: //If it doesn't exists, it's 'month'
+            case 'month':
+                $mongoProject['month'] = array('$month' => '$date');
+                $mongoGroupId['month'] = '$month';
+            case 'year':
+                $mongoProject['year'] = array('$year' => '$date');
+                $mongoGroupId['year'] = '$year';
+                break;
+        }
+        
+        $fromMongoDate = new \MongoDate($fromDate->format('U'), $fromDate->format('u'));
+        $toMongoDate = new \MongoDate($toDate->format('U'), $toDate->format('u'));
+
+        $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
+
+        $pipeline = array(
+            array('$match' => array('date' => array('$gte' => $fromMongoDate, '$lte' => $toMongoDate))),
+            array('$project' => $mongoProject),
+            array('$group' => array('_id' => $mongoGroupId,
+                                    'numView' => array('$sum' => 1))
+            ),
+            array('$sort' => array('_id' => $sort)),
+            array('$limit' => $limit ),
+        );
+        $aggregation = $viewsLogColl->aggregate($pipeline);
+        $mostViewed = array();
+        
+        return $aggregation->toArray();
     }
 
 }
