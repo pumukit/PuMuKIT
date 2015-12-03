@@ -105,4 +105,30 @@ class UserClearanceTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($userClearance->removeClearance(Clearance::UPLOAD_WITHOUT_WIZARD));
     }
 
+    public function testIsScope()
+    {
+        $name = 'User Test Clearance';
+        $clearances = array(
+                            Clearance::ACCESS_DASHBOARD,
+                            Clearance::ACCESS_MULTIMEDIA_SERIES,
+                            Clearance::ACCESS_LIVE_CHANNELS,
+                            Clearance::ACCESS_LIVE_EVENTS,
+                            Clearance::ACCESS_INGESTOR
+                            );
+        $system = true;
+        $default = true;
+        $scope = UserClearance::SCOPE_GLOBAL;
+
+        $userClearance = new UserClearance();
+
+        $userClearance->setName($name);
+        $userClearance->setClearances($clearances);
+        $userClearance->setSystem($system);
+        $userClearance->setDefault($default);
+        $userClearance->setScope($scope);
+
+        $this->assertTrue($userClearance->isGlobal());
+        $this->assertFalse($userClearance->isPersonal());
+        $this->assertFalse($userClearance->isNone());
+    }
 }
