@@ -2,6 +2,8 @@
 
 namespace Pumukit\ExampleDataBundle\Command;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -19,6 +21,7 @@ use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\StatsBundle\Document\ViewsLog;
 
 
 class PumukitInitExampleDataCommand extends ContainerAwareCommand
@@ -313,6 +316,8 @@ EOT
                         $this->load_pic_multimediaobject($multimediaObject, 'audio');
                   }
 
+                  $this->load_viewsLog($this->dm);
+
                   if(!$input->getOption('reusezip')){
                         unlink($newFile);
                   }
@@ -452,6 +457,49 @@ EOT
             $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
             $dm->persist($multimediaObject);
             $dm->flush();
+      }
+    
+      private function load_viewsLog(DocumentManager $dm) {
+            $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+            $viewsLogRepo = $dm->getRepository('PumukitStatsBundle:ViewsLog');
+            $dm->getDocumentCollection('PumukitStatsBundle:ViewsLog')->remove(array());
+
+            $allMmobjs = $mmobjRepo->findAll();
+            $useragents = array( 'Mozilla/5.0 PuMuKIT/2.2 (UserAgent Example Data.) Gecko/20100101 Firefox/40.1',
+                                 'Mozilla/5.0 PuMuKIT/2.2 (This is not the user agent you are looking for...) Gecko/20100101 Firefox/40.1',
+                                 'Mozilla/5.0 PuMuKIT/2.2 (The answer to everything: 42) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36',
+                                 'Mozilla/5.0 PuMuKIT/2.2 (Internet Explorer didn\'t survive) (Windows NT 6.1; WOW64; Trident/7.0; AS; rv:11.0) like Gecko'
+            );
+            $clientips = array( '123.213.231.132',
+                                '0.0.0.1',
+                                '12.12.12.21',
+                                '74.125.224.72',
+            );
+            
+            $initTime = (new \DateTime('2013-03-03'))->getTimestamp();
+            $endTime = (new \DateTime('2015-03-03'))->getTimestamp();
+            $date = new \DateTime();
+
+            foreach($allMmobjs as $mmobj) {
+                  for($i = rand(1,1000); $i > 0; $i--) {
+                        $uri = 'http://localhost:8080/video/'.$mmobj->getId();
+                        $referer = 'http://localhost:8080/series/'.$mmobj->getSeries()->getId();
+                        $log = new ViewsLog($uri,
+                                            array_rand($clientips),
+                                            array_rand($useragents),
+                                            $referer,
+                                            $mmobj->getId(),
+                                            $mmobj->getSeries()->getId(),
+                                            null);
+                        $randTimestamp = rand($initTime, $endTime);
+                        $date->setTimestamp($randTimestamp);
+                        $log->setDate($date);
+                        $dm->persist($log);
+                        $mmobj->incNumview();
+                        $dm->persist($mmobj);
+                  }
+                  $dm->flush();
+            } 
       }
 
       private function download($src, $target, $output)
