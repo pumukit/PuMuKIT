@@ -56,9 +56,16 @@ class ViewsLog
     /**
      * @var string $multimediaObject
      *
-     * @MongoDB\String
+     * @MongoDB\ObjectId
      */
     private $multimediaObject;
+
+    /**
+     * @var string $series
+     *
+     * @MongoDB\ObjectId
+     */
+    private $series;
 
     /**
      * @var string $track
@@ -67,7 +74,7 @@ class ViewsLog
      */
     private $track;
 
-    public function __construct($url, $ip, $userAgent, $referer, $multimediaObject, $track)
+    public function __construct($url, $ip, $userAgent, $referer, $multimediaObject, $series, $track)
     {
         $this->date = new \DateTime("now");
         $this->url = $url;        
@@ -75,6 +82,7 @@ class ViewsLog
         $this->userAgent = $userAgent;
         $this->referer = $referer;
         $this->multimediaObject = $multimediaObject;
+        $this->series = $series;
         $this->track = $track;
     }
 
@@ -213,11 +221,33 @@ class ViewsLog
     /**
      * Get multimediaObject
      *
-     * @return string $multimediaObject
+     * @return int $multimediaObject
      */
     public function getMultimediaObject()
     {
         return $this->multimediaObject;
+    }
+
+    /**
+     * Set series
+     *
+     * @param int $series
+     * @return self
+     */
+    public function setSeries($series)
+    {
+        $this->series = $series;
+        return $this;
+    }
+
+    /**
+     * Get series
+     *
+     * @return int $series
+     */
+    public function getSeries()
+    {
+        return $this->series;
     }
 
     /**
