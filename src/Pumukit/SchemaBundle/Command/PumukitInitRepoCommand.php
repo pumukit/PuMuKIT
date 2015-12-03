@@ -11,6 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\UserClearance;
+use Pumukit\SchemaBundle\Document\Clearance;
 
 class PumukitInitRepoCommand extends ContainerAwareCommand
 {
@@ -22,13 +24,14 @@ class PumukitInitRepoCommand extends ContainerAwareCommand
     private $tagsPath = "../Resources/data/tags/";
     private $broadcastsPath = "../Resources/data/broadcasts/";
     private $rolesPath = "../Resources/data/roles/";
+    private $userClearancesPath = "../Resources/data/userclearances/";
 
     protected function configure()
     {
         $this
             ->setName('pumukit:init:repo')
             ->setDescription('Load Pumukit data fixtures to your database')
-            ->addArgument('repo', InputArgument::REQUIRED, 'Select the repo to init: tag, broadcast, role, all')
+            ->addArgument('repo', InputArgument::REQUIRED, 'Select the repo to init: tag, broadcast, role, userclearances, all')
             ->addArgument('file', InputArgument::OPTIONAL, 'Input CSV path')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
             ->setHelp(<<<EOT
@@ -65,6 +68,10 @@ EOT
                     break;
                 case "role":
                     $errorExecuting = $this->executeRoles($input, $output);
+                    if (-1 === $errorExecuting) return -1;
+                    break;
+                case "userclearance":
+                    $errorExecuting = $this->executeUserClearances($input, $output);
                     if (-1 === $errorExecuting) return -1;
                     break;
             }
@@ -149,6 +156,27 @@ EOT
         return 0;
     }
 
+    protected function executeUserClearances(InputInterface $input, OutputInterface $output)
+    {
+        $finder = new Finder();
+        $finder->files()->in(__DIR__.'/'.$this->userClearancesPath);
+        $file = $input->getArgument('file');
+        if ((0 == strcmp($file, "")) && (!$finder)) {
+            $output->writeln("<error>UserClearances: There's no data to initialize</error>");
+
+            return -1;
+        }
+        $this->removeUserClearances();
+        foreach ($finder as $userClearancesFile) {
+            $this->createFromFile($userClearancesFile, null, $output, 'userclearance');
+        }
+        if ($file) {
+            $this->createFromFile($file, null, $output, 'userclearance');
+        }
+
+        return 0;
+    }
+
     protected function removeTags()
     {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')->remove(array());
@@ -162,6 +190,11 @@ EOT
     protected function removeRoles()
     {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Role')->remove(array());
+    }
+
+    protected function removeUserClearances()
+    {
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:UserClearance')->remove(array());
     }
 
     protected function createRoot()
@@ -179,6 +212,12 @@ EOT
 
             return -1;
         }
+        $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
+        $ending = substr($fileExtension, -1);
+        if (('~' === $ending) || ('#' === $ending)) {
+            $output->writeln("<warning>".$repoName.": Ignoring file ".$file."</warning>");
+            return -1;
+        }
 
         $idCodMapping = array();
 
@@ -188,7 +227,8 @@ EOT
                 $number = count($currentRow);
                 if ((('tag' === $repoName) && ($number == 6 || $number == 8)) || 
                     (('broadcast' === $repoName) && ($number == 5 || $number == 8)) || 
-                    (('role' === $repoName) && ($number == 7 || $number == 10))){
+                    (('role' === $repoName) && ($number == 7 || $number == 10)) ||
+                    (('userclearance' === $repoName) && ($number == 6))){
                     //Check header rows
                     if (trim($currentRow[0]) == "id") {
                         continue;
@@ -216,6 +256,11 @@ EOT
                                 $role = $this->createRoleFromCsvArray($currentRow);
                                 $idCodMapping[$currentRow[0]] = $role;
                                 $output->writeln("Role persisted - new id: ".$role->getId()." code: ".$role->getCod());
+                                break;
+                            case 'userclearance':
+                                $userClearance = $this->createUserClearanceFromCsvArray($currentRow);
+                                $idCodMapping[$currentRow[0]] = $userClearance;
+                                $output->writeln("UserClearance persisted - new id: ".$userClearance->getId()." name: ".$userClearance->getName());
                                 break;
                         }
                     } catch (\Exception $e) {
@@ -336,5 +381,45 @@ EOT
         $this->dm->persist($role);
 
         return $role;
+    }
+
+    /**
+     * Create UserClearance from CSV array
+     */
+    private function createUserClearanceFromCsvArray($csv_array)
+    {
+        $userClearance = new UserClearance();
+
+        $userClearance->setName($csv_array[1]);
+        $userClearance->setSystem($csv_array[2]);
+        $userClearance->setDefault($csv_array[3]);
+        if (($csv_array[4] === UserClearance::SCOPE_GLOBAL) ||
+            ($csv_array[4] === UserClearance::SCOPE_PERSONAL) ||
+            ($csv_array[4] === UserClearance::SCOPE_NONE)) {
+            $userClearance->setScope($csv_array[4]);
+        }
+        foreach (array_filter(preg_split('/[,\s]+/', $csv_array[5])) as $clearance) {
+            if ($clearance === 'none') {
+                break;
+            } elseif ($clearance === 'all') {
+                $userClearance = $this->addAllClearances($userClearance);
+                break;
+            } elseif (array_key_exists($clearance, Clearance::$clearanceDescription)) {
+                $userClearance->addClearance($clearance);
+            }
+        }
+
+        $this->dm->persist($userClearance);
+
+        return $userClearance;
+    }
+
+    private function addAllClearances(UserClearance $userClearance)
+    {
+        foreach (Clearance::$clearanceDescription as $key => $value) {
+            $userClearance->addClearance($key);
+        }
+
+        return $userClearance;
     }
 }
