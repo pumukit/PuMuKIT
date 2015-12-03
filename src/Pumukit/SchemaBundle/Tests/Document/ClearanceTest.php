@@ -19,11 +19,14 @@ class ClearanceTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(array_key_exists(Clearance::ACCESS_SERIES_TYPES, Clearance::$clearanceDescription));
         $this->assertTrue(array_key_exists(Clearance::ACCESS_ADMIN_USERS, Clearance::$clearanceDescription));
         $this->assertTrue(array_key_exists(Clearance::ACCESS_ROLES, Clearance::$clearanceDescription));
-        $this->assertTrue(array_key_exists(Clearance::ACCESS_USER_ACCESS_LEVEL, Clearance::$clearanceDescription));
+        $this->assertTrue(array_key_exists(Clearance::ACCESS_USER_CLEARANCE_LEVEL, Clearance::$clearanceDescription));
         $this->assertTrue(array_key_exists(Clearance::ACCESS_INGESTOR, Clearance::$clearanceDescription));
-        $this->assertTrue(array_key_exists(Clearance::CHANGE_MULTIMEDIA_STATUS, Clearance::$clearanceDescription));
+        $this->assertTrue(array_key_exists(Clearance::CHANGE_MMOBJECT_STATUS, Clearance::$clearanceDescription));
+        $this->assertTrue(array_key_exists(Clearance::CHANGE_MMOBJECT_PUBCHANNEL, Clearance::$clearanceDescription));
         $this->assertTrue(array_key_exists(Clearance::ACCESS_PUBLICATION_TAB, Clearance::$clearanceDescription));
-        $this->assertTrue(array_key_exists(Clearance::UPLOAD_WITHOUT_WIZARD, Clearance::$clearanceDescription));
+        $this->assertTrue(array_key_exists(Clearance::ACCESS_WIZARD_UPLOAD, Clearance::$clearanceDescription));
+        $this->assertTrue(array_key_exists(Clearance::ACCESS_ADVANCED_UPLOAD, Clearance::$clearanceDescription));
+        $this->assertTrue(array_key_exists(Clearance::ACCESS_API, Clearance::$clearanceDescription));
 
         $accessDashboard = "Access Dashboard";
         $accessMultimediaSeries = "Access Multimedia Series";
@@ -36,11 +39,14 @@ class ClearanceTest extends \PHPUnit_Framework_TestCase
         $accessSeriesTypes = "Access Series Types";
         $accessAdminUsers = "Access Admin Users";
         $accessRoles = "Access Roles";
-        $accessUserAccessLevel = "Access Users Access Level";
+        $accessUserClearanceLevel = "Access Users Clearance Level";
         $accessIngestor = "Access Ingestor";
-        $changeMultimediaStatus = "Change Multimedia Status";
+        $changeMmObjectStatus = "Change Multimedia Object Status";
+        $changeMmObjectPubChannel = "Change Multimedia Object Publication Channel";
         $accessPublicationTab = "Access Publication Tab";
-        $uploadWithoutWizard = "Upload Without Wizard";
+        $accessWizardUpload = "Access Wizard Upload";
+        $accessAdvancedUpload = "Access Advanced Upload";
+        $accessApi = "Access API";
 
         $this->assertEquals($accessDashboard, Clearance::$clearanceDescription[Clearance::ACCESS_DASHBOARD]);
         $this->assertEquals($accessMultimediaSeries, Clearance::$clearanceDescription[Clearance::ACCESS_MULTIMEDIA_SERIES]);
@@ -53,10 +59,13 @@ class ClearanceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($accessSeriesTypes, Clearance::$clearanceDescription[Clearance::ACCESS_SERIES_TYPES]);
         $this->assertEquals($accessAdminUsers, Clearance::$clearanceDescription[Clearance::ACCESS_ADMIN_USERS]);
         $this->assertEquals($accessRoles, Clearance::$clearanceDescription[Clearance::ACCESS_ROLES]);
-        $this->assertEquals($accessUserAccessLevel, Clearance::$clearanceDescription[Clearance::ACCESS_USER_ACCESS_LEVEL]);
+        $this->assertEquals($accessUserClearanceLevel, Clearance::$clearanceDescription[Clearance::ACCESS_USER_CLEARANCE_LEVEL]);
         $this->assertEquals($accessIngestor, Clearance::$clearanceDescription[Clearance::ACCESS_INGESTOR]);
-        $this->assertEquals($changeMultimediaStatus, Clearance::$clearanceDescription[Clearance::CHANGE_MULTIMEDIA_STATUS]);
+        $this->assertEquals($changeMmObjectStatus, Clearance::$clearanceDescription[Clearance::CHANGE_MMOBJECT_STATUS]);
+        $this->assertEquals($changeMmObjectPubChannel, Clearance::$clearanceDescription[Clearance::CHANGE_MMOBJECT_PUBCHANNEL]);
         $this->assertEquals($accessPublicationTab, Clearance::$clearanceDescription[Clearance::ACCESS_PUBLICATION_TAB]);
-        $this->assertEquals($uploadWithoutWizard, Clearance::$clearanceDescription[Clearance::UPLOAD_WITHOUT_WIZARD]);
+        $this->assertEquals($accessWizardUpload, Clearance::$clearanceDescription[Clearance::ACCESS_WIZARD_UPLOAD]);
+        $this->assertEquals($accessAdvancedUpload, Clearance::$clearanceDescription[Clearance::ACCESS_ADVANCED_UPLOAD]);
+        $this->assertEquals($accessApi, Clearance::$clearanceDescription[Clearance::ACCESS_API]);
     }
 }

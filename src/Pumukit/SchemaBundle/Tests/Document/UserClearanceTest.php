@@ -102,7 +102,7 @@ class UserClearanceTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($userClearance->removeClearance(Clearance::ACCESS_DASHBOARD));
         $this->assertFalse($userClearance->containsClearance(Clearance::ACCESS_DASHBOARD));
 
-        $this->assertFalse($userClearance->removeClearance(Clearance::UPLOAD_WITHOUT_WIZARD));
+        $this->assertFalse($userClearance->removeClearance(Clearance::ACCESS_WIZARD_UPLOAD));
     }
 
     public function testIsScope()

@@ -14,12 +14,15 @@ class Clearance
     const ACCESS_BROADCASTS = 'ACCESS_BROADCASTS';
     const ACCESS_SERIES_TYPES = 'ACCESS_SERIES_TYPES';
     const ACCESS_ADMIN_USERS = 'ACCESS_ADMIN_USERS';
+    const ACCESS_USER_CLEARANCE_LEVEL = 'ACCESS_USER_CLEARANCE_LEVEL';
     const ACCESS_ROLES = 'ACCESS_ROLES';
-    const ACCESS_USER_ACCESS_LEVEL = 'ACCESS_USER_ACCESS_LEVEL';
     const ACCESS_INGESTOR = 'ACCESS_INGESTOR';
-    const CHANGE_MULTIMEDIA_STATUS = 'CHANGE_MULTIMEDIA_STATUS';
+    const CHANGE_MMOBJECT_STATUS = 'CHANGE_MMOBJECT_STATUS';
+    const CHANGE_MMOBJECT_PUBCHANNEL = 'CHANGE_MMOBJECT_PUBCHANNEL';
     const ACCESS_PUBLICATION_TAB = 'ACCESS_PUBLICATION_TAB';
-    const UPLOAD_WITHOUT_WIZARD = 'UPLOAD_WITHOUT_WIZARD';
+    const ACCESS_ADVANCED_UPLOAD = 'ACCESS_ADVANCED_UPLOAD';
+    const ACCESS_WIZARD_UPLOAD = 'ACCESS_WIZARD_UPLOAD';
+    const ACCESS_API = 'ACCESS_API';
 
     public static $clearanceDescription = array(
                                                 Clearance::ACCESS_DASHBOARD => "Access Dashboard",
@@ -32,11 +35,14 @@ class Clearance
                                                 Clearance::ACCESS_BROADCASTS => "Access Broadcasts",
                                                 Clearance::ACCESS_SERIES_TYPES => "Access Series Types",
                                                 Clearance::ACCESS_ADMIN_USERS => "Access Admin Users",
+                                                Clearance::ACCESS_USER_CLEARANCE_LEVEL => "Access Users Clearance Level",
                                                 Clearance::ACCESS_ROLES => "Access Roles",
-                                                Clearance::ACCESS_USER_ACCESS_LEVEL => "Access Users Access Level",
                                                 Clearance::ACCESS_INGESTOR => "Access Ingestor",
-                                                Clearance::CHANGE_MULTIMEDIA_STATUS => "Change Multimedia Status",
+                                                Clearance::CHANGE_MMOBJECT_STATUS => "Change Multimedia Object Status",
+                                                Clearance::CHANGE_MMOBJECT_PUBCHANNEL => "Change Multimedia Object Publication Channel",
                                                 Clearance::ACCESS_PUBLICATION_TAB => "Access Publication Tab",
-                                                Clearance::UPLOAD_WITHOUT_WIZARD => "Upload Without Wizard"
+                                                Clearance::ACCESS_ADVANCED_UPLOAD => "Access Advanced Upload",
+                                                Clearance::ACCESS_WIZARD_UPLOAD => "Access Wizard Upload",
+                                                Clearance::ACCESS_API => "Access API"
                                                 );
 }
