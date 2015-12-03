@@ -5,9 +5,8 @@
 </p>
 <div class="pumukit_mmobjs pumukit_series">
   {% for oneseries in series %}
-    {% set num_mmobj = oneseries|count_multimedia_objects %}
-    {% if num_mmobj != 0 %}
-      {% include 'PumukitCmarWebTVBundle:MediaLibrary:series.html.twig' with {'series': oneseries} %}
+    {% if mmobj_count[oneseries.getId()] is defined %}
+      {% include 'PumukitCmarWebTVBundle:MediaLibrary:series.html.twig' with {'series': oneseries, 'count': mmobj_count[oneseries.getId()]} %}
     {% endif %}
   {% endfor %}
 </div>
