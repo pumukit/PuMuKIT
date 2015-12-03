@@ -15,6 +15,7 @@ class StatsService
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->repoSeries = $this->dm->getRepository('PumukitSchemaBundle:Series');
     }
 
 
@@ -106,4 +107,43 @@ class StatsService
 
         return $mostViewed;        
     }
+
+
+    public function getSeriesMostViewedByRange(\DateTime $fromDate = null, \DateTime $toDate = null, $limit = 10, array $criteria = array(), $sort = -1)
+    {
+        $ids = array();
+        if(!$fromDate) {
+            $fromDate = new \DateTime();
+            $fromDate->setTime(0,0,0);
+        }
+        if(!$toDate) {
+            $toDate = new \DateTime();
+        }
+
+        $fromMongoDate = new \MongoDate($fromDate->format('U'), $fromDate->format('u'));
+        $toMongoDate = new \MongoDate($toDate->format('U'), $toDate->format('u'));
+
+        $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
+
+        $pipeline = array(
+            array('$match' => array('date' => array('$gte' => $fromMongoDate, '$lte' => $toMongoDate))),
+            array('$group' => array('_id' => '$series', 'numView' => array('$sum' => 1))),
+            array('$sort' => array('numView' => $sort)),
+            array('$limit' => $limit ), //Get more elements due to tags post-filter.
+        );
+        $aggregation = $viewsLogColl->aggregate($pipeline);
+        $mostViewed = array();
+        foreach($aggregation as $element) {
+            $ids[] =  $element['_id'];
+            $series = $this->repoSeries->find($element['_id']);
+            if ($series) {
+                $mostViewed[] = array('series' => $series,
+                                      'num_viewed' => $element['numView'],
+                );
+            }
+        }
+
+        return $mostViewed;        
+    }
+
 }

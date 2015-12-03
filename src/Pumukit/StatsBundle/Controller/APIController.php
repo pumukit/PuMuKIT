@@ -105,7 +105,7 @@ class APIController extends Controller
             $toDate = null;
         }
 
-        $mmobjs = $viewsService->getMmobjsMostViewedByRange($fromDate, $toDate, $limit, $criteria, $sort);
+        $series = $viewsService->getSeriesMostViewedByRange($fromDate, $toDate, $limit, $criteria, $sort);
 
         $views = array(
             'limit' => $limit,
@@ -113,7 +113,7 @@ class APIController extends Controller
             'sort'  => $sort,
             'fromDate' => $fromDate,
             'toDate' => $toDate,
-            'mmobjs' => $mmobjs
+            'series' => $series
         );
 
         $data = $serializer->serialize($views, $request->getRequestFormat());
