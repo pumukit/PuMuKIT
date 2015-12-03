@@ -93,11 +93,15 @@ EOT
                               $zip->close();
                         }
                   }
+                  $progress = new \Symfony\Component\Console\Helper\ProgressBar($output, 13);
+                  $output->writeln("\nCreating resources...");
+                  $progress->setFormat('verbose');
+                  $progress->start();
 
                   // Roles
                   $actorRole = $this->getRoleWithCode('actor');
                   $presenterRole = $this->getRoleWithCode('presenter');
-
+                  $progress->advance();
                   //Series Access grid
                   if(!$this->checkSeriesExists("Access grid")){
                         $series = $factoryService->createSeries();
@@ -112,6 +116,7 @@ EOT
                         $this->load_people_multimediaobject($multimediaObject, 'Will', $actorRole);
                         $this->load_pic_multimediaobject($multimediaObject, '17');
                   }
+                  $progress->advance();
 
                   //Series Uvigo
                   if(!$this->checkSeriesExists("Uvigo")){
@@ -126,6 +131,7 @@ EOT
                         $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEREV","PUDEPD3","PUCHWEBTV","DIRECTRIZ","Dhealth"));
                         $this->load_pic_multimediaobject($multimediaObject, '19');
                   }
+                  $progress->advance();
 
                   //Series Robots
                   if(!$this->checkSeriesExists("Robots")){
@@ -165,6 +171,7 @@ EOT
                         $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD3","DIRECTRIZ","Dscience","Dhumanities"));
                         $this->load_pic_multimediaobject($multimediaObject, '20');
                   }
+                  $progress->advance();
 
                   //Series Polimedia
                   if(!$this->checkSeriesExists("Polimedia")){
@@ -179,6 +186,7 @@ EOT
                         $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD3","PUBDECISIONS","Dsocial","Dhumanities"));
                         $this->load_pic_multimediaobject($multimediaObject, '38');
                   }
+                  $progress->advance();
 
                   //Serie Energia de materiales y medio ambiente
                   if(!$this->checkSeriesExists("Energy materials and environment")){
@@ -194,6 +202,7 @@ EOT
                         $this->load_people_multimediaobject($multimediaObject, 'Marcos', $presenterRole);
                         $this->load_pic_multimediaobject($multimediaObject, '28');
                   }
+                  $progress->advance();
 
                   //Serie Marine sciences
                   if(!$this->checkSeriesExists("Marine sciences")){
@@ -208,6 +217,7 @@ EOT
                         $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEREV","PUDEPD2","PUDEPD3","PUCHWEBTV","Dscience","Dsocial"));
                         $this->load_pic_multimediaobject($multimediaObject, '29');
                   }
+                  $progress->advance();
 
                   //Serie NOS register
                   if(!$this->checkSeriesExists("NOS register")){
@@ -228,6 +238,7 @@ EOT
                         $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUCHWEBTV","Dscience","Dtechnical"));
                         $this->load_pic_multimediaobject($multimediaObject, '30');
                   }
+                  $progress->advance();
 
                   //Serie Zigzag
                   if(!$this->checkSeriesExists("ZigZag")){
@@ -242,6 +253,7 @@ EOT
                         $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD1","PUBCHANNELS","DIRECTRIZ","Dsocial","Dhealth"));
                         $this->load_pic_multimediaobject($multimediaObject, '40');
                   }
+                  $progress->advance();
 
                   //Serie Quijote
                   if(!$this->checkSeriesExists("Quijote")){
@@ -263,6 +275,7 @@ EOT
                         $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEPD2","PUCHWEBTV","Dsocial","Dtechnical"));
                         $this->load_pic_multimediaobject($multimediaObject, '34');
                   }
+                  $progress->advance();
 
                   //Serie autonomic
                   if(!$this->checkSeriesExists("Financing economic autonomy statutes")){
@@ -277,6 +290,7 @@ EOT
                         $this->load_tags_multimediaobject($multimediaObject, array("PUDENEW","PUDEREV","PUDEPD3","PUCHWEBTV","Dscience","Dhumanities"));
                         $this->load_pic_multimediaobject($multimediaObject, '35');
                   }
+                  $progress->advance();
 
                   //Serie HD
                   if(!$this->checkSeriesExists("HD")){
@@ -293,6 +307,7 @@ EOT
                         $this->load_people_multimediaobject($multimediaObject, 'Carlos', $actorRole);
                         $this->load_pic_multimediaobject($multimediaObject, '36');
                   }
+                  $progress->advance();
 
                   //Serie AUDIOS
                   if(!$this->checkSeriesExists("Audios")){
@@ -315,8 +330,9 @@ EOT
                         $this->load_people_multimediaobject($multimediaObject, 'Sara', $presenterRole);
                         $this->load_pic_multimediaobject($multimediaObject, 'audio');
                   }
-
-                  $this->load_viewsLog($this->dm);
+                  $progress->advance();
+                  $progress->finish();
+                  $this->load_viewsLog($this->dm, $output);
 
                   if(!$input->getOption('reusezip')){
                         unlink($newFile);
@@ -459,7 +475,7 @@ EOT
             $dm->flush();
       }
     
-      private function load_viewsLog(DocumentManager $dm) {
+      private function load_viewsLog(DocumentManager $dm, $output) {
             $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
             $viewsLogRepo = $dm->getRepository('PumukitStatsBundle:ViewsLog');
             $dm->getDocumentCollection('PumukitStatsBundle:ViewsLog')->remove(array());
@@ -480,13 +496,22 @@ EOT
             $endTime = (new \DateTime('2015-03-03'))->getTimestamp();
             $date = new \DateTime();
 
-            foreach($allMmobjs as $mmobj) {
+            $clientip = $clientips[array_rand($clientips)];
+            $useragent = $useragents[array_rand($useragents)];
+
+            $progress = new \Symfony\Component\Console\Helper\ProgressBar($output, count($allMmobjs));
+            $output->writeln("\nCreating test views on ViewsLog...");
+            $progress->setFormat('verbose');
+            $progress->start();
+
+            foreach($allMmobjs as $id=>$mmobj) {
+                  $progress->setProgress($id);
                   for($i = rand(1,1000); $i > 0; $i--) {
                         $uri = 'http://localhost:8080/video/'.$mmobj->getId();
                         $referer = 'http://localhost:8080/series/'.$mmobj->getSeries()->getId();
                         $log = new ViewsLog($uri,
-                                            array_rand($clientips),
-                                            array_rand($useragents),
+                                            $clientip,
+                                            $useragent,
                                             $referer,
                                             $mmobj->getId(),
                                             $mmobj->getSeries()->getId(),
@@ -498,8 +523,10 @@ EOT
                         $mmobj->incNumview();
                         $dm->persist($mmobj);
                   }
-                  $dm->flush();
-            } 
+            }
+            $progress->setProgress(count($allMmobjs));
+            $dm->flush();
+            $progress->finish();
       }
 
       private function download($src, $target, $output)
