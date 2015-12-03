@@ -41,6 +41,7 @@ class MultimediaObjectInSeriesTest extends WebTestCase
         $broadcast = $this->createBroadcast();
 
         $series = $this->factoryService->createSeries();
+
         $this->factoryService->createMultimediaObject($series);
 
         $coll_mms = $series->getMultimediaObjects();

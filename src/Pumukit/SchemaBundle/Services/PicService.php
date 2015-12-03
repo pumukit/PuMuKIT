@@ -12,15 +12,17 @@ class PicService
     private $defaultVideoPic;
     private $defaultAudioHDPic;
     private $defaultAudioSDPic;
+    private $webDir;
 
     /**
      * @var RequestContext $context
      */
     protected $context;
 
-    public function __construct(RequestContext $context, $defaultSeriesPic='', $defaultVideoPic='', $defaultAudioHDPic='', $defaultAudioSDPic='')
+    public function __construct(RequestContext $context, $webDir='', $defaultSeriesPic='', $defaultVideoPic='', $defaultAudioHDPic='', $defaultAudioSDPic='')
     {
         $this->context = $context;
+        $this->webDir = $webDir;
         $this->defaultSeriesPic = $defaultSeriesPic;
         $this->defaultVideoPic = $defaultVideoPic;
         $this->defaultAudioHDPic = $defaultAudioHDPic;
@@ -49,8 +51,12 @@ class PicService
             return $this->getDefaultUrlPicForObject($object, $absolute, $hd);
         } else {
             foreach ($pics as $pic) {
-                if ($picUrl = $pic->getUrl()) break;
+                if (($picUrl = $pic->getUrl()) && !$pic->getHide() && !$pic->containsTag('banner')) break;
             }
+        }
+
+        if (!$picUrl) {
+            return $this->getDefaultUrlPicForObject($object, $absolute, $hd);
         }
 
         if ($absolute) {
@@ -157,5 +163,115 @@ class PicService
         }
 
         return $picUrl;
+    }
+
+    /**
+     * Get first path pic
+     *
+     * Get the first path pic of a document,
+     * if none is found, returns the default
+     * path pic for a given resource checking if
+     * it is Series, MultimediaObject of type
+     * video or audio
+     *
+     * @param Series|MultimediaObject $object   Object to get the path (using $object->getPics())
+     * @param boolean                 $hd       Returns pic in HD
+     *
+     * @return string
+     */
+    public function getFirstPathPic($object, $hd=true)
+    {
+        $pics = $object->getPics();
+        if (0 === count($pics)) {
+            return $this->getDefaultPathPicForObject($object, $hd);
+        } else {
+            foreach ($pics as $pic) {
+                if (($picPath = $pic->getPath()) && !$pic->getHide() && !$pic->containsTag('banner')) break;
+            }
+        }
+
+        if (!$picPath) {
+            return $this->getDefaultPathPicForObject($object, $hd);
+        }
+
+        return $picPath;
+    }
+
+    /**
+     * Get default path pic
+     *
+     * Get the default path pic
+     * for a given resource checking if
+     * it is Series, MultimediaObject of type
+     * video or audio
+     *
+     * @param Series|MultimediaObject $object   Object to get the path (using $object->getPics())
+     * @param boolean                 $hd       Returns pic in HD
+     *
+     * @return string
+     */
+    public function getDefaultPathPicForObject($object, $hd=true)
+    {
+        if ($object instanceof Series) {
+            return $this->getDefaultSeriesPathPic();
+        } elseif ($object instanceof MultimediaObject) {
+            return $this->getDefaultMultimediaObjectPathPic($object->isOnlyAudio(), $hd);
+        }
+
+        return $this->getDefaultMultimediaObjectPathPic(false, $hd);
+    }
+
+    /**
+     * Get default series path pic
+     *
+     * @returns string
+     */
+    public function getDefaultSeriesPathPic()
+    {
+        return $this->getAbsolutePathPic($this->defaultSeriesPic);
+    }
+
+    /**
+     * Get default multimedia object path pic
+     *
+     * Returns the default path pic
+     * according to hd parameter and in case of audio
+     *
+     * @param boolean $audio    Video is only audio
+     * @param boolean $hd       Returns pic in HD
+     * @returns string
+     */
+    public function getDefaultMultimediaObjectPathPic($audio=false, $hd=true)
+    {
+        if ($audio) {
+            if ($hd) {
+                $defaultPic = $this->defaultAudioHDPic;
+            } else {
+                $defaultPic = $this->defaultAudioSDPic;
+            }
+        } else {
+            $defaultPic = $this->defaultVideoPic;
+        }
+
+        return $this->getAbsolutePathPic($defaultPic);
+    }
+
+    /**
+     * Get absolute path of a given pic path
+     *
+     * @param string $picPath
+     * @return string
+     */
+    private function getAbsolutePathPic($picPath='')
+    {
+        if ($picPath) {
+            if ("/" == $picPath[0]) {
+                return $this->webDir.$picPath;
+            } else {
+                return $this->webDir.'/'.$picPath;
+            }
+        }
+
+        return $picPath;
     }
 }

@@ -8,7 +8,7 @@
   </h5>
   {% endif %}
   {% if series_precinct %}
-    {% if series_precinct.getCod() != "PLACE0001PRECINCT01" %}
+    {% if series_precinct.getCod() != "PLACE0001PRECINCT001" %}
     <h3 class="place">
       {{ precinct_complete_name(series_precinct, app.request.getLocale()) }}
     </h3>

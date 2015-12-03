@@ -106,7 +106,9 @@ class MediaLibraryController extends Controller
         $seriesRepo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:Series');
         $series = $seriesRepo->findBy(array(), array('public_date' => -1));
 
-        return array('title' => $title, 'series' => $series);
+        $mmobjCount = $this->countMmobjInSeries();
+
+        return array('title' => $title, 'series' => $series, 'mmobj_count' => $mmobjCount);
     }
 
 
@@ -130,7 +132,9 @@ class MediaLibraryController extends Controller
 
         $series = $dm->getRepository('PumukitSchemaBundle:Series')->findWithTag($tag, $sort);
 
-        return array('title' => $title, 'series' => $series, 'tag_cod' => $tagName);
+        $mmobjCount = $this->countMmobjInSeries();
+
+        return array('title' => $title, 'series' => $series, 'tag_cod' => $tagName, 'mmobj_count' => $mmobjCount);
     }
 
     private function actionOpencast($title, $tagName, $routeName, array $sort=array('public_date' => -1))

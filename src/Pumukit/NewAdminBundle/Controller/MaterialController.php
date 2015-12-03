@@ -42,7 +42,7 @@ class MaterialController extends Controller
 
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
             try {
-                $multimediaObject = $this->get('pumukitschema.material')->updateMaterialInMultimediaObject($multimediaObject);
+                $multimediaObject = $this->get('pumukitschema.material')->updateMaterialInMultimediaObject($multimediaObject, $material);
             } catch (\Exception $e) {
                 $this->get('session')->getFlashBag()->add('error', $e->getMessage());
             }
@@ -97,8 +97,6 @@ class MaterialController extends Controller
     public function deleteAction(MultimediaObject $multimediaObject, Request $request)
     {
         $multimediaObject = $this->get('pumukitschema.material')->removeMaterialFromMultimediaObject($multimediaObject, $this->getRequest()->get('id'));
-
-        $this->addFlash('success', 'delete');
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_material_list', array('id' => $multimediaObject->getId())));
     }

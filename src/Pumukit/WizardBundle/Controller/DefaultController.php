@@ -116,7 +116,8 @@ class DefaultController extends Controller
      */
     public function uploadAction(Request $request)
     {
-        $trackService = $this->get('pumukitschema.track');
+        $jobService = $this->get('pumukitencoder.job');
+        $inspectionService = $this->get('pumukit.inspection');
 
         $series = null;
         $seriesId = null;
@@ -160,10 +161,10 @@ class DefaultController extends Controller
                     $filetype = $this->getKeyData('filetype', $trackData);
                     if ('file' === $filetype){
                         $selectedPath = $request->get('resource');
-                        $multimediaObject = $trackService->createTrackFromLocalHardDrive($multimediaObject, $request->files->get('resource'), $profile, $priority, $language, $description);
+                        $multimediaObject = $jobService->createTrackFromLocalHardDrive($multimediaObject, $request->files->get('resource'), $profile, $priority, $language, $description);
                     }elseif ('inbox' === $filetype){
                         $selectedPath = $request->get('file');
-                        $multimediaObject = $trackService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description);
+                        $multimediaObject = $jobService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description);
                     }
                     if ($multimediaObject && $pubchannel){
                         foreach($pubchannel as $tagCode => $valueOn){
@@ -177,11 +178,16 @@ class DefaultController extends Controller
                     $finder->files()->in($selectedPath);
                     foreach ($finder as $f){
                         $filePath = $f->getRealpath();
+                        try {
+                            $duration = $inspectionService->getDuration($filePath);
+                        } catch (\Exception $e) {
+                            continue;
+                        }
                         $titleData = $this->getDefaultFieldValuesInData(array(), 'i18n_title', $f->getRelativePathname(), true);
                         $multimediaObject = $this->createMultimediaObject($titleData, $series);
                         if ($multimediaObject){
                             try{
-                                $multimediaObject = $trackService->createTrackFromInboxOnServer($multimediaObject, $filePath, $profile, $priority, $language, $description);
+                                $multimediaObject = $jobService->createTrackFromInboxOnServer($multimediaObject, $filePath, $profile, $priority, $language, $description);
                             }catch(\Exception $e){
                                 // TODO: filter invalid files another way
                                 if (!strpos($e->getMessage(), 'Unknown error')){

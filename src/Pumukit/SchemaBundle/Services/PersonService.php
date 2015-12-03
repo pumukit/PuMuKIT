@@ -15,6 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class PersonService
 {
     private $dm;
+    private $dispatcher;
     private $repoPerson;
     private $repoMmobj;
     private $userService;
@@ -25,12 +26,14 @@ class PersonService
      * Constructor
      *
      * @param DocumentManager $documentManager
+     * @param PersonWithRoleEventDispatcherService $dispatcher
      * @param UserService     $userService
      * @param string          $autoPublisherRoleCode
      */
-    public function __construct(DocumentManager $documentManager, UserService $userService, $autoPublisherRoleCode='owner')
+    public function __construct(DocumentManager $documentManager, PersonWithRoleEventDispatcherService $dispatcher, UserService $userService, $autoPublisherRoleCode='owner')
     {
         $this->dm = $documentManager;
+        $this->dispatcher = $dispatcher;
         $this->userService = $userService;
         $this->autoPublisherRoleCode = $autoPublisherRoleCode;
         $this->repoPerson = $documentManager->getRepository('PumukitSchemaBundle:Person');
@@ -110,8 +113,12 @@ class PersonService
         $person = $this->savePerson($person);
 
         foreach ($this->repoMmobj->findByPersonId($person->getId()) as $mmobj) {
+            $embeddedRoles = $mmobj->getAllEmbeddedRolesByPerson($person);
             foreach ($mmobj->getAllEmbeddedPeopleByPerson($person) as $embeddedPerson) {
                 $embeddedPerson = $this->updateEmbeddedPerson($person, $embeddedPerson);
+                foreach ($embeddedRoles as $embeddedRole) {
+                    $this->dispatcher->dispatchUpdate($mmobj, $embeddedPerson, $embeddedRole);
+                }
             }
             $this->dm->persist($mmobj);
         }
@@ -135,6 +142,9 @@ class PersonService
                 if ($role->getId() === $embeddedRole->getId()) {
                     $embeddedRole = $this->updateEmbeddedRole($role, $embeddedRole);
                     $this->dm->persist($mmobj);
+                    foreach ($embeddedRole->getPeople() as $embeddedPerson) {
+                        $this->dispatcher->dispatchUpdate($mmobj, $embeddedPerson, $embeddedRole);
+                    }
                 }
             }
         }
@@ -191,9 +201,12 @@ class PersonService
             }
             $this->dm->persist($multimediaObject);
             $this->dm->persist($role);
-	    if($flush) {
-                $this->dm->flush();
-	    }		       
+
+            if($flush) {
+              $this->dm->flush();
+            }		       
+
+            $this->dispatcher->dispatchCreate($multimediaObject, $person, $role);
         }
 
         return $multimediaObject;
@@ -272,6 +285,8 @@ class PersonService
             $this->dm->flush();
         }
 
+        $this->dispatcher->dispatchDelete($multimediaObject, $person, $role);
+
         return $multimediaObject;
     }
 
@@ -307,6 +322,7 @@ class PersonService
                     if (!($mmobj->removePersonWithRole($person, $embeddedRole))) {
                         throw new \Expection('There was an error removing person '.$person->getId().' with role '.$role->getCod().' in multimedia object '.$multimediaObject->getId());
                     }
+                    $this->dispatcher->dispatchDelete($mmobj, $person, $embeddedRole);
                 }
             }
             $this->dm->persist($mmobj);
