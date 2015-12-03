@@ -1,30 +1,32 @@
+sudo: false
 language: php
-sudo: required
 
 php:
-  - 5.4
   - 5.5
+  - 5.6
+
 env:
-  - PUMUKIT2_OPENCAST_HOST="http://engage14.campusdomar.es" PUMUKIT2_OPENCAST_USERNAME="" PUMUKIT2_OPENCAST_PASSWORD="" PUMUKIT2_OPENCAST_PLAYER="/paellaengage/ui/cmarwatch.html"
+  - MONGO_VERSION=stable
+
 services:
   - mongodb
-before_script: 
-  - mongo --version
-  - echo "extension = mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-  - echo 'date.timezone = "Europe/Madrid"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-  - export TZ="Europe/Madrid"
-  - /home/travis/.phpenv/versions/5.3.3/bin/composer self-update
-  - sleep 5
-  - if [ -f "~/satis/bin/satis" ]; then ~/satis/bin/satis --no-interaction build ~/packages.json ~/packages; fi
-  - if [ -f "app/config/parameters.yml" ]; then rm app/config/parameters.yml; fi
-  - if [ -d "app/cache" ]; then rm -Rf app/cache/*; fi
-  - if [ -d "app/logs" ]; then rm -Rf app/logs/*; fi
-  - curl -sS https://getcomposer.org/installer | php
-  - mkdir -p build
-  - php composer.phar install --no-interaction
-  - php app/check.php
-  - sudo php app/console doctrine:mongodb:schema:create 
-  - php app/console cache:clear
-  - php app/console pumukit:init:repo all --force
 
-script: sudo php bin/phpunit --log-junit build/unit.xml  --coverage-html build/coverage --coverage-clover build/coverage/coverage.xml -c app
+addons:
+  apt:
+    sources:
+      - mongodb-3.0-precise
+    packages:
+      - mongodb-org-server
+      - mediainfo
+      - libav-tools
+      - libavcodec-extra-53
+
+before_script:
+  - yes '' | pecl -q install -f mongo-${MONGO_VERSION} && echo "extension=mongo.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
+  - composer self-update
+  - php -i
+  - composer install
+
+
+script:
+    - phpunit -c app
