@@ -3,7 +3,7 @@
 namespace Pumukit\SchemaBundle\Tests\Document;
 
 use Pumukit\SchemaBundle\Document\UserClearance;
-use Pumukit\SchemaBundle\Document\Clearance;
+use Pumukit\SchemaBundle\Security\Clearance;
 
 class UserClearanceTest extends \PHPUnit_Framework_TestCase
 {

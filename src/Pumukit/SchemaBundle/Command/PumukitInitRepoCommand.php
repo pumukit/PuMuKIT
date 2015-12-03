@@ -12,7 +12,7 @@ use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\UserClearance;
-use Pumukit\SchemaBundle\Document\Clearance;
+use Pumukit\SchemaBundle\Security\Clearance;
 
 class PumukitInitRepoCommand extends ContainerAwareCommand
 {

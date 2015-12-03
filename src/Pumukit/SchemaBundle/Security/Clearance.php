@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\SchemaBundle\Document;
+namespace Pumukit\SchemaBundle\Security;
 
 class Clearance
 {

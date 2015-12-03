@@ -3,7 +3,7 @@
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Pumukit\SchemaBundle\Document\Clearance;
+use Pumukit\SchemaBundle\Security\Clearance;
 use Pumukit\SchemaBundle\Document\UserClearance;
 
 class UserClearanceRepositoryTest extends WebTestCase

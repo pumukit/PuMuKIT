@@ -1,8 +1,8 @@
 <?php
 
-namespace Pumukit\SchemaBundle\Tests\Document;
+namespace Pumukit\SchemaBundle\Tests\Security;
 
-use Pumukit\SchemaBundle\Document\Clearance;
+use Pumukit\SchemaBundle\Security\Clearance;
 
 class ClearanceTest extends \PHPUnit_Framework_TestCase
 {
