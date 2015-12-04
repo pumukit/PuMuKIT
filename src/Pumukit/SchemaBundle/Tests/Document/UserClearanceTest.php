@@ -131,4 +131,61 @@ class UserClearanceTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($userClearance->isPersonal());
         $this->assertFalse($userClearance->isNone());
     }
+
+    public function testIsDefault()
+    {
+        $name = 'User Test Clearance';
+        $default = true;
+
+        $userClearance = new UserClearance();
+
+        $userClearance->setName($name);
+        $userClearance->setDefault($default);
+
+        $this->assertTrue($userClearance->isDefault());
+
+        $name = 'User Test Clearance 2';
+        $default = false;
+
+        $userClearance2 = new UserClearance();
+
+        $userClearance2->setName($name);
+        $userClearance2->setDefault($default);
+
+        $this->assertFalse($userClearance2->isDefault());
+    }
+
+    public function testIsSystem()
+    {
+        $name = 'User Test Clearance';
+        $system = true;
+
+        $userClearance = new UserClearance();
+
+        $userClearance->setName($name);
+        $userClearance->setSystem($system);
+
+        $this->assertTrue($userClearance->isSystem());
+
+        $name = 'User Test Clearance 2';
+        $system = false;
+
+        $userClearance2 = new UserClearance();
+
+        $userClearance2->setName($name);
+        $userClearance2->setSystem($system);
+
+        $this->assertFalse($userClearance2->isSystem());
+    }
+
+    public function testToString()
+    {
+        $name = 'User Test Clearance';
+
+        $userClearance = new UserClearance();
+
+        $userClearance->setName($name);
+
+        $this->assertEquals($name, $userClearance->__toString());
+    }
 }

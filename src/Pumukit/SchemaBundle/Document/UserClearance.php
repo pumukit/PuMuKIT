@@ -13,6 +13,12 @@ class UserClearance
     const SCOPE_PERSONAL = 'SCOPE_PERSONAL';
     const SCOPE_NONE = 'SCOPE_NONE';
 
+    public static $scopeDescription = array(
+                                            UserClearance::SCOPE_GLOBAL => 'Global Scope',
+                                            UserClearance::SCOPE_PERSONAL => 'Personal Scope',
+                                            UserClearance::SCOPE_NONE => 'No Scope'
+                                            );
+
     /**
      * @var string $id
      *
@@ -263,4 +269,31 @@ class UserClearance
         return self::SCOPE_NONE === $this->getScope();
     }
 
+    /**
+     * To String
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+    /**
+     * Is system
+     *
+     * @return boolean
+     */
+    public function isSystem()
+    {
+        return $this->system;
+    }
+
+    /**
+     * Is default
+     *
+     * @return boolean
+     */
+    public function isDefault()
+    {
+        return $this->default;
+    }
 }
