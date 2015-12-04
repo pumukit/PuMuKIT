@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\APIBundle\Controller;
+namespace Pumukit\SchemaBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -155,6 +155,10 @@ class APIController extends Controller
         $serializer = $this->get('serializer');
 
         $limit = $request->get('limit');
+        if(!$limit || $limit > 100 ) {
+            $limit = 100;
+        }
+
         $criteria = $request->get('criteria')?:array();
         $sort = $request->get('sort')?:array();
 
@@ -182,6 +186,4 @@ class APIController extends Controller
         $data = $serializer->serialize($counts, $request->getRequestFormat());
         return new Response($data);
     }
-
 }
-
