@@ -157,37 +157,15 @@ class StatsService
             $toDate = new \DateTime();
         }
 
-        //
-        $mongoProject = array();
-        $mongoGroupId = array();
-        switch($groupBy) {
-            case 'hour':
-                $mongoProject['hour'] = array('$hour' => '$date');
-                $mongoGroupId['hour'] = '$hour';
-            case 'day':
-                $mongoProject['day'] = array('$dayOfMonth' => '$date');
-                $mongoGroupId['day'] = '$day';
-            default: //If it doesn't exists, it's 'month'
-            case 'month':
-                $mongoProject['month'] = array('$month' => '$date');
-                $mongoGroupId['month'] = '$month';
-            case 'year':
-                $mongoProject['year'] = array('$year' => '$date');
-                $mongoGroupId['year'] = '$year';
-                break;
-        }
-        $mongoProject = array_reverse($mongoProject);
-        $mongoGroupId = array_reverse($mongoGroupId);
-
         $fromMongoDate = new \MongoDate($fromDate->format('U'), $fromDate->format('u'));
         $toMongoDate = new \MongoDate($toDate->format('U'), $toDate->format('u'));
 
         $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
-
+        $mongoProject = $this->getMongoProjectArray($groupBy);
         $pipeline = array(
             array('$match' => array('date' => array('$gte' => $fromMongoDate, '$lte' => $toMongoDate))),
-            array('$project' => $mongoProject),
-            array('$group' => array('_id' => $mongoGroupId,
+            array('$project' => array('date' => array('$concat' => $mongoProject))),
+            array('$group' => array('_id' => '$date',
                                     'numView' => array('$sum' => 1))
             ),
             array('$sort' => array('_id' => $sort)),
@@ -210,25 +188,7 @@ class StatsService
             $toDate = new \DateTime();
         }
 
-        //
-        $mongoProject = array();
-        $mongoGroupId = array();
-        switch($groupBy) {
-            case 'hour':
-                $mongoProject['hour'] = array('$hour' => '$date');
-                $mongoGroupId['hour'] = '$hour';
-            case 'day':
-                $mongoProject['day'] = array('$dayOfMonth' => '$date');
-                $mongoGroupId['day'] = '$day';
-            default: //If it doesn't exists, it's 'month'
-            case 'month':
-                $mongoProject['month'] = array('$month' => '$date');
-                $mongoGroupId['month'] = '$month';
-            case 'year':
-                $mongoProject['year'] = array('$year' => '$date');
-                $mongoGroupId['year'] = '$year';
-                break;
-        }
+        $mongoProject = $this->getMongoProjectArray($groupBy);
 
         $fromMongoDate = new \MongoDate($fromDate->format('U'), $fromDate->format('u'));
         $toMongoDate = new \MongoDate($toDate->format('U'), $toDate->format('u'));
@@ -238,8 +198,8 @@ class StatsService
         $pipeline = array(
             array('$match' => array('multimediaObject' => $mmobjId,
                                     'date' => array('$gte' => $fromMongoDate, '$lte' => $toMongoDate))),
-            array('$project' => $mongoProject),
-            array('$group' => array('_id' => $mongoGroupId,
+            array('$project' => array('date' => array('$concat' => $mongoProject))),
+            array('$group' => array('_id' => '$date',
                                     'numView' => array('$sum' => 1))
             ),
             array('$sort' => array('_id' => $sort)),
@@ -262,25 +222,7 @@ class StatsService
             $toDate = new \DateTime();
         }
 
-        //
-        $mongoProject = array();
-        $mongoGroupId = array();
-        switch($groupBy) {
-            case 'hour':
-                $mongoProject['hour'] = array('$hour' => '$date');
-                $mongoGroupId['hour'] = '$hour';
-            case 'day':
-                $mongoProject['day'] = array('$dayOfMonth' => '$date');
-                $mongoGroupId['day'] = '$day';
-            default: //If it doesn't exists, it's 'month'
-            case 'month':
-                $mongoProject['month'] = array('$month' => '$date');
-                $mongoGroupId['month'] = '$month';
-            case 'year':
-                $mongoProject['year'] = array('$year' => '$date');
-                $mongoGroupId['year'] = '$year';
-                break;
-        }
+        $mongoProject = $this->getMongoProjectArray($groupBy);
 
         $fromMongoDate = new \MongoDate($fromDate->format('U'), $fromDate->format('u'));
         $toMongoDate = new \MongoDate($toDate->format('U'), $toDate->format('u'));
@@ -290,8 +232,8 @@ class StatsService
         $pipeline = array(
             array('$match' => array('series' => $seriesId,
                                     'date' => array('$gte' => $fromMongoDate, '$lte' => $toMongoDate))),
-            array('$project' => $mongoProject),
-            array('$group' => array('_id' => $mongoGroupId,
+            array('$project' => array('date' => array('$concat' => $mongoProject))),
+            array('$group' => array('_id' => '$date',
                                     'numView' => array('$sum' => 1))
             ),
             array('$sort' => array('_id' => $sort)),
@@ -303,4 +245,27 @@ class StatsService
         return $aggregation->toArray();
     }
 
+
+    //TEMP
+    private function getMongoProjectArray($groupBy) {
+        $mongoProject = array();
+        switch($groupBy) {
+            case 'hour':
+                $mongoProject[] = 'H';
+                $mongoProject[] = array('$substr' => array('$date',0,2));
+                $mongoProject[] = 'T';
+            case 'day':
+                $mongoProject[] = array('$substr' => array('$date',8,2));
+                $mongoProject[] = '-';
+            default: //If it doesn't exists, it's 'month'
+            case 'month':
+                $mongoProject[] = array('$substr' => array('$date',5,2));
+                $mongoProject[] = '-';
+            case 'year':
+                $mongoProject[] = array('$substr' => array('$date',0,4));
+                break;
+        }
+
+        return array_reverse($mongoProject);        
+    }
 }
