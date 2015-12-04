@@ -36,7 +36,7 @@ class StatsService
         $aggregation = $viewsLogColl->aggregate($pipeline);
 
         $mostViewed = array();
-        
+
         foreach($aggregation as $element) {
             $ids[] =  $element['_id'];
             $criteria['_id'] = $element['_id'];
@@ -55,11 +55,11 @@ class StatsService
 
         return $mostViewed;
     }
-    
+
     public function getMostViewed(array $tags, $days = 30, $limit = 3)
     {
         $criteria = array();
-        if ($tags) $criteria['tags.cod'] = array('$all' => $tags);        
+        if ($tags) $criteria['tags.cod'] = array('$all' => $tags);
         return $this->doGetMostViewed($criteria, $days, $limit);
     }
 
@@ -105,7 +105,7 @@ class StatsService
             }
         }
 
-        return $mostViewed;        
+        return $mostViewed;
     }
 
 
@@ -143,7 +143,7 @@ class StatsService
             }
         }
 
-        return $mostViewed;        
+        return $mostViewed;
     }
 
     public function getTotalViewedGrouped(\DateTime $fromDate = null, \DateTime $toDate = null, $limit = 10, array $criteria = array(), $sort = -1, $groupBy = 'month')
@@ -156,8 +156,8 @@ class StatsService
         if(!$toDate) {
             $toDate = new \DateTime();
         }
-        
-        // 
+
+        //
         $mongoProject = array();
         $mongoGroupId = array();
         switch($groupBy) {
@@ -176,7 +176,9 @@ class StatsService
                 $mongoGroupId['year'] = '$year';
                 break;
         }
-        
+        $mongoProject = array_reverse($mongoProject);
+        $mongoGroupId = array_reverse($mongoGroupId);
+
         $fromMongoDate = new \MongoDate($fromDate->format('U'), $fromDate->format('u'));
         $toMongoDate = new \MongoDate($toDate->format('U'), $toDate->format('u'));
 
@@ -193,7 +195,111 @@ class StatsService
         );
         $aggregation = $viewsLogColl->aggregate($pipeline);
         $mostViewed = array();
-        
+
+        return $aggregation->toArray();
+    }
+
+    public function getTotalViewedGroupedByMmobj(\MongoId $mmobjId,\DateTime $fromDate = null, \DateTime $toDate = null, $limit = 10, array $criteria = array(), $sort = -1, $groupBy = 'month')
+    {
+        $ids = array();
+        if(!$fromDate) {
+            $fromDate = new \DateTime();
+            $fromDate->setTime(0,0,0);
+        }
+        if(!$toDate) {
+            $toDate = new \DateTime();
+        }
+
+        //
+        $mongoProject = array();
+        $mongoGroupId = array();
+        switch($groupBy) {
+            case 'hour':
+                $mongoProject['hour'] = array('$hour' => '$date');
+                $mongoGroupId['hour'] = '$hour';
+            case 'day':
+                $mongoProject['day'] = array('$dayOfMonth' => '$date');
+                $mongoGroupId['day'] = '$day';
+            default: //If it doesn't exists, it's 'month'
+            case 'month':
+                $mongoProject['month'] = array('$month' => '$date');
+                $mongoGroupId['month'] = '$month';
+            case 'year':
+                $mongoProject['year'] = array('$year' => '$date');
+                $mongoGroupId['year'] = '$year';
+                break;
+        }
+
+        $fromMongoDate = new \MongoDate($fromDate->format('U'), $fromDate->format('u'));
+        $toMongoDate = new \MongoDate($toDate->format('U'), $toDate->format('u'));
+
+        $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
+
+        $pipeline = array(
+            array('$match' => array('multimediaObject' => $mmobjId,
+                                    'date' => array('$gte' => $fromMongoDate, '$lte' => $toMongoDate))),
+            array('$project' => $mongoProject),
+            array('$group' => array('_id' => $mongoGroupId,
+                                    'numView' => array('$sum' => 1))
+            ),
+            array('$sort' => array('_id' => $sort)),
+            array('$limit' => $limit ),
+        );
+        $aggregation = $viewsLogColl->aggregate($pipeline);
+        $mostViewed = array();
+
+        return $aggregation->toArray();
+    }
+
+    public function getTotalViewedGroupedBySeries(\MongoId $seriesId,\DateTime $fromDate = null, \DateTime $toDate = null, $limit = 10, array $criteria = array(), $sort = -1, $groupBy = 'month')
+    {
+        $ids = array();
+        if(!$fromDate) {
+            $fromDate = new \DateTime();
+            $fromDate->setTime(0,0,0);
+        }
+        if(!$toDate) {
+            $toDate = new \DateTime();
+        }
+
+        //
+        $mongoProject = array();
+        $mongoGroupId = array();
+        switch($groupBy) {
+            case 'hour':
+                $mongoProject['hour'] = array('$hour' => '$date');
+                $mongoGroupId['hour'] = '$hour';
+            case 'day':
+                $mongoProject['day'] = array('$dayOfMonth' => '$date');
+                $mongoGroupId['day'] = '$day';
+            default: //If it doesn't exists, it's 'month'
+            case 'month':
+                $mongoProject['month'] = array('$month' => '$date');
+                $mongoGroupId['month'] = '$month';
+            case 'year':
+                $mongoProject['year'] = array('$year' => '$date');
+                $mongoGroupId['year'] = '$year';
+                break;
+        }
+
+        $fromMongoDate = new \MongoDate($fromDate->format('U'), $fromDate->format('u'));
+        $toMongoDate = new \MongoDate($toDate->format('U'), $toDate->format('u'));
+
+        $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
+
+        $pipeline = array(
+            array('$match' => array('series' => $seriesId,
+                                    'date' => array('$gte' => $fromMongoDate, '$lte' => $toMongoDate))),
+            array('$project' => $mongoProject),
+            array('$group' => array('_id' => $mongoGroupId,
+                                    'numView' => array('$sum' => 1))
+            ),
+            array('$sort' => array('_id' => $sort)),
+            array('$limit' => $limit ),
+        );
+        $aggregation = $viewsLogColl->aggregate($pipeline);
+        $mostViewed = array();
+
         return $aggregation->toArray();
     }
 

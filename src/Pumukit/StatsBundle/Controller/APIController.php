@@ -176,4 +176,120 @@ class APIController extends Controller
         return new Response($data);
     }
 
+    /**
+     * @Route("/views/mmobj.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     */
+    public function viewsMmobjAction(Request $request)
+    {
+        $viewsRepo = $this->get('doctrine_mongodb')->getRepository('PumukitStatsBundle:ViewsLog');
+        $serializer = $this->get('serializer');
+        $viewsService = $this->get('pumukit_stats.stats');
+
+        $mmobjId = $request->get('mmobj');
+
+        $limit = intval($request->get('limit'));
+        if(!$limit || $limit > 100 ) {
+            $limit = 100;
+        }
+
+        $criteria = $request->get('criteria')?:array();
+        $sort = intval($request->get('sort'));
+        if(!in_array($sort, array(1,-1))) {
+            $sort = -1;
+        }
+        
+        $fromDate = $request->get('from_date');
+        $toDate = $request->get('to_date');
+        if(!strpos($fromDate,'T')) {
+            $fromDate .= "T00:00:00";
+        }
+        if(!strpos($toDate,'T')) {
+            $toDate .= "T23:59:59";
+        }
+        $fromDate = \DateTime::createFromFormat('Y-m-d\TH:i:s', $fromDate);
+        $toDate = \DateTime::createFromFormat('Y-m-d\TH:i:s', $toDate);
+
+        if(!$fromDate) {
+            $fromDate = null;
+        }
+        if(!$toDate) {
+            $toDate = null;
+        }
+
+        $groupBy = $request->get('group_by');
+
+        $views = $viewsService->getTotalViewedGroupedByMmobj(new \MongoId($mmobjId), $fromDate, $toDate, $limit, $criteria, $sort, $groupBy);
+
+        $views = array(
+            'limit' => $limit,
+            'criteria' => $criteria, 
+            'sort'  => $sort,
+            'group_by' => $groupBy,
+            'fromDate' => $fromDate,
+            'toDate' => $toDate,
+            'views' => $views
+        );
+
+        $data = $serializer->serialize($views, $request->getRequestFormat());
+        return new Response($data);
+    }
+
+    /**
+     * @Route("/views/series.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     */
+    public function viewsSeriesAction(Request $request)
+    {
+        $viewsRepo = $this->get('doctrine_mongodb')->getRepository('PumukitStatsBundle:ViewsLog');
+        $serializer = $this->get('serializer');
+        $viewsService = $this->get('pumukit_stats.stats');
+
+        $seriesId = $request->get('series');
+
+        $limit = intval($request->get('limit'));
+        if(!$limit || $limit > 100 ) {
+            $limit = 100;
+        }
+
+        $criteria = $request->get('criteria')?:array();
+        $sort = intval($request->get('sort'));
+        if(!in_array($sort, array(1,-1))) {
+            $sort = -1;
+        }
+        
+        $fromDate = $request->get('from_date');
+        $toDate = $request->get('to_date');
+        if(!strpos($fromDate,'T')) {
+            $fromDate .= "T00:00:00";
+        }
+        if(!strpos($toDate,'T')) {
+            $toDate .= "T23:59:59";
+        }
+        $fromDate = \DateTime::createFromFormat('Y-m-d\TH:i:s', $fromDate);
+        $toDate = \DateTime::createFromFormat('Y-m-d\TH:i:s', $toDate);
+
+        if(!$fromDate) {
+            $fromDate = null;
+        }
+        if(!$toDate) {
+            $toDate = null;
+        }
+
+        $groupBy = $request->get('group_by');
+
+        $views = $viewsService->getTotalViewedGroupedBySeries(new \MongoId($seriesId), $fromDate, $toDate, $limit, $criteria, $sort, $groupBy);
+
+        $views = array(
+            'limit' => $limit,
+            'criteria' => $criteria, 
+            'sort'  => $sort,
+            'group_by' => $groupBy,
+            'fromDate' => $fromDate,
+            'toDate' => $toDate,
+            'views' => $views
+        );
+
+        $data = $serializer->serialize($views, $request->getRequestFormat());
+        return new Response($data);
+    }
+
 }
