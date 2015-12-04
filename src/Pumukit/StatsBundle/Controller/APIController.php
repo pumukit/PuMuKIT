@@ -37,13 +37,13 @@ class APIController extends Controller
         $fromDate = $request->get('from_date');
         $toDate = $request->get('to_date');
         if(!strpos($fromDate,'T')) {
-            $fromDate .= "T00:00:00";
+            $fromDate .= "T00:00:00Z";
         }
         if(!strpos($toDate,'T')) {
-            $toDate .= "T23:59:59";
+            $toDate .= "T23:59:59Z";
         }
-        $fromDate = \DateTime::createFromFormat('Y-m-d\TH:i:s', $fromDate);
-        $toDate = \DateTime::createFromFormat('Y-m-d\TH:i:s', $toDate);
+        $fromDate = \DateTime::createFromFormat('Y-m-d\TH:i:sZ', $fromDate);
+        $toDate = \DateTime::createFromFormat('Y-m-d\TH:i:sZ', $toDate);
 
         if(!$fromDate) {
             $fromDate = null;
@@ -152,10 +152,11 @@ class APIController extends Controller
         $toDate = \DateTime::createFromFormat('Y-m-d\TH:i:s', $toDate);
 
         if(!$fromDate) {
-            $fromDate = null;
+            $fromDate = new \DateTime('Z');
+            $fromDate->setTime(0,0,0);
         }
         if(!$toDate) {
-            $toDate = null;
+            $toDate = new \DateTime('Z');
         }
 
         $groupBy = $request->get('group_by');
@@ -210,10 +211,11 @@ class APIController extends Controller
         $toDate = \DateTime::createFromFormat('Y-m-d\TH:i:s', $toDate);
 
         if(!$fromDate) {
-            $fromDate = null;
+            $fromDate = new \DateTime('Z');
+            $fromDate->setTime(0,0,0);
         }
         if(!$toDate) {
-            $toDate = null;
+            $toDate = new \DateTime('Z');
         }
 
         $groupBy = $request->get('group_by');
@@ -259,20 +261,22 @@ class APIController extends Controller
         $fromDate = $request->get('from_date');
         $toDate = $request->get('to_date');
         if(!strpos($fromDate,'T')) {
-            $fromDate .= "T00:00:00";
+            $fromDate .= "T00:00:00Z";
         }
         if(!strpos($toDate,'T')) {
-            $toDate .= "T23:59:59";
+            $toDate .= "T23:59:59Z";
         }
-        $fromDate = \DateTime::createFromFormat('Y-m-d\TH:i:s', $fromDate);
-        $toDate = \DateTime::createFromFormat('Y-m-d\TH:i:s', $toDate);
+        $fromDate = \DateTime::createFromFormat('Y-m-d\TH:i:se', $fromDate);
+        $toDate = \DateTime::createFromFormat('Y-m-d\TH:i:se', $toDate);
 
         if(!$fromDate) {
-            $fromDate = null;
+            $fromDate = new \DateTime('Z');
+            $fromDate->setTime(0,0,0);
         }
         if(!$toDate) {
-            $toDate = null;
+            $toDate = new \DateTime('Z');
         }
+
 
         $groupBy = $request->get('group_by');
 
