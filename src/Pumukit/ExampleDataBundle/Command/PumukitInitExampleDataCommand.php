@@ -518,7 +518,7 @@ EOT
                                             null);
                         $randTimestamp = rand($initTime, $endTime);
                         $date->setTimestamp($randTimestamp);
-                        $log->setDate($date);
+                        $log->setDate(clone $date);
                         $dm->persist($log);
                         $mmobj->incNumview();
                         $dm->persist($mmobj);
