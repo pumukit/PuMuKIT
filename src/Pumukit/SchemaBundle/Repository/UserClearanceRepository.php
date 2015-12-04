@@ -12,4 +12,19 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
  */
 class UserClearanceRepository extends DocumentRepository
 {
+    /**
+     * Change default
+     *
+     * @param boolean $default
+     */
+    public function changeDefault($default=true)
+    {
+        $this->createQueryBuilder()
+            ->update()
+            ->multiple(true)
+            ->field('default')->set(!$default)
+            ->field('default')->equals($default)
+            ->getQuery()
+            ->execute();
+    }
 }
