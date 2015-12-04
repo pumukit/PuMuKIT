@@ -1,3 +1,8 @@
+pumukit_schema:
+    resource: "@PumukitSchemaBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 pumukit_opencast:
     resource: "@PumukitOpencastBundle/Controller/"
     type:     annotation
@@ -27,11 +32,6 @@ pumukit_web_tv_file:
 
 pumukit_encoder:
     resource: "@PumukitEncoderBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-pumukit_api:
-    resource: "@PumukitAPIBundle/Controller/"
     type:     annotation
     prefix:   /
 
