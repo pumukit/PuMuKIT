@@ -4,8 +4,10 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\NewAdminBundle\Form\Type\RoleType;
+
 
 class RoleController extends SortableAdminController
 {
@@ -27,7 +29,7 @@ class RoleController extends SortableAdminController
                 try {
                     $person = $personService->updateRole($role);
                 } catch (\Exception $e) {
-                    $this->get('session')->getFlashBag()->add('error', $e->getMessage());
+                    return new JsonResponse(array("status" => $e->getMessage()), 409);
                 }
 
                 return $this->redirect($this->generateUrl('pumukitnewadmin_role_list'));
