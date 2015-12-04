@@ -148,72 +148,43 @@ class StatsService
 
     public function getTotalViewedGrouped(\DateTime $fromDate = null, \DateTime $toDate = null, $limit = 10, array $criteria = array(), $sort = -1, $groupBy = 'month')
     {
-        $ids = array();
-        if(!$fromDate) {
-            $fromDate = new \DateTime();
-            $fromDate->setTime(0,0,0);
-        }
-        if(!$toDate) {
-            $toDate = new \DateTime();
-        }
-
-        $fromMongoDate = new \MongoDate($fromDate->format('U'), $fromDate->format('u'));
-        $toMongoDate = new \MongoDate($toDate->format('U'), $toDate->format('u'));
-
-        $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
-        $mongoProject = $this->getMongoProjectArray($groupBy);
-        $pipeline = array(
-            array('$match' => array('date' => array('$gte' => $fromMongoDate, '$lte' => $toMongoDate))),
-            array('$project' => array('date' => array('$concat' => $mongoProject))),
-            array('$group' => array('_id' => '$date',
-                                    'numView' => array('$sum' => 1))
-            ),
-            array('$sort' => array('_id' => $sort)),
-            array('$limit' => $limit ),
-        );
-        $aggregation = $viewsLogColl->aggregate($pipeline);
-        $mostViewed = array();
-
+        $aggregation = $this->getGroupedByAggrPipeline($fromDate, $toDate, $limit, $sort, $groupBy);
         return $aggregation->toArray();
     }
 
     public function getTotalViewedGroupedByMmobj(\MongoId $mmobjId,\DateTime $fromDate = null, \DateTime $toDate = null, $limit = 10, array $criteria = array(), $sort = -1, $groupBy = 'month')
     {
-        $ids = array();
-        if(!$fromDate) {
-            $fromDate = new \DateTime();
-            $fromDate->setTime(0,0,0);
-        }
-        if(!$toDate) {
-            $toDate = new \DateTime();
-        }
-
-        $mongoProject = $this->getMongoProjectArray($groupBy);
-
-        $fromMongoDate = new \MongoDate($fromDate->format('U'), $fromDate->format('u'));
-        $toMongoDate = new \MongoDate($toDate->format('U'), $toDate->format('u'));
-
-        $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
-
-        $pipeline = array(
-            array('$match' => array('multimediaObject' => $mmobjId,
-                                    'date' => array('$gte' => $fromMongoDate, '$lte' => $toMongoDate))),
-            array('$project' => array('date' => array('$concat' => $mongoProject))),
-            array('$group' => array('_id' => '$date',
-                                    'numView' => array('$sum' => 1))
-            ),
-            array('$sort' => array('_id' => $sort)),
-            array('$limit' => $limit ),
-        );
-        $aggregation = $viewsLogColl->aggregate($pipeline);
-        $mostViewed = array();
-
+        $aggregation = $this->getGroupedByAggrPipeline($fromDate, $toDate, $limit, $sort, $groupBy, array('multimediaObject' => $mmobjId));
         return $aggregation->toArray();
     }
 
     public function getTotalViewedGroupedBySeries(\MongoId $seriesId,\DateTime $fromDate = null, \DateTime $toDate = null, $limit = 10, array $criteria = array(), $sort = -1, $groupBy = 'month')
     {
-        $ids = array();
+        $aggregation = $this->getGroupedByAggrPipeline($fromDate, $toDate, $limit, $sort, $groupBy, array('series' => $seriesId));
+        return $aggregation->toArray();
+    }
+
+    /**
+     * Returns an aggregation pipeline array with all necessary data
+     */
+    public function getGroupedByAggrPipeline($fromDate = null, $toDate = null, $limit = 100, $sort = -1, $groupBy = 'month', $matchExtra = array())
+    {
+        $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
+
+        $pipeline = $this->aggrPipeAddMatch($fromDate, $toDate, $matchExtra);
+        $pipeline = $this->aggrPipeAddProjectGroupDate($pipeline, $groupBy);
+        $pipeline = $this->aggrPipeAddSort($pipeline, $sort);
+        $pipeline = $this->aggrPipeAddLimit($pipeline, $limit);
+
+        $aggregation = $viewsLogColl->aggregate($pipeline);
+        return $aggregation;
+    }
+
+    /**
+     * Returns the pipe with a match
+     */
+    private function aggrPipeAddMatch($fromDate = null, $toDate = null, $matchExtra = array(), $pipeline = array())
+    {
         if(!$fromDate) {
             $fromDate = new \DateTime();
             $fromDate->setTime(0,0,0);
@@ -222,31 +193,51 @@ class StatsService
             $toDate = new \DateTime();
         }
 
-        $mongoProject = $this->getMongoProjectArray($groupBy);
-
         $fromMongoDate = new \MongoDate($fromDate->format('U'), $fromDate->format('u'));
         $toMongoDate = new \MongoDate($toDate->format('U'), $toDate->format('u'));
 
-        $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
-
-        $pipeline = array(
-            array('$match' => array('series' => $seriesId,
-                                    'date' => array('$gte' => $fromMongoDate, '$lte' => $toMongoDate))),
-            array('$project' => array('date' => array('$concat' => $mongoProject))),
-            array('$group' => array('_id' => '$date',
-                                    'numView' => array('$sum' => 1))
-            ),
-            array('$sort' => array('_id' => $sort)),
-            array('$limit' => $limit ),
+        $pipeline[] = array('$match' => array_merge( $matchExtra, array('date' => array('$gte' => $fromMongoDate, 
+                                                                                        '$lte' => $toMongoDate)))
         );
-        $aggregation = $viewsLogColl->aggregate($pipeline);
-        $mostViewed = array();
-
-        return $aggregation->toArray();
+        return $pipeline;
     }
 
+    /**
+     * Returns the pipe with a group by date range.
+     * It inserts a '$project' before the group to properly get an 'id' to sort with
+     */
+    private function aggrPipeAddProjectGroupDate($pipeline, $groupBy)
+    {
+        $mongoProject = $this->getMongoProjectArray($groupBy);
+        $pipeline[] = array('$project' => array('date' => array('$concat' => $mongoProject)));
+        $pipeline[] = array('$group' => array('_id' => '$date',
+                                'numView' => array('$sum' => 1))
+        );
+        return $pipeline;
+    }
 
-    //TEMP
+    /**
+     * Returns the pipe with a sort
+     */
+    private function aggrPipeAddSort($pipeline, $sort)
+    {
+        $pipeline[] = array('$sort' => array('_id' => $sort));
+        return $pipeline;
+    }
+    
+    /**
+     * Returns the pipe with a limit
+     */
+    private function aggrPipeAddLimit($pipeline, $limit)
+    {
+        $pipeline[] = array('$limit' => $limit );
+        return $pipeline;
+    }
+
+    /**
+     * Returns a 'mongoProject' to turn a date into an date-formatted string with only the required fields.
+     */
+    //TEMP NAME
     private function getMongoProjectArray($groupBy) {
         $mongoProject = array();
         switch($groupBy) {
@@ -268,4 +259,5 @@ class StatsService
 
         return array_reverse($mongoProject);        
     }
+
 }
