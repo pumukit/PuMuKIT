@@ -82,7 +82,7 @@ class AnnounceServiceTest extends WebTestCase
 
         $this->tagService->addTagToMultimediaObject($mm11, $tag->getId());
 
-        $this->assertEquals(array(), $this->announceService->getLast());
+        $this->assertEquals(array('falsetest'), $this->announceService->getLast());
     }
     public function testNextLatestUploads()
     {
