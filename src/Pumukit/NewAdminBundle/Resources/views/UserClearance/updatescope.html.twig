@@ -1,0 +1,10 @@
+<div class="form-group">
+  <div class="form-control-wrapper">
+    <select id="pumukitnewadmin_userclearance_scope" name="pumukitnewadmin_userclearance[scope]" class="form-control"{{ userclearance.system ?'disabled="disabled"':'' }}>
+      {% for key,scope in scopes %}
+      <option value="{{ key }}" {{ (userclearance.scope == key)?'selected="selected"':'' }}>{{ scope }}</option>
+      {% endfor %}
+    </select>
+    <span class="material-input"></span>
+  </div>
+</div>

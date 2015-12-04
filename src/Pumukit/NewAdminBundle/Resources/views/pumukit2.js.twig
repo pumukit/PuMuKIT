@@ -173,6 +173,21 @@ window.submit_delete_series = function(id, seriesTitle, countMm)
     }
 }
 
+window.submit_delete_userclearance = function(id, userClearanceName)
+{
+    if (window.confirm('{% trans %}Are you sure you want to delete the User Clearance{% endtrans %} "'+userClearanceName+'"?.')){
+        var url = "{{ path('pumukitnewadmin_userclearance_delete', {'id': '__id__'})|raw }}";
+        var message = '{% trans %}User Clearance{% endtrans %} "'+userClearanceName+'" {% trans %}successfully deleted{% endtrans %}.';
+        $('#list_userclearances').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
+            if (textStatus !== "error") {
+                success(message);
+            } else {
+                no_success(XMLHttpRequest['statusText'] + ': ' + responseText);
+            }
+        });
+    }
+}
+
 success = function(message){
     $("#div_messages_span_info").attr("data-content", message);
     $("#div_messages_span_info").snackbar("show");
@@ -1688,6 +1703,35 @@ $(document).on('submit', '#pumukitnewadmin_user_form_create', function(event){
                         }else{
                             $('#list_users').html(response);
                             var message = '{% trans %}User successfully created.{% endtrans %}';
+                            success(message);
+                        }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                        // TODO: talk to Rubén
+                        var responseText = jqXHR.responseText.split("<title>").pop().split("</title>").shift();
+                        var message = responseText.replace(/(\r\n|\n|\r)/gm,"");
+                        no_success(errorThrown+': '+textStatus+', '+message);
+            }
+    });
+    return false;
+});
+
+$(document).on('submit', '#pumukitnewadmin_userclearance_form_create', function(event){
+    $(event.currentTarget).find(':submit').prop('disabled', true);
+    $('#myModal').modal('hide');
+
+    var route = '{{ path('pumukitnewadmin_userclearance_create') }}';
+    $.ajax({
+            url: route,
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function(response, textStatus, jqXHR){
+                        if (jqXHR.responseText.indexOf('modal-header') != -1){
+                            var message = '{% trans %}There was an error in creating the User Clearance.{% endtrans %}';
+                            no_success(message);
+                        }else{
+                            $('#list_userclearances').html(response);
+                            var message = '{% trans %}User Clearance successfully created.{% endtrans %}';
                             success(message);
                         }
             },

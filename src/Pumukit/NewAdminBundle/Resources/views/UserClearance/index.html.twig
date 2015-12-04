@@ -1,0 +1,37 @@
+{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+
+{% block body %}
+
+<h1>{% trans %}Users Clearances{% endtrans %}</h1>
+
+<div class="row">
+  {% if is_granted('ROLE_SUPER_ADMIN') %}
+  <div class="col-md-12">
+    <div class="well">
+      <div id="list_userclearances">
+        {% include 'PumukitNewAdminBundle:UserClearance:list.html.twig' %}
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <select id="options_userclearances" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('userclearance', $(this), 'userclearances');">
+            <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
+            <option disabled="">---</option>
+            <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
+          </select>
+        </div>
+        <div class="col-md-10 text-right">
+          <a href="{{ path('pumukitnewadmin_userclearance_create') }}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <div class="col-md-12">
+    <div class="well">
+      {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}
