@@ -90,3 +90,7 @@ pumukitnewadmin_event:
 pumukitnewadmin_eventpic:
     resource: @PumukitNewAdminBundle/Resources/config/routes/eventpic.yml
     prefix: /admin/eventpic
+
+pumukitnewadmin_user_clearance:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/userclearance.yml
+    prefix: /admin/userclearance

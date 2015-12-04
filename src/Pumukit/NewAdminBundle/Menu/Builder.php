@@ -39,6 +39,7 @@ class Builder extends ContainerAware
         if ($authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
           $management = $menu->addChild('Management')->setExtra('translation_domain', 'NewAdminBundle');
           $management->addChild('Admin users', array('route' => 'pumukitnewadmin_user_index'))->setExtra('translation_domain', 'NewAdminBundle');
+          $management->addChild('Admin user clearances', array('route' => 'pumukitnewadmin_userclearance_index'))->setExtra('translation_domain', 'NewAdminBundle');
           $management->addChild('Roles', array('route' => 'pumukitnewadmin_role_index'))->setExtra('translation_domain', 'NewAdminBundle');
         }
 
