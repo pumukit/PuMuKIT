@@ -88,4 +88,34 @@ class UserClearanceRepositoryTest extends WebTestCase
         $this->assertCount(0, $this->repo->findByDefault(true));
         $this->assertCount(3, $this->repo->findByDefault(false));
     }
+
+    public function testFindDefaultCandidate()
+    {
+        $this->assertNull($this->repo->findDefaultCandidate());
+
+        $clearances1 = array(Clearance::ACCESS_DASHBOARD, Clearance::ACCESS_LIVE_CHANNELS);
+        $userClearance1 = new UserClearance();
+        $userClearance1->setName('test1');
+        $userClearance1->setClearances($clearances1);
+
+        $clearances2 = array();
+        $userClearance2 = new UserClearance();
+        $userClearance2->setName('test2');
+        $userClearance2->setClearances($clearances2);
+
+        $clearances3 = array(Clearance::ACCESS_DASHBOARD);
+        $userClearance3 = new UserClearance();
+        $userClearance3->setName('test3');
+        $userClearance3->setClearances($clearances3);
+
+        $this->dm->persist($userClearance1);
+        $this->dm->persist($userClearance2);
+        $this->dm->persist($userClearance3);
+        $this->dm->flush();
+
+        $this->assertEmpty($this->repo->findByDefault(true));
+        $this->assertNotEmpty($this->repo->findByDefault(false));
+
+        $this->assertEquals($userClearance2, $this->repo->findDefaultCandidate());
+    }
 }

@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
+use Pumukit\SchemaBundle\Security\Clearance;
 
 /**
  * UserClearanceRepository
@@ -27,4 +28,35 @@ class UserClearanceRepository extends DocumentRepository
             ->getQuery()
             ->execute();
     }
+
+    /**
+     * Find candidate for being default
+     *
+     * Candidate:
+     * - Less amount of clearances
+     */
+    public function findDefaultCandidate()
+    {
+        $count = 0;
+        $size = -1;
+        $totalClearances = count(Clearance::$clearanceDescription);
+        do {
+            if ($count > 0) break;
+            ++$size;
+            $count = $this->createQueryBuilder()
+                ->field('clearances')->size($size)
+                ->count()
+                ->getQuery()
+                ->execute();
+        } while ($size <= $totalClearances);
+
+        if ($count > 0) {
+            return $this->createQueryBuilder()
+                ->field('clearances')->size($size)
+                ->getQuery()
+                ->getSingleResult();
+        }
+
+        return null;
+   }
 }
