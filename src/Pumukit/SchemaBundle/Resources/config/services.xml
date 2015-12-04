@@ -67,6 +67,10 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
 
+        <service id="pumukitschema.userclearance" class="Pumukit\SchemaBundle\Services\UserClearanceService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+        </service>
+
         <!-- EMBEDDED DOCUMENTS EVENT DISPATCHER SERVICES -->
 
         <service id="pumukitschema.multimediaobject_dispatcher" class="Pumukit\SchemaBundle\Services\MultimediaObjectEventDispatcherService">
