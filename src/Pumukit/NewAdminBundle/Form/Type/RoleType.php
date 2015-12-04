@@ -23,8 +23,12 @@ class RoleType extends AbstractType
     {
         $builder
             ->add('display', 'checkbox', array('required' => false))
-            ->add('cod', 'text',
-                  array('label' => $this->translator->trans('Code', array(), null, $this->locale)))
+            ->add('cod', 'text', array(
+                                       'attr' => array(
+                                                       'pattern' => "^\w*$",
+                                                       'oninvalid' => "setCustomValidity('The code can not have blank spaces neither special characters')",
+                                                       'oninput' => "setCustomValidity('')"),
+                                       'label' => $this->translator->trans('Code', array(), null, $this->locale)))
             ->add('xml', 'text',
                   array('label' => $this->translator->trans('XML', array(), null, $this->locale)))
             ->add('i18n_name', 'texti18n',
