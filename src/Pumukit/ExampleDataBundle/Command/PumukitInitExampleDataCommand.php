@@ -38,7 +38,8 @@ class PumukitInitExampleDataCommand extends ContainerAwareCommand
             ->setName('pumukit:init:example')
             ->setDescription('Load Pumukit expample data fixtures to your database')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
-            ->addOption('append', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
+            ->addOption('noviewlogs', null, InputOption::VALUE_NONE, 'Does not add viewlog dummy views')
+            ->addOption('append', null, InputOption::VALUE_NONE, 'Add examples without deleting')
             ->addOption('reusezip', null, InputOption::VALUE_NONE, 'Set this parameter to not delete zip file with videos to reuse in the future')
             ->setHelp(<<<EOT
 
@@ -70,6 +71,7 @@ EOT
                   $this->dm->getDocumentCollection('PumukitSchemaBundle:Person')->remove(array());
                   $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
                   $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
+                  $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog')->remove(array());
             } elseif (!$input->getOption('append')) {
                   $output->writeln('<error>ATTENTION:</error> This operation should not be executed in a production environment.');
                   $output->writeln('');
@@ -78,9 +80,6 @@ EOT
                   $output->writeln('<error>All data will be lost!</error>');
                   return -1;
             }
-
-
-            if ($input->getOption('force') || $input->getOption('append')) {
 
                   if(!$input->getOption('reusezip')){
                         if (!$this->download(self::PATH_VIDEO, $newFile, $output)) {
@@ -332,14 +331,14 @@ EOT
                   }
                   $progress->advance();
                   $progress->finish();
-                  $this->load_viewsLog($this->dm, $output);
-
+                  if (!$input->getOption('noviewlogs')) {
+                        $this->load_viewsLog($this->dm, $output);
+                  }
                   if(!$input->getOption('reusezip')){
                         unlink($newFile);
                   }
                   $output->writeln('');
                   $output->writeln('<info>Example data load successful</info>');
-            } 
       }
 
       private function load_series($series, $title){
@@ -478,7 +477,6 @@ EOT
       private function load_viewsLog(DocumentManager $dm, $output) {
             $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
             $viewsLogRepo = $dm->getRepository('PumukitStatsBundle:ViewsLog');
-            $dm->getDocumentCollection('PumukitStatsBundle:ViewsLog')->remove(array());
 
             $allMmobjs = $mmobjRepo->findAll();
             $useragents = array( 'Mozilla/5.0 PuMuKIT/2.2 (UserAgent Example Data.) Gecko/20100101 Firefox/40.1',
