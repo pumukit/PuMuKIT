@@ -135,4 +135,77 @@ class UserClearanceServiceTest extends WebTestCase
         $this->assertEquals($newClearances, $userClearance->getClearances());
         $this->assertNotEquals($clearances, $userClearance->getClearances());
     }
+
+    public function testCheckDefault()
+    {
+        $clearances1 = array(Clearance::ACCESS_DASHBOARD);
+        $userClearance1 = new UserClearance();
+        $userClearance1->setName('test1');
+        $userClearance1->setDefault(true);
+        $userClearance1->setClearances($clearances1);
+
+        $clearances2 = array(Clearance::ACCESS_DASHBOARD, Clearance::ACCESS_ADVANCED_UPLOAD);
+        $userClearance2 = new UserClearance();
+        $userClearance2->setName('test2');
+        $userClearance2->setDefault(false);
+        $userClearance2->setClearances($clearances2);
+
+        $clearances3 = array();
+        $userClearance3 = new UserClearance();
+        $userClearance3->setName('test3');
+        $userClearance3->setDefault(false);
+        $userClearance3->setClearances($clearances3);
+
+        $this->dm->persist($userClearance1);
+        $this->dm->persist($userClearance2);
+        $this->dm->persist($userClearance3);
+        $this->dm->flush();
+
+        $this->assertEquals($userClearance1, $this->repo->findOneByDefault(true));
+
+        $falseDefault = $this->repo->findByDefault(false);
+        $this->assertFalse(in_array($userClearance1, $falseDefault));
+        $this->assertTrue(in_array($userClearance2, $falseDefault));
+        $this->assertTrue(in_array($userClearance3, $falseDefault));
+
+        $userClearance1->setDefault(false);
+        $userClearance1 = $this->userClearanceService->update($userClearance1);
+
+        $this->assertEquals($userClearance3, $this->repo->findOneByDefault(true));
+
+        $falseDefault = $this->repo->findByDefault(false);
+        $this->assertTrue(in_array($userClearance1, $falseDefault));
+        $this->assertTrue(in_array($userClearance2, $falseDefault));
+        $this->assertFalse(in_array($userClearance3, $falseDefault));
+    }
+
+    public function testSetDefaultUserClearance()
+    {
+        $this->assertFalse($this->userClearanceService->setDefaultUserClearance());
+
+        $clearances1 = array(Clearance::ACCESS_DASHBOARD);
+        $userClearance1 = new UserClearance();
+        $userClearance1->setName('test1');
+        $userClearance1->setDefault(false);
+        $userClearance1->setClearances($clearances1);
+
+        $clearances2 = array();
+        $userClearance2 = new UserClearance();
+        $userClearance2->setName('test2');
+        $userClearance2->setDefault(false);
+        $userClearance2->setClearances($clearances2);
+
+        $clearances3 = array(Clearance::ACCESS_DASHBOARD, Clearance::ACCESS_ADVANCED_UPLOAD);
+        $userClearance3 = new UserClearance();
+        $userClearance3->setName('test3');
+        $userClearance3->setDefault(false);
+        $userClearance3->setClearances($clearances3);
+
+        $this->dm->persist($userClearance1);
+        $this->dm->persist($userClearance2);
+        $this->dm->persist($userClearance3);
+        $this->dm->flush();
+
+        $this->assertEquals($userClearance2, $this->userClearanceService->setDefaultUserClearance());
+    }
 }

@@ -29,14 +29,56 @@ class UserClearanceService
      */
     public function update(UserClearance $userClearance)
     {
-        if ($userClearance->isDefault()) {
-            $this->repo->changeDefault();
-        }
+        $default = $this->checkDefault($userClearance);
 
         $this->dm->persist($userClearance);
         $this->dm->flush();
 
         return $userClearance;
+    }
+
+    /**
+     * Check default user clearance
+     *
+     * Checks if there is any change in 'default' property
+     * If there is no UserClearance as default,
+     * calls setDefaultUserClearance.
+     *
+     * @param UserClearance $userClearance
+     */
+    public function checkDefault(UserClearance $userClearance)
+    {
+        if ($userClearance->isDefault()) {
+            $this->repo->changeDefault();
+        }
+
+        $default = $this->repo->findOneByDefault(true);
+        if ((null == $default) || (!$default->isDefault())) {
+            $default = $this->setDefaultUserClearance();
+        }
+
+        return $default;
+    }
+
+    /**
+     * Set default user clearance
+     *
+     * Set as default user clearance
+     * the one with less clearances
+     *
+     * @return UserClearance
+     */
+    public function setDefaultUserClearance()
+    {
+        $default = $this->repo->findDefaultCandidate();
+
+        if (null == $default) return false;
+
+        $default->setDefault(true);
+        $this->dm->persist($default);
+        $this->dm->flush();
+
+        return $default;
     }
 
     /**
