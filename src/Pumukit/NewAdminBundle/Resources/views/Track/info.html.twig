@@ -1,101 +1,49 @@
+{% set iframe_url = url('pumukit_webtv_multimediaobject_iframe', {id: mm.id, track_id: track.id}) %}
+{% set track_url = url('pumukit_webtv_multimediaobject_index', {id: mm.id, track_id: track.id}) %}
+{% set series_url = url('pumukit_webtv_series_index', {id: mm.series.id}) %}
+
 <div class="modal-header">
-  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <h4 class="modal-title" id="myModalLabel">{% trans %}track info{% endtrans %}</h4>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <h4 class="modal-title" id="myModalLabel">{% trans %}Track Info{% endtrans %}</h4>
 </div>
 <div class="modal-body">
   <form>
     <fieldset>
-      <h2><strong>HTML:</strong></h2>
-      <div class="form-group">
-        <label for="embed" class="control-label">{% trans %}Embedded IFRAME{% endtrans %}:</label>
-          <textarea id="embed_code" name="embed_code" readonly="readonly" class="form-control" rows="5" onclick="this.select()">
-            <iframe src="http://{# TODO sfConfig::get('app_info_link').'/'.$sf_user->getCulture() #}/video/iframe/{{ mm.id }}.html" width="570" frameborder="0">
-              {% trans %}Not understand iframes{% endtrans %}
-            </iframe>
-          </textarea>
-      </div>      
-      {% if true %} {# TODO  if($file->getPerfil()->getExtension() == 'wmv') #}
-      <h2><strong>{% trans %}EMBED{% endtrans %}:</strong></h2>
-      <div class="form-group">
-        <label for="embed" class="control-label">{% trans %}Original resolution{% endtrans %}:</label>
-        <div class="content">
-	      <textarea id="embed_code" name="embed_code" readonly="readonly" class="form-control" rows="5" onclick="this.select()">
-            <object id="MediaPlayer" 
-                    classid="CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6"
-                    standby="{% trans %}Loading Microsoft Windows Media Player components{% endtrans %}..."
-                    type="application/x-oleobject" width="{{ track.getTags()|profile_width }}" height="{{ track.getTags()|profile_height }}">
-              <param name="url" value="{{ track.getUrl() }}" />
-              <param name="AutoStart" value="true" />
-              <param name="ShowControls" value="1" />
-              <param name="uiMode" value="full" />
-              
-              <param value="{{ track.getUrl() }}" name="filename"/>
-              <param value="1" name="showcontrols"/>
-              <param value="0" name="showdisplay"/>
-              <param value="0" name="showstatusbar"/>
-              <param value="0" name="autosize"/>
-              
-              <embed 
-                 width="{{ track.getTags()|profile_width }}" height="{{ track.getTags()|profile_height }}"
-                 autosize="0" 
-                 showstatusbar="0" 
-                 showdisplay="0" 
-                 showcontrols="1" 
-                 filename="{{ track.getUrl() }}"
-                 pluginspage="http://www.microsoft.com/windows/downloads/contents/products/mediaplayer/" 
-                 type="application/x-mplayer2" 
+      {% if is_playable %}
+        {% if not is_published %}
+          {% trans %} <span class="alert alert-dismissable alert-warning"><i>Warning: This multimedia object is not correctly published on WebTV</i></span>{% endtrans %}
+          </br>
+          </br>
+        {% endif %}
+        <div class="form-group">
+          <label for="embed" class="control-label">{% trans %}Embedded Iframe{% endtrans %}:</label>
+          <input id="embed_code" name="embed_code" rows=1 readonly="readonly" class="form-control" onclick="this.select()"
+                 value='<iframe src="{{ iframe_url }}" width="560" height="315" frameborder="0" allowfullscreen></iframe>'
                  />
-            </object>
-          </textarea>
-        </div>
-        <br />
-        <label for="embed" class="control-label">{% trans %}Resolution 480x320{% endtrans %}:</label>
-        <div class="content">
-	      <textarea id="embed_code" name="embed_code" readonly="readonly" class="form-control" rows="5" onclick="this.select()">
-            <object id="MediaPlayer" 
-                    classid="CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6"
-                    standby="{% trans %}Loading Microsoft Windows Media Player components{% endtrans %}..."
-                    type="application/x-oleobject" width="480" height="320">
-              <param name="url" value="{{ track.getUrl() }}" />
-              <param name="AutoStart" value="true" />
-              <param name="ShowControls" value="1" />
-              <param name="uiMode" value="full" />
-              
-              <param value="{{ track.getUrl() }}" name="filename"/>
-              <param value="1" name="showcontrols"/>
-              <param value="0" name="showdisplay"/>
-              <param value="0" name="showstatusbar"/>
-              <param value="0" name="autosize"/>
-              
-              <embed 
-                 width="480" height="320"
-                 autosize="0" 
-                 showstatusbar="0" 
-                 showdisplay="0" 
-                 showcontrols="1" 
-                 filename="{{ track.getUrl() }}"
-                 pluginspage="http://www.microsoft.com/windows/downloads/contents/products/mediaplayer/" 
-                 type="application/x-mplayer2" 
-                 />
-            </object>
-          </textarea>
-        </div>
-      </div>
-      
+        </div>            
+        <div class="form-group">
+          <label for="embed" class="control-label">{% trans %}Video track{% endtrans %}:</label>
+          <div class="input-group">
+            <input type="text" onclick="this.select()" class="form-control" value="{{ track_url }}" readonly/>
+            {% if is_published %}
+              <span class="input-group-addon"><a id="alinkROMagicUrl" href="{{ track_url }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
+            {% else %}
+              <span class="input-group-addon"><i class="mdi-action-report-problem" title="{% trans %}Warning: This link will give a 404 error until this multimedia object is correctly published.{% endtrans %}"></i></span>
+            {% endif %}
+          </div>
+      {% else %}
+          <span class="alert alert-dismissable alert-warning">{% trans %} Warning: This Track is not a playable resource. {% endtrans %}</span>
+          </br>
       {% endif %}
-      
-      <h2><strong>URL:</strong></h2>
-      <div class="form-group">
-        <label for="embed" class="control-label">{% trans %}Video{% endtrans %}:</label>
-        <div class="content">{# TODO CHECK GETURLLINK(TRUE) #}
-          <input type="text" onclick="this.select()" class="form-control" value="{{ track.getUrl() }}" disabled/>
-        </div>
-        <br />
-        <label for="embed" class="control-label">{% trans %}Series{% endtrans %}:</label>
-        <div class="content"> {# TODO webtv mms index instead of admin mms index #}
-          <input type="text" onclick="this.select()" class="form-control" value="{{ url('pumukitnewadmin_mms_index', {id: mm.getSeries().getId()}) }}" disabled/>
-        </div>
+      <br />
+      <label for="embed" class="control-label">{% trans %}Series{% endtrans %}:</label>
+      <div class="input-group">
+        <input type="text" onclick="this.select()" class="form-control" value="{{ series_url }}" readonly/>
+        <span class="input-group-addon"><a id="alinkROMagicUrl" href="{{ series_url }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
       </div>
+        </div>
     </fieldset>
     <div class="modal-footer">
       <button type="button" class="btn btn-pumukit btn-raised" data-dismiss="modal">{% trans %}OK{% endtrans %}</button>

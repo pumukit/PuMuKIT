@@ -34,7 +34,7 @@ class Series
   /**
    * @var ArrayCollection $multimedia_objects
    *
-   * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="series", strategy="set", repositoryMethod="findWithoutPrototype", sort={"rank"=1}, simple=true, orphanRemoval=true, cascade={"persist"})
+   * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="series", repositoryMethod="findWithoutPrototype", sort={"rank"=1}, simple=true, orphanRemoval=true, cascade="ALL")
    * @Serializer\Exclude
    */
   private $multimedia_objects;

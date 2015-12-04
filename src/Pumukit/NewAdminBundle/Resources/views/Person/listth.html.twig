@@ -1,39 +1,40 @@
+<input type="hidden" name="pumukitnewadmin_person_sort_change_type" id="pumukitnewadmin_person_sort_change_type" value="{{ app.session.get('admin/person/type')=='asc'?'desc':'asc' }}"/>
 {% if 'id' == app.session.get('admin/person/sort') %}
   <th width="1%">
-    <a href="#" onclick="$('#list_people').load('{{ path('pumukitnewadmin_person_list', {'sorting': {'id': app.session.get('admin/person/type')=='asc'?'desc':'asc'}}) }}'); return false;">{% trans %}Id{% endtrans %}{{ app.session.get('admin/person/type')=='asc'?'&nbsp;&#x25BE;':'&nbsp;&#x25B4;' }}</a>
+    <a href="#" id="pumukitnewadmin_person_id_sort_selected">{% trans %}Id{% endtrans %}{{ app.session.get('admin/person/type')=='asc'?'&nbsp;&#x25B4;':'&nbsp;&#x25BE;' }}</a>
   </th>
 {% else %}
   <th width="1%">
-    <a href="#" onclick="$('#list_people').load('{{ path('pumukitnewadmin_person_list', {'sorting': {'id': 'asc'}}) }}'); return false;">{% trans %}Id{% endtrans %}</a>
+    <a href="#" id="pumukitnewadmin_person_id_sort_not_selected">{% trans %}Id{% endtrans %}</a>
   </th>
 {% endif %}
 
 {% if 'name' == app.session.get('admin/person/sort') %}
   <th>
-    <a href="#" onclick="$('#list_people').load('{{ path('pumukitnewadmin_person_list', {'sorting': {'name': app.session.get('admin/person/type')=='asc'?'desc':'asc'}}) }}'); return false;">{% trans %}Name{% endtrans %}{{ app.session.get('admin/person/type')=='asc'?'&nbsp;&#x25BE;':'&nbsp;&#x25B4;' }}</a>
+    <a href="#" id="pumukitnewadmin_person_name_sort_selected">{% trans %}Name{% endtrans %}{{ app.session.get('admin/person/type')=='asc'?'&nbsp;&#x25B4;':'&nbsp;&#x25BE;' }}</a>
   </th>
 {% else %}
   <th>
-    <a href="#" onclick="$('#list_people').load('{{ path('pumukitnewadmin_person_list', {'sorting': {'name': 'asc'}}) }}'); return false;">{% trans %}Name{% endtrans %}</a>
+    <a href="#" id="pumukitnewadmin_person_name_sort_not_selected">{% trans %}Name{% endtrans %}</a>
   </th>
 {% endif %}
 
 {% if 'email' == app.session.get('admin/person/sort') %}
   <th>
-    <a href="#" onclick="$('#list_people').load('{{ path('pumukitnewadmin_person_list', {'sorting': {'email': app.session.get('admin/person/type')=='asc'?'desc':'asc'}}) }}'); return false;">{% trans %}Email{% endtrans %}{{ app.session.get('admin/person/type')=='asc'?'&nbsp;&#x25BE;':'&nbsp;&#x25B4;' }}</a>
+    <a href="#" id="pumukitnewadmin_person_email_sort_selected">{% trans %}Email{% endtrans %}{{ app.session.get('admin/person/type')=='asc'?'&nbsp;&#x25B4;':'&nbsp;&#x25BE;' }}</a>
   </th>
 {% else %}
   <th>
-    <a href="#" onclick="$('#list_people').load('{{ path('pumukitnewadmin_person_list', {'sorting': {'email': 'asc'}}) }}'); return false;">{% trans %}Email{% endtrans %}</a>
+    <a href="#" id="pumukitnewadmin_person_email_sort_not_selected">{% trans %}Email{% endtrans %}</a>
   </th>
 {% endif %}
 
 {% if 'phone' == app.session.get('admin/person/sort') %}
   <th>
-    <a href="#" onclick="$('#list_people').load('{{ path('pumukitnewadmin_person_list', {'sorting': {'phone': app.session.get('admin/person/type')=='asc'?'desc':'asc'}}) }}'); return false;">{% trans %}Phone{% endtrans %}{{ app.session.get('admin/person/type')=='asc'?'&nbsp;&#x25BE;':'&nbsp;&#x25B4;' }}</a>
+    <a href="#" id="pumukitnewadmin_person_phone_sort_selected">{% trans %}Phone{% endtrans %}{{ app.session.get('admin/person/type')=='asc'?'&nbsp;&#x25B4;':'&nbsp;&#x25BE;' }}</a>
   </th>
   {% else %}
   <th>
-    <a href="#" onclick="$('#list_people').load('{{ path('pumukitnewadmin_person_list', {'sorting': {'phone': 'asc'}}) }}'); return false;">{% trans %}Phone{% endtrans %}</a>
+    <a href="#" id="pumukitnewadmin_person_phone_sort_not_selected">{% trans %}Phone{% endtrans %}</a>
   </th>
 {% endif %}

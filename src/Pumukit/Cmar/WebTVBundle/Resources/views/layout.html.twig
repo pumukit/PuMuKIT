@@ -50,6 +50,7 @@
         {% include app.session.get('breadcrumbs/title') == 'Sonar' ? 'PumukitCmarSonarBundle::footer.html.twig' : 'PumukitCmarWebTVBundle::footer.html.twig' %}
       </div>
     </div>
+    {% include 'PumukitCmarWebTVBundle::googleanalytics.html.twig' %}
     {% endblock %}
   </body>
 </html>

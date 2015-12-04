@@ -1,6 +1,7 @@
 <!-- Vista previa -->
 {% if person is not null %}
 <div>
+   <input type="hidden" id="inputRawId" value="{{ person.id }}"/>
    <p style="text-align:center; font-size: large;">
     {{ person.getHName() }}
   </p>

@@ -33,7 +33,8 @@ class WidgetController extends Controller
         'announces_title' => $announcesTitle,
         'search_title' => $searchTitle,
         'mediateca_title' => $mediatecaTitle,
-        'categories_title' => $categoriesTitle );
+        'categories_title' => $categoriesTitle,
+        'menu_stats' => $menuStats);
     }
 
     /**

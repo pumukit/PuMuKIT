@@ -23,7 +23,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param array $status
      * @return ArrayCollection
      */
-    public function findWithStatus(Series $series, array $status, $limit = 0, $page = 1)
+    public function findWithStatus(Series $series, array $status, $limit = 0, $page = 0)
     {
         $qb = $this->createQueryBuilder()
         ->field('series')->references($series)

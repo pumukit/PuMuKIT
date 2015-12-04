@@ -69,7 +69,7 @@ class CategoriesController extends Controller
         //End removes unnecessary parent nodes.
 
         //Count number multimediaObjects
-        $provider = $request->get('provider');dump($provider);
+        $provider = $request->get('provider');
         //TODO Move this logic into a service.
         $counterMmobjs = $this->countMmobjInTags($provider);
         $linkService = $this->get('pumukit_web_tv.link_service');

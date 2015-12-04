@@ -20,6 +20,7 @@ class PicServiceTest extends WebTestCase
     private $defaultAudioHDPic = '/images/audio_hd.jpg';
     private $defaultAudioSDPic = '/images/audio_sd.jpg';
     private $localhost = 'http://localhost';
+    private $webDir;
 
     public function __construct()
     {
@@ -30,6 +31,8 @@ class PicServiceTest extends WebTestCase
         $this->dm = $kernel->getContainer()->get('doctrine_mongodb.odm.document_manager');
         $this->factoryService = $kernel->getContainer()->get('pumukitschema.factory');
         $this->context = $kernel->getContainer()->get('router.request_context');
+        $this->rootDir = $kernel->getContainer()->getParameter('kernel.root_dir');
+        $this->webDir = realpath($this->rootDir.'/../web/bundles/pumukitschema');
     }
 
     public function setUp()
@@ -38,7 +41,7 @@ class PicServiceTest extends WebTestCase
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
         $this->dm->flush();
 
-        $this->picService = new PicService($this->context, $this->defaultSeriesPic, $this->defaultVideoPic, $this->defaultAudioHDPic, $this->defaultAudioSDPic);
+        $this->picService = new PicService($this->context, $this->webDir, $this->defaultSeriesPic, $this->defaultVideoPic, $this->defaultAudioHDPic, $this->defaultAudioSDPic);
     }
 
     public function testGetFirstUrlPic()
@@ -159,5 +162,100 @@ class PicServiceTest extends WebTestCase
 
         $absolute = true;
         $this->assertEquals($this->localhost.$this->defaultVideoPic, $this->picService->getDefaultUrlPicForObject($pic, $absolute));
+    }
+
+    public function testGetFirstPathPic()
+    {
+        // SERIES SECTION
+        $series = $this->factoryService->createSeries();
+
+        $this->assertEquals($this->webDir.$this->defaultSeriesPic, $this->picService->getFirstPathPic($series));
+
+        $seriesPath1 = $this->webDir.'/uploads/series1.jpg';
+        $seriesPic1 = new Pic();
+        $seriesPic1->setPath($seriesPath1);
+
+        $series->addPic($seriesPic1);
+
+        $this->dm->persist($series);
+        $this->dm->flush();
+
+        $this->assertEquals($seriesPath1, $this->picService->getFirstPathPic($series));
+
+        $seriesPath2 = $this->webDir.'/uploads/series2.jpg';
+        $seriesPic2 = new Pic();
+        $seriesPic2->setPath($seriesPath2);
+
+        $series->addPic($seriesPic2);
+
+        $this->dm->persist($series);
+
+        $series->upPicById($seriesPic2->getId());
+
+        $this->dm->persist($series);
+        $this->dm->flush();
+
+        $this->assertEquals($seriesPath2, $this->picService->getFirstPathPic($series));
+
+        // MULTIMEDIA OBJECT SECTION
+        // Workaround for detached Series document
+        $this->dm->clear(get_class($series));
+        $series = $this->dm->find('PumukitSchemaBundle:Series', $series->getId());
+
+        $mm = $this->factoryService->createMultimediaObject($series);
+        $mm->setSeries($series);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $track = new Track();
+        $track->setOnlyAudio(false);
+        $mm->addTrack($track);
+
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $this->assertEquals($this->webDir.$this->defaultVideoPic, $this->picService->getFirstPathPic($mm));
+
+        $track->setOnlyAudio(true);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $hd = true;
+        $this->assertEquals($this->webDir.$this->defaultAudioHDPic, $this->picService->getFirstPathPic($mm, $hd));
+        $hd = false;
+        $this->assertEquals($this->webDir.$this->defaultAudioSDPic, $this->picService->getFirstPathPic($mm, $hd));
+
+        $mmPath1 = realpath(__DIR__.'/../Resources/images/video_none.jpg');
+        $mmPic1 = new Pic();
+        $mmPic1->setPath($mmPath1);
+
+        $mm->addPic($mmPic1);
+
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $this->assertEquals($mmPath1, $this->picService->getFirstPathPic($mm));
+
+        $mmPath2 = realpath(__DIR__.'/../Resources/images/series_folder.png');
+        $mmPic2 = new Pic();
+        $mmPic2->setPath($mmPath2);
+
+        $mm->addPic($mmPic2);
+
+        $this->dm->persist($mm);
+
+        $mm->upPicById($mmPic2->getId());
+
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $this->assertEquals($mmPath2, $this->picService->getFirstPathPic($mm));
+    }
+
+    public function testGetDefaultPathPicForObject()
+    {
+        $pic = new Pic();
+
+        $this->assertEquals($this->webDir.$this->defaultVideoPic, $this->picService->getDefaultPathPicForObject($pic));
     }
 }
