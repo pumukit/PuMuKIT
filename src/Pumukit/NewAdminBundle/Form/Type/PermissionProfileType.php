@@ -22,14 +22,11 @@ class PermissionProfileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text',
-                  array('label' => $this->translator->trans('Name', array(), null, $this->locale)))
-            ->add('system', 'checkbox',
-                  array('required' => false,
-                        'label' => $this->translator->trans('System', array(), null, $this->locale)))
             ->add('default', 'checkbox',
                   array('required' => false,
                         'label' => $this->translator->trans('Default', array(), null, $this->locale)))
+            ->add('name', 'text',
+                  array('label' => $this->translator->trans('Name', array(), null, $this->locale)))
             ->add('scope', 'choice',
                   array('choices' => PermissionProfile::$scopeDescription,
                         'required' => false,
