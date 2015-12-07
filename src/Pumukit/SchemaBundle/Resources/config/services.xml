@@ -67,7 +67,7 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
 
-        <service id="pumukitschema.userclearance" class="Pumukit\SchemaBundle\Services\UserClearanceService">
+        <service id="pumukitschema.permissionprofile" class="Pumukit\SchemaBundle\Services\PermissionProfileService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
 

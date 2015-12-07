@@ -7,14 +7,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Pumukit\SchemaBundle\Document\UserClearance;
-use Pumukit\SchemaBundle\Security\Clearance;
-use Pumukit\NewAdminBundle\Form\Type\UserClearanceType;
+use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Pumukit\SchemaBundle\Security\Permission;
+use Pumukit\NewAdminBundle\Form\Type\PermissionProfileType;
 
 /**
  * @Security("has_role('ROLE_SUPER_ADMIN')")
  */
-class UserClearanceController extends AdminController
+class PermissionProfileController extends AdminController
 {
     /**
      * Overwrite to update the criteria with MongoRegex, and save it in the session
@@ -27,14 +27,14 @@ class UserClearanceController extends AdminController
         $sorting = $request->get('sorting');
 
         $criteria = $this->getCriteria($config);
-        $userClearances = $this->getResources($request, $config, $criteria);
+        $permissionProfiles = $this->getResources($request, $config, $criteria);
 
-        $clearances = Clearance::$clearanceDescription;
-        $scopes = UserClearance::$scopeDescription;
+        $permissions = Permission::$permissionDescription;
+        $scopes = PermissionProfile::$scopeDescription;
 
         return array(
-                     'userclearances' => $userClearances,
-                     'clearances' => $clearances,
+                     'permissionprofiles' => $permissionProfiles,
+                     'permissions' => $permissions,
                      'scopes' => $scopes
                      );
     }
@@ -42,7 +42,7 @@ class UserClearanceController extends AdminController
     /**
      * List action
      *
-     * Overwrite to have clearances list
+     * Overwrite to have permissions list
      * @Template()
      */
     public function listAction(Request $request)
@@ -52,21 +52,21 @@ class UserClearanceController extends AdminController
         $sorting = $request->get('sorting');
 
         $criteria = $this->getCriteria($config);
-        $userClearances = $this->getResources($request, $config, $criteria);
+        $permissionProfiles = $this->getResources($request, $config, $criteria);
 
-        $clearances = Clearance::$clearanceDescription;
-        $scopes = UserClearance::$scopeDescription;
+        $permissions = Permission::$permissionDescription;
+        $scopes = PermissionProfile::$scopeDescription;
 
         return array(
-                     'userclearances' => $userClearances,
-                     'clearances' => $clearances,
+                     'permissionprofiles' => $permissionProfiles,
+                     'permissions' => $permissions,
                      'scopes' => $scopes
                      );
     }
 
     /**
      * Create Action
-     * Overwrite to give UserClearanceType name correctly
+     * Overwrite to give PermissionProfileType name correctly
      * @Template()
      *
      * @param Request $request
@@ -78,25 +78,25 @@ class UserClearanceController extends AdminController
         $dm = $this->get('doctrine_mongodb')->getManager();
         $config = $this->getConfiguration();
 
-        $userClearance = new UserClearance();
-        $form = $this->getForm($userClearance);
+        $permissionProfile = new PermissionProfile();
+        $form = $this->getForm($permissionProfile);
 
         if ($form->handleRequest($request)->isValid()) {
             try {
-                $dm->persist($userClearance);
+                $dm->persist($permissionProfile);
                 $dm->flush();
             } catch (\Exception $e) {
                 return new JsonResponse(array("status" => $e->getMessage()), 409);
             }
-            if (null === $userClearance) {
-                return $this->redirect($this->generateUrl('pumukitnewadmin_userclearance_list'));
+            if (null === $permissionProfile) {
+                return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list'));
             }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_userclearance_list'));
+            return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list'));
         }
 
         return array(
-                     'userclearance' => $userClearance,
+                     'permissionprofile' => $permissionProfile,
                      'form' => $form->createView()
                      );
     }
@@ -114,40 +114,40 @@ class UserClearanceController extends AdminController
     public function updateAction(Request $request)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
-        $userClearanceService = $this->get('pumukitschema.userclearance');
+        $permissionProfileService = $this->get('pumukitschema.permissionprofile');
         $config = $this->getConfiguration();
 
-        $userClearance = $this->findOr404($request);
-        $form     = $this->getForm($userClearance);
+        $permissionProfile = $this->findOr404($request);
+        $form     = $this->getForm($permissionProfile);
 
         if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
             try {
-                $userClearance = $userClearanceService->update($userClearance);
+                $permissionProfile = $permissionProfileService->update($permissionProfile);
             } catch (\Exception $e) {
                 return new JsonResponse(array("status" => $e->getMessage()), 409);
             }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_userclearance_list'));
+            return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list'));
         }
 
         return array(
-                     'userclearance' => $userClearance,
+                     'permissionprofile' => $permissionProfile,
                      'form' => $form->createView()
                      );
     }
 
     /**
      * Overwrite to get form with translations
-     * @param object|null $userClearance
+     * @param object|null $permissionProfile
      *
      * @return FormInterface
      */
-    public function getForm($userClearance = null)
+    public function getForm($permissionProfile = null)
     {
         $translator = $this->get('translator');
         $locale = $this->getRequest()->getLocale();
 
-        $form = $this->createForm(new UserClearanceType($translator, $locale), $userClearance);
+        $form = $this->createForm(new PermissionProfileType($translator, $locale), $permissionProfile);
 
         return $form;
     }
@@ -155,7 +155,7 @@ class UserClearanceController extends AdminController
     /**
      * Delete action
      *
-     * Overwrite to change default user clearance
+     * Overwrite to change default user permission
      * if the default one is being deleted
      */
     public function deleteAction(Request $request)
@@ -166,12 +166,12 @@ class UserClearanceController extends AdminController
         $changeDefault = $resource->isDefault();
 
         $this->get('pumukitschema.factory')->deleteResource($resource);
-        if ($resourceId === $this->get('session')->get('admin/userclearance/id')){
-            $this->get('session')->remove('admin/userclearance/id');
+        if ($resourceId === $this->get('session')->get('admin/permissionprofile/id')){
+            $this->get('session')->remove('admin/permissionprofile/id');
         }
 
-        $newDefault = $this->get('pumukitschema.userclearance')->checkDefault($resource);
+        $newDefault = $this->get('pumukitschema.permissionprofile')->checkDefault($resource);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_userclearance_list'));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list'));
     }
 }

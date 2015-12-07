@@ -11,8 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\Role;
-use Pumukit\SchemaBundle\Document\UserClearance;
-use Pumukit\SchemaBundle\Security\Clearance;
+use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Pumukit\SchemaBundle\Security\Permission;
 
 class PumukitInitRepoCommand extends ContainerAwareCommand
 {
@@ -24,14 +24,14 @@ class PumukitInitRepoCommand extends ContainerAwareCommand
     private $tagsPath = "../Resources/data/tags/";
     private $broadcastsPath = "../Resources/data/broadcasts/";
     private $rolesPath = "../Resources/data/roles/";
-    private $userClearancesPath = "../Resources/data/userclearances/";
+    private $permissionProfilesPath = "../Resources/data/permissionprofiles/";
 
     protected function configure()
     {
         $this
             ->setName('pumukit:init:repo')
             ->setDescription('Load Pumukit data fixtures to your database')
-            ->addArgument('repo', InputArgument::REQUIRED, 'Select the repo to init: tag, broadcast, role, userclearances, all')
+            ->addArgument('repo', InputArgument::REQUIRED, 'Select the repo to init: tag, broadcast, role, permissionprofiles, all')
             ->addArgument('file', InputArgument::OPTIONAL, 'Input CSV path')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
             ->setHelp(<<<EOT
@@ -70,8 +70,8 @@ EOT
                     $errorExecuting = $this->executeRoles($input, $output);
                     if (-1 === $errorExecuting) return -1;
                     break;
-                case "userclearance":
-                    $errorExecuting = $this->executeUserClearances($input, $output);
+                case "permissionprofile":
+                    $errorExecuting = $this->executePermissionProfiles($input, $output);
                     if (-1 === $errorExecuting) return -1;
                     break;
             }
@@ -156,22 +156,22 @@ EOT
         return 0;
     }
 
-    protected function executeUserClearances(InputInterface $input, OutputInterface $output)
+    protected function executePermissionProfiles(InputInterface $input, OutputInterface $output)
     {
         $finder = new Finder();
-        $finder->files()->in(__DIR__.'/'.$this->userClearancesPath);
+        $finder->files()->in(__DIR__.'/'.$this->permissionProfilesPath);
         $file = $input->getArgument('file');
         if ((0 == strcmp($file, "")) && (!$finder)) {
-            $output->writeln("<error>UserClearances: There's no data to initialize</error>");
+            $output->writeln("<error>PermissionProfiles: There's no data to initialize</error>");
 
             return -1;
         }
-        $this->removeUserClearances();
-        foreach ($finder as $userClearancesFile) {
-            $this->createFromFile($userClearancesFile, null, $output, 'userclearance');
+        $this->removePermissionProfiles();
+        foreach ($finder as $permissionProfilesFile) {
+            $this->createFromFile($permissionProfilesFile, null, $output, 'permissionprofile');
         }
         if ($file) {
-            $this->createFromFile($file, null, $output, 'userclearance');
+            $this->createFromFile($file, null, $output, 'permissionprofile');
         }
 
         return 0;
@@ -192,9 +192,9 @@ EOT
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Role')->remove(array());
     }
 
-    protected function removeUserClearances()
+    protected function removePermissionProfiles()
     {
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:UserClearance')->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:PermissionProfile')->remove(array());
     }
 
     protected function createRoot()
@@ -228,7 +228,7 @@ EOT
                 if ((('tag' === $repoName) && ($number == 6 || $number == 8)) || 
                     (('broadcast' === $repoName) && ($number == 5 || $number == 8)) || 
                     (('role' === $repoName) && ($number == 7 || $number == 10)) ||
-                    (('userclearance' === $repoName) && ($number == 6))){
+                    (('permissionprofile' === $repoName) && ($number == 6))){
                     //Check header rows
                     if (trim($currentRow[0]) == "id") {
                         continue;
@@ -257,10 +257,10 @@ EOT
                                 $idCodMapping[$currentRow[0]] = $role;
                                 $output->writeln("Role persisted - new id: ".$role->getId()." code: ".$role->getCod());
                                 break;
-                            case 'userclearance':
-                                $userClearance = $this->createUserClearanceFromCsvArray($currentRow);
-                                $idCodMapping[$currentRow[0]] = $userClearance;
-                                $output->writeln("UserClearance persisted - new id: ".$userClearance->getId()." name: ".$userClearance->getName());
+                            case 'permissionprofile':
+                                $permissionProfile = $this->createPermissionProfileFromCsvArray($currentRow);
+                                $idCodMapping[$currentRow[0]] = $permissionProfile;
+                                $output->writeln("PermissionProfile persisted - new id: ".$permissionProfile->getId()." name: ".$permissionProfile->getName());
                                 break;
                         }
                     } catch (\Exception $e) {
@@ -384,42 +384,42 @@ EOT
     }
 
     /**
-     * Create UserClearance from CSV array
+     * Create PermissionProfile from CSV array
      */
-    private function createUserClearanceFromCsvArray($csv_array)
+    private function createPermissionProfileFromCsvArray($csv_array)
     {
-        $userClearance = new UserClearance();
+        $permissionProfile = new PermissionProfile();
 
-        $userClearance->setName($csv_array[1]);
-        $userClearance->setSystem($csv_array[2]);
-        $userClearance->setDefault($csv_array[3]);
-        if (($csv_array[4] === UserClearance::SCOPE_GLOBAL) ||
-            ($csv_array[4] === UserClearance::SCOPE_PERSONAL) ||
-            ($csv_array[4] === UserClearance::SCOPE_NONE)) {
-            $userClearance->setScope($csv_array[4]);
+        $permissionProfile->setName($csv_array[1]);
+        $permissionProfile->setSystem($csv_array[2]);
+        $permissionProfile->setDefault($csv_array[3]);
+        if (($csv_array[4] === PermissionProfile::SCOPE_GLOBAL) ||
+            ($csv_array[4] === PermissionProfile::SCOPE_PERSONAL) ||
+            ($csv_array[4] === PermissionProfile::SCOPE_NONE)) {
+            $permissionProfile->setScope($csv_array[4]);
         }
-        foreach (array_filter(preg_split('/[,\s]+/', $csv_array[5])) as $clearance) {
-            if ($clearance === 'none') {
+        foreach (array_filter(preg_split('/[,\s]+/', $csv_array[5])) as $permission) {
+            if ($permission === 'none') {
                 break;
-            } elseif ($clearance === 'all') {
-                $userClearance = $this->addAllClearances($userClearance);
+            } elseif ($permission === 'all') {
+                $permissionProfile = $this->addAllPermissions($permissionProfile);
                 break;
-            } elseif (array_key_exists($clearance, Clearance::$clearanceDescription)) {
-                $userClearance->addClearance($clearance);
+            } elseif (array_key_exists($permission, Permission::$permissionDescription)) {
+                $permissionProfile->addPermission($permission);
             }
         }
 
-        $this->dm->persist($userClearance);
+        $this->dm->persist($permissionProfile);
 
-        return $userClearance;
+        return $permissionProfile;
     }
 
-    private function addAllClearances(UserClearance $userClearance)
+    private function addAllPermissions(PermissionProfile $permissionProfile)
     {
-        foreach (Clearance::$clearanceDescription as $key => $value) {
-            $userClearance->addClearance($key);
+        foreach (Permission::$permissionDescription as $key => $value) {
+            $permissionProfile->addPermission($key);
         }
 
-        return $userClearance;
+        return $permissionProfile;
     }
 }

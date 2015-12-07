@@ -5,18 +5,18 @@ namespace Pumukit\SchemaBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\UserClearanceRepository")
+ * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\PermissionProfileRepository")
  */
-class UserClearance
+class PermissionProfile
 {
     const SCOPE_GLOBAL = 'SCOPE_GLOBAL';
     const SCOPE_PERSONAL = 'SCOPE_PERSONAL';
     const SCOPE_NONE = 'SCOPE_NONE';
 
     public static $scopeDescription = array(
-                                            UserClearance::SCOPE_GLOBAL => 'Global Scope',
-                                            UserClearance::SCOPE_PERSONAL => 'Personal Scope',
-                                            UserClearance::SCOPE_NONE => 'No Scope'
+                                            PermissionProfile::SCOPE_GLOBAL => 'Global Scope',
+                                            PermissionProfile::SCOPE_PERSONAL => 'Personal Scope',
+                                            PermissionProfile::SCOPE_NONE => 'No Scope'
                                             );
 
     /**
@@ -35,11 +35,11 @@ class UserClearance
     private $name = "";
 
     /**
-     * @var array $clearances
+     * @var array $permissions
      *
      * @MongoDB\Collection
      */
-    private $clearances = array();
+    private $permissions = array();
 
     /**
      * @var boolean $system
@@ -93,49 +93,49 @@ class UserClearance
     }
 
     /**
-     * Set clearances
+     * Set permissions
      *
-     * @param array $clearances
+     * @param array $permissions
      */
-    public function setClearances(array $clearances)
+    public function setPermissions(array $permissions)
     {
-        $this->clearances = $clearances;
+        $this->permissions = $permissions;
     }
 
     /**
-     * Get clearances
+     * Get permissions
      *
      * @return array
      */
-    public function getClearances()
+    public function getPermissions()
     {
-        return $this->clearances;
+        return $this->permissions;
     }
 
     /**
-     * Add clearance
+     * Add permission
      *
-     * @param string $clearance
+     * @param string $permission
      */
-    public function addClearance($clearance)
+    public function addPermission($permission)
     {
-        $this->clearances[] = $clearance;
+        $this->permissions[] = $permission;
 
-        return $this->clearances = array_unique($this->clearances);
+        return $this->permissions = array_unique($this->permissions);
     }
 
     /**
-     * Remove clearance
+     * Remove permission
      *
-     * @param  string  $clearance
-     * @return boolean TRUE if this UserClearance contains the specified clearance, FALSE otherwise
+     * @param  string  $permission
+     * @return boolean TRUE if this PermissionProfile contains the specified permission, FALSE otherwise
      */
-    public function removeClearance($clearance)
+    public function removePermission($permission)
     {
-        $clearance = array_search($clearance, $this->clearances, true);
+        $permission = array_search($permission, $this->permissions, true);
 
-        if ($clearance !== false) {
-            unset($this->clearances[$clearance]);
+        if ($permission !== false) {
+            unset($this->permissions[$permission]);
 
             return true;
         }
@@ -144,36 +144,36 @@ class UserClearance
     }
 
     /**
-     * Contains clearance
+     * Contains permission
      *
-     * @param  string  $clearance
-     * @return boolean TRUE if this UserClearance contains the specified clearance, FALSE otherwise
+     * @param  string  $permission
+     * @return boolean TRUE if this PermissionProfile contains the specified permission, FALSE otherwise
      */
-    public function containsClearance($clearance)
+    public function containsPermission($permission)
     {
-        return in_array($clearance, $this->clearances, true);
+        return in_array($permission, $this->permissions, true);
     }
 
     /**
-     * Contains all clearances
+     * Contains all permissions
      *
-     * @param  array   $clearances
-     * @return boolean TRUE if this UserClearance contains all clearances, FALSE otherwise
+     * @param  array   $permissions
+     * @return boolean TRUE if this PermissionProfile contains all permissions, FALSE otherwise
      */
-    public function containsAllClearances(array $clearances)
+    public function containsAllPermissions(array $permissions)
     {
-        return count(array_intersect($clearances, $this->clearances)) === count($clearances);
+        return count(array_intersect($permissions, $this->permissions)) === count($permissions);
     }
 
     /**
-     * Contains any clearances
+     * Contains any permissions
      *
-     * @param  array   $clearances
-     * @return boolean TRUE if this UserClearance contains any clearance of the list, FALSE otherwise
+     * @param  array   $permissions
+     * @return boolean TRUE if this PermissionProfile contains any permission of the list, FALSE otherwise
      */
-    public function containsAnyClearance(array $clearances)
+    public function containsAnyPermission(array $permissions)
     {
-        return (count(array_intersect($clearances, $this->clearances)) != 0);
+        return (count(array_intersect($permissions, $this->permissions)) != 0);
     }
 
     /**
@@ -238,7 +238,7 @@ class UserClearance
 
     /**
      * Helper function to know if the
-     * UserClearance is a global scope
+     * PermissionProfile is a global scope
      *
      * @return boolean
      */
@@ -249,7 +249,7 @@ class UserClearance
 
     /**
      * Helper function to know if the
-     * UserClearance is a personal scope
+     * PermissionProfile is a personal scope
      *
      * @return boolean
      */
@@ -260,7 +260,7 @@ class UserClearance
 
     /**
      * Helper function to know if the
-     * UserClearance is a none scope
+     * PermissionProfile is a none scope
      *
      * @return boolean
      */

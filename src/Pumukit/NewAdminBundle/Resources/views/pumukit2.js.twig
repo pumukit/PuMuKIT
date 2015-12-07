@@ -173,12 +173,12 @@ window.submit_delete_series = function(id, seriesTitle, countMm)
     }
 }
 
-window.submit_delete_userclearance = function(id, userClearanceName)
+window.submit_delete_permissionprofile = function(id, permissionProfileName)
 {
-    if (window.confirm('{% trans %}Are you sure you want to delete the User Clearance{% endtrans %} "'+userClearanceName+'"?.')){
-        var url = "{{ path('pumukitnewadmin_userclearance_delete', {'id': '__id__'})|raw }}";
-        var message = '{% trans %}User Clearance{% endtrans %} "'+userClearanceName+'" {% trans %}successfully deleted{% endtrans %}.';
-        $('#list_userclearances').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
+    if (window.confirm('{% trans %}Are you sure you want to delete the Permission Profile{% endtrans %} "'+permissionProfileName+'"?.')){
+        var url = "{{ path('pumukitnewadmin_permissionprofile_delete', {'id': '__id__'})|raw }}";
+        var message = '{% trans %}Permission Profile{% endtrans %} "'+permissionProfileName+'" {% trans %}successfully deleted{% endtrans %}.';
+        $('#list_permissionprofiles').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
             if (textStatus !== "error") {
                 success(message);
             } else {
@@ -1716,22 +1716,22 @@ $(document).on('submit', '#pumukitnewadmin_user_form_create', function(event){
     return false;
 });
 
-$(document).on('submit', '#pumukitnewadmin_userclearance_form_create', function(event){
+$(document).on('submit', '#pumukitnewadmin_permissionprofile_form_create', function(event){
     $(event.currentTarget).find(':submit').prop('disabled', true);
     $('#myModal').modal('hide');
 
-    var route = '{{ path('pumukitnewadmin_userclearance_create') }}';
+    var route = '{{ path('pumukitnewadmin_permissionprofile_create') }}';
     $.ajax({
             url: route,
             method: 'POST',
             data: $(this).serialize(),
             success: function(response, textStatus, jqXHR){
                         if (jqXHR.responseText.indexOf('modal-header') != -1){
-                            var message = '{% trans %}There was an error in creating the User Clearance.{% endtrans %}';
+                            var message = '{% trans %}There was an error in creating the Permission Profile.{% endtrans %}';
                             no_success(message);
                         }else{
-                            $('#list_userclearances').html(response);
-                            var message = '{% trans %}User Clearance successfully created.{% endtrans %}';
+                            $('#list_permissionprofiles').html(response);
+                            var message = '{% trans %}Permission Profile successfully created.{% endtrans %}';
                             success(message);
                         }
             },

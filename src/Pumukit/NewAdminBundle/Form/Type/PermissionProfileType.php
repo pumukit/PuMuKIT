@@ -5,10 +5,10 @@ namespace Pumukit\NewAdminBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Pumukit\SchemaBundle\Document\UserClearance;
+use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class UserClearanceType extends AbstractType
+class PermissionProfileType extends AbstractType
 {
     private $translator;
     private $locale;
@@ -31,7 +31,7 @@ class UserClearanceType extends AbstractType
                   array('required' => false,
                         'label' => $this->translator->trans('Default', array(), null, $this->locale)))
             ->add('scope', 'choice',
-                  array('choices' => UserClearance::$scopeDescription,
+                  array('choices' => PermissionProfile::$scopeDescription,
                         'required' => false,
                         'label' => $this->translator->trans('Scope', array(), null, $this->locale)))
 ;
@@ -40,12 +40,12 @@ class UserClearanceType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-                                     'data_class' => 'Pumukit\SchemaBundle\Document\UserClearance',
+                                     'data_class' => 'Pumukit\SchemaBundle\Document\PermissionProfile',
                                      ));
     }
 
     public function getName()
     {
-        return 'pumukitnewadmin_userclearance';
+        return 'pumukitnewadmin_permissionprofile';
     }
 }
