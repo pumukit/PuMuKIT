@@ -86,14 +86,15 @@ class PermissionProfileService
      *
      * @param PermissionProfile $permissionProfile
      * @param string $permission
+     * @param boolean $executeFlush
      * @return PermissionProfile
      */
-    public function addPermission(PermissionProfile $permissionProfile, $permission='')
+    public function addPermission(PermissionProfile $permissionProfile, $permission='', $executeFlush=true)
     {
         if (array_key_exists($permission, Permission::$permissionDescription)) {
             $permissionProfile->addPermission($permission);
             $this->dm->persist($permissionProfile);
-            $this->dm->flush();
+            if ($executeFlush) $this->dm->flush();
         }
 
         return $permissionProfile;

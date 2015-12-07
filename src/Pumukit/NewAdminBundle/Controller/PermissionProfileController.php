@@ -174,4 +174,73 @@ class PermissionProfileController extends AdminController
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list'));
     }
+
+    /**
+     * Batch update action
+     */
+    public function batchUpdateAction(Request $request)
+    {
+        $checkedPairs = $this->getRequest()->get('checked_pairs');
+        $notCheckedPairs = $this->getRequest()->get('not_checked_pairs');
+
+        if ('string' === gettype($checkedPairs)){
+            $checkedPairs = json_decode($checkedPairs, true);
+        }
+        if ('string' === gettype($notCheckedPairs)){
+            $notCheckedPairs = json_decode($notCheckedPairs, true);
+        }
+
+        $config = $this->getConfiguration();
+
+        $permissionProfileService = $this->get('pumukitschema.permissionprofile');
+
+        foreach ($checkedPairs as $checkedPair) {
+            $data = $this->separateSystemPermissionProfilesIds($checkedPair);
+            if ($data['system']) continue;
+            $permissionProfile = $this->find($data['profileId']);
+            if (null == $permissionProfile) continue;
+            try {
+                $permissionProfile = $permissionProfileService->addPermission($permissionProfile, $data['permission'], false);
+            } catch (\Exception $e) {
+                return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
+            }
+        }
+
+        foreach ($notCheckedPairs as $notCheckedPair) {
+            $data = $this->separateSystemPermissionProfilesIds($notCheckedPair);
+            if ($data['system']) continue;
+            $permissionProfile = $this->find($data['profileId']);
+            if (null == $permissionProfile) continue;
+            try {
+                $permissionProfile = $permissionProfileService->removePermission($permissionProfile, $data['permission'], false);
+            } catch (\Exception $e) {
+                return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
+            }
+        }
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $dm->flush();
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list'));
+    }
+
+    private function separateSystemPermissionProfilesIds($pair='')
+    {
+        $data = array('system' => true, 'permission' => '', 'profileId' => '');
+        if ($pair) {
+            $output = explode('__', $pair);
+            if (array_key_exists(0, $output)) {
+                if ('0' === $output[0]) {
+                  $data['system'] = false;
+                }
+            }
+            if (array_key_exists(1, $output)) {
+                $data['permission'] = $output[1];
+            }
+            if (array_key_exists(2, $output)) {
+                $data['profileId'] = $output[2];
+            }
+        }
+
+        return $data;
+    }
 }
