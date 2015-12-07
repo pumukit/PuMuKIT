@@ -12,14 +12,7 @@
         {% include 'PumukitNewAdminBundle:PermissionProfile:list.html.twig' %}
       </div>
       <div class="row">
-        <div class="col-md-2">
-          <select id="options_permissionprofiles" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('permissionprofile', $(this), 'permissionprofiles');">
-            <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
-            <option disabled="">---</option>
-            <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
-          </select>
-        </div>
-        <div class="col-md-10 text-right">
+        <div class="col-md-12 text-right">
           <a href="{{ path('pumukitnewadmin_permissionprofile_create') }}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
         </div>
       </div>
