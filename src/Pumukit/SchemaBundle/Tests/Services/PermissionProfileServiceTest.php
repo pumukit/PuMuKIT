@@ -138,21 +138,27 @@ class PermissionProfileServiceTest extends WebTestCase
 
     public function testCheckDefault()
     {
+        $this->assertCount(0, $this->repo->findByDefault(true));
+        $this->assertCount(0, $this->repo->findByDefault(false));
+
         $permissions1 = array(Permission::ACCESS_DASHBOARD);
         $permissionProfile1 = new PermissionProfile();
         $permissionProfile1->setName('test1');
+        $permissionProfile1->setSystem(true);
         $permissionProfile1->setDefault(true);
         $permissionProfile1->setPermissions($permissions1);
 
         $permissions2 = array(Permission::ACCESS_DASHBOARD, Permission::ACCESS_ADVANCED_UPLOAD);
         $permissionProfile2 = new PermissionProfile();
         $permissionProfile2->setName('test2');
+        $permissionProfile2->setSystem(true);
         $permissionProfile2->setDefault(false);
         $permissionProfile2->setPermissions($permissions2);
 
         $permissions3 = array();
         $permissionProfile3 = new PermissionProfile();
         $permissionProfile3->setName('test3');
+        $permissionProfile3->setSystem(true);
         $permissionProfile3->setDefault(false);
         $permissionProfile3->setPermissions($permissions3);
 
@@ -161,6 +167,8 @@ class PermissionProfileServiceTest extends WebTestCase
         $this->dm->persist($permissionProfile3);
         $this->dm->flush();
 
+        $this->assertCount(1, $this->repo->findByDefault(true));
+        $this->assertCount(2, $this->repo->findByDefault(false));
         $this->assertEquals($permissionProfile1, $this->repo->findOneByDefault(true));
 
         $falseDefault = $this->repo->findByDefault(false);
@@ -177,6 +185,21 @@ class PermissionProfileServiceTest extends WebTestCase
         $this->assertTrue(in_array($permissionProfile1, $falseDefault));
         $this->assertTrue(in_array($permissionProfile2, $falseDefault));
         $this->assertFalse(in_array($permissionProfile3, $falseDefault));
+
+        $permissionProfile4 = new PermissionProfile();
+        $permissionProfile4->setName('test4');
+        $permissionProfile4->setSystem(false);
+        $permissionProfile4->setDefault(false);
+
+        $this->dm->persist($permissionProfile4);
+        $this->dm->flush();
+
+        $permissionProfile4->setDefault(true);
+        $permissionProfile4 = $this->permissionProfileService->update($permissionProfile4);
+
+        $this->assertCount(1, $this->repo->findByDefault(true));
+        $this->assertCount(3, $this->repo->findByDefault(false));
+        $this->assertEquals($permissionProfile4, $this->repo->findOneByDefault(true));
     }
 
     public function testSetDefaultPermissionProfile()

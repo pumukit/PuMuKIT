@@ -55,14 +55,17 @@ class PermissionProfileRepositoryTest extends WebTestCase
 
         $permissionProfile1 = new PermissionProfile();
         $permissionProfile1->setName('test1');
+        $permissionProfile1->setSystem(true);
         $permissionProfile1->setDefault(true);
 
         $permissionProfile2 = new PermissionProfile();
         $permissionProfile2->setName('test2');
+        $permissionProfile2->setSystem(true);
         $permissionProfile2->setDefault(false);
 
         $permissionProfile3 = new PermissionProfile();
         $permissionProfile3->setName('test3');
+        $permissionProfile3->setSystem(true);
         $permissionProfile3->setDefault(false);
 
         $this->dm->persist($permissionProfile1);
@@ -72,21 +75,21 @@ class PermissionProfileRepositoryTest extends WebTestCase
 
         $this->assertCount(1, $this->repo->findByDefault(true));
         $this->assertCount(2, $this->repo->findByDefault(false));
+        $this->assertEquals($permissionProfile1, $this->repo->findOneByDefault(true));
 
-        $this->repo->changeDefault();
+        $permissionProfile4 = new PermissionProfile();
+        $permissionProfile4->setName('test4');
+        $permissionProfile4->setSystem(false);
+        $permissionProfile4->setDefault(true);
 
-        $this->assertCount(0, $this->repo->findByDefault(true));
+        $this->dm->persist($permissionProfile4);
+        $this->dm->flush();
+
+        $this->repo->changeDefault($permissionProfile4);
+
+        $this->assertCount(1, $this->repo->findByDefault(true));
         $this->assertCount(3, $this->repo->findByDefault(false));
-
-        $this->repo->changeDefault(false);
-
-        $this->assertCount(3, $this->repo->findByDefault(true));
-        $this->assertCount(0, $this->repo->findByDefault(false));
-
-        $this->repo->changeDefault(true);
-
-        $this->assertCount(0, $this->repo->findByDefault(true));
-        $this->assertCount(3, $this->repo->findByDefault(false));
+        $this->assertEquals($permissionProfile4, $this->repo->findOneByDefault(true));
     }
 
     public function testFindDefaultCandidate()

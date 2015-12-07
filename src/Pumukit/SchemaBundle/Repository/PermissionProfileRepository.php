@@ -4,6 +4,7 @@ namespace Pumukit\SchemaBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use Pumukit\SchemaBundle\Security\Permission;
+use Pumukit\SchemaBundle\Document\PermissionProfile;
 
 /**
  * PermissionProfileRepository
@@ -16,11 +17,13 @@ class PermissionProfileRepository extends DocumentRepository
     /**
      * Change default
      *
+     * @param PermissionProfile $permissionProfile
      * @param boolean $default
      */
-    public function changeDefault($default=true)
+    public function changeDefault(PermissionProfile $permissionProfile, $default=true)
     {
         $this->createQueryBuilder()
+            ->field('name')->notEqual($permissionProfile->getName())
             ->update()
             ->multiple(true)
             ->field('default')->set(!$default)

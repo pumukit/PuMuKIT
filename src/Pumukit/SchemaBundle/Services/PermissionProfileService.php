@@ -29,10 +29,10 @@ class PermissionProfileService
      */
     public function update(PermissionProfile $permissionProfile)
     {
-        $default = $this->checkDefault($permissionProfile);
-
         $this->dm->persist($permissionProfile);
         $this->dm->flush();
+
+        $default = $this->checkDefault($permissionProfile);
 
         return $permissionProfile;
     }
@@ -49,7 +49,7 @@ class PermissionProfileService
     public function checkDefault(PermissionProfile $permissionProfile)
     {
         if ($permissionProfile->isDefault()) {
-            $this->repo->changeDefault();
+            $this->repo->changeDefault($permissionProfile);
         }
 
         $default = $this->repo->findOneByDefault(true);

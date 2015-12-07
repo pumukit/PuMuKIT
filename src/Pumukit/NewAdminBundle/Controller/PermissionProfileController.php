@@ -76,6 +76,7 @@ class PermissionProfileController extends AdminController
     public function createAction(Request $request)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
+        $permissionProfileService = $this->get('pumukitschema.permissionprofile');
         $config = $this->getConfiguration();
 
         $permissionProfile = new PermissionProfile();
@@ -83,8 +84,7 @@ class PermissionProfileController extends AdminController
 
         if ($form->handleRequest($request)->isValid()) {
             try {
-                $dm->persist($permissionProfile);
-                $dm->flush();
+                $permissionProfile = $permissionProfileService->update($permissionProfile);
             } catch (\Exception $e) {
                 return new JsonResponse(array("status" => $e->getMessage()), 409);
             }
