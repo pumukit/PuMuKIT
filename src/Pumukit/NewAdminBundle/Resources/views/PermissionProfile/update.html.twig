@@ -7,6 +7,7 @@
   <form autocomplete="off" id="pumukitnewadmin_permissionprofile_form_update"
         action="{{ path('pumukitnewadmin_permissionprofile_update', {'id': permissionprofile.id}) }}" method="POST">
     <fieldset>
+      <input type="hidden" name="permissionProfileId" id="permissionProfileId" value="{{ permissionprofile.id }}">
       {% for child in form %}
         {{ form_row(child) }}
       {% endfor %}

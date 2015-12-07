@@ -1745,6 +1745,37 @@ $(document).on('submit', '#pumukitnewadmin_permissionprofile_form_create', funct
     return false;
 });
 
+$(document).on('submit', '#pumukitnewadmin_permissionprofile_form_update', function(event){
+    $('#myModal').modal('hide');
+
+    var route = '{{ path('pumukitnewadmin_permissionprofile_update', {'id': '__permissionProfileId__'}) }}';
+    var permissionProfileId = $('#permissionProfileId').val();
+
+    route = route.replace('__permissionProfileId__', permissionProfileId);
+
+    $.ajax({
+            url: route,
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function(response, textStatus, jqXHR){
+                        if (jqXHR.responseText.indexOf('modal-header') != -1){
+                            var message = '{% trans %}There was an error in updating the Permission Profile.{% endtrans %}';
+                            no_success(message);
+                        }else{
+                            $('#list_permissionprofiles').html(response);
+                            var message = '{% trans %}Permission Profile successfully updated.{% endtrans %}';
+                            success(message);
+                        }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                        var responseText = jqXHR.responseText.split("<title>").pop().split("</title>").shift();
+                        var message = responseText.replace(/(\r\n|\n|\r)/gm,"");
+                        no_success(errorThrown+': '+textStatus+', '+message);
+            }
+    });
+    return false;
+});
+
 function test_material_form_url(url){
     $('.error').hide();
 
