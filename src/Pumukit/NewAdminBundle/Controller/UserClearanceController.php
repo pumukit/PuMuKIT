@@ -170,9 +170,7 @@ class UserClearanceController extends AdminController
             $this->get('session')->remove('admin/userclearance/id');
         }
 
-        if ($changeDefault) {
-            $newDefault = $this->get('pumukitschema.userclearance')->setDefaultUserClearance();
-        }
+        $newDefault = $this->get('pumukitschema.userclearance')->checkDefault($resource);
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_userclearance_list'));
     }
