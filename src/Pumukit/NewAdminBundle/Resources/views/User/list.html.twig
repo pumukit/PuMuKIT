@@ -53,22 +53,32 @@
 	          {% if user.username is not empty %}{{ user.username }}{% endif %}
           </td>
           <td>
+            {% spaceless %}
+            {% if user.getPermissionProfile() is not null %}{{ user.getPermissionProfile().getName() }},&nbsp;{% endif %}
             {% for role in user.roles %}
                 {% if 'ROLE_SUPER_ADMIN' == role %}
-                    {% trans %}Administrator{% endtrans %}
-                {% elseif 'ROLE_ADMIN' == role %}
-                    {% trans %}Administrator without publishing privileges{% endtrans %}
-                {% elseif 'ROLE_AUTO_PUBLISHER' == role %}
-                    {% trans %}Auto Publisher{% endtrans %}
-                {% elseif 'ROLE_USER' == role %}
-                    {% trans %}User{% endtrans %}
-                {% endif %}
-                {% spaceless %}
+                    {% trans %}System Administrator{% endtrans %}
                     {% if not loop.last %}
                         ,&nbsp;
-                    {% endif %} 
-                {% endspaceless %}
+                    {% endif %}
+                {% elseif 'ROLE_ADMIN' == role %}
+                    {% trans %}System Administrator without publishing privileges{% endtrans %}
+                    {% if not loop.last %}
+                        ,&nbsp;
+                    {% endif %}
+                {% elseif 'ROLE_AUTO_PUBLISHER' == role %}
+                    {% trans %}System Auto Publisher{% endtrans %}
+                    {% if not loop.last %}
+                        ,&nbsp;
+                    {% endif %}
+                {% elseif 'ROLE_USER' == role %}
+                    {% trans %}System User{% endtrans %}
+                    {% if not loop.last %}
+                        ,&nbsp;
+                    {% endif %}
+                {% endif %}
             {% endfor %}
+            {% endspaceless %}
           </td>
           <td>
 	          {% if user.email is not empty %}{{ user.email }}{% endif %}
