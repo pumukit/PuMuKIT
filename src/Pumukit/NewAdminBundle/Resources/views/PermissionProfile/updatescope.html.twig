@@ -1,8 +1,8 @@
 <div class="form-group">
   <div class="form-control-wrapper">
-    <select id="pumukitnewadmin_permissionprofile_scope" form="pumukitnewadmin_permissionprofile_table_form" name="pumukitnewadmin_permissionprofile[scope]" class="form-control"{{ permissionprofile.system ?'disabled="disabled"':'' }}>
+    <select id="pumukitnewadmin_permissionprofile_scope" form="pumukitnewadmin_permissionprofile_table_form" name="pumukitnewadmin_permissionprofile[scope]" class="form-control {{ permissionprofile.system ?'system':'not_system' }}"{{ permissionprofile.system ?'disabled="disabled"':'' }}>
       {% for key,scope in scopes %}
-      <option value="{{ key }}" {{ (permissionprofile.scope == key)?'selected="selected"':'' }}>{{ scope }}</option>
+      <option value="{{ key }}__{{ permissionprofile.id }}" {{ (permissionprofile.scope == key)?'selected="selected"':'' }}>{{ scope }}</option>
       {% endfor %}
     </select>
     <span class="material-input"></span>

@@ -50,7 +50,7 @@
           <td>
             <div class="checkbox{{ permissionprofile.system ? ' pmk_disabled_checkbox'}}">
               <label>
-                <input id="{{ permissionprofile.system ? '1':'0' }}__{{ key }}__{{ permissionprofile.id }}" form="pumukitnewadmin_permissionprofile_table_form" class="permission_permissionprofile_checkbox" type="checkbox" size="1"{{ permissionprofile.containsPermission(key) ? ' checked="checked"':'' }}{{ permissionprofile.system ? ' disabled="disabled"':'' }}>
+                <input id="{{ key }}__{{ permissionprofile.id }}" form="pumukitnewadmin_permissionprofile_table_form" class="{{ permissionprofile.system ? 'system':'not_system' }}_permission_permissionprofile_checkbox" type="checkbox" size="1"{{ permissionprofile.containsPermission(key) ? ' checked="checked"':'' }}{{ permissionprofile.system ? ' disabled="disabled"':'' }}>
               </label>
             </div>
           </td>
