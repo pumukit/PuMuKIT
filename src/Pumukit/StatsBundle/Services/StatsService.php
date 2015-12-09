@@ -147,6 +147,47 @@ class StatsService
         return $mostViewed;
     }
 
+
+    public function getMmobjRecordedGroupedBy($fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy)
+    {
+        $viewsLogColl = $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+        
+        $matchExtra = array();
+
+        if (!empty($criteria)) {
+            $mmobjIds = $this->getMmobjIdsWithCriteria($criteria);
+            $matchExtra['multimediaObject'] = array('$in' => $mmobjIds);
+        }
+
+        if (!$fromDate) {
+            $fromDate = new \DateTime();
+            $fromDate->setTime(0, 0, 0);
+        }
+        if (!$toDate) {
+            $toDate = new \DateTime();
+        }
+
+        $fromMongoDate = new \MongoDate($fromDate->format('U'), $fromDate->format('u'));
+        $toMongoDate = new \MongoDate($toDate->format('U'), $toDate->format('u'));
+
+        $pipeline[] = array('$match' => array_merge($matchExtra, array('record_date' => array('$gte' => $fromMongoDate,
+                                                                                        '$lte' => $toMongoDate, ))),
+        );
+        $mongoProjectDate = $this->getMongoProjectDateArray($groupBy, '$record_date');
+        $pipeline[] = array('$project' => array('date' => $mongoProjectDate));
+        $pipeline[] = array('$group' => array('_id' => '$date',
+                                              'numMmobjs' => array('$sum' => 1), ),
+        );
+        $pipeline[] = array('$sort' => array('_id' => $sort));
+        $pipeline[] = array('$skip' => $page * $limit);
+        $pipeline[] = array('$limit' => $limit);
+
+        $aggregation = $viewsLogColl->aggregate($pipeline);
+
+        return $aggregation->toArray();
+    }
+
+
     /**
      * Returns an array with the total number of views (all mmobjs) on a certain date range, grouped by hour/day/month/year.
      */
@@ -242,33 +283,38 @@ class StatsService
      * Returns an array for a mongo $project pipeline to create a date-formatted string with just the required fields.
      * It is used for grouping results in date ranges (hour/day/month/year).
      */
-    private function getMongoProjectDateArray($groupBy)
+    private function getMongoProjectDateArray($groupBy, $dateField = '$date')
     {
         $mongoProjectDate = array();
         switch ($groupBy) {
             case 'hour':
                 $mongoProjectDate[] = 'H';
-                $mongoProjectDate[] = array('$substr' => array('$date',0,2));
+                $mongoProjectDate[] = array('$substr' => array($dateField,0,2));
                 $mongoProjectDate[] = 'T';
             case 'day':
-                $mongoProjectDate[] = array('$substr' => array('$date',8,2));
+                $mongoProjectDate[] = array('$substr' => array($dateField,8,2));
                 $mongoProjectDate[] = '-';
             default: //If it doesn't exists, it's 'month'
             case 'month':
-                $mongoProjectDate[] = array('$substr' => array('$date',5,2));
+                $mongoProjectDate[] = array('$substr' => array($dateField,5,2));
                 $mongoProjectDate[] = '-';
             case 'year':
-                $mongoProjectDate[] = array('$substr' => array('$date',0,4));
+                $mongoProjectDate[] = array('$substr' => array($dateField,0,4));
                 break;
         }
 
         return array('$concat' => array_reverse($mongoProjectDate));
     }
 
+    /**
+     * Returns an array of MongoIds as results from the criteria.
+     */
     private function getMmobjIdsWithCriteria($criteria)
     {
         $mmobjIds = $this->repo->createQueryBuilder()->addAnd($criteria)->distinct('_id')->getQuery()->execute()->toArray();
 
         return $mmobjIds;
     }
+
+
 }
