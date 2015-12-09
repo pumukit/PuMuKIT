@@ -20,6 +20,11 @@ class User extends BaseUser
     protected $id;
 
     /**
+     * @MongoDB\ReferenceOne(targetDocument="PermissionProfile", simple=true)
+     */
+    private $permissionProfile;
+
+    /**
      * @MongoDB\ReferenceOne(targetDocument="Person", inversedBy="user", simple=true)
      */
     private $person;
@@ -34,6 +39,26 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
+    }
+
+    /**
+     * Set permission profile
+     *
+     * @param PermissionProfile $permissionProfile
+     */
+    public function setPermissionProfile(PermissionProfile $permissionProfile)
+    {
+        $this->permissionProfile = $permissionProfile;
+    }
+
+    /**
+     * Get permission profile
+     *
+     * @return PermissionProfile $permissionProfile
+     */
+    public function getPermissionProfile()
+    {
+        return $this->permissionProfile;
     }
 
     /**
