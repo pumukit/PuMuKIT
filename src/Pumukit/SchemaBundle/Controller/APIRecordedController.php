@@ -5,7 +5,6 @@ namespace Pumukit\SchemaBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
@@ -19,11 +18,6 @@ class APIRecordedController extends Controller
      */
     public function mmobjRecordedAction(Request $request)
     {
-        $mmRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $seriesRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:series');
-        $liveRepo = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Live');
-
-        $viewsRepo = $this->get('doctrine_mongodb')->getRepository('PumukitStatsBundle:ViewsLog');
         $serializer = $this->get('serializer');
         $recordsService = $this->get('pumukit_stats.stats');
 
@@ -47,7 +41,69 @@ class APIRecordedController extends Controller
         $data = $serializer->serialize($views, $request->getRequestFormat());
 
         return new Response($data);
+    }
 
+    /**
+     * @Route("/series/num_recorded.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     * @Route("/series/recorded.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     * @Route("/series/published.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     */
+    public function seriesRecordedAction(Request $request)
+    {
+        $serializer = $this->get('serializer');
+        $recordsService = $this->get('pumukit_stats.stats');
+
+        list($criteria, $sort, $fromDate, $toDate, $limit, $page) = $this->processRequestData($request);
+
+        $groupBy = $request->get('group_by') ?: 'month';
+
+        $views = $recordsService->getSeriesRecordedGroupedBy($fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
+
+        $views = array(
+            'limit' => $limit,
+            'page' => $page,
+            'criteria' => $criteria,
+            'sort' => $sort,
+            'group_by' => $groupBy,
+            'fromDate' => $fromDate,
+            'toDate' => $toDate,
+            'views' => $views,
+        );
+
+        $data = $serializer->serialize($views, $request->getRequestFormat());
+
+        return new Response($data);
+    }
+
+    /**
+     * @Route("/hours/num_recorded.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     * @Route("/hours/recorded.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     */
+    public function hoursRecordedAction(Request $request)
+    {
+        $serializer = $this->get('serializer');
+        $recordsService = $this->get('pumukit_stats.stats');
+
+        list($criteria, $sort, $fromDate, $toDate, $limit, $page) = $this->processRequestData($request);
+
+        $groupBy = $request->get('group_by') ?: 'month';
+
+        $views = $recordsService->getHoursRecordedGroupedBy($fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
+
+        $views = array(
+            'limit' => $limit,
+            'page' => $page,
+            'criteria' => $criteria,
+            'sort' => $sort,
+            'group_by' => $groupBy,
+            'fromDate' => $fromDate,
+            'toDate' => $toDate,
+            'views' => $views,
+        );
+
+        $data = $serializer->serialize($views, $request->getRequestFormat());
+
+        return new Response($data);
     }
 
     protected function processRequestData(Request $request)
