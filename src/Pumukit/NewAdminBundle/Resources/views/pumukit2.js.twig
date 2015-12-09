@@ -1787,21 +1787,27 @@ $(document).on('click', '#pumukitnewadmin_permissionprofile_update_cancel', func
 
 processPermissionProfilesOk = function(){
     $('#remember_save_permissionprofile').hide();
-    var checked_pairs = [];
-    $('.permission_permissionprofile_checkbox:checked').each(function(){
+    var selected_scopes = [];
+    $('select.not_system option:selected').each(function(){
             var $this = $(this);
-            checked_pairs.push($this.attr("id"));
+            selected_scopes.push($this.attr("value"));
     });
-    var not_checked_pairs = [];
-    $('.permission_permissionprofile_checkbox:not(:checked)').each(function(){
+    var checked_permissions = [];
+    $('.not_system_permission_permissionprofile_checkbox:checked').each(function(){
             var $this = $(this);
-            not_checked_pairs.push($this.attr("id"));
+            checked_permissions.push($this.attr("id"));
+    });
+    var not_checked_permissions = [];
+    $('.not_system_permission_permissionprofile_checkbox:not(:checked)').each(function(){
+            var $this = $(this);
+            not_checked_permissions.push($this.attr("id"));
     });
 
-    var message = '{% trans %}Permission Profiles successfully deleted.{% endtrans %}';
-    var route = '{{ path('pumukitnewadmin_permissionprofile_batch_update', {'checked_pairs': '__checked_pairs__', 'not_checked_pairs': '__not_checked_pairs__'})|raw }}';
-    route = route.replace('__checked_pairs__', JSON.stringify(checked_pairs));
-    route = route.replace('__not_checked_pairs__', JSON.stringify(not_checked_pairs));
+    var message = '{% trans %}Permission Profiles successfully updated.{% endtrans %}';
+    var route = '{{ path('pumukitnewadmin_permissionprofile_batch_update', {'selected_scopes': '__selected_scopes__', 'checked_permissions': '__checked_permissions__', 'not_checked_permissions': '__not_checked_permissions__'})|raw }}';
+    route = route.replace('__selected_scopes__', JSON.stringify(selected_scopes));
+    route = route.replace('__checked_permissions__', JSON.stringify(checked_permissions));
+    route = route.replace('__not_checked_permissions__', JSON.stringify(not_checked_permissions));
     $.ajax({
             url: route,
             type: 'POST',
