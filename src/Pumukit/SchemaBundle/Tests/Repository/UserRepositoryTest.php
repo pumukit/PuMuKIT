@@ -44,8 +44,8 @@ class UserRepositoryTest extends WebTestCase
     {
         $user = new User();
 
-        $user->setEmail($email);
-        $user->setUsername($name);
+        $user->setEmail('test@mail.com');
+        $user->setUsername('test');
 
         $this->dm->persist($user);
         $this->dm->flush();
