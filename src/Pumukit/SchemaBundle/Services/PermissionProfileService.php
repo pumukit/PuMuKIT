@@ -137,4 +137,14 @@ class PermissionProfileService
 
         return $permissionProfile;
     }
+
+    /**
+     * Get Default
+     *
+     * @return PermissionProfile
+     */
+    public function getDefault()
+    {
+        return $this->repo->findOneByDefault(true);
+    }
 }
