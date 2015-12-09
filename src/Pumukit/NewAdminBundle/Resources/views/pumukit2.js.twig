@@ -1787,6 +1787,11 @@ $(document).on('click', '#pumukitnewadmin_permissionprofile_update_cancel', func
 
 processPermissionProfilesOk = function(){
     $('#remember_save_permissionprofile').hide();
+    var selected_default = '';
+    $('input.pumukitnewadmin_permissionprofile_default:checked').each(function(){
+            var $this = $(this);
+            selected_default = $this.attr("value");
+    });
     var selected_scopes = [];
     $('select.not_system option:selected').each(function(){
             var $this = $(this);
@@ -1804,7 +1809,8 @@ processPermissionProfilesOk = function(){
     });
 
     var message = '{% trans %}Permission Profiles successfully updated.{% endtrans %}';
-    var route = '{{ path('pumukitnewadmin_permissionprofile_batch_update', {'selected_scopes': '__selected_scopes__', 'checked_permissions': '__checked_permissions__', 'not_checked_permissions': '__not_checked_permissions__'})|raw }}';
+    var route = '{{ path('pumukitnewadmin_permissionprofile_batch_update', {'selected_default': '__selected_default__', 'selected_scopes': '__selected_scopes__', 'checked_permissions': '__checked_permissions__', 'not_checked_permissions': '__not_checked_permissions__'})|raw }}';
+    route = route.replace('__selected_default__', selected_default);
     route = route.replace('__selected_scopes__', JSON.stringify(selected_scopes));
     route = route.replace('__checked_permissions__', JSON.stringify(checked_permissions));
     route = route.replace('__not_checked_permissions__', JSON.stringify(not_checked_permissions));

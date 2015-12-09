@@ -183,6 +183,7 @@ class PermissionProfileController extends AdminController
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $repo = $dm->getRepository('PumukitSchemaBundle:PermissionProfile');
 
+        $selectedDefault = $this->getRequest()->get('selected_default');
         $selectedScopes = $this->getRequest()->get('selected_scopes');
         $checkedPermissions = $this->getRequest()->get('checked_permissions');
         $notCheckedPermissions = $this->getRequest()->get('not_checked_permissions');
@@ -201,8 +202,14 @@ class PermissionProfileController extends AdminController
 
         $permissionProfileService = $this->get('pumukitschema.permissionprofile');
 
+        $newDefaultPermissionProfile = $this->find($selectedDefault);
+        if (null != $newDefaultPermissionProfile) {
+            if (!$newDefaultPermissionProfile->isDefault()) {
+                $newDefaultPermissionProfile->setDefault(true);
+                $newDefaultPermissionProfile = $permissionProfileService->update($newDefaultPermissionProfile);
+            }
+        }
         $notSystemPermissionProfiles = $repo->findBySystem(false);
-
         foreach ($selectedScopes as $selectedScope) {
             $data = $this->separateAttributePermissionProfilesIds($selectedScope);
             $permissionProfile = $this->findPermissionProfile($notSystemPermissionProfiles, $data['profileId']);
