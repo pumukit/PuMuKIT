@@ -1,13 +1,14 @@
 <div class="table-responsive well">
-    <div class="row" style="display:none;" id="remember_save_permissionprofile">
+    <div class="row">
       <div class="col-md-6">
 	    <div>
-          <span class="alert alert-dismissable alert-danger">{% trans %}Press OK for changes to take effect{% endtrans %}</span> &nbsp;
+          <span style="display:none;" id="remember_save_permissionprofile" class="alert alert-dismissable alert-danger">{% trans %}Press SAVE for changes to take effect{% endtrans %}</span> &nbsp;
         </div>
       </div>
       <div class="col-md-6 text-right">
         <button id="pumukitnewadmin_permissionprofile_update_cancel" type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button>
-        <button id="pumukitnewadmin_permissionprofile_update_ok" type="submit" class="btn btn-pumukit btn-raised" onclick="return processPermissionProfilesOk();">{% trans %}OK{% endtrans %}</button>
+        <button id="pumukitnewadmin_permissionprofile_update_ok" type="submit" class="btn btn-primary btn-raised" onclick="return processPermissionProfilesOk();">{% trans %}Save{% endtrans %}</button>
+        <a href="{{ path('pumukitnewadmin_permissionprofile_create') }}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
       </div>
     </div>
     <form autocomplete="off" method="POST" id="pumukitnewadmin_permissionprofile_table_form">
