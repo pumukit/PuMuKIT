@@ -29,9 +29,12 @@ class UserController extends AdminController
         $form = $this->getForm($user);
 
         if ($form->handleRequest($request)->isValid()) {
-            $user = $this->domainManager->create($user);
-            $user = $this->get('pumukitschema.person')->referencePersonIntoUser($user);
-
+            try {
+                $user = $this->get('pumukitschema.user')->create($user);
+                $user = $this->get('pumukitschema.person')->referencePersonIntoUser($user);
+            } catch (\Exception $e) {
+              throw $e;
+            }
             if ($this->config->isApiRequest()) {
                 return $this->handleView($this->view($user, 201));
             }
@@ -69,15 +72,18 @@ class UserController extends AdminController
         $form = $this->getForm($user);
 
         if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
-            $response = $this->isAllowedToBeUpdated($user);
-            if ($response instanceof Response) {
-                return $response;
+            try {
+                $response = $this->isAllowedToBeUpdated($user);
+                if ($response instanceof Response) {
+                    return $response;
+                }
+                // false to not flush
+                $userManager->updateUser($user, false);
+                // To update aditional fields added
+                $user = $this->get('pumukitschema.user')->update($user);
+            } catch (\Exception $e) {
+                throw $e;
             }
-            // false to not flush
-            $userManager->updateUser($user, false);
-            // To update aditional fields added
-            $this->domainManager->update($user);
-
             if ($this->config->isApiRequest()) {
                 return $this->handleView($this->view($user, 204));
             }
