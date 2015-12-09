@@ -18,7 +18,6 @@ class StatsService
         $this->repoSeries = $this->dm->getRepository('PumukitSchemaBundle:Series');
     }
 
-
     public function doGetMostViewed(array $criteria = array(), $days = 30, $limit = 3)
     {
         $ids = array();
@@ -69,8 +68,9 @@ class StatsService
         return $this->doGetMostViewed($filters, $days, $limit);
     }
 
-
-
+    /**
+     * Returns an array of mmobj viewed on the given range and its number of views on that range.
+     */
     public function getMmobjsMostViewedByRange(\DateTime $fromDate = null, \DateTime $toDate = null, $limit = 10, array $criteria = array(), $sort = -1)
     {
         $ids = array();
@@ -109,6 +109,9 @@ class StatsService
     }
 
 
+    /**
+     * Returns an array of series viewed on the given range and its number of views on that range.
+     */
     public function getSeriesMostViewedByRange(\DateTime $fromDate = null, \DateTime $toDate = null, $limit = 10, array $criteria = array(), $sort = -1)
     {
         $ids = array();
@@ -146,18 +149,28 @@ class StatsService
         return $mostViewed;
     }
 
+
+    /**
+     * Returns an array with the total number of views (all mmobjs) on a certain date range, grouped by hour/day/month/year
+     */
     public function getTotalViewedGrouped(\DateTime $fromDate = null, \DateTime $toDate = null, $limit = 10, array $criteria = array(), $sort = -1, $groupBy = 'month')
     {
         $aggregation = $this->getGroupedByAggrPipeline($fromDate, $toDate, $limit, $sort, $groupBy);
         return $aggregation->toArray();
     }
 
+    /**
+     * Returns an array with the number of views for a mmobj on a certain date range, grouped by hour/day/month/year
+     */
     public function getTotalViewedGroupedByMmobj(\MongoId $mmobjId,\DateTime $fromDate = null, \DateTime $toDate = null, $limit = 10, array $criteria = array(), $sort = -1, $groupBy = 'month')
     {
         $aggregation = $this->getGroupedByAggrPipeline($fromDate, $toDate, $limit, $sort, $groupBy, array('multimediaObject' => $mmobjId));
         return $aggregation->toArray();
     }
-
+    
+    /**
+     * Returns an array with the total number of views for a series on a certain date range, grouped by hour/day/month/year
+     */
     public function getTotalViewedGroupedBySeries(\MongoId $seriesId,\DateTime $fromDate = null, \DateTime $toDate = null, $limit = 10, array $criteria = array(), $sort = -1, $groupBy = 'month')
     {
         $aggregation = $this->getGroupedByAggrPipeline($fromDate, $toDate, $limit, $sort, $groupBy, array('series' => $seriesId));
@@ -165,7 +178,7 @@ class StatsService
     }
 
     /**
-     * Returns an aggregation pipeline array with all necessary data
+     * Returns an aggregation pipeline array with all necessary data to form a num_views array grouped by hour/day/...
      */
     public function getGroupedByAggrPipeline($fromDate = null, $toDate = null, $limit = 100, $sort = -1, $groupBy = 'month', $matchExtra = array())
     {
@@ -208,10 +221,10 @@ class StatsService
      */
     private function aggrPipeAddProjectGroupDate($pipeline, $groupBy)
     {
-        $mongoProject = $this->getMongoProjectArray($groupBy);
-        $pipeline[] = array('$project' => array('date' => array('$concat' => $mongoProject)));
+        $mongoProjectDate = $this->getMongoProjectDateArray($groupBy);
+        $pipeline[] = array('$project' => array('date' => $mongoProjectDate));
         $pipeline[] = array('$group' => array('_id' => '$date',
-                                'numView' => array('$sum' => 1))
+                                              'numView' => array('$sum' => 1))
         );
         return $pipeline;
     }
@@ -235,11 +248,11 @@ class StatsService
     }
 
     /**
-     * Returns a 'mongoProject' to turn a date into an date-formatted string with only the required fields.
+     * Returns an array for a mongo $project pipeline to create a date-formatted string with just the required fields.
+     * It is used for grouping results in date ranges (hour/day/month/year)
      */
-    //TEMP NAME
-    private function getMongoProjectArray($groupBy) {
-        $mongoProject = array();
+    private function getMongoProjectDateArray($groupBy) {
+        $mongoProjectDate = array();
         switch($groupBy) {
             case 'hour':
                 $mongoProject[] = 'H';
@@ -257,7 +270,6 @@ class StatsService
                 break;
         }
 
-        return array_reverse($mongoProject);        
+        return array('$concat' => array_reverse($mongoProjectDate));
     }
-
 }
