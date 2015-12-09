@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 class UserService
 {
     private $dm;
+    private $repo;
     private $securityContext;
     private $autoPublisherDeleteOwners;
 
@@ -24,6 +25,7 @@ class UserService
     public function __construct(DocumentManager $documentManager, SecurityContext $securityContext, $autoPublisherDeleteOwners=false)
     {
         $this->dm = $documentManager;
+        $this->repo = $this->dm->getRepository('PumukitSchemaBundle:User');
         $this->securityContext = $securityContext;
         $this->autoPublisherDeleteOwners = $autoPublisherDeleteOwners;
     }
@@ -225,5 +227,79 @@ class UserService
         }
 
         return false;
+    }
+
+    /**
+     * Update user
+     */
+    public function create(User $user)
+    {
+        if (null != ($permissionProfile = $user->getPermissionProfile())) {
+            $user = $this->addRoles($user, $permissionProfile->getPermissions(), false);
+        }
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        return $user;
+    }
+
+    /**
+     * Update user
+     */
+    public function update(User $user)
+    {
+        $permissionProfile = $user->getPermissionProfile();
+        if (null != $permissionProfile) {
+            if ($user->getRoles() !== $permissionProfile->getPermissions()) {
+                $user = $this->removeRoles($user, $user->getRoles(), false);
+                $user = $this->addRoles($user, $permissionProfile->getPermissions(), false);
+            }
+        }
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        return $user;
+    }
+
+    /**
+     * Add roles
+     *
+     * @param User $user
+     * @paran array $permissions
+     * @param boolean $executeFlush
+     * @return User
+     */
+    public function addRoles(User $user, $permissions = array(), $executeFlush = true)
+    {
+        foreach ($permissions as $permission) {
+            if (!$user->hasRole($permission)) {
+                $user->addRole($permission);
+            }
+        }
+        $this->dm->persist($user);
+        if ($executeFlush) $this->dm->flush();
+
+        return $user;
+    }
+
+    /**
+     * Remove roles
+     *
+     * @param User $user
+     * @paran array $permissions
+     * @param boolean $executeFlush
+     * @return User
+     */
+    public function removeRoles(User $user, $permissions = array(), $executeFlush = true)
+    {
+        foreach ($permissions as $permission) {
+            if ($user->hasRole($permission) && ($permission !== 'ROLE_USER')) {
+                $user->removeRole($permission);
+            }
+        }
+        $this->dm->persist($user);
+        if ($executeFlush) $this->dm->flush();
+
+        return $user;
     }
 }
