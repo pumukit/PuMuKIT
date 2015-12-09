@@ -12,8 +12,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
  */
 class APIController extends Controller
 {
-    private $MAX_LIMIT = 500;
-
     /**
      * @Route("/mmobj/most_viewed.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
      */
@@ -25,10 +23,11 @@ class APIController extends Controller
 
         list($criteria, $sort, $fromDate, $toDate, $limit, $page) = $this->processRequestData($request);
 
-        $mmobjs = $viewsService->getMmobjsMostViewedByRange($fromDate, $toDate, $limit, $criteria, $sort);
+        $mmobjs = $viewsService->getMmobjsMostViewedByRange($fromDate, $toDate, $limit, $page, $criteria, $sort);
 
         $views = array(
             'limit' => $limit,
+            'page' => $page, 
             'criteria' => $criteria,
             'sort' => $sort,
             'fromDate' => $fromDate,
@@ -52,7 +51,7 @@ class APIController extends Controller
 
         list($criteria, $sort, $fromDate, $toDate, $limit, $page) = $this->processRequestData($request);
 
-        $series = $viewsService->getSeriesMostViewedByRange($fromDate, $toDate, $limit, $criteria, $sort);
+        $series = $viewsService->getSeriesMostViewedByRange($fromDate, $toDate, $limit, $page, $criteria, $sort);
 
         $views = array(
             'limit' => $limit,
@@ -82,10 +81,11 @@ class APIController extends Controller
 
         $groupBy = $request->get('group_by') ?: 'month';
 
-        $views = $viewsService->getTotalViewedGrouped($fromDate, $toDate, $limit, $criteria, $sort, $groupBy);
+        $views = $viewsService->getTotalViewedGrouped($fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
 
         $views = array(
             'limit' => $limit,
+            'page' => $page,
             'criteria' => $criteria,
             'sort' => $sort,
             'group_by' => $groupBy,
@@ -114,10 +114,11 @@ class APIController extends Controller
 
         $groupBy = $request->get('group_by');
 
-        $views = $viewsService->getTotalViewedGroupedByMmobj(new \MongoId($mmobjId), $fromDate, $toDate, $limit, $criteria, $sort, $groupBy);
+        $views = $viewsService->getTotalViewedGroupedByMmobj(new \MongoId($mmobjId), $fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
 
         $views = array(
             'limit' => $limit,
+            'page' => $page,
             'criteria' => $criteria,
             'sort' => $sort,
             'group_by' => $groupBy,
@@ -147,10 +148,11 @@ class APIController extends Controller
 
         $groupBy = $request->get('group_by') ?: 'month';
 
-        $views = $viewsService->getTotalViewedGroupedBySeries(new \MongoId($seriesId), $fromDate, $toDate, $limit, $criteria, $sort, $groupBy);
+        $views = $viewsService->getTotalViewedGroupedBySeries(new \MongoId($seriesId), $fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
 
         $views = array(
             'limit' => $limit,
+            'page' => $page,
             'criteria' => $criteria,
             'sort' => $sort,
             'group_by' => $groupBy,
@@ -167,17 +169,18 @@ class APIController extends Controller
 
     protected function processRequestData(Request $request)
     {
+        $MAX_LIMIT = 500;
         //Request variables.
         $criteria = $request->get('criteria') ?: array();
         $sort = intval($request->get('sort'));
         $fromDate = $request->get('from_date');
         $toDate = $request->get('to_date');
         $limit = intval($request->get('limit'));
-        $page = $request->get('page') ?: 0;
+        $page = intval($request->get('page')) ?: 0;
 
         //Processing variables.
-        if (!$limit || $limit > $this->MAX_LIMIT) {
-            $limit = $this->MAX_LIMIT;
+        if (!$limit || $limit > $MAX_LIMIT) {
+            $limit = $MAX_LIMIT;
         }
 
         if (!in_array($sort, array(1, -1))) {
