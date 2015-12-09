@@ -249,11 +249,10 @@ class UserService
     public function update(User $user)
     {
         $permissionProfile = $user->getPermissionProfile();
-        if (null != $permissionProfile) {
-            if ($user->getRoles() !== $permissionProfile->getPermissions()) {
-                $user = $this->removeRoles($user, $user->getRoles(), false);
-                $user = $this->addRoles($user, $permissionProfile->getPermissions(), false);
-            }
+        if (null == $permissionProfile) throw new \Exception('The User "'.$user->getUsername().'" has no Permission Profile assigned.');
+        if ($user->getRoles() !== $permissionProfile->getPermissions()) {
+            $user = $this->removeRoles($user, $user->getRoles(), false);
+            $user = $this->addRoles($user, $permissionProfile->getPermissions(), false);
         }
         $this->dm->persist($user);
         $this->dm->flush();
@@ -293,7 +292,7 @@ class UserService
     public function removeRoles(User $user, $permissions = array(), $executeFlush = true)
     {
         foreach ($permissions as $permission) {
-            if ($user->hasRole($permission) && ($permission !== 'ROLE_USER')) {
+            if ($user->hasRole($permission) && (false === strpos('ROLE_', $permission))) {
                 $user->removeRole($permission);
             }
         }
