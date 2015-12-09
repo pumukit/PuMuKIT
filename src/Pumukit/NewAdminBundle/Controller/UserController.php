@@ -24,8 +24,14 @@ class UserController extends AdminController
     public function createAction(Request $request)
     {
         $config = $this->getConfiguration();
+        $permissionProfileService = $this->get('pumukitschema.permissionprofile');
 
-        $user = $this->createNew();
+        $user = new User();
+        $defaultPermissionProfile = $permissionProfileService->getDefault();
+        if (null == $defaultPermissionProfile) {
+            throw new \Exception('Unable to assign a Permission Profile to the new User. There is no default Permission Profile');
+        }
+        $user->setPermissionProfile($defaultPermissionProfile);
         $form = $this->getForm($user);
 
         if ($form->handleRequest($request)->isValid()) {
@@ -33,7 +39,7 @@ class UserController extends AdminController
                 $user = $this->get('pumukitschema.user')->create($user);
                 $user = $this->get('pumukitschema.person')->referencePersonIntoUser($user);
             } catch (\Exception $e) {
-              throw $e;
+                throw $e;
             }
             if ($this->config->isApiRequest()) {
                 return $this->handleView($this->view($user, 201));
