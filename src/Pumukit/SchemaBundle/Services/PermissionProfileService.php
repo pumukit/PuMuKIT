@@ -105,14 +105,34 @@ class PermissionProfileService
      *
      * @param PermissionProfile $permissionProfile
      * @param string $permission
+     * @param boolean $executeFlush
      * @return PermissionProfile
      */
-    public function removePermission(PermissionProfile $permissionProfile, $permission='')
+    public function removePermission(PermissionProfile $permissionProfile, $permission='', $executeFlush=true)
     {
         if ($permissionProfile->containsPermission($permission)) {
             $permissionProfile->removePermission($permission);
-            $this->dm->persist($permissionProfile);
+            if ($executeFlush) $this->dm->persist($permissionProfile);
             $this->dm->flush();
+        }
+
+        return $permissionProfile;
+    }
+
+    /**
+     * Set scope
+     *
+     * @param PermissionProfile $permissionProfile
+     * @param string $scope
+     * @param boolean $executeFlush
+     * @return PermissionProfile
+     */
+    public function setScope(PermissionProfile $permissionProfile, $scope='', $executeFlush=true)
+    {
+        if (array_key_exists($scope, PermissionProfile::$scopeDescription)) {
+            $permissionProfile->setScope($scope);
+            $this->dm->persist($permissionProfile);
+            if ($executeFlush) $this->dm->flush();
         }
 
         return $permissionProfile;
