@@ -32,6 +32,15 @@
         </tr>
         {% endif %}
         <tr>
+          <td>{% trans %}Default{% endtrans %}</td>
+          {% for permissionprofile in permissionprofiles %}
+          <td></td>
+          <td>
+            {% include 'PumukitNewAdminBundle:PermissionProfile:updatedefault.html.twig' %}
+          </td>
+          {% endfor %}
+        </tr>
+        <tr>
           <td>{% trans %}Scope{% endtrans %}</td>
           {% for permissionprofile in permissionprofiles %}
           <td></td>
