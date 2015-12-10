@@ -6,6 +6,7 @@ use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Pumukit\SchemaBundle\Security\Permission;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\Security\Core\SecurityContext;
 
@@ -260,7 +261,7 @@ class UserService
         $permissionProfile = $user->getPermissionProfile();
         if (null == $permissionProfile) throw new \Exception('The User "'.$user->getUsername().'" has no Permission Profile assigned.');
         /** NOTE: User roles have:
-           - ROLE_USER, ROLE_SUPER_ADMIN
+           - ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_USER
            - permission profile roles
            - permission profile scope
         */
@@ -311,7 +312,7 @@ class UserService
     public function removeRoles(User $user, $permissions = array(), $executeFlush = true)
     {
         foreach ($permissions as $permission) {
-            if ($user->hasRole($permission) && (false === strpos($permission, 'ROLE_'))) {
+            if ($user->hasRole($permission) && (in_array($permission, array_keys(Permission::$permissionDescription)))) {
                 $user->removeRole($permission);
             }
         }
@@ -360,10 +361,7 @@ class UserService
     {
         $userPermissions = array();
         foreach ($userRoles as $userRole) {
-            if ((false === strpos($userRole, 'ROLE_')) &&
-                ($userRole !== PermissionProfile::SCOPE_GLOBAL) &&
-                ($userRole !== PermissionProfile::SCOPE_PERSONAL) &&
-                ($userRole !== PermissionProfile::SCOPE_NONE)) {
+            if (in_array($userRole, array_keys(Permission::$permissionDescription))) {
                 $userPermissions[] = $userRole;
             }
         }
@@ -396,9 +394,7 @@ class UserService
     public function getUserScope($userRoles = array())
     {
         foreach ($userRoles as $userRole) {
-            if (($userRole === PermissionProfile::SCOPE_GLOBAL) ||
-                ($userRole === PermissionProfile::SCOPE_PERSONAL) ||
-                ($userRole === PermissionProfile::SCOPE_NONE)) {
+            if (in_array($userRole, array_keys(PermissionProfile::$scopeDescription))) {
                 return $userRole;
             }
         }
@@ -415,9 +411,7 @@ class UserService
     public function addUserScope(User $user, $scope= '')
     {
         if ((!$user->hasRole($scope)) &&
-            (($scope === PermissionProfile::SCOPE_GLOBAL) ||
-            ($scope === PermissionProfile::SCOPE_PERSONAL) ||
-             ($scope === PermissionProfile::SCOPE_NONE))) {
+            (in_array($scope, array_keys(PermissionProfile::$scopeDescription)))) {
             $user->addRole($scope);
             $this->dm->persist($user);
             $this->dm->flush();
