@@ -4,6 +4,10 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
+    <parameters>
+        <parameter key="security.role_hierarchy.class">Pumukit\SchemaBundle\Security\RoleHierarchy</parameter>
+    </parameters>
+
     <services>
         <!-- See #5826 -->
         <service id="doctrine" alias="doctrine_mongodb" />
