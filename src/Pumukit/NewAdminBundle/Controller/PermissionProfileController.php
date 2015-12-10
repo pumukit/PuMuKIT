@@ -161,16 +161,24 @@ class PermissionProfileController extends AdminController
     public function deleteAction(Request $request)
     {
         $config = $this->getConfiguration();
-        $resource = $this->findOr404($request);
-        $resourceId = $resource->getId();
-        $changeDefault = $resource->isDefault();
+        $permissionProfile = $this->findOr404($request);
+        $permissionProfileId = $permissionProfile->getId();
+        $changeDefault = $permissionProfile->isDefault();
 
-        $this->get('pumukitschema.factory')->deleteResource($resource);
-        if ($resourceId === $this->get('session')->get('admin/permissionprofile/id')){
-            $this->get('session')->remove('admin/permissionprofile/id');
+        $response = $this->isAllowedToBeDeleted($permissionProfile);
+        if ($response instanceof Response) {
+            return $response;
         }
 
-        $newDefault = $this->get('pumukitschema.permissionprofile')->checkDefault($resource);
+        try {
+            $this->get('pumukitschema.factory')->deleteResource($permissionProfile);
+            if ($permissionProfileId === $this->get('session')->get('admin/permissionprofile/id')){
+                $this->get('session')->remove('admin/permissionprofile/id');
+            }
+            $newDefault = $this->get('pumukitschema.permissionprofile')->checkDefault($permissionProfile);
+        } catch (\Exception $e) {
+            throw $e;
+        }
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list'));
     }
@@ -197,8 +205,6 @@ class PermissionProfileController extends AdminController
         if ('string' === gettype($notCheckedPermissions)){
             $notCheckedPermissions = json_decode($notCheckedPermissions, true);
         }
-
-        $config = $this->getConfiguration();
 
         $permissionProfileService = $this->get('pumukitschema.permissionprofile');
 
@@ -270,5 +276,23 @@ class PermissionProfileController extends AdminController
         }
 
         return null;
+    }
+
+    private function isAllowedToBeDeleted(PermissionProfile $permissionProfile)
+    {
+        $userRepo = $this->get('doctrine_mongodb.odm.document_manager')
+            ->getRepository('PumukitSchemaBundle:User');
+
+        $usersWithPermissionProfile = $userRepo->createQueryBuilder()
+            ->field('permissionProfile')->references($permissionProfile)
+            ->count()
+            ->getQuery()
+            ->execute();
+
+        if (0 < $usersWithPermissionProfile) {
+            return new Response('Can not delete this permission profile "'.$permissionProfile->getName().'". There are '.$usersWithPermissionProfile.' user(s) with this permission profile.', Response::HTTP_FORBIDDEN);
+        }
+
+        return true;
     }
 }
