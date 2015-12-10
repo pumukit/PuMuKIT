@@ -10,29 +10,39 @@ class PermissionProfileService
 {
     private $dm;
     private $repo;
+    private $dispatcher;
 
     /**
      * Constructor
      *
      * @param DocumentManager $documentManager
+     * @param PermissionProfileEventDispatcherService $dispatcher
      */
-    public function __construct(DocumentManager $documentManager)
+    public function __construct(DocumentManager $documentManager, PermissionProfileEventDispatcherService $dispatcher)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:PermissionProfile');
+        $this->dispatcher = $dispatcher;
     }
 
     /**
      * Update User Permission
      *
      * @param PermissionProfile $permissionProfile
+     * @param boolean $dispatchCreate
      */
-    public function update(PermissionProfile $permissionProfile)
+    public function update(PermissionProfile $permissionProfile, $dispatchCreate = false)
     {
         $this->dm->persist($permissionProfile);
         $this->dm->flush();
 
         $default = $this->checkDefault($permissionProfile);
+
+        if ($dispatchCreate) {
+            $this->dispatcher->dispatchCreate($permissionProfile);
+        } else {
+            $this->dispatcher->dispatchUpdate($permissionProfile);
+        }
 
         return $permissionProfile;
     }
@@ -45,16 +55,20 @@ class PermissionProfileService
      * calls setDefaultPermissionProfile.
      *
      * @param PermissionProfile $permissionProfile
+     * @return PermissionProfile
      */
     public function checkDefault(PermissionProfile $permissionProfile)
     {
         if ($permissionProfile->isDefault()) {
+            $default = $this->repo->findOneByDefault(true);
             $this->repo->changeDefault($permissionProfile);
+            $this->dispatcher->dispatchUpdate($default);
         }
 
         $default = $this->repo->findOneByDefault(true);
         if ((null == $default) || (!$default->isDefault())) {
             $default = $this->setDefaultPermissionProfile();
+            $this->dispatcher->dispatchUpdate($default);
         }
 
         return $default;
@@ -95,6 +109,8 @@ class PermissionProfileService
             $permissionProfile->addPermission($permission);
             $this->dm->persist($permissionProfile);
             if ($executeFlush) $this->dm->flush();
+
+            $this->dispatcher->dispatchUpdate($permissionProfile);
         }
 
         return $permissionProfile;
@@ -114,6 +130,8 @@ class PermissionProfileService
             $permissionProfile->removePermission($permission);
             if ($executeFlush) $this->dm->persist($permissionProfile);
             $this->dm->flush();
+
+            $this->dispatcher->dispatchUpdate($permissionProfile);
         }
 
         return $permissionProfile;
@@ -133,6 +151,7 @@ class PermissionProfileService
             $permissionProfile->setScope($scope);
             $this->dm->persist($permissionProfile);
             if ($executeFlush) $this->dm->flush();
+            $this->dispatcher->dispatchUpdate($permissionProfile);
         }
 
         return $permissionProfile;
