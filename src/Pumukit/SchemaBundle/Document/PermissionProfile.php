@@ -9,9 +9,9 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  */
 class PermissionProfile
 {
-    const SCOPE_GLOBAL = 'SCOPE_GLOBAL';
-    const SCOPE_PERSONAL = 'SCOPE_PERSONAL';
-    const SCOPE_NONE = 'SCOPE_NONE';
+    const SCOPE_GLOBAL = 'ROLE_SCOPE_GLOBAL';
+    const SCOPE_PERSONAL = 'ROLE_SCOPE_PERSONAL';
+    const SCOPE_NONE = 'ROLE_SCOPE_NONE';
 
     public static $scopeDescription = array(
                                             PermissionProfile::SCOPE_GLOBAL => 'Global Scope',
