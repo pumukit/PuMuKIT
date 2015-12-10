@@ -21,6 +21,11 @@
             <tag name="doctrine_mongodb.odm.event_listener" event="preRemove" />
         </service>
 
+        <service id="pumukitschema.schema.permissionprofile" class="Pumukit\SchemaBundle\EventListener\PermissionProfileListener">
+            <argument type="service" id="service_container" />
+            <tag name="kernel.event_listener" event="permissionprofile.update" method="postUpdate" />
+        </service>
+
         <service id="pumukitschema.factory" class="Pumukit\SchemaBundle\Services\FactoryService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager" />
             <argument type="service" id="pumukitschema.tag" />
@@ -67,15 +72,20 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
 
-        <service id="pumukitschema.permissionprofile" class="Pumukit\SchemaBundle\Services\PermissionProfileService">
-            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+        <service id="pumukitschema.permissionprofile_dispatcher" class="Pumukit\SchemaBundle\Services\PermissionProfileEventDispatcherService">
+            <argument type="service" id="event_dispatcher"/>
         </service>
 
-        <!-- EMBEDDED DOCUMENTS EVENT DISPATCHER SERVICES -->
+        <service id="pumukitschema.permissionprofile" class="Pumukit\SchemaBundle\Services\PermissionProfileService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="pumukitschema.permissionprofile_dispatcher"/>
+        </service>
 
         <service id="pumukitschema.multimediaobject_dispatcher" class="Pumukit\SchemaBundle\Services\MultimediaObjectEventDispatcherService">
             <argument type="service" id="event_dispatcher"/>
         </service>
+
+        <!-- EMBEDDED DOCUMENTS EVENT DISPATCHER SERVICES -->
 
         <service id="pumukitschema.link_dispatcher" class="Pumukit\SchemaBundle\Services\LinkEventDispatcherService">
             <argument type="service" id="event_dispatcher"/>
