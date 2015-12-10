@@ -42,6 +42,7 @@ class UserServiceTest extends WebTestCase
         $permissions1 = array(Permission::ACCESS_DASHBOARD, Permission::ACCESS_ROLES);
         $permissionProfile1 = new PermissionProfile();
         $permissionProfile1->setPermissions($permissions1);
+        $permissionProfile1->setScope(PermissionProfile::SCOPE_PERSONAL);
         $this->dm->persist($permissionProfile1);
         $this->dm->flush();
 
@@ -61,10 +62,14 @@ class UserServiceTest extends WebTestCase
         $this->assertTrue($user->hasRole(Permission::ACCESS_DASHBOARD));
         $this->assertTrue($user->hasRole(Permission::ACCESS_ROLES));
         $this->assertFalse($user->hasRole(Permission::ACCESS_TAGS));
+        $this->assertFalse($user->hasRole(PermissionProfile::SCOPE_GLOBAL));
+        $this->assertTrue($user->hasRole(PermissionProfile::SCOPE_PERSONAL));
+        $this->assertFalse($user->hasRole(PermissionProfile::SCOPE_NONE));
 
         $permissions2 = array(Permission::ACCESS_TAGS);
         $permissionProfile2 = new PermissionProfile();
         $permissionProfile2->setPermissions($permissions2);
+        $permissionProfile2->setScope(PermissionProfile::SCOPE_GLOBAL);
         $this->dm->persist($permissionProfile2);
         $this->dm->flush();
 
@@ -80,6 +85,9 @@ class UserServiceTest extends WebTestCase
         $this->assertFalse($user->hasRole(Permission::ACCESS_DASHBOARD));
         $this->assertFalse($user->hasRole(Permission::ACCESS_ROLES));
         $this->assertTrue($user->hasRole(Permission::ACCESS_TAGS));
+        $this->assertTrue($user->hasRole(PermissionProfile::SCOPE_GLOBAL));
+        $this->assertFalse($user->hasRole(PermissionProfile::SCOPE_PERSONAL));
+        $this->assertFalse($user->hasRole(PermissionProfile::SCOPE_NONE));
     }
 
     public function testAddAndRemoveRoles()
@@ -152,5 +160,131 @@ class UserServiceTest extends WebTestCase
         $this->assertFalse(in_array($user1, $usersProfile2));
         $this->assertTrue(in_array($user2, $usersProfile2));
         $this->assertFalse(in_array($user3, $usersProfile2));
+    }
+
+    public function testGetUserPermissions()
+    {
+        $permissions = array(Permission::ACCESS_DASHBOARD, Permission::ACCESS_TAGS);
+        $permissionProfile = new PermissionProfile();
+        $permissionProfile->setName('test');
+        $permissionProfile->setPermissions($permissions);
+        $this->dm->persist($permissionProfile);
+        $this->dm->flush();
+
+        $user = new User();
+        $user->setUsername('test');
+        $user->setEmail('test@mail.com');
+        $user->setPermissionProfile($permissionProfile);
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $user = $this->userService->addRoles($user, $permissionProfile->getPermissions());
+
+        $this->assertNotEquals($permissions, $user->getRoles());
+        $this->assertEquals($permissions, $this->userService->getUserPermissions($user->getRoles()));
+    }
+
+    public function testAddUserScope()
+    {
+        $notValidScope = 'NOT_VALID_SCOPE';
+
+        $user = new User();
+        $user->setUsername('test');
+        $user->setEmail('test@mail.com');
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $this->assertFalse(in_array(PermissionProfile::SCOPE_GLOBAL, $user->getRoles()));
+        $this->assertFalse(in_array(PermissionProfile::SCOPE_PERSONAL, $user->getRoles()));
+        $this->assertFalse(in_array(PermissionProfile::SCOPE_NONE, $user->getRoles()));
+
+        $user = $this->userService->addUserScope($user, PermissionProfile::SCOPE_PERSONAL);
+
+        $this->assertFalse(in_array(PermissionProfile::SCOPE_GLOBAL, $user->getRoles()));
+        $this->assertTrue(in_array(PermissionProfile::SCOPE_PERSONAL, $user->getRoles()));
+        $this->assertFalse(in_array(PermissionProfile::SCOPE_NONE, $user->getRoles()));
+        $this->assertFalse(in_array($notValidScope, $user->getRoles()));
+
+        $user = $this->userService->addUserScope($user, $notValidScope);
+
+        $this->assertFalse(in_array(PermissionProfile::SCOPE_GLOBAL, $user->getRoles()));
+        $this->assertTrue(in_array(PermissionProfile::SCOPE_PERSONAL, $user->getRoles()));
+        $this->assertFalse(in_array(PermissionProfile::SCOPE_NONE, $user->getRoles()));
+        $this->assertFalse(in_array($notValidScope, $user->getRoles()));
+    }
+
+    public function testGetUserScope()
+    {
+        $permissions = array(Permission::ACCESS_DASHBOARD, Permission::ACCESS_TAGS);
+        $permissionProfile = new PermissionProfile();
+        $permissionProfile->setName('test');
+        $permissionProfile->setPermissions($permissions);
+        $permissionProfile->setScope(PermissionProfile::SCOPE_PERSONAL);
+        $this->dm->persist($permissionProfile);
+        $this->dm->flush();
+
+        $user = new User();
+        $user->setUsername('test');
+        $user->setEmail('test@mail.com');
+        $user->setPermissionProfile($permissionProfile);
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $userScope = $this->userService->getUserScope($user->getRoles());
+
+        $this->assertNotEquals(PermissionProfile::SCOPE_GLOBAL, $userScope);
+        $this->assertNotEquals(PermissionProfile::SCOPE_PERSONAL, $userScope);
+        $this->assertNotEquals(PermissionProfile::SCOPE_NONE, $userScope);
+        $this->assertCount(1, $user->getRoles());
+
+        $user = $this->userService->addRoles($user, $permissionProfile->getPermissions());
+        $this->assertCount(3, $user->getRoles());
+        $user = $this->userService->addUserScope($user, PermissionProfile::SCOPE_PERSONAL);
+        $this->assertCount(4, $user->getRoles());
+
+        $userScope = $this->userService->getUserScope($user->getRoles());
+
+        $this->assertNotEquals(PermissionProfile::SCOPE_GLOBAL, $userScope);
+        $this->assertEquals(PermissionProfile::SCOPE_PERSONAL, $userScope);
+        $this->assertNotEquals(PermissionProfile::SCOPE_NONE, $userScope);
+    }
+
+    public function testSetUserScope()
+    {
+        $permissions = array(Permission::ACCESS_DASHBOARD, Permission::ACCESS_TAGS);
+        $permissionProfile = new PermissionProfile();
+        $permissionProfile->setName('test');
+        $permissionProfile->setPermissions($permissions);
+        $permissionProfile->setScope(PermissionProfile::SCOPE_PERSONAL);
+        $this->dm->persist($permissionProfile);
+        $this->dm->flush();
+
+        $user = new User();
+        $user->setUsername('test');
+        $user->setEmail('test@mail.com');
+        $user->setPermissionProfile($permissionProfile);
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $this->assertCount(1, $user->getRoles());
+        $user = $this->userService->addRoles($user, $permissionProfile->getPermissions());
+        $this->assertCount(3, $user->getRoles());
+        $user = $this->userService->addUserScope($user, PermissionProfile::SCOPE_PERSONAL);
+        $this->assertCount(4, $user->getRoles());
+
+        $userScope = $this->userService->getUserScope($user->getRoles());
+
+        $this->assertNotEquals(PermissionProfile::SCOPE_GLOBAL, $userScope);
+        $this->assertEquals(PermissionProfile::SCOPE_PERSONAL, $userScope);
+        $this->assertNotEquals(PermissionProfile::SCOPE_NONE, $userScope);
+
+        $user = $this->userService->setUserScope($user, $userScope, PermissionProfile::SCOPE_GLOBAL);
+
+        $newUserScope = $this->userService->getUserScope($user->getRoles());
+
+        $this->assertEquals(PermissionProfile::SCOPE_GLOBAL, $newUserScope);
+        $this->assertNotEquals(PermissionProfile::SCOPE_PERSONAL, $newUserScope);
+        $this->assertNotEquals(PermissionProfile::SCOPE_NONE, $newUserScope);
+        $this->assertCount(4, $user->getRoles());
     }
 }

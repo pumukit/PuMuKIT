@@ -239,6 +239,7 @@ class UserService
     public function create(User $user)
     {
         if (null != ($permissionProfile = $user->getPermissionProfile())) {
+            $user = $this->setUserScope($user, null, $permissionProfile->getScope());
             $user = $this->addRoles($user, $permissionProfile->getPermissions(), false);
         }
         $this->dm->persist($user);
@@ -258,8 +259,18 @@ class UserService
     {
         $permissionProfile = $user->getPermissionProfile();
         if (null == $permissionProfile) throw new \Exception('The User "'.$user->getUsername().'" has no Permission Profile assigned.');
-        if ($user->getRoles() !== $permissionProfile->getPermissions()) {
-            $user = $this->removeRoles($user, $user->getRoles(), false);
+        /** NOTE: User roles have:
+           - ROLE_USER, ROLE_SUPER_ADMIN
+           - permission profile roles
+           - permission profile scope
+        */
+        $userScope = $this->getUserScope($user->getRoles());
+        if ($userScope !== $permissionProfile->getScope()) {
+            $user = $this->setUserScope($user, $userScope, $permissionProfile->getScope());
+        }
+        $userPermissions = $this->getUserPermissions($user->getRoles());
+        if ($userPermissions !== $permissionProfile->getPermissions()) {
+            $user = $this->removeRoles($user, $userPermissions, false);
             $user = $this->addRoles($user, $permissionProfile->getPermissions(), false);
         }
         $this->dm->persist($user);
@@ -337,5 +348,81 @@ class UserService
             ->field('permissionProfile')->references($permissionProfile)
             ->getQuery()
             ->execute();
+    }
+
+    /**
+     * Get user permissions
+     *
+     * @param array $userRoles
+     * @return array $userPermissions
+     */
+    public function getUserPermissions($userRoles = array())
+    {
+        $userPermissions = array();
+        foreach ($userRoles as $userRole) {
+            if ((false === strpos($userRole, 'ROLE_')) &&
+                ($userRole !== PermissionProfile::SCOPE_GLOBAL) &&
+                ($userRole !== PermissionProfile::SCOPE_PERSONAL) &&
+                ($userRole !== PermissionProfile::SCOPE_NONE)) {
+                $userPermissions[] = $userRole;
+            }
+        }
+
+        return $userPermissions;
+    }
+
+    /**
+     * Set user scope
+     *
+     * @param User $user
+     * @param string $oldScope
+     * @param string $newScope
+     * @return User
+     */
+    public function setUserScope(User $user, $oldScope = '', $newScope = '')
+    {
+        if ($user->hasRole($oldScope)) $user->removeRole($oldScope);
+        $user = $this->addUserScope($user, $newScope);
+
+        return $user;
+    }
+
+    /**
+     * Get user scope
+     *
+     * @param array $userRoles
+     * @return string $userScope
+     */
+    public function getUserScope($userRoles = array())
+    {
+        foreach ($userRoles as $userRole) {
+            if (($userRole === PermissionProfile::SCOPE_GLOBAL) ||
+                ($userRole === PermissionProfile::SCOPE_PERSONAL) ||
+                ($userRole === PermissionProfile::SCOPE_NONE)) {
+                return $userRole;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Add user scope
+     *
+     * @param User $user
+     * @return User
+     */
+    public function addUserScope(User $user, $scope= '')
+    {
+        if ((!$user->hasRole($scope)) &&
+            (($scope === PermissionProfile::SCOPE_GLOBAL) ||
+            ($scope === PermissionProfile::SCOPE_PERSONAL) ||
+             ($scope === PermissionProfile::SCOPE_NONE))) {
+            $user->addRole($scope);
+            $this->dm->persist($user);
+            $this->dm->flush();
+        }
+
+        return $user;
     }
 }
