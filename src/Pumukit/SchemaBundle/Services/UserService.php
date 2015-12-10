@@ -230,7 +230,7 @@ class UserService
     }
 
     /**
-     * Update user
+     * Create user
      */
     public function create(User $user)
     {
@@ -292,7 +292,7 @@ class UserService
     public function removeRoles(User $user, $permissions = array(), $executeFlush = true)
     {
         foreach ($permissions as $permission) {
-            if ($user->hasRole($permission) && (false === strpos('ROLE_', $permission))) {
+            if ($user->hasRole($permission) && (false === strpos($permission, 'ROLE_'))) {
                 $user->removeRole($permission);
             }
         }
