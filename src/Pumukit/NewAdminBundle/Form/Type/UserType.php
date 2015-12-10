@@ -49,7 +49,7 @@ class UserType extends AbstractType
             ->add('email', 'email',
                   array('label' => $this->translator->trans('Email', array(), null, $this->locale)))
             ->add('permissionProfile', null,
-                  array('label' => $this->translator->trans('Type', array(), null, $this->locale)));
+                  array('label' => $this->translator->trans('Permission Profile', array(), null, $this->locale)));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
