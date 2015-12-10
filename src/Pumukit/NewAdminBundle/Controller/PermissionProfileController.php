@@ -280,14 +280,8 @@ class PermissionProfileController extends AdminController
 
     private function isAllowedToBeDeleted(PermissionProfile $permissionProfile)
     {
-        $userRepo = $this->get('doctrine_mongodb.odm.document_manager')
-            ->getRepository('PumukitSchemaBundle:User');
-
-        $usersWithPermissionProfile = $userRepo->createQueryBuilder()
-            ->field('permissionProfile')->references($permissionProfile)
-            ->count()
-            ->getQuery()
-            ->execute();
+        $userService = $this->get('pumukitschema.user');
+        $usersWithPermissionProfile = $userService->countUsersWithPermissionProfile($permissionProfile);
 
         if (0 < $usersWithPermissionProfile) {
             return new Response('Can not delete this permission profile "'.$permissionProfile->getName().'". There are '.$usersWithPermissionProfile.' user(s) with this permission profile.', Response::HTTP_FORBIDDEN);
