@@ -232,6 +232,9 @@ class UserService
 
     /**
      * Create user
+     *
+     * @param User $user
+     * @return User
      */
     public function create(User $user)
     {
@@ -246,8 +249,12 @@ class UserService
 
     /**
      * Update user
+     *
+     * @param User $user
+     * @param boolean $executeFlush
+     * @return User
      */
-    public function update(User $user)
+    public function update(User $user, $executeFlush = true)
     {
         $permissionProfile = $user->getPermissionProfile();
         if (null == $permissionProfile) throw new \Exception('The User "'.$user->getUsername().'" has no Permission Profile assigned.');
@@ -256,7 +263,7 @@ class UserService
             $user = $this->addRoles($user, $permissionProfile->getPermissions(), false);
         }
         $this->dm->persist($user);
-        $this->dm->flush();
+        if ($executeFlush) $this->dm->flush();
 
         return $user;
     }
