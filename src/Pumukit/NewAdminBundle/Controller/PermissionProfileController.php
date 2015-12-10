@@ -84,7 +84,7 @@ class PermissionProfileController extends AdminController
 
         if ($form->handleRequest($request)->isValid()) {
             try {
-                $permissionProfile = $permissionProfileService->update($permissionProfile);
+                $permissionProfile = $permissionProfileService->update($permissionProfile, true);
             } catch (\Exception $e) {
                 return new JsonResponse(array("status" => $e->getMessage()), 409);
             }
@@ -172,6 +172,7 @@ class PermissionProfileController extends AdminController
 
         try {
             $this->get('pumukitschema.factory')->deleteResource($permissionProfile);
+            $this->get('pumukitschema.permissionprofile_dispatcher')->dispatchDelete($permissionProfile);
             if ($permissionProfileId === $this->get('session')->get('admin/permissionprofile/id')){
                 $this->get('session')->remove('admin/permissionprofile/id');
             }
