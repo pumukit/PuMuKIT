@@ -128,7 +128,7 @@ Add your HTML on `src/Pumukit/ExampleOrg/WebTVBundle/Resources/views/Layout/foot
 Override the `Pumukit/ExampleOrg/WebTVBundle/Resources/views/logo.html.twig` template.
 
 ```html
-<img src="{{ asset('bundles/pumukitwebtv/images/logo_cies.png') }}" class="img-responsive" style="max-height:100%">
+<img src="{{ asset('bundles/pumukitwebtv/images/webtv/logo80px.png') }}" class="img-responsive" style="max-height:100%">
 ```
 
 
