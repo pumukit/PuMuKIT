@@ -5,6 +5,7 @@ namespace Pumukit\SchemaBundle\Services;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\Security\Core\SecurityContext;
 
@@ -300,5 +301,34 @@ class UserService
         if ($executeFlush) $this->dm->flush();
 
         return $user;
+    }
+
+    /**
+     * Count Users with given permission profile
+     *
+     * @param PermissionProfile $permissionProfile
+     * @return integer
+     */
+    public function countUsersWithPermissionProfile(PermissionProfile $permissionProfile)
+    {
+        return $this->repo->createQueryBuilder()
+            ->field('permissionProfile')->references($permissionProfile)
+            ->count()
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * Get Users with given permission profile
+     *
+     * @param PermissionProfile $permissionProfile
+     * @return Cursor
+     */
+    public function getUsersWithPermissionProfile(PermissionProfile $permissionProfile)
+    {
+        return $this->repo->createQueryBuilder()
+            ->field('permissionProfile')->references($permissionProfile)
+            ->getQuery()
+            ->execute();
     }
 }

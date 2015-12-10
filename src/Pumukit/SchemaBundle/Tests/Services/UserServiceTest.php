@@ -109,4 +109,48 @@ class UserServiceTest extends WebTestCase
         $this->assertFalse($user->hasRole(Permission::ACCESS_ROLES));
         $this->assertFalse($user->hasRole(Permission::ACCESS_TAGS));
     }
+
+    public function testCountAndGetUsersWithPermissionProfile()
+    {
+        $permissionProfile1 = new PermissionProfile();
+        $permissionProfile1->setName('permissionprofile1');
+        $this->dm->persist($permissionProfile1);
+        $this->dm->flush();
+
+        $permissionProfile2 = new PermissionProfile();
+        $permissionProfile2->setName('permissionprofile2');
+        $this->dm->persist($permissionProfile2);
+        $this->dm->flush();
+
+        $user1 = new User();
+        $user1->setUsername('test1');
+        $user1->setEmail('test1@mail.com');
+        $user1->setPermissionProfile($permissionProfile1);
+        $user1 = $this->userService->create($user1);
+
+        $user2 = new User();
+        $user2->setUsername('test2');
+        $user2->setEmail('test2@mail.com');
+        $user2->setPermissionProfile($permissionProfile2);
+        $user2 = $this->userService->create($user2);
+
+        $user3 = new User();
+        $user3->setUsername('test3');
+        $user3->setEmail('test3@mail.com');
+        $user3->setPermissionProfile($permissionProfile1);
+        $user3 = $this->userService->create($user3);
+
+        $this->assertEquals(2, $this->userService->countUsersWithPermissionProfile($permissionProfile1));
+        $this->assertEquals(1, $this->userService->countUsersWithPermissionProfile($permissionProfile2));
+
+        $usersProfile1 = $this->userService->getUsersWithPermissionProfile($permissionProfile1)->toArray();
+        $this->assertTrue(in_array($user1, $usersProfile1));
+        $this->assertFalse(in_array($user2, $usersProfile1));
+        $this->assertTrue(in_array($user3, $usersProfile1));
+
+        $usersProfile2 = $this->userService->getUsersWithPermissionProfile($permissionProfile2)->toArray();
+        $this->assertFalse(in_array($user1, $usersProfile2));
+        $this->assertTrue(in_array($user2, $usersProfile2));
+        $this->assertFalse(in_array($user3, $usersProfile2));
+    }
 }
