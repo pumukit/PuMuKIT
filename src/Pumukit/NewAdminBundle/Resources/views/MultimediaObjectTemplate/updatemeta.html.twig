@@ -1,7 +1,7 @@
 {% form_theme form_meta 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
 
 <div class="well">
-
+{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   <form autocomplete="off" id="pumukitnewadmin_mmtemplate_updatemeta_form"
         onsubmit="$.ajax({
                           url: '{{ path('pumukitnewadmin_mmtemplate_update_meta', {'id': mm.id, 'seriesId': mm.getSeries().getId()}) }}',
@@ -38,8 +38,12 @@
       </fieldset>
 
   </form>
+{% else %}
+  {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+{% endif %}
 </div>
 
+{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 <script type="text/javascript">
 $(document).ready(function() {
     $("*[id^='pumukitnewadmin_mmtemplate_']").on('change', function(){
@@ -47,3 +51,4 @@ $(document).ready(function() {
     });
 });
 </script>
+{% endif %}

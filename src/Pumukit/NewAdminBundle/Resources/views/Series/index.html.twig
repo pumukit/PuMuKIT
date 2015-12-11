@@ -5,6 +5,7 @@
 <h3> {% trans %}Multimedia Series{% endtrans %}</h3>
 
 <div class="row">
+  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   <div class="col-md-10">
     <div class="well" >
       <div id="list_series">
@@ -44,6 +45,13 @@
     {# TODO define $broadcasts and $seriestypes #}
     {% include 'PumukitNewAdminBundle:Series:acordeon.html.twig' with {'name': 'series', 'broadcasts': 'broadcasts', 'seriestypes': 'seriestypes'} %}
   </div>
+  {% else %}
+  <div class="col-md-12">
+    <div class="well">
+      {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+    </div>
+  </div>
+  {% endif %}
 </div>
 
 <div class="modal fade" id="myAuxModal_template" tabindex="-1" role="dialog" aria-labelledby="myAuxModal_templateLabel" aria-hidden="true">

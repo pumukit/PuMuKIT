@@ -3,7 +3,8 @@
   <h4 class="modal-title" id="myModalLabel">{% trans %}create new material{% endtrans %}</h4>
 </div>
 <div class="modal-body">
-{% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
+  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+  {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
   <form autocomplete="off" enctype="multipart/form-data" target="iframeUpload"
         action="{{ path('pumukitnewadmin_material_upload', {'id': mm.id}) }}" method="POST">
 	<input type="hidden" name="id" id="id" value="{{ mm.id }}">
@@ -40,5 +41,11 @@
 	  <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
 	  <button type="submit" class="btn btn-pumukit btn-raised" onclick="if($('#radio_url').prop('checked')){return test_material_form_url($('#url').val())}else{return test_material_form_file_nmb($('#file').val())}">{% trans %}OK{% endtrans %}</button>
 	</div>
+  {% else %}
+    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+  {% endif %}
   </form>
+  {% else %}
+    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+  {% endif %}
 </div>

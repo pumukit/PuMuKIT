@@ -3,6 +3,7 @@
   <h4 class="modal-title" id="myModalLabel">{% trans %}update material{% endtrans %}</h4>
 </div>
 <div class="modal-body">
+  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
   <form autocomplete="off" onsubmit="$('#myModal').modal('hide');
                   $.ajax({
@@ -32,4 +33,7 @@
       <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}OK{% endtrans %}</button>
     </div>
   </form>
+  {% else %}
+    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+  {% endif %}
 </div>

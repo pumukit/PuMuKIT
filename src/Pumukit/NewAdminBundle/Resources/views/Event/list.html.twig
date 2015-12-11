@@ -1,4 +1,5 @@
 <div class="well">
+  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_LIVE_EVENTS')) %}
   <div role="tabpanel">
     <ul id="eventTab" class="nav nav-tabs" role="tablist">
       <li class="{{ app.session.get('admin/event/tab')?'':'active' }}">
@@ -17,4 +18,7 @@
       </div>
     </div>
   </div>
+  {% else %}
+    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+  {% endif %}
 </div>

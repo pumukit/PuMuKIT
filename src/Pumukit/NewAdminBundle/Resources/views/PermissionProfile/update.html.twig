@@ -3,6 +3,7 @@
   <h4 class="modal-title" id="myModalLabel">{% trans %}update permission profile{% endtrans %}</h4>
 </div>
 <div class="modal-body">
+  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PERMISSION_PROFILES')) %}
   {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
   <form autocomplete="off" id="pumukitnewadmin_permissionprofile_form_update"
         action="{{ path('pumukitnewadmin_permissionprofile_update', {'id': permissionprofile.id}) }}" method="POST">
@@ -17,4 +18,7 @@
       <button type="submit" class="btn btn-pumukit btn-raised" id="pumukitnewadmin_permissionprofile_form_save">{% trans %}Save changes{% endtrans %}</button>
     </div>
   </form>
+  {% else %}
+    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+  {% endif %}
 </div>

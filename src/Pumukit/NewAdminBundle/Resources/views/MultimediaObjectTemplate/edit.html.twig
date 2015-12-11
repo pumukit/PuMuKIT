@@ -1,3 +1,4 @@
+{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 {% if mmtemplate %}
 <div>
   <div role="tabpanel">
@@ -28,4 +29,7 @@
     </div>
   </div>
 </div>
+{% endif %}
+{% else %}
+  {% trans %}You don't have enough permissions to access this content.{% endtrans %}
 {% endif %}
