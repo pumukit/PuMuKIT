@@ -1,4 +1,5 @@
 <!-- Vista previa -->
+{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE')) %}
 {% if person is not null %}
 <div>
    <input type="hidden" id="inputRawId" value="{{ person.id }}"/>
@@ -24,5 +25,6 @@
   {% trans %}Select any person{% endtrans %}.
 </p>
 {% endif %}
-
-
+{% else %}
+  {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+{% endif %}

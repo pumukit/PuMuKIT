@@ -4,6 +4,7 @@
 </p>
 </div>
 <div class="modal-body">
+  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   <fieldset>
     <div class="form-group">
       <label for="name" class="control-label">{% trans %}Name{% endtrans %}:</label>
@@ -31,6 +32,7 @@
                      return false;">
       {% trans %}Use{% endtrans %}
     </button>
+    {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE')) %}
     <button type="button" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
             id="create_relation" href="#"
             onclick="var aux = $('#name').val();
@@ -38,12 +40,17 @@
                      $('#create_relation').attr('href', encodeURI(route.replace('__aux__', aux))); return true;">
       {% trans %}New{% endtrans %}
     </button>
+    {% endif %}
     <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
   </div>
+  {% else %}
+    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+  {% endif %}
 </div>
 
 <div style="clear:right"></div>
 
+{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 <script type="text/javascript">
 $("#name").autocomplete({
     source: "{{ path('pumukitnewadmin_person_auto_complete') }}",
@@ -62,3 +69,4 @@ $("#name").on("input", function(){
     $("#person_id").val("");
 });
 </script>
+{% endif %}
