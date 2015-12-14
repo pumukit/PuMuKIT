@@ -152,7 +152,7 @@ class StatsService
      */
     public function getTotalViewedGrouped(\DateTime $fromDate = null, \DateTime $toDate = null, $limit = 10, $page = 0, array $criteria = array(), $sort = -1, $groupBy = 'month')
     {
-        $aggregation = $this->getGroupedByAggrPipeline($fromDate, $toDate, $limit, $sort, $groupBy, $criteria);
+        $aggregation = $this->getGroupedByAggrPipeline($fromDate, $toDate, $limit, $page, $sort, $groupBy, $criteria);
 
         return $aggregation->toArray();
     }
@@ -162,7 +162,7 @@ class StatsService
      */
     public function getTotalViewedGroupedByMmobj(\MongoId $mmobjId, \DateTime $fromDate = null, \DateTime $toDate = null, $limit = 10, $page = 0, array $criteria = array(), $sort = -1, $groupBy = 'month')
     {
-        $aggregation = $this->getGroupedByAggrPipeline($fromDate, $toDate, $limit, $sort, $groupBy, $criteria, array('multimediaObject' => $mmobjId));
+        $aggregation = $this->getGroupedByAggrPipeline($fromDate, $toDate, $limit, $page, $sort, $groupBy, $criteria, array('multimediaObject' => $mmobjId));
 
         return $aggregation->toArray();
     }
