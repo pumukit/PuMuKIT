@@ -1,4 +1,5 @@
 <div class="well">
+  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   <div class="row">
     <div class="col-md-6">
       <form class="form-horizontal">        
@@ -53,7 +54,9 @@
       {% endif %}
     </div>
   </div>
-
+  {% else %}
+    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+  {% endif %}
 </div>
 
 
