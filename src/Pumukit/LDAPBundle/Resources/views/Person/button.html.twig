@@ -1,4 +1,4 @@
-{% if ldap_connected %}
+{% if ldap_connected and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 <button type="button" class="btn btn-primary btn-raised" data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
         id="ldap_person_listautocomplete" href="#"
         onclick="var route = '{{ path('pumukit_ldap_person_listautocomplete', {'mmId': mm.id, 'roleId': role.id})|raw }}';

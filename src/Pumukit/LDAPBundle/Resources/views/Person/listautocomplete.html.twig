@@ -1,11 +1,14 @@
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   <h4 class="modal-title" id="myAuxModal{{ template }}Label">{% trans %}new person from LDAP{% endtrans %}</h4>
+{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 <p>
 {% trans %}Write the email login of the person you would like to add from the LDAP server. A pull-down menu will be shown, where you can select and use the person data.{% endtrans %}.
 </p>
+{% endif %}
 </div>
 <div class="modal-body">
+  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   <fieldset>
     <div class="form-group">
       <label for="login" class="control-label">{% trans %}Login{% endtrans %}:</label>
@@ -27,7 +30,12 @@
       {% trans %}Use{% endtrans %}
     </button>
   </div>
+  {% else %}
+    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+  {% endif %}
 </div>
 
 <div style="clear:right"></div>
+{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 <script type="text/javascript" src="{{ path('pumukit_ldap_js') }}"></script>
+{% endif %}
