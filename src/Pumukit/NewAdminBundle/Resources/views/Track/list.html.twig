@@ -1,4 +1,5 @@
 <table><tbody>
+  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   {% for job in jobs %}
     <tr>
       <td><ul><li></li></ul></td>
@@ -143,8 +144,12 @@
     <td><ul><li></li></ul></td>
     <td colspan="11"><a data-toggle="modal" data-backdrop="static" data-target="#myModal" href="{{ path('pumukitnewadmin_track_create', {'id': mm.id}) }}">{% trans %}New master{% endtrans %}...</a></td>
   </tr>
+  {% else %}
+    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+  {% endif %}
 </tbody></table>
 
+{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 {% if false %} {# TODO ($sf_request->getParameter('preview')) #} {# define update_preview #}
 <script type="text/javascript">
   update_preview('{{ mm.id }}');
@@ -165,4 +170,5 @@
     //$('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id })|raw }}');
   }, 8000);
 </script>
+{% endif %}
 {% endif %}
