@@ -5,10 +5,13 @@
 <h1>Encoder</h1>
 
 <div class="row stats_jobs">
- {% include 'PumukitEncoderBundle:Info:stats.html.twig' %}
+  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_JOBS')) %}
+  {% include 'PumukitEncoderBundle:Info:stats.html.twig' %}
+  {% endif %}
 </div>
 
 <div class="row">
+  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_JOBS')) %}
   <div class="col-md-9">
     <div class="well" id="list_jobs">
       {% include 'PumukitEncoderBundle:Info:jobs.html.twig' with {'pageParameter': '[page_pending]', 'title': 'Pending jobs (paused & waiting)'|trans, 'jobs': jobs.pending }%}
@@ -20,7 +23,14 @@
     <div class="well" id="list_cpus">
       {% include 'PumukitEncoderBundle:Info:cpus.html.twig' %}
     </div>
-  </div>    
+  </div>
+  {% else %}
+  <div class="col-md-12">
+    <div class="well">
+      {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+    </div>
+  </div>
+  {% endif %}
 </div>
 
 
