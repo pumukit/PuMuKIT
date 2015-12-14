@@ -23,11 +23,17 @@ class APIController extends Controller
 
         list($criteria, $sort, $fromDate, $toDate, $limit, $page) = $this->processRequestData($request);
 
-        $mmobjs = $viewsService->getMmobjsMostViewedByRange($fromDate, $toDate, $limit, $page, $criteria, $sort);
+        $options['fromDate'] = $fromDate;
+        $options['toDate'] = $toDate;
+        $options['limit'] = $limit;
+        $options['page'] = $page;
+        $options['sort'] = $sort;
+
+        $mmobjs = $viewsService->getMmobjsMostViewedByRange($criteria, $options);
 
         $views = array(
             'limit' => $limit,
-            'page' => $page, 
+            'page' => $page,
             'criteria' => $criteria,
             'sort' => $sort,
             'fromDate' => $fromDate,
@@ -51,7 +57,13 @@ class APIController extends Controller
 
         list($criteria, $sort, $fromDate, $toDate, $limit, $page) = $this->processRequestData($request);
 
-        $series = $viewsService->getSeriesMostViewedByRange($fromDate, $toDate, $limit, $page, $criteria, $sort);
+        $options['fromDate'] = $fromDate;
+        $options['toDate'] = $toDate;
+        $options['limit'] = $limit;
+        $options['page'] = $page;
+        $options['sort'] = $sort;
+
+        $series = $viewsService->getSeriesMostViewedByRange($criteria, $options);
 
         $views = array(
             'limit' => $limit,
@@ -81,7 +93,14 @@ class APIController extends Controller
 
         $groupBy = $request->get('group_by') ?: 'month';
 
-        $views = $viewsService->getTotalViewedGrouped($fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
+        $options['fromDate'] = $fromDate;
+        $options['toDate'] = $toDate;
+        $options['limit'] = $limit;
+        $options['page'] = $page;
+        $options['sort'] = $sort;
+        $options['group_by'] = $groupBy;
+
+        $views = $viewsService->getTotalViewedGrouped($criteria, $options);
 
         $views = array(
             'limit' => $limit,
@@ -114,7 +133,14 @@ class APIController extends Controller
 
         $groupBy = $request->get('group_by');
 
-        $views = $viewsService->getTotalViewedGroupedByMmobj(new \MongoId($mmobjId), $fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
+        $options['fromDate'] = $fromDate;
+        $options['toDate'] = $toDate;
+        $options['limit'] = $limit;
+        $options['page'] = $page;
+        $options['sort'] = $sort;
+        $options['group_by'] = $groupBy;
+
+        $views = $viewsService->getTotalViewedGroupedByMmobj(new \MongoId($mmobjId), $criteria, $options);
 
         $views = array(
             'limit' => $limit,
@@ -148,7 +174,14 @@ class APIController extends Controller
 
         $groupBy = $request->get('group_by') ?: 'month';
 
-        $views = $viewsService->getTotalViewedGroupedBySeries(new \MongoId($seriesId), $fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
+        $options['fromDate'] = $fromDate;
+        $options['toDate'] = $toDate;
+        $options['limit'] = $limit;
+        $options['page'] = $page;
+        $options['sort'] = $sort;
+        $options['group_by'] = $groupBy;
+
+        $views = $viewsService->getTotalViewedGroupedBySeries(new \MongoId($seriesId), $criteria, $options);
 
         $views = array(
             'limit' => $limit,
