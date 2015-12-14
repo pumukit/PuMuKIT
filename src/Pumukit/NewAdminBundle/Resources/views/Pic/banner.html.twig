@@ -16,6 +16,7 @@
   </div>
 
   <div id="div_banner_url" style="display:none;">
+    {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
     <form autocomplete="off" onsubmit="$.ajax({
                             url: '{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id, 'banner': true}) }}',
                             type: 'POST',
@@ -53,10 +54,12 @@
         <button type="submit" class="btn btn-pumukit btn-raised" onclick="if (test_form_url($('#url').val())) { return test_form_url($('#url_bannerTargetUrl').val());} else {return false;}">{% trans %}Add{% endtrans %}</button>
       </div>
     </form>
+    {% endif %}
   </div>
   <div style="clear:both"></div>
 
   <div id="div_banner_file">
+    {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
     <form autocomplete="off" method="post" enctype="multipart/form-data" target="iframeUpload" action="{{ path('pumukitnewadmin_'~resource_name~'pic_upload', {'id': resource.id, 'banner': true}) }}">
       <input type="hidden" name="type" id="type" value="url">
       <input type="hidden" name="{{ resource_name }}" id="{{ resource_name }}" value="{{ resource.id }}">
@@ -81,6 +84,7 @@
         <button type="submit" class="btn btn-pumukit btn-raised" onclick="if($('#file').val()==''){window.alert('{% trans %}Select a file on first place. Thank you.{% endtrans %}');return false;} else {return test_form_url($('#file_bannerTargetUrl').val());}">{% trans %}Add{% endtrans %}</button>
       </div>
     </form>
+    {% endif %}
   </div>
 
   <div style="clear:both"></div>
