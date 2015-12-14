@@ -1,4 +1,3 @@
-{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 <label for="file" class="control-label">{% trans %}Resource{% endtrans %}:</label>
 <div class="input-group" style="width: 100%; font-family: monospace">
   <input type="hidden" name="file" id="file" value="" placeholder="{% trans %}Select a file on the tree{% endtrans %}" class="form-control">
@@ -6,6 +5,3 @@
     {% block inbox_body %}{% endblock %}
   </div>  
 </div>
-{% else %}
-  {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-{% endif %}
