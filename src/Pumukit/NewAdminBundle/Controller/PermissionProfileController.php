@@ -12,7 +12,7 @@ use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\NewAdminBundle\Form\Type\PermissionProfileType;
 
 /**
- * @Security("has_role('ROLE_SUPER_ADMIN')")
+ * @Security("is_granted('ROLE_ACCESS_PERMISSION_PROFILES')")
  */
 class PermissionProfileController extends AdminController
 {

@@ -12,7 +12,7 @@ use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\NewAdminBundle\Form\Type\TagType;
 
 /**
- * @Security("has_role('ROLE_ADMIN')")
+ * @Security("is_granted('ROLE_ACCESS_TAGS')")
  */
 class TagController extends Controller
 {

@@ -19,7 +19,7 @@ class PersonController extends AdminController
     /**
      * Index
      *
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ACCESS_PEOPLE')")
      * @Template("PumukitNewAdminBundle:Person:index.html.twig")
      */
     public function indexAction(Request $request)
@@ -45,7 +45,7 @@ class PersonController extends AdminController
     /**
      * Create new person
      *
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ACCESS_PEOPLE')")
      * @Template("PumukitNewAdminBundle:Person:create.html.twig")
      */
     public function createAction(Request $request)
@@ -84,7 +84,7 @@ class PersonController extends AdminController
 
     /**
      * Update person
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ACCESS_PEOPLE')")
      * @Template("PumukitNewAdminBundle:Person:update.html.twig")
      */
     public function updateAction(Request $request)
@@ -124,7 +124,7 @@ class PersonController extends AdminController
     /**
      * Show person
      *
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ACCESS_PEOPLE')")
      * @Template("PumukitNewAdminBundle:Person:show.html.twig")
      */
     public function showAction(Request $request)
@@ -143,7 +143,7 @@ class PersonController extends AdminController
     /**
      * List people
      *
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ACCESS_PEOPLE')")
      * @Template("PumukitNewAdminBundle:Person:list.html.twig")
      */
     public function listAction(Request $request)

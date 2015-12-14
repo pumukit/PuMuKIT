@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
- * @Security("has_role('ROLE_ADMIN')")
+ * @Security("is_granted('ROLE_ACCESS_BROADCASTS')")
  */
 class BroadcastAdminController extends AdminController
 {

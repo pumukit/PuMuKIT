@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
- * @Security("has_role('ROLE_ADMIN')")
+ * @Security("is_granted('ROLE_ACCESS_LIVE_CHANNELS')")
  */
 class LiveController extends AdminController
 {

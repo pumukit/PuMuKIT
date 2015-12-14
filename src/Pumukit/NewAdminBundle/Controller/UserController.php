@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Pumukit\SchemaBundle\Document\User;
 
 /**
- * @Security("has_role('ROLE_SUPER_ADMIN')")
+ * @Security("is_granted('ROLE_ACCESS_ADMIN_USERS')")
  */
 class UserController extends AdminController
 {

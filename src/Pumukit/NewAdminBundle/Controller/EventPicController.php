@@ -5,8 +5,12 @@ namespace Pumukit\NewAdminBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Pumukit\LiveBundle\Document\Event;
 
+/**
+ * @Security("is_granted('ROLE_ACCESS_LIVE_EVENTS')")
+ */
 class EventPicController extends Controller
 {
     /**

@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
- * @Security("has_role('ROLE_ADMIN')")
+ * @Security("is_granted('ROLE_ACCESS_DASHBOARD')")
  */
 class DashboardController extends Controller
 {
