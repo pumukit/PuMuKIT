@@ -112,7 +112,7 @@ class InfoController extends Controller
     {
         $flashMessage = $this->get('pumukitencoder.job')->retryJob($job);
 
-        return new JsonResponse(array("jobId" => $job.getId(), 'mesage' => $flashMessage));
+        return new JsonResponse(array("jobId" => $job->getId(), 'mesage' => $flashMessage));
     }
 
     /**
