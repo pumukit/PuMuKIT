@@ -34,7 +34,8 @@ class FilterListener
             && (!isset($routeParams["filter"]) || $routeParams["filter"])) {
 
             $loggedInUser = $this->userService->getLoggedInUser();
-            if ($loggedInUser->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
+            if ($loggedInUser->hasRole(PermissionProfile::SCOPE_PERSONAL) ||
+                $loggedInUser->hasRole(PermissionProfile::SCOPE_NONE)) {
                 $filter = $this->dm->getFilterCollection()->enable("backend");
 
                 if (null != $people = $this->getPeopleMongoQuery()) {
