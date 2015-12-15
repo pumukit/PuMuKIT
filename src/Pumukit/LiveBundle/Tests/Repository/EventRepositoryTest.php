@@ -159,8 +159,6 @@ class EventRepositoryTest extends WebTestCase
         $this->dm->persist($event4);
         $this->dm->flush();
 
-        $this->assertEquals(null, $this->repo->findOneByHoursEvent(1));
-
         $this->assertEquals($event4, $this->repo->findOneByHoursEvent(3, $date));
     }
 }
