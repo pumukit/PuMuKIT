@@ -57,6 +57,8 @@ EOT
                     if (-1 === $errorExecuting) return -1;
                     $errorExecuting = $this->executeRoles($input, $output);
                     if (-1 === $errorExecuting) return -1;
+                    $errorExecuting = $this->executePermissionProfiles($input, $output);
+                    if (-1 === $errorExecuting) return -1;
                     break;
                 case "tag":
                     $errorExecuting = $this->executeTags($input, $output);
