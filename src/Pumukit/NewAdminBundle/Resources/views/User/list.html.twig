@@ -58,22 +58,32 @@
             {% if user.getPermissionProfile() is not null %}{{ user.getPermissionProfile().getName() }},&nbsp;{% endif %}
             {% for role in user.roles %}
                 {% if 'ROLE_SUPER_ADMIN' == role %}
-                    {% trans %}System Administrator{% endtrans %}
+                    {% trans %}System Super Administrator{% endtrans %}
                     {% if not loop.last %}
                         ,&nbsp;
                     {% endif %}
                 {% elseif 'ROLE_ADMIN' == role %}
-                    {% trans %}System Administrator without publishing privileges{% endtrans %}
-                    {% if not loop.last %}
-                        ,&nbsp;
-                    {% endif %}
-                {% elseif 'ROLE_AUTO_PUBLISHER' == role %}
-                    {% trans %}System Auto Publisher{% endtrans %}
+                    {% trans %}System Administrator{% endtrans %}
                     {% if not loop.last %}
                         ,&nbsp;
                     {% endif %}
                 {% elseif 'ROLE_USER' == role %}
                     {% trans %}System User{% endtrans %}
+                    {% if not loop.last %}
+                        ,&nbsp;
+                    {% endif %}
+                {% elseif constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_GLOBAL') == role %}
+                    {% trans %}Global Scope{% endtrans %}
+                    {% if not loop.last %}
+                        ,&nbsp;
+                    {% endif %}
+                {% elseif constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_PERSONAL') == role %}
+                    {% trans %}Personal Scope{% endtrans %}
+                    {% if not loop.last %}
+                        ,&nbsp;
+                    {% endif %}
+                {% elseif constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_NONE') == role %}
+                    {% trans %}No Scope{% endtrans %}
                     {% if not loop.last %}
                         ,&nbsp;
                     {% endif %}

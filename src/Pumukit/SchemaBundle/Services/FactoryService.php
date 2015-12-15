@@ -377,7 +377,7 @@ class FactoryService
     private function addLoggedInUserAsPerson(MultimediaObject $multimediaObject)
     {
         if ($this->addUserAsPerson && (null != $person = $this->personService->getPersonFromLoggedInUser())) {
-            if (null != $role = $this->personService->getAutoPublisherRole()) {
+            if (null != $role = $this->personService->getPersonalScopeRole()) {
                 $multimediaObject = $this->personService->createRelationPerson($person, $role, $multimediaObject);
             }
         }
@@ -397,7 +397,7 @@ class FactoryService
     private function allowToDeleteObject($object=null)
     {
         $user = $this->userService->getLoggedInUser();
-        if ($this->userService->isAutoPublisher($user) && (null != $object)) {
+        if ($this->userService->isPersonalScope($user) && (null != $object)) {
             $owners = $object->getProperty('owners');
             if (null != $owners) {
 	        if (!in_array($user->getId(), $owners) || (1 != count($owners))) {

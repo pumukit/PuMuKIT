@@ -15,21 +15,21 @@ class UserService
     private $dm;
     private $repo;
     private $securityContext;
-    private $autoPublisherDeleteOwners;
+    private $personalScopeDeleteOwners;
 
     /**
      * Constructor
      *
      * @param DocumentManager $documentManager
      * @param SecurityContext $securityContext
-     * @param boolean         $autoPublisherDeleteOwners
+     * @param boolean         $personalScopeDeleteOwners
      */
-    public function __construct(DocumentManager $documentManager, SecurityContext $securityContext, $autoPublisherDeleteOwners=false)
+    public function __construct(DocumentManager $documentManager, SecurityContext $securityContext, $personalScopeDeleteOwners=false)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:User');
         $this->securityContext = $securityContext;
-        $this->autoPublisherDeleteOwners = $autoPublisherDeleteOwners;
+        $this->personalScopeDeleteOwners = $personalScopeDeleteOwners;
     }
 
     /**
@@ -121,8 +121,7 @@ class UserService
             if ($loggedInUser->hasRole('ROLE_SUPER_ADMIN')) {
                 return true;
             }
-            // TODO: Check what happens with ROLE_ADMIN
-            if ($loggedInUser->hasRole('ROLE_AUTO_PUBLISHER') && $this->autoPublisherDeleteOwners) {
+            if ($loggedInUser->hasRole(PermissionProfile::SCOPE_PERSONAL) && $this->personalScopeDeleteOwners) {
                 return true;
             }
         }
@@ -200,30 +199,30 @@ class UserService
     }
 
     /**
-     * Is Auto Publisher
+     * Is Personal Scope
      *
      * Checks if the logged in user
-     * has role AUTO_PUBLISHER and
-     * has not ADMIN privileges
+     * or given user
+     * has role SCOPE_PERSONAL
      *
      * @return boolean
      */
-    public function isAutoPublisher($user=null)
+    public function isPersonalScope($user=null)
     {
         if (null == $user) {
             $loggedInUser = $this->getLoggedInUser();
-            return $this->checkAutoPublisher($loggedInUser);
+            return $this->checkPersonalScope($loggedInUser);
         } else {
-            return $this->checkAutoPublisher($user);
+            return $this->checkPersonalScope($user);
         }
 
         return false;
     }
 
-    private function checkAutoPublisher($user = null)
+    private function checkPersonalScope($user = null)
     {
         if (null != $user) {
-            if ($user->hasRole('ROLE_AUTO_PUBLISHER') && !$user->hasRole('ROLE_ADMIN')) {
+            if ($user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
                 return true;
             }
         }
