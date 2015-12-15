@@ -46,6 +46,7 @@ class TrackController extends Controller
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
      * @Template
+     * @Security("is_granted('ROLE_ACCESS_ADVANCED_UPLOAD')")
      */
     public function uploadAction(MultimediaObject $multimediaObject, Request $request)
     {

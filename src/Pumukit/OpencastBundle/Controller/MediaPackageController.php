@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Pagerfanta\Adapter\FixedAdapter;
 use Pagerfanta\Pagerfanta;
 
@@ -21,6 +22,7 @@ use Pumukit\OpencastBundle\Services\OpencastService;
 
 /**
  * @Route("/admin")
+ * @Security("is_granted('ROLE_ACCESS_INGESTOR')")
  */
 class MediaPackageController extends Controller
 {

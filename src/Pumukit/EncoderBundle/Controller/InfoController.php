@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\EncoderBundle\Document\Job;
@@ -14,6 +15,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * @Route("/admin/encoder")
+ * @Security("is_granted('ROLE_ACCESS_JOBS')")
  */
 class InfoController extends Controller
 {
