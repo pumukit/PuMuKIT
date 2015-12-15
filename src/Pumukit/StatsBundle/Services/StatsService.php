@@ -77,7 +77,7 @@ class StatsService
     /**
      * Returns an array of mmobj viewed on the given range and its number of views on that range.
      */
-    public function getMmobjsMostViewedByRange(\DateTime $fromDate = null, \DateTime $toDate = null, $limit = 10, $page = 0, array $criteria = array(), $sort = -1)
+    public function getMmobjsMostViewedByRange(array $criteria = array(), array $options = array())
     {
         $ids = array();
 
@@ -89,12 +89,14 @@ class StatsService
             $matchExtra['multimediaObject'] = array('$in' => $mmobjIds);
         }
 
+        $options = $this->parseOptions($options);
+
         $pipeline = array();
-        $pipeline = $this->aggrPipeAddMatch($fromDate, $toDate, $matchExtra);
+        $pipeline = $this->aggrPipeAddMatch($options['fromDate'], $options['toDate'], $matchExtra);
         $pipeline[] = array('$group' => array('_id' => '$multimediaObject', 'numView' => array('$sum' => 1)));
-        $pipeline[] = array('$sort' => array('numView' => $sort));
-        $pipeline[] = array('$skip' => $page * $limit);
-        $pipeline[] = array('$limit' => $limit);
+        $pipeline[] = array('$sort' => array('numView' => $options['sort']));
+        $pipeline[] = array('$skip' => $options['page'] * $options['limit']);
+        $pipeline[] = array('$limit' => $options['limit']);
 
         $aggregation = $viewsLogColl->aggregate($pipeline);
         $mostViewed = array();
@@ -114,7 +116,7 @@ class StatsService
     /**
      * Returns an array of series viewed on the given range and its number of views on that range.
      */
-    public function getSeriesMostViewedByRange(\DateTime $fromDate = null, \DateTime $toDate = null, $limit = 10, $page = 0, array $criteria = array(), $sort = -1)
+    public function getSeriesMostViewedByRange(array $criteria = array(), array $options = array())
     {
         $ids = array();
         $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
@@ -125,12 +127,14 @@ class StatsService
             $matchExtra['multimediaObject'] = array('$in' => $mmobjIds);
         }
 
+        $options = $this->parseOptions($options);
+
         $pipeline = array();
-        $pipeline = $this->aggrPipeAddMatch($fromDate, $toDate, $matchExtra);
+        $pipeline = $this->aggrPipeAddMatch($options['fromDate'], $options['toDate'], $matchExtra);
         $pipeline[] = array('$group' => array('_id' => '$series', 'numView' => array('$sum' => 1)));
-        $pipeline[] = array('$sort' => array('numView' => $sort));
-        $pipeline[] = array('$skip' => $page * $limit);
-        $pipeline[] = array('$limit' => $limit);
+        $pipeline[] = array('$sort' => array('numView' => $options['sort']));
+        $pipeline[] = array('$skip' => $options['page'] * $options['limit']);
+        $pipeline[] = array('$limit' => $options['limit']);
 
         $aggregation = $viewsLogColl->aggregate($pipeline);
         $mostViewed = array();
@@ -150,9 +154,9 @@ class StatsService
     /**
      * Returns an array with the total number of views (all mmobjs) on a certain date range, grouped by hour/day/month/year.
      */
-    public function getTotalViewedGrouped(\DateTime $fromDate = null, \DateTime $toDate = null, $limit = 10, $page = 0, array $criteria = array(), $sort = -1, $groupBy = 'month')
+    public function getTotalViewedGrouped(array $criteria = array(), array $options = array())
     {
-        $aggregation = $this->getGroupedByAggrPipeline($fromDate, $toDate, $limit, $sort, $groupBy, $criteria);
+        $aggregation = $this->getGroupedByAggrPipeline($criteria, $options);
 
         return $aggregation->toArray();
     }
@@ -160,9 +164,9 @@ class StatsService
     /**
      * Returns an array with the number of views for a mmobj on a certain date range, grouped by hour/day/month/year.
      */
-    public function getTotalViewedGroupedByMmobj(\MongoId $mmobjId, \DateTime $fromDate = null, \DateTime $toDate = null, $limit = 10, $page = 0, array $criteria = array(), $sort = -1, $groupBy = 'month')
+    public function getTotalViewedGroupedByMmobj(\MongoId $mmobjId, array $criteria = array(), array $options = array())
     {
-        $aggregation = $this->getGroupedByAggrPipeline($fromDate, $toDate, $limit, $sort, $groupBy, $criteria, array('multimediaObject' => $mmobjId));
+        $aggregation = $this->getGroupedByAggrPipeline($criteria, $options, array('multimediaObject' => $mmobjId));
 
         return $aggregation->toArray();
     }
@@ -170,9 +174,9 @@ class StatsService
     /**
      * Returns an array with the total number of views for a series on a certain date range, grouped by hour/day/month/year.
      */
-    public function getTotalViewedGroupedBySeries(\MongoId $seriesId, \DateTime $fromDate = null, \DateTime $toDate = null, $limit = 10, $page = 0, array $criteria = array(), $sort = -1, $groupBy = 'month')
+    public function getTotalViewedGroupedBySeries(\MongoId $seriesId, array $criteria = array(), array $options = array())
     {
-        $aggregation = $this->getGroupedByAggrPipeline($fromDate, $toDate, $limit, $page, $sort, $groupBy, $criteria, array('series' => $seriesId));
+        $aggregation = $this->getGroupedByAggrPipeline($criteria, $options, array('series' => $seriesId));
 
         return $aggregation->toArray();
     }
@@ -180,7 +184,7 @@ class StatsService
     /**
      * Returns an aggregation pipeline array with all necessary data to form a num_views array grouped by hour/day/...
      */
-    public function getGroupedByAggrPipeline($fromDate = null, $toDate = null, $limit = 100, $page = 0, $sort = -1, $groupBy = 'month', $criteria = array(), $matchExtra = array())
+    public function getGroupedByAggrPipeline($criteria = array(), $options = array(), $matchExtra = array())
     {
         $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
 
@@ -189,11 +193,13 @@ class StatsService
             $matchExtra['multimediaObject'] = array('$in' => $mmobjIds);
         }
 
-        $pipeline = $this->aggrPipeAddMatch($fromDate, $toDate, $matchExtra);
-        $pipeline = $this->aggrPipeAddProjectGroupDate($pipeline, $groupBy);
-        $pipeline[] = array('$sort' => array('_id' => $sort));
-        $pipeline[] = array('$skip' => $page * $limit);
-        $pipeline[] = array('$limit' => $limit);
+        $options = $this->parseOptions($options);
+
+        $pipeline = $this->aggrPipeAddMatch($options['fromDate'], $options['toDate'], $matchExtra);
+        $pipeline = $this->aggrPipeAddProjectGroupDate($pipeline, $options['groupBy']);
+        $pipeline[] = array('$sort' => array('_id' => $options['sort']));
+        $pipeline[] = array('$skip' => $options['page'] * $options['limit']);
+        $pipeline[] = array('$limit' => $options['limit']);
 
         $aggregation = $viewsLogColl->aggregate($pipeline);
 
@@ -203,7 +209,7 @@ class StatsService
     /**
      * Returns the pipe with a match.
      */
-    private function aggrPipeAddMatch($fromDate = null, $toDate = null, $matchExtra = array(), $pipeline = array())
+    private function aggrPipeAddMatch(\DateTime $fromDate = null, \DateTime $toDate = null, $matchExtra = array(), $pipeline = array())
     {
         if (!$fromDate) {
             $fromDate = new \DateTime();
@@ -273,5 +279,20 @@ class StatsService
         $mmobjIds = $this->repo->createQueryBuilder()->addAnd($criteria)->distinct('_id')->getQuery()->execute()->toArray();
 
         return $mmobjIds;
+    }
+
+    /**
+     * Parses the options array to add all default options (if not added);.
+     */
+    private function parseOptions(array $options = array())
+    {
+        $options['groupBy'] = isset($options['groupBy']) ? $options['groupBy'] : 'month';
+        $options['limit'] = isset($options['limit']) ? $options['limit'] : 100;
+        $options['sort'] = isset($options['sort']) ? $options['sort'] : -1;
+        $options['page'] = isset($options['page']) ? $options['page'] : 0;
+        $options['fromDate'] = isset($options['fromDate']) ? $options['fromDate'] : null;
+        $options['toDate'] = isset($options['toDate']) ? $options['toDate'] : null;
+
+        return $options;
     }
 }
