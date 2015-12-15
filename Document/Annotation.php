@@ -20,9 +20,9 @@ class Annotation
     private $id;
 
     /**
-     * @var string $multimediaObject
+     * @var object_id $multimediaObject
      *
-     * @MongoDB\String
+     * @MongoDB\ObjectId
      * @MongoDB\UniqueIndex(safe=1)
      */
     private $multimediaObject;
@@ -98,7 +98,6 @@ class Annotation
      */
     private $is_private;
 
-
     /**
      * Get id
      *
@@ -109,11 +108,10 @@ class Annotation
         return $this->id;
     }
 
-
     /**
      * Set multimediaObject
      *
-     * @param string $multimediaObject
+     * @param object_id $multimediaObject
      * @return self
      */
     public function setMultimediaObject($multimediaObject)
@@ -125,7 +123,7 @@ class Annotation
     /**
      * Get multimediaObject
      *
-     * @return string $multimediaObject
+     * @return object_id $multimediaObject
      */
     public function getMultimediaObject()
     {
