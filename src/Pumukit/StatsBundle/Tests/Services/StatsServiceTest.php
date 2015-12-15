@@ -40,7 +40,7 @@ class StatsServiceTest extends WebTestCase
 
     private function logView($when, MultimediaObject $multimediaObject, Track $track = null)
     {
-        $log = new ViewsLog('/', '8.8.8.8', 'test', '', $multimediaObject->getId(), null);
+        $log = new ViewsLog('/', '8.8.8.8', 'test', '', $multimediaObject->getId(), $multimediaObject->getSeries()->getId(), null);
         $log->setDate($when);
         
         $this->dm->persist($log);

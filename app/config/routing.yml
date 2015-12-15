@@ -1,3 +1,13 @@
+pumukit_stats:
+    resource: "@PumukitStatsBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pumukit_schema:
+    resource: "@PumukitSchemaBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 pumukit_opencast:
     resource: "@PumukitOpencastBundle/Controller/"
     type:     annotation
