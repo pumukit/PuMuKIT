@@ -102,9 +102,6 @@ class EventRepositoryTest extends WebTestCase
         $this->dm->flush();
 
         $events = array($event4);
-        $this->assertEquals($events, array_values($this->repo->findFutureAndNotFinished(1)->toArray()));
-
-        $events = array($event4);
         $this->assertEquals($events, array_values($this->repo->findFutureAndNotFinished(1, $date)->toArray()));
 
         $events = array($event4, $event1);
