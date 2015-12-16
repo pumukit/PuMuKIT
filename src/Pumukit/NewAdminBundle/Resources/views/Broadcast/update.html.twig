@@ -21,7 +21,7 @@
                                                }
                           },
                           error: function(jqXHR, textStatus, errorThrown){
-                                               no_success(errorThrown+': '+textStatus);
+                                               no_success(errorThrown+': '+textStatus+', '+jqXHR.responseText);
                           }
                   });
                   return false;"
