@@ -52,6 +52,7 @@
           {% endfor %}
         </tr>
         {% for key,permission in permissions %}
+        {% if broadcast_enabled or (key != constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_BROADCASTS')) %}
         <tr>
           <td>
             {{ permission }}
@@ -67,6 +68,7 @@
           </td>
           {% endfor %}
         </tr>
+        {% endif %}
         {% endfor %}
       </tbody>
     </table>
