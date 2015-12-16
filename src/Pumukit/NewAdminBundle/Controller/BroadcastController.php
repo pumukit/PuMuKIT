@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 /**
  * @Security("is_granted('ROLE_ACCESS_BROADCASTS')")
  */
-class BroadcastAdminController extends AdminController
+class BroadcastController extends AdminController
 {
     /**
      * Change the default broadcast type
@@ -41,7 +41,7 @@ class BroadcastAdminController extends AdminController
     /**
      * Overwrite to check Broadcast creation
      *
-     * @Template("PumukitNewAdminBundle:Broadcast:index.html.twig")
+     * @Template()
      */
     public function indexAction(Request $request)
     {
@@ -59,7 +59,7 @@ class BroadcastAdminController extends AdminController
      * Create Action
      * Overwrite to check Broadcast creation
      *
-     * @Template("PumukitNewAdminBundle:Broadcast:create.html.twig")
+     * @Template()
      *
      * @param Request $request
      *
@@ -108,7 +108,7 @@ class BroadcastAdminController extends AdminController
      * Update Action
      * Overwrite to check Broadcast creation
      *
-     * @Template("PumukitNewAdminBundle:Broadcast:update.html.twig")
+     * @Template()
      *
      * @param Request $request
      *
@@ -174,7 +174,7 @@ class BroadcastAdminController extends AdminController
      * List action
      * Overwrite to check Broadcast creation
      *
-     * @Template("PumukitNewAdminBundle:Broadcast:list.html.twig")
+     * @Template()
      *
      */
     public function listAction(Request $request)
