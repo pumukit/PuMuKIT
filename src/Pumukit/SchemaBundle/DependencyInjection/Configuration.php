@@ -50,6 +50,10 @@ class Configuration implements ConfigurationInterface
               ->defaultFalse()
               ->info('Allow Personal Scope users to delete other owners of Series and MultimediaObjects')
             ->end()
+            ->booleanNode('disable_create_new_broadcasts')
+              ->defaultFalse()
+              ->info('Disable the creation of new Broadcasts')
+            ->end()
           ->end();
 
         return $treeBuilder;
