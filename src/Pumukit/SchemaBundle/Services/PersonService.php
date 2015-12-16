@@ -19,7 +19,7 @@ class PersonService
     private $repoPerson;
     private $repoMmobj;
     private $userService;
-    private $autoPublisherRoleCode;
+    private $personalScopeRoleCode;
     private $repoRole;
 
     /**
@@ -28,14 +28,14 @@ class PersonService
      * @param DocumentManager $documentManager
      * @param PersonWithRoleEventDispatcherService $dispatcher
      * @param UserService     $userService
-     * @param string          $autoPublisherRoleCode
+     * @param string          $personalScopeRoleCode
      */
-    public function __construct(DocumentManager $documentManager, PersonWithRoleEventDispatcherService $dispatcher, UserService $userService, $autoPublisherRoleCode='owner')
+    public function __construct(DocumentManager $documentManager, PersonWithRoleEventDispatcherService $dispatcher, UserService $userService, $personalScopeRoleCode='owner')
     {
         $this->dm = $documentManager;
         $this->dispatcher = $dispatcher;
         $this->userService = $userService;
-        $this->autoPublisherRoleCode = $autoPublisherRoleCode;
+        $this->personalScopeRoleCode = $personalScopeRoleCode;
         $this->repoPerson = $documentManager->getRepository('PumukitSchemaBundle:Person');
         $this->repoMmobj = $documentManager->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->repoRole = $documentManager->getRepository('PumukitSchemaBundle:Role');
@@ -196,7 +196,7 @@ class PersonService
             $this->dm->persist($person);
             $multimediaObject->addPersonWithRole($person, $role);
             $role->increaseNumberPeopleInMultimediaObject();
-            if ($this->autoPublisherRoleCode === $role->getCod()) {
+            if ($this->personalScopeRoleCode === $role->getCod()) {
                 $this->userService->addOwnerUserToMultimediaObject($multimediaObject, $person->getUser(), false);
             }
             $this->dm->persist($multimediaObject);
@@ -276,7 +276,7 @@ class PersonService
             $hasBeenRemoved = $multimediaObject->removePersonWithRole($person, $role);
             if ($hasBeenRemoved) {
                 $role->decreaseNumberPeopleInMultimediaObject();
-                if ($this->autoPublisherRoleCode === $role->getCod()) {
+                if ($this->personalScopeRoleCode === $role->getCod()) {
                     $this->userService->removeOwnerUserFromMultimediaObject($multimediaObject, $person->getUser(), false);
                 }
             }
@@ -389,7 +389,7 @@ class PersonService
     }
 
     /**
-     * Get Auto Publisher Role
+     * Get Personal Scope Role
      *
      * Gets the default role
      * to add the User as Person
@@ -397,13 +397,13 @@ class PersonService
      *
      * @return Role
      */
-    public function getAutoPublisherRole()
+    public function getPersonalScopeRole()
     {
-        return $this->dm->getRepository('PumukitSchemaBundle:Role')->findOneByCod($this->autoPublisherRoleCode);
+        return $this->dm->getRepository('PumukitSchemaBundle:Role')->findOneByCod($this->personalScopeRoleCode);
     }
 
     /**
-     * Get Auto Publisher Role
+     * Get Personal Scope Role
      *
      * Gets the default role code
      * to add the User as Person
@@ -411,9 +411,9 @@ class PersonService
      *
      * @return Role
      */
-    public function getAutoPublisherRoleCode()
+    public function getPersonalScopeRoleCode()
     {
-        return $this->autoPublisherRoleCode;
+        return $this->personalScopeRoleCode;
     }
 
     /**
@@ -473,12 +473,12 @@ class PersonService
      *
      * Checks if the user has the rights
      * to delete this person with this role
-     * in case of the auto publisher role
+     * in case of the personal scope role
      */
     private function allowToBeDeleted(Person $person, Role $role)
     {
         if (null != $person && null != $role) {
-            if ($this->autoPublisherRoleCode === $role->getCod()) {
+            if ($this->personalScopeRoleCode === $role->getCod()) {
                 return $this->userService->allowToDeleteOwner($person->getUser());
             }
         }

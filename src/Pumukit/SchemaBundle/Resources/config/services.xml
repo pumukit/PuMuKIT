@@ -138,13 +138,13 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="pumukitschema.personwithrole_dispatcher"/>
             <argument type="service" id="pumukitschema.user" />
-            <argument>%pumukitschema.auto_publisher_role_code%</argument>
+            <argument>%pumukitschema.personal_scope_role_code%</argument>
         </service>
 
         <service id="pumukitschema.user" class="Pumukit\SchemaBundle\Services\UserService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="security.context" />
-            <argument>%pumukitschema.auto_publisher_delete_owners%</argument>
+            <argument>%pumukitschema.personal_scope_delete_owners%</argument>
         </service>
 
         <service id="pumukitschema.pic" class="Pumukit\SchemaBundle\Services\PicService">

@@ -42,13 +42,13 @@ class Configuration implements ConfigurationInterface
               ->defaultTrue()
               ->info('Add logged in User as Person to MultimediaObjects')
             ->end()
-            ->scalarNode('auto_publisher_role_code')
+            ->scalarNode('personal_scope_role_code')
               ->defaultValue('owner')
-              ->info('Role code related to Auto Publisher User to use as EmbeddedPerson')
+              ->info('Role code related to Personal Scope User to use as EmbeddedPerson')
             ->end()
-            ->booleanNode('auto_publisher_delete_owners')
+            ->booleanNode('personal_scope_delete_owners')
               ->defaultFalse()
-              ->info('Allow Auto Publisher users to delete other owners of Series and MultimediaObjects')
+              ->info('Allow Personal Scope users to delete other owners of Series and MultimediaObjects')
             ->end()
           ->end();
 

@@ -8,6 +8,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Services\UserService;
+use Pumukit\SchemaBundle\Document\PermissionProfile;
 
 class FilterListener
 {
@@ -33,7 +34,8 @@ class FilterListener
             && (!isset($routeParams["filter"]) || $routeParams["filter"])) {
 
             $loggedInUser = $this->userService->getLoggedInUser();
-            if ($loggedInUser->hasRole('ROLE_AUTO_PUBLISHER') && !$loggedInUser->hasRole('ROLE_ADMIN')) {
+            if ($loggedInUser->hasRole(PermissionProfile::SCOPE_PERSONAL) ||
+                $loggedInUser->hasRole(PermissionProfile::SCOPE_NONE)) {
                 $filter = $this->dm->getFilterCollection()->enable("backend");
 
                 if (null != $people = $this->getPeopleMongoQuery()) {
@@ -44,7 +46,7 @@ class FilterListener
                     $filter->setParameter("person_id", $person->getId());
                 }
 
-                if (null != $roleCode = $this->personService->getAutoPublisherRoleCode()) {
+                if (null != $roleCode = $this->personService->getPersonalScopeRoleCode()) {
                     $filter->setParameter("role_code", $roleCode);
                 }
             }
@@ -64,7 +66,7 @@ class FilterListener
     {
         $people = array();
         if ((null != ($person = $this->personService->getPersonFromLoggedInUser()))
-            && (null != ($roleCode = $this->personService->getAutoPublisherRoleCode()))) {
+            && (null != ($roleCode = $this->personService->getPersonalScopeRoleCode()))) {
             $people['$elemMatch'] = array();
             $people['$elemMatch']['people._id'] = new \MongoId($person->getId());
             $people['$elemMatch']['cod'] = $roleCode;
