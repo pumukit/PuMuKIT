@@ -9,6 +9,12 @@ security:
         FOS\UserBundle\Model\UserInterface: sha512
 
     firewalls:
+        api:
+            pattern: ^/api
+            stateless: true
+            http_basic:
+                provider: fos_userbundle
+                realm: "secure-api"
         main:
             pattern: ^/
             form_login:
@@ -29,6 +35,7 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_USER }
+        - { path: ^/api/, role: ROLE_ADMIN }
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER

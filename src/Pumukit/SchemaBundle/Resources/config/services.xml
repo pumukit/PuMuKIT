@@ -155,6 +155,9 @@
           <argument>%pumukitschema.default_audio_hd_pic%</argument>
           <argument>%pumukitschema.default_audio_sd_pic%</argument>
         </service>
-    </services>
 
+        <service id="pumukitschema.stats" class="Pumukit\SchemaBundle\Services\StatsService">
+          <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+        </service>
+    </services>
 </container>
