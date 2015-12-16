@@ -16,6 +16,9 @@ use Pumukit\SchemaBundle\Security\Permission;
 
 class PumukitInitRepoCommand extends ContainerAwareCommand
 {
+    const BROADCAST_DEFAULT = 'default';
+    const BROADCAST_CAS = 'cas';
+
     private $dm = null;
     private $tagsRepo = null;
     private $broadcastsRepo = null;
@@ -26,13 +29,16 @@ class PumukitInitRepoCommand extends ContainerAwareCommand
     private $rolesPath = "../Resources/data/roles/";
     private $permissionProfilesPath = "../Resources/data/permissionprofiles/";
 
+    private $broadcastOption = self::BROADCAST_DEFAULT;
+
     protected function configure()
     {
         $this
             ->setName('pumukit:init:repo')
             ->setDescription('Load Pumukit data fixtures to your database')
-            ->addArgument('repo', InputArgument::REQUIRED, 'Select the repo to init: tag, broadcast, role, permissionprofiles, all')
+            ->addArgument('repo', InputArgument::REQUIRED, 'Select the repo to init: tag, broadcast, role, permissionprofile, all')
             ->addArgument('file', InputArgument::OPTIONAL, 'Input CSV path')
+            ->addOption('option', 'o', InputOption::VALUE_OPTIONAL, 'Input Broadcast option: default, cas. Default if none given.', $this->broadcastOption)
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
             ->setHelp(<<<EOT
 
@@ -117,6 +123,11 @@ EOT
     {
         $this->broadcastsRepo = $this->dm->getRepository("PumukitSchemaBundle:Broadcast");
 
+        if (($broadcastOption = $input->getOption('option')) &&
+            (($broadcastOption === self::BROADCAST_DEFAULT) || ($broadcastOption === self::BROADCAST_CAS))) {
+            $this->broadcastOption = $broadcastOption;
+        }
+
         $finder = new Finder();
         $finder->files()->in(__DIR__.'/'.$this->broadcastsPath);
         $file = $input->getArgument('file');
@@ -130,7 +141,10 @@ EOT
             $this->createFromFile($file, null, $output, 'broadcast');
         } else {
             foreach ($finder as $broadcastFile) {
-                $this->createFromFile($broadcastFile, null, $output, 'broadcast');
+                if (0 === strpos(pathinfo($broadcastFile, PATHINFO_FILENAME), $this->broadcastOption)) {
+                    $this->createFromFile($broadcastFile, null, $output, 'broadcast');
+                    break;
+                }
             }
         }
 
@@ -257,7 +271,7 @@ EOT
                             case 'broadcast':
                                 $broadcast = $this->createBroadcastFromCsvArray($currentRow);
                                 $idCodMapping[$currentRow[0]] = $broadcast;
-                                $output->writeln("Broadcast persisted - new id: ".$broadcast->getId()." type: ".$broadcast->getBroadcastTypeId());
+                                $output->writeln("Broadcast persisted - new id: ".$broadcast->getId()." name: ".$broadcast->getName().", type: ".$broadcast->getBroadcastTypeId());
                                 break;
                             case 'role':
                                 $role = $this->createRoleFromCsvArray($currentRow);
