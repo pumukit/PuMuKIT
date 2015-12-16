@@ -1,4 +1,5 @@
 <div class="table-responsive well" style="overflow:visible;">
+  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_LIVE_CHANNELS')) %}
   <table class="table table-striped table-hover">
     <thead>
       <tr>
@@ -83,4 +84,7 @@
     </tr>
   </tfoot>
 </table>
+{% else %}
+  {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+{% endif %}
 </div>

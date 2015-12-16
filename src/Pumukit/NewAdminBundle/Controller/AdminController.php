@@ -6,6 +6,7 @@ use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AdminController extends ResourceController
 {
@@ -42,6 +43,7 @@ class AdminController extends ResourceController
      */
     public function createAction(Request $request)
     {
+        $dm = $this->get('doctrine_mongodb')->getManager();
         $config = $this->getConfiguration();
         $resourceName = $config->getResourceName();
 
@@ -49,7 +51,12 @@ class AdminController extends ResourceController
         $form = $this->getForm($resource);
 
         if ($form->handleRequest($request)->isValid()) {
-            $resource = $this->domainManager->create($resource);
+            try {
+                $dm->persist($resource);
+                $dm->flush();
+            } catch (\Exception $e) {
+                return new JsonResponse(array("status" => $e->getMessage()), 409);
+            }
 
             if ($this->config->isApiRequest()) {
                 return $this->handleView($this->view($resource, 201));
@@ -91,7 +98,12 @@ class AdminController extends ResourceController
         $form     = $this->getForm($resource);
 
         if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
-            $this->domainManager->update($resource);
+            try {
+                $dm->persist($resource);
+                $dm->flush();
+            } catch (\Exception $e) {
+                return new JsonResponse(array("status" => $e->getMessage()), 409);
+            }
 
             if ($this->config->isApiRequest()) {
                 return $this->handleView($this->view($resource, 204));

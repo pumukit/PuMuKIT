@@ -3,6 +3,7 @@
   <h4 class="modal-title" id="myModalLabel">{% trans %}Job info{% endtrans %}</h4>
 </div>
 <div class="modal-body">
+  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   <div class="box-body">
     <dl class="dl-horizontal">
       <dt>{% trans %}Id{% endtrans %}</dt>
@@ -62,4 +63,7 @@
     {% endif %}    
 	</div>
   </form>
+  {% else %}
+    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+  {% endif %}
 </div>

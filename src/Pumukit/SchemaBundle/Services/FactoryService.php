@@ -7,6 +7,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\EncoderBundle\Document\Job;
 
 class FactoryService
@@ -16,17 +17,23 @@ class FactoryService
 
     private $dm;
     private $tagService;
+    private $personService;
+    private $userService;
     private $translator;
     private $locales;
     private $defaultCopyright;
+    private $addUserAsPerson;
 
-    public function __construct(DocumentManager $documentManager, TagService $tagService, TranslatorInterface $translator, array $locales = array(), $defaultCopyright = "")
+    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, TranslatorInterface $translator, $addUserAsPerson=true, array $locales = array(), $defaultCopyright = "")
     {
         $this->dm = $documentManager;
         $this->tagService = $tagService;
+        $this->personService = $personService;
+        $this->userService = $userService;
         $this->translator = $translator;
         $this->locales = $locales;
         $this->defaultCopyright = $defaultCopyright;
+        $this->addUserAsPerson = $addUserAsPerson;
     }
 
     /**
@@ -85,6 +92,7 @@ class FactoryService
         }
 
         $mm->setSeries($series);
+        $mm = $this->addLoggedInUserAsPerson($mm);
 
         return $mm;
     }
@@ -118,7 +126,7 @@ class FactoryService
 
         $mm->setSeries($series);
         $series->addMultimediaObject($mm);
-        
+        $mm = $this->addLoggedInUserAsPerson($mm);
 
         $this->dm->persist($mm);
         $this->dm->persist($series);
@@ -231,7 +239,10 @@ class FactoryService
      * @param Series $series
      */
     public function deleteSeries(Series $series)
-    {      
+    {
+        if (!$this->allowToDeleteObject($series)) {
+            throw new \Exception('You are not allowed to delete this Series. It has  more owners.');
+        }
         $repoMmobjs = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
          
         $multimediaObjects = $repoMmobjs->findBySeries($series);
@@ -252,6 +263,9 @@ class FactoryService
      */
     public function deleteMultimediaObject(MultimediaObject $multimediaObject)
     {
+        if (!$this->allowToDeleteObject($multimediaObject)) {
+            throw new \Exception('You are not allowed to delete this MultimediaObject. It has  more owners.');
+        }
         $repoMmobjs = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
 
         if (null != $series = $multimediaObject->getSeries()) {
@@ -268,7 +282,6 @@ class FactoryService
      */
     public function deleteResource($resource)
     {
-        $jobRepo = $this->dm->getRepository("PumukitEncoderBundle:Job");
         $this->dm->remove($resource);
         $this->dm->flush();
     }
@@ -359,5 +372,40 @@ class FactoryService
         $this->dm->flush();
 
         return $new;
+    }
+
+    private function addLoggedInUserAsPerson(MultimediaObject $multimediaObject)
+    {
+        if ($this->addUserAsPerson && (null != $person = $this->personService->getPersonFromLoggedInUser())) {
+            if (null != $role = $this->personService->getPersonalScopeRole()) {
+                $multimediaObject = $this->personService->createRelationPerson($person, $role, $multimediaObject);
+            }
+        }
+
+        return $multimediaObject;
+    }
+
+    /**
+     * Allow to delete object
+     *
+     * Checks whether the logged in user
+     * is allowed to delete the object or not
+     *
+     * @param Series|MultimediaObject $object
+     * @return boolean
+     */
+    private function allowToDeleteObject($object=null)
+    {
+        $user = $this->userService->getLoggedInUser();
+        if ($this->userService->isPersonalScope($user) && (null != $object)) {
+            $owners = $object->getProperty('owners');
+            if (null != $owners) {
+	        if (!in_array($user->getId(), $owners) || (1 != count($owners))) {
+		    return false;
+	        }
+            }
+	}
+
+	return true;
     }
 }

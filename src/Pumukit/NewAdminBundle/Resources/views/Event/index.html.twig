@@ -5,6 +5,7 @@
 <h1>{% trans %}Live broadcastings{% endtrans %}</h3>
 
 <div class="row">
+  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_LIVE_EVENTS')) %}
   <div class="col-md-10">
     <div class="well">
       <div id="list_events">
@@ -35,6 +36,13 @@
     </div>
     {% include 'PumukitNewAdminBundle:Event:filters.html.twig' %}
   </div>
+  {% else %}
+  <div class="col-md-12">
+    <div class="well">
+      {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+    </div>
+  </div>
+  {% endif %}
 </div>
 
 {% endblock %}

@@ -5,10 +5,14 @@ namespace Pumukit\NewAdminBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectTemplateMetaType;
 
+/**
+ * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
+ */
 class MultimediaObjectTemplateController extends MultimediaObjectController
 {
     /**

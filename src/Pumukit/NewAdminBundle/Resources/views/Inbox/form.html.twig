@@ -1,6 +1,7 @@
 {% extends 'PumukitNewAdminBundle:Inbox:base.html.twig' %}
 
 {% block inbox_body %}
+{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 <a data-hash="root" data-path="root" class="list-group-item collapsed noload" href="#"
    onclick="javascript:fileServerTree(this, '{{ onlyDir ? 'dir' : 'file'}}', '{{ dir }}', 1, 'explorer_videoserv'); return false;">
   <span style="padding-left: 0px">
@@ -10,4 +11,7 @@
     {{ dir }}
   </span>                  
 </a>
+{% else %}
+  {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+{% endif %}
 {% endblock %}

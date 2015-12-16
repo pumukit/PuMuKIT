@@ -6,10 +6,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Pumukit\SchemaBundle\Document\Link;
 use Pumukit\NewAdminBundle\Form\Type\LinkType;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
+/**
+ * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
+ */
 class LinkController extends Controller
 {
     /**

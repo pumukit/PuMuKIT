@@ -5,6 +5,7 @@
 <h1>{% trans %}People{% endtrans %}</h1>
 
 <div class="row">
+  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE')) %}
   <div class="col-md-10">
     <div class="well">
       <div id="list_people">
@@ -34,5 +35,12 @@
       {% endif %}
     </div>
   </div>
+  {% else %}
+  <div class="col-md-12">
+    <div class="well">
+      {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+    </div>
+  </div>
+  {% endif %}
 </div>
 {% endblock %}

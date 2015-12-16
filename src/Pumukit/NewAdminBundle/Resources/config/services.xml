@@ -41,5 +41,12 @@
     <service id="pumukitnewadmin.series_search" class="Pumukit\NewAdminBundle\Services\SeriesSearchService">
       <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
     </service>
+
+    <service id="pumukitnewadmin.filter" class="Pumukit\NewAdminBundle\EventListener\FilterListener">
+      <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+      <argument type="service" id="pumukitschema.person"/>
+      <argument type="service" id="pumukitschema.user"/>
+      <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest"/>
+    </service>
   </services>
 </container>

@@ -1,4 +1,5 @@
 <div class="well">
+  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   <div class="row">
     <div class="col-md-6">
       <form class="form-horizontal">        
@@ -35,21 +36,27 @@
       <li class="active">
         <a href="#editSeries" aria-controls="editSeries" role="tab" data-toggle="tab">{% trans %}Info{% endtrans %}</a>
       </li>
+      {% if mmtemplate %}
       <li>
         <a href="#editTemplate" aria-controls="editTemplate" role="tab"data-toggle="tab">{% trans %}Videos Template{% endtrans %}</a>
       </li>
+      {% endif %}
     </ul>
     
     <div class="tab-content">
       <div id="editSeries" role="tabpanel" class="tab-pane active">
         {% include 'PumukitNewAdminBundle:Series:updatemeta.html.twig' %}
       </div>
+      {% if mmtemplate %}
       <div id="editTemplate" role="tabpanel" class="tab-pane">
         {% include 'PumukitNewAdminBundle:MultimediaObjectTemplate:edit.html.twig' %}
       </div>
+      {% endif %}
     </div>
   </div>
-
+  {% else %}
+    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+  {% endif %}
 </div>
 
 

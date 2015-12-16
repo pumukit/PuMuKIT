@@ -1,4 +1,5 @@
 <div class="table-responsive well">
+  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADMIN_USERS')) %}
     <table class="table table-striped table-hover">
       <thead>
         <tr>
@@ -53,20 +54,42 @@
 	          {% if user.username is not empty %}{{ user.username }}{% endif %}
           </td>
           <td>
+            {% spaceless %}
+            {% if user.getPermissionProfile() is not null %}{{ user.getPermissionProfile().getName() }},&nbsp;{% endif %}
             {% for role in user.roles %}
                 {% if 'ROLE_SUPER_ADMIN' == role %}
-                    {% trans %}Administrator{% endtrans %}
-                {% elseif 'ROLE_ADMIN' == role %}
-                    {% trans %}Publisher{% endtrans %}
-                {% elseif 'ROLE_USER' == role %}
-                    {% trans %}User{% endtrans %}
-                {% endif %}
-                {% spaceless %}
+                    {% trans %}System Super Administrator{% endtrans %}
                     {% if not loop.last %}
                         ,&nbsp;
-                    {% endif %} 
-                {% endspaceless %}
+                    {% endif %}
+                {% elseif 'ROLE_ADMIN' == role %}
+                    {% trans %}System Administrator{% endtrans %}
+                    {% if not loop.last %}
+                        ,&nbsp;
+                    {% endif %}
+                {% elseif 'ROLE_USER' == role %}
+                    {% trans %}System User{% endtrans %}
+                    {% if not loop.last %}
+                        ,&nbsp;
+                    {% endif %}
+                {% elseif constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_GLOBAL') == role %}
+                    {% trans %}Global Scope{% endtrans %}
+                    {% if not loop.last %}
+                        ,&nbsp;
+                    {% endif %}
+                {% elseif constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_PERSONAL') == role %}
+                    {% trans %}Personal Scope{% endtrans %}
+                    {% if not loop.last %}
+                        ,&nbsp;
+                    {% endif %}
+                {% elseif constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_NONE') == role %}
+                    {% trans %}No Scope{% endtrans %}
+                    {% if not loop.last %}
+                        ,&nbsp;
+                    {% endif %}
+                {% endif %}
             {% endfor %}
+            {% endspaceless %}
           </td>
           <td>
 	          {% if user.email is not empty %}{{ user.email }}{% endif %}
@@ -95,4 +118,7 @@
         </tr>
       </tfoot>
     </table>
+  {% else %}
+    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+  {% endif %}
 </div>

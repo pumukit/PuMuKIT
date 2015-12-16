@@ -1,5 +1,6 @@
 {% extends 'PumukitNewAdminBundle::layout.html.twig' %}
 
+{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_DASHBOARD')) %}
 {% block stylesheets %}
   {{ parent() }}
   <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('/bundles/pumukitnewadmin/css/admin/dashboard.css') }}" />
@@ -9,14 +10,13 @@
   {{ parent() }}
   <script type="text/javascript" src="{{ asset('/bundles/pumukitnewadmin/js/timeline_2.3.1/timeline_js/timeline-api.js') }}"></script>
 {% endblock %}
-
-   
+{% endif %}
 
 {% block body %}
 <h1>{% trans %}Dashboard{% endtrans %}</h3>
 
-
 <div class="text-center well"> 
+  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_DASHBOARD')) %}
   <div id="my-timeline" style="height: 300px; border: 1px solid #aaa"></div>
   <br />
   <br />
@@ -25,9 +25,16 @@
      {% trans %}Please enable Javascript in your browser to see the full page.{% endtrans %}
      {% trans %}Thank you.{% endtrans %}
   </noscript>
+  {% else %}
+  <div class="col-md-12">
+    <div class="well">
+      {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+    </div>
+  </div>
+  {% endif %}
 </div>
 
-
+{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_DASHBOARD')) %}
 <script type="text/javascript">
 
 $(function(){
@@ -82,6 +89,7 @@ Timeline.DefaultEventSource.Event.prototype.fillInfoBubble = function(elmt, them
     elmt.appendChild(a_frontend);
 }
 </script>
+{% endif %}
 <br />
 <br />
 

@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\NewAdminBundle\Form\Type\SeriesType;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectTemplateMetaType;
@@ -13,6 +14,9 @@ use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
 
+/**
+ * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
+ */
 class SeriesController extends AdminController
 {
     /**

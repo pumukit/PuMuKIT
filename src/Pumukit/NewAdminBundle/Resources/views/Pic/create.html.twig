@@ -6,6 +6,7 @@
 <div class="modal-body">
 
   <div id="tv_admin_container">
+    {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
     <form autocomplete="off" onsubmit="$.ajax({
                             url: '{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id}) }}',
                             type: 'POST',
@@ -60,15 +61,20 @@
         <button type="submit" class="btn btn-pumukit btn-raised" onclick="if($('#file').val()==''){window.alert('{% trans %}Select a file on first place. Thank you.{% endtrans %}');return false;}">{% trans %}Add{% endtrans %}</button>
       </div>
     </form>
+    {% else %}
+      {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+    {% endif %}
   </div>
 
 
   <div style="clear:both"></div>
+  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   {% if resource_name != 'event' %}
   <div id="pics_to_add_list">
     {% set picstoaddlistaction = "PumukitNewAdminBundle:"~(resource_name == 'mms' ? 'MultimediaObject':(resource_name|capitalize))~"Pic:picstoaddlist" %}
     {{ render(controller(picstoaddlistaction, {'id': resource.id, 'page':1})) }}
   </div>
+  {% endif %}
   {% endif %}
   <div class="modal-footer">
     <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>

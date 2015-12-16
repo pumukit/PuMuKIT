@@ -7,6 +7,8 @@ use Pumukit\SchemaBundle\Document\EmbeddedPerson;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\EmbeddedRole;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Services\UserService;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -16,6 +18,8 @@ class PersonService
     private $dispatcher;
     private $repoPerson;
     private $repoMmobj;
+    private $userService;
+    private $personalScopeRoleCode;
     private $repoRole;
 
     /**
@@ -23,11 +27,15 @@ class PersonService
      *
      * @param DocumentManager $documentManager
      * @param PersonWithRoleEventDispatcherService $dispatcher
+     * @param UserService     $userService
+     * @param string          $personalScopeRoleCode
      */
-    public function __construct(DocumentManager $documentManager, PersonWithRoleEventDispatcherService $dispatcher)
+    public function __construct(DocumentManager $documentManager, PersonWithRoleEventDispatcherService $dispatcher, UserService $userService, $personalScopeRoleCode='owner')
     {
         $this->dm = $documentManager;
         $this->dispatcher = $dispatcher;
+        $this->userService = $userService;
+        $this->personalScopeRoleCode = $personalScopeRoleCode;
         $this->repoPerson = $documentManager->getRepository('PumukitSchemaBundle:Person');
         $this->repoMmobj = $documentManager->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->repoRole = $documentManager->getRepository('PumukitSchemaBundle:Role');
@@ -188,6 +196,9 @@ class PersonService
             $this->dm->persist($person);
             $multimediaObject->addPersonWithRole($person, $role);
             $role->increaseNumberPeopleInMultimediaObject();
+            if ($this->personalScopeRoleCode === $role->getCod()) {
+                $this->userService->addOwnerUserToMultimediaObject($multimediaObject, $person->getUser(), false);
+            }
             $this->dm->persist($multimediaObject);
             $this->dm->persist($role);
 
@@ -258,11 +269,21 @@ class PersonService
      */
     public function deleteRelation(Person $person, Role $role, MultimediaObject $multimediaObject)
     {
-        $flag = $multimediaObject->removePersonWithRole($person, $role);
-        $role->decreaseNumberPeopleInMultimediaObject();
-        $this->dm->persist($multimediaObject);
-        $this->dm->persist($role);
-        $this->dm->flush();
+        if (null != $person && null != $role && null != $multimediaObject) {
+            if (!$this->allowToBeDeleted($person, $role)) {
+  	        throw new \Exception('Not allowed to remove the relation of Person with id "'.$user->getName().'"  with role "'.$role->getCod().'" from MultimediaObject "'.$multimediaObject->getId().'". You are not that User.');
+            }
+            $hasBeenRemoved = $multimediaObject->removePersonWithRole($person, $role);
+            if ($hasBeenRemoved) {
+                $role->decreaseNumberPeopleInMultimediaObject();
+                if ($this->personalScopeRoleCode === $role->getCod()) {
+                    $this->userService->removeOwnerUserFromMultimediaObject($multimediaObject, $person->getUser(), false);
+                }
+            }
+            $this->dm->persist($multimediaObject);
+            $this->dm->persist($role);
+            $this->dm->flush();
+        }
 
         $this->dispatcher->dispatchDelete($multimediaObject, $person, $role);
 
@@ -272,12 +293,17 @@ class PersonService
     /**
      * Delete Person
      */
-    public function deletePerson(Person $person)
+    public function deletePerson(Person $person, $deleteFromUser=false)
     {
         if (null !== $person) {
             if (0 !== count($this->repoMmobj->findByPersonId($person->getId()))) {
                 throw new \Exception("Couldn't remove Person with id ".$person->getId().". There are multimedia objects with this person");
             }
+ 
+            if ((null != $user = $person->getUser()) && !$deleteFromUser) {
+                throw new \Exception('Could not remove Person with id "'.$person->getId().'". There is an User with id "'.$user->getId().'" and usernname "'.$user->getUsername().'" referenced. Delete the user to delete this Person.');
+            }
+
             $this->dm->remove($person);
             $this->dm->flush();
         }
@@ -318,6 +344,98 @@ class PersonService
     }
 
     /**
+     * Reference Person into User
+     *
+     * @param User $user
+     * @return User
+     */
+    public function referencePersonIntoUser(User $user)
+    {
+        if (null == $person = $user->getPerson()) {
+            $person = $this->createFromUser($user);
+
+            $user->setPerson($person);
+            $person->setUser($user);
+
+            $this->dm->persist($user);
+            $this->dm->persist($person);
+            $this->dm->flush();
+        }
+
+        return $user;
+    }
+
+    /**
+     * Get Person from logged in User
+     *
+     * Get the Person referenced
+     * in the logged in User
+     * It there is none, it creates it
+     *
+     * @return Person|null
+     */
+    public function getPersonFromLoggedInUser()
+    {
+        if (null != $user = $this->userService->getLoggedInUser()) {
+            if (null == $person = $user->getPerson()) {
+                $user = $this->referencePersonIntoUser($user);
+                $person = $user->getPerson();
+            }
+
+            return $person;
+        }
+
+        return null;
+    }
+
+    /**
+     * Get Personal Scope Role
+     *
+     * Gets the default role
+     * to add the User as Person
+     * to MultimediaObject
+     *
+     * @return Role
+     */
+    public function getPersonalScopeRole()
+    {
+        return $this->dm->getRepository('PumukitSchemaBundle:Role')->findOneByCod($this->personalScopeRoleCode);
+    }
+
+    /**
+     * Get Personal Scope Role
+     *
+     * Gets the default role code
+     * to add the User as Person
+     * to MultimediaObject
+     *
+     * @return Role
+     */
+    public function getPersonalScopeRoleCode()
+    {
+        return $this->personalScopeRoleCode;
+    }
+
+    /**
+     * Create from User
+     *
+     * @param User $user
+     * @return Person
+     */
+    private function createFromUser(User $user)
+    {
+        $person = new Person();
+
+        $person->setName($user->getFullname() ?: $user->getUsername());
+        $person->setEmail($user->getEmail());
+
+        $this->dm->persist($person);
+        $this->dm->flush();
+
+        return $person;
+    }
+
+    /**
      * Get all roles
      */
     public function getRoles()
@@ -348,6 +466,24 @@ class PersonService
         }
 
         return $embeddedPerson;
+    }
+
+    /**
+     * Allow to be deleted
+     *
+     * Checks if the user has the rights
+     * to delete this person with this role
+     * in case of the personal scope role
+     */
+    private function allowToBeDeleted(Person $person, Role $role)
+    {
+        if (null != $person && null != $role) {
+            if ($this->personalScopeRoleCode === $role->getCod()) {
+                return $this->userService->allowToDeleteOwner($person->getUser());
+            }
+        }
+
+        return true;
     }
 
     /**

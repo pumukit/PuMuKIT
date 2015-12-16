@@ -73,6 +73,7 @@ class PicServiceTest extends WebTestCase
         $series->addPic($seriesPic2);
 
         $this->dm->persist($series);
+        $this->dm->flush();
 
         $series->upPicById($seriesPic2->getId());
 
@@ -80,11 +81,6 @@ class PicServiceTest extends WebTestCase
         $this->dm->flush();
 
         $this->assertEquals($seriesUrl2, $this->picService->getFirstUrlPic($series));
-
-        // MULTIMEDIA OBJECT SECTION
-        // Workaround for detached Series document
-        $this->dm->clear(get_class($series));
-        $series = $this->dm->find('PumukitSchemaBundle:Series', $series->getId());
 
         $mm = $this->factoryService->createMultimediaObject($series);
         $mm->setSeries($series);

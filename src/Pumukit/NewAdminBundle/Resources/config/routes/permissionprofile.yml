@@ -1,0 +1,53 @@
+pumukitnewadmin_permissionprofile_index:
+    pattern: /
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.permissionprofile:indexAction
+        _sylius:
+            filterable: true
+
+pumukitnewadmin_permissionprofile_create:
+    pattern: /create
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.permissionprofile:createAction
+        _sylius:
+            redirect: pumukitnewadmin_permissionprofile_index
+
+pumukitnewadmin_permissionprofile_update:
+    pattern: /{id}/edit
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.permissionprofile:updateAction
+        _sylius:
+            redirect: pumukitnewadmin_permissionprofile_index
+
+pumukitnewadmin_permissionprofile_batch_delete:
+    pattern: /batchdelete
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.permissionprofile:batchDeleteAction
+        _sylius:
+            redirect: pumukitnewadmin_permissionprofile_index
+
+pumukitnewadmin_permissionprofile_delete:
+    pattern: /{id}/delete
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.permissionprofile:deleteAction
+        _sylius:
+            redirect: pumukitnewadmin_permissionprofile_index
+
+pumukitnewadmin_permissionprofile_list:
+    pattern: /list
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.permissionprofile:listAction
+
+pumukitnewadmin_permissionprofile_batch_update:
+    pattern: /batchupdate
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.permissionprofile:batchUpdateAction
+        _sylius:
+            redirect: pumukitnewadmin_permissionprofile_index

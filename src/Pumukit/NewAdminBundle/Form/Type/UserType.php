@@ -48,14 +48,8 @@ class UserType extends AbstractType
           */
             ->add('email', 'email',
                   array('label' => $this->translator->trans('Email', array(), null, $this->locale)))
-            ->add('roles', 'choice',
-                  array(
-                        'choices' => array(
-                                           'ROLE_SUPER_ADMIN' => $this->translator->trans('Administrator', array(), null, $this->locale),
-                                           'ROLE_ADMIN' => $this->translator->trans('Publisher', array(), null, $this->locale)),
-                        'multiple' => true,
-                        'expanded' => true,
-                        'label' => $this->translator->trans('Type', array(), null, $this->locale)));
+            ->add('permissionProfile', null,
+                  array('label' => $this->translator->trans('Permission Profile', array(), null, $this->locale)));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

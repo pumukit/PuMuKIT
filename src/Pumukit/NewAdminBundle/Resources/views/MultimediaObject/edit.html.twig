@@ -1,5 +1,6 @@
 {% if mm is not empty %}
 <div class="well">
+  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 
   {#
   <div style="text-align:right;">
@@ -51,5 +52,8 @@
       </div>
     </div>
   </div>
+  {% else %}
+    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+  {% endif %}
 </div>
 {% endif %}

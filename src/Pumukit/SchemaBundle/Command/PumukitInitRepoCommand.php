@@ -11,6 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Pumukit\SchemaBundle\Security\Permission;
 
 class PumukitInitRepoCommand extends ContainerAwareCommand
 {
@@ -22,13 +24,14 @@ class PumukitInitRepoCommand extends ContainerAwareCommand
     private $tagsPath = "../Resources/data/tags/";
     private $broadcastsPath = "../Resources/data/broadcasts/";
     private $rolesPath = "../Resources/data/roles/";
+    private $permissionProfilesPath = "../Resources/data/permissionprofiles/";
 
     protected function configure()
     {
         $this
             ->setName('pumukit:init:repo')
             ->setDescription('Load Pumukit data fixtures to your database')
-            ->addArgument('repo', InputArgument::REQUIRED, 'Select the repo to init: tag, broadcast, role, all')
+            ->addArgument('repo', InputArgument::REQUIRED, 'Select the repo to init: tag, broadcast, role, permissionprofiles, all')
             ->addArgument('file', InputArgument::OPTIONAL, 'Input CSV path')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
             ->setHelp(<<<EOT
@@ -54,6 +57,8 @@ EOT
                     if (-1 === $errorExecuting) return -1;
                     $errorExecuting = $this->executeRoles($input, $output);
                     if (-1 === $errorExecuting) return -1;
+                    $errorExecuting = $this->executePermissionProfiles($input, $output);
+                    if (-1 === $errorExecuting) return -1;
                     break;
                 case "tag":
                     $errorExecuting = $this->executeTags($input, $output);
@@ -65,6 +70,10 @@ EOT
                     break;
                 case "role":
                     $errorExecuting = $this->executeRoles($input, $output);
+                    if (-1 === $errorExecuting) return -1;
+                    break;
+                case "permissionprofile":
+                    $errorExecuting = $this->executePermissionProfiles($input, $output);
                     if (-1 === $errorExecuting) return -1;
                     break;
             }
@@ -149,6 +158,27 @@ EOT
         return 0;
     }
 
+    protected function executePermissionProfiles(InputInterface $input, OutputInterface $output)
+    {
+        $finder = new Finder();
+        $finder->files()->in(__DIR__.'/'.$this->permissionProfilesPath);
+        $file = $input->getArgument('file');
+        if ((0 == strcmp($file, "")) && (!$finder)) {
+            $output->writeln("<error>PermissionProfiles: There's no data to initialize</error>");
+
+            return -1;
+        }
+        $this->removePermissionProfiles();
+        foreach ($finder as $permissionProfilesFile) {
+            $this->createFromFile($permissionProfilesFile, null, $output, 'permissionprofile');
+        }
+        if ($file) {
+            $this->createFromFile($file, null, $output, 'permissionprofile');
+        }
+
+        return 0;
+    }
+
     protected function removeTags()
     {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')->remove(array());
@@ -162,6 +192,11 @@ EOT
     protected function removeRoles()
     {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Role')->remove(array());
+    }
+
+    protected function removePermissionProfiles()
+    {
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:PermissionProfile')->remove(array());
     }
 
     protected function createRoot()
@@ -179,6 +214,12 @@ EOT
 
             return -1;
         }
+        $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
+        $ending = substr($fileExtension, -1);
+        if (('~' === $ending) || ('#' === $ending)) {
+            $output->writeln("<warning>".$repoName.": Ignoring file ".$file."</warning>");
+            return -1;
+        }
 
         $idCodMapping = array();
 
@@ -188,7 +229,8 @@ EOT
                 $number = count($currentRow);
                 if ((('tag' === $repoName) && ($number == 6 || $number == 8)) || 
                     (('broadcast' === $repoName) && ($number == 5 || $number == 8)) || 
-                    (('role' === $repoName) && ($number == 7 || $number == 10))){
+                    (('role' === $repoName) && ($number == 7 || $number == 10)) ||
+                    (('permissionprofile' === $repoName) && ($number == 6))){
                     //Check header rows
                     if (trim($currentRow[0]) == "id") {
                         continue;
@@ -216,6 +258,11 @@ EOT
                                 $role = $this->createRoleFromCsvArray($currentRow);
                                 $idCodMapping[$currentRow[0]] = $role;
                                 $output->writeln("Role persisted - new id: ".$role->getId()." code: ".$role->getCod());
+                                break;
+                            case 'permissionprofile':
+                                $permissionProfile = $this->createPermissionProfileFromCsvArray($currentRow);
+                                $idCodMapping[$currentRow[0]] = $permissionProfile;
+                                $output->writeln("PermissionProfile persisted - new id: ".$permissionProfile->getId()." name: ".$permissionProfile->getName());
                                 break;
                         }
                     } catch (\Exception $e) {
@@ -336,5 +383,45 @@ EOT
         $this->dm->persist($role);
 
         return $role;
+    }
+
+    /**
+     * Create PermissionProfile from CSV array
+     */
+    private function createPermissionProfileFromCsvArray($csv_array)
+    {
+        $permissionProfile = new PermissionProfile();
+
+        $permissionProfile->setName($csv_array[1]);
+        $permissionProfile->setSystem($csv_array[2]);
+        $permissionProfile->setDefault($csv_array[3]);
+        if (($csv_array[4] === PermissionProfile::SCOPE_GLOBAL) ||
+            ($csv_array[4] === PermissionProfile::SCOPE_PERSONAL) ||
+            ($csv_array[4] === PermissionProfile::SCOPE_NONE)) {
+            $permissionProfile->setScope($csv_array[4]);
+        }
+        foreach (array_filter(preg_split('/[,\s]+/', $csv_array[5])) as $permission) {
+            if ($permission === 'none') {
+                break;
+            } elseif ($permission === 'all') {
+                $permissionProfile = $this->addAllPermissions($permissionProfile);
+                break;
+            } elseif (array_key_exists($permission, Permission::$permissionDescription)) {
+                $permissionProfile->addPermission($permission);
+            }
+        }
+
+        $this->dm->persist($permissionProfile);
+
+        return $permissionProfile;
+    }
+
+    private function addAllPermissions(PermissionProfile $permissionProfile)
+    {
+        foreach (Permission::$permissionDescription as $key => $value) {
+            $permissionProfile->addPermission($key);
+        }
+
+        return $permissionProfile;
     }
 }

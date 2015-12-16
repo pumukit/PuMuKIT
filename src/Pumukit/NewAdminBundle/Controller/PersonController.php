@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
@@ -18,6 +19,7 @@ class PersonController extends AdminController
     /**
      * Index
      *
+     * @Security("is_granted('ROLE_ACCESS_PEOPLE')")
      * @Template("PumukitNewAdminBundle:Person:index.html.twig")
      */
     public function indexAction(Request $request)
@@ -43,6 +45,7 @@ class PersonController extends AdminController
     /**
      * Create new person
      *
+     * @Security("is_granted('ROLE_ACCESS_PEOPLE')")
      * @Template("PumukitNewAdminBundle:Person:create.html.twig")
      */
     public function createAction(Request $request)
@@ -81,6 +84,7 @@ class PersonController extends AdminController
 
     /**
      * Update person
+     * @Security("is_granted('ROLE_ACCESS_PEOPLE')")
      * @Template("PumukitNewAdminBundle:Person:update.html.twig")
      */
     public function updateAction(Request $request)
@@ -120,6 +124,7 @@ class PersonController extends AdminController
     /**
      * Show person
      *
+     * @Security("is_granted('ROLE_ACCESS_PEOPLE')")
      * @Template("PumukitNewAdminBundle:Person:show.html.twig")
      */
     public function showAction(Request $request)
@@ -138,6 +143,7 @@ class PersonController extends AdminController
     /**
      * List people
      *
+     * @Security("is_granted('ROLE_ACCESS_PEOPLE')")
      * @Template("PumukitNewAdminBundle:Person:list.html.twig")
      */
     public function listAction(Request $request)
@@ -419,7 +425,11 @@ class PersonController extends AdminController
     {
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
-        $multimediaObject = $personService->deleteRelation($person, $role, $multimediaObject);
+	try {
+            $multimediaObject = $personService->deleteRelation($person, $role, $multimediaObject);
+        }catch (\Exception $e){
+            return new Response("Can not delete relation of Person '".$person->getName()."' with MultimediaObject '".$multimediaObject->getId()."'. ".$e->getMessage(), 409);
+        }
 
         $template = '';
         if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
@@ -446,9 +456,39 @@ class PersonController extends AdminController
         try{
             if (0 === $personService->countMultimediaObjectsWithPerson($person)){
                 $personService->deletePerson($person);
+            } else {
+                return new Response("Can not delete Person '".$person->getName()."'. There are Multimedia objects with this Person.", 409);
             }
         }catch (\Exception $e){
-            $this->get('session')->getFlashBag()->add('error', $e->getMessage());          
+            return new Response("Can not delete Person '".$person->getName()."'. ".$e->getMessage(), 409);
+        }
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_person_list'));
+    }
+
+    /**
+     * Batch delete Person
+     * Overwrite to use PersonService
+     */
+    public function batchDeleteAction(Request $request)
+    {
+        $ids = $this->getRequest()->get('ids');
+
+        if ('string' === gettype($ids)){
+            $ids = json_decode($ids, true);
+        }
+
+        $personService = $this->get('pumukitschema.person');
+        foreach ($ids as $id) {
+            $person = $this->find($id);
+            try{
+                $personService->deletePerson($person);
+            } catch (\Exception $e) {
+                return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
+            }
+            if ($id === $this->get('session')->get('admin/person/id')){
+                $this->get('session')->remove('admin/person/id');
+            }
         }
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_person_list'));

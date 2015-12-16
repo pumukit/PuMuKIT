@@ -201,4 +201,37 @@ final class SchemaEvents
      * @var string
      */
     const PERSONWITHROLE_DELETE = 'personwithrole.delete';
+
+    /**
+     * The permissionprofile.create event is thrown each time a
+     * permissionprofile is created.
+     *
+     * The event listener receives an
+     * Pumukit\SchemaBundle\Event\PermissionProfileEvent instance.
+     *
+     * @var string
+     */
+    const PERMISSIONPROFILE_CREATE = 'permissionprofile.create';
+
+    /**
+     * The permissionprofile.update event is thrown each time a
+     * permissionprofile is updated.
+     *
+     * The event listener receives an
+     * Pumukit\SchemaBundle\Event\PermissionProfileEvent instance.
+     *
+     * @var string
+     */
+    const PERMISSIONPROFILE_UPDATE = 'permissionprofile.update';
+
+    /**
+     * The permissionprofile.delete event is thrown each time a
+     * permissionprofile is deleted.
+     *
+     * The event listener receives an
+     * Pumukit\SchemaBundle\Event\PermissionProfileEvent instance.
+     *
+     * @var string
+     */
+    const PERMISSIONPROFILE_DELETE = 'permissionprofile.delete';
 }

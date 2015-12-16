@@ -34,6 +34,12 @@ body {
   animation:rippleOff 0ms
 }
 
+.checkbox.pmk_disabled_checkbox input[type=checkbox]:disabled~.check,
+.checkbox.pmk_disabled_checkbox input[type=checkbox]:disabled~.check:before,
+.checkbox.pmk_disabled_checkbox input[type=checkbox]:disabled~.check:after {
+  color:gray
+}
+
 .checkbox label .check:before,
 .checkbox.pumukit-mms-checkbox label .check:before{
   position:absolute;

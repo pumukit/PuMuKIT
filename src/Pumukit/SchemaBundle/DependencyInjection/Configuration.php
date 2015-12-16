@@ -38,6 +38,18 @@ class Configuration implements ConfigurationInterface
               ->defaultValue('/bundles/pumukitschema/images/audio_sd.svg')
               ->info('Default audio SD picture')
             ->end()
+            ->booleanNode('enable_add_user_as_person')
+              ->defaultTrue()
+              ->info('Add logged in User as Person to MultimediaObjects')
+            ->end()
+            ->scalarNode('personal_scope_role_code')
+              ->defaultValue('owner')
+              ->info('Role code related to Personal Scope User to use as EmbeddedPerson')
+            ->end()
+            ->booleanNode('personal_scope_delete_owners')
+              ->defaultFalse()
+              ->info('Allow Personal Scope users to delete other owners of Series and MultimediaObjects')
+            ->end()
           ->end();
 
         return $treeBuilder;

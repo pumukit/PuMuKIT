@@ -4,7 +4,11 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+/**
+ * @Security("is_granted('ROLE_ACCESS_BROADCASTS')")
+ */
 class BroadcastAdminController extends AdminController
 {
     /**

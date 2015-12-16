@@ -20,6 +20,11 @@ class Person
     protected $id;
 
     /**
+     * @MongoDB\ReferenceOne(targetDocument="User", inversedBy="person", simple=true)
+     */
+    private $user;
+
+    /**
      * @var string $name
      *
      * @MongoDB\String
@@ -91,6 +96,26 @@ class Person
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set user
+     *
+     * @param User $user
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * Get user
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 
     /**

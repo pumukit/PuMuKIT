@@ -1,0 +1,77 @@
+<div class="table-responsive well">
+  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PERMISSION_PROFILES')) %}
+    <div class="row">
+      <div class="col-md-6">
+	    <div>
+          <span style="display:none;" id="remember_save_permissionprofile" class="alert alert-dismissable alert-danger">{% trans %}Press SAVE for changes to take effect{% endtrans %}</span> &nbsp;
+        </div>
+      </div>
+      <div class="col-md-6 text-right">
+        <button id="pumukitnewadmin_permissionprofile_update_cancel" type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button>
+        <button id="pumukitnewadmin_permissionprofile_update_ok" type="submit" class="btn btn-primary btn-raised" onclick="return processPermissionProfilesOk();">{% trans %}Save{% endtrans %}</button>
+        <a href="{{ path('pumukitnewadmin_permissionprofile_create') }}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
+      </div>
+    </div>
+    <form autocomplete="off" method="POST" id="pumukitnewadmin_permissionprofile_table_form">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th width="20%">{% trans %}Permissions{% endtrans %}</th>
+          {% for permissionprofile in permissionprofiles %}
+          <th width="1%">{% if not permissionprofile.system %}{% include 'PumukitNewAdminBundle:PermissionProfile:updatemenu.html.twig' %}{% endif %}</th>
+          <th width="8%">{{ permissionprofile.name }}</th>
+          {% else %}
+          <th>{% trans %}There are no user permissions with those values.{% endtrans %}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% if permissions is empty %}
+        <tr>
+          <td colspan="8">
+            {% trans %}There are no permissions with those values.{% endtrans %}
+          </td>
+        </tr>
+        {% endif %}
+        <tr>
+          <td>{% trans %}Default{% endtrans %}</td>
+          {% for permissionprofile in permissionprofiles %}
+          <td></td>
+          <td>
+            {% include 'PumukitNewAdminBundle:PermissionProfile:updatedefault.html.twig' %}
+          </td>
+          {% endfor %}
+        </tr>
+        <tr>
+          <td>{% trans %}Scope{% endtrans %}</td>
+          {% for permissionprofile in permissionprofiles %}
+          <td></td>
+          <td>
+            {% include 'PumukitNewAdminBundle:PermissionProfile:updatescope.html.twig' %}
+          </td>
+          {% endfor %}
+        </tr>
+        {% for key,permission in permissions %}
+        <tr>
+          <td>
+            {{ permission }}
+          </td>
+          {% for permissionprofile in permissionprofiles %}
+          <td></td>
+          <td>
+            <div class="checkbox{{ permissionprofile.system ? ' pmk_disabled_checkbox'}}">
+              <label>
+                <input id="{{ key }}__{{ permissionprofile.id }}" form="pumukitnewadmin_permissionprofile_table_form" class="{{ permissionprofile.system ? 'system':'not_system' }}_permission_permissionprofile_checkbox" type="checkbox" size="1"{{ permissionprofile.containsPermission(key) ? ' checked="checked"':'' }}{{ permissionprofile.system ? ' disabled="disabled"':'' }}>
+              </label>
+            </div>
+          </td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </form>
+  {% else %}
+    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+  {% endif %}
+</div>

@@ -8,6 +8,7 @@ use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\User;
 
 class PersonServiceTest extends WebTestCase
 {
@@ -713,6 +714,59 @@ class PersonServiceTest extends WebTestCase
         $this->personService->deletePerson($personBob);
 
         $this->assertEquals(1, count($this->repo->findAll()));
+    }
+
+    public function testReferencePersonIntoUser()
+    {
+        $this->assertEquals(0, count($this->repo->findAll()));
+
+        $fullname = 'User fullname';
+        $email = 'user@mail.com';
+
+        $user = new User();
+        $user->setFullname($fullname);
+        $user->setEmail($email);
+
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $user = $this->personService->referencePersonIntoUser($user);
+
+        $people = $this->repo->findAll();
+        $this->assertEquals(1, count($people));
+
+        $person = $people[0];
+
+        $this->assertEquals($person, $user->getPerson());
+        $this->assertEquals($user, $person->getUser());
+
+        $this->assertEquals($fullname, $user->getFullname());
+        $this->assertEquals($fullname, $person->getName());
+
+        $this->assertEquals($email, $user->getEmail());
+        $this->assertEquals($email, $person->getEmail());
+
+        $user = $this->personService->referencePersonIntoUser($user);
+        $people = $this->repo->findAll();
+        $this->assertEquals(1, count($people));
+
+
+        $user2 = new User();
+        $user2->setFullname($fullname);
+        $user2->setEmail($email);
+
+        $this->dm->persist($user2);
+        $this->dm->flush();
+
+        $user2 = $this->personService->referencePersonIntoUser($user2);
+
+        $people = $this->repo->findAll();
+        $this->assertEquals(2, count($people));
+
+        $person = $people[1];
+
+        $this->assertEquals($person, $user2->getPerson());
+        $this->assertEquals($user2, $person->getUser());
     }
 
     public function testGetRoles()

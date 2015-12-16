@@ -10,12 +10,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\NewAdminBundle\Form\Type\TrackType;
 use Pumukit\NewAdminBundle\Form\Type\TrackUpdateType;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\EncoderBundle\Document\Job;
 
+/**
+ * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
+ */
 class TrackController extends Controller
 {
     /**
@@ -42,6 +46,7 @@ class TrackController extends Controller
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
      * @Template
+     * @Security("is_granted('ROLE_ACCESS_ADVANCED_UPLOAD')")
      */
     public function uploadAction(MultimediaObject $multimediaObject, Request $request)
     {

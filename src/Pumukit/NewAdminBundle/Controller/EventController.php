@@ -5,8 +5,12 @@ namespace Pumukit\NewAdminBundle\Controller;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+/**
+ * @Security("is_granted('ROLE_ACCESS_LIVE_EVENTS')")
+ */
 class EventController extends AdminController
 {
     /**

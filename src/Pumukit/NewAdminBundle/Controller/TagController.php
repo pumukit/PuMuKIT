@@ -7,9 +7,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\NewAdminBundle\Form\Type\TagType;
 
+/**
+ * @Security("is_granted('ROLE_ACCESS_TAGS')")
+ */
 class TagController extends Controller
 {
     /**

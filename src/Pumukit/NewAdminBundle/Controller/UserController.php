@@ -8,10 +8,57 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Pumukit\SchemaBundle\Document\User;
 
 /**
- * @Security("has_role('ROLE_SUPER_ADMIN')")
+ * @Security("is_granted('ROLE_ACCESS_ADMIN_USERS')")
  */
 class UserController extends AdminController
 {
+    /**
+     * Create Action
+     * Overwrite to create Person
+     * referenced to User
+     *
+     * @param Request $request
+     *
+     * @return RedirectResponse|Response
+     */
+    public function createAction(Request $request)
+    {
+        $config = $this->getConfiguration();
+        $permissionProfileService = $this->get('pumukitschema.permissionprofile');
+
+        $user = new User();
+        $defaultPermissionProfile = $permissionProfileService->getDefault();
+        if (null == $defaultPermissionProfile) {
+            throw new \Exception('Unable to assign a Permission Profile to the new User. There is no default Permission Profile');
+        }
+        $user->setPermissionProfile($defaultPermissionProfile);
+        $form = $this->getForm($user);
+
+        if ($form->handleRequest($request)->isValid()) {
+            try {
+                $user = $this->get('pumukitschema.user')->create($user);
+                $user = $this->get('pumukitschema.person')->referencePersonIntoUser($user);
+            } catch (\Exception $e) {
+                throw $e;
+            }
+            if ($this->config->isApiRequest()) {
+                return $this->handleView($this->view($user, 201));
+            }
+
+            return $this->redirect($this->generateUrl('pumukitnewadmin_user_list'));
+        }
+
+        if ($this->config->isApiRequest()) {
+            return $this->handleView($this->view($form));
+        }
+
+        return $this->render("PumukitNewAdminBundle:User:create.html.twig",
+                             array(
+                                   'user' => $user,
+                                   'form' => $form->createView()
+                                   ));
+    }
+
     /**
      * Update Action
      * Overwrite to update it with user manager
@@ -31,15 +78,18 @@ class UserController extends AdminController
         $form = $this->getForm($user);
 
         if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
-            $response = $this->isAllowedToBeUpdated($user);
-            if ($response instanceof Response) {
-                return $response;
+            try {
+                $response = $this->isAllowedToBeUpdated($user);
+                if ($response instanceof Response) {
+                    return $response;
+                }
+                // false to not flush
+                $userManager->updateUser($user, false);
+                // To update aditional fields added
+                $user = $this->get('pumukitschema.user')->update($user);
+            } catch (\Exception $e) {
+                throw $e;
             }
-            // false to not flush
-            $userManager->updateUser($user, false);
-            // To update aditional fields added
-            $this->domainManager->update($user);
-
             if ($this->config->isApiRequest()) {
                 return $this->handleView($this->view($user, 204));
             }
@@ -119,6 +169,14 @@ class UserController extends AdminController
 
         if ((1 === $numberAdminUsers) && ($userToDelete->isSuperAdmin())){
             return new Response("Can not delete this unique admin user '".$userToDelete->getUsername()."'", 409);
+        }
+
+        if (null != $person = $userToDelete->getPerson()) {
+            try {
+                $this->get('pumukitschema.person')->deletePerson($person, true);
+            } catch (\Exception $e) {
+                return new Response("Can not delete the user '".$userToDelete->getUsername()."'. ".$e->getMessage(), 409);
+            }
         }
 
         return true;

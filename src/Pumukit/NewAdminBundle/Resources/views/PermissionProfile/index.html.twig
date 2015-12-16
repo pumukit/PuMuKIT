@@ -1,0 +1,25 @@
+{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+
+{% block body %}
+
+<h1>{% trans %}Permission Profiles{% endtrans %}</h1>
+
+<div class="row">
+  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PERMISSION_PROFILES')) %}
+  <div class="col-md-12">
+    <div class="well">
+      <div id="list_permissionprofiles">
+        {% include 'PumukitNewAdminBundle:PermissionProfile:list.html.twig' %}
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <div class="col-md-12">
+    <div class="well">
+      {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}

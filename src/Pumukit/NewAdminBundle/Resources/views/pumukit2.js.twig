@@ -173,6 +173,21 @@ window.submit_delete_series = function(id, seriesTitle, countMm)
     }
 }
 
+window.submit_delete_permissionprofile = function(id, permissionProfileName)
+{
+    if (window.confirm('{% trans %}Are you sure you want to delete the Permission Profile{% endtrans %} "'+permissionProfileName+'"?.')){
+        var url = "{{ path('pumukitnewadmin_permissionprofile_delete', {'id': '__id__'})|raw }}";
+        var message = '{% trans %}Permission Profile{% endtrans %} "'+permissionProfileName+'" {% trans %}successfully deleted{% endtrans %}.';
+        $('#list_permissionprofiles').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
+            if (textStatus !== "error") {
+                success(message);
+            } else {
+                no_success(XMLHttpRequest['statusText'] + ': ' + responseText);
+            }
+        });
+    }
+}
+
 success = function(message){
     $("#div_messages_span_info").attr("data-content", message);
     $("#div_messages_span_info").snackbar("show");
@@ -235,8 +250,14 @@ window.submit_delete_person_relation = function(id, roleId, mmId, hName, templat
         url = url.replace('__mmId__', mmId);
         $(tag_id).load(url, {'_method': 'DELETE'});
         var url = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'})|raw }}";
-        var message = '{% trans %}Person successfully removed from Multimedia Object{% endtrans %}';
-        $('#preview_mm').load(url.replace('__mmId__', mmId), function(){success(message)});
+        $('#preview_mm').load(url.replace('__mmId__', mmId), function(responseText, textStatus, XMLHttpRequest){
+            console.log(XMLHttpRequest.status);
+	    if(XMLHttpRequest.status >= 400){
+                no_success('{% trans %}Error deleting Person{% endtrans %} "'+personHName+' from MultimediaObject": ' + responseText);
+	    } else {
+                success('{% trans %}Person successfully removed from Multimedia Object{% endtrans %}');
+            }
+	});
     }
 }
 
@@ -331,8 +352,13 @@ window.submit_delete_person = function(id, countMm, personHName)
     if (countMm == 0){
         if (window.confirm("{% trans %}Are you sure you want to delete the data of{% endtrans %} "+personHName+"?")){
             var url = "{{ path('pumukitnewadmin_person_delete', {'id': '__id__'})|raw }}";
-            var message = '{% trans %}Person successfully deleted.{% endtrans %}';
-            $('#list_people').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message);});
+            $('#list_people').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
+                if(XMLHttpRequest.status >= 400){
+                    no_success('{% trans %}Error deleting Person{% endtrans %} "'+personHName+'": ' + responseText);
+                }else{
+                    success('{% trans %}Person{% endtrans %} "'+personHName+'" {% trans %}successfully deleted.{% endtrans %}');
+                }
+            });
     }
     }else{
         window.alert('{% trans %}Cannot delete the data of{% endtrans %} '+personHName+'. '+ countMm+' {% trans %}multimedia object(s) contain(s) this person{% endtrans %}.');
@@ -953,10 +979,8 @@ $(function() {
   });
 
   $('#pumukitnewadmin_series_new_button').on('click', function () {
-    var seriesId = $('#series_series_id').val();
-    var route = "{{ path('pumukitnewadmin_series_create', {'id': '__seriesId__'}) }}";
+    var route = "{{ path('pumukitnewadmin_series_create') }}";
     $('#filter_series')[0].reset();
-    route = route.replace('__seriesId__', seriesId);
     $.ajax(route, {
             type: 'GET',
             error: function(jqXHR, textStatus, errorThrown){
@@ -1691,6 +1715,119 @@ $(document).on('submit', '#pumukitnewadmin_user_form_create', function(event){
     });
     return false;
 });
+
+$(document).on('submit', '#pumukitnewadmin_permissionprofile_form_create', function(event){
+    $(event.currentTarget).find(':submit').prop('disabled', true);
+    $('#myModal').modal('hide');
+
+    var route = '{{ path('pumukitnewadmin_permissionprofile_create') }}';
+    $.ajax({
+            url: route,
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function(response, textStatus, jqXHR){
+                        if (jqXHR.responseText.indexOf('modal-header') != -1){
+                            var message = '{% trans %}There was an error in creating the Permission Profile.{% endtrans %}';
+                            no_success(message);
+                        }else{
+                            $('#list_permissionprofiles').html(response);
+                            var message = '{% trans %}Permission Profile successfully created.{% endtrans %}';
+                            success(message);
+                        }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                        // TODO: talk to Rubén
+                        var responseText = jqXHR.responseText.split("<title>").pop().split("</title>").shift();
+                        var message = responseText.replace(/(\r\n|\n|\r)/gm,"");
+                        no_success(errorThrown+': '+textStatus+', '+message);
+            }
+    });
+    return false;
+});
+
+$(document).on('submit', '#pumukitnewadmin_permissionprofile_form_update', function(event){
+    $('#myModal').modal('hide');
+
+    var route = '{{ path('pumukitnewadmin_permissionprofile_update', {'id': '__permissionProfileId__'}) }}';
+    var permissionProfileId = $('#permissionProfileId').val();
+
+    route = route.replace('__permissionProfileId__', permissionProfileId);
+
+    $.ajax({
+            url: route,
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function(response, textStatus, jqXHR){
+                        if (jqXHR.responseText.indexOf('modal-header') != -1){
+                            var message = '{% trans %}There was an error in updating the Permission Profile.{% endtrans %}';
+                            no_success(message);
+                        }else{
+                            $('#list_permissionprofiles').html(response);
+                            var message = '{% trans %}Permission Profile successfully updated.{% endtrans %}';
+                            success(message);
+                        }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                        var responseText = jqXHR.responseText.split("<title>").pop().split("</title>").shift();
+                        var message = responseText.replace(/(\r\n|\n|\r)/gm,"");
+                        no_success(errorThrown+': '+textStatus+', '+message);
+            }
+    });
+    return false;
+});
+
+$(document).on('change', 'form#pumukitnewadmin_permissionprofile_table_form', function(){
+    $('#remember_save_permissionprofile').show();
+});
+
+$(document).on('click', '#pumukitnewadmin_permissionprofile_update_cancel', function(){
+    $('#pumukitnewadmin_permissionprofile_table_form')[0].reset();
+    $('#remember_save_permissionprofile').hide();
+});
+
+processPermissionProfilesOk = function(){
+    $('#remember_save_permissionprofile').hide();
+    var selected_default = '';
+    $('input.pumukitnewadmin_permissionprofile_default:checked').each(function(){
+            var $this = $(this);
+            selected_default = $this.attr("value");
+    });
+    var selected_scopes = [];
+    $('select.not_system option:selected').each(function(){
+            var $this = $(this);
+            selected_scopes.push($this.attr("value"));
+    });
+    var checked_permissions = [];
+    $('.not_system_permission_permissionprofile_checkbox:checked').each(function(){
+            var $this = $(this);
+            checked_permissions.push($this.attr("id"));
+    });
+    var not_checked_permissions = [];
+    $('.not_system_permission_permissionprofile_checkbox:not(:checked)').each(function(){
+            var $this = $(this);
+            not_checked_permissions.push($this.attr("id"));
+    });
+
+    var message = '{% trans %}Permission Profiles successfully updated.{% endtrans %}';
+    var route = '{{ path('pumukitnewadmin_permissionprofile_batch_update', {'selected_default': '__selected_default__', 'selected_scopes': '__selected_scopes__', 'checked_permissions': '__checked_permissions__', 'not_checked_permissions': '__not_checked_permissions__'})|raw }}';
+    route = route.replace('__selected_default__', selected_default);
+    route = route.replace('__selected_scopes__', JSON.stringify(selected_scopes));
+    route = route.replace('__checked_permissions__', JSON.stringify(checked_permissions));
+    route = route.replace('__not_checked_permissions__', JSON.stringify(not_checked_permissions));
+    $.ajax({
+            url: route,
+            type: 'POST',
+            error: function(jqXHR, textStatus, errorThrown){
+                no_success(errorThrown + ': ' + jqXHR.responseText);
+            },
+            success: function(response){
+                $('#list_permissionprofiles').html(response);
+                success(message);
+            }
+    });
+
+    return false;
+}
 
 function test_material_form_url(url){
     $('.error').hide();

@@ -1,0 +1,20 @@
+<div class="dropdown">
+  <i class="mdi-navigation-menu" id="list_pics_{{ permissionprofile.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="list_permissionprofiles_{{ permissionprofile.id }}">
+    <li>
+      <a href="{{ path('pumukitnewadmin_permissionprofile_update', {'id': permissionprofile.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+        <i class="mdi-editor-mode-edit"></i> {% trans %}Edit the permission profile{% endtrans %}
+      </a>
+    </li>
+    <li>
+      <a href="#" onclick="window.submit_delete_permissionprofile('{{ permissionprofile.id }}', '{{ permissionprofile.name }}'); return false;">
+        <i class="mdi-content-clear"></i> {% trans %}Delete the permission profile{% endtrans %}
+      </a>
+    </li>
+    <li>
+      <a href="#" onclick="return false;">
+        <strong>{% trans %}Cancel{% endtrans %}...</strong>
+      </a>
+    </li>
+  </ul>
+</div>

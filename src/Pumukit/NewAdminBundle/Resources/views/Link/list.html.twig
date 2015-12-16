@@ -1,4 +1,5 @@
-<table><tdody>
+<table><tbody>
+  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   {% for link in links %}
     <tr>
       <td><ul><li></li></ul></td>
@@ -41,6 +42,9 @@
     <td><ul><li></li></ul></td>
     <td colspan="6"><a title="{% trans %}Create Link{% endtrans %}" data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal" href="{{ path('pumukitnewadmin_link_create', {'id': mmId}) }}">{% trans %}New{% endtrans %}...</a></td>
   </tr>
+  {% else %}
+    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+  {% endif %}
 </tbody></table>
 
 {# TODO

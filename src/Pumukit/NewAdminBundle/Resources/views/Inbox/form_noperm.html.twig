@@ -1,7 +1,11 @@
 {% extends 'PumukitNewAdminBundle:Inbox:base.html.twig' %}
 
 {% block inbox_body %}
+{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 <p style="padding: 5px">
   <code>{{ dir }}</code> {% trans %}is not readable{% endtrans %}. {% trans %}Check the file system permissions{% endtrans %}.
 </p>
+{% else %}
+  {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+{% endif %}
 {% endblock %}

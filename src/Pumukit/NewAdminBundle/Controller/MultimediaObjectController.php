@@ -15,7 +15,11 @@ use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectPubType;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+/**
+ * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
+ */
 class MultimediaObjectController extends SortableAdminController
 {
     /**

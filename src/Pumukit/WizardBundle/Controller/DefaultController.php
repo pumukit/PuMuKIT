@@ -5,6 +5,7 @@ namespace Pumukit\WizardBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Intl\Intl;
 use Symfony\Component\Finder\Finder;
@@ -12,6 +13,9 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 
+/**
+ * @Security("is_granted('ROLE_ACCESS_WIZARD_UPLOAD')")
+ */
 class DefaultController extends Controller
 {
     /**
