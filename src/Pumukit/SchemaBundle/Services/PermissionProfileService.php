@@ -62,7 +62,9 @@ class PermissionProfileService
         if ($permissionProfile->isDefault()) {
             $default = $this->repo->findOneByDefault(true);
             $this->repo->changeDefault($permissionProfile);
-            $this->dispatcher->dispatchUpdate($default);
+            if (null != $default) {
+                $this->dispatcher->dispatchUpdate($default);
+            }
         }
 
         $default = $this->repo->findOneByDefault(true);
