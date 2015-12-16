@@ -102,11 +102,12 @@ EOT
         }
         $this->removeTags();
         $root = $this->createRoot();
-        foreach ($finder as $tagFile) {
-            $this->createFromFile($tagFile, $root, $output, 'tag');
-        }
         if ($file) {
-          $this->createFromFile($file, $root, $output, 'tag');
+            $this->createFromFile($file, $root, $output, 'tag');
+        } else {
+            foreach ($finder as $tagFile) {
+                $this->createFromFile($tagFile, $root, $output, 'tag');
+            }
         }
 
         return 0;
@@ -125,11 +126,12 @@ EOT
             return -1;
         }
         $this->removeBroadcasts();
-        foreach ($finder as $broadcastFile) {
-          $this->createFromFile($broadcastFile, null, $output, 'broadcast');
-        }
         if ($file) {
-          $this->createFromFile($file, null, $output, 'broadcast');
+            $this->createFromFile($file, null, $output, 'broadcast');
+        } else {
+            foreach ($finder as $broadcastFile) {
+                $this->createFromFile($broadcastFile, null, $output, 'broadcast');
+            }
         }
 
         return 0;
@@ -148,11 +150,12 @@ EOT
             return -1;
         }
         $this->removeRoles();
-        foreach ($finder as $roleFile) {
-            $this->createFromFile($roleFile, null, $output, 'role');
-        }
         if ($file) {
             $this->createFromFile($file, null, $output, 'role');
+        } else {
+            foreach ($finder as $roleFile) {
+                $this->createFromFile($roleFile, null, $output, 'role');
+            }
         }
 
         return 0;
@@ -169,11 +172,12 @@ EOT
             return -1;
         }
         $this->removePermissionProfiles();
-        foreach ($finder as $permissionProfilesFile) {
-            $this->createFromFile($permissionProfilesFile, null, $output, 'permissionprofile');
-        }
         if ($file) {
             $this->createFromFile($file, null, $output, 'permissionprofile');
+        } else {
+            foreach ($finder as $permissionProfilesFile) {
+                $this->createFromFile($permissionProfilesFile, null, $output, 'permissionprofile');
+            }
         }
 
         return 0;
@@ -220,6 +224,7 @@ EOT
             $output->writeln("<warning>".$repoName.": Ignoring file ".$file."</warning>");
             return -1;
         }
+        $output->writeln("<info>Found file: ".realpath($file)."</info>");
 
         $idCodMapping = array();
 
