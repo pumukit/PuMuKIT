@@ -123,9 +123,13 @@ EOT
     {
         $this->broadcastsRepo = $this->dm->getRepository("PumukitSchemaBundle:Broadcast");
 
-        if (($broadcastOption = $input->getOption('option')) &&
-            (($broadcastOption === self::BROADCAST_DEFAULT) || ($broadcastOption === self::BROADCAST_CAS))) {
-            $this->broadcastOption = $broadcastOption;
+        if ($broadcastOption = $input->getOption('option')) {
+            if (($broadcastOption === self::BROADCAST_DEFAULT) || ($broadcastOption === self::BROADCAST_CAS)) {
+                $this->broadcastOption = $broadcastOption;
+            } else {
+                throw new \Exception('Broadcast Option: "'.$broadcastOption.'" not valid. Valid values: "'
+                                    .self::BROADCAST_DEFAULT.'" or "'.self::BROADCAST_CAS.'".');
+            }
         }
 
         $finder = new Finder();
@@ -235,7 +239,7 @@ EOT
         $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
         $ending = substr($fileExtension, -1);
         if (('~' === $ending) || ('#' === $ending)) {
-            $output->writeln("<warning>".$repoName.": Ignoring file ".$file."</warning>");
+            $output->writeln("<comment>".$repoName.": Ignoring file ".$file."</comment>");
             return -1;
         }
         $output->writeln("<info>Found file: ".realpath($file)."</info>");
