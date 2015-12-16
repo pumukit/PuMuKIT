@@ -91,6 +91,8 @@ class AdminController extends ResourceController
      */
     public function updateAction(Request $request)
     {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+
         $config = $this->getConfiguration();
         $resourceName = $config->getResourceName();
 
