@@ -15,7 +15,7 @@ class Builder extends ContainerAware
 
         // Add translations in src/Pumukit/NewAdminBundle/Resource/translations/NewAdminBundle.locale.yml
         $authorizationChecker = $this->container->get('security.authorization_checker');
-        $createBroadcastDisabled = $this->container->getParameter('pumukitschema.disable_create_new_broadcasts');
+        $createBroadcastDisabled = $this->container->getParameter('pumukitschema.disable_broadcast_creation');
         if (false !== $authorizationChecker->isGranted(Permission::ACCESS_DASHBOARD)) {
             $menu->addChild('Dashboard', array('route' => 'pumukit_newadmin_dashboard_index'))->setExtra('translation_domain', 'NewAdminBundle');
         }

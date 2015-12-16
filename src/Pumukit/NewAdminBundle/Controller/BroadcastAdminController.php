@@ -239,7 +239,7 @@ class BroadcastAdminController extends AdminController
 
     private function checkCreateBroadcastDisabled()
     {
-        $createBroadcastsDisabled = $this->container->getParameter('pumukitschema.disable_create_new_broadcasts');
+        $createBroadcastsDisabled = $this->container->getParameter('pumukitschema.disable_broadcast_creation');
         if ($createBroadcastsDisabled) {
             throw $this->createAccessDeniedException();
         }
