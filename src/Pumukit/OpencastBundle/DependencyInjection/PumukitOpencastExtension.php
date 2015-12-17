@@ -63,5 +63,7 @@ class PumukitOpencastExtension extends Extension
         $container->setParameter('pumukit_opencast.sbs.use_flavour', $config['sbs']['generate_sbs'] ? $config['sbs']['use_flavour'] : false);
         $container->setParameter('pumukit_opencast.sbs.flavour', $config['sbs']['use_flavour'] ? $config['sbs']['flavour'] : null);
         $container->setParameter('pumukit_opencast.sbs.url_mapping', $config['sbs']['generate_sbs'] ? $config['sbs']['url_mapping'] : null);
+
+        $container->setParameter('pumukit_opencast.use_redirect', $config['use_redirect']);
     }
 }
