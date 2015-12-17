@@ -15,6 +15,7 @@ class Builder extends ContainerAware
 
         // Add translations in src/Pumukit/NewAdminBundle/Resource/translations/NewAdminBundle.locale.yml
         $authorizationChecker = $this->container->get('security.authorization_checker');
+        $createBroadcastDisabled = $this->container->getParameter('pumukitschema.disable_broadcast_creation');
         if (false !== $authorizationChecker->isGranted(Permission::ACCESS_DASHBOARD)) {
             $menu->addChild('Dashboard', array('route' => 'pumukit_newadmin_dashboard_index'))->setExtra('translation_domain', 'NewAdminBundle');
         }
@@ -46,7 +47,7 @@ class Builder extends ContainerAware
             if ($authorizationChecker->isGranted(Permission::ACCESS_TAGS)) {
                 $tables->addChild('Tags', array('route' => 'pumukitnewadmin_tag_index'))->setExtra('translation_domain', 'NewAdminBundle');
             }
-            if ($authorizationChecker->isGranted(Permission::ACCESS_BROADCASTS)) {
+            if ($authorizationChecker->isGranted(Permission::ACCESS_BROADCASTS) && !$createBroadcastDisabled) {
                 $tables->addChild('Access profiles', array('route' => 'pumukitnewadmin_broadcast_index'))->setExtra('translation_domain', 'NewAdminBundle');
             }
             if ($authorizationChecker->isGranted(Permission::ACCESS_SERIES_TYPES)) {

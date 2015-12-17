@@ -1,0 +1,3 @@
+id;name;broadcast_type_id;passwd;default_sel;description_es;description_gl;description_en
+1;"Public";"public";"123456";0;"Perfil de acceso público";"Perfil de acceso público";"Public access profile"
+2;"CAS";"corporative";"123456";0;"Perfil de acceso CAS";"Perfil de acceso CAS";"CAS access profile"
