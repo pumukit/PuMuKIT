@@ -41,9 +41,9 @@ class PumukitOpencastExtension extends Extension
 
           $container
             ->register("pumukit_opencast.job", "Pumukit\OpencastBundle\Services\OpencastService")
-            ->addArgument($config['generate_sbs'] ? $config['profile'] : null)
+            ->addArgument($config['sbs']['generate_sbs'] ? $config['sbs']['profile'] : null)
             ->addArgument(new Reference('pumukitencoder.job'))
-            ->addArgument($config['url_mapping'])
+            ->addArgument($config['sbs']['url_mapping'])
             ->addArgument(array('opencast_host' => $config['host'], 'opencast_username' => $config['username'], 'opencast_password' => $config['password']));
 
           $container
@@ -58,7 +58,10 @@ class PumukitOpencastExtension extends Extension
             ->addArgument(new Parameter("pumukit2.locales"));
         }
 
-        $container->setParameter('pumukit_opencast.generate_sbs', $config['generate_sbs'] ? $config['generate_sbs'] : false);
-        $container->setParameter('pumukit_opencast.profile', $config['generate_sbs'] ? $config['profile'] : null);
+        $container->setParameter('pumukit_opencast.sbs', $config['sbs']);
+        $container->setParameter('pumukit_opencast.sbs.generate_sbs', $config['sbs']['generate_sbs'] ? $config['sbs']['generate_sbs'] : false);
+        $container->setParameter('pumukit_opencast.sbs.profile', $config['sbs']['generate_sbs'] ? $config['sbs']['profile'] : null);
+        $container->setParameter('pumukit_opencast.sbs.use_flavour', $config['sbs']['generate_sbs'] ? $config['sbs']['use_flavour'] : false);
+        $container->setParameter('pumukit_opencast.sbs.flavour', $config['sbs']['use_flavour'] ? $config['sbs']['flavour'] : null);
     }
 }

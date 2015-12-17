@@ -28,11 +28,3 @@ parameters:
     pumukit2.inbox:   "%kernel.root_dir%/../web/storage/inbox"
     pumukit2.tmp:     "%kernel.root_dir%/../web/storage/tmp"
     pumukit2.delete_on_disk: true
-
-    opencast_host:  ''
-    opencast_username: ''
-    opencast_password: ''
-    opencast_player: ''
-    opencast_generate_sbs: false
-    opencast_profile: sbs
-    opencast_url_mapping: {}
