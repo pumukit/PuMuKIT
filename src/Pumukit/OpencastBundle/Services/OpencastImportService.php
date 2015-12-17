@@ -8,6 +8,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\TrackService;
 use Pumukit\SchemaBundle\Services\TagService;
+use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Track;
@@ -23,16 +24,18 @@ class OpencastImportService
     private $factoryService;
     private $trackService;
     private $tagService;
+    private $mmsService;
     private $opencastService;
     private $inspectionService;
     private $otherLocales;
     
-    public function __construct(DocumentManager $documentManager, FactoryService $factoryService, TrackService $trackService, TagService $tagService, ClientService $opencastClient, OpencastService $opencastService, InspectionServiceInterface $inspectionService, array $otherLocales = array()) {
+    public function __construct(DocumentManager $documentManager, FactoryService $factoryService, TrackService $trackService, TagService $tagService, MultimediaObjectService $mmsService, ClientService $opencastClient, OpencastService $opencastService, InspectionServiceInterface $inspectionService, array $otherLocales = array()) {
         $this->opencastClient = $opencastClient;
         $this->dm = $documentManager;
         $this->factoryService = $factoryService;
         $this->trackService = $trackService;
         $this->tagService = $tagService;
+        $this->mmsService = $mmsService;
         $this->opencastService = $opencastService;
         $this->inspectionService = $inspectionService;
         $this->otherLocales = $otherLocales;
@@ -42,135 +45,74 @@ class OpencastImportService
     public function importRecording($opencastId, $invert=false)
     {
         $mediaPackage = $this->opencastClient->getMediaPackage($opencastId);
+
         $seriesRepo = $this->dm->getRepository('PumukitSchemaBundle:Series');
 
-        if(isset($mediaPackage["series"])){
-            $series = $seriesRepo->findOneBy(array("properties.opencast" => $mediaPackage["series"]));
-        }else{
+        $seriesOpencastId = $this->getMediaPackageField($mediaPackage, 'series');
+        if ($seriesOpencastId) {
+            $series = $seriesRepo->findOneBy(array("properties.opencast" => $seriesOpencastId));
+        } else {
             $series = $seriesRepo->findOneBy(array("properties.opencast" => "default"));            
         }
-        
-        if(!$series) {
+        if (!$series) {
             $series = $this->importSeries($mediaPackage);
         }
 
+        $onemultimediaobjects = null;
         $multimediaobjectsRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $onemultimediaobjects = $multimediaobjectsRepo->findOneBy(array("properties.opencast" => $mediaPackage["id"]));        
+        $mediaPackageId = $this->getMediaPackageField($mediaPackage, 'id');
+        if ($mediaPackageId) {
+            $onemultimediaobjects = $multimediaobjectsRepo->findOneBy(array("properties.opencast" => $mediaPackageId));
+        }
 
-        if($onemultimediaobjects == null){
-            $title = $mediaPackage["title"];
-            $properties = $mediaPackage["id"];
-            $recDate = $mediaPackage["start"];
-
+        if (null == $onemultimediaobjects) {
             $multimediaObject = $this->factoryService->createMultimediaObject($series);
             $multimediaObject->setSeries($series);
-            $multimediaObject->setRecordDate($recDate);
-            $multimediaObject->setProperty("opencast", $properties);
+
+            $title = $this->getMediaPackageField($mediaPackage, 'title');
+            if ($title) $multimediaObject->setTitle($title);
+
+            $properties = $this->getMediaPackageField($mediaPackage, 'id');
+            if ($properties) {
+                $multimediaObject->setProperty("opencast", $properties);
+                $multimediaObject->setProperty("opencasturl", $this->opencastClient->getPlayerUrl() . "?id=" . $properties);
+            }
             $multimediaObject->setProperty("opencastinvert", boolval($invert));
-            $multimediaObject->setProperty("opencasturl", $this->opencastClient->getPlayerUrl() . "?id=" . $properties);
-            $multimediaObject->setTitle($title);
-            if (isset($mediaPackage["language"])) {
-                $multimediaObject->setProperty("opencastlanguage", strtolower($mediaPackage["language"]));
+
+            $recDate = $this->getMediaPackageField($mediaPackage, 'start');
+            if ($recDate) $multimediaObject->setRecordDate($recDate);
+
+            $language = $this->getMediaPackageField($mediaPackage, 'language');
+            if ($language) {
+                $multimediaObject->setProperty("opencastlanguage", strtolower($language));
             } else {
                 $multimediaObject->setProperty("opencastlanguage", 'en');
             }
-            foreach($this->otherLocales as $locale) {
+
+            foreach ($this->otherLocales as $locale) {
                 $multimediaObject->setTitle($title, $locale);
             }
 
-            //Multiple tracks
-            if(isset($mediaPackage["media"]["track"][0])){
-                for($i=0; $i<count($mediaPackage["media"]["track"]); $i++) {
-
-                    $tags = $mediaPackage["media"]["track"][$i]["tags"];
-                    $url = $mediaPackage["media"]["track"][$i]["url"];
-                    $mime = $mediaPackage["media"]["track"][$i]["mimetype"];
-                    $duration = $mediaPackage["media"]["track"][$i]["duration"];
-
-                    $track = new Track();
-
-                    if( isset($mediapackage["media"]["track"][$i]["audio"])) {
-                        $acodec = $mediaPackage["media"]["track"][$i]["audio"]["encoder"]["type"];
-                        $track->setAcodec($acodec);
-                    }
-
-                    if (isset($mediaPackage["language"])) {
-                        $track->setLanguage(strtolower($mediaPackage["language"]));
-                    }
-
-                    if( isset($mediaPackage["media"]["track"][$i]["video"])) {
-                        $vcodec = $mediaPackage["media"]["track"][$i]["video"]["encoder"]["type"];
-                        $track->setVcodec($vcodec);
-                        $framerate = $mediaPackage["media"]["track"][$i]["video"]["framerate"];
-                        $track->setFramerate($framerate);
-                    }
-
-                    if (!$track->getVcodec() && $track->getAcodec()) {
-                        $track->setOnlyAudio(true);
-                    }
-
-                    $track->addTag("opencast");
-                    $track->addTag($mediaPackage["media"]["track"][$i]["type"]);
-                    $track->setUrl($url);
-                    $track->setPath($this->opencastService->getPath($url));
-                    $track->setMimeType($mime);
-                    $track->setDuration($duration/1000);
-
-                    $this->inspectionService->autocompleteTrack($track);
-
-                    $multimediaObject->setDuration($track->getDuration());
-
-                    $this->trackService->addTrackToMultimediaObject($multimediaObject, $track, false);
+            $media = $this->getMediaPackageField($mediaPackage, 'media');
+            $tracks = $this->getMediaPackageField($media, 'track');
+            if (isset($tracks[0])) {
+                // NOTE: Multiple tracks
+                for ($i=0; $i < count($tracks); $i++) {
+                    $track = $this->createTrackFromMediaPackage($mediaPackage, $multimediaObject, $i);
                 }
             } else {
-                $tags = $mediaPackage["media"]["track"]["tags"];
-                $url = $mediaPackage["media"]["track"]["url"];
-                $mime = $mediaPackage["media"]["track"]["mimetype"];
-                $duration = $mediaPackage["media"]["track"]["duration"];
-
-                $track = new Track();
-
-                if( isset($mediapackage["media"]["track"]["audio"])) {
-                    $acodec = $mediaPackage["media"]["track"]["audio"]["encoder"]["type"];
-                    $track->setAcodec($acodec);
-                }
-
-                if( isset($mediaPackage["media"]["track"]["video"])) {
-                    $vcodec = $mediaPackage["media"]["track"]["video"]["encoder"]["type"];
-                    $track->setVcodec($vcodec);
-                    $framerate = $mediaPackage["media"]["track"]["video"]["framerate"];
-                    $track->setFramerate($framerate);
-                }
-
-                if (!$track->getVcodec() && $track->getAcodec()) {
-                    $track->setOnlyAudio(true);
-                }
-
-                $track->addTag("opencast");
-                $track->addTag($mediaPackage["media"]["track"]["type"]);
-                $track->setUrl($url);
-                $track->setPath($this->opencastService->getPath($url));
-                $track->setMimeType($mime);
-                $track->setDuration($duration/1000);
-
-                $this->inspectionService->autocompleteTrack($track);
-
-                $multimediaObject->setDuration($track->getDuration());
-
-                $this->trackService->addTrackToMultimediaObject($multimediaObject, $track, false);
+                // NOTE: Single track
+                $track = $this->createTrackFromMediaPackage($mediaPackage, $multimediaObject);
             }
 
-            for($j = 0; $j < count($mediaPackage["attachments"]["attachment"]); $j++){
-                if (isset($mediaPackage["attachments"]["attachment"][$j]["type"])) {
-                    if($mediaPackage["attachments"]["attachment"][$j]["type"] == "presenter/search+preview"){
-                        $tags = $mediaPackage["attachments"]["attachment"][$j]["tags"];
-                        $url = $mediaPackage["attachments"]["attachment"][$j]["url"];
-                        $pic = new Pic();
-                        $pic->setTags(array($tags));
-                        $pic->setUrl($url);
-                        $multimediaObject->addPic($pic);
-                    }
+            $attachments = $this->getMediaPackageField($mediaPackage, 'attachments');
+            $attachment = $this->getMediaPackageField($attachments, 'attachment');
+            if (isset($attachment[0])) {
+                for ($j = 0; $j < count($attachment); $j++) {
+                    $multimediaObject = $this->createPicFromAttachment($attachment, $multimediaObject, $j);
                 }
+            } else {
+                $multimediaObject = $this->createPicFromAttachment($attachment, $multimediaObject);
             }
 
             $tagRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
@@ -179,10 +121,10 @@ class OpencastImportService
                 $tagService = $this->tagService;
                 $tagAdded = $tagService->addTagToMultimediaObject($multimediaObject, $opencastTag->getId());
             }
-            $this->dm->persist($multimediaObject);
-            $this->dm->flush();
 
-            if($track) {
+            $multimediaObject = $this->mmsService->updateMultimediaObject($multimediaObject);
+
+            if ($track) {
                 $opencastUrls = $this->getOpencastUrls($opencastId);
                 $this->opencastService->genAutoSbs($multimediaObject, $opencastUrls);
             }
@@ -193,9 +135,10 @@ class OpencastImportService
     {
         $publicDate = new \DateTime("now");
 
-        if(isset($mediaPackage["series"])){
-            $title = $mediaPackage["seriestitle"];
-            $properties = $mediaPackage["series"];            
+        $seriesOpencastId = $this->getMediaPackageField($mediaPackage, 'series');
+        if ($seriesOpencastId) {
+            $title = $this->getMediaPackageField($mediaPackage, 'seriestitle');
+            $properties = $seriesOpencastId;
         } else{
             $title = "MediaPackages without series";
             $properties = "default";            
@@ -204,7 +147,7 @@ class OpencastImportService
         $series = $this->factoryService->createSeries();
         $series->setPublicDate($publicDate);
         $series->setTitle($title);
-        foreach($this->otherLocales as $locale) {
+        foreach ($this->otherLocales as $locale) {
             $series->setTitle($title, $locale);
         }
 
@@ -226,13 +169,17 @@ class OpencastImportService
                 // TODO - Trace error
                 return $opencastUrls;
             }
-            if(isset($archiveMediaPackage["media"]["track"][0])){
-                for($i=0; $i<count($archiveMediaPackage["media"]["track"]); $i++) {
-                    $track = $archiveMediaPackage["media"]["track"][$i];
+            $media = $this->getMediaPackageField($archiveMediaPackage, 'media');
+            $tracks = $this->getMediaPackageField($media, 'track');
+            if (isset($tracks[0])) {
+                // NOTE: Multiple tracks
+                for ($i=0; $i < count($tracks); $i++) {
+                    $track = $tracks[$i];
                     $opencastUrls = $this->addOpencastUrl($opencastUrls, $track);
                 }
             } else {
-                $track = $archiveMediaPackage["media"]["track"];
+                // NOTE: Single track
+                $track = $tracks;
                 $opencastUrls = $this->addOpencastUrl($opencastUrls, $track);
             }
         }
@@ -242,9 +189,157 @@ class OpencastImportService
 
     private function addOpencastUrl($opencastUrls=array(), $track=array())
     {
-        if ((isset($track["type"])) && (isset($track["url"]))) {
-            $opencastUrls[$track["type"]] = $track["url"];
+        $type = $this->getMediaPackageField($track, 'type');
+        $url = $this->getMediaPackageField($track, 'url');
+        if ($type && $url) {
+            $opencastUrls[$type] = $url;
         }
         return $opencastUrls;
+    }
+
+    private function getMediaPackageField($mediaFields = array(), $field = '')
+    {
+        if ($mediaFields && $field) {
+            if (isset($mediaFields[$field])) {
+                return $mediaFields[$field];
+            }
+        }
+
+        return null;
+    }
+
+    private function createTrackFromMediaPackage($mediaPackage = array(), MultimediaObject $multimediaObject, $index = null)
+    {
+        $media = $this->getMediaPackageField($mediaPackage, 'media');
+        $tracks = $this->getMediaPackageField($media, 'track');
+        if ($tracks) {
+            if (null === $index) {
+                $opencastTrack = $tracks;
+            } else {
+                $opencastTrack = $tracks[$index];
+            }
+        } else {
+            return null;
+        }
+
+        $track = new Track();
+
+        $language = $this->getMediaPackageField($mediaPackage, 'language');
+        if ($language) {
+            $track->setLanguage(strtolower($language));
+        }
+
+        $tagsArray = $this->getMediaPackageField($opencastTrack, 'tags');
+        $tags = $this->getMediaPackageField($tagsArray, 'tag');
+        if (isset($tags[0])) {
+            // NOTE: Multiple tags
+            for ($i=0; $i < count($tags); $i++) {
+                $track = $this->addTagToTrack($tags, $track, $i);
+            }
+        } else {
+            // NOTE: Single tag
+            $track = $this->addTagToTrack($tags, $track);
+        }
+
+        $url = $this->getMediaPackageField($opencastTrack, 'url');
+        if ($url) {
+            $track->setUrl($url);
+            $track->setPath($this->opencastService->getPath($url));
+        }
+
+        $mime = $this->getMediaPackageField($opencastTrack, 'mimetype');
+        if ($mime) {
+            $track->setMimeType($mime);
+        }
+
+        $duration = $this->getMediaPackageField($opencastTrack, 'duration');
+        if ($duration) {
+            $track->setDuration($duration/1000);
+        }
+
+        $audio = $this->getMediaPackageField($opencastTrack, 'audio');
+        $encoder = $this->getMediaPackageField($audio, 'encoder');
+        $acodec = $this->getMediaPackageField($encoder, 'type');
+        if ($acodec) {
+            $track->setAcodec($acodec);
+        }
+
+        $video = $this->getMediaPackageField($opencastTrack, 'video');
+
+        $encoder = $this->getMediaPackageField($video, 'encoder');
+        $vcodec = $this->getMediaPackageField($video, 'type');
+        if ($vcodec) {
+            $track->setVcodec($vcodec);
+        }
+
+        $framerate = $this->getMediaPackageField($video, 'framerate');
+        if ($framerate) {
+            $track->setFramerate($framerate);
+        }
+
+        if (!$track->getVcodec() && $track->getAcodec()) {
+            $track->setOnlyAudio(true);
+        }
+
+        $track->addTag("opencast");
+
+        $type = $this->getMediaPackageField($opencastTrack, 'type');
+        if ($type) {
+            $track->addTag($opencastTrack["type"]);
+        }
+
+        if ($track->getPath()) {
+            $this->inspectionService->autocompleteTrack($track);
+        }
+
+        $multimediaObject->setDuration($track->getDuration());
+
+        $this->trackService->addTrackToMultimediaObject($multimediaObject, $track, false);
+
+        return $track;
+    }
+
+    private function createPicFromAttachment($attachment = array(), MultimediaObject $multimediaObject, $index = null)
+    {
+        if ($attachment) {
+            if (null === $index) {
+                $itemAttachment = $attachment; 
+            } else {
+                $itemAttachment = $attachment[$index];
+            }
+            $type = $this->getMediaPackageField($itemAttachment, 'type');
+            if ($type == "presenter/search+preview") {
+                $tags = $this->getMediaPackageField($itemAttachment, 'tags');
+                $url = $this->getMediaPackageField($itemAttachment, 'url');
+                if ($tags || $url) {
+                    $pic = new Pic();
+                    if ($tags) {
+                        foreach ($tags as $tag) {
+                            $pic->addTag($tag);
+                        }
+                    }
+                    if ($url) $pic->setUrl($url);
+                    $multimediaObject->addPic($pic);
+                }
+            }
+        }
+
+        return $multimediaObject;
+    }
+
+    private function addTagToTrack($tags = array(), Track $track, $index = null)
+    {
+        if ($tags) {
+            if (null === $index) {
+                $tag = $tags;
+            } else {
+                $tag = $tags[$index];
+            }
+            if (!$track->containsTag($tag)) {
+                $track->addTag($tag);
+            }
+        }
+
+        return $track;
     }
 }

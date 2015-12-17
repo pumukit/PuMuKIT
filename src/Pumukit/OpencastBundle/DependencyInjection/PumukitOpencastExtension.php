@@ -53,6 +53,7 @@ class PumukitOpencastExtension extends Extension
             ->addArgument(new Reference("pumukitschema.factory"))
             ->addArgument(new Reference("pumukitschema.track"))
             ->addArgument(new Reference("pumukitschema.tag"))
+            ->addArgument(new Reference("pumukitschema.multimedia_object"))
             ->addArgument(new Reference("pumukit_opencast.client"))
             ->addArgument(new Reference("pumukit_opencast.job"))
             ->addArgument(new Reference("pumukit.inspection"))
