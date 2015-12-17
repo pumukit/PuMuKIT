@@ -26,12 +26,12 @@ class MultimediaObjectController extends Controller
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
     {
         $generateSbs = false;
-        if ($this->container->hasParameter('pumukit_opencast.generate_sbs')) {
-            $generateSbs = $this->container->getParameter('pumukit_opencast.generate_sbs');
+        if ($this->container->hasParameter('pumukit_opencast.sbs.generate_sbs')) {
+            $generateSbs = $this->container->getParameter('pumukit_opencast.sbs.generate_sbs');
         }
         $sbsProfile = '';
-        if ($this->container->hasParameter('pumukit_opencast.profile')) {
-            $sbsProfile = $this->container->getParameter('pumukit_opencast.profile');
+        if ($this->container->hasParameter('pumukit_opencast.sbs.profile')) {
+            $sbsProfile = $this->container->getParameter('pumukit_opencast.sbs.profile');
         }      
 
         return array(
@@ -102,7 +102,7 @@ class MultimediaObjectController extends Controller
     public function generateSbsAction(MultimediaObject $multimediaObject, Request $request)
     {
         $opencastUrls = $this->get('pumukit_opencast.import')->getOpencastUrls($multimediaObject->getProperty('opencast'));
-        $this->get('pumukit_opencast.job')->genSbs($multimediaObject, $opencastUrls);
+        $this->get('pumukit_opencast.job')->generateSbsTrack($multimediaObject, $opencastUrls);
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', array('id' => $multimediaObject->getId())));
     }

@@ -184,7 +184,7 @@ class OpencastImportService
 
             if($track) {
                 $opencastUrls = $this->getOpencastUrls($opencastId);
-                $this->opencastService->genSbs($multimediaObject, $opencastUrls);
+                $this->opencastService->genAutoSbs($multimediaObject, $opencastUrls);
             }
         }
     }

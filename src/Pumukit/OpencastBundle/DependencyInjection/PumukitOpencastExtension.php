@@ -43,6 +43,8 @@ class PumukitOpencastExtension extends Extension
             ->register("pumukit_opencast.job", "Pumukit\OpencastBundle\Services\OpencastService")
             ->addArgument($config['sbs'])
             ->addArgument(new Reference('pumukitencoder.job'))
+            ->addArgument(new Reference('pumukitencoder.profile'))
+            ->addArgument(new Reference('pumukitschema.multimedia_object'))
             ->addArgument(array('opencast_host' => $config['host'], 'opencast_username' => $config['username'], 'opencast_password' => $config['password']));
 
           $container
