@@ -46,6 +46,7 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->arrayNode('sbs')
               ->info('Side By Side configuration')
+              ->addDefaultsIfNotSet()
               ->children()
                 ->booleanNode('generate_sbs')
                   ->defaultFalse()
