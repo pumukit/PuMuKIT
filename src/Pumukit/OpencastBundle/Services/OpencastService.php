@@ -8,19 +8,43 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class OpencastService
 {
-    private $sbsProfile;
-    private $jobService;
+    private $sbsConfiguration;
+    private $sbsProfile = null;
+    private $generateSbs = false;
+    private $useFlavour = false;
+    private $sbsFlavour = null;
     private $urlPathMapping;
+    private $jobService;
     private $defaultVars;
 
-    public function __construct($sbsProfile, JobService $jobService, array $urlPathMapping = array(), array $defaultVars = array())
+    public function __construct($sbsConfiguration, JobService $jobService, array $defaultVars = array())
     {
-        $this->sbsProfile = $sbsProfile;
+        $this->sbsConfiguration = $sbsConfiguration;
         $this->jobService = $jobService;
-        $this->urlPathMapping = $urlPathMapping;
         $this->defaultVars = $defaultVars;
+        $this->initSbsConfiguration();
     }
 
+    private function initSbsConfiguration()
+    {
+        if ($this->sbsConfiguration) {
+            if (isset($this->sbsConfiguration['generate_sbs'])) {
+                $this->generateSbs = $this->sbsConfiguration['generate_sbs'];
+            }
+            if (isset($this->sbsConfiguration['profile'])) {
+                $this->sbsProfile = $this->sbsConfiguration['profile'];
+            }
+            if (isset($this->sbsConfiguration['use_flavour'])) {
+                $this->useFlavour = $this->sbsConfiguration['use_flavour'];
+            }
+            if (isset($this->sbsConfiguration['flavour'])) {
+                $this->sbsFlavour = $this->sbsConfiguration['flavour'];
+            }
+            if (isset($this->sbsConfiguration['url_mapping'])) {
+                $this->urlPathMapping = $this->sbsConfiguration['url_mapping'];
+            }
+        }
+    }
 
     public function genSbs(MultimediaObject $multimediaObject, $opencastUrls=array())
     {

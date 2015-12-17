@@ -41,9 +41,8 @@ class PumukitOpencastExtension extends Extension
 
           $container
             ->register("pumukit_opencast.job", "Pumukit\OpencastBundle\Services\OpencastService")
-            ->addArgument($config['sbs']['generate_sbs'] ? $config['sbs']['profile'] : null)
+            ->addArgument($config['sbs'])
             ->addArgument(new Reference('pumukitencoder.job'))
-            ->addArgument($config['sbs']['url_mapping'])
             ->addArgument(array('opencast_host' => $config['host'], 'opencast_username' => $config['username'], 'opencast_password' => $config['password']));
 
           $container
@@ -63,5 +62,6 @@ class PumukitOpencastExtension extends Extension
         $container->setParameter('pumukit_opencast.sbs.profile', $config['sbs']['generate_sbs'] ? $config['sbs']['profile'] : null);
         $container->setParameter('pumukit_opencast.sbs.use_flavour', $config['sbs']['generate_sbs'] ? $config['sbs']['use_flavour'] : false);
         $container->setParameter('pumukit_opencast.sbs.flavour', $config['sbs']['use_flavour'] ? $config['sbs']['flavour'] : null);
+        $container->setParameter('pumukit_opencast.sbs.url_mapping', $config['sbs']['generate_sbs'] ? $config['sbs']['url_mapping'] : null);
     }
 }
