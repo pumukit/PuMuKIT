@@ -232,6 +232,17 @@ class MultimediaObjectServiceTest extends WebTestCase
         $this->assertEquals($newTitle, $multimediaObject->getTitle());
     }
 
+    public function testIncNumView()
+    {
+        $series = $this->factory->createSeries();
+        $mm = $this->factory->createMultimediaObject($series);
+
+        $this->assertEquals(0, $mm->getNumView());
+
+        $this->mmsService->incNumView($mm);
+        $this->assertEquals(1, $mm->getNumView());
+    }
+
     private function createTags()
     {
         $rootTag = new Tag();
