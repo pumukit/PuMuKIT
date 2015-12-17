@@ -31,9 +31,8 @@ class OpencastController extends PlayerController
     }
 
     $mmobjService = $this->get('pumukitschema.multimedia_object');
-    if ($this->container->getParameter('pumukit.opencast.use_redirect')) {
+    if ($this->container->getParameter('pumukit_opencast.use_redirect')) {
         $mmobjService->incNumView($multimediaObject);
-        $mmobjService->dispatch($multimediaObject);
         if ($invert = $multimediaObject->getProperty('opencastinvert')) {
             $opencasturl .= '&display=invert';
         }
