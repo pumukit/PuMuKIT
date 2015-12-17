@@ -680,12 +680,18 @@ class JobService
     private function checkService()
     {
         $jobs = $this->repo->findWithStatus(array(Job::STATUS_EXECUTING));
-        $yesterday = new \DateTime('-1 day'); 
+        $yesterday = new \DateTime('now');
+        $yesterday->sub(new \DateInterval('P1D'));
 
-        foreach($jobs as $job) {
-          if($job->getTimestart() < $yesterday) {  
-            $this->logger->addError(sprintf('[checkService] Job executing for a long time %s', $job->getId()));
-          }
+        foreach ($jobs as $job) {
+            if ($job->getStatus() !== Job::STATUS_EXECUTING) {
+              // TODO FIX THIS #8965 batch import with SBS generation
+              //var_dump('Job with id "'. $job->getId(). '" and status "'.Job::$statusTexts[$job->getStatus()].'" was found as "'.Job::$statusTexts[Job::STATUS_EXECUTING].'"');
+              continue;
+            }
+            if ($job->getTimestart()->format('U') < $yesterday->format('U')) {
+                $this->logger->addError(sprintf('[checkService] Job executing for a long time %s', $job->getId()));
+            }
         }
     }
 
