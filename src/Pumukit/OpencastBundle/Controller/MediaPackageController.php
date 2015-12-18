@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -34,6 +35,10 @@ class MediaPackageController extends Controller
      */
     public function indexAction(Request $request)
     {
+        if (!$this->container->getParameter('pumukit_opencast.show_ingestor_tab')) {
+            throw new AccessDeniedException('Not allowed. Configure your OpencastBundle to show the Ingestor Tab.');
+        }
+
         if(!$this->has('pumukit_opencast.client')) {
           throw $this->createNotFoundException('PumukitOpencastBundle not configured.');
         }
@@ -80,6 +85,10 @@ class MediaPackageController extends Controller
      */
     public function importAction($id, Request $request)
     {
+        if (!$this->container->getParameter('pumukit_opencast.show_ingestor_tab')) {
+            throw new AccessDeniedException('Not allowed. Configure your OpencastBundle to show the Ingestor Tab.');
+        }
+
         $opencastService = $this->get('pumukit_opencast.import');
         $opencastService->importRecording($id, $request->get('invert'));
         return $this->redirect($this->getRequest()->headers->get('referer'));
