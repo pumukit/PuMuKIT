@@ -686,7 +686,9 @@ class JobService
         foreach ($jobs as $job) {
             if ($job->getStatus() !== Job::STATUS_EXECUTING) {
               // TODO FIX THIS #8965 batch import with SBS generation
-              //var_dump('Job with id "'. $job->getId(). '" and status "'.Job::$statusTexts[$job->getStatus()].'" was found as "'.Job::$statusTexts[Job::STATUS_EXECUTING].'"');
+              // var_dump('Job with id "'. $job->getId(). '" and status "'.Job::$statusTexts[$job->getStatus()].'" was found as "'.Job::$statusTexts[Job::STATUS_EXECUTING].'"');
+              // $mm = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
+              // var_dump('Opencast id: '.$mm->getProperty('opencast'));
               continue;
             }
             if ($job->getTimestart()->format('U') < $yesterday->format('U')) {
