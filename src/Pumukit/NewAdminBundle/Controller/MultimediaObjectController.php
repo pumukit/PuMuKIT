@@ -10,6 +10,7 @@ use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectPubType;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
@@ -136,7 +137,7 @@ class MultimediaObjectController extends SortableAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $resource);
-        $options = array('not_admin' => !$this->isGranted('ROLE_SUPER_ADMIN'));
+        $options = array('not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS));
         $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource, $options);
 
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
@@ -215,7 +216,7 @@ class MultimediaObjectController extends SortableAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $resource);
-        $options = array('not_admin' => !$this->isGranted('ROLE_SUPER_ADMIN'));
+        $options = array('not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS));
         $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource, $options);
 
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
@@ -290,7 +291,7 @@ class MultimediaObjectController extends SortableAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $resource);
-        $options = array('not_admin' => !$this->isGranted('ROLE_SUPER_ADMIN'));
+        $options = array('not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS));
         $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource, $options);
 
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
