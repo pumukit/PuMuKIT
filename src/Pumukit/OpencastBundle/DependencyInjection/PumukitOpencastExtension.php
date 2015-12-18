@@ -68,5 +68,7 @@ class PumukitOpencastExtension extends Extension
         $container->setParameter('pumukit_opencast.sbs.url_mapping', $config['sbs']['generate_sbs'] ? $config['sbs']['url_mapping'] : null);
 
         $container->setParameter('pumukit_opencast.use_redirect', $config['use_redirect']);
+        $container->setParameter('pumukit_opencast.batchimport_inverted', $config['batchimport_inverted']);
+        $container->setParameter('pumukit_opencast.show_ingestor_tab', $config['show_ingestor_tab']);
     }
 }

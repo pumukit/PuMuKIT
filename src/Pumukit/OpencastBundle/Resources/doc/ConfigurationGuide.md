@@ -10,6 +10,8 @@ pumukit_opencast:
     password: 'CHANGE_ME'
     player: /engage/ui/watch.html
     use_redirect: true
+    batchimport_inverted: false
+    show_ingestor_tab: true
     sbs:
         generate_sbs: true
         profile: sbs
@@ -32,6 +34,8 @@ Mandatory:
 
 Optional:
    - `use_redirect` when set to false, an Opencast video will be displayed inside an iframe into PuMuKIT. Default value: true, the Opencast video is displayed on the Opencast server.
+   - `batchimport_inverted` when set to true, the Opencast videos will be imported with presentation and presented inverted, i.e. switching positions.
+   - `show_ingestor_tab` when set to false, the Opencast Ingestor Tab will not be shown. Useful when the ingestion is done using batch import command.
    - `sbs`:
       - `generate_sbs` when set to true, generates side by side video when MP is imported according to the profile below.
       - `profile` is the profile name to generate the side by side video. Mandatory if `generate_sbs` is set to true.
