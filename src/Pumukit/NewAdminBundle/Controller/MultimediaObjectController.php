@@ -152,6 +152,8 @@ class MultimediaObjectController extends SortableAdminController
         $isPublished = null;
         $playableResource = null;
 
+        $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
+
         return array(
                      'mm'            => $resource,
                      'form_meta'     => $formMeta->createView(),
@@ -164,6 +166,7 @@ class MultimediaObjectController extends SortableAdminController
                      'jobs'          => $jobs,
                      'not_master_profiles' => $notMasterProfiles,
                      'template' => $template,
+                     'not_change_pub_channel' => $notChangePubChannel
                      );
     }
 
@@ -222,6 +225,8 @@ class MultimediaObjectController extends SortableAdminController
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
 
+        $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
+
         $method = $request->getMethod();
         if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
             $formMeta->submit($request, !$request->isMethod('PATCH'))->isValid()) {
@@ -261,7 +266,8 @@ class MultimediaObjectController extends SortableAdminController
                                    'roles'         => $roles,
                                    'pub_channels'  => $pubChannelsTags,
                                    'pub_decisions' => $pubDecisionsTags,
-                                   'parent_tags'   => $parentTags
+                                   'parent_tags'   => $parentTags,
+                                   'not_change_pub_channel' => $notChangePubChannel
                                    )
                              );
     }
@@ -296,6 +302,8 @@ class MultimediaObjectController extends SortableAdminController
 
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
+
+        $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
 
         $method = $request->getMethod();
         if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
@@ -339,7 +347,8 @@ class MultimediaObjectController extends SortableAdminController
                                    'roles'         => $roles,
                                    'pub_channels'  => $pubChannelsTags,
                                    'pub_decisions' => $pubDecisionsTags,
-                                   'parent_tags'   => $parentTags
+                                   'parent_tags'   => $parentTags,
+                                   'not_change_pub_channel' => $notChangePubChannel
                                    )
                              );
     }
