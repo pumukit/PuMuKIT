@@ -14,10 +14,12 @@
 
   <div role="tabpanel">
     <ul id="menuTab" class="nav nav-tabs" role="tablist">
-      <li class="active">
+      {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %}
+      <li{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %} class="active"{% endif %}>
         <a href="#pubMm" aria-controls="pubMm" role="tab" data-toggle="tab">{% trans %}Publication{% endtrans %}</a>
       </li>
-      <li>
+      {% endif %}
+      <li{% if not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %} class="active"{% endif %}>
         <a href="#metaMm" aria-controls="metaMm" role="tab" data-toggle="tab">{% trans %}Metadata{% endtrans %}</a>
       </li>
       <li>
@@ -32,10 +34,12 @@
     </ul>
   
     <div class="tab-content">
-      <div id="pubMm" role="tabpanel" class="tab-pane active">
+      {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %}
+      <div id="pubMm" role="tabpanel" class="tab-pane{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %} active{% endif %}">
         {% include 'PumukitNewAdminBundle:MultimediaObject:updatepub.html.twig' with {'mm': mm, 'pub_channels': pub_channels, 'pub_decisions': pub_decisions} %}
       </div>
-      <div id="metaMm" role="tabpanel" class="tab-pane">
+      {% endif %}
+      <div id="metaMm" role="tabpanel" class="tab-pane{% if not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %} active{% endif %}">
         {% include 'PumukitNewAdminBundle:MultimediaObject:updatemeta.html.twig' with {'mm': mm} %}
       </div>
 
