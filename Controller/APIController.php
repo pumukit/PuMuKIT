@@ -10,10 +10,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
- *  @Route("/api/annotations")
+ *  @Route("/api/annotation")
  */
 class APIController extends Controller
 {
@@ -26,6 +26,11 @@ class APIController extends Controller
         //TODO: Do the annotation getting using a service function.
         //$opencastAnnotationService = $this->container->get('video_editor.opencast_annotations');
         $serializer = $this->get('serializer');
+
+        $episode = $request->get('episode');
+        $type = $request->get('type');
+        $day = $request->get('day');
+        
         $limit = $request->get('limit')?:10;
         $offset = $request->get('offset')?:0;
         $total = 10;
@@ -34,12 +39,32 @@ class APIController extends Controller
         //$resAnnotations = $opencastAnnotationService->getOpencastAnnotations();
         $resAnnotations = array();
         $annonRepo = $this->get('doctrine_mongodb')->getRepository('PumukitVideoEditorBundle:Annotation');
-        $resAnnotations = $annonRepo->findAll();
+        $annonQB = $annonRepo->createQueryBuilder();
 
-        $data = array('limit' => $limit,
-                      'offset' => $offset,
-                      'total' => $total,
-                      'annotation' => $resAnnotations);
+        if($episode)
+            $annonQB->field('multimediaObject')->equals(new \MongoId($episode));
+        
+        if($type)
+            $annonQB->field('type')->equals($type);
+
+        if($day) {
+            $minDate = new \DateTime($day);
+            $minDate->setTime(0,0,0);
+            $maxDate = new \DateTime($day);
+            $maxDate->setTime(23,59,59);
+            $annonQB->field('created')->gte($minDate)->lte($maxDate);
+        }
+
+        $total = clone($annonQB);
+        $total = $total->count()->getQuery()->execute();
+
+        $annonQB->limit($limit)->skip($offset);
+        $resAnnotations = $annonQB->getQuery()->execute()->toArray();
+
+        $data = array('annotations' => array('limit' => $limit,
+                                             'offset' => $offset,
+                                             'total' => $total,
+                                             'annotation' => $resAnnotations));
         
         $response = $serializer->serialize($data, $request->getRequestFormat());
         return new Response($response);
@@ -49,20 +74,21 @@ class APIController extends Controller
      * @Route("/{id}.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
      * @Method("GET")
      */
-    public function getByIdAction(Request $request, $id)
+    public function getByIdAction(Annotation $annotation, Request $request)
     {
-        //TODO: Do the annotation getting using a service function.
-        //$opencastAnnotationService = $this->container->get('video_editor.opencast_annotations');
         $serializer = $this->get('serializer');
-
-        //TODO: Do the annotation getting using a service function.
-        //$resAnnotations = $opencastAnnotationService->getOpencastAnnotations();
-        $resAnnotations = array();
-        $annonRepo = $this->get('doctrine_mongodb')->getRepository('PumukitVideoEditorBundle:Annotation');
-        $resAnnotations = $annonRepo->find($id);
-
-        $data = array('annotation' => $resAnnotations);
-        
+        $data = array( 'annotation' => array( 'annotationId' => $annotation->getId(),
+                                              'mediapackageId' => $annotation->getMultimediaObject(),
+                                              'userId' => $annotation->getUserId(), 
+                                              'sessionId' => $annotation->getSession(),
+                                              'inpoint' => $annotation->getInPoint(),
+                                              'outpoint' => $annotation->getOutPoint(),
+                                              'length' => $annotation->getLength(),
+                                              'type' => $annotation->getType(),
+                                              'isPrivate' => $annotation->getIsPrivate(),
+                                              'value' => $annotation->getValue(),
+                                              'created' => $annotation->getCreated()                      
+        ));
         $response = $serializer->serialize($data, $request->getRequestFormat());
         return new Response($response);
     }
@@ -94,14 +120,28 @@ class APIController extends Controller
         $annotation->setIsPrivate($isPrivate);
         $annotation->setLength(0);//This field is not very useful.
         $annotation->setCreated(new \DateTime());
-        $annotation->setUserId('anonymous');//TODO: How do we get the user_id? 
-        $annotation->setSession('session');
+        $userId = $this->getUser()?$this->getUser()->getId():'anonymous';
+        $annotation->setUserId($userId);//TODO: How do we get the user_id? 
+        $session = new Session(); //Using symfony sessions instead of php session_id()
+        $session = $session->getId();
+        $annotation->setSession($session);
         
         $this->get('doctrine_mongodb.odm.document_manager')->persist($annotation);
         $this->get('doctrine_mongodb.odm.document_manager')->flush();
         
-        $data = array('annotation' => $annotation);
-        $response = $serializer->serialize($data, 'xml');
+        $data = array( 'annotation' => array( 'annotationId' => $annotation->getId(),
+                                              'mediapackageId' => $annotation->getMultimediaObject(),
+                                              'userId' => $annotation->getUserId(), 
+                                              'sessionId' => $annotation->getSession(),
+                                              'inpoint' => $annotation->getInPoint(),
+                                              'outpoint' => $annotation->getOutPoint(),
+                                              'length' => $annotation->getLength(),
+                                              'type' => $annotation->getType(),
+                                              'isPrivate' => $annotation->getIsPrivate(),
+                                              'value' => $annotation->getValue(),
+                                              'created' => $annotation->getCreated()                      
+        ));
+        $response = $serializer->serialize($data, 'json');
         return new Response($response);
     }
 
@@ -115,8 +155,19 @@ class APIController extends Controller
         $annotation->setValue($value);
         $annonRepo = $this->get('doctrine_mongodb.odm.document_manager')->persist($annotation);
         $annonRepo = $this->get('doctrine_mongodb.odm.document_manager')->flush();
-        
-        $response = $serializer->serialize($annotation, 'xml');
+        $data = array( 'annotation' => array( 'annotationId' => $annotation->getId(),
+                                              'mediapackageId' => $annotation->getMultimediaObject(),
+                                              'userId' => $annotation->getUserId(), 
+                                              'sessionId' => $annotation->getSession(),
+                                              'inpoint' => $annotation->getInPoint(),
+                                              'outpoint' => $annotation->getOutPoint(),
+                                              'length' => $annotation->getLength(),
+                                              'type' => $annotation->getType(),
+                                              'isPrivate' => $annotation->getIsPrivate(),
+                                              'value' => $annotation->getValue(),
+                                              'created' => $annotation->getCreated()                      
+        ));        
+        $response = $serializer->serialize($data, 'xml');
         return new Response($response);
     }
 
