@@ -10,6 +10,14 @@ class ClientService
     private $player;
     private $adminUrl;
 
+    /**
+     * Constructor
+     *
+     * @param string  $url
+     * @param string  $user
+     * @param string  $passwd
+     * @param string  $player
+     */
     public function __construct($url, $user="", $passwd="", $player="/engage/ui/watch.html")
     {
         $this->url  = $url;
@@ -18,16 +26,40 @@ class ClientService
         $this->player  = $player;
     }
 
+    /**
+     * Get Url
+     * from Opencast server
+     * (Engage node in cluster)
+     *
+     * @return string $url
+     */
     public function getUrl()
     {
         return $this->url;
     }
 
+    /**
+     * Get player url
+     * from Opencast
+     *
+     * @return string
+     */
     public function getPlayerUrl()
     {
         return ('/' === $this->player[0]) ? $this->url . $this->player : $this->player;
     }
 
+    /**
+     * Get media packages
+     *
+     * Gets all the media packages from the Opencast server
+     * accordin to input parameters
+     *
+     * @param  string $query
+     * @param  string $limit
+     * @param  string $offset
+     * @return array
+     */
     public function getMediaPackages($query, $limit, $offset)
     {
         $output = $this->request("/search/episode.json?q=" . $query . "&limit=" . $limit . "&offset=" . $offset);
@@ -55,6 +87,13 @@ class ClientService
         return $return;
     }
 
+    /**
+     * Get media package
+     * from given id
+     *
+     * @param  string $id
+     * @return array
+     */
     public function getMediapackage($id)
     {
         $output = $this->request("/search/episode.json?id=" . $id);
@@ -74,6 +113,13 @@ class ClientService
             return $decode["search-results"]["result"]["mediapackage"];   
     }
 
+    /**
+     * Get media package from archive
+     * with given id
+     *
+     * @param  string $id
+     * @return array
+     */
     public function getMediapackageFromArchive($id)
     {
         $this->adminUrl = $this->getAdminUrl();
@@ -94,6 +140,17 @@ class ClientService
             return $decode["search-results"]["result"]["mediapackage"];
     }
 
+    /**
+     * Request
+     *
+     * Makes a given request (path)
+     * to the Opencast server
+     * using or not the admin url
+     *
+     * @param  string  $path
+     * @param  boolean $useAdminUrl
+     * @return array
+     */
     private function request ($path, $useAdminUrl=false)
     {
         $output = array();
@@ -126,6 +183,11 @@ class ClientService
         return $output;
     }
 
+    /**
+     * Get admin url
+     *
+     * Gets the admin url for Opencast
+     */
     private function getAdminUrl()
     {
         $output = $this->request('/services/available.json?serviceType=org.opencastproject.episode');
