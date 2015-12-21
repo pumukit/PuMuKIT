@@ -11,7 +11,6 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  */
 class Annotation
 {
-    //--- Mongo, PuMuKIT fields ---//
     /**
      * @var int $id
      *
@@ -23,11 +22,10 @@ class Annotation
      * @var object_id $multimediaObject
      *
      * @MongoDB\ObjectId
-     * @MongoDB\UniqueIndex(safe=1)
      */
+    //This field would be the equivalent to 'mediapackage_id' on opencast.
     private $multimediaObject;
 
-    //-- Mediapackage fields --//
     /**
      * @var date $created
      *
@@ -41,13 +39,6 @@ class Annotation
      * @MongoDB\string
      */
     private $type;
-
-    /**
-     * @var string $mediapackage
-     *
-     * @MongoDB\string
-     */
-    private $mediapackage;
 
     /**
      * @var string $user_id
