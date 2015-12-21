@@ -83,11 +83,14 @@ class OpencastService
      */
     public function getPath($url)
     {
-        $path = $url;
         foreach($this->urlPathMapping as $m) {
-            $path = str_replace($m["url"], $m["path"], $path);
+            $path = str_replace($m["url"], $m["path"], $url);
+            if (realpath($path)) {
+                return $path;
+            }
         }
-        return $path;
+
+        return null;
     }
 
     /**
