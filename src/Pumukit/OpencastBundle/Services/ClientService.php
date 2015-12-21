@@ -147,6 +147,66 @@ class ClientService
     }
 
     /**
+     * Apply workflow to media packages
+     *
+     * @param  array  $mediaPackagesIds
+     * @param  string $workflowName
+     * @return string $status
+     */
+    public function applyWorkflowToMediaPackages(array $mediaPackagesIds = array(), $workflowName = '')
+    {
+        if (!$workflowName) {
+            $workflowName = $this->deletionWorkflowName;
+            if (!$this->deleteArchiveMediaPackage) {
+                throw new \Exception('Not allowed to delete media packages form archive');
+            }
+        }
+
+        if (!$mediaPackagesIds) {
+            throw new \Exception('No media packages given.');
+        }
+
+        $request = '/episode/apply/'.$workflowName.'?mediaPackageIds=';
+        foreach ($mediaPackagesIds as $index => $id) {
+            $request = $request . $id;
+            if ($index < (count($mediaPackagesIds) - 1)) {
+                $request = $request . ',+';
+            }
+        }
+
+        if (!$this->adminUrl) {
+            $this->adminUrl = $this->getAdminUrl();
+        }
+
+        $output = $this->request($request, true);
+
+        if ($output["status"] !== 204) return false;
+
+        return true;
+    }
+
+    /**
+     * Check workflow ended
+     *
+     * @param string $id
+     * @return boolean
+     */
+    public function checkWorkflowEnded($id='')
+    {
+        $workflows = $this->getWorkflowInstances($id);
+        $deletionWorkflow = $this->getWorkflowWithTemplate($workflows, $this->deletionWorkflowName);
+        $isFinished = $this->isWorkflowFinished($deletionWorkflow);
+
+        if ($isFinished) {
+            // TODO: Create function
+            //$output = $this->deleteWorkflows($id);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Request
      *
      * Makes a given request (path)
@@ -211,5 +271,70 @@ class ClientService
         }
 
         return null;
+    }
+
+    /**
+     * Get workflow instances
+     * with given mediapackage id
+     *
+     * @param string $id
+     * @return array
+     */
+    private function getWorkflowInstances($id = '')
+    {
+        $request = '/workflow/instances.json?mp='.$id;
+
+        $output = $this->request($request);
+
+        if ($output["status"] !== 200) return false;
+
+        $decode = json_decode($output["var"], true);
+
+        if (!($decode)) {
+            throw new \Exception("Opencast Matterhorn communication error");
+        }
+
+        if ($decode["workflows"]["totalCounts"] == 0)
+            return null;
+        else
+            return $decode["workflows"]["workflow"];
+    }
+
+    /**
+     * Get workflow template
+     *
+     * @param array $workflows
+     * @param string $template
+     * @return array
+     */
+    private function getWorkflowWithTemplate(array $workflows = array(), $template='')
+    {
+        foreach ($workflows as $workflow) {
+            if (isset($workflow['template'])) {
+                if ($template == $workflow['template']) {
+                    return $workflow;
+                }
+            }
+        }
+  
+        return null;
+    }
+
+    /**
+     * Is workflow finished
+     *
+     * @param array $workflow
+     * @return boolean
+     */
+    private function isWorkflowFinished(array $workflow = array())
+    {
+        // TODO: review
+        if ($workflow && isset($workflow['status'])) {
+            if ('SUCCEED' === $workflow['status']) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
