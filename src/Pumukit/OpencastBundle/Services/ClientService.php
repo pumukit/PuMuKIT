@@ -9,6 +9,8 @@ class ClientService
     private $passwd;
     private $player;
     private $adminUrl;
+    private $deleteArchiveMediaPackage;
+    private $deletionWorkflowName;
 
     /**
      * Constructor
@@ -17,13 +19,17 @@ class ClientService
      * @param string  $user
      * @param string  $passwd
      * @param string  $player
+     * @param boolean $deleteArchiveMediaPackage
+     * @param boolean $deletionWorkflowName
      */
-    public function __construct($url, $user="", $passwd="", $player="/engage/ui/watch.html")
+    public function __construct($url, $user="", $passwd="", $player="/engage/ui/watch.html", $deleteArchiveMediaPackage = false, $deletionWorkflowName = 'delete-archive')
     {
         $this->url  = $url;
         $this->user  = $user;
         $this->passwd  = $passwd;
         $this->player  = $player;
+        $this->deleteArchiveMediaPackage = $deleteArchiveMediaPackage;
+        $this->deletionWorkflowName = $deletionWorkflowName;
     }
 
     /**

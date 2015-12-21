@@ -37,7 +37,9 @@ class PumukitOpencastExtension extends Extension
             ->addArgument($config['host'])
             ->addArgument($config['username'])
             ->addArgument($config['password'])
-            ->addArgument($config['player']);
+            ->addArgument($config['player'])
+            ->addArgument($config['delete_archive_mediapackage'])
+            ->addArgument($config['deletion_workflow_name']);
 
           $container
             ->register("pumukit_opencast.job", "Pumukit\OpencastBundle\Services\OpencastService")
@@ -70,5 +72,7 @@ class PumukitOpencastExtension extends Extension
         $container->setParameter('pumukit_opencast.use_redirect', $config['use_redirect']);
         $container->setParameter('pumukit_opencast.batchimport_inverted', $config['batchimport_inverted']);
         $container->setParameter('pumukit_opencast.show_ingestor_tab', $config['show_ingestor_tab']);
+        $container->setParameter('pumukit_opencast.delete_archive_mediapackage', $config['delete_archive_mediapackage']);
+        $container->setParameter('pumukit_opencast.deletion_workflow_name', $config['deletion_workflow_name']);
     }
 }
