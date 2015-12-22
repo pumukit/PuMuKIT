@@ -191,15 +191,60 @@ class ClientService
      * @param string $id
      * @return boolean
      */
-    public function checkWorkflowEnded($id='')
+    public function deleteWorkflowsIfEnded($id='')
     {
         $workflows = $this->getWorkflowInstances($id);
         $deletionWorkflow = $this->getWorkflowWithTemplate($workflows, $this->deletionWorkflowName);
         $isFinished = $this->isWorkflowFinished($deletionWorkflow);
 
         if ($isFinished) {
-            // TODO: Create function
-            //$output = $this->deleteWorkflows($id);
+            return $this->deleteWorkflows($workflows);
+        }
+
+        return false;
+    }
+
+    /**
+     * Delete workflows
+     * with given media package id
+     *
+     * @param array $workflows
+     * @return boolean
+     */
+    public function deleteWorkflows(array $workflows = array())
+    {
+        $errors = 0;
+        foreach ($workflows as $workflow) {
+            $output = $this->stopWorkflow($workflow);
+            if (!$output) {
+                ++$errors;
+            }
+        }
+
+        if ($errors > 0)
+            return false;
+
+        return true;
+    }
+
+    /**
+     * Stop workflow
+     *
+     * @param array $workflow
+     * @return boolean
+     */
+    public function stopWorkflow(array $workflow = array())
+    {
+        if (isset($workflow['id'])) {
+            $request = '/workflow/stop?id='.$workflow['id'];
+
+            if (!$this->adminUrl) {
+                $this->adminUrl = $this->getAdminUrl();
+            }
+            $output = $this->request($request, true);
+            if ($output["status"] !== 200)
+                return false;
+
             return true;
         }
 
