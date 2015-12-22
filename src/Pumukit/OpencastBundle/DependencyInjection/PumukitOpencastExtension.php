@@ -74,5 +74,12 @@ class PumukitOpencastExtension extends Extension
         $container->setParameter('pumukit_opencast.show_ingestor_tab', $config['show_ingestor_tab']);
         $container->setParameter('pumukit_opencast.delete_archive_mediapackage', $config['delete_archive_mediapackage']);
         $container->setParameter('pumukit_opencast.deletion_workflow_name', $config['deletion_workflow_name']);
+
+        $container
+          ->register("pumukit_opencast.remove_listener", "Pumukit\OpencastBundle\EventListener\RemoveListener")
+          ->addArgument(new Reference("doctrine_mongodb.odm.document_manager"))
+          ->addArgument(new Reference("pumukit_opencast.client"))
+          ->addTag("kernel.event_listener", array('event' => 'multimediaobject.delete', 'method' => 'onMultimediaObjectDelete'))
+          ->addTag("kernel.event_listener", array('event' => 'track.delete', 'method' => 'onTrackDelete'));
     }
 }
