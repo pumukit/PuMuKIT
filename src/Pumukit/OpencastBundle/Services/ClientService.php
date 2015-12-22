@@ -8,7 +8,7 @@ class ClientService
     private $user;
     private $passwd;
     private $player;
-    private $adminUrl;
+    private $adminUrl = null;
     private $deleteArchiveMediaPackage;
     private $deletionWorkflowName;
 
@@ -22,7 +22,7 @@ class ClientService
      * @param boolean $deleteArchiveMediaPackage
      * @param boolean $deletionWorkflowName
      */
-    public function __construct($url, $user="", $passwd="", $player="/engage/ui/watch.html", $deleteArchiveMediaPackage = false, $deletionWorkflowName = 'delete-archive')
+    public function __construct($url="", $user="", $passwd="", $player="/engage/ui/watch.html", $deleteArchiveMediaPackage = false, $deletionWorkflowName = 'delete-archive')
     {
         $this->url  = $url;
         $this->user  = $user;
@@ -155,7 +155,7 @@ class ClientService
      */
     public function applyWorkflowToMediaPackages(array $mediaPackagesIds = array(), $workflowName = '')
     {
-        if (!$workflowName) {
+        if (!$workflowName || ($workflowName == $this->deletionWorkflowName)) {
             $workflowName = $this->deletionWorkflowName;
             if (!$this->deleteArchiveMediaPackage) {
                 throw new \Exception('Not allowed to delete media packages from archive');
