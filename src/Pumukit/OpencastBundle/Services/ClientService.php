@@ -158,7 +158,7 @@ class ClientService
         if (!$workflowName) {
             $workflowName = $this->deletionWorkflowName;
             if (!$this->deleteArchiveMediaPackage) {
-                throw new \Exception('Not allowed to delete media packages form archive');
+                throw new \Exception('Not allowed to delete media packages from archive');
             }
         }
 
