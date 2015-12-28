@@ -86,7 +86,6 @@ var MyVideoLoader = Class.create(paella.VideoLoader, {
 	    if (stream.sources[type]) {
 		if (type != 'image') {
 		    var source = stream.sources[type];
-                    console.log(source);
 		    source.forEach(function(sourceItem) {
 			var pattern = /^[a-zA-Z\:]+\:\/\//gi;
 			if (typeof(sourceItem.src)=="string") {
