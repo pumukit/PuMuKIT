@@ -60,11 +60,15 @@ class APIController extends Controller
 
         $annonQB->limit($limit)->skip($offset);
         $resAnnotations = $annonQB->getQuery()->execute()->toArray();
+        $annotations = array();
+        foreach( $resAnnotations as $ann) {
+            $annotations[] = $ann;
+        }
 
         $data = array('annotations' => array('limit' => $limit,
                                              'offset' => $offset,
                                              'total' => $total,
-                                             'annotation' => $resAnnotations, ));
+                                             'annotation' => $annotations, ));
 
         $response = $serializer->serialize($data, $request->getRequestFormat());
 
@@ -154,6 +158,10 @@ class APIController extends Controller
      */
     public function editAction(Annotation $annotation, Request $request)
     {
+        //TODO: Do the annotation getting using a service function.
+        //$opencastAnnotationService = $this->container->get('video_editor.opencast_annotations');
+        $serializer = $this->get('serializer');
+
         $value = $request->get('value');
         $annotation->setValue($value);
         $annonRepo = $this->get('doctrine_mongodb.odm.document_manager')->persist($annotation);

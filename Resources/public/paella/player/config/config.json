@@ -36,8 +36,8 @@
     "data": {
         "enabled": true,
         "dataDelegates": {
-            "default": "CookieDataDelegate",
-            "trimming": "CookieDataDelegate",
+            "default": "MHAnnotationServiceDefaultDataDelegate",
+            "trimming": "MHAnnotationServiceDefaultDataDelegate",
             "userInfo": "UserDataDelegate"
         }
     },
