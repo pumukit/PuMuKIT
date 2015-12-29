@@ -26,20 +26,8 @@ class PaellaRepositoryController extends Controller
         $track = $mmobj->getFilteredTrackWithTags(array('display'));
         $pic = $picService->getFirstUrlPic($mmobj, true, false);
 
-        $src = "http://127.0.0.1:8010".$track->getUrl();
-        /*if ("/" == $src[0]) {
-           $scheme = $request->context->getScheme();
-           $host = $request->context->getHost();
-           $port = '';
-           if ('http' === $scheme && 80 != $request->context->getHttpPort()) {
-           $port = ':'.$request->context->getHttpPort();
-           } elseif ('https' === $scheme && 443 != $request->context->getHttpsPort()) {
-           $port = ':'.$request->context->getHttpsPort();
-           }
-
-           $src = $scheme."://".$host.$port.$picUrl;
-           }*/
-
+        $src = $this->getAbsoluteUrl($request, $track->getUrl());
+        
         $data = array();
         $data['streams'] = array();
         $data['streams'][] = array('sources' => array('mp4' => array(array('src' => $src,
@@ -54,5 +42,20 @@ class PaellaRepositoryController extends Controller
 
         $response = $serializer->serialize($data, $request->getRequestFormat());
         return new Response($response);
+    }
+
+    /**
+     * Returns the absolute url from a given path or url
+     */
+    private function getAbsoluteUrl($request, $url) {
+        if (false !== strpos($url, '://') || 0 === strpos($url, '//')) {
+            return $url;
+        }
+
+        if ('' === $host = $request->getHost()) {
+            return $url;
+        }
+
+        return $request->getSchemeAndHttpHost().$request->getBasePath().$url;
     }
 }
