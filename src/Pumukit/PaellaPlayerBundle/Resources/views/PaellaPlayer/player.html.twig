@@ -1,0 +1,13 @@
+<div id="playerContainer" style="display:block;width:100%" >
+</div>
+<script>
+ $(document).bind(paella.events.loadComplete,function(event,params) {
+     {% if autostart %}
+     // paella.events.trigger(paella.events.play);
+     {% endif %}
+ });
+ setTimeout(function(){
+
+ }, 4000);
+ loadPaella('playerContainer', '{{multimediaObject.id}}');
+</script>
