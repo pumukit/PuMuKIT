@@ -75,12 +75,14 @@ class PicExtractorService
     {
         $currentDir = 'series/' . $multimediaObject->getSeries()->getId() . '/video/' . $multimediaObject->getId();
         $absCurrentDir = $this->targetPath."/".$currentDir;
-
-        $picFileName = date('ymdGis').'.jpg';
-        $aux = null;
-        
+       
         $fs = new Filesystem();
         $fs->mkdir($absCurrentDir);
+
+        $picFileName = date('ymdGis').'.jpg';
+        while(file_exists($absCurrentDir.'/'.$picFileName)) {
+            $picFileName = date('ymdGis'). rand(). '.jpg';
+        }
 
         $aspectTrack = $this->getAspect($track);
         if (0 !== $aspectTrack) {
