@@ -23,17 +23,20 @@ class PaellaRepositoryController extends Controller
         //$opencastAnnotationService = $this->container->get('video_editor.opencast_annotations');
         $serializer = $this->get('serializer');
         $picService = $this->get('pumukitschema.pic');
-        $track = $mmobj->getFilteredTrackWithTags(array('display'));
         $pic = $picService->getFirstUrlPic($mmobj, true, false);
-
-        $src = $this->getAbsoluteUrl($request, $track->getUrl());
         
         $data = array();
         $data['streams'] = array();
-        $data['streams'][] = array('sources' => array('mp4' => array(array('src' => $src,
+
+        $tracks = $this->getMmobjTracks($mmobj);
+
+        foreach( $tracks as $track) {
+            $src = $this->getAbsoluteUrl($request, $track->getUrl());
+            $data['streams'][] = array('sources' => array('mp4' => array(array('src' => $src,
                                                                      'mimetype' => $track->getMimetype(),
                                                                      'res' => array('w' => 0, 'h' => 0)))),
                                    'preview' => $pic);
+        }
 
         
         $data['metadata'] = array('title' => $mmobj->getTitle(),
@@ -55,7 +58,23 @@ class PaellaRepositoryController extends Controller
         if ('' === $host = $request->getHost()) {
             return $url;
         }
-
         return $request->getSchemeAndHttpHost().$request->getBasePath().$url;
+    }
+
+    /**
+     * Returns an array (can be empty) of tracks for the mmobj
+     */
+    private function getMmobjTracks(MultimediaObject $mmobj)
+    {
+        $tracks = array();
+        if($mmobj->getProperty('opencast')) {
+            $tracks[] = $mmobj->getFilteredTrackWithTags(array('presenter/delivery'));
+            $tracks[] = $mmobj->getFilteredTrackWithTags(array('presentation/delivery'));
+        }
+        else {
+            $tracks[] = $mmobj->getFilteredTrackWithTags(array('display'));
+        }
+
+        return $tracks;
     }
 }
