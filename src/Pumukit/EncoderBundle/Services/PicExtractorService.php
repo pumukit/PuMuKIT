@@ -155,7 +155,7 @@ class PicExtractorService
     private function completePicMetadata(MultimediaObject $multimediaObject, $picUrl='', $picPath='', $width = 0, $height = 0)
     {
         foreach ($multimediaObject->getPics() as $pic) {
-            if ($picUrl = $pic->getUrl()) {
+            if ($picUrl == $pic->getUrl()) {
                 $pic->setPath($picPath);
                 $pic->setWidth($width);
                 $pic->setHeight($height);
