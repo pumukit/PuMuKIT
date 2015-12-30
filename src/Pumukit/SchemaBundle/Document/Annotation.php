@@ -1,13 +1,13 @@
 <?php
 
-namespace Pumukit\VideoEditorBundle\Document;
+namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * Pumukit\VideoEditorBundle\Document\Annotation
+ * Pumukit\SchemaBundle\Document\Annotation
  *
- * @MongoDB\Document(repositoryClass="Pumukit\VideoEditorBundle\Repository\AnnotationRepository")
+ * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\AnnotationRepository")
  */
 class Annotation
 {

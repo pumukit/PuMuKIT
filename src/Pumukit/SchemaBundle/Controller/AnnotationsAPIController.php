@@ -1,8 +1,8 @@
 <?php
 
-namespace Pumukit\VideoEditorBundle\Controller;
+namespace Pumukit\SchemaBundle\Controller;
 
-use Pumukit\VideoEditorBundle\Document\Annotation;
+use Pumukit\SchemaBundle\Document\Annotation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 /**
  *  @Route("/api/annotation")
  */
-class APIController extends Controller
+class AnnotationsAPIController extends Controller
 {
     /**
      * @Route("/annotations.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
@@ -36,7 +36,7 @@ class APIController extends Controller
         //TODO: Do the annotation getting using a service function.
         //$resAnnotations = $opencastAnnotationService->getOpencastAnnotations();
         $resAnnotations = array();
-        $annonRepo = $this->get('doctrine_mongodb')->getRepository('PumukitVideoEditorBundle:Annotation');
+        $annonRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Annotation');
         $annonQB = $annonRepo->createQueryBuilder();
 
         if ($episode) {
@@ -109,7 +109,7 @@ class APIController extends Controller
         //$opencastAnnotationService = $this->container->get('video_editor.opencast_annotations');
         $serializer = $this->get('serializer');
 
-        //$annonRepo = $this->get('doctrine_mongodb')->getRepository('PumukitVideoEditorBundle:Annotation');
+        //$annonRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Annotation');
         $episode = $request->get('episode');
         $type = $request->get('type');
         $value = $request->get('value');

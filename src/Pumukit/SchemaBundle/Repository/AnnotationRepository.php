@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\VideoEditorBundle\Repository;
+namespace Pumukit\SchemaBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 
