@@ -47,12 +47,7 @@ class PicExtractorService
             return "Error in data autocomplete of multimedia object.";
         }
 
-        if (false !== strpos($track->getFramerate(), '/')) {
-            $aux = explode('/', $track->getFramerate());
-            $num_frames = intval($track->getDuration() * intval($aux[0]) / intval($aux[1]));
-        } else {
-            $num_frames = intval($track->getFramerate() * $track->getDuration());
-        }
+        $num_frames = $track->getNumFrames();
 
         if((is_null($numframe)||($num_frames == 0))){
             $num = 125 * (count($multimediaObject->getPics())) + 1;
@@ -102,7 +97,7 @@ class PicExtractorService
         }
 
         $vars = array(
-            "{{ss}}" => intval($frame/25),
+            "{{ss}}" => $track->getTimeOfAFrame($frame),
             "{{size}}" => $newWidth . "x" . $newHeight,
             "{{input}}" => $track->getPath(),
             "{{output}}" => $absCurrentDir.'/'.$picFileName
@@ -123,7 +118,7 @@ class PicExtractorService
         if (file_exists($picPath)){
             $multimediaObject = $this->mmsPicService->addPicUrl($multimediaObject, $picUrl);
             $pic = $this->getPicByUrl($multimediaObject, $picUrl);
-            $tags = array('auto', 'frame_' . $frame, 'time_' . ($frame/25));
+            $tags = array('auto', 'frame_' . $frame, 'time_' . $track->getTimeOfAFrame($frame));
             $multimediaObject = $this->completePicMetadata($multimediaObject, $pic, $picPath, $newWidth, $newHeight, $tags);
         }
         
