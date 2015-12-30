@@ -7,6 +7,7 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
 
 class PicExtractorService
@@ -121,7 +122,9 @@ class PicExtractorService
         $picPath = $absCurrentDir .'/' . $picFileName;
         if (file_exists($picPath)){
             $multimediaObject = $this->mmsPicService->addPicUrl($multimediaObject, $picUrl);
-            $multimediaObject = $this->completePicMetadata($multimediaObject, $picUrl, $picPath, $newWidth, $newHeight);
+            $pic = $this->getPicByUrl($multimediaObject, $picUrl);
+            $tags = array('auto', 'frame_' . $frame, 'time_' . ($frame/25));
+            $multimediaObject = $this->completePicMetadata($multimediaObject, $pic, $picPath, $newWidth, $newHeight, $tags);
         }
         
         return true;
@@ -152,18 +155,36 @@ class PicExtractorService
      * @param int    $height
      * @return MultimediaObject $multimediaObject
      */
-    private function completePicMetadata(MultimediaObject $multimediaObject, $picUrl='', $picPath='', $width = 0, $height = 0)
+    private function completePicMetadata(MultimediaObject $multimediaObject, Pic $pic, $picPath='', $width = 0, $height = 0, array $tags = array())
     {
-        foreach ($multimediaObject->getPics() as $pic) {
-            if ($picUrl == $pic->getUrl()) {
-                $pic->setPath($picPath);
-                $pic->setWidth($width);
-                $pic->setHeight($height);
-            }
-        }
+        $pic->setPath($picPath);
+        $pic->setWidth($width);
+        $pic->setHeight($height);
+        foreach($tags as $tag) $pic->addTag($tag);
+
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
         return $multimediaObject;
+    }
+
+
+    /**
+     * Private method needed because MmsPicService::addPicUrl doesn't return
+     * the Pic instance (#9065)
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param string $picUrl
+     * @return Pic|null
+     */
+    private function getPicByUrl(MultimediaObject $multimediaObject, $picUrl)
+    {
+        foreach ($multimediaObject->getPics() as $pic) {
+            if ($picUrl == $pic->getUrl()) {
+                return $pic;
+            }
+        }
+
+        return null;
     }
 }
