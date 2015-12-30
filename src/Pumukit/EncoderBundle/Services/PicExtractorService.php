@@ -33,6 +33,27 @@ class PicExtractorService
         $this->command = $command ?: 'avprobe -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"';
     }
 
+
+    /**
+     * Extract pics on batch
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param Track $track
+     * @param array $marks
+     * @return string $message
+     */
+    public function extractPicOnBatch(MultimediaObject $multimediaObject, Track $track, array $marks = null)
+    {
+        if ($multimediaObject->getProperty('imagesonbatch')) return false;
+
+        $multimediaObject->setProperty('imagesonbatch', true);
+
+        if (!$marks) $marks = array('0%', '10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%');
+        foreach ($marks as $mark) {
+            $this->extractPic($multimediaObject, $track, $mark);
+        }
+    }
+
     /**
      * Extract Pic
      *
