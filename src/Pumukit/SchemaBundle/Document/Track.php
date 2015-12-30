@@ -228,6 +228,8 @@ class Track extends Element
    */
   public function getTimeOfAFrame($frame)
   {
+      if(!$this->getFramerate()) return 0;
+
       if (false !== strpos($this->getFramerate(), '/')) {
           $aux = explode('/', $this->getFramerate());
           return floatval($frame * intval($aux[1]) / intval($aux[0]));
