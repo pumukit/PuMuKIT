@@ -7,6 +7,7 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
 
 class PicExtractorService
@@ -32,6 +33,27 @@ class PicExtractorService
         $this->command = $command ?: 'avprobe -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"';
     }
 
+
+    /**
+     * Extract pics on batch
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param Track $track
+     * @param array $marks
+     * @return string $message
+     */
+    public function extractPicOnBatch(MultimediaObject $multimediaObject, Track $track, array $marks = null)
+    {
+        if ($multimediaObject->getProperty('imagesonbatch')) return false;
+
+        $multimediaObject->setProperty('imagesonbatch', true);
+
+        if (!$marks) $marks = array('0%', '10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%');
+        foreach ($marks as $mark) {
+            $this->extractPic($multimediaObject, $track, $mark);
+        }
+    }
+
     /**
      * Extract Pic
      *
@@ -46,12 +68,7 @@ class PicExtractorService
             return "Error in data autocomplete of multimedia object.";
         }
 
-        if (false !== strpos($track->getFramerate(), '/')) {
-            $aux = explode('/', $track->getFramerate());
-            $num_frames = intval($track->getDuration() * intval($aux[0]) / intval($aux[1]));
-        } else {
-            $num_frames = intval($track->getFramerate() * $track->getDuration());
-        }
+        $num_frames = $track->getNumFrames();
 
         if((is_null($numframe)||($num_frames == 0))){
             $num = 125 * (count($multimediaObject->getPics())) + 1;
@@ -79,12 +96,14 @@ class PicExtractorService
     {
         $currentDir = 'series/' . $multimediaObject->getSeries()->getId() . '/video/' . $multimediaObject->getId();
         $absCurrentDir = $this->targetPath."/".$currentDir;
-
-        $picFileName = date('ymdGis').'.jpg';
-        $aux = null;
-        
+       
         $fs = new Filesystem();
         $fs->mkdir($absCurrentDir);
+
+        $picFileName = date('ymdGis').'.jpg';
+        while(file_exists($absCurrentDir.'/'.$picFileName)) {
+            $picFileName = date('ymdGis'). rand(). '.jpg';
+        }
 
         $aspectTrack = $this->getAspect($track);
         if (0 !== $aspectTrack) {
@@ -101,7 +120,7 @@ class PicExtractorService
         }
 
         $vars = array(
-            "{{ss}}" => intval($frame/25),
+            "{{ss}}" => $track->getTimeOfAFrame($frame),
             "{{size}}" => $newWidth . "x" . $newHeight,
             "{{input}}" => $track->getPath(),
             "{{output}}" => $absCurrentDir.'/'.$picFileName
@@ -121,7 +140,9 @@ class PicExtractorService
         $picPath = $absCurrentDir .'/' . $picFileName;
         if (file_exists($picPath)){
             $multimediaObject = $this->mmsPicService->addPicUrl($multimediaObject, $picUrl);
-            $multimediaObject = $this->completePicMetadata($multimediaObject, $picUrl, $picPath, $newWidth, $newHeight);
+            $pic = $this->getPicByUrl($multimediaObject, $picUrl);
+            $tags = array('auto', 'frame_' . $frame, 'time_' . $track->getTimeOfAFrame($frame));
+            $multimediaObject = $this->completePicMetadata($multimediaObject, $pic, $picPath, $newWidth, $newHeight, $tags);
         }
         
         return true;
@@ -152,18 +173,36 @@ class PicExtractorService
      * @param int    $height
      * @return MultimediaObject $multimediaObject
      */
-    private function completePicMetadata(MultimediaObject $multimediaObject, $picUrl='', $picPath='', $width = 0, $height = 0)
+    private function completePicMetadata(MultimediaObject $multimediaObject, Pic $pic, $picPath='', $width = 0, $height = 0, array $tags = array())
     {
-        foreach ($multimediaObject->getPics() as $pic) {
-            if ($picUrl = $pic->getUrl()) {
-                $pic->setPath($picPath);
-                $pic->setWidth($width);
-                $pic->setHeight($height);
-            }
-        }
+        $pic->setPath($picPath);
+        $pic->setWidth($width);
+        $pic->setHeight($height);
+        foreach($tags as $tag) $pic->addTag($tag);
+
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
         return $multimediaObject;
+    }
+
+
+    /**
+     * Private method needed because MmsPicService::addPicUrl doesn't return
+     * the Pic instance (#9065)
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param string $picUrl
+     * @return Pic|null
+     */
+    private function getPicByUrl(MultimediaObject $multimediaObject, $picUrl)
+    {
+        foreach ($multimediaObject->getPics() as $pic) {
+            if ($picUrl == $pic->getUrl()) {
+                return $pic;
+            }
+        }
+
+        return null;
     }
 }

@@ -65,6 +65,28 @@ class Pic extends Element
       return $this->height;
   }
 
+
+  /**
+   * Get time from a tag with time_XXX format.
+   *
+   * @return integer, default 0
+   */
+  public function getTime()
+  {
+      $time = 0;
+
+      foreach($this->getTags() as $tag) {
+        if ('time_' == substr($tag, 0, 5)) {
+          return floatval(substr($tag, 5));
+        }
+      }
+      
+      return $time;
+  }
+
+
+    
+
   /**
    * To string
    *
