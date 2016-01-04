@@ -29,5 +29,6 @@ before_script:
 
 
 script:
+    - find . -type f -name "*.php" -exec php -l {} \;
     - phpunit -c app
 

@@ -196,6 +196,50 @@ class Track extends Element
   }
 
   /**
+   * Get total number of frames
+   *
+   * @return int
+   */
+  public function getNumFrames()
+  {
+    return $this->getFrameNumber($this->getDuration());
+  }
+
+  /**
+   * Get frame number of a instant in seg.
+   *
+   * @return int
+   */
+  public function getFrameNumber($seg)
+  {
+      if (false !== strpos($this->getFramerate(), '/')) {
+          $aux = explode('/', $this->getFramerate());
+          return intval($seg * intval($aux[0]) / intval($aux[1]));
+      } else {
+          return intval($seg * $this->getFramerate());
+      }
+  }
+
+
+  /**
+   * Get instant in seg of a frame number.
+   *
+   * @return float
+   */
+  public function getTimeOfAFrame($frame)
+  {
+      if(!$this->getFramerate()) return 0;
+
+      if (false !== strpos($this->getFramerate(), '/')) {
+          $aux = explode('/', $this->getFramerate());
+          return floatval($frame * intval($aux[1]) / intval($aux[0]));
+      } else {
+          return floatval($frame / $this->getFramerate());
+      }
+  }
+
+
+  /**
    * Set only_audio
    *
    * @param boolean $onlyAudio
