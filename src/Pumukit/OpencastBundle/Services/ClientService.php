@@ -68,8 +68,7 @@ class ClientService
      */
     public function getMediaPackages($query, $limit, $offset)
     {
-        $output = $this->request("/search/episode.json?q=" . $query . "&limit=" . $limit . "&offset=" . $offset);
-
+        $output = $this->request("/search/episode.json?". ($query?"q=" . $query ."&":""). "limit=" . $limit . "&offset=" . $offset);
 
         if ($output["status"] !== 200) return false;
         $decode = json_decode($output["var"], true);
@@ -166,19 +165,18 @@ class ClientService
             throw new \Exception('No media packages given.');
         }
 
-        $request = '/episode/apply/'.$workflowName.'?mediaPackageIds=';
+        $request = '/episode/apply/'.$workflowName;
+
+        $mediaPackageIdsParameter = '';
         foreach ($mediaPackagesIds as $index => $id) {
-            $request = $request . $id;
+            $mediaPackageIdsParameter = $mediaPackageIdsParameter . $id;
             if ($index < (count($mediaPackagesIds) - 1)) {
-                $request = $request . ',+';
+                $mediaPackageIdsParameter = $mediaPackageIdsParameter . ',+';
             }
         }
+        $parameters = array('mediaPackageIds' => $mediaPackageIdsParameter);
 
-        if (!$this->adminUrl) {
-            $this->adminUrl = $this->getAdminUrl();
-        }
-
-        $output = $this->request($request, true);
+        $output = $this->postRequest($request, $parameters, false);
 
         if ($output["status"] !== 204) return false;
 
@@ -193,15 +191,21 @@ class ClientService
      */
     public function deleteWorkflowsIfEnded($id='')
     {
+        $errors = 0;
         $workflows = $this->getWorkflowInstances($id);
-        $deletionWorkflow = $this->getWorkflowWithTemplate($workflows, $this->deletionWorkflowName);
-        $isFinished = $this->isWorkflowFinished($deletionWorkflow);
-
-        if ($isFinished) {
-            return $this->deleteWorkflows($workflows);
+        $deletionWorkflows = $this->getWorkflowsWithTemplate($workflows, $this->deletionWorkflowName);
+        foreach ($deletionWorkflows as $deletionWorkflow) {
+            $isFinished = $this->isWorkflowFinished($deletionWorkflow);
+            if ($isFinished) {
+                $output = $this->deleteWorkflow($deletionWorkflow);
+                if (!$output) {
+                    ++$errors;
+                }
+            }
         }
-
-        return false;
+        if ($errors > 0) return false;
+        
+        return true;
     }
 
     /**
@@ -211,18 +215,12 @@ class ClientService
      * @param array $workflows
      * @return boolean
      */
-    public function deleteWorkflows(array $workflows = array())
+    public function deleteWorkflow($workflow = array())
     {
-        $errors = 0;
-        foreach ($workflows as $workflow) {
-            $output = $this->stopWorkflow($workflow);
-            if (!$output) {
-                ++$errors;
-            }
-        }
-
-        if ($errors > 0)
+        $output = $this->stopWorkflow($workflow);
+        if (!$output) {
             return false;
+        }
 
         return true;
     }
@@ -236,12 +234,11 @@ class ClientService
     public function stopWorkflow(array $workflow = array())
     {
         if (isset($workflow['id'])) {
-            $request = '/workflow/stop?id='.$workflow['id'];
 
-            if (!$this->adminUrl) {
-                $this->adminUrl = $this->getAdminUrl();
-            }
-            $output = $this->request($request, true);
+            $request = '/workflow/stop';
+            $params = array('id' => $workflow['id']);
+
+            $output = $this->postRequest($request, $params, false);
             if ($output["status"] !== 200)
                 return false;
 
@@ -262,7 +259,7 @@ class ClientService
      * @param  boolean $useAdminUrl
      * @return array
      */
-    private function request ($path, $useAdminUrl=false)
+    private function request($path, $useAdminUrl=false)
     {
         $output = array();
 
@@ -271,6 +268,7 @@ class ClientService
         } else {
             $request = curl_init($this->url . $path);
         }
+
         curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($request, CURLOPT_FOLLOWLOCATION, false);
 
@@ -280,6 +278,7 @@ class ClientService
             curl_setopt($request, CURLOPT_HTTPHEADER, array("X-Requested-Auth: Digest",
                                                        "X-Opencast-Matterhorn-Authorization: true"));
         }
+        
 
         $output["var"] = curl_exec($request);
         $output["error"] = curl_error($request);
@@ -290,6 +289,46 @@ class ClientService
         if (200 != $output["status"]) {
             throw new \Exception("Error Processing Request", 1);
         }
+
+        return $output;
+    }
+
+    private function postRequest($path = '', $query = array(), $useAdminUrl=false)
+    {
+        if (!function_exists('curl_init')) {
+            throw new \RuntimeException('Curl is required to execute remote commands.');
+        }
+
+        if (false === $curl = curl_init()) {
+            throw new \RuntimeException('Unable to create a new curl handle.');
+        }
+
+        $output = array();
+
+        if ($useAdminUrl && $this->adminUrl) {
+            $request = $this->adminUrl . $path;
+        } else {
+            $request = $this->url . $path;
+        }
+
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_URL, $request);
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, false);
+
+        if ($this->user != "") {
+            curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
+            curl_setopt($curl, CURLOPT_USERPWD, $this->user . ':' . $this->passwd);
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array("X-Requested-Auth: Digest",
+                                                         "X-Opencast-Matterhorn-Authorization: true"));
+        }
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($query));
+
+        $output["var"] = curl_exec($curl);
+        $output["error"] = curl_error($curl);
+        $output["status"] = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+        curl_close($curl);
 
         return $output;
     }
@@ -327,7 +366,7 @@ class ClientService
      */
     private function getWorkflowInstances($id = '')
     {
-        $request = '/workflow/instances.json?mp='.$id;
+        $request = '/workflow/instances.json'. ($id ? '?mp='.$id : '');
 
         $output = $this->request($request);
 
@@ -339,30 +378,31 @@ class ClientService
             throw new \Exception("Opencast Matterhorn communication error");
         }
 
-        if ($decode["workflows"]["totalCounts"] == 0)
+        if ($decode["workflows"]["totalCount"] == 0)
             return null;
         else
             return $decode["workflows"]["workflow"];
     }
 
     /**
-     * Get workflow template
+     * Get workflows template
      *
      * @param array $workflows
      * @param string $template
      * @return array
      */
-    private function getWorkflowWithTemplate(array $workflows = array(), $template='')
+    private function getWorkflowsWithTemplate(array $workflows = array(), $template='')
     {
+        $templateWorkflows = array();
         foreach ($workflows as $workflow) {
             if (isset($workflow['template'])) {
                 if ($template == $workflow['template']) {
-                    return $workflow;
+                    $templateWorkflows[] = $workflow;
                 }
             }
         }
   
-        return null;
+        return $templateWorkflows;
     }
 
     /**
@@ -374,8 +414,8 @@ class ClientService
     private function isWorkflowFinished(array $workflow = array())
     {
         // TODO: review
-        if ($workflow && isset($workflow['status'])) {
-            if ('SUCCEED' === $workflow['status']) {
+        if ($workflow && isset($workflow['state'])) {
+            if ('SUCCEEDED' === $workflow['state']) {
                 return true;
             }
         }
