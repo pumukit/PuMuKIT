@@ -60,26 +60,27 @@ class PumukitOpencastExtension extends Extension
             ->addArgument(new Reference("pumukit_opencast.job"))
             ->addArgument(new Reference("pumukit.inspection"))
             ->addArgument(new Parameter("pumukit2.locales"));
+
+
+          $container->setParameter('pumukit_opencast.sbs', $config['sbs']);
+          $container->setParameter('pumukit_opencast.sbs.generate_sbs', $config['sbs']['generate_sbs'] ? $config['sbs']['generate_sbs'] : false);
+          $container->setParameter('pumukit_opencast.sbs.profile', $config['sbs']['generate_sbs'] ? $config['sbs']['profile'] : null);
+          $container->setParameter('pumukit_opencast.sbs.use_flavour', $config['sbs']['generate_sbs'] ? $config['sbs']['use_flavour'] : false);
+          $container->setParameter('pumukit_opencast.sbs.flavour', $config['sbs']['use_flavour'] ? $config['sbs']['flavour'] : null);
+          $container->setParameter('pumukit_opencast.sbs.url_mapping', $config['sbs']['generate_sbs'] ? $config['sbs']['url_mapping'] : null);
+
+          $container->setParameter('pumukit_opencast.use_redirect', $config['use_redirect']);
+          $container->setParameter('pumukit_opencast.batchimport_inverted', $config['batchimport_inverted']);
+          $container->setParameter('pumukit_opencast.show_ingestor_tab', $config['show_ingestor_tab']);
+          $container->setParameter('pumukit_opencast.delete_archive_mediapackage', $config['delete_archive_mediapackage']);
+          $container->setParameter('pumukit_opencast.deletion_workflow_name', $config['deletion_workflow_name']);
+
+          $container
+            ->register("pumukit_opencast.remove_listener", "Pumukit\OpencastBundle\EventListener\RemoveListener")
+            ->addArgument(new Reference("doctrine_mongodb.odm.document_manager"))
+            ->addArgument(new Reference("pumukit_opencast.client"))
+            ->addTag("kernel.event_listener", array('event' => 'multimediaobject.delete', 'method' => 'onMultimediaObjectDelete'))
+            ->addTag("kernel.event_listener", array('event' => 'track.delete', 'method' => 'onTrackDelete'));
         }
-
-        $container->setParameter('pumukit_opencast.sbs', $config['sbs']);
-        $container->setParameter('pumukit_opencast.sbs.generate_sbs', $config['sbs']['generate_sbs'] ? $config['sbs']['generate_sbs'] : false);
-        $container->setParameter('pumukit_opencast.sbs.profile', $config['sbs']['generate_sbs'] ? $config['sbs']['profile'] : null);
-        $container->setParameter('pumukit_opencast.sbs.use_flavour', $config['sbs']['generate_sbs'] ? $config['sbs']['use_flavour'] : false);
-        $container->setParameter('pumukit_opencast.sbs.flavour', $config['sbs']['use_flavour'] ? $config['sbs']['flavour'] : null);
-        $container->setParameter('pumukit_opencast.sbs.url_mapping', $config['sbs']['generate_sbs'] ? $config['sbs']['url_mapping'] : null);
-
-        $container->setParameter('pumukit_opencast.use_redirect', $config['use_redirect']);
-        $container->setParameter('pumukit_opencast.batchimport_inverted', $config['batchimport_inverted']);
-        $container->setParameter('pumukit_opencast.show_ingestor_tab', $config['show_ingestor_tab']);
-        $container->setParameter('pumukit_opencast.delete_archive_mediapackage', $config['delete_archive_mediapackage']);
-        $container->setParameter('pumukit_opencast.deletion_workflow_name', $config['deletion_workflow_name']);
-
-        $container
-          ->register("pumukit_opencast.remove_listener", "Pumukit\OpencastBundle\EventListener\RemoveListener")
-          ->addArgument(new Reference("doctrine_mongodb.odm.document_manager"))
-          ->addArgument(new Reference("pumukit_opencast.client"))
-          ->addTag("kernel.event_listener", array('event' => 'multimediaobject.delete', 'method' => 'onMultimediaObjectDelete'))
-          ->addTag("kernel.event_listener", array('event' => 'track.delete', 'method' => 'onTrackDelete'));
     }
 }
