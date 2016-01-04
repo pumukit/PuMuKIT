@@ -29,17 +29,4 @@ class RemoveListener
             }
         }
     }
-
-    public function onTrackDelete(TrackEvent $event)
-    {
-        $multimediaObject = $event->getMultimediaObject();
-        $track = $event->getTrack();
-        if ($mediaPackageId = $multimediaObject->getProperty('opencast')) {
-            $output = $this->clientService->applyWorkflowToMediaPackages(array($mediaPackageId));
-            if (!$output) {
-                throw new \Exception('Error on deleting Opencast media package "'
-                                     .$mediaPackageId.'" from archive.');
-            }
-        }
-    }
 }

@@ -79,8 +79,7 @@ class PumukitOpencastExtension extends Extension
             ->register("pumukit_opencast.remove_listener", "Pumukit\OpencastBundle\EventListener\RemoveListener")
             ->addArgument(new Reference("doctrine_mongodb.odm.document_manager"))
             ->addArgument(new Reference("pumukit_opencast.client"))
-            ->addTag("kernel.event_listener", array('event' => 'multimediaobject.delete', 'method' => 'onMultimediaObjectDelete'))
-            ->addTag("kernel.event_listener", array('event' => 'track.delete', 'method' => 'onTrackDelete'));
+            ->addTag("kernel.event_listener", array('event' => 'multimediaobject.delete', 'method' => 'onMultimediaObjectDelete'));
         }
     }
 }
