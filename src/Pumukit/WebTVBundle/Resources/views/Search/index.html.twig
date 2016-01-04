@@ -1,5 +1,16 @@
 {% extends 'PumukitWebTVBundle::layout.html.twig' %}
 
+{% block stylesheets %}
+  {{ parent() }}
+  <link href="{{ asset('bundles/pumukitwebtv/css/bootstrap-datetimepicker.min.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('bundles/pumukitwebtv/js/moment-with-locales.min.js') }}" type="text/javascript"></script>
+  <script src="{{ asset('bundles/pumukitwebtv/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+{% endblock %}
+
 {% block body %}
   <div class="row">
     <div class="col-xs-12">
