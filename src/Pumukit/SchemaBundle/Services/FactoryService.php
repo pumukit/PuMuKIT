@@ -23,13 +23,15 @@ class FactoryService
     private $locales;
     private $defaultCopyright;
     private $addUserAsPerson;
+    private $mmsDispatcher;
 
-    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, TranslatorInterface $translator, $addUserAsPerson=true, array $locales = array(), $defaultCopyright = "")
+    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, MultimediaObjectEventDispatcherService $mmsDispatcher, TranslatorInterface $translator, $addUserAsPerson=true, array $locales = array(), $defaultCopyright = "")
     {
         $this->dm = $documentManager;
         $this->tagService = $tagService;
         $this->personService = $personService;
         $this->userService = $userService;
+        $this->mmsDispatcher = $mmsDispatcher;
         $this->translator = $translator;
         $this->locales = $locales;
         $this->defaultCopyright = $defaultCopyright;
@@ -249,6 +251,7 @@ class FactoryService
         foreach($multimediaObjects as $mm){
             $series->removeMultimediaObject($mm);
             $this->dm->remove($mm);
+            $this->mmsDispatcher->dispatchDelete($mm);
         }
          
         $this->dm->remove($series);
@@ -273,7 +276,7 @@ class FactoryService
             $this->dm->persist($series);
         }
         $this->dm->remove($multimediaObject);
-
+        $this->mmsDispatcher->dispatchDelete($multimediaObject);
         $this->dm->flush();
     }
 
