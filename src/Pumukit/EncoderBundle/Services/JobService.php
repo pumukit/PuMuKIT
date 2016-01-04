@@ -680,18 +680,10 @@ class JobService
     private function checkService()
     {
         $jobs = $this->repo->findWithStatus(array(Job::STATUS_EXECUTING));
-        $yesterday = new \DateTime('now');
-        $yesterday->sub(new \DateInterval('P1D'));
+        $yesterday = new \DateTime('-1 day'); 
 
         foreach ($jobs as $job) {
-            if ($job->getStatus() !== Job::STATUS_EXECUTING) {
-              // TODO FIX THIS #8965 batch import with SBS generation
-              // var_dump('Job with id "'. $job->getId(). '" and status "'.Job::$statusTexts[$job->getStatus()].'" was found as "'.Job::$statusTexts[Job::STATUS_EXECUTING].'"');
-              // $mm = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
-              // var_dump('Opencast id: '.$mm->getProperty('opencast'));
-              continue;
-            }
-            if ($job->getTimestart()->format('U') < $yesterday->format('U')) {
+            if($job->getTimestart() < $yesterday) {
                 $this->logger->addError(sprintf('[checkService] Job executing for a long time %s', $job->getId()));
             }
         }
