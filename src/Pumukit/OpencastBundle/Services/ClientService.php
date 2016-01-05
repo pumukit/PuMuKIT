@@ -128,7 +128,7 @@ class ClientService
     public function getMediapackageFromArchive($id)
     {
         $this->adminUrl = $this->getAdminUrl();
-        $output = $this->request("/episode/episode.json?id=" . $id, true);
+        $output = $this->request("/episode/episode.json?id=" . $id, array(), true, true);
 
         if ($output["status"] !== 200) return false;
         $decode = json_decode($output["var"], true);
@@ -176,7 +176,7 @@ class ClientService
         }
         $parameters = array('mediaPackageIds' => $mediaPackageIdsParameter);
 
-        $output = $this->postRequest($request, $parameters, false);
+        $output = $this->request($request, $parameters, false);
 
         if ($output["status"] !== 204) return false;
 
@@ -238,7 +238,7 @@ class ClientService
             $request = '/workflow/stop';
             $params = array('id' => $workflow['id']);
 
-            $output = $this->postRequest($request, $params, false);
+            $output = $this->request($request, $params, false);
             if ($output["status"] !== 200)
                 return false;
 
@@ -252,21 +252,43 @@ class ClientService
      * Request
      *
      * Makes a given request (path)
+     * GET or POST
      * to the Opencast server
      * using or not the admin url
      *
      * @param  string  $path
+     * @param  array   $query
+     * @param  boolean $get
      * @param  boolean $useAdminUrl
      * @return array
      */
-    private function request($path, $useAdminUrl=false)
+    private function request($path, $query = array(), $get = true, $useAdminUrl = false)
     {
-        $output = array();
+        if (!function_exists('curl_init')) {
+            throw new \RuntimeException('Curl is required to execute remote commands.');
+        }
 
-        if ($useAdminUrl && $this->adminUrl) {
-            $request = curl_init($this->adminUrl . $path);
+        if ($get) {
+            if ($useAdminUrl && $this->adminUrl) {
+                $request = curl_init($this->adminUrl . $path);
+            } else {
+                $request = curl_init($this->url . $path);
+            }
+            if (false === $request) {
+                throw new \RuntimeException('Unable to create a new curl handle.');
+            }
         } else {
-            $request = curl_init($this->url . $path);
+            if (false === $request = curl_init()) {
+                throw new \RuntimeException('Unable to create a new curl handle.');
+            }
+            if ($useAdminUrl && $this->adminUrl) {
+                $requestUrl = $this->adminUrl . $path;
+            } else {
+                $requestUrl = $this->url . $path;
+            }
+            curl_setopt($request, CURLOPT_URL, $requestUrl);
+            curl_setopt($request, CURLOPT_POST, 1);
+            curl_setopt($request, CURLOPT_POSTFIELDS, http_build_query($query));
         }
 
         curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
@@ -276,59 +298,21 @@ class ClientService
             curl_setopt($request, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
             curl_setopt($request, CURLOPT_USERPWD, $this->user . ':' . $this->passwd);
             curl_setopt($request, CURLOPT_HTTPHEADER, array("X-Requested-Auth: Digest",
-                                                       "X-Opencast-Matterhorn-Authorization: true"));
+                                                            "X-Opencast-Matterhorn-Authorization: true"));
         }
-        
 
+        $output = array();
         $output["var"] = curl_exec($request);
         $output["error"] = curl_error($request);
         $output["status"] = curl_getinfo($request, CURLINFO_HTTP_CODE);
 
         curl_close($request);
 
-        if (200 != $output["status"]) {
-            throw new \Exception("Error Processing Request", 1);
+        if ($get) {
+            if (200 != $output["status"]) {
+                throw new \Exception("Error Processing Request", 1);
+            }
         }
-
-        return $output;
-    }
-
-    private function postRequest($path = '', $query = array(), $useAdminUrl=false)
-    {
-        if (!function_exists('curl_init')) {
-            throw new \RuntimeException('Curl is required to execute remote commands.');
-        }
-
-        if (false === $curl = curl_init()) {
-            throw new \RuntimeException('Unable to create a new curl handle.');
-        }
-
-        $output = array();
-
-        if ($useAdminUrl && $this->adminUrl) {
-            $request = $this->adminUrl . $path;
-        } else {
-            $request = $this->url . $path;
-        }
-
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_URL, $request);
-        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, false);
-
-        if ($this->user != "") {
-            curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
-            curl_setopt($curl, CURLOPT_USERPWD, $this->user . ':' . $this->passwd);
-            curl_setopt($curl, CURLOPT_HTTPHEADER, array("X-Requested-Auth: Digest",
-                                                         "X-Opencast-Matterhorn-Authorization: true"));
-        }
-        curl_setopt($curl, CURLOPT_POST, 1);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($query));
-
-        $output["var"] = curl_exec($curl);
-        $output["error"] = curl_error($curl);
-        $output["status"] = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-        curl_close($curl);
 
         return $output;
     }
