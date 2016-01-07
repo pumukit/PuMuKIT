@@ -4,12 +4,14 @@ namespace Pumukit\OpencastBundle\Services;
 
 class ClientService
 {
+    const RETRACT_WORKFLOW = 'retract';
+
     private $url;
     private $user;
     private $passwd;
     private $player;
     private $adminUrl = null;
-    private $deleteArchiveMediaPackage;
+    private $retractMediaPackage;
     private $deletionWorkflowName;
 
     /**
@@ -19,16 +21,16 @@ class ClientService
      * @param string  $user
      * @param string  $passwd
      * @param string  $player
-     * @param boolean $deleteArchiveMediaPackage
+     * @param boolean $retractMediaPackage
      * @param boolean $deletionWorkflowName
      */
-    public function __construct($url="", $user="", $passwd="", $player="/engage/ui/watch.html", $deleteArchiveMediaPackage = false, $deletionWorkflowName = 'delete-archive')
+    public function __construct($url="", $user="", $passwd="", $player="/engage/ui/watch.html", $retractMediaPackage = false, $deletionWorkflowName = 'retract')
     {
         $this->url  = $url;
         $this->user  = $user;
         $this->passwd  = $passwd;
         $this->player  = $player;
-        $this->deleteArchiveMediaPackage = $deleteArchiveMediaPackage;
+        $this->retractMediaPackage = $retractMediaPackage;
         $this->deletionWorkflowName = $deletionWorkflowName;
     }
 
@@ -156,7 +158,7 @@ class ClientService
     {
         if (!$workflowName || ($workflowName == $this->deletionWorkflowName)) {
             $workflowName = $this->deletionWorkflowName;
-            if (!$this->deleteArchiveMediaPackage) {
+            if (!$this->retractMediaPackage) {
                 throw new \Exception('Not allowed to delete media packages from archive');
             }
         }
@@ -175,6 +177,10 @@ class ClientService
             }
         }
         $parameters = array('mediaPackageIds' => $mediaPackageIdsParameter);
+        if ($this->deletionWorkflowName === self::RETRACT_WORKFLOW) {
+            $parameters['engage'] = 'Matterhorn+Engage+Player';
+            $parameters['youtube'] = 'Youtube';
+        }
 
         $output = $this->request($request, $parameters, false);
 

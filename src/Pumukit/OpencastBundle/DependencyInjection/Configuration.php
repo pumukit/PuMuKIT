@@ -57,7 +57,7 @@ class Configuration implements ConfigurationInterface
               ->info('Opencast mediapackage will be deleted from the archive when the PuMuKIT track or multimedia object is deleted, when set to true.')
             ->end()
             ->scalarNode('deletion_workflow_name')
-              ->defaultValue('delete-archive')
+              ->defaultValue('retract')
               ->info('Name of the workflow in Opencast that handles the deletion of a mediapackage from the archive.')
             ->end()
             ->arrayNode('sbs')
