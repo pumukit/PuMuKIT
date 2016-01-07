@@ -14,7 +14,7 @@ pumukit_opencast:
     batchimport_inverted: false
     show_ingestor_tab: true
     delete_archive_mediapackage: false
-    deletion_workflow_name: 'retract'
+    deletion_workflow_name: 'delete-archive'
     sbs:
         generate_sbs: true
         profile: sbs
@@ -40,7 +40,7 @@ Optional:
    - `batchimport_inverted` when set to true, the Opencast videos will be imported with presentation and presented inverted, i.e. switching positions. Default value: false.
    - `show_ingestor_tab` when set to false, the Opencast Ingestor Tab will not be shown. Useful when the ingestion is done using batch import command. Default value: true.
    - `delete_archive_mediapackage` when set to true, the Opencast mediapackage will be deleted from the archive when deleting the PuMuKIT track or multimedia object. Default value: false.
-   - `deletion_workflow_name` is the name of the Opencast workflow in Opencast that handles the deletion of a mediapackage from the archive. Default value: retract.
+   - `deletion_workflow_name` is the name of the Opencast workflow in Opencast that handles the deletion of a mediapackage from the archive. Default value: delete-archive.
    - `sbs`:
       - `generate_sbs` when set to true, generates side by side video when MP is imported according to the profile below. Default value: false.
       - `profile` is the profile name to generate the side by side video. Mandatory if `generate_sbs` is set to true.
