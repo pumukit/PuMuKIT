@@ -174,7 +174,8 @@ class ClientService
                 $mediaPackageIdsParameter = $mediaPackageIdsParameter . ',+';
             }
         }
-        $parameters = array('mediaPackageIds' => $mediaPackageIdsParameter);
+        $parameters = array('mediaPackageIds' => $mediaPackageIdsParameter,
+                            'engage' => 'Matterhorn+Engage+Player');
 
         $output = $this->request($request, $parameters, false);
 
