@@ -24,6 +24,8 @@ class PumukitOpencastExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('pumukit_opencast.show_ingestor_tab', $config['show_ingestor_tab']);
+
         if(isset($config['host']) && $config['host']) {
           if (!filter_var($config['host'], FILTER_VALIDATE_URL)){
             throw new InvalidConfigurationException(sprintf(
@@ -71,7 +73,6 @@ class PumukitOpencastExtension extends Extension
 
           $container->setParameter('pumukit_opencast.use_redirect', $config['use_redirect']);
           $container->setParameter('pumukit_opencast.batchimport_inverted', $config['batchimport_inverted']);
-          $container->setParameter('pumukit_opencast.show_ingestor_tab', $config['show_ingestor_tab']);
           $container->setParameter('pumukit_opencast.delete_archive_mediapackage', $config['delete_archive_mediapackage']);
           $container->setParameter('pumukit_opencast.deletion_workflow_name', $config['deletion_workflow_name']);
 
