@@ -37,7 +37,7 @@
         "enabled": true,
         "dataDelegates": {
             "default": "MHAnnotationServiceDefaultDataDelegate",
-            "trimming": "MHAnnotationServiceDefaultDataDelegate",
+            "trimming": "MHAnnotationServiceTrimmingDataDelegate",
             "userInfo": "UserDataDelegate"
         }
     },
@@ -125,6 +125,10 @@
                 "enabled": true
             },
             "es.upv.paella.showEditorPlugin": {
+                "enabled": false,
+                "alwaysVisible": true
+            },
+            "es.teltek.paella.showEditorTtkPlugin": {
                 "enabled": true,
                 "alwaysVisible": true
             },
