@@ -1,6 +1,11 @@
 # Opencast configuration
 
-## Parameters
+## Index
+
+1. (Parameters)[1-parameters]
+2. (Cron tool)[2-cron-tool]
+
+## 1. Parameters
 
 Add your Opencast server configuration to your `app/config/parameters.yml` file:
 
@@ -53,7 +58,11 @@ Optional:
 For more info about Opencast Matterhorn parameters go to [Opencast Documentation](https://bitbucket.org/opencast-community/matterhorn/src/d9890525acc0c14ee20b2523da4873551c6a91f2/etc/config.properties?at=master)
 
 
-## Batch Import
+## 2. Cron tool
+
+List of PuMuKIT commands that must be configured with the cron tool.
+
+### 2.1. Batch Import
 
 The `pumukit:opencast:batchimport` console command allows to import all Opencast videos into PuMuKIT at once.
 This command allows to import all videos with or without invert option to switch camera and screen positions.
@@ -77,4 +86,25 @@ The recommendation on a production environment is to run commands every day, e.g
 40 23 * * *     /usr/bin/php /var/www/pumukit2/app/console pumukit:opencast:batchimport --env=prod
 40 23 * * *     /usr/bin/php /var/www/pumukit2/app/console pumukit:opencast:batchimport --env=prod -i 1
 40 23 * * *     /usr/bin/php /var/www/pumukit2/app/console pumukit:opencast:batchimport --env=prod -i 0
+```
+
+### 2.2. Stop Workflow
+
+The `pumukit:opencast:stop:workflow` console command allows to stop all Opencast succeeded workflows of
+a removed media package.
+
+If the `delete_archive_mediapackage` parameter is set to true, there is no need to add this command to
+the crontab configuration.
+
+Configure cron to execute this command periodically.
+
+```
+sudo crontab -e
+```
+
+The recommendation on a development environment is to run commands every minute.
+The recommendation on a production environment is to run commands every day, e.g.: every day at time 23:40.
+
+```
+40 23 * * *     /usr/bin/php /var/www/pumukit2/app/console pumukit:opencast:stop:workflow --env=prod
 ```
