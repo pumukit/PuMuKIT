@@ -45,10 +45,11 @@ class PumukitOpencastExtension extends Extension
 
           $container
             ->register("pumukit_opencast.job", "Pumukit\OpencastBundle\Services\OpencastService")
-            ->addArgument($config['sbs'])
             ->addArgument(new Reference('pumukitencoder.job'))
             ->addArgument(new Reference('pumukitencoder.profile'))
             ->addArgument(new Reference('pumukitschema.multimedia_object'))
+            ->addArgument($config['sbs'])
+            ->addArgument($config['url_mapping'])
             ->addArgument(array('opencast_host' => $config['host'], 'opencast_username' => $config['username'], 'opencast_password' => $config['password']));
 
           $container
@@ -73,12 +74,12 @@ class PumukitOpencastExtension extends Extension
           $container->setParameter('pumukit_opencast.sbs.profile', $config['sbs']['generate_sbs'] ? $config['sbs']['profile'] : null);
           $container->setParameter('pumukit_opencast.sbs.use_flavour', $config['sbs']['generate_sbs'] ? $config['sbs']['use_flavour'] : false);
           $container->setParameter('pumukit_opencast.sbs.flavour', $config['sbs']['use_flavour'] ? $config['sbs']['flavour'] : null);
-          $container->setParameter('pumukit_opencast.sbs.url_mapping', $config['sbs']['generate_sbs'] ? $config['sbs']['url_mapping'] : null);
 
           $container->setParameter('pumukit_opencast.use_redirect', $config['use_redirect']);
           $container->setParameter('pumukit_opencast.batchimport_inverted', $config['batchimport_inverted']);
           $container->setParameter('pumukit_opencast.delete_archive_mediapackage', $config['delete_archive_mediapackage']);
           $container->setParameter('pumukit_opencast.deletion_workflow_name', $config['deletion_workflow_name']);
+          $container->setParameter('pumukit_opencast.url_mapping', $config['url_mapping']);
 
           $container
             ->register("pumukit_opencast.remove_listener", "Pumukit\OpencastBundle\EventListener\RemoveListener")

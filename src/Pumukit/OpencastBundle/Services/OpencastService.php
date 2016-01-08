@@ -21,12 +21,13 @@ class OpencastService
     private $multimediaObjectService;
     private $defaultVars;
 
-    public function __construct($sbsConfiguration, JobService $jobService, ProfileService $profileService, MultimediaObjectService $multimediaObjectService, array $defaultVars = array())
+    public function __construct(JobService $jobService, ProfileService $profileService, MultimediaObjectService $multimediaObjectService, array $sbsConfiguration = array(), array $urlMapping = array(), array $defaultVars = array())
     {
-        $this->sbsConfiguration = $sbsConfiguration;
         $this->jobService = $jobService;
         $this->profileService = $profileService;
         $this->multimediaObjectService = $multimediaObjectService;
+        $this->sbsConfiguration = $sbsConfiguration;
+        $this->urlPathMapping = $urlMapping;
         $this->defaultVars = $defaultVars;
         $this->initSbsConfiguration();
     }
@@ -45,9 +46,6 @@ class OpencastService
             }
             if (isset($this->sbsConfiguration['flavour'])) {
                 $this->sbsFlavour = $this->sbsConfiguration['flavour'];
-            }
-            if (isset($this->sbsConfiguration['url_mapping'])) {
-                $this->urlPathMapping = $this->sbsConfiguration['url_mapping'];
             }
         }
     }
