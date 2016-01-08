@@ -27,12 +27,5 @@
          "duration": 0
      }
  };
- $(document).bind(paella.events.loadComplete,function(event,params) {
-     paella.events.trigger(paella.events.play);
- });
- setTimeout(function(){
-     //paella.events.trigger(paella.events.showEditor);
- }, 4000);
-// paella.load('playerContainer', {data : data});
  loadPaella('playerContainer', '{{multimediaObject.id}}');
 </script>
