@@ -63,6 +63,10 @@ class PumukitOpencastExtension extends Extension
             ->addArgument(new Reference("pumukit.inspection"))
             ->addArgument(new Parameter("pumukit2.locales"));
 
+          $container
+            ->register("pumukit_opencast.workflow", "Pumukit\OpencastBundle\Services\WorkflowService")
+            ->addArgument(new Reference("pumukit_opencast.client"))
+            ->addArgument($config['deletion_workflow_name']);
 
           $container->setParameter('pumukit_opencast.sbs', $config['sbs']);
           $container->setParameter('pumukit_opencast.sbs.generate_sbs', $config['sbs']['generate_sbs'] ? $config['sbs']['generate_sbs'] : false);

@@ -20,7 +20,7 @@ class ClientService
      * @param string  $passwd
      * @param string  $player
      * @param boolean $deleteArchiveMediaPackage
-     * @param boolean $deletionWorkflowName
+     * @param string  $deletionWorkflowName
      */
     public function __construct($url="", $user="", $passwd="", $player="/engage/ui/watch.html", $deleteArchiveMediaPackage = false, $deletionWorkflowName = 'delete-archive')
     {
@@ -185,45 +185,49 @@ class ClientService
     }
 
     /**
-     * Check workflow ended
+     * Get workflow statistics
      *
-     * @param string $id
-     * @return boolean
+     * Used to get the total number of workflows
      */
-    public function deleteWorkflowsIfEnded($id='')
+    public function getWorkflowStatistics()
     {
-        $errors = 0;
-        $workflows = $this->getWorkflowInstances($id);
-        $deletionWorkflows = $this->getWorkflowsWithTemplate($workflows, $this->deletionWorkflowName);
-        foreach ($deletionWorkflows as $deletionWorkflow) {
-            $isFinished = $this->isWorkflowFinished($deletionWorkflow);
-            if ($isFinished) {
-                $output = $this->deleteWorkflow($deletionWorkflow);
-                if (!$output) {
-                    ++$errors;
-                }
-            }
+        $request = '/workflow/statistics.json';
+
+        $output = $this->request($request);
+
+        if ($output["status"] !== 200) return false;
+
+        $decode = json_decode($output["var"], true);
+
+        if (!($decode)) {
+            throw new \Exception("Opencast Matterhorn communication error");
         }
-        if ($errors > 0) return false;
-        
-        return true;
+
+        return $decode;
     }
 
     /**
-     * Delete workflows
-     * with given media package id
+     * Get counted workflow instances
      *
-     * @param array $workflows
-     * @return boolean
+     * @param  string  $id
+     * @param  string  $count
+     * @return array
      */
-    public function deleteWorkflow($workflow = array())
+    public function getCountedWorkflowInstances($id = '', $count = '')
     {
-        $output = $this->stopWorkflow($workflow);
-        if (!$output) {
-            return false;
+        $request = '/workflow/instances.json'. ($id && $count ? '?mp='.$id.'&count='.$count : ($id ? '?mp='.$id : ($count?'?count='.$count:'')));
+
+        $output = $this->request($request);
+
+        if ($output["status"] !== 200) return false;
+
+        $decode = json_decode($output["var"], true);
+
+        if (!($decode)) {
+            throw new \Exception("Opencast Matterhorn communication error");
         }
 
-        return true;
+        return $decode;
     }
 
     /**
@@ -238,7 +242,6 @@ class ClientService
 
             $request = '/workflow/stop';
             $params = array('id' => $workflow['id']);
-
             $output = $this->request($request, $params, false);
             if ($output["status"] !== 200)
                 return false;
@@ -340,71 +343,5 @@ class ClientService
         }
 
         return null;
-    }
-
-    /**
-     * Get workflow instances
-     * with given mediapackage id
-     *
-     * @param string $id
-     * @return array
-     */
-    private function getWorkflowInstances($id = '')
-    {
-        $request = '/workflow/instances.json'. ($id ? '?mp='.$id : '');
-
-        $output = $this->request($request);
-
-        if ($output["status"] !== 200) return false;
-
-        $decode = json_decode($output["var"], true);
-
-        if (!($decode)) {
-            throw new \Exception("Opencast Matterhorn communication error");
-        }
-
-        if ($decode["workflows"]["totalCount"] == 0)
-            return null;
-        else
-            return $decode["workflows"]["workflow"];
-    }
-
-    /**
-     * Get workflows template
-     *
-     * @param array $workflows
-     * @param string $template
-     * @return array
-     */
-    private function getWorkflowsWithTemplate(array $workflows = array(), $template='')
-    {
-        $templateWorkflows = array();
-        foreach ($workflows as $workflow) {
-            if (isset($workflow['template'])) {
-                if ($template == $workflow['template']) {
-                    $templateWorkflows[] = $workflow;
-                }
-            }
-        }
-  
-        return $templateWorkflows;
-    }
-
-    /**
-     * Is workflow finished
-     *
-     * @param array $workflow
-     * @return boolean
-     */
-    private function isWorkflowFinished(array $workflow = array())
-    {
-        // TODO: review
-        if ($workflow && isset($workflow['state'])) {
-            if ('SUCCEEDED' === $workflow['state']) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
