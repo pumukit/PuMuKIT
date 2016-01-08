@@ -2,8 +2,8 @@
 
 ## Index
 
-1. (Parameters)[1-parameters]
-2. (Cron tool)[2-cron-tool]
+1. [Parameters](#1-parameters)
+2. [Cron tool](#2-cron-tool)
 
 ## 1. Parameters
 
