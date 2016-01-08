@@ -88,9 +88,9 @@ The recommendation on a production environment is to run commands every day, e.g
 40 23 * * *     /usr/bin/php /var/www/pumukit2/app/console pumukit:opencast:batchimport --env=prod -i 0
 ```
 
-### 2.2. Stop Workflow
+### 2.2. Workflow Stop
 
-The `pumukit:opencast:stop:workflow` console command allows to stop all Opencast succeeded workflows of
+The `pumukit:opencast:workflow:stop` console command allows to stop all Opencast succeeded workflows of
 a removed media package.
 
 If the `delete_archive_mediapackage` parameter is set to true, there is no need to add this command to
@@ -106,5 +106,5 @@ The recommendation on a development environment is to run commands every minute.
 The recommendation on a production environment is to run commands every day, e.g.: every day at time 23:40.
 
 ```
-40 23 * * *     /usr/bin/php /var/www/pumukit2/app/console pumukit:opencast:stop:workflow --env=prod
+40 23 * * *     /usr/bin/php /var/www/pumukit2/app/console pumukit:opencast:workflow:stop --env=prod
 ```
