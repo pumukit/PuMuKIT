@@ -24,7 +24,7 @@ class PaellaRepositoryController extends Controller
         $serializer = $this->get('serializer');
         $picService = $this->get('pumukitschema.pic');
         $pic = $picService->getFirstUrlPic($mmobj, true, false);
-        
+
         $data = array();
         $data['streams'] = array();
 
@@ -38,7 +38,7 @@ class PaellaRepositoryController extends Controller
                                    'preview' => $pic);
         }
 
-        
+
         $data['metadata'] = array('title' => $mmobj->getTitle(),
                                   'description' => $mmobj->getDescription(),
                                   'duration' => 0);
@@ -68,8 +68,12 @@ class PaellaRepositoryController extends Controller
     {
         $tracks = array();
         if($mmobj->getProperty('opencast')) {
-            $tracks[] = $mmobj->getFilteredTrackWithTags(array('presenter/delivery'));
-            $tracks[] = $mmobj->getFilteredTrackWithTags(array('presentation/delivery'));
+            if($track= $mmobj->getFilteredTrackWithTags(array('presenter/delivery')))
+                $tracks[] = $track;
+
+
+            if($track = $mmobj->getFilteredTrackWithTags(array('presentation/delivery')))
+                $tracks[] = $track;
         }
         else {
             $tracks[] = $mmobj->getFilteredTrackWithTags(array('display'));
@@ -77,4 +81,5 @@ class PaellaRepositoryController extends Controller
 
         return $tracks;
     }
+
 }
