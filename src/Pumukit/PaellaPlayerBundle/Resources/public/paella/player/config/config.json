@@ -36,8 +36,8 @@
     "data": {
         "enabled": true,
         "dataDelegates": {
-            "default": "MHAnnotationsDefaultService",
-            "trimming": "MHAnnotationsTrimmingService",
+            "default": "MHAnnotationServiceDefaultDataDelegate",
+            "trimming": "MHAnnotationServiceTrimmingDataDelegate",
             "userInfo": "UserDataDelegate"
         }
     },
