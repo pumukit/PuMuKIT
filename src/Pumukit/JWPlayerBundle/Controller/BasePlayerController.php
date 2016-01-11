@@ -19,7 +19,7 @@ class BasePlayerController extends BasePlayerControllero
 {
     /**
      * @Route("/videoplayer/{id}", name="pumukit_videoplayer_index" )
-     * @Template()
+     * @Template("PumukitJWPlayerBundle:JWPlayer:index.html.twig")
      */
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
     {
