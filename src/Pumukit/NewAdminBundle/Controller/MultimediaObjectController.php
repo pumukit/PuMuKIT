@@ -308,7 +308,9 @@ class MultimediaObjectController extends SortableAdminController
         $method = $request->getMethod();
         if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
             $formPub->submit($request, !$request->isMethod('PATCH'))->isValid()) {
-            $resource = $this->updateTags($request->get('pub_channels', null), "PUCH", $resource);
+            if (!$notChangePubChannel) {
+                $resource = $this->updateTags($request->get('pub_channels', null), "PUCH", $resource);
+            }
             $resource = $this->updateTags($request->get('pub_decisions', null), "PUDE", $resource);
 
             $this->domainManager->update($resource);
@@ -449,7 +451,7 @@ class MultimediaObjectController extends SortableAdminController
           }
           foreach ($checkedTags as $cod => $checked) {
             $tag = $this->get('pumukitschema.factory')->getTagsByCod($cod, false);
-              $resource->addTag($tag);
+            $resource->addTag($tag);
           }
         } else {
             foreach ($resource->getTags() as $tag) {
