@@ -12,13 +12,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\WebTVBundle\Controller\PlayerController;
 
+use Pumukit\BasePlayerBundle\Controller\BasePlayerController as BasePlayerControllero;
 
-class PaellaPlayerController extends PlayerController
+class BasePlayerController extends BasePlayerControllero
 {
     /**
-     * @Route("/paellavideo/{id}", name="pumukit_paellaplayer_index" )
+     * @Route("/videoplayer/{id}", name="pumukit_videoplayer_index" )
      * @Template()
      */
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
