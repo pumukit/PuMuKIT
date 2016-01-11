@@ -1,3 +1,11 @@
+{% if 0 == permissionprofiles|length%}
+  {% set range = 1..9 %}
+{% elseif (permissionprofiles|length - (permissionprofiles.getMaxPerPage() * (permissionprofiles.getCurrentPage() - 1))) < (permissionprofiles.maxPerPage) %}
+  {% set range = (permissionprofiles|length - (permissionprofiles.getMaxPerPage() * (permissionprofiles.getCurrentPage() - 1)))..(permissionprofiles.maxPerPage-1) %}
+{% else %}
+  {% set range = [] %}
+{% endif %}
+
 <div class="table-responsive well">
   {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PERMISSION_PROFILES')) %}
     <div class="row">
@@ -22,6 +30,9 @@
           <th width="8%">{{ permissionprofile.name }}</th>
           {% else %}
           <th>{% trans %}There are no user permissions with those values.{% endtrans %}</th>
+          {% endfor %}
+          {% for i in range %}
+          <th></th>
           {% endfor %}
         </tr>
       </thead>
@@ -71,6 +82,26 @@
         {% endif %}
         {% endfor %}
       </tbody>
+      <tfoot>
+        <tr>
+          <th colspan="25">
+            <div class="col-md-8">
+              {{ permissionprofiles.getNbResults }}
+              {% transchoice permissionprofiles.getNbResults %}
+                {0} permissionprofiles|{1} permissionprofile|]1,Inf] permissionprofiles
+	            {% endtranschoice %}
+	            {% if app.session.get('admin/permissionprofile/criteria')|length != 0%}
+                <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
+	            {% endif %}
+            </div>
+            <div class="col-md-4 text-right">
+              <div class="pagerfanta">
+                {{ pagerfanta(permissionprofiles, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_permissionprofile_index"}) }}
+              </div>
+            </div>
+          </th>
+        </tr>
+      </tfoot>
     </table>
     </form>
   {% else %}
