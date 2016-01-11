@@ -151,6 +151,16 @@ class MultimediaObjectController extends SortableAdminController
         $isPublished = null;
         $playableResource = null;
 
+        $router = $this->get('router');
+
+        try {
+            $activeEditor = $router->generate('pumukit_videoeditor_index', array('id'=> $resource->getId()));
+            $activeEditor = true;
+        }
+        catch (\Exception $e){
+            $activeEditor = false;
+        }
+
         return array(
                      'mm'            => $resource,
                      'form_meta'     => $formMeta->createView(),
@@ -163,6 +173,7 @@ class MultimediaObjectController extends SortableAdminController
                      'jobs'          => $jobs,
                      'not_master_profiles' => $notMasterProfiles,
                      'template' => $template,
+                     'active_editor' => $activeEditor,
                      );
     }
 
