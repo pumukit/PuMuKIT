@@ -4,6 +4,7 @@ namespace Pumukit\EncoderBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Filesystem\Filesystem;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\EncoderBundle\Services\PicExtractorService;
 
@@ -100,9 +101,8 @@ class PicExtractorServiceTest extends WebTestCase
                 unlink($file);
             }
         }
-        rmdir($dirMmId);
-        rmdir($dirVideo);
-        rmdir($dirSeriesId);
-        rmdir($dirSeries);
+
+        $fs = new Filesystem();
+        $fs->remove(array($dirMmId, $dirVideo, $dirSeriesId, $dirSeries));
     }
 }
