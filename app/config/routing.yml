@@ -3,6 +3,11 @@ pumukit_paella_player:
     type:     annotation
     prefix:   /
 
+pumukit_base_player:
+    resource: "@PumukitBasePlayerBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 pumukit_stats:
     resource: "@PumukitStatsBundle/Controller/"
     type:     annotation
