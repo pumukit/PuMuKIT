@@ -34,7 +34,7 @@ class BasePlayerController extends BasePlayerControllero
 
         $this->dispatchViewEvent($multimediaObject, $track);
 
-        if($track && $track->containsTag("download")) {       
+        if($track && $track->containsTag("download")) {
             return $this->redirect($track->getUrl());
         }
 
@@ -42,5 +42,26 @@ class BasePlayerController extends BasePlayerControllero
                      'intro' => $this->getIntro($request->query->get('intro')),
                      'multimediaObject' => $multimediaObject,
                      'track' => $track, );
+    }
+
+    /**
+     * @Route("/videoplayer/opencast/{id}", name="pumukit_videoplayer_opencast" )
+     * @Template("PumukitJWPlayerBundle:JWPlayer:index_opencast.html.twig")
+     */
+    public function opencastAction(MultimediaObject $multimediaObject, Request $request)
+    {
+        //Detect if it's mobile: (Refactor this using javascript... )
+        $userAgent = $this->getRequest()->headers->get('user-agent');
+        $mobileDetectorService = $this->get('mobile_detect.mobile_detector');
+        $userAgentParserService = $this->get('pumukit_web_tv.useragent_parser');
+        $isMobileDevice = ($mobileDetectorService->isMobile($userAgent) || $mobileDetectorService->isTablet($userAgent));
+        $isOldBrowser = $userAgentParserService->isOldBrowser($userAgent);
+
+        $this->dispatchViewEvent($multimediaObject);
+
+        return array('intro' => $this->getIntro($request->query->get('intro')),
+                     'multimediaObject' => $multimediaObject,
+                     'is_mobile_device' => $isMobileDevice,
+                     'is_old_browser' => $isOldBrowser);
     }
 }
