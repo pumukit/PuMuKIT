@@ -57,21 +57,21 @@ class Annotation
     /**
      * @var int $inpoint
      *
-     * @MongoDB\int
+     * @MongoDB\Int
      */
     private $inpoint;
     
     /**
      * @var int $outpoint
      *
-     * @MongoDB\int
+     * @MongoDB\Int
      */
     private $outpoint;
 
     /**
      * @var int $outpoint
      *
-     * @MongoDB\int
+     * @MongoDB\Int
      */
     private $length;
 
