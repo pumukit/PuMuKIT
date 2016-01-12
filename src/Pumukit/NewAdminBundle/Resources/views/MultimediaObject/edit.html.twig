@@ -29,6 +29,11 @@
       <li>
         <a href="#mediaMm" aria-controls="mediaMm" role="tab" data-toggle="tab">{% trans %}Multimedia{% endtrans %}</a>
       </li>
+      {% if active_editor %}
+        <li>
+          <a href="#editorMm" aria-controls="editorMm" role="tab" data-toggle="tab">{% trans %}Media Edition{% endtrans %}</a>
+        </li>
+      {% endif %}
     </ul>
   
     <div class="tab-content">
@@ -50,6 +55,11 @@
       <div id="mediaMm" role="tabpanel" class="tab-pane">
         {% include 'PumukitNewAdminBundle:MultimediaObject:updatemedia.html.twig' with {'mm': mm, 'jobs': jobs} %}
       </div>
+      {% if active_editor %}
+        <div id="editorMm" role="tabpanel" class="tab-pane">
+          {% include 'PumukitNewAdminBundle:MultimediaObject:editor.html.twig' with {'mm': mm, 'jobs': jobs} %}
+        </div>
+      {% endif %}
     </div>
   </div>
   {% else %}

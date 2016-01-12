@@ -100,9 +100,12 @@ class MultimediaObjectController extends SortableAdminController
 
       $roles = $this->get('pumukitschema.person')->getRoles();
 
+      $activeEditor = $this->checkHasEditor();
+
       return array(
                    'mm' => $data,
-                   'roles' => $roles
+                   'roles' => $roles,
+                   'active_editor' => $activeEditor,
                    );
     }
 
@@ -151,6 +154,8 @@ class MultimediaObjectController extends SortableAdminController
         $isPublished = null;
         $playableResource = null;
 
+        $activeEditor = $this->checkHasEditor();
+
         return array(
                      'mm'            => $resource,
                      'form_meta'     => $formMeta->createView(),
@@ -163,6 +168,7 @@ class MultimediaObjectController extends SortableAdminController
                      'jobs'          => $jobs,
                      'not_master_profiles' => $notMasterProfiles,
                      'template' => $template,
+                     'active_editor' => $activeEditor,
                      );
     }
 
@@ -748,5 +754,15 @@ class MultimediaObjectController extends SortableAdminController
     {
         $event = new MultimediaObjectEvent($multimediaObject);
         $this->get('event_dispatcher')->dispatch(SchemaEvents::MULTIMEDIAOBJECT_UPDATE, $event);
+    }
+
+    //Workaround function to check if the VideoEditorBundle is installed.
+    protected function checkHasEditor()
+    {
+        $router = $this->get('router');
+        $routes = $router->getRouteCollection()->all();
+        $activeEditor = array_key_exists('pumukit_videoeditor_index', $routes);
+
+        return $activeEditor;
     }
 }

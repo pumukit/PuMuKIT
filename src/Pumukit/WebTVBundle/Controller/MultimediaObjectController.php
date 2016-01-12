@@ -40,8 +40,6 @@ class MultimediaObjectController extends PlayerController
             throw $this->createNotFoundException();
         }
 
-        $this->dispatchViewEvent($multimediaObject, $track);
-
         if ($track->containsTag('download')) {
             return $this->redirect($track->getUrl());
         }
@@ -61,25 +59,7 @@ class MultimediaObjectController extends PlayerController
      */
     public function iframeAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $response = $this->testBroadcast($multimediaObject, $request);
-        if ($response instanceof Response) {
-            return $response;
-        }
-
-        $track = $request->query->has('track_id') ?
-        $multimediaObject->getTrackById($request->query->get('track_id')) :
-        $multimediaObject->getFilteredTrackWithTags(array('display'));
-
-        $this->dispatchViewEvent($multimediaObject, $track);
-
-        if($track && $track->containsTag("download")) {       
-            return $this->redirect($track->getUrl());
-        }
-
-        return array('autostart' => $request->query->get('autostart', 'true'),
-        'intro' => $this->getIntro($request->query->get('intro')),
-        'multimediaObject' => $multimediaObject,
-        'track' => $track, );
+        return $this->forward('PumukitBasePlayerBundle:BasePlayer:index', array('request' => $request, 'multimediaObject' => $multimediaObject));
     }
 
     /**
