@@ -111,14 +111,9 @@ class SearchController extends Controller
         ->getQuery()->getSingleResult();
         $minRecordDate = $firstMmobj->getRecordDate()->format('m/d/Y');
         $maxRecordDate = date('m/d/Y');
-        // --- Query to get years for the 'Year' select form. ---
-        $searchYears = array();
-        $maxYear = date('Y');
-        $tempYear = $firstMmobj->getRecordDate()->format('Y');
-        while($tempYear <= $maxYear) {
-            $searchYears[] = $tempYear;
-            $tempYear++;
-        }
+        // --- Get years array ---
+        $searchYears = $this->getYears();
+
         // -- Init Number Cols for showing results ---
         $numberCols = $this->container->getParameter('columns_objs_search');
 
@@ -274,4 +269,19 @@ class SearchController extends Controller
         return $queryBuilder;
     }
     // ========== END queryBuilder functions =========
+
+    private function getYears()
+    {
+        $mmObjColl = $this->get('doctrine_mongodb')->getManager()->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+        $pipeline = array(
+            array('$group' => array('_id' => array('$year' => '$record_date'))),
+            array('$sort' => array('_id' => 1)),
+        );
+        $yearResults = $mmObjColl->aggregate($pipeline);
+        $years = array();
+        foreach($yearResults as $year) {
+            $years[] = $year['_id'];
+        }
+        return $years;
+    }
 }
