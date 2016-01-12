@@ -9,6 +9,7 @@
         <service id="pumukit_stats.log" class="Pumukit\StatsBundle\Services\LogService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager" />
             <argument type="service" id="request_stack" />
+            <argument type="service" id="security.token_storage"/>
             <tag name="kernel.event_listener" event="multimediaobject.view" method="onMultimediaObjectViewed" />
         </service>
 

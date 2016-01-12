@@ -14,6 +14,7 @@ class LogServiceTest extends WebTestCase
     private $dm;
     private $repo;    
     private $factoryService;
+    private $tokenStorage;
 
     public function setUp()
     {
@@ -26,6 +27,8 @@ class LogServiceTest extends WebTestCase
             ->getRepository('PumukitStatsBundle:ViewsLog');
         $this->factoryService = $kernel->getContainer()
             ->get('pumukitschema.factory');
+        $this->tokenStorage = $kernel->getContainer()
+          ->get('security.token_storage');
         
         $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog')
             ->remove(array());
@@ -65,7 +68,7 @@ class LogServiceTest extends WebTestCase
     public function testonMultimediaObjectViewed()
     {
         $requestStack = $this->createMockRequestStack();
-        $service = new LogService($this->dm, $requestStack);
+        $service = new LogService($this->dm, $requestStack, $this->tokenStorage);
 
         $event = $this->createEvent();
         $service->onMultimediaObjectViewed($event);
@@ -75,7 +78,7 @@ class LogServiceTest extends WebTestCase
     public function testonMultimediaObjectWithoutTrackViewed()
     {
         $requestStack = $this->createMockRequestStack();
-        $service = new LogService($this->dm, $requestStack);
+        $service = new LogService($this->dm, $requestStack, $this->tokenStorage);
 
         $event = $this->createEvent(false);
         $service->onMultimediaObjectViewed($event);

@@ -3,6 +3,7 @@
 namespace Pumukit\StatsBundle\Services;
 
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\StatsBundle\Document\ViewsLog;
 use Pumukit\WebTVBundle\Event\ViewedEvent;
@@ -11,12 +12,13 @@ class LogService
 {
     private $dm;
     private $requestStack;
+    private $tokenStorage;
 
-    public function __construct(DocumentManager $documentManager, RequestStack $requestStack)
+    public function __construct(DocumentManager $documentManager, RequestStack $requestStack, TokenStorage $tokenStorage)
     {
         $this->dm = $documentManager;
         $this->requestStack = $requestStack;
-        
+        $this->tokenStorage = $tokenStorage;
     }
 
 
@@ -29,9 +31,23 @@ class LogService
                             $req->headers->get('referer'),
                             $event->getMultimediaObject()->getId(),
                             $event->getMultimediaObject()->getSeries()->getId(),
-                            $event->getTrack() ? $event->getTrack()->getId() : null);
+                            $event->getTrack() ? $event->getTrack()->getId() : null,
+                            $this->getUser());
 
         $this->dm->persist($log);
         $this->dm->flush();        
     }
+
+
+    private function getUser()
+    {
+        if (null !== $token = $this->tokenStorage->getToken()) {
+            if (is_object($user = $token->getUser())) {
+                return $user->getUsername();
+            }
+        }
+
+        return null;
+    }
+
 }

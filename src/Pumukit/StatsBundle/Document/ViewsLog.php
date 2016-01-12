@@ -74,7 +74,14 @@ class ViewsLog
      */
     private $track;
 
-    public function __construct($url, $ip, $userAgent, $referer, $multimediaObject, $series, $track)
+    /**
+     * @var string $user
+     *
+     * @MongoDB\String
+     */
+    private $user;
+
+    public function __construct($url, $ip, $userAgent, $referer, $multimediaObject, $series, $track, $user = null)
     {
         $this->date = new \DateTime("now");
         $this->url = $url;        
@@ -84,6 +91,7 @@ class ViewsLog
         $this->multimediaObject = $multimediaObject;
         $this->series = $series;
         $this->track = $track;
+        $this->user = $user;
     }
 
     /**
@@ -270,5 +278,27 @@ class ViewsLog
     public function getTrack()
     {
         return $this->track;
+    }
+
+    /**
+     * Set user
+     *
+     * @param string $user
+     * @return self
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return string $user
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
