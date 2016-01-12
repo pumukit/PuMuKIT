@@ -11,6 +11,7 @@ use Symfony\Component\Intl\Intl;
 use Symfony\Component\Finder\Finder;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 
 /**
@@ -60,6 +61,12 @@ class DefaultController extends Controller
             }
         }
 
+        if (false === $this->get('security.authorization_checker')->isGranted(Permission::ACCESS_INBOX)) {
+            $formData['series']['id'] = $id;
+            $formData['type']['option'] = 'single';
+            return $this->redirect($this->generateUrl('pumukitwizard_default_option', array('pumukitwizard_form_data' => $formData)));
+        }
+
         return array(
                      'series_id' => $id,
                      'form_data' => $formData,
@@ -74,7 +81,7 @@ class DefaultController extends Controller
     {
         $formData = $request->get('pumukitwizard_form_data');
 
-        if ('multiple' == $formData['type']['option']){
+        if (('multiple' == $formData['type']['option']) && (false !== $this->get('security.authorization_checker')->isGranted(Permission::ACCESS_INBOX))) {
             return $this->redirect($this->generateUrl('pumukitwizard_default_track', array('pumukitwizard_form_data' => $formData)));
         }
 

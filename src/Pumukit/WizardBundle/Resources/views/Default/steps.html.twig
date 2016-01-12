@@ -1,3 +1,4 @@
+{% set access_inbox = (app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX'))) %}
 <div class="row">
   <div class="col-md-12">
     <ul id="mainNav" class="nav nav-pills nav-wizard">
@@ -7,26 +8,28 @@
         </a>
         <div class="nav-arrow"></div>
       </li>
+      {% if access_inbox %}
       <li class="{% if not show_series %}first-child-pumukit{% endif %} {% if (step == 1) %}active{% elseif ((step == 2) or ((step == 3) and ('multiple' == option))) %}lastdone{% elseif (step > 2) %}done{% elseif (step < 1) %}disabled{% endif %}">
         <a {{ ('single' == option)?'id="pumukitwizard_multimediaobject_previous"':'id="pumukitwizard_track_previous"' }} href="#" style="float:left;clear:left;">{% trans %}Step 2: Type{% endtrans %}<br/>
           {% trans %}Choose option type{% endtrans %}
         </a>
         <div class="nav-arrow"></div>
       </li>
-      <li class="{% if (step == 2) and ('single' == option) %}active{% elseif (step == 3) and ('single' == option) %}lastdone{% elseif (step > 3) and ('single' == option) %}done{% elseif (step < 2) or ('multiple' == option) %}disabled{% endif %}">
-        <a id="pumukitwizard_track_previous" href="#">{% trans %}Step 3: Metadata{% endtrans %}<br/>
+      {% endif %}
+      <li class="{% if not show_series and not access_inbox%}first-child-pumukit{% endif %} {% if (step == 2) and ('single' == option) %}active{% elseif (step == 3) and ('single' == option) %}lastdone{% elseif (step > 3) and ('single' == option) %}done{% elseif (step < 2) or ('multiple' == option) %}disabled{% endif %}">
+        <a id="pumukitwizard_track_previous" href="#">{% trans %}Step{% endtrans %} {{ access_inbox ? '3':'2' }}: {% trans %}Metadata{% endtrans %}<br/>
           {% trans %}Insert the data for the Multimedia Object{% endtrans %}
         </a>
         <div class="nav-arrow"></div>
       </li>
       {% if  ('single' == option) %}
       <li class="{% if (step == 3) %}active{% elseif (step > 2) %}done{% elseif (step < 3) %}disabled{% endif %}">
-        <a href="#">{% trans %}Step 4: File{% endtrans %}<br/>
+        <a href="#">{% trans %}Step{% endtrans %} {{ access_inbox ? '4':'3' }}: {% trans %}File{% endtrans %}<br/>
           {% trans %}Upload the multimedia file{% endtrans %}
         </a>
         <div class="nav-arrow"></div>
       </li>
-      {% elseif 'multiple' == option %}
+      {% elseif ('multiple' == option) and access_inbox %}
       <li class="{% if (step == 3) %}active{% elseif (step > 2) %}done{% elseif (step < 3) %}disabled{% endif %}">
         <a href="#">{% trans %}Step 3: Files{% endtrans %}<br/>
           {% trans %}Upload the multimedia file{% endtrans %}
