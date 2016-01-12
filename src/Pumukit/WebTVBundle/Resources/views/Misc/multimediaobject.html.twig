@@ -10,31 +10,21 @@
         <img alt="serial_pic" class="serial thumbnailimg" src="{{ object|first_url_pic(true) }}"/>
         <div class="thumbnailholder" ></div>
       </div>
-      <div class="info">
-        <div class="title" title="{{object.description}}">
-            <div class="ellipsedtext-parent">
-                <div class="ellipsedtext-leftmargin"></div>
-                <div class="ellipsedtext-testwrapper">
-                    <div class="ellipsedtext-text">
-                        <div class="ellipsedtext-textstopper"></div>
-                        <span class="mmobj_thumbnail_title">{{object.title | default('No title')|trans}}</span>
-                        <div class="ellipsedtext-endtext"></div>
-                    </div>
-                </div>
-                <div class="ellipsedtext-overflowdetector">
-                    <div class="ellipsedtext-ellipse">...</div>
-                </div>
-            </div>
-        </div>
-        <div class="subtitle">
+      <div class="info-wrapper">
+        <div class="info">
+          <div class="title" title="{{object.description}}">
+            <span class="mmobj_thumbnail_title">{{object.title | default('No title')|trans}}</span>
+          </div>
+          <div class="subtitle">
             {% if object.subtitle is not empty %}
-            <abbr title="{{object.subtitle}}">{{object.subtitle}}</abbr>
+              <abbr title="{{object.subtitle}}">{{object.subtitle}}</abbr>
             {% else %}
-            <abbr title="{{object.series.title}}">{{object.series.title}}</abbr>
+              <abbr title="{{object.series.title}}">{{object.series.title}}</abbr>
             {% endif %}
-        </div>
-        <div class="date mmobj">
-          {{object.recordDate|date("d/m/Y")}}
+          </div>
+          <div class="date mmobj">
+            {{object.recordDate|date("d/m/Y")}}
+          </div>
         </div>
       </div>
     </div>

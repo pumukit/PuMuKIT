@@ -4,19 +4,6 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <parameters>
-        <parameter key="pumukit_web_tv.breadcrumbs_all_title">All</parameter>
-        <parameter key="pumukit_web_tv.breadcrumbs_all_route">pumukit_webtv_medialibrary_index</parameter>
-        <parameter key="breadcrumbs_home_title">Home</parameter>
-        <parameter key="pumukit_web_tv.default_pic">/bundles/pumukitwebtv/images/no_pic.jpg</parameter>
-        <parameter key="pumukit_web_tv.media_library.filter_tags" type="collection">
-            <parameter>DIRECTRIZ</parameter>
-            <parameter>UNESCO</parameter>
-        </parameter>
-        <parameter key="pumukit_web_tv.linktagtosearch">false</parameter>
-        <parameter key="pumukit_web_tv.breadcrumbs_parentweb">null</parameter>
-    </parameters>
-
     <services>
         <service id="pumukit_web_tv.link_service" class="Pumukit\WebTVBundle\Services\LinkService">
             <argument type="service" id="router" />

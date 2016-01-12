@@ -21,14 +21,8 @@ class ByTagController extends Controller
    */
   public function multimediaObjectsAction(Tag $tag, Request $request)
   {
-      $numberCols = 2;
-      if( $this->container->hasParameter('columns_objs_bytag')){
-          $numberCols = $this->container->getParameter('columns_objs_bytag');
-      }
-      $limit = 10;
-      if ($this->container->hasParameter('limit_objs_bytag')){
-        $limit = $this->container->getParameter('limit_objs_bytag');
-      }
+      $numberCols = $this->container->getParameter('columns_objs_bytag');
+      $limit = $this->container->getParameter('limit_objs_bytag');
 
       $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
 
@@ -61,10 +55,7 @@ class ByTagController extends Controller
   public function seriesAction(Tag $tag, Request $request)
   {
 
-      $numberCols = 2;
-      if( $this->container->hasParameter('columns_objs_bytag')){
-          $numberCols = $this->container->getParameter('columns_objs_bytag');
-      }
+      $numberCols = $this->container->getParameter('columns_objs_bytag');
       $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
       $series = $repo->createBuilderWithTag($tag, array('public_date' => +1));
 
@@ -73,7 +64,7 @@ class ByTagController extends Controller
 
       $title = $tag->getTitle();
       $title = $this->get('translator')->trans('Series with tag: %title%', array('%title%' => $title));
-      
+
       return array('title' => $title,
                  'objects' => $pagerfanta,
                  'tag' => $tag,

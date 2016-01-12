@@ -44,14 +44,10 @@ class PlayerController extends Controller
 
     protected function getIntro($queryIntro = false)
     {
-        $hasIntro = $this->container->hasParameter('pumukit2.intro');
+        $intro = $this->container->getParameter('pumukit2.intro');
 
         if ($queryIntro && filter_var($queryIntro, FILTER_VALIDATE_URL)) {
             $intro = $queryIntro;
-        } elseif ($hasIntro) {
-            $intro = $this->container->getParameter('pumukit2.intro');
-        } else {
-            $intro = false;
         }
 
         return $intro;

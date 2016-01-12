@@ -5,16 +5,20 @@
 {% set default_content_background = default_content_background | default("#fff") %}
 
 {% set default_contrast_font = default_contrast_font | default("#fff") %}
-{% set default_light_font = default_light_font | default("#ed6d00") %}
+{% set default_light_font = default_light_font | default("#858585") %}
 {% set default_content_font = default_content_font | default("#111") %}
 {% set default_content_link_font = default_content_link_font | default("#222") %}
 {% set default_content_link_selected_font = default_content_link_selected_font | default("#444") %}
 
 {% set breadcrumbs_separator = breadcrumbs_separator | default('»') %}
-{% set content_max_width = content_max_width | default("1400px") %}
-{% set menu_stats = menu_stats | default(true) %}
+{% set content_max_width = content_max_width | default("1200px") %}
 {% set menu_padding = menu_padding | default("10px 10px 10px 30px") %}
 {% set page_background = page_background | default("#ddd") %}
+
+{# DEFAULT ASPECT RATIO: 12:9#}
+{% set thumbnail_width = thumbnail_width|default(152) %}
+{% set thumbnail_height = thumbnail_height|default(114) %}
+{% set thumbnail_border = thumbnail_border|default(2) %}
 
 {# DEPENDABLE: If not set they will use other variables as default #}
 {% set breadcrumbs_background = breadcrumbs_background | default(default_contrast_background) %}
@@ -23,16 +27,16 @@
 {% set breadcrumbs_max_width = breadcrumbs_max_width | default(content_max_width) %}
 {% set content_background = content_background | default(default_content_background) %}
 {% set header_max_width = header_max_width | default(content_max_width) %}
-{% set header_background = header_background | default(default_light_background) %}
-{% set label_background = label_background | default(default_contrast_background) %}
-{% set label_font = label_font | default(default_contrast_font) %}
+{% set header_background = header_background | default(default_content_background) %}
+{% set label_background = label_background | default('#8A8A8A') %}
+{% set label_font = label_font | default('#fff') %}
 {% set menu_background = menu_background | default(default_light_background) %}
 {% set menu_font_color = menu_font_color | default(default_light_font) %}
 {% set menu_selected_background = menu_selected_background | default(default_light_font) %}
 {% set menu_selected_font_color = menu_selected_font_color | default(default_light_background) %}
 {% set mmobj_font_color = mmobj_font_color | default(default_content_font) %}
 {% set mmobj_selected_font_color = mmobjs_selected_font_color | default(default_content_font) %}
-{% set mmobj_selected_background = mmobj_selected_background | default(page_background) %}
+{% set mmobj_selected_background = mmobj_selected_background | default('#ededed') %}
 {% set mmobj_serie_background = mmobj_serie_background | default(mmobj_selected_background) %}
 {% set mmobj_serie_font = mmobj_serie_font | default(mmobj_selected_font_color) %}
 {% set navbar_background = navbar_background | default(default_light_background) %}
@@ -40,6 +44,11 @@
 {% set panel_default_background = panel_default_background | default(default_light_background) %}
 {% set panel_default_font = panel_default_font | default(default_light_font) %}
 {% set footer_max_width = footer_max_width | default(content_max_width) %}
+{% set panel_heading_background = panel_heading_background | default('#ededed') %}
+{% set panel_heading_font = panel_heading_font | default('#000') %}
+
+
+{% set big_breadcrumbs = big_breadcrumbs | default(true) %}
 {# END SET VARIABLES#}
 body {
     background: {{ page_background }};
@@ -60,7 +69,6 @@ ul, ol {
 h1 {
     font-size: 40px;
     font-weight: bold;
-    border-bottom: 4px solid {{ default_content_font }};
     color: {{ default_content_font }};
 }
 h2 {
@@ -74,16 +82,39 @@ h4 {
     font-weight: bold;
     font-size: 1.2em;
 }
+footer {
+    background: black;
+    color: grey;
+}
+
 /*END BASE CSS*/
+.footer-content {
+    margin: 0 auto;
+    max-width: {{footer_max_width}};
+    padding: 20px;
+}
 p.disabled {
     color: grey;
 }
 /*BOOTSTRAP OVERRIDE*/
 .label {
     margin: 2px;
+    background: {{ label_background }};
+    color: {{ label_font }};
+    border-radius: 5px;
+    padding: 5px;
 }
 .label a{
-    color:white;
+    background: {{ label_background }};
+    color: {{ label_font }};
+}
+.label a:hover{
+    background: grey;
+    color: #ececec;
+}
+.label:hover{
+    background: grey;
+    color: #ececec;
 }
 .breadcrumb {
     color: {{ breadcrumbs_font_color }};
@@ -106,7 +137,10 @@ p.disabled {
 .breadcrumbs_color {
     background: {{ breadcrumbs_back_background }};
 }
-{% if big_breadcrumbs is defined %}
+{% if big_breadcrumbs is defined and big_breadcrumbs %}
+.title-for-crumbs {
+    display: none;
+}
 @media (max-width: 1199px) {
 .title-for-crumbs {
 
@@ -119,7 +153,7 @@ p.disabled {
 }
 .breadcrumb > li:last-of-type {
     display: block;
-    font-size: 3em;
+    font-size: 3.8em;
     content: "";
     line-height: 100%;
 }
@@ -136,12 +170,13 @@ p.disabled {
     padding: 0px;
 
 }
+.breadcrumb li:first-child {
+    padding-bottom: 10px;
+}
+
 {% endif %}
 
-.label {
-    background: {{ label_background }};
-    color: {{ label_font }};
-}
+
 .navbar {
     margin-bottom: 0px;
 }
@@ -159,8 +194,8 @@ p.disabled {
     border: none;
 }
 .panel-default > .panel-heading {
-    background: {{ panel_default_background }};
-    color: {{ panel_default_font }};
+    background: {{ panel_heading_background }};
+    color: {{ panel_heading_font }};
 }
 
 /*END BOOTSTRAP OVERRIDE*/
@@ -188,12 +223,12 @@ p.disabled {
     font-size: 1.2em;
     position: absolute;
     bottom: 10%;
-    left: 150px;
+    left: {{thumbnail_width+20}}px;
     position: absolute;
     text-align: left;
 }
 .date.serial {
-    left: 160px;
+    left: {{thumbnail_width+30}}px;
     bottom: 9%;
     position: absolute;
     font-size: 1.2em;
@@ -205,10 +240,13 @@ p.disabled {
     min-height: 80px;
     padding: 15px 0px;
 }
+.info.serial {
+    padding-left: 20px;
+}
 .info {
     float: left;
     padding-left: 10px;
-    width: 68%;
+    width: 100%;
     min-height: 60px;
     overflow: hidden;
     display: inline;
@@ -216,12 +254,26 @@ p.disabled {
 }
 .info .title{
     font-weight: bold;
-    font-size: 0.9em;
-    height: 2.5em;
+    font-size: 1em;
+    max-height: 2.7em;
+    word-wrap: break-word;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;   
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
 }
-.info.serial {
-    position: absolute;
-    left: 150px;
+.info .subtitle {
+    font-weight: 400;
+    margin: 5px 5px;
+    font-size: 0.9em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.info-wrapper {
+    overflow: hidden;
 }
 .language_select_wrapper {
     float: right;
@@ -233,11 +285,9 @@ p.disabled {
 }
 
 .main-content {
-    margin: 0 auto;
+    overflow: hidden;
     background: {{ content_background }};
-    min-height: 700px;
-    max-width: {{ content_max_width }};
-    padding-bottom: 20px;
+    min-height: 600px;
 }
 .menu {
     background: {{ menu_background }};
@@ -246,7 +296,6 @@ p.disabled {
 .mobile_header {
     background: {{ header_background }};
 }
-/**/
 body.opencast-layout .main-content {
     max-width: 100%;
 }
@@ -264,7 +313,11 @@ body.opencast-layout .breadcrumb_wrapper {
 .number-videos.serial {
     position: absolute;
     bottom: 8%;
-    right: 5%;
+    right: 8%;
+    color: white;
+    font-size: 0.9em;
+    background: rgba(0,0,0,0.65);
+    padding: 1px 5px 1px 5px;
 }
 .parent-centering {
     text-align: center;
@@ -286,7 +339,7 @@ body.opencast-layout .breadcrumb_wrapper {
     background-size: contain;
     width: 28px;
     height: 28px;
-    /*overflow: auto;*/
+    overflow: auto;
 }
 .play_icon.small {
     margin: 5px;
@@ -300,11 +353,11 @@ body.opencast-layout .breadcrumb_wrapper {
 }
 .pumukit_mmobj {
     color: {{ mmobj_font_color }};
-    height: 120px;
+    height: {{thumbnail_height + 20}}px;
     overflow: hidden;
     margin: 10px 0px;
     padding: 5px;
-    border-radius: 10px;
+/*    border-radius: 10px;*/
     position: relative;
 }
 .pumukit_mmobj a{
@@ -321,8 +374,8 @@ body.opencast-layout .breadcrumb_wrapper {
     color: {{ mmobj_selected_font_color }};
 }
 .pumukit_album {
-    margin:2px 20px 2px 2px;
     position: relative;
+    float: left;
 }
 .row.pumukit {
     margin: 0 auto;
@@ -347,13 +400,19 @@ body.opencast-layout .breadcrumb_wrapper {
 #search-box:focus {
     border-color: #ccc;
 }
+.search-form {
+    margin: 10px;
+    padding: 10px;
+    background: {{ mmobj_selected_background }};
+    color: {{ mmobj_selected_font_color }};
+}
 .input-group-addon {
     background: white;
 }
 /*Thumbnails*/
 .thumbnail {
-    width: 135px;
-    height: 98px;
+    width: {{thumbnail_width + thumbnail_border*2}}px;
+    height: {{thumbnail_height + thumbnail_border*2}}px;
 }
 .minimmobj {
     overflow: hidden;
@@ -389,7 +448,7 @@ body.opencast-layout .breadcrumb_wrapper {
     border-radius: 0px;
     box-shadow: 1px 1px 2px #666;
     background: #F3F3F3;
-    padding: 4px;
+    padding: {{thumbnail_border}}px;
     z-index: 3;
     position: relative;
 }
@@ -400,14 +459,14 @@ body.opencast-layout .breadcrumb_wrapper {
 }
 .thumbnailwrapper {
     padding-left: 0px;
-    min-width:132px;
+    min-width: 132px;
 }
 .minithumbnail.bodyMm, .thumbnail.bodyMm {
     margin-bottom: 5px;
 }
 .thumbnail img.thumbnailimg{
-    max-width: 120px;
-    max-height: 90px;
+    max-width: {{thumbnail_width}}px;
+    max-height: {{thumbnail_height}}px;
 }
 .minithumbnail img.thumbnailimg{
     max-width: 67px;
@@ -419,9 +478,8 @@ body.opencast-layout .breadcrumb_wrapper {
     vertical-align: middle;
 }
 .thumbnailholder {
-    top: 4px;
-    width: 127px;
-    height: 90px;
+    width: {{thumbnail_width}}px;
+    height: {{thumbnail_height}}px;
 }
 .minithumbnailholder {
     top: 2px;
@@ -430,6 +488,7 @@ body.opencast-layout .breadcrumb_wrapper {
 }
 .minithumbnailholder, .thumbnailholder {
     position: absolute;
+    top: {{thumbnail_border}}px;
     background:#000;
     z-index: -1;
 }
@@ -464,7 +523,9 @@ body.opencast-layout .breadcrumb_wrapper {
     width: 100%;
     vertical-align: middle;
     background: {{ menu_background }}; /* Trick to color the menu's length */
-    min-height: 100%;
+    margin: 0 auto;
+    min-height: 600px;
+    max-width: {{ content_max_width }};
 }
 
 /*CIES*/
@@ -496,11 +557,7 @@ a:hover .cover {
     line-height: 1;
     overflow: hidden;
 }
-.info .subtitle {
-    font-weight: 400;
-    margin: 10px 5px;
-    font-size: 1.2em;
-}
+
 .media-heading.title{
     line-height: 1;
     overflow: hidden;
@@ -574,6 +631,14 @@ a:hover .cover {
     max-height: 400px;
 }
 .powered_by {
+    background: black;
+    color: white;
+}
+.powered_by a{
+    color: white;
+    text-decoration: none; 
+}
+.powered_by div {
     max-width: {{content_max_width }};
     text-align: right;
     margin: 0 auto;
@@ -587,13 +652,8 @@ a:hover .cover {
 }
 .widget.slidebar {
     text-align: left;
-    background: {{menu_background}};
+    padding-top: 20px;
 }
-{% if menu_stats %}
-.widget.slidebar.stats {
-    display: none;
-}
-{% endif %}
 .widget.slidebar #total{
     text-align: center;
 }
@@ -607,7 +667,7 @@ a:hover .cover {
     background: {{ menu_selected_background }};
     color: {{ menu_selected_font_color }};
     margin-left: -65px;
-    padding-left: 85px;
+    padding-left: 95px;
     z-index:10;
     transition: background 0.3s ease;
 }
@@ -654,34 +714,29 @@ a:hover .cover {
 .ellipsedtext-ellipse {
     position: absolute;
     top: -1.5em;
-    left: 4520%;
+    left: 4387%;
     z-index: 2;
-    padding: 0 25px 0 15px;
+    padding: 0 20px 0 15px;
     background: rgba(255,255,255,0);
-    background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 32%, rgba(255,255,255,1) 100%);
-    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,255,0)), color-stop(32%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,1)));
-    background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 32%, rgba(255,255,255,1) 100%);
-    background: -o-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 32%, rgba(255,255,255,1) 100%);
-    background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 32%, rgba(255,255,255,1) 100%);
-    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 32%, rgba(255,255,255,1) 100%);
+    background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 30%, rgba(255,255,255,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,255,0)), color-stop(30%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,1)));
+    background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 30%, rgba(255,255,255,1) 100%);
+    background: -o-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 30%, rgba(255,255,255,1) 100%);
+    background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 30%, rgba(255,255,255,1) 100%);
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 30%, rgba(255,255,255,1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=1 );
 }
 
 .pumukit_mmobj:hover .ellipsedtext-ellipse {
     background: rgba(255,255,255,0);
-    background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 40%, {{ mmobj_selected_background }} 100%);
-    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,255,0)), color-stop(40%, {{ mmobj_selected_background }}), color-stop(100%, {{ mmobj_selected_background }}));
-    background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 40%, {{ mmobj_selected_background }} 100%);
-    background: -o-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 40%, {{ mmobj_selected_background }} 100%);
-    background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 40%, {{ mmobj_selected_background }} 100%);
-    background: linear-gradient(to right, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 40%, {{ mmobj_selected_background }} 100%);
+    background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 30%, {{ mmobj_selected_background }} 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,255,0)), color-stop(30%, {{ mmobj_selected_background }}), color-stop(100%, {{ mmobj_selected_background }}));
+    background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 30%, {{ mmobj_selected_background }} 100%);
+    background: -o-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 30%, {{ mmobj_selected_background }} 100%);
+    background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 30%, {{ mmobj_selected_background }} 100%);
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 30%, {{ mmobj_selected_background }} 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='{{ mmobj_selected_background }}', endColorstr='{{ mmobj_selected_background }}', GradientType=1 );
 }
 {# ==== END MAGIC CSS TO ELLIPSE TEXT ==== #}
-.footer-wrapper {
-    width: 100%;
-    overflow: hidden;
-    color: {{default_contrast_font}};
-    background: {{default_contrast_background}};
-}
+
 {% endblock %}

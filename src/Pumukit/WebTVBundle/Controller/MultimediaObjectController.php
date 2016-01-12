@@ -73,7 +73,7 @@ class MultimediaObjectController extends PlayerController
             if($mmobjService->hasPlayableResource($multimediaObject) && Broadcast::BROADCAST_TYPE_PUB === $multimediaObject->getBroadcast()->getBroadcastTypeId()){
                 return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId())));
             }
-        } elseif( ($multimediaObject->getStatus() != MultimediaObject::STATUS_PUBLISHED 
+        } elseif( ($multimediaObject->getStatus() != MultimediaObject::STATUS_PUBLISHED
                  && $multimediaObject->getStatus() != MultimediaObject::STATUS_HIDE
                  ) || !$multimediaObject->containsTagWithCod('PUCHWEBTV')) {
             return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
@@ -104,7 +104,7 @@ class MultimediaObjectController extends PlayerController
         $this->updateBreadcrumbs($multimediaObject);
         return array('autostart' => $request->query->get('autostart', 'true'),
                      'intro' => $this->getIntro($request->query->get('intro')),
-                     'multimediaObject' => $multimediaObject, 
+                     'multimediaObject' => $multimediaObject,
                      'track' => $track,
                      'magic_url' => true);
     }
@@ -121,10 +121,8 @@ class MultimediaObjectController extends PlayerController
           ->get('doctrine_mongodb.odm.document_manager')
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
 
-        $limit = 10;
-        if ($this->container->hasParameter('limit_objs_series')) {
-            $limit = $this->container->getParameter('limit_objs_search');
-        }        
+        $limit = $this->container->getParameter('limit_objs_player_series');
+
 
         $multimediaObjects = $mmobjRepo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED), $limit);
 

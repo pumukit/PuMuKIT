@@ -5,4 +5,16 @@
 {% block body %}
 
 {{ parent() }}
+.breadcrumbs_color {
+    border-bottom: 10px solid #D66400;
+}
+.breadcrumb > li:last-of-type {
+    margin-top: 5px;
+}
+@media (max-width: 767px) {
+    .main-content {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+}
 {% endblock %}

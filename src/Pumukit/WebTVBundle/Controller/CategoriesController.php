@@ -18,10 +18,7 @@ class CategoriesController extends Controller
      */
     public function indexAction($sort, Request $request)
     {
-        $templateTitle = null;
-        if($this->container->hasParameter('menu.categories_title')) {
-            $templateTitle = $this->container->getParameter('menu.categories_title');
-        }
+        $templateTitle = $this->container->getParameter('menu.categories_title');
         $this->get('pumukit_web_tv.breadcrumbs')->addList($templateTitle?:'Videos by Category', 'pumukit_webtv_categories_index');
         $parentCod = $this->container->getParameter('categories_tag_cod');
 
@@ -33,10 +30,7 @@ class CategoriesController extends Controller
             throw $this->createNotFoundException('The parent with cod: '.$parentCod.' was not found. Please add it to the Tags database or configure another categories_tag_cod in parameters.yml');
         }
 
-        $listGeneralParam = false;
-        if($this->container->hasParameter('categories.list_general_tags')) {
-            $listGeneralParam = $this->container->getParameter('categories.list_general_tags');
-        }
+        $listGeneralParam = $this->container->getParameter('categories.list_general_tags');
 
         $allGrounds = array();
         $tagsTree = $this->getDoctrine()
