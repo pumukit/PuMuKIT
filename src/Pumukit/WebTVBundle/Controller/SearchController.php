@@ -274,6 +274,7 @@ class SearchController extends Controller
     {
         $mmObjColl = $this->get('doctrine_mongodb')->getManager()->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
         $pipeline = array(
+            array('$match' => array('status' => MultimediaObject::STATUS_PUBLISHED)),
             array('$group' => array('_id' => array('$year' => '$record_date'))),
             array('$sort' => array('_id' => 1)),
         );
