@@ -30,7 +30,6 @@
             <argument type="service" id="logger"/>
             <argument type="service" id="pumukitschema.track"/>
             <argument type="service" id="security.token_storage"/>
-            <argument type="service" id="security.authorization_checker"/>
             <tag name="monolog.logger" channel="encoder"/>
             <argument>%kernel.environment%</argument>
             <argument>%pumukit2.tmp%</argument>
