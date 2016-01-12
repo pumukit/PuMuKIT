@@ -174,6 +174,7 @@ class DefaultController extends Controller
                         $selectedPath = $request->get('resource');
                         $multimediaObject = $jobService->createTrackFromLocalHardDrive($multimediaObject, $request->files->get('resource'), $profile, $priority, $language, $description);
                     }elseif ('inbox' === $filetype){
+                        $this->denyAccessUnlessGranted(Permission::ACCESS_INBOX);
                         $selectedPath = $request->get('file');
                         $multimediaObject = $jobService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description);
                     }
@@ -183,6 +184,7 @@ class DefaultController extends Controller
                         }
                     }
                 }elseif ('multiple' === $option){
+                    $this->denyAccessUnlessGranted(Permission::ACCESS_INBOX);
                     $series = $this->getSeries($seriesData);
                     $selectedPath = $request->get('file');
                     $finder = new Finder();
