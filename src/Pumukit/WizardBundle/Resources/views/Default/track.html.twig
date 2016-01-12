@@ -93,11 +93,13 @@
         <div class="form-group">
           <label for="pumukitwizard_track_filetype" class="control-label">{% trans %}Mode{% endtrans %}</label>
           {% if 'single' == form_data.type.option %}
+          {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
           <div class="radio">
             <label><input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_inbox" value="inbox" onclick="$('#pumukitwizard_track_file').hide();$('#pumukitwizard_track_inbox').show();"/> {% trans %}Inbox on server{% endtrans %}</label>
           </div>
+          {% endif %}
           <div class="radio">
-            <label><input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_file" value="file" checked="checked" onclick="$('#pumukitwizard_track_inbox').hide();$('#pumukitwizard_track_file').show();"/> {% trans %}Local hard drive{% endtrans %}</label>
+            <label><input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_file" value="file" checked="checked" onclick="{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}$('#pumukitwizard_track_inbox').hide();{% endif %}$('#pumukitwizard_track_file').show();"/> {% trans %}Local hard drive{% endtrans %}</label>
           </div>
           {% elseif 'multiple' == form_data.type.option %}
           <div class="radio">
@@ -114,10 +116,12 @@
             <span id="file_upload_progress" style="color:blue; display:none;">{% trans %}Progress{% endtrans %}...</span>
           </div>
         </div>
+        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
         <div class="form-group" id="pumukitwizard_track_inbox" style="display: none">
           {{ render(controller('PumukitNewAdminBundle:Inbox:Form')) }}
         </div>
-        {% elseif 'multiple' == form_data.type.option %}
+        {% endif %}
+        {% elseif ('multiple' == form_data.type.option) and app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
         <div class="form-group" id="pumukitwizard_track_directory">
           {{ render(controller('PumukitNewAdminBundle:Inbox:Form', {'onlyDir': true})) }}
         </div>
