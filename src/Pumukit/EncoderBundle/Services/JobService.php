@@ -5,11 +5,14 @@ namespace Pumukit\EncoderBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Pumukit\EncoderBundle\Document\Job;
@@ -22,8 +25,8 @@ use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\SchemaBundle\Services\TrackService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\InspectionBundle\Services\InspectionServiceInterface;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class JobService
 {
@@ -38,10 +41,11 @@ class JobService
     private $logger;
     private $environment;
     private $tokenStorage;
+    private $authorizationChecker;
 
     public function __construct(DocumentManager $documentManager, ProfileService $profileService, CpuService $cpuService, 
                                 InspectionServiceInterface $inspectionService, EventDispatcherInterface $dispatcher, LoggerInterface $logger,
-                                TrackService $trackService, TokenStorage $tokenStorage, $environment="dev", $tmpPath=null)
+                                TrackService $trackService, TokenStorage $tokenStorage, AuthorizationCheckerInterface $authorizationChecker, $environment="dev", $tmpPath=null)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
@@ -52,6 +56,7 @@ class JobService
         $this->logger = $logger;
         $this->trackService = $trackService;
         $this->tokenStorage = $tokenStorage;
+        $this->authorizationChecker = $authorizationChecker;
         $this->dispatcher = $dispatcher;
         $this->environment = $environment;
     }
@@ -97,6 +102,10 @@ class JobService
      */
     public function createTrackFromInboxOnServer(MultimediaObject $multimediaObject, $trackUrl, $profile, $priority, $language, $description)
     {
+        if (false === $this->authorizationChecker->denyAccessUnlessGranted(Permission::ACCESS_INBOX)) {
+            throw new AccessDeniedException();
+        }
+
         if (!is_file($trackUrl)) {
             throw new FileNotFoundException($trackUrl);
         }
