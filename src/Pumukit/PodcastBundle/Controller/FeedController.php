@@ -346,7 +346,7 @@ class FeedController extends Controller
         return $url;
     }
 
-    private function getBaseUrl(Request $request)
+    private function getBaseUrl()
     {
         $context = $this->get('router.request_context');
         if (!$context) {
