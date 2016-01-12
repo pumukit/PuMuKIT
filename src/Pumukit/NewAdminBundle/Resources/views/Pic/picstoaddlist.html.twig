@@ -1,4 +1,4 @@
-{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 <fieldset>
   <div class="form-group">
 	<label for="other">{% trans %}Use Image{% endtrans %}:</label>

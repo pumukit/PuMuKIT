@@ -6,7 +6,7 @@
 <div class="modal-body">
 
   <div id="tv_admin_container">
-    {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
     <form autocomplete="off" onsubmit="$.ajax({
                             url: '{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id}) }}',
                             type: 'POST',
@@ -68,7 +68,7 @@
 
 
   <div style="clear:both"></div>
-  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   {% if resource_name != 'event' %}
   <div id="pics_to_add_list">
     {% set picstoaddlistaction = "PumukitNewAdminBundle:"~(resource_name == 'mms' ? 'MultimediaObject':(resource_name|capitalize))~"Pic:picstoaddlist" %}
