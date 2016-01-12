@@ -36,14 +36,14 @@ class Annotation
     /**
      * @var string $type
      *
-     * @MongoDB\string
+     * @MongoDB\String
      */
     private $type;
 
     /**
      * @var string $user_id
      *
-     * @MongoDB\string
+     * @MongoDB\String
      */
     private $user_id;
 
