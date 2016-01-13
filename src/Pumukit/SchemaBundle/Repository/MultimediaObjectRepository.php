@@ -648,6 +648,7 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         return $this->createStandardQueryBuilder()
           ->field('series')->references($series)
+          ->sort('rank', 1)
           ->getQuery()
           ->execute();
     }
