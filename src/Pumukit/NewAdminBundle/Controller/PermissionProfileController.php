@@ -314,9 +314,12 @@ class PermissionProfileController extends AdminController
     public function getResources(Request $request, $config, $criteria)
     {
         $sorting = $config->getSorting();
+        if (!isset($sorting['rank'])) {
+            $sorting['rank'] = 1;
+        }
         $repository = $this->getRepository();
         $session = $this->get('session');
-        $session_namespace = 'admin/' . $config->getResourceName();
+        $session_namespace = 'admin/permissionprofile';
 
         if ($config->isPaginated()) {
             $resources = $this
