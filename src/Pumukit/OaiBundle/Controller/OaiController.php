@@ -35,7 +35,7 @@ class OaiController extends Controller
     case 'ListRecords':
       return $this->listIdentifiers($request);
     case 'GetRecord':
-      return $this->forward('PumukitOaiBundle:Index:getRecord', array("request" => $request));
+      return $this->getRecord($request);
     default:
       return $this->error('badVerb', 'Illegal OAI verb');
     }
@@ -67,44 +67,10 @@ class OaiController extends Controller
 
     $XMLgetRecord = new SimpleXMLExtended("<GetRecord></GetRecord>");
     $XMLrecord = $XMLgetRecord->addChild('record');
-    $XMLheader = $XMLrecord->addChild('header');
-    $XMLidentifier = $XMLheader->addChild('identifier');
-    $XMLidentifier->addCDATA($object->getId());
-    $XMLheader->addChild('datestamp', $object->getPublicDate()->format('Y-m-d'));
-    $XMLsetSpec = $XMLheader->addChild('setSpec');
-    $XMLsetSpec->addCDATA($object->getSeries()->getId());
-    $XMLmetadata = $XMLrecord->addChild('metadata');
-    $XMLoai_dc = $XMLmetadata->addChild('oai_dc:dc');
-    $XMLoai_dc->addAttribute('xmlns:oai_dc', 'http://www.openarchives.org/OAI/2.0/oai_dc/');
-    $XMLoai_dc->addAttribute('xmlns:dc', 'http://purl.org/dc/elements/1.1/');
-    $XMLoai_dc->addAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-    $XMLoai_dc->addAttribute('xsi:schemaLocation', 'http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd');
-    $XMLtitle = $XMLoai_dc->addChild('dc:title');
-    $XMLtitle->addCDATA($object->getTitle());
-    $XMLdescription = $XMLoai_dc->addChild('dc:description');
-    $XMLdescription->addCDATA($object->getDescription());
-    $XMLoai_dc->addChild('dc:date', $object->getPublicDate()->format('Y-m-d'));
-    $XMLiden = $XMLoai_dc->addChild('dc:identifier');
-    $XMLiden->addAttribute('xsi:type', 'dcterms:URI');
-    $XMLiden->addAttribute('id', 'uid');
-    foreach($object->getTracks() as $track){
-      $XMLtype = $XMLoai_dc->addChild('dc:type');
-      $XMLtype->addCDATA($track->getMimeType());
-      $XMLoai_dc->addChild('dc:format');
-    }
-    foreach($object->getTags() as $tag){
-      $XMLsubject = $XMLoai_dc->addChild('dc:subject');
-      $XMLsubject->addCDATA($tag->getTitle());
-    }
-    $XMLcreator = $XMLoai_dc->addChild('dc:creator');
-    $XMLcreator->addCDATA('');
-    $XMLpublisher = $XMLoai_dc->addChild('dc:publisher');
-    $XMLpublisher->addCDATA('');
-    $XMLoai_dc->addChild('dc:language', $object->getLocale());
-    $XMLrights = $XMLoai_dc->addChild('dc:rights');
-    $XMLrights->addCDATA('');
+    $this->genObjectHeader($XMLrecord, $object);
+    $this->genObjectMetadata($XMLrecord, $object);
 
-    return $this->genResponse($XMLrequest,$XMLgetRecord);
+    return $this->genResponse($XMLrequest, $XMLgetRecord);
   }
 
   private function identify()
@@ -186,7 +152,7 @@ class OaiController extends Controller
       }
     }
     $XMLresumptionToken = $XMLlist->addChild('resumptionToken', $pag);
-    $XMLresumptionToken->addAttribute('expirationDate', '2002-06-01T23:20:00Z');
+    $XMLresumptionToken->addAttribute('expirationDate', '2222-06-01T23:20:00Z');
     $XMLresumptionToken->addAttribute('completeListSize', count($mmObjColl));
     $XMLresumptionToken->addAttribute('cursor', '0');
 
@@ -225,7 +191,6 @@ class OaiController extends Controller
     $pag = 2;
     $resumptionToken = $request->query->get('resumptionToken');
 
-
     //TODO fix.
     $token = $this->validateToken($resumptionToken);
     if($token['error'] == true){
@@ -261,7 +226,7 @@ class OaiController extends Controller
       $XMLsetName->addCDATA($series->getTitle());
     }
     $XMLresumptionToken = $XMLlistSets->addChild('resumptionToken', $pag);
-    $XMLresumptionToken->addAttribute('expirationDate', '2002-06-01T23:20:00Z');
+    $XMLresumptionToken->addAttribute('expirationDate', '2222-06-01T23:20:00Z');
     $XMLresumptionToken->addAttribute('completeListSize', count($allSeries));
     $XMLresumptionToken->addAttribute('cursor', '0');
 
@@ -335,31 +300,38 @@ class OaiController extends Controller
   private function genObjectMetadata($XMLlist, $object)
   {
     $XMLmetadata = $XMLlist->addChild('metadata');
-    $XMLoai_dc = $XMLmetadata->addChild('oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd"');
+
+    $XMLoai_dc = new SimpleXMLExtended('<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd"></oai_dc:dc>');
     $XMLtitle = $XMLoai_dc->addChild('dc:title', null, 'http://purl.org/dc/elements/1.1/');
     $XMLtitle->addCDATA($object->getTitle());
-    $XMLdescription = $XMLoai_dc->addChild('dc:description');
+    $XMLdescription = $XMLoai_dc->addChild('dc:description', null, 'http://purl.org/dc/elements/1.1/');
     $XMLdescription->addCDATA($object->getDescription());
     $XMLoai_dc->addChild('dc:date', $object->getPublicDate()->format('Y-m-d'));
-    $XMLiden = $XMLoai_dc->addChild('dc:identifier');
-    $XMLiden->addAttribute('xsi:type', 'dcterms:URI');
-    $XMLiden->addAttribute('id', 'uid');
-    foreach($object->getTracks() as $track){
-      $XMLtype = $XMLoai_dc->addChild('dc:type');
-      $XMLtype->addCDATA($track->getMimeType());
-      $XMLoai_dc->addChild('dc:format');
+    $url = $this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $object->getId()), true);
+    $XMLiden = $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
+    //$XMLiden->addAttribute('xsi:type', 'dcterms:URI');
+    //$XMLiden->addAttribute('id', 'uid');
+    $thumbnail = $this->get('pumukitschema.pic')->getFirstUrlPic($object, true);
+    $XMLiden = $XMLoai_dc->addChild('dc:thumbnail', $thumbnail, 'http://purl.org/dc/elements/1.1/');
+    foreach($object->getFilteredTracksWithTags(array('display')) as $track){
+      $XMLtype = $XMLoai_dc->addChild('dc:type', 'Moving Image', 'http://purl.org/dc/elements/1.1/');
+      $XMLoai_dc->addChild('dc:format', $track->getMimeType(), 'http://purl.org/dc/elements/1.1/');
     }
     foreach($object->getTags() as $tag){
-      $XMLsubject = $XMLoai_dc->addChild('dc:subject');
+      $XMLsubject = $XMLoai_dc->addChild('dc:subject', null, 'http://purl.org/dc/elements/1.1/');
       $XMLsubject->addCDATA($tag->getTitle());
     }
-    $XMLcreator = $XMLoai_dc->addChild('dc:creator');
+    $XMLcreator = $XMLoai_dc->addChild('dc:creator', null, 'http://purl.org/dc/elements/1.1/');
     $XMLcreator->addCDATA('');
-    $XMLpublisher = $XMLoai_dc->addChild('dc:publisher');
+    $XMLpublisher = $XMLoai_dc->addChild('dc:publisher', null, 'http://purl.org/dc/elements/1.1/');
     $XMLpublisher->addCDATA('');
-    $XMLoai_dc->addChild('dc:language', $object->getLocale());
-    $XMLrights = $XMLoai_dc->addChild('dc:rights');
+    $XMLoai_dc->addChild('dc:language', $object->getLocale(), 'http://purl.org/dc/elements/1.1/');
+    $XMLrights = $XMLoai_dc->addChild('dc:rights', $object->getCopyright(), 'http://purl.org/dc/elements/1.1/');
     $XMLrights->addCDATA('');
+
+    $toDom = dom_import_simplexml($XMLmetadata);
+    $fromDom = dom_import_simplexml($XMLoai_dc);
+    $toDom->appendChild($toDom->ownerDocument->importNode($fromDom, true));
   }
 
 
