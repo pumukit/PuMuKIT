@@ -1,0 +1,4 @@
+pumukit_video_editor_bundle:
+    resource: "@PumukitVideoEditorBundle/Controller/"
+    type:     annotation
+    prefix:   /videoeditor/
