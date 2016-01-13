@@ -1,0 +1,31 @@
+<div id="playerContainer" style="display:block;width:100%">
+</div>
+<script>
+ {# https://github.com/polimediaupv/paella/blob/master/doc/integrate_datajson.md #}
+ var data = {
+     "streams": [
+         {% for track in tracks %}
+         {
+             "sources": {
+                 "mp4": [
+                     {
+                         "src": "{{ asset(track.url, absolute=true) }}",
+                         "mimetype": "{{ track.mimetype }}",
+                         "res": {
+                             "w":0,
+                             "h":0
+                         }
+                     }
+                 ]
+             },
+             "preview": "{{ multimediaObject|first_url_pic(true) }}"
+         },
+         {% endfor %}
+     ],
+     "metadata": {
+         "title":"{{multimediaObject.title}}",
+         "duration": 0
+     }
+ };
+ loadPaella('playerContainer', '{{multimediaObject.id}}');
+</script>
