@@ -251,7 +251,6 @@ window.submit_delete_person_relation = function(id, roleId, mmId, hName, templat
         $(tag_id).load(url, {'_method': 'DELETE'});
         var url = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'})|raw }}";
         $('#preview_mm').load(url.replace('__mmId__', mmId), function(responseText, textStatus, XMLHttpRequest){
-            console.log(XMLHttpRequest.status);
 	    if(XMLHttpRequest.status >= 400){
                 no_success('{% trans %}Error deleting Person{% endtrans %} "'+personHName+' from MultimediaObject": ' + responseText);
 	    } else {
