@@ -125,12 +125,9 @@
                 "enabled": true
             },
             "es.upv.paella.showEditorPlugin": {
-                "enabled": false,
-                "alwaysVisible": true
-            },
-            "es.teltek.paella.showEditorTtkPlugin": {
                 "enabled": true,
-                "alwaysVisible": true
+                "alwaysVisible": true,
+                "openEditorInIframe": true
             },
             "es.upv.paella.commentsPlugin": {
                 "enabled": false
@@ -192,6 +189,9 @@
                 "enabled": true
             },
             "es.upv.paella.editor.trimmingTrackPlugin": {
+                "enabled": true
+            },
+            "pumukitChapterMarkPlugin": {
                 "enabled": true
             }
         }
