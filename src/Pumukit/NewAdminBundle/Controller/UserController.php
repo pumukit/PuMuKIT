@@ -5,6 +5,7 @@ namespace Pumukit\NewAdminBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\User;
 
 /**
@@ -12,6 +13,25 @@ use Pumukit\SchemaBundle\Document\User;
  */
 class UserController extends AdminController
 {
+    /**
+     * Overwrite to check Users creation
+     *
+     * @Template()
+     */
+    public function indexAction(Request $request)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $config = $this->getConfiguration();
+
+        $criteria = $this->getCriteria($config);
+        $users = $this->getResources($request, $config, $criteria);
+        $repo = $dm->getRepository('PumukitSchemaBundle:PermissionProfile');
+        $profiles = $repo->findAll();
+
+        return array('users' => $users, 'profiles' => $profiles);
+    }
+
+
     /**
      * Create Action
      * Overwrite to create Person
@@ -218,5 +238,32 @@ class UserController extends AdminController
           ->where("function(){for ( var k in this.roles ) { if ( this.roles[k] == 'ROLE_SUPER_ADMIN' ) return true;}}")
           ->getQuery()
           ->getSingleResult();
+    }
+
+
+    /**
+     * Gets the criteria values
+     */
+    public function getCriteria($config)
+    {
+        $criteria = $config->getCriteria();
+
+        if (array_key_exists('reset', $criteria)) {
+            $this->get('session')->remove('admin/user/criteria');
+        } elseif ($criteria) {
+            $this->get('session')->set('admin/user/criteria', $criteria);
+        }
+        $criteria = $this->get('session')->get('admin/user/criteria', array());
+
+        $new_criteria = array();
+        foreach ($criteria as $property => $value) {
+             if ('permissionProfile' == $property && 'all' !== $value) {
+                 $new_criteria[$property] = new \MongoId($value);
+            }elseif ('' !== $value) {
+                $new_criteria[$property] = new \MongoRegex('/'.$value.'/i');
+            }
+        }
+
+        return $new_criteria;
     }
 }
