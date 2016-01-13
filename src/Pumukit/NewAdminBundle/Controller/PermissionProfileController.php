@@ -58,7 +58,7 @@ class PermissionProfileController extends AdminController
         $permissionProfiles = $this->getResources($request, $config, $criteria);
 
         $page = $session->get('admin/permissionprofile/page', 1);
-        $maxPerPage = $session->get('admin/permissionprofile/paginate', 10);
+        $maxPerPage = $session->get('admin/permissionprofile/paginate', 9);
         $newPermissionProfileId = $request->get('id');
         if ($newPermissionProfileId && (($permissionProfiles->getNbResults()/$maxPerPage) > $page)) {
             $page = $permissionProfiles->getNbPages();
