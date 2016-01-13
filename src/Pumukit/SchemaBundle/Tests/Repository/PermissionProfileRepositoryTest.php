@@ -121,4 +121,31 @@ class PermissionProfileRepositoryTest extends WebTestCase
 
         $this->assertEquals($permissionProfile2, $this->repo->findDefaultCandidate());
     }
+
+    public function testRank()
+    {
+        $permissionProfile1 = new PermissionProfile();
+        $permissionProfile1->setName('test1');
+        $permissionProfile1->setSystem(true);
+        $permissionProfile1->setDefault(true);
+
+        $permissionProfile2 = new PermissionProfile();
+        $permissionProfile2->setName('test2');
+        $permissionProfile2->setSystem(true);
+        $permissionProfile2->setDefault(false);
+
+        $permissionProfile3 = new PermissionProfile();
+        $permissionProfile3->setName('test3');
+        $permissionProfile3->setSystem(true);
+        $permissionProfile3->setDefault(false);
+
+        $this->dm->persist($permissionProfile1);
+        $this->dm->persist($permissionProfile2);
+        $this->dm->persist($permissionProfile3);
+        $this->dm->flush();
+
+        $this->assertEquals(0, $permissionProfile1->getRank());
+        $this->assertEquals(1, $permissionProfile2->getRank());
+        $this->assertEquals(2, $permissionProfile3->getRank());
+    }
 }
