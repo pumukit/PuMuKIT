@@ -15,7 +15,7 @@ use Pumukit\OpencastBundle\Form\Type\MultimediaObjectType;
 
 /**
  * @Route("/admin/opencast/mm")
- * @Security("is_granted('ROLE_ACCESS_INGESTOR')")
+ * @Security("is_granted('ROLE_ACCESS_IMPORTER')")
  */
 class MultimediaObjectController extends Controller
 {

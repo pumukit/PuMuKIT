@@ -23,7 +23,7 @@ use Pumukit\OpencastBundle\Services\OpencastService;
 
 /**
  * @Route("/admin")
- * @Security("is_granted('ROLE_ACCESS_INGESTOR')")
+ * @Security("is_granted('ROLE_ACCESS_IMPORTER')")
  */
 class MediaPackageController extends Controller
 {
@@ -35,8 +35,8 @@ class MediaPackageController extends Controller
      */
     public function indexAction(Request $request)
     {
-        if (!$this->container->getParameter('pumukit_opencast.show_ingestor_tab')) {
-            throw new AccessDeniedException('Not allowed. Configure your OpencastBundle to show the Ingestor Tab.');
+        if (!$this->container->getParameter('pumukit_opencast.show_importer_tab')) {
+            throw new AccessDeniedException('Not allowed. Configure your OpencastBundle to show the Importer Tab.');
         }
 
         if(!$this->has('pumukit_opencast.client')) {
@@ -85,8 +85,8 @@ class MediaPackageController extends Controller
      */
     public function importAction($id, Request $request)
     {
-        if (!$this->container->getParameter('pumukit_opencast.show_ingestor_tab')) {
-            throw new AccessDeniedException('Not allowed. Configure your OpencastBundle to show the Ingestor Tab.');
+        if (!$this->container->getParameter('pumukit_opencast.show_importer_tab')) {
+            throw new AccessDeniedException('Not allowed. Configure your OpencastBundle to show the Importer Tab.');
         }
 
         $opencastService = $this->get('pumukit_opencast.import');

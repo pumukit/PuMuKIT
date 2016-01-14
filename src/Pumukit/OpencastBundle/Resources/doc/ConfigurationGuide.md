@@ -17,7 +17,7 @@ pumukit_opencast:
     player: /engage/ui/watch.html
     use_redirect: true
     batchimport_inverted: false
-    show_ingestor_tab: true
+    show_importer_tab: true
     delete_archive_mediapackage: false
     deletion_workflow_name: 'delete-archive'
     sbs:
@@ -43,7 +43,7 @@ Mandatory:
 Optional:
    - `use_redirect` when set to false, an Opencast video will be displayed inside an iframe into PuMuKIT. Default value: true, the Opencast video is displayed on the Opencast server.
    - `batchimport_inverted` when set to true, the Opencast videos will be imported with presentation and presented inverted, i.e. switching positions. Default value: false.
-   - `show_ingestor_tab` when set to false, the Opencast Ingestor Tab will not be shown. Useful when the ingestion is done using batch import command. Default value: true.
+   - `show_importer_tab` when set to false, the Opencast Importer Tab will not be shown. Useful when the importation is done using batch import command. Default value: true.
    - `delete_archive_mediapackage` when set to true, the Opencast mediapackage will be deleted from the archive when deleting the PuMuKIT track or multimedia object. Default value: false.
    - `deletion_workflow_name` is the name of the Opencast workflow in Opencast that handles the deletion of a mediapackage from the archive. Default value: delete-archive.
    - `sbs`:

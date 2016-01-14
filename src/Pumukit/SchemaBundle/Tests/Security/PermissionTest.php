@@ -20,7 +20,7 @@ class PermissionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(array_key_exists(Permission::ACCESS_ADMIN_USERS, Permission::$permissionDescription));
         $this->assertTrue(array_key_exists(Permission::ACCESS_ROLES, Permission::$permissionDescription));
         $this->assertTrue(array_key_exists(Permission::ACCESS_PERMISSION_PROFILES, Permission::$permissionDescription));
-        $this->assertTrue(array_key_exists(Permission::ACCESS_INGESTOR, Permission::$permissionDescription));
+        $this->assertTrue(array_key_exists(Permission::ACCESS_IMPORTER, Permission::$permissionDescription));
         $this->assertTrue(array_key_exists(Permission::CHANGE_MMOBJECT_STATUS, Permission::$permissionDescription));
         $this->assertTrue(array_key_exists(Permission::CHANGE_MMOBJECT_PUBCHANNEL, Permission::$permissionDescription));
         $this->assertTrue(array_key_exists(Permission::ACCESS_PUBLICATION_TAB, Permission::$permissionDescription));
@@ -40,7 +40,7 @@ class PermissionTest extends \PHPUnit_Framework_TestCase
         $accessAdminUsers = "Access Admin Users";
         $accessRoles = "Access Roles";
         $accessPermissionProfiles = "Access Permission Profiles";
-        $accessIngestor = "Access Ingestor";
+        $accessImporter = "Access Importer";
         $changeMmObjectStatus = "Change Multimedia Object Status";
         $changeMmObjectPubChannel = "Change Multimedia Object Publication Channel";
         $accessPublicationTab = "Access Publication Tab";
@@ -60,7 +60,7 @@ class PermissionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($accessAdminUsers, Permission::$permissionDescription[Permission::ACCESS_ADMIN_USERS]);
         $this->assertEquals($accessRoles, Permission::$permissionDescription[Permission::ACCESS_ROLES]);
         $this->assertEquals($accessPermissionProfiles, Permission::$permissionDescription[Permission::ACCESS_PERMISSION_PROFILES]);
-        $this->assertEquals($accessIngestor, Permission::$permissionDescription[Permission::ACCESS_INGESTOR]);
+        $this->assertEquals($accessImporter, Permission::$permissionDescription[Permission::ACCESS_IMPORTER]);
         $this->assertEquals($changeMmObjectStatus, Permission::$permissionDescription[Permission::CHANGE_MMOBJECT_STATUS]);
         $this->assertEquals($changeMmObjectPubChannel, Permission::$permissionDescription[Permission::CHANGE_MMOBJECT_PUBCHANNEL]);
         $this->assertEquals($accessPublicationTab, Permission::$permissionDescription[Permission::ACCESS_PUBLICATION_TAB]);
