@@ -32,8 +32,23 @@
     <p class="description">
       {{ multimediaObject.getDescription() }}
     </p>
+    <!-- PERSONS ACT -->
+    <div class="persons">
+      {% for role in multimediaObject.getRoles() if role.getDisplay() %}
+        {% for person in multimediaObject.getPeopleByRole(role) %}
+          <div>
+            <div class="person"><span class="glyphicon glyphicon-user"></span>
+              {{ role.getText() }}
+              {{ person.getHName() }}
+            </div>
+            {{ person.getInfo() }}
+          </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
   </div>
 </div>
+<br>
 <div class="row">
   <div class="col-sm-6">
     <!--MATERIALS-->
@@ -60,20 +75,6 @@
           </div>
         {% endfor %}
       </div>
-    </div>
-    <!-- PERSONS ACT -->
-    <div class="persons">
-      {% for role in multimediaObject.getRoles() if role.getDisplay() %}
-        {% for person in multimediaObject.getPeopleByRole(role) %}
-          <div>
-            <div class="person"><span class="glyphicon glyphicon-user"></span>
-              {{ role.getText() }}
-              {{ person.getHName() }}
-            </div>
-            {{ person.getInfo() }}
-          </div>
-        {% endfor %}
-      {% endfor %}
     </div>
   </div>
   <div class="col-sm-6">
