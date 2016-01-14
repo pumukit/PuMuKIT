@@ -4,6 +4,8 @@ namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Pumukit\SchemaBundle\Document\User;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -52,6 +54,20 @@ class UserType extends AbstractType
                   array('label' => $this->translator->trans('Email', array(), null, $this->locale)))
             ->add('permissionProfile', null,
                   array('label' => $this->translator->trans('Permission Profile', array(), null, $this->locale)));
+
+
+        $builder->addEventListener(FormEvents::POST_SET_DATA, function(FormEvent $event) {
+            $user = $event->getData();
+            if($user->hasRole('ROLE_SUPER_ADMIN')) {
+                $event->getForm()->remove('permissionProfile');
+                $event->getForm()->add('permissionProfilePlacebo', 'choice',
+                    array(
+                        'mapped' => false,
+                        'choices'  => array('ROLE_SUPER_ADMIN' => 'System Super Administrator'),
+                        'label' => $this->translator->trans('Permission Profile', array(), null, $this->locale)));
+            }
+        });
+
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
