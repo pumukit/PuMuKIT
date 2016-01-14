@@ -60,11 +60,10 @@ class MultimediaObjectController extends PlayerController
         $editorChapters = array();
         if($marks) {
             $marks = json_decode($marks->getValue(), true);
-        }
-
-        foreach($marks['marks'] as $chapt) {
-            $editorChapters[] = array('title' => $chapt['name'],
-                                      'time' => $chapt['s']);
+            foreach($marks['marks'] as $chapt) {
+                $editorChapters[] = array('title' => $chapt['name'],
+                                          'time' => $chapt['s']);
+            }
         }
 
         return array('autostart' => $request->query->get('autostart', 'true'),
