@@ -250,7 +250,7 @@ EOT
         if (($file = fopen($file, "r")) !== false) {
             while (($currentRow = fgetcsv($file, 300, ";")) !== false) {
                 $number = count($currentRow);
-                if ((('tag' === $repoName) && ($number == 6 || $number == 8)) || 
+                if ((('tag' === $repoName) && ($number == 6 || $number == 8 || $number == 9)) || 
                     (('broadcast' === $repoName) && ($number == 5 || $number == 8)) || 
                     (('role' === $repoName) && ($number == 7 || $number == 10)) ||
                     (('permissionprofile' === $repoName) && ($number == 6))){
