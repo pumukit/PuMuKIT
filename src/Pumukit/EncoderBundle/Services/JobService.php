@@ -434,9 +434,16 @@ class JobService
         $vars = $job->getInitVars();
 
         $vars['tracks'] = array();
+        $vars['tracks_audio'] = array();
+        $vars['tracks_video'] = array();
         foreach ($mmobj->getTracks() as $track) {
             foreach($track->getTags() as $tag) {
                 $vars['tracks'][$tag] = $track->getPath();
+                if ($track->isOnlyAudio()) {
+                    $vars['tracks_audio'][$tag] = $track->getPath();
+                } else {
+                    $vars['tracks_video'][$tag] = $track->getPath();
+                }
             }
         }
 
