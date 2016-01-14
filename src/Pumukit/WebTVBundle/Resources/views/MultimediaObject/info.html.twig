@@ -39,7 +39,7 @@
     <!--MATERIALS-->
     <div class="panel panel-default">
       <div class="panel-heading">
-        {% trans %} Materials {% endtrans %}
+        {% trans %} Attachments {% endtrans %}
       </div>
       <div class="panel-body">
         {% for material in multimediaObject.getMaterials() if not material.getHide() %}
@@ -48,7 +48,7 @@
             <a href="{{ material.getUrl() }}">{{ material.getName() }}</a>
           </div>
         {% else %}
-          <strong>{% trans %} There is no materials {% endtrans %}</strong>
+          <strong>{% trans %} There are no attachments {% endtrans %}</strong>
         {% endfor %}
         <!--LINKS-->
         {% for link in multimediaObject.getLinks() %}
