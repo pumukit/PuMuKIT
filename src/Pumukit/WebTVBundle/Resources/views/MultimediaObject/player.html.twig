@@ -1,2 +1,25 @@
-<iframe src="{{url('pumukit_videoplayer_index', {'id':multimediaObject.id})}}?id={{multimediaObject.id}}" frameborder="0" border="0" width="100%" onload="resizeFrame(this)" height="500px" allowfullscreen>
+<iframe src="{{url('pumukit_videoplayer_index', {'id':multimediaObject.id})}}?id={{multimediaObject.id}}"
+        id="paellaiframe"
+        frameborder="0"
+        border="0"
+        width="100%"
+        onload="resizeFrame(this)"
+        height="500px"
+        allowfullscreen>
 </iframe>
+{% if editor_chapters %}
+  <strong>Marks:</strong>
+  <ol style="list-style-type:decimal;padding-left:40px;">
+    {% for chapter in editor_chapters %}
+      <li>{{chapter.title}} :
+        <a style="cursor:pointer;color:blue"
+           onMouseOver="this.style.textDecoration='underline'"
+           onMouseOut="this.style.textDecoration='none'"
+           onClick="paellaevents = document.getElementById('paellaiframe').contentWindow.paella.events;
+                    paellaevents.trigger(paellaevents.seekToTime,{time:{{chapter.time}}})">
+          {{ date("00:00:00 + " ~ (chapter.time|round) ~ " seconds")|date('H:i:s')}}
+        </a>
+      </li>
+    {% endfor %}
+  </ol>
+{% endif %}
