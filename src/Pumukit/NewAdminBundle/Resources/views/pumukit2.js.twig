@@ -727,6 +727,34 @@ window.change_select = function(element, selector, pluralName)
                         );
         break;
 */
+    case 'promote_to':
+        var ids = $('.' + element + '_checkbox:checked.nosuperadmin').map(function(i, e){return e.id}).get();
+
+        if (ids.length == 0) {
+           no_success('{% trans %}Select any user.{% endtrans %}');
+           break;
+        }
+    
+        var node = selector.find(':selected');
+        var profile = node.data('profile');
+        var profilename = node.data('profilename');
+        $.ajax({
+            url: '{{ path('pumukitnewadmin_user_promote')|raw }}',
+            type: 'POST',
+            data: {'ids': ids, 'profile': profile},
+            error: function(jqXHR, textStatus, errorThrown){ debugger; },
+            success: function(response){ 
+                ids.forEach(function(e){$('#profile'+e).html(profilename)})
+                $('.' + element + '_checkbox:checked').each(function(){
+                    var $this = $(this);
+                    $this[0].checked = false;
+                });
+                no_success('{% trans %}Users updated.{% endtrans %}');
+            },
+        });
+
+        break;
+
     }
     selector.val('default');
 }

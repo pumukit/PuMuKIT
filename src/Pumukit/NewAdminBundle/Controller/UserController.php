@@ -4,6 +4,7 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\User;
@@ -265,5 +266,34 @@ class UserController extends AdminController
         }
 
         return $new_criteria;
+    }
+
+
+    /**
+     * Change the permission profiles of a list of users.
+     *
+     */
+    public function promoteAction(Request $request)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $profileRepo = $dm->getRepository('PumukitSchemaBundle:PermissionProfile');
+        $usersRepo = $dm->getRepository('PumukitSchemaBundle:User');
+
+        $ids = $request->request->get('ids');
+        $profile = $profileRepo->find($request->request->get('profile'));
+        
+        if(!$profile){
+            throw $this->createNotFoundException('Profile not found!');
+        }
+        
+        $users = $usersRepo->findBy(array('_id' => array('$in' => $ids)));
+        foreach($users as $user) {
+            if(!$user->hasRole('ROLE_SUPER_ADMIN')) {
+                $user->setPermissionProfile($profile);
+                $user = $this->get('pumukitschema.user')->update($user);         
+            }
+        }
+        
+        return new JsonResponse(array('ok'));
     }
 }

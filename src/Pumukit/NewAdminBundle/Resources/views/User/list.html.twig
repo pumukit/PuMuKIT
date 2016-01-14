@@ -33,7 +33,7 @@
           <td>
             <div class="checkbox">
               <label>
-                <input id="{{ user.id }}" class="user_checkbox" type="checkbox" size="1">
+                <input id="{{ user.id }}" class="user_checkbox {{ user.hasRole('ROLE_SUPER_ADMIN') ? 'superadmin' : 'nosuperadmin'  }}" type="checkbox" size="1">
               </label>
             </div>
           </td>
@@ -53,7 +53,7 @@
           <td>
 	          {% if user.username is not empty %}{{ user.username }}{% endif %}
           </td>
-          <td>
+          <td id="profile{{ user.id }}">
             {% if 'ROLE_SUPER_ADMIN' in user.roles %}
                System Super Administrator
             {% elseif user.getPermissionProfile() is not null %}
