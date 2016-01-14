@@ -64,7 +64,7 @@
                 "searchOnCaptions": true
             },
             "es.upv.paella.extendedTabAdapterPlugin": {
-                "enabled": true
+                "enabled": false
             },
             "es.upv.paella.footprintsPlugin": {
                 "enabled": false
@@ -80,7 +80,7 @@
                 }
             },
             "es.upv.paella.helpPlugin": {
-                "enabled": true,
+                "enabled": false,
                 "langs": [
                     "en",
                     "es"
@@ -91,7 +91,7 @@
                 "showWidthRes": true
             },
             "es.upv.paella.playbackRatePlugin": {
-                "enabled": true,
+                "enabled": false,
                 "availableRates": [
                     0.75,
                     1,
@@ -103,15 +103,15 @@
                 "enabled": true
             },
             "es.upv.paella.searchPlugin": {
-                "enabled": true,
+                "enabled": false,
                 "sortType": "time",
                 "colorSearch": false
             },
             "es.upv.paella.socialPlugin": {
-                "enabled": true
+                "enabled": false
             },
             "es.upv.paella.themeChooserPlugin": {
-                "enabled": true
+                "enabled": false
             },
             "es.upv.paella.viewModePlugin": {
                 "enabled": true
@@ -166,7 +166,7 @@
                 "enabled": true
             },
             "es.upv.paella.search.captionsSearchPlugin": {
-                "enabled": true
+                "enabled": false
             },
             "es.upv.paella.usertracking.elasticsearchSaverPlugin": {
                 "enabled": false,
