@@ -4,7 +4,9 @@ namespace Pumukit\SecurityBundle\Authentication\Provider;
 
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationServiceException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\NonceExpiredException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
@@ -31,12 +33,17 @@ class PumukitProvider implements AuthenticationProviderInterface
       throw new BadCredentialsException('No pre-authenticated principal found in request.');
     }
 
-    try{
-    $user = $this->userProvider->loadUserByUsername($user);
-    }catch(\Exception $e){
-      var_dump($e);
-      var_dump($user); exit;
+    try {
+        $user = $this->userProvider->loadUserByUsername($user);
+    } catch(UsernameNotFoundException $notFound){
+      //TODO add use in ddbb.
+        throw $notFound;
+    } catch (\Exception $repositoryProblem) {
+        $ex = new AuthenticationServiceException($repositoryProblem->getMessage(), 0, $repositoryProblem);
+        $ex->setToken($token);
+        throw $ex;
     }
+
 
     //TODO
     //$this->userChecker->checkPostAuth($user);
