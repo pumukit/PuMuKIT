@@ -255,8 +255,10 @@ class UserController extends AdminController
 
         $new_criteria = array();
         foreach ($criteria as $property => $value) {
-            if ('permissionProfile' == $property && 'all' !== $value) {
-                $new_criteria[$property] = new \MongoId($value);
+            if ('permissionProfile' == $property) {
+                if('all' != $value) {
+                    $new_criteria[$property] = new \MongoId($value);
+                }
             } elseif ('' !== $value) {
                 $new_criteria[$property] = new \MongoRegex('/'.$value.'/i');
             }
