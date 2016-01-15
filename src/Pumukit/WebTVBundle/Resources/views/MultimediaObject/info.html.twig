@@ -23,6 +23,24 @@
     </div>
   </div>
 </div>
+
+{% if editor_chapters %}
+  <strong>Marks:</strong>
+  <ol style="list-style-type:decimal;padding-left:40px;">
+    {% for chapter in editor_chapters %}
+      <li>{{chapter.title}} :
+        <a style="cursor:pointer;color:blue"
+           onMouseOver="this.style.textDecoration='underline'"
+           onMouseOut="this.style.textDecoration='none'"
+           onClick="paellaevents = document.getElementById('paellaiframe').contentWindow.paella.events;
+                    paellaevents.trigger(paellaevents.seekToTime,{time:{{chapter.time}}})">
+          {{ date("00:00:00 + " ~ (chapter.time|round) ~ " seconds")|date('H:i:s')}}
+        </a>
+      </li>
+    {% endfor %}
+  </ol>
+{% endif %}
+
 <!--SUBTITLE/DESCRIPTION-->
 <div class="row">
   <div class="col-xs-12">
