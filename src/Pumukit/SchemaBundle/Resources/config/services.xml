@@ -163,5 +163,11 @@
         <service id="pumukitschema.stats" class="Pumukit\SchemaBundle\Services\StatsService">
           <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
+
+        <service id="security.role_hierarchy" class="%security.role_hierarchy.class%" public="false">
+            <argument>%security.role_hierarchy.roles%</argument>
+            <argument type="service" id="pumukitschema.permission"/>
+        </service>
+
     </services>
 </container>
