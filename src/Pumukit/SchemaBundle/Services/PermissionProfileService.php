@@ -88,7 +88,8 @@ class PermissionProfileService
      */
     public function setDefaultPermissionProfile()
     {
-        $default = $this->repo->findDefaultCandidate();
+        $totalPermissions = count($this->permissionService->getAllPermissions());
+        $default = $this->repo->findDefaultCandidate($totalPermissions);
 
         if (null == $default) return false;
 
