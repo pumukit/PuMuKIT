@@ -4,6 +4,7 @@ namespace Pumukit\SecurityBundle\Authentication\Provider;
 
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationServiceException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
@@ -16,11 +17,13 @@ class PumukitProvider implements AuthenticationProviderInterface
 {
   private $userProvider;
   private $providerKey;
+  private $userChecker;
 
-  public function __construct(UserProviderInterface $userProvider, $providerKey)
+  public function __construct(UserProviderInterface $userProvider, $providerKey, UserCheckerInterface $userChecker)
   {
     $this->userProvider = $userProvider;
     $this->providerKey = $providerKey;
+    $this->userChecker = $userChecker;
   }
 
   public function authenticate(TokenInterface $token)
@@ -45,25 +48,13 @@ class PumukitProvider implements AuthenticationProviderInterface
     }
 
 
-    //TODO
-    //$this->userChecker->checkPostAuth($user);
-
+    $this->userChecker->checkPreAuth($user);
+    $this->userChecker->checkPostAuth($user);
+    
     $authenticatedToken = new PreAuthenticatedToken($user, $token->getCredentials(), $this->providerKey, $user->getRoles());
     $authenticatedToken->setAttributes($token->getAttributes());
 
     return $authenticatedToken;
-
-
-    /*
-    if ($user) {
-      $authenticatedToken = new PreAuthenticatedToken($user, "XXX", "main", $user->getRoles());
-      $authenticatedToken->setUser($user);
-
-      return $authenticatedToken;
-    }
-
-    throw new AuthenticationException('The pumukit authentication failed.');
-    */
   }
 
   public function supports(TokenInterface $token)

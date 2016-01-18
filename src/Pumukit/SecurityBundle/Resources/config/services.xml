@@ -16,6 +16,7 @@
       <service id="pumukit.security.authentication.provider" class="Pumukit\SecurityBundle\Authentication\Provider\PumukitProvider" public="false">
         <argument />  <!-- UserProvider -->
         <argument />  <!-- providerKey -->
+        <argument type="service" id="security.user_checker" />
       </service>
 
       <service id="pumukit.security.authentication.listener"
