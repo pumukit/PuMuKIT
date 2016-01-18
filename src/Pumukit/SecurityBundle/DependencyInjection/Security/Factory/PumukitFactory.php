@@ -50,7 +50,8 @@ class PumukitFactory extends AbstractFactory
   
   protected function createAuthProvider(ContainerBuilder $container, $id, $config, $userProviderId)
   { 
-    $provider = 'security.authentication.provider.pumukit.'.$id;
+    $provider = 'pumukit.security.authentication.provider.'.$id;
+
         $container
           ->setDefinition($provider, new DefinitionDecorator('pumukit.security.authentication.provider'))
           ->replaceArgument(0, new Reference($userProviderId))
