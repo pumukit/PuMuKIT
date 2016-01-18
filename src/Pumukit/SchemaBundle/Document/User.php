@@ -36,6 +36,13 @@ class User extends BaseUser
      */
     protected $fullname;
 
+    /**
+     * @var string $origin
+     *
+     * @MongoDB\String
+     */
+    protected $origin = 'local';
+
     public function __construct()
     {
         parent::__construct();
@@ -99,5 +106,25 @@ class User extends BaseUser
     public function getFullname()
     {
         return $this->fullname;
+    }
+
+    /**
+     * Set origin
+     *
+     * @param string $origin
+     */
+    public function setOrigin($origin)
+    {
+        $this->origin = $origin;
+    }
+
+    /**
+     * Get origin
+     *
+     * @return string
+     */
+    public function getOrigin()
+    {
+        return $this->origin;
     }
 }

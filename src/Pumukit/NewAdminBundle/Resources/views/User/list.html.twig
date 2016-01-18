@@ -14,6 +14,7 @@
           <th>{% trans %}Name{% endtrans %}</th>
           <th>{% trans %}Login{% endtrans %}</th>
           <th>{% trans %}Type{% endtrans %}</th>
+          <th>{% trans %}Origin{% endtrans %}</th>
           <th>{% trans %}Email{% endtrans %}</th>
         </tr>
       </thead>
@@ -90,6 +91,9 @@
                 {% endif %}
             {% endfor %}
             {% endspaceless %}
+          </td>
+          <td>
+	          {{ user.origin }}
           </td>
           <td>
 	          {% if user.email is not empty %}{{ user.email }}{% endif %}
