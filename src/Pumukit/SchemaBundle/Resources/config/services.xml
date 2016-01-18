@@ -85,6 +85,10 @@
             <argument type="service" id="pumukitschema.permissionprofile_dispatcher"/>
         </service>
 
+        <service id="pumukitschema.permission" class="Pumukit\SchemaBundle\Services\PermissionService">
+            <argument>%pumukitschema.external_permissions%</argument>
+        </service>
+
         <service id="pumukitschema.multimediaobject_dispatcher" class="Pumukit\SchemaBundle\Services\MultimediaObjectEventDispatcherService">
             <argument type="service" id="event_dispatcher"/>
         </service>
