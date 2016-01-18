@@ -32,7 +32,7 @@ class PermissionProfileController extends AdminController
         $permissions = Permission::$permissionDescription;
         $scopes = PermissionProfile::$scopeDescription;
 
-        $createBroadcastsEnabled = !$this->container->getParameter('pumukitschema.disable_broadcast_creation');
+        $createBroadcastsEnabled = !$this->container->getParameter('pumukit_new_admin.disable_broadcast_creation');
 
         return array(
                      'permissionprofiles' => $permissionProfiles,
@@ -60,7 +60,7 @@ class PermissionProfileController extends AdminController
         $permissions = Permission::$permissionDescription;
         $scopes = PermissionProfile::$scopeDescription;
 
-        $createBroadcastsEnabled = !$this->container->getParameter('pumukitschema.disable_broadcast_creation');
+        $createBroadcastsEnabled = !$this->container->getParameter('pumukit_new_admin.disable_broadcast_creation');
 
         return array(
                      'permissionprofiles' => $permissionProfiles,
