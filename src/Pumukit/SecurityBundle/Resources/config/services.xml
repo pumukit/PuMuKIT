@@ -17,6 +17,8 @@
         <argument />  <!-- UserProvider -->
         <argument />  <!-- providerKey -->
         <argument type="service" id="security.user_checker" />
+        <argument type="service" id="service_container" /> 
+        <!--<call method="setUserService"><argument type="service" id="pumukitschema.user" /></call>-->
       </service>
 
       <service id="pumukit.security.authentication.listener"
