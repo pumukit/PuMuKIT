@@ -31,6 +31,8 @@ class PumukitInitRepoCommand extends ContainerAwareCommand
 
     private $broadcastOption = self::BROADCAST_DEFAULT;
 
+    private $allPermissions;
+
     protected function configure()
     {
         $this
@@ -53,6 +55,7 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+        $this->allPermissions = $this->getContainer()->get('pumukitschema.permission')->getAllPermissions();
 
         if ($input->getOption('force') && ($repoName = $input->getArgument('repo'))) {
             switch ($repoName) {
@@ -429,7 +432,7 @@ EOT
             } elseif ($permission === 'all') {
                 $permissionProfile = $this->addAllPermissions($permissionProfile);
                 break;
-            } elseif (array_key_exists($permission, Permission::$permissionDescription)) {
+            } elseif (array_key_exists($permission, $this->allPermissions)) {
                 $permissionProfile->addPermission($permission);
             }
         }
@@ -441,7 +444,7 @@ EOT
 
     private function addAllPermissions(PermissionProfile $permissionProfile)
     {
-        foreach (Permission::$permissionDescription as $key => $value) {
+        foreach ($this->allPermissions as $key => $value) {
             $permissionProfile->addPermission($key);
         }
 
