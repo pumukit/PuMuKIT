@@ -15,22 +15,22 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Http\Firewall\AbstractAuthenticationListener;
 use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
-
+use Pumukit\SecurityBundle\Services\CASService;
 
 class PumukitListener extends AbstractAuthenticationListener
 {
-  protected $tokenStorage;
-  protected $authenticationManager;
+  protected $casService;
 
 
   /**
    * {@inheritdoc}
    */
 
-  public function __construct(SecurityContextInterface $securityContext, AuthenticationManagerInterface $authenticationManager, SessionAuthenticationStrategyInterface $sessionStrategy, HttpUtils $httpUtils, $providerKey, AuthenticationSuccessHandlerInterface $successHandler, AuthenticationFailureHandlerInterface $failureHandler, array $options = array(), LoggerInterface $logger = null, EventDispatcherInterface $dispatcher = null)
+  public function __construct(SecurityContextInterface $securityContext, AuthenticationManagerInterface $authenticationManager, SessionAuthenticationStrategyInterface $sessionStrategy, HttpUtils $httpUtils, $providerKey, AuthenticationSuccessHandlerInterface $successHandler, AuthenticationFailureHandlerInterface $failureHandler, array $options = array(), LoggerInterface $logger = null, EventDispatcherInterface $dispatcher = null, CASService $casService)
   {
     
     parent::__construct($securityContext, $authenticationManager, $sessionStrategy, $httpUtils, $providerKey, $successHandler, $failureHandler, $options, $logger, $dispatcher);
+    $this->casService = $casService;
   }
 
 
@@ -39,17 +39,8 @@ class PumukitListener extends AbstractAuthenticationListener
    */
   protected function attemptAuthentication(Request $request)
   {
-
-    \phpCAS::client(CAS_VERSION_2_0, "login.campusdomar.es", 443, "cas", false);
-    //\phpCAS::setDebug('/tmp/cas.log');
-    \phpCAS::setNoCasServerValidation();
-    //\phpCAS::setSingleSignoutCallback(array($this, 'casSingleSignOut'));
-    //\phpCAS::setPostAuthenticateCallback(array($this, 'casPostAuth'));
-    \phpCAS::handleLogoutRequests(true, array());
-    \phpCAS::forceAuthentication();
-
-    $username = \phpCAS::getUser();
-
+    $this->casService->forceAuthentication();
+    $username = $this->casService->getUser();
 
     $token = new PreAuthenticatedToken($username, array('ROLE_USER'), $this->providerKey);
     return $this->authenticationManager->authenticate($token);

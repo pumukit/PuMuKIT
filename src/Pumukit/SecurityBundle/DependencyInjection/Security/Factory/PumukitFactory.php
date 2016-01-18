@@ -47,6 +47,19 @@ class PumukitFactory extends AbstractFactory
   {  
     return 'pumukit.security.authentication.listener';
   }
+
+  protected function createListener($container, $id, $config, $userProvider)
+  {
+    $listenerId = parent::createListener($container, $id, $config, $userProvider);
+
+    $container
+      ->getDefinition($listenerId)
+      ->addArgument(new Reference('pumukit.casservice'))
+      ;
+
+    return $listenerId;
+  }
+
   
   protected function createAuthProvider(ContainerBuilder $container, $id, $config, $userProviderId)
   { 
