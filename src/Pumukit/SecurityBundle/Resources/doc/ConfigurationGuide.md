@@ -14,3 +14,14 @@ security:
                 success_handler: pumukit.security.handler.logout
             anonymous:    true
 ```
+
+
+And `app/config/parameters.yml` file with:
+
+
+```
+pumukit_security:
+    cas_url: 'login.XXXXXX.es'
+    cas_port: 443
+    cas_uri: 'cas'
+```
