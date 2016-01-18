@@ -15,6 +15,11 @@
                  class="Pumukit\SecurityBundle\Firewall\PumukitListener"
                  parent="security.authentication.listener.abstract"
                  abstract="true" />
+
+      <service id="pumukit.security.handler.logout" class="Pumukit\SecurityBundle\Handler\LogoutSuccessHandler">
+        <argument type="collection" />
+        <argument type="service" id="router" />
+      </service>
     </services>
 
 
