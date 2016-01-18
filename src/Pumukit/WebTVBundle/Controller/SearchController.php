@@ -96,6 +96,10 @@ class SearchController extends Controller
         $queryBuilder = $this->tagsQueryBuilder($queryBuilder, $tagsFound, $blockedTag, $useTagAsGeneral);
         $queryBuilder = $queryBuilder->sort('record_date','desc');
         // --- END Create QueryBuilder ---
+
+        // --- Execute QueryBuilder count --
+        $countQuery = clone $queryBuilder;
+        $totalObjects = $countQuery->count()->getQuery()->execute();
         // --- Execute QueryBuilder and get paged results ---
         $pagerfanta = $this->createPager($queryBuilder, $request->query->get('page', 1));
         // --- Query to get existing languages ---
@@ -129,7 +133,8 @@ class SearchController extends Controller
         'blocked_tag' => $blockedTag,
         'min_record_date' => $minRecordDate,
         'max_record_date' => $maxRecordDate,
-        'search_years' => $searchYears );
+        'search_years' => $searchYears,
+        'total_objects' => $totalObjects);
     }
 
     private function createPager($objects, $page)
