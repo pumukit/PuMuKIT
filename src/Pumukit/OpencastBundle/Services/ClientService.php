@@ -213,9 +213,9 @@ class ClientService
      * @param  string  $count
      * @return array
      */
-    public function getCountedWorkflowInstances($id = '', $count = '')
+    public function getCountedWorkflowInstances($id = '', $count = '', $workflowName = '')
     {
-        $request = '/workflow/instances.json'. ($id && $count ? '?mp='.$id.'&count='.$count : ($id ? '?mp='.$id : ($count?'?count='.$count:'')));
+        $request = '/workflow/instances.json?state=SUCCEEDED'.($workflowName?'&workflowdefinition='.$workflowName:'').($id?'&mp='.$id:'').($count?'&count='.$count:'');
 
         $output = $this->request($request);
 

@@ -29,16 +29,19 @@ class WorkflowService
     {
         $errors = 0;
         if ($mediaPackageId) {
+            $deletionWorkflow = $this->getAllWorkflowInstances($mediaPackageId, $this->deletionWorkflowName);
+            $errors = $this->stopSucceededWorkflow($deletionWorkflow, $errors);
+            $mediaPackageId = $this->getMediaPackageIdFromWorkflow($deletionWorkflow);
             $workflows = $this->getAllWorkflowInstances($mediaPackageId);
             foreach ($workflows as $workflow) {
                 $errors = $this->stopSucceededWorkflow($workflow, $errors);
             }
         } else {
-            $workflows = $this->getAllWorkflowInstances();
-            $deletionWorkflows = $this->getWorkflowsWithTemplate($workflows, $this->deletionWorkflowName);
+            $deletionWorkflows = $this->getAllWorkflowInstances('', $this->deletionWorkflowName);
             foreach ($deletionWorkflows as $deletionWorkflow) {
+                $errors = $this->stopSucceededWorkflow($deletionWorkflow, $errors);
                 $mediaPackageId = $this->getMediaPackageIdFromWorkflow($deletionWorkflow);
-                $mediaPackageWorkflows = $this->getWorkflowsWithMediaPackageId($workflows, $mediaPackageId);
+                $mediaPackageWorkflows = $this->getAllWorkflowInstances($mediaPackageId, '');
                 foreach ($mediaPackageWorkflows as $mediaPackageWorkflow) {
                     $errors = $this->stopSucceededWorkflow($mediaPackageWorkflow, $errors);
                 }
@@ -56,7 +59,7 @@ class WorkflowService
      * @param string $id
      * @return array
      */
-    private function getAllWorkflowInstances($id = '')
+    private function getAllWorkflowInstances($id = '', $workflowName = '')
     {
         $statistics = $this->clientService->getWorkflowStatistics();
 
@@ -68,11 +71,14 @@ class WorkflowService
         if ($total == 0)
             return null;
 
-        $decode = $this->clientService->getCountedWorkflowInstances($id, $total);
+        $decode = $this->clientService->getCountedWorkflowInstances($id, $total, $workflowName);
 
         $instances = array();
         if (isset($decode["workflows"]["workflow"])) {
             $instances = $decode["workflows"]["workflow"];
+        }
+        if (isset($instances['state'])) {
+            $instances = array('0' => $instances);
         }
 
         return $instances;
