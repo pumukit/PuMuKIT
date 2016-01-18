@@ -54,6 +54,14 @@ class Configuration implements ConfigurationInterface
               ->defaultFalse()
               ->info('Disable the creation of new Broadcasts')
             ->end()
+            ->arrayNode('external_permissions')
+              ->prototype('array')
+              ->info('External permissions for user profiles.')
+              ->children()
+                ->scalarNode('role')->isRequired()->end()
+                ->scalarNode('description')->isRequired()->end()
+              ->end()
+            ->end()
           ->end();
 
         return $treeBuilder;
