@@ -4,25 +4,27 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
-use Pumukit\SchemaBundle\Security\Permission;
 
 class PermissionProfileService
 {
     private $dm;
     private $repo;
     private $dispatcher;
+    private $permissionService;
 
     /**
      * Constructor
      *
      * @param DocumentManager $documentManager
      * @param PermissionProfileEventDispatcherService $dispatcher
+     * @param PermissionService $permissionService
      */
-    public function __construct(DocumentManager $documentManager, PermissionProfileEventDispatcherService $dispatcher)
+    public function __construct(DocumentManager $documentManager, PermissionProfileEventDispatcherService $dispatcher, PermissionService $permissionService)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:PermissionProfile');
         $this->dispatcher = $dispatcher;
+        $this->permissionService = $permissionService;
     }
 
     /**
@@ -107,7 +109,7 @@ class PermissionProfileService
      */
     public function addPermission(PermissionProfile $permissionProfile, $permission='', $executeFlush=true)
     {
-        if (array_key_exists($permission, Permission::$permissionDescription)) {
+        if (array_key_exists($permission, $this->permissionService->getAllPermissions())) {
             $permissionProfile->addPermission($permission);
             $this->dm->persist($permissionProfile);
             if ($executeFlush) $this->dm->flush();

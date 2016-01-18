@@ -83,6 +83,7 @@
         <service id="pumukitschema.permissionprofile" class="Pumukit\SchemaBundle\Services\PermissionProfileService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="pumukitschema.permissionprofile_dispatcher"/>
+            <argument type="service" id="pumukitschema.permission"/>
         </service>
 
         <service id="pumukitschema.permission" class="Pumukit\SchemaBundle\Services\PermissionService">
