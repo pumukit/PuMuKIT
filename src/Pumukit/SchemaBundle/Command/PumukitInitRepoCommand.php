@@ -17,7 +17,7 @@ use Pumukit\SchemaBundle\Security\Permission;
 class PumukitInitRepoCommand extends ContainerAwareCommand
 {
     const BROADCAST_DEFAULT = 'default';
-    const BROADCAST_CAS = 'cas';
+    const BROADCAST_LDAP = 'ldap';
 
     private $dm = null;
     private $tagsRepo = null;
@@ -124,11 +124,11 @@ EOT
         $this->broadcastsRepo = $this->dm->getRepository("PumukitSchemaBundle:Broadcast");
 
         if ($broadcastOption = $input->getOption('option')) {
-            if (($broadcastOption === self::BROADCAST_DEFAULT) || ($broadcastOption === self::BROADCAST_CAS)) {
+            if (($broadcastOption === self::BROADCAST_DEFAULT) || ($broadcastOption === self::BROADCAST_LDAP)) {
                 $this->broadcastOption = $broadcastOption;
             } else {
                 throw new \Exception('Broadcast Option: "'.$broadcastOption.'" not valid. Valid values: "'
-                                    .self::BROADCAST_DEFAULT.'" or "'.self::BROADCAST_CAS.'".');
+                                    .self::BROADCAST_DEFAULT.'" or "'.self::BROADCAST_LDAP.'".');
             }
         }
 
