@@ -92,7 +92,7 @@ class PaellaRepositoryController extends Controller
         }
         else {
             $track = $mmobj->getFilteredTrackWithTags(array('display'));
-            if($tracks)
+            if($track)
                 $tracks[] = $track;
         }
 
