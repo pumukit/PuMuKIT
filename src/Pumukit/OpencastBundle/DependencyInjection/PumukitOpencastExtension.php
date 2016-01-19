@@ -37,7 +37,9 @@ class PumukitOpencastExtension extends Extension
             ->addArgument($config['host'])
             ->addArgument($config['username'])
             ->addArgument($config['password'])
-            ->addArgument($config['player']);
+            ->addArgument($config['player'])
+            ->addArgument($config['scheduler'])
+            ->addArgument($config['dashboard']);
 
           $container
             ->register("pumukit_opencast.job", "Pumukit\OpencastBundle\Services\OpencastService")

@@ -8,28 +8,50 @@ class ClientService
   private $user;
   private $passwd;
   private $player;
+  private $scheduler;
+  private $dashboard;
   private $adminUrl;
 
-  public function __construct($url, $user="", $passwd="", $player="/engage/ui/watch.html")
+  public function __construct($url, $user='', $passwd='', $player='/engage/ui/watch.html', $scheduler = '/admin/index.html#/recordings', $dashboard = '/dashboard/index.html')
   {
       $this->url  = ('/' == substr($url, -1)) ? substr($url, 0, -1) : $url;
       $this->user  = $user;
       $this->passwd  = $passwd;
       $this->player  = $player;
+      $this->scheduler  = $scheduler;
+      $this->dashboard  = $dashboard;
   }
 
   public function getUrl()
   {
-    return $this->url;
+      return $this->url;
   }
 
   public function getPlayerUrl()
   {
-    return ('/' === $this->player[0]) ? $this->url . $this->player : $this->player;
+      return ('/' === $this->player[0]) ? $this->url . $this->player : $this->player;
   }
 
+  public function getSchedulerUrl()
+  {
+      if (!$this->adminUrl) {
+          $this->adminUrl = $this->getAdminUrl();
+      }
 
-  private function request($path, $useAdminUrl=false){
+      return ('/' === $this->scheduler[0]) ? $this->adminUrl . $this->scheduler : $this->scheduler;
+  }
+
+  public function getDashboardUrl()
+  {
+      if (!$this->adminUrl) {
+          $this->adminUrl = $this->getAdminUrl();
+      }
+
+      return ('/' === $this->dashboard[0]) ? $this->adminUrl . $this->dashboard : $this->dashboard;
+  }
+
+  private function request($path, $useAdminUrl=false)
+  {
     $sal = array();
 
     if ($useAdminUrl && $this->adminUrl) {
