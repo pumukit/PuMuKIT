@@ -24,6 +24,7 @@ class Permission
     const ACCESS_WIZARD_UPLOAD = 'ROLE_ACCESS_WIZARD_UPLOAD';
     const ACCESS_API = 'ROLE_ACCESS_API';
     const ACCESS_INBOX = 'ROLE_ACCESS_INBOX';
+    const MODIFY_OWNER = 'ROLE_MODIFY_OWNER';
 
     public static $permissionDescription = array(
                                                 Permission::ACCESS_DASHBOARD => "Access Dashboard",
@@ -45,6 +46,7 @@ class Permission
                                                 Permission::ACCESS_ADVANCED_UPLOAD => "Access Advanced Upload",
                                                 Permission::ACCESS_WIZARD_UPLOAD => "Access Wizard Upload",
                                                 Permission::ACCESS_API => "Access API",
-                                                Permission::ACCESS_INBOX => "Access Inbox"
+                                                Permission::ACCESS_INBOX => "Access Inbox",
+                                                Permission::MODIFY_OWNER => "Modify Owner"
                                                 );
 }
