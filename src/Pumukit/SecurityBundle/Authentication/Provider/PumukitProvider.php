@@ -46,15 +46,12 @@ class PumukitProvider implements AuthenticationProviderInterface
     try {
         $user = $this->userProvider->loadUserByUsername($user);
     } catch(UsernameNotFoundException $notFound){
-      $this->createUser($user);
-      //TODO add use in ddbb.
-        throw $notFound;
+        $user = $this->createUser($user);
     } catch (\Exception $repositoryProblem) {
         $ex = new AuthenticationServiceException($repositoryProblem->getMessage(), 0, $repositoryProblem);
         $ex->setToken($token);
         throw $ex;
     }
-
 
     $this->userChecker->checkPreAuth($user);
     $this->userChecker->checkPostAuth($user);
@@ -69,15 +66,27 @@ class PumukitProvider implements AuthenticationProviderInterface
   private function createUser($userName)
   {
     $userService = $this->container->get('pumukitschema.user');
-    if($userService) {
-      //TODO create createDefaultUser in UserService.
-      //$this->userService->createDefaultUser($user);
-      $user = new User();
-      $user->setUsername($userName);
-      $userService->create($user);
-    } else {
-      throw new AuthenticationServiceException("Not UserService to create a new user");
+    $personService = $this->container->get('pumukitschema.person');
+    $permissionProfileService = $this->container->get('pumukitschema.permissionprofile');
+    if ($userService && $personService) {
+        //TODO create createDefaultUser in UserService.
+        //$this->userService->createDefaultUser($user);
+        $user = new User();
+        $user->setUsername($userName);
+        $defaultPermissionProfile = $permissionProfileService->getDefault();
+        if (null == $defaultPermissionProfile) {
+            throw new \Exception('Unable to assign a Permission Profile to the new User. There is no default Permission Profile');
+        }
+        $user->setPermissionProfile($defaultPermissionProfile);
+        $user->setOrigin('cas');
+        $user->setEnabled(true);
+
+        $userService->create($user);
+        $personService->referencePersonIntoUser($user);
+        return $user;
     }
+
+    throw new AuthenticationServiceException("Not UserService to create a new user");    
   }
 
 
