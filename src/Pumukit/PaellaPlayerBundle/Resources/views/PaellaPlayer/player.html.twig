@@ -3,7 +3,9 @@
 <script>
  $(document).bind(paella.events.loadComplete,function(event,params) {
      {% if autostart %}
-     paella.events.trigger(paella.events.play);
+     setTimeout(function(){
+         paella.events.trigger(paella.events.play);
+     }, 2000);
      {% endif %}
  });
  loadPaella('playerContainer', '{{multimediaObject.id}}');
