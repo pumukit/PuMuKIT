@@ -21,7 +21,7 @@ class Builder extends ContainerAware
         }
 
         if ($authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_SERIES)) {
-            $series = $menu->addChild('Multimedia Series', array('route' => 'pumukitnewadmin_series_index'))->setExtra('translation_domain', 'NewAdminBundle');
+            $series = $menu->addChild('Media Manager', array('route' => 'pumukitnewadmin_series_index'))->setExtra('translation_domain', 'NewAdminBundle');
             $series->addChild('Multimedia', array('route' => 'pumukitnewadmin_mms_index'))->setExtra('translation_domain', 'NewAdminBundle');
             $series->setDisplayChildren(false);
         }
