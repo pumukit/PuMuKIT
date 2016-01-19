@@ -58,4 +58,27 @@ class PlayerController extends Controller
         $event = new ViewedEvent($multimediaObject, $track);
         $this->get('event_dispatcher')->dispatch(WebTVEvents::MULTIMEDIAOBJECT_VIEW, $event);
     }
+
+    protected function getChapterMarks(MultimediaObject $multimediaObject)
+    {
+        //Get editor chapters for the editor template.
+        //Once the chapter marks player plugin is created, this part won't be needed.
+        $marks = $this->get('doctrine_mongodb.odm.document_manager')
+                      ->getRepository('PumukitSchemaBundle:Annotation')
+                      ->createQueryBuilder()
+                      ->field('type')->equals('paella/marks')
+                      ->field('multimediaObject')->equals(new \MongoId($multimediaObject->getId()))
+                      ->getQuery()->getSingleResult();
+
+        $editorChapters = array();
+        if($marks) {
+            $marks = json_decode($marks->getValue(), true);
+        }
+
+        foreach($marks['marks'] as $chapt) {
+            $editorChapters[] = array('title' => $chapt['name'],
+                                      'time' => $chapt['s']);
+        }
+        return $editorChapters;
+    }
 }

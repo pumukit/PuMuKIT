@@ -46,26 +46,7 @@ class MultimediaObjectController extends PlayerController
 
         $this->updateBreadcrumbs($multimediaObject);
 
-
-        //Get editor chapters for the editor template.
-        //Once the chapter marks player plugin is created, this part won't be needed.
-        $marks = $this->get('doctrine_mongodb.odm.document_manager')
-                               ->getRepository('PumukitSchemaBundle:Annotation')
-                               ->createQueryBuilder()
-                               ->field('type')->equals('paella/marks')
-                               ->field('multimediaObject')->equals(new \MongoId($multimediaObject->getId()))
-                               ->getQuery()->getSingleResult();
-
-
-        $editorChapters = array();
-        if($marks) {
-            $marks = json_decode($marks->getValue(), true);
-        }
-
-        foreach($marks['marks'] as $chapt) {
-            $editorChapters[] = array('title' => $chapt['name'],
-                                      'time' => $chapt['s']);
-        }
+        $editorChapters = $this->getChapterMarks($multimediaObject);
 
         return array('autostart' => $request->query->get('autostart', 'true'),
         'intro' => $this->getIntro($request->query->get('intro')),
