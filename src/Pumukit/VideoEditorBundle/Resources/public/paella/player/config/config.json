@@ -73,7 +73,7 @@
                 "enabled": true
             },
             "es.upv.paella.fullScreenButtonPlugin": {
-                "enabled": true,
+                "enabled": false,
                 "reloadOnFullscreen": {
                     "enabled": true,
                     "keepUserSelection": true
