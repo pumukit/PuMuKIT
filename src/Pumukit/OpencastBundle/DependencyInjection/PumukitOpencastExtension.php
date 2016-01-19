@@ -60,5 +60,7 @@ class PumukitOpencastExtension extends Extension
 
         $container->setParameter('pumukit_opencast.generate_sbs', $config['generate_sbs'] ? $config['generate_sbs'] : false);
         $container->setParameter('pumukit_opencast.profile', $config['generate_sbs'] ? $config['profile'] : null);
+        $container->setParameter('pumukit_opencast.scheduler_on_menu', $config['scheduler_on_menu']);
+        $container->setParameter('pumukit_opencast.dashboard_on_menu', $config['dashboard_on_menu']);
     }
 }

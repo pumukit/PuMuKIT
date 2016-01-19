@@ -71,8 +71,15 @@ class Builder extends ContainerAware
 
         if ($authorizationChecker->isGranted(Permission::ACCESS_INGESTOR)) {
             if ($this->container->has("pumukit_opencast.client")) {
-                $ingester = $menu->addChild('Ingester')->setExtra('translation_domain', 'NewAdminBundle');
-                $ingester->addChild('Opencast Ingester', array('route' => 'pumukitopencast'))->setExtra('translation_domain', 'NewAdminBundle');
+                $client = $this->container->get("pumukit_opencast.client");
+                $ingester = $menu->addChild('OC-tools')->setExtra('translation_domain', 'NewAdminBundle');
+                if ($this->container->getParameter('pumukit_opencast.scheduler_on_menu')) {
+                    $ingester->addChild('Scheduler', array('uri' => $client->getAdminUrl() . '/admin/index.html#/recordings'))->setExtra('translation_domain', 'NewAdminBundle');
+                }
+                if ($this->container->getParameter('pumukit_opencast.dashboard_on_menu')) {
+                    $ingester->addChild('GC-Dash', array('uri' => $client->getAdminUrl() . '/dashboard/index.html'))->setExtra('translation_domain', 'NewAdminBundle');
+                }
+                $ingester->addChild('Ingester', array('route' => 'pumukitopencast'))->setExtra('translation_domain', 'NewAdminBundle');
             }
         }
 

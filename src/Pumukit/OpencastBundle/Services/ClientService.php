@@ -12,7 +12,7 @@ class ClientService
 
   public function __construct($url, $user="", $passwd="", $player="/engage/ui/watch.html")
   {
-      $this->url  = $url;
+      $this->url  = ('/' == substr($url, -1)) ? substr($url, 0, -1) : $url;
       $this->user  = $user;
       $this->passwd  = $passwd;
       $this->player  = $player;
@@ -54,12 +54,10 @@ class ClientService
     curl_close($ch);
 
     if(200 != $sal["status"]) {
-      throw new \Exception("Error Processing Request", 1);
-      
+      throw new \Exception(sprintf("Error Processing Request '%s'", $this->url . $path), 1);
     }
    
     return $sal;
-
   }
 
 
@@ -131,7 +129,7 @@ class ClientService
           return $decode["search-results"]["result"]["mediapackage"];
   }
 
-  private function getAdminUrl()
+  public function getAdminUrl()
   {
       $output = $this->request('/services/available.json?serviceType=org.opencastproject.episode');
       if ($output["status"] !== 200) return false;
