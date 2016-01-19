@@ -32,10 +32,11 @@ class PaellaRepositoryController extends Controller
 
         foreach( $tracks as $track) {
             $src = $this->getAbsoluteUrl($request, $track->getUrl());
+            $mimeType = $track->getMimetype();
             $data['streams'][] = array('sources' => array('mp4' => array(array('src' => $src,
-                                                                     'mimetype' => $track->getMimetype(),
-                                                                     'res' => array('w' => 0, 'h' => 0)))),
-                                   'preview' => $pic);
+                                                                               'mimetype' => $mimeType,
+                                                                               'res' => array('w' => 0, 'h' => 0)))),
+                                       'preview' => $pic);
         }
 
 
@@ -68,15 +69,31 @@ class PaellaRepositoryController extends Controller
     {
         $tracks = array();
         if($mmobj->getProperty('opencast')) {
-            if($track= $mmobj->getFilteredTrackWithTags(array('presenter/delivery')))
-                $tracks[] = $track;
+            $presenterTracks = $mmobj->getFilteredTracksWithTags(array('presenter/delivery'));
+            $presentationTracks = $mmobj->getFilteredTracksWithTags(array('presentation/delivery'));
 
-
-            if($track = $mmobj->getFilteredTrackWithTags(array('presentation/delivery')))
-                $tracks[] = $track;
+            foreach($presenterTracks as $track) {
+                if($track->getVcodec() == 'h264') {
+                    $tracks[] = $track;
+                    break;
+                }
+            }
+            foreach($presentationTracks as $track) {
+                if($track->getVcodec() == 'h264') {
+                    $tracks[] = $track;
+                    break;
+                }
+            }
+            if(count($tracks) <= 0) {
+                $track =  $mmobj->getFilteredTracksWithTags(array('sbs'));
+                if($track)
+                    $tracks[] = $track;
+            }
         }
         else {
-            $tracks[] = $mmobj->getFilteredTrackWithTags(array('display'));
+            $track = $mmobj->getFilteredTrackWithTags(array('display'));
+            if($tracks)
+                $tracks[] = $track;
         }
 
         return $tracks;
