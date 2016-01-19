@@ -79,6 +79,9 @@ class PlayerController extends Controller
             $editorChapters[] = array('title' => $chapt['name'],
                                       'time' => $chapt['s']);
         }
+        usort($editorChapters, function($a, $b) {
+            return $a > $b;
+        });
         return $editorChapters;
     }
 }
