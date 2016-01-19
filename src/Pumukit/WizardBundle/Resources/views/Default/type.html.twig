@@ -34,16 +34,20 @@
         <div class="radio">
           <label><input type="radio" name="pumukitwizard_form_data[type][option]" value="single" {{ ('single' == form_data.type.option)?'checked="checked"':'' }}/>{% trans %}Add one single multimedia object{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</label>
         </div>
+        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
         <div class="radio">
           <label><input type="radio" name="pumukitwizard_form_data[type][option]" value="multiple" {{ ('multiple' == form_data.type.option)?'checked="checked"':'' }}/>{% trans %}Add multiple multimedia objects{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</label>
         </div>
+        {% endif %}
         {% else %}
         <div class="radio">
           <label><input type="radio" name="pumukitwizard_form_data[type][option]" value="single" checked="checked"/>{% trans %}Add one single multimedia object{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</label>
         </div>
+        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
         <div class="radio">
           <label><input type="radio" name="pumukitwizard_form_data[type][option]" value="multiple"/>{% trans %}Add multiple multimedia objects{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</label>
         </div>
+        {% endif %}
         {% endif %}
       </div>
     </fieldset>

@@ -3,7 +3,7 @@
   <h4 class="modal-title" id="myModalLabel">{% trans %}create new track{% endtrans %}</h4>
 </div>
 <div class="modal-body">
-  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
   <form autocomplete="off" method="post" target="iframeUpload"
         action="{{ path('pumukitnewadmin_track_upload', {'id': mm.id}) }}" 
@@ -38,15 +38,19 @@
 
       {{ form_row(form["language"]) }}
 
+      {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
       <div class="form-group">
-        <label for="file_type" class="control-label">{% trans %}Mode{% endtrans %}</label>        
+        <label for="file_type" class="control-label">{% trans %}Mode{% endtrans %}</label>
         <div class="radio">
           <label><input type="radio" name="file_type" id="radio_inbox" value="inbox" onclick="$('#pumukitnewadmin_track_file').hide();$('#pumukitnewadmin_track_inbox').show();"/> {% trans %}Inbox on server{% endtrans %}</label>
         </div>
         <div class="radio">
-          <label><input type="radio" name="file_type" id="radio_file" value="file" checked="checked" onclick="$('#pumukitnewadmin_track_inbox').hide();$('#pumukitnewadmin_track_file').show();"/> {% trans %}Local hard drive{% endtrans %}</label>
+          <label><input type="radio" name="file_type" id="radio_file" value="file" checked="checked" onclick="{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}$('#pumukitnewadmin_track_inbox').hide();{% endif %}$('#pumukitnewadmin_track_file').show();"/> {% trans %}Local hard drive{% endtrans %}</label>
         </div>
       </div>
+      {% else %}
+      <input type="hidden" name="file_type" id="radio_file" value="file"/>
+      {% endif %}
       
       <div class="form-group" id="pumukitnewadmin_track_file">
         <label for="url" class="control-label">{% trans %}Resource{% endtrans %}:</label>
@@ -56,10 +60,11 @@
           <span id="file_upload_progress" style="color:blue; display:none;">{% trans %}Progress{% endtrans %}...</span>
         </div>
       </div>
-      
+      {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
       <div class="form-group" id="pumukitnewadmin_track_inbox" style="display: none">
         {{ render(controller('PumukitNewAdminBundle:Inbox:Form')) }}
       </div>
+      {% endif %}
       <span id="error_file" style="display:none;color:red;" class="error">{% trans %}Empty file field{% endtrans %}</span>
     </fieldset>
     <div class="modal-footer">

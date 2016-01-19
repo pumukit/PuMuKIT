@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
- * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
+ * @Security("is_granted('ROLE_ACCESS_INBOX')")
  */
 class InboxController extends Controller
 {

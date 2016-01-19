@@ -29,7 +29,7 @@ class PermissionProfileController extends AdminController
         $criteria = $this->getCriteria($config);
         $permissionProfiles = $this->getResources($request, $config, $criteria);
 
-        $permissions = Permission::$permissionDescription;
+        $permissions = $this->get('pumukitschema.permission')->getAllPermissions();
         $scopes = PermissionProfile::$scopeDescription;
 
         $createBroadcastsEnabled = !$this->container->getParameter('pumukit_new_admin.disable_broadcast_creation');
@@ -57,7 +57,16 @@ class PermissionProfileController extends AdminController
         $criteria = $this->getCriteria($config);
         $permissionProfiles = $this->getResources($request, $config, $criteria);
 
-        $permissions = Permission::$permissionDescription;
+        $page = $session->get('admin/permissionprofile/page', 1);
+        $maxPerPage = $session->get('admin/permissionprofile/paginate', 9);
+        $newPermissionProfileId = $request->get('id');
+        if ($newPermissionProfileId && (($permissionProfiles->getNbResults()/$maxPerPage) > $page)) {
+            $page = $permissionProfiles->getNbPages();
+            $session->set('admin/permissionprofile/page', $page);
+        }
+        $permissionProfiles->setCurrentPage($page);
+
+        $permissions = $this->get('pumukitschema.permission')->getAllPermissions();
         $scopes = PermissionProfile::$scopeDescription;
 
         $createBroadcastsEnabled = !$this->container->getParameter('pumukit_new_admin.disable_broadcast_creation');
@@ -98,7 +107,7 @@ class PermissionProfileController extends AdminController
                 return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list'));
             }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list'));
+            return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list', array('id' => $permissionProfile->getId())));
         }
 
         return array(
@@ -295,5 +304,46 @@ class PermissionProfileController extends AdminController
         }
 
         return true;
+    }
+
+    /**
+     * Gets the list of resources according to a criteria
+     *
+     * Override to get 9 resources per page
+     */
+    public function getResources(Request $request, $config, $criteria)
+    {
+        $sorting = $config->getSorting();
+        if (!isset($sorting['rank'])) {
+            $sorting['rank'] = 1;
+        }
+        $repository = $this->getRepository();
+        $session = $this->get('session');
+        $session_namespace = 'admin/permissionprofile';
+
+        if ($config->isPaginated()) {
+            $resources = $this
+                ->resourceResolver
+                ->getResource($repository, 'createPaginator', array($criteria, $sorting));
+
+            if ($request->get('page', null)) {
+                $session->set($session_namespace.'/page', $request->get('page', 1));
+            }
+
+            if ($request->get('paginate', null)) {
+                $session->set($session_namespace.'/paginate', $request->get('paginate', 9));
+            }
+
+            $resources
+                ->setMaxPerPage($session->get($session_namespace.'/paginate', 9))
+                ->setNormalizeOutOfRangePages(true)
+                ->setCurrentPage($session->get($session_namespace.'/page', 1));
+        } else {
+            $resources = $this
+                ->resourceResolver
+                ->getResource($repository, 'findBy', array($criteria, $sorting, $config->getLimit()));
+        }
+
+        return $resources;
     }
 }

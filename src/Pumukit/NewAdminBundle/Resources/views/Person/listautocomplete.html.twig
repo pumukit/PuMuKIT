@@ -4,7 +4,7 @@
 </p>
 </div>
 <div class="modal-body">
-  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   <fieldset>
     <div class="form-group">
       <label for="name" class="control-label">{% trans %}Name{% endtrans %}:</label>
@@ -32,7 +32,7 @@
                      return false;">
       {% trans %}Use{% endtrans %}
     </button>
-    {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE')) %}
+    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE')) %}
     <button type="button" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
             id="create_relation" href="#"
             onclick="var aux = $('#name').val();
@@ -50,7 +50,7 @@
 
 <div style="clear:right"></div>
 
-{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 <script type="text/javascript">
 $("#name").autocomplete({
     source: "{{ path('pumukitnewadmin_person_auto_complete') }}",

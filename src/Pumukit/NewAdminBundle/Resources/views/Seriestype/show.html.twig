@@ -1,4 +1,4 @@
-{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_SERIES_TYPES')) %}
+{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_SERIES_TYPES')) %}
 {% if seriestype is not null %}
 <dl>
   <dt>{% trans %}Code{% endtrans %}</dt>
