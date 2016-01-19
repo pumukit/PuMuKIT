@@ -85,7 +85,7 @@ class PaellaRepositoryController extends Controller
                 }
             }
             if(count($tracks) <= 0) {
-                $track =  $mmobj->getFilteredTracksWithTags(array('sbs'));
+                $track =  $mmobj->getFilteredTrackWithTags(array('sbs'));
                 if($track)
                     $tracks[] = $track;
             }
