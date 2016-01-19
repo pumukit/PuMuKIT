@@ -5,13 +5,14 @@ namespace Pumukit\SchemaBundle\Controller;
 use Pumukit\SchemaBundle\Document\Annotation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
- *  @Route("/api/annotation")
+ *  @Route("/annotation")
  */
 class AnnotationsAPIController extends Controller
 {
@@ -102,6 +103,7 @@ class AnnotationsAPIController extends Controller
     /**
      * @Route("/")
      * @Method("PUT")
+     * @Security("has_role('ROLE_ACCESS_MULTIMEDIA_SERIES')")
      */
     public function createNewAction(Request $request)
     {
@@ -155,6 +157,7 @@ class AnnotationsAPIController extends Controller
     /**
      * @Route("/{id}")
      * @Method("PUT")
+     * @Security("has_role('ROLE_ACCESS_MULTIMEDIA_SERIES')")
      */
     public function editAction(Annotation $annotation, Request $request)
     {
@@ -186,6 +189,7 @@ class AnnotationsAPIController extends Controller
     /**
      * @Route("/{id}")
      * @Method("DELETE")
+     * @Security("has_role('ROLE_ACCESS_MULTIMEDIA_SERIES')")
      */
     public function deleteAction(Annotation $annotation, Request $request)
     {
