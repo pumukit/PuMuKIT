@@ -94,6 +94,10 @@
             <argument type="service" id="event_dispatcher"/>
         </service>
 
+        <service id="pumukitschema.user_dispatcher" class="Pumukit\SchemaBundle\Services\UserEventDispatcherService">
+            <argument type="service" id="event_dispatcher"/>
+        </service>
+
         <!-- EMBEDDED DOCUMENTS EVENT DISPATCHER SERVICES -->
 
         <service id="pumukitschema.link_dispatcher" class="Pumukit\SchemaBundle\Services\LinkEventDispatcherService">
@@ -149,6 +153,7 @@
         <service id="pumukitschema.user" class="Pumukit\SchemaBundle\Services\UserService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="security.context" />
+            <argument type="service" id="pumukitschema.user_dispatcher" />
             <argument type="service" id="pumukitschema.permission"/>
             <argument>%pumukitschema.personal_scope_delete_owners%</argument>
         </service>

@@ -17,21 +17,25 @@ class UserService
     private $securityContext;
     private $permissionService;
     private $personalScopeDeleteOwners;
+    private $dispatcher;
 
     /**
      * Constructor
      *
      * @param DocumentManager $documentManager
      * @param SecurityContext $securityContext
+     * @param UserEventDispatcherService $dispatcher
      * @param PermissionService $permissionService
      * @param boolean         $personalScopeDeleteOwners
      */
-    public function __construct(DocumentManager $documentManager, SecurityContext $securityContext, PermissionService $permissionService, $personalScopeDeleteOwners=false)
+    public function __construct(DocumentManager $documentManager, SecurityContext $securityContext, UserEventDispatcherService $dispatcher, 
+                                PermissionService $permissionService, $personalScopeDeleteOwners=false)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:User');
         $this->securityContext = $securityContext;
         $this->permissionService = $permissionService;
+        $this->dispatcher = $dispatcher;
         $this->personalScopeDeleteOwners = $personalScopeDeleteOwners;
     }
 
@@ -248,6 +252,8 @@ class UserService
         $this->dm->persist($user);
         $this->dm->flush();
 
+        $this->dispatcher->dispatchCreate($user);
+
         return $user;
     }
 
@@ -279,7 +285,23 @@ class UserService
         $this->dm->persist($user);
         if ($executeFlush) $this->dm->flush();
 
+        $this->dispatcher->dispatchUpdate($user);
+
         return $user;
+    }
+
+    /**
+     * Delete user
+     *
+     * @param User $user
+     * @param boolean $executeFlush
+     */
+    public function delete(User $user, $executeFlush = true)
+    {
+        $this->dm->remove($user);
+        if ($executeFlush) $this->dm->flush();
+
+        $this->dispatcher->dispatchDelete($user);
     }
 
     /**

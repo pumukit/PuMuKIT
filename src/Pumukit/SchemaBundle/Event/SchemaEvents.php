@@ -234,4 +234,37 @@ final class SchemaEvents
      * @var string
      */
     const PERMISSIONPROFILE_DELETE = 'permissionprofile.delete';
+
+    /**
+     * The user.create event is thrown each time a
+     * user is created.
+     *
+     * The event listener receives an
+     * Pumukit\SchemaBundle\Event\UserEvent instance.
+     *
+     * @var string
+     */
+    const USER_CREATE = 'user.create';
+
+    /**
+     * The user.update event is thrown each time a
+     * user is updated.
+     *
+     * The event listener receives an
+     * Pumukit\SchemaBundle\Event\UserEvent instance.
+     *
+     * @var string
+     */
+    const USER_UPDATE = 'user.update';
+
+    /**
+     * The user.delete event is thrown each time a
+     * user is deleted.
+     *
+     * The event listener receives an
+     * Pumukit\SchemaBundle\Event\UserEvent instance.
+     *
+     * @var string
+     */
+    const USER_DELETE = 'user.delete';
 }
