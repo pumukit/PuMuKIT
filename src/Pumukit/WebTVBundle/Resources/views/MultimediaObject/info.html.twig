@@ -24,7 +24,7 @@
   </div>
 </div>
 
-{% if editor_chapters %}
+{% if editor_chapters is defined and editor_chapters%}
   <strong>Marks:</strong>
   <ol style="list-style-type:decimal;padding-left:40px;">
     {% for chapter in editor_chapters %}
