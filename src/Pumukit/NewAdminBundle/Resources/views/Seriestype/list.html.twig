@@ -1,5 +1,5 @@
 <div class="table-responsive well" style="overflow:visible;">
-  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_SERIES_TYPES')) %}
+  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_SERIES_TYPES')) %}
   <table class="table table-striped table-hover">
     <thead>
       <tr>

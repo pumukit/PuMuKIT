@@ -1,6 +1,6 @@
 {% extends 'PumukitNewAdminBundle::layout.html.twig' %}
 
-{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_DASHBOARD')) %}
+{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_DASHBOARD')) %}
 {% block stylesheets %}
   {{ parent() }}
   <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('/bundles/pumukitnewadmin/css/admin/dashboard.css') }}" />
@@ -16,7 +16,7 @@
 <h1>{% trans %}Dashboard{% endtrans %}</h3>
 
 <div class="text-center well"> 
-  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_DASHBOARD')) %}
+  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_DASHBOARD')) %}
   <div id="my-timeline" style="height: 300px; border: 1px solid #aaa"></div>
   <br />
   <br />
@@ -34,7 +34,7 @@
   {% endif %}
 </div>
 
-{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_DASHBOARD')) %}
+{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_DASHBOARD')) %}
 <script type="text/javascript">
 
 $(function(){

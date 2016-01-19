@@ -1,12 +1,36 @@
+{% if 0 == permissionprofiles|length%}
+  {% set range = 1..9 %}
+{% elseif (permissionprofiles|length - (permissionprofiles.getMaxPerPage() * (permissionprofiles.getCurrentPage() - 1))) < (permissionprofiles.maxPerPage) %}
+  {% set range = (permissionprofiles|length - (permissionprofiles.getMaxPerPage() * (permissionprofiles.getCurrentPage() - 1)))..(permissionprofiles.maxPerPage-1) %}
+{% else %}
+  {% set range = [] %}
+{% endif %}
+
 <div class="table-responsive well">
-  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PERMISSION_PROFILES')) %}
+  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PERMISSION_PROFILES')) %}
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-2">
+        <p style="font-weight:bold;">
+        {{ permissionprofiles.getNbResults }}
+        {% transchoice permissionprofiles.getNbResults %}
+        {0} permission profiles|{1} permission profile|]1,Inf] permission profiles
+	    {% endtranschoice %}
+        </p>
+	    {% if app.session.get('admin/permissionprofile/criteria')|length != 0%}
+        <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
+	    {% endif %}
+      </div>
+      <div class="col-md-4">
+        <div class="pagerfanta">
+          {{ pagerfanta(permissionprofiles, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_permissionprofile_index"}) }}
+        </div>
+      </div>
+      <div class="col-md-3">
 	    <div>
           <span style="display:none;" id="remember_save_permissionprofile" class="alert alert-dismissable alert-danger">{% trans %}Press SAVE for changes to take effect{% endtrans %}</span> &nbsp;
         </div>
       </div>
-      <div class="col-md-6 text-right">
+      <div class="col-md-3 text-right">
         <button id="pumukitnewadmin_permissionprofile_update_cancel" type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button>
         <button id="pumukitnewadmin_permissionprofile_update_ok" type="submit" class="btn btn-primary btn-raised" onclick="return processPermissionProfilesOk();">{% trans %}Save{% endtrans %}</button>
         <a href="{{ path('pumukitnewadmin_permissionprofile_create') }}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
@@ -22,6 +46,9 @@
           <th width="8%">{{ permissionprofile.name }}</th>
           {% else %}
           <th>{% trans %}There are no user permissions with those values.{% endtrans %}</th>
+          {% endfor %}
+          {% for i in range %}
+          <th></th>
           {% endfor %}
         </tr>
       </thead>

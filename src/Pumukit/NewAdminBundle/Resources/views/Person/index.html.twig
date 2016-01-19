@@ -5,7 +5,7 @@
 <h1>{% trans %}People{% endtrans %}</h1>
 
 <div class="row">
-  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE')) %}
+  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE')) %}
   <div class="col-md-10">
     <div class="well">
       <div id="list_people">

@@ -83,6 +83,11 @@
         <service id="pumukitschema.permissionprofile" class="Pumukit\SchemaBundle\Services\PermissionProfileService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="pumukitschema.permissionprofile_dispatcher"/>
+            <argument type="service" id="pumukitschema.permission"/>
+        </service>
+
+        <service id="pumukitschema.permission" class="Pumukit\SchemaBundle\Services\PermissionService">
+            <argument>%pumukitschema.external_permissions%</argument>
         </service>
 
         <service id="pumukitschema.multimediaobject_dispatcher" class="Pumukit\SchemaBundle\Services\MultimediaObjectEventDispatcherService">
@@ -144,6 +149,7 @@
         <service id="pumukitschema.user" class="Pumukit\SchemaBundle\Services\UserService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="security.context" />
+            <argument type="service" id="pumukitschema.permission"/>
             <argument>%pumukitschema.personal_scope_delete_owners%</argument>
         </service>
 
@@ -159,5 +165,11 @@
         <service id="pumukitschema.stats" class="Pumukit\SchemaBundle\Services\StatsService">
           <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
+
+        <service id="security.role_hierarchy" class="%security.role_hierarchy.class%" public="false">
+            <argument>%security.role_hierarchy.roles%</argument>
+            <argument type="service" id="pumukitschema.permission"/>
+        </service>
+
     </services>
 </container>

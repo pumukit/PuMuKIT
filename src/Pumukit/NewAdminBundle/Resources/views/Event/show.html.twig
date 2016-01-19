@@ -1,4 +1,4 @@
-{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_LIVE_EVENTS')) %}
+{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_LIVE_EVENTS')) %}
   {% if event is not null %}
   <div>
     <p style="text-align:center; font-weight: bolder; font-size: large;">

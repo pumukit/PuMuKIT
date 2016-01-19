@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\PermissionProfileRepository")
@@ -61,6 +62,15 @@ class PermissionProfile
      * @MongoDB\String
      */
     private $scope = self::SCOPE_NONE;
+
+    /**
+     * @var integer $rank
+     *
+     * @MongoDB\Int
+     * @MongoDB\UniqueIndex(safe=1)
+     * @Gedmo\SortablePosition
+     */
+    private $rank;
 
     /**
      * Get id
@@ -234,6 +244,26 @@ class PermissionProfile
     public function getScope()
     {
         return $this->scope;
+    }
+
+    /**
+     * Set rank
+     *
+     * @param integer $rank
+     */
+    public function setRank($rank)
+    {
+        $this->rank = $rank;
+    }
+
+    /**
+     * Get rank
+     *
+     * @return integer
+     */
+    public function getRank()
+    {
+        return $this->rank;
     }
 
     /**

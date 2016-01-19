@@ -3,7 +3,7 @@
   <h4 class="modal-title" id="myModalLabel">{% trans %}create new tag{% endtrans %}</h4>
 </div>
 <div class="modal-body">
-  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_TAGS')) %}
+  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_TAGS')) %}
   {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
   <form autocomplete="off" onsubmit="$('#myModal').modal('hide');
                   $.ajax({
