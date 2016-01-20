@@ -19,6 +19,7 @@ class PersonService
     private $repoPerson;
     private $repoMmobj;
     private $userService;
+    private $addUserAsPerson;
     private $personalScopeRoleCode;
     private $repoRole;
 
@@ -28,18 +29,20 @@ class PersonService
      * @param DocumentManager $documentManager
      * @param PersonWithRoleEventDispatcherService $dispatcher
      * @param UserService     $userService
+     * @param boolean         $addUserAsPerson
      * @param string          $personalScopeRoleCode
      */
-    public function __construct(DocumentManager $documentManager, PersonWithRoleEventDispatcherService $dispatcher, UserService $userService, $personalScopeRoleCode='owner')
+    public function __construct(DocumentManager $documentManager, PersonWithRoleEventDispatcherService $dispatcher, UserService $userService, $addUserAsPerson=true, $personalScopeRoleCode='owner')
     {
         $this->dm = $documentManager;
         $this->dispatcher = $dispatcher;
         $this->userService = $userService;
-        $this->personalScopeRoleCode = $personalScopeRoleCode;
         $this->repoPerson = $documentManager->getRepository('PumukitSchemaBundle:Person');
         $this->repoMmobj = $documentManager->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->repoRole = $documentManager->getRepository('PumukitSchemaBundle:Role');
-        if (null == $this->getPersonalScopeRole($personalScopeRoleCode)) {
+        $this->addUserAsPerson = $addUserAsPerson;
+        $this->personalScopeRoleCode = $personalScopeRoleCode;
+        if ($addUserAsPerson && (null == $this->getPersonalScopeRole($personalScopeRoleCode))) {
             throw new \Exception('Invalid Personal Scope Role Code: "'.$personalScopeRoleCode.'". There is no Role with this data. Change it on parameters.yml or use default value by deleting line "personal_scope_role_code: \''.$personalScopeRoleCode.'\'" from your parameters file.');
         }
     }
@@ -198,7 +201,7 @@ class PersonService
         $this->dm->persist($person);
         $multimediaObject->addPersonWithRole($person, $role);
         $role->increaseNumberPeopleInMultimediaObject();
-        if ($this->personalScopeRoleCode === $role->getCod()) {
+        if ($this->addUserAsPerson && ($this->personalScopeRoleCode === $role->getCod())) {
             $this->userService->addOwnerUserToMultimediaObject($multimediaObject, $person->getUser(), false);
         }
         $this->dm->persist($multimediaObject);
@@ -273,7 +276,7 @@ class PersonService
         $hasBeenRemoved = $multimediaObject->removePersonWithRole($person, $role);
         if ($hasBeenRemoved) {
             $role->decreaseNumberPeopleInMultimediaObject();
-            if ($this->personalScopeRoleCode === $role->getCod()) {
+            if ($this->addUserAsPerson && ($this->personalScopeRoleCode === $role->getCod())) {
                 $this->userService->removeOwnerUserFromMultimediaObject($multimediaObject, $person->getUser(), false);
             }
         }
@@ -345,7 +348,7 @@ class PersonService
      */
     public function referencePersonIntoUser(User $user)
     {
-        if (null == $person = $user->getPerson()) {
+        if ($this->addUserAsPerson && (null == $person = $user->getPerson())) {
             $person = $this->createFromUser($user);
 
             $user->setPerson($person);
