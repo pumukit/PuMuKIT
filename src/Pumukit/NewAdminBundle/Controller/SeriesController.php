@@ -109,8 +109,13 @@ class SeriesController extends AdminController
         $factoryService = $this->get('pumukitschema.factory');
         $personService = $this->get('pumukitschema.person');
 
-        $personalScopeRole = $personService->getPersonalScopeRole();
         $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
+
+        try {
+            $personalScopeRole = $personService->getPersonalScopeRole();
+        } catch (\Exception $e) {
+            return new Response($e, Response::HTTP_BAD_REQUEST);
+        }
 
         $roles = $personService->getRoles();
         if (null === $roles){
