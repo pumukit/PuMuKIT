@@ -80,7 +80,7 @@ class PlayerController extends Controller
                                       'time' => $chapt['s']);
         }
         usort($editorChapters, function($a, $b) {
-            return $a > $b;
+            return $a['time'] > $b['time'];
         });
         return $editorChapters;
     }
