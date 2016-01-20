@@ -9,8 +9,6 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerI
 use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface;
 use Symfony\Component\Security\Http\HttpUtils;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Http\Firewall\AbstractAuthenticationListener;
@@ -19,30 +17,27 @@ use Pumukit\SecurityBundle\Services\CASService;
 
 class PumukitListener extends AbstractAuthenticationListener
 {
-  protected $casService;
-
+    protected $casService;
 
   /**
    * {@inheritdoc}
    */
-
   public function __construct(SecurityContextInterface $securityContext, AuthenticationManagerInterface $authenticationManager, SessionAuthenticationStrategyInterface $sessionStrategy, HttpUtils $httpUtils, $providerKey, AuthenticationSuccessHandlerInterface $successHandler, AuthenticationFailureHandlerInterface $failureHandler, array $options = array(), LoggerInterface $logger = null, EventDispatcherInterface $dispatcher = null, CASService $casService)
   {
-    
-    parent::__construct($securityContext, $authenticationManager, $sessionStrategy, $httpUtils, $providerKey, $successHandler, $failureHandler, $options, $logger, $dispatcher);
-    $this->casService = $casService;
+      parent::__construct($securityContext, $authenticationManager, $sessionStrategy, $httpUtils, $providerKey, $successHandler, $failureHandler, $options, $logger, $dispatcher);
+      $this->casService = $casService;
   }
-
 
   /**
    * {@inheritdoc}
    */
   protected function attemptAuthentication(Request $request)
   {
-    $this->casService->forceAuthentication();
-    $username = $this->casService->getUser();
+      $this->casService->forceAuthentication();
+      $username = $this->casService->getUser();
 
-    $token = new PreAuthenticatedToken($username, array('ROLE_USER'), $this->providerKey);
-    return $this->authenticationManager->authenticate($token);
+      $token = new PreAuthenticatedToken($username, array('ROLE_USER'), $this->providerKey);
+
+      return $this->authenticationManager->authenticate($token);
   }
 }

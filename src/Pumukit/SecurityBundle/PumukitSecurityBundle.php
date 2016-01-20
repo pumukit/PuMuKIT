@@ -8,11 +8,11 @@ use Pumukit\SecurityBundle\DependencyInjection\Security\Factory\PumukitFactory;
 
 class PumukitSecurityBundle extends Bundle
 {
-  public function build(ContainerBuilder $container)
-  {
-    parent::build($container);
+    public function build(ContainerBuilder $container)
+    {
+        parent::build($container);
 
-    $extension = $container->getExtension('security');
-    $extension->addSecurityListenerFactory(new PumukitFactory());
-  }
+        $extension = $container->getExtension('security');
+        $extension->addSecurityListenerFactory(new PumukitFactory());
+    }
 }

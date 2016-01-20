@@ -9,31 +9,31 @@ use Pumukit\SecurityBundle\Services\CASService;
 
 class LogoutSuccessHandler implements LogoutSuccessHandlerInterface
 {
-  private $options;
-  private $router;
-  protected $casService;
+    private $options;
+    private $router;
+    protected $casService;
 
-  public function __construct(array $options = array(), UrlGeneratorInterface $router, CASService $casService)
-  {
-    $this->options = $options;
-    $this->router = $router;
-    $this->casService = $casService;
-  }
-
-  public function onLogoutSuccess(Request $request)
-  {
-    $this->casService->logout();
-    /* Call CAS API to do authentication */
-    /*
-    \phpCAS::client($this->options['cas_protocol'], $this->options['cas_server'], $this->options['cas_port'], $this->options['cas_path'], false);
-    if (!isset($this->options['cas_logout']) || empty($this->options['cas_logout'])) {
-      \phpCAS::logout();
-    } else {
-      // generate absolute URL
-      $url = $this->router->generate($this->options['cas_logout'], array(), true);
-      \phpCAS::logoutWithRedirectService($url);
+    public function __construct(array $options = array(), UrlGeneratorInterface $router, CASService $casService)
+    {
+        $this->options = $options;
+        $this->router = $router;
+        $this->casService = $casService;
     }
-    return null;
-    */
-  }
+
+    public function onLogoutSuccess(Request $request)
+    {
+        $this->casService->logout();
+        /* Call CAS API to do authentication */
+        /*
+        \phpCAS::client($this->options['cas_protocol'], $this->options['cas_server'], $this->options['cas_port'], $this->options['cas_path'], false);
+        if (!isset($this->options['cas_logout']) || empty($this->options['cas_logout'])) {
+          \phpCAS::logout();
+        } else {
+          // generate absolute URL
+          $url = $this->router->generate($this->options['cas_logout'], array(), true);
+          \phpCAS::logoutWithRedirectService($url);
+        }
+        return null;
+        */
+    }
 }
