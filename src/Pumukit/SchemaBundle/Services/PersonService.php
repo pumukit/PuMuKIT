@@ -288,18 +288,16 @@ class PersonService
      */
     public function deletePerson(Person $person, $deleteFromUser=false)
     {
-        if (null !== $person) {
-            if (0 !== count($this->repoMmobj->findByPersonId($person->getId()))) {
-                throw new \Exception("Couldn't remove Person with id ".$person->getId().". There are multimedia objects with this person");
-            }
- 
-            if ((null != $user = $person->getUser()) && !$deleteFromUser) {
-                throw new \Exception('Could not remove Person with id "'.$person->getId().'". There is an User with id "'.$user->getId().'" and usernname "'.$user->getUsername().'" referenced. Delete the user to delete this Person.');
-            }
-
-            $this->dm->remove($person);
-            $this->dm->flush();
+        if (0 !== count($this->repoMmobj->findByPersonId($person->getId()))) {
+            throw new \Exception("Couldn't remove Person with id ".$person->getId().". There are multimedia objects with this person");
         }
+
+        if ((null != $user = $person->getUser()) && !$deleteFromUser) {
+            throw new \Exception('Could not remove Person with id "'.$person->getId().'". There is an User with id "'.$user->getId().'" and usernname "'.$user->getUsername().'" referenced. Delete the user to delete this Person.');
+        }
+
+        $this->dm->remove($person);
+        $this->dm->flush();
     }
 
     /**
