@@ -18,18 +18,16 @@ class FactoryService
     private $dm;
     private $tagService;
     private $personService;
-    private $userService;
     private $translator;
     private $locales;
     private $defaultCopyright;
     private $addUserAsPerson;
 
-    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, TranslatorInterface $translator, $addUserAsPerson=true, array $locales = array(), $defaultCopyright = "")
+    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, TranslatorInterface $translator, $addUserAsPerson=true, array $locales = array(), $defaultCopyright = "")
     {
         $this->dm = $documentManager;
         $this->tagService = $tagService;
         $this->personService = $personService;
-        $this->userService = $userService;
         $this->translator = $translator;
         $this->locales = $locales;
         $this->defaultCopyright = $defaultCopyright;
@@ -47,9 +45,10 @@ class FactoryService
     /**
      * Create a new series with default values
      *
+     * @param  User   $loggedInUser
      * @return Series
      */
-    public function createSeries()
+    public function createSeries(User $loggedInUser = null)
     {
         $series = new Series();
 
@@ -60,7 +59,7 @@ class FactoryService
             $series->setTitle($title, $locale);
         }
 
-        $mm = $this->createMultimediaObjectPrototype($series);
+        $mm = $this->createMultimediaObjectPrototype($series, $loggedInUser);
 
         $this->dm->persist($mm);
         $this->dm->persist($series);
@@ -72,9 +71,11 @@ class FactoryService
     /**
      * Create a new Multimedia Object Template
      *
+     * @param  Series           $series
+     * @param  User             $loggedInUser
      * @return MultimediaObject
      */
-    private function createMultimediaObjectPrototype($series)
+    private function createMultimediaObjectPrototype(Series $series, User $loggedInUser = null)
     {
         $mm = new MultimediaObject();
         $mm->setStatus(MultimediaObject::STATUS_PROTOTYPE);
@@ -92,7 +93,7 @@ class FactoryService
         }
 
         $mm->setSeries($series);
-        $mm = $this->addLoggedInUserAsPerson($mm);
+        $mm = $this->addLoggedInUserAsPerson($mm, $loggedInUser);
 
         return $mm;
     }
@@ -100,9 +101,12 @@ class FactoryService
     /**
      * Create a new Multimedia Object from Template
      *
+     * @param  Series           $series
+     * @param  boolean          $flush
+     * @param  User             $loggedInUser
      * @return MultimediaObject
      */
-    public function createMultimediaObject($series, $flush = true)
+    public function createMultimediaObject(Series $series, $flush = true, User $loggedInUser = null)
     {
         $prototype = $this->getMultimediaObjectPrototype($series);
 
@@ -126,7 +130,7 @@ class FactoryService
 
         $mm->setSeries($series);
         $series->addMultimediaObject($mm);
-        $mm = $this->addLoggedInUserAsPerson($mm);
+        $mm = $this->addLoggedInUserAsPerson($mm, $loggedInUser);
 
         $this->dm->persist($mm);
         $this->dm->persist($series);
@@ -240,9 +244,6 @@ class FactoryService
      */
     public function deleteSeries(Series $series)
     {
-        if (!$this->allowToDeleteObject($series)) {
-            throw new \Exception('You are not allowed to delete this Series. It has  more owners.');
-        }
         $repoMmobjs = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
          
         $multimediaObjects = $repoMmobjs->findBySeries($series);
@@ -263,9 +264,6 @@ class FactoryService
      */
     public function deleteMultimediaObject(MultimediaObject $multimediaObject)
     {
-        if (!$this->allowToDeleteObject($multimediaObject)) {
-            throw new \Exception('You are not allowed to delete this MultimediaObject. It has  more owners.');
-        }
         $repoMmobjs = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
 
         if (null != $series = $multimediaObject->getSeries()) {
@@ -279,6 +277,8 @@ class FactoryService
 
     /**
      * Delete resource
+     *
+     * @param Object $resource
      */
     public function deleteResource($resource)
     {
@@ -374,38 +374,14 @@ class FactoryService
         return $new;
     }
 
-    private function addLoggedInUserAsPerson(MultimediaObject $multimediaObject)
+    private function addLoggedInUserAsPerson(MultimediaObject $multimediaObject, User $loggedInUser = null)
     {
-        if ($this->addUserAsPerson && (null != $person = $this->personService->getPersonFromLoggedInUser())) {
+        if ($this->addUserAsPerson && (null != $person = $this->personService->getPersonFromLoggedInUser($loggedInUser))) {
             if (null != $role = $this->personService->getPersonalScopeRole()) {
                 $multimediaObject = $this->personService->createRelationPerson($person, $role, $multimediaObject);
             }
         }
 
         return $multimediaObject;
-    }
-
-    /**
-     * Allow to delete object
-     *
-     * Checks whether the logged in user
-     * is allowed to delete the object or not
-     *
-     * @param Series|MultimediaObject $object
-     * @return boolean
-     */
-    private function allowToDeleteObject($object=null)
-    {
-        $user = $this->userService->getLoggedInUser();
-        if ($this->userService->isPersonalScope($user) && (null != $object)) {
-            $owners = $object->getProperty('owners');
-            if (null != $owners) {
-	        if (!in_array($user->getId(), $owners) || (1 != count($owners))) {
-		    return false;
-	        }
-            }
-	}
-
-	return true;
     }
 }

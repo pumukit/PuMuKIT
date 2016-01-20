@@ -192,22 +192,20 @@ class PersonService
      */
     public function createRelationPerson(Person $person, Role $role, MultimediaObject $multimediaObject, $flush = true)
     {
-        if ($person && $role && $multimediaObject) {
-            $this->dm->persist($person);
-            $multimediaObject->addPersonWithRole($person, $role);
-            $role->increaseNumberPeopleInMultimediaObject();
-            if ($this->personalScopeRoleCode === $role->getCod()) {
-                $this->userService->addOwnerUserToMultimediaObject($multimediaObject, $person->getUser(), false);
-            }
-            $this->dm->persist($multimediaObject);
-            $this->dm->persist($role);
-
-            if($flush) {
-              $this->dm->flush();
-            }		       
-
-            $this->dispatcher->dispatchCreate($multimediaObject, $person, $role);
+        $this->dm->persist($person);
+        $multimediaObject->addPersonWithRole($person, $role);
+        $role->increaseNumberPeopleInMultimediaObject();
+        if ($this->personalScopeRoleCode === $role->getCod()) {
+            $this->userService->addOwnerUserToMultimediaObject($multimediaObject, $person->getUser(), false);
         }
+        $this->dm->persist($multimediaObject);
+        $this->dm->persist($role);
+
+        if($flush) {
+            $this->dm->flush();
+        }
+
+        $this->dispatcher->dispatchCreate($multimediaObject, $person, $role);
 
         return $multimediaObject;
     }
@@ -269,21 +267,16 @@ class PersonService
      */
     public function deleteRelation(Person $person, Role $role, MultimediaObject $multimediaObject)
     {
-        if (null != $person && null != $role && null != $multimediaObject) {
-            if (!$this->allowToBeDeleted($person, $role)) {
-  	        throw new \Exception('Not allowed to remove the relation of Person with id "'.$user->getName().'"  with role "'.$role->getCod().'" from MultimediaObject "'.$multimediaObject->getId().'". You are not that User.');
+        $hasBeenRemoved = $multimediaObject->removePersonWithRole($person, $role);
+        if ($hasBeenRemoved) {
+            $role->decreaseNumberPeopleInMultimediaObject();
+            if ($this->personalScopeRoleCode === $role->getCod()) {
+                $this->userService->removeOwnerUserFromMultimediaObject($multimediaObject, $person->getUser(), false);
             }
-            $hasBeenRemoved = $multimediaObject->removePersonWithRole($person, $role);
-            if ($hasBeenRemoved) {
-                $role->decreaseNumberPeopleInMultimediaObject();
-                if ($this->personalScopeRoleCode === $role->getCod()) {
-                    $this->userService->removeOwnerUserFromMultimediaObject($multimediaObject, $person->getUser(), false);
-                }
-            }
-            $this->dm->persist($multimediaObject);
-            $this->dm->persist($role);
-            $this->dm->flush();
         }
+        $this->dm->persist($multimediaObject);
+        $this->dm->persist($role);
+        $this->dm->flush();
 
         $this->dispatcher->dispatchDelete($multimediaObject, $person, $role);
 
@@ -372,14 +365,15 @@ class PersonService
      * in the logged in User
      * It there is none, it creates it
      *
+     * @param  User|null  $loggedInUser
      * @return Person|null
      */
-    public function getPersonFromLoggedInUser()
+    public function getPersonFromLoggedInUser(User $loggedInUser = null)
     {
-        if (null != $user = $this->userService->getLoggedInUser()) {
-            if (null == $person = $user->getPerson()) {
-                $user = $this->referencePersonIntoUser($user);
-                $person = $user->getPerson();
+        if (null != $loggedInUser) {
+            if (null == $person = $loggedInUser->getPerson()) {
+                $loggedInUser = $this->referencePersonIntoUser($loggedInUser);
+                $person = $loggedInUser->getPerson();
             }
 
             return $person;
@@ -466,24 +460,6 @@ class PersonService
         }
 
         return $embeddedPerson;
-    }
-
-    /**
-     * Allow to be deleted
-     *
-     * Checks if the user has the rights
-     * to delete this person with this role
-     * in case of the personal scope role
-     */
-    private function allowToBeDeleted(Person $person, Role $role)
-    {
-        if (null != $person && null != $role) {
-            if ($this->personalScopeRoleCode === $role->getCod()) {
-                return $this->userService->allowToDeleteOwner($person->getUser());
-            }
-        }
-
-        return true;
     }
 
     /**
