@@ -453,7 +453,7 @@ class PersonController extends AdminController
 
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
-	try {
+        try {
             $multimediaObject = $personService->deleteRelation($person, $role, $multimediaObject);
         }catch (\Exception $e){
             return new Response("Can not delete relation of Person '".$person->getName()."' with MultimediaObject '".$multimediaObject->getId()."'. ".$e->getMessage(), 409);
