@@ -109,6 +109,9 @@ class SeriesController extends AdminController
         $factoryService = $this->get('pumukitschema.factory');
         $personService = $this->get('pumukitschema.person');
 
+        $personalScopeRole = $personService->getPersonalScopeRole();
+        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
+
         $roles = $personService->getRoles();
         if (null === $roles){
             throw new \Exception('Not found any role.');
@@ -126,14 +129,16 @@ class SeriesController extends AdminController
 
         return $this->render('PumukitNewAdminBundle:Series:update.html.twig',
                              array(
-                                   'series'        => $resource,
-                                   'form'          => $form->createView(),
-                                   'mmtemplate'    => $mmtemplate,
-                                   'form_meta'     => $formMeta->createView(),
-                                   'roles'         => $roles,
-                                   'pub_decisions' => $pubDecisionsTags,
-                                   'parent_tags'   => $parentTags,
-                                   'template'      => '_template'
+                                   'series'                   => $resource,
+                                   'form'                     => $form->createView(),
+                                   'mmtemplate'               => $mmtemplate,
+                                   'form_meta'                => $formMeta->createView(),
+                                   'roles'                    => $roles,
+                                   'personal_scope_role'      => $personalScopeRole,
+                                   'personal_scope_role_code' => $personalScopeRoleCode,
+                                   'pub_decisions'            => $pubDecisionsTags,
+                                   'parent_tags'              => $parentTags,
+                                   'template'                 => '_template'
                                    )
                              );
     }

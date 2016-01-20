@@ -117,7 +117,10 @@ class MultimediaObjectController extends SortableAdminController
 
         $factoryService = $this->get('pumukitschema.factory');
         $personService = $this->get('pumukitschema.person');
-        
+
+        $personalScopeRole = $personService->getPersonalScopeRole();
+        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
+
         $roles = $personService->getRoles();
         if (null === $roles){
             throw new \Exception('Not found any role.');
@@ -155,18 +158,20 @@ class MultimediaObjectController extends SortableAdminController
         $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
 
         return array(
-                     'mm'            => $resource,
-                     'form_meta'     => $formMeta->createView(),
-                     'form_pub'      => $formPub->createView(),
-                     'series'        => $series,
-                     'roles'         => $roles,
-                     'pub_channels'  => $pubChannelsTags,
-                     'pub_decisions' => $pubDecisionsTags,
-                     'parent_tags'   => $parentTags,
-                     'jobs'          => $jobs,
-                     'not_master_profiles' => $notMasterProfiles,
-                     'template' => $template,
-                     'not_change_pub_channel' => $notChangePubChannel
+                     'mm'                       => $resource,
+                     'form_meta'                => $formMeta->createView(),
+                     'form_pub'                 => $formPub->createView(),
+                     'series'                   => $series,
+                     'roles'                    => $roles,
+                     'personal_scope_role'      => $personalScopeRole,
+                     'personal_scope_role_code' => $personalScopeRoleCode,
+                     'pub_channels'             => $pubChannelsTags,
+                     'pub_decisions'            => $pubDecisionsTags,
+                     'parent_tags'              => $parentTags,
+                     'jobs'                     => $jobs,
+                     'not_master_profiles'      => $notMasterProfiles,
+                     'template'                 => $template,
+                     'not_change_pub_channel'   => $notChangePubChannel
                      );
     }
 
@@ -199,6 +204,9 @@ class MultimediaObjectController extends SortableAdminController
 
         $factoryService = $this->get('pumukitschema.factory');
         $personService = $this->get('pumukitschema.person');
+
+        $personalScopeRole = $personService->getPersonalScopeRole();
+        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
 
         $roles = $personService->getRoles();
         if (null === $roles){
@@ -259,15 +267,17 @@ class MultimediaObjectController extends SortableAdminController
 
         return $this->render('PumukitNewAdminBundle:MultimediaObject:edit.html.twig',
                              array(
-                                   'mm'            => $resource,
-                                   'form_meta'     => $formMeta->createView(),
-                                   'form_pub'      => $formPub->createView(),
-                                   'series'        => $series,
-                                   'roles'         => $roles,
-                                   'pub_channels'  => $pubChannelsTags,
-                                   'pub_decisions' => $pubDecisionsTags,
-                                   'parent_tags'   => $parentTags,
-                                   'not_change_pub_channel' => $notChangePubChannel
+                                   'mm'                       => $resource,
+                                   'form_meta'                => $formMeta->createView(),
+                                   'form_pub'                 => $formPub->createView(),
+                                   'series'                   => $series,
+                                   'roles'                    => $roles,
+                                   'personal_scope_role'      => $personalScopeRole,
+                                   'personal_scope_role_code' => $personalScopeRoleCode,
+                                   'pub_channels'             => $pubChannelsTags,
+                                   'pub_decisions'            => $pubDecisionsTags,
+                                   'parent_tags'              => $parentTags,
+                                   'not_change_pub_channel'   => $notChangePubChannel
                                    )
                              );
     }
@@ -335,6 +345,9 @@ class MultimediaObjectController extends SortableAdminController
             return $this->handleView($this->view($formPub));
         }
 
+        $personalScopeRole = $personService->getPersonalScopeRole();
+        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
+
         $roles = $personService->getRoles();
         if (null === $roles){
             throw new \Exception('Not found any role.');
@@ -342,15 +355,17 @@ class MultimediaObjectController extends SortableAdminController
 
         return $this->render('PumukitNewAdminBundle:MultimediaObject:edit.html.twig',
                              array(
-                                   'mm'            => $resource,
-                                   'form_meta'     => $formMeta->createView(),
-                                   'form_pub'      => $formPub->createView(),
-                                   'series'        => $series,
-                                   'roles'         => $roles,
-                                   'pub_channels'  => $pubChannelsTags,
-                                   'pub_decisions' => $pubDecisionsTags,
-                                   'parent_tags'   => $parentTags,
-                                   'not_change_pub_channel' => $notChangePubChannel
+                                   'mm'                       => $resource,
+                                   'form_meta'                => $formMeta->createView(),
+                                   'form_pub'                 => $formPub->createView(),
+                                   'series'                   => $series,
+                                   'roles'                    => $roles,
+                                   'personal_scope_role'      => $personalScopeRole,
+                                   'personal_scope_role_code' => $personalScopeRoleCode,
+                                   'pub_channels'             => $pubChannelsTags,
+                                   'pub_decisions'            => $pubDecisionsTags,
+                                   'parent_tags'              => $parentTags,
+                                   'not_change_pub_channel'   => $notChangePubChannel
                                    )
                              );
     }
