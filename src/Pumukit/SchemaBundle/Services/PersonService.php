@@ -39,6 +39,9 @@ class PersonService
         $this->repoPerson = $documentManager->getRepository('PumukitSchemaBundle:Person');
         $this->repoMmobj = $documentManager->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->repoRole = $documentManager->getRepository('PumukitSchemaBundle:Role');
+        if (null == $this->getPersonalScopeRole($personalScopeRoleCode)) {
+            throw new \Exception('Invalid Personal Scope Role Code: "'.$personalScopeRoleCode.'". There is no Role with this data. Change it on parameters.yml or use default value by deleting line "personal_scope_role_code: \''.$personalScopeRoleCode.'\'" from your parameters file.');
+        }
     }
 
     /**
