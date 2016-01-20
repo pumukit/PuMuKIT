@@ -5,22 +5,22 @@ namespace Pumukit\NewAdminBundle\EventListener;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\Security\Core\SecurityContext;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\PersonService;
-use Pumukit\SchemaBundle\Services\UserService;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 
 class FilterListener
 {
     private $dm;
     private $personService;
-    private $userService;
+    private $securityContext;
 
-    public function __construct(DocumentManager $documentManager, PersonService $personService, UserService $userService)
+    public function __construct(DocumentManager $documentManager, PersonService $personService, SecurityContext $securityContext)
     {
         $this->dm = $documentManager;
         $this->personService = $personService;
-        $this->userService = $userService;
+        $this->securityContext = $securityContext;
     }
 
     public function onKernelRequest(GetResponseEvent $event)
@@ -33,16 +33,18 @@ class FilterListener
             && (false !== strpos($req->attributes->get("_controller"), 'pumukitnewadmin'))
             && (!isset($routeParams["filter"]) || $routeParams["filter"])) {
 
-            $loggedInUser = $this->userService->getLoggedInUser();
+            $loggedInUser = $this->getLoggedInUser();
             if ($loggedInUser->hasRole(PermissionProfile::SCOPE_PERSONAL) ||
                 $loggedInUser->hasRole(PermissionProfile::SCOPE_NONE)) {
                 $filter = $this->dm->getFilterCollection()->enable("backend");
 
-                if (null != $people = $this->getPeopleMongoQuery()) {
+                $person = $this->personService->getPersonFromLoggedInUser($loggedInUser);
+
+                if (null != $people = $this->getPeopleMongoQuery($person)) {
                     $filter->setParameter("people", $people);
                 }
 
-                if (null != $person = $this->personService->getPersonFromLoggedInUser()) {
+                if (null != $person) {
                     $filter->setParameter("person_id", $person->getId());
                 }
 
@@ -61,17 +63,31 @@ class FilterListener
      * 
      * Query in MongoDB:
      * {"people":{"$elemMatch":{"people._id":{"$id":"___MongoID_of_Person___"},"cod":"___Role_cod___"}}}
+     *
+     * @param  Person|null $person
+     * @return array       $people
      */
-    private function getPeopleMongoQuery()
+    private function getPeopleMongoQuery(Person $person = null)
     {
         $people = array();
-        if ((null != ($person = $this->personService->getPersonFromLoggedInUser()))
-            && (null != ($roleCode = $this->personService->getPersonalScopeRoleCode()))) {
+        if ((null != $person) && (null != ($roleCode = $this->personService->getPersonalScopeRoleCode()))) {
             $people['$elemMatch'] = array();
             $people['$elemMatch']['people._id'] = new \MongoId($person->getId());
             $people['$elemMatch']['cod'] = $roleCode;
         }
 
         return $people;
+    }
+
+    /**
+     * Get logged in user
+     */
+    private function getLoggedInUser()
+    {
+        if (null != $token = $this->securityContext->getToken()) {
+            return $token->getUser();
+        }
+
+        return null;
     }
 }
