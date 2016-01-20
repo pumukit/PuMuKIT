@@ -175,7 +175,7 @@ class UserController extends AdminController
           ->get('doctrine_mongodb.odm.document_manager')
           ->getRepository('PumukitSchemaBundle:User');
 
-        $loggedInUser = $this->container->get('security.context')->getToken()->getUser();
+        $loggedInUser = $this->getUser();
 
         if ($loggedInUser === $userToDelete) {
             return new Response("Can not delete the logged in user '".$loggedInUser->getUsername()."'", 409);

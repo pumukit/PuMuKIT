@@ -63,7 +63,7 @@ class SeriesController extends AdminController
     public function createAction(Request $request)
     {
         $factory = $this->get('pumukitschema.factory');
-        $series = $factory->createSeries();
+        $series = $factory->createSeries($this->getUser());
         $this->get('session')->set('admin/series/id', $series->getId());
 
         return new JsonResponse(array('seriesId' => $series->getId()));
@@ -486,5 +486,4 @@ class SeriesController extends AdminController
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_series_index'));
     }
-     
 }
