@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationServiceException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\NonceExpiredException;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
 use Symfony\Component\Security\Core\Util\StringUtils;
@@ -22,15 +23,17 @@ class PumukitProvider implements AuthenticationProviderInterface
   private $providerKey;
   private $userChecker;
   private $container;
+  private $createUsers;
 
 
-  public function __construct(UserProviderInterface $userProvider, $providerKey, UserCheckerInterface $userChecker, ContainerInterface $container)
+  public function __construct(UserProviderInterface $userProvider, $providerKey, UserCheckerInterface $userChecker, ContainerInterface $container, $createUsers=true)
   {
     $this->userProvider = $userProvider;
     $this->providerKey = $providerKey;
     $this->userChecker = $userChecker;
     //NOTE: using container instead of tag service to avoid ServiceCircularReferenceException.
     $this->container = $container;
+    $this->createUsers = $createUsers;
   }
 
   public function authenticate(TokenInterface $token)
@@ -46,7 +49,11 @@ class PumukitProvider implements AuthenticationProviderInterface
     try {
         $user = $this->userProvider->loadUserByUsername($user);
     } catch(UsernameNotFoundException $notFound){
+      if ($this->createUsers) {
         $user = $this->createUser($user);
+      } else {
+        throw new BadCredentialsException('Bad credentials', 0, $notFound);
+      } 
     } catch (\Exception $repositoryProblem) {
         $ex = new AuthenticationServiceException($repositoryProblem->getMessage(), 0, $repositoryProblem);
         $ex->setToken($token);

@@ -26,6 +26,7 @@ class PumukitSecurityExtension extends Extension
         $container->setParameter('pumukit_security.cas_port', $config['cas_port']);
         $container->setParameter('pumukit_security.cas_uri', $config['cas_uri']);
         $container->setParameter('pumukit_security.cas_allowed_ip_clients', $config['cas_allowed_ip_clients']);
+        $container->setParameter('pumukit_security.create_users', $config['create_users']);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');

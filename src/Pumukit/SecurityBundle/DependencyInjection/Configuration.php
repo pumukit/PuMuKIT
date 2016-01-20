@@ -36,7 +36,11 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->arrayNode('cas_allowed_ip_clients')
               ->prototype('scalar')
-              ->info('Array of allowed IP clients')
+              ->info('Array of allowed IP clients')->end()
+            ->end()
+            ->booleanNode('create_users')
+              ->defaultTrue()
+              ->info('Authorize application to create not found users')
             ->end()
           ->end()
           ;
