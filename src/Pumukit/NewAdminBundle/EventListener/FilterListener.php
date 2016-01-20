@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Pumukit\SchemaBundle\Document\Person;
 
 class FilterListener
 {
