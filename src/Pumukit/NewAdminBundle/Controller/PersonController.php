@@ -220,9 +220,10 @@ class PersonController extends AdminController
         $form = $this->createForm(new PersonType($translator, $locale), $person);
 
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
+            $personService = $this->get('pumukitschema.person');
+            $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
             if ($form->bind($request)->isValid()) {
                 try {
-                    $personService = $this->get('pumukitschema.person');
                     $multimediaObject = $personService->createRelationPerson($person, $role, $multimediaObject);
                 } catch (\Exception $e) {
                     $this->get('session')->getFlashBag()->add('error', $e->getMessage());
@@ -241,6 +242,7 @@ class PersonController extends AdminController
                                  array(
                                        'people' => $multimediaObject->getPeopleByRole($role, true),
                                        'role' => $role,
+                                       'personal_scope_role_code' => $personalScopeRoleCode,
                                        'mm' => $multimediaObject,
                                        'template' => $template
                                        ));
@@ -272,6 +274,7 @@ class PersonController extends AdminController
 
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
+        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
@@ -292,6 +295,7 @@ class PersonController extends AdminController
                                      array(
                                            'people' => $multimediaObject->getPeopleByRole($role, true),
                                            'role' => $role,
+                                           'personal_scope_role_code' => $personalScopeRoleCode,
                                            'mm' => $multimediaObject,
                                            'template' => $template
                                            ));
@@ -331,6 +335,7 @@ class PersonController extends AdminController
 
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
+        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
         try{
             $multimediaObject = $personService->createRelationPerson($person, $role, $multimediaObject);
             // TODO Snackbars and toasts
@@ -350,6 +355,7 @@ class PersonController extends AdminController
                              array(
                                    'people' => $multimediaObject->getPeopleByRole($role, true),
                                    'role' => $role,
+                                   'personal_scope_role_code' => $personalScopeRoleCode,
                                    'mm' => $multimediaObject,
                                    'template' => $template
                                    ));
@@ -392,6 +398,7 @@ class PersonController extends AdminController
 
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
+        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
         $multimediaObject = $personService->upPersonWithRole($person, $role, $multimediaObject);
 
         $template = '';
@@ -403,6 +410,7 @@ class PersonController extends AdminController
                              array(
                                    'people' => $multimediaObject->getPeopleByRole($role, true),
                                    'role' => $role,
+                                   'personal_scope_role_code' => $personalScopeRoleCode,
                                    'mm' => $multimediaObject,
                                    'template' => $template
                                    ));        
@@ -422,6 +430,7 @@ class PersonController extends AdminController
 
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
+        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
         $multimediaObject = $personService->downPersonWithRole($person, $role, $multimediaObject);
 
         $template = '';
@@ -433,6 +442,7 @@ class PersonController extends AdminController
                              array(
                                    'people' => $multimediaObject->getPeopleByRole($role, true),
                                    'role' => $role,
+                                   'personal_scope_role_code' => $personalScopeRoleCode,
                                    'mm' => $multimediaObject,
                                    'template' => $template
                                    ));
