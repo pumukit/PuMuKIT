@@ -14,21 +14,18 @@ class UserService
     private $dm;
     private $repo;
     private $permissionService;
-    private $personalScopeDeleteOwners;
 
     /**
      * Constructor
      *
      * @param DocumentManager $documentManager
      * @param PermissionService $permissionService
-     * @param boolean         $personalScopeDeleteOwners
      */
-    public function __construct(DocumentManager $documentManager, PermissionService $permissionService, $personalScopeDeleteOwners=false)
+    public function __construct(DocumentManager $documentManager, PermissionService $permissionService)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:User');
         $this->permissionService = $permissionService;
-        $this->personalScopeDeleteOwners = $personalScopeDeleteOwners;
     }
 
     /**
