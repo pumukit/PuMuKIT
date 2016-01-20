@@ -10,8 +10,8 @@
           </div>
         </dd>
       </div>
-      {% endif %}
       <hr class="pumukit-green"/>
+      {% endif %}
       {% for role in roles if role.getCod() != personal_scope_role_code %}
       <div class="form-row">
         <dt>{{ role.getName() }}{{ role.getDisplay()?'*':'' }}:</dt>
