@@ -42,9 +42,6 @@ class PersonService
         $this->repoRole = $documentManager->getRepository('PumukitSchemaBundle:Role');
         $this->addUserAsPerson = $addUserAsPerson;
         $this->personalScopeRoleCode = $personalScopeRoleCode;
-        if ($addUserAsPerson && (null == $this->getPersonalScopeRole($personalScopeRoleCode))) {
-            throw new \Exception('Invalid Personal Scope Role Code: "'.$personalScopeRoleCode.'". There is no Role with this data. Change it on parameters.yml or use default value by deleting line "personal_scope_role_code: \''.$personalScopeRoleCode.'\'" from your parameters file.');
-        }
     }
 
     /**
@@ -393,11 +390,20 @@ class PersonService
      * to add the User as Person
      * to MultimediaObject
      *
-     * @return Role
+     * @return Role|null
      */
     public function getPersonalScopeRole()
     {
-        return $this->dm->getRepository('PumukitSchemaBundle:Role')->findOneByCod($this->personalScopeRoleCode);
+        $personalScopeRole = $this->dm->getRepository('PumukitSchemaBundle:Role')->findOneByCod($this->personalScopeRoleCode);
+        if ($this->addUserAsPerson && (null == $personalScopeRole)) {
+            throw new \Exception('Invalid Personal Scope Role Code: "'.$this->personalScopeRoleCode
+                                 .'". There is no Role with this data. '
+                                 .'Change it on parameters.yml or use default value by deleting '
+                                 .'line "personal_scope_role_code: \''.$this->personalScopeRoleCode.'\'" '
+                                 .'from your parameters file.');
+        }
+
+        return $personalScopeRole;
     }
 
     /**
