@@ -4,6 +4,8 @@ pumukitnewadmin_js:
     defaults:
         _controller: FrameworkBundle:Template:template
         template: 'PumukitNewAdminBundle::pumukit2.js.twig'
+        maxAge:       86400
+        sharedAge:    86400
         _format: js
 
 pumukitnewadmin_css:
@@ -12,6 +14,8 @@ pumukitnewadmin_css:
     defaults:
         _controller: FrameworkBundle:Template:template
         template: 'PumukitNewAdminBundle::pumukit2.css.twig'
+        maxAge:       86400
+        sharedAge:    86400
         _format: css
 
 
@@ -21,6 +25,8 @@ pumukit_jquery_ui_autocomplete_css:
     defaults:
         _controller: FrameworkBundle:Template:template
         template: 'PumukitNewAdminBundle::jquery-ui-autocomplete.css.twig'
+        maxAge:       86400
+        sharedAge:    86400
         _format: css
 
 pumukitnewadmin_user:
