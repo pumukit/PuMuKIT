@@ -463,6 +463,7 @@ class PersonController extends AdminController
 
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
+        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
         try {
             $multimediaObject = $personService->deleteRelation($person, $role, $multimediaObject);
         }catch (\Exception $e){
@@ -477,6 +478,7 @@ class PersonController extends AdminController
         return array(
                      'people' => $multimediaObject->getPeopleByRole($role, true),
                      'role' => $role,
+                     'personal_scope_role_code' => $personalScopeRoleCode,
                      'mm' => $multimediaObject,
                      'template' => $template
                      );
