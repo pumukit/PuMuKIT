@@ -16,12 +16,14 @@ class FilterListener
     private $dm;
     private $personService;
     private $securityContext;
+    private $addUserAsPerson;
 
-    public function __construct(DocumentManager $documentManager, PersonService $personService, SecurityContext $securityContext)
+    public function __construct(DocumentManager $documentManager, PersonService $personService, SecurityContext $securityContext, $addUserAsPerson = true)
     {
         $this->dm = $documentManager;
         $this->personService = $personService;
         $this->securityContext = $securityContext;
+        $this->addUserAsPerson = $addUserAsPerson;
     }
 
     public function onKernelRequest(GetResponseEvent $event)
@@ -34,23 +36,25 @@ class FilterListener
             && (false !== strpos($req->attributes->get("_controller"), 'pumukitnewadmin'))
             && (!isset($routeParams["filter"]) || $routeParams["filter"])) {
 
-            $loggedInUser = $this->getLoggedInUser();
-            if ($loggedInUser->hasRole(PermissionProfile::SCOPE_PERSONAL) ||
-                $loggedInUser->hasRole(PermissionProfile::SCOPE_NONE)) {
-                $filter = $this->dm->getFilterCollection()->enable("backend");
+            if ($this->addUserAsPerson) {
+                $loggedInUser = $this->getLoggedInUser();
+                if ($loggedInUser->hasRole(PermissionProfile::SCOPE_PERSONAL) ||
+                    $loggedInUser->hasRole(PermissionProfile::SCOPE_NONE)) {
+                    $filter = $this->dm->getFilterCollection()->enable("backend");
 
-                $person = $this->personService->getPersonFromLoggedInUser($loggedInUser);
+                    $person = $this->personService->getPersonFromLoggedInUser($loggedInUser);
 
-                if (null != $people = $this->getPeopleMongoQuery($person)) {
-                    $filter->setParameter("people", $people);
-                }
+                    if (null != $people = $this->getPeopleMongoQuery($person)) {
+                        $filter->setParameter("people", $people);
+                    }
 
-                if (null != $person) {
-                    $filter->setParameter("person_id", $person->getId());
-                }
+                    if (null != $person) {
+                        $filter->setParameter("person_id", $person->getId());
+                    }
 
-                if (null != $roleCode = $this->personService->getPersonalScopeRoleCode()) {
-                    $filter->setParameter("role_code", $roleCode);
+                    if (null != $roleCode = $this->personService->getPersonalScopeRoleCode()) {
+                        $filter->setParameter("role_code", $roleCode);
+                    }
                 }
             }
         }
