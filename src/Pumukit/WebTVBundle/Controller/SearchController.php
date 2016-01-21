@@ -41,12 +41,13 @@ class SearchController extends Controller
         }
 
         if ($startFound != 'All' && $startFound != '') {
-            $start = \DateTime::createFromFormat('d/m/Y', $startFound);
+            $start = \DateTime::createFromFormat('!d/m/Y', $startFound);
             $queryBuilder->field('public_date')->gt($start);
         }
 
         if ($endFound != 'All' && $endFound != '') {
-            $end = \DateTime::createFromFormat('d/m/Y', $endFound);
+            $end = \DateTime::createFromFormat('!d/m/Y', $endFound);
+            $end->modify("+1 day");
             $queryBuilder->field('public_date')->lt($end);
         }
 
@@ -233,11 +234,12 @@ class SearchController extends Controller
         }
         else {
             if ($startFound != '') {
-                $start = \DateTime::createFromFormat('d/m/Y', $startFound);
+                $start = \DateTime::createFromFormat('!d/m/Y', $startFound);
                 $queryBuilder->field('record_date')->gt($start);
             }
             if ($endFound != '') {
-                $end = \DateTime::createFromFormat('d/m/Y', $endFound);
+                $end = \DateTime::createFromFormat('!d/m/Y', $endFound);
+                $end->modify("+1 day");
                 $queryBuilder->field('record_date')->lt($end);
             }
         }
