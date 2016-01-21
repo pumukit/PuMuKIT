@@ -54,13 +54,6 @@ body {
     background: {{ page_background }};
 }
 
-a:hover, a:focus {
-    text-decoration: none;
-    color: {{ default_content_link_selected_font }};
-}
-a {
-    color: {{ default_content_link_font }};
-}
 ul, ol {
     list-style:none;
     margin: 0px;
@@ -593,6 +586,7 @@ body.opencast-layout .breadcrumb_wrapper {
     position: relative;
     display: block;
     overflow: auto;
+    text-decoration: none;
 }
 a:hover .cover {
     background: {{ default_light_font }};
@@ -648,6 +642,7 @@ a:hover .cover {
 .widget.slidebar a {
     display: block;
     font-size: 1.3em;
+    text-decoration: none;
     padding: {{ menu_padding }};
     color: {{ menu_font_color }};
 }
@@ -657,6 +652,7 @@ a:hover .cover {
     margin-left: -65px;
     padding-left: 95px;
     z-index:10;
+    text-decoration: none;
     transition: background 0.3s ease;
 }
 
