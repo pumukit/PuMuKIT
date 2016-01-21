@@ -67,6 +67,7 @@ class PumukitOpencastExtension extends Extension
           $container
             ->register("pumukit_opencast.workflow", "Pumukit\OpencastBundle\Services\WorkflowService")
             ->addArgument(new Reference("pumukit_opencast.client"))
+            ->addArgument($config['delete_archive_mediapackage'])
             ->addArgument($config['deletion_workflow_name']);
 
           $container->setParameter('pumukit_opencast.sbs', $config['sbs']);

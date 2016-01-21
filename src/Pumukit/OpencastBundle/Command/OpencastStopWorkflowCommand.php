@@ -15,11 +15,11 @@ class OpencastStopWorkflowCommand extends ContainerAwareCommand
         $this
             ->setName('pumukit:opencast:workflow:stop')
             ->setDescription('Stop given workflow or all finished workflows')
-            ->addOption('id', null, InputOption::VALUE_REQUIRED, 'Set this parameter to stop workflow with given id')
+            ->addOption('mediaPackageId', null, InputOption::VALUE_REQUIRED, 'Set this parameter to stop workflow with given mediaPackageId')
             ->setHelp(<<<EOT
 Command to stop workflows in Opencast Server.
 
-Given id, will stop that workflow, all finished otherwise.
+Given mediaPackageId, will stop that workflow, all finished otherwise.
 
 EOT
                       );
@@ -27,16 +27,24 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $logger = $this->getContainer()->get('logger');
         $opencastWorkflowService = $this->getContainer()->get('pumukit_opencast.workflow');
+        $deleteArchiveMediaPackage = $this->getContainer()->getParameter('pumukit_opencast.delete_archive_mediapackage');
 
-        $id = $input->getOption('id');
-        $result = $opencastWorkflowService->stopSucceededWorkflows($id);
-        if (!$result) {
-            $output->writeln('Error on stopping workflows');
-            return -1;
+        if ($deleteArchiveMediaPackage) {
+            $mediaPackageId = $input->getOption('mediaPackageId');
+            $result = $opencastWorkflowService->stopSucceededWorkflows($mediaPackageId);
+            if (!$result) {
+                $output->writeln('<error>Error on stopping workflows</error>');
+                $logger->error('['.__CLASS__.']('.__FUNCTION__.') Error on stopping workflows');
+                return -1;
+            }
+            $output->writeln('<info>Successfully stopped workflows</info>');
+            $logger->info('['.__CLASS__.']('.__FUNCTION__.') Successfully stopped workflows');
+        } else {
+            $output->writeln('<info>Not allowed to stop workflows</info>');
+            $logger->warning('['.__CLASS__.']('.__FUNCTION__.') Not allowed to stop workflows');
         }
-
-        $output->writeln('Successfully stopped workflows');
 
         return 1;
     }

@@ -238,15 +238,16 @@ class ClientService
      */
     public function stopWorkflow(array $workflow = array())
     {
-        if (isset($workflow['id'])) {
+        if ($this->deleteArchiveMediaPackage) {
+            if (isset($workflow['id'])) {
+                $request = '/workflow/stop';
+                $params = array('id' => $workflow['id']);
+                $output = $this->request($request, $params, false);
+                if ($output["status"] !== 200)
+                    return false;
 
-            $request = '/workflow/stop';
-            $params = array('id' => $workflow['id']);
-            $output = $this->request($request, $params, false);
-            if ($output["status"] !== 200)
-                return false;
-
-            return true;
+                return true;
+            }
         }
 
         return false;

@@ -6,16 +6,19 @@ class WorkflowService
 {
     private $clientService;
     private $deletionWorkflowName;
+    private $deleteArchiveMediaPackage;
 
     /**
      * Constructor
      *
      * @param ClientService $clientService
+     * @param boolean       $deleteArchiveMediaPackage
      * @param string        $deletionWorkflowName
      */
-    public function __construct(ClientService $clientService, $deletionWorkflowName = 'delete-archive')
+    public function __construct(ClientService $clientService, $deleteArchiveMediaPackage = false, $deletionWorkflowName = 'delete-archive')
     {
         $this->clientService = $clientService;
+        $this->deleteArchiveMediaPackage = $deleteArchiveMediaPackage;
         $this->deletionWorkflowName = $deletionWorkflowName;
     }
 
@@ -28,22 +31,25 @@ class WorkflowService
     public function stopSucceededWorkflows($mediaPackageId='')
     {
         $errors = 0;
-        if ($mediaPackageId) {
-            $deletionWorkflow = $this->getAllWorkflowInstances($mediaPackageId, $this->deletionWorkflowName);
-            $errors = $this->stopSucceededWorkflow($deletionWorkflow, $errors);
-            $mediaPackageId = $this->getMediaPackageIdFromWorkflow($deletionWorkflow);
-            $workflows = $this->getAllWorkflowInstances($mediaPackageId);
-            foreach ($workflows as $workflow) {
-                $errors = $this->stopSucceededWorkflow($workflow, $errors);
-            }
-        } else {
-            $deletionWorkflows = $this->getAllWorkflowInstances('', $this->deletionWorkflowName);
-            foreach ($deletionWorkflows as $deletionWorkflow) {
-                $errors = $this->stopSucceededWorkflow($deletionWorkflow, $errors);
-                $mediaPackageId = $this->getMediaPackageIdFromWorkflow($deletionWorkflow);
-                $mediaPackageWorkflows = $this->getAllWorkflowInstances($mediaPackageId, '');
-                foreach ($mediaPackageWorkflows as $mediaPackageWorkflow) {
-                    $errors = $this->stopSucceededWorkflow($mediaPackageWorkflow, $errors);
+        if ($this->deleteArchiveMediaPackage) {
+            if ($mediaPackageId) {
+                $deletionWorkflow = $this->getAllWorkflowInstances($mediaPackageId, $this->deletionWorkflowName);
+                if (null != $deletionWorkflow) {
+                    $errors = $this->stopSucceededWorkflow($deletionWorkflow, $errors);
+                    $workflows = $this->getAllWorkflowInstances($mediaPackageId);
+                    foreach ($workflows as $workflow) {
+                        $errors = $this->stopSucceededWorkflow($workflow, $errors);
+                    }
+                }
+            } else {
+                $deletionWorkflows = $this->getAllWorkflowInstances('', $this->deletionWorkflowName);
+                foreach ($deletionWorkflows as $deletionWorkflow) {
+                    $errors = $this->stopSucceededWorkflow($deletionWorkflow, $errors);
+                    $mediaPackageId = $this->getMediaPackageIdFromWorkflow($deletionWorkflow);
+                    $mediaPackageWorkflows = $this->getAllWorkflowInstances($mediaPackageId, '');
+                    foreach ($mediaPackageWorkflows as $mediaPackageWorkflow) {
+                        $errors = $this->stopSucceededWorkflow($mediaPackageWorkflow, $errors);
+                    }
                 }
             }
         }
@@ -147,11 +153,13 @@ class WorkflowService
      */
     private function stopSucceededWorkflow(array $workflow = array(), $errors = 0)
     {
-        $isSucceeded = $this->isWorkflowSucceeded($workflow);
-        if ($isSucceeded) {
-            $output = $this->clientService->stopWorkflow($workflow);
-            if (!$output) {
-                ++$errors;
+        if ($this->deleteArchiveMediaPackage) {
+            $isSucceeded = $this->isWorkflowSucceeded($workflow);
+            if ($isSucceeded) {
+                $output = $this->clientService->stopWorkflow($workflow);
+                if (!$output) {
+                    ++$errors;
+                }
             }
         }
 
