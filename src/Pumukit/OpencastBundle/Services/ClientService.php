@@ -177,7 +177,8 @@ class ClientService
         $parameters = array('mediaPackageIds' => $mediaPackageIdsParameter,
                             'engage' => 'Matterhorn+Engage+Player');
 
-        $output = $this->request($request, $parameters, false);
+        $this->adminUrl = $this->getAdminUrl();
+        $output = $this->request($request, $parameters, false, true);
 
         if ($output["status"] !== 204) return false;
 
@@ -193,7 +194,8 @@ class ClientService
     {
         $request = '/workflow/statistics.json';
 
-        $output = $this->request($request);
+        $this->adminUrl = $this->getAdminUrl();
+        $output = $this->request($request, array(), true, true);
 
         if ($output["status"] !== 200) return false;
 
@@ -217,7 +219,8 @@ class ClientService
     {
         $request = '/workflow/instances.json?state=SUCCEEDED'.($workflowName?'&workflowdefinition='.$workflowName:'').($id?'&mp='.$id:'').($count?'&count='.$count:'');
 
-        $output = $this->request($request);
+        $this->adminUrl = $this->getAdminUrl();
+        $output = $this->request($request, array(), true, true);
 
         if ($output["status"] !== 200) return false;
 
@@ -239,10 +242,10 @@ class ClientService
     public function stopWorkflow(array $workflow = array())
     {
         if (isset($workflow['id'])) {
-
             $request = '/workflow/stop';
             $params = array('id' => $workflow['id']);
-            $output = $this->request($request, $params, false);
+            $this->adminUrl = $this->getAdminUrl();
+            $output = $this->request($request, $params, false, true);
             if ($output["status"] !== 200)
                 return false;
 
