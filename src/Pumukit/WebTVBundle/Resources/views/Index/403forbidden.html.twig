@@ -8,5 +8,9 @@
       <h2 style="color:red;">{% trans %}Forbidden to access this video{% endtrans %}</h2>
 	</div>
 	<div class="grid_5">
+      {% if show_forceauth %}
+        {% set diff = (app.request.getQueryString) ? '&' : '?' %}
+        <a href="{{ app.request.requestUri }}{{ diff }}force-auth=true">login</a>
+      {% endif %}
 	</div>
 {% endblock %}
