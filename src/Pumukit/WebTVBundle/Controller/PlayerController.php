@@ -32,7 +32,10 @@ class PlayerController extends Controller
                 return true;
             }
 
-            return new Response($this->renderView('PumukitWebTVBundle:Index:403forbidden.html.twig', array()), 403);
+            if ($request->query->get('force-auth')) {
+                throw $this->createAccessDeniedException('Unable to access this page!');
+            }
+            return new Response($this->renderView('PumukitWebTVBundle:Index:403forbidden.html.twig', array('show_forceauth' => true)), 403);
         }
 
         if (($broadcast->getName() == $request->headers->get('PHP_AUTH_USER', false)) &&
