@@ -33,8 +33,8 @@
            onMouseOver="this.style.textDecoration='underline'"
            onMouseOut="this.style.textDecoration='none'"
            onClick="paellaevents = document.getElementById('paellaiframe').contentWindow.paella.events;
-                    paellaevents.trigger(paellaevents.seekToTime,{time:{{chapter.time}}})">
-          {{ date("00:00:00 + " ~ (chapter.time|round) ~ " seconds")|date('H:i:s')}}
+                    paellaevents.trigger(paellaevents.seekToTime,{time:{{chapter.real_time}}})">
+          {{ date("00:00:00 + " ~ (chapter.time_to_show|round) ~ " seconds")|date('H:i:s')}}
         </a>
       </li>
     {% endfor %}

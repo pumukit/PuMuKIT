@@ -70,17 +70,32 @@ class PlayerController extends Controller
                       ->field('multimediaObject')->equals(new \MongoId($multimediaObject->getId()))
                       ->getQuery()->getSingleResult();
 
+        $trimming = $this->get('doctrine_mongodb.odm.document_manager')
+                      ->getRepository('PumukitSchemaBundle:Annotation')
+                      ->createQueryBuilder()
+                      ->field('type')->equals('paella/trimming')
+                      ->field('multimediaObject')->equals(new \MongoId($multimediaObject->getId()))
+                      ->getQuery()->getSingleResult();
+
+
         $editorChapters = array();
         if($marks) {
             $marks = json_decode($marks->getValue(), true);
         }
-
+        if($trimming) {
+            $trimming = json_decode($trimming->getValue(), true)['trimming'];
+        }
+        dump($trimming);
         foreach($marks['marks'] as $chapt) {
-            $editorChapters[] = array('title' => $chapt['name'],
-                                      'time' => $chapt['s']);
+            $time = $chapt['s'];
+            if($trimming['start'] <= $time && $trimming['end'] >= $time) {
+                $editorChapters[] = array('title' => $chapt['name'],
+                                          'real_time' => $time,
+                                          'time_to_show' => $time - $trimming['start']);
+            }
         }
         usort($editorChapters, function($a, $b) {
-            return $a['time'] > $b['time'];
+            return $a['real_time'] > $b['real_time'];
         });
         return $editorChapters;
     }
