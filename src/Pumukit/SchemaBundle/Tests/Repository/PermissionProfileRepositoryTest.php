@@ -5,11 +5,13 @@ namespace Pumukit\SchemaBundle\Tests\Repository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Pumukit\SchemaBundle\Services\PermissionService;
 
 class PermissionProfileRepositoryTest extends WebTestCase
 {
     private $dm;
     private $repo;
+    private $permissionService;
 
     public function __construct()
     {
@@ -94,7 +96,16 @@ class PermissionProfileRepositoryTest extends WebTestCase
 
     public function testFindDefaultCandidate()
     {
-        $this->assertNull($this->repo->findDefaultCandidate());
+        $externalPermissions = array(
+                                     array(
+                                           'role' => 'ROLE_ONE',
+                                           'description' => 'Access One'
+                                           )
+                                     );
+        $permissionService = new PermissionService($externalPermissions);
+        $totalPermissions = count($permissionService->getAllPermissions());
+
+        $this->assertNull($this->repo->findDefaultCandidate($totalPermissions));
 
         $permissions1 = array(Permission::ACCESS_DASHBOARD, Permission::ACCESS_LIVE_CHANNELS);
         $permissionProfile1 = new PermissionProfile();
@@ -119,6 +130,33 @@ class PermissionProfileRepositoryTest extends WebTestCase
         $this->assertEmpty($this->repo->findByDefault(true));
         $this->assertNotEmpty($this->repo->findByDefault(false));
 
-        $this->assertEquals($permissionProfile2, $this->repo->findDefaultCandidate());
+        $this->assertEquals($permissionProfile2, $this->repo->findDefaultCandidate($totalPermissions));
+    }
+
+    public function testRank()
+    {
+        $permissionProfile1 = new PermissionProfile();
+        $permissionProfile1->setName('test1');
+        $permissionProfile1->setSystem(true);
+        $permissionProfile1->setDefault(true);
+
+        $permissionProfile2 = new PermissionProfile();
+        $permissionProfile2->setName('test2');
+        $permissionProfile2->setSystem(true);
+        $permissionProfile2->setDefault(false);
+
+        $permissionProfile3 = new PermissionProfile();
+        $permissionProfile3->setName('test3');
+        $permissionProfile3->setSystem(true);
+        $permissionProfile3->setDefault(false);
+
+        $this->dm->persist($permissionProfile1);
+        $this->dm->persist($permissionProfile2);
+        $this->dm->persist($permissionProfile3);
+        $this->dm->flush();
+
+        $this->assertEquals(0, $permissionProfile1->getRank());
+        $this->assertEquals(1, $permissionProfile2->getRank());
+        $this->assertEquals(2, $permissionProfile3->getRank());
     }
 }

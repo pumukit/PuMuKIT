@@ -15,20 +15,27 @@ class UserService
     private $dm;
     private $repo;
     private $securityContext;
+    private $permissionService;
     private $personalScopeDeleteOwners;
+    private $dispatcher;
 
     /**
      * Constructor
      *
      * @param DocumentManager $documentManager
      * @param SecurityContext $securityContext
+     * @param UserEventDispatcherService $dispatcher
+     * @param PermissionService $permissionService
      * @param boolean         $personalScopeDeleteOwners
      */
-    public function __construct(DocumentManager $documentManager, SecurityContext $securityContext, $personalScopeDeleteOwners=false)
+    public function __construct(DocumentManager $documentManager, SecurityContext $securityContext, UserEventDispatcherService $dispatcher, 
+                                PermissionService $permissionService, $personalScopeDeleteOwners=false)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:User');
         $this->securityContext = $securityContext;
+        $this->permissionService = $permissionService;
+        $this->dispatcher = $dispatcher;
         $this->personalScopeDeleteOwners = $personalScopeDeleteOwners;
     }
 
@@ -245,6 +252,8 @@ class UserService
         $this->dm->persist($user);
         $this->dm->flush();
 
+        $this->dispatcher->dispatchCreate($user);
+
         return $user;
     }
 
@@ -276,7 +285,23 @@ class UserService
         $this->dm->persist($user);
         if ($executeFlush) $this->dm->flush();
 
+        $this->dispatcher->dispatchUpdate($user);
+
         return $user;
+    }
+
+    /**
+     * Delete user
+     *
+     * @param User $user
+     * @param boolean $executeFlush
+     */
+    public function delete(User $user, $executeFlush = true)
+    {
+        $this->dm->remove($user);
+        if ($executeFlush) $this->dm->flush();
+
+        $this->dispatcher->dispatchDelete($user);
     }
 
     /**
@@ -311,7 +336,7 @@ class UserService
     public function removeRoles(User $user, $permissions = array(), $executeFlush = true)
     {
         foreach ($permissions as $permission) {
-            if ($user->hasRole($permission) && (in_array($permission, array_keys(Permission::$permissionDescription)))) {
+            if ($user->hasRole($permission) && (in_array($permission, array_keys($this->permissionService->getAllPermissions())))) {
                 $user->removeRole($permission);
             }
         }
@@ -360,7 +385,7 @@ class UserService
     {
         $userPermissions = array();
         foreach ($userRoles as $userRole) {
-            if (in_array($userRole, array_keys(Permission::$permissionDescription))) {
+            if (in_array($userRole, array_keys($this->permissionService->getAllPermissions()))) {
                 $userPermissions[] = $userRole;
             }
         }

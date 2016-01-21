@@ -729,14 +729,15 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findStandardBySeries(Series $series, $limit = 0, $page = 1)
     {
         $qb = $this->createStandardQueryBuilder()
-        ->field('series')->references($series);
+          ->field('series')->references($series);
 
         if ($limit > 0){
             $qb->limit($limit)->skip($limit * $page);
         }
 
-        return $qb->getQuery()
-        ->execute();
+        return $qb->sort('rank', 1)
+          ->getQuery()
+          ->execute();
     }
 
     /**

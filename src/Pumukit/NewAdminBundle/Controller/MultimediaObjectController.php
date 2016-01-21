@@ -10,6 +10,7 @@ use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectPubType;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
@@ -139,7 +140,7 @@ class MultimediaObjectController extends SortableAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $resource);
-        $options = array('not_admin' => !$this->isGranted('ROLE_SUPER_ADMIN'));
+        $options = array('not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS));
         $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource, $options);
 
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
@@ -155,6 +156,7 @@ class MultimediaObjectController extends SortableAdminController
         $playableResource = null;
 
         $activeEditor = $this->checkHasEditor();
+        $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
 
         return array(
                      'mm'            => $resource,
@@ -169,6 +171,7 @@ class MultimediaObjectController extends SortableAdminController
                      'not_master_profiles' => $notMasterProfiles,
                      'template' => $template,
                      'active_editor' => $activeEditor,
+                     'not_change_pub_channel' => $notChangePubChannel
                      );
     }
 
@@ -221,11 +224,13 @@ class MultimediaObjectController extends SortableAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $resource);
-        $options = array('not_admin' => !$this->isGranted('ROLE_SUPER_ADMIN'));
+        $options = array('not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS));
         $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource, $options);
 
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
+
+        $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
 
         $method = $request->getMethod();
         if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
@@ -266,7 +271,8 @@ class MultimediaObjectController extends SortableAdminController
                                    'roles'         => $roles,
                                    'pub_channels'  => $pubChannelsTags,
                                    'pub_decisions' => $pubDecisionsTags,
-                                   'parent_tags'   => $parentTags
+                                   'parent_tags'   => $parentTags,
+                                   'not_change_pub_channel' => $notChangePubChannel
                                    )
                              );
     }
@@ -296,16 +302,20 @@ class MultimediaObjectController extends SortableAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $resource);
-        $options = array('not_admin' => !$this->isGranted('ROLE_SUPER_ADMIN'));
+        $options = array('not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS));
         $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource, $options);
 
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
 
+        $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
+
         $method = $request->getMethod();
         if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
             $formPub->submit($request, !$request->isMethod('PATCH'))->isValid()) {
-            $resource = $this->updateTags($request->get('pub_channels', null), "PUCH", $resource);
+            if (!$notChangePubChannel) {
+                $resource = $this->updateTags($request->get('pub_channels', null), "PUCH", $resource);
+            }
             $resource = $this->updateTags($request->get('pub_decisions', null), "PUDE", $resource);
 
             $this->domainManager->update($resource);
@@ -344,7 +354,8 @@ class MultimediaObjectController extends SortableAdminController
                                    'roles'         => $roles,
                                    'pub_channels'  => $pubChannelsTags,
                                    'pub_decisions' => $pubDecisionsTags,
-                                   'parent_tags'   => $parentTags
+                                   'parent_tags'   => $parentTags,
+                                   'not_change_pub_channel' => $notChangePubChannel
                                    )
                              );
     }
@@ -445,7 +456,7 @@ class MultimediaObjectController extends SortableAdminController
           }
           foreach ($checkedTags as $cod => $checked) {
             $tag = $this->get('pumukitschema.factory')->getTagsByCod($cod, false);
-              $resource->addTag($tag);
+            $resource->addTag($tag);
           }
         } else {
             foreach ($resource->getTags() as $tag) {

@@ -3,7 +3,7 @@
   <h4 class="modal-title" id="myModalLabel">{% trans %}create new broadcast{% endtrans %}</h4>
 </div>
 <div class="modal-body">
-  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_BROADCASTS')) %}
+  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_BROADCASTS')) %}
   {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
   <form autocomplete="off" onsubmit="
                   $(this).find(':submit').prop('disabled', true);
@@ -43,7 +43,7 @@
   {% endif %}
 </div>
 
-{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_BROADCASTS')) %}
+{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_BROADCASTS')) %}
 <script>
 document.getElementById('pumukitnewadmin_broadcast_broadcast_type_id').addEventListener('change', function(event) {
   document.getElementById('pumukitnewadmin_broadcast_passwd').required = (event.target.value != "public");

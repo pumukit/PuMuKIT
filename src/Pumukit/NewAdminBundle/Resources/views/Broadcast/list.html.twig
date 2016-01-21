@@ -1,5 +1,5 @@
 <div class="table-responsive well">
-  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_BROADCASTS')) %}
+  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_BROADCASTS')) %}
     <table class="table table-striped table-hover">
       <thead>
         <tr>

@@ -4,7 +4,7 @@
 <h1>{% trans %}Tags{% endtrans %}</h1>
 
 <div class="row">
-  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_TAGS')) %}
+  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_TAGS')) %}
   <div class="col-md-12">
     <div class="well">
       <div id="list_tags">

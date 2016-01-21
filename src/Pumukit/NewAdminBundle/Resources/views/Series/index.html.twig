@@ -5,7 +5,7 @@
 <h3> {% trans %}Multimedia Series{% endtrans %}</h3>
 
 <div class="row">
-  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   <div class="col-md-10">
     <div class="well" >
       <div id="list_series">
@@ -21,11 +21,11 @@
           </select>
         </div>
         <div class="col-md-10 text-right">
-          {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_WIZARD_UPLOAD')) %}
+          {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_WIZARD_UPLOAD')) %}
 	      <a class="btn btn-primary btn-raised" href="{{ url('pumukitwizard_default_series') }}">{% trans %}Wizard{% endtrans %}</a>
           {% endif %}
           {# TODO check route with filter /editar.php/serials/create/filter/filter #}
-          {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADVANCED_UPLOAD')) %}
+          {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADVANCED_UPLOAD')) %}
 	      <a title="{% trans %}Create new series{% endtrans %}" id="pumukitnewadmin_series_new_button" class="btn btn-pumukit btn-raised" href="#">{% trans %}New{% endtrans %}</a>
           {% endif %}
         </div>
