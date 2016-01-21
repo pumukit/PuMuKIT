@@ -40,7 +40,7 @@ class FilterListener
                 $loggedInUser = $this->getLoggedInUser();
                 if ($loggedInUser->hasRole(PermissionProfile::SCOPE_PERSONAL) ||
                     $loggedInUser->hasRole(PermissionProfile::SCOPE_NONE)) {
-                    $filter = $this->dm->getFilterCollection()->enable("backend");
+                    $filter = $this->dm->getFilterCollection()->enable("backoffice");
 
                     $person = $this->personService->getPersonFromLoggedInUser($loggedInUser);
 
