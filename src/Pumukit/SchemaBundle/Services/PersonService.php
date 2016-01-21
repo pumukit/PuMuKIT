@@ -198,7 +198,7 @@ class PersonService
         $this->dm->persist($person);
         $multimediaObject->addPersonWithRole($person, $role);
         $role->increaseNumberPeopleInMultimediaObject();
-        if ($this->addUserAsPerson && ($this->personalScopeRoleCode === $role->getCod())) {
+        if ($this->addUserAsPerson && ($this->personalScopeRoleCode === $role->getCod()) && (null != $person->getUser())) {
             $this->userService->addOwnerUserToMultimediaObject($multimediaObject, $person->getUser(), false);
         }
         $this->dm->persist($multimediaObject);
@@ -273,7 +273,7 @@ class PersonService
         $hasBeenRemoved = $multimediaObject->removePersonWithRole($person, $role);
         if ($hasBeenRemoved) {
             $role->decreaseNumberPeopleInMultimediaObject();
-            if ($this->addUserAsPerson && ($this->personalScopeRoleCode === $role->getCod())) {
+            if ($this->addUserAsPerson && ($this->personalScopeRoleCode === $role->getCod()) && (null != $person->getUser())) {
                 $this->userService->removeOwnerUserFromMultimediaObject($multimediaObject, $person->getUser(), false);
             }
         }
