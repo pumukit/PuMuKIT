@@ -1,0 +1,23 @@
+{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+
+{% block body %}
+  <div class="row">
+    <div class="col-xs-12">
+        <br>
+      <div class="row">
+        <div class="col-xs-12">
+          <h1 class="title-for-crumbs">{{ title }}</h1>
+        </div>
+      </div>
+      {% for result in results %}{#if result.objects | length > 0 #}
+        <div class="row">
+          <div class="col-xs-12">
+            <h2>{{ result.tag.title }}<small> (All {{result.numMmobjs }})</small></h2>
+          </div>
+          {% set objects = result.objects%}
+          {% include 'PumukitWebTVBundle:Channel:list.html.twig' %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
