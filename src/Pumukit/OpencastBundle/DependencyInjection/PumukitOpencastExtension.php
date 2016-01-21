@@ -85,7 +85,9 @@ class PumukitOpencastExtension extends Extension
           $container
             ->register("pumukit_opencast.remove_listener", "Pumukit\OpencastBundle\EventListener\RemoveListener")
             ->addArgument(new Reference("pumukit_opencast.client"))
+            ->addArgument(new Reference("logger"))
             ->addArgument($config['delete_archive_mediapackage'])
+            ->addArgument($config['deletion_workflow_name'])
             ->addTag("kernel.event_listener", array('event' => 'multimediaobject.delete', 'method' => 'onMultimediaObjectDelete'));
         }
     }

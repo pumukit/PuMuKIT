@@ -276,8 +276,9 @@ class FactoryService
             $this->dm->persist($series);
         }
         $this->dm->remove($multimediaObject);
-        $this->mmsDispatcher->dispatchDelete($multimediaObject);
         $this->dm->flush();
+
+        $this->mmsDispatcher->dispatchDelete($multimediaObject);
     }
 
     /**
