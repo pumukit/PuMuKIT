@@ -231,23 +231,7 @@ class PumukitAdminExtension extends \Twig_Extension
      */
     public function getSeriesIcon($series)
     {
-        $mmobjsPublished = 0;
-        $mmobjsHidden = 0;
-        $mmobjsBlocked = 0;
-
-        foreach ($series->getMultimediaObjects() as $mmobj) {
-            switch ($mmobj->getStatus()) {
-                case MultimediaObject::STATUS_PUBLISHED:
-                    ++$mmobjsPublished;
-                    break;
-                case MultimediaObject::STATUS_HIDE:
-                    ++$mmobjsHidden;
-                    break;
-                case MultimediaObject::STATUS_BLOQ:
-                    ++$mmobjsBlocked;
-                    break;
-            }
-        }
+        list($mmobjsPublished, $mmobjsHidden, $mmobjsBlocked) = $this->countPubHidBlockMmobjs($series);
 
         $iconClass = 'mdi-alert-warning';
 
@@ -281,28 +265,12 @@ class PumukitAdminExtension extends \Twig_Extension
      */
     public function getSeriesText($series)
     {
-        $mmobjsPublished = 0;
-        $mmobjsHidden = 0;
-        $mmobjsBlocked = 0;
-
-        foreach ($series->getMultimediaObjects() as $mmobj) {
-            switch ($mmobj->getStatus()) {
-                case MultimediaObject::STATUS_PUBLISHED:
-                    ++$mmobjsPublished;
-                    break;
-                case MultimediaObject::STATUS_HIDE:
-                    ++$mmobjsHidden;
-                    break;
-                case MultimediaObject::STATUS_BLOQ:
-                    ++$mmobjsBlocked;
-                    break;
-            }
-        }
+        list($mmobjsPublished, $mmobjsHidden, $mmobjsBlocked) = $this->countPubHidBlockMmobjs($series);
 
         $iconText = $mmobjsPublished." Published Multimedia Object(s),\n".
             $mmobjsHidden." Hidden Multimedia Object(s),\n".
           $mmobjsBlocked." Blocked Multimedia Object(s)\n";
-
+        
         return $iconText;
     }
 
@@ -392,11 +360,10 @@ class PumukitAdminExtension extends \Twig_Extension
     {
         $icon = 'mdi-action-done pumukit-transparent';
 
-        foreach ($series->getMultimediaObjects() as $mm) {
-            if ($mm->containsTagWithCod('PUDENEW')) {
+        $count = $this->countMmobjsWithTag($series, 'PUDENEW');
+
+        if($count > 0)
                 return 'mdi-action-spellcheck pumukit-mm-announce';
-            }
-        }
 
         return $icon;
     }
@@ -413,12 +380,7 @@ class PumukitAdminExtension extends \Twig_Extension
     {
         $text = '';
 
-        $count = 0;
-        foreach ($series->getMultimediaObjects() as $mm) {
-            if ($mm->containsTagWithCod('PUDENEW')) {
-                ++$count;
-            }
-        }
+        $count = $this->countMmobjsWithTag($series, 'PUDENEW');
 
         if ($count > 0) {
             return 'This Series has '.$count.' announced Multimedia Object(s)';
@@ -504,5 +466,60 @@ class PumukitAdminExtension extends \Twig_Extension
     public function countMultimediaObjects($series)
     {
         return $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->countInSeries($series);
+    }
+
+    
+    //TODO: Pass to a SERVICE
+    private function countPubHidBlockMmobjs($series)
+    {
+        static $c_counts;
+        if(isset($c_counts[$series->getId()])) {
+            return $c_counts[$series->getId()];
+        }
+        $mmobjsPublished = 0;
+        $mmobjsHidden = 0;
+        $mmobjsBlocked = 0;
+        
+        $seriesColl = $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+        $aggrPipe = array(
+            array('$match' => array('series' => new \MongoId($series->getId()))),
+            array('$group' => array('_id'=>'$status',
+                                    'count' => array('$sum' => 1))),
+        );
+        $mmobjCounts = $seriesColl->aggregate($aggrPipe)->toArray();
+
+        foreach ($mmobjCounts as $mmobjCount) {
+            switch ($mmobjCount['_id']) {
+                case MultimediaObject::STATUS_PUBLISHED:
+                    $mmobjsPublished = $mmobjCount['count'];
+                    break;
+                case MultimediaObject::STATUS_HIDE:
+                    $mmobjsHidden = $mmobjCount['count'];
+                    break;
+                case MultimediaObject::STATUS_BLOQ:
+                    $mmobjsBlocked = $mmobjCount['count'];
+                    break;
+            }
+        }
+
+        $result = array($mmobjsPublished, $mmobjsHidden, $mmobjsBlocked);
+        return $c_counts[$series->getId()] = $result;
+        return $result;
+    }
+
+    //TODO: Pass to a SERVICE
+    private function countMmobjsWithTag($series, $tagCod)
+    {
+        static $c_counts;
+        if(isset($c_counts[$series->getId()][$tagCod]))
+            return $c_counts[$series->getId()][$tagCod];
+
+        $repoSeries = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $qb = $repoSeries->createStandardQueryBuilder()->field('series')->equals(new \MongoId($series->getId()))->field('tags.cod')->equals('PUDENEW');
+        $count = $qb->count()->getQuery()->execute();
+
+        $c_counts[$series->getId()][$tagCod] = $count;
+        dump($count);
+        return $count;
     }
 }
