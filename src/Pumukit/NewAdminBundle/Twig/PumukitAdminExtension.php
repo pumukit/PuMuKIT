@@ -44,24 +44,24 @@ class PumukitAdminExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-                     new \Twig_SimpleFilter('basename', array($this, 'getBasename')),
-                     new \Twig_SimpleFilter('profile', array($this, 'getProfile')),
-                     new \Twig_SimpleFilter('display', array($this, 'getDisplay')),
-                     new \Twig_SimpleFilter('duration_string', array($this, 'getDurationString')),
-                     new \Twig_SimpleFilter('language_name', array($this, 'getLanguageName')),
-                     new \Twig_SimpleFilter('status_icon', array($this, 'getStatusIcon')),
-                     new \Twig_SimpleFilter('status_text', array($this, 'getStatusText')),
-                     new \Twig_SimpleFilter('series_icon', array($this, 'getSeriesIcon')),
-                     new \Twig_SimpleFilter('series_text', array($this, 'getSeriesText')),
-                     new \Twig_SimpleFilter('profile_width', array($this, 'getProfileWidth')),
-                     new \Twig_SimpleFilter('profile_height', array($this, 'getProfileHeight')),
-                     new \Twig_SimpleFilter('series_announce_icon', array($this, 'getSeriesAnnounceIcon')),
-                     new \Twig_SimpleFilter('series_announce_text', array($this, 'getSeriesAnnounceText')),
-                     new \Twig_SimpleFilter('mms_announce_icon', array($this, 'getMmsAnnounceIcon')),
-                     new \Twig_SimpleFilter('mms_announce_text', array($this, 'getMmsAnnounceText')),
-                     new \Twig_SimpleFilter('filter_profiles', array($this, 'filterProfiles')),
-                     new \Twig_SimpleFilter('count_multimedia_objects', array($this, 'countMultimediaObjects')),
-                     );
+            new \Twig_SimpleFilter('basename', array($this, 'getBasename')),
+            new \Twig_SimpleFilter('profile', array($this, 'getProfile')),
+            new \Twig_SimpleFilter('display', array($this, 'getDisplay')),
+            new \Twig_SimpleFilter('duration_string', array($this, 'getDurationString')),
+            new \Twig_SimpleFilter('language_name', array($this, 'getLanguageName')),
+            new \Twig_SimpleFilter('status_icon', array($this, 'getStatusIcon')),
+            new \Twig_SimpleFilter('status_text', array($this, 'getStatusText')),
+            new \Twig_SimpleFilter('series_icon', array($this, 'getSeriesIcon')),
+            new \Twig_SimpleFilter('series_text', array($this, 'getSeriesText')),
+            new \Twig_SimpleFilter('profile_width', array($this, 'getProfileWidth')),
+            new \Twig_SimpleFilter('profile_height', array($this, 'getProfileHeight')),
+            new \Twig_SimpleFilter('series_announce_icon', array($this, 'getSeriesAnnounceIcon')),
+            new \Twig_SimpleFilter('series_announce_text', array($this, 'getSeriesAnnounceText')),
+            new \Twig_SimpleFilter('mms_announce_icon', array($this, 'getMmsAnnounceIcon')),
+            new \Twig_SimpleFilter('mms_announce_text', array($this, 'getMmsAnnounceText')),
+            new \Twig_SimpleFilter('filter_profiles', array($this, 'filterProfiles')),
+            new \Twig_SimpleFilter('count_multimedia_objects', array($this, 'countMultimediaObjects')),
+        );
     }
 
     /**
@@ -70,9 +70,9 @@ class PumukitAdminExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-                   new \Twig_SimpleFunction('php_upload_max_filesize', array($this, 'getPhpUploadMaxFilesize')),
-                   new \Twig_SimpleFunction('path_exists', array($this, 'existsRoute')),
-                   );
+            new \Twig_SimpleFunction('php_upload_max_filesize', array($this, 'getPhpUploadMaxFilesize')),
+            new \Twig_SimpleFunction('path_exists', array($this, 'existsRoute')),
+        );
     }
 
     /**
@@ -268,9 +268,9 @@ class PumukitAdminExtension extends \Twig_Extension
         list($mmobjsPublished, $mmobjsHidden, $mmobjsBlocked) = $this->countPubHidBlockMmobjs($series);
 
         $iconText = $mmobjsPublished." Published Multimedia Object(s),\n".
-            $mmobjsHidden." Hidden Multimedia Object(s),\n".
-          $mmobjsBlocked." Blocked Multimedia Object(s)\n";
-        
+                    $mmobjsHidden." Hidden Multimedia Object(s),\n".
+                    $mmobjsBlocked." Blocked Multimedia Object(s)\n";
+
         return $iconText;
     }
 
@@ -362,8 +362,9 @@ class PumukitAdminExtension extends \Twig_Extension
 
         $count = $this->countMmobjsWithTag($series, 'PUDENEW');
 
-        if($count > 0)
-                return 'mdi-action-spellcheck pumukit-mm-announce';
+        if ($count > 0) {
+            return 'mdi-action-spellcheck pumukit-mm-announce';
+        }
 
         return $icon;
     }
@@ -468,23 +469,22 @@ class PumukitAdminExtension extends \Twig_Extension
         return $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->countInSeries($series);
     }
 
-    
     //TODO: Pass to a SERVICE
     private function countPubHidBlockMmobjs($series)
     {
         static $c_counts;
-        if(isset($c_counts[$series->getId()])) {
+        if (isset($c_counts[$series->getId()])) {
             return $c_counts[$series->getId()];
         }
         $mmobjsPublished = 0;
         $mmobjsHidden = 0;
         $mmobjsBlocked = 0;
-        
+
         $seriesColl = $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
         $aggrPipe = array(
             array('$match' => array('series' => new \MongoId($series->getId()))),
-            array('$group' => array('_id'=>'$status',
-                                    'count' => array('$sum' => 1))),
+            array('$group' => array('_id' => '$status',
+                                    'count' => array('$sum' => 1), )),
         );
         $mmobjCounts = $seriesColl->aggregate($aggrPipe)->toArray();
 
@@ -503,7 +503,9 @@ class PumukitAdminExtension extends \Twig_Extension
         }
 
         $result = array($mmobjsPublished, $mmobjsHidden, $mmobjsBlocked);
+
         return $c_counts[$series->getId()] = $result;
+
         return $result;
     }
 
@@ -511,8 +513,9 @@ class PumukitAdminExtension extends \Twig_Extension
     private function countMmobjsWithTag($series, $tagCod)
     {
         static $c_counts;
-        if(isset($c_counts[$series->getId()][$tagCod]))
+        if (isset($c_counts[$series->getId()][$tagCod])) {
             return $c_counts[$series->getId()][$tagCod];
+        }
 
         $repoSeries = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $qb = $repoSeries->createStandardQueryBuilder()->field('series')->equals(new \MongoId($series->getId()))->field('tags.cod')->equals('PUDENEW');
@@ -520,6 +523,7 @@ class PumukitAdminExtension extends \Twig_Extension
 
         $c_counts[$series->getId()][$tagCod] = $count;
         dump($count);
+
         return $count;
     }
 }
