@@ -2,12 +2,12 @@
   {% dump(user) %}
   {% if user %}
     <span class="glyphicon glyphicon-user"></span> {{user.fullname?:user.username}} 
-    <button type="button" class="btn btn-xs btn-danger title=" Log out">
+    <a href="{{ url('fos_user_security_logout') }}" type="button" class="btn btn-xs btn-danger title=" Log out">
       <span class="glyphicon glyphicon-log-out"></span>
-    </button>
+    </a>
   {% else %}
-    <button type="button" class="btn btn-default" title="Log in">
+    <a href="{{ url('fos_user_security_login') }}" type="button" class="btn btn-default" title="Log in">
       <span class="glyphicon glyphicon-log-in"></span> Log in 
-    </button>
+    </a>
   {% endif %}
 </div>
