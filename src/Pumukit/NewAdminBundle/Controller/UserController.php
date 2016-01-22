@@ -192,7 +192,7 @@ class UserController extends AdminController
 
         if (null != $person = $userToDelete->getPerson()) {
             try {
-                $this->get('pumukitschema.person')->deletePerson($person, true);
+                $this->get('pumukitschema.person')->removeUserFromPerson($userToDelete, $person, true);
             } catch (\Exception $e) {
                 return new Response("Can not delete the user '".$userToDelete->getUsername()."'. ".$e->getMessage(), 409);
             }
