@@ -45,18 +45,14 @@ class UserController extends AdminController
     {
         $config = $this->getConfiguration();
         $permissionProfileService = $this->get('pumukitschema.permissionprofile');
+        $userService = $this->get('pumukitschema.user');
 
-        $user = new User();
-        $defaultPermissionProfile = $permissionProfileService->getDefault();
-        if (null == $defaultPermissionProfile) {
-            throw new \Exception('Unable to assign a Permission Profile to the new User. There is no default Permission Profile');
-        }
-        $user->setPermissionProfile($defaultPermissionProfile);
+        $user = $userService->instantiate();
         $form = $this->getForm($user);
 
         if ($form->handleRequest($request)->isValid()) {
             try {
-                $user = $this->get('pumukitschema.user')->create($user);
+                $user = $userService->create($user);
                 $user = $this->get('pumukitschema.person')->referencePersonIntoUser($user);
             } catch (\Exception $e) {
                 throw $e;
