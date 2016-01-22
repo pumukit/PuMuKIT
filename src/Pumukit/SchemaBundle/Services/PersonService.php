@@ -450,6 +450,20 @@ class PersonService
     }
 
     /**
+     * Remove User from Person
+     *
+     * @param User    $user
+     * @param Person  $person
+     * @param boolean $executeFlush
+     */
+    public function removeUserFromPerson(User $user, Person $person, $executeFlush = true)
+    {
+        $person->setUser(null);
+        $this->dm->persist($person);
+        if ($executeFlush) $this->dm->flush();
+    }
+
+    /**
      * Update embedded person
      *
      * @param  Person         $person

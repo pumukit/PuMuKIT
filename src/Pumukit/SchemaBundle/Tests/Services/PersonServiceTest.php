@@ -787,4 +787,32 @@ class PersonServiceTest extends WebTestCase
 
         $this->assertEquals(3, count($this->personService->getRoles()));
     }
+
+    public function testRemoveUserFromPerson()
+    {
+        $user = new User();
+        $user->setUsername('test');
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $person = new Person();
+        $person->setName('test');
+        $this->dm->persist($person);
+        $this->dm->flush();
+
+        $user->setPerson($person);
+        $person->setUser($user);
+
+        $this->dm->persist($person);
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $this->assertEquals($person, $user->getPerson());
+        $this->assertEquals($user, $person->getUser());
+
+        $this->personService->removeUserFromPerson($user, $person, true);
+
+        $this->assertEquals($person, $user->getPerson());
+        $this->assertEquals(null, $person->getUser());        
+    }
 }
