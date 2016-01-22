@@ -5,6 +5,7 @@ namespace Pumukit\WebTVBundle\Twig;
 use Symfony\Component\Routing\RequestContext;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Services\MultimediaObjectDurationService;
 use Pumukit\SchemaBundle\Services\MaterialService;
 use Pumukit\SchemaBundle\Services\PicService;
 use Pumukit\WebTVBundle\Services\LinkService;
@@ -27,8 +28,9 @@ class PumukitExtension extends \Twig_Extension
     private $materialService;
     private $picService;
     private $linkService;
+    private $mmobjDurationService;
 
-    public function __construct(DocumentManager $documentManager, RequestContext $context, $defaultPic, MaterialService $materialService, PicService $picService, LinkService $linkService)
+    public function __construct(DocumentManager $documentManager, RequestContext $context, $defaultPic, MaterialService $materialService, PicService $picService, LinkService $linkService, MultimediaObjectDurationService $mmobjDurationService)
     {
         $this->dm = $documentManager;
         $this->context = $context;
@@ -36,6 +38,7 @@ class PumukitExtension extends \Twig_Extension
         $this->materialService = $materialService;
         $this->picService = $picService;
         $this->linkService = $linkService;
+        $this->mmobjDurationService = $mmobjDurationService;
     }
 
     public function getName()
@@ -49,6 +52,7 @@ class PumukitExtension extends \Twig_Extension
             new \Twig_SimpleFilter('first_url_pic', array($this, 'getFirstUrlPicFilter')),
             new \Twig_SimpleFilter('precinct_fulltitle', array($this, 'getPrecinctFulltitle')),
             new \Twig_SimpleFilter('duration_minutes_seconds', array($this, 'getDurationInMinutesSeconds')),
+            new \Twig_SimpleFilter('duration_string', array($this, 'getDurationString')),
         );
     }
 
@@ -64,6 +68,7 @@ class PumukitExtension extends \Twig_Extension
                      new \Twig_SimpleFunction('captions', array($this, 'getCaptions')),
                      new \Twig_SimpleFunction('iframeurl', array($this, 'getIframeUrl')),
                      new \Twig_SimpleFunction('path_to_tag', array($this, 'getPathToTag')),
+                     new \Twig_SimpleFunction('mmobj_duration', array($this, 'getMmobjDuration')),
                      );
     }
 
@@ -189,6 +194,46 @@ class PumukitExtension extends \Twig_Extension
 
       return $minutes ."' ". $seconds . "''";
    }
+
+    /**
+     * Get duration as uninternationalized string
+     * The format is type 78'12''
+     *
+     * @param int $duration
+     * @return string
+     */
+    public function getDurationString($duration)
+    {
+        if ($duration > 0) {
+            $min =  floor($duration / 60);
+            $seg = $duration %60;
+
+            if ($seg < 10) {
+                $seg = '0'.$seg;
+            }
+
+            if ($min == 0) {
+                $aux = $seg."''";
+            } else {
+                $aux = $min."' ".$seg."''";
+            }
+
+            return $aux;
+        } else {
+            return "0''";
+        }
+    }
+
+    /**
+     * Wrapper for the duration of the object. Gets the duration using the MultimediaObjectDurationService
+     *
+     * @param MultimediaObject $mmobj
+     * @return int
+     */
+    public function getMmobjDuration(MultimediaObject $mmobj)
+    {
+        return $this->mmobjDurationService->getMmobjDuration($mmobj);
+    }
 
     /**
      * Get captions
