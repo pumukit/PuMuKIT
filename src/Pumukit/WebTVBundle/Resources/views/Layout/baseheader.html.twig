@@ -12,6 +12,15 @@
       </div>
       <div class="col-sm-6">
         <div class="row">
+          <span class="pull-right">
+            <div class="col-xs-12">
+              <a href="/">
+                Log in <span class="glyphicon glyphicon-log-in"></span>
+              </a>
+            </div>
+          </span>
+        </div>
+        <div class="row">
           {% render( controller( 'PumukitWebTVBundle:Widget:languageselect') ) %}
           <div class="col-sm-6" style="float:right;";>
             {% include 'PumukitWebTVBundle:Layout:search_box.html.twig' %}
