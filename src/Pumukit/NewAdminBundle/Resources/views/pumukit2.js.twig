@@ -1893,3 +1893,31 @@ window.change_pics_page = function(route)
 {
     $('#pics_to_add_list').load(route);
 }
+
+function checkScope(id)
+{
+    var scope_id = $('#pumukitnewadmin_permissionprofile_scope_'+id+' option:selected').val();
+    var values = scope_id.split('__');
+    var permissions = $("input[id$=__"+id+"__permission]");
+    var scope = values[0];
+    for (var i = 0; i < permissions.length; i++){
+       if (scope == 'ROLE_SCOPE_NONE') {
+           if ($(permissions[i]).attr("disabled") != "disabled") {
+               $(permissions[i]).attr("disabled", "disabled");
+           }
+           if ($(permissions[i]).attr("checked") != "checked") {
+               $(permissions[i]).removeAttr("checked");
+           }
+           if ($(permissions[i]).closest("div").attr("class") != "checkbox pmk_disabled_checkbox") {
+               $(permissions[i]).closest("div").attr("class", "checkbox pmk_disabled_checkbox");
+           }
+       } else {
+           if ($(permissions[i]).attr("disabled") == "disabled") {
+               $(permissions[i]).removeAttr("disabled");
+           }
+           if ($(permissions[i]).closest("div").attr("class") == "checkbox pmk_disabled_checkbox") {
+               $(permissions[i]).closest("div").attr("class", "checkbox");
+           }
+       }
+    }
+}
