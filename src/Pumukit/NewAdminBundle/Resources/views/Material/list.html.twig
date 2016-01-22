@@ -1,5 +1,5 @@
 <table><tdody>
-  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   {% for material in materials %}
     <tr>
       <td><ul><li></li></ul></td>

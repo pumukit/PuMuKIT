@@ -1,5 +1,5 @@
 <table><tbody>
-  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   {% for job in jobs %}
     <tr>
       <td><ul><li></li></ul></td>
@@ -149,7 +149,7 @@
   {% endif %}
 </tbody></table>
 
-{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 {% if false %} {# TODO ($sf_request->getParameter('preview')) #} {# define update_preview #}
 <script type="text/javascript">
   update_preview('{{ mm.id }}');

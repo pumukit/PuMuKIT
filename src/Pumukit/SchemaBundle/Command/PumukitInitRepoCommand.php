@@ -17,7 +17,7 @@ use Pumukit\SchemaBundle\Security\Permission;
 class PumukitInitRepoCommand extends ContainerAwareCommand
 {
     const BROADCAST_DEFAULT = 'default';
-    const BROADCAST_CAS = 'cas';
+    const BROADCAST_LDAP = 'ldap';
 
     private $dm = null;
     private $tagsRepo = null;
@@ -31,6 +31,8 @@ class PumukitInitRepoCommand extends ContainerAwareCommand
 
     private $broadcastOption = self::BROADCAST_DEFAULT;
 
+    private $allPermissions;
+
     protected function configure()
     {
         $this
@@ -38,7 +40,7 @@ class PumukitInitRepoCommand extends ContainerAwareCommand
             ->setDescription('Load Pumukit data fixtures to your database')
             ->addArgument('repo', InputArgument::REQUIRED, 'Select the repo to init: tag, broadcast, role, permissionprofile, all')
             ->addArgument('file', InputArgument::OPTIONAL, 'Input CSV path')
-            ->addOption('option', 'o', InputOption::VALUE_OPTIONAL, 'Input Broadcast option: default, cas. Default if none given.', $this->broadcastOption)
+            ->addOption('option', 'o', InputOption::VALUE_OPTIONAL, 'Input Broadcast option: default, ldap. Default if none given.', $this->broadcastOption)
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
             ->setHelp(<<<EOT
 
@@ -53,6 +55,7 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+        $this->allPermissions = $this->getContainer()->get('pumukitschema.permission')->getAllPermissions();
 
         if ($input->getOption('force') && ($repoName = $input->getArgument('repo'))) {
             switch ($repoName) {
@@ -124,11 +127,11 @@ EOT
         $this->broadcastsRepo = $this->dm->getRepository("PumukitSchemaBundle:Broadcast");
 
         if ($broadcastOption = $input->getOption('option')) {
-            if (($broadcastOption === self::BROADCAST_DEFAULT) || ($broadcastOption === self::BROADCAST_CAS)) {
+            if (($broadcastOption === self::BROADCAST_DEFAULT) || ($broadcastOption === self::BROADCAST_LDAP)) {
                 $this->broadcastOption = $broadcastOption;
             } else {
                 throw new \Exception('Broadcast Option: "'.$broadcastOption.'" not valid. Valid values: "'
-                                    .self::BROADCAST_DEFAULT.'" or "'.self::BROADCAST_CAS.'".');
+                                    .self::BROADCAST_DEFAULT.'" or "'.self::BROADCAST_LDAP.'".');
             }
         }
 
@@ -429,7 +432,7 @@ EOT
             } elseif ($permission === 'all') {
                 $permissionProfile = $this->addAllPermissions($permissionProfile);
                 break;
-            } elseif (array_key_exists($permission, Permission::$permissionDescription)) {
+            } elseif (array_key_exists($permission, $this->allPermissions)) {
                 $permissionProfile->addPermission($permission);
             }
         }
@@ -441,7 +444,7 @@ EOT
 
     private function addAllPermissions(PermissionProfile $permissionProfile)
     {
-        foreach (Permission::$permissionDescription as $key => $value) {
+        foreach ($this->allPermissions as $key => $value) {
             $permissionProfile->addPermission($key);
         }
 

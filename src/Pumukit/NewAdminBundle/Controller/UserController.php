@@ -4,7 +4,9 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\User;
 
 /**
@@ -13,9 +15,27 @@ use Pumukit\SchemaBundle\Document\User;
 class UserController extends AdminController
 {
     /**
+     * Overwrite to check Users creation.
+     *
+     * @Template()
+     */
+    public function indexAction(Request $request)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $config = $this->getConfiguration();
+
+        $criteria = $this->getCriteria($config);
+        $users = $this->getResources($request, $config, $criteria);
+        $repo = $dm->getRepository('PumukitSchemaBundle:PermissionProfile');
+        $profiles = $repo->findAll();
+
+        return array('users' => $users, 'profiles' => $profiles);
+    }
+
+    /**
      * Create Action
      * Overwrite to create Person
-     * referenced to User
+     * referenced to User.
      *
      * @param Request $request
      *
@@ -52,17 +72,17 @@ class UserController extends AdminController
             return $this->handleView($this->view($form));
         }
 
-        return $this->render("PumukitNewAdminBundle:User:create.html.twig",
+        return $this->render('PumukitNewAdminBundle:User:create.html.twig',
                              array(
                                    'user' => $user,
-                                   'form' => $form->createView()
+                                   'form' => $form->createView(),
                                    ));
     }
 
     /**
      * Update Action
      * Overwrite to update it with user manager
-     * Checks plain password and updates encoded password
+     * Checks plain password and updates encoded password.
      *
      * @param Request $request
      *
@@ -101,16 +121,15 @@ class UserController extends AdminController
             return $this->handleView($this->view($form));
         }
 
-        return $this->render("PumukitNewAdminBundle:User:update.html.twig",
+        return $this->render('PumukitNewAdminBundle:User:update.html.twig',
                              array(
                                    'user' => $user,
-                                   'form' => $form->createView()
+                                   'form' => $form->createView(),
                                    ));
     }
 
-
     /**
-     * Delete action
+     * Delete action.
      */
     public function deleteAction(Request $request)
     {
@@ -125,7 +144,7 @@ class UserController extends AdminController
     }
 
     /**
-     * Batch Delete action
+     * Batch Delete action.
      */
     public function batchDeleteAction(Request $request)
     {
@@ -135,7 +154,7 @@ class UserController extends AdminController
 
         $ids = $this->getRequest()->get('ids');
 
-        if ('string' === gettype($ids)){
+        if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);
         }
 
@@ -158,16 +177,16 @@ class UserController extends AdminController
 
         $loggedInUser = $this->container->get('security.context')->getToken()->getUser();
 
-        if ($loggedInUser === $userToDelete){
+        if ($loggedInUser === $userToDelete) {
             return new Response("Can not delete the logged in user '".$loggedInUser->getUsername()."'", 409);
         }
-        if (1 === $repo->createQueryBuilder()->getQuery()->execute()->count()){
+        if (1 === $repo->createQueryBuilder()->getQuery()->execute()->count()) {
             return new Response("Can not delete this unique user '".$userToDelete->getUsername()."'", 409);
         }
 
         $numberAdminUsers = $this->getNumberAdminUsers();
 
-        if ((1 === $numberAdminUsers) && ($userToDelete->isSuperAdmin())){
+        if ((1 === $numberAdminUsers) && ($userToDelete->isSuperAdmin())) {
             return new Response("Can not delete this unique admin user '".$userToDelete->getUsername()."'", 409);
         }
 
@@ -218,5 +237,60 @@ class UserController extends AdminController
           ->where("function(){for ( var k in this.roles ) { if ( this.roles[k] == 'ROLE_SUPER_ADMIN' ) return true;}}")
           ->getQuery()
           ->getSingleResult();
+    }
+
+    /**
+     * Gets the criteria values.
+     */
+    public function getCriteria($config)
+    {
+        $criteria = $config->getCriteria();
+
+        if (array_key_exists('reset', $criteria)) {
+            $this->get('session')->remove('admin/user/criteria');
+        } elseif ($criteria) {
+            $this->get('session')->set('admin/user/criteria', $criteria);
+        }
+        $criteria = $this->get('session')->get('admin/user/criteria', array());
+
+        $new_criteria = array();
+        foreach ($criteria as $property => $value) {
+            if ('permissionProfile' == $property) {
+                if('all' != $value) {
+                    $new_criteria[$property] = new \MongoId($value);
+                }
+            } elseif ('' !== $value) {
+                $new_criteria[$property] = new \MongoRegex('/'.$value.'/i');
+            }
+        }
+
+        return $new_criteria;
+    }
+
+    /**
+     * Change the permission profiles of a list of users.
+     */
+    public function promoteAction(Request $request)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $profileRepo = $dm->getRepository('PumukitSchemaBundle:PermissionProfile');
+        $usersRepo = $dm->getRepository('PumukitSchemaBundle:User');
+
+        $ids = $request->request->get('ids');
+        $profile = $profileRepo->find($request->request->get('profile'));
+
+        if (!$profile) {
+            throw $this->createNotFoundException('Profile not found!');
+        }
+
+        $users = $usersRepo->findBy(array('_id' => array('$in' => $ids)));
+        foreach ($users as $user) {
+            if (!$user->hasRole('ROLE_SUPER_ADMIN')) {
+                $user->setPermissionProfile($profile);
+                $user = $this->get('pumukitschema.user')->update($user);
+            }
+        }
+
+        return new JsonResponse(array('ok'));
     }
 }

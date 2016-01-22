@@ -27,6 +27,7 @@ class PermissionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(array_key_exists(Permission::ACCESS_WIZARD_UPLOAD, Permission::$permissionDescription));
         $this->assertTrue(array_key_exists(Permission::ACCESS_ADVANCED_UPLOAD, Permission::$permissionDescription));
         $this->assertTrue(array_key_exists(Permission::ACCESS_API, Permission::$permissionDescription));
+        $this->assertTrue(array_key_exists(Permission::ACCESS_INBOX, Permission::$permissionDescription));
 
         $accessDashboard = "Access Dashboard";
         $accessMultimediaSeries = "Access Multimedia Series";
@@ -47,6 +48,7 @@ class PermissionTest extends \PHPUnit_Framework_TestCase
         $accessWizardUpload = "Access Wizard Upload";
         $accessAdvancedUpload = "Access Advanced Upload";
         $accessApi = "Access API";
+        $accessInbox = "Access Inbox";
 
         $this->assertEquals($accessDashboard, Permission::$permissionDescription[Permission::ACCESS_DASHBOARD]);
         $this->assertEquals($accessMultimediaSeries, Permission::$permissionDescription[Permission::ACCESS_MULTIMEDIA_SERIES]);
@@ -67,5 +69,6 @@ class PermissionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($accessWizardUpload, Permission::$permissionDescription[Permission::ACCESS_WIZARD_UPLOAD]);
         $this->assertEquals($accessAdvancedUpload, Permission::$permissionDescription[Permission::ACCESS_ADVANCED_UPLOAD]);
         $this->assertEquals($accessApi, Permission::$permissionDescription[Permission::ACCESS_API]);
+        $this->assertEquals($accessInbox, Permission::$permissionDescription[Permission::ACCESS_INBOX]);
     }
 }

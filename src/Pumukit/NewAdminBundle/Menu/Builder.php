@@ -15,13 +15,13 @@ class Builder extends ContainerAware
 
         // Add translations in src/Pumukit/NewAdminBundle/Resource/translations/NewAdminBundle.locale.yml
         $authorizationChecker = $this->container->get('security.authorization_checker');
-        $createBroadcastDisabled = $this->container->getParameter('pumukitschema.disable_broadcast_creation');
+        $createBroadcastDisabled = $this->container->getParameter('pumukit_new_admin.disable_broadcast_creation');
         if (false !== $authorizationChecker->isGranted(Permission::ACCESS_DASHBOARD)) {
             $menu->addChild('Dashboard', array('route' => 'pumukit_newadmin_dashboard_index'))->setExtra('translation_domain', 'NewAdminBundle');
         }
 
         if ($authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_SERIES)) {
-            $series = $menu->addChild('Multimedia Series', array('route' => 'pumukitnewadmin_series_index'))->setExtra('translation_domain', 'NewAdminBundle');
+            $series = $menu->addChild('Media Manager', array('route' => 'pumukitnewadmin_series_index'))->setExtra('translation_domain', 'NewAdminBundle');
             $series->addChild('Multimedia', array('route' => 'pumukitnewadmin_mms_index'))->setExtra('translation_domain', 'NewAdminBundle');
             $series->setDisplayChildren(false);
         }

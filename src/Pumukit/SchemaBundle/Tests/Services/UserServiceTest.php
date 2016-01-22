@@ -287,4 +287,21 @@ class UserServiceTest extends WebTestCase
         $this->assertNotEquals(PermissionProfile::SCOPE_NONE, $newUserScope);
         $this->assertCount(4, $user->getRoles());
     }
+
+    public function testDelete()
+    {
+        $username = 'test';
+        $email = 'test@mail.com';
+        $user = new User();
+        $user->setUsername($username);
+        $user->setEmail($email);
+
+        $user = $this->userService->create($user);
+
+        $this->assertCount(1, $this->repo->findAll());
+
+        $user = $this->userService->delete($user);
+
+        $this->assertCount(0, $this->repo->findAll());        
+    }
 }
