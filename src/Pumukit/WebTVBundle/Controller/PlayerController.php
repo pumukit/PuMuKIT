@@ -100,9 +100,11 @@ class PlayerController extends Controller
             $marks = json_decode($marks->getValue(), true);
         }
         if($trimming) {
-            $trimming = json_decode($trimming->getValue(), true)['trimming'];
+            $trimming = json_decode($trimming->getValue(), true);
+            if(isset($trimming['trimming']))
+                $trimming = $trimming['trimming'];
         }
-        dump($trimming);
+
         foreach($marks['marks'] as $chapt) {
             $time = $chapt['s'];
             if($trimming['start'] <= $time && $trimming['end'] >= $time) {
