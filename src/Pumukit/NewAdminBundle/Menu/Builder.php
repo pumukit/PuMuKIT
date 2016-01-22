@@ -16,6 +16,8 @@ class Builder extends ContainerAware
         // Add translations in src/Pumukit/NewAdminBundle/Resource/translations/NewAdminBundle.locale.yml
         $authorizationChecker = $this->container->get('security.authorization_checker');
         $createBroadcastDisabled = $this->container->getParameter('pumukit_new_admin.disable_broadcast_creation');
+        $showImporterTab = $this->container->getParameter('pumukit_opencast.show_importer_tab');
+
         if (false !== $authorizationChecker->isGranted(Permission::ACCESS_DASHBOARD)) {
             $menu->addChild('Dashboard', array('route' => 'pumukit_newadmin_dashboard_index'))->setExtra('translation_domain', 'NewAdminBundle');
         }
@@ -69,10 +71,10 @@ class Builder extends ContainerAware
             }
         }
 
-        if ($authorizationChecker->isGranted(Permission::ACCESS_INGESTOR)) {
+        if ($showImporterTab && $authorizationChecker->isGranted(Permission::ACCESS_IMPORTER)) {
             if ($this->container->has("pumukit_opencast.client")) {
-                $ingester = $menu->addChild('Ingester')->setExtra('translation_domain', 'NewAdminBundle');
-                $ingester->addChild('Opencast Ingester', array('route' => 'pumukitopencast'))->setExtra('translation_domain', 'NewAdminBundle');
+                $importer = $menu->addChild('Importer')->setExtra('translation_domain', 'NewAdminBundle');
+                $importer->addChild('Opencast Importer', array('route' => 'pumukitopencast'))->setExtra('translation_domain', 'NewAdminBundle');
             }
         }
 

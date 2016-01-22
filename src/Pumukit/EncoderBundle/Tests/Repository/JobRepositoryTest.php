@@ -83,13 +83,57 @@ class JobRepositoryTest extends WebTestCase
         $this->dm->persist($finishedJob);
         $this->dm->flush();
 
-        $this->assertEquals(1, count($this->repo->findWithStatus(array(Job::STATUS_PAUSED))));
-        $this->assertEquals(1, count($this->repo->findWithStatus(array(Job::STATUS_WAITING))));
-        $this->assertEquals(2, count($this->repo->findWithStatus(array(Job::STATUS_EXECUTING))));
-        $this->assertEquals(1, count($this->repo->findWithStatus(array(Job::STATUS_FINISHED))));
-        $this->assertEquals(1, count($this->repo->findWithStatus(array(Job::STATUS_ERROR))));
-        $this->assertEquals(2, count($this->repo->findWithStatus(array(Job::STATUS_PAUSED, Job::STATUS_WAITING))));
-        $this->assertEquals(3, count($this->repo->findWithStatus(array(Job::STATUS_PAUSED, Job::STATUS_FINISHED, Job::STATUS_ERROR))));
+        $pausedJobs = $this->repo->findWithStatus(array(Job::STATUS_PAUSED))->toArray();
+        $waitingJobs = $this->repo->findWithStatus(array(Job::STATUS_WAITING))->toArray();
+        $executingJobs = $this->repo->findWithStatus(array(Job::STATUS_EXECUTING))->toArray();
+        $finishedJobs = $this->repo->findWithStatus(array(Job::STATUS_FINISHED))->toArray();
+        $errorJobs = $this->repo->findWithStatus(array(Job::STATUS_ERROR))->toArray();
+        $pausedAndWaitingJobs = $this->repo->findWithStatus(array(Job::STATUS_PAUSED, Job::STATUS_WAITING))->toArray();
+        $pausedFinishedAndErrorJobs = $this->repo->findWithStatus(array(Job::STATUS_PAUSED, Job::STATUS_FINISHED, Job::STATUS_ERROR))->toArray();
+
+        $this->assertCount(1, $pausedJobs);
+        $this->assertCount(1, $waitingJobs);
+        $this->assertCount(2, $executingJobs);
+        $this->assertCount(1, $finishedJobs);
+        $this->assertCount(1, $errorJobs);
+        $this->assertCount(2, $pausedAndWaitingJobs);
+        $this->assertCount(3, $pausedFinishedAndErrorJobs);
+
+        $this->assertTrue(in_array($pausedJob, $pausedJobs));
+        $this->assertFalse(in_array($waitingJob, $pausedJobs));
+        $this->assertFalse(in_array($executingJob, $pausedJobs));
+        $this->assertFalse(in_array($executingJob2, $pausedJobs));
+        $this->assertFalse(in_array($finishedJob, $pausedJobs));
+        $this->assertFalse(in_array($errorJob, $pausedJobs));
+
+        $this->assertFalse(in_array($pausedJob, $waitingJobs));
+        $this->assertTrue(in_array($waitingJob, $waitingJobs));
+        $this->assertFalse(in_array($executingJob, $waitingJobs));
+        $this->assertFalse(in_array($executingJob2, $waitingJobs));
+        $this->assertFalse(in_array($finishedJob, $waitingJobs));
+        $this->assertFalse(in_array($errorJob, $waitingJobs));
+
+        $this->assertFalse(in_array($pausedJob, $executingJobs));
+        $this->assertFalse(in_array($waitingJob, $executingJobs));
+        $this->assertTrue(in_array($executingJob, $executingJobs));
+        $this->assertTrue(in_array($executingJob2, $executingJobs));
+        $this->assertFalse(in_array($finishedJob, $executingJobs));
+        $this->assertFalse(in_array($errorJob, $executingJobs));
+
+        $this->assertFalse(in_array($pausedJob, $finishedJobs));
+        $this->assertFalse(in_array($waitingJob, $finishedJobs));
+        $this->assertFalse(in_array($executingJob, $finishedJobs));
+        $this->assertFalse(in_array($executingJob2, $finishedJobs));
+        $this->assertTrue(in_array($finishedJob, $finishedJobs));
+        $this->assertFalse(in_array($errorJob, $finishedJobs));
+
+        $this->assertFalse(in_array($pausedJob, $errorJobs));
+        $this->assertFalse(in_array($waitingJob, $errorJobs));
+        $this->assertFalse(in_array($executingJob, $errorJobs));
+        $this->assertFalse(in_array($executingJob2, $errorJobs));
+        $this->assertFalse(in_array($finishedJob, $errorJobs));
+        $this->assertTrue(in_array($errorJob, $errorJobs));
+
     }
 
     public function testFindHigherPriorityWithStatus()

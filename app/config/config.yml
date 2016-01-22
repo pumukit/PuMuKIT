@@ -90,13 +90,3 @@ mobile_detect:
         mobile: ~
         tablet: ~
     switch_device_view: ~
-
-# Pumukit Opencast Configuration
-pumukit_opencast:
-    host: "%opencast_host%"
-    username: "%opencast_username%"
-    password: "%opencast_password%"
-    player: "%opencast_player%"
-    generate_sbs: "%opencast_generate_sbs%"
-    profile: "%opencast_profile%"
-    url_mapping: "%opencast_url_mapping%"
