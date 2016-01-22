@@ -149,6 +149,7 @@
         <service id="pumukitschema.user" class="Pumukit\SchemaBundle\Services\UserService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="pumukitschema.permission"/>
+            <argument type="service" id="pumukitschema.permissionprofile"/>
         </service>
 
         <service id="pumukitschema.pic" class="Pumukit\SchemaBundle\Services\PicService">

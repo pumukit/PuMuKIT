@@ -14,18 +14,21 @@ class UserService
     private $dm;
     private $repo;
     private $permissionService;
+    private $permissionProfileService;
 
     /**
      * Constructor
      *
      * @param DocumentManager $documentManager
      * @param PermissionService $permissionService
+     * @param PermissionProfileService $permissionProfileService
      */
-    public function __construct(DocumentManager $documentManager, PermissionService $permissionService)
+    public function __construct(DocumentManager $documentManager, PermissionService $permissionService, PermissionProfileService $permissionProfileService)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:User');
         $this->permissionService = $permissionService;
+        $this->permissionProfileService = $permissionProfileService;
     }
 
     /**
@@ -333,6 +336,30 @@ class UserService
             $this->dm->persist($user);
             $this->dm->flush();
         }
+
+        return $user;
+    }
+
+    /**
+     * Instantiate User
+     *
+     * @param  string  $userName
+     * @param  string  $email
+     * @param  boolean $enabled
+     * @return User
+     */
+    public function instantiate($userName = '', $email = '', $enabled = true)
+    {
+        $user = new User();
+        if ($userName) $user->setUsername($userName);
+        if ($email) $user->setEmail($email);
+        $defaultPermissionProfile = $this->permissionProfileService->getDefault();
+        if (null == $defaultPermissionProfile) {
+            throw new \Exception('Unable to assign a Permission Profile to the new User. There is no default Permission Profile');
+        }
+        $user->setPermissionProfile($defaultPermissionProfile);
+        $user->setEnabled($enabled);
+        //$user->setOrigin('cas');
 
         return $user;
     }
