@@ -8,26 +8,31 @@ class ClientService
     private $user;
     private $passwd;
     private $player;
+    private $scheduler;
+    private $dashboard;
     private $adminUrl = null;
     private $deleteArchiveMediaPackage;
     private $deletionWorkflowName;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param string  $url
-     * @param string  $user
-     * @param string  $passwd
-     * @param string  $player
-     * @param boolean $deleteArchiveMediaPackage
-     * @param string  $deletionWorkflowName
+     * @param string $url
+     * @param string $user
+     * @param string $passwd
+     * @param string $player
+     * @param bool   $deleteArchiveMediaPackage
+     * @param string $deletionWorkflowName
      */
-    public function __construct($url="", $user="", $passwd="", $player="/engage/ui/watch.html", $deleteArchiveMediaPackage = false, $deletionWorkflowName = 'delete-archive')
+    public function __construct($url = '', $user = '', $passwd = '', $player = '/engage/ui/watch.html', $scheduler = '/admin/index.html#/recordings', $dashboard = '/dashboard/index.html',
+                                $deleteArchiveMediaPackage = false, $deletionWorkflowName = 'delete-archive')
     {
-        $this->url  = $url;
-        $this->user  = $user;
-        $this->passwd  = $passwd;
-        $this->player  = $player;
+        $this->url = ('/' == substr($url, -1)) ? substr($url, 0, -1) : $url;
+        $this->user = $user;
+        $this->passwd = $passwd;
+        $this->player = $player;
+        $this->scheduler = $scheduler;
+        $this->dashboard = $dashboard;
         $this->deleteArchiveMediaPackage = $deleteArchiveMediaPackage;
         $this->deletionWorkflowName = $deletionWorkflowName;
     }
@@ -35,7 +40,7 @@ class ClientService
     /**
      * Get Url
      * from Opencast server
-     * (Engage node in cluster)
+     * (Engage node in cluster).
      *
      * @return string $url
      */
@@ -45,111 +50,155 @@ class ClientService
     }
 
     /**
-     * Get player url
-     * from Opencast
+     * Get player url from Opencast.
      *
      * @return string
      */
     public function getPlayerUrl()
     {
-        return ('/' === $this->player[0]) ? $this->url . $this->player : $this->player;
+        return ('/' === $this->player[0]) ? $this->url.$this->player : $this->player;
     }
 
     /**
-     * Get media packages
+     * Get scheduler url from Opencast.
+     *
+     * @return string
+     */
+    public function getSchedulerUrl()
+    {
+        if (!$this->adminUrl) {
+            $this->adminUrl = $this->getAdminUrl();
+        }
+
+        return ('/' === $this->scheduler[0]) ? $this->adminUrl.$this->scheduler : $this->scheduler;
+    }
+
+    /**
+     * Get player url from Opencast.
+     *
+     * @return string
+     */
+    public function getDashboardUrl()
+    {
+        if (!$this->adminUrl) {
+            $this->adminUrl = $this->getAdminUrl();
+        }
+
+        return ('/' === $this->dashboard[0]) ? $this->adminUrl.$this->dashboard : $this->dashboard;
+    }
+
+    /**
+     * Get media packages.
      *
      * Gets all the media packages from the Opencast server
      * accordin to input parameters
      *
-     * @param  string $query
-     * @param  string $limit
-     * @param  string $offset
+     * @param string $query
+     * @param string $limit
+     * @param string $offset
+     *
      * @return array
      */
     public function getMediaPackages($query, $limit, $offset)
     {
-        $output = $this->request("/search/episode.json?". ($query?"q=" . $query ."&":""). "limit=" . $limit . "&offset=" . $offset);
+        $output = $this->request('/search/episode.json?'.($query ? 'q='.$query.'&' : '').'limit='.$limit.'&offset='.$offset);
 
-        if ($output["status"] !== 200) return false;
-        $decode = json_decode($output["var"], true);
+        if ($output['status'] !== 200) {
+            return false;
+        }
+        $decode = json_decode($output['var'], true);
 
         if (!($decode)) {
-            throw new \Exception("Opencast Matterhorn communication error");
+            throw new \Exception('Opencast Matterhorn communication error');
         }
 
         $return = array(0, array());
 
-        if ($decode["search-results"]["total"] == 0)
+        if ($decode['search-results']['total'] == 0) {
             return $return;
-    
-        $return[0] = $decode["search-results"]["total"];
-        if ($decode["search-results"]["limit"] > 1)
-            foreach($decode["search-results"]["result"] as $media)
-                $return[1][] = $media["mediapackage"];
-        else
-            $return[1][] = $decode["search-results"]["result"]["mediapackage"];
+        }
+
+        $return[0] = $decode['search-results']['total'];
+        if ($decode['search-results']['limit'] > 1) {
+            foreach ($decode['search-results']['result'] as $media) {
+                $return[1][] = $media['mediapackage'];
+            }
+        } else {
+            $return[1][] = $decode['search-results']['result']['mediapackage'];
+        }
 
         return $return;
     }
 
     /**
      * Get media package
-     * from given id
+     * from given id.
      *
-     * @param  string $id
+     * @param string $id
+     *
      * @return array
      */
     public function getMediapackage($id)
     {
-        $output = $this->request("/search/episode.json?id=" . $id);
+        $output = $this->request('/search/episode.json?id='.$id);
 
-        if ($output["status"] !== 200) return false;
-        $decode = json_decode($output["var"], true);
+        if ($output['status'] !== 200) {
+            return false;
+        }
+        $decode = json_decode($output['var'], true);
 
         if (!($decode)) {
-            throw new \Exception("Opencast Matterhorn communication error");
+            throw new \Exception('Opencast Matterhorn communication error');
         }
 
-        if ($decode["search-results"]["total"] == 0)
-            return null;
-        if ($decode["search-results"]["limit"] > 1)
-            return $decode["search-results"]["result"][0]["mediapackage"];
-        else
-            return $decode["search-results"]["result"]["mediapackage"];   
+        if ($decode['search-results']['total'] == 0) {
+            return;
+        }
+        if ($decode['search-results']['limit'] > 1) {
+            return $decode['search-results']['result'][0]['mediapackage'];
+        } else {
+            return $decode['search-results']['result']['mediapackage'];
+        }
     }
 
     /**
      * Get media package from archive
-     * with given id
+     * with given id.
      *
-     * @param  string $id
+     * @param string $id
+     *
      * @return array
      */
     public function getMediapackageFromArchive($id)
     {
         $this->adminUrl = $this->getAdminUrl();
-        $output = $this->request("/episode/episode.json?id=" . $id, array(), true, true);
+        $output = $this->request('/episode/episode.json?id='.$id, array(), true, true);
 
-        if ($output["status"] !== 200) return false;
-        $decode = json_decode($output["var"], true);
+        if ($output['status'] !== 200) {
+            return false;
+        }
+        $decode = json_decode($output['var'], true);
 
         if (!($decode)) {
-            throw new \Exception("Opencast Matterhorn communication error");
+            throw new \Exception('Opencast Matterhorn communication error');
         }
 
-        if ($decode["search-results"]["total"] == 0)
-            return null;
-        if ($decode["search-results"]["limit"] > 1)
-            return $decode["search-results"]["result"][0]["mediapackage"];
-        else
-            return $decode["search-results"]["result"]["mediapackage"];
+        if ($decode['search-results']['total'] == 0) {
+            return;
+        }
+        if ($decode['search-results']['limit'] > 1) {
+            return $decode['search-results']['result'][0]['mediapackage'];
+        } else {
+            return $decode['search-results']['result']['mediapackage'];
+        }
     }
 
     /**
-     * Apply workflow to media packages
+     * Apply workflow to media packages.
      *
-     * @param  array  $mediaPackagesIds
-     * @param  string $workflowName
+     * @param array  $mediaPackagesIds
+     * @param string $workflowName
+     *
      * @return string $status
      */
     public function applyWorkflowToMediaPackages(array $mediaPackagesIds = array(), $workflowName = '')
@@ -169,23 +218,25 @@ class ClientService
 
         $mediaPackageIdsParameter = '';
         foreach ($mediaPackagesIds as $index => $id) {
-            $mediaPackageIdsParameter = $mediaPackageIdsParameter . $id;
+            $mediaPackageIdsParameter = $mediaPackageIdsParameter.$id;
             if ($index < (count($mediaPackagesIds) - 1)) {
-                $mediaPackageIdsParameter = $mediaPackageIdsParameter . ',+';
+                $mediaPackageIdsParameter = $mediaPackageIdsParameter.',+';
             }
         }
         $parameters = array('mediaPackageIds' => $mediaPackageIdsParameter,
-                            'engage' => 'Matterhorn+Engage+Player');
+                            'engage' => 'Matterhorn+Engage+Player', );
 
         $output = $this->request($request, $parameters, false);
 
-        if ($output["status"] !== 204) return false;
+        if ($output['status'] !== 204) {
+            return false;
+        }
 
         return true;
     }
 
     /**
-     * Get workflow statistics
+     * Get workflow statistics.
      *
      * Used to get the total number of workflows
      */
@@ -195,46 +246,52 @@ class ClientService
 
         $output = $this->request($request);
 
-        if ($output["status"] !== 200) return false;
+        if ($output['status'] !== 200) {
+            return false;
+        }
 
-        $decode = json_decode($output["var"], true);
+        $decode = json_decode($output['var'], true);
 
         if (!($decode)) {
-            throw new \Exception("Opencast Matterhorn communication error");
+            throw new \Exception('Opencast Matterhorn communication error');
         }
 
         return $decode;
     }
 
     /**
-     * Get counted workflow instances
+     * Get counted workflow instances.
      *
-     * @param  string  $id
-     * @param  string  $count
+     * @param string $id
+     * @param string $count
+     *
      * @return array
      */
     public function getCountedWorkflowInstances($id = '', $count = '', $workflowName = '')
     {
-        $request = '/workflow/instances.json?state=SUCCEEDED'.($workflowName?'&workflowdefinition='.$workflowName:'').($id?'&mp='.$id:'').($count?'&count='.$count:'');
+        $request = '/workflow/instances.json?state=SUCCEEDED'.($workflowName ? '&workflowdefinition='.$workflowName : '').($id ? '&mp='.$id : '').($count ? '&count='.$count : '');
 
         $output = $this->request($request);
 
-        if ($output["status"] !== 200) return false;
+        if ($output['status'] !== 200) {
+            return false;
+        }
 
-        $decode = json_decode($output["var"], true);
+        $decode = json_decode($output['var'], true);
 
         if (!($decode)) {
-            throw new \Exception("Opencast Matterhorn communication error");
+            throw new \Exception('Opencast Matterhorn communication error');
         }
 
         return $decode;
     }
 
     /**
-     * Stop workflow
+     * Stop workflow.
      *
      * @param array $workflow
-     * @return boolean
+     *
+     * @return bool
      */
     public function stopWorkflow(array $workflow = array())
     {
@@ -243,8 +300,9 @@ class ClientService
                 $request = '/workflow/stop';
                 $params = array('id' => $workflow['id']);
                 $output = $this->request($request, $params, false);
-                if ($output["status"] !== 200)
+                if ($output['status'] !== 200) {
                     return false;
+                }
 
                 return true;
             }
@@ -254,17 +312,18 @@ class ClientService
     }
 
     /**
-     * Request
+     * Request.
      *
      * Makes a given request (path)
      * GET or POST
      * to the Opencast server
      * using or not the admin url
      *
-     * @param  string  $path
-     * @param  array   $query
-     * @param  boolean $get
-     * @param  boolean $useAdminUrl
+     * @param string $path
+     * @param array  $query
+     * @param bool   $get
+     * @param bool   $useAdminUrl
+     *
      * @return array
      */
     private function request($path, $query = array(), $get = true, $useAdminUrl = false)
@@ -275,9 +334,9 @@ class ClientService
 
         if ($get) {
             if ($useAdminUrl && $this->adminUrl) {
-                $request = curl_init($this->adminUrl . $path);
+                $request = curl_init($this->adminUrl.$path);
             } else {
-                $request = curl_init($this->url . $path);
+                $request = curl_init($this->url.$path);
             }
             if (false === $request) {
                 throw new \RuntimeException('Unable to create a new curl handle.');
@@ -287,9 +346,9 @@ class ClientService
                 throw new \RuntimeException('Unable to create a new curl handle.');
             }
             if ($useAdminUrl && $this->adminUrl) {
-                $requestUrl = $this->adminUrl . $path;
+                $requestUrl = $this->adminUrl.$path;
             } else {
-                $requestUrl = $this->url . $path;
+                $requestUrl = $this->url.$path;
             }
             curl_setopt($request, CURLOPT_URL, $requestUrl);
             curl_setopt($request, CURLOPT_POST, 1);
@@ -299,50 +358,52 @@ class ClientService
         curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($request, CURLOPT_FOLLOWLOCATION, false);
 
-        if ($this->user != "") {
+        if ($this->user != '') {
             curl_setopt($request, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
-            curl_setopt($request, CURLOPT_USERPWD, $this->user . ':' . $this->passwd);
-            curl_setopt($request, CURLOPT_HTTPHEADER, array("X-Requested-Auth: Digest",
-                                                            "X-Opencast-Matterhorn-Authorization: true"));
+            curl_setopt($request, CURLOPT_USERPWD, $this->user.':'.$this->passwd);
+            curl_setopt($request, CURLOPT_HTTPHEADER, array('X-Requested-Auth: Digest',
+                                                            'X-Opencast-Matterhorn-Authorization: true', ));
         }
 
         $output = array();
-        $output["var"] = curl_exec($request);
-        $output["error"] = curl_error($request);
-        $output["status"] = curl_getinfo($request, CURLINFO_HTTP_CODE);
+        $output['var'] = curl_exec($request);
+        $output['error'] = curl_error($request);
+        $output['status'] = curl_getinfo($request, CURLINFO_HTTP_CODE);
 
         curl_close($request);
 
         if ($get) {
-            if (200 != $output["status"]) {
-                throw new \Exception("Error Processing Request", 1);
+            if (200 != $output['status']) {
+                throw new \Exception('Error Processing Request', 1);
             }
         }
 
         return $output;
     }
 
-    /**
-     * Get admin url
-     *
-     * Gets the admin url for Opencast
-     */
-    private function getAdminUrl()
-    {
-        $output = $this->request('/services/available.json?serviceType=org.opencastproject.episode');
-        if ($output["status"] !== 200) return false;
-        $decode = json_decode($output["var"], true);
-        if (!($decode)) {
-            throw new \Exception("Opencast Matterhorn communication error");
-        }
-        if (isset($decode['services'])) {
-            if (isset($decode['services']['service'])) {
-                if (isset($decode['services']['service']['host'])) {
-                    return $decode['services']['service']['host'];
-                }
-            }
-        }
+  /**
+   * Get admin url.
+   *
+   * Gets the admin url for Opencast
+   */
+  public function getAdminUrl()
+  {
+      $output = $this->request('/services/available.json?serviceType=org.opencastproject.episode');
+      if ($output['status'] !== 200) {
+          return false;
+      }
+      $decode = json_decode($output['var'], true);
+      if (!($decode)) {
+          throw new \Exception('Matterhorn communication error');
+      }
+      if (isset($decode['services'])) {
+          if (isset($decode['services']['service'])) {
+              if (isset($decode['services']['service']['host'])) {
+                  return $decode['services']['service']['host'];
+              }
+          }
+      }
 
-        return null;
-    }
+      return;
+  }
 }

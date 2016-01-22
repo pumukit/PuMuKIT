@@ -38,7 +38,7 @@ class Builder extends ContainerAware
             }
         }
         if ($authorizationChecker->isGranted(Permission::ACCESS_JOBS)) {
-            $menu->addChild('Encoder jobs', array('route' => 'pumukit_encoder_info'))->setExtra('translation_domain', 'NewAdminBundle');        
+            $menu->addChild('Encoder jobs', array('route' => 'pumukit_encoder_info'))->setExtra('translation_domain', 'NewAdminBundle');
         }
         if ($authorizationChecker->isGranted(Permission::ACCESS_PEOPLE) || $authorizationChecker->isGranted(Permission::ACCESS_TAGS) ||
             $authorizationChecker->isGranted(Permission::ACCESS_BROADCASTS) || $authorizationChecker->isGranted(Permission::ACCESS_SERIES_TYPES)) {
@@ -72,9 +72,16 @@ class Builder extends ContainerAware
         }
 
         if ($showImporterTab && $authorizationChecker->isGranted(Permission::ACCESS_IMPORTER)) {
-            if ($this->container->has("pumukit_opencast.client")) {
-                $importer = $menu->addChild('Importer')->setExtra('translation_domain', 'NewAdminBundle');
-                $importer->addChild('Opencast Importer', array('route' => 'pumukitopencast'))->setExtra('translation_domain', 'NewAdminBundle');
+            if ($this->container->has('pumukit_opencast.client')) {
+                $client = $this->container->get('pumukit_opencast.client');
+                $importer = $menu->addChild('OC-tools')->setExtra('translation_domain', 'NewAdminBundle');
+                if ($this->container->getParameter('pumukit_opencast.scheduler_on_menu')) {
+                    $importer->addChild('Scheduler', array('uri' => $client->getSchedulerUrl()))->setExtra('translation_domain', 'NewAdminBundle');
+                }
+                if ($this->container->getParameter('pumukit_opencast.dashboard_on_menu')) {
+                    $importer->addChild('GC-Dash', array('uri' => $client->getDashboardUrl()))->setExtra('translation_domain', 'NewAdminBundle');
+                }
+                $importer->addChild('Importer', array('route' => 'pumukitopencast'))->setExtra('translation_domain', 'NewAdminBundle');
             }
         }
 

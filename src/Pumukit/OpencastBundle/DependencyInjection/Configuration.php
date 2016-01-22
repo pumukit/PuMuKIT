@@ -6,7 +6,7 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
- * This is the class that validates and merges configuration from your app/config files
+ * This is the class that validates and merges configuration from your app/config files.
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
  */
@@ -60,6 +60,22 @@ class Configuration implements ConfigurationInterface
               ->defaultValue('delete-archive')
               ->info('Name of the workflow in Opencast that handles the deletion of a mediapackage from the archive.')
             ->end()
+            ->booleanNode('scheduler_on_menu')
+              ->defaultFalse()
+              ->info('List a opencast scheduler link on the menu.')
+            ->end()
+            ->scalarNode('scheduler')
+              ->defaultValue('/admin/index.html#/recordings')
+              ->info('Opencast schedule URL or path (default /admin/index.html#/recordings).')
+            ->end()
+            ->booleanNode('dashboard_on_menu')
+              ->defaultFalse()
+              ->info('List a galicaster dashboard link on the menu.')
+            ->end()
+            ->scalarNode('dashboard')
+              ->defaultValue('/dashboard/index.html')
+              ->info('Galicaster dashboard URL or path (default /dashboard/index.html).')
+            ->end()
             ->arrayNode('url_mapping')
               ->prototype('array')
                 ->info('URLs and paths used to mapping the Opencast share.')
@@ -93,7 +109,6 @@ class Configuration implements ConfigurationInterface
             ->end()
           ->end()
         ;
-          
 
         return $treeBuilder;
     }
