@@ -27,6 +27,10 @@ class ClientService
     public function __construct($url = '', $user = '', $passwd = '', $player = '/engage/ui/watch.html', $scheduler = '/admin/index.html#/recordings', $dashboard = '/dashboard/index.html',
                                 $deleteArchiveMediaPackage = false, $deletionWorkflowName = 'delete-archive')
     {
+        if (!function_exists('curl_init')) {
+            throw new \RuntimeException('Curl is required to execute remote commands.');
+        }
+
         $this->url = ('/' == substr($url, -1)) ? substr($url, 0, -1) : $url;
         $this->user = $user;
         $this->passwd = $passwd;
@@ -57,6 +61,32 @@ class ClientService
     public function getPlayerUrl()
     {
         return ('/' === $this->player[0]) ? $this->url.$this->player : $this->player;
+    }
+
+    /**
+     * Get admin url.
+     *
+     * Gets the admin url for Opencast
+     */
+    public function getAdminUrl()
+    {
+        $output = $this->request('/services/available.json?serviceType=org.opencastproject.episode');
+        if ($output['status'] !== 200) {
+            return false;
+        }
+        $decode = json_decode($output['var'], true);
+        if (!($decode)) {
+            throw new \Exception('Opencast Matterhorn communication error');
+        }
+        if (isset($decode['services'])) {
+            if (isset($decode['services']['service'])) {
+                if (isset($decode['services']['service']['host'])) {
+                    return $decode['services']['service']['host'];
+                }
+            }
+        }
+
+        return;
     }
 
     /**
@@ -328,10 +358,6 @@ class ClientService
      */
     private function request($path, $query = array(), $get = true, $useAdminUrl = false)
     {
-        if (!function_exists('curl_init')) {
-            throw new \RuntimeException('Curl is required to execute remote commands.');
-        }
-
         if ($get) {
             if ($useAdminUrl && $this->adminUrl) {
                 $request = curl_init($this->adminUrl.$path);
@@ -380,30 +406,4 @@ class ClientService
 
         return $output;
     }
-
-  /**
-   * Get admin url.
-   *
-   * Gets the admin url for Opencast
-   */
-  public function getAdminUrl()
-  {
-      $output = $this->request('/services/available.json?serviceType=org.opencastproject.episode');
-      if ($output['status'] !== 200) {
-          return false;
-      }
-      $decode = json_decode($output['var'], true);
-      if (!($decode)) {
-          throw new \Exception('Matterhorn communication error');
-      }
-      if (isset($decode['services'])) {
-          if (isset($decode['services']['service'])) {
-              if (isset($decode['services']['service']['host'])) {
-                  return $decode['services']['service']['host'];
-              }
-          }
-      }
-
-      return;
-  }
 }
