@@ -70,10 +70,11 @@ class ClientService
      */
     public function getAdminUrl()
     {
-        $output = $this->request('/services/available.json?serviceType=org.opencastproject.episode');
-        if ($output['status'] !== 200) {
-            return false;
+        if ($this->adminUrl) {
+            return $this->adminUrl;
         }
+
+        $output = $this->request('/services/available.json?serviceType=org.opencastproject.episode');
         $decode = json_decode($output['var'], true);
         if (!($decode)) {
             throw new \Exception('Opencast Matterhorn communication error');
@@ -81,12 +82,12 @@ class ClientService
         if (isset($decode['services'])) {
             if (isset($decode['services']['service'])) {
                 if (isset($decode['services']['service']['host'])) {
-                    return $decode['services']['service']['host'];
+                    $this->adminUrl = $decode['services']['service']['host'];
                 }
             }
         }
 
-        return;
+        return $this->adminUrl;
     }
 
     /**
@@ -96,11 +97,7 @@ class ClientService
      */
     public function getSchedulerUrl()
     {
-        if (!$this->adminUrl) {
-            $this->adminUrl = $this->getAdminUrl();
-        }
-
-        return ('/' === $this->scheduler[0]) ? $this->adminUrl.$this->scheduler : $this->scheduler;
+        return ('/' === $this->scheduler[0]) ? $this->getAdminUrl().$this->scheduler : $this->scheduler;
     }
 
     /**
@@ -110,11 +107,7 @@ class ClientService
      */
     public function getDashboardUrl()
     {
-        if (!$this->adminUrl) {
-            $this->adminUrl = $this->getAdminUrl();
-        }
-
-        return ('/' === $this->dashboard[0]) ? $this->adminUrl.$this->dashboard : $this->dashboard;
+        return ('/' === $this->dashboard[0]) ? $this->getAdminUrl().$this->dashboard : $this->dashboard;
     }
 
     /**
@@ -201,8 +194,7 @@ class ClientService
      */
     public function getMediapackageFromArchive($id)
     {
-        $this->adminUrl = $this->getAdminUrl();
-        $output = $this->request('/episode/episode.json?id='.$id, array(), true, true);
+        $output = $this->request('/episode/episode.json?id='.$id, array(), 'GET', true);
 
         if ($output['status'] !== 200) {
             return false;
@@ -256,7 +248,7 @@ class ClientService
         $parameters = array('mediaPackageIds' => $mediaPackageIdsParameter,
                             'engage' => 'Matterhorn+Engage+Player', );
 
-        $output = $this->request($request, $parameters, false);
+        $output = $this->request($request, $parameters, 'POST');
 
         if ($output['status'] !== 204) {
             return false;
@@ -329,7 +321,7 @@ class ClientService
             if (isset($workflow['id'])) {
                 $request = '/workflow/stop';
                 $params = array('id' => $workflow['id']);
-                $output = $this->request($request, $params, false);
+                $output = $this->request($request, $params, 'POST');
                 if ($output['status'] !== 200) {
                     return false;
                 }
@@ -351,34 +343,34 @@ class ClientService
      *
      * @param string $path
      * @param array  $query
-     * @param bool   $get
+     * @param string $method
      * @param bool   $useAdminUrl
      *
      * @return array
      */
-    private function request($path, $query = array(), $get = true, $useAdminUrl = false)
+    private function request($path, $query = array(), $method = 'GET', $useAdminUrl = false)
     {
-        if ($get) {
-            if ($useAdminUrl && $this->adminUrl) {
-                $request = curl_init($this->adminUrl.$path);
-            } else {
-                $request = curl_init($this->url.$path);
-            }
-            if (false === $request) {
-                throw new \RuntimeException('Unable to create a new curl handle.');
-            }
+        if ($useAdminUrl) {
+            $requestUrl = $this->getAdminUrl() . $path;
         } else {
-            if (false === $request = curl_init()) {
-                throw new \RuntimeException('Unable to create a new curl handle.');
-            }
-            if ($useAdminUrl && $this->adminUrl) {
-                $requestUrl = $this->adminUrl.$path;
-            } else {
-                $requestUrl = $this->url.$path;
-            }
-            curl_setopt($request, CURLOPT_URL, $requestUrl);
+            $requestUrl = $this->url.$path;
+        }
+        if (false === $request = curl_init($requestUrl)) {
+            throw new \RuntimeException('Unable to create a new curl handle with URL: '.$requestUrl.'.');
+        }
+
+        switch ($method) {
+        case 'GET':
+            break;
+        case 'POST':
             curl_setopt($request, CURLOPT_POST, 1);
             curl_setopt($request, CURLOPT_POSTFIELDS, http_build_query($query));
+            break;
+        case 'PUT':
+            break;
+        case 'DELETE':
+            break;
+        default: throw new \Exception('Method "'.$method.'" not allowed.');
         }
 
         curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
@@ -398,7 +390,7 @@ class ClientService
 
         curl_close($request);
 
-        if ($get) {
+        if ($method == 'GET') {
             if (200 != $output['status']) {
                 throw new \Exception('Error Processing Request', 1);
             }
