@@ -248,7 +248,7 @@ class ClientService
         $parameters = array('mediaPackageIds' => $mediaPackageIdsParameter,
                             'engage' => 'Matterhorn+Engage+Player', );
 
-        $output = $this->request($request, $parameters, 'POST');
+        $output = $this->request($request, $parameters, 'POST', true);
 
         if ($output['status'] !== 204) {
             return false;
@@ -266,7 +266,7 @@ class ClientService
     {
         $request = '/workflow/statistics.json';
 
-        $output = $this->request($request);
+        $output = $this->request($request, array(), 'GET', true);
 
         if ($output['status'] !== 200) {
             return false;
@@ -293,7 +293,7 @@ class ClientService
     {
         $request = '/workflow/instances.json?state=SUCCEEDED'.($workflowName ? '&workflowdefinition='.$workflowName : '').($id ? '&mp='.$id : '').($count ? '&count='.$count : '');
 
-        $output = $this->request($request);
+        $output = $this->request($request, array(), 'GET', true);
 
         if ($output['status'] !== 200) {
             return false;
@@ -321,7 +321,7 @@ class ClientService
             if (isset($workflow['id'])) {
                 $request = '/workflow/stop';
                 $params = array('id' => $workflow['id']);
-                $output = $this->request($request, $params, 'POST');
+                $output = $this->request($request, $params, 'POST', true);
                 if ($output['status'] !== 200) {
                     return false;
                 }
