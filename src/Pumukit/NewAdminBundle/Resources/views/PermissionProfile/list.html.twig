@@ -87,9 +87,9 @@
           {% for permissionprofile in permissionprofiles %}
           <td></td>
           <td>
-            <div class="checkbox{{ permissionprofile.system ? ' pmk_disabled_checkbox'}}">
+            <div class="checkbox{{ (permissionprofile.system or (permissionprofile.scope == constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_NONE'))) ? ' pmk_disabled_checkbox'}}">
               <label>
-                <input id="{{ key }}__{{ permissionprofile.id }}__permission" form="pumukitnewadmin_permissionprofile_table_form" class="{{ permissionprofile.system ? 'system':'not_system' }}_permission_permissionprofile_checkbox" type="checkbox" size="1"{{ permissionprofile.containsPermission(key) ? ' checked="checked"':'' }}{{ permissionprofile.system ? ' disabled="disabled"':'' }}>
+                <input id="{{ key }}__{{ permissionprofile.id }}__permission" form="pumukitnewadmin_permissionprofile_table_form" class="{{ permissionprofile.system ? 'system':'not_system' }}_permission_permissionprofile_checkbox" type="checkbox" size="1"{{ permissionprofile.containsPermission(key) ? ' checked="checked"':'' }}{{ (permissionprofile.system or (permissionprofile.scope == constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_NONE'))) ? ' disabled="disabled"':'' }}>
               </label>
             </div>
           </td>
