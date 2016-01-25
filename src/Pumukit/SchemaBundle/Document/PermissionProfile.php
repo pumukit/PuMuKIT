@@ -67,7 +67,6 @@ class PermissionProfile
      * @var integer $rank
      *
      * @MongoDB\Int
-     * @MongoDB\UniqueIndex(safe=1)
      * @Gedmo\SortablePosition
      */
     private $rank;
