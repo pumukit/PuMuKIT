@@ -5,6 +5,18 @@
 .buttonPlugin.flexSkip_Forward_30 {
   background-position: -200% 22%;
 }
+/*** File: plugins/es.teltek.paella.chapterMarksPlugins/editor.less ***/
+.pumukitChapterMarkPlugin .editorTrackItemLabel {
+  margin: 0px;
+  display: none;
+}
+.pumukitChapterMarkPlugin .editorTrackItemMoveArea {
+  left: 0px;
+  right: 0px;
+}
+.editorTrackItemMark {
+  border: none !important;
+}
 /*** File: plugins/es.upv.paella.annotationPlugins/player.less ***/
 .textAnnotation {
   background-color: rgba(128, 128, 128, 0.7);
