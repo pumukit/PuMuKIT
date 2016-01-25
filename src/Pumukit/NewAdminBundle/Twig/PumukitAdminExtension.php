@@ -17,7 +17,8 @@ class PumukitAdminExtension extends \Twig_Extension
     private $profileService;
     private $translator;
     private $router;
-
+    private $countMmobjsByStatus;
+    private $countMmobjsWithTag;
     /**
      * Constructor.
      */
@@ -231,7 +232,7 @@ class PumukitAdminExtension extends \Twig_Extension
      */
     public function getSeriesIcon($series)
     {
-        list($mmobjsPublished, $mmobjsHidden, $mmobjsBlocked) = $this->countPubHidBlockMmobjs($series);
+        list($mmobjsPublished, $mmobjsHidden, $mmobjsBlocked) = $this->countMmobjsByStatus($series);
 
         $iconClass = 'mdi-alert-warning';
 
@@ -265,7 +266,7 @@ class PumukitAdminExtension extends \Twig_Extension
      */
     public function getSeriesText($series)
     {
-        list($mmobjsPublished, $mmobjsHidden, $mmobjsBlocked) = $this->countPubHidBlockMmobjs($series);
+        list($mmobjsPublished, $mmobjsHidden, $mmobjsBlocked) = $this->countMmobjsByStatus($series);
 
         $iconText = $mmobjsPublished." Published Multimedia Object(s),\n".
                     $mmobjsHidden." Hidden Multimedia Object(s),\n".
@@ -470,11 +471,10 @@ class PumukitAdminExtension extends \Twig_Extension
     }
 
     //TODO: Pass to a SERVICE
-    private function countPubHidBlockMmobjs($series)
+    private function countMmobjsByStatus($series)
     {
-        static $c_counts;
-        if (isset($c_counts[$series->getId()])) {
-            return $c_counts[$series->getId()];
+        if (isset($this->countMmobjsByStatus[$series->getId()])) {
+            return $this->countMmobjsByStatus[$series->getId()];
         }
         $mmobjsPublished = 0;
         $mmobjsHidden = 0;
@@ -504,7 +504,7 @@ class PumukitAdminExtension extends \Twig_Extension
 
         $result = array($mmobjsPublished, $mmobjsHidden, $mmobjsBlocked);
 
-        return $c_counts[$series->getId()] = $result;
+        return $this->countMmobjsByStatus[$series->getId()] = $result;
 
         return $result;
     }
@@ -512,18 +512,14 @@ class PumukitAdminExtension extends \Twig_Extension
     //TODO: Pass to a SERVICE
     private function countMmobjsWithTag($series, $tagCod)
     {
-        static $c_counts;
-        if (isset($c_counts[$series->getId()][$tagCod])) {
-            return $c_counts[$series->getId()][$tagCod];
+        if (isset($this->countMmobjsWithTag[$series->getId()][$tagCod])) {
+            return $this->countMmobjsWithTag[$series->getId()][$tagCod];
         }
-
         $repoSeries = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $qb = $repoSeries->createStandardQueryBuilder()->field('series')->equals(new \MongoId($series->getId()))->field('tags.cod')->equals('PUDENEW');
         $count = $qb->count()->getQuery()->execute();
 
-        $c_counts[$series->getId()][$tagCod] = $count;
-        dump($count);
-
+        $this->countMmobjsWithTag[$series->getId()][$tagCod] = $count;
         return $count;
     }
 }
