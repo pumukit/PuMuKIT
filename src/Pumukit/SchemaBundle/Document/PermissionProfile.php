@@ -61,13 +61,12 @@ class PermissionProfile
      *
      * @MongoDB\String
      */
-    private $scope = self::SCOPE_NONE;
+    private $scope = self::SCOPE_PERSONAL;
 
     /**
      * @var integer $rank
      *
      * @MongoDB\Int
-     * @MongoDB\UniqueIndex(safe=1)
      * @Gedmo\SortablePosition
      */
     private $rank;
