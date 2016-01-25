@@ -38,10 +38,10 @@ class PumukitOpencastExtension extends Extension
               ->addArgument($config['username'])
               ->addArgument($config['password'])
               ->addArgument($config['player'])
-              ->addArgument($config['delete_archive_mediapackage'])
-              ->addArgument($config['deletion_workflow_name'])
               ->addArgument($config['scheduler'])
-              ->addArgument($config['dashboard']);
+              ->addArgument($config['dashboard'])
+              ->addArgument($config['delete_archive_mediapackage'])
+              ->addArgument($config['deletion_workflow_name']);
 
             $container
               ->register('pumukit_opencast.job', "Pumukit\OpencastBundle\Services\OpencastService")
