@@ -5,7 +5,6 @@ namespace Pumukit\WebTVBundle\Twig;
 use Symfony\Component\Routing\RequestContext;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Services\MultimediaObjectDurationService;
 use Pumukit\SchemaBundle\Services\MaterialService;
 use Pumukit\SchemaBundle\Services\PicService;
 use Pumukit\WebTVBundle\Services\LinkService;
@@ -30,7 +29,7 @@ class PumukitExtension extends \Twig_Extension
     private $linkService;
     private $mmobjDurationService;
 
-    public function __construct(DocumentManager $documentManager, RequestContext $context, $defaultPic, MaterialService $materialService, PicService $picService, LinkService $linkService, MultimediaObjectDurationService $mmobjDurationService)
+    public function __construct(DocumentManager $documentManager, RequestContext $context, $defaultPic, MaterialService $materialService, PicService $picService, LinkService $linkService, $mmobjDurationService)
     {
         $this->dm = $documentManager;
         $this->context = $context;
