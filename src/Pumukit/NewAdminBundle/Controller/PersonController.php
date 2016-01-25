@@ -175,6 +175,10 @@ class PersonController extends AdminController
      */
     public function listAutocompleteAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
+        if ($role->getCod() === $this->container->getParameter('pumukitschema.personal_scope_role_code')) {
+            $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
+        }
+
         $config = $this->getConfiguration();
         $pluralName = $config->getPluralResourceName();
         
@@ -203,6 +207,10 @@ class PersonController extends AdminController
      */
     public function createRelationAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
+        if ($role->getCod() === $this->container->getParameter('pumukitschema.personal_scope_role_code')) {
+            $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
+        }
+
         $person = new Person();
         $person->setName(preg_replace('/\d+ - /', '', $request->get('name')));
 
@@ -212,9 +220,10 @@ class PersonController extends AdminController
         $form = $this->createForm(new PersonType($translator, $locale), $person);
 
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
+            $personService = $this->get('pumukitschema.person');
+            $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
             if ($form->bind($request)->isValid()) {
                 try {
-                    $personService = $this->get('pumukitschema.person');
                     $multimediaObject = $personService->createRelationPerson($person, $role, $multimediaObject);
                 } catch (\Exception $e) {
                     $this->get('session')->getFlashBag()->add('error', $e->getMessage());
@@ -233,6 +242,7 @@ class PersonController extends AdminController
                                  array(
                                        'people' => $multimediaObject->getPeopleByRole($role, true),
                                        'role' => $role,
+                                       'personal_scope_role_code' => $personalScopeRoleCode,
                                        'mm' => $multimediaObject,
                                        'template' => $template
                                        ));
@@ -258,8 +268,13 @@ class PersonController extends AdminController
      */
     public function updateRelationAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
+        if ($role->getCod() === $this->container->getParameter('pumukitschema.personal_scope_role_code')) {
+            $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
+        }
+
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
+        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
@@ -280,6 +295,7 @@ class PersonController extends AdminController
                                      array(
                                            'people' => $multimediaObject->getPeopleByRole($role, true),
                                            'role' => $role,
+                                           'personal_scope_role_code' => $personalScopeRoleCode,
                                            'mm' => $multimediaObject,
                                            'template' => $template
                                            ));
@@ -313,8 +329,13 @@ class PersonController extends AdminController
      */
     public function linkAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
+        if ($role->getCod() === $this->container->getParameter('pumukitschema.personal_scope_role_code')) {
+            $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
+        }
+
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
+        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
         try{
             $multimediaObject = $personService->createRelationPerson($person, $role, $multimediaObject);
             // TODO Snackbars and toasts
@@ -334,6 +355,7 @@ class PersonController extends AdminController
                              array(
                                    'people' => $multimediaObject->getPeopleByRole($role, true),
                                    'role' => $role,
+                                   'personal_scope_role_code' => $personalScopeRoleCode,
                                    'mm' => $multimediaObject,
                                    'template' => $template
                                    ));
@@ -370,8 +392,13 @@ class PersonController extends AdminController
      */
     public function upAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
+        if ($role->getCod() === $this->container->getParameter('pumukitschema.personal_scope_role_code')) {
+            $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
+        }
+
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
+        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
         $multimediaObject = $personService->upPersonWithRole($person, $role, $multimediaObject);
 
         $template = '';
@@ -383,6 +410,7 @@ class PersonController extends AdminController
                              array(
                                    'people' => $multimediaObject->getPeopleByRole($role, true),
                                    'role' => $role,
+                                   'personal_scope_role_code' => $personalScopeRoleCode,
                                    'mm' => $multimediaObject,
                                    'template' => $template
                                    ));        
@@ -396,8 +424,13 @@ class PersonController extends AdminController
      */
     public function downAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
+        if ($role->getCod() === $this->container->getParameter('pumukitschema.personal_scope_role_code')) {
+            $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
+        }
+
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
+        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
         $multimediaObject = $personService->downPersonWithRole($person, $role, $multimediaObject);
 
         $template = '';
@@ -409,6 +442,7 @@ class PersonController extends AdminController
                              array(
                                    'people' => $multimediaObject->getPeopleByRole($role, true),
                                    'role' => $role,
+                                   'personal_scope_role_code' => $personalScopeRoleCode,
                                    'mm' => $multimediaObject,
                                    'template' => $template
                                    ));
@@ -423,9 +457,14 @@ class PersonController extends AdminController
      */
     public function deleteRelationAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
+        if ($role->getCod() === $this->container->getParameter('pumukitschema.personal_scope_role_code')) {
+            $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
+        }
+
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
-	try {
+        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
+        try {
             $multimediaObject = $personService->deleteRelation($person, $role, $multimediaObject);
         }catch (\Exception $e){
             return new Response("Can not delete relation of Person '".$person->getName()."' with MultimediaObject '".$multimediaObject->getId()."'. ".$e->getMessage(), 409);
@@ -439,6 +478,7 @@ class PersonController extends AdminController
         return array(
                      'people' => $multimediaObject->getPeopleByRole($role, true),
                      'role' => $role,
+                     'personal_scope_role_code' => $personalScopeRoleCode,
                      'mm' => $multimediaObject,
                      'template' => $template
                      );

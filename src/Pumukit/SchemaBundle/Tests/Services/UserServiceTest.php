@@ -288,6 +288,7 @@ class UserServiceTest extends WebTestCase
         $this->assertCount(4, $user->getRoles());
     }
 
+
     public function testDelete()
     {
         $username = 'test';
@@ -303,5 +304,55 @@ class UserServiceTest extends WebTestCase
         $user = $this->userService->delete($user);
 
         $this->assertCount(0, $this->repo->findAll());        
+    }
+
+    public function testInstantiate()
+    {
+        $permissionProfile1 = new PermissionProfile();
+        $permissionProfile1->setName('1');
+        $permissionProfile1->setDefault(false);
+
+        $permissionProfile2 = new PermissionProfile();
+        $permissionProfile2->setName('2');
+        $permissionProfile2->setDefault(true);
+
+        $this->dm->persist($permissionProfile1);
+        $this->dm->persist($permissionProfile2);
+        $this->dm->flush();
+
+        $user1 = $this->userService->instantiate();
+
+        $this->assertNull($user1->getUsername());
+        $this->assertNull($user1->getEmail());
+        $this->assertTrue($user1->isEnabled());
+        $this->assertNotEquals($permissionProfile1, $user1->getPermissionProfile());
+        $this->assertEquals($permissionProfile2, $user1->getPermissionProfile());
+
+        $userName = 'test';
+        $email = 'test@mail.com';
+        $enabled = false;
+
+        $permissionProfile1->setDefault(true);
+        $permissionProfile2->setDefault(false);
+        $this->dm->persist($permissionProfile1);
+        $this->dm->persist($permissionProfile2);
+        $this->dm->flush();
+
+        $user2 = $this->userService->instantiate($userName, $email, $enabled);
+
+        $this->assertEquals($userName, $user2->getUsername());
+        $this->assertEquals($email, $user2->getEmail());
+        $this->assertFalse($user2->isEnabled());
+        $this->assertEquals($permissionProfile1, $user2->getPermissionProfile());
+        $this->assertNotEquals($permissionProfile2, $user2->getPermissionProfile());
+    }
+
+    /**
+     * @expectedException Exception
+     * @expectedExceptionMessage Unable to assign a Permission Profile to the new User. There is no default Permission Profile
+     */
+    public function testInstantiateException()
+    {
+        $user = $this->userService->instantiate();
     }
 }

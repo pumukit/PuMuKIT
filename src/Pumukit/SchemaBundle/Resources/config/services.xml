@@ -148,14 +148,15 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="pumukitschema.personwithrole_dispatcher"/>
             <argument type="service" id="pumukitschema.user" />
+            <argument>%pumukitschema.enable_add_user_as_person%</argument>
             <argument>%pumukitschema.personal_scope_role_code%</argument>
         </service>
 
         <service id="pumukitschema.user" class="Pumukit\SchemaBundle\Services\UserService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
-            <argument type="service" id="security.context" />
             <argument type="service" id="pumukitschema.user_dispatcher" />
             <argument type="service" id="pumukitschema.permission"/>
+            <argument type="service" id="pumukitschema.permissionprofile"/>
             <argument>%pumukitschema.personal_scope_delete_owners%</argument>
         </service>
 
