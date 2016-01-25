@@ -81,6 +81,7 @@ class PumukitOpencastExtension extends Extension
             $container->setParameter('pumukit_opencast.delete_archive_mediapackage', $config['delete_archive_mediapackage']);
             $container->setParameter('pumukit_opencast.deletion_workflow_name', $config['deletion_workflow_name']);
             $container->setParameter('pumukit_opencast.url_mapping', $config['url_mapping']);
+            $container->setParameter('pumukit_opencast.access_opencast_users', $config['access_opencast_users']);
 
             $container
               ->register('pumukit_opencast.remove_listener', "Pumukit\OpencastBundle\EventListener\RemoveListener")
