@@ -84,7 +84,7 @@ class OaiController extends Controller
     $XMLidentify->addChild('repositoryName', $info['description']);
     $XMLidentify->addChild('baseURL', $this->generateUrl('pumukit_oai_index', array(), true));
     $XMLidentify->addChild('protocolVersion', '2.0');
-    $XMLidentify->addChild('adminEmail');
+    $XMLidentify->addChild('adminEmail', $info['email']);
     $XMLidentify->addChild('earliestDatestamp', '1990-02-01T12:00:00Z');
     $XMLidentify->addChild('deletedRecord', 'no');
     $XMLidentify->addChild('granularity', 'YYYY-MM-DDThh:mm:ssZ');
