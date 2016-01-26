@@ -92,7 +92,7 @@ class StatsService
         $options = $this->parseOptions($options);
 
         $pipeline = array();
-        $pipeline = $this->aggrPipeAddMatch($options['fromDate'], $options['toDate'], $matchExtra);
+        $pipeline = $this->aggrPipeAddMatch($options['from_date'], $options['to_date'], $matchExtra);
         $pipeline[] = array('$group' => array('_id' => '$multimediaObject', 'numView' => array('$sum' => 1)));
         $pipeline[] = array('$sort' => array('numView' => $options['sort']));
         $pipeline[] = array('$skip' => $options['page'] * $options['limit']);
@@ -130,7 +130,7 @@ class StatsService
         $options = $this->parseOptions($options);
 
         $pipeline = array();
-        $pipeline = $this->aggrPipeAddMatch($options['fromDate'], $options['toDate'], $matchExtra);
+        $pipeline = $this->aggrPipeAddMatch($options['from_date'], $options['to_date'], $matchExtra);
         $pipeline[] = array('$group' => array('_id' => '$series', 'numView' => array('$sum' => 1)));
         $pipeline[] = array('$sort' => array('numView' => $options['sort']));
         $pipeline[] = array('$skip' => $options['page'] * $options['limit']);
@@ -195,8 +195,8 @@ class StatsService
 
         $options = $this->parseOptions($options);
 
-        $pipeline = $this->aggrPipeAddMatch($options['fromDate'], $options['toDate'], $matchExtra);
-        $pipeline = $this->aggrPipeAddProjectGroupDate($pipeline, $options['groupBy']);
+        $pipeline = $this->aggrPipeAddMatch($options['from_date'], $options['to_date'], $matchExtra);
+        $pipeline = $this->aggrPipeAddProjectGroupDate($pipeline, $options['group_by']);
         $pipeline[] = array('$sort' => array('_id' => $options['sort']));
         $pipeline[] = array('$skip' => $options['page'] * $options['limit']);
         $pipeline[] = array('$limit' => $options['limit']);
@@ -286,12 +286,12 @@ class StatsService
      */
     private function parseOptions(array $options = array())
     {
-        $options['groupBy'] = isset($options['groupBy']) ? $options['groupBy'] : 'month';
+        $options['group_by'] = isset($options['group_by']) ? $options['group_by'] : 'month';
         $options['limit'] = isset($options['limit']) ? $options['limit'] : 100;
         $options['sort'] = isset($options['sort']) ? $options['sort'] : -1;
         $options['page'] = isset($options['page']) ? $options['page'] : 0;
-        $options['fromDate'] = isset($options['fromDate']) ? $options['fromDate'] : null;
-        $options['toDate'] = isset($options['toDate']) ? $options['toDate'] : null;
+        $options['from_date'] = isset($options['from_date']) ? $options['from_date'] : null;
+        $options['to_date'] = isset($options['to_date']) ? $options['to_date'] : null;
 
         return $options;
     }

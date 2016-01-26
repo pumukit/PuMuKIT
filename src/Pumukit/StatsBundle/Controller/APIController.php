@@ -23,8 +23,8 @@ class APIController extends Controller
 
         list($criteria, $sort, $fromDate, $toDate, $limit, $page) = $this->processRequestData($request);
 
-        $options['fromDate'] = $fromDate;
-        $options['toDate'] = $toDate;
+        $options['from_date'] = $fromDate;
+        $options['to_date'] = $toDate;
         $options['limit'] = $limit;
         $options['page'] = $page;
         $options['sort'] = $sort;
@@ -36,8 +36,8 @@ class APIController extends Controller
             'page' => $page,
             'criteria' => $criteria,
             'sort' => $sort,
-            'fromDate' => $fromDate,
-            'toDate' => $toDate,
+            'from_date' => $fromDate,
+            'to_date' => $toDate,
             'mmobjs' => $mmobjs,
         );
 
@@ -57,8 +57,8 @@ class APIController extends Controller
 
         list($criteria, $sort, $fromDate, $toDate, $limit, $page) = $this->processRequestData($request);
 
-        $options['fromDate'] = $fromDate;
-        $options['toDate'] = $toDate;
+        $options['from_date'] = $fromDate;
+        $options['to_date'] = $toDate;
         $options['limit'] = $limit;
         $options['page'] = $page;
         $options['sort'] = $sort;
@@ -70,8 +70,8 @@ class APIController extends Controller
             'page' => $page,
             'criteria' => $criteria,
             'sort' => $sort,
-            'fromDate' => $fromDate,
-            'toDate' => $toDate,
+            'from_date' => $fromDate,
+            'to_date' => $toDate,
             'series' => $series,
         );
 
@@ -93,8 +93,8 @@ class APIController extends Controller
 
         $groupBy = $request->get('group_by') ?: 'month';
 
-        $options['fromDate'] = $fromDate;
-        $options['toDate'] = $toDate;
+        $options['from_date'] = $fromDate;
+        $options['to_date'] = $toDate;
         $options['limit'] = $limit;
         $options['page'] = $page;
         $options['sort'] = $sort;
@@ -108,8 +108,8 @@ class APIController extends Controller
             'criteria' => $criteria,
             'sort' => $sort,
             'group_by' => $groupBy,
-            'fromDate' => $fromDate,
-            'toDate' => $toDate,
+            'from_date' => $fromDate,
+            'to_date' => $toDate,
             'views' => $views,
         );
 
@@ -131,10 +131,10 @@ class APIController extends Controller
 
         list($criteria, $sort, $fromDate, $toDate, $limit, $page) = $this->processRequestData($request);
 
-        $groupBy = $request->get('group_by');
+        $groupBy = $request->get('group_by') ?: 'month';
 
-        $options['fromDate'] = $fromDate;
-        $options['toDate'] = $toDate;
+        $options['from_date'] = $fromDate;
+        $options['to_date'] = $toDate;
         $options['limit'] = $limit;
         $options['page'] = $page;
         $options['sort'] = $sort;
@@ -148,8 +148,8 @@ class APIController extends Controller
             'criteria' => $criteria,
             'sort' => $sort,
             'group_by' => $groupBy,
-            'fromDate' => $fromDate,
-            'toDate' => $toDate,
+            'from_date' => $fromDate,
+            'to_date' => $toDate,
             'mmobj_id' => $mmobjId ?: -1,
             'views' => $views,
         );
@@ -174,8 +174,8 @@ class APIController extends Controller
 
         $groupBy = $request->get('group_by') ?: 'month';
 
-        $options['fromDate'] = $fromDate;
-        $options['toDate'] = $toDate;
+        $options['from_date'] = $fromDate;
+        $options['to_date'] = $toDate;
         $options['limit'] = $limit;
         $options['page'] = $page;
         $options['sort'] = $sort;
@@ -189,8 +189,8 @@ class APIController extends Controller
             'criteria' => $criteria,
             'sort' => $sort,
             'group_by' => $groupBy,
-            'fromDate' => $fromDate,
-            'toDate' => $toDate,
+            'from_date' => $fromDate,
+            'to_date' => $toDate,
             'series_id' => $seriesId ?: -1,
             'views' => $views,
         );
