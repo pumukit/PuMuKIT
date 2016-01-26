@@ -2,9 +2,49 @@
   <fieldset>
     <dl>
       <div class="form-row">
-        <iframe src="{{url('pumukit_videoeditor_index', {'id': mm.id})}}?id={{mm.id}}" style="background:black;width:100%;height:800px;">
+        <span id="edit-btn-group" style="display: none">
+          <a class="btn btn-default" onclick="switchMode('discard-close')"> {%trans%} DISCARD {%endtrans%} </a>
+          <a class="btn btn-default" onclick="switchMode('save')"> {%trans%}  SAVE {%endtrans%} </a>
+          <a class="btn btn-default" onclick="switchMode('save-close')"> {%trans%}  SAVE AND CLOSE {%endtrans%} </a>
+        </span>
+        <span id="play-btn-group">
+          <a class="btn btn-default" onclick="switchMode('editor')"> {%trans%}  EDIT MODE {%endtrans%} </a>
+        </span>
+        <iframe id="paellaiframe"
+                src="{{url('pumukit_videoeditor_index', {'id': mm.id})}}?id={{mm.id}}" 
+                style="background:black;width:100%;height:800px;">
         </iframe>
       </div>
     </dl>
   </fieldset>
 </div>
+<script>
+ function switchMode(action) {
+     var iframe = document.getElementById('paellaiframe');
+     var paella = iframe.contentWindow.paella;
+     switch(action) {
+         case 'editor':
+             paella.events.trigger(paella.events.play);
+             setTimeout(function(){
+                 paella.events.trigger(paella.events.showEditor)
+             },100);
+             toggleButtons();
+             break;
+         case 'discard-close':
+             paella.editor.instance.bottomBar.toolbar.discardAndClose();
+             toggleButtons();
+             break;
+         case 'save-close':
+             paella.editor.instance.bottomBar.toolbar.saveAndClose();
+             toggleButtons();
+             break;
+         case 'save':
+             paella.editor.instance.bottomBar.toolbar.save();
+             break;
+     }
+ }
+ function toggleButtons() {
+     $('#edit-btn-group').toggle();
+     $('#play-btn-group').toggle();
+ }
+</script>
