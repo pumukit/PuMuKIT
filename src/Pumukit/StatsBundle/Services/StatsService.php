@@ -211,20 +211,21 @@ class StatsService
      */
     private function aggrPipeAddMatch(\DateTime $fromDate = null, \DateTime $toDate = null, $matchExtra = array(), $pipeline = array())
     {
-        if (!$fromDate) {
-            $fromDate = new \DateTime();
-            $fromDate->setTime(0, 0, 0);
-        }
-        if (!$toDate) {
-            $toDate = new \DateTime();
-        }
 
-        $fromMongoDate = new \MongoDate($fromDate->format('U'), $fromDate->format('u'));
-        $toMongoDate = new \MongoDate($toDate->format('U'), $toDate->format('u'));
-
-        $pipeline[] = array('$match' => array_merge($matchExtra, array('date' => array('$gte' => $fromMongoDate,
-                                                                                        '$lte' => $toMongoDate, ))),
-        );
+        $date = array();
+        if($fromDate) {
+            $fromMongoDate = new \MongoDate($fromDate->format('U'), $fromDate->format('u'));
+            $date['$gte'] = $fromMongoDate;
+        }
+        if($toDate) {
+            $toMongoDate = new \MongoDate($toDate->format('U'), $toDate->format('u'));
+            $date['$lte'] = $toMongoDate;
+        }
+        if(count($date) > 0) {
+            $date = array('date' => $date);
+        }
+        if(count($matchExtra) > 0 || count($date) > 0)
+            $pipeline[] = array('$match' => array_merge($matchExtra, $date));
 
         return $pipeline;
     }

@@ -226,15 +226,8 @@ class APIController extends Controller
         if (!strpos($toDate, 'T')) {
             $toDate .= 'T23:59:59';
         }
-        $fromDate = \DateTime::createFromFormat('Y-m-d\TH:i:s', $fromDate);
-        $toDate = \DateTime::createFromFormat('Y-m-d\TH:i:s', $toDate);
-        if (!$fromDate) {
-            $fromDate = new \DateTime('Z');
-            $fromDate->setTime(0, 0, 0);
-        }
-        if (!$toDate) {
-            $toDate = new \DateTime('Z');
-        }
+        $fromDate = \DateTime::createFromFormat('Y-m-d\TH:i:s', $fromDate)?:null;
+        $toDate = \DateTime::createFromFormat('Y-m-d\TH:i:s', $toDate)?:null;
 
         return array($criteria, $sort, $fromDate, $toDate, $limit, $page);
     }
