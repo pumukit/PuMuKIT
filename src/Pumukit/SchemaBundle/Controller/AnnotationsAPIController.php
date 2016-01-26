@@ -3,8 +3,8 @@
 namespace Pumukit\SchemaBundle\Controller;
 
 use Pumukit\SchemaBundle\Document\Annotation;
-use Pumukit\SchemaBundle\Event\AnnotationsAPIEvents;
-use Pumukit\SchemaBundle\Event\AnnotationsAPIUpdateEvent;
+use Pumukit\SchemaBundle\Event\AnnotationsEvents;
+use Pumukit\SchemaBundle\Event\AnnotationsUpdateEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
