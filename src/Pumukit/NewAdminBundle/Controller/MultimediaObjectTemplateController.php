@@ -25,6 +25,8 @@ class MultimediaObjectTemplateController extends MultimediaObjectController
         $factoryService = $this->get('pumukitschema.factory');
         $personService = $this->get('pumukitschema.person');
 
+        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
+
         $roles = $personService->getRoles();
         if (null === $roles){
             throw new \Exception('Not found any role.');
@@ -65,12 +67,14 @@ class MultimediaObjectTemplateController extends MultimediaObjectController
 
         return $this->render('PumukitNewAdminBundle:MultimediaObjectTemplate:edit.html.twig',
                              array(
-                                   'mm'            => $resource,
-                                   'form_meta'     => $formMeta->createView(),
-                                   'series'        => $series,
-                                   'roles'         => $roles,
-                                   'pub_decisions' => $pubDecisionsTags,
-                                   'parent_tags'   => $parentTags
+                                   'mm'                       => $resource,
+                                   'form_meta'                => $formMeta->createView(),
+                                   'series'                   => $series,
+                                   'roles'                    => $roles,
+                                   'personal_scope_role'      => $personalScopeRole,
+                                   'personal_scope_role_code' => $personalScopeRoleCode,
+                                   'pub_decisions'            => $pubDecisionsTags,
+                                   'parent_tags'              => $parentTags
                                    )
                              );
     }

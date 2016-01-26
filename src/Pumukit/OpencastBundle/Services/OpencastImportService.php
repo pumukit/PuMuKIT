@@ -13,6 +13,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\Pic;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\OpencastBundle\Services\OpencastService;
 use Pumukit\OpencastBundle\Services\ClientService;
 use Pumukit\InspectionBundle\Services\InspectionServiceInterface;
@@ -41,8 +42,18 @@ class OpencastImportService
         $this->otherLocales = $otherLocales;
     }
 
-
-    public function importRecording($opencastId, $invert=false)
+    /**
+     * Import recording
+     *
+     * Given a media package id
+     * create a multimedia object
+     * with the media package metadata
+     *
+     * @param string    $opencastId
+     * @param boolean   $invert
+     * @param User|null $loggedInUser
+     */
+    public function importRecording($opencastId, $invert=false, User $loggedInUser = null)
     {
         $mediaPackage = $this->opencastClient->getMediaPackage($opencastId);
 
@@ -55,7 +66,7 @@ class OpencastImportService
             $series = $seriesRepo->findOneBy(array("properties.opencast" => "default"));            
         }
         if (!$series) {
-            $series = $this->importSeries($mediaPackage);
+            $series = $this->importSeries($mediaPackage, $loggedInUser);
         }
 
         $onemultimediaobjects = null;
@@ -66,7 +77,7 @@ class OpencastImportService
         }
 
         if (null == $onemultimediaobjects) {
-            $multimediaObject = $this->factoryService->createMultimediaObject($series);
+            $multimediaObject = $this->factoryService->createMultimediaObject($series, true, $loggedInUser);
             $multimediaObject->setSeries($series);
 
             $title = $this->getMediaPackageField($mediaPackage, 'title');
@@ -131,7 +142,7 @@ class OpencastImportService
         }
     }
 
-    private function importSeries($mediaPackage)
+    private function importSeries($mediaPackage, User $loggedInUser = null)
     {
         $publicDate = new \DateTime("now");
 
@@ -144,7 +155,7 @@ class OpencastImportService
             $properties = "default";            
         }
 
-        $series = $this->factoryService->createSeries();
+        $series = $this->factoryService->createSeries($loggedInUser);
         $series->setPublicDate($publicDate);
         $series->setTitle($title);
         foreach ($this->otherLocales as $locale) {

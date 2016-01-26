@@ -73,7 +73,7 @@ class User extends BaseUser
      *
      * @param Person $person
      */
-    public function setPerson(Person $person)
+    public function setPerson(Person $person = null)
     {
         $this->person = $person;
     }
