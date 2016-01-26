@@ -19,7 +19,7 @@ class OpencastController extends PlayerController
 {
     /**
      * @Route("/video_opencast/{id}", name="pumukit_webtv_opencast_index", defaults={"show_hide": true})
-     * @Template("PumukitWebTVBundle:MultimediaObject:index_opencast.html.twig")
+     * @Template("PumukitWebTVBundle:MultimediaObject:index.html.twig")
      */
     public function indexAction( MultimediaObject $multimediaObject, Request $request ){
         $response = $this->testBroadcast($multimediaObject, $request);
@@ -57,7 +57,7 @@ class OpencastController extends PlayerController
 
             $editorChapters = $this->getChapterMarks($multimediaObject);
 
-            return $this->render('PumukitWebTVBundle:MultimediaObject:index_opencast.html.twig',
+            return $this->render('PumukitWebTVBundle:MultimediaObject:index.html.twig',
                                  array('intro' => $this->getIntro($request->query->get('intro')),
                                        'multimediaObject' => $multimediaObject,
                                        'is_old_browser' => $isOldBrowser,
