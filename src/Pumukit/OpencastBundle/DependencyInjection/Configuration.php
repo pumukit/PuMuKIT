@@ -76,7 +76,7 @@ class Configuration implements ConfigurationInterface
               ->defaultValue('/dashboard/index.html')
               ->info('Galicaster dashboard URL or path (default /dashboard/index.html).')
             ->end()
-            ->booleanNode('access_opencast_users')
+            ->booleanNode('manage_opencast_users')
               ->defaultFalse()
               ->info('Permission to create/modify/delete Opencast users from PuMuKIT.')
             ->end()

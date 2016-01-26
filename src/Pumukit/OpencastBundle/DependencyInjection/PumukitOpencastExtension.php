@@ -41,7 +41,9 @@ class PumukitOpencastExtension extends Extension
               ->addArgument($config['scheduler'])
               ->addArgument($config['dashboard'])
               ->addArgument($config['delete_archive_mediapackage'])
-              ->addArgument($config['deletion_workflow_name']);
+              ->addArgument($config['deletion_workflow_name'])
+              ->addArgument($config['manage_opencast_users'])
+              ->addArgument(new Reference('logger'));
 
             $container
               ->register('pumukit_opencast.job', "Pumukit\OpencastBundle\Services\OpencastService")
@@ -81,7 +83,7 @@ class PumukitOpencastExtension extends Extension
             $container->setParameter('pumukit_opencast.delete_archive_mediapackage', $config['delete_archive_mediapackage']);
             $container->setParameter('pumukit_opencast.deletion_workflow_name', $config['deletion_workflow_name']);
             $container->setParameter('pumukit_opencast.url_mapping', $config['url_mapping']);
-            $container->setParameter('pumukit_opencast.access_opencast_users', $config['access_opencast_users']);
+            $container->setParameter('pumukit_opencast.manage_opencast_users', $config['manage_opencast_users']);
 
             $container
               ->register('pumukit_opencast.remove_listener', "Pumukit\OpencastBundle\EventListener\RemoveListener")
@@ -90,6 +92,15 @@ class PumukitOpencastExtension extends Extension
               ->addArgument($config['delete_archive_mediapackage'])
               ->addArgument($config['deletion_workflow_name'])
               ->addTag('kernel.event_listener', array('event' => 'multimediaobject.delete', 'method' => 'onMultimediaObjectDelete'));
+
+            $container
+              ->register('pumukit_opencast.user_listener', "Pumukit\OpencastBundle\EventListener\UserListener")
+              ->addArgument(new Reference('pumukit_opencast.client'))
+              ->addArgument(new Reference('logger'))
+              ->addArgument($config['manage_opencast_users'])
+              ->addTag('kernel.event_listener', array('event' => 'user.create', 'method' => 'onUserCreate'))
+              ->addTag('kernel.event_listener', array('event' => 'user.update', 'method' => 'onUserUpdate'))
+              ->addTag('kernel.event_listener', array('event' => 'user.delete', 'method' => 'onUserDelete'));
         }
 
         $container->setParameter('pumukit_opencast.scheduler_on_menu', $config['scheduler_on_menu']);
