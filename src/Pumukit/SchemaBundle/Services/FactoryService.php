@@ -283,7 +283,7 @@ class FactoryService
     public function deleteResource($resource)
     {
         if ($resource instanceof User) {
-            $this->userService->delete($user);
+            $this->userService->delete($resource);
         } else {
             $this->dm->remove($resource);
             $this->dm->flush();
