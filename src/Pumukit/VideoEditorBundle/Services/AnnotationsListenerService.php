@@ -5,7 +5,7 @@ namespace Pumukit\VideoEditorBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
-class AnnotationsAPIListenerService
+class AnnotationsListenerService
 {
     private $dm;
     private $repo;
@@ -18,7 +18,7 @@ class AnnotationsAPIListenerService
         $this->repoAnnotations = $this->dm->getRepository('PumukitSchemaBundle:Annotation');
     }
 
-    public function onAnnotationsAPIUpdate($event)
+    public function onAnnotationsUpdate($event)
     {
         $mmobjId = $event->getMultimediaObject();
         $mmobj = $this->repoMmobj->find($mmobjId);

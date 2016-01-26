@@ -2,7 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Event;
 
-final class AnnotationsAPIEvents
+final class AnnotationsEvents
 {
     /**
      * The multimediaobject.view event is thrown each time a 
@@ -13,7 +13,7 @@ final class AnnotationsAPIEvents
      *
      * @var string
      */
-    const API_UPDATE = 'annotationsapi.update';
-    const API_GET = 'annotationsapi.get';
+    const UPDATE = 'annotations.update';
+    const GET = 'annotations.get';
 
 }

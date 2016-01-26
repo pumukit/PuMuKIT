@@ -5,9 +5,9 @@ namespace Pumukit\SchemaBundle\Event;
 use Symfony\Component\EventDispatcher\Event;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
-class AnnotationsAPIUpdateEvent extends Event
+class AnnotationsUpdateEvent extends Event
 {
-    const EVENT_NAME = 'annotationsapi.update';
+    const EVENT_NAME = 'annotations.update';
     /**
      * @var MultimediaObject
      */
