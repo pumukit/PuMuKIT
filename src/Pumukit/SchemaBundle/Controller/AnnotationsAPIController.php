@@ -3,6 +3,8 @@
 namespace Pumukit\SchemaBundle\Controller;
 
 use Pumukit\SchemaBundle\Document\Annotation;
+use Pumukit\SchemaBundle\Event\AnnotationsEvents;
+use Pumukit\SchemaBundle\Event\AnnotationsUpdateEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -10,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
-
+use Symfony\Component\EventDispatcher\EventDispatcher;
 /**
  *  @Route("/annotation")
  */
@@ -150,7 +152,8 @@ class AnnotationsAPIController extends Controller
                                               'created' => $annotation->getCreated(),
         ));
         $response = $serializer->serialize($data, 'json');
-
+        $event = new AnnotationsUpdateEvent($episode);
+        $this->get('event_dispatcher')->dispatch(AnnotationsEvents::UPDATE, $event);
         return new Response($response);
     }
 
@@ -182,7 +185,8 @@ class AnnotationsAPIController extends Controller
                                               'created' => $annotation->getCreated(),
         ));
         $response = $serializer->serialize($data, 'xml');
-
+        $event = new AnnotationsUpdateEvent($annotation->getMultimediaObject());
+        $this->get('event_dispatcher')->dispatch(AnnotationsEvents::UPDATE, $event);
         return new Response($response);
     }
 

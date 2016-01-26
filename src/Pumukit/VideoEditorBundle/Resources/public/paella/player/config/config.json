@@ -125,8 +125,8 @@
                 "enabled": true
             },
             "es.upv.paella.showEditorPlugin": {
-                "enabled": true,
-                "alwaysVisible": true,
+                "enabled": false,
+                "alwaysVisible": false,
                 "openEditorInIframe": true
             },
             "es.upv.paella.commentsPlugin": {
