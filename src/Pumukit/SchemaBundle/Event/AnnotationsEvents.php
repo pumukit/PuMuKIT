@@ -5,11 +5,11 @@ namespace Pumukit\SchemaBundle\Event;
 final class AnnotationsEvents
 {
     /**
-     * The multimediaobject.view event is thrown each time a 
-     * multimedia object is played in the webtv portal.
+     * The annotations.update event is thrown each time an
+     * annotation is edited (through put)
      *
      * The event listener receives an
-     * Pumukit\WebTVBundle\Event\ViewedEvent instance.
+     * Pumukit\SchemaBundle\Event\AnnotationsUpdateEvent instance.
      *
      * @var string
      */
