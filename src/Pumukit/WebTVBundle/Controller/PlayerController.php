@@ -39,7 +39,8 @@ class PlayerController extends Controller
         }
 
         if (($broadcast->getName() == $request->headers->get('PHP_AUTH_USER', false)) &&
-            ($request->headers->get('PHP_AUTH_PW') == $broadcast->getPasswd())) {
+            ($request->headers->get('PHP_AUTH_PW') == $broadcast->getPasswd()) &&
+            (Broadcast::BROADCAST_TYPE_COR === $broadcast->getBroadcastTypeId())) {
             return true;
         }
 
