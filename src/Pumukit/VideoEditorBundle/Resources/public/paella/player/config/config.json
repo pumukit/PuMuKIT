@@ -189,7 +189,8 @@
                 "enabled": true
             },
             "es.upv.paella.editor.trimmingTrackPlugin": {
-                "enabled": true
+                "enabled": true,
+                "enableResetButton": true
             },
             "pumukitChapterMarkPlugin": {
                 "enabled": true
