@@ -95,10 +95,12 @@ class StatsService
         $pipeline = $this->aggrPipeAddMatch($options['from_date'], $options['to_date'], $matchExtra);
         $pipeline[] = array('$group' => array('_id' => '$multimediaObject', 'numView' => array('$sum' => 1)));
         $pipeline[] = array('$sort' => array('numView' => $options['sort']));
-        $pipeline[] = array('$skip' => $options['page'] * $options['limit']);
-        $pipeline[] = array('$limit' => $options['limit']);
 
         $aggregation = $viewsLogColl->aggregate($pipeline);
+
+        $total = count($aggregation);
+        $aggregation = $this->getPagedAggregation($aggregation->toArray(), $options['page'], $options['limit']);
+
         $mostViewed = array();
         foreach ($aggregation as $element) {
             $ids[] = $element['_id'];
@@ -110,7 +112,7 @@ class StatsService
             }
         }
 
-        return $mostViewed;
+        return array($mostViewed, $total);
     }
 
     /**
@@ -133,10 +135,12 @@ class StatsService
         $pipeline = $this->aggrPipeAddMatch($options['from_date'], $options['to_date'], $matchExtra);
         $pipeline[] = array('$group' => array('_id' => '$series', 'numView' => array('$sum' => 1)));
         $pipeline[] = array('$sort' => array('numView' => $options['sort']));
-        $pipeline[] = array('$skip' => $options['page'] * $options['limit']);
-        $pipeline[] = array('$limit' => $options['limit']);
 
         $aggregation = $viewsLogColl->aggregate($pipeline);
+
+        $total = count($aggregation);
+        $aggregation = $this->getPagedAggregation($aggregation->toArray(), $options['page'], $options['limit']);
+
         $mostViewed = array();
         foreach ($aggregation as $element) {
             $ids[] = $element['_id'];
@@ -148,7 +152,7 @@ class StatsService
             }
         }
 
-        return $mostViewed;
+        return array($mostViewed, $total);
     }
 
     /**
@@ -156,9 +160,7 @@ class StatsService
      */
     public function getTotalViewedGrouped(array $criteria = array(), array $options = array())
     {
-        $aggregation = $this->getGroupedByAggrPipeline($criteria, $options);
-
-        return $aggregation->toArray();
+        return $this->getGroupedByAggrPipeline($criteria, $options);
     }
 
     /**
@@ -166,9 +168,7 @@ class StatsService
      */
     public function getTotalViewedGroupedByMmobj(\MongoId $mmobjId, array $criteria = array(), array $options = array())
     {
-        $aggregation = $this->getGroupedByAggrPipeline($criteria, $options, array('multimediaObject' => $mmobjId));
-
-        return $aggregation->toArray();
+        return $this->getGroupedByAggrPipeline($criteria, $options, array('multimediaObject' => $mmobjId));
     }
 
     /**
@@ -176,9 +176,7 @@ class StatsService
      */
     public function getTotalViewedGroupedBySeries(\MongoId $seriesId, array $criteria = array(), array $options = array())
     {
-        $aggregation = $this->getGroupedByAggrPipeline($criteria, $options, array('series' => $seriesId));
-
-        return $aggregation->toArray();
+        return $this->getGroupedByAggrPipeline($criteria, $options, array('series' => $seriesId));
     }
 
     /**
@@ -198,12 +196,13 @@ class StatsService
         $pipeline = $this->aggrPipeAddMatch($options['from_date'], $options['to_date'], $matchExtra);
         $pipeline = $this->aggrPipeAddProjectGroupDate($pipeline, $options['group_by']);
         $pipeline[] = array('$sort' => array('_id' => $options['sort']));
-        $pipeline[] = array('$skip' => $options['page'] * $options['limit']);
-        $pipeline[] = array('$limit' => $options['limit']);
 
         $aggregation = $viewsLogColl->aggregate($pipeline);
 
-        return $aggregation;
+        $total = count($aggregation);
+        $aggregation = $this->getPagedAggregation($aggregation->toArray(), $options['page'], $options['limit']);
+        
+        return array($aggregation, $total);
     }
 
     /**
@@ -295,5 +294,19 @@ class StatsService
         $options['to_date'] = isset($options['to_date']) ? $options['to_date'] : null;
 
         return $options;
+    }
+
+    /**
+     * Returns a 'paged' result of the aggregation array.
+     *
+     * @param aggregation The aggregation array to be paged
+     * @param page The page to be returned
+     * @param limit The number of elements to be returned
+     * @return array aggregation
+     *      
+     */
+    function getPagedAggregation(array $aggregation, $page = 0, $limit = 10) {
+        $offset = $page * $limit;
+        return array_splice($aggregation, $offset, $limit);
     }
 }

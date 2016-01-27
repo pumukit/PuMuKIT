@@ -29,11 +29,12 @@ class APIController extends Controller
         $options['page'] = $page;
         $options['sort'] = $sort;
 
-        $mmobjs = $viewsService->getMmobjsMostViewedByRange($criteria, $options);
+        list($mmobjs, $total) = $viewsService->getMmobjsMostViewedByRange($criteria, $options);
 
         $views = array(
             'limit' => $limit,
             'page' => $page,
+            'total' => $total,
             'criteria' => $criteria,
             'sort' => $sort,
             'from_date' => $fromDate,
@@ -63,11 +64,12 @@ class APIController extends Controller
         $options['page'] = $page;
         $options['sort'] = $sort;
 
-        $series = $viewsService->getSeriesMostViewedByRange($criteria, $options);
+        list($series, $total) = $viewsService->getSeriesMostViewedByRange($criteria, $options);
 
         $views = array(
             'limit' => $limit,
             'page' => $page,
+            'total' => $total,
             'criteria' => $criteria,
             'sort' => $sort,
             'from_date' => $fromDate,
@@ -100,11 +102,12 @@ class APIController extends Controller
         $options['sort'] = $sort;
         $options['group_by'] = $groupBy;
 
-        $views = $viewsService->getTotalViewedGrouped($criteria, $options);
+        list($views, $total) = $viewsService->getTotalViewedGrouped($criteria, $options);
 
         $views = array(
             'limit' => $limit,
             'page' => $page,
+            'total' => $total,
             'criteria' => $criteria,
             'sort' => $sort,
             'group_by' => $groupBy,
@@ -140,11 +143,12 @@ class APIController extends Controller
         $options['sort'] = $sort;
         $options['group_by'] = $groupBy;
 
-        $views = $viewsService->getTotalViewedGroupedByMmobj(new \MongoId($mmobjId), $criteria, $options);
+        list($views, $total) = $viewsService->getTotalViewedGroupedByMmobj(new \MongoId($mmobjId), $criteria, $options);
 
         $views = array(
             'limit' => $limit,
             'page' => $page,
+            'total' => $total,
             'criteria' => $criteria,
             'sort' => $sort,
             'group_by' => $groupBy,
@@ -181,11 +185,12 @@ class APIController extends Controller
         $options['sort'] = $sort;
         $options['group_by'] = $groupBy;
 
-        $views = $viewsService->getTotalViewedGroupedBySeries(new \MongoId($seriesId), $criteria, $options);
+        list($views, $total) = $viewsService->getTotalViewedGroupedBySeries(new \MongoId($seriesId), $criteria, $options);
 
         $views = array(
             'limit' => $limit,
             'page' => $page,
+            'total' => $total,
             'criteria' => $criteria,
             'sort' => $sort,
             'group_by' => $groupBy,
