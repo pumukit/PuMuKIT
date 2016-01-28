@@ -5,7 +5,6 @@
   <a href="{{ path('pumukit_webtv_multimediaobject_index', {'id': object.id}) }}">
     <div class="pumukit_mmobj">
       <div class="thumbnail">
-        <span class="play_icon" alt=""></span>
         <span class="video-duration">{{ mmobj_duration(object) | duration_string }}</span>
         <img alt="serial_pic" class="serial thumbnailimg" src="{{ object|first_url_pic(true) }}"/>
         <div class="thumbnailholder" ></div>

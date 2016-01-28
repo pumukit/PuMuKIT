@@ -163,7 +163,6 @@ class MultimediaObjectController extends SortableAdminController
         $isPublished = null;
         $playableResource = null;
 
-
         $activeEditor = $this->checkHasEditor();
         $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
 
