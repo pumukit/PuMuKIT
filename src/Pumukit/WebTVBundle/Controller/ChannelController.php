@@ -36,7 +36,6 @@ class ChannelController extends Controller
      */
     public function seriesAction(Request $request, $channelNumber)
     {
-        dump($channelNumber);
         $numberCols = $this->container->getParameter('columns_objs_bytag');
         $limit = $this->container->getParameter('limit_objs_bytag');
 
@@ -45,7 +44,6 @@ class ChannelController extends Controller
 
         $channelTitle = $this->getChannelTitle($channelNumber);
         $channelTags = $this->getTagsForChannel($channelNumber);
-        dump($channelTags);
         $results = array();
         
         foreach($channelTags as $tag) {
