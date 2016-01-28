@@ -142,7 +142,8 @@
                 "enabled": true
             },
             "es.upv.paella.breaksPlayerPlugin": {
-                "enabled": true
+                "enabled": true,
+                "neverShow": true
             },
             "es.upv.paella.overlayCaptionsPlugin": {
                 "enabled": true
