@@ -28,6 +28,7 @@
 {% set content_background = content_background | default(default_content_background) %}
 {% set header_max_width = header_max_width | default(content_max_width) %}
 {% set header_background = header_background | default(default_content_background) %}
+{% set header_font = header_font | default('#000') %}
 {% set label_background = label_background | default('#8A8A8A') %}
 {% set label_font = label_font | default('#fff') %}
 {% set menu_background = menu_background | default(default_light_background) %}
@@ -237,6 +238,7 @@ p.disabled {
 .header-content{
     margin: 0 auto;
     max-width: {{ header_max_width }};
+    color: {{ header_font }};
     min-height: 80px;
     padding: 15px 0px;
 }
@@ -295,6 +297,7 @@ p.disabled {
 }
 .mobile_header {
     background: {{ header_background }};
+    color: {{ header_font }};
 }
 body.opencast-layout .main-content {
     max-width: 100%;
@@ -573,6 +576,7 @@ a:hover .cover {
 }
 .header {
     background: {{ header_background }};
+    color: {{ header_font }};
 }
 .header.sticky {
     position: fixed;
@@ -580,6 +584,7 @@ a:hover .cover {
     transition: top 0.2s ease-in-out;
     width: 100%;
     z-index:6;
+    color: {{ header_font }};
 }
 .header.sticky.nav-up {
     top: -60px;
