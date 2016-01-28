@@ -162,6 +162,7 @@
             <argument type="service" id="pumukitschema.permission"/>
             <argument type="service" id="pumukitschema.permissionprofile"/>
             <argument>%pumukitschema.personal_scope_delete_owners%</argument>
+            <argument>%pumukitschema.gen_user_salt%</argument>
         </service>
 
         <service id="pumukitschema.pic" class="Pumukit\SchemaBundle\Services\PicService">
