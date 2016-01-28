@@ -125,7 +125,7 @@ Add your HTML on `src/Pumukit/ExampleOrg/WebTVBundle/Resources/views/Layout/foot
 
 
 ### 4.- Logo
-Override the `Pumukit/ExampleOrg/WebTVBundle/Resources/views/logo.html.twig` template.
+Override the `Pumukit/ExampleOrg/WebTVBundle/Resources/views/Layout/logo.html.twig` template.
 
 ```html
 <img src="{{ asset('bundles/pumukitwebtv/images/webtv/logo80px.png') }}" class="img-responsive" style="max-height:100%">
