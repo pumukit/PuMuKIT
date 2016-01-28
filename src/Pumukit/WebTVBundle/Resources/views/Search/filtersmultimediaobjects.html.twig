@@ -11,7 +11,7 @@
       </div>
     </div>
   </div>
-  {% if parent_tag is not null and blocked_tag is null or not blocked_tag.isDescendantOf(parent_tag) %}
+  {% if parent_tag is not null and (blocked_tag is null or not blocked_tag.isDescendantOf(parent_tag)) %}
     <div class="form-group col-md-3 col-sm-4">
       <label for="tags">{{ parent_tag.title|trans}}:</label>
       <select id="tags" name="tags[]" class="form-control" onchange="submitForm(this);">
