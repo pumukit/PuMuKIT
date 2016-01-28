@@ -36,9 +36,10 @@
           <a href="{{ url_mmobj }}">
             <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>
             {% spaceless %}
-              {% trans %}Video{% endtrans %}
               {% if (mm.getBroadcast().getBroadcastTypeId() != public_broadcast()) %}
-                {% trans %}private{% endtrans %}
+                {% trans %}Private video{% endtrans %}
+              {% else %}
+                {% trans %}Video{% endtrans %}
               {% endif %}
             {% endspaceless %}</a>
             &nbsp;|&nbsp;&nbsp;<span class="language">{{ (mm.getProperty('opencastlanguage')?(mm.getProperty('opencastlanguage')|lower):'en')|language_name }}</span>

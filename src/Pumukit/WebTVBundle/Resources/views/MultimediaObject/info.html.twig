@@ -24,7 +24,7 @@
   </div>
 </div>
 <!--CHAPTER MARKS-->
-{% if editor_chapters %}
+{% if editor_chapters is defined and editor_chapters%}
   <strong>Marks:</strong>
   <ol style="list-style-type:decimal;padding-left:40px;">
     {% for chapter in editor_chapters %}
@@ -33,13 +33,14 @@
            onMouseOver="this.style.textDecoration='underline'"
            onMouseOut="this.style.textDecoration='none'"
            onClick="paellaevents = document.getElementById('paellaiframe').contentWindow.paella.events;
-                    paellaevents.trigger(paellaevents.seekToTime,{time:{{chapter.time}}})">
-          {{ date("00:00:00 + " ~ (chapter.time|round) ~ " seconds")|date('H:i:s')}}
+                    paellaevents.trigger(paellaevents.seekToTime,{time:{{chapter.real_time}}})">
+          {{ date("00:00:00 + " ~ (chapter.time_to_show|round) ~ " seconds")|date('H:i:s')}}
         </a>
       </li>
     {% endfor %}
   </ol>
 {% endif %}
+
 <!--SUBTITLE/DESCRIPTION-->
 <div class="row">
   <div class="col-xs-12">
@@ -99,3 +100,4 @@
   </div>
 </div>
 <br>
+

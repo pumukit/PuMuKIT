@@ -40,9 +40,15 @@
           </a>
         </td>
         <td>
-          <a href="#" onclick="window.submit_delete_person('{{ person.id }}', '{{ countMmPeople[person.id] }}', '{% autoescape 'js' %}{{ person.getHName() }}{% endautoescape %}'); return false;">
+          {% if person.getUser() %}
+          <i title="{% trans %}Can't delete Person{% endtrans %} '{{ person.name }}'. {% trans %}There is a referenced User{% endtrans %}." class="mdi-content-block" style="color:#009587"></i>
+          {% elseif countMmPeople[person.id] != 0 %}
+          <i title="{% trans %}Cannot delete the data of{% endtrans %} '{{ person.name }}'. '{{ countMmPeople[person.id] }}' {% trans %}multimedia object(s) contain(s) this person{% endtrans %}." class="mdi-content-block" style="color:#009587"></i>
+          {% else %}
+          <a href="#" title="Delete Person '{{ person.name }}'" onclick="window.submit_delete_person('{{ person.id }}', '{{ countMmPeople[person.id] }}', '{% autoescape 'js' %}{{ person.getHName() }}{% endautoescape %}'); return false;">
             <i class="mdi-content-clear"></i>
           </a>
+          {% endif %}
         </td>
         <td onclick="click_fila_url('person', this, '{{ path('pumukitnewadmin_person_show', {'id': person.id}) }}');">
           {{ person.id }}

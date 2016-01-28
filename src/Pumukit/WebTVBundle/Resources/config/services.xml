@@ -26,6 +26,7 @@
           <argument type="service" id="pumukitschema.material" />
           <argument type="service" id="pumukitschema.pic" />
           <argument type="service" id="pumukit_web_tv.link_service" />
+          <argument type="service" id="pumukitschema.mmsduration" />
           <tag name="twig.extension" />
         </service>
 

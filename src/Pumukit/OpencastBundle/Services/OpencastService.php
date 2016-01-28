@@ -3,29 +3,108 @@
 namespace Pumukit\OpencastBundle\Services;
 
 use Pumukit\EncoderBundle\Services\JobService;
+use Pumukit\EncoderBundle\Services\ProfileService;
+use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-
+use Pumukit\SchemaBundle\Document\Track;
 
 class OpencastService
 {
-    private $sbsProfile;
-    private $jobService;
+    private $sbsConfiguration;
+    private $sbsProfileName = null;
+    private $generateSbs = false;
+    private $useFlavour = false;
+    private $sbsFlavour = null;
     private $urlPathMapping;
+    private $jobService;
+    private $profileService;
+    private $multimediaObjectService;
     private $defaultVars;
 
-    public function __construct($sbsProfile, JobService $jobService, array $urlPathMapping = array(), array $defaultVars = array())
+    public function __construct(JobService $jobService, ProfileService $profileService, MultimediaObjectService $multimediaObjectService, array $sbsConfiguration = array(), array $urlMapping = array(), array $defaultVars = array())
     {
-        $this->sbsProfile = $sbsProfile;
         $this->jobService = $jobService;
-        $this->urlPathMapping = $urlPathMapping;
+        $this->profileService = $profileService;
+        $this->multimediaObjectService = $multimediaObjectService;
+        $this->sbsConfiguration = $sbsConfiguration;
+        $this->urlPathMapping = $urlMapping;
         $this->defaultVars = $defaultVars;
+        $this->initSbsConfiguration();
     }
 
-
-    public function genSbs(MultimediaObject $multimediaObject, $opencastUrls=array())
+    private function initSbsConfiguration()
     {
-        if (!$this->sbsProfile)
-        return false;
+        if ($this->sbsConfiguration) {
+            if (isset($this->sbsConfiguration['generate_sbs'])) {
+                $this->generateSbs = $this->sbsConfiguration['generate_sbs'];
+            }
+            if (isset($this->sbsConfiguration['profile'])) {
+                $this->sbsProfileName = $this->sbsConfiguration['profile'];
+            }
+            if (isset($this->sbsConfiguration['use_flavour'])) {
+                $this->useFlavour = $this->sbsConfiguration['use_flavour'];
+            }
+            if (isset($this->sbsConfiguration['flavour'])) {
+                $this->sbsFlavour = $this->sbsConfiguration['flavour'];
+            }
+        }
+    }
+
+    /**
+     * Gen SBS according to configuration in parameters
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param array            $opencastUrls
+     * @return boolean
+     */
+    public function genAutoSbs(MultimediaObject $multimediaObject, $opencastUrls=array())
+    {
+        if (!$this->generateSbs)
+            return false;
+
+        if ($this->useFlavour) {
+            $flavourTrack = $multimediaObject->getTrackWithTag($this->sbsFlavour);
+            if (null == $flavourTrack) {
+                return $this->generateSbsTrack($multimediaObject, $opencastUrls);
+            }
+            return $this->useTrackAsSbs($multimediaObject, $flavourTrack);
+        }
+
+        return $this->generateSbsTrack($multimediaObject, $opencastUrls);
+    }
+
+    /**
+     * Get path
+     *
+     * @param string $url
+     * @return string
+     */
+    public function getPath($url)
+    {
+        foreach($this->urlPathMapping as $m) {
+            $path = str_replace($m["url"], $m["path"], $url);
+            if (realpath($path)) {
+                return $path;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Generate SBS Track
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param array            $opencastUrls
+     * @rettun boolean
+     */
+    public function generateSbsTrack(MultimediaObject $multimediaObject, $opencastUrls=array())
+    {
+        if (!$this->generateSbs)
+            return false;
+
+        if (!$this->sbsProfileName)
+            return false;
 
         $tracks = $multimediaObject->getTracks();
         if (!$tracks)
@@ -41,16 +120,30 @@ class OpencastService
             $vars += array('ocurls' => $opencastUrls);
         }
 
-        return $this->jobService->addJob($path, $this->sbsProfile, 2, $multimediaObject, $language, array(), $vars);
+        return $this->jobService->addJob($path, $this->sbsProfileName, 2, $multimediaObject, $language, array(), $vars);
     }
 
-
-    public function getPath($url)
+    private function useTrackAsSbs(MultimediaObject $multimediaObject, Track $track)
     {
-        $path = $url;
-        foreach($this->urlPathMapping as $m) {
-            $path = str_replace($m["url"], $m["path"], $path);
+        if (!$this->sbsProfileName)
+            return false;
+
+        $sbsProfile = $this->profileService->getProfile($this->sbsProfileName);
+
+        $track->addTag('profile:' . $this->sbsProfileName);
+
+        $tags = array('master', 'display');
+        foreach ($tags as $tag) {
+            if ($sbsProfile[$tag] && !$track->containsTag($tag)) {
+                $track->addTag($tag);
+            }
         }
-        return $path;
+
+        foreach(array_filter(preg_split('/[,\s]+/', $sbsProfile['tags'])) as $tag) {
+            $track->addTag(trim($tag));
+        }
+
+        $multimediaObject = $this->multimediaObjectService->updateMultimediaObject($multimediaObject);
+        return true;
     }
 }

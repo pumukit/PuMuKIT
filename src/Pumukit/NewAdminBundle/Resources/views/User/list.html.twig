@@ -14,6 +14,7 @@
           <th>{% trans %}Name{% endtrans %}</th>
           <th>{% trans %}Login{% endtrans %}</th>
           <th>{% trans %}Permission Profile{% endtrans %}</th>
+          <th>{% trans %}Origin{% endtrans %}</th>
           <th>{% trans %}Email{% endtrans %}</th>
         </tr>
       </thead>
@@ -59,6 +60,9 @@
             {% elseif user.getPermissionProfile() is not null %}
               {{ user.getPermissionProfile().getName() }}
             {% endif %}
+          </td>
+          <td>
+	          {{ user.origin }}
           </td>
           <td>
 	          {% if user.email is not empty %}{{ user.email }}{% endif %}

@@ -358,7 +358,7 @@ class DefaultController extends Controller
     {
         if ($seriesData){
             $factoryService = $this->get('pumukitschema.factory');
-            $series = $factoryService->createSeries();
+            $series = $factoryService->createSeries($this->getUser());
 
             $i18nTitle = $this->getKeyData('i18n_title', $seriesData);
             if (empty(array_filter($i18nTitle))) $seriesData = $this->getDefaultFieldValuesInData($seriesData, 'i18n_title', 'New', true);
@@ -379,7 +379,7 @@ class DefaultController extends Controller
     {
         if ($series){
             $factoryService = $this->get('pumukitschema.factory');
-            $multimediaObject = $factoryService->createMultimediaObject($series);
+            $multimediaObject = $factoryService->createMultimediaObject($series, true, $this->getUser());
 
             if ($mmData){
                 $keys = array('i18n_title', 'i18n_subtitle', 'i18n_description', 'i18n_line2');

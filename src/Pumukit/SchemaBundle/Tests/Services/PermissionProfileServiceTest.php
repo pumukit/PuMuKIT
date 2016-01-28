@@ -247,16 +247,15 @@ class PermissionProfileServiceTest extends WebTestCase
         $this->dm->flush();
 
         $permissionProfile = $this->repo->find($permissionProfile->getId());
-        $this->assertEquals(PermissionProfile::SCOPE_NONE, $permissionProfile->getScope());
-
+        $this->assertEquals(PermissionProfile::SCOPE_PERSONAL, $permissionProfile->getScope());
 
         $permissionProfile = $this->repo->find($permissionProfile->getId());
-        $this->permissionProfileService->setScope($permissionProfile, PermissionProfile::SCOPE_PERSONAL);
-        $this->assertEquals(PermissionProfile::SCOPE_PERSONAL, $permissionProfile->getScope());
+        $this->permissionProfileService->setScope($permissionProfile, PermissionProfile::SCOPE_NONE);
+        $this->assertEquals(PermissionProfile::SCOPE_NONE, $permissionProfile->getScope());
 
         $permissionProfile = $this->repo->find($permissionProfile->getId());
         $this->permissionProfileService->setScope($permissionProfile, 'non existing scope');
-        $this->assertEquals(PermissionProfile::SCOPE_PERSONAL, $permissionProfile->getScope());
+        $this->assertEquals(PermissionProfile::SCOPE_NONE, $permissionProfile->getScope());
     }
 
     public function testGetDefault()

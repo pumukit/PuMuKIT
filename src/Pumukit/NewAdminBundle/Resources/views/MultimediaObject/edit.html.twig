@@ -20,7 +20,7 @@
       </li>
       {% endif %}
       <li{% if not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %} class="active"{% endif %}>
-        <a href="#metaMm" aria-controls="metaMm" role="tab" data-toggle="tab">{% trans %}Metadata{% endtrans %}</a>
+        <a href="#metaMm" aria-controls="metaMm" role="tab" data-toggle="tab">{% trans %}Basic Metadata{% endtrans %}</a>
       </li>
       <li>
         <a href="#tagMm" aria-controls="tagMm" role="tab" data-toggle="tab">{% trans %}Tags{% endtrans %}</a>

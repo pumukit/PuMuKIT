@@ -104,13 +104,24 @@ class MultimediaObjectService
 
     public function onMultimediaObjectViewed(ViewedEvent $event)
     {
-      $track = $event->getTrack();
-      $multimediaObject = $event->getMultimediaObject();
+        $track = $event->getTrack();
+        $multimediaObject = $event->getMultimediaObject();
 
-      $multimediaObject->incNumview();
-      $track && $track->incNumview();
-      $this->dm->persist($multimediaObject);
-      $this->dm->flush();
+        $multimediaObject->incNumview();
+        $track && $track->incNumview();
+
+        $this->updateMultimediaObject($multimediaObject);
+    }
+
+    /**
+     * Inc num view of multimedia object
+     *
+     * @param MultimediaObject $multimediaObject
+     */
+    public function incNumView(MultimediaObject $multimediaObject)
+    {
+        $multimediaObject->incNumview();
+        $this->updateMultimediaObject($multimediaObject);
     }
 }
 

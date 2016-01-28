@@ -40,7 +40,7 @@ class PumukitInitRepoCommand extends ContainerAwareCommand
             ->setDescription('Load Pumukit data fixtures to your database')
             ->addArgument('repo', InputArgument::REQUIRED, 'Select the repo to init: tag, broadcast, role, permissionprofile, all')
             ->addArgument('file', InputArgument::OPTIONAL, 'Input CSV path')
-            ->addOption('option', 'o', InputOption::VALUE_OPTIONAL, 'Input Broadcast option: default, cas. Default if none given.', $this->broadcastOption)
+            ->addOption('option', 'o', InputOption::VALUE_OPTIONAL, 'Input Broadcast option: default, ldap. Default if none given.', $this->broadcastOption)
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
             ->setHelp(<<<EOT
 
