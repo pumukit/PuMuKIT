@@ -425,7 +425,7 @@ class ClientService
      *
      * @return array
      */
-    private function request($path, $params, $method = 'GET', $useAdminUrl = false)
+    private function request($path, $params = array(), $method = 'GET', $useAdminUrl = false)
     {
         if ($useAdminUrl) {
             $requestUrl = $this->getAdminUrl() . $path;
