@@ -4,11 +4,11 @@
       <div class="form-row">
         <span id="edit-btn-group" style="display: none">
           <a class="btn btn-default btn-raised" onclick="switchMode('discard-close')"> {%trans%} DISCARD {%endtrans%} </a>
-          <a class="btn btn-default btn-raised" onclick="switchMode('save')"> {%trans%}  SAVE {%endtrans%} </a>
-          <a class="btn btn-default btn-raised" onclick="switchMode('save-close')"> {%trans%}  SAVE AND CLOSE {%endtrans%} </a>
+          <a class="btn btn-pumukit btn-raised" onclick="switchMode('save')"> {%trans%}  SAVE {%endtrans%} </a>
+          <a class="btn btn-pumukit btn-raised" onclick="switchMode('save-close')"> {%trans%}  SAVE AND CLOSE {%endtrans%} </a>
         </span>
         <span id="play-btn-group">
-          <a class="btn btn-default btn-raised" onclick="switchMode('editor')"> {%trans%}  EDIT MODE {%endtrans%} </a>
+          <a class="btn btn-primary btn-raised" onclick="switchMode('editor')"> {%trans%}  EDIT MODE {%endtrans%} </a>
         </span>
         <iframe id="paellaiframe"
                 src="{{url('pumukit_videoeditor_index', {'id': mm.id})}}?id={{mm.id}}" 
