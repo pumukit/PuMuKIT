@@ -9,6 +9,7 @@
       {% endif %}
   </div>
   <div style="clear:both">{# PREVENTS MMOBJS FROM EXTENDING TO TOP #}</div>
+  <p style="padding-left:15px;color:black;font-weight:bold;font-size:1.2em;">{% trans %}Total search results: {% endtrans %}{{total_objects}}</p>
   {% for object in objects %}
     {% if object.isCollection() %}
       {% include 'PumukitWebTVBundle:Misc:series.html.twig' with{ 'cols': number_cols } %}

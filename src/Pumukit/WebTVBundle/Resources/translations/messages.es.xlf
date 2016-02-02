@@ -198,6 +198,74 @@
         <source>This series does not have any multimedia objects.</source>
         <target>Esta serie no tiene objetos multimedia.</target>
       </trans-unit>
+      <trans-unit id="132482b5ee2d95cfcbe8ae9b288c047b" resname="{0}no videos yet|{1}1 video|]1,Inf[%count% videos">
+        <source>{0}no videos yet|{1}1 video|]1,Inf[%count% videos</source>
+        <target>{0}aún no hay videos|{1}1 video|]1,Inf[%count% videos</target>
+      </trans-unit>
+      <trans-unit id="af1b98adf7f686b84cd0b443e022b7a0" resname="Categories">
+        <source>Categories</source>
+        <target>Categorías</target>
+      </trans-unit>
+      <trans-unit id="2d31a9042ca0f50dce8ae60553645e5d" resname="Most viewed">
+        <source>Most viewed</source>
+        <target>Más vistos</target>
+      </trans-unit>
+      <trans-unit id="945d258623dcac0fa86586d6a0056452" resname="Recently added">
+        <source>Recently added</source>
+        <target>Añadidos recientemente</target>
+      </trans-unit>
+      <trans-unit id="e5e13447e7fd56ed3179869f274069bb" resname="Full Catalogue">
+        <source>Full Catalogue</source>
+        <target>Catálogo completo</target>
+      </trans-unit>
+      <trans-unit id="33d8042bd735c559cc3206f4bc99aedc" resname="Sort by">
+        <source>Sort by</source>
+        <target>Ordenar por</target>
+      </trans-unit>
+      <trans-unit id="44749712dbec183e983dcd78a7736c41" resname="Date">
+        <source>Date</source>
+        <target>Fecha</target>
+      </trans-unit>
+      <trans-unit id="05602ad27c432a05f26a92b6bc277994" resname="Alphabetically">
+        <source>Alphabetically</source>
+        <target>Alfabéticamente</target>
+      </trans-unit>
+      <trans-unit id="4137ec14cea10e898243f3e95469a468" resname="Videos in the same series:">
+        <source>Videos in the same series:</source>
+        <target>Videos en la misma serie:</target>
+      </trans-unit>
+      <trans-unit id="3af6ba5f6e48bf7f55c1d1f94fd55da0" resname="You may also be interested in:">
+        <source>You may also be interested in:</source>
+        <target>También pueden interesarte:</target>
+      </trans-unit>
+      <trans-unit id="fed711884ae4b45839ecd6ef36ae02e6" resname="Recording date">
+        <source>Recording date</source>
+        <target>Fecha de grabación</target>
+      </trans-unit>
+      <trans-unit id="7e2708aeb65763c54052f57ed1a1ec1d" resname="Attachments">
+        <source>Attachments</source>
+        <target>Materiales</target>
+      </trans-unit>
+      <trans-unit id="404eb0c9cf5314b4ddfa9914d2b2ce94" resname="There are no attachments">
+        <source>There are no attachments</source>
+        <target>No hay materiales</target>
+      </trans-unit>
+      <trans-unit id="d2fc53cc95bd888332468705b5cca88d" resname="Share this video">
+        <source>Share this video</source>
+        <target>Comparte este video</target>
+      </trans-unit>
+      <trans-unit id="3b3d06023f6353f8fd05f859b298573e" resname="URL:">
+        <source>URL:</source>
+        <target>URL:</target>
+      </trans-unit>
+      <trans-unit id="7610774817c30466188bfb70778b7a48" resname="IFRAME:">
+        <source>IFRAME:</source>
+        <target>IFRAME:</target>
+      </trans-unit>
+      <trans-unit id="4994a8ffeba4ac3140beb89e8d41f174" resname="Language">
+        <source>Language</source>
+        <target>Idioma</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

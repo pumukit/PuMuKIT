@@ -2,6 +2,9 @@
 
 namespace Pumukit\OpencastBundle\Services;
 
+use Symfony\Component\HttpKernel\Log\LoggerInterface;
+use Pumukit\SchemaBundle\Document\User;
+
 class ClientService
 {
     private $url;
@@ -13,6 +16,8 @@ class ClientService
     private $adminUrl = null;
     private $deleteArchiveMediaPackage;
     private $deletionWorkflowName;
+    private $manageOpencastUsers;
+    private $logger;
 
     /**
      * Constructor.
@@ -23,10 +28,21 @@ class ClientService
      * @param string $player
      * @param bool   $deleteArchiveMediaPackage
      * @param string $deletionWorkflowName
+     * @param bool   $manageOpencastUsers
+     * @param LoggerInterface $logger
      */
     public function __construct($url = '', $user = '', $passwd = '', $player = '/engage/ui/watch.html', $scheduler = '/admin/index.html#/recordings', $dashboard = '/dashboard/index.html',
-                                $deleteArchiveMediaPackage = false, $deletionWorkflowName = 'delete-archive')
+                                $deleteArchiveMediaPackage = false, $deletionWorkflowName = 'delete-archive', $manageOpencastUsers = false, LoggerInterface $logger)
     {
+        $this->logger = $logger;
+
+        if (!function_exists('curl_init')) {
+            $this->logger->addError(__CLASS__.'['.__FUNCTION__.'](line '.__LINE__
+                                    .') The function "curl_init" does not exist. '
+                                    .'Curl is required to execute remote commands.');
+            throw new \RuntimeException('Curl is required to execute remote commands.');
+        }
+
         $this->url = ('/' == substr($url, -1)) ? substr($url, 0, -1) : $url;
         $this->user = $user;
         $this->passwd = $passwd;
@@ -35,6 +51,7 @@ class ClientService
         $this->dashboard = $dashboard;
         $this->deleteArchiveMediaPackage = $deleteArchiveMediaPackage;
         $this->deletionWorkflowName = $deletionWorkflowName;
+        $this->manageOpencastUsers = $manageOpencastUsers;
     }
 
     /**
@@ -60,17 +77,37 @@ class ClientService
     }
 
     /**
+     * Get admin url.
+     *
+     * Gets the admin url for Opencast
+     */
+    public function getAdminUrl()
+    {
+        if ($this->adminUrl) {
+            return $this->adminUrl;
+        }
+
+        $output = $this->request('/services/available.json?serviceType=org.opencastproject.episode');
+        $decode = $this->decodeJson($output['var']);
+        if (isset($decode['services'])) {
+            if (isset($decode['services']['service'])) {
+                if (isset($decode['services']['service']['host'])) {
+                    $this->adminUrl = $decode['services']['service']['host'];
+                }
+            }
+        }
+
+        return $this->adminUrl;
+    }
+
+    /**
      * Get scheduler url from Opencast.
      *
      * @return string
      */
     public function getSchedulerUrl()
     {
-        if (!$this->adminUrl) {
-            $this->adminUrl = $this->getAdminUrl();
-        }
-
-        return ('/' === $this->scheduler[0]) ? $this->adminUrl.$this->scheduler : $this->scheduler;
+        return ('/' === $this->scheduler[0]) ? $this->getAdminUrl().$this->scheduler : $this->scheduler;
     }
 
     /**
@@ -80,11 +117,7 @@ class ClientService
      */
     public function getDashboardUrl()
     {
-        if (!$this->adminUrl) {
-            $this->adminUrl = $this->getAdminUrl();
-        }
-
-        return ('/' === $this->dashboard[0]) ? $this->adminUrl.$this->dashboard : $this->dashboard;
+        return ('/' === $this->dashboard[0]) ? $this->getAdminUrl().$this->dashboard : $this->dashboard;
     }
 
     /**
@@ -106,11 +139,7 @@ class ClientService
         if ($output['status'] !== 200) {
             return false;
         }
-        $decode = json_decode($output['var'], true);
-
-        if (!($decode)) {
-            throw new \Exception('Opencast Matterhorn communication error');
-        }
+        $decode = $this->decodeJson($output['var']);
 
         $return = array(0, array());
 
@@ -145,11 +174,7 @@ class ClientService
         if ($output['status'] !== 200) {
             return false;
         }
-        $decode = json_decode($output['var'], true);
-
-        if (!($decode)) {
-            throw new \Exception('Opencast Matterhorn communication error');
-        }
+        $decode = $this->decodeJson($output['var']);
 
         if ($decode['search-results']['total'] == 0) {
             return;
@@ -171,17 +196,12 @@ class ClientService
      */
     public function getMediapackageFromArchive($id)
     {
-        $this->adminUrl = $this->getAdminUrl();
-        $output = $this->request('/episode/episode.json?id='.$id, array(), true, true);
+        $output = $this->request('/episode/episode.json?id='.$id, array(), 'GET', true);
 
         if ($output['status'] !== 200) {
             return false;
         }
-        $decode = json_decode($output['var'], true);
-
-        if (!($decode)) {
-            throw new \Exception('Opencast Matterhorn communication error');
-        }
+        $decode = $this->decodeJson($output['var']);
 
         if ($decode['search-results']['total'] == 0) {
             return;
@@ -226,7 +246,7 @@ class ClientService
         $parameters = array('mediaPackageIds' => $mediaPackageIdsParameter,
                             'engage' => 'Matterhorn+Engage+Player', );
 
-        $output = $this->request($request, $parameters, false);
+        $output = $this->request($request, $parameters, 'POST', true);
 
         if ($output['status'] !== 204) {
             return false;
@@ -244,17 +264,13 @@ class ClientService
     {
         $request = '/workflow/statistics.json';
 
-        $output = $this->request($request);
+        $output = $this->request($request, array(), 'GET', true);
 
         if ($output['status'] !== 200) {
             return false;
         }
 
-        $decode = json_decode($output['var'], true);
-
-        if (!($decode)) {
-            throw new \Exception('Opencast Matterhorn communication error');
-        }
+        $decode = $this->decodeJson($output['var']);
 
         return $decode;
     }
@@ -271,17 +287,13 @@ class ClientService
     {
         $request = '/workflow/instances.json?state=SUCCEEDED'.($workflowName ? '&workflowdefinition='.$workflowName : '').($id ? '&mp='.$id : '').($count ? '&count='.$count : '');
 
-        $output = $this->request($request);
+        $output = $this->request($request, array(), 'GET', true);
 
         if ($output['status'] !== 200) {
             return false;
         }
 
-        $decode = json_decode($output['var'], true);
-
-        if (!($decode)) {
-            throw new \Exception('Opencast Matterhorn communication error');
-        }
+        $decode = $this->decodeJson($output['var']);
 
         return $decode;
     }
@@ -299,13 +311,100 @@ class ClientService
             if (isset($workflow['id'])) {
                 $request = '/workflow/stop';
                 $params = array('id' => $workflow['id']);
-                $output = $this->request($request, $params, false);
+                $output = $this->request($request, $params, 'POST', true);
                 if ($output['status'] !== 200) {
                     return false;
                 }
 
                 return true;
             }
+        }
+
+        return false;
+    }
+
+    /**
+     * Create User
+     *
+     * @param  User $user
+     * @return boolean
+     */
+    public function createUser(User $user)
+    {
+        if ($this->manageOpencastUsers) {
+            $request = '/user-utils/';
+            $roles = $this->getUserRoles($user);
+            $params = array(
+                            'username' => $user->getUsername(),
+                            'password' => 'pumukit',
+                            'roles' => $roles
+                            );
+            $output = $this->request($request, $params, 'POST', false);
+            if (201 != $output['status']) {
+                if (409 == $output['status']) {
+                    throw new \Exception('Conflict '.$output['status'].'. An user with this username "'.$user->getUsername().'" already exist.', 1);
+                } else {
+                    throw new \Exception('Error '.$output['status'].' Processing Request on Creating User "'.$user->getUsername().'"', 1);
+                }
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Update User
+     *
+     * @param User $user
+     * @return boolean
+     */
+    public function updateUser(User $user)
+    {
+        if ($this->manageOpencastUsers) {
+            $request = '/user-utils/'.$user->getUsername().'.json';
+            $roles = $this->getUserRoles($user);
+            $params = array(
+                            'username' => $user->getUsername(),
+                            'password' => 'pumukit',
+                            'roles' => $roles
+                            );
+            $output = $this->request($request, $params, 'PUT', false);
+            if (200 != $output['status']) {
+                if (404 == $output['status']) {
+                    throw new \Exception('Error '.$output['status'].'. User with this username "'.$user->getUsername().'" not found.', 1);
+                } else {
+                    throw new \Exception('Error '.$output['status'].' Processing Request on Updating User "'.$user->getUsername().'"', 1);
+                }
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Delete User
+     *
+     * @param User $user
+     * @return boolean
+     */
+    public function deleteUser(User $user)
+    {
+        if ($this->manageOpencastUsers) {
+            $request = '/user-utils/'.$user->getUsername().'.json';
+            $output = $this->request($request, '', 'DELETE', false);
+            if (200 != $output['status']) {
+                if (404 == $output['status']) {
+                    throw new \Exception('Error '.$output['status'].'. User with this username "'.$user->getUsername().'" not found.', 1);
+                } else {
+                    throw new \Exception('Error '.$output['status'].' Processing Request on Deleting User "'.$user->getUsername().'"', 1);
+                }
+            }
+
+            return true;
         }
 
         return false;
@@ -319,40 +418,54 @@ class ClientService
      * to the Opencast server
      * using or not the admin url
      *
-     * @param string $path
-     * @param array  $query
-     * @param bool   $get
-     * @param bool   $useAdminUrl
+     * @param string        $path
+     * @param array|string  $params
+     * @param string        $method
+     * @param bool          $useAdminUrl
      *
      * @return array
      */
-    private function request($path, $query = array(), $get = true, $useAdminUrl = false)
+    private function request($path, $params = array(), $method = 'GET', $useAdminUrl = false)
     {
-        if (!function_exists('curl_init')) {
-            throw new \RuntimeException('Curl is required to execute remote commands.');
+        if ($useAdminUrl) {
+            $requestUrl = $this->getAdminUrl() . $path;
+        } else {
+            $requestUrl = $this->url.$path;
         }
 
-        if ($get) {
-            if ($useAdminUrl && $this->adminUrl) {
-                $request = curl_init($this->adminUrl.$path);
-            } else {
-                $request = curl_init($this->url.$path);
-            }
-            if (false === $request) {
-                throw new \RuntimeException('Unable to create a new curl handle.');
-            }
-        } else {
-            if (false === $request = curl_init()) {
-                throw new \RuntimeException('Unable to create a new curl handle.');
-            }
-            if ($useAdminUrl && $this->adminUrl) {
-                $requestUrl = $this->adminUrl.$path;
-            } else {
-                $requestUrl = $this->url.$path;
-            }
-            curl_setopt($request, CURLOPT_URL, $requestUrl);
+        $fields = (is_array($params)) ? http_build_query($params) : $params;
+
+        $header = array('X-Requested-Auth: Digest',
+                        'X-Opencast-Matterhorn-Authorization: true');
+
+        $this->logger->addDebug(__CLASS__.'['.__FUNCTION__.'](line '.__LINE__
+                                .') Requested URL "'.$requestUrl.'" '
+                                .'with method "'.$method.'" '
+                                .'and params: '.$fields);
+
+        if (false === $request = curl_init($requestUrl)) {
+            $this->logger->addError(__CLASS__.'['.__FUNCTION__.'](line '.__LINE__
+                                    .') Unable to create a new curl handle with URL: '.$requestUrl.'.');
+            throw new \RuntimeException('Unable to create a new curl handle with URL: '.$requestUrl.'.');
+        }
+
+        switch ($method) {
+        case 'GET':
+            break;
+        case 'POST':
             curl_setopt($request, CURLOPT_POST, 1);
-            curl_setopt($request, CURLOPT_POSTFIELDS, http_build_query($query));
+            curl_setopt($request, CURLOPT_POSTFIELDS, $fields);
+            break;
+        case 'PUT':
+            $header[] = 'Content-Length: ' . strlen($fields);
+            curl_setopt($request, CURLOPT_CUSTOMREQUEST, 'PUT');
+            curl_setopt($request, CURLOPT_POSTFIELDS, $fields);
+            break;
+        case 'DELETE':
+            curl_setopt($request, CURLOPT_CUSTOMREQUEST, 'DELETE');
+            break;
+        default:
+            throw new \Exception('Method "'.$method.'" not allowed.');
         }
 
         curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
@@ -361,8 +474,7 @@ class ClientService
         if ($this->user != '') {
             curl_setopt($request, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
             curl_setopt($request, CURLOPT_USERPWD, $this->user.':'.$this->passwd);
-            curl_setopt($request, CURLOPT_HTTPHEADER, array('X-Requested-Auth: Digest',
-                                                            'X-Opencast-Matterhorn-Authorization: true', ));
+            curl_setopt($request, CURLOPT_HTTPHEADER, $header);
         }
 
         $output = array();
@@ -372,7 +484,7 @@ class ClientService
 
         curl_close($request);
 
-        if ($get) {
+        if ($method == 'GET') {
             if (200 != $output['status']) {
                 throw new \Exception('Error Processing Request', 1);
             }
@@ -381,29 +493,34 @@ class ClientService
         return $output;
     }
 
-  /**
-   * Get admin url.
-   *
-   * Gets the admin url for Opencast
-   */
-  public function getAdminUrl()
-  {
-      $output = $this->request('/services/available.json?serviceType=org.opencastproject.episode');
-      if ($output['status'] !== 200) {
-          return false;
-      }
-      $decode = json_decode($output['var'], true);
-      if (!($decode)) {
-          throw new \Exception('Matterhorn communication error');
-      }
-      if (isset($decode['services'])) {
-          if (isset($decode['services']['service'])) {
-              if (isset($decode['services']['service']['host'])) {
-                  return $decode['services']['service']['host'];
-              }
-          }
-      }
+    /**
+     * Decode json string
+     *
+     * @param  string $jsonString
+     * @return array  $decode
+     */
+    private function decodeJson($jsonString = '')
+    {
+        $decode = json_decode($jsonString, true);
+        if (!($decode)) {
+            throw new \Exception('Opencast Matterhorn communication error');
+        }
 
-      return;
-  }
+        return $decode;
+    }
+
+    private function getUserRoles(User $user)
+    {
+        if ($user->isSuperAdmin()) {
+            $roles = '["ROLE_SUPER_ADMIN"';
+            foreach ($this->permissionService->getAllPermissions() as $role => $description) {
+                $roles .= ',+"'.$role.'"';
+            }
+            $roles .= ']';
+        } else {
+            $roles = '["'.implode('","', $user->getRoles()).'"]';
+        }
+
+        return $roles;
+    }
 }
