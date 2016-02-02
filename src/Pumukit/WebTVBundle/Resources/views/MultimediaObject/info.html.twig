@@ -25,7 +25,7 @@
 </div>
 
 {% if editor_chapters is defined and editor_chapters%}
-  <strong>Marks:</strong>
+  <strong>{%trans%}Marks:{%endtrans%}</strong>
   <ol style="list-style-type:decimal;padding-left:40px;">
     {% for chapter in editor_chapters %}
       <li>{{chapter.title}} :
