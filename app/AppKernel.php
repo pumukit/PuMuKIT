@@ -46,6 +46,8 @@ class AppKernel extends Kernel
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
             $bundles[] = new Pumukit\InstallBundleBundle\PumukitInstallBundleBundle();
             $bundles[] = new Pumukit\ExampleDataBundle\PumukitExampleDataBundle();
+            $bundles[] = new Vipx\BotDetectBundle\VipxBotDetectBundle();
+
         }
 
         return $bundles;

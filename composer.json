@@ -23,7 +23,8 @@
         "knplabs/knp-menu-bundle": "~2.0",
         "gedmo/doctrine-extensions": "dev-master",
         "jasig/phpcas": "1.3.*",
-        "suncat/mobile-detect-bundle": "0.10.*"
+        "suncat/mobile-detect-bundle": "0.10.*",
+        "vipx/bot-detect-bundle": "^2.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
