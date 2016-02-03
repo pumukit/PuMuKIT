@@ -125,7 +125,7 @@ Add your HTML on `src/Pumukit/ExampleOrg/WebTVBundle/Resources/views/Layout/foot
 
 
 ### 4.- Logo
-Override the `Pumukit/ExampleOrg/WebTVBundle/Resources/views/logo.html.twig` template.
+Override the `Pumukit/ExampleOrg/WebTVBundle/Resources/views/Layout/logo.html.twig` template.
 
 ```html
 <img src="{{ asset('bundles/pumukitwebtv/images/webtv/logo80px.png') }}" class="img-responsive" style="max-height:100%">
@@ -153,36 +153,65 @@ Add your HTML on `src/Pumukit/ExampleOrg/WebTVBundle/Resources/views/Layout/head
 
 ```
 ### 6.- Parameters:
-Simply add the following sentences to your parameters.yml file to change the default values.
 
-#### 6.1 Number of columns
-The number of columns for almost every multimedia object and series listing.
-```yaml
-    columns_objs_bytag:        3             # Number of columns for bytag.  (Default 2)
-    columns_objs_search:       3             # Number of columns for search. (Default 2)
-    columns_objs_announces:    3             # Number of columns for announces. (Default 1);
-    columns_objs_catalogue:    2             # Number of columns for full catalogue. (Default 1)
+To override the parameter rules first you must edit the "DependencyInjection" file on your bundle:
+
+``src/Pumukit/ExampleOrg/WebTVBundle/DependencyInjection/PumukitExampleOrgWebTVExtension.php``
+
+```php
+...
+    public function load(array $configs, ContainerBuilder $container)
+    {
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
+
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('parameters.yml');
+    }
+    ...
 ```
 
-#### 6.2 Objects per page
-The number of objects per page in the templates using the pager.
-```yaml
-    limit_objs_bytag:          3             # ByTag Pager limit.   (Default 10)
-    limit_objs_search:         6             # Search Pager limit.  (Default 10)
-    limit_objs_mostviewed:     6             # Mostviewed limit.     (Default 3)
-    limit_objs_recentlyadded:  4             # Recentlyadded limit.    (Default 3)
-```
 
-#### 6.3 Menu Statistics
-The statistics viewed at the bottom of the lateral menu.
-```yaml
-    menu_stats:                true          # To show stats on the menu or not. (Default true)
-```
+Below is the full parameter rules and their explanation:
 
-#### 6.4 Misc
-Other values
-```yaml
-    catalogue_thumbnails:      true          # If set to true, the full catalogue will list thumbnails instead of text.
-    menu_stats:                true          # To show stats on the menu or not. (Default true)
-    categories_tag_cod:        UNESCO       # Cod of Root Tag to create the Categories page.
+```yml
+ parameters:
+  breadcrumbs_home_title:    'WebTV'                # 'Home' option title for the breadcrumbs service.
+  catalogue_thumbnails:      true                   # If set to true, the full catalogue will list thumbnails instead of text.
+  categories_tag_cod:        ITUNESU                # Cod of Root Tag to create the Categories page.
+  categories.list_general_tags:  true               # If true, adds a 'general tag' to each category.
+  columns_objs_announces:    2                      # Number of columns for announces. (Default 1)
+  columns_objs_bytag:        2                      # Number of columns for bytag.  (Default 2)
+  columns_objs_catalogue:    2                      # Number of columns for full catalogue. (Default 1)
+  columns_objs_search:       2                      # Number of columns for search. (Default 2)
+  limit_objs_bytag:          10                     # ByTag Pager limit.   (Default 10)
+  limit_objs_mostviewed:     3                      # Mostviewed limit.     (Default 3)
+  limit_objs_recentlyadded:  3                      # Recentlyadded limit.    (Default 3)
+  limit_objs_search:         10                     # Search Pager limit.  (Default 10)
+  limit_objs_series:         10                     # Search Pager limit.  (Default 10)
+  limit_objs_player_series:  10                     # Limit for mmobjs to appear on the mmobj player (Default 10)
+  search.parent_tag.cod:     ITUNESU                # Search controller option for the main tag search.
+  search.parent_tag_2.cod:   null                   # Search controller option for the optional tag search.
+  menu.announces_title:      'Latest Uploads'       # 'Announces' option title for the menu widget.
+  menu.categories_title:     'By subject catalogue' # 'Categories' option title for the menu widget.
+  menu.home_title:           'Home'                 # 'Home' option title for the menu widget.
+  menu.mediateca_title:      'Full Catalogue'       # 'Mediateca' option title for the menu widget.
+  menu.show_stats:           false                  # To show stats on the menu or not. (Default true)
+  menu.search_title:         'Search'               # 'Search' option title for the menu widget.
+
+  pumukit_web_tv.breadcrumbs_all_title: 'All'
+  pumukit_web_tv.breadcrumbs_all_route: 'pumukit_webtv_medialibrary_index'
+
+  pumukit_web_tv.breadcrumbs_parentweb:             # 'If set to an array, a 'parent' will always appear as first element in the breadcrumbs service.
+    title:  'Pumukit University'
+    url:    'http://www.pumukit.org'
+
+  pumukit_web_tv.default_pic: '/bundles/pumukitwebtv/images/no_pic.jpg'
+  pumukit_web_tv.linktagtosearch: false             # If set to true, the links to tags will link to a search template with the tag already selected on the search.
+
+  pumukit_web_tv.media_library.filter_tags:
+    - DIRECTRIZ
+    - UNESCO
+
+  pumukit2.intro:            null                   # If set to an url, plays that url before every video.
 ```
