@@ -1,5 +1,5 @@
 parameters:
-  breadcrumbs_home_title:    'WebTV'                # 'Home' option title for the breadcrumbs service.
+  breadcrumbs_home_title:    'UPumukitTV'                # 'Home' option title for the breadcrumbs service.
   catalogue_thumbnails:      true                   # If set to true, the full catalogue will list thumbnails instead of text.
   categories_tag_cod:        ITUNESU                # Cod of Root Tag to create the Categories page.
   categories.list_general_tags:  true               # If true, adds a 'general tag' to each category.
@@ -26,8 +26,8 @@ parameters:
   pumukit_web_tv.breadcrumbs_all_route: 'pumukit_webtv_medialibrary_index'
 
   pumukit_web_tv.breadcrumbs_parentweb:             # 'If set to an array, a 'parent' will always appear as first element in the breadcrumbs service.
-    title:  'Pumukit University' 
-    url:    'http://www.pumukit.org'
+#    title:  'Pumukit University' 
+#    url:    'http://www.pumukit.org'
 
   pumukit_web_tv.default_pic: '/bundles/pumukitwebtv/images/no_pic.jpg'
   pumukit_web_tv.linktagtosearch: false             # If set to true, the links to tags will link to a search template with the tag already selected on the search.

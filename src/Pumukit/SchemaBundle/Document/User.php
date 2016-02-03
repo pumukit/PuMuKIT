@@ -43,9 +43,12 @@ class User extends BaseUser
      */
     protected $origin = 'local';
 
-    public function __construct()
+    public function __construct($genUserSalt = false)
     {
         parent::__construct();
+        if(false == $genUserSalt){
+            $this->salt = '';
+        }
     }
 
     /**

@@ -79,12 +79,4 @@ class IndexController extends Controller
     {
         return array();
     }
-
-    /**
-     * @Template()
-     */
-    public function loginboxAction()
-    {        
-        return array('user' => $this->getUser());
-    }
 }

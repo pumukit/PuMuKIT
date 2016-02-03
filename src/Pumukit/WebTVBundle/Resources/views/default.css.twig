@@ -1,11 +1,11 @@
 {% block body %}
 {# SET VARIABLES #}
 {% set default_contrast_background = default_contrast_background | default("#ed6d00") %}
-{% set default_light_background = default_light_background | default("#fff") %}
+{% set default_light_background = default_light_background | default("#858585") %}
 {% set default_content_background = default_content_background | default("#fff") %}
 
-{% set default_contrast_font = default_contrast_font | default("#fff") %}
-{% set default_light_font = default_light_font | default("#858585") %}
+{% set default_contrast_font = default_contrast_font | default("#858585") %}
+{% set default_light_font = default_light_font | default("#fff") %}
 {% set default_content_font = default_content_font | default("#111") %}
 {% set default_content_link_font = default_content_link_font | default("#222") %}
 {% set default_content_link_selected_font = default_content_link_selected_font | default("#444") %}
@@ -54,13 +54,6 @@ body {
     background: {{ page_background }};
 }
 
-a:hover, a:focus {
-    text-decoration: none;
-    color: {{ default_content_link_selected_font }};
-}
-a {
-    color: {{ default_content_link_font }};
-}
 ul, ol {
     list-style:none;
     margin: 0px;
@@ -209,14 +202,7 @@ p.disabled {
 .nopadding {
     padding: 0;
 }
-.cover {
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
-    width: 100%;
-    padding: 10px 5px;
-}
-.date {
+.date, .num_views {
     text-align: right;
 }
 .date.mmobj {
@@ -288,6 +274,9 @@ p.disabled {
     overflow: hidden;
     background: {{ content_background }};
     min-height: 600px;
+}
+.main-content-wrapper {
+    background: {{ content_background }};
 }
 .menu {
     background: {{ menu_background }};
@@ -512,8 +501,8 @@ body.opencast-layout .breadcrumb_wrapper {
 }
 .video-duration {
     position: absolute;
-    bottom: 8%;
-    right: 8%;
+    top: 8%;
+    left: 8%;
     color: white;
     font-size: 0.8em;
     background:rgba(0,0,0,0.65);
@@ -536,18 +525,7 @@ body.opencast-layout .breadcrumb_wrapper {
     margin: 0px;
     border-radius: 0px;
 }
-.cover {
-    background: {{ default_light_background }};
-    color: {{ default_light_font }};
-    font-weight: bold;
-    font-size: 120%;
-    opacity: .8;
-}
-a:hover .cover {
-    background: {{ default_light_font }};
-    color: {{ default_light_background }};
 
-}
 .media {
     padding: 2px 2px 15px 2px;
 }
@@ -597,34 +575,50 @@ a:hover .cover {
 .img_category.two {
     height: 50%;
 }
-.index_container a{
-    position: relative;
-    display: block;
-    overflow: auto;
-}
-.index_container {
-    position: relative;
-    display: block;
-}
-.index_container.three {
-    margin-top:10px;
-}
-.index_container .img_category:nth-child(2){
-    padding-top: 12.1%;
-}
+
 .index_widget {
     margin-top: 15px;
     margin-bottom: 15px;
 }
+.index_widget .index_container .img_category.two{
+    position: relative;
+    display: block;
+    padding-top: 4.35%;
+}
+.index_widget .index_container a{
+    position: relative;
+    display: block;
+    overflow: auto;
+    text-decoration: none;
+}
+a:hover .cover {
+    background: {{ default_light_font }};
+    color: {{ default_light_background }};
 
+}
+.cover {
+   background: {{ default_light_background }};
+   color: {{ default_light_font }};
+   font-weight: bold;
+   font-size: 120%;
+   opacity: .8;
+   width: 100%;
+   padding: 8px;
+}
 @media (max-width: 992px) {
-    .index_container .img_category:nth-child(2){
-        padding-top: 0%;
+   .index_container .img_category.two {
+        padding-top: 12.87% !important;
     }
     .index_container .img_category {
-        padding-top: 8% !important;
+        padding-top: 5%;
+    }       
+}
+@media (max-width: 1199px) {
+    .index_container .img_category,.index_container .img_category.two {
+        padding-top: 8.67% !important;
     }
 }
+
 .panel-series .panel-body, .panel-related .panel-body{
     overflow-x: hidden;
     overflow-y: scroll;
@@ -660,6 +654,7 @@ a:hover .cover {
 .widget.slidebar a {
     display: block;
     font-size: 1.3em;
+    text-decoration: none;
     padding: {{ menu_padding }};
     color: {{ menu_font_color }};
 }
@@ -669,6 +664,7 @@ a:hover .cover {
     margin-left: -65px;
     padding-left: 95px;
     z-index:10;
+    text-decoration: none;
     transition: background 0.3s ease;
 }
 

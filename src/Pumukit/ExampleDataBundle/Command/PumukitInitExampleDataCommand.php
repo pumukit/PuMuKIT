@@ -478,7 +478,7 @@ EOT
         $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $viewsLogRepo = $dm->getRepository('PumukitStatsBundle:ViewsLog');
 
-        $allMmobjs = $mmobjRepo->findAll();
+        $allMmobjs = $mmobjRepo->findStandardBy(array());
         $useragents = array('Mozilla/5.0 PuMuKIT/2.2 (UserAgent Example Data.) Gecko/20100101 Firefox/40.1',
                              'Mozilla/5.0 PuMuKIT/2.2 (This is not the user agent you are looking for...) Gecko/20100101 Firefox/40.1',
                              'Mozilla/5.0 PuMuKIT/2.2 (The answer to everything: 42) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36',
