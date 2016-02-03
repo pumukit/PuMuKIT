@@ -10,7 +10,17 @@
 	<div class="grid_5">
       {% if show_forceauth %}
         {% set diff = (app.request.getQueryString) ? '&' : '?' %}
-        <h3 style="text-align: center;">{% trans %}Login is required{% endtrans %}  <a href="{{ app.request.requestUri }}{{ diff }}force-auth=true" type="button" class="btn btn-xs btn-default" title="Log in"><span class="glyphicon glyphicon-log-in"></span> Log in </a></h3>
+        <h3 style="text-align: center;">{% trans %}Log in is required{% endtrans %}</h3>
+        <div class="row">
+          <div class="col-xs-3"></div>
+          <div class="col-xs-9">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-2">
+              <button type="submit" class="btn btn-primary btn-block btn-flat" name="submit" title="Log In" onclick="location.href='{{ app.request.requestUri }}{{ diff }}force-auth=true'">Log In</button>
+            </div>
+            <div class="col-xs-7"></div>
+          </div>
+        </div>
       {% endif %}
 	</div>
 {% endblock %}
