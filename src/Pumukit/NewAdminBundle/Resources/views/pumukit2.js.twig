@@ -1905,7 +1905,7 @@ function checkScope(id)
            if ($(permissions[i]).attr("disabled") != "disabled") {
                $(permissions[i]).attr("disabled", "disabled");
            }
-           if ($(permissions[i]).attr("checked") != "checked") {
+           if ($(permissions[i]).attr("checked") == "checked") {
                $(permissions[i]).removeAttr("checked");
            }
            if ($(permissions[i]).closest("div").attr("class") != "checkbox pmk_disabled_checkbox") {
