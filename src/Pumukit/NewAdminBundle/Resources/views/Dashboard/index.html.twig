@@ -13,7 +13,7 @@
 {% endif %}
 
 {% block body %}
-<h1>{% trans %}Dashboard{% endtrans %}</h3>
+<h1>{% trans %}Dashboard{% endtrans %}</h1>
 
 <div class="text-center well"> 
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_DASHBOARD')) %}
