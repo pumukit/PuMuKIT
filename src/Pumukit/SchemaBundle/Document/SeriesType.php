@@ -4,6 +4,7 @@ namespace Pumukit\SchemaBundle\Document;
 
 //use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use JMS\Serializer\Annotation as Serializer;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -45,6 +46,7 @@ class SeriesType
    * @var ArrayCollection $series
    *
    * @MongoDB\ReferenceMany(targetDocument="Series", mappedBy="series_type", simple=true, orphanRemoval=false)
+   * @Serializer\Exclude
    */
   private $series;
 

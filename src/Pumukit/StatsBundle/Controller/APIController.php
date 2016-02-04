@@ -207,7 +207,7 @@ class APIController extends Controller
 
     protected function processRequestData(Request $request)
     {
-        $MAX_LIMIT = 500;
+        $MAX_LIMIT = 250;
         //Request variables.
         $criteria = $request->get('criteria') ?: array();
         $sort = intval($request->get('sort'));

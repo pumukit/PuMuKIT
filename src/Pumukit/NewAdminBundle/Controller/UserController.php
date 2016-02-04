@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\NewAdminBundle\Form\Type\UserUpdateType;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_ADMIN_USERS')")
@@ -91,7 +92,9 @@ class UserController extends AdminController
         $userManager = $this->get('fos_user.user_manager');
 
         $user = $this->findOr404($request);
-        $form = $this->getForm($user);
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
+        $form = $this->createForm(new UserUpdateType($translator, $locale), $user);
 
         if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
             try {

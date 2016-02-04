@@ -43,6 +43,11 @@ class CASService
         return \phpCAS::getUser();
     }
 
+    public function getAttributes()
+    {
+        return \phpCAS::getAttributes();
+    }
+
     public function setFixedServiceURL($url)
     {
         if(!$initialize) $this->prepare();
