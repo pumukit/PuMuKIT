@@ -33,43 +33,43 @@ class CASService
 
     public function isAuthenticated()
     {
-        if(!$initialize) $this->prepare();
+        if(!$this->initialize) $this->prepare();
         return \phpCAS::isAuthenticated();
     }
 
     public function getUser()
     {
-        if(!$initialize) $this->prepare();
+        if(!$this->initialize) $this->prepare();
         return \phpCAS::getUser();
     }
 
     public function getAttributes()
     {
-        if(!$initialize) $this->prepare();
+        if(!$this->initialize) $this->prepare();
         return \phpCAS::getAttributes();
     }
 
     public function setFixedServiceURL($url)
     {
-        if(!$initialize) $this->prepare();
+        if(!$this->initialize) $this->prepare();
         \phpCAS::setFixedServiceURL($url);
     }
 
     public function forceAuthentication()
     {
-        if(!$initialize) $this->prepare();
+        if(!$this->initialize) $this->prepare();
         \phpCAS::forceAuthentication();
     }
 
     public function logoutWithRedirectService($url)
     {
-        if(!$initialize) $this->prepare();
+        if(!$this->initialize) $this->prepare();
         \phpCAS::logoutWithRedirectService($url);
     }
 
     public function logout()
     {
-        if(!$initialize) $this->prepare();
+        if(!$this->initialize) $this->prepare();
         \phpCAS::logout();
     }
 }
