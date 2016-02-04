@@ -22,7 +22,7 @@ class CASService
 
     private function prepare()
     {
-        $initialize = true;
+        $this->initialize = true;
         \phpCAS::client(CAS_VERSION_2_0, $this->casUrl, $this->casPort, $this->casUri, false);
         //\phpCAS::setDebug('/tmp/cas.log');
         \phpCAS::setNoCasServerValidation();
@@ -45,6 +45,7 @@ class CASService
 
     public function getAttributes()
     {
+        if(!$initialize) $this->prepare();
         return \phpCAS::getAttributes();
     }
 
