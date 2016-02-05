@@ -2938,17 +2938,17 @@
         },
         {
             "name": "vipx/bot-detect",
-            "version": "v1.2.2",
+            "version": "v1.2.3",
             "target-dir": "Vipx/BotDetect",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lennerd/vipx-bot-detect.git",
-                "reference": "45971512fc69ef4a34f1d018d8ebbd26b1bf4b97"
+                "reference": "a1681255e2803e316e722b21fbd6418ae61bb11f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lennerd/vipx-bot-detect/zipball/45971512fc69ef4a34f1d018d8ebbd26b1bf4b97",
-                "reference": "45971512fc69ef4a34f1d018d8ebbd26b1bf4b97",
+                "url": "https://api.github.com/repos/lennerd/vipx-bot-detect/zipball/a1681255e2803e316e722b21fbd6418ae61bb11f",
+                "reference": "a1681255e2803e316e722b21fbd6418ae61bb11f",
                 "shasum": ""
             },
             "require": {
@@ -2985,7 +2985,7 @@
             "keywords": [
                 "bot"
             ],
-            "time": "2016-01-24 15:29:47"
+            "time": "2016-02-05 09:29:57"
         },
         {
             "name": "vipx/bot-detect-bundle",
