@@ -39,7 +39,6 @@ class JobGeneratorListener
     private function checkMultimediaObject(MultimediaObject $multimediaObject)
     {
         $master = $multimediaObject->getTrackWithTag("master");
-        $publicTracks = $multimediaObject->getTracksWithTag("display");
 
         $repository = $this->dm->getRepository('PumukitSchemaBundle:Tag');
         $tag = $repository->findOneByCod("PUBCHANNELS");
@@ -47,8 +46,7 @@ class JobGeneratorListener
 
         foreach($tag->getChildren() as $pubchannel) {
             if(($multimediaObject->containsTag($pubchannel))
-               && ($master)
-               && (!$publicTracks)) {
+               && ($master)) {
 
               $this->generateJobs($multimediaObject, $pubchannel->getCod());
             }
