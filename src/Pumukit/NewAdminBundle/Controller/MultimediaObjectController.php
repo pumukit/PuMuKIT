@@ -688,11 +688,14 @@ class MultimediaObjectController extends SortableAdminController
 
         $rank = 1;
         foreach($mms as $mm){
-          $mm->setRank($rank++);
-          $dm->persist($mm);
+            $dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
+              ->update()
+              ->field('rank')->set($rank++)
+              ->field('_id')->equals($mm->getId())
+              ->getQuery()
+              ->execute();
         }
-        $dm->flush();
-
+        
         return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));      
     }
 
