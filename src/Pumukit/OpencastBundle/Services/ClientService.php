@@ -339,7 +339,7 @@ class ClientService
                             'password' => 'pumukit',
                             'roles' => $roles
                             );
-            $output = $this->request($request, $params, 'POST', false);
+            $output = $this->request($request, $params, 'POST', true);
             if (201 != $output['status']) {
                 if (409 == $output['status']) {
                     throw new \Exception('Conflict '.$output['status'].'. An user with this username "'.$user->getUsername().'" already exist.', 1);
@@ -370,7 +370,7 @@ class ClientService
                             'password' => 'pumukit',
                             'roles' => $roles
                             );
-            $output = $this->request($request, $params, 'PUT', false);
+            $output = $this->request($request, $params, 'PUT', true);
             if (200 != $output['status']) {
                 if (404 == $output['status']) {
                     throw new \Exception('Error '.$output['status'].'. User with this username "'.$user->getUsername().'" not found.', 1);
@@ -395,7 +395,7 @@ class ClientService
     {
         if ($this->manageOpencastUsers) {
             $request = '/user-utils/'.$user->getUsername().'.json';
-            $output = $this->request($request, '', 'DELETE', false);
+            $output = $this->request($request, '', 'DELETE', true);
             if (200 != $output['status']) {
                 if (404 == $output['status']) {
                     throw new \Exception('Error '.$output['status'].'. User with this username "'.$user->getUsername().'" not found.', 1);
