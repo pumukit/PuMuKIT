@@ -93,6 +93,7 @@ class PersonController extends Controller
         $cn = $request->get('cn');
         $email = $request->get('mail');
         $personService = $this->get('pumukitschema.person');
+        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
         try{
             $person = $personService->findPersonByEmail($email);
             if (null == $person) {
@@ -108,6 +109,7 @@ class PersonController extends Controller
                              array(
                                    'people' => $multimediaObject->getPeopleByRole($role, true),
                                    'role' => $role,
+                                   'personal_scope_role_code' => $personalScopeRoleCode,
                                    'mm' => $multimediaObject,
                                    'template' => $template
                                    ));

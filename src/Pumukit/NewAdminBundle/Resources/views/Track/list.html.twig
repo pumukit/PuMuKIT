@@ -1,5 +1,5 @@
 <table><tbody>
-  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   {% for job in jobs %}
     <tr>
       <td><ul><li></li></ul></td>
@@ -47,10 +47,14 @@
         </a>
       </td>
       <td>
+        {% if track.containsTag('opencast') %}
+          <i class="mdi-content-block" style="color:#009587"></i>
+        {% else %}
           <a title="{% trans %}Delete track{% endtrans %} {{ track.id }}" href="#" 
              onclick="window.submit_delete_track('{{ track.id }}', '{{ mm.id }}', '{{ mm.getSeries().getId() }}'); return false;">
              <i class="mdi-content-clear"></i>
           </a>
+        {% endif %}
       </td>
       <td>
         <a title="{% trans %}Autocomplete technical metadata of track{% endtrans %} {{ track.id }}" href="#" 
@@ -149,7 +153,7 @@
   {% endif %}
 </tbody></table>
 
-{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 {% if false %} {# TODO ($sf_request->getParameter('preview')) #} {# define update_preview #}
 <script type="text/javascript">
   update_preview('{{ mm.id }}');

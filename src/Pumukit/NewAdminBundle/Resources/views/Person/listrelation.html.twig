@@ -1,9 +1,12 @@
-{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE')) %}
+{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE')) %}
 <table>
- <tdody>
-  {% for person in people %}
+  <tdody>
+    {% for person in people %}
     <tr>
       <td><ul><li></li></ul></td>
+      {% if ((role.getCod() == personal_scope_role_code) and app.user and not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::MODIFY_OWNER'))) %}
+      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;</td><td>&nbsp;&nbsp;</td>
+      {% else %}
       <td>
         <a title="{% trans %}Edit Person{% endtrans %} '{{ person.getHName() }}'" href="{{ path('pumukitnewadmin_person_update_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}" data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myAuxModal{{ template }}">
           <i class="mdi-editor-mode-edit"></i>
@@ -16,33 +19,36 @@
       </td>
       <td>
         {% if loop.first %}
-	  &nbsp;
-	{% else %}
-	  <a href="#" onclick="$('#{{ role.id }}_person_mms{{ template }}').load('{{ path('pumukitnewadmin_person_up', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}'); return false;">&#8593;</a>
-	{% endif %}
+	    &nbsp;&nbsp;
+	    {% else %}
+	    <a href="#" onclick="$('#{{ role.id }}_person_mms{{ template }}').load('{{ path('pumukitnewadmin_person_up', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}'); return false;">&#8593;</a>
+	    {% endif %}
       </td>
       <td>
-	{% if loop.last %}
-          &nbsp;
-	{% else %}
-	  <a href="#" onclick="$('#{{ role.id }}_person_mms{{ template }}').load('{{ path('pumukitnewadmin_person_down', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}'); return false;">&#8595;</a>
-	{% endif %}
+	    {% if loop.last %}
+        &nbsp;&nbsp;
+	    {% else %}
+	    <a href="#" onclick="$('#{{ role.id }}_person_mms{{ template }}').load('{{ path('pumukitnewadmin_person_down', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}'); return false;">&#8595;</a>
+	    {% endif %}
       </td>
+      {% endif %}
       <td>&nbsp;{{ person.id }} - {{ person.getHName() }}</td>
     </tr>
-  {% endfor %}
-  <tr>
-    <td><ul><li></li></ul></td>
-    <td colspan="6">
-      <a title="{% trans %}Create{% endtrans %} {{ role.getName() }}" 
-         href="{{ path('pumukitnewadmin_person_list_autocomplete', {'roleId': role.id, 'mmId': mm.id}) }}" 
-         data-toggle="modal" data-backdrop="static" data-target="#myAuxModal{{ template }}">
-        {% trans %}new{% endtrans %}...
-      </a>
-    </td>
-  </tr>
- </tbody>
+    {% endfor %}
+    {% if not ((role.getCod() == personal_scope_role_code) and app.user and not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::MODIFY_OWNER'))) %}
+    <tr>
+      <td><ul><li></li></ul></td>
+      <td colspan="6">
+        <a title="{% trans %}Create{% endtrans %} {{ role.getName() }}"
+           href="{{ path('pumukitnewadmin_person_list_autocomplete', {'roleId': role.id, 'mmId': mm.id}) }}"
+           data-toggle="modal" data-backdrop="static" data-target="#myAuxModal{{ template }}">
+          {% trans %}new{% endtrans %}...
+        </a>
+      </td>
+    </tr>
+    {% endif %}
+</tbody>
 </table>
 {% else %}
-  {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+{% trans %}You don't have enough permissions to access this content.{% endtrans %}
 {% endif %}

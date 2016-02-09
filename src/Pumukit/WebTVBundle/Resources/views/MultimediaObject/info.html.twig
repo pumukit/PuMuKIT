@@ -23,7 +23,7 @@
     </div>
   </div>
 </div>
-
+<!--CHAPTER MARKS-->
 {% if editor_chapters is defined and editor_chapters%}
   <strong>{%trans%}Marks:{%endtrans%}</strong>
   <ol style="list-style-type:decimal;padding-left:40px;">
@@ -50,35 +50,6 @@
     <p class="description">
       {{ multimediaObject.getDescription() }}
     </p>
-  </div>
-</div>
-<div class="row">
-  <div class="col-xs-12">
-    <!--MATERIALS-->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        {% trans %} Materials {% endtrans %}
-      </div>
-      <div class="panel-body">
-        {% for material in multimediaObject.getMaterials() if not material.getHide() %}
-          <div id="material">
-            <span class="glyphicon glyphicon-paperclip"></span>
-            <a href="{{ material.getUrl() }}">{{ material.getName() }}</a>
-          </div>
-        {% else %}
-          <strong>{% trans %} There is no materials {% endtrans %}</strong>
-        {% endfor %}
-        <!--LINKS-->
-        {% for link in multimediaObject.getLinks() %}
-          <div id="link" class="link">
-            <a target="_blank" href="{{ link.getUrl() }}">
-              <span class="glyphicon glyphicon-globe"></span>
-              {{ link.getName() }}
-            </a>
-          </div>
-        {% endfor %}
-      </div>
-    </div>
     <!-- PERSONS ACT -->
     <div class="persons">
       {% for role in multimediaObject.getRoles() if role.getDisplay() %}
@@ -96,3 +67,37 @@
   </div>
 </div>
 <br>
+<div class="row">
+  <div class="col-sm-6">
+    <!--MATERIALS-->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        {% trans %} Attachments {% endtrans %}
+      </div>
+      <div class="panel-body">
+        {% for material in multimediaObject.getMaterials() if not material.getHide() %}
+          <div id="material">
+            <span class="glyphicon glyphicon-paperclip"></span>
+            <a href="{{ material.getUrl() }}">{{ material.getName() }}</a>
+          </div>
+        {% else %}
+          <strong>{% trans %} There are no attachments {% endtrans %}</strong>
+        {% endfor %}
+        <!--LINKS-->
+        {% for link in multimediaObject.getLinks() %}
+          <div id="link" class="link">
+            <a target="_blank" href="{{ link.getUrl() }}">
+              <span class="glyphicon glyphicon-globe"></span>
+              {{ link.getName() }}
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    {% include 'PumukitWebTVBundle:MultimediaObject:share.html.twig' %}
+  </div>
+</div>
+<br>
+

@@ -16,13 +16,15 @@ class Permission
     const ACCESS_ADMIN_USERS = 'ROLE_ACCESS_ADMIN_USERS';
     const ACCESS_PERMISSION_PROFILES = 'ROLE_ACCESS_PERMISSION_PROFILES';
     const ACCESS_ROLES = 'ROLE_ACCESS_ROLES';
-    const ACCESS_INGESTOR = 'ROLE_ACCESS_INGESTOR';
+    const ACCESS_IMPORTER = 'ROLE_ACCESS_IMPORTER';
     const CHANGE_MMOBJECT_STATUS = 'ROLE_CHANGE_MMOBJECT_STATUS';
     const CHANGE_MMOBJECT_PUBCHANNEL = 'ROLE_CHANGE_MMOBJECT_PUBCHANNEL';
     const ACCESS_PUBLICATION_TAB = 'ROLE_ACCESS_PUBLICATION_TAB';
     const ACCESS_ADVANCED_UPLOAD = 'ROLE_ACCESS_ADVANCED_UPLOAD';
     const ACCESS_WIZARD_UPLOAD = 'ROLE_ACCESS_WIZARD_UPLOAD';
     const ACCESS_API = 'ROLE_ACCESS_API';
+    const ACCESS_INBOX = 'ROLE_ACCESS_INBOX';
+    const MODIFY_OWNER = 'ROLE_MODIFY_OWNER';
 
     public static $permissionDescription = array(
                                                 Permission::ACCESS_DASHBOARD => "Access Dashboard",
@@ -37,12 +39,14 @@ class Permission
                                                 Permission::ACCESS_ADMIN_USERS => "Access Admin Users",
                                                 Permission::ACCESS_PERMISSION_PROFILES => "Access Permission Profiles",
                                                 Permission::ACCESS_ROLES => "Access Roles",
-                                                Permission::ACCESS_INGESTOR => "Access Ingestor",
+                                                Permission::ACCESS_IMPORTER => "Access Importer",
                                                 Permission::CHANGE_MMOBJECT_STATUS => "Change Multimedia Object Status",
                                                 Permission::CHANGE_MMOBJECT_PUBCHANNEL => "Change Multimedia Object Publication Channel",
                                                 Permission::ACCESS_PUBLICATION_TAB => "Access Publication Tab",
                                                 Permission::ACCESS_ADVANCED_UPLOAD => "Access Advanced Upload",
                                                 Permission::ACCESS_WIZARD_UPLOAD => "Access Wizard Upload",
-                                                Permission::ACCESS_API => "Access API"
+                                                Permission::ACCESS_API => "Access API",
+                                                Permission::ACCESS_INBOX => "Access Inbox",
+                                                Permission::MODIFY_OWNER => "Modify Owner"
                                                 );
 }

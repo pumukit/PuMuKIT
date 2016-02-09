@@ -15,13 +15,15 @@ class Builder extends ContainerAware
 
         // Add translations in src/Pumukit/NewAdminBundle/Resource/translations/NewAdminBundle.locale.yml
         $authorizationChecker = $this->container->get('security.authorization_checker');
-        $createBroadcastDisabled = $this->container->getParameter('pumukitschema.disable_broadcast_creation');
+        $createBroadcastDisabled = $this->container->getParameter('pumukit_new_admin.disable_broadcast_creation');
+        $showImporterTab = $this->container->getParameter('pumukit_opencast.show_importer_tab');
+
         if (false !== $authorizationChecker->isGranted(Permission::ACCESS_DASHBOARD)) {
             $menu->addChild('Dashboard', array('route' => 'pumukit_newadmin_dashboard_index'))->setExtra('translation_domain', 'NewAdminBundle');
         }
 
         if ($authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_SERIES)) {
-            $series = $menu->addChild('Multimedia Series', array('route' => 'pumukitnewadmin_series_index'))->setExtra('translation_domain', 'NewAdminBundle');
+            $series = $menu->addChild('Media Manager', array('route' => 'pumukitnewadmin_series_index'))->setExtra('translation_domain', 'NewAdminBundle');
             $series->addChild('Multimedia', array('route' => 'pumukitnewadmin_mms_index'))->setExtra('translation_domain', 'NewAdminBundle');
             $series->setDisplayChildren(false);
         }
@@ -36,7 +38,7 @@ class Builder extends ContainerAware
             }
         }
         if ($authorizationChecker->isGranted(Permission::ACCESS_JOBS)) {
-            $menu->addChild('Encoder jobs', array('route' => 'pumukit_encoder_info'))->setExtra('translation_domain', 'NewAdminBundle');        
+            $menu->addChild('Encoder jobs', array('route' => 'pumukit_encoder_info'))->setExtra('translation_domain', 'NewAdminBundle');
         }
         if ($authorizationChecker->isGranted(Permission::ACCESS_PEOPLE) || $authorizationChecker->isGranted(Permission::ACCESS_TAGS) ||
             $authorizationChecker->isGranted(Permission::ACCESS_BROADCASTS) || $authorizationChecker->isGranted(Permission::ACCESS_SERIES_TYPES)) {
@@ -69,10 +71,17 @@ class Builder extends ContainerAware
             }
         }
 
-        if ($authorizationChecker->isGranted(Permission::ACCESS_INGESTOR)) {
-            if ($this->container->has("pumukit_opencast.client")) {
-                $ingester = $menu->addChild('Ingester')->setExtra('translation_domain', 'NewAdminBundle');
-                $ingester->addChild('Opencast Ingester', array('route' => 'pumukitopencast'))->setExtra('translation_domain', 'NewAdminBundle');
+        if ($showImporterTab && $authorizationChecker->isGranted(Permission::ACCESS_IMPORTER)) {
+            if ($this->container->has('pumukit_opencast.client')) {
+                $client = $this->container->get('pumukit_opencast.client');
+                $importer = $menu->addChild('OC-tools')->setExtra('translation_domain', 'NewAdminBundle');
+                if ($this->container->getParameter('pumukit_opencast.scheduler_on_menu')) {
+                    $importer->addChild('Scheduler', array('uri' => $client->getSchedulerUrl()))->setExtra('translation_domain', 'NewAdminBundle');
+                }
+                if ($this->container->getParameter('pumukit_opencast.dashboard_on_menu')) {
+                    $importer->addChild('GC-Dash', array('uri' => $client->getDashboardUrl()))->setExtra('translation_domain', 'NewAdminBundle');
+                }
+                $importer->addChild('Importer', array('route' => 'pumukitopencast'))->setExtra('translation_domain', 'NewAdminBundle');
             }
         }
 

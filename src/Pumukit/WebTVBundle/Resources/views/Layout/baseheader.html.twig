@@ -12,6 +12,11 @@
       </div>
       <div class="col-sm-6">
         <div class="row">
+          <span class="pull-right">
+            {% include 'PumukitWebTVBundle:Index:loginbox.html.twig' %}
+          </span>
+        </div>
+        <div class="row">
           {% render( controller( 'PumukitWebTVBundle:Widget:languageselect') ) %}
           <div class="col-sm-6" style="float:right;";>
             {% include 'PumukitWebTVBundle:Layout:search_box.html.twig' %}

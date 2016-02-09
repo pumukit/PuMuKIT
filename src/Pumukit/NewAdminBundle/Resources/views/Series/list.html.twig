@@ -1,5 +1,5 @@
 <div class="table-responsive well" style="overflow:visible;">
-  {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   <table class="table table-striped table-hover">
     <thead>
       <tr>
@@ -40,7 +40,7 @@
           {% endspaceless %}
         </td> 
         <td>
-          {% if is_granted('ROLE_SUPER_ADMIN') %}
+          {% if app.user and is_granted('ROLE_SUPER_ADMIN') %}
           <a href="{{ path('pumukitnewadmin_series_changepub', {'id': oneseries.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
             <i class="{{ oneseries|series_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|series_text }}({% trans %}Click to modify broadcast status{% endtrans %})"></i>
           </a>

@@ -1,4 +1,4 @@
-{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 {% for pub in pubs %}
     {% if not pub.getDisplay() %}
       <div style="color: grey">
@@ -13,6 +13,7 @@
 	           id="pub_{{ pub_type }}_{{ pub.cod }}"
                class="pub_channel_input_checkbox"
 	           {{ (status)?'checked="checked"':"" }}
+               {{ ((pub_type == 'channels') and not_change_pub_channel) ? 'disabled="disabled"' : '' }}
                {# TODO <?php echo(($estado === 2) || ($estado === 2)) ? 'disabled="disabled"' : ''?> #}
                />
         {{ pub.getTitle() }}

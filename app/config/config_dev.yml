@@ -39,3 +39,7 @@ assetic:
 
 #swiftmailer:
 #    delivery_address: me@example.com
+
+
+vipx_bot_detect:
+    metadata_file: extended.yml

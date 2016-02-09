@@ -37,12 +37,13 @@ class PermissionProfileRepository extends DocumentRepository
      *
      * Candidate:
      * - Less amount of permissions
+     *
+     * @param integer $totalPermissions
      */
-    public function findDefaultCandidate()
+    public function findDefaultCandidate($totalPermissions = 0)
     {
         $count = 0;
         $size = -1;
-        $totalPermissions = count(Permission::$permissionDescription);
         do {
             if ($count > 0) break;
             ++$size;

@@ -23,21 +23,22 @@ class APIController extends Controller
 
         list($criteria, $sort, $fromDate, $toDate, $limit, $page) = $this->processRequestData($request);
 
-        $options['fromDate'] = $fromDate;
-        $options['toDate'] = $toDate;
+        $options['from_date'] = $fromDate;
+        $options['to_date'] = $toDate;
         $options['limit'] = $limit;
         $options['page'] = $page;
         $options['sort'] = $sort;
 
-        $mmobjs = $viewsService->getMmobjsMostViewedByRange($criteria, $options);
+        list($mmobjs, $total) = $viewsService->getMmobjsMostViewedByRange($criteria, $options);
 
         $views = array(
             'limit' => $limit,
             'page' => $page,
+            'total' => $total,
             'criteria' => $criteria,
             'sort' => $sort,
-            'fromDate' => $fromDate,
-            'toDate' => $toDate,
+            'from_date' => $fromDate,
+            'to_date' => $toDate,
             'mmobjs' => $mmobjs,
         );
 
@@ -57,21 +58,22 @@ class APIController extends Controller
 
         list($criteria, $sort, $fromDate, $toDate, $limit, $page) = $this->processRequestData($request);
 
-        $options['fromDate'] = $fromDate;
-        $options['toDate'] = $toDate;
+        $options['from_date'] = $fromDate;
+        $options['to_date'] = $toDate;
         $options['limit'] = $limit;
         $options['page'] = $page;
         $options['sort'] = $sort;
 
-        $series = $viewsService->getSeriesMostViewedByRange($criteria, $options);
+        list($series, $total) = $viewsService->getSeriesMostViewedByRange($criteria, $options);
 
         $views = array(
             'limit' => $limit,
             'page' => $page,
+            'total' => $total,
             'criteria' => $criteria,
             'sort' => $sort,
-            'fromDate' => $fromDate,
-            'toDate' => $toDate,
+            'from_date' => $fromDate,
+            'to_date' => $toDate,
             'series' => $series,
         );
 
@@ -93,23 +95,24 @@ class APIController extends Controller
 
         $groupBy = $request->get('group_by') ?: 'month';
 
-        $options['fromDate'] = $fromDate;
-        $options['toDate'] = $toDate;
+        $options['from_date'] = $fromDate;
+        $options['to_date'] = $toDate;
         $options['limit'] = $limit;
         $options['page'] = $page;
         $options['sort'] = $sort;
         $options['group_by'] = $groupBy;
 
-        $views = $viewsService->getTotalViewedGrouped($criteria, $options);
+        list($views, $total) = $viewsService->getTotalViewedGrouped($criteria, $options);
 
         $views = array(
             'limit' => $limit,
             'page' => $page,
+            'total' => $total,
             'criteria' => $criteria,
             'sort' => $sort,
             'group_by' => $groupBy,
-            'fromDate' => $fromDate,
-            'toDate' => $toDate,
+            'from_date' => $fromDate,
+            'to_date' => $toDate,
             'views' => $views,
         );
 
@@ -131,25 +134,26 @@ class APIController extends Controller
 
         list($criteria, $sort, $fromDate, $toDate, $limit, $page) = $this->processRequestData($request);
 
-        $groupBy = $request->get('group_by');
+        $groupBy = $request->get('group_by') ?: 'month';
 
-        $options['fromDate'] = $fromDate;
-        $options['toDate'] = $toDate;
+        $options['from_date'] = $fromDate;
+        $options['to_date'] = $toDate;
         $options['limit'] = $limit;
         $options['page'] = $page;
         $options['sort'] = $sort;
         $options['group_by'] = $groupBy;
 
-        $views = $viewsService->getTotalViewedGroupedByMmobj(new \MongoId($mmobjId), $criteria, $options);
+        list($views, $total) = $viewsService->getTotalViewedGroupedByMmobj(new \MongoId($mmobjId), $criteria, $options);
 
         $views = array(
             'limit' => $limit,
             'page' => $page,
+            'total' => $total,
             'criteria' => $criteria,
             'sort' => $sort,
             'group_by' => $groupBy,
-            'fromDate' => $fromDate,
-            'toDate' => $toDate,
+            'from_date' => $fromDate,
+            'to_date' => $toDate,
             'mmobj_id' => $mmobjId ?: -1,
             'views' => $views,
         );
@@ -174,23 +178,24 @@ class APIController extends Controller
 
         $groupBy = $request->get('group_by') ?: 'month';
 
-        $options['fromDate'] = $fromDate;
-        $options['toDate'] = $toDate;
+        $options['from_date'] = $fromDate;
+        $options['to_date'] = $toDate;
         $options['limit'] = $limit;
         $options['page'] = $page;
         $options['sort'] = $sort;
         $options['group_by'] = $groupBy;
 
-        $views = $viewsService->getTotalViewedGroupedBySeries(new \MongoId($seriesId), $criteria, $options);
+        list($views, $total) = $viewsService->getTotalViewedGroupedBySeries(new \MongoId($seriesId), $criteria, $options);
 
         $views = array(
             'limit' => $limit,
             'page' => $page,
+            'total' => $total,
             'criteria' => $criteria,
             'sort' => $sort,
             'group_by' => $groupBy,
-            'fromDate' => $fromDate,
-            'toDate' => $toDate,
+            'from_date' => $fromDate,
+            'to_date' => $toDate,
             'series_id' => $seriesId ?: -1,
             'views' => $views,
         );
@@ -202,7 +207,7 @@ class APIController extends Controller
 
     protected function processRequestData(Request $request)
     {
-        $MAX_LIMIT = 500;
+        $MAX_LIMIT = 250;
         //Request variables.
         $criteria = $request->get('criteria') ?: array();
         $sort = intval($request->get('sort'));
@@ -226,15 +231,8 @@ class APIController extends Controller
         if (!strpos($toDate, 'T')) {
             $toDate .= 'T23:59:59';
         }
-        $fromDate = \DateTime::createFromFormat('Y-m-d\TH:i:s', $fromDate);
-        $toDate = \DateTime::createFromFormat('Y-m-d\TH:i:s', $toDate);
-        if (!$fromDate) {
-            $fromDate = new \DateTime('Z');
-            $fromDate->setTime(0, 0, 0);
-        }
-        if (!$toDate) {
-            $toDate = new \DateTime('Z');
-        }
+        $fromDate = \DateTime::createFromFormat('Y-m-d\TH:i:s', $fromDate)?:null;
+        $toDate = \DateTime::createFromFormat('Y-m-d\TH:i:s', $toDate)?:null;
 
         return array($criteria, $sort, $fromDate, $toDate, $limit, $page);
     }

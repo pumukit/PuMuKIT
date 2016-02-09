@@ -1,11 +1,11 @@
-{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 {% if mmtemplate %}
 <div>
   <div role="tabpanel">
     <!-- actualizar vistaPrevia -->
     <ul id="templateTab" class="nav nav-tabs nav-tabs-pumukit" role="tablist">
       <li class="active">
-        <a href="#metaMmTemplate" aria-controls="metaMmTemplate" role="tab" data-toggle="tab">{% trans %}Metadata{% endtrans %}</a>
+        <a href="#metaMmTemplate" aria-controls="metaMmTemplate" role="tab" data-toggle="tab">{% trans %}Basic Metadata{% endtrans %}</a>
       </li>
       <li>
         <a href="#tagMmTemplate" aria-controls="tagMmTemplate" role="tab" data-toggle="tab">{% trans %}Tags{% endtrans %}</a>

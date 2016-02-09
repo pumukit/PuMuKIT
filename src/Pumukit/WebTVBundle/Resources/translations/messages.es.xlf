@@ -216,7 +216,7 @@
       </trans-unit>
       <trans-unit id="e5e13447e7fd56ed3179869f274069bb" resname="Full Catalogue">
         <source>Full Catalogue</source>
-        <target>__Full Catalogue</target>
+        <target>Catálogo completo</target>
       </trans-unit>
       <trans-unit id="33d8042bd735c559cc3206f4bc99aedc" resname="Sort by">
         <source>Sort by</source>
@@ -230,6 +230,14 @@
         <source>Alphabetically</source>
         <target>Alfabéticamente</target>
       </trans-unit>
+      <trans-unit id="4137ec14cea10e898243f3e95469a468" resname="Videos in the same series:">
+        <source>Videos in the same series:</source>
+        <target>Videos en la misma serie:</target>
+      </trans-unit>
+      <trans-unit id="3af6ba5f6e48bf7f55c1d1f94fd55da0" resname="You may also be interested in:">
+        <source>You may also be interested in:</source>
+        <target>También pueden interesarte:</target>
+      </trans-unit>
       <trans-unit id="fed711884ae4b45839ecd6ef36ae02e6" resname="Recording date">
         <source>Recording date</source>
         <target>Fecha de grabación</target>
@@ -238,12 +246,12 @@
         <source>Marks:</source>
         <target>Marcas:</target>
       </trans-unit>
-      <trans-unit id="23ce0eb7d180f3dc8391d4af48572d21" resname="Materials">
-        <source>Materials</source>
+      <trans-unit id="7e2708aeb65763c54052f57ed1a1ec1d" resname="Attachments">
+        <source>Attachments</source>
         <target>Materiales</target>
       </trans-unit>
-      <trans-unit id="594926470af8adae2a0914a57f89605f" resname="There is no materials">
-        <source>There is no materials</source>
+      <trans-unit id="404eb0c9cf5314b4ddfa9914d2b2ce94" resname="There are no attachments">
+        <source>There are no attachments</source>
         <target>No hay materiales</target>
       </trans-unit>
       <trans-unit id="d2fc53cc95bd888332468705b5cca88d" resname="Share this video">

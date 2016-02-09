@@ -12,26 +12,45 @@
     </div>
   </div>
 
-  <div class="form-group col-md-3 col-sm-5 col-xs-6">
-    <label for="start">{% trans %}Start date{% endtrans %}:</label>
-    <div class="input-group date" id='start'>
-      <input type='text' class="form-control" name="start" value="{{ app.request.query.get('start') }}" placeholder="From" onblur="javascript:this.form.submit();"/>
-      <span class="input-group-addon">
-        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-      </span>
-    </div>
-  </div>
 
-  <div class="form-group col-md-3 col-sm-5 col-xs-6">
-    <label for="end">{% trans %}Finish date{% endtrans %}:</label>
-    <div class="input-group date" id="end">
-      <input type="text" class="form-control" name="end" value="{{ app.request.query.get('end') }}" placeholder="Until" onblur="javascript:this.form.submit();"/>
-      <div class="input-group-addon">
-        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+  <div class="form-group col-md-6 col-sm-10 col-xs-12">
+    <div class="row">
+      {% set activated = app.request.query.get('start') or app.request.query.get('end') %}
+      <div id="advanced-date-search" {{ activated?'':'style="display:none"' }}>
+        <div class="col-xs-6">
+          <label for="start">{% trans %}Start date{% endtrans %}:</label>
+          <a style="padding-left:20px;cursor:pointer;" onclick="toggleDateSelect()">{% trans %} Select by year {% endtrans %}</a>
+          <div class="input-group date" id='start'>
+            <input type='text' class="form-control" name="start" value="{{ app.request.query.get('start') }}" placeholder="From" onblur="javascript:submitForm(this);" {{ activated?'':'disabled'}}/>
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+            </span>
+          </div>
+        </div>
+        <div class="col-xs-6">
+          <label for="end">{% trans %}Finish date{% endtrans %}:</label>
+          <div class="input-group date" id="end">
+            <input type="text" class="form-control" name="end" value="{{ app.request.query.get('end') }}" placeholder="Until" onblur="javascript:submitForm(this);" {{ activated?'':'disabled'}}/>
+            <div class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="simple-date-search" {{ activated?'style="display:none"':'' }}>
+        <div class="col-md-6 col-xs-12">
+          <label for="year">{% trans %}Year{% endtrans %}</label>
+          <a style="padding-left:20px;cursor:pointer;" onclick="toggleDateSelect()">{% trans %}Select by date range {% endtrans %}</a>
+          <select id='year' name='year' class='form-control' onchange="submitForm(this);" {{ activated?'disabled':''}}>
+            <option value="" {% if app.request.query.get('year') == "" %} selected="selected" {% endif %}>{% trans%}Any{% endtrans %}</option>
+            {% for year in search_years %}
+              <option value="{{year}}" {% if app.request.query.get('year') == year %} selected="selected" {% endif %}>{{year}}</option>
+            {% endfor %}
+          </select>
+        </div>
       </div>
     </div>
   </div>
-
   <div class="form-group col-md-2 col-sm-2">
     <label for="reset">{% trans %}Reset filters{% endtrans %}:</label>
     <input type="button" class="btn btn-default form-control" id="exampleInputEmail1" placeholder="Email" value="{% trans %}Reset filters{% endtrans %}"
@@ -45,6 +64,19 @@
       $( "#end" ).datetimepicker({useCurrent: false, viewMode: 'years', format: 'DD/MM/YYYY'});
       $( "#end" ).on("dp.change", function(e){$("#form_search").submit();});
   });
+ function toggleDateSelect() {
+     $('#simple-date-search, #advanced-date-search').toggle();
+     $('#year').prop('disabled', function(i, v) { return !v; });
+     $('#start .form-control').prop('disabled', function(i, v) { return !v; });
+     $('#end .form-control').prop('disabled', function(i, v) { return !v; });
+ }
+ function submitForm(elem) {
+     $('#search_spinner').show();
+     $('#search_results').hide();
+     $('.pagination').hide();
+     elem.form.submit();
+ }
+
 </script>
 
 </form>

@@ -10,6 +10,7 @@ use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectPubType;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
@@ -77,7 +78,7 @@ class MultimediaObjectController extends SortableAdminController
        $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
        $this->get('session')->set('admin/series/id', $series->getId());
 
-       $mmobj = $factoryService->createMultimediaObject($series);
+       $mmobj = $factoryService->createMultimediaObject($series, true, $this->getUser());
 
        $this->get('session')->set('admin/mms/id', $mmobj->getId());
 
@@ -119,7 +120,15 @@ class MultimediaObjectController extends SortableAdminController
 
         $factoryService = $this->get('pumukitschema.factory');
         $personService = $this->get('pumukitschema.person');
-        
+
+        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
+
+        try {
+            $personalScopeRole = $personService->getPersonalScopeRole();
+        } catch (\Exception $e) {
+            return new Response($e, Response::HTTP_BAD_REQUEST);
+        }
+
         $roles = $personService->getRoles();
         if (null === $roles){
             throw new \Exception('Not found any role.');
@@ -139,7 +148,7 @@ class MultimediaObjectController extends SortableAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $resource);
-        $options = array('not_admin' => !$this->isGranted('ROLE_SUPER_ADMIN'));
+        $options = array('not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS));
         $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource, $options);
 
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
@@ -155,20 +164,24 @@ class MultimediaObjectController extends SortableAdminController
         $playableResource = null;
 
         $activeEditor = $this->checkHasEditor();
+        $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
 
         return array(
-                     'mm'            => $resource,
-                     'form_meta'     => $formMeta->createView(),
-                     'form_pub'      => $formPub->createView(),
-                     'series'        => $series,
-                     'roles'         => $roles,
-                     'pub_channels'  => $pubChannelsTags,
-                     'pub_decisions' => $pubDecisionsTags,
-                     'parent_tags'   => $parentTags,
-                     'jobs'          => $jobs,
-                     'not_master_profiles' => $notMasterProfiles,
-                     'template' => $template,
-                     'active_editor' => $activeEditor,
+                     'mm'                       => $resource,
+                     'form_meta'                => $formMeta->createView(),
+                     'form_pub'                 => $formPub->createView(),
+                     'series'                   => $series,
+                     'roles'                    => $roles,
+                     'personal_scope_role'      => $personalScopeRole,
+                     'personal_scope_role_code' => $personalScopeRoleCode,
+                     'pub_channels'             => $pubChannelsTags,
+                     'pub_decisions'            => $pubDecisionsTags,
+                     'parent_tags'              => $parentTags,
+                     'jobs'                     => $jobs,
+                     'not_master_profiles'      => $notMasterProfiles,
+                     'template'                 => $template,
+                     'active_editor'            => $activeEditor,
+                     'not_change_pub_channel'   => $notChangePubChannel
                      );
     }
 
@@ -202,6 +215,14 @@ class MultimediaObjectController extends SortableAdminController
         $factoryService = $this->get('pumukitschema.factory');
         $personService = $this->get('pumukitschema.person');
 
+        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
+
+        try {
+            $personalScopeRole = $personService->getPersonalScopeRole();
+        } catch (\Exception $e) {
+            return new Response($e, Response::HTTP_BAD_REQUEST);
+        }
+
         $roles = $personService->getRoles();
         if (null === $roles){
             throw new \Exception('Not found any role.');
@@ -221,11 +242,13 @@ class MultimediaObjectController extends SortableAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $resource);
-        $options = array('not_admin' => !$this->isGranted('ROLE_SUPER_ADMIN'));
+        $options = array('not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS));
         $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource, $options);
 
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
+
+        $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
 
         $method = $request->getMethod();
         if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
@@ -259,14 +282,17 @@ class MultimediaObjectController extends SortableAdminController
 
         return $this->render('PumukitNewAdminBundle:MultimediaObject:edit.html.twig',
                              array(
-                                   'mm'            => $resource,
-                                   'form_meta'     => $formMeta->createView(),
-                                   'form_pub'      => $formPub->createView(),
-                                   'series'        => $series,
-                                   'roles'         => $roles,
-                                   'pub_channels'  => $pubChannelsTags,
-                                   'pub_decisions' => $pubDecisionsTags,
-                                   'parent_tags'   => $parentTags
+                                   'mm'                       => $resource,
+                                   'form_meta'                => $formMeta->createView(),
+                                   'form_pub'                 => $formPub->createView(),
+                                   'series'                   => $series,
+                                   'roles'                    => $roles,
+                                   'personal_scope_role'      => $personalScopeRole,
+                                   'personal_scope_role_code' => $personalScopeRoleCode,
+                                   'pub_channels'             => $pubChannelsTags,
+                                   'pub_decisions'            => $pubDecisionsTags,
+                                   'parent_tags'              => $parentTags,
+                                   'not_change_pub_channel'   => $notChangePubChannel
                                    )
                              );
     }
@@ -296,16 +322,20 @@ class MultimediaObjectController extends SortableAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $resource);
-        $options = array('not_admin' => !$this->isGranted('ROLE_SUPER_ADMIN'));
+        $options = array('not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS));
         $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource, $options);
 
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
 
+        $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
+
         $method = $request->getMethod();
         if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
             $formPub->submit($request, !$request->isMethod('PATCH'))->isValid()) {
-            $resource = $this->updateTags($request->get('pub_channels', null), "PUCH", $resource);
+            if (!$notChangePubChannel) {
+                $resource = $this->updateTags($request->get('pub_channels', null), "PUCH", $resource);
+            }
             $resource = $this->updateTags($request->get('pub_decisions', null), "PUDE", $resource);
 
             $this->domainManager->update($resource);
@@ -330,6 +360,14 @@ class MultimediaObjectController extends SortableAdminController
             return $this->handleView($this->view($formPub));
         }
 
+        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
+
+        try {
+            $personalScopeRole = $personService->getPersonalScopeRole();
+        } catch (\Exception $e) {
+            return new Response($e, Response::HTTP_BAD_REQUEST);
+        }
+
         $roles = $personService->getRoles();
         if (null === $roles){
             throw new \Exception('Not found any role.');
@@ -337,14 +375,17 @@ class MultimediaObjectController extends SortableAdminController
 
         return $this->render('PumukitNewAdminBundle:MultimediaObject:edit.html.twig',
                              array(
-                                   'mm'            => $resource,
-                                   'form_meta'     => $formMeta->createView(),
-                                   'form_pub'      => $formPub->createView(),
-                                   'series'        => $series,
-                                   'roles'         => $roles,
-                                   'pub_channels'  => $pubChannelsTags,
-                                   'pub_decisions' => $pubDecisionsTags,
-                                   'parent_tags'   => $parentTags
+                                   'mm'                       => $resource,
+                                   'form_meta'                => $formMeta->createView(),
+                                   'form_pub'                 => $formPub->createView(),
+                                   'series'                   => $series,
+                                   'roles'                    => $roles,
+                                   'personal_scope_role'      => $personalScopeRole,
+                                   'personal_scope_role_code' => $personalScopeRoleCode,
+                                   'pub_channels'             => $pubChannelsTags,
+                                   'pub_decisions'            => $pubDecisionsTags,
+                                   'parent_tags'              => $parentTags,
+                                   'not_change_pub_channel'   => $notChangePubChannel
                                    )
                              );
     }
@@ -445,7 +486,7 @@ class MultimediaObjectController extends SortableAdminController
           }
           foreach ($checkedTags as $cod => $checked) {
             $tag = $this->get('pumukitschema.factory')->getTagsByCod($cod, false);
-              $resource->addTag($tag);
+            $resource->addTag($tag);
           }
         } else {
             foreach ($resource->getTags() as $tag) {
