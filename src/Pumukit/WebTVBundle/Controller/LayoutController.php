@@ -1,3 +1,4 @@
+
 <?php
 
 namespace Pumukit\WebTVBundle\Controller;
@@ -32,10 +33,10 @@ class LayoutController extends Controller
     public function dataAction()
     {
         $title = $this->container->getParameter('breadcrumbs_home_title');
-        // TODO: set breadcrumbs_back_background
-        $color = '#d66400';
+        $primaryColor = $this->container->getParameter('pumukit_web_tv.primary_color');
+        $secondaryColor = $this->container->getParameter('pumukit_web_tv.secondary_color');
 
-        $response = new JsonResponse(array('title' => $title, 'color' => $color));
+        $response = new JsonResponse(array('title' => $title, 'primary_color' => $primaryColor, 'secondary_color' => $secondaryColor));
         $response->setCallback('callback');
 
         return $response;
