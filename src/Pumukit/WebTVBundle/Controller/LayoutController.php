@@ -1,4 +1,3 @@
-
 <?php
 
 namespace Pumukit\WebTVBundle\Controller;
