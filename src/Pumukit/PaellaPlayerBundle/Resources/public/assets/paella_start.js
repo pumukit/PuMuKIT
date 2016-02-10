@@ -19,7 +19,7 @@ var MyAccessControl = Class.create(paella.AccessControl,{
     }
 });
 
-var MyVideoLoader = Class.create(paella.VideoLoader, {
+var MyVideoLoader = Class.create(paella.DefaultVideoLoader, {
     ref2IntRe:/.*;time=T(\d*?):(\d*?):(\d*?):(\d*?)F1000/i,
     
     ref2Int:function(ref) {
