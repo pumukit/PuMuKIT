@@ -46,10 +46,8 @@
 
 {% endblock %}
 
-{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_LIVE_CHANNELS')) %}
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/pumukitwebtv/js/jwplayer/jwplayer.js') }}" type="text/javascript"></script>
     {% if jwplayer_key is defined %}<script type="text/javascript">jwplayer.key="{{ jwplayer_key }}";</script>{% endif %}
 {% endblock %}
-{% endif %}
