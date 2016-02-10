@@ -1,6 +1,6 @@
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <h4 class="modal-title" id="myModalLabel">{% trans %}add new pic{% endtrans %}</h4>
+  <h4 class="modal-title" id="myModalLabel">{% trans %}add new thumbnail{% endtrans %}</h4>
 </div>
 
 <div class="modal-body">
@@ -19,7 +19,7 @@
                                                         } else {
                                                           $('#pic_{{ resource_name }}_{{ resource.id }}').html(response);
                                                         }
-                                                        success('{% trans %}New Pic added.{% endtrans %}');
+                                                        success('{% trans %}New Thumbnail added.{% endtrans %}');
                                                         }
                           });
                     return false;"
