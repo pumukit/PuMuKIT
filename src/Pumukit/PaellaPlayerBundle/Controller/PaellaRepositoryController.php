@@ -109,22 +109,29 @@ class PaellaRepositoryController extends Controller
      */
     private function getOpencastFrameList($mmobj) {
         $opencastClient = $this->get('pumukit_opencast.client');
-        $mediaPackage = $opencastClient->getMediaPackage($mmobj->getProperty('opencast'));
         $images = array();
-        foreach($mediaPackage['attachments']['attachment'] as $attachmnt) {
-            if($attachmnt['type'] == 'presentation/segment+preview') {
-                $result = array();
+        //Only works if the video is an opencast video
+        if($opencastId = $mmobj->getProperty('opencast')) {
+            $mediaPackage = $opencastClient->getMediaPackage($opencastId);
+            //If it doesn't have attachments as opencast should, we return an empty result
+            if(!isset($mediaPackage['attachments']['attachment']))
+                return array();
 
-                //preg_match that stores in result the hours, minutes and second of a string of this type ->  time=T12:12:12:0F1000
-                preg_match('/time\=T(.*?):(.*?):(.*?):;*/',$attachmnt['ref'], $result);
-                $time = $result[1]*3600 + $result[2]*60 + $result[3];
-                
-                $images[] = array('id' =>'frame_'.$time,
-                    'mimetype' => $attachmnt['mimetype'],
-                    'time' => $time,
-                    'url' => $attachmnt['url'],
-                    'thumb' => $attachmnt['url'],
-                );
+            foreach($mediaPackage['attachments']['attachment'] as $attachmnt) {
+                if($attachmnt['type'] == 'presentation/segment+preview') {
+                    $result = array();
+
+                    //Getting time by parsing hours, minutes and second of a string of this type ->  time=T12:12:12:0F1000
+                    preg_match('/time\=T(.*?):(.*?):(.*?):;*/',$attachmnt['ref'], $result);
+                    $time = $result[1]*3600 + $result[2]*60 + $result[3];
+                    
+                    $images[] = array('id' =>'frame_'.$time,
+                                      'mimetype' => $attachmnt['mimetype'],
+                                      'time' => $time,
+                                      'url' => $attachmnt['url'],
+                                      'thumb' => $attachmnt['url'],
+                    );
+                }
             }
         }
         return $images;
