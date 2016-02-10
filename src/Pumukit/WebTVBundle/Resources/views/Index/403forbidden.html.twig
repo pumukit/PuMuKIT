@@ -1,16 +1,27 @@
 {% extends 'PumukitWebTVBundle::layout.html.twig' %}
 {% block body %}
-    <h1 class="titulo_widget titulo_widget_grande">
-      {% trans %}403 Forbidden{% endtrans %}
+    <h1 class="widget slidebar" style="text-align: center; padding-top: 40px;">
+      {% trans %}Private Video{% endtrans %}
     </h1>
 	<div class="grid_10 mm_player">
       <div class="date"></div>
-      <h2 style="color:red;">{% trans %}Forbidden to access this video{% endtrans %}</h2>
+      <h2 style="text-align: center;">{% trans %}This video is private with restricted access{% endtrans %}.</h2>
 	</div>
 	<div class="grid_5">
       {% if show_forceauth %}
         {% set diff = (app.request.getQueryString) ? '&' : '?' %}
-        <a href="{{ app.request.requestUri }}{{ diff }}force-auth=true">login</a>
+        <h3 style="text-align: center;">{% trans %}Log in is required to watch it{% endtrans %}</h3>
+        <br/>
+        <div class="row">
+          <div class="col-xs-3"></div>
+          <div class="col-xs-9">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-2">
+              <button type="submit" class="btn btn-primary btn-block btn-flat" name="submit" title="Log In" onclick="location.href='{{ app.request.requestUri }}{{ diff }}force-auth=true'">Log In</button>
+            </div>
+            <div class="col-xs-7"></div>
+          </div>
+        </div>
       {% endif %}
 	</div>
 {% endblock %}
