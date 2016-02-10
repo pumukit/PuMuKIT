@@ -142,7 +142,8 @@
                 "enabled": true
             },
             "es.upv.paella.breaksPlayerPlugin": {
-                "enabled": true
+                "enabled": true,
+                "neverShow": true
             },
             "es.upv.paella.overlayCaptionsPlugin": {
                 "enabled": true
@@ -189,7 +190,8 @@
                 "enabled": true
             },
             "es.upv.paella.editor.trimmingTrackPlugin": {
-                "enabled": true
+                "enabled": true,
+                "enableResetButton": true
             },
             "pumukitChapterMarkPlugin": {
                 "enabled": true

@@ -8,7 +8,7 @@
 
     <service id="pumukitvideoeditor.annotationsapilistener" class="Pumukit\VideoEditorBundle\Services\AnnotationsListenerService">
       <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
-      <tag name="kernel.event_listener" event="annotationsapi.update" method="onAnnotationsUpdate" />
+      <tag name="kernel.event_listener" event="annotations.update" method="onAnnotationsUpdate" />
     </service>
 
     <service id="pumukitschema.mmsduration" class="Pumukit\VideoEditorBundle\Services\MultimediaObjectDurationService">

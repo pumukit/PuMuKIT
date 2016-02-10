@@ -200,7 +200,7 @@
       </trans-unit>
       <trans-unit id="132482b5ee2d95cfcbe8ae9b288c047b" resname="{0}no videos yet|{1}1 video|]1,Inf[%count% videos">
         <source>{0}no videos yet|{1}1 video|]1,Inf[%count% videos</source>
-        <target>{0}aún no hay videos|{1}1 video|]1,Inf[%count% videos</target>
+        <target>{0}aún no hay vídeos|{1}1 vídeo|]1,Inf[%count% vídeos</target>
       </trans-unit>
       <trans-unit id="af1b98adf7f686b84cd0b443e022b7a0" resname="Categories">
         <source>Categories</source>
@@ -242,6 +242,10 @@
         <source>Recording date</source>
         <target>Fecha de grabación</target>
       </trans-unit>
+      <trans-unit id="20c95ce3b877c9ea1fa186ac6d47c4a3" resname="Marks:">
+        <source>Marks:</source>
+        <target>Marcas:</target>
+      </trans-unit>
       <trans-unit id="7e2708aeb65763c54052f57ed1a1ec1d" resname="Attachments">
         <source>Attachments</source>
         <target>Materiales</target>
@@ -252,7 +256,7 @@
       </trans-unit>
       <trans-unit id="d2fc53cc95bd888332468705b5cca88d" resname="Share this video">
         <source>Share this video</source>
-        <target>Comparte este video</target>
+        <target>Comparte este vídeo</target>
       </trans-unit>
       <trans-unit id="3b3d06023f6353f8fd05f859b298573e" resname="URL:">
         <source>URL:</source>
@@ -265,6 +269,10 @@
       <trans-unit id="4994a8ffeba4ac3140beb89e8d41f174" resname="Language">
         <source>Language</source>
         <target>Idioma</target>
+      </trans-unit>
+      <trans-unit id="8d098c874004071be31f616d9edfdd2f" resname="Private video">
+        <source>Private video</source>
+        <target>Vídeo privado</target>
       </trans-unit>
     </body>
   </file>
