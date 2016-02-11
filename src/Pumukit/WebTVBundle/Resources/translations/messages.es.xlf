@@ -162,8 +162,8 @@
         <source>Series search</source>
         <target>Buscar series</target>
       </trans-unit>
-      <trans-unit id="12b214e7c67af198fa672b60161eac75" resname="Multimedia object search">
-        <source>Multimedia object search</source>
+      <trans-unit id="12b214e7c67af198fa672b60161eac75" resname="Multimedia objects search">
+        <source>Multimedia objects search</source>
         <target>Buscar objetos multimedia</target>
       </trans-unit>
       <trans-unit id="633e57bd46fdbfeb7b92ee75c5a5386e" resname="Not series found">
