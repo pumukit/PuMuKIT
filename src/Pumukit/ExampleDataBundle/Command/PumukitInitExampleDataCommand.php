@@ -490,8 +490,8 @@ EOT
                             '74.125.224.72',
         );
 
-        $initTime = (new \DateTime('2013-03-03'))->getTimestamp();
-        $endTime = (new \DateTime('2015-03-03'))->getTimestamp();
+        $initTime = (new \DateTime('2 years ago'))->getTimestamp();
+        $endTime = (new \DateTime())->getTimestamp();
 
         $clientip = $clientips[array_rand($clientips)];
         $useragent = $useragents[array_rand($useragents)];
