@@ -73,7 +73,7 @@ class SearchController extends Controller
     {
         $templateTitle = $this->container->getParameter('menu.search_title');
 
-        $this->get('pumukit_web_tv.breadcrumbs')->addList($blockedTag ? $blockedTag->getTitle() : $templateTitle?:'Multimedia object search', 'pumukit_webtv_search_multimediaobjects');
+        $this->get('pumukit_web_tv.breadcrumbs')->addList($blockedTag ? $blockedTag->getTitle() : $templateTitle?:'Multimedia objects search', 'pumukit_webtv_search_multimediaobjects');
 
         // --- Get Tag Parent for Tag Fields ---
         $parentTag = $this->getParentTag();
