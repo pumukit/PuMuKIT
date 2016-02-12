@@ -1,7 +1,7 @@
-id;cod;tree_parent_id;metacategory;display;name_es;name_gl;name_en
+id;cod;tree_parent_cod;metatag;display;name_es;name_gl;name_en
 1;DIRECTRIZ;0;1;1;DIRECTRIZ;DIRECTRIZ;GUIDELINE
-2;Dscience;1;0;1;"Ciencias Experimentales";"Ciencias Experimentais";"Experimental sciences"
-3;Dsocial;1;0;1;"Ciencias Juridico-Sociales";"Ciencias Xuridico-Sociais";"Social and Legal sciences"
-4;Dhealth;1;0;1;"Ciencias de la Salud";"Ciencias da Saude";"Health Sciences"
-5;Dtechnical;1;0;1;"Ciencias tecnologicas";"Ciencias tecnoloxicas";"Technical sciences"
-6;Dhumanities;1;0;1;"Humanidades";"Humanidades";"Humanities"
+2;Dscience;DIRECTRIZ;0;1;"Ciencias Experimentales";"Ciencias Experimentais";"Experimental sciences"
+3;Dsocial;DIRECTRIZ;0;1;"Ciencias Juridico-Sociales";"Ciencias Xuridico-Sociais";"Social and Legal sciences"
+4;Dhealth;DIRECTRIZ;0;1;"Ciencias de la Salud";"Ciencias da Saude";"Health Sciences"
+5;Dtechnical;DIRECTRIZ;0;1;"Ciencias tecnologicas";"Ciencias tecnoloxicas";"Technical sciences"
+6;Dhumanities;DIRECTRIZ;0;1;"Humanidades";"Humanidades";"Humanities"
