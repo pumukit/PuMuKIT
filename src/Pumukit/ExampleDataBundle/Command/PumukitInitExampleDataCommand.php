@@ -410,7 +410,6 @@ EOT
         $title = $title;
         $subtitle = '';
         $description = '';
-        $numview = 3;
 
         $multimediaObject->setRank($rank);
         $multimediaObject->setStatus($status);
@@ -420,7 +419,6 @@ EOT
         $multimediaObject->setTitle($title);
         $multimediaObject->setSubtitle($subtitle);
         $multimediaObject->setDescription($description);
-        $multimediaObject->setNumview($numview);
     }
 
     private function load_track_multimediaobject($multimediaObject, $folder, $track, $audio)
