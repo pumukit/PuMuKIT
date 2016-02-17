@@ -4,11 +4,12 @@ namespace Pumukit\InstallBundleBundle\Command;
 
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Sensio\Bundle\GeneratorBundle\Manipulator\KernelManipulator;
-use Sensio\Bundle\GeneratorBundle\Manipulator\RoutingManipulator;
+use Pumukit\InstallBundleBundle\Manipulator\RoutingManipulator;
 
 class PumukitInstallBundleCommand extends ContainerAwareCommand
 {
@@ -17,11 +18,14 @@ class PumukitInstallBundleCommand extends ContainerAwareCommand
         $this
             ->setName('pumukit:install:bundle')
             ->addArgument('bundle', InputArgument::IS_ARRAY | InputArgument::REQUIRED, 'List of bundles classes with namespace')
+            ->addOption('append-to-end', null, InputOption::VALUE_NONE, 'Set this parameter to append the routing bundle configuration to the end of routing file')
             ->setDescription('Update Kernel (app/AppKernel.php) and routing (app/config/routing.yml) to enable the bundle.')
             ->setHelp(<<<EOT
 The <info>pumukit:install:bundle</info> command helps you installs bundles.
 
 The command updates the Kernel to enable the bundle (<comment>app/AppKernel.php</comment>) and loads the routing (<comment>app/config/routing.yml</comment>) to add the bundle routes.
+
+The parameter --append-to-end adds the bundle routes at the end fo the <comment>app/config/routing.yml</comment> file.
 
 <info>php app/console pumukit:install:bundle Pumukit/Cmar/WebTVBundle/PumukitCmarWebTVBundle</info>
 
@@ -46,10 +50,12 @@ EOT
             }
         }
 
+        $appendToEnd = $input->getOption('append-to-end');
+
         foreach ($input->getArgument('bundle') as $bundleName) {
             $bundle = $this->prepareBundleName($bundleName);
             $this->updateKernel($input, $output, $kernel, $bundle);
-            $this->updateRouting($input, $output, $bundle);
+            $this->updateRouting($input, $output, $bundle, 'yml', $appendToEnd);
         }
     }
 
@@ -76,20 +82,18 @@ EOT
             }
         } catch (\RuntimeException $e) {
             $output->writeln(sprintf('Bundle <comment>%s</comment> is already defined in <comment>AppKernel::registerBundles()</comment>.', $bundle));
-            throw $e;
         }
     }
 
-    protected function updateRouting(InputInterface $input, OutputInterface $output, $bundle, $format = 'yml')
+    protected function updateRouting(InputInterface $input, OutputInterface $output, $bundle, $format = 'yml', $appendToEnd = false)
     {
         $refClass = new \ReflectionClass($bundle);
         $bundleRoutingFile = sprintf('%s/Resources/config/routing.%s', dirname($refClass->getFileName()), $format);
-
         if (is_file($bundleRoutingFile)) {
             $routing = new RoutingManipulator($this->getContainer()->getParameter('kernel.root_dir').'/config/routing.yml');
             $bundleName = substr($bundle, 1 + strrpos($bundle, '\\'));
             try {
-                $ret = $routing->addResource($bundleName, $format);
+                $ret = $routing->addResource($bundleName, $format, '/', 'routing', $appendToEnd);
                 if (!$ret) {
                     if ('annotation' === $format) {
                         $help = sprintf("        <comment>resource: \"@%s/Controller/\"</comment>\n        <comment>type:     annotation</comment>\n", $bundle);
@@ -104,7 +108,6 @@ EOT
                 }
             } catch (\RuntimeException $e) {
                 $output->writeln(sprintf('Bundle <comment>%s</comment> is already imported.', $bundle));
-                throw $e;
             }
         }
     }
