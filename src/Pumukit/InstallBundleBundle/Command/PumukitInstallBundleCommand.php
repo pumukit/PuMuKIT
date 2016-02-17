@@ -9,7 +9,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Sensio\Bundle\GeneratorBundle\Manipulator\KernelManipulator;
-//use Sensio\Bundle\GeneratorBundle\Manipulator\RoutingManipulator;
 use Pumukit\InstallBundleBundle\Manipulator\RoutingManipulator;
 
 class PumukitInstallBundleCommand extends ContainerAwareCommand
