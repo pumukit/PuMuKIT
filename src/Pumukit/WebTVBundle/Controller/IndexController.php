@@ -36,28 +36,23 @@ class IndexController extends Controller
     }
 
     /**
-     * @Template()
+     * @Template("PumukitWebTVBundle:Index:mostviewed.html.twig")
      */
     public function mostviewedAction()
     {
         $limit = $this->container->getParameter('limit_objs_mostviewed');
-
+        $showLastMonth = $this->container->getParameter('show_mostviewed_lastmonth');
+ 
         $repository = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $multimediaObjectsSortedByNumview = $repository->findStandardBy(array(), array('numview' => -1), $limit, 0);
-
-        return array('multimediaObjectsSortedByNumview' => $multimediaObjectsSortedByNumview);
-    }
-
-    /**
-     * @Template("PumukitWebTVBundle:Index:mostviewed.html.twig")
-     */
-    public function mostviewedlastmonthAction()
-    {
-        $limit = $this->container->getParameter('limit_objs_mostviewed');
-
-        $multimediaObjectsSortedByNumview = $this->get('pumukit_stats.stats')->getMostViewedUsingFilters(30, $limit);
-
-        return array('multimediaObjectsSortedByNumview' => $multimediaObjectsSortedByNumview);
+        if($showLastMonth){
+            $multimediaObjectsSortedByNumview = $this->get('pumukit_stats.stats')->getMostViewedUsingFilters(30, $limit);
+        }
+        else {
+            $multimediaObjectsSortedByNumview = $repository->findStandardBy(array(), array('numview' => -1), $limit, 0);
+        }
+        return array('multimediaObjectsSortedByNumview' => $multimediaObjectsSortedByNumview,
+                     'show_last_month' => $showLastMonth,
+        );
     }
 
     /**
