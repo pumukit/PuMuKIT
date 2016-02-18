@@ -9,7 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/", name="pumukit_newadmin_index")
+     * @Route("/default")
      * @Template()
      */
     public function indexAction()
