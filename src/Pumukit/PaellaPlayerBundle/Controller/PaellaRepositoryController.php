@@ -4,6 +4,7 @@ namespace Pumukit\PaellaPlayerBundle\Controller;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\VideoEditorBundle\Document\Annotation;
+use Pumukit\WebTVBundle\Controller\WebTVController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -11,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-class PaellaRepositoryController extends Controller
+class PaellaRepositoryController extends Controller implements WebTVController
 {
     /**
      * @Route("/paellarepository/{id}.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
