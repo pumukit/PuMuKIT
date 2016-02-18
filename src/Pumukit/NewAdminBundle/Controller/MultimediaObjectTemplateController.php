@@ -13,7 +13,7 @@ use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectTemplateMetaType;
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
-class MultimediaObjectTemplateController extends MultimediaObjectController
+class MultimediaObjectTemplateController extends MultimediaObjectController implements NewAdminController
 {
     /**
      * Display the form for editing or update the resource.

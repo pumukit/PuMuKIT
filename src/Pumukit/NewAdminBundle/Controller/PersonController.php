@@ -14,7 +14,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\NewAdminBundle\Form\Type\PersonType;
 
-class PersonController extends AdminController
+class PersonController extends AdminController implements NewAdminController
 {
     /**
      * Index
