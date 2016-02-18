@@ -13,7 +13,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
 
-class SearchController extends Controller
+class SearchController extends Controller implements WebTVController
 {
     /**
      * @Route("/searchseries")

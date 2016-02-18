@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
-class LegacyController extends Controller
+class LegacyController extends Controller implements WebTVController
 {
     /**
      * @Route("/serial/index/id/{pumukit1id}")
