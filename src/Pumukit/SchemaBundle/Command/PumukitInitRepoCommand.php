@@ -250,16 +250,17 @@ EOT
         }
 
         if($repoName == 'tag') {
-            //Checks if the file header has the required fields. (Only for tags)
-            $result_diff = array_diff($this->tagRequiredFields, $csv_headers);
-            if (count($result_diff) > 0) {
-                $output->writeln('<error>Error reading first row (csv header) of '.$file_route.": HEADER doesn't have the required fields: ".print_r($result_diff, true).' </error>');
-
-                return -1;
-            }
             //Creates the csvTagHeaders (to be used later)
             if (($csvTagHeaders = fgetcsv($file, 300, ';', '"')) === false) {
                 $output->writeln('<error>Error reading first row (csv header) of '.$file_route.": fgetcsv returned 'false' </error>");
+                return -1;
+            }
+
+            //Checks if the file header has the required fields. (Only for tags)
+            $result_diff = array_diff($this->tagRequiredFields, $csvTagHeaders);
+            if (count($result_diff) > 0) {
+                $output->writeln('<error>Error reading first row (csv header) of '.$file_route.": HEADER doesn't have the required fields: ".print_r($result_diff, true).' </error>');
+
                 return -1;
             }
         }
@@ -295,7 +296,6 @@ EOT
                             for ($i = 0; $i < count($currentRow); $i++) {
                                 $key = $csvTagHeaders[ $i ]; // Here we turn the csv into an associative array (Doesn't a csv parsing library do this already?)
                                 $csvTagsArray[ $key ] = $currentRow[ $i ];
-                                echo $key."\n";
                             }
 
                             if (isset($importedTags[ $csvTagsArray[ 'tree_parent_cod' ] ])) {
