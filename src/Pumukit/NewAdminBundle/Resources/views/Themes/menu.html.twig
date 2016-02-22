@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block root %}
-{% set listAttributes = item.childrenAttributes|merge({'class': 'nav navbar-nav'}) %}
+{% set listAttributes = item.childrenAttributes|merge({'class': 'nav navbar-nav pmk-backoffice-menu'}) %}
 {{ block('list') -}}
 {% endblock %}
 
