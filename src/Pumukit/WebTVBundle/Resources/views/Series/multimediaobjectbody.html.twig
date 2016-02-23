@@ -34,13 +34,8 @@
       {% if mm.getProperty('opencast') is not empty %}
         <div id="material" class="file matterhorn">
           <a href="{{ url_mmobj }}">
-            <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>
-            {% spaceless %}
-              {% if (mm.getBroadcast().getBroadcastTypeId() != public_broadcast()) %}
-                {% trans %}Private video{% endtrans %}
-              {% else %}
-                {% trans %}Video{% endtrans %}
-              {% endif %}
+            <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>{% spaceless %}
+              {{ mm.isPublicBroadcast() ? 'Video'|trans : 'Private video'|trans }}
             {% endspaceless %}</a>
             &nbsp;|&nbsp;&nbsp;<span class="language">{{ (mm.getProperty('opencastlanguage')?(mm.getProperty('opencastlanguage')|lower):'en')|language_name }}</span>
             &nbsp;|&nbsp; {{ mmobj_duration(mm) | duration_string }}
@@ -60,14 +55,11 @@
             {% endif %}
             <a href="{{ url_track }}">{% spaceless %}
               {% if track.isOnlyAudio %}
-                {% trans %}Audio{% endtrans %}
+                {{ mm.isPublicBroadcast() ? 'Audio'|trans : 'Private audio'|trans }}
               {% elseif track.containsTag('download') %}
                 {% trans %}Download master{% endtrans %}
               {% else %}
-                {% trans %}Video{% endtrans %}
-              {% endif %}
-              {% if (mm.getBroadcast().getBroadcastTypeId() != public_broadcast()) %}
-                {% trans %}private{% endtrans %}
+                {{ mm.isPublicBroadcast() ? 'Video'|trans : 'Private video'|trans }}
               {% endif %}
             {% endspaceless %}</a>
             &nbsp;|&nbsp;&nbsp;<span class="language">{{ track.getLanguage()|language_name}}</span>
