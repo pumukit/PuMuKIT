@@ -21,7 +21,7 @@
     </thead>
 
     <tbody>
-      {% if (0 == mms|length) %}
+      {% if mms is empty %}
       <tr>
         <td colspan="13">
           {% trans %}There are no multimedia objects with those values.{% endtrans %}
