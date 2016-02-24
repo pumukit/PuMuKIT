@@ -25,7 +25,7 @@ class UserType extends AbstractType
         $builder
             ->add('enabled', 'hidden', array('data' => true))
             ->add('fullname', 'text',
-                  array('label' => $this->translator->trans('Name', array(), null, $this->locale)))
+                  array('label' => $this->translator->trans('Name and Surname', array(), null, $this->locale)))
             ->add('username', 'text',
                   array(
                         'attr' => array(
