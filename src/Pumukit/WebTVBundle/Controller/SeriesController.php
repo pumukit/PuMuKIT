@@ -11,7 +11,7 @@ use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
-class SeriesController extends Controller
+class SeriesController extends Controller implements WebTVController
 {
     /**
     * @Route("/series/{id}", name="pumukit_webtv_series_index")

@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 /**
  * @Security("is_granted('ROLE_ACCESS_LIVE_EVENTS')")
  */
-class EventController extends AdminController
+class EventController extends AdminController implements NewAdminController
 {
     /**
      * @var array

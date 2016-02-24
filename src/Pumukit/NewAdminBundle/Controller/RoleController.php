@@ -12,7 +12,7 @@ use Pumukit\NewAdminBundle\Form\Type\RoleType;
 /**
  * @Security("is_granted('ROLE_ACCESS_ROLES')")
  */
-class RoleController extends SortableAdminController
+class RoleController extends SortableAdminController implements NewAdminController
 {
     /**
      * Update role

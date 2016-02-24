@@ -7,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
-class IndexController extends Controller
+class IndexController extends Controller implements WebTVController
 {
     /**
      * @Route("/", name="pumukit_webtv_index_index")

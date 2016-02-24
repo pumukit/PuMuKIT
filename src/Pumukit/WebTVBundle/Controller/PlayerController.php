@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Pumukit\WebTVBundle\Event\WebTVEvents;
 use Pumukit\WebTVBundle\Event\ViewedEvent;
 
-class PlayerController extends Controller
+class PlayerController extends Controller implements WebTVController
 {
     protected function testBroadcast(MultimediaObject $multimediaObject, Request $request)
     {
