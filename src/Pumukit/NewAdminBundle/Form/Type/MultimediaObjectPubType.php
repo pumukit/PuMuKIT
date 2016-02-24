@@ -30,7 +30,7 @@ class MultimediaObjectPubType extends AbstractType
                                            ),
                         'disabled' => $options['not_granted_change_status'],
                         'label' => $this->translator->trans('Status', array(), null, $this->locale) ))
-            ->add('broadcast', null, array('label' => $this->translator->trans('Broadcast', array(), null, $this->locale)));
+            ->add('broadcast', null, array('label' => $this->translator->trans('Broadcast Profile', array(), null, $this->locale)));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
