@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 /**
  * @Security("is_granted('ROLE_ACCESS_BROADCASTS')")
  */
-class BroadcastController extends AdminController
+class BroadcastController extends AdminController implements NewAdminController
 {
     /**
      * Change the default broadcast type

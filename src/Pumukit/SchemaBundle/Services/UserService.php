@@ -389,4 +389,58 @@ class UserService
 
         return $user;
     }
+
+    /**
+     * Has Global Scope
+     *
+     * Checks if the PermissionProfile
+     * of the User has Global Scope
+     *
+     * @param User $user
+     * @return boolean
+     */
+    public function hasGlobalScope(User $user)
+    {
+        if ($permissionProfile = $user->getPermissionProfile()) {
+            return $permissionProfile->isGlobal();
+        }
+
+        return false;
+    }
+
+    /**
+     * Has Personal Scope
+     *
+     * Checks if the PermissionProfile
+     * of the User has Personal Scope
+     *
+     * @param User $user
+     * @return boolean
+     */
+    public function hasPersonalScope(User $user)
+    {
+        if ($permissionProfile = $user->getPermissionProfile()) {
+            return $permissionProfile->isPersonal();
+        }
+
+        return false;
+    }
+
+    /**
+     * Has None Scope
+     *
+     * Checks if the PermissionProfile
+     * of the User has None Scope
+     *
+     * @param User $user
+     * @return boolean
+     */
+    public function hasNoneScope(User $user)
+    {
+        if ($permissionProfile = $user->getPermissionProfile()) {
+            return $permissionProfile->isNone();
+        }
+
+        return false;
+    }
 }

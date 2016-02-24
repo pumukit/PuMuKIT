@@ -12,11 +12,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 /**
  * @Security("is_granted('ROLE_ACCESS_DASHBOARD')")
  */
-class DashboardController extends Controller
+class DashboardController extends Controller implements NewAdminController
 {
     /**
      *
      * @Route("/dashboard")
+     * @Route("/dashboard/default", name="pumukit_newadmin_dashboard_index_default")
      * @Template
      */
     public function indexAction(Request $request)

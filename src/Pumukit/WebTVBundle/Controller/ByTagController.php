@@ -11,7 +11,7 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\Tag;
 
-class ByTagController extends Controller
+class ByTagController extends Controller implements WebTVController
 {
 
   /**

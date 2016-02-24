@@ -20,7 +20,7 @@ use Pumukit\EncoderBundle\Document\Job;
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
-class TrackController extends Controller
+class TrackController extends Controller implements NewAdminController
 {
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")

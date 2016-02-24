@@ -21,7 +21,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
-class MultimediaObjectController extends SortableAdminController
+class MultimediaObjectController extends SortableAdminController implements NewAdminController
 {
     /**
      * Overwrite to search criteria with date
@@ -763,11 +763,14 @@ class MultimediaObjectController extends SortableAdminController
 
         $rank = 1;
         foreach($mms as $mm){
-          $mm->setRank($rank++);
-          $dm->persist($mm);
+            $dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
+              ->update()
+              ->field('rank')->set($rank++)
+              ->field('_id')->equals($mm->getId())
+              ->getQuery()
+              ->execute();
         }
-        $dm->flush();
-
+        
         return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));      
     }
 

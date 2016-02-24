@@ -125,8 +125,8 @@ class StatsService
 
         $matchExtra = array();
         if (!empty($criteria)) {
-            $mmobjIds = $this->getMmobjIdsWithCriteria($criteria);
-            $matchExtra['multimediaObject'] = array('$in' => $mmobjIds);
+            $mmobjIds = $this->getSeriesIdsWithCriteria($criteria);
+            $matchExtra['series'] = array('$in' => $mmobjIds);
         }
 
         $options = $this->parseOptions($options);
@@ -277,6 +277,13 @@ class StatsService
     private function getMmobjIdsWithCriteria($criteria)
     {
         $mmobjIds = $this->repo->createQueryBuilder()->addAnd($criteria)->distinct('_id')->getQuery()->execute()->toArray();
+
+        return $mmobjIds;
+    }
+
+    private function getSeriesIdsWithCriteria($criteria)
+    {
+        $mmobjIds = $this->repoSeries->createQueryBuilder()->addAnd($criteria)->distinct('_id')->getQuery()->execute()->toArray();
 
         return $mmobjIds;
     }

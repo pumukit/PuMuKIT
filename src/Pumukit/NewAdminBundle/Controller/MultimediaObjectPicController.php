@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
-class MultimediaObjectPicController extends Controller
+class MultimediaObjectPicController extends Controller implements NewAdminController
 {
     /**
      *

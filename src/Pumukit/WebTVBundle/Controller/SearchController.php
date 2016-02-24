@@ -13,7 +13,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
 
-class SearchController extends Controller
+class SearchController extends Controller implements WebTVController
 {
     /**
      * @Route("/searchseries")
@@ -71,9 +71,10 @@ class SearchController extends Controller
      */
     public function multimediaObjectsAction(Request $request, Tag $blockedTag = null, $useTagAsGeneral = false)
     {
-        $templateTitle = $this->container->getParameter('menu.search_title');
-
-        $this->get('pumukit_web_tv.breadcrumbs')->addList($blockedTag ? $blockedTag->getTitle() : $templateTitle?:'Multimedia object search', 'pumukit_webtv_search_multimediaobjects');
+        //Add translated title to breadcrumbs.
+        $templateTitle = $this->container->getParameter('menu.search_title')?:'Multimedia objects search';
+        $templateTitle = $this->get('translator')->trans($templateTitle);
+        $this->get('pumukit_web_tv.breadcrumbs')->addList($blockedTag ? $blockedTag->getTitle() : $templateTitle, 'pumukit_webtv_search_multimediaobjects');
 
         // --- Get Tag Parent for Tag Fields ---
         $parentTag = $this->getParentTag();
