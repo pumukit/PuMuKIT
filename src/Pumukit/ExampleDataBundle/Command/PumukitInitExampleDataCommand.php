@@ -55,6 +55,7 @@ EOT
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
         $this->roleRepo = $this->dm->getRepository('PumukitSchemaBundle:Role');
         $this->seriesRepo = $this->dm->getRepository('PumukitSchemaBundle:Series');
+        $this->pmk2AllLocales = $this->getContainer()->getParameter('pumukit2.locales');
 
         $factoryService = $this->getContainer()->get('pumukitschema.factory');
 
@@ -350,7 +351,9 @@ EOT
 
         $series->setAnnounce($announce);
         $series->setPublicDate($publicDate);
-        $series->setTitle($title);
+        foreach ($this->pmk2AllLocales as $locale) {
+            $series->setTitle($title, $locale);
+        }
         $series->setSubtitle($subtitle);
         $series->setDescription($description);
         $series->setHeader($header);
@@ -416,7 +419,9 @@ EOT
         $multimediaObject->setSeries($series);
         $multimediaObject->setRecordDate($record_date);
         $multimediaObject->setPublicDate($public_date);
-        $multimediaObject->setTitle($title);
+        foreach ($this->pmk2AllLocales as $locale) {
+            $multimediaObject->setTitle($title, $locale);
+        }
         $multimediaObject->setSubtitle($subtitle);
         $multimediaObject->setDescription($description);
     }

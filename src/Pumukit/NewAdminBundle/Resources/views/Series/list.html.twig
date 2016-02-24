@@ -17,13 +17,6 @@
     </thead>
 
     <tbody>
-      {% if series is empty %}
-      <tr>
-        <td colspan="12">
-          {% trans %}There are no series with those values.{% endtrans %}
-        </td>
-      </tr>
-      {% endif %}
       {% for oneseries in series %}
       <tr style="cursor: pointer" {% if(app.session.get('admin/series/id') == oneseries.id ) %} class="success" {% endif %}>
         <td>
