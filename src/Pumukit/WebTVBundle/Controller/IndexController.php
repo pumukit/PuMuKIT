@@ -36,32 +36,23 @@ class IndexController extends Controller
     }
 
     /**
-     * @Template()
+     * @Template("PumukitWebTVBundle:Index:mostviewed.html.twig")
      */
     public function mostviewedAction()
     {
-        $limit = 3;
-        if ($this->container->hasParameter('limit_objs_mostviewed')){
-            $limit = $this->container->getParameter('limit_objs_mostviewed');
-        }
+        $limit = $this->container->getParameter('limit_objs_mostviewed');
+        $showLastMonth = $this->container->getParameter('show_mostviewed_lastmonth');
+ 
         $repository = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $multimediaObjectsSortedByNumview = $repository->findStandardBy(array(), array('numview' => -1), $limit, 0);
-
-        return array('multimediaObjectsSortedByNumview' => $multimediaObjectsSortedByNumview);
-    }
-
-    /**
-     * @Template("PumukitWebTVBundle:Index:mostviewed.html.twig")
-     */
-    public function mostviewedlastmonthAction()
-    {
-        $limit = 3;
-        if ($this->container->hasParameter('limit_objs_mostviewed')){
-            $limit = $this->container->getParameter('limit_objs_mostviewed');
+        if($showLastMonth){
+            $multimediaObjectsSortedByNumview = $this->get('pumukit_stats.stats')->getMostViewedUsingFilters(30, $limit);
         }
-        $multimediaObjectsSortedByNumview = $this->get('pumukit_stats.stats')->getMostViewedUsingFilters(30, $limit);
-
-        return array('multimediaObjectsSortedByNumview' => $multimediaObjectsSortedByNumview);
+        else {
+            $multimediaObjectsSortedByNumview = $repository->findStandardBy(array(), array('numview' => -1), $limit, 0);
+        }
+        return array('multimediaObjectsSortedByNumview' => $multimediaObjectsSortedByNumview,
+                     'show_last_month' => $showLastMonth,
+        );
     }
 
     /**
@@ -69,10 +60,8 @@ class IndexController extends Controller
      */
     public function recentlyaddedAction()
     {
-        $limit = 3;
-        if ($this->container->hasParameter('limit_objs_recentlyadded')){
-            $limit = $this->container->getParameter('limit_objs_recentlyadded');
-        }
+        $limit = $this->container->getParameter('limit_objs_recentlyadded');
+
         $last = $this->get('pumukitschema.announce')->getLast($limit);
 
         return array('last' => $last);

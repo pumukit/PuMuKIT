@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\NewAdminBundle\Form\Type\UserUpdateType;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_ADMIN_USERS')")
@@ -45,18 +46,14 @@ class UserController extends AdminController
     {
         $config = $this->getConfiguration();
         $permissionProfileService = $this->get('pumukitschema.permissionprofile');
+        $userService = $this->get('pumukitschema.user');
 
-        $user = new User();
-        $defaultPermissionProfile = $permissionProfileService->getDefault();
-        if (null == $defaultPermissionProfile) {
-            throw new \Exception('Unable to assign a Permission Profile to the new User. There is no default Permission Profile');
-        }
-        $user->setPermissionProfile($defaultPermissionProfile);
+        $user = $userService->instantiate();
         $form = $this->getForm($user);
 
         if ($form->handleRequest($request)->isValid()) {
             try {
-                $user = $this->get('pumukitschema.user')->create($user);
+                $user = $userService->create($user);
                 $user = $this->get('pumukitschema.person')->referencePersonIntoUser($user);
             } catch (\Exception $e) {
                 throw $e;
@@ -95,7 +92,9 @@ class UserController extends AdminController
         $userManager = $this->get('fos_user.user_manager');
 
         $user = $this->findOr404($request);
-        $form = $this->getForm($user);
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
+        $form = $this->createForm(new UserUpdateType($translator, $locale), $user);
 
         if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
             try {
@@ -175,7 +174,7 @@ class UserController extends AdminController
           ->get('doctrine_mongodb.odm.document_manager')
           ->getRepository('PumukitSchemaBundle:User');
 
-        $loggedInUser = $this->container->get('security.context')->getToken()->getUser();
+        $loggedInUser = $this->getUser();
 
         if ($loggedInUser === $userToDelete) {
             return new Response("Can not delete the logged in user '".$loggedInUser->getUsername()."'", 409);
@@ -192,7 +191,7 @@ class UserController extends AdminController
 
         if (null != $person = $userToDelete->getPerson()) {
             try {
-                $this->get('pumukitschema.person')->deletePerson($person, true);
+                $this->get('pumukitschema.person')->removeUserFromPerson($userToDelete, $person, true);
             } catch (\Exception $e) {
                 return new Response("Can not delete the user '".$userToDelete->getUsername()."'. ".$e->getMessage(), 409);
             }

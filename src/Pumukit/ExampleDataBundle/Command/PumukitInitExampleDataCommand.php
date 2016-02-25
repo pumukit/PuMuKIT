@@ -55,6 +55,7 @@ EOT
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
         $this->roleRepo = $this->dm->getRepository('PumukitSchemaBundle:Role');
         $this->seriesRepo = $this->dm->getRepository('PumukitSchemaBundle:Series');
+        $this->pmk2AllLocales = $this->getContainer()->getParameter('pumukit2.locales');
 
         $factoryService = $this->getContainer()->get('pumukitschema.factory');
 
@@ -350,7 +351,9 @@ EOT
 
         $series->setAnnounce($announce);
         $series->setPublicDate($publicDate);
-        $series->setTitle($title);
+        foreach ($this->pmk2AllLocales as $locale) {
+            $series->setTitle($title, $locale);
+        }
         $series->setSubtitle($subtitle);
         $series->setDescription($description);
         $series->setHeader($header);
@@ -410,17 +413,17 @@ EOT
         $title = $title;
         $subtitle = '';
         $description = '';
-        $numview = 3;
 
         $multimediaObject->setRank($rank);
         $multimediaObject->setStatus($status);
         $multimediaObject->setSeries($series);
         $multimediaObject->setRecordDate($record_date);
         $multimediaObject->setPublicDate($public_date);
-        $multimediaObject->setTitle($title);
+        foreach ($this->pmk2AllLocales as $locale) {
+            $multimediaObject->setTitle($title, $locale);
+        }
         $multimediaObject->setSubtitle($subtitle);
         $multimediaObject->setDescription($description);
-        $multimediaObject->setNumview($numview);
     }
 
     private function load_track_multimediaobject($multimediaObject, $folder, $track, $audio)
@@ -476,9 +479,9 @@ EOT
     private function load_viewsLog(DocumentManager $dm, $output)
     {
         $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $viewsLogRepo = $dm->getRepository('PumukitStatsBundle:ViewsLog');
+        $viewsLogColl = $dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
 
-        $allMmobjs = $mmobjRepo->findAll();
+        $allMmobjs = $mmobjRepo->findStandardBy(array());
         $useragents = array('Mozilla/5.0 PuMuKIT/2.2 (UserAgent Example Data.) Gecko/20100101 Firefox/40.1',
                              'Mozilla/5.0 PuMuKIT/2.2 (This is not the user agent you are looking for...) Gecko/20100101 Firefox/40.1',
                              'Mozilla/5.0 PuMuKIT/2.2 (The answer to everything: 42) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36',
@@ -490,9 +493,8 @@ EOT
                             '74.125.224.72',
         );
 
-        $initTime = (new \DateTime('2013-03-03'))->getTimestamp();
-        $endTime = (new \DateTime('2015-03-03'))->getTimestamp();
-        $date = new \DateTime();
+        $initTime = (new \DateTime('2 years ago'))->getTimestamp();
+        $endTime = (new \DateTime())->getTimestamp();
 
         $clientip = $clientips[array_rand($clientips)];
         $useragent = $useragents[array_rand($useragents)];
@@ -502,27 +504,24 @@ EOT
         $progress->setFormat('verbose');
         $progress->start();
 
+        $logs = array();
         foreach ($allMmobjs as $id => $mmobj) {
             $progress->setProgress($id);
             for ($i = rand(1, 1000); $i > 0; --$i) {
-                $uri = 'http://localhost:8080/video/'.$mmobj->getId();
-                $referer = 'http://localhost:8080/series/'.$mmobj->getSeries()->getId();
-                $log = new ViewsLog($uri,
-                                    $clientip,
-                                    $useragent,
-                                    $referer,
-                                    $mmobj->getId(),
-                                    $mmobj->getSeries()->getId(),
-                                    null);
                 $randTimestamp = rand($initTime, $endTime);
-                $date->setTimestamp($randTimestamp);
-                $log->setDate(clone $date);
-                $dm->persist($log);
+                $logs[] = array('date' => new \MongoDate($randTimestamp),
+                                'url' => 'http://localhost:8080/video/'.$mmobj->getId(),
+                                'ip' => $clientip,
+                                'userAgent' => $useragent,
+                                'referer' => 'http://localhost:8080/series/'.$mmobj->getSeries()->getId(),
+                                'multimediaObject' => new \MongoId($mmobj->getId()),
+                                'series' => new \MongoId($mmobj->getSeries()->getId()));
                 $mmobj->incNumview();
                 $dm->persist($mmobj);
             }
         }
         $progress->setProgress(count($allMmobjs));
+        $viewsLogColl->batchInsert($logs);
         $dm->flush();
         $progress->finish();
     }

@@ -28,12 +28,12 @@ class Job
      * @var array
      */
     public static $statusTexts = array(
-      -1 => "Error",
-      0 => "Paused",
-      1 => "Waiting",
-      2 => "Executing",
-      3 => "Finished"
-    );
+                                       self::STATUS_ERROR => "Error",
+                                       self::STATUS_PAUSED => "Paused",
+                                       self::STATUS_WAITING => "Waiting",
+                                       self::STATUS_EXECUTING => "Executing",
+                                       self::STATUS_FINISHED => "Finished"
+                                       );
     
     /**
      * @var int $id

@@ -33,6 +33,10 @@ class AppKernel extends Kernel
             new Pumukit\WizardBundle\PumukitWizardBundle(),
             new Pumukit\WebTVBundle\PumukitWebTVBundle(),
             new Pumukit\StatsBundle\PumukitStatsBundle(),
+            new Pumukit\BasePlayerBundle\PumukitBasePlayerBundle(),
+            new Pumukit\PaellaPlayerBundle\PumukitPaellaPlayerBundle(),
+//            new Pumukit\JWPlayerBundle\PumukitJWPlayerBundle(),
+            new Pumukit\VideoEditorBundle\PumukitVideoEditorBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
@@ -42,6 +46,8 @@ class AppKernel extends Kernel
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
             $bundles[] = new Pumukit\InstallBundleBundle\PumukitInstallBundleBundle();
             $bundles[] = new Pumukit\ExampleDataBundle\PumukitExampleDataBundle();
+            $bundles[] = new Vipx\BotDetectBundle\VipxBotDetectBundle();
+
         }
 
         return $bundles;

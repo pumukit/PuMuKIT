@@ -35,6 +35,7 @@
             <argument type="service" id="pumukitschema.tag" />
             <argument type="service" id="pumukitschema.person" />
             <argument type="service" id="pumukitschema.user" />
+            <argument type="service" id="pumukitschema.multimediaobject_dispatcher" />
             <argument type="service" id="translator" />
             <argument>%pumukitschema.enable_add_user_as_person%</argument>
             <argument>%pumukit2.locales%</argument>
@@ -55,6 +56,10 @@
 	        <argument>%pumukit2.uploads_dir%/pic/</argument>
 	        <argument>%pumukit2.uploads_url%/pic</argument>
             <argument>%pumukit2.delete_on_disk%</argument>
+        </service>
+
+        <service id="pumukitschema.mmsduration" class="Pumukit\SchemaBundle\Services\MultimediaObjectDurationService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
 
         <service id="pumukitschema.multimedia_object" class="Pumukit\SchemaBundle\Services\MultimediaObjectService">
@@ -147,15 +152,17 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="pumukitschema.personwithrole_dispatcher"/>
             <argument type="service" id="pumukitschema.user" />
+            <argument>%pumukitschema.enable_add_user_as_person%</argument>
             <argument>%pumukitschema.personal_scope_role_code%</argument>
         </service>
 
         <service id="pumukitschema.user" class="Pumukit\SchemaBundle\Services\UserService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
-            <argument type="service" id="security.context" />
             <argument type="service" id="pumukitschema.user_dispatcher" />
             <argument type="service" id="pumukitschema.permission"/>
+            <argument type="service" id="pumukitschema.permissionprofile"/>
             <argument>%pumukitschema.personal_scope_delete_owners%</argument>
+            <argument>%pumukitschema.gen_user_salt%</argument>
         </service>
 
         <service id="pumukitschema.pic" class="Pumukit\SchemaBundle\Services\PicService">

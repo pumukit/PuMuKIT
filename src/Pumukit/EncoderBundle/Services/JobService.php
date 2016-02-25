@@ -434,9 +434,16 @@ class JobService
         $vars = $job->getInitVars();
 
         $vars['tracks'] = array();
+        $vars['tracks_audio'] = array();
+        $vars['tracks_video'] = array();
         foreach ($mmobj->getTracks() as $track) {
             foreach($track->getTags() as $tag) {
                 $vars['tracks'][$tag] = $track->getPath();
+                if ($track->isOnlyAudio()) {
+                    $vars['tracks_audio'][$tag] = $track->getPath();
+                } else {
+                    $vars['tracks_video'][$tag] = $track->getPath();
+                }
             }
         }
 
@@ -682,10 +689,10 @@ class JobService
         $jobs = $this->repo->findWithStatus(array(Job::STATUS_EXECUTING));
         $yesterday = new \DateTime('-1 day'); 
 
-        foreach($jobs as $job) {
-          if($job->getTimestart() < $yesterday) {  
-            $this->logger->addError(sprintf('[checkService] Job executing for a long time %s', $job->getId()));
-          }
+        foreach ($jobs as $job) {
+            if($job->getTimestart() < $yesterday) {
+                $this->logger->addError(sprintf('[checkService] Job executing for a long time %s', $job->getId()));
+            }
         }
     }
 

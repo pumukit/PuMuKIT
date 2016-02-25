@@ -17,13 +17,6 @@
     </thead>
 
     <tbody>
-      {% if series.currentPageResults|length == 0 %}
-      <tr>
-        <td colspan="12">
-          {% trans %}There are no series with those values.{% endtrans %}
-        </td>
-      </tr>
-      {% endif %}
       {% for oneseries in series %}
       <tr style="cursor: pointer" {% if(app.session.get('admin/series/id') == oneseries.id ) %} class="success" {% endif %}>
         <td>
@@ -65,6 +58,12 @@
         </td>
         <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
           {{ oneseries|count_multimedia_objects }}
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="12">
+          {% trans %}There are no series with those values.{% endtrans %}
         </td>
       </tr>
       {% endfor %}
