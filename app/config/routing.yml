@@ -3,6 +3,10 @@
 #     type:     annotation
 #     prefix:   /
 
+# pumukit_video_editor:
+#     resource: "@PumukitVideoEditorBundle/Resources/config/routing.yml"
+#     prefix:   /
+
 pumukit_jw_player:
    resource: "@PumukitJWPlayerBundle/Controller/"
    type:     annotation
@@ -11,10 +15,6 @@ pumukit_jw_player:
 pumukit_base_player:
     resource: "@PumukitBasePlayerBundle/Controller/"
     type:     annotation
-    prefix:   /
-
-pumukit_video_editor:
-    resource: "@PumukitVideoEditorBundle/Resources/config/routing.yml"
     prefix:   /
 
 pumukit_stats:
