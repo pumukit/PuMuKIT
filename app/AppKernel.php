@@ -36,7 +36,7 @@ class AppKernel extends Kernel
             new Pumukit\BasePlayerBundle\PumukitBasePlayerBundle(),
 //            new Pumukit\PaellaPlayerBundle\PumukitPaellaPlayerBundle(),
             new Pumukit\JWPlayerBundle\PumukitJWPlayerBundle(),
-            new Pumukit\VideoEditorBundle\PumukitVideoEditorBundle(),
+            //new Pumukit\VideoEditorBundle\PumukitVideoEditorBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
