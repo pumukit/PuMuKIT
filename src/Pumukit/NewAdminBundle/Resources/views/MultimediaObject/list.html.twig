@@ -21,14 +21,6 @@
     </thead>
 
     <tbody>
-      {% if (0 == mms|length) %}
-      <tr>
-        <td colspan="13">
-          {% trans %}There are no multimedia objects with those values.{% endtrans %}
-        </td>
-      </tr>
-      {% endif %}
-
       {% for mm in mms %}
       <tr style="cursor: pointer" {% if(app.session.get('admin/mms/id') == mm.id ) %} class="success" {% endif %}>
         <td>
@@ -85,6 +77,12 @@
         </td>
         <td class="text-nowrap" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
           {{ mm.getPublicDate()|date('d-m-Y') }}
+        </td>
+      </tr>
+    {% else %}
+      <tr>
+        <td colspan="13">
+          {% trans %}There are no multimedia objects with those values.{% endtrans %}
         </td>
       </tr>
     {% endfor %}

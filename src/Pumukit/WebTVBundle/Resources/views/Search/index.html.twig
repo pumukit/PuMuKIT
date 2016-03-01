@@ -16,21 +16,21 @@
     <div class="col-xs-12">
       <div class="row">
         <div class="col-xs-12">
-            {% if blocked_tag is defined and blocked_tag is not null %}
-            <h1 class="title-for-crumbs">{{ blocked_tag.title }}</h1>
-            {% else %}
-            <h1 class="title-for-crumbs">
-                {% if template_title %}
-                    {{ template_title |trans }}
+          {% if blocked_tag is defined and blocked_tag is not null %}
+            <h1 class="">{{ blocked_tag.title }}</h1>
+          {% else %}
+            <h1 class="">
+              {% if template_title is defined %}
+                {{ template_title |trans }}
+              {% else %}
+                {% if type == "series"%}
+                  {% trans %}Series search{% endtrans %}
                 {% else %}
-                    {% if type == "series"%}
-                        {% trans %}Series search{% endtrans %}
-                    {% else %}
-                        {% trans %}Multimedia object search{% endtrans %}
-                    {% endif %}
+                  {% trans %}Multimedia objects search{% endtrans %}
                 {% endif %}
+              {% endif %}
             </h1>
-            {% endif %}
+          {% endif %}
         </div>
       </div>
       <div class="row">

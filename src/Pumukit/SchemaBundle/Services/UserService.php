@@ -8,48 +8,36 @@ use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Security\Permission;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Symfony\Component\Security\Core\SecurityContext;
 
 class UserService
 {
     private $dm;
     private $repo;
-    private $securityContext;
     private $permissionService;
     private $personalScopeDeleteOwners;
     private $dispatcher;
+    private $permissionProfileService;
+    private $genUserSalt;
 
     /**
      * Constructor
      *
      * @param DocumentManager $documentManager
-     * @param SecurityContext $securityContext
      * @param UserEventDispatcherService $dispatcher
      * @param PermissionService $permissionService
-     * @param boolean         $personalScopeDeleteOwners
+     * @param PermissionProfileService $permissionProfileService
      */
-    public function __construct(DocumentManager $documentManager, SecurityContext $securityContext, UserEventDispatcherService $dispatcher, 
-                                PermissionService $permissionService, $personalScopeDeleteOwners=false)
+    public function __construct(DocumentManager $documentManager, UserEventDispatcherService $dispatcher, PermissionService $permissionService, PermissionProfileService $permissionProfileService, $personalScopeDeleteOwners=false, $genUserSalt=false)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:User');
-        $this->securityContext = $securityContext;
         $this->permissionService = $permissionService;
         $this->dispatcher = $dispatcher;
         $this->personalScopeDeleteOwners = $personalScopeDeleteOwners;
+        $this->permissionProfileService = $permissionProfileService;
+        $this->genUserSalt = $genUserSalt;
     }
 
-    /**
-     * Get logged in user
-     */
-    public function getLoggedInUser()
-    {
-        if (null != $token = $this->securityContext->getToken()) {
-            return $token->getUser();
-        }
-
-        return null;
-    }
 
     /**
      * Add owner user to MultimediaObject
@@ -64,12 +52,10 @@ class UserService
      */
     public function addOwnerUserToMultimediaObject(MultimediaObject $multimediaObject, User $user, $executeFlush=true)
     {
-        if (null != $user && null != $multimediaObject) {
-            $multimediaObject = $this->addOwnerUserToObject($multimediaObject, $user, $executeFlush);
-            $series = $this->addOwnerUserToObject($multimediaObject->getSeries(), $user, $executeFlush);
-            if ($executeFlush) {
-                $this->dm->flush();
-            }
+        $multimediaObject = $this->addOwnerUserToObject($multimediaObject, $user, $executeFlush);
+        $series = $this->addOwnerUserToObject($multimediaObject->getSeries(), $user, $executeFlush);
+        if ($executeFlush) {
+            $this->dm->flush();
         }
 
         return $multimediaObject;
@@ -88,7 +74,7 @@ class UserService
      */
     private function addOwnerUserToObject($object, User $user, $executeFlush=true)
     {
-        if (null != $object && null != $user) {
+        if (null != $object) {
             $owners = $object->getProperty('owners');
             if (null == $owners) {
                 $owners = array();
@@ -100,40 +86,10 @@ class UserService
             }
             if ($executeFlush) {
                 $this->dm->flush();
-            }        
+            }
         }
 
         return $object;
-    }
-
-    /**
-     * Allow to delete owner
-     *
-     * Checks if the logged in user
-     * is allowed to delete the owner
-     * (same user, or another user)
-     * from the MultimediaObject
-     * or Series
-     * Super Admin always is allowed
-     *
-     * @param User     $userFromPersonToDelete
-     * @return boolean
-     */
-    public function allowToDeleteOwner(User $userFromPersonToDelete)
-    {
-        if (null != $userFromPersonToDelete && null != $loggedInUser = $this->getLoggedInUser()) {
-            if ($userFromPersonToDelete == $loggedInUser) {
-                return true;
-            }
-            if ($loggedInUser->hasRole('ROLE_SUPER_ADMIN')) {
-                return true;
-            }
-            if ($loggedInUser->hasRole(PermissionProfile::SCOPE_PERSONAL) && $this->personalScopeDeleteOwners) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**
@@ -150,10 +106,6 @@ class UserService
      */
     public function removeOwnerUserFromMultimediaObject(MultimediaObject $multimediaObject, User $user, $executeFlush=true)
     {
-        if ($user != $this->getLoggedInUser()) {
-	    throw new \Exception('Not allowed to remove owner User with id "'.$user->getUsername().'" from MultimediaObject "'.$multimediaObject->getId().'". You are not that User.');
-        }
-
         $multimediaObject = $this->removeOwnerUserFromObject($multimediaObject, $user, $executeFlush);
         $series = $this->removeOwnerUserFromObject($multimediaObject->getSeries(), $user, $executeFlush);
 
@@ -162,7 +114,7 @@ class UserService
 
     private function removeOwnerUserFromObject($object, User $user, $executeFlush=true)
     {
-        if (null != $user && null != $object) {
+        if (null != $object) {
             $owners = $object->getProperty('owners');
             if (in_array($user->getId(), $owners)) {
                 if ($object->isCollection()) {
@@ -190,51 +142,21 @@ class UserService
         return $object;
     }
 
-    private function removeUserFromOwnerProperty($object, $user, $executeFlush=true)
+    private function removeUserFromOwnerProperty($object, User $user, $executeFlush=true)
     {
-        $owners = array_filter($object->getProperty('owners'), function ($ownerId) use ($user) {
-            return $ownerId !== $user->getId();
-        });
-        $object->setProperty('owners', $owners);
+        if (null != $object) {
+            $owners = array_filter($object->getProperty('owners'), function ($ownerId) use ($user) {
+                    return $ownerId !== $user->getId();
+                });
+            $object->setProperty('owners', $owners);
 
-        $this->dm->persist($object);
-        if ($executeFlush) {
-            $this->dm->flush();
-        }
-
-        return $object;
-    }
-
-    /**
-     * Is Personal Scope
-     *
-     * Checks if the logged in user
-     * or given user
-     * has role SCOPE_PERSONAL
-     *
-     * @return boolean
-     */
-    public function isPersonalScope($user=null)
-    {
-        if (null == $user) {
-            $loggedInUser = $this->getLoggedInUser();
-            return $this->checkPersonalScope($loggedInUser);
-        } else {
-            return $this->checkPersonalScope($user);
-        }
-
-        return false;
-    }
-
-    private function checkPersonalScope($user = null)
-    {
-        if (null != $user) {
-            if ($user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
-                return true;
+            $this->dm->persist($object);
+            if ($executeFlush) {
+                $this->dm->flush();
             }
         }
 
-        return false;
+        return $object;
     }
 
     /**
@@ -440,6 +362,30 @@ class UserService
             $this->dm->persist($user);
             $this->dm->flush();
         }
+
+        return $user;
+    }
+
+    /**
+     * Instantiate User
+     *
+     * @param  string  $userName
+     * @param  string  $email
+     * @param  boolean $enabled
+     * @return User
+     */
+    public function instantiate($userName = '', $email = '', $enabled = true)
+    {
+        $user = new User($this->genUserSalt);
+        if ($userName) $user->setUsername($userName);
+        if ($email) $user->setEmail($email);
+        $defaultPermissionProfile = $this->permissionProfileService->getDefault();
+        if (null == $defaultPermissionProfile) {
+            throw new \Exception('Unable to assign a Permission Profile to the new User. There is no default Permission Profile');
+        }
+        $user->setPermissionProfile($defaultPermissionProfile);
+        $user->setEnabled($enabled);
+        //$user->setOrigin('cas');
 
         return $user;
     }

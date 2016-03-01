@@ -63,7 +63,7 @@ class SeriesController extends AdminController
     public function createAction(Request $request)
     {
         $factory = $this->get('pumukitschema.factory');
-        $series = $factory->createSeries();
+        $series = $factory->createSeries($this->getUser());
         $this->get('session')->set('admin/series/id', $series->getId());
 
         return new JsonResponse(array('seriesId' => $series->getId()));
@@ -109,6 +109,14 @@ class SeriesController extends AdminController
         $factoryService = $this->get('pumukitschema.factory');
         $personService = $this->get('pumukitschema.person');
 
+        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
+
+        try {
+            $personalScopeRole = $personService->getPersonalScopeRole();
+        } catch (\Exception $e) {
+            return new Response($e, Response::HTTP_BAD_REQUEST);
+        }
+
         $roles = $personService->getRoles();
         if (null === $roles){
             throw new \Exception('Not found any role.');
@@ -126,14 +134,16 @@ class SeriesController extends AdminController
 
         return $this->render('PumukitNewAdminBundle:Series:update.html.twig',
                              array(
-                                   'series'        => $resource,
-                                   'form'          => $form->createView(),
-                                   'mmtemplate'    => $mmtemplate,
-                                   'form_meta'     => $formMeta->createView(),
-                                   'roles'         => $roles,
-                                   'pub_decisions' => $pubDecisionsTags,
-                                   'parent_tags'   => $parentTags,
-                                   'template'      => '_template'
+                                   'series'                   => $resource,
+                                   'form'                     => $form->createView(),
+                                   'mmtemplate'               => $mmtemplate,
+                                   'form_meta'                => $formMeta->createView(),
+                                   'roles'                    => $roles,
+                                   'personal_scope_role'      => $personalScopeRole,
+                                   'personal_scope_role_code' => $personalScopeRoleCode,
+                                   'pub_decisions'            => $pubDecisionsTags,
+                                   'parent_tags'              => $parentTags,
+                                   'template'                 => '_template'
                                    )
                              );
     }
@@ -486,5 +496,4 @@ class SeriesController extends AdminController
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_series_index'));
     }
-     
 }

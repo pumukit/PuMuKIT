@@ -21,40 +21,47 @@ class SearchController extends Controller
      */
     public function seriesAction(Request $request)
     {
-        $numberCols = 2;
-        if ($this->container->hasParameter('columns_objs_search')) {
-            $numberCols = $this->container->getParameter('columns_objs_search');
-        }
-
         $this->get('pumukit_web_tv.breadcrumbs')->addList('Series search', 'pumukit_webtv_search_series');
 
+        // --- Get Variables ---
         $searchFound = $request->query->get('search');
         $startFound = $request->query->get('start');
         $endFound = $request->query->get('end');
-
+        $yearFound = $request->query->get('year');
+        // --- END Get Variables --
+        // --- Get valid series ids ---
+        $validSeries = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject')
+                            ->createStandardQueryBuilder()
+                            ->distinct('series')
+                            ->getQuery()
+                            ->execute()->toArray();
+        // --- END Get valid series ids ---
+        // --- Create QueryBuilder ---
         $repository_series = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
-
         $queryBuilder = $repository_series->createQueryBuilder();
+        $queryBuilder = $queryBuilder->field('_id')->in($validSeries);
+        $queryBuilder = $this->searchQueryBuilder($queryBuilder, $searchFound);
+        $queryBuilder = $this->dateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound, 'public_date');
+        // --- END Create QueryBuilder ---
 
-        if ($searchFound != '') {
-            $queryBuilder->field('$text')->equals(array('$search' => $searchFound));
-        }
-
-        if ($startFound != 'All' && $startFound != '') {
-            $start = \DateTime::createFromFormat('d/m/Y', $startFound);
-            $queryBuilder->field('public_date')->gt($start);
-        }
-
-        if ($endFound != 'All' && $endFound != '') {
-            $end = \DateTime::createFromFormat('d/m/Y', $endFound);
-            $queryBuilder->field('public_date')->lt($end);
-        }
-
+        // --- Execute QueryBuilder count --
+        $countQuery = clone $queryBuilder;
+        $totalObjects = $countQuery->count()->getQuery()->execute();
+        // --- Execute QueryBuilder and get paged results ---
         $pagerfanta = $this->createPager($queryBuilder, $request->query->get('page', 1));
 
+        // -- Get years array --
+        $searchYears = $this->getSeriesYears();
+
+        // -- Init Number Cols for showing results ---
+        $numberCols = $this->container->getParameter('columns_objs_search');
+
+        // --- RETURN ---
         return array('type' => 'series',
         'objects' => $pagerfanta,
-        'number_cols' => $numberCols, );
+        'search_years' => $searchYears,
+        'number_cols' => $numberCols, 
+        'total_objects' => $totalObjects);
     }
 
     /**
@@ -64,11 +71,10 @@ class SearchController extends Controller
      */
     public function multimediaObjectsAction(Request $request, Tag $blockedTag = null, $useTagAsGeneral = false)
     {
-        $templateTitle = null;
-        if($this->container->hasParameter('menu.search_title')) {
-            $templateTitle = $this->container->getParameter('menu.search_title');
-        }
-        $this->get('pumukit_web_tv.breadcrumbs')->addList($blockedTag ? $blockedTag->getTitle() : $templateTitle?:'Multimedia object search', 'pumukit_webtv_search_multimediaobjects');
+        //Add translated title to breadcrumbs.
+        $templateTitle = $this->container->getParameter('menu.search_title')?:'Multimedia objects search';
+        $templateTitle = $this->get('translator')->trans($templateTitle);
+        $this->get('pumukit_web_tv.breadcrumbs')->addList($blockedTag ? $blockedTag->getTitle() : $templateTitle, 'pumukit_webtv_search_multimediaobjects');
 
         // --- Get Tag Parent for Tag Fields ---
         $parentTag = $this->getParentTag();
@@ -116,7 +122,7 @@ class SearchController extends Controller
         $minRecordDate = $firstMmobj->getRecordDate()->format('m/d/Y');
         $maxRecordDate = date('m/d/Y');
         // --- Get years array ---
-        $searchYears = $this->getYears();
+        $searchYears = $this->getMmobjsYears();
 
         // -- Init Number Cols for showing results ---
         $numberCols = $this->container->getParameter('columns_objs_search');
@@ -139,10 +145,8 @@ class SearchController extends Controller
 
     private function createPager($objects, $page)
     {
-        $limit = 10;
-        if ($this->container->hasParameter('limit_objs_search')) {
-            $limit = $this->container->getParameter('limit_objs_search');
-        }
+        $limit = $this->container->getParameter('limit_objs_search');
+
         $adapter = new DoctrineODMMongoDBAdapter($objects);
         $pagerfanta = new Pagerfanta($adapter);
         $pagerfanta->setMaxPerPage($limit);
@@ -155,10 +159,8 @@ class SearchController extends Controller
     private function getParentTag()
     {
         $tagRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
-        $searchByTagCod = 'ITUNESU';
-        if ($this->container->hasParameter('search.parent_tag.cod')) {
-            $searchByTagCod = $this->container->getParameter('search.parent_tag.cod');
-        }
+        $searchByTagCod = $this->container->getParameter('search.parent_tag.cod');
+
         $parentTag = $tagRepo->findOneByCod($searchByTagCod);
         if (!isset($parentTag)) {
             throw new \Exception(sprintf('The parent Tag with COD:  \' %s  \' does not exist. Check if your tags are initialized and that you added the correct \'cod\' to parameters.yml (search.parent_tag.cod)', $searchByTagCod));
@@ -169,14 +171,13 @@ class SearchController extends Controller
     private function getOptionalParentTag()
     {
         $tagRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
+
+        $searchByTagCod = $this->container->getParameter('search.parent_tag_2.cod');
         $parentTagOptional = null;
-        if ($this->container->hasParameter('search.parent_tag_2.cod')) {
-            $searchByTagCod2 = $this->container->getParameter('search.parent_tag_2.cod');
-            $parentTagOptional = $tagRepo->findOneByCod($searchByTagCod2);
-            if (!isset($parentTagOptional)) {
-                throw new \Exception(sprintf('The parent Tag with COD:  \' %s  \' does not exist. Check if your tags are initialized and that you added the correct \'cod\' to parameters.yml (search.parent_tag.cod)', $searchByTagCod));
-            }
+        if($searchByTagCod) {
+            $parentTagOptional = $tagRepo->findOneByCod($searchByTagCod);
         }
+        
         return $parentTagOptional;
     }
 
@@ -223,22 +224,23 @@ class SearchController extends Controller
         return $queryBuilder;
     }
 
-    private function dateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound)
+    private function dateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound, $dateField = 'record_date')
     {
         if( $yearFound ) {
             $start = \DateTime::createFromFormat('d/m/Y:H:i:s', sprintf('01/01/%s:00:00:01',$yearFound));
             $end = \DateTime::createFromFormat('d/m/Y:H:i:s', sprintf('01/01/%s:00:00:01',($yearFound)+1));
-            $queryBuilder->field('record_date')->gte($start);
-            $queryBuilder->field('record_date')->lt($end);
+            $queryBuilder->field($dateField)->gte($start);
+            $queryBuilder->field($dateField)->lt($end);
         }
         else {
             if ($startFound != '') {
-                $start = \DateTime::createFromFormat('d/m/Y', $startFound);
-                $queryBuilder->field('record_date')->gt($start);
+                $start = \DateTime::createFromFormat('!d/m/Y', $startFound);
+                $queryBuilder->field($dateField)->gt($start);
             }
             if ($endFound != '') {
-                $end = \DateTime::createFromFormat('d/m/Y', $endFound);
-                $queryBuilder->field('record_date')->lt($end);
+                $end = \DateTime::createFromFormat('!d/m/Y', $endFound);
+                $end->modify("+1 day");
+                $queryBuilder->field($dateField)->lt($end);
             }
         }
 
@@ -275,12 +277,27 @@ class SearchController extends Controller
     }
     // ========== END queryBuilder functions =========
 
-    private function getYears()
+    private function getMmobjsYears()
     {
         $mmObjColl = $this->get('doctrine_mongodb')->getManager()->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
         $pipeline = array(
             array('$match' => array('status' => MultimediaObject::STATUS_PUBLISHED)),
             array('$group' => array('_id' => array('$year' => '$record_date'))),
+            array('$sort' => array('_id' => 1)),
+        );
+        $yearResults = $mmObjColl->aggregate($pipeline);
+        $years = array();
+        foreach($yearResults as $year) {
+            $years[] = $year['_id'];
+        }
+        return $years;
+    }
+
+    private function getSeriesYears()
+    {
+        $mmObjColl = $this->get('doctrine_mongodb')->getManager()->getDocumentCollection('PumukitSchemaBundle:Series');
+        $pipeline = array(
+            array('$group' => array('_id' => array('$year' => '$public_date'))),
             array('$sort' => array('_id' => 1)),
         );
         $yearResults = $mmObjColl->aggregate($pipeline);

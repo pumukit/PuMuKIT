@@ -50,7 +50,7 @@ class SeriesController extends Controller
 
         $this->updateBreadcrumbs($series);
 
-        return array('series' => $series, 
+        return array('series' => $series,
                    'multimediaObjects' => $multimediaObjects,
                    'magic_url' => true);
     }
@@ -63,10 +63,7 @@ class SeriesController extends Controller
 
     private function createPager($objects, $page)
     {
-        $limit = 10;
-        if ($this->container->hasParameter('limit_objs_series')) {
-            $limit = $this->container->getParameter('limit_objs_search');
-        }
+        $limit = $this->container->getParameter('limit_objs_series');
 
         if (0 == $limit) {
             return $objects->getQuery()->execute();

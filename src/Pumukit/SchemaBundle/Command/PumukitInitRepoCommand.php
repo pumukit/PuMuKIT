@@ -32,6 +32,7 @@ class PumukitInitRepoCommand extends ContainerAwareCommand
     private $broadcastOption = self::BROADCAST_DEFAULT;
 
     private $allPermissions;
+    private $tagRequiredFields = array('cod', 'tree_parent_cod', 'metatag', 'display', 'name_en');
 
     protected function configure()
     {
@@ -56,6 +57,7 @@ EOT
     {
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->allPermissions = $this->getContainer()->get('pumukitschema.permission')->getAllPermissions();
+        $this->pmk2_allLocales = $this->getContainer()->getParameter('pumukit2.locales');
 
         if ($input->getOption('force') && ($repoName = $input->getArgument('repo'))) {
             switch ($repoName) {
@@ -226,119 +228,155 @@ EOT
 
     protected function createRoot()
     {
-        $root = $this->createTagFromCsvArray(array(null, "ROOT", 1, 1, "ROOT", "ROOT", "ROOT"));
+        $root = $this->createTagFromCsvArray(array('id' => null, 'cod' =>"ROOT", 'tree_parent_cod' =>null, 'metatag' => 1, 'display' => 0,'name_en' =>"ROOT"));
         $this->dm->flush();
 
         return $root;
     }
 
-    protected function createFromFile($file, $root, OutputInterface $output, $repoName)
+    protected function createFromFile($file_route, $root, OutputInterface $output, $repoName)
     {
-        if (!file_exists($file)) {
-            $output->writeln("<error>".$repoName.": Error stating ".$file."</error>");
+        /* NECCESSARY CHECKS*/
+        if (!file_exists($file_route)) {
+            $output->writeln('<error>'.$repoName.': Error stating '.$file.": File doesn't exist</error>");
 
             return -1;
         }
-        $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
+
+        if (($file = fopen($file_route, 'r')) === false) {
+            $output->writeln('<error>Error opening '.$file_route.": fopen() returned 'false' </error>");
+
+            return -1;
+        }
+
+        if($repoName == 'tag') {
+            //Creates the csvTagHeaders (to be used later)
+            if (($csvTagHeaders = fgetcsv($file, 300, ';', '"')) === false) {
+                $output->writeln('<error>Error reading first row (csv header) of '.$file_route.": fgetcsv returned 'false' </error>");
+                return -1;
+            }
+
+            //Checks if the file header has the required fields. (Only for tags)
+            $result_diff = array_diff($this->tagRequiredFields, $csvTagHeaders);
+            if (count($result_diff) > 0) {
+                $output->writeln('<error>Error reading first row (csv header) of '.$file_route.": HEADER doesn't have the required fields: ".print_r($result_diff, true).' </error>');
+
+                return -1;
+            }
+        }
+        /* END CHECKS */
+
+        $fileExtension = pathinfo($file_route, PATHINFO_EXTENSION);
         $ending = substr($fileExtension, -1);
         if (('~' === $ending) || ('#' === $ending)) {
             $output->writeln("<comment>".$repoName.": Ignoring file ".$file."</comment>");
             return -1;
         }
-        $output->writeln("<info>Found file: ".realpath($file)."</info>");
+        $output->writeln("<info>Found file: ".realpath($file_route)."</info>");
 
         $idCodMapping = array();
 
         $row = 1;
-        if (($file = fopen($file, "r")) !== false) {
-            while (($currentRow = fgetcsv($file, 300, ";")) !== false) {
-                $number = count($currentRow);
-                if ((('tag' === $repoName) && ($number == 6 || $number == 8)) || 
-                    (('broadcast' === $repoName) && ($number == 5 || $number == 8)) || 
-                    (('role' === $repoName) && ($number == 7 || $number == 10)) ||
-                    (('permissionprofile' === $repoName) && ($number == 6))){
-                    //Check header rows
-                    if (trim($currentRow[0]) == "id") {
-                        continue;
-                    }
-
-                    if ('tag' === $repoName){
-                        $parent = isset($idCodMapping[$currentRow[2]])
-                          ? $idCodMapping[$currentRow[2]]
-                          : $root;
-                    }
-
-                    try {
-                        switch ($repoName){
-                            case 'tag':
-                                $tag = $this->createTagFromCsvArray($currentRow, $parent);
-                                $idCodMapping[$currentRow[0]] = $tag;
-                                $output->writeln("Tag persisted - new id: ".$tag->getId()." cod: ".$tag->getCod());
-                                break;
-                            case 'broadcast':
-                                $broadcast = $this->createBroadcastFromCsvArray($currentRow);
-                                $idCodMapping[$currentRow[0]] = $broadcast;
-                                $output->writeln("Broadcast persisted - new id: ".$broadcast->getId()." name: ".$broadcast->getName().", type: ".$broadcast->getBroadcastTypeId());
-                                break;
-                            case 'role':
-                                $role = $this->createRoleFromCsvArray($currentRow);
-                                $idCodMapping[$currentRow[0]] = $role;
-                                $output->writeln("Role persisted - new id: ".$role->getId()." code: ".$role->getCod());
-                                break;
-                            case 'permissionprofile':
-                                $permissionProfile = $this->createPermissionProfileFromCsvArray($currentRow);
-                                $idCodMapping[$currentRow[0]] = $permissionProfile;
-                                $output->writeln("PermissionProfile persisted - new id: ".$permissionProfile->getId()." name: ".$permissionProfile->getName());
-                                break;
-                        }
-                    } catch (\Exception $e) {
-                        $output->writeln("<error>".$repoName.': '.$e->getMessage()."</error>");
-                    }
-                } else {
-                    $output->writeln($repoName.": Last valid row = ...");
-                    $output->writeln("Error: line $row has $number elements");
+        $importedTags = array();
+        while (($currentRow = fgetcsv($file, 300, ";")) !== false) {
+            $number = count($currentRow);
+            if (('tag' === $repoName) || 
+                (('broadcast' === $repoName) && ($number == 5 || $number == 8)) || 
+                (('role' === $repoName) && ($number == 7 || $number == 10)) ||
+                (('permissionprofile' === $repoName) && ($number == 6))){
+                //Check header rows
+                if (trim($currentRow[0]) == "id") {
+                    continue;
                 }
 
-                if ($row % 100 == 0) {
-                    echo "Row ".$row."\n";
+                try {
+                    switch ($repoName){
+                        case 'tag':
+                            $csvTagsArray = array();
+                            for ($i = 0; $i < count($currentRow); $i++) {
+                                $key = $csvTagHeaders[ $i ]; // Here we turn the csv into an associative array (Doesn't a csv parsing library do this already?)
+                                $csvTagsArray[ $key ] = $currentRow[ $i ];
+                            }
+
+                            if (isset($importedTags[ $csvTagsArray[ 'tree_parent_cod' ] ])) {
+                                $parent = $importedTags[ $csvTagsArray[ 'tree_parent_cod' ] ];
+                            } else {
+                                $parent = $this->tagsRepo->findOneByCod($csvTagsArray[ 'tree_parent_cod' ]);
+                            }
+
+                            if (!isset($parent)) {
+                                $parent = $root;
+                            }
+                            $tag = $this->createTagFromCsvArray($csvTagsArray, $parent);
+                            $importedTags[ $tag->getCod() ] = $tag;
+                            $output->writeln('Tag persisted - new id: '.$tag->getId().' cod: '.$tag->getCod());
+                            break;
+                        case 'broadcast':
+                            $broadcast = $this->createBroadcastFromCsvArray($currentRow);
+                            $idCodMapping[$currentRow[0]] = $broadcast;
+                            $output->writeln("Broadcast persisted - new id: ".$broadcast->getId()." name: ".$broadcast->getName().", type: ".$broadcast->getBroadcastTypeId());
+                            break;
+                        case 'role':
+                            $role = $this->createRoleFromCsvArray($currentRow);
+                            $idCodMapping[$currentRow[0]] = $role;
+                            $output->writeln("Role persisted - new id: ".$role->getId()." code: ".$role->getCod());
+                            break;
+                        case 'permissionprofile':
+                            $permissionProfile = $this->createPermissionProfileFromCsvArray($currentRow);
+                            $idCodMapping[$currentRow[0]] = $permissionProfile;
+                            $output->writeln("PermissionProfile persisted - new id: ".$permissionProfile->getId()." name: ".$permissionProfile->getName());
+                            break;
+                    }
+                } catch (\Exception $e) {
+                    $output->writeln("<error>".$repoName.': '.$e->getMessage()."</error>");
                 }
-                $previous_content = $currentRow;
-                $row++;
+            } else {
+                $output->writeln($repoName.": Last valid row = ...");
+                $output->writeln("Error: line $row has $number elements");
             }
-            fclose($file);
-            $this->dm->flush();
-        } else {
-            $output->writeln("<error>Error opening ".$file."</error>");
 
-            return -1;
+            if ($row % 100 == 0) {
+                echo "Row ".$row."\n";
+            }
+            $previous_content = $currentRow;
+            $row++;
         }
+        fclose($file);
+        $this->dm->flush();
     }
 
     /**
      *
      */
-    private function createTagFromCsvArray($csv_array, $tag_parent = null)
+    private function createTagFromCsvArray($csvTagsArray, $tag_parent = null)
     {
-        if ($tag = $this->tagsRepo->findOneByCod($csv_array[1])) {
-            throw new \LengthException("Nothing done - Tag retrieved from DB id: ".$tag->getId()." cod: ".$tag->getCod());
+        if ($tag = $this->tagsRepo->findOneByCod($csvTagsArray[ 'cod' ])) {
+            //    $this->dm->remove($tag);
+            throw new \LengthException('Nothing done - Tag retrieved from DB id: '.$tag->getId().' cod: '.$tag->getCod());
         }
 
         $tag = new Tag();
-        $tag->setCod($csv_array[1]);
-        $tag->setMetatag($csv_array[3]);
-        $tag->setDisplay($csv_array[4]);
+        $tag->setCod($csvTagsArray['cod']);
+        $tag->setMetatag($csvTagsArray['metatag']);
+        $tag->setDisplay($csvTagsArray['display']);
         if ($tag_parent) {
             $tag->setParent($tag_parent);
         }
-        // NOTE Take care of csv language order!
-        if (isset($csv_array[5])) {
-            $tag->setTitle($csv_array[5], 'es');
+        //Get all titles neccessary on PMK.
+        foreach ($this->pmk2_allLocales as $locale) {
+            $key_name = 'name_'.$locale;
+            if (isset($csvTagsArray[ $key_name ])) {
+                $tag->setTitle($csvTagsArray[ $key_name ], $locale);
+            } else {
+                //Default name will be in english
+                $tag->setTitle($csvTagsArray[ 'name_en' ], $locale);
+            }
         }
-        if (isset($csv_array[6])) {
-            $tag->setTitle($csv_array[6], 'gl');
-        }
-        if (isset($csv_array[7])) {
-            $tag->setTitle($csv_array[7], 'en');
+        foreach (array_keys($csvTagsArray) as $key) {
+            if (preg_match('/property_*/', $key, $matches)) {
+                $property_name = str_replace($matches[0], '', $key);
+                $tag->setProperty($property_name, $csvTagsArray[ $key ]);
+            }
         }
 
         $this->dm->persist($tag);

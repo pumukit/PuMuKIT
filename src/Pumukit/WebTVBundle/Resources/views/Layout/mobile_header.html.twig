@@ -2,9 +2,13 @@
   <div class="navbar-header" >
     <div class="row mobile_header">
       <span class="navbar-brand">
-          {% include 'PumukitWebTVBundle:Layout:logo.html.twig' %}
+        {% include 'PumukitWebTVBundle:Layout:logo.html.twig' %}
+      </span>
+      <span class="pull-right" style="margin:15px 2px">
+        {% include 'PumukitWebTVBundle:Index:loginbox.html.twig' %}
       </span>
       {% render( controller( 'PumukitWebTVBundle:Widget:languageselect') ) %}
+
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#pumukit-navbar-collapse-1">
         <span class="sr-only">TOGGLE NAVIGATION</span>
         <span class="icon-bar"></span>
@@ -15,15 +19,14 @@
         <span class="sr-only">TOGGLE SEARCH</span>
         <span class="glyphicon glyphicon-search"></span>
       </button>
-
     </div>
     <div class="collapse navbar-collapse" id="pumukit-navbar-collapse-2">
       {% include 'PumukitWebTVBundle:Layout:search_box.html.twig' %}
     </div>
   </div>
   <div class="row">
-  <div class="collapse navbar-collapse" id="pumukit-navbar-collapse-1">
-          {% render(controller('PumukitWebTVBundle:Widget:menu')) %}
-  </div><!--END navbar-collapse-->
+    <div class="collapse navbar-collapse" id="pumukit-navbar-collapse-1">
+      {% render(controller('PumukitWebTVBundle:Widget:menu')) %}
+    </div><!--END navbar-collapse-->
   </div>
 </nav>

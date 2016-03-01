@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\StatsBundle\Document\ViewsLog;
-use Pumukit\WebTVBundle\Event\ViewedEvent;
+use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 
 class LogService
 {

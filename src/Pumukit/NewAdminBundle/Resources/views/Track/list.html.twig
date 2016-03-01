@@ -47,10 +47,14 @@
         </a>
       </td>
       <td>
+        {% if track.containsTag('opencast') %}
+          <i class="mdi-content-block" style="color:#009587"></i>
+        {% else %}
           <a title="{% trans %}Delete track{% endtrans %} {{ track.id }}" href="#" 
              onclick="window.submit_delete_track('{{ track.id }}', '{{ mm.id }}', '{{ mm.getSeries().getId() }}'); return false;">
              <i class="mdi-content-clear"></i>
           </a>
+        {% endif %}
       </td>
       <td>
         <a title="{% trans %}Autocomplete technical metadata of track{% endtrans %} {{ track.id }}" href="#" 
@@ -137,7 +141,7 @@
       </td>
     </tr>
   {% endfor %}
-  {% if mm.getProperty('opencast') %}
+  {% if mm.getProperty('opencast') and opencast_exists %}
      {% render(controller('PumukitOpencastBundle:MultimediaObject:index', {'id': mm.id })) %}
   {% endif %}
   <tr>

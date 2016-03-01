@@ -18,10 +18,8 @@ class AnnouncesController extends Controller
      */
     public function latestUploadsAction(Request $request)
     {
-        $templateTitle = 'Latest Uploads';
-        if($this->container->hasParameter('menu.announces_title')) {
-            $templateTitle = $this->container->getParameter('menu.announces_title');
-        }
+        $templateTitle = $this->container->getParameter('menu.announces_title');
+
         $this->get('pumukit_web_tv.breadcrumbs')->addList($templateTitle, 'pumukit_webtv_announces_latestuploads');
         return array('template_title' => $templateTitle);
     }
@@ -31,10 +29,8 @@ class AnnouncesController extends Controller
      */
     public function latestUploadsPagerAction(Request $request)
     {
-        $numberCols = 1;
-        if( $this->container->hasParameter('columns_objs_announces')){
-            $numberCols = $this->container->getParameter('columns_objs_announces');
-        }
+        $numberCols = $this->container->getParameter('columns_objs_announces');
+
 
         $announcesService = $this->get('pumukitschema.announce');
 

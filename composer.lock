@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0bf7f43fb9e8942e7b1435d9646ada26",
+    "hash": "52babefa2b828a5a54057b087c915585",
+    "content-hash": "193bea88bcd83ed5bf19762b5b57ab01",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -804,7 +805,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/d305acad9307a9f7419ec8a6f904de2fae38f770",
+                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/453ef86b8c499b05fefe9b67347b8b9c06e3f176",
                 "reference": "328c1eba840a4f3b81d3a28211b3f1ce5445ceaf",
                 "shasum": ""
             },
@@ -2533,12 +2534,12 @@
             "version": "v2.6.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/AsseticBundle.git",
+                "url": "https://github.com/symfony/assetic-bundle.git",
                 "reference": "422b0add2110f0cf9bc7a873a386ea053f4a89f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/AsseticBundle/zipball/422b0add2110f0cf9bc7a873a386ea053f4a89f0",
+                "url": "https://api.github.com/repos/symfony/assetic-bundle/zipball/422b0add2110f0cf9bc7a873a386ea053f4a89f0",
                 "reference": "422b0add2110f0cf9bc7a873a386ea053f4a89f0",
                 "shasum": ""
             },
@@ -2598,12 +2599,12 @@
             "version": "v2.7.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/MonologBundle.git",
+                "url": "https://github.com/symfony/monolog-bundle.git",
                 "reference": "9320b6863404c70ebe111e9040dab96f251de7ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/MonologBundle/zipball/9320b6863404c70ebe111e9040dab96f251de7ac",
+                "url": "https://api.github.com/repos/symfony/monolog-bundle/zipball/9320b6863404c70ebe111e9040dab96f251de7ac",
                 "reference": "9320b6863404c70ebe111e9040dab96f251de7ac",
                 "shasum": ""
             },
@@ -2657,12 +2658,12 @@
             "version": "v2.3.8",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/SwiftmailerBundle.git",
+                "url": "https://github.com/symfony/swiftmailer-bundle.git",
                 "reference": "970b13d01871207e81d17b17ddda025e7e21e797"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/SwiftmailerBundle/zipball/970b13d01871207e81d17b17ddda025e7e21e797",
+                "url": "https://api.github.com/repos/symfony/swiftmailer-bundle/zipball/970b13d01871207e81d17b17ddda025e7e21e797",
                 "reference": "970b13d01871207e81d17b17ddda025e7e21e797",
                 "shasum": ""
             },
@@ -2934,6 +2935,110 @@
                 "templating"
             ],
             "time": "2015-01-25 17:32:08"
+        },
+        {
+            "name": "vipx/bot-detect",
+            "version": "v1.2.3",
+            "target-dir": "Vipx/BotDetect",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lennerd/vipx-bot-detect.git",
+                "reference": "a1681255e2803e316e722b21fbd6418ae61bb11f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lennerd/vipx-bot-detect/zipball/a1681255e2803e316e722b21fbd6418ae61bb11f",
+                "reference": "a1681255e2803e316e722b21fbd6418ae61bb11f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4",
+                "symfony/config": "^2.3|^3.0",
+                "symfony/yaml": "^2.3|^3.0"
+            },
+            "require-dev": {
+                "satooshi/php-coveralls": "^1.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Vipx\\BotDetect": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lennart Hildebrandt",
+                    "email": "hello@lennerd.com"
+                }
+            ],
+            "description": "Bot detector library",
+            "homepage": "http://lennerd.com/",
+            "keywords": [
+                "bot"
+            ],
+            "time": "2016-02-05 09:29:57"
+        },
+        {
+            "name": "vipx/bot-detect-bundle",
+            "version": "v2.0.1",
+            "target-dir": "Vipx/BotDetectBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lennerd/VipxBotDetectBundle.git",
+                "reference": "cd4a7889c902d3cb6e94fdf795a98b4876ae2f72"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lennerd/VipxBotDetectBundle/zipball/cd4a7889c902d3cb6e94fdf795a98b4876ae2f72",
+                "reference": "cd4a7889c902d3cb6e94fdf795a98b4876ae2f72",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/framework-bundle": "~2.1",
+                "symfony/security-bundle": "~2.1",
+                "vipx/bot-detect": "~1.0"
+            },
+            "require-dev": {
+                "satooshi/php-coveralls": "~0.6"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Vipx\\BotDetectBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lennart Hildebrandt",
+                    "email": "hello@lennerd.com"
+                }
+            ],
+            "description": "Symfony VipxBotDetectBundle",
+            "homepage": "http://lennerd.com/",
+            "keywords": [
+                "bot",
+                "security"
+            ],
+            "time": "2014-10-13 08:29:16"
         },
         {
             "name": "white-october/pagerfanta-bundle",

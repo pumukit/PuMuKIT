@@ -1,56 +1,22 @@
-{% if track %}
-  {% set captions = captions(multimediaObject) %}
-  {% set captions_block %}
-  {% if captions is not empty %}
-    tracks: [
-    {% for caption in captions %}
-      {
-      file: "{{ asset(caption.url, absolute=true) }}",
-      label: "{{ caption.language|language_name }}",
-      kind: "captions"
-      },
-    {% endfor %}
-    ],
-  {% endif %}
-{% endset %}
-<video id="player1" controls></video>
-<script type="text/javascript">
-  jwplayer("player1").setup({
-    {% if intro %}
-    playlist: [{
-      file: "{{ asset(intro, absolute=true) }}",
-      {% if 'true' != autostart %}
-      image: "{{ multimediaObject|first_url_pic(true) }}",
-      {% endif %}
-    },{
-      file: "{{ asset(track.url, absolute=true) }}",
-      {{ captions_block }}
-      {% if ('true' != autostart) or track.isOnlyAudio() %}
-      image: "{{ multimediaObject|first_url_pic(true) }}",
-      {% endif %}
-    }],
-    {% else %}
-    file: "{{ asset(track.url, absolute=true) }}",
-    {{ captions_block }}
-    {% if (('true' != autostart) or track.isOnlyAudio()) %}
-    image: "{{ multimediaObject|first_url_pic(true) }}",
-    {% endif %}
-    {% endif %}
-    startparam: "start",
-    autostart: {{ autostart|default("true") }},
-    repeat: "false",
-    {% if responsive is defined %}
-    width: '100%',
-    aspectratio: '16:9',
-    {% else %}
-    width: {{ width|default("620") }},
-    height: {{ height|default("465") }},
-    {% endif %}
-    logo: { hide: true }
-  });
+<script>
+function resizeFrame(elem){
+    var width = $(elem).width()
+    var height = width/16*9;
+    $(elem).height(height);
+    console.log('width', width);
+    console.log('height', height);
+}
+$(window).resize(function(){
+    resizeFrame($('#paellaiframe'));
+});
 </script>
-{% else %}
-<div style="color: white; background: black; {% if responsive %} width: 100%; height: 300px; {% else %}width: {{ width|default('620') }}px; height: {{ height|default('465') }}px;{% endif %} text-align: center;vertical-align: middle;display: table-cell;">
-  No track.
-</div>
-{% endif %}
+<iframe src="{{url('pumukit_videoplayer_index', {'id':multimediaObject.id})}}?id={{multimediaObject.id}}"
+        id="paellaiframe"
+        frameborder="0"
+        border="0"
+        width="100%"
+        onload="resizeFrame(this)"
+        height="500px"
+        scrolling="no"
+        allowfullscreen>
+</iframe>
