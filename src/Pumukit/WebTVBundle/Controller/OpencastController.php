@@ -2,7 +2,8 @@
 
 namespace Pumukit\WebTVBundle\Controller;
 
-
+use Pumukit\BasePlayerBundle\Event\BasePlayerEvents;
+use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\Broadcast;
@@ -14,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+
 
 class OpencastController extends PlayerController
 {
@@ -32,8 +34,8 @@ class OpencastController extends PlayerController
 
         $mmobjService = $this->get('pumukitschema.multimedia_object');
         if ($this->container->hasParameter('pumukit.opencast.use_redirect') && $this->container->getParameter('pumukit.opencast.use_redirect')) {
-            $mmobjService->incNumView($multimediaObject);
-            $mmobjService->dispatch($multimediaObject);
+            $event = new ViewedEvent($multimediaObject, $track);
+            $this->get('event_dispatcher')->dispatch(BasePlayerEvents::MULTIMEDIAOBJECT_VIEW, $event);
             if ($invert = $multimediaObject->getProperty('opencastinvert')) {
                 $opencasturl .= '&display=invert';
             }
