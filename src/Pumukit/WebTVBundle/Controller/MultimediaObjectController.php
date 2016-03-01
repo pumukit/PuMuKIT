@@ -96,9 +96,6 @@ class MultimediaObjectController extends PlayerController
                  $multimediaObject->getTrackById($request->query->get('track_id')) :
                  $multimediaObject->getTrackWithTag('display');
 
-
-        $this->dispatchViewEvent($multimediaObject, $track);
-
         if ($track && $track->containsTag('download')) {
             return $this->redirect($track->getUrl());
         }

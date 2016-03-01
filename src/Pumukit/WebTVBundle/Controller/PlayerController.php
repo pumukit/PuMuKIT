@@ -9,8 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Pumukit\WebTVBundle\Event\WebTVEvents;
-use Pumukit\WebTVBundle\Event\ViewedEvent;
 
 class PlayerController extends Controller
 {
@@ -69,12 +67,6 @@ class PlayerController extends Controller
         }
 
         return $intro;
-    }
-
-    public function dispatchViewEvent(MultimediaObject $multimediaObject, Track $track = null)
-    {
-        $event = new ViewedEvent($multimediaObject, $track);
-        $this->get('event_dispatcher')->dispatch(WebTVEvents::MULTIMEDIAOBJECT_VIEW, $event);
     }
 
     protected function getChapterMarks(MultimediaObject $multimediaObject)
