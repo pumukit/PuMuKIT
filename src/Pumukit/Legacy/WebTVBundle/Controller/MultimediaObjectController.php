@@ -13,8 +13,8 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\Broadcast;
-use Pumukit\Legacy\WebTVBundle\Event\ViewedEvent;
-use Pumukit\Legacy\WebTVBundle\Event\WebTVEvents;
+use Pumukit\BasePlayerBundle\Event\ViewedEvent;
+use Pumukit\BasePlayerBundle\Event\BasePlayerEvents;
 
 class MultimediaObjectController extends Controller
 {
@@ -41,7 +41,6 @@ class MultimediaObjectController extends Controller
       if (!$track)
         throw $this->createNotFoundException();
 
-      $this->incNumView($multimediaObject, $track);
       $this->dispatch($multimediaObject, $track);      
 
       if($track->containsTag("download")) {       
@@ -194,7 +193,7 @@ class MultimediaObjectController extends Controller
     protected function dispatch(MultimediaObject $multimediaObject, Track $track=null)
     {
         $event = new ViewedEvent($multimediaObject, $track);
-        $this->get('event_dispatcher')->dispatch(WebTVEvents::MULTIMEDIAOBJECT_VIEW, $event);
+        $this->get('event_dispatcher')->dispatch(BasePlayerEvents::MULTIMEDIAOBJECT_VIEW, $event);
     }
 
     protected function updateBreadcrumbs(MultimediaObject $multimediaObject)

@@ -7,7 +7,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\WebTVBundle\Event\ViewedEvent;
+use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 
 
 class MultimediaObjectService
@@ -62,7 +62,7 @@ class MultimediaObjectService
     }
 
     /**
-     * Returns true if the $mm is being displayed on the webtv frontend. ( Keep updated with SchemaFilter->getCriteria() )
+     * Returns true if the $mm is being displayed on the baseplayer. ( Keep updated with SchemaFilter->getCriteria() )
      * @param MultimediaObject
      * @param String
      * @return boolean
