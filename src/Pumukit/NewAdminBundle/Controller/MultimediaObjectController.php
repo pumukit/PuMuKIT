@@ -165,6 +165,8 @@ class MultimediaObjectController extends SortableAdminController
 
         $activeEditor = $this->checkHasEditor();
         $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
+        $allBundles = $this->container->getParameter('kernel.bundles');
+        $opencastExists = array_key_exists('OpencastBundle', $allBundles);
 
         return array(
                      'mm'                       => $resource,
@@ -181,6 +183,7 @@ class MultimediaObjectController extends SortableAdminController
                      'not_master_profiles'      => $notMasterProfiles,
                      'template'                 => $template,
                      'active_editor'            => $activeEditor,
+                     'opencast_exists'          => $opencastExists,
                      'not_change_pub_channel'   => $notChangePubChannel
                      );
     }

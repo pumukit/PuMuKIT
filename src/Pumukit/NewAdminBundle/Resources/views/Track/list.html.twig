@@ -141,7 +141,7 @@
       </td>
     </tr>
   {% endfor %}
-  {% if mm.getProperty('opencast') %}
+  {% if mm.getProperty('opencast') and opencast_exists %}
      {% render(controller('PumukitOpencastBundle:MultimediaObject:index', {'id': mm.id })) %}
   {% endif %}
   <tr>
