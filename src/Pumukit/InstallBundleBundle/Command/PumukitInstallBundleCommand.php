@@ -53,7 +53,7 @@ EOT
         }
 
         $appendToEnd = $input->getOption('append-to-end');
-        
+
         $this->uninstall = $input->getOption('uninstall');
 
         foreach ($input->getArgument('bundle') as $bundleName) {
@@ -67,6 +67,7 @@ EOT
     {
         //Helper to autocomplete in a shell: delete "src/" from the begin and ".php" from the tail.
         $bundleName = preg_replace('/^src\/(.*?)\.php$/i', '${1}', $bundleName);
+
         return str_replace('/', '\\', $bundleName);
     }
 
@@ -75,10 +76,9 @@ EOT
         $manip = new KernelManipulator($kernel);
 
         try {
-            if(!$this->uninstall) {
+            if (!$this->uninstall) {
                 $ret = $manip->addBundle($bundle);
-            }
-            else {
+            } else {
                 $ret = $this->removeBundle($bundle);
                 //$ret = $manip->removeBundle($bundle);//DOESNT EXIST
             }
@@ -91,10 +91,11 @@ EOT
                 $output->writeln(sprintf("    <comment>new %s(),</comment>\n", $bundle));
             }
         } catch (\RuntimeException $e) {
-            if(!$this->uninstall)
+            if (!$this->uninstall) {
                 $output->writeln(sprintf('Bundle <comment>%s</comment> is already defined in <comment>AppKernel::registerBundles()</comment>.', $bundle));
-            else 
+            } else {
                 $output->writeln(sprintf('Bundle <comment>%s</comment> is already not defined in <comment>AppKernel::registerBundles()</comment>.', $bundle));
+            }
         }
     }
 
@@ -106,10 +107,9 @@ EOT
             $routing = new RoutingManipulator($this->getContainer()->getParameter('kernel.root_dir').'/config/routing.yml');
             $bundleName = substr($bundle, 1 + strrpos($bundle, '\\'));
             try {
-                if(!$this->uninstall) {
+                if (!$this->uninstall) {
                     $ret = $routing->addResource($bundleName, $format, '/', 'routing', $appendToEnd);
-                }
-                else {
+                } else {
                     $ret = $this->removeResource($bundleName, $format, '/', 'routing');
                 }
 
@@ -126,13 +126,13 @@ EOT
                     $output->writeln($help);
                 }
             } catch (\RuntimeException $e) {
-                if(!$this->uninstall)                
+                if (!$this->uninstall) {
                     $output->writeln(sprintf('Bundle <comment>%s</comment> is already imported.', $bundle));
-                else
+                } else {
                     $output->writeln(sprintf('Bundle <comment>%s</comment> is already not imported.', $bundle));
+                }
             }
-        }
-        else {
+        } else {
             $output->writeln(sprintf('<comment>Warning: </comment> The routing file %s for the %s bundle does not exist', $bundleRoutingFile, $bundle));
         }
     }
@@ -169,7 +169,7 @@ EOT
 
         //Finds the bundle inside 'registerBundles' function and removes it.
         foreach ($lines as $key => $line) {
-            if(false !== strpos($line, $bundle)) {
+            if (false !== strpos($line, $bundle)) {
                 $srcKey = $key + $method->getStartLine() - 1;
                 unset($src[$srcKey]);
             }
@@ -198,7 +198,7 @@ EOT
         $routingFile = $this->getContainer()->getParameter('kernel.root_dir').'/config/routing.yml';
 
         $code = sprintf("%s:\n", Container::underscore(substr($bundle, 0, -6)).('/' !== $prefix ? '_'.str_replace('/', '_', substr($prefix, 1)) : ''));
-        
+
         if (file_exists($routingFile)) {
             $current = file_get_contents($routingFile);
 
@@ -212,24 +212,23 @@ EOT
 
         $src = file($routingFile);
         $numSpaces = 0;
-        foreach($src as $key => $line) {
-            if(false !== strpos($line, $code)){
+        foreach ($src as $key => $line) {
+            if (false !== strpos($line, $code)) {
                 $numSpaces = preg_match('/^( *)'.$code.'/', $line, $results);
                 $numSpaces = count($results[1]);
                 unset($src[$key]);
                 continue;
             }
-            if($numSpaces != 0 && 
+            if ($numSpaces != 0 &&
                 (strlen(trim($line)) == 0 ||
                 1 === preg_match('/^( ){'.$numSpaces.'}.*/', $line))) {
                 unset($src[$key]);
-            }
-            else {
+            } else {
                 $numSpaces = 0;
             }
         }
 
-        if (false === file_put_contents($routingFile, implode('',$src))) {
+        if (false === file_put_contents($routingFile, implode('', $src))) {
             return false;
         }
 
