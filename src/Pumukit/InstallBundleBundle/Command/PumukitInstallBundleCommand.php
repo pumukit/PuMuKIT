@@ -19,6 +19,7 @@ class PumukitInstallBundleCommand extends ContainerAwareCommand
             ->setName('pumukit:install:bundle')
             ->addArgument('bundle', InputArgument::IS_ARRAY | InputArgument::REQUIRED, 'List of bundles classes with namespace')
             ->addOption('append-to-end', null, InputOption::VALUE_NONE, 'Set this parameter to append the routing bundle configuration to the end of routing file')
+            ->addOption('uninstall', null, InputOption::VALUE_NONE)
             ->setDescription('Update Kernel (app/AppKernel.php) and routing (app/config/routing.yml) to enable the bundle.')
             ->setHelp(<<<EOT
 The <info>pumukit:install:bundle</info> command helps you installs bundles.
@@ -31,7 +32,7 @@ The parameter --append-to-end adds the bundle routes at the end fo the <comment>
 
 Note that the bundle namespace must end with "Bundle" and  / instead of \\ has to be used for the namespace delimiter to avoid any problem.
 EOT
-          );
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -69,9 +70,16 @@ EOT
     protected function updateKernel(InputInterface $input, OutputInterface $output, KernelInterface $kernel, $bundle)
     {
         $manip = new KernelManipulator($kernel);
+        $uninstall = $input->getOption('uninstall');
 
         try {
-            $ret = $manip->addBundle($bundle);
+            if(!$uninstall) {
+                $ret = $manip->addBundle($bundle);
+            }
+            else {
+                $ret = $this->removeBundle($bundle);
+                //$ret = $manip->removeBundle($bundle);//DOESNT EXIST
+            }
 
             if (!$ret) {
                 $reflected = new \ReflectionObject($kernel);
@@ -81,7 +89,10 @@ EOT
                 $output->writeln(sprintf("    <comment>new %s(),</comment>\n", $bundle));
             }
         } catch (\RuntimeException $e) {
-            $output->writeln(sprintf('Bundle <comment>%s</comment> is already defined in <comment>AppKernel::registerBundles()</comment>.', $bundle));
+            if(!$uninstall)
+                $output->writeln(sprintf('Bundle <comment>%s</comment> is already defined in <comment>AppKernel::registerBundles()</comment>.', $bundle));
+            else 
+                $output->writeln(sprintf('Bundle <comment>%s</comment> is already not defined in <comment>AppKernel::registerBundles()</comment>.', $bundle));
         }
     }
 
@@ -108,7 +119,53 @@ EOT
                 }
             } catch (\RuntimeException $e) {
                 $output->writeln(sprintf('Bundle <comment>%s</comment> is already imported.', $bundle));
+
+                $output->writeln(sprintf('Bundle <comment>%s</comment> is already imported.', $bundle));
             }
         }
     }
+
+    /**
+     * Removes an existing bundle from the appKernel register bundles.
+     *
+     * Quite a naive approach, if finds the line (or lines) with the bundle and removes it (them) from the file
+     *
+     * @param string $bundle The bundle class name
+     *
+     * @return bool true if it worked, false otherwise
+     *
+     * @throws \RuntimeException If bundle is not defined
+     */
+    public function removeBundle($bundle)
+    {
+        $kernel = $this->getContainer()->get('kernel');
+        $this->reflected = new \ReflectionObject($kernel);
+
+        if (!$this->reflected->getFilename()) {
+            return false;
+        }
+
+        $src = file($this->reflected->getFilename());
+
+        $method = $this->reflected->getMethod('registerBundles');
+        $lines = array_slice($src, $method->getStartLine() - 1, $method->getEndLine() - $method->getStartLine() + 1);
+
+        // Exception if the bundle is not there anyways
+        if (false === strpos(implode('', $lines), $bundle)) {
+            throw new \RuntimeException(sprintf('Bundle "%s" is already not defined in "AppKernel::registerBundles()".', $bundle));
+        }
+
+        //Finds the bundle inside 'registerBundles' function and removes it.
+        foreach ($lines as $key => $line) {
+            if(false !== strpos($line, $bundle)) {
+                $srcKey = $key + $method->getStartLine() - 1;
+                unset($src[$srcKey]);
+            }
+        }
+
+        file_put_contents($this->reflected->getFilename(), implode('', $src));
+
+        return true;
+    }
+
 }
