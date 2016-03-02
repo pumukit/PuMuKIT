@@ -61,8 +61,8 @@ class IndexController extends Controller
     public function recentlyaddedAction()
     {
         $limit = $this->container->getParameter('limit_objs_recentlyadded');
-
-        $last = $this->get('pumukitschema.announce')->getLast($limit);
+        $showPudenew = $this->container->getParameter('show_latest_with_pudenew');
+        $last = $this->get('pumukitschema.announce')->getLast($limit, $showPudenew);
 
         return array('last' => $last);
     }

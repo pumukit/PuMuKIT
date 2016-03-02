@@ -30,13 +30,13 @@ class AnnouncesController extends Controller
     public function latestUploadsPagerAction(Request $request)
     {
         $numberCols = $this->container->getParameter('columns_objs_announces');
-
+        $showPudenew = $this->container->getParameter('show_latest_with_pudenew');
 
         $announcesService = $this->get('pumukitschema.announce');
 
         $dateRequest = $request->query->get('date', 0);//Use to queries for month and year to reduce formatting and unformatting.
         $date = \DateTime::createFromFormat('d/m/Y H:i:s', "01/$dateRequest 00:00:00");
-        list($date, $last) = $announcesService->getNextLatestUploads($date);
+        list($date, $last) = $announcesService->getNextLatestUploads($date, $showPudenew);
         if (empty($last)) {
             $dateHeader = '---';
         } else {
