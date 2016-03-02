@@ -1,0 +1,4 @@
+pumukit_opencast:
+    resource: "@PumukitOpencastBundle/Controller/"
+    type:     annotation
+    prefix:   /
