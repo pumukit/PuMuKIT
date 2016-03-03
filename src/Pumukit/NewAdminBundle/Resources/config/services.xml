@@ -7,6 +7,7 @@
   <parameters>
     <parameter key="pumukit2.customlanguages" type="collection"></parameter>
     <parameter key="pumukit2.warning_on_unpublished">false</parameter>
+    <parameter key="pumukit2.show_dashboard_tab">true</parameter>
   </parameters>
 
   <services>
