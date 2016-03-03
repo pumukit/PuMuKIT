@@ -98,12 +98,14 @@ class AnnounceService
     }
 
     /**
-     * Gets the next latest uploads, starting with the month given and looking 24 months forward.
-     * If not, returns an empty array.
+     * Gets the next latest uploads month, starting with the month given and looking 24 months forward.
+     *
+     * An optional parameter can be added to either use PUDENEW or not.
+     * If it can't find any objects, returns an empty array.
      *
      * @return array
      */
-    public function getNextLatestUploads($date, $withPudenewTag)
+    public function getNextLatestUploads($date, $withPudenewTag = true)
     {
         $counter = 0;
         $dateStart = clone $date;
