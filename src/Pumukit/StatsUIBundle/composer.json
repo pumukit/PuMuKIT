@@ -1,0 +1,30 @@
+{
+    "name": "teltek/pmk2-stats-ui-bundle",
+    "description": "Stats UI for PuMuKIT",
+    "type": "symfony-bundle",
+    "keywords": [
+        "ui",        
+        "stats",
+        "symfony2",
+        "bundle",
+        "pumukit",
+        "teltek"
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "pumukit/pumukit2": "2.2.*"
+    },
+    "homepage": "https://github.com/teltek/PuMuKIT2-stats-ui-bundle",
+    "license": "Copyright",
+    "authors": [
+        {
+            "name": "Teltek Team",
+            "homepage": "http://teltek.es"            
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Pumukit\\StatsUIBundle\\": ""
+        }
+    }
+}
