@@ -1,0 +1,4 @@
+pumukit_stats_ui_bundle:
+    resource: "@PumukitStatsUIBundle/Controller/"
+    type:     annotation
+    prefix:   /
