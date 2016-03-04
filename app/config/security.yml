@@ -11,12 +11,13 @@ security:
     firewalls:
         api:
             pattern: ^/api
-            stateless: true
+            context: pumukit
             http_basic:
                 provider: fos_userbundle
                 realm: "secure-api"
         main:
             pattern: ^/
+            context: pumukit
             form_login:
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
