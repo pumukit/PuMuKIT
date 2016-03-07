@@ -20,9 +20,9 @@
               <tbody>
                 <tr>
                   <td> 1. </td>
-                  <td> <a class="two-lines" href="{{pmkCtrl.base_uri.protocol}}://{{pmkCtrl.base_uri.host}}:{{pmkCtrl.base_uri.port}}/video/{{pmkCtrl.current.id}}" target="_blank">{{pmkCtrl.current.label}}</a> </td>
+                  <td> <a href="#" class="two-lines" href="{{pmkCtrl.base_uri.protocol}}://{{pmkCtrl.base_uri.host}}:{{pmkCtrl.base_uri.port}}/video/{{pmkCtrl.current.id}}" target="_blank">{{pmkCtrl.current.label}}</a> </td>
                   <td> {{(pmkCtrl.current.duration*1000) | asDuration}} </td>
-                  <td> <a class="two-lines" ng-click="pmkCtrl.go_to('series',pmkCtrl.current.serie)">{{pmkCtrl.current.serie.label}}</a> </td>
+                  <td> <a href="#" class="two-lines" ng-click="pmkCtrl.go_to('series',pmkCtrl.current.serie)">{{pmkCtrl.current.serie.label}}</a> </td>
                   <td> {{pmkCtrl.current.value}} </td>
                 </tr>
               </tbody>
@@ -31,7 +31,7 @@
         </div>
 
         <div class="col col-md-6">
-          <a href="{{pmkCtrl.base_uri.protocol}}://{{pmkCtrl.base_uri.host}}:{{pmkCtrl.base_uri.port}}/video/{{pmkCtrl.current.id}}" target="_blank">
+          <a href="#" href="{{pmkCtrl.base_uri.protocol}}://{{pmkCtrl.base_uri.host}}:{{pmkCtrl.base_uri.port}}/video/{{pmkCtrl.current.id}}" target="_blank">
             <div class="pumukit_mmobj">
               <div class="thumbnail">
                 <span class="play_icon" alt=""></span>
