@@ -19,9 +19,9 @@
             <tbody>
               <tr ng-repeat="mmobj in pmkCtrl.mv.objects.general.data[0].values">
                 <td> {{(pmkCtrl.page.mv-1)*10 + $index +1}}. </td>
-                <td> <a class="two-lines" ng-click="pmkCtrl.go_to('objects',mmobj)">{{mmobj.label}}</a> </td>
+                <td> <a href="#" class="two-lines" ng-click="pmkCtrl.go_to('objects',mmobj)">{{mmobj.label}}</a> </td>
                 <td> {{(mmobj.duration*1000) | asDuration}} </td>
-                <td> <a class="two-lines" ng-click="pmkCtrl.go_to('series',mmobj.serie)">{{mmobj.serie.label}}</a> </td>
+                <td> <a href="#" class="two-lines" ng-click="pmkCtrl.go_to('series',mmobj.serie)">{{mmobj.serie.label}}</a> </td>
                 <td> {{mmobj.value}} </td>
               </tr>
             </tbody>
@@ -52,13 +52,13 @@
           <div class="dataTables_paginate">
             <ul class="pagination">
               <li ng-class="{'disabled':pmkCtrl.page.mv == 1}">
-              <a ng-click="pmkCtrl.go_to_page(pmkCtrl.page.mv -1)" > Previous </a>
+              <a href="#" ng-click="pmkCtrl.go_to_page(pmkCtrl.page.mv -1)" > Previous </a>
               </li>
               <li ng-repeat = "page in pmkCtrl.range(pmkCtrl.total_pages.mv) track by $index" ng-class = "{'active': pmkCtrl.page.mv == page}">
-              <a ng-click="pmkCtrl.go_to_page(page)"> {{page}}</a>
+              <a href="#" ng-click="pmkCtrl.go_to_page(page)"> {{page}}</a>
               </li>
               <li ng-class="{'disabled': pmkCtrl.page.mv == pmkCtrl.total_pages.mv}">
-              <a ng-click="pmkCtrl.go_to_page(pmkCtrl.page.mv +1)" > Next </a>
+              <a href="#" ng-click="pmkCtrl.go_to_page(pmkCtrl.page.mv +1)" > Next </a>
               </li>
             </ul>
           </div>
