@@ -6,6 +6,8 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
     var pmk = this;
 
     var init = true;
+    //TODO init with $rootScope.min_date
+    pmk.min_date = '1970-01-01';
     pmk.set_url_parameters = set_url_parameters;
     pmk.go_to = go_to;
     pmk.go_to_page = go_to_page;
@@ -91,7 +93,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             'series': false,
             'objects': true,
         },
-        'scope': 'general',
+        'scope': 'general',  //general or particular
     };
     pmk.view_stack = [];
     pmk.current = {};
@@ -111,7 +113,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
     //FIXME: Change name to datepicker
     pmk.datepicker_mv = {
         'model' : {
-            'startDate': moment($rootScope.min_date),
+            'startDate': moment(pmk.min_date),
             'endDate':   moment()
         },
         'locale': {
@@ -125,13 +127,13 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             'Last 365 days': [moment().subtract(1, 'year'), moment()],
             'This month': [moment().startOf('month'), moment()],
             'This year': [moment().startOf('year'), moment()],
-            'All history': [moment($rootScope.min_date),moment()],
+            'All history': [moment(pmk.min_date),moment()],
         },
         'model_debug': {
             'from_date':'',
             'to_date':'',
         },
-        'min_date': $rootScope.min_date,
+        'min_date': pmk.min_date,
         'max_date': moment().format('YYYY-MM-DD'),
         'text': 'All history',
     }
@@ -325,40 +327,6 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         pmk.view.tabes.objects = obj_type == 'objects';
         pmk.view.scope = obj_scope == 'general' ? 'general':$routeParams.id;
 
-        if (pmk.view.scope != 'general'){
-            var type = obj_type == 'objects' ? 'mmobj':'series';
-            $http({
-                method: 'GET',
-                url: '/api/media/' + type + '.json',
-                params:{
-                    'criteria[id]' : $routeParams.id,
-                }
-            })
-            .then( function (data){
-                var type = pmk.view.tabes.series ? 'series':'mmobj';
-                var generic_data_type = type.lastIndexOf('s') == type.length-1 ? type : (type + 's');
-                var obj = data.data[generic_data_type][data.data.criteria.id];
-                pmk.current = {
-                    'id': obj.id,
-                    'label': obj.title[obj.locale],
-                }
-                if (type == 'mmobj'){
-                    //FIXME: search for the track with the maximum duration
-                    pmk.current.duration = obj.tracks[0].duration;
-                    pmk.current.description = obj.description;
-                    pmk.current.date = obj.record_date;
-                    pmk.current.img = obj.pics[0].url;
-                    pmk.current.serie = {
-                        'label': obj.series.title[obj.series.locale],
-                        'id': obj.series.id,
-                    }
-                }
-                //TODO: If type is series add number of objects of the serie.
-            });
-        }
-
-
-
         // Intialize the charts for the different views
         // The model can't be reused
 
@@ -394,9 +362,11 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             },
         }
 
+
         setTimeout(function(){
             if (!(pmk.view.tabes.objects && pmk.view.scope != 'general')){
                 get_most_viewed();
+		load_particular_scope();
             }else{
                 calculate_total_views();
             }
@@ -404,6 +374,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         },500);
 
     }
+
 
     // SCOPE FUNCTIONS
     
@@ -528,7 +499,40 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
     }
 
     //INTERNAL FUNCTIONS
-    
+    function load_particular_scope(){
+        if (pmk.view.scope != 'general'){
+            var obj_type = $location.path().search('objects') >=0 ? 'objects':'series';
+            var type = obj_type == 'objects' ? 'mmobj':'series';
+            $http({
+                method: 'GET',
+                url: '/api/media/' + type + '.json',
+                params:{
+                    'criteria[id]' : $routeParams.id,
+                }
+            })
+            .then( function (data){
+                var type = pmk.view.tabes.series ? 'series':'mmobj';
+                var generic_data_type = type.lastIndexOf('s') == type.length-1 ? type : (type + 's');
+                var obj = data.data[generic_data_type][data.data.criteria.id];
+                pmk.current = {
+                    'id': obj.id,
+                    'label': obj.title[obj.locale],
+                }
+                if (type == 'mmobj'){
+                    //FIXME: search for the track with the maximum duration
+                    pmk.current.duration = obj.tracks[0].duration;
+                    pmk.current.description = obj.description;
+                    pmk.current.date = obj.record_date;
+                    pmk.current.img = obj.pics[0].url;
+                    pmk.current.serie = {
+                        'label': obj.series.title[obj.series.locale],
+                        'id': obj.series.id,
+                    }
+                }
+                //TODO: If type is series add number of objects of the serie.
+            });
+        }
+    }
     function get_most_viewed(origin){
 
         var tab = pmk.view.tabes.series ? 'series':'objects';
@@ -952,16 +956,14 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         }
     }
 
-    function save_string_dates(){
 
+    function save_string_dates(){
         //FIXME: Library bug. ng-change called twice. Second time not working
         if (typeof(pmk.datepicker_mv.model) === 'string'){
-        console.log(pmk.datepicker_mv.model);
-
+            console.log(pmk.datepicker_mv.model);
             pmk.datepicker_mv.model_debug.from_date = moment(pmk.datepicker_mv.model.split("-")[0], pmk.datepicker_mv.locale.format).format('YYYY-MM-DD');
             pmk.datepicker_mv.model_debug.to_date = moment(pmk.datepicker_mv.model.split("-")[1], pmk.datepicker_mv.locale.format).format('YYYY-MM-DD');
-
-        console.log(pmk.datepicker_mv.model_debug);
+            console.log(pmk.datepicker_mv.model_debug);
         }
     }
 });
