@@ -58,8 +58,9 @@ EOT
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->allPermissions = $this->getContainer()->get('pumukitschema.permission')->getAllPermissions();
         $this->pmk2_allLocales = $this->getContainer()->getParameter('pumukit2.locales');
+        $repoName = $input->getArgument('repo');
 
-        if ($input->getOption('force') && ($repoName = $input->getArgument('repo'))) {
+        if ($input->getOption('force')) {
             switch ($repoName) {
                 case "all":
                   $errorExecuting = $this->executeTags($input, $output);
@@ -88,6 +89,9 @@ EOT
                     if (-1 === $errorExecuting) return -1;
                     break;
             }
+        } else if ( $repoName == 'tag') {
+            $errorExecuting = $this->executeTags($input, $output, false);
+            if (-1 === $errorExecuting) return -1;
         } else {
             $output->writeln('<error>ATTENTION:</error> This operation should not be executed in a production environment.');
             $output->writeln('');
@@ -99,7 +103,7 @@ EOT
         }
     }
 
-    protected function executeTags(InputInterface $input, OutputInterface $output)
+    protected function executeTags(InputInterface $input, OutputInterface $output, $force = true)
     {
         $this->tagsRepo = $this->dm->getRepository("PumukitSchemaBundle:Tag");
 
@@ -111,7 +115,8 @@ EOT
 
             return -1;
         }
-        //$this->removeTags();
+        if($force)
+            $this->removeTags();
         $root = $this->createRoot();
         $verbose = $input->getOption('verbose');
         if ($file) {
