@@ -26,8 +26,8 @@
           <div class="input-group">
             <input type="text" ng-model="pmkCtrl.filter.title" ng-disabled="pmkCtrl.view.tabes.objects && pmkCtrl.view.scope!='general'" class="form-control form_daterangepicker"/>
             <div class="input-group-addon no-padding">
-              <button class="btn btn-default" ng-click="pmkCtrl.set_url_parameters('filter');"><i class="fa fa-search"></i></button>
-              <button class="btn btn-default" ng-click="pmkCtrl.clear_filter('filter');"><i class="fa fa-remove"></i></button>
+              <button class="btn btn-default" ng-click="pmkCtrl.set_url_parameters('filter');"><i class="fa fa-search glyphicon glyphicon-search"></i></button>
+              <button class="btn btn-default" ng-click="pmkCtrl.clear_filter('filter');"><i class="fa fa-remove glyphicon glyphicon-remove"></i></button>
             </div>
           </div> <!-- /.input group -->
         </span>
@@ -35,12 +35,18 @@
         <label>Date range:</label>
         <div class="input-group">
           <span class="no-margin no-padding form_daterangepicker" style="border:none;">
-          <input id="form_daterangepicker" class="form-control form_daterangepicker" type="daterange" show-dropdowns="true" ng-model="pmkCtrl.datepicker_mv.model" ranges="pmkCtrl.datepicker_mv.ranges" opens="center" locale="pmkCtrl.datepicker_mv.locale" ng-change="pmkCtrl.set_url_parameters('datepicker')" always-show-calendars="true" min-date="pmkCtrl.datepicker_mv.min_date" max-date="pmkCtrl.datepicker_mv.max_date" linked-calendars="false"/>
-          <input ng-show="pmkCtrl.check_all_history()" class="form-control form_daterangepicker" type="text" ng-model="pmkCtrl.datepicker_mv.text" ng-click="pmkCtrl.toggle_daterange()" style="position:absolute;"/>
+          <input id="form_daterangepicker" class="form-control form_daterangepicker" type="daterange" 
+		 show-dropdowns="true" 
+		 ng-model="pmkCtrl.datepicker_mv.model" ranges="pmkCtrl.datepicker_mv.ranges" opens="center" locale="pmkCtrl.datepicker_mv.locale" 
+		 ng-change="pmkCtrl.set_url_parameters('datepicker')" always-show-calendars="true" 
+		 min-date="pmkCtrl.datepicker_mv.min_date" max-date="pmkCtrl.datepicker_mv.max_date" 
+		 linked-calendars="false"/>
+          <input ng-show="pmkCtrl.check_all_history()" class="form-control form_daterangepicker" type="text" ng-model="pmkCtrl.datepicker_mv.text" 
+		 ng-click="pmkCtrl.toggle_daterange()" style="position:absolute; background: rgb(238, 238, 238);"/>
           </span>
           <div class="input-group-addon no-padding">
-            <button class="btn btn-default" ng-click="pmkCtrl.toggle_daterange($event)"><i class="fa fa-calendar"></i></button>
-            <button class="btn btn-default" ng-click="pmkCtrl.clear_filter('datepicker')"><i class="fa fa-remove"></i></button>
+            <button class="btn btn-default" ng-click="pmkCtrl.toggle_daterange($event)"><i class="fa fa-calendar glyphicon glyphicon-calendar"></i></button>
+            <button class="btn btn-default" ng-click="pmkCtrl.clear_filter('datepicker')"><i class="fa fa-remove glyphicon glyphicon-remove"></i></button>
           </div>
         </div> <!-- /.input group -->
 
@@ -48,7 +54,7 @@
     </div>
 
     <div class="col col-md-1 col-md-push-1" ng-class="{'clear-filters': !(pmkCtrl.view.tabes.objects && !(pmkCtrl.view.scope == 'general'))}">
-      <a class="btn btn-app" ng-click="pmkCtrl.clear_filter('all')"><i class="fa fa-remove"></i> Clear filters </a>
+      <a class="btn btn-app" ng-click="pmkCtrl.clear_filter('all')"><i class="fa fa-remove glyphicon glyphicon-remove"></i> Clear filters </a>
     </div>
 
     <div class="col col-md-5 col-sm-6 col-md-push-1 col-sm-push-1">
