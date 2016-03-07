@@ -14,12 +14,10 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Debug\Debug;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Command\PumukitInitRepoCommand;
-use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Component\Console\Output\BufferedOutput;
-use Symfony\Component\Console\Input\ArrayInput;
 
 class MyLocalCommand extends ContainerAwareCommand
 {
