@@ -80,9 +80,15 @@
       <div class="box-tools pull-right">
 
         <div class="btn-group">
-          <label class="btn btn-default ng-pristine ng-untouched ng-valid" ng-model="pmkCtrl.current_span" uib-btn-radio="'day'" ng-click="pmkCtrl.set_url_parameters('timespan')">Day</label> 
-          <label class="btn btn-default ng-pristine ng-untouched ng-valid" ng-model="pmkCtrl.current_span" uib-btn-radio="'month'" ng-click="pmkCtrl.set_url_parameters('timespan')">Month</label> 
-          <label class="btn btn-default ng-pristine ng-untouched ng-valid" ng-model="pmkCtrl.current_span" uib-btn-radio="'year'" ng-click="pmkCtrl.set_url_parameters('timespan')">Year</label> 
+          <label class="btn btn-default ng-pristine ng-untouched ng-valid" 
+		 ng-class="{'btn-success': pmkCtrl.current_span == 'day'}" 
+		 ng-click="pmkCtrl.current_span = 'day'; pmkCtrl.set_url_parameters('timespan')">Day</label> 
+          <label class="btn btn-default ng-pristine ng-untouched ng-valid" 
+		 ng-class="{'btn-success': pmkCtrl.current_span == 'month'}" 
+		 ng-click="pmkCtrl.current_span = 'month'; pmkCtrl.set_url_parameters('timespan')">Month</label> 
+          <label class="btn btn-default ng-pristine ng-untouched ng-valid" 
+		 ng-class="{'btn-success': pmkCtrl.current_span == 'year'}" 
+		 ng-click="pmkCtrl.current_span = 'year'; pmkCtrl.set_url_parameters('timespan')">Year</label> 
         </div>
         <!--<div range-slider min="1" max="24" model-min="pmkCtrl.slider_mv.min" model-max="pmkCtrl.slider_mv.max" show-values="true" pin-handle="min" ng-mouseup="pmkCtrl.get_most_viewed('slider')" attach-handle-values="true"> 
         </div>-->
