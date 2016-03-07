@@ -34,7 +34,7 @@
 
         <label>Date range:</label>
         <div class="input-group">
-          <span class="form-control no-margin no-padding form_daterangepicker" style="border:none;">
+          <span class="no-margin no-padding form_daterangepicker" style="border:none;">
           <input id="form_daterangepicker" class="form-control form_daterangepicker" type="daterange" show-dropdowns="true" ng-model="pmkCtrl.datepicker_mv.model" ranges="pmkCtrl.datepicker_mv.ranges" opens="center" locale="pmkCtrl.datepicker_mv.locale" ng-change="pmkCtrl.set_url_parameters('datepicker')" always-show-calendars="true" min-date="pmkCtrl.datepicker_mv.min_date" max-date="pmkCtrl.datepicker_mv.max_date" linked-calendars="false"/>
           <input ng-show="pmkCtrl.check_all_history()" class="form-control form_daterangepicker" type="text" ng-model="pmkCtrl.datepicker_mv.text" ng-click="pmkCtrl.toggle_daterange()" style="position:absolute;"/>
           </span>
