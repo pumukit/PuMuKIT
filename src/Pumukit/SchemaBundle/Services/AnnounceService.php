@@ -19,13 +19,22 @@ class AnnounceService
     public function getLast($limit = 3, $withPudenewTag = true)
     {
         if($withPudenewTag) {
-            $mmobjCriteria = array('tags.cod' => 'PUDENEW');
-            $seriesCriteria = array('announce' => true);
+            $return = $this->getLastMmobjsWithSeries($limit);
         }
         else {
-            $mmobjCriteria = array();
-            $seriesCriteria = array();
+            //Get recently added mmobjs
+            $return = $this->mmobjRepo->findStandardBy(array(), array('public_date' => -1), $limit, 0);
         }
+        return $return;
+    }
+
+    /**
+     * Returns the last series/mmobjs with the pudenew tag.
+     */
+    protected function getLastMmobjsWithSeries($limit = 3)
+    {
+        $mmobjCriteria = array('tags.cod' => 'PUDENEW');
+        $seriesCriteria = array('announce' => true);
 
         $lastMms = $this->mmobjRepo->findStandardBy($mmobjCriteria, array('public_date' => -1), $limit, 0);
         $lastSeries = $this->seriesRepo->findBy($seriesCriteria, array('public_date' => -1), $limit, 0);
