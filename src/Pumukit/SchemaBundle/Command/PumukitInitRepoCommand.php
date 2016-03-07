@@ -281,7 +281,8 @@ EOT
             $output->writeln("<comment>".$repoName.": Ignoring file ".$file."</comment>");
             return -1;
         }
-        $output->writeln("<info>Found file: ".realpath($file_route)."</info>");
+        if($verbose)
+            $output->writeln("<info>Found file: ".realpath($file_route)."</info>");
 
         $idCodMapping = array();
 
