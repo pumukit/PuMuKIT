@@ -1,0 +1,20 @@
+pumukit_web_tv_parent:
+    resource: "../../src/Pumukit/Legacy/WebTVBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pumukit_web_tv:
+    resource: "@PumukitWebTVBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pumukit_webtv_default_css:
+    pattern: /webtv/css/webtv.css
+    methods: [GET]
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'PumukitWebTVBundle::custom.css.twig'
+        _format: css
+
+homepage:
+    pattern: /
