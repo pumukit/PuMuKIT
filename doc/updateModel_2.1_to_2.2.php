@@ -16,7 +16,10 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Debug\Debug;
 use Pumukit\SchemaBundle\Document\Person;
-
+use Pumukit\SchemaBundle\Command\PumukitInitRepoCommand;
+use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\Console\Input\ArrayInput;
 
 class MyLocalCommand extends ContainerAwareCommand
 {
@@ -24,7 +27,7 @@ class MyLocalCommand extends ContainerAwareCommand
     {
         $this
             ->setName('update:model:2.1to2.2')
-            ->setDescription('Update ViewsLog documents.')
+            ->setDescription('Update the documents (from 2.1) to match the 2.2 version.')
         ;
     }
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -33,6 +36,9 @@ class MyLocalCommand extends ContainerAwareCommand
         $output->writeln('Mongo ViewsLog collection updated');
         $this->updateUserPerson();
         $output->writeln('Mongo User and Person collections updated');
+        $output->writeln('<info>Executing "pumukit:init:repo tag" to add the PUDEUNI tag</info>');
+        $this->addNewTags($output);
+        $output->writeln('Added PUDEUNI publishing decision');
     }
 
     protected function updateViewsLog()
@@ -127,6 +133,22 @@ class MyLocalCommand extends ContainerAwareCommand
             $dm->persist($user);
             $dm->flush();
         }
+    }
+
+    /**
+     * Adds new tags
+     *
+     * This function executes the pumukit:init:repo tag command to re-init PUDEUNI particularly.
+     * Instead of running a command within another command, a better approach could be to separate the tags functionality
+     * into a service of its own
+     */
+    protected function addNewTags($output = null)
+    {
+        $command = $this->getApplication()->find('pumukit:init:repo');
+        if(!$output)
+            $output = new BufferedOutput();
+        $input = new ArrayInput(array('command' => 'pumukit:init:repo','repo' => 'tag'));
+        $command->run($input, $output);
     }
 }
 
