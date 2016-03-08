@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Debug\Debug;
 use Pumukit\SchemaBundle\Document\Person;
-use Pumukit\SchemaBundle\Command\PumukitInitRepoCommand;
 
 class MyLocalCommand extends ContainerAwareCommand
 {
