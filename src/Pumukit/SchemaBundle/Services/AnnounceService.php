@@ -71,15 +71,17 @@ class AnnounceService
     public function getLatestUploadsByDates($dateStart, $dateEnd, $withPudenewTag = true)
     {
         $queryBuilderMms = $this->mmobjRepo->createQueryBuilder();
-        $queryBuilderSeries = $this->seriesRepo->createQueryBuilder();
-
         $queryBuilderMms->field('public_date')->range($dateStart, $dateEnd);
+
+        if(!$withPudenewTag) {
+            return $queryBuilderMms->sort(array('public_date' => 1))->getQuery()->execute()->toArray();
+        }
+
+        $queryBuilderSeries = $this->seriesRepo->createQueryBuilder();
         $queryBuilderSeries->field('public_date')->range($dateStart, $dateEnd);
 
-        if($withPudenewTag) {
-            $queryBuilderMms->field('tags.cod')->equals('PUDENEW');
-            $queryBuilderSeries->field('announce')->equals(true);
-        }
+        $queryBuilderMms->field('tags.cod')->equals('PUDENEW');
+        $queryBuilderSeries->field('announce')->equals(true);
 
         $lastMms = $queryBuilderMms->getQuery()->execute();
         $lastSeries = $queryBuilderSeries->getQuery()->execute();
