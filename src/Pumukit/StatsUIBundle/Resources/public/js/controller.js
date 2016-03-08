@@ -366,8 +366,8 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         setTimeout(function(){
             if (!(pmk.view.tabes.objects && pmk.view.scope != 'general')){
                 get_most_viewed();
-		load_particular_scope();
             }else{
+                load_particular_scope();
                 calculate_total_views();
             }
             get_historical_data();
@@ -790,7 +790,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                     // FIXME
                     ids = [0];
                 }else{
-                    ids.push(pmk.current.id);
+                    ids.push($routeParams.id);
                 }
 
                 pmk.his[tab][scope].new_data = [];
