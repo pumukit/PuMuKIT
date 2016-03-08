@@ -1,0 +1,144 @@
+.custom-box-tools{
+	width: 50%;
+	margin-top: -15px;
+}
+.custom-box-tools > .ngrs-range-slider{
+	margin-bottom: 10px !important;
+}
+.table > tbody > tr > td{
+	padding: 6px 8px 6px 8px !important;
+}
+.table > tbody > tr > td > a{
+	text-decoration: underline !important;
+	cursor: pointer;
+}
+.pagination > li > a{
+	cursor: pointer;
+}
+.form_daterangepicker{
+	height: 45px !important;
+	font-size: 15px !important;
+}
+.clear-filters{
+	margin-top: 50px;
+}
+.two-lines{
+	max-height: 2.7em;
+	word-wrap: break-word;
+	overflow: hidden;
+	-webkit-line-clamp: 2;
+	display: -webkit-box;   
+	-webkit-box-orient: vertical;
+	text-overflow: ellipsis;
+}
+.custom-small-box:hover .icon{
+	font-size: 65px !important;
+}
+.custom-small-box .icon{
+	font-size: 60px !important;
+}
+.custom-small-box .two-lines{
+	max-height: 2.9em !important;
+}
+/* PuMuKIT CSS*/
+.pumukit_mmobj{
+	color: #111;
+	height: 134px;
+	overflow: hidden;
+	margin: 10px 0px;
+	padding: 5px;
+	border-radius: 10px;
+	position: relative;
+}
+.pumukit_mmobj:hover, .pumukit_mmobj:focus {
+	background: #ededed;
+	color: #111;
+}
+.thumbnail {
+	float: left;
+	display: inline;
+	margin-bottom:0px;
+	text-align: center;
+	border: 0;
+	border-radius: 0px;
+	box-shadow: 1px 1px 2px #666;
+	background: #F3F3F3;
+	padding: 2px;
+	z-index: 3;
+	position: relative;
+	width: 156px;
+	height: 118px;
+}
+.play_icon {
+	position: absolute;
+	margin: 10px;
+	left: 0%;
+	background: url("/static/img/play_icon.png") no-repeat center;
+	background-size: contain;
+	width: 28px;
+	height: 28px;
+	overflow: auto;
+}
+.video-duration {
+	position: absolute;
+	bottom: 8%;
+	right: 8%;
+	color: white;
+	font-size: 0.8em;
+	background:rgba(0,0,0,0.65);
+	padding: 1px 3px;
+}
+.thumbnail img.thumbnailimg{
+	margin: 0 auto;
+	display: inline-block;
+	vertical-align: middle;
+}
+.thumbnailholder {
+	position: absolute;
+	top: 2px;
+	background:#000;
+	z-index: -1;
+}
+.info-wrapper {
+	overflow: hidden;
+}
+.info {
+	float: left;
+	padding-left: 10px;
+	width: 100%;
+	min-height: 60px;
+	overflow: hidden;
+	display: inline;
+	word-wrap: break-word;
+}
+.info .title{
+	font-weight: bold;
+	font-size: 1em;
+	max-height: 2.7em;
+	word-wrap: break-word;
+	overflow: hidden;
+	-webkit-line-clamp: 2;
+	display: -webkit-box;   
+	-webkit-box-orient: vertical;
+	text-overflow: ellipsis;
+}
+.info .subtitle {
+	font-weight: 400;
+	margin: 5px 5px;
+	font-size: 0.9em;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.date.mmobj {
+	font-size: 1.2em;
+	position: absolute;
+	bottom: 10%;
+	left: 172px;
+	position: absolute;
+	text-align: left;
+}
+.thumbnailholder {
+	width: 152px;
+	height: 114px;
+}
