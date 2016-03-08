@@ -26,6 +26,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
           ->children()
             ->scalarNode('host')
+              ->isRequired()
               ->info('Matterhorn server URL (Engage node in cluster).')
             ->end()
             ->scalarNode('username')
