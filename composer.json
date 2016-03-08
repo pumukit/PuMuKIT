@@ -12,7 +12,7 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "pumukit/pumukit2": "*"
+        "pumukit/pumukit2": ">=2.2"
     },
     "homepage": "https://github.com/teltek/PuMuKIT2-stats-ui-bundle",
     "license": "Copyright",
