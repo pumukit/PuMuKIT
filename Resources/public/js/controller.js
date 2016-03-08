@@ -121,7 +121,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         },
         'ranges': {
             'Today' : [moment(), moment()],
-            'Yesterday': [moment().subtract(1,'days'), moment().subtract(1,'days')],
+            'Yesterday': [moment().subtract(1,'days'), moment()],
             'Last 7 days': [moment().subtract(7, 'days'), moment()],
             'Last 30 days': [moment().subtract(30, 'days'), moment()],
             'Last 365 days': [moment().subtract(1, 'year'), moment()],
