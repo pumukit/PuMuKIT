@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AnnouncesController extends Controller
+class AnnouncesController extends Controller implements WebTVController
 {
     /**
      * @Route("/latestuploads", name="pumukit_webtv_announces_latestuploads")

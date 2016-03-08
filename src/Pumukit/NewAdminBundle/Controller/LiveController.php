@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 /**
  * @Security("is_granted('ROLE_ACCESS_LIVE_CHANNELS')")
  */
-class LiveController extends AdminController
+class LiveController extends AdminController implements NewAdminController
 {
     /**
      * Create Action

@@ -15,9 +15,10 @@ class Builder extends ContainerAware
         // Add translations in src/Pumukit/NewAdminBundle/Resource/translations/NewAdminBundle.locale.yml
         $authorizationChecker = $this->container->get('security.authorization_checker');
         $createBroadcastDisabled = $this->container->getParameter('pumukit_new_admin.disable_broadcast_creation');
-        $showImporterTab = $this->container->hasParameter('pumukit_opencast.show_importer_tab') && $this->container->getParameter('pumukit_opencast.show_importer_tab');
+        $showImporterTab = $this->container->getParameter('pumukit_opencast.show_importer_tab');
+        $showDashboardTab = $this->container->getParameter('pumukit2.show_dashboard_tab');
 
-        if (false !== $authorizationChecker->isGranted(Permission::ACCESS_DASHBOARD)) {
+        if ($showDashboardTab && false !== $authorizationChecker->isGranted(Permission::ACCESS_DASHBOARD)) {
             $menu->addChild('Dashboard', array('route' => 'pumukit_newadmin_dashboard_index'))->setExtra('translation_domain', 'NewAdminBundle');
         }
 
@@ -49,7 +50,7 @@ class Builder extends ContainerAware
                 $tables->addChild('Tags', array('route' => 'pumukitnewadmin_tag_index'))->setExtra('translation_domain', 'NewAdminBundle');
             }
             if ($authorizationChecker->isGranted(Permission::ACCESS_BROADCASTS) && !$createBroadcastDisabled) {
-                $tables->addChild('Access profiles', array('route' => 'pumukitnewadmin_broadcast_index'))->setExtra('translation_domain', 'NewAdminBundle');
+                $tables->addChild('Broadcast profiles', array('route' => 'pumukitnewadmin_broadcast_index'))->setExtra('translation_domain', 'NewAdminBundle');
             }
             if ($authorizationChecker->isGranted(Permission::ACCESS_SERIES_TYPES)) {
                 $tables->addChild('Series types', array('route' => 'pumukitnewadmin_seriestype_index'))->setExtra('translation_domain', 'NewAdminBundle');

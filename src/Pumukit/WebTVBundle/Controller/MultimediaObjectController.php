@@ -15,7 +15,7 @@ use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\WebTVBundle\Controller\PlayerController;
 
 
-class MultimediaObjectController extends PlayerController
+class MultimediaObjectController extends PlayerController implements WebTVController
 {
     /**
      * @Route("/video/{id}", name="pumukit_webtv_multimediaobject_index" )

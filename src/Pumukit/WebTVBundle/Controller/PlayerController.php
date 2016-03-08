@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-class PlayerController extends Controller
+class PlayerController extends Controller implements WebTVController
 {
     protected function testBroadcast(MultimediaObject $multimediaObject, Request $request)
     {

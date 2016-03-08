@@ -21,7 +21,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
-class MultimediaObjectController extends SortableAdminController
+class MultimediaObjectController extends SortableAdminController implements NewAdminController
 {
     /**
      * Overwrite to search criteria with date

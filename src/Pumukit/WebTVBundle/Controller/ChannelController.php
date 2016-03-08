@@ -11,7 +11,7 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\Tag;
 
-class ChannelController extends Controller
+class ChannelController extends Controller implements WebTVController
 {
 
     private $titles = array( 1 => "University",

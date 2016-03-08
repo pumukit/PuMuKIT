@@ -16,8 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-
-class OpencastController extends PlayerController
+class OpencastController extends PlayerController implements WebTVController
 {
     /**
      * @Route("/video_opencast/{id}", name="pumukit_webtv_opencast_index", defaults={"show_hide": true})

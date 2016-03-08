@@ -3,17 +3,17 @@
   <li>
     {% if event.getPic() is empty %}
     <a href="{{ path('pumukitnewadmin_eventpic_create', {'id': event.id}) }}" data-toggle="modal" data-target="#myModal">
-      <i class="mdi-image-camera-alt"></i> {% trans %}Add pic{% endtrans %}
+      <i class="mdi-image-camera-alt"></i> {% trans %}Add thumbnail{% endtrans %}
     </a>
     <a href="#">
-      <i class="mdi-content-clear"></i> {% trans %}Delete pic{% endtrans %}
+      <i class="mdi-content-clear"></i> {% trans %}Delete thumbnail{% endtrans %}
     </a>
     {% else %}
     <a href="#">
-      <i class="mdi-image-camera-alt"></i> {% trans %}Add pic{% endtrans %}
+      <i class="mdi-image-camera-alt"></i> {% trans %}Add thumbnail{% endtrans %}
     </a>
     <a href="#" onclick="window.delete_eventpic('{{ event.id }}'); return false;" data-toggle="modal" data-target="#myModal">
-      <i class="mdi-content-clear"></i> {% trans %}Delete pic{% endtrans %}
+      <i class="mdi-content-clear"></i> {% trans %}Delete thumbnail{% endtrans %}
     </a>
     {% endif %}
   </li>

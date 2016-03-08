@@ -788,6 +788,18 @@ class MultimediaObject
         return $this->broadcast;
     }
 
+    
+    /**
+     * Get broadcast
+     *
+     * @return Broadcast
+     */
+    public function isPublicBroadcast()
+    {
+      return (bool)(!$this->broadcast || Broadcast::BROADCAST_TYPE_PUB == $this->broadcast->getBroadcastTypeId());
+    }
+        
+
     // Start tag section. Caution: MultimediaObject tags are Tag objects, not strings.
     /**
      * Get tags

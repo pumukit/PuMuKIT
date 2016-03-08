@@ -56,6 +56,7 @@ class DefaultController extends Controller
             if (!$formData){
                 $formData = array('series' => array(
                                                    'i18n_title' => $series->getI18nTitle(),
+                                                   'i18n_subtitle' => $series->getI18nSubtitle(),
                                                    'i18n_description' => $series->getI18nDescription()
                                                    ));
             }
@@ -363,7 +364,7 @@ class DefaultController extends Controller
             $i18nTitle = $this->getKeyData('i18n_title', $seriesData);
             if (empty(array_filter($i18nTitle))) $seriesData = $this->getDefaultFieldValuesInData($seriesData, 'i18n_title', 'New', true);
 
-            $keys = array('i18n_title', 'i18n_description');
+            $keys = array('i18n_title', 'i18n_subtitle', 'i18n_description');
             $series = $this->setData($series, $seriesData, $keys);
 
             return $series;

@@ -17,7 +17,7 @@ use Pagerfanta\Pagerfanta;
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
-class SeriesController extends AdminController
+class SeriesController extends AdminController implements NewAdminController
 {
     /**
      * Overwrite to search criteria with date

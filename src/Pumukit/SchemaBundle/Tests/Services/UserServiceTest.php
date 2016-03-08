@@ -355,4 +355,49 @@ class UserServiceTest extends WebTestCase
     {
         $user = $this->userService->instantiate();
     }
+
+    public function testHasScopes()
+    {
+        $globalProfile = new PermissionProfile();
+        $globalProfile->setScope(PermissionProfile::SCOPE_GLOBAL);
+
+        $personalProfile = new PermissionProfile();
+        $personalProfile->setScope(PermissionProfile::SCOPE_PERSONAL);
+
+        $noneProfile = new PermissionProfile();
+        $noneProfile->setScope(PermissionProfile::SCOPE_NONE);
+
+        $this->dm->persist($globalProfile);
+        $this->dm->persist($personalProfile);
+        $this->dm->persist($noneProfile);
+        $this->dm->flush();
+
+        $user = new User();
+        $user->setUsername('test');
+        $user->setPassword('pass');
+        $user->setPermissionProfile($globalProfile);
+
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $this->assertTrue($this->userService->hasGlobalScope($user));
+        $this->assertFalse($this->userService->hasPersonalScope($user));
+        $this->assertFalse($this->userService->hasNoneScope($user));
+
+        $user->setPermissionProfile($personalProfile);
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $this->assertFalse($this->userService->hasGlobalScope($user));
+        $this->assertTrue($this->userService->hasPersonalScope($user));
+        $this->assertFalse($this->userService->hasNoneScope($user));
+
+        $user->setPermissionProfile($noneProfile);
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $this->assertFalse($this->userService->hasGlobalScope($user));
+        $this->assertFalse($this->userService->hasPersonalScope($user));
+        $this->assertTrue($this->userService->hasNoneScope($user));
+    }
 }
