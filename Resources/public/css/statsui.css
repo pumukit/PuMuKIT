@@ -142,3 +142,10 @@
 	width: 152px;
 	height: 114px;
 }
+
+.daterangepicker .ranges li:last-child:hover {
+    background: #f5f5f5;
+    border: 1px solid #f5f5f5;
+    color: #08c;
+    cursor: default;
+}
