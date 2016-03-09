@@ -8,8 +8,14 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
       <![endif]-->
       <meta charset="UTF-8" />
+      <meta name="title" content="{{ pumukit2_info.title }}" />
+      <meta name="robots" content="index, follow" />
+      <meta name="revisit-after" content="1 days" />
+      <meta name="description" content="{{ pumukit2_info.description }}" />
+      <meta name="language" content="{{ app.request.locale }}" />
+      <meta name="Keywords" content="{{ pumukit2_info.keywords }}" />
     {% endblock %}
-    <title>{% block title %}Pumukit WebTV{% endblock %}</title>
+    <title>{% block title %}{{ pumukit2_info.title }}{% endblock %}</title>
 
     {% block stylesheets %}
       <link href="{{ asset('bundles/pumukitwebtv/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" media="screen"/>
