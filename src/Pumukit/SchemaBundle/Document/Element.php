@@ -370,4 +370,9 @@ class Element
   {
       return $this->locale;
   }
+
+    public function __clone()
+    {
+        $this->id = null;
+    }
 }

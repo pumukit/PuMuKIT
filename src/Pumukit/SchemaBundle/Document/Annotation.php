@@ -340,4 +340,9 @@ class Annotation
     {
         return $this->is_private;
     }
+
+    public function __clone()
+    {
+        $this->id = null;
+    }
 }
