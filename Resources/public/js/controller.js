@@ -523,7 +523,11 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                     pmk.current.duration = obj.tracks[0].duration;
                     pmk.current.description = obj.description;
                     pmk.current.date = obj.record_date;
-                    pmk.current.img = obj.pics[0].url;
+                    if (obj.pics.length != 0 && obj.pics[0].url) {
+                        pmk.current.img = obj.pics[0].url;
+                    } else {
+                        pmk.current.img = "/bundles/pumukitschema/images/video_none.jpg";
+                    }
                     pmk.current.serie = {
                         'label': obj.series.title[obj.series.locale],
                         'id': obj.series.id,
@@ -645,7 +649,11 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                     data.duration = items[item_indx][mv_data].tracks[0].duration; 
                     data.description = items[item_indx][mv_data].description[items[item_indx][mv_data].locale];
                     data.date = items[item_indx][mv_data].record_date;
-                    data.img = items[item_indx][mv_data].pics[0].url;
+                    if (items[item_indx][mv_data].pics.length != 0 && items[item_indx][mv_data].pics[0].url) {
+                        data.img = items[item_indx][mv_data].pics[0].url;
+                    } else {
+                        data.img = "/bundles/pumukitschema/images/video_none.jpg";
+                    }
                 }else{
                     $http({
                         method: 'GET',
