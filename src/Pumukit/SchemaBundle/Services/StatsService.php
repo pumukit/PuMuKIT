@@ -21,7 +21,7 @@ class StatsService
         $dmColl = $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
         $mongoGroup = array('numMmobjs' => array('$sum' => 1));
 
-        $aggregation = $aggregation = $this->getAggrRecordedGroupedBy($dmColl, $mongoGroup, 'record_date', $fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
+        $aggregation = $this->getAggrRecordedGroupedBy($dmColl, $mongoGroup, 'record_date', $fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
 
         return $aggregation->toArray();
     }
@@ -31,7 +31,7 @@ class StatsService
         $dmColl = $this->dm->getDocumentCollection('PumukitSchemaBundle:Series');
         $mongoGroup = array('numSeries' => array('$sum' => 1));
 
-        $aggregation = $aggregation = $this->getAggrRecordedGroupedBy($dmColl, $mongoGroup, 'public_date', $fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
+        $aggregation = $this->getAggrRecordedGroupedBy($dmColl, $mongoGroup, 'public_date', $fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
 
         return $aggregation->toArray();
     }
