@@ -276,6 +276,11 @@ class FactoryService
             $series->removeMultimediaObject($multimediaObject);
             $this->dm->persist($series);
         }
+        $annotRepo = $this->dm->getRepository('PumukitSchemaBundle:Annotation');
+        $annotations = $annotRepo->findBy(array('multimediaObject' => new \MongoId($multimediaObject->getId())));
+        foreach( $annotations as $annot) {
+            $this->dm->remove($annot);
+        }
         $this->dm->remove($multimediaObject);
         $this->dm->flush();
 
@@ -344,14 +349,18 @@ class FactoryService
     {
         $new = new MultimediaObject();
 
-        $new->setI18nTitle($src->getI18nTitle());
+        $i18nTitles = array();
+        foreach($src->getI18nTitle() as $key => $val) {
+            $string = $this->translator->trans('cloned', array(), null, $key);
+            $i18nTitles[$key] = $val . ' (' . $string. ')';
+        }
+        $new->setI18nTitle($i18nTitles);
         $new->setI18nSubtitle($src->getI18nSubtitle());
         $new->setI18nDescription($src->getI18nDescription());
         $new->setI18nLine2($src->getI18nLine2());
         $new->setI18nKeyword($src->getI18nKeyword());
         $new->setCopyright($src->getCopyright());
         $new->setLicense($src->getLicense());
-
         // NOTE: #7408 Specify which properties are clonable
         $new->setProperty("subseries", $src->getProperty("subseries"));
         $new->setProperty("subseriestitle", $src->getProperty("subseriestitle"));
@@ -369,6 +378,35 @@ class FactoryService
         }
 
         $new->setSeries($src->getSeries());
+        $this->dm->persist($new);
+        foreach ($src->getPics() as $thumb) {
+            $clonedThumb = clone $thumb;
+            $this->dm->persist($clonedThumb);
+            $new->addPic($clonedThumb);
+        }
+        foreach ($src->getTracks() as $track) {
+            $clonedTrack = clone $track;
+            $this->dm->persist($clonedTrack);
+            $new->addTrack($clonedTrack);
+        }
+        foreach ($src->getMaterials() as $material) {
+            $clonedMaterial = clone $material;
+            $this->dm->persist($clonedMaterial);
+            $new->addMaterial($clonedMaterial);
+        }
+        foreach ($src->getLinks() as $link) {
+            $clonedLink = clone $link;
+            $this->dm->persist($clonedLink);
+            $new->addLink($clonedLink);
+        }
+        $annotRepo = $this->dm->getRepository('PumukitSchemaBundle:Annotation');
+        $annotations = $annotRepo->findBy(array('multimediaObject' => new \MongoId($src->getId())));
+        foreach($annotations as $annot) {
+            $clonedAnnot = clone $annot;
+            $clonedAnnot->setMultimediaObject($new->getId());
+            $this->dm->persist($clonedAnnot);
+            $this->dm->flush();//necessary?
+        }
 
         if ($broadcast = $src->getBroadcast()) {
             $new->setBroadcast($broadcast);
