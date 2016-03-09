@@ -19,6 +19,7 @@ class CategoriesController extends Controller implements WebTVController
     public function indexAction($sort, Request $request)
     {
         $templateTitle = $this->container->getParameter('menu.categories_title');
+        $templateTitle = $this->get('translator')->trans($templateTitle);
         $this->get('pumukit_web_tv.breadcrumbs')->addList($templateTitle?:'Videos by Category', 'pumukit_webtv_categories_index');
         $parentCod = $this->container->getParameter('categories_tag_cod');
 

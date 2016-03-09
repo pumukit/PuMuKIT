@@ -66,6 +66,7 @@ class ChannelController extends Controller implements WebTVController
     public function getChannelTitle($channelNumber)
     {
         $title = isset($this->titles[$channelNumber])?$this->titles[$channelNumber]:'No title';
+        $title = $this->get('translator')->trans($title);
         return $title;
     }
 

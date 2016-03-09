@@ -21,7 +21,9 @@ class SearchController extends Controller implements WebTVController
      */
     public function seriesAction(Request $request)
     {
-        $this->get('pumukit_web_tv.breadcrumbs')->addList('Series search', 'pumukit_webtv_search_series');
+        $templateTitle = 'Series search';
+        $templateTitle = $this->get('translator')->trans($templateTitle);
+        $this->get('pumukit_web_tv.breadcrumbs')->addList($templateTitle, 'pumukit_webtv_search_series');
 
         // --- Get Variables ---
         $searchFound = $request->query->get('search');
