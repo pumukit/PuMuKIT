@@ -56,7 +56,7 @@ class MediaPackageController extends Controller
                 $limit,
                 ($page -1) * $limit);
         } catch (\Exception $e) {
-            return new Response($this->render('PumukitOpencastBundle:MediaPackage:error.html.twig', array('message' => $e->getMessage())), 400);
+          return new Response($this->renderView('PumukitOpencastBundle:MediaPackage:error.html.twig', array('admin_url' => $opencastClient->getUrl() ,'message' => $e->getMessage())), 503);
         }
 
         $currentPageOpencastIds = array();
