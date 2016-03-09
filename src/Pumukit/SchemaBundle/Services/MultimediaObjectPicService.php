@@ -51,7 +51,7 @@ class MultimediaObjectPicService
       $this->dm->persist($multimediaObject);
       if($flush) {
           $this->dm->flush();
-      }		 
+      }
 
       $this->dispatcher->dispatchCreate($multimediaObject, $pic);
 
@@ -98,8 +98,11 @@ class MultimediaObjectPicService
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
+
         if ($this->forceDeleteOnDisk && $picPath) {
-          $this->deleteFileOnDisk($picPath, $multimediaObject);
+            $otherPics = $this->repo->findBy(array('pics.path' => $picPath));
+            if(count($otherPics) == 0)
+                $this->deleteFileOnDisk($picPath, $multimediaObject);
         }
 
         $this->dispatcher->dispatchDelete($multimediaObject, $pic);
