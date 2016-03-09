@@ -43,6 +43,8 @@ class PumukitOpencastExtension extends Extension
               ->addArgument($config['delete_archive_mediapackage'])
               ->addArgument($config['deletion_workflow_name'])
               ->addArgument($config['manage_opencast_users'])
+              ->addArgument(new Parameter('pumukit2.insecure_http_client'))
+              ->addArgument($config['admin_host'])
               ->addArgument(new Reference('logger'));
 
             $container
