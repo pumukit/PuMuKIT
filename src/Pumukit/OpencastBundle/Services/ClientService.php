@@ -17,6 +17,7 @@ class ClientService
     private $deleteArchiveMediaPackage;
     private $deletionWorkflowName;
     private $manageOpencastUsers;
+    private $insecure = false;
     private $logger;
 
     /**
@@ -32,7 +33,7 @@ class ClientService
      * @param LoggerInterface $logger
      */
     public function __construct($url = '', $user = '', $passwd = '', $player = '/engage/ui/watch.html', $scheduler = '/admin/index.html#/recordings', $dashboard = '/dashboard/index.html',
-                                $deleteArchiveMediaPackage = false, $deletionWorkflowName = 'delete-archive', $manageOpencastUsers = false, LoggerInterface $logger)
+                                $deleteArchiveMediaPackage = false, $deletionWorkflowName = 'delete-archive', $manageOpencastUsers = false, $insecure = false, LoggerInterface $logger)
     {
         $this->logger = $logger;
 
@@ -52,6 +53,7 @@ class ClientService
         $this->deleteArchiveMediaPackage = $deleteArchiveMediaPackage;
         $this->deletionWorkflowName = $deletionWorkflowName;
         $this->manageOpencastUsers = $manageOpencastUsers;
+        $this->insecure = $insecure;
     }
 
     /**
@@ -470,6 +472,10 @@ class ClientService
 
         curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($request, CURLOPT_FOLLOWLOCATION, false);
+
+        if ($this->insecure) {
+            curl_setopt($request, CURLOPT_SSL_VERIFYPEER, false);
+        }
 
         if ($this->user != '') {
             curl_setopt($request, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
