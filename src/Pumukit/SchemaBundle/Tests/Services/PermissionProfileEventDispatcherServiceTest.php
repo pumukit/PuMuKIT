@@ -19,10 +19,9 @@ class PermissionProfileEventDispatcherServiceTest extends WebTestCase
     public function __construct()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
+        static::bootKernel($options);
 
-        $this->dm = $kernel->getContainer()
+        $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb.odm.document_manager');
         $this->dispatcher = new EventDispatcher();
     }

@@ -18,18 +18,17 @@ class PermissionProfileServiceTest extends WebTestCase
     public function __construct()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
+        static::bootKernel($options);
 
-        $this->dm = $kernel->getContainer()
+        $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
           ->getRepository('PumukitSchemaBundle:PermissionProfile');
-        $this->permissionProfileService = $kernel->getContainer()
+        $this->permissionProfileService = static::$kernel->getContainer()
           ->get('pumukitschema.permissionprofile');
-        $this->dispatcher = $kernel->getContainer()
+        $this->dispatcher = static::$kernel->getContainer()
           ->get('pumukitschema.permissionprofile_dispatcher');
-        $this->permissionService = $kernel->getContainer()
+        $this->permissionService = static::$kernel->getContainer()
           ->get('pumukitschema.permission');
     }
 

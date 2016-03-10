@@ -13,14 +13,14 @@ class TagTest extends WebTestCase
     public function setUp()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
-        $this->dm = $kernel->getContainer()
-      ->get('doctrine_mongodb')->getManager();
+        static::bootKernel($options);
+        
+        $this->dm = static::$kernel->getContainer()
+          ->get('doctrine_mongodb')->getManager();
         $this->tagRepo = $this->dm
-      ->getRepository('PumukitSchemaBundle:Tag');
+          ->getRepository('PumukitSchemaBundle:Tag');
 
-        $this->tagService = $kernel->getContainer()->get('pumukitschema.tag');
+        $this->tagService = static::$kernel->getContainer()->get('pumukitschema.tag');
 
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')
       ->remove(array());

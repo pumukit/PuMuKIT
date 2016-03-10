@@ -24,10 +24,9 @@ class UserServiceTest extends WebTestCase
     public function __construct()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
+        static::bootKernel($options);
 
-        $this->dm = $kernel->getContainer()
+        $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
           ->getRepository('PumukitSchemaBundle:User');

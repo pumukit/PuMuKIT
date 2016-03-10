@@ -27,15 +27,11 @@ class PermissionProfileListenerTest extends WebTestCase
     public function __construct()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
+        static::bootKernel($options);
 
-        $this->dm = $kernel->getContainer()
-          ->get('doctrine_mongodb')->getManager();
-        $this->userRepo = $this->dm
-          ->getRepository('PumukitSchemaBundle:User');
-        $this->permissionProfileRepo = $this->dm
-          ->getRepository('PumukitSchemaBundle:PermissionProfile');
+        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $this->userRepo = $this->dm->getRepository('PumukitSchemaBundle:User');
+        $this->permissionProfileRepo = $this->dm->getRepository('PumukitSchemaBundle:PermissionProfile');
 
 
         $dispatcher = new EventDispatcher();

@@ -13,10 +13,9 @@ class LiveRepositoryTest extends WebTestCase
     public function setUp()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
+        static::bootKernel($options);
 
-        $this->dm = $kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm->getRepository('PumukitLiveBundle:Live');
 
         $this->dm->getDocumentCollection('PumukitLiveBundle:Live')->remove(array());

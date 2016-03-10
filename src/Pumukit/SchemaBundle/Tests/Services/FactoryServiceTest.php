@@ -23,17 +23,17 @@ class FactoryServiceTest extends WebTestCase
     public function setUp()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
-        $this->dm = $kernel->getContainer()
+        static::bootKernel($options);
+
+        $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb')->getManager();
         $this->seriesRepo = $this->dm
           ->getRepository('PumukitSchemaBundle:Series');
         $this->mmobjRepo = $this->dm
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $this->translator = $kernel->getContainer()
+        $this->translator = static::$kernel->getContainer()
           ->get('translator');
-        $this->factory = $kernel->getContainer()
+        $this->factory = static::$kernel->getContainer()
           ->get('pumukitschema.factory');
         $this->locales = $this->factory->getLocales();
 

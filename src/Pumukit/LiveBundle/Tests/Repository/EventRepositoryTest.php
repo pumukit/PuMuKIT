@@ -14,10 +14,9 @@ class EventRepositoryTest extends WebTestCase
     public function setUp()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
+        static::bootKernel($options);
 
-        $this->dm = $kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm->getRepository('PumukitLiveBundle:Event');
 
         $this->dm->getDocumentCollection('PumukitLiveBundle:Event')->remove(array());

@@ -22,18 +22,17 @@ class MaterialServiceTest extends WebTestCase
     public function __construct()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
+        static::bootKernel($options);
 
-        $this->dm = $kernel->getContainer()
+        $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb')->getManager();
         $this->repoMmobj = $this->dm
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $this->materialService = $kernel->getContainer()
+        $this->materialService = static::$kernel->getContainer()
           ->get('pumukitschema.material');
-        $this->materialDispatcher = $kernel->getContainer()
+        $this->materialDispatcher = static::$kernel->getContainer()
           ->get('pumukitschema.material_dispatcher');
-        $this->factoryService = $kernel->getContainer()
+        $this->factoryService = static::$kernel->getContainer()
           ->get('pumukitschema.factory');
 
         $this->originalFilePath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'file.pdf';

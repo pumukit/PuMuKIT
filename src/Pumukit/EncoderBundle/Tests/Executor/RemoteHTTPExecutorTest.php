@@ -10,7 +10,7 @@ class RemoteHTTPExecutorTest extends WebTestCase
     public function __construct()
     {
         $options = array('environment' => 'test');
-        $kernel = static::bootKernel($options);
+        static::bootKernel($options);
     }
 
     public function testSimple()
