@@ -40,13 +40,13 @@ class LegacyController extends Controller
     }
 
     /**
-     * @Route("/{_locale}/video/{pumukit1id}.html")
-     * @Route("/{_locale}/video/{pumukit1id}")
+     * @Route("/{_locale}/video/{pumukit1id}.html", defaults={"filter": false})
+     * @Route("/{_locale}/video/{pumukit1id}", defaults={"filter": false})
      * @Route("/video/{pumukit1id}", requirements={
      *     "pumukit1id": "\d+"
-     * })
-     * @Route("/video/index/id/{pumukit1id}")
-     * @Route("/video/index/id/{pumukit1id}.html")
+     * }, defaults={"filter": false})
+     * @Route("/video/index/id/{pumukit1id}", defaults={"filter": false})
+     * @Route("/video/index/id/{pumukit1id}.html", defaults={"filter": false})
      *
      * Parameters:
      * - {_locale} matches current locale
@@ -59,13 +59,19 @@ class LegacyController extends Controller
 
         $multimediaObject = $mmobjRepo->createQueryBuilder()
           ->field("properties.pumukit1id")->equals($pumukit1id)
+          ->field("status")->gte(0)
           ->getQuery()->getSingleResult();
 
         if (!$multimediaObject) {
             throw $this->createNotFoundException();
         }
-
+        if ($multimediaObject->getStatus() == "2"){
+        return $this->redirect($this->generateUrl("pumukit_webtv_multimediaobject_magicindex", array("secret" => $multimediaObject->getSecret())));
+        }
+        else{
         return $this->redirect($this->generateUrl("pumukit_webtv_multimediaobject_index", array("id" => $multimediaObject->getId())));
+        }
+        
     }
     
     /**
