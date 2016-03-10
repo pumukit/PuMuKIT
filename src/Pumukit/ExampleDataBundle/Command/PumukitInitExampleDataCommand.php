@@ -353,41 +353,14 @@ EOT
         $series->setPublicDate($publicDate);
         foreach ($this->pmk2AllLocales as $locale) {
             $series->setTitle($title, $locale);
+            $series->setSubtitle($subtitle);
+            $series->setDescription($description);
+            $series->setHeader($header);
+            $series->setFooter($footer);
+            $series->setKeyword($keyword);
+            $series->setLine2($line2);
         }
-        $series->setSubtitle($subtitle);
-        $series->setDescription($description);
-        $series->setHeader($header);
-        $series->setFooter($footer);
         $series->setCopyright($copyright);
-        $series->setKeyword($keyword);
-        $series->setLine2($line2);
-        $series->setLocale($locale);
-
-        $titleEs = $title;
-        $subtitleEs = '';
-        $descriptionEs = '';
-        $headerEs = '';
-        $footerEs = '';
-        $copyrightEs = 'UdN-TV';
-        $keywordEs = '';
-        $line2Es = '';
-        $localeEs = 'es';
-
-        $titleI18n = array($locale => $title, $localeEs => $titleEs);
-        $subtitleI18n = array($locale => $subtitle, $localeEs => $subtitleEs);
-        $descriptionI18n = array($locale => $description, $localeEs => $descriptionEs);
-        $headerI18n = array($locale => $header, $localeEs => $headerEs);
-        $footerI18n = array($locale => $footer, $localeEs => $footerEs);
-        $keywordI18n = array($locale => $keyword, $localeEs => $keywordEs);
-        $line2I18n = array($locale => $line2, $localeEs => $line2Es);
-
-        $series->setI18nTitle($titleI18n);
-        $series->setI18nSubtitle($subtitleI18n);
-        $series->setI18nDescription($descriptionI18n);
-        $series->setI18nHeader($headerI18n);
-        $series->setI18nFooter($footerI18n);
-        $series->setI18nKeyword($keywordI18n);
-        $series->setI18nLine2($line2I18n);
     }
 
     private function load_pic_series($series, $pic)
@@ -421,9 +394,9 @@ EOT
         $multimediaObject->setPublicDate($public_date);
         foreach ($this->pmk2AllLocales as $locale) {
             $multimediaObject->setTitle($title, $locale);
+            $multimediaObject->setSubtitle($subtitle);
+            $multimediaObject->setDescription($description);
         }
-        $multimediaObject->setSubtitle($subtitle);
-        $multimediaObject->setDescription($description);
     }
 
     private function load_track_multimediaobject($multimediaObject, $folder, $track, $audio)
