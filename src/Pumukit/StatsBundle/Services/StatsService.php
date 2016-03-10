@@ -184,9 +184,10 @@ class StatsService
     {
         $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
 
-        $mmobjIds = $this->getMmobjIdsWithCriteria($criteria);
-        $matchExtra['multimediaObject'] = array('$in' => $mmobjIds);
-
+        if(!isset($matchExtra['multimediaObject'])) {
+            $mmobjIds = $this->getMmobjIdsWithCriteria($criteria);
+            $matchExtra['multimediaObject'] = array('$in' => $mmobjIds);
+        }
         $options = $this->parseOptions($options);
 
         $pipeline = $this->aggrPipeAddMatch($options['from_date'], $options['to_date'], $matchExtra);
