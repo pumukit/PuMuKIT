@@ -3,9 +3,16 @@
 namespace Pumukit\SchemaBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Security\Permission;
+use Pumukit\SchemaBundle\Services\UserService;
+use Pumukit\SchemaBundle\Services\UserEventDispatcherService;
+use Pumukit\SchemaBundle\Services\PermissionService;
+use Pumukit\SchemaBundle\Services\PermissionProfileService;
+use Pumukit\SchemaBundle\Services\PermissionProfileEventDispatcherService;
+use Pumukit\SchemaBundle\EventListener\PermissionProfileListener;
 
 class UserServiceTest extends WebTestCase
 {
@@ -26,8 +33,27 @@ class UserServiceTest extends WebTestCase
           ->getRepository('PumukitSchemaBundle:User');
         $this->permissionProfileRepo = $this->dm
           ->getRepository('PumukitSchemaBundle:PermissionProfile');
-        $this->userService = $kernel->getContainer()
-          ->get('pumukitschema.user');
+
+        $dispatcher = new EventDispatcher();
+        $userDispatcher = new UserEventDispatcherService($dispatcher);
+        $permissionProfileDispatcher = new PermissionProfileEventDispatcherService($dispatcher);
+        $permissionService = new PermissionService();
+        $permissionProfileService = new PermissionProfileService(
+            $this->dm, $permissionProfileDispatcher,
+            $permissionService
+        );
+
+        $personalScopeDeleteOwners = false;
+        $genUserSalt = true;
+
+        $this->userService = new UserService(
+            $this->dm, $userDispatcher,
+            $permissionService, $permissionProfileService,
+            $personalScopeDeleteOwners, $genUserSalt
+        );
+
+        $listener = new PermissionProfileListener($this->dm, $this->userService);
+        $dispatcher->addListener('permissionprofile.update', array($listener, 'postUpdate'));
     }
 
     public function setUp()
