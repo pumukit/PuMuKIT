@@ -29,7 +29,7 @@ class PumukitInitExampleDataCommand extends ContainerAwareCommand
     {
         $this
             ->setName('pumukit:init:example')
-            ->setDescription('Load Pumukit expample data fixtures to your database')
+            ->setDescription('Load Pumukit example data fixtures to your database')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
             ->addOption('noviewlogs', null, InputOption::VALUE_NONE, 'Does not add viewlog dummy views')
             ->addOption('append', null, InputOption::VALUE_NONE, 'Add examples without deleting')
@@ -379,13 +379,13 @@ EOT
 
     private function load_multimediaobject($multimediaObject, $series, $title)
     {
-        $rank = 3;
+        $rank = 1;
         $status = MultimediaObject::STATUS_PUBLISHED;
         $record_date = new \DateTime();
         $public_date = new \DateTime();
         $title = $title;
-        $subtitle = '';
-        $description = '';
+        $subtitle = 'subtitle lorem ipsum subtitle lorem ipsum subtitle lorem ipsum subtitle lorem ipsum';
+        $description = "description dolor sit amet description dolor sit amet description dolor sit amet description dolor sit amet.\nDescription dolor sit amet description dolor sit amet description dolor sit amet";
 
         $multimediaObject->setRank($rank);
         $multimediaObject->setStatus($status);
