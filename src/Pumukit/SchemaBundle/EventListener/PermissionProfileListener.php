@@ -2,32 +2,31 @@
 
 namespace Pumukit\SchemaBundle\EventListener;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Event\PermissionProfileEvent;
+use Pumukit\SchemaBundle\Services\UserService;
 
 class PermissionProfileListener
 {
-    private $container;
+    private $userService;
+    private $dm;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(DocumentManager $dm, UserService $userService)
     {
-        //NOTE: using container instead of tag service to avoid ServiceCircularReferenceException.
-        $this->container = $container;
+        $this->dm = $dm;
+        $this->userService = $userService;
     }
 
     public function postUpdate(PermissionProfileEvent $event)
     {
         $permissionProfile = $event->getPermissionProfile();
-
-        $userService = $this->container->get('pumukitschema.user');
-        $countUsers = $userService->countUsersWithPermissionProfile($permissionProfile);
+        $countUsers = $this->userService->countUsersWithPermissionProfile($permissionProfile);
         if (0 < $countUsers) {
-            $usersWithPermissionProfile = $userService->getUsersWithPermissionProfile($permissionProfile);
+            $usersWithPermissionProfile = $this->userService->getUsersWithPermissionProfile($permissionProfile);
             foreach ($usersWithPermissionProfile as $user) {
-                $user = $userService->update($user, false);
+                $user = $this->userService->update($user, false);
             }
-            $dm = $this->container->get('doctrine_mongodb.odm.document_manager');
-            $dm->flush();
+            $this->dm->flush();
         }
     }
 }
