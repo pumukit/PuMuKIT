@@ -319,7 +319,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             pmk.current_span = $routeParams.span;
         }
         if ($routeParams.page != undefined){
-            pmk.page.mv = $routeParams.page;
+            pmk.page.mv = parseInt($routeParams.page);
         }
 
         //FIXME: change view.tabes true/false with the name of the 'tabe'
