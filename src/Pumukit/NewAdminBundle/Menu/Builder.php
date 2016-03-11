@@ -83,17 +83,8 @@ class Builder extends ContainerAware
         }
 
         if ($showImporterTab && $authorizationChecker->isGranted(Permission::ACCESS_IMPORTER)) {
-            if ($this->container->has('pumukit_opencast.client')) {
-                $client = $this->container->get('pumukit_opencast.client');
-                $importer = $menu->addChild('OC-tools')->setExtra('translation_domain', 'NewAdminBundle');
-                if ($this->container->getParameter('pumukit_opencast.scheduler_on_menu')) {
-                    $importer->addChild('Scheduler', array('uri' => $client->getSchedulerUrl()))->setExtra('translation_domain', 'NewAdminBundle');
-                }
-                if ($this->container->getParameter('pumukit_opencast.dashboard_on_menu')) {
-                    $importer->addChild('GC-Dash', array('uri' => $client->getDashboardUrl()))->setExtra('translation_domain', 'NewAdminBundle');
-                }
-                $importer->addChild('Importer', array('route' => 'pumukitopencast'))->setExtra('translation_domain', 'NewAdminBundle');
-            }
+            $importer = $menu->addChild('Tools')->setExtra('translation_domain', 'NewAdminBundle');
+            $importer->addChild('OC-Importer', array('route' => 'pumukitopencast'))->setExtra('translation_domain', 'NewAdminBundle');
         }
 
         return $menu;
