@@ -10,7 +10,12 @@ $(window).resize(function(){
     resizeFrame($('#paellaiframe'));
 });
 </script>
-<iframe src="{{url('pumukit_videoplayer_index', {'id':multimediaObject.id, 'track_id':track.id})}}&id={{multimediaObject.id}}"
+{% if track %}
+  {% set url_iframe = url('pumukit_videoplayer_index', {'id':multimediaObject.id, 'track_id':track.id}) ~ '&id=' ~ multimediaObject.id%}
+{% else %}
+  {% set url_iframe = url('pumukit_videoplayer_index', {'id':multimediaObject.id}) ~ '?id=' ~ multimediaObject.id%}
+{% endif %}
+<iframe src="{{url_iframe}}"
         id="paellaiframe"
         frameborder="0"
         border="0"
