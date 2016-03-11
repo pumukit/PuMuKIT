@@ -274,9 +274,9 @@
         <source>Private video</source>
         <target>Vídeo privado</target>
       </trans-unit>
-      <trans-unit id="5b3150e30d4963ac18c88f081ecf8876" resname="{0}0 Videos|{1}%count% Video|{2}%count% Videos">
-        <source>{0}0 Videos|{1}%count% Video|{2}%count% Videos</source>
-        <target>{0}0 Vídeos|{1}%count% Vídeo|{2}%count% Vídeos</target>
+      <trans-unit id="5b3150e30d4963ac18c88f081ecf8876" resname="{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos">
+        <source>{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos</source>
+        <target>{0}0 Vídeos|{1}%count% Vídeo|]1,Inf[%count% Vídeos</target>
       </trans-unit>
       <trans-unit id="445bd664985fd3d87bdfdc0da47507fa" resname="No resources available">
         <source>No resources available</source>
