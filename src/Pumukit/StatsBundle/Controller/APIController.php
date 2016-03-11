@@ -208,7 +208,7 @@ class APIController extends Controller implements NewAdminController
 
     protected function processRequestData(Request $request)
     {
-        $MAX_LIMIT = 250;
+        $MAX_LIMIT = 1000;
         //Request variables.
         $criteria = $request->get('criteria') ?: array();
         $sort = intval($request->get('sort'));
