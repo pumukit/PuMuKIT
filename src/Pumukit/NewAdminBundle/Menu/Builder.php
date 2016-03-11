@@ -29,6 +29,14 @@ class Builder extends ContainerAware
             $stats = $menu->addChild('Stats')->setExtra('translation_domain', 'NewAdminBundle');
             $stats->addChild('Series', array('route' => 'pumukit_stats_series_index'))->setExtra('translation_domain', 'NewAdminBundle');
             $stats->addChild('Multimedia Objects', array('route' => 'pumukit_stats_mmobj_index'))->setExtra('translation_domain', 'NewAdminBundle');
+
+            //TODO: Use VOTERS: https://github.com/KnpLabs/KnpMenu/blob/master/doc/01-Basic-Menus.markdown#the-current-menu-item
+            //Voters are a way to check if a menu item is the current one. Now we are just checking the routes and setting the Current element manually
+            $route = $this->container->get('request_stack')->getMasterRequest()->attributes->get('_route');
+            $statsRoutes = array('pumukit_stats_series_index', 'pumukit_stats_mmobj_index', 'pumukit_stats_series_index_id', 'pumukit_stats_mmobj_index_id');
+            if(in_array($route, $statsRoutes)) {
+                $stats->setCurrent(true);
+            }
         }
 
         if ($authorizationChecker->isGranted(Permission::ACCESS_LIVE_EVENTS) || $authorizationChecker->isGranted(Permission::ACCESS_LIVE_CHANNELS)) {
