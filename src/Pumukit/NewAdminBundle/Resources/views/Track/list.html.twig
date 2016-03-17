@@ -144,10 +144,12 @@
   {% if mm.getProperty('opencast') and opencast_exists %}
      {% render(controller('PumukitOpencastBundle:MultimediaObject:index', {'id': mm.id })) %}
   {% endif %}
+  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADVANCED_UPLOAD')) %}
   <tr>
     <td><ul><li></li></ul></td>
     <td colspan="11"><a data-toggle="modal" data-backdrop="static" data-target="#myModal" href="{{ path('pumukitnewadmin_track_create', {'id': mm.id}) }}">{% trans %}New master{% endtrans %}...</a></td>
   </tr>
+  {% endif %}
   {% else %}
     {% trans %}You don't have enough permissions to access this content.{% endtrans %}
   {% endif %}
