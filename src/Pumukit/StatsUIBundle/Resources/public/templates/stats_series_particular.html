@@ -57,7 +57,7 @@
               <a href="#" ng-click="pmkCtrl.go_to_page(page)"> {{page}}</a>
               </li>
               <li ng-class="{'disabled':pmkCtrl.page.mv == pmkCtrl.total_pages.mv}">
-              <a href="#" ng-click="pmkCtrl.go_to_page(pmkCtrl.page.mv + 1)" > Next </a>
+              <a href="#" ng-click="pmkCtrl.go_to_page(pmkCtrl.page.mv * 1 + 1)" > Next </a>
               </li>
             </ul>
           </div>
