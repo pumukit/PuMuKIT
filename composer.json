@@ -1,5 +1,6 @@
 {
     "name": "pumukit/pumukit2",
+    "version": "2.2.0",
     "license": "GPL",
     "type": "project",
     "description": "Media Portal",
