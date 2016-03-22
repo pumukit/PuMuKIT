@@ -645,8 +645,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                         'label': items[item_indx][mv_data].series.title[locale],
                         'id': items[item_indx][mv_data].series.id,
                     }
-                    //FIXME: search for the track with the maximum duration
-                    data.duration = items[item_indx][mv_data].tracks[0].duration; 
+                    data.duration = items[item_indx][mv_data].duration;
                     data.description = items[item_indx][mv_data].description[items[item_indx][mv_data].locale];
                     data.date = items[item_indx][mv_data].record_date;
                     if (items[item_indx][mv_data].pics.length != 0 && items[item_indx][mv_data].pics[0].url) {
