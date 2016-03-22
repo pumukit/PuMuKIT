@@ -46,7 +46,7 @@ class BasePlayerController extends BasePlayerControllero implements WebTVControl
     }
 
     /**
-     * @Route("/videoplayer/magic/{secret}", name="pumukit_videoplayer_magicindex", defaults={"filter": false} )
+     * @Route("/videoplayer/magic/{secret}", name="pumukit_videoplayer_magicindex", defaults={"show_hide": true} )
      * @Template("PumukitJWPlayerBundle:JWPlayer:index.html.twig")
      */
     public function magicIndexAction(MultimediaObject $multimediaObject, Request $request)
