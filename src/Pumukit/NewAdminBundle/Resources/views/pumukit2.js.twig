@@ -448,7 +448,7 @@ window.filter_click_letter = function(letter)
 }
 
 // TODO complete todos
-window.change_select = function(element, selector, pluralName)
+window.change_select = function(element, selector, pluralName, seriesId = '')
 {
     var i = selector.val();
     switch(i){
@@ -584,22 +584,18 @@ window.change_select = function(element, selector, pluralName)
 */
     case 'order_rec_date_asc':
         var route = '{{ path('pumukitnewadmin_mms_reorder', {'seriesId': '__seriesId__', 'fieldName': 'record_date', 'order': 'asc'})|raw }}';
-        var seriesId = '{{ app.session.get('admin/series/id') }}';
         $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId), {'_method': 'POST'});
         break;
     case 'order_rec_date_desc':
         var route = '{{ path('pumukitnewadmin_mms_reorder', {'seriesId': '__seriesId__', 'fieldName': 'record_date', 'order': 'desc'})|raw }}';
-        var seriesId = '{{ app.session.get('admin/series/id') }}';
         $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId), {'_method': 'POST'});
         break;
     case 'order_pub_date_asc':
         var route = '{{ path('pumukitnewadmin_mms_reorder', {'seriesId': '__seriesId__', 'fieldName': 'public_date', 'order': 'asc'})|raw }}';
-        var seriesId = '{{ app.session.get('admin/series/id') }}';
         $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId), {'_method': 'POST'});
         break;
     case 'order_pub_date_desc':
         var route = '{{ path('pumukitnewadmin_mms_reorder', {'seriesId': '__seriesId__', 'fieldName': 'public_date', 'order': 'desc'})|raw }}';
-        var seriesId = '{{ app.session.get('admin/series/id') }}';
         $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId), {'_method': 'POST'});
         break;
     case 'cut_mm':
@@ -637,7 +633,6 @@ window.change_select = function(element, selector, pluralName)
     case 'paste_mm':
         if (confirm('{% trans %}Paste multimedia object(s) in this series?{% endtrans %}')) {
             var route = '{{ path('pumukitnewadmin_mms_paste', {'seriesId': '__seriesId__'})|raw }}';
-            var seriesId = '{{ app.session.get('admin/series/id') }}';
             $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId), {'_method':'POST'}, function(){
                 $('#options_mms #paste_mm').hide();
 
