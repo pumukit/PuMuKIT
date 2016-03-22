@@ -12,10 +12,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\WebTVBundle\Controller\WebTVController;
 
 use Pumukit\BasePlayerBundle\Controller\BasePlayerController as BasePlayerControllero;
 
-class BasePlayerController extends BasePlayerControllero
+class BasePlayerController extends BasePlayerControllero implements WebTVController
 {
     /**
      * @Route("/videoplayer/{id}", name="pumukit_videoplayer_index" )
@@ -42,6 +43,46 @@ class BasePlayerController extends BasePlayerControllero
                      'intro' => $this->getIntro($request->query->get('intro')),
                      'multimediaObject' => $multimediaObject,
                      'track' => $track, );
+    }
+
+    /**
+     * @Route("/videoplayer/magic/{secret}", name="pumukit_videoplayer_magicindex", defaults={"filter": false} )
+     * @Template("PumukitJWPlayerBundle:JWPlayer:index.html.twig")
+     */
+    public function magicIndexAction(MultimediaObject $multimediaObject, Request $request)
+    {
+        $mmobjService = $this->get('pumukitschema.multimedia_object');
+        if($mmobjService->isPublished($multimediaObject,'PUCHWEBTV')){
+            if($mmobjService->hasPlayableResource($multimediaObject) && Broadcast::BROADCAST_TYPE_PUB === $multimediaObject->getBroadcast()->getBroadcastTypeId()){
+                return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId())));
+            }
+        } elseif( ($multimediaObject->getStatus() != MultimediaObject::STATUS_PUBLISHED
+                 && $multimediaObject->getStatus() != MultimediaObject::STATUS_HIDE
+                 ) || !$multimediaObject->containsTagWithCod('PUCHWEBTV')) {
+            return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
+        }
+
+        $response = $this->testBroadcast($multimediaObject, $request);
+        if ($response instanceof Response) {
+            return $response;
+        }
+
+        $track = $request->query->has('track_id') ?
+                 $multimediaObject->getTrackById($request->query->get('track_id')) :
+                 $multimediaObject->getTrackWithTag('display');
+
+        if ($track && $track->containsTag('download')) {
+            return $this->redirect($track->getUrl());
+        }
+
+
+        $this->updateBreadcrumbs($multimediaObject);
+        return array('autostart' => $request->query->get('autostart', 'true'),
+                     'intro' => $this->getIntro($request->query->get('intro')),
+                     'multimediaObject' => $multimediaObject,
+                     'track' => $track,
+                     'magic_url' => true);
+
     }
 
     /**
