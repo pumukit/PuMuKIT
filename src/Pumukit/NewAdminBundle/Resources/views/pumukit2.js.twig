@@ -1349,6 +1349,9 @@ get_batch_delete_route = function(element, ids)
         case 'series':
             route = '{{ path('pumukitnewadmin_series_batch_delete', {'ids': '__ids__'})|raw }}';
             break;
+        case 'seriestype':
+            route = '{{ path('pumukitnewadmin_seriestype_batch_delete', {'ids': '__ids__'})|raw }}';
+            break;
         case 'mm':
             route = '{{ path('pumukitnewadmin_mms_batch_delete', {'ids': '__ids__'})|raw }}';
             break;
