@@ -366,10 +366,10 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         setTimeout(function(){
             if (!(pmk.view.tabes.objects && pmk.view.scope != 'general')){
                 get_most_viewed();
-            }else{
+            }else if (pmk.view.scope != 'general'){
                 load_particular_scope();
-                calculate_total_views();
             }
+            calculate_total_views();
             get_historical_data();
         },500);
 
@@ -500,7 +500,6 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
 
     //INTERNAL FUNCTIONS
     function load_particular_scope(){
-        if (pmk.view.scope != 'general'){
             var obj_type = $location.path().search('objects') >=0 ? 'objects':'series';
             var type = obj_type == 'objects' ? 'mmobj':'series';
             $http({
@@ -535,10 +534,8 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                 }
                 //TODO: If type is series add number of objects of the serie.
             });
-        }
     }
     function get_most_viewed(origin){
-
         var tab = pmk.view.tabes.series ? 'series':'objects';
         var scope = pmk.view.scope == 'general' ? 'general':'particular';
         pmk.loading.mv[tab][scope] = true;
@@ -548,7 +545,6 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
 
         if ((!(origin=='datepicker' && typeof(pmk.datepicker_mv.model) === 'object')) && !(pmk.mv[tab][scope].api == undefined)){
 
-            calculate_total_views()
                 var params = {
                     'limit': pmk.items_page.mv,
                     'from_date' : pmk.datepicker_mv.model_debug.from_date,
@@ -949,9 +945,6 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                 total = year.numView + total;   
             })
             pmk.total_views = total;
-            if (pmk.view.tabes.objects && pmk.view.scope != 'general'){
-                pmk.current.value = total;
-            }
         }
 
         function getTotalViewsError(){
