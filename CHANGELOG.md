@@ -11,12 +11,8 @@ To get the diff between two versions, go to https://github.com/campusdomar/PuMuK
 ## [2.1.0] (2015-11-16)
 - Added migration path from PuMuKIT1.7 to PuMuKIT2
 - Removed MoodleBundle out of the project to be used as a third party bundle.
-
-
-## [2.1.0-RC1] (2015-10-23)
 - Production version
 - Bootstrap based Material design AdminUI
-
 
 ## 2.0.0 (2015-02-12)
 - Initial concept of technologies
