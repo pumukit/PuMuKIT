@@ -137,7 +137,7 @@ class ClientService
      */
     public function getMediaPackages($query, $limit, $offset)
     {
-        $output = $this->request('/search/episode.json?'.($query ? 'q='.$query.'&' : '').'limit='.$limit.'&offset='.$offset);
+        $output = $this->request('/search/episode.json?'.($query ? 'q='.urlencode($query).'&' : '').'limit='.$limit.'&offset='.$offset);
 
         if ($output['status'] !== 200) {
             return false;
