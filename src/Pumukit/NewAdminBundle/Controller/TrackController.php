@@ -16,6 +16,7 @@ use Pumukit\NewAdminBundle\Form\Type\TrackType;
 use Pumukit\NewAdminBundle\Form\Type\TrackUpdateType;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\SchemaBundle\Security\Permission;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
@@ -23,6 +24,7 @@ use Pumukit\EncoderBundle\Document\Job;
 class TrackController extends Controller implements NewAdminController
 {
     /**
+     * @Security("is_granted('ROLE_ACCESS_ADVANCED_UPLOAD')")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
      * @Template
      */
@@ -147,9 +149,13 @@ class TrackController extends Controller implements NewAdminController
      */
     public function deleteAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $multimediaObject = $this->get('pumukitschema.track')->removeTrackFromMultimediaObject($multimediaObject, $request->get('id'));
-
-        $this->addFlash('success', 'delete');
+        $track = $multimediaObject->getTrackById($request->get('id'));
+        if ($track) {
+            if ($track->containsTag('opencast') || ($track->isMaster() && !$this->isGranted(Permission::ACCESS_ADVANCED_UPLOAD))) {
+                return new Response('You don\'t have enough permissions to delete this track. Contact your administrator.', Response::HTTP_FORBIDDEN);
+            }
+            $multimediaObject = $this->get('pumukitschema.track')->removeTrackFromMultimediaObject($multimediaObject, $request->get('id'));
+        }
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', array('id' => $multimediaObject->getId())));
     }
