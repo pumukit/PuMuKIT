@@ -22,20 +22,20 @@ class AnnounceServiceTest extends WebTestCase
     public function setUp()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
-        $this->dm = $kernel->getContainer()
+        static::bootKernel($options);
+
+        $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb')->getManager();
         $this->seriesRepo = $this->dm
           ->getRepository('PumukitSchemaBundle:Series');
         $this->mmobjRepo = $this->dm
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
 
-        $this->announceService = $kernel->getContainer()
+        $this->announceService = static::$kernel->getContainer()
           ->get('pumukitschema.announce');
-        $this->factoryService = $kernel->getContainer()
+        $this->factoryService = static::$kernel->getContainer()
           ->get('pumukitschema.factory');
-        $this->tagService = $kernel->getContainer()
+        $this->tagService = static::$kernel->getContainer()
           ->get('pumukitschema.tag');
 
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
@@ -96,15 +96,18 @@ class AnnounceServiceTest extends WebTestCase
         $this->dm->persist($series2);
         $this->dm->flush();
 
-        //We create two mmobjs to run test with
+        //We create three mmobjs to run tests with
         $mm11 = $this->factoryService->createMultimediaObject($series2);
         $mm22 = $this->factoryService->createMultimediaObject($series2);
+        $mm33 = $this->factoryService->createMultimediaObject($series2);
         $mm11->setPublicDate(\DateTime::createFromFormat('d/m/Y', "01/05/1999"));
         $mm22->setPublicDate(\DateTime::createFromFormat('d/m/Y', "05/04/1999"));
+        $mm33->setPublicDate(\DateTime::createFromFormat('d/m/Y', "03/05/1999"));
         $mm11->addTag($tagPudenew);
         $mm22->addTag($tagPudenew);
         $this->dm->persist($mm11);
         $this->dm->persist($mm22);
+        $this->dm->persist($mm33);
         $this->dm->flush();
 
         //We create initial date to request
@@ -114,6 +117,10 @@ class AnnounceServiceTest extends WebTestCase
         list($dateEnd, $last) = $this->announceService->getNextLatestUploads($date);
         $this->assertEquals( "05/1999", $dateEnd->format("m/Y"));
         $this->assertEquals( array($series2, $mm11), $last);
+
+        //We check the response is correct (returns objects within the same month and doesn't return series) with not 'tagPudenew'
+        list($dateEnd, $last) = $this->announceService->getNextLatestUploads($date, false);
+        $this->assertEquals( array($mm33->getId() => $mm33, $mm11->getId() => $mm11), $last);
 
         //We reuse the series and change the date
         $series2->setPublicDate(\DateTime::createFromFormat('d/m/Y', "05/04/1999"));
@@ -136,6 +143,9 @@ class AnnounceServiceTest extends WebTestCase
         list($dateEnd, $last) = $this->announceService->getNextLatestUploads($dateEnd);
         $this->assertEquals( array(), $last);
         $this->assertEquals( "04/1995", $dateEnd->format("m/Y"));
-
+        $dateEnd->modify('first day of last month');
+        list($dateEnd, $last) = $this->announceService->getNextLatestUploads($dateEnd, false);
+        $this->assertEquals( array(), $last);
+        $this->assertEquals( "04/1993", $dateEnd->format("m/Y"));
     }
 }

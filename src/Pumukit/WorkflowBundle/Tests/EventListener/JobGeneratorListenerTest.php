@@ -22,11 +22,10 @@ class JobGeneratorListenerTest extends WebTestCase
     public function __construct()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
+        static::bootKernel($options);
 
-        $this->dm = $kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->logger = $kernel->getContainer()->get('logger');
+        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $this->logger = static::$kernel->getContainer()->get('logger');
         
     }
 

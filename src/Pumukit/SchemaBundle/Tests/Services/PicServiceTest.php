@@ -25,13 +25,12 @@ class PicServiceTest extends WebTestCase
     public function __construct()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
+        static::bootKernel($options);
 
-        $this->dm = $kernel->getContainer()->get('doctrine_mongodb.odm.document_manager');
-        $this->factoryService = $kernel->getContainer()->get('pumukitschema.factory');
-        $this->context = $kernel->getContainer()->get('router.request_context');
-        $this->rootDir = $kernel->getContainer()->getParameter('kernel.root_dir');
+        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb.odm.document_manager');
+        $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
+        $this->context = static::$kernel->getContainer()->get('router.request_context');
+        $this->rootDir = static::$kernel->getContainer()->getParameter('kernel.root_dir');
         $this->webDir = realpath($this->rootDir.'/../web/bundles/pumukitschema');
     }
 

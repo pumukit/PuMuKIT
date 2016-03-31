@@ -30,17 +30,17 @@ class MultimediaObjectRepositoryTest extends WebTestCase
     public function __construct()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
-        $this->dm = $kernel->getContainer()
+        static::bootKernel($options);
+
+        $this->dm = static::$kernel->getContainer()
             ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
             ->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $this->factoryService = $kernel->getContainer()
+        $this->factoryService = static::$kernel->getContainer()
             ->get('pumukitschema.factory');
-        $this->mmsPicService = $kernel->getContainer()
+        $this->mmsPicService = static::$kernel->getContainer()
             ->get('pumukitschema.mmspic');
-        $this->tagService = $kernel->getContainer()
+        $this->tagService = static::$kernel->getContainer()
             ->get('pumukitschema.tag');
     }
 

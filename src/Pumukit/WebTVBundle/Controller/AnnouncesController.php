@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AnnouncesController extends Controller
+class AnnouncesController extends Controller implements WebTVController
 {
     /**
      * @Route("/latestuploads", name="pumukit_webtv_announces_latestuploads")
@@ -19,7 +19,7 @@ class AnnouncesController extends Controller
     public function latestUploadsAction(Request $request)
     {
         $templateTitle = $this->container->getParameter('menu.announces_title');
-
+        $templateTitle = $this->get('translator')->trans($templateTitle);
         $this->get('pumukit_web_tv.breadcrumbs')->addList($templateTitle, 'pumukit_webtv_announces_latestuploads');
         return array('template_title' => $templateTitle);
     }
@@ -30,13 +30,13 @@ class AnnouncesController extends Controller
     public function latestUploadsPagerAction(Request $request)
     {
         $numberCols = $this->container->getParameter('columns_objs_announces');
-
+        $showPudenew = $this->container->getParameter('show_latest_with_pudenew');
 
         $announcesService = $this->get('pumukitschema.announce');
 
         $dateRequest = $request->query->get('date', 0);//Use to queries for month and year to reduce formatting and unformatting.
         $date = \DateTime::createFromFormat('d/m/Y H:i:s', "01/$dateRequest 00:00:00");
-        list($date, $last) = $announcesService->getNextLatestUploads($date);
+        list($date, $last) = $announcesService->getNextLatestUploads($date, $showPudenew);
         if (empty($last)) {
             $dateHeader = '---';
         } else {

@@ -6,11 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Pumukit\NewAdminBundle\Controller\NewAdminController;
 
 /**
  * @Route("/api/media")
  */
-class APIController extends Controller
+class APIController extends Controller implements NewAdminController
 {
     /**
      * @Route("/mmobj/most_viewed.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
@@ -207,7 +208,7 @@ class APIController extends Controller
 
     protected function processRequestData(Request $request)
     {
-        $MAX_LIMIT = 250;
+        $MAX_LIMIT = 1000;
         //Request variables.
         $criteria = $request->get('criteria') ?: array();
         $sort = intval($request->get('sort'));

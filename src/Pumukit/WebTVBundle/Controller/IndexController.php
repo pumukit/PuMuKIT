@@ -7,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
-class IndexController extends Controller
+class IndexController extends Controller implements WebTVController
 {
     /**
      * @Route("/", name="pumukit_webtv_index_index")
@@ -61,8 +61,8 @@ class IndexController extends Controller
     public function recentlyaddedAction()
     {
         $limit = $this->container->getParameter('limit_objs_recentlyadded');
-
-        $last = $this->get('pumukitschema.announce')->getLast($limit);
+        $showPudenew = $this->container->getParameter('show_latest_with_pudenew');
+        $last = $this->get('pumukitschema.announce')->getLast($limit, $showPudenew);
 
         return array('last' => $last);
     }

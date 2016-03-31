@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 
-class WidgetController extends Controller
+class WidgetController extends Controller implements WebTVController
 {
     /**
      * @Template()

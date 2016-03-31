@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class MediaLibraryController extends Controller
+class MediaLibraryController extends Controller implements WebTVController
 {
     /**
      * @Route("/mediateca/{sort}", defaults={"sort" = "date"}, requirements={"sort" = "alphabetically|date|tags"}, name="pumukit_webtv_medialibrary_index")
@@ -15,7 +15,9 @@ class MediaLibraryController extends Controller
      */
     public function indexAction($sort, Request $request)
     {
-        $this->get('pumukit_web_tv.breadcrumbs')->addList('All', 'pumukit_webtv_medialibrary_index', array('sort' => $sort));
+        $templateTitle = $this->container->getParameter('menu.mediateca_title');
+        $templateTitle = $this->get('translator')->trans($templateTitle);
+        $this->get('pumukit_web_tv.breadcrumbs')->addList($templateTitle, 'pumukit_webtv_medialibrary_index', array('sort' => $sort));
 
         $series_repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
         $tags_repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');

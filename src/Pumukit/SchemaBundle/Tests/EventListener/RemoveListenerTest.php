@@ -20,23 +20,15 @@ class RemoveListenerTest extends WebTestCase
     public function __construct()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
+        static::bootKernel($options);
 
-        $this->logger = $kernel->getContainer()
-          ->get('logger');
-        $this->dm = $kernel->getContainer()
-          ->get('doctrine_mongodb')->getManager();
-        $this->repoJobs = $this->dm
-          ->getRepository('PumukitEncoderBundle:Job');
-        $this->repoMmobj = $this->dm
-          ->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $this->repoSeries = $this->dm
-          ->getRepository('PumukitSchemaBundle:Series');
-        $this->factoryService = $kernel->getContainer()
-          ->get('pumukitschema.factory');
-        $this->tokenStorage = $kernel->getContainer()
-          ->get('security.token_storage');
+        $this->logger = static::$kernel->getContainer()->get('logger');
+        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $this->repoJobs = $this->dm->getRepository('PumukitEncoderBundle:Job');
+        $this->repoMmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->repoSeries = $this->dm->getRepository('PumukitSchemaBundle:Series');
+        $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
+        $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
 
         $this->resourcesDir = realpath(__DIR__.'/../Resources');
     }

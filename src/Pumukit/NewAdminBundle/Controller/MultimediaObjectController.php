@@ -21,7 +21,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
-class MultimediaObjectController extends SortableAdminController
+class MultimediaObjectController extends SortableAdminController implements NewAdminController
 {
     /**
      * Overwrite to search criteria with date
@@ -571,6 +571,18 @@ class MultimediaObjectController extends SortableAdminController
         $resource = $this->findOr404($request);
         $resourceId = $resource->getId();
         $seriesId = $resource->getSeries()->getId();
+
+        if(!$this->isGranted(Permission::MODIFY_OWNER)) {
+            $loggedInUser = $this->getUser();
+            $personService = $this->get('pumukitschema.person');
+            $person = $personService->getPersonFromLoggedInUser($loggedInUser);
+            $role = $personService->getPersonalScopeRole();
+            if( !$person ||
+                !$resource->containsPersonWithRole($person, $role) ||
+                count($resource->getPeopleByRole($role, true)) > 1) {
+                return new Response('You don\'t have enough permissions to delete this mmobj. Contact your administrator.', Response::HTTP_FORBIDDEN);
+            }
+        }
 
         try {
             $this->get('pumukitschema.factory')->deleteMultimediaObject($resource);

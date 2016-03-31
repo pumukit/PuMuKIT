@@ -16,20 +16,20 @@ class TagServiceTest extends WebTestCase
     public function setUp()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
-        $this->dm = $kernel->getContainer()
-      ->get('doctrine_mongodb')->getManager();
+        static::bootKernel($options);
+
+        $this->dm = static::$kernel->getContainer()
+          ->get('doctrine_mongodb')->getManager();
         $this->tagRepo = $this->dm
-      ->getRepository('PumukitSchemaBundle:Tag');
+          ->getRepository('PumukitSchemaBundle:Tag');
         $this->mmobjRepo = $this->dm
-      ->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $this->tagService = $kernel->getContainer()->get('pumukitschema.tag');
+          ->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->tagService = static::$kernel->getContainer()->get('pumukitschema.tag');
 
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
-      ->remove(array());
+          ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')
-      ->remove(array());
+          ->remove(array());
     }
 
     public function testAddTagToMultimediaObject()

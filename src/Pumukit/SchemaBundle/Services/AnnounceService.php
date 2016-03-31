@@ -16,10 +16,28 @@ class AnnounceService
         $this->mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
     }
 
-    public function getLast($limit = 3)
+    public function getLast($limit = 3, $withPudenewTag = true)
     {
-        $lastMms = $this->mmobjRepo->findStandardBy(array('tags.cod' => 'PUDENEW'), array('public_date' => -1), $limit, 0);
-        $lastSeries = $this->seriesRepo->findBy(array('announce' => true), array('public_date' => -1), $limit, 0);
+        if($withPudenewTag) {
+            $return = $this->getLastMmobjsWithSeries($limit);
+        }
+        else {
+            //Get recently added mmobjs
+            $return = $this->mmobjRepo->findStandardBy(array(), array('public_date' => -1), $limit, 0);
+        }
+        return $return;
+    }
+
+    /**
+     * Returns the last series/mmobjs with the pudenew tag.
+     */
+    protected function getLastMmobjsWithSeries($limit = 3)
+    {
+        $mmobjCriteria = array('tags.cod' => 'PUDENEW');
+        $seriesCriteria = array('announce' => true);
+
+        $lastMms = $this->mmobjRepo->findStandardBy($mmobjCriteria, array('public_date' => -1), $limit, 0);
+        $lastSeries = $this->seriesRepo->findBy($seriesCriteria, array('public_date' => -1), $limit, 0);
 
         $return = array();
         $i = 0;
@@ -50,14 +68,19 @@ class AnnounceService
         return $return;
     }
 
-    public function getLatestUploadsByDates($dateStart, $dateEnd)
+    public function getLatestUploadsByDates($dateStart, $dateEnd, $withPudenewTag = true)
     {
         $queryBuilderMms = $this->mmobjRepo->createQueryBuilder();
-        $queryBuilderSeries = $this->seriesRepo->createQueryBuilder();
-
         $queryBuilderMms->field('public_date')->range($dateStart, $dateEnd);
-        $queryBuilderMms->field('tags.cod')->equals('PUDENEW');
+
+        if(!$withPudenewTag) {
+            return $queryBuilderMms->sort(array('public_date' => 1))->getQuery()->execute()->toArray();
+        }
+
+        $queryBuilderSeries = $this->seriesRepo->createQueryBuilder();
         $queryBuilderSeries->field('public_date')->range($dateStart, $dateEnd);
+
+        $queryBuilderMms->field('tags.cod')->equals('PUDENEW');
         $queryBuilderSeries->field('announce')->equals(true);
 
         $lastMms = $queryBuilderMms->getQuery()->execute();
@@ -86,12 +109,14 @@ class AnnounceService
     }
 
     /**
-     * Gets the next latest uploads, starting with the month given and looking 24 months forward.
-     * If not, returns an empty array.
+     * Gets the next latest uploads month, starting with the month given and looking 24 months forward.
+     *
+     * An optional parameter can be added to either use PUDENEW or not.
+     * If it can't find any objects, returns an empty array.
      *
      * @return array
      */
-    public function getNextLatestUploads($date)
+    public function getNextLatestUploads($date, $withPudenewTag = true)
     {
         $counter = 0;
         $dateStart = clone $date;
@@ -103,7 +128,7 @@ class AnnounceService
             ++$counter;
             $dateStart->modify('first day of last month');
             $dateEnd->modify('last day of last month');
-            $last = $this->getLatestUploadsByDates($dateStart, $dateEnd);
+            $last = $this->getLatestUploadsByDates($dateStart, $dateEnd, $withPudenewTag);
         } while (empty($last) && $counter < 24);
 
         return array($dateEnd, $last);

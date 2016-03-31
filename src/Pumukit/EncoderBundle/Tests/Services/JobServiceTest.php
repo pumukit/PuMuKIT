@@ -25,23 +25,15 @@ class JobServiceTest extends WebTestCase
     public function __construct()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
+        static::bootKernel($options);
 
-        $this->dm = $kernel->getContainer()
-          ->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm
-          ->getRepository('PumukitEncoderBundle:Job');
-        $this->repoMmobj = $this->dm
-          ->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $this->logger = $kernel->getContainer()
-          ->get('logger');
-        $this->trackService = $kernel->getContainer()
-          ->get('pumukitschema.track');
-        $this->tokenStorage = $kernel->getContainer()
-          ->get('security.token_storage');
-        $this->factory = $kernel->getContainer()
-          ->get('pumukitschema.factory');
+        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
+        $this->repoMmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->logger = static::$kernel->getContainer()->get('logger');
+        $this->trackService = static::$kernel->getContainer()->get('pumukitschema.track');
+        $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
+        $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
     }
 
     public function setUp()

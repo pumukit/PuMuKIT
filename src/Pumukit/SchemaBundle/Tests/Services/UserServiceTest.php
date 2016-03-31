@@ -3,9 +3,16 @@
 namespace Pumukit\SchemaBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Security\Permission;
+use Pumukit\SchemaBundle\Services\UserService;
+use Pumukit\SchemaBundle\Services\UserEventDispatcherService;
+use Pumukit\SchemaBundle\Services\PermissionService;
+use Pumukit\SchemaBundle\Services\PermissionProfileService;
+use Pumukit\SchemaBundle\Services\PermissionProfileEventDispatcherService;
+use Pumukit\SchemaBundle\EventListener\PermissionProfileListener;
 
 class UserServiceTest extends WebTestCase
 {
@@ -17,17 +24,35 @@ class UserServiceTest extends WebTestCase
     public function __construct()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
+        static::bootKernel($options);
 
-        $this->dm = $kernel->getContainer()
+        $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
           ->getRepository('PumukitSchemaBundle:User');
         $this->permissionProfileRepo = $this->dm
           ->getRepository('PumukitSchemaBundle:PermissionProfile');
-        $this->userService = $kernel->getContainer()
-          ->get('pumukitschema.user');
+
+        $dispatcher = new EventDispatcher();
+        $userDispatcher = new UserEventDispatcherService($dispatcher);
+        $permissionProfileDispatcher = new PermissionProfileEventDispatcherService($dispatcher);
+        $permissionService = new PermissionService();
+        $permissionProfileService = new PermissionProfileService(
+            $this->dm, $permissionProfileDispatcher,
+            $permissionService
+        );
+
+        $personalScopeDeleteOwners = false;
+        $genUserSalt = true;
+
+        $this->userService = new UserService(
+            $this->dm, $userDispatcher,
+            $permissionService, $permissionProfileService,
+            $personalScopeDeleteOwners, $genUserSalt
+        );
+
+        $listener = new PermissionProfileListener($this->dm, $this->userService);
+        $dispatcher->addListener('permissionprofile.update', array($listener, 'postUpdate'));
     }
 
     public function setUp()
@@ -354,5 +379,50 @@ class UserServiceTest extends WebTestCase
     public function testInstantiateException()
     {
         $user = $this->userService->instantiate();
+    }
+
+    public function testHasScopes()
+    {
+        $globalProfile = new PermissionProfile();
+        $globalProfile->setScope(PermissionProfile::SCOPE_GLOBAL);
+
+        $personalProfile = new PermissionProfile();
+        $personalProfile->setScope(PermissionProfile::SCOPE_PERSONAL);
+
+        $noneProfile = new PermissionProfile();
+        $noneProfile->setScope(PermissionProfile::SCOPE_NONE);
+
+        $this->dm->persist($globalProfile);
+        $this->dm->persist($personalProfile);
+        $this->dm->persist($noneProfile);
+        $this->dm->flush();
+
+        $user = new User();
+        $user->setUsername('test');
+        $user->setPassword('pass');
+        $user->setPermissionProfile($globalProfile);
+
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $this->assertTrue($this->userService->hasGlobalScope($user));
+        $this->assertFalse($this->userService->hasPersonalScope($user));
+        $this->assertFalse($this->userService->hasNoneScope($user));
+
+        $user->setPermissionProfile($personalProfile);
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $this->assertFalse($this->userService->hasGlobalScope($user));
+        $this->assertTrue($this->userService->hasPersonalScope($user));
+        $this->assertFalse($this->userService->hasNoneScope($user));
+
+        $user->setPermissionProfile($noneProfile);
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $this->assertFalse($this->userService->hasGlobalScope($user));
+        $this->assertFalse($this->userService->hasPersonalScope($user));
+        $this->assertTrue($this->userService->hasNoneScope($user));
     }
 }

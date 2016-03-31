@@ -84,10 +84,8 @@ class StatsService
         $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
 
         $matchExtra = array();
-        if (!empty($criteria)) {
-            $mmobjIds = $this->getMmobjIdsWithCriteria($criteria);
-            $matchExtra['multimediaObject'] = array('$in' => $mmobjIds);
-        }
+        $mmobjIds = $this->getMmobjIdsWithCriteria($criteria);
+        $matchExtra['multimediaObject'] = array('$in' => $mmobjIds);
 
         $options = $this->parseOptions($options);
 
@@ -124,10 +122,10 @@ class StatsService
         $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
 
         $matchExtra = array();
-        if (!empty($criteria)) {
-            $mmobjIds = $this->getSeriesIdsWithCriteria($criteria);
-            $matchExtra['series'] = array('$in' => $mmobjIds);
-        }
+
+        $mmobjIds = $this->getSeriesIdsWithCriteria($criteria);
+        $matchExtra['series'] = array('$in' => $mmobjIds);
+
 
         $options = $this->parseOptions($options);
 
@@ -186,11 +184,10 @@ class StatsService
     {
         $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
 
-        if (!empty($criteria)) {
+        if(!isset($matchExtra['multimediaObject'])) {
             $mmobjIds = $this->getMmobjIdsWithCriteria($criteria);
             $matchExtra['multimediaObject'] = array('$in' => $mmobjIds);
         }
-
         $options = $this->parseOptions($options);
 
         $pipeline = $this->aggrPipeAddMatch($options['from_date'], $options['to_date'], $matchExtra);
@@ -211,20 +208,26 @@ class StatsService
     private function aggrPipeAddMatch(\DateTime $fromDate = null, \DateTime $toDate = null, $matchExtra = array(), $pipeline = array())
     {
 
+      //$filterMath = $this->dm->getFilterCollection()->getFilterCriteria($this->repo->getClassMetadata());
+
+        
         $date = array();
-        if($fromDate) {
+        if ($fromDate) {
             $fromMongoDate = new \MongoDate($fromDate->format('U'), $fromDate->format('u'));
             $date['$gte'] = $fromMongoDate;
         }
-        if($toDate) {
+        if ($toDate) {
             $toMongoDate = new \MongoDate($toDate->format('U'), $toDate->format('u'));
             $date['$lte'] = $toMongoDate;
         }
-        if(count($date) > 0) {
+        if (count($date) > 0) {
             $date = array('date' => $date);
         }
-        if(count($matchExtra) > 0 || count($date) > 0)
-            $pipeline[] = array('$match' => array_merge($matchExtra, $date));
+
+        if (count($matchExtra) > 0 || count($date) > 0) {
+          //$pipeline[] = array('$match' => array_merge($filterMath, $matchExtra, $date));
+          $pipeline[] = array('$match' => array_merge($matchExtra, $date));
+        }
 
         return $pipeline;
     }
@@ -276,16 +279,22 @@ class StatsService
      */
     private function getMmobjIdsWithCriteria($criteria)
     {
-        $mmobjIds = $this->repo->createQueryBuilder()->addAnd($criteria)->distinct('_id')->getQuery()->execute()->toArray();
+        $qb = $this->repo->createQueryBuilder();
+        if ($criteria) {
+            $mmobjIds = $qb->addAnd($criteria);
+        }
 
-        return $mmobjIds;
+        return $qb->distinct('_id')->getQuery()->execute()->toArray();
     }
 
     private function getSeriesIdsWithCriteria($criteria)
     {
-        $mmobjIds = $this->repoSeries->createQueryBuilder()->addAnd($criteria)->distinct('_id')->getQuery()->execute()->toArray();
+        $qb = $this->repoSeries->createQueryBuilder();
+        if ($criteria) {
+            $mmobjIds = $qb->addAnd($criteria);
+        }
 
-        return $mmobjIds;
+        return $qb->distinct('_id')->getQuery()->execute()->toArray();
     }
 
     /**

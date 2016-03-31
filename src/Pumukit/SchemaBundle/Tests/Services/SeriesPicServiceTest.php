@@ -21,18 +21,17 @@ class SeriesPicServiceTest extends WebTestCase
     public function __construct()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
+        static::bootKernel($options);
 
-        $this->dm = $kernel->getContainer()
+        $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
           ->getRepository('PumukitSchemaBundle:Series');
-        $this->factoryService = $kernel->getContainer()
+        $this->factoryService = static::$kernel->getContainer()
           ->get('pumukitschema.factory');
-        $this->seriesPicService = $kernel->getContainer()
+        $this->seriesPicService = static::$kernel->getContainer()
           ->get('pumukitschema.seriespic');
-        $this->mmsPicService = $kernel->getContainer()
+        $this->mmsPicService = static::$kernel->getContainer()
           ->get('pumukitschema.mmspic');
 
         $this->originalPicPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'logo.png';

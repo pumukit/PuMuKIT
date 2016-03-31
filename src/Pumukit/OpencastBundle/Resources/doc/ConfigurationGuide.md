@@ -1,5 +1,7 @@
 # Opencast configuration
 
+This is the Opencast Bundle Configuration Guide. Check our [README](README.md) to learn more about this bundle.
+
 ## Index
 
 1. [Parameters](#1-parameters)

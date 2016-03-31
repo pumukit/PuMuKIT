@@ -1,16 +1,10 @@
-# pumukit_paella_player:
-#     resource: "@PumukitPaellaPlayerBundle/Controller/"
-#     type:     annotation
-#     prefix:   /
-
-# pumukit_video_editor:
-#     resource: "@PumukitVideoEditorBundle/Resources/config/routing.yml"
-#     prefix:   /
+pumukit_stats_ui:
+    resource: "@PumukitStatsUIBundle/Resources/config/routing.yml"
+    prefix:   /
 
 pumukit_jw_player:
-   resource: "@PumukitJWPlayerBundle/Controller/"
-   type:     annotation
-   prefix:   /
+    resource: "@PumukitJWPlayerBundle/Resources/config/routing.yml"
+    prefix:   /
 
 pumukit_base_player:
     resource: "@PumukitBasePlayerBundle/Controller/"
@@ -24,11 +18,6 @@ pumukit_stats:
 
 pumukit_schema:
     resource: "@PumukitSchemaBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-pumukit_opencast:
-    resource: "@PumukitOpencastBundle/Controller/"
     type:     annotation
     prefix:   /
 

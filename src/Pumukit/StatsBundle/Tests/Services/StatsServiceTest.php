@@ -19,13 +19,13 @@ class StatsServiceTest extends WebTestCase
     public function setUp()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
-        $this->dm = $kernel->getContainer()
+        static::bootKernel($options);
+
+        $this->dm = static::$kernel->getContainer()
             ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
             ->getRepository('PumukitStatsBundle:ViewsLog');
-        $this->factoryService = $kernel->getContainer()
+        $this->factoryService = static::$kernel->getContainer()
             ->get('pumukitschema.factory');
         
         $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog')

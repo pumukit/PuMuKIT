@@ -6,10 +6,11 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class TemplateController extends ContainerAware
+class TemplateController extends ContainerAware implements WebTVController
 {
     public function templateAction($template, $title = null, $maxAge = null, $sharedAge = null, $private = null, Request $request)
     {
+        $title = $this->get('translator')->trans($title);
         $this->container->get('pumukit_web_tv.breadcrumbs')->add($title, $request->get('_route'));
         
         /** @var $response \Symfony\Component\HttpFoundation\Response */

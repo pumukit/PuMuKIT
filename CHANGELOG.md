@@ -5,17 +5,19 @@ To get the diff for a specific change, go to https://github.com/campusdomar/PuMu
 To get the diff between two versions, go to https://github.com/campusdomar/PuMuKIT2/compare/2.0.0...2.1.0-rc1
 
 ## [Unreleased]
-- Changed webtv portal bundle to be responsive
-
+- Changed WebTV portal bundle to be responsive.
+- Added PumukitStatsUI bundle as default. (Adds statistics of series and multimedia objects to the back-office)
+- Improved CAS support.
+- Added new LDAP broadcast.
+- Added 'personal scope' support to the back-office.
+- Added support to switch default portal player.
+- Added 'Permission Profiles' to the back-office.
 
 ## [2.1.0] (2015-11-16)
 - Added migration path from PuMuKIT1.7 to PuMuKIT2
 - Removed MoodleBundle out of the project to be used as a third party bundle.
-
-## [2.1.0-RC1] (2015-10-23)
 - Production version
 - Bootstrap based Material design AdminUI
-
 
 ## 2.0.0 (2015-02-12)
 - Initial concept of technologies

@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 //Used on countMmobjsInTags TODO Move to service
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
-class CategoriesController extends Controller
+class CategoriesController extends Controller implements WebTVController
 {
     /**
      * @Route("/categories/{sort}", defaults={"sort" = "date"}, requirements={"sort" = "alphabetically|date|tags"}, name="pumukit_webtv_categories_index")
@@ -19,6 +19,7 @@ class CategoriesController extends Controller
     public function indexAction($sort, Request $request)
     {
         $templateTitle = $this->container->getParameter('menu.categories_title');
+        $templateTitle = $this->get('translator')->trans($templateTitle);
         $this->get('pumukit_web_tv.breadcrumbs')->addList($templateTitle?:'Videos by Category', 'pumukit_webtv_categories_index');
         $parentCod = $this->container->getParameter('categories_tag_cod');
 

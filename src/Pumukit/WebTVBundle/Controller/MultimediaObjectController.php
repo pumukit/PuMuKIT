@@ -15,7 +15,7 @@ use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\WebTVBundle\Controller\PlayerController;
 
 
-class MultimediaObjectController extends PlayerController
+class MultimediaObjectController extends PlayerController implements WebTVController
 {
     /**
      * @Route("/video/{id}", name="pumukit_webtv_multimediaobject_index" )
@@ -95,9 +95,6 @@ class MultimediaObjectController extends PlayerController
         $track = $request->query->has('track_id') ?
                  $multimediaObject->getTrackById($request->query->get('track_id')) :
                  $multimediaObject->getTrackWithTag('display');
-
-
-        $this->dispatchViewEvent($multimediaObject, $track);
 
         if ($track && $track->containsTag('download')) {
             return $this->redirect($track->getUrl());

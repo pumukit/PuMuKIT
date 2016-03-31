@@ -20,15 +20,11 @@ class EventPicServiceTest extends WebTestCase
     public function __construct()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
+        static::bootKernel($options);
 
-        $this->dm = $kernel->getContainer()
-          ->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm
-          ->getRepository('PumukitLiveBundle:Event');
-        $this->eventPicService = $kernel->getContainer()
-          ->get('pumukitlive.eventpic');
+        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $this->repo = $this->dm->getRepository('PumukitLiveBundle:Event');
+        $this->eventPicService = static::$kernel->getContainer()->get('pumukitlive.eventpic');
 
         $this->originalPicPath = realpath(__DIR__.'/../Resources').'/logo.png';
         $this->uploadsPath = realpath(__DIR__.'/../../../../../web/uploads/pic');

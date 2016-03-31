@@ -22,6 +22,7 @@ parameters:
   menu.show_stats:           false                        # To show stats on the menu or not. (Default true)
   menu.search_title:         'Multimedia objects search'  # 'Search' option title for the menu widget.
   show_mostviewed_lastmonth: false                        # If true it shows only the most viewed during last month.
+  show_latest_with_pudenew:  false                        # Set whether to use the PUDENEW tag for 'Recently Added' and 'Latest Uploads'
 
   pumukit_web_tv.breadcrumbs_all_title: 'All'       
   pumukit_web_tv.breadcrumbs_all_route: 'pumukit_webtv_medialibrary_index'

@@ -25,12 +25,14 @@ class EventType extends AbstractType
             ->add('name', 'text',
                   array('label' => $this->translator->trans('Event', array(), null, $this->locale)))
             ->add('place', 'text',
-                  array('label' => $this->translator->trans('Place', array(), null, $this->locale)))
+                  array('label' => $this->translator->trans('Location', array(), null, $this->locale)))
             ->add('live', null,
                   array('label' => $this->translator->trans('Channels', array(), null, $this->locale)))
             ->add('schedule', new EventscheduleType(),
                   array('label' => $this->translator->trans('Schedule', array(), null, $this->locale)))
-            ->add('display', 'checkbox', array('required' => false));
+            ->add('display', 'checkbox',
+                  array('required' => false,
+                        'label' => $this->translator->trans('Announce', array(), null, $this->locale)));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

@@ -4,7 +4,7 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 
-class SortableAdminController extends AdminController
+class SortableAdminController extends AdminController implements NewAdminController
 {
     public function upAction(Request $request)
     {

@@ -24,16 +24,15 @@ class FuncionalTest extends WebTestCase
     public function __construct()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
+        static::bootKernel($options);
 
-        $this->dm = $kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
 
-        $this->profileService = $kernel->getContainer()->get('pumukitencoder.profile');
-        $this->cpuService = $kernel->getContainer()->get('pumukitencoder.cpu');
-        $this->inspectionService = $kernel->getContainer()->get('pumukit.inspection');
-        $this->tokenStorage = $kernel->getContainer()->get('security.token_storage');
+        $this->profileService = static::$kernel->getContainer()->get('pumukitencoder.profile');
+        $this->cpuService = static::$kernel->getContainer()->get('pumukitencoder.cpu');
+        $this->inspectionService = static::$kernel->getContainer()->get('pumukit.inspection');
+        $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
     }
 
 

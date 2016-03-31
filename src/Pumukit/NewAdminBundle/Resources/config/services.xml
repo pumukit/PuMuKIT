@@ -7,6 +7,7 @@
   <parameters>
     <parameter key="pumukit2.customlanguages" type="collection"></parameter>
     <parameter key="pumukit2.warning_on_unpublished">false</parameter>
+    <parameter key="pumukit2.show_dashboard_tab">true</parameter>
   </parameters>
 
   <services>
@@ -47,7 +48,7 @@
       <argument type="service" id="pumukitschema.person"/>
       <argument type="service" id="security.context"/>
       <argument>%pumukitschema.enable_add_user_as_person%</argument>
-      <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest"/>
+      <tag name="kernel.event_listener" event="kernel.controller" />
     </service>
   </services>
 </container>

@@ -21,10 +21,9 @@ class PersonServiceTest extends WebTestCase
     public function __construct()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
+        static::bootKernel($options);
 
-        $this->dm = $kernel->getContainer()
+        $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
           ->getRepository('PumukitSchemaBundle:Person');
@@ -32,9 +31,9 @@ class PersonServiceTest extends WebTestCase
           ->getRepository('PumukitSchemaBundle:Role');
         $this->repoMmobj = $this->dm
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $this->personService = $kernel->getContainer()
+        $this->personService = static::$kernel->getContainer()
           ->get('pumukitschema.person');
-        $this->factoryService = $kernel->getContainer()
+        $this->factoryService = static::$kernel->getContainer()
           ->get('pumukitschema.factory');
     }
 

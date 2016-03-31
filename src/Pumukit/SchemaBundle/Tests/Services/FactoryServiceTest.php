@@ -23,17 +23,17 @@ class FactoryServiceTest extends WebTestCase
     public function setUp()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
-        $this->dm = $kernel->getContainer()
+        static::bootKernel($options);
+
+        $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb')->getManager();
         $this->seriesRepo = $this->dm
           ->getRepository('PumukitSchemaBundle:Series');
         $this->mmobjRepo = $this->dm
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $this->translator = $kernel->getContainer()
+        $this->translator = static::$kernel->getContainer()
           ->get('translator');
-        $this->factory = $kernel->getContainer()
+        $this->factory = static::$kernel->getContainer()
           ->get('pumukitschema.factory');
         $this->locales = $this->factory->getLocales();
 
@@ -347,7 +347,13 @@ class FactoryServiceTest extends WebTestCase
 
         $new = $this->factory->cloneMultimediaObject($src);
 
-        $this->assertEquals($new->getI18nTitle(), $src->getI18nTitle());
+        $newTitles = $new->getI18nTitle();
+        foreach($src->getI18nTitle() as $key => $title) {
+            $string = $this->translator->trans('cloned', array(), null, $key);
+            $title = $title . ' (' . $string. ')';
+            $this->assertEquals($newTitles[$key], $title);
+        }
+        $this->assertTrue($src->getRank() < $new->getRank());
         $this->assertEquals($new->getI18nSubtitle(), $src->getI18nSubtitle());
         $this->assertEquals($new->getI18nDescription(), $src->getI18nDescription());
         $this->assertEquals($new->getI18nLine2(), $src->getI18nLine2());

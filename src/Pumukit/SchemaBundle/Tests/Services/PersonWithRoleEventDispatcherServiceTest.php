@@ -21,10 +21,9 @@ class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
     public function __construct()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
+        static::bootKernel($options);
 
-        $this->dispatcher = $kernel->getContainer()
+        $this->dispatcher = static::$kernel->getContainer()
           ->get('event_dispatcher');
     }
 

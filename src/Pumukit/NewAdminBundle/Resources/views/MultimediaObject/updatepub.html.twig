@@ -38,13 +38,13 @@
 	    {{ form_row(form_pub['status']) }}
 
 	    <div class="form-group" id="pumukitnewadmin_mms_pub_channel" {{ (mm.getStatus() == 1)?'style="background-color: #f2f2f2"':'' }}>
-	      <label for="pub" class="control-label">{% trans %}Publication Channels{% endtrans %}:</label>
+	      <label for="pub" class="control-label">{% trans %}Publication Channels{% endtrans %}</label>
 	      <div id="list_pub_{{ mm.id }}">
 	        {% include 'PumukitNewAdminBundle:MultimediaObject:listpub.html.twig' with {'mm': mm, 'pubs': pub_channels, 'pub_type': 'channels'} %}
 	      </div>
         </div>
 	    <div class="form-group" id="pumukitnewadmin_mms_pub_decision">
-	      <label for="announce_label" class="control-label">{% trans %}Publishing Decisions{% endtrans %}:</label>
+	      <label for="announce_label" class="control-label">{% trans %}Publishing Decisions{% endtrans %}</label>
 	      <div id="list_pubdecisions_{{ mm.id }}">
 	        {% include 'PumukitNewAdminBundle:MultimediaObject:listpub.html.twig' with {'mm': mm, 'pubs': pub_decisions, 'pub_type': 'decisions'} %}
 	      </div>

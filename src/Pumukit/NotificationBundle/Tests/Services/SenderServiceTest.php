@@ -22,19 +22,14 @@ class SenderServiceTest extends WebTestCase
     public function __construct()
     {
         $options = array('environment' => 'dev');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
-        $container = $kernel->getContainer();
+        static::bootKernel($options);
+        $container = static::$kernel->getContainer();
 
-        $this->dm = $container
-          ->get('doctrine_mongodb')->getManager();
+        $this->dm = $container->get('doctrine_mongodb')->getManager();
 
-        $this->mailer = $container
-          ->get('mailer');
-        $this->templating = $container
-          ->get('templating');
-        $this->translator = $container
-          ->get('translator');
+        $this->mailer = $container->get('mailer');
+        $this->templating = $container->get('templating');
+        $this->translator = $container->get('translator');
         $this->enable = true;
         $this->senderEmail = 'mercefan@gmail.com';
         $this->senderName = 'Mercefan';

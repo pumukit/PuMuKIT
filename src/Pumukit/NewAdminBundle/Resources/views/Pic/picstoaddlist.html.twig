@@ -1,10 +1,10 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 <fieldset>
   <div class="form-group">
-	<label for="other">{% trans %}Use Image{% endtrans %}:</label>
+	<label for="other">{% trans %}Use Thumbnail{% endtrans %}:</label>
     <div class="">
       {% if 0 == pics|length %}
-      {% trans %}There are no images in the database.{% endtrans %}
+      {% trans %}There are no thumbnails in the database.{% endtrans %}
       {% endif %}
       {% for pic_url in pics %}
 	  <div style="padding: 18px; float:left">
@@ -12,7 +12,7 @@
           <div class="wrap1">
             <div class="wrap2">
               <div class="wrap3">
-		        <a href="#" data-dismiss="modal" onclick="$('#pic_{{ resource_name }}_{{ resource.id }}').load('{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id, 'picUrl': pic_url}) }}', function(){success('{% trans %}New Pic added.{% endtrans %}');}); return false;">
+		        <a href="#" data-dismiss="modal" onclick="$('#pic_{{ resource_name }}_{{ resource.id }}').load('{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id, 'picUrl': pic_url}) }}', function(){success('{% trans %}New Thumbnail added.{% endtrans %}');}); return false;">
                   <img src="{{ pic_url }}" alt="{{ pic_url|split('/')|last }}" height="82" width="100"/>
                 </a>
               </div>

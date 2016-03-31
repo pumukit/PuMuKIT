@@ -17,16 +17,15 @@ class MultimediaObjectDurationServiceTest extends WebTestCase
     {
 
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
+        static::bootKernel($options);
 
-        $this->dm = $kernel->getContainer()
+        $this->dm = static::$kernel->getContainer()
                            ->get('doctrine_mongodb')->getManager();
         $this->mmRepo = $this->dm
                              ->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $this->factory = $kernel->getContainer()
+        $this->factory = static::$kernel->getContainer()
                                 ->get('pumukitschema.factory');
-        $this->mmsService = $kernel->getContainer()
+        $this->mmsService = static::$kernel->getContainer()
                                    ->get('pumukitschema.mmsduration');
     }
 

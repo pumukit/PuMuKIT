@@ -14,7 +14,7 @@ use Pumukit\NewAdminBundle\Form\Type\PermissionProfileType;
 /**
  * @Security("is_granted('ROLE_ACCESS_PERMISSION_PROFILES')")
  */
-class PermissionProfileController extends AdminController
+class PermissionProfileController extends AdminController implements NewAdminController
 {
     /**
      * Overwrite to update the criteria with MongoRegex, and save it in the session

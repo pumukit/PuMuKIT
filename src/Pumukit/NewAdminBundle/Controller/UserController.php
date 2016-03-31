@@ -13,7 +13,7 @@ use Pumukit\NewAdminBundle\Form\Type\UserUpdateType;
 /**
  * @Security("is_granted('ROLE_ACCESS_ADMIN_USERS')")
  */
-class UserController extends AdminController
+class UserController extends AdminController implements NewAdminController
 {
     /**
      * Overwrite to check Users creation.

@@ -13,10 +13,9 @@ class PermissionServiceTest extends WebTestCase
     public function __construct()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
+        static::bootKernel($options);
 
-        $this->permissionService = $kernel->getContainer()
+        $this->permissionService = static::$kernel->getContainer()
           ->get('pumukitschema.permission');
     }
 

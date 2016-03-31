@@ -16,8 +16,9 @@ class Builder extends ContainerAware
         $authorizationChecker = $this->container->get('security.authorization_checker');
         $createBroadcastDisabled = $this->container->getParameter('pumukit_new_admin.disable_broadcast_creation');
         $showImporterTab = $this->container->hasParameter('pumukit_opencast.show_importer_tab') && $this->container->getParameter('pumukit_opencast.show_importer_tab');
+        $showDashboardTab = $this->container->getParameter('pumukit2.show_dashboard_tab');
 
-        if (false !== $authorizationChecker->isGranted(Permission::ACCESS_DASHBOARD)) {
+        if ($showDashboardTab && false !== $authorizationChecker->isGranted(Permission::ACCESS_DASHBOARD)) {
             $menu->addChild('Dashboard', array('route' => 'pumukit_newadmin_dashboard_index'))->setExtra('translation_domain', 'NewAdminBundle');
         }
 
@@ -25,6 +26,17 @@ class Builder extends ContainerAware
             $series = $menu->addChild('Media Manager', array('route' => 'pumukitnewadmin_series_index'))->setExtra('translation_domain', 'NewAdminBundle');
             $series->addChild('Multimedia', array('route' => 'pumukitnewadmin_mms_index'))->setExtra('translation_domain', 'NewAdminBundle');
             $series->setDisplayChildren(false);
+            $stats = $menu->addChild('Stats')->setExtra('translation_domain', 'NewAdminBundle');
+            $stats->addChild('Series', array('route' => 'pumukit_stats_series_index'))->setExtra('translation_domain', 'NewAdminBundle');
+            $stats->addChild('Multimedia Objects', array('route' => 'pumukit_stats_mmobj_index'))->setExtra('translation_domain', 'NewAdminBundle');
+
+            //TODO: Use VOTERS: https://github.com/KnpLabs/KnpMenu/blob/master/doc/01-Basic-Menus.markdown#the-current-menu-item
+            //Voters are a way to check if a menu item is the current one. Now we are just checking the routes and setting the Current element manually
+            $route = $this->container->get('request_stack')->getMasterRequest()->attributes->get('_route');
+            $statsRoutes = array('pumukit_stats_series_index', 'pumukit_stats_mmobj_index', 'pumukit_stats_series_index_id', 'pumukit_stats_mmobj_index_id');
+            if(in_array($route, $statsRoutes)) {
+                $stats->setCurrent(true);
+            }
         }
 
         if ($authorizationChecker->isGranted(Permission::ACCESS_LIVE_EVENTS) || $authorizationChecker->isGranted(Permission::ACCESS_LIVE_CHANNELS)) {
@@ -49,7 +61,7 @@ class Builder extends ContainerAware
                 $tables->addChild('Tags', array('route' => 'pumukitnewadmin_tag_index'))->setExtra('translation_domain', 'NewAdminBundle');
             }
             if ($authorizationChecker->isGranted(Permission::ACCESS_BROADCASTS) && !$createBroadcastDisabled) {
-                $tables->addChild('Access profiles', array('route' => 'pumukitnewadmin_broadcast_index'))->setExtra('translation_domain', 'NewAdminBundle');
+                $tables->addChild('Broadcast profiles', array('route' => 'pumukitnewadmin_broadcast_index'))->setExtra('translation_domain', 'NewAdminBundle');
             }
             if ($authorizationChecker->isGranted(Permission::ACCESS_SERIES_TYPES)) {
                 $tables->addChild('Series types', array('route' => 'pumukitnewadmin_seriestype_index'))->setExtra('translation_domain', 'NewAdminBundle');
@@ -71,17 +83,8 @@ class Builder extends ContainerAware
         }
 
         if ($showImporterTab && $authorizationChecker->isGranted(Permission::ACCESS_IMPORTER)) {
-            if ($this->container->has('pumukit_opencast.client')) {
-                $client = $this->container->get('pumukit_opencast.client');
-                $importer = $menu->addChild('OC-tools')->setExtra('translation_domain', 'NewAdminBundle');
-                if ($this->container->getParameter('pumukit_opencast.scheduler_on_menu')) {
-                    $importer->addChild('Scheduler', array('uri' => $client->getSchedulerUrl()))->setExtra('translation_domain', 'NewAdminBundle');
-                }
-                if ($this->container->getParameter('pumukit_opencast.dashboard_on_menu')) {
-                    $importer->addChild('GC-Dash', array('uri' => $client->getDashboardUrl()))->setExtra('translation_domain', 'NewAdminBundle');
-                }
-                $importer->addChild('Importer', array('route' => 'pumukitopencast'))->setExtra('translation_domain', 'NewAdminBundle');
-            }
+            $importer = $menu->addChild('Tools')->setExtra('translation_domain', 'NewAdminBundle');
+            $importer->addChild('OC-Importer', array('route' => 'pumukitopencast'))->setExtra('translation_domain', 'NewAdminBundle');
         }
 
         return $menu;

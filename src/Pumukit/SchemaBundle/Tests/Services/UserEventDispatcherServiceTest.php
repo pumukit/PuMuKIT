@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Event\UserEvent;
@@ -18,13 +19,12 @@ class UserEventDispatcherServiceTest extends WebTestCase
     public function __construct()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
+        static::bootKernel($options);
 
-        $this->dm = $kernel->getContainer()
+        $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb.odm.document_manager');
-        $this->dispatcher = $kernel->getContainer()
-          ->get('event_dispatcher');
+        $this->dispatcher = new EventDispatcher();
+        
     }
 
     public function setUp()

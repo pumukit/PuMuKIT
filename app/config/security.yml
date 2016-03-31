@@ -11,12 +11,13 @@ security:
     firewalls:
         api:
             pattern: ^/api
-            stateless: true
+            context: pumukit
             http_basic:
                 provider: fos_userbundle
                 realm: "secure-api"
         main:
             pattern: ^/
+            context: pumukit
             form_login:
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
@@ -35,7 +36,7 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: [ROLE_SCOPE_GLOBAL, ROLE_SCOPE_PERSONAL] }
-        - { path: ^/api/, role: ROLE_ACCESS_API }
+        - { path: ^/api/, role: [ROLE_SCOPE_GLOBAL, ROLE_SCOPE_PERSONAL, ROLE_ACCESS_API] }
 
     role_hierarchy:
         ROLE_ADMIN:        ROLE_USER

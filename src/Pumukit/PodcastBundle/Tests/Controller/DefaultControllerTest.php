@@ -16,9 +16,9 @@ class DefaultControllerTest extends WebTestCase
     {
         $this->client = static::createClient();
         $options = array('environment'=>'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
-        $container = $kernel->getContainer();
+        static::bootKernel($options);
+
+        $container = static::$kernel->getContainer();
         $this->dm = $container->get('doctrine_mongodb.odm.document_manager');
         $this->router = $container->get('router');
         $this->factory = $container->get('pumukitschema.factory');

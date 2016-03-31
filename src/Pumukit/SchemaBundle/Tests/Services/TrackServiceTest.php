@@ -24,22 +24,21 @@ class TrackServiceTest extends WebTestCase
     public function __construct()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
+        static::bootKernel($options);
 
-        $this->logger = $kernel->getContainer()
+        $this->logger = static::$kernel->getContainer()
           ->get('logger');
-        $this->dm = $kernel->getContainer()
+        $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb')->getManager();
         $this->repoJobs = $this->dm
           ->getRepository('PumukitEncoderBundle:Job');
         $this->repoMmobj = $this->dm
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $this->factoryService = $kernel->getContainer()
+        $this->factoryService = static::$kernel->getContainer()
           ->get('pumukitschema.factory');
-        $this->trackDispatcher = $kernel->getContainer()
+        $this->trackDispatcher = static::$kernel->getContainer()
           ->get('pumukitschema.track_dispatcher');
-        $this->tokenStorage = $kernel->getContainer()
+        $this->tokenStorage = static::$kernel->getContainer()
           ->get('security.token_storage');
     }
 

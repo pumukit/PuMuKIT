@@ -25,15 +25,15 @@ class PicExtractorListenerTest extends WebTestCase
     public function __construct()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
-        $this->dm = $kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        static::bootKernel($options);
+
+        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $this->logger = $kernel->getContainer()->get('logger');
+        $this->logger = static::$kernel->getContainer()->get('logger');
         $this->videoPath = realpath(__DIR__ . '/../Resources/data/track.mp4');
-        $this->factoryService = $kernel->getContainer()->get('pumukitschema.factory');
-        $this->mmsPicService = $kernel->getContainer()->get('pumukitschema.mmspic');
-        $this->picExtractorService = $kernel->getContainer()->get('pumukitencoder.picextractor');
+        $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
+        $this->mmsPicService = static::$kernel->getContainer()->get('pumukitschema.mmspic');
+        $this->picExtractorService = static::$kernel->getContainer()->get('pumukitencoder.picextractor');
     }
 
     public function setUp()

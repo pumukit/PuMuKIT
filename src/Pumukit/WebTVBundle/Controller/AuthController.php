@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class AuthController extends Controller
+class AuthController extends Controller implements WebTVController
 {
   /**
    * @Route("/auth", name="pumukit_auth")

@@ -8,12 +8,12 @@
     parent.$('#edit_series').load('{{ path('pumukitnewadmin_series_update', {'id': resource.id}) }}');
   } else {
     parent.$('#pic_{{ resource_name }}_{{ resource.id }}').load('{{ path('pumukitnewadmin_'~resource_name~'pic_list', {'id': resource.id}) }}');
-    parent.$('#pic_{{ resource_name }}_{{ resource.id }}').html('{% trans %}Update the video to show the images{% endtrans %}.');
+    parent.$('#pic_{{ resource_name }}_{{ resource.id }}').html('{% trans %}Update the video to show the thumbnails{% endtrans %}.');
   }
 
   var uploaded = '{{ uploaded }}';
 
-  if ('success' == uploaded) parent.success('{% trans %}New Pic added.{% endtrans %}');
+  if ('success' == uploaded) parent.success('{% trans %}New Thumbnail added.{% endtrans %}');
   else parent.no_success('{{ message }}');
 </script>
 {% else %}

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "52babefa2b828a5a54057b087c915585",
-    "content-hash": "193bea88bcd83ed5bf19762b5b57ab01",
+    "hash": "8775b7c186d5c0bd947183d7d5d2e5db",
+    "content-hash": "e97e292860dca821e71f791585db14d6",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -805,7 +805,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/453ef86b8c499b05fefe9b67347b8b9c06e3f176",
+                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/3384cb3ee5341fbc4415e3858dd5a6a6a800cdc4",
                 "reference": "328c1eba840a4f3b81d3a28211b3f1ce5445ceaf",
                 "shasum": ""
             },
@@ -2826,6 +2826,52 @@
                 "framework"
             ],
             "time": "2015-05-11 01:58:49"
+        },
+        {
+            "name": "teltek/pmk2-stats-ui-bundle",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/teltek/PuMuKIT2-stats-ui-bundle.git",
+                "reference": "ceadef0a1fe8ce8281c5fdfd61e3ee198f2fd312"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/teltek/PuMuKIT2-stats-ui-bundle/zipball/ceadef0a1fe8ce8281c5fdfd61e3ee198f2fd312",
+                "reference": "ceadef0a1fe8ce8281c5fdfd61e3ee198f2fd312",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9",
+                "pumukit/pumukit2": ">=2.2"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Pumukit\\StatsUIBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Copyright"
+            ],
+            "authors": [
+                {
+                    "name": "Teltek Team",
+                    "homepage": "http://teltek.es"
+                }
+            ],
+            "description": "Stats UI for PuMuKIT",
+            "homepage": "https://github.com/teltek/PuMuKIT2-stats-ui-bundle",
+            "keywords": [
+                "Symfony2",
+                "bundle",
+                "pumukit",
+                "stats",
+                "teltek",
+                "ui"
+            ],
+            "time": "2016-03-08 15:41:20"
         },
         {
             "name": "twig/extensions",

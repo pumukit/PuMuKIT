@@ -14,6 +14,7 @@
 {% set content_max_width = content_max_width | default("1200px") %}
 {% set menu_padding = menu_padding | default("10px 10px 10px 30px") %}
 {% set page_background = page_background | default("#ddd") %}
+{% set big_breadcrumbs = true %}
 
 {# DEFAULT ASPECT RATIO: 12:9#}
 {% set thumbnail_width = thumbnail_width|default(152) %}
@@ -48,6 +49,7 @@
 {% set panel_heading_background = panel_heading_background | default('#ededed') %}
 {% set panel_heading_font = panel_heading_font | default('#000') %}
 
+{% set big_breadcrumbs = big_breadcrumbs is not defined or big_breadcrumbs%}
 {# END SET VARIABLES#}
 body {
     background: {{ page_background }};
@@ -84,6 +86,15 @@ footer {
     margin: 0 auto;
     max-width: {{footer_max_width}};
     padding: 20px;
+}
+.footer-social {
+    font-size: 40px;
+}
+.footer-social a {
+    color: white;
+}
+.footer-social a:hover, .footer-social a:focus {
+    text-decoration: none;
 }
 p.disabled {
     color: grey;
@@ -129,8 +140,7 @@ p.disabled {
 .breadcrumbs_color {
     background: {{ breadcrumbs_back_background }};
 }
-
-{% if big_breadcrumbs is defined and big_breadcrumbs %}
+{% if big_breadcrumbs %}
 .title-for-crumbs {
     display: none;
 }
@@ -381,6 +391,9 @@ body.opencast-layout .breadcrumb_wrapper {
 .search-box {
     margin: 8px;
 }
+.search-box button {
+    padding: 1px 6px;
+}
 .search-box .input-group {
     border-radius: 8px;
     /*overflow: hidden;*/
@@ -616,7 +629,6 @@ a:hover .cover {
    color: {{ default_light_font }};
    font-weight: bold;
    font-size: 120%;
-   opacity: .8;
    width: 100%;
    padding: 8px;
 }

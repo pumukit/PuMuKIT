@@ -3,10 +3,17 @@
 namespace Pumukit\SchemaBundle\Tests\EventListener;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Pumukit\SchemaBundle\Event\PermissionProfileEvent;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Security\Permission;
+use Pumukit\SchemaBundle\Services\UserService;
+use Pumukit\SchemaBundle\Services\UserEventDispatcherService;
+use Pumukit\SchemaBundle\Services\PermissionService;
+use Pumukit\SchemaBundle\Services\PermissionProfileService;
+use Pumukit\SchemaBundle\Services\PermissionProfileEventDispatcherService;
+use Pumukit\SchemaBundle\EventListener\PermissionProfileListener;
 
 class PermissionProfileListenerTest extends WebTestCase
 {
@@ -15,22 +22,38 @@ class PermissionProfileListenerTest extends WebTestCase
     private $permissionProfileRepo;
     private $userService;
     private $permissionProfileService;
+    private $listener;
 
     public function __construct()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
+        static::bootKernel($options);
 
-        $this->dm = $kernel->getContainer()
-          ->get('doctrine_mongodb')->getManager();
-        $this->userRepo = $this->dm
-          ->getRepository('PumukitSchemaBundle:User');
-        $this->permissionProfileRepo = $this->dm
-          ->getRepository('PumukitSchemaBundle:PermissionProfile');
-        $this->userService = $kernel->getContainer()->get('pumukitschema.user');
-        $this->permissionProfileService = $kernel->getContainer()
-          ->get('pumukitschema.permissionprofile');
+        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $this->userRepo = $this->dm->getRepository('PumukitSchemaBundle:User');
+        $this->permissionProfileRepo = $this->dm->getRepository('PumukitSchemaBundle:PermissionProfile');
+
+
+        $dispatcher = new EventDispatcher();
+        $userDispatcher = new UserEventDispatcherService($dispatcher);
+        $permissionProfileDispatcher = new PermissionProfileEventDispatcherService($dispatcher);
+        $permissionService = new PermissionService();
+        $this->permissionProfileService = new PermissionProfileService(
+            $this->dm, $permissionProfileDispatcher,
+            $permissionService
+        );
+
+        $personalScopeDeleteOwners = false;
+        $genUserSalt = true;
+
+        $this->userService = new UserService(
+            $this->dm, $userDispatcher,
+            $permissionService, $this->permissionProfileService,
+            $personalScopeDeleteOwners, $genUserSalt
+        );
+
+        $this->listener = new PermissionProfileListener($this->dm, $this->userService);
+        $dispatcher->addListener('permissionprofile.update', array($this->listener, 'postUpdate'));
     }
 
     public function setUp()

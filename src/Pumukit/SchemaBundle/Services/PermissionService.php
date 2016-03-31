@@ -45,6 +45,16 @@ class PermissionService
         return $this->allPermissions;
     }
 
+
+    /**
+     * Check if exist a permission
+     */
+    public function exists($permission)
+    {
+        return array_key_exists($permission, $this->allPermissions);
+    }
+
+
     /**
      * Build all permissions
      */

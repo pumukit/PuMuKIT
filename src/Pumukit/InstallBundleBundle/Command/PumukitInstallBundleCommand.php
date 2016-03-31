@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Sensio\Bundle\GeneratorBundle\Manipulator\KernelManipulator;
 use Pumukit\InstallBundleBundle\Manipulator\RoutingManipulator;
@@ -19,6 +20,7 @@ class PumukitInstallBundleCommand extends ContainerAwareCommand
             ->setName('pumukit:install:bundle')
             ->addArgument('bundle', InputArgument::IS_ARRAY | InputArgument::REQUIRED, 'List of bundles classes with namespace')
             ->addOption('append-to-end', null, InputOption::VALUE_NONE, 'Set this parameter to append the routing bundle configuration to the end of routing file')
+            ->addOption('uninstall', null, InputOption::VALUE_NONE)
             ->setDescription('Update Kernel (app/AppKernel.php) and routing (app/config/routing.yml) to enable the bundle.')
             ->setHelp(<<<EOT
 The <info>pumukit:install:bundle</info> command helps you installs bundles.
@@ -31,7 +33,7 @@ The parameter --append-to-end adds the bundle routes at the end fo the <comment>
 
 Note that the bundle namespace must end with "Bundle" and  / instead of \\ has to be used for the namespace delimiter to avoid any problem.
 EOT
-          );
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -52,6 +54,8 @@ EOT
 
         $appendToEnd = $input->getOption('append-to-end');
 
+        $this->uninstall = $input->getOption('uninstall');
+
         foreach ($input->getArgument('bundle') as $bundleName) {
             $bundle = $this->prepareBundleName($bundleName);
             $this->updateKernel($input, $output, $kernel, $bundle);
@@ -63,6 +67,7 @@ EOT
     {
         //Helper to autocomplete in a shell: delete "src/" from the begin and ".php" from the tail.
         $bundleName = preg_replace('/^src\/(.*?)\.php$/i', '${1}', $bundleName);
+
         return str_replace('/', '\\', $bundleName);
     }
 
@@ -71,7 +76,12 @@ EOT
         $manip = new KernelManipulator($kernel);
 
         try {
-            $ret = $manip->addBundle($bundle);
+            if (!$this->uninstall) {
+                $ret = $manip->addBundle($bundle);
+            } else {
+                $ret = $this->removeBundle($bundle);
+                //$ret = $manip->removeBundle($bundle);//DOESNT EXIST
+            }
 
             if (!$ret) {
                 $reflected = new \ReflectionObject($kernel);
@@ -81,7 +91,11 @@ EOT
                 $output->writeln(sprintf("    <comment>new %s(),</comment>\n", $bundle));
             }
         } catch (\RuntimeException $e) {
-            $output->writeln(sprintf('Bundle <comment>%s</comment> is already defined in <comment>AppKernel::registerBundles()</comment>.', $bundle));
+            if (!$this->uninstall) {
+                $output->writeln(sprintf('Bundle <comment>%s</comment> is already defined in <comment>AppKernel::registerBundles()</comment>.', $bundle));
+            } else {
+                $output->writeln(sprintf('Bundle <comment>%s</comment> is already not defined in <comment>AppKernel::registerBundles()</comment>.', $bundle));
+            }
         }
     }
 
@@ -93,7 +107,12 @@ EOT
             $routing = new RoutingManipulator($this->getContainer()->getParameter('kernel.root_dir').'/config/routing.yml');
             $bundleName = substr($bundle, 1 + strrpos($bundle, '\\'));
             try {
-                $ret = $routing->addResource($bundleName, $format, '/', 'routing', $appendToEnd);
+                if (!$this->uninstall) {
+                    $ret = $routing->addResource($bundleName, $format, '/', 'routing', $appendToEnd);
+                } else {
+                    $ret = $this->removeResource($bundleName, $format, '/', 'routing');
+                }
+
                 if (!$ret) {
                     if ('annotation' === $format) {
                         $help = sprintf("        <comment>resource: \"@%s/Controller/\"</comment>\n        <comment>type:     annotation</comment>\n", $bundle);
@@ -107,8 +126,112 @@ EOT
                     $output->writeln($help);
                 }
             } catch (\RuntimeException $e) {
-                $output->writeln(sprintf('Bundle <comment>%s</comment> is already imported.', $bundle));
+                if (!$this->uninstall) {
+                    $output->writeln(sprintf('Bundle <comment>%s</comment> is already imported.', $bundle));
+                } else {
+                    $output->writeln(sprintf('Bundle <comment>%s</comment> is already not imported.', $bundle));
+                }
+            }
+        } else {
+            $output->writeln(sprintf('<comment>Warning: </comment> The routing file %s for the %s bundle does not exist', $bundleRoutingFile, $bundle));
+        }
+    }
+
+    /**
+     * Removes an existing bundle from the appKernel register bundles.
+     *
+     * Quite a naive approach, if finds the line (or lines) with the bundle and removes it (them) from the file
+     *
+     * @param string $bundle The bundle class name
+     *
+     * @return bool true if it worked, false otherwise
+     *
+     * @throws \RuntimeException If bundle is not defined
+     */
+    public function removeBundle($bundle)
+    {
+        $kernel = $this->getContainer()->get('kernel');
+        $this->reflected = new \ReflectionObject($kernel);
+
+        if (!$this->reflected->getFilename()) {
+            return false;
+        }
+
+        $src = file($this->reflected->getFilename());
+
+        $method = $this->reflected->getMethod('registerBundles');
+        $lines = array_slice($src, $method->getStartLine() - 1, $method->getEndLine() - $method->getStartLine() + 1);
+
+        // Exception if the bundle is not there anyways
+        if (false === strpos(implode('', $lines), $bundle)) {
+            throw new \RuntimeException(sprintf('Bundle "%s" is already not defined in "AppKernel::registerBundles()".', $bundle));
+        }
+
+        //Finds the bundle inside 'registerBundles' function and removes it.
+        foreach ($lines as $key => $line) {
+            if (false !== strpos($line, $bundle)) {
+                $srcKey = $key + $method->getStartLine() - 1;
+                unset($src[$srcKey]);
             }
         }
+
+        file_put_contents($this->reflected->getFilename(), implode('', $src));
+
+        return true;
+    }
+
+    /**
+     * Removes a routing resource.
+     *
+     * @param string $bundle
+     * @param string $format
+     * @param string $prefix
+     * @param string $path
+     *
+     * @return Boolean true if it worked, false otherwise
+     *
+     * @throws \RuntimeException If bundle is not found on file
+     */
+    public function removeResource($bundle, $format, $prefix = '/', $path = 'routing')
+    {
+        $current = '';
+        $routingFile = $this->getContainer()->getParameter('kernel.root_dir').'/config/routing.yml';
+
+        $code = sprintf("%s:\n", Container::underscore(substr($bundle, 0, -6)).('/' !== $prefix ? '_'.str_replace('/', '_', substr($prefix, 1)) : ''));
+
+        if (file_exists($routingFile)) {
+            $current = file_get_contents($routingFile);
+
+            // Exception in case the bundle does not exist
+            if (false === strpos($current, $code)) {
+                throw new \RuntimeException(sprintf('Bundle "%s" is already not imported.', $bundle));
+            }
+        } else {
+            throw new \RuntimeException(sprintf('The routing file %s does not exist', $routingFile));
+        }
+
+        $src = file($routingFile);
+        $numSpaces = 0;
+        foreach ($src as $key => $line) {
+            if (false !== strpos($line, $code)) {
+                $numSpaces = preg_match('/^( *)'.$code.'/', $line, $results);
+                $numSpaces = count($results[1]);
+                unset($src[$key]);
+                continue;
+            }
+            if ($numSpaces != 0 &&
+                (strlen(trim($line)) == 0 ||
+                1 === preg_match('/^( ){'.$numSpaces.'}.*/', $line))) {
+                unset($src[$key]);
+            } else {
+                $numSpaces = 0;
+            }
+        }
+
+        if (false === file_put_contents($routingFile, implode('', $src))) {
+            return false;
+        }
+
+        return true;
     }
 }

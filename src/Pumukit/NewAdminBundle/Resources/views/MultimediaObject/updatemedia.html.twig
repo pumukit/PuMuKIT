@@ -2,7 +2,7 @@
   <fieldset>
     <dl>
       <div class="form-row">
-        <dt>{% trans %}Images{% endtrans %}:</dt>
+        <dt>{% trans %}Thumbnails{% endtrans %}:</dt>
         <dd>
           <div id="pic_mms_{{ mm.id }}">
 	        {% include 'PumukitNewAdminBundle:Pic:list.html.twig' with {'resource': mm, 'resource_name': 'mms'} %}
@@ -20,7 +20,7 @@
       </div>
 
       <div class="form-row">
-        <dt>{% trans %}Materials{% endtrans %}:</dt>
+        <dt>{% trans %}Attachments{% endtrans %}:</dt>
         <dd>
           <div id="materials_mms_{{ mm.id }}">
 	        {% include 'PumukitNewAdminBundle:Material:list.html.twig' with {'mmId': mm.id, 'materials': mm.getMaterials()} %}

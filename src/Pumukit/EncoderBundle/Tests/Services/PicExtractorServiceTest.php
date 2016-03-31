@@ -21,19 +21,13 @@ class PicExtractorServiceTest extends WebTestCase
     public function __construct()
     {
         $options = array('environment' => 'test');
-        $kernel = static::createKernel($options);
-        $kernel->boot();
+        static::bootKernel($options);
 
-        $this->dm = $kernel->getContainer()
-          ->get('doctrine_mongodb')->getManager();
-        $this->mmobjRepo = $this->dm
-          ->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $this->factory = $kernel->getContainer()
-          ->get('pumukitschema.factory');
-        $this->mmsPicService = $kernel->getContainer()
-          ->get('pumukitschema.mmspic');
-        $this->inspectionService = $kernel->getContainer()
-          ->get('pumukit.inspection');
+        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $this->mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
+        $this->mmsPicService = static::$kernel->getContainer()->get('pumukitschema.mmspic');
+        $this->inspectionService = static::$kernel->getContainer()->get('pumukit.inspection');
         $this->resourcesDir = realpath(__DIR__.'/../Resources');
         $this->targetPath = $this->resourcesDir;
         $this->targetUrl = '/uploads';

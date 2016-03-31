@@ -58,8 +58,9 @@ EOT
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->allPermissions = $this->getContainer()->get('pumukitschema.permission')->getAllPermissions();
         $this->pmk2_allLocales = $this->getContainer()->getParameter('pumukit2.locales');
+        $repoName = $input->getArgument('repo');
 
-        if ($input->getOption('force') && ($repoName = $input->getArgument('repo'))) {
+        if ($input->getOption('force')) {
             switch ($repoName) {
                 case "all":
                   $errorExecuting = $this->executeTags($input, $output);
@@ -88,6 +89,9 @@ EOT
                     if (-1 === $errorExecuting) return -1;
                     break;
             }
+        } else if ( $repoName == 'tag') {
+            $errorExecuting = $this->executeTags($input, $output, false);
+            if (-1 === $errorExecuting) return -1;
         } else {
             $output->writeln('<error>ATTENTION:</error> This operation should not be executed in a production environment.');
             $output->writeln('');
@@ -99,7 +103,7 @@ EOT
         }
     }
 
-    protected function executeTags(InputInterface $input, OutputInterface $output)
+    protected function executeTags(InputInterface $input, OutputInterface $output, $force = true)
     {
         $this->tagsRepo = $this->dm->getRepository("PumukitSchemaBundle:Tag");
 
@@ -108,16 +112,18 @@ EOT
         $file = $input->getArgument('file');
         if ((0 == strcmp($file, "")) && (!$finder)) {
             $output->writeln("<error>Tags: There's no data to initialize</error>");
-        
+
             return -1;
         }
-        $this->removeTags();
+        if($force)
+            $this->removeTags();
         $root = $this->createRoot();
+        $verbose = $input->getOption('verbose');
         if ($file) {
-            $this->createFromFile($file, $root, $output, 'tag');
+            $this->createFromFile($file, $root, $output, 'tag', $verbose);
         } else {
             foreach ($finder as $tagFile) {
-                $this->createFromFile($tagFile, $root, $output, 'tag');
+                $this->createFromFile($tagFile, $root, $output, 'tag', $verbose);
             }
         }
 
@@ -228,13 +234,16 @@ EOT
 
     protected function createRoot()
     {
-        $root = $this->createTagFromCsvArray(array('id' => null, 'cod' =>"ROOT", 'tree_parent_cod' =>null, 'metatag' => 1, 'display' => 0,'name_en' =>"ROOT"));
+        $root = $this->tagsRepo->findOneByCod('ROOT');
+        if(!$root)
+            $root = $this->createTagFromCsvArray(array('id' => null, 'cod' =>"ROOT", 'tree_parent_cod' =>null, 'metatag' => 1, 'display' => 0,'name_en' =>"ROOT"));
+        $this->dm->persist($root);
         $this->dm->flush();
 
         return $root;
     }
 
-    protected function createFromFile($file_route, $root, OutputInterface $output, $repoName)
+    protected function createFromFile($file_route, $root, OutputInterface $output, $repoName, $verbose = false)
     {
         /* NECCESSARY CHECKS*/
         if (!file_exists($file_route)) {
@@ -272,7 +281,8 @@ EOT
             $output->writeln("<comment>".$repoName.": Ignoring file ".$file."</comment>");
             return -1;
         }
-        $output->writeln("<info>Found file: ".realpath($file_route)."</info>");
+        if($verbose)
+            $output->writeln("<info>Found file: ".realpath($file_route)."</info>");
 
         $idCodMapping = array();
 
@@ -280,8 +290,8 @@ EOT
         $importedTags = array();
         while (($currentRow = fgetcsv($file, 300, ";")) !== false) {
             $number = count($currentRow);
-            if (('tag' === $repoName) || 
-                (('broadcast' === $repoName) && ($number == 5 || $number == 8)) || 
+            if (('tag' === $repoName) ||
+                (('broadcast' === $repoName) && ($number == 5 || $number == 8)) ||
                 (('role' === $repoName) && ($number == 7 || $number == 10)) ||
                 (('permissionprofile' === $repoName) && ($number == 6))){
                 //Check header rows
@@ -307,9 +317,15 @@ EOT
                             if (!isset($parent)) {
                                 $parent = $root;
                             }
-                            $tag = $this->createTagFromCsvArray($csvTagsArray, $parent);
-                            $importedTags[ $tag->getCod() ] = $tag;
-                            $output->writeln('Tag persisted - new id: '.$tag->getId().' cod: '.$tag->getCod());
+                            try {
+                                $tag = $this->createTagFromCsvArray($csvTagsArray, $parent);
+                                $importedTags[ $tag->getCod() ] = $tag;
+                            } catch(\LengthException $e) {
+                                if($verbose)
+                                    $output->writeln('<comment>'.$e->getMessage().'</comment>');
+                                continue;
+                            }
+                            $output->writeln('<info>Tag persisted - new id: '.$tag->getId().' cod: '.$tag->getCod().'</info>');
                             break;
                         case 'broadcast':
                             $broadcast = $this->createBroadcastFromCsvArray($currentRow);
@@ -335,9 +351,10 @@ EOT
                 $output->writeln("Error: line $row has $number elements");
             }
 
-            if ($row % 100 == 0) {
+            if ($verbose && $row % 100 == 0) {
                 echo "Row ".$row."\n";
             }
+
             $previous_content = $currentRow;
             $row++;
         }
@@ -350,9 +367,8 @@ EOT
      */
     private function createTagFromCsvArray($csvTagsArray, $tag_parent = null)
     {
-        if ($tag = $this->tagsRepo->findOneByCod($csvTagsArray[ 'cod' ])) {
-            //    $this->dm->remove($tag);
-            throw new \LengthException('Nothing done - Tag retrieved from DB id: '.$tag->getId().' cod: '.$tag->getCod());
+        if ($tag = $this->tagsRepo->findOneByCod($csvTagsArray[ 'cod' ])) {;
+            throw new \LengthException('Nothing done - Tag already on DB - id: '.$tag->getId().' cod: '.$tag->getCod());
         }
 
         $tag = new Tag();
@@ -409,7 +425,7 @@ EOT
         if (isset($csv_array[7])) {
             $broadcast->setDescription($csv_array[7], 'en');
         }
-        
+
         $this->dm->persist($broadcast);
 
         return $broadcast;

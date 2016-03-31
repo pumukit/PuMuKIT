@@ -17,6 +17,7 @@ class ClientService
     private $deleteArchiveMediaPackage;
     private $deletionWorkflowName;
     private $manageOpencastUsers;
+    private $insecure = false;
     private $logger;
 
     /**
@@ -32,7 +33,7 @@ class ClientService
      * @param LoggerInterface $logger
      */
     public function __construct($url = '', $user = '', $passwd = '', $player = '/engage/ui/watch.html', $scheduler = '/admin/index.html#/recordings', $dashboard = '/dashboard/index.html',
-                                $deleteArchiveMediaPackage = false, $deletionWorkflowName = 'delete-archive', $manageOpencastUsers = false, LoggerInterface $logger)
+                                $deleteArchiveMediaPackage = false, $deletionWorkflowName = 'delete-archive', $manageOpencastUsers = false, $insecure = false, $adminUrl = null, LoggerInterface $logger)
     {
         $this->logger = $logger;
 
@@ -52,6 +53,8 @@ class ClientService
         $this->deleteArchiveMediaPackage = $deleteArchiveMediaPackage;
         $this->deletionWorkflowName = $deletionWorkflowName;
         $this->manageOpencastUsers = $manageOpencastUsers;
+        $this->insecure = $insecure;
+        $this->adminUrl = $adminUrl;
     }
 
     /**
@@ -134,7 +137,7 @@ class ClientService
      */
     public function getMediaPackages($query, $limit, $offset)
     {
-        $output = $this->request('/search/episode.json?'.($query ? 'q='.$query.'&' : '').'limit='.$limit.'&offset='.$offset);
+        $output = $this->request('/search/episode.json?'.($query ? 'q='.urlencode($query).'&' : '').'limit='.$limit.'&offset='.$offset);
 
         if ($output['status'] !== 200) {
             return false;
@@ -471,6 +474,10 @@ class ClientService
         curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($request, CURLOPT_FOLLOWLOCATION, false);
 
+        if ($this->insecure) {
+            curl_setopt($request, CURLOPT_SSL_VERIFYPEER, false);
+        }
+
         if ($this->user != '') {
             curl_setopt($request, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
             curl_setopt($request, CURLOPT_USERPWD, $this->user.':'.$this->passwd);
@@ -486,7 +493,9 @@ class ClientService
 
         if ($method == 'GET') {
             if (200 != $output['status']) {
-                throw new \Exception('Error Processing Request', 1);
+              $this->logger->addError(__CLASS__.'['.__FUNCTION__.'](line '.__LINE__
+                                      .') Error Processing Request : '.$requestUrl.'.');
+              throw new \Exception(sprintf('Error Processing Request (%s)', $requestUrl), 1);
             }
         }
 
