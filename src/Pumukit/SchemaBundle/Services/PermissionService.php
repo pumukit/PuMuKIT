@@ -9,6 +9,7 @@ class PermissionService
 {
     private $externalPermissions;
     private $allPermissions;
+    private $allDependencies;
 
     /**
      * Constructor
@@ -38,11 +39,32 @@ class PermissionService
     }
 
     /**
+     * Get local dependencies
+     */
+    public function getLocalDependencies()
+    {
+        return Permission::$permissionDependencies;
+    }
+
+    /**
      * Get all permissions
      */
     public function getAllPermissions()
     {
-        return $this->allPermissions;
+        return array_map(function($a){
+            return $a['description'];
+        },$this->allPermissions);
+    }
+
+
+    /**
+     * Get all dependencies
+     */
+    public function getAllDependencies()
+    {
+        return array_map(function($a){
+            return $a['dependencies'];
+        }, $this->allPermissions);
     }
 
 
@@ -60,14 +82,43 @@ class PermissionService
      */
     private function buildAllPermissions()
     {
+        //Empty 'dependencies' to add to a permission without them
+        $defaultDeps = array(
+            'global' => array(),
+            'personal' => array()
+        );
         $allPermissions = $this->getLocalPermissions();
         foreach ($this->externalPermissions as $externalPermission) {
             if (false === strpos($externalPermission['role'], 'ROLE_')) {
                 throw new \Exception('Invalid permission: "'.$externalPermission['role'].'". Permission must start with "ROLE_".');
             }
-            $allPermissions[$externalPermission['role']] = $externalPermission['description'];
+            $allPermissions[$externalPermission['role']] = array(
+                'description' => $externalPermission['description'],
+                'dependencies' => isset($externalPermission['dependencies']) ? $externalPermission['dependencies'] : $defaultDeps,
+            );
         }
 
         return $allPermissions;
+    }
+
+    /**
+     * Returns permissions dependent of a given permission by scope 
+     *
+     * @param string $permission
+     * @param string $scope
+     */
+    public function getDependenciesByScope($permission, $scope)
+    {
+        return $this->allPermissions;
+        $dependencies = array();
+        if(!array_key_exists($permission, $this->allDependencies)) {
+            return array();
+        }
+        $dependencies = $this->allDependencies[$permission];
+        $ref = &$dependencies;
+        foreach($ref as $dep) {
+            $ref = array_merge($dependencies, $this->allDependencies[$dep]);
+        }
+        return $dependencies;
     }
 }
