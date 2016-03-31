@@ -40,7 +40,9 @@ class PermissionServiceTest extends WebTestCase
         $externalPermissions = $this->getExternalPermissions();
         $permissionService = new PermissionService($externalPermissions);
 
-        $allPermissions = Permission::$permissionDescription;
+        $allPermissions = array_map(function($a){
+            return $a['description'];
+        }, Permission::$permissionDescription);
         $allPermissions['ROLE_ONE'] = 'Access One';
         $allPermissions['ROLE_TWO'] = 'Access Two';
         $allPermissions['ROLE_THREE'] = 'Access Three';
@@ -66,18 +68,30 @@ class PermissionServiceTest extends WebTestCase
     private function getExternalPermissions()
     {
         return array(
-                     array(
-                           'role' => 'ROLE_ONE',
-                           'description' => 'Access One'
-                           ),
-                     array(
-                           'role' => 'ROLE_TWO',
-                           'description' => 'Access Two'
-                           ),
-                     array(
-                           'role' => 'ROLE_THREE',
-                           'description' => 'Access Three'
-                           )
-                     );
+            array(
+                'role' => 'ROLE_ONE',
+                'description' => 'Access One',
+                'dependencies' => array(
+                    'global' => 'ROLE_TWO',
+                    'local' => 'ROLE_TWO',
+                )
+            ),
+            array(
+                'role' => 'ROLE_TWO',
+                'description' => 'Access Two',
+                'dependencies' => array(
+                    'global' => 'ROLE_THREE',
+                    'local' => 'ROLE_THREE',
+                )
+            ),
+            array(
+                'role' => 'ROLE_THREE',
+                'description' => 'Access Three',
+                'dependencies' => array(
+                    'global' => 'ROLE_ONE',
+                    'local' => 'ROLE_TWO',
+                )
+            )
+        );
     }
 }
