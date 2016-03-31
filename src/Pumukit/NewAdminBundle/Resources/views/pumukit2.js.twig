@@ -1851,6 +1851,25 @@ processPermissionProfilesOk = function(){
     return false;
 }
 
+$(document).on('click', '.not_system_permission_permissionprofile_checkbox', function(event){
+    var element = event.target;
+    var elementId = element.id.split('__')[1];
+    console.log(elementId);
+    var selectedScope = $('select#pumukitnewadmin_permissionprofile_scope_' + elementId + ' option:selected');
+    var scope = selectedScope.attr("value");
+    if (scope.indexOf('GLOBAL') > -1) {
+        var rawDependencies = element.getAttribute('data-dependencies-global');
+    } else {
+        var rawDependencies = element.getAttribute('data-dependencies-personal');
+    }
+    var dependencies = rawDependencies.split(' ');
+    var dependenciesLength = dependencies.length;
+    for (var i = 0; i < dependenciesLength; i++) {
+        console.log(dependencies[i]);
+        //$('#dependencies[i]').prop('checked', 'checked');
+    }
+});
+
 function test_material_form_url(url){
     $('.error').hide();
 
