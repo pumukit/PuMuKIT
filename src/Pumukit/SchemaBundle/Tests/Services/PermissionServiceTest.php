@@ -50,6 +50,30 @@ class PermissionServiceTest extends WebTestCase
         $this->assertEquals($allPermissions, $permissionService->getAllPermissions());
     }
 
+    public function testGetAllDependencies()
+    {
+        $externalPermissions = $this->getExternalPermissions();
+        $permissionService = new PermissionService($externalPermissions);
+        $allDependencies = array_map(function($a){
+            return $a['dependencies'];
+        }, Permission::$permissionDescription);
+
+        $allDependencies['ROLE_ONE'] = array(
+            'global' => 'ROLE_TWO',
+            'local' => 'ROLE_TWO',
+        );
+        $allDependencies['ROLE_TWO'] = array(
+            'global' => 'ROLE_THREE',
+            'local' => 'ROLE_THREE',
+        );
+        $allDependencies['ROLE_THREE'] = array(
+            'global' => 'ROLE_ONE',
+            'local' => 'ROLE_TWO',
+        );
+
+        $this->assertEquals($allDependencies, $permissionService->getAllDependencies());
+    }
+
     /**
      * @expectedException Exception
      * @expectedExceptionMessage Permission must start with "ROLE_"
