@@ -29,7 +29,9 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         $criteria = $this->getCriteria($config);
         $permissionProfiles = $this->getResources($request, $config, $criteria);
 
-        $permissions = $this->get('pumukitschema.permission')->getAllPermissions();
+        $permissionService = $this->get('pumukitschema.permission');
+        $permissions = $permissionService->getAllPermissions();
+        $dependencies = $permissionService->getAllDependencies();
         $scopes = PermissionProfile::$scopeDescription;
 
         $createBroadcastsEnabled = !$this->container->getParameter('pumukit_new_admin.disable_broadcast_creation');
@@ -38,7 +40,8 @@ class PermissionProfileController extends AdminController implements NewAdminCon
                      'permissionprofiles' => $permissionProfiles,
                      'permissions' => $permissions,
                      'scopes' => $scopes,
-                     'broadcast_enabled' => $createBroadcastsEnabled
+                     'broadcast_enabled' => $createBroadcastsEnabled,
+                     'dependencies' => $dependencies
                      );
     }
 
@@ -66,7 +69,9 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         }
         $permissionProfiles->setCurrentPage($page);
 
-        $permissions = $this->get('pumukitschema.permission')->getAllPermissions();
+        $permissionService = $this->get('pumukitschema.permission');
+        $permissions = $permissionService->getAllPermissions();
+        $dependencies = $permissionService->getAllDependencies();
         $scopes = PermissionProfile::$scopeDescription;
 
         $createBroadcastsEnabled = !$this->container->getParameter('pumukit_new_admin.disable_broadcast_creation');
@@ -75,7 +80,8 @@ class PermissionProfileController extends AdminController implements NewAdminCon
                      'permissionprofiles' => $permissionProfiles,
                      'permissions' => $permissions,
                      'scopes' => $scopes,
-                     'broadcast_enabled' => $createBroadcastsEnabled
+                     'broadcast_enabled' => $createBroadcastsEnabled,
+                     'dependencies' => $dependencies
                      );
     }
 
