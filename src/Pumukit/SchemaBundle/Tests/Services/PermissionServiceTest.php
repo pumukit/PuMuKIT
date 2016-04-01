@@ -47,6 +47,7 @@ class PermissionServiceTest extends WebTestCase
         $allPermissions['ROLE_ONE'] = 'Access One';
         $allPermissions['ROLE_TWO'] = 'Access Two';
         $allPermissions['ROLE_THREE'] = 'Access Three';
+        $allPermissions['ROLE_FOUR'] = 'Access Four';
 
         $this->assertEquals($allPermissions, $permissionService->getAllPermissions());
     }
@@ -71,6 +72,10 @@ class PermissionServiceTest extends WebTestCase
             PermissionProfile::SCOPE_GLOBAL => array('ROLE_ONE','ROLE_TWO'),
             PermissionProfile::SCOPE_PERSONAL => array('ROLE_THREE'),
         );
+        $allDependencies['ROLE_FOUR'] = array(
+            PermissionProfile::SCOPE_GLOBAL => array(),
+            PermissionProfile::SCOPE_PERSONAL => array(),
+        );
 
         $this->assertEquals($allDependencies, $permissionService->getAllDependencies());
     }
@@ -80,12 +85,15 @@ class PermissionServiceTest extends WebTestCase
         $externalPermissions = $this->getExternalPermissions();
         $permissionService = new PermissionService($externalPermissions);
 
-        $this->assertEquals(array('ROLE_TWO', 'ROLE_THREE'), $permissionService->getDependenciesByScope($externalPermissions[0], PermissionProfile::SCOPE_GLOBAL));
-        $this->assertEquals(array('ROLE_TWO'), $permissionService->getDependenciesByScope($externalPermissions[0], PermissionProfile::SCOPE_PERSONAL));
-        $this->assertEquals(array('ROLE_THREE'), $permissionService->getDependenciesByScope($externalPermissions[1], PermissionProfile::SCOPE_GLOBAL));
-        $this->assertEquals(array(''), $permissionService->getDependenciesByScope($externalPermissions[1], PermissionProfile::SCOPE_PERSONAL));
-        $this->assertEquals(array('ROLE_ONE', 'ROLE_TWO'), $permissionService->getDependenciesByScope($externalPermissions[2], PermissionProfile::SCOPE_GLOBAL));
-        $this->assertEquals(array(), $permissionService->getDependenciesByScope($externalPermissions[2], PermissionProfile::SCOPE_PERSONAL));
+        $this->assertEquals(array('ROLE_TWO', 'ROLE_THREE'), $permissionService->getDependenciesByScope($externalPermissions[0]['role'], PermissionProfile::SCOPE_GLOBAL));
+        $this->assertEquals(array('ROLE_TWO'), $permissionService->getDependenciesByScope($externalPermissions[0]['role'], PermissionProfile::SCOPE_PERSONAL));
+        $this->assertEquals(array('ROLE_THREE', 'ROLE_ONE'), $permissionService->getDependenciesByScope($externalPermissions[1]['role'], PermissionProfile::SCOPE_GLOBAL));
+        $this->assertEquals(array(), $permissionService->getDependenciesByScope($externalPermissions[1]['role'], PermissionProfile::SCOPE_PERSONAL));
+        $this->assertEquals(array('ROLE_ONE', 'ROLE_TWO'), $permissionService->getDependenciesByScope($externalPermissions[2]['role'], PermissionProfile::SCOPE_GLOBAL));
+        $this->assertEquals(array(), $permissionService->getDependenciesByScope($externalPermissions[2]['role'], PermissionProfile::SCOPE_PERSONAL));
+        $this->assertEquals(array(), $permissionService->getDependenciesByScope($externalPermissions[3['role'], PermissionProfile::SCOPE_GLOBAL));
+        $this->assertEquals(array(), $permissionService->getDependenciesByScope($externalPermissions[3]['role'], PermissionProfile::SCOPE_PERSONAL));
+
     }
 
     /**
@@ -110,26 +118,30 @@ class PermissionServiceTest extends WebTestCase
                 'role' => 'ROLE_ONE',
                 'description' => 'Access One',
                 'dependencies' => array(
-                    PermissionProfile::SCOPE_GLOBAL => array('ROLE_TWO'),
-                    PermissionProfile::SCOPE_PERSONAL => array('ROLE_TWO'),
+                    'global' => array('ROLE_TWO'),
+                    'personal' => array('ROLE_TWO'),
                 )
             ),
             array(
                 'role' => 'ROLE_TWO',
                 'description' => 'Access Two',
                 'dependencies' => array(
-                    PermissionProfile::SCOPE_GLOBAL => array('ROLE_THREE'),
-                    PermissionProfile::SCOPE_PERSONAL => array(),
+                    'global' => array('ROLE_THREE'),
+                    'personal' => array(),
                 )
             ),
             array(
                 'role' => 'ROLE_THREE',
                 'description' => 'Access Three',
                 'dependencies' => array(
-                    PermissionProfile::SCOPE_GLOBAL => array('ROLE_ONE', 'ROLE_TWO'),
-                    PermissionProfile::SCOPE_PERSONAL => array('ROLE_THREE'),
+                    'global' => array('ROLE_ONE', 'ROLE_TWO'),
+                    'personal' => array('ROLE_THREE'),
                 )
-            )
+            ),
+            array(
+                'role' => 'ROLE_FOUR',
+                'description' => 'Access Four',
+            ),
         );
     }
 }
