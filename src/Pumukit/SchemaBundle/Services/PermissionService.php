@@ -4,12 +4,12 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Security\Permission;
+use Pumukit\SchemaBundle\Document\PermissionProfile;
 
 class PermissionService
 {
     private $externalPermissions;
     private $allPermissions;
-    private $allDependencies;
 
     /**
      * Constructor
@@ -84,17 +84,27 @@ class PermissionService
     {
         //Empty 'dependencies' to add to a permission without them
         $defaultDeps = array(
-            'global' => array(),
-            'personal' => array()
+            PermissionProfile::SCOPE_GLOBAL => array(),
+            PermissionProfile::SCOPE_PERSONAL => array()
         );
         $allPermissions = $this->getLocalPermissions();
         foreach ($this->externalPermissions as $externalPermission) {
             if (false === strpos($externalPermission['role'], 'ROLE_')) {
                 throw new \Exception('Invalid permission: "'.$externalPermission['role'].'". Permission must start with "ROLE_".');
             }
+
+            $dependencies = $defaultDeps;            
+            if(isset($externalPermission['dependencies']) && !isset($externalPermission['dependencies']['global'])){
+                var_dump($externalPermission);exit();
+            }
+            if(isset($externalPermission['dependencies'])) {
+                $dependencies[PermissionProfile::SCOPE_GLOBAL] = $externalPermission['dependencies']['global'];
+                $dependencies[PermissionProfile::SCOPE_PERSONAL] = $externalPermission['dependencies']['personal'];
+            }
+
             $allPermissions[$externalPermission['role']] = array(
                 'description' => $externalPermission['description'],
-                'dependencies' => isset($externalPermission['dependencies']) ? $externalPermission['dependencies'] : $defaultDeps,
+                'dependencies' => $dependencies,
             );
         }
 
@@ -109,15 +119,19 @@ class PermissionService
      */
     public function getDependenciesByScope($permission, $scope)
     {
-        return $this->allPermissions;
-        $dependencies = array();
-        if(!array_key_exists($permission, $this->allDependencies)) {
+        if(!array_key_exists($permission, $this->allPermissions)) {
             return array();
         }
-        $dependencies = $this->allDependencies[$permission];
-        $ref = &$dependencies;
-        foreach($ref as $dep) {
-            $ref = array_merge($dependencies, $this->allDependencies[$dep]);
+        $dependencies = $this->allPermissions[$permission]['dependencies'][$scope];
+        $dependencies = array_diff($dependencies, array($permission));
+
+        reset($dependencies);
+        while(($elem = each($dependencies)) !== false) {
+            foreach($this->allPermissions[$elem['value']]['dependencies'][$scope] as $newDep) {
+                if($newDep != $permission && !in_array($newDep, $dependencies)) {
+                    $dependencies[] = $newDep;
+                }
+            }
         }
         return $dependencies;
     }
