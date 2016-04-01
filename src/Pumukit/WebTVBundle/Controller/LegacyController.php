@@ -59,17 +59,16 @@ class LegacyController extends Controller
 
         $multimediaObject = $mmobjRepo->createQueryBuilder()
           ->field("properties.pumukit1id")->equals($pumukit1id)
-          ->field("status")->gte(0)
+          ->field("status")->gte(MultimediaObject::STATUS_PUBLISHED)
           ->getQuery()->getSingleResult();
 
         if (!$multimediaObject) {
             throw $this->createNotFoundException();
         }
-        if ($multimediaObject->getStatus() == "2"){
-        return $this->redirect($this->generateUrl("pumukit_webtv_multimediaobject_magicindex", array("secret" => $multimediaObject->getSecret())));
-        }
-        else{
-        return $this->redirect($this->generateUrl("pumukit_webtv_multimediaobject_index", array("id" => $multimediaObject->getId())));
+        if ($multimediaObject->getStatus() == MultimediaObject::STATUS_HIDE){
+            return $this->redirect($this->generateUrl("pumukit_webtv_multimediaobject_magicindex", array("secret" => $multimediaObject->getSecret())));
+        } else {
+            return $this->redirect($this->generateUrl("pumukit_webtv_multimediaobject_index", array("id" => $multimediaObject->getId())));
         }
         
     }
