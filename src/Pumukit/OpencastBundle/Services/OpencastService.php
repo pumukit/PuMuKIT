@@ -63,11 +63,17 @@ class OpencastService
             return false;
 
         if ($this->useFlavour) {
-            $flavourTrack = $multimediaObject->getTrackWithTag($this->sbsFlavour);
-            if (null == $flavourTrack) {
-                return $this->generateSbsTrack($multimediaObject, $opencastUrls);
+            $flavourTrack = null;
+            foreach($multimediaObject->getTracksWithTag($this->sbsFlavour) as $track) {
+                if (!$track->isOnlyAudio()) {
+                    $flavourTrack = $track;
+                    break;
+                }
             }
-            return $this->useTrackAsSbs($multimediaObject, $flavourTrack);
+
+            if ($flavourTrack) {
+                return $this->useTrackAsSbs($multimediaObject, $flavourTrack);
+            }
         }
 
         return $this->generateSbsTrack($multimediaObject, $opencastUrls);
