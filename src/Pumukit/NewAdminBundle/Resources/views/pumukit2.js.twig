@@ -1851,6 +1851,54 @@ processPermissionProfilesOk = function(){
     return false;
 }
 
+$(document).on('click', '.not_system_permission_permissionprofile_checkbox', function(event){
+    var element = event.target;
+    var checkedElement = element.checked;
+    var elementId = element.id.split('__')[1];
+    var selectedScope = $('select#pumukitnewadmin_permissionprofile_scope_' + elementId + ' option:selected');
+    var scope = selectedScope.attr("value");
+    var dependencies = get_permission_dependencies(element, scope);
+    var dependenciesLength = dependencies.length;
+    for (var i = 0; i < dependenciesLength; i++) {
+        if (checkedElement) {
+            $("#"+dependencies[i]).prop("checked", "checked");
+        } else {
+            $("#"+dependencies[i]).prop("checked", "");
+            fix_permission_dependencies(elementId, scope);
+        }
+    }
+});
+
+function get_permission_dependencies(element, scope) {
+    if (scope.indexOf('GLOBAL') > -1) {
+        var rawDependencies = element.getAttribute('data-dependencies-global');
+    } else {
+        var rawDependencies = element.getAttribute('data-dependencies-personal');
+    }
+    return rawDependencies.split(' ');
+}
+
+function fix_permission_dependencies(elementId, scope){
+    var permissionProfileId = '__' + elementId + '__permission';
+    $("[id^='ROLE_'][id$="+permissionProfileId+"]:checked").each(function (i, element) {
+        var dependencies = get_permission_dependencies(element, scope);
+        var dependenciesLength = dependencies.length;
+        for (var i = 0; i < dependenciesLength; i++) {
+            if (!$("#"+dependencies[i]).prop("checked")) {
+                $("#"+dependencies[i]).prop("checked", "checked");
+            }
+        }
+    });
+}
+
+function fix_permission_scope_none(elementId){
+    var permissionProfileId = '__' + elementId + '__permission';
+    $("[id^='ROLE_'][id$="+permissionProfileId+"]:checked").each(function (i, element) {
+        $("#"+element.id).prop("checked", "");
+    });
+}
+
+
 function test_material_form_url(url){
     $('.error').hide();
 
@@ -1909,6 +1957,7 @@ function checkScope(id)
            if ($(permissions[i]).closest("div").attr("class") != "checkbox pmk_disabled_checkbox") {
                $(permissions[i]).closest("div").attr("class", "checkbox pmk_disabled_checkbox");
            }
+           fix_permission_scope_none(id);
        } else {
            if ($(permissions[i]).attr("disabled") == "disabled") {
                $(permissions[i]).removeAttr("disabled");
@@ -1916,6 +1965,7 @@ function checkScope(id)
            if ($(permissions[i]).closest("div").attr("class") == "checkbox pmk_disabled_checkbox") {
                $(permissions[i]).closest("div").attr("class", "checkbox");
            }
+           fix_permission_dependencies(id, scope_id);
        }
     }
 }
