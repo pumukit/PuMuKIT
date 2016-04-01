@@ -91,7 +91,7 @@ class PermissionServiceTest extends WebTestCase
         $this->assertEquals(array(), $permissionService->getDependenciesByScope($externalPermissions[1]['role'], PermissionProfile::SCOPE_PERSONAL));
         $this->assertEquals(array('ROLE_ONE', 'ROLE_TWO'), $permissionService->getDependenciesByScope($externalPermissions[2]['role'], PermissionProfile::SCOPE_GLOBAL));
         $this->assertEquals(array(), $permissionService->getDependenciesByScope($externalPermissions[2]['role'], PermissionProfile::SCOPE_PERSONAL));
-        $this->assertEquals(array(), $permissionService->getDependenciesByScope($externalPermissions[3['role'], PermissionProfile::SCOPE_GLOBAL));
+        $this->assertEquals(array(), $permissionService->getDependenciesByScope($externalPermissions[3]['role'], PermissionProfile::SCOPE_GLOBAL));
         $this->assertEquals(array(), $permissionService->getDependenciesByScope($externalPermissions[3]['role'], PermissionProfile::SCOPE_PERSONAL));
 
     }
