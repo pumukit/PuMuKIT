@@ -1857,15 +1857,14 @@ $(document).on('click', '.not_system_permission_permissionprofile_checkbox', fun
     var elementId = element.id.split('__')[1];
     var selectedScope = $('select#pumukitnewadmin_permissionprofile_scope_' + elementId + ' option:selected');
     var scope = selectedScope.attr("value");
-    var dependencies = get_permission_dependencies(element, scope);
-    var dependenciesLength = dependencies.length;
-    for (var i = 0; i < dependenciesLength; i++) {
-        if (checkedElement) {
+    if (checkedElement) {
+        var dependencies = get_permission_dependencies(element, scope);
+        var dependenciesLength = dependencies.length;
+        for (var i = 0; i < dependenciesLength; i++) {
             $("#"+dependencies[i]).prop("checked", "checked");
-        } else {
-            $("#"+dependencies[i]).prop("checked", "");
-            fix_permission_dependencies(elementId, scope);
         }
+    } else {
+        fix_permission_dependencies(elementId, scope);
     }
 });
 
