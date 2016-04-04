@@ -118,6 +118,25 @@ class PermissionServiceTest extends WebTestCase
     }
 
     /**
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage The permission with role 'ROLE_DEPENDENCY' does not exist in the configuration
+     */
+    public function testGetDependenciesByScopeInvalidDependency()
+    {
+        $erroringPermission = array(
+            'role' => 'ROLE_BROKEN_DEPENDENCY',
+            'description' => 'Access Three',
+            'dependencies' => array(
+                'global' => array('ROLE_ONE', 'ROLE_TWO'),
+                'personal' => array('ROLE_DEPENDENCY'),
+            )
+        );
+        $externalPermissions = $this->getExternalPermissions();
+        $externalPermissions[] = $erroringPermission;
+        $permissionService = new PermissionService($externalPermissions);
+    }
+
+    /**
      * @expectedException Exception
      * @expectedExceptionMessage Permission must start with "ROLE_"
      */
