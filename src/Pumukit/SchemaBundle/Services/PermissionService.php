@@ -20,6 +20,7 @@ class PermissionService
     {
         $this->externalPermissions = $externalPermissions;
         $this->allPermissions = $this->buildAllPermissions();
+        $this->allPermissions = $this->buildAllDependencies();
     }
 
     /**
@@ -107,7 +108,20 @@ class PermissionService
                 'dependencies' => $dependencies,
             );
         }
+        return $allPermissions;
+    }
 
+    /**
+     * Build all dependencies
+     */
+    private function buildAllDependencies()
+    {
+        $allPermissions = $this->allPermissions;
+        foreach($allPermissions as $role => $permission) {
+            foreach($permission['dependencies'] as $scope => $dependencies) {
+                $allPermissions[$role]['dependencies'][$scope] = $this->getDependenciesByScope($role, $scope);
+            }
+        }
         return $allPermissions;
     }
 
@@ -119,9 +133,11 @@ class PermissionService
      */
     public function getDependenciesByScope($permission, $scope)
     {
-        if(!array_key_exists($permission, $this->allPermissions)) {
-            return array();
-        }
+        if(!array_key_exists($permission, $this->allPermissions))
+            throw new \InvalidArgumentException("The permission with role '$permission' does not exist in the configuration");
+        if(!in_array($scope, array(PermissionProfile::SCOPE_GLOBAL, PermissionProfile::SCOPE_PERSONAL)))
+            throw new \InvalidArgumentException("The scope '$scope' is not a valid scope (SCOPE_GLOBAL or SCOPE_PERSONAL)");
+
         $dependencies = $this->allPermissions[$permission]['dependencies'][$scope];
         $dependencies = array_diff($dependencies, array($permission));
 
