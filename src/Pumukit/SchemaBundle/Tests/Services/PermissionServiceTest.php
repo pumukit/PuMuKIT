@@ -93,7 +93,28 @@ class PermissionServiceTest extends WebTestCase
         $this->assertEquals(array(), $permissionService->getDependenciesByScope($externalPermissions[2]['role'], PermissionProfile::SCOPE_PERSONAL));
         $this->assertEquals(array(), $permissionService->getDependenciesByScope($externalPermissions[3]['role'], PermissionProfile::SCOPE_GLOBAL));
         $this->assertEquals(array(), $permissionService->getDependenciesByScope($externalPermissions[3]['role'], PermissionProfile::SCOPE_PERSONAL));
+    }
 
+    /**
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage The permission with role 'ROLE_DOESNTEXIST' does not exist in the configuration
+     */
+    public function testGetDependenciesByScopeInvalidPermission()
+    {
+        $externalPermissions = $this->getExternalPermissions();
+        $permissionService = new PermissionService($externalPermissions);
+        $dependencies = $permissionService->getDependenciesByScope('ROLE_DOESNTEXIST', PermissionProfile::SCOPE_PERSONAL);
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage The scope 'NO_SCOPE' is not a valid scope (SCOPE_GLOBAL or SCOPE_PERSONAL)
+     */
+    public function testGetDependenciesByScopeInvalidScope()
+    {
+        $externalPermissions = $this->getExternalPermissions();
+        $permissionService = new PermissionService($externalPermissions);
+        $dependencies = $permissionService->getDependenciesByScope($externalPermissions[3]['role'], 'NO_SCOPE');
     }
 
     /**
