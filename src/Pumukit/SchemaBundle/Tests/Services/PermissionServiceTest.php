@@ -28,6 +28,34 @@ class PermissionServiceTest extends WebTestCase
         $this->assertEquals($externalPermissions, $permissionService->getExternalPermissions());
     }
 
+    /**
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage The permission with role 'ROLE_FOUR' is duplicated. Please check the configuration.
+     */
+    public function testConstructorDuplicatedRoleException()
+    {
+        $externalPermissions = $this->getExternalPermissions();
+        $externalPermissions[] = array(
+            'role' => 'ROLE_FOUR',
+            'description' => 'Access Four',
+        );
+        $permissionService = new PermissionService($externalPermissions);
+    }
+
+    /**
+     * @expectedException UnexpectedValueException
+     * @expectedExceptionMessage Invalid permission: "INVALID_NAME". Permission must start with "ROLE_".
+     */
+    public function testConstructorRoleNameException()
+    {
+        $externalPermissions = $this->getExternalPermissions();
+        $externalPermissions[] = array(
+            'role' => 'INVALID_NAME',
+            'description' => 'Invalid Name',
+        );
+        $permissionService = new PermissionService($externalPermissions);
+    }
+
     public function testGetLocalPermissions()
     {
         $externalPermissions = $this->getExternalPermissions();
