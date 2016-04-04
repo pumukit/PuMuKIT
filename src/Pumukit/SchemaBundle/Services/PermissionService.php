@@ -90,8 +90,10 @@ class PermissionService
         );
         $allPermissions = $this->getLocalPermissions();
         foreach ($this->externalPermissions as $externalPermission) {
+            if(array_key_exists($externalPermission['role'], $allPermissions))
+                throw new \RuntimeException(sprintf('The permission with role \'%s\' is duplicated. Please check the configuration.', $externalPermission['role']));
             if (false === strpos($externalPermission['role'], 'ROLE_')) {
-                throw new \Exception('Invalid permission: "'.$externalPermission['role'].'". Permission must start with "ROLE_".');
+                throw new \UnexpectedValueException('Invalid permission: "'.$externalPermission['role'].'". Permission must start with "ROLE_".');
             }
 
             $dependencies = $defaultDeps;            
