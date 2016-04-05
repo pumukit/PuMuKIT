@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\NewAdminBundle\Form\Type\SeriesType;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectTemplateMetaType;
 use Pagerfanta\Adapter\ArrayAdapter;
@@ -159,6 +161,9 @@ class SeriesController extends AdminController implements NewAdminController
         $factoryService = $this->get('pumukitschema.factory');
 
         $series = $this->findOr404($request);
+        if(!$this->isUserAllowedToDelete($series))
+            return new Response('You don\'t have enough permissions to delete this series. Contact your administrator.', Response::HTTP_FORBIDDEN);
+
         $seriesId = $series->getId();
 
         $seriesSessionId = $this->get('session')->get('admin/mms/id');
@@ -195,7 +200,7 @@ class SeriesController extends AdminController implements NewAdminController
         $resource = $this->findOr404($request);
         $mmobjService = $this->get('pumukitschema.series');
         $response = $mmobjService->resetMagicUrl($resource);
-        return new Response($response);        
+        return new Response($response);
     }
 
     /**
@@ -214,6 +219,8 @@ class SeriesController extends AdminController implements NewAdminController
 
         foreach ($ids as $id) {
             $series = $this->find($id);
+            if(!$this->isUserAllowedToDelete($series))
+                continue;
             $seriesId = $series->getId();
 
             $seriesSessionId = $this->get('session')->get('admin/mms/id');
@@ -327,12 +334,12 @@ class SeriesController extends AdminController implements NewAdminController
 
     private function getSorting(Request $request)
     {
-      $session = $this->get('session');    
+      $session = $this->get('session');
 
       if ($sorting = $request->get('sorting')){
           $session->set('admin/series/type', current($sorting));
           $session->set('admin/series/sort', key($sorting));
-      } 
+      }
 
       $value = $session->get('admin/series/type', 'desc');
       $key = $session->get('admin/series/sort', 'public_date');
@@ -372,7 +379,7 @@ class SeriesController extends AdminController implements NewAdminController
             if ($request->get('paginate', null)) {
                 $session->set($session_namespace.'/paginate', $request->get('paginate', 10));
             }
-  
+
             if ($selectedSeriesId) {
                 $newSeries = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:Series')->find($selectedSeriesId);
                 $adapter = $resources->getAdapter();
@@ -495,5 +502,32 @@ class SeriesController extends AdminController implements NewAdminController
         $this->get('session')->set('admin/series/criteria', array('search' => $q));
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_series_index'));
+    }
+
+    /**
+     * Returns true if the user has enough permissions to delete the $resource passed
+     *
+     * This function will always return true if the user the MODIFY_ONWER permission. Otherwise,
+     * it checks if it is the owner of the object (and there are no other owners) and returns false if not.
+     * Since this is a series, that means it will check every object for ownerships.
+     */
+    protected function isUserAllowedToDelete(Series $series)
+    {
+        if(!$this->isGranted(Permission::MODIFY_OWNER)) {
+            $loggedInUser = $this->getUser();
+            $personService = $this->get('pumukitschema.person');
+            $person = $personService->getPersonFromLoggedInUser($loggedInUser);
+            $role = $personService->getPersonalScopeRole();
+            if(!$person)
+                return false;
+            $allMmobjs = $series->getMultimediaObjects();
+            foreach($allMmobjs as $resource) {
+                if(!$resource->containsPersonWithRole($person, $role) ||
+                   count($resource->getPeopleByRole($role, true)) > 1) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
