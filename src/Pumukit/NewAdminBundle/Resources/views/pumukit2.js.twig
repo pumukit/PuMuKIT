@@ -1864,6 +1864,7 @@ $(document).on('click', '.not_system_permission_permissionprofile_checkbox', fun
             $("#"+dependencies[i]).prop("checked", "checked");
         }
     } else {
+        delete_dependent_permissions(elementId, scope, element.id);
         fix_permission_dependencies(elementId, scope);
     }
 });
@@ -1875,6 +1876,40 @@ function get_permission_dependencies(element, scope) {
         var rawDependencies = element.getAttribute('data-dependencies-personal');
     }
     return rawDependencies.split(' ');
+}
+
+function delete_dependent_permissions(elementId, scope, fullPermission){
+    var permissionProfileId = '__' + elementId + '__permission';
+    var elementsToDelete = [];
+    var elementsDescriptionToDelete = "";
+    $("[id^='ROLE_'][id$="+permissionProfileId+"]:checked").each(function (i, element) {
+        var dependencies = get_permission_dependencies(element, scope);
+        var dependenciesLength = dependencies.length;
+        for (var i = 0; i < dependenciesLength; i++) {
+            if (dependencies[i] == fullPermission) {
+                elementsToDelete.push(element.id);
+                var permission = element.id.split("__")[0];
+                var fullDescription = $("#"+permission).html().replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+                var description = fullDescription.split(' <i')[0];
+                elementsDescriptionToDelete += '"' + description + '", ';
+                break;
+            }
+        }
+    });
+    if (elementsDescriptionToDelete.slice(-2) == ', ') {
+        elementsDescriptionToDelete = elementsDescriptionToDelete.slice(0, -2);
+    }
+    var elementsToDeleteLength = elementsToDelete.length;
+    if (elementsToDeleteLength > 0) {
+        var permissionToDelete = fullPermission.split("__")[0];
+        var permissionFullDescription = $("#"+permissionToDelete).html().replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+        var permissionDescription = '"' + permissionFullDescription.split(' <i')[0] + '"';
+        if (window.confirm("{% trans %}The permission{% endtrans %} " + permissionDescription + " {% trans %}is dependent of the permission(s){% endtrans %}: " + elementsDescriptionToDelete + ". {% trans %}If you click OK you will uncheck all these permissions. Are you sure?{% endtrans %}")) {
+            for (var i = 0; i < elementsToDeleteLength; i++) {
+                $("#"+elementsToDelete[i]).prop("checked", "");
+            }
+        }
+    }
 }
 
 function fix_permission_dependencies(elementId, scope){
