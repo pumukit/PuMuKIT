@@ -520,7 +520,9 @@ class SeriesController extends AdminController implements NewAdminController
             $role = $personService->getPersonalScopeRole();
             if(!$person)
                 return false;
-            $allMmobjs = $series->getMultimediaObjects();
+            $mmobjRepo = $this->get('doctrine_mongodb.odm.document_manager')
+                              ->getRepository('PumukitSchemaBundle:MultimediaObject');
+            $allMmobjs = $mmobjRepo->createStandardQueryBuilder()->field('series')->equals($series->getId())->getQuery()->execute();
             foreach($allMmobjs as $resource) {
                 if(!$resource->containsPersonWithRole($person, $role) ||
                    count($resource->getPeopleByRole($role, true)) > 1) {
