@@ -2,7 +2,7 @@
 (function(){
 
 //authenticationService, socketService, stateService, $http, colors, notify, $q, $filter,$routeParams,$rootScope,$location,$route) {
-angular.module('app').controller("PMKController", function ($http, $q, $filter, $routeParams, $rootScope, $location, $route) { 
+angular.module('app').controller("PMKController", function ($http, $q, $filter, $routeParams, $rootScope, $location, $route) {
     var pmk = this;
 
     var init = true;
@@ -155,7 +155,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                 },
                 y: function(d){return d.value;},
                 tooltip: {
-                    gravity: 'e',  
+                    gravity: 'e',
                     //valueFormatter: function(d){return d;}, // Returns the field size if it is a parent
                     //keyFormatter: function(d){return d;}, // Returns the field name of the node
                     contentGenerator: generateTooltip,
@@ -166,7 +166,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                     tickFormat: function(d){
                         var label = d[2] + '. ' + d[1];
                         if (label.length>12){
-                           label = (label.slice(0,11) + '...'); 
+                           label = (label.slice(0,11) + '...');
                         }
                         return label;
                     }
@@ -377,7 +377,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
 
 
     // SCOPE FUNCTIONS
-    
+
     function go_to_page(page){
         if (page > 0 && page < pmk.total_pages.mv +1){
             pmk.page.mv = page;
@@ -427,7 +427,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
     function check_all_history(){
         var min_model = pmk.datepicker_mv.model_debug.from_date;
         var max_model = pmk.datepicker_mv.model_debug.to_date;
-        return (min_model == pmk.datepicker_mv.min_date && 
+        return (min_model == pmk.datepicker_mv.min_date &&
                 max_model == pmk.datepicker_mv.max_date);
     }
 
@@ -454,7 +454,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                 if (origin == 'timespan'){
                     updated_params.span = pmk.current_span == "month" ? null:pmk.current_span;
                 }
-                
+
                 if (origin == 'page'){
                     updated_params.page = pmk.page.mv != 0 ? pmk.page.mv:null;
                 }
@@ -466,7 +466,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         }
 
         function reload(updated_params){
-            var params = angular.copy($routeParams); 
+            var params = angular.copy($routeParams);
             angular.forEach(updated_params, function(value,key){
                 if (value != null){
                     params[key] = value;
@@ -480,18 +480,18 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                 $location.search(params);
             }
         }
-        
+
     }
 
     function clear_filter(filter_type){
-        
+
         if (filter_type=='datepicker' || filter_type=='all'){
             var from_date = pmk.datepicker_mv.ranges['All history'][0]
                 .format(pmk.datepicker_mv.locale.format);
             var to_date = pmk.datepicker_mv.ranges['All history'][1]
                 .format(pmk.datepicker_mv.locale.format);
             pmk.datepicker_mv.model = from_date + ' - ' + to_date;
-        } 
+        }
         if (filter_type=='filter' || filter_type=='all'){
             pmk.filter.title = '';
         }
@@ -558,10 +558,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             }
 
             if (pmk.filter.title != ""){
-                // FIXME: Hardcoded search in english
-                params['criteria[title.en][$regex]'] = pmk.filter.title;
-                // Case insensitive
-                params['criteria[title.en][$options]'] = 'i';
+                params['criteria[$text][$search]'] = pmk.filter.title;
 
             }else if(pmk.view.tabes.objects && pmk.view.scope != 'general'){
                 // FIXME: Hardcoded search in english
@@ -672,7 +669,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             var data_elem = jQuery.grep(pmk.mv[tab][scope].data[0].values, function(e){return e.id == serie_id});
             data_elem[0].items = Object.keys(data.data.mmobjs).length
         }
-        
+
         var tab = pmk.view.tabes.series ? 'series':'objects';
         var scope = pmk.view.scope == 'general' ? 'general':'particular';
         pmk.loading.mv[tab][scope] = false;
@@ -715,12 +712,12 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             'to_date': pmk.datepicker_mv.model_debug.to_date,
         }
         if (tl_data == 'series'){
-            params.series = id; 
+            params.series = id;
         }else{
             params.mmobj = id;
         }
 
-        return( 
+        return(
                 $http({
                     method: 'GET',
                     url: '/api/media/views/' + tl_data,
@@ -739,12 +736,12 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         var mmobj = {
             //FIXME: series_id, later be mmobj_id
             'key' : orig[0].label,
-            'values' : [],        
+            'values' : [],
         };
         for(var span_indx in views){
             //FIXME: hardcoded
             mmobj.values.push([
-                    moment(views[span_indx]['_id'],pmk.span_format[pmk.current_span].moment.get).valueOf(), 
+                    moment(views[span_indx]['_id'],pmk.span_format[pmk.current_span].moment.get).valueOf(),
                     //views[span_indx]['_id'],
                     views[span_indx].numView
                     ]);
@@ -819,11 +816,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         }
 
         if (pmk.filter.title != ""){
-            // FIXME: Hardcoded search in english
-            params['criteria[title.en][$regex]'] = pmk.filter.title;
-            // Case insensitive
-            params['criteria[title.en][$options]'] = 'i';
-
+            params['criteria[$text][$search]'] = pmk.filter.title;
         }
 
         if (parseInt(id)>0){
@@ -832,7 +825,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         if (his_data != ""){
             his_data = '/' + his_data;
         }
-        return( 
+        return(
                 $http({
                     method: 'GET',
                     url: '/api/media/views' + his_data,
@@ -851,7 +844,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         var data_elem = [];
         for(var span_indx=0; span_indx<views.length; span_indx++){
             data_elem.push([
-                    moment(views[span_indx]['_id'],pmk.span_format[pmk.current_span].moment.get).valueOf(), 
+                    moment(views[span_indx]['_id'],pmk.span_format[pmk.current_span].moment.get).valueOf(),
                     //views[span_indx]['_id'],
                     views[span_indx].numView
                     ]);
@@ -906,7 +899,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
 
         // Total views
 
-        var data_type = ''; 
+        var data_type = '';
         var tab = pmk.view.tabes.series ? 'series':'mmobj';
         var scope = pmk.view.scope == 'general'? 'general':'particular';
 
@@ -925,10 +918,8 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         }
 
         if (pmk.filter.title != ''){
-            // FIXME: Hardcoded search in english
-            params['criteria[title.en][$regex]'] = pmk.filter.title;
-            // Case insensitive
-            params['criteria[title.en][$options]'] = 'i';
+            //Searches on the text index
+            params['criteria[$text][$search]'] = pmk.filter.title;
         }
 
         $http({
@@ -942,7 +933,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         function getTotalViewsSuccess(data){
             var total = 0;
             angular.forEach(data.data.views, function(year){
-                total = year.numView + total;   
+                total = year.numView + total;
             })
             pmk.total_views = total;
         }
