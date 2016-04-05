@@ -152,7 +152,7 @@ class APIController extends Controller implements NewAdminController
         $options['sort'] = $sort;
         $options['group_by'] = $groupBy;
 
-        list($views, $total) = $viewsService->getTotalViewedGroupedByMmobj(new \MongoId($mmobjId), $criteria, $options);
+        list($views, $total) = $viewsService->getTotalViewedGroupedByMmobj(new \MongoId($mmobjId), $options);
 
         $views = array(
             'limit' => $limit,
@@ -193,7 +193,7 @@ class APIController extends Controller implements NewAdminController
         $options['sort'] = $sort;
         $options['group_by'] = $groupBy;
 
-        list($views, $total) = $viewsService->getTotalViewedGroupedBySeries(new \MongoId($seriesId), $criteria, $options);
+        list($views, $total) = $viewsService->getTotalViewedGroupedBySeries(new \MongoId($seriesId), $options);
 
         $views = array(
             'limit' => $limit,
