@@ -6,7 +6,7 @@
     <div class="box-body">
       <div class="row">
         <div class="col col-md-6">
-          <table class="table table-bordered table-striped dataTable"> 
+          <table class="table table-bordered table-striped dataTable">
             <thead>
               <tr>
                 <th style="width:60px;"> Ranking </th>
@@ -23,6 +23,11 @@
                 <td> {{(mmobj.duration*1000) | asDuration}} </td>
                 <td> <a href="#" class="two-lines" ng-click="pmkCtrl.go_to('series',mmobj.serie)">{{mmobj.serie.label}}</a> </td>
                 <td> {{mmobj.value}} </td>
+              </tr>
+              <tr ng-if="pmkCtrl.mv.objects.general.data[0].values.length == 0">
+                <td colspan="5">
+                  <b>No results found. The filters may be restricting the search too much.</b>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -80,23 +85,23 @@
       <div class="box-tools pull-right">
 
         <div class="btn-group">
-          <label class="btn btn-default ng-pristine ng-untouched ng-valid" 
-		 ng-class="{'btn-success': pmkCtrl.current_span == 'day'}" 
-		 ng-click="pmkCtrl.current_span = 'day'; pmkCtrl.set_url_parameters('timespan')">Day</label> 
-          <label class="btn btn-default ng-pristine ng-untouched ng-valid" 
-		 ng-class="{'btn-success': pmkCtrl.current_span == 'month'}" 
-		 ng-click="pmkCtrl.current_span = 'month'; pmkCtrl.set_url_parameters('timespan')">Month</label> 
-          <label class="btn btn-default ng-pristine ng-untouched ng-valid" 
-		 ng-class="{'btn-success': pmkCtrl.current_span == 'year'}" 
-		 ng-click="pmkCtrl.current_span = 'year'; pmkCtrl.set_url_parameters('timespan')">Year</label> 
+          <label class="btn btn-default ng-pristine ng-untouched ng-valid"
+		 ng-class="{'btn-success': pmkCtrl.current_span == 'day'}"
+		 ng-click="pmkCtrl.current_span = 'day'; pmkCtrl.set_url_parameters('timespan')">Day</label>
+          <label class="btn btn-default ng-pristine ng-untouched ng-valid"
+		 ng-class="{'btn-success': pmkCtrl.current_span == 'month'}"
+		 ng-click="pmkCtrl.current_span = 'month'; pmkCtrl.set_url_parameters('timespan')">Month</label>
+          <label class="btn btn-default ng-pristine ng-untouched ng-valid"
+		 ng-class="{'btn-success': pmkCtrl.current_span == 'year'}"
+		 ng-click="pmkCtrl.current_span = 'year'; pmkCtrl.set_url_parameters('timespan')">Year</label>
         </div>
-        <!--<div range-slider min="1" max="24" model-min="pmkCtrl.slider_mv.min" model-max="pmkCtrl.slider_mv.max" show-values="true" pin-handle="min" ng-mouseup="pmkCtrl.get_most_viewed('slider')" attach-handle-values="true"> 
+        <!--<div range-slider min="1" max="24" model-min="pmkCtrl.slider_mv.min" model-max="pmkCtrl.slider_mv.max" show-values="true" pin-handle="min" ng-mouseup="pmkCtrl.get_most_viewed('slider')" attach-handle-values="true">
         </div>-->
       </div>
     </div><!-- /.box-header -->
     <div class="box-body">
       <div class="col col-md-6">
-        <table class="table table-bordered table-striped dataTable" fixed-header table-height="370px" > 
+        <table class="table table-bordered table-striped dataTable" fixed-header table-height="370px" >
           <thead>
             <tr>
               <th> Date </th>
@@ -131,5 +136,3 @@
 
   </div><!-- /.box-->
 </div>
-
-
