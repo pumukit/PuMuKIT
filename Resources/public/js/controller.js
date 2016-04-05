@@ -898,14 +898,8 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
     function calculate_total_views(){
 
         // Total views
-
-        var data_type = '';
         var tab = pmk.view.tabes.series ? 'series':'mmobj';
         var scope = pmk.view.scope == 'general'? 'general':'particular';
-
-        if (scope != 'general'){
-            data_type = '/' + tab;
-        }
 
         var params = {
             'group_by' : 'year',
@@ -913,18 +907,24 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             'to_date' : pmk.datepicker_mv.model_debug.to_date,
         };
 
-        if (data_type != ''){
-            params[tab]=pmk.view.scope;
+        if (scope != 'general') {
+            if(tab == 'series')
+                params['criteria_mmobj[series]'] = pmk.view.scope;
+            else
+                params['criteria_mmobj[_id]'] = pmk.view.scope;
         }
 
         if (pmk.filter.title != ''){
             //Searches on the text index
-            params['criteria[$text][$search]'] = pmk.filter.title;
+            if (scope == 'general' && tab == 'series')
+                params['criteria_series[$text][$search]'] = pmk.filter.title;
+            else
+                params['criteria_mmobj[$text][$search]'] = pmk.filter.title;
         }
 
         $http({
             method: 'GET',
-            url: '/api/media/views' + data_type,
+            url: '/api/media/views',
             params: params,
         })
         .then(getTotalViewsSuccess)
