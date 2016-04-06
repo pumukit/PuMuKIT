@@ -1,11 +1,6 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 {% for pub in pubs %}
-    {% if not pub.getDisplay() %}
-      <div style="color: grey">
-        <input type="checkbox" disabled="disabled" />  {{ pub.getTitle() }}
-      </div>
-    {% else %}
-      <div class="checkbox">
+      <div class="checkbox{{ (not pub.getDisplay()) ? ' pmk_disabled_checkbox':'' }}">
 	    {% set status = mm.containsTag(pub) %}
         <label>
         <input type="checkbox"
@@ -13,7 +8,7 @@
 	           id="pub_{{ pub_type }}_{{ pub.cod }}"
                class="pub_channel_input_checkbox"
 	           {{ (status)?'checked="checked"':"" }}
-               {{ ((pub_type == 'channels') and not_change_pub_channel) ? 'disabled="disabled"' : '' }}
+               {{ ((not pub.getDisplay()) or ((pub_type == 'channels') and not_change_pub_channel)) ? 'disabled="disabled"' : '' }}
                {# TODO <?php echo(($estado === 2) || ($estado === 2)) ? 'disabled="disabled"' : ''?> #}
                />
         {{ pub.getTitle() }}
@@ -32,6 +27,5 @@
 
         </label>
       </div>
-    {% endif %}
 {% endfor %}
 {% endif %}
