@@ -96,6 +96,7 @@ class APIController extends Controller implements NewAdminController
 
         $groupBy = $request->get('group_by') ?: 'month';
 
+        //NOTE: $criteria is the same as $criteria_mmobj to provide backwards compatibility.
         $criteria_mmobj = $request->get('criteria_mmobj') ?: $criteria;
         $criteria_series = $request->get('criteria_series') ?: array();
 
