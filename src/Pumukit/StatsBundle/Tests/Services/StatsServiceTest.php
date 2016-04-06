@@ -229,14 +229,14 @@ class StatsServiceTest extends WebTestCase
         $this->assertEquals($total, 5);
         list($mostViewed, $total) =  $service->getMmobjsMostViewedByRange(array('not_a_parameter' => 'not_a_value'));
         $this->assertEquals($total, 0);
-        list($mostViewed, $total) =  $service->getMmobjsMostViewedByRange(array('title.en' => 'New'), array('limit' => 2,'from_date' => new \DateTime('-10 days')));
+        list($mostViewed, $total) =  $service->getMmobjsMostViewedByRange(array('title.en' => 'New'), array('limit' => 2,'from_date' => new \DateTime('-11 days')));
         $this->assertEquals(array($listMapped[1], $listMapped[2]), $mostViewed);
         $this->assertEquals($total, 3);
-        list($mostViewed, $total) =  $service->getMmobjsMostViewedByRange(array('title.en' => 'New'), array('limit' => 2,'from_date' => new \DateTime('-10 days'), 'page' => 1));
+        list($mostViewed, $total) =  $service->getMmobjsMostViewedByRange(array('title.en' => 'New'), array('limit' => 2,'from_date' => new \DateTime('-11 days'), 'page' => 1));
         $this->assertEquals(array($listMapped[3]), $mostViewed);
         $this->assertEquals($total, 3);
 
-        list($mostViewed, $total) =  $service->getMmobjsMostViewedByRange(array(), array('from_date' => new \DateTime('-20 days'), 'to_date' => new \DateTime('-10 days')));
+        list($mostViewed, $total) =  $service->getMmobjsMostViewedByRange(array(), array('from_date' => new \DateTime('-21 days'), 'to_date' => new \DateTime('-9 days')));
         $this->assertEquals(array($listMapped[0], $listMapped[1]), $mostViewed);
         $this->assertEquals($total, 2);
     }
