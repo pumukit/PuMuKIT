@@ -966,4 +966,23 @@ class MultimediaObjectRepository extends DocumentRepository
         return $this->findAllByTagQuery($tag, $sort)
           ->execute();
     }
+
+    /**
+     * Returns all mmobjs (except prototypes) using a QueryBuilder
+     *
+     * The method $this->findAll() would return an array with ALL multimedia objects.
+     * This is quite unconvenient when having tens of thousands of multimedia objects.
+     * This function returns a Cursor instead, by using a QueryBuilder and executing it.
+     * It also filters the 'Prototype' Multimedia Objects, which are generally not wanted, by default.
+     *
+     * @return Cursor
+     */
+    public function findAllAsIterable($filter_prototype = true)
+    {
+        if($filter_prototype)
+            $qb = $this->createStandardQueryBuilder();
+        else
+            $qb = $this->createQueryBuilder();
+        return $qb->getQuery()->execute();
+    }
 }
