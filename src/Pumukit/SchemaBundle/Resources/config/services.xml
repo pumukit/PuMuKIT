@@ -38,6 +38,7 @@
             <argument type="service" id="pumukitschema.person" />
             <argument type="service" id="pumukitschema.user" />
             <argument type="service" id="pumukitschema.multimediaobject_dispatcher" />
+            <argument type="service" id="pumukitschema.series_dispatcher" />
             <argument type="service" id="translator" />
             <argument>%pumukitschema.enable_add_user_as_person%</argument>
             <argument>%pumukit2.locales%</argument>
@@ -46,6 +47,7 @@
 
         <service id="pumukitschema.seriespic" class="Pumukit\SchemaBundle\Services\SeriesPicService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="pumukitschema.series_dispatcher" />
             <argument>%pumukit2.locales%</argument>
 	        <argument>%pumukit2.uploads_dir%/pic/</argument>
 	        <argument>%pumukit2.uploads_url%/pic</argument>
@@ -77,6 +79,7 @@
 
         <service id="pumukitschema.series" class="Pumukit\SchemaBundle\Services\SeriesService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="pumukitschema.series_dispatcher" />
         </service>
 
         <service id="pumukitschema.announce" class="Pumukit\SchemaBundle\Services\AnnounceService">

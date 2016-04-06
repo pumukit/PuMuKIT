@@ -15,11 +15,13 @@ class SeriesService
 {
     private $dm;
     private $repo;
+    private $seriesDispatcher;
 
-    public function __construct(DocumentManager $documentManager)
+    public function __construct(DocumentManager $documentManager, SeriesEventDispatcherService $seriesDispatcher)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:Series');
+        $this->seriesDispatcher = $seriesDispatcher;
     }
     
    /**
@@ -32,6 +34,8 @@ class SeriesService
         $series->resetSecret();
         $this->dm->persist($series);
         $this->dm->flush();
+        $this->seriesDispatcher->dispatchUpdate($series);
+
         return $series->getSecret();
     }
  

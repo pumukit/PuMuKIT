@@ -33,6 +33,8 @@ class SeriesPicServiceTest extends WebTestCase
           ->get('pumukitschema.seriespic');
         $this->mmsPicService = static::$kernel->getContainer()
           ->get('pumukitschema.mmspic');
+        $this->seriesDispatcher = static::$kernel->getContainer()
+          ->get('pumukitschema.series_dispatcher');
 
         $this->originalPicPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'logo.png';
         $this->uploadsPath = realpath(__DIR__.'/../../../../../web/uploads/pic');
@@ -212,7 +214,7 @@ class SeriesPicServiceTest extends WebTestCase
      */
     public function testInvalidTargetPath()
     {
-        $seriespicService = new SeriesPicService($this->dm, "/non/existing/path", "/uploads/pic", true);
+        $seriespicService = new SeriesPicService($this->dm, $this->seriesDispatcher, "/non/existing/path", "/uploads/pic", true);
     }
 
     private function createBroadcast($broadcastTypeId)
