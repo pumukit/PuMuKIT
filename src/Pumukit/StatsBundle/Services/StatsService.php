@@ -155,40 +155,49 @@ class StatsService
 
     /**
      * Returns an array with the total number of views (all mmobjs) on a certain date range, grouped by hour/day/month/year.
+     *
+     * If $options['criteria_mmobj'] exists, a query will be executed to filter using the resulting mmobj ids.
+     * If $options['criteria_series'] exists, a query will be executed to filter using the resulting series ids.
      */
-    public function getTotalViewedGrouped(array $criteria = array(), array $options = array())
+    public function getTotalViewedGrouped(array $options = array())
     {
-        return $this->getGroupedByAggrPipeline($criteria, $options);
+        return $this->getGroupedByAggrPipeline($options);
     }
 
     /**
      * Returns an array with the number of views for a mmobj on a certain date range, grouped by hour/day/month/year.
      */
-    public function getTotalViewedGroupedByMmobj(\MongoId $mmobjId, array $criteria = array(), array $options = array())
+    public function getTotalViewedGroupedByMmobj(\MongoId $mmobjId, array $options = array())
     {
-        return $this->getGroupedByAggrPipeline($criteria, $options, array('multimediaObject' => $mmobjId));
+        return $this->getGroupedByAggrPipeline($options, array('multimediaObject' => $mmobjId));
     }
 
     /**
      * Returns an array with the total number of views for a series on a certain date range, grouped by hour/day/month/year.
      */
-    public function getTotalViewedGroupedBySeries(\MongoId $seriesId, array $criteria = array(), array $options = array())
+    public function getTotalViewedGroupedBySeries(\MongoId $seriesId, array $options = array())
     {
-        return $this->getGroupedByAggrPipeline($criteria, $options, array('series' => $seriesId));
+        return $this->getGroupedByAggrPipeline($options, array('series' => $seriesId));
     }
 
     /**
      * Returns an aggregation pipeline array with all necessary data to form a num_views array grouped by hour/day/...
      */
-    public function getGroupedByAggrPipeline($criteria = array(), $options = array(), $matchExtra = array())
+    public function getGroupedByAggrPipeline($options = array(), $matchExtra = array())
     {
         $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
-
-        if(!isset($matchExtra['multimediaObject'])) {
-            $mmobjIds = $this->getMmobjIdsWithCriteria($criteria);
-            $matchExtra['multimediaObject'] = array('$in' => $mmobjIds);
-        }
         $options = $this->parseOptions($options);
+
+        if(!$matchExtra) {
+            if($options['criteria_series']) {
+                $seriesIds = $this->getSeriesIdsWithCriteria($options['criteria_series']);
+                $matchExtra['series'] = array('$in' => $seriesIds);
+            }
+            if($options['criteria_mmobj']) {
+                $mmobjIds = $this->getMmobjIdsWithCriteria($options['criteria_mmobj']);
+                $matchExtra['multimediaObject'] = array('$in' => $mmobjIds);
+            }
+        }
 
         $pipeline = $this->aggrPipeAddMatch($options['from_date'], $options['to_date'], $matchExtra);
         $pipeline = $this->aggrPipeAddProjectGroupDate($pipeline, $options['group_by']);
@@ -198,7 +207,7 @@ class StatsService
 
         $total = count($aggregation);
         $aggregation = $this->getPagedAggregation($aggregation->toArray(), $options['page'], $options['limit']);
-        
+
         return array($aggregation, $total);
     }
 
@@ -210,7 +219,7 @@ class StatsService
 
       //$filterMath = $this->dm->getFilterCollection()->getFilterCriteria($this->repo->getClassMetadata());
 
-        
+
         $date = array();
         if ($fromDate) {
             $fromMongoDate = new \MongoDate($fromDate->format('U'), $fromDate->format('u'));
@@ -308,6 +317,8 @@ class StatsService
         $options['page'] = isset($options['page']) ? $options['page'] : 0;
         $options['from_date'] = isset($options['from_date']) ? $options['from_date'] : null;
         $options['to_date'] = isset($options['to_date']) ? $options['to_date'] : null;
+        $options['criteria_series'] = isset($options['criteria_series']) ? $options['criteria_series'] : array();
+        $options['criteria_mmobj'] = isset($options['criteria_mmobj']) ? $options['criteria_mmobj'] : array();
 
         return $options;
     }
@@ -319,7 +330,7 @@ class StatsService
      * @param page The page to be returned
      * @param limit The number of elements to be returned
      * @return array aggregation
-     *      
+     *
      */
     function getPagedAggregation(array $aggregation, $page = 0, $limit = 10) {
         $offset = $page * $limit;
