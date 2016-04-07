@@ -101,7 +101,7 @@ class PermissionProfileService
     }
 
     /**
-     * Add permission
+     * Calls doAddPermission  and the dispatchUpdate event
      *
      * @param PermissionProfile $permissionProfile
      * @param string $permission
@@ -110,15 +110,29 @@ class PermissionProfileService
      */
     public function addPermission(PermissionProfile $permissionProfile, $permission, $executeFlush=true)
     {
+        $this->doAddPermission($permissionProfile, $permission, $executeFlush);
+        $this->dispatcher->dispatchUpdate($permissionProfile);
+        return $permissionProfile;
+    }
+
+    /**
+     * Adds a permission
+     *
+     * @param PermissionProfile $permissionProfile
+     * @param string $permission
+     * @param boolean $executeFlush
+     * @return PermissionProfile
+     */
+    public function doAddPermission(PermissionProfile $permissionProfile, $permission, $executeFlush=true)
+    {
         if (array_key_exists($permission, $this->permissionService->getAllPermissions())) {
             $permissionProfile->addPermission($permission);
             foreach($this->permissionService->getDependenciesByScope($permission, $permissionProfile->getScope()) as $dependency) {
                 $permissionProfile->addPermission($dependency);
             }
             $this->dm->persist($permissionProfile);
-            if ($executeFlush) $this->dm->flush();
-
-            $this->dispatcher->dispatchUpdate($permissionProfile);
+            if ($executeFlush)
+                $this->dm->flush();
         }
 
         return $permissionProfile;
@@ -197,16 +211,15 @@ class PermissionProfileService
      */
     public function batchUpdate(PermissionProfile $permissionProfile, $permissionsList, $executeFlush = true)
     {
-
         $permissionProfile = $this->clearPermissions($permissionProfile, false);
         foreach($permissionsList as $permission) {
-            $this->addPermission($permissionProfile, $permission, false);
+            $this->doAddPermission($permissionProfile, $permission, false);
         }
-
         $this->dm->persist($permissionProfile);
         if($executeFlush)
             $this->dm->flush();
 
+        $this->dispatcher->dispatchUpdate($permissionProfile);
         return $permissionProfile;
     }
 
