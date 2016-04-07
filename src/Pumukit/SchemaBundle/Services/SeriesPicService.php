@@ -13,15 +13,17 @@ class SeriesPicService
 {
     private $dm;
     private $repoMmobj;
+    private $seriesDispatcher;
     private $locales;
     private $targetPath;
     private $targetUrl;
     private $forceDeleteOnDisk;
     private $defaultBanner = "<a href=\"#\"><img  style=\"width:100%\" src=\"___banner_url___\" border=\"0\"/></a>";
 
-    public function __construct(DocumentManager $documentManager, $locales=array(), $targetPath, $targetUrl, $forceDeleteOnDisk=true)
+    public function __construct(DocumentManager $documentManager, SeriesEventDispatcherService $seriesDispatcher, $locales=array(), $targetPath, $targetUrl, $forceDeleteOnDisk=true)
     {
         $this->dm = $documentManager;
+        $this->seriesDispatcher = $seriesDispatcher;
         $this->locales = $locales;
         $this->targetPath = realpath($targetPath);
         if (!$this->targetPath){
@@ -56,6 +58,7 @@ class SeriesPicService
       $series->addPic($pic);
       $this->dm->persist($series);
       $this->dm->flush();
+      $this->seriesDispatcher->dispatchUpdate($series);
 
       return $series;
   }
@@ -87,6 +90,7 @@ class SeriesPicService
       $series->addPic($pic);
       $this->dm->persist($series);
       $this->dm->flush();
+      $this->seriesDispatcher->dispatchUpdate($series);
 
       return $series;
   }
@@ -110,6 +114,7 @@ class SeriesPicService
         $series->removePicById($picId);
         $this->dm->persist($series);
         $this->dm->flush();
+        $this->seriesDispatcher->dispatchUpdate($series);
 
         if ($this->forceDeleteOnDisk && $picPath) {
             $this->deleteFileOnDisk($picPath, $series);

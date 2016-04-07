@@ -5,6 +5,39 @@ namespace Pumukit\SchemaBundle\Event;
 final class SchemaEvents
 {
     /**
+     * The series.update event is thrown each time a
+     * series is updated.
+     *
+     * The event listener receives an
+     * Pumukit\SchemaBundle\Event\SeriesEvent instance.
+     *
+     * @var string
+     */
+    const SERIES_UPDATE = 'series.update';
+
+    /**
+     * The series.create event is thrown each time a
+     * series is created.
+     *
+     * The event listener receives an
+     * Pumukit\SchemaBundle\Event\SeriesEvent instance.
+     *
+     * @var string
+     */
+    const SERIES_CREATE = 'series.create';
+
+    /**
+     * The series.delete event is thrown each time a
+     * series is deleted.
+     *
+     * The event listener receives an
+     * Pumukit\SchemaBundle\Event\SeriesEvent instance.
+     *
+     * @var string
+     */
+    const SERIES_DELETE = 'series.delete';
+
+    /**
      * The multimediaobject.update event is thrown each time a
      * multimedia object is updated.
      *

@@ -20,19 +20,21 @@ class FactoryService
     private $personService;
     private $userService;
     private $mmsDispatcher;
+    private $seriesDispatcher;
     private $translator;
     private $locales;
     private $defaultCopyright;
     private $addUserAsPerson;
 
 
-    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, MultimediaObjectEventDispatcherService $mmsDispatcher, TranslatorInterface $translator, $addUserAsPerson=true, array $locales = array(), $defaultCopyright = "")
+    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, MultimediaObjectEventDispatcherService $mmsDispatcher, SeriesEventDispatcherService $seriesDispatcher, TranslatorInterface $translator, $addUserAsPerson=true, array $locales = array(), $defaultCopyright = "")
     {
         $this->dm = $documentManager;
         $this->tagService = $tagService;
         $this->personService = $personService;
         $this->userService = $userService;
         $this->mmsDispatcher = $mmsDispatcher;
+        $this->seriesDispatcher = $seriesDispatcher;
         $this->translator = $translator;
         $this->locales = $locales;
         $this->defaultCopyright = $defaultCopyright;
@@ -69,6 +71,8 @@ class FactoryService
         $this->dm->persist($mm);
         $this->dm->persist($series);
         $this->dm->flush();
+
+        $this->seriesDispatcher->dispatchCreate($series);
 
         return $series;
     }
@@ -142,6 +146,8 @@ class FactoryService
         if($flush) {
             $this->dm->flush();
         }
+
+        $this->seriesDispatcher->dispatchUpdate($series);
 
         return $mm;
     }
@@ -261,6 +267,8 @@ class FactoryService
         $this->dm->remove($series);
 
         $this->dm->flush();
+
+        $this->seriesDispatcher->dispatchDelete($series);
     }
 
     /**
@@ -275,6 +283,7 @@ class FactoryService
         if (null != $series = $multimediaObject->getSeries()) {
             $series->removeMultimediaObject($multimediaObject);
             $this->dm->persist($series);
+            $this->seriesDispatcher->dispatchUpdate($series);
         }
         $annotRepo = $this->dm->getRepository('PumukitSchemaBundle:Annotation');
         $annotations = $annotRepo->findBy(array('multimediaObject' => new \MongoId($multimediaObject->getId())));

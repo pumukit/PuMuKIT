@@ -90,6 +90,7 @@ class SeriesController extends AdminController implements NewAdminController
         if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
             $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
             $this->domainManager->update($resource);
+            $this->get('pumukitschema.series_dispatcher')->dispatchUpdate($resource);
 
             if ($config->isApiRequest()) {
                 return $this->handleView($this->view($form));
