@@ -32,6 +32,12 @@
             <tag name="kernel.event_listener" event="permissionprofile.update" method="postUpdate" />
         </service>
 
+        <service id="pumukitschema.schema.series" class="Pumukit\SchemaBundle\EventListener\SeriesListener">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+            <argument type="service" id="pumukitschema.multimediaobject_dispatcher" />
+            <tag name="kernel.event_listener" event="series.update" method="postUpdate" />
+        </service>
+
         <service id="pumukitschema.factory" class="Pumukit\SchemaBundle\Services\FactoryService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager" />
             <argument type="service" id="pumukitschema.tag" />
