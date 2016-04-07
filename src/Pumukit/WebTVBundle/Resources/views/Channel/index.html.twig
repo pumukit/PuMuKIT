@@ -21,7 +21,7 @@
           <div class="col-xs-12">
             <h2>{{ result.tag.title }}
               <a href="{{ path_to_tag(result.tag.cod) }}" {{result.numMmobjs > 0?'':'style="pointer-events:none"'}}>
-                <small> (All {{result.numMmobjs }})</small>
+                <small> ({% trans %} Show videos {% endtrans %})</small>
               </a>
             </h2>
           </div>

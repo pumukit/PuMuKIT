@@ -40,12 +40,12 @@ class ChannelController extends Controller implements WebTVController
         $limit = $this->container->getParameter('limit_objs_bytag');
 
         $repoSeries = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
-        $repoMmobj = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
+        $repoMmobj = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
 
         $channelTitle = $this->getChannelTitle($channelNumber);
         $channelTags = $this->getTagsForChannel($channelNumber);
         $results = array();
-        
+
         foreach($channelTags as $tag) {
             $series = $repoSeries->createBuilderWithTag($tag, array('record_date' => 1));
             $series = $series->getQuery()->execute();
