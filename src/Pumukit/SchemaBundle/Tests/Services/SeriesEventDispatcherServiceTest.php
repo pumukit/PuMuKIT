@@ -11,7 +11,7 @@ use Pumukit\SchemaBundle\Services\SeriesEventDispatcherService;
 
 class SeriesEventDispatcherServiceTest extends WebTestCase
 {
-    const EMPTY_TITLE = 'EMTPY_TITLE';
+    const EMPTY_TITLE = 'EMPTY_TITLE';
 
     private $dm;
     private $seriesDispatcher;
