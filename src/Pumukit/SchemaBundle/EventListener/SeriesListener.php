@@ -4,7 +4,6 @@ namespace Pumukit\SchemaBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Event\SeriesEvent;
-use Pumukit\SchemaBundle\Services\MultimediaObjectEventDispatcherService;
 
 /**
  * NOTE: This listener is to update the seriesTitle field in each
@@ -15,13 +14,11 @@ class SeriesListener
 {
     private $dm;
     private $mmRepo;
-    private $mmDispatcher;
 
-    public function __construct(DocumentManager $dm, MultimediaObjectEventDispatcherService $mmDispatcher)
+    public function __construct(DocumentManager $dm)
     {
         $this->dm = $dm;
         $this->mmRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $this->mmDispatcher = $mmDispatcher;
     }
 
     public function postUpdate(SeriesEvent $event)
@@ -31,7 +28,6 @@ class SeriesListener
         foreach ($multimediaObjects as $multimediaObject) {
             $multimediaObject->setSeries($series);
             $this->dm->persist($multimediaObject);
-            $this->mmDispatcher->dispatchUpdate($multimediaObject);
         }
         $this->dm->flush();
     }
