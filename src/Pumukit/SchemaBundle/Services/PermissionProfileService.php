@@ -150,6 +150,24 @@ class PermissionProfileService
 
         return $permissionProfile;
     }
+    /**
+     * Clears all permissions
+     *
+     * @param PermissionProfile $permissionProfile
+     * @param boolean $executeFlush
+     * @return PermissionProfile
+     */
+    public function clearPermissions(PermissionProfile $permissionProfile, $executeFlush=true)
+    {
+        $permissionProfile->setPermissions(array());
+
+        $this->dm->persist($permissionProfile);
+        if ($executeFlush) $this->dm->flush();
+
+        $this->dispatcher->dispatchUpdate($permissionProfile);
+
+        return $permissionProfile;
+    }
 
     /**
      * Set scope
@@ -170,6 +188,28 @@ class PermissionProfileService
 
         return $permissionProfile;
     }
+
+    /**
+     * Updates all permissions for a given permissionProfile
+     *
+     * @param PermissionProfile $permissionProfile
+     * @param boolean $dispatchCreate
+     */
+    public function batchUpdate(PermissionProfile $permissionProfile, $permissionsList, $executeFlush = true)
+    {
+
+        $permissionProfile = $this->clearPermissions($permissionProfile, false);
+        foreach($permissionsList as $permission) {
+            $this->addPermission($permissionProfile, $permission, false);
+        }
+
+        $this->dm->persist($permissionProfile);
+        if($executeFlush)
+            $this->dm->flush();
+
+        return $permissionProfile;
+    }
+
 
     /**
      * Get Default
