@@ -29,8 +29,7 @@ class SeriesListener
         $series = $event->getSeries();
         $multimediaObjects = $this->mmRepo->findBySeries($series);
         foreach ($multimediaObjects as $multimediaObject) {
-            $updateSeries = $multimediaObject->getSeries();
-            $multimediaObject->setSeries($updateSeries);
+            $multimediaObject->setSeries($series);
             $this->dm->persist($multimediaObject);
             $this->mmDispatcher->dispatchUpdate($multimediaObject);
         }
