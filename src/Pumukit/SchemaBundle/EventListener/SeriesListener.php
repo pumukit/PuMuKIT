@@ -6,6 +6,11 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Event\SeriesEvent;
 use Pumukit\SchemaBundle\Services\MultimediaObjectEventDispatcherService;
 
+/**
+ * NOTE: This listener is to update the seriesTitle field in each
+ *       MultimediaObject for MongoDB Search Index purposes.
+ *       Do not modify this listener.
+ */
 class SeriesListener
 {
     private $dm;
