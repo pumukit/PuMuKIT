@@ -179,6 +179,7 @@ window.submit_delete_permissionprofile = function(id, permissionProfileName)
         var url = "{{ path('pumukitnewadmin_permissionprofile_delete', {'id': '__id__'})|raw }}";
         var message = '{% trans %}Permission Profile{% endtrans %} "'+permissionProfileName+'" {% trans %}successfully deleted{% endtrans %}.';
         $('#list_permissionprofiles').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
+            $('[data-toggle="tooltip"]').tooltip();
             if (textStatus !== "error") {
                 success(message);
             } else {
@@ -1756,6 +1757,7 @@ $(document).on('submit', '#pumukitnewadmin_permissionprofile_form_create', funct
                             no_success(message);
                         }else{
                             $('#list_permissionprofiles').html(response);
+                            $('[data-toggle="tooltip"]').tooltip()
                             var message = '{% trans %}Permission Profile successfully created.{% endtrans %}';
                             success(message);
                         }
@@ -1788,6 +1790,7 @@ $(document).on('submit', '#pumukitnewadmin_permissionprofile_form_update', funct
                             no_success(message);
                         }else{
                             $('#list_permissionprofiles').html(response);
+                            $('[data-toggle="tooltip"]').tooltip();
                             var message = '{% trans %}Permission Profile successfully updated.{% endtrans %}';
                             success(message);
                         }
@@ -1844,6 +1847,7 @@ processPermissionProfilesOk = function(){
             },
             success: function(response){
                 $('#list_permissionprofiles').html(response);
+                $('[data-toggle="tooltip"]').tooltip();
                 success(message);
             }
     });
