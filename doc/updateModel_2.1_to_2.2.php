@@ -160,14 +160,13 @@ class MyLocalCommand extends ContainerAwareCommand
         $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $mmRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
 
-        $multimediaObjects = $this->mmRepo->findAll();
+        $multimediaObjects = $mmRepo->findAll();
         foreach ($multimediaObjects as $multimediaObject) {
             $series = $multimediaObject->getSeries();
             $multimediaObject->setSeries($series);
-            $this->dm->persist($multimediaObject);
-            $this->mmDispatcher->dispatchUpdate($multimediaObject);
+            $dm->persist($multimediaObject);
         }
-        $this->dm->flush();
+        $dm->flush();
     }
 }
 
