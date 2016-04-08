@@ -212,11 +212,11 @@ class PermissionProfileController extends AdminController implements NewAdminCon
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $repo = $dm->getRepository('PumukitSchemaBundle:PermissionProfile');
+        $permissionProfileService = $this->get('pumukitschema.permissionprofile');
 
         $selectedDefault = $this->getRequest()->get('selected_default');
         $selectedScopes = $this->getRequest()->get('selected_scopes');
         $checkedPermissions = $this->getRequest()->get('checked_permissions');
-        $notCheckedPermissions = $this->getRequest()->get('not_checked_permissions');
 
         if ('string' === gettype($selectedScopes)){
             $selectedScopes = json_decode($selectedScopes, true);
@@ -224,11 +224,6 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         if ('string' === gettype($checkedPermissions)){
             $checkedPermissions = json_decode($checkedPermissions, true);
         }
-        if ('string' === gettype($notCheckedPermissions)){
-            $notCheckedPermissions = json_decode($notCheckedPermissions, true);
-        }
-
-        $permissionProfileService = $this->get('pumukitschema.permissionprofile');
 
         $newDefaultPermissionProfile = $this->find($selectedDefault);
         if (null != $newDefaultPermissionProfile) {
@@ -238,41 +233,59 @@ class PermissionProfileController extends AdminController implements NewAdminCon
             }
         }
         $notSystemPermissionProfiles = $repo->findBySystem(false);
+
+        //Doing a batch update for all checked profiles. This will remove everything except the checked permissions.
+        $permissionProfiles = $this->buildPermissionProfiles($checkedPermissions, $selectedScopes);
+        foreach ($permissionProfiles as $profileId => $p) {
+            $permissionProfile = $this->findPermissionProfile($notSystemPermissionProfiles, $profileId);
+            if (null == $permissionProfile)
+                continue;
+            try {
+                $permissionProfile = $permissionProfileService->setScope($permissionProfile, $p['scope'], false);
+                $permissionProfileService->batchUpdate($permissionProfile, $p['permissions'], false);
+            }
+            catch (\Exception $e) {
+                return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
+            }
+        }
+        $dm->flush();
+        return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list'));
+    }
+
+    /**
+     * Returns an array with all permissions and there newly set (if any) permissions and scope.
+     *
+     * returns $permissionProfiles = array(
+     *             'PROFILE_NAME' => array('PERM1', 'PERM2', 'PERM3', ...),
+     *             (...) ,
+     *         );
+     */
+    private function buildPermissionProfiles($checkedPermissions, $selectedScopes)
+    {
+        $permissionProfiles = array();
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $repo = $dm->getRepository('PumukitSchemaBundle:PermissionProfile');
+        $notSystemPermissionProfiles = $repo->findBySystem(false);
+        //Initializes array with all profiles with empty permission.
+        foreach($notSystemPermissionProfiles as $profile) {
+            $profileId = $profile->getId();
+            $permissionProfiles[$profileId] = array(
+                'permissions' => array(),
+                'scope' => $profile->getScope(),
+            );
+        }
+        //Adds scope and checked permissions to permissions.
+        foreach($checkedPermissions as $permission) {
+            $data = $this->separateAttributePermissionProfilesIds($permission);
+            $permissionProfiles[$data['profileId']]['permissions'][] = $data['attribute'];
+        }
         foreach ($selectedScopes as $selectedScope) {
             $data = $this->separateAttributePermissionProfilesIds($selectedScope);
-            $permissionProfile = $this->findPermissionProfile($notSystemPermissionProfiles, $data['profileId']);
-            if (null == $permissionProfile) continue;
-            try {
-                $permissionProfile = $permissionProfileService->setScope($permissionProfile, $data['attribute'], false);
-            } catch (\Exception $e) {
-                return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
-            }
+            if(isset($permissionProfiles[$data['profileId']]))
+                $permissionProfiles[$data['profileId']]['scope'] = $data['attribute'];
         }
-        $dm->flush();
-        foreach ($checkedPermissions as $checkedPermission) {
-            $data = $this->separateAttributePermissionProfilesIds($checkedPermission);
-            $permissionProfile = $this->findPermissionProfile($notSystemPermissionProfiles, $data['profileId']);
-            if (null == $permissionProfile) continue;
-            try {
-                $permissionProfile = $permissionProfileService->addPermission($permissionProfile, $data['attribute'], false);
-            } catch (\Exception $e) {
-                return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
-            }
-        }
-        $dm->flush();
-        foreach ($notCheckedPermissions as $notCheckedPermission) {
-            $data = $this->separateAttributePermissionProfilesIds($notCheckedPermission);
-            $permissionProfile = $this->findPermissionProfile($notSystemPermissionProfiles, $data['profileId']);
-            if (null == $permissionProfile) continue;
-            try {
-                $permissionProfile = $permissionProfileService->removePermission($permissionProfile, $data['attribute'], false);
-            } catch (\Exception $e) {
-                return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
-            }
-        }
-        $dm->flush();
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list'));
+        return $permissionProfiles;
     }
 
     private function separateAttributePermissionProfilesIds($pair='')

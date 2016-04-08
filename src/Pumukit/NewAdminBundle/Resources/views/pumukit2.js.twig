@@ -1830,18 +1830,13 @@ processPermissionProfilesOk = function(){
             var $this = $(this);
             checked_permissions.push($this.attr("id"));
     });
-    var not_checked_permissions = [];
-    $('.not_system_permission_permissionprofile_checkbox:not(:checked)').each(function(){
-            var $this = $(this);
-            not_checked_permissions.push($this.attr("id"));
-    });
 
     var message = '{% trans %}Permission Profiles successfully updated.{% endtrans %}';
     var route = '{{ path('pumukitnewadmin_permissionprofile_batch_update')|raw }}';
     $.ajax({
             url: route,
             type: 'POST',
-            data: {'selected_default': selected_default, 'selected_scopes': JSON.stringify(selected_scopes), 'checked_permissions': JSON.stringify(checked_permissions), 'not_checked_permissions': JSON.stringify(not_checked_permissions)},
+            data: {'selected_default': selected_default, 'selected_scopes': JSON.stringify(selected_scopes), 'checked_permissions': JSON.stringify(checked_permissions)},
             error: function(jqXHR, textStatus, errorThrown){
                 no_success(errorThrown + ': ' + jqXHR.responseText);
             },

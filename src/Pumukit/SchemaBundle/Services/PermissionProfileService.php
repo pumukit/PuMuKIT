@@ -101,7 +101,7 @@ class PermissionProfileService
     }
 
     /**
-     * Add permission
+     * Calls doAddPermission  and the dispatchUpdate event
      *
      * @param PermissionProfile $permissionProfile
      * @param string $permission
@@ -110,12 +110,29 @@ class PermissionProfileService
      */
     public function addPermission(PermissionProfile $permissionProfile, $permission, $executeFlush=true)
     {
+        $this->doAddPermission($permissionProfile, $permission, $executeFlush);
+        $this->dispatcher->dispatchUpdate($permissionProfile);
+        return $permissionProfile;
+    }
+
+    /**
+     * Adds a permission
+     *
+     * @param PermissionProfile $permissionProfile
+     * @param string $permission
+     * @param boolean $executeFlush
+     * @return PermissionProfile
+     */
+    public function doAddPermission(PermissionProfile $permissionProfile, $permission, $executeFlush=true)
+    {
         if (array_key_exists($permission, $this->permissionService->getAllPermissions())) {
             $permissionProfile->addPermission($permission);
+            foreach($this->permissionService->getDependenciesByScope($permission, $permissionProfile->getScope()) as $dependency) {
+                $permissionProfile->addPermission($dependency);
+            }
             $this->dm->persist($permissionProfile);
-            if ($executeFlush) $this->dm->flush();
-
-            $this->dispatcher->dispatchUpdate($permissionProfile);
+            if ($executeFlush)
+                $this->dm->flush();
         }
 
         return $permissionProfile;
@@ -132,6 +149,12 @@ class PermissionProfileService
     public function removePermission(PermissionProfile $permissionProfile, $permission, $executeFlush=true)
     {
         if ($permissionProfile->containsPermission($permission)) {
+            $dependencies = $this->permissionService->getDependablesByScope($permission, $permissionProfile->getScope());
+            foreach($dependencies as $dependency) {
+                if ($permissionProfile->containsPermission($dependency)) {
+                    throw new \InvalidArgumentException(sprintf('The permission %s cannot be deleted from \'%s\'. The permission %s is ALSO SET and is dependent on %1$s',$permission, $permissionProfile->getName(), $dependency));
+                }
+            }
             $permissionProfile->removePermission($permission);
             if ($executeFlush) $this->dm->persist($permissionProfile);
             $this->dm->flush();
@@ -161,6 +184,28 @@ class PermissionProfileService
 
         return $permissionProfile;
     }
+
+    /**
+     * Updates all permissions for a given permissionProfile
+     *
+     * @param PermissionProfile $permissionProfile
+     * @param boolean $dispatchCreate
+     */
+    public function batchUpdate(PermissionProfile $permissionProfile, $permissionsList, $executeFlush = true)
+    {
+        //Clears all permissions for this permissionProfile.
+        $permissionProfile->setPermissions(array());
+        foreach($permissionsList as $permission) {
+            $this->doAddPermission($permissionProfile, $permission, false);
+        }
+        $this->dm->persist($permissionProfile);
+        if($executeFlush)
+            $this->dm->flush();
+
+        $this->dispatcher->dispatchUpdate($permissionProfile);
+        return $permissionProfile;
+    }
+
 
     /**
      * Get Default
