@@ -263,17 +263,6 @@ class PermissionProfileController extends AdminController implements NewAdminCon
     private function buildPermissionProfiles($checkedPermissions, $selectedScopes)
     {
         $permissionProfiles = array();
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $repo = $dm->getRepository('PumukitSchemaBundle:PermissionProfile');
-        $notSystemPermissionProfiles = $repo->findBySystem(false);
-        //Initializes array with all profiles with empty permission.
-        foreach($notSystemPermissionProfiles as $profile) {
-            $profileId = $profile->getId();
-            $permissionProfiles[$profileId] = array(
-                'permissions' => array(),
-                'scope' => $profile->getScope(),
-            );
-        }
         //Adds scope and checked permissions to permissions.
         foreach($checkedPermissions as $permission) {
             $data = $this->separateAttributePermissionProfilesIds($permission);
@@ -281,8 +270,14 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         }
         foreach ($selectedScopes as $selectedScope) {
             $data = $this->separateAttributePermissionProfilesIds($selectedScope);
-            if(isset($permissionProfiles[$data['profileId']]))
+            if(isset($permissionProfiles[$data['profileId']])) {
                 $permissionProfiles[$data['profileId']]['scope'] = $data['attribute'];
+            } else {
+                $permissionProfiles[$data['profileId']] = array(
+                    'permissions' => array(),
+                    'scope' => $data['attribute'],
+                );
+            }
         }
 
         return $permissionProfiles;
