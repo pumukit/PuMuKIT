@@ -166,7 +166,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $activeEditor = $this->checkHasEditor();
         $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
         $allBundles = $this->container->getParameter('kernel.bundles');
-        $opencastExists = array_key_exists('OpencastBundle', $allBundles);
+        $opencastExists = array_key_exists('PumukitOpencastBundle', $allBundles);
 
         return array(
                      'mm'                       => $resource,
