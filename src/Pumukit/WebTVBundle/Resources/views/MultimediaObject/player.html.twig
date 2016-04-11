@@ -3,8 +3,6 @@ function resizeFrame(elem){
     var width = $(elem).width()
     var height = width/16*9;
     $(elem).height(height);
-    console.log('width', width);
-    console.log('height', height);
 }
 $(window).resize(function(){
     resizeFrame($('#paellaiframe'));
