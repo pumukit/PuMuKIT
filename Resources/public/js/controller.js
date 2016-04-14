@@ -375,7 +375,6 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             }else if (pmk.view.scope != 'general'){
                 load_particular_scope();
             }
-            calculate_total_views();
             get_historical_data();
         },500);
 
@@ -900,58 +899,12 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         pmk.his[tab][scope].api.update();
         pmk.loading.his[tab][scope] = false;
 
-    }
-
-    function calculate_total_views(){
-
-        // Total views
-        var tab = pmk.view.tabes.series ? 'series':'mmobj';
-        var scope = pmk.view.scope == 'general'? 'general':'particular';
-
-        var params = {
-            'group_by' : 'year',
-            'from_date' : pmk.datepicker_mv.model_debug.from_date,
-            'to_date' : pmk.datepicker_mv.model_debug.to_date,
-        };
-
-        if (scope != 'general') {
-            if(tab == 'series')
-                params['criteria_mmobj[series]'] = pmk.view.scope;
-            else
-                params['criteria_mmobj[_id]'] = pmk.view.scope;
-        }
-
-        if (pmk.filter.title != ''){
-            //Searches on the text index
-            if (scope == 'general' && tab == 'series')
-                params['criteria_series[$text][$search]'] = pmk.filter.title;
-            else
-                params['criteria_mmobj[$text][$search]'] = pmk.filter.title;
-        }
-
-        $http({
-            method: 'GET',
-            url: '/api/media/views',
-            params: params,
+        var aux__total_views;
+        angular.forEach(data.values, function(val){
+            aux_total_views += val[1];
         })
-        .then(getTotalViewsSuccess)
-        .catch(getTotalViewsError)
+        pmk.total_views = aux_total_views;
 
-        function getTotalViewsSuccess(data){
-            var total = 0;
-            angular.forEach(data.data.views, function(year){
-                total = year.numView + total;
-            })
-            pmk.total_views = total;
-        }
-
-        function getTotalViewsError(){
-            console.error({
-                message: "There was an error getting the total number of views",
-                templateUrl: "/static/angular/angular-notify.html",
-                classes: "danger alert-danger",
-            });
-        }
     }
 
 
