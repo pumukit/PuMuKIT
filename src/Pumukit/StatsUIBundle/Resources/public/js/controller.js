@@ -260,6 +260,12 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                     axisLabel: '',
                     tickFormat: function(d){
                         if (typeof(d)=='number'){
+                            //Fix typo #9590
+                            if (type == 'YYYY') {
+                                d += 15811200000; //add 6 months
+                            } else if(type == 'YYYY-MM') {
+                                d += 1337400000; //add 15 days
+                            }
                             return moment(d).format(pmk.span_format[pmk.current_span].moment.show_short);
                         }
                         return d;
@@ -799,6 +805,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                         promises.push(createPromise_his(ids[serie_id_indx]));
                     }
                 $q.all(promises).then(getHisSuccess);
+
             }
         }
     }
