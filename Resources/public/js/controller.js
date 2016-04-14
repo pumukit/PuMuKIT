@@ -261,9 +261,9 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                     tickFormat: function(d){
                         if (typeof(d)=='number'){
                             //Fix typo #9590
-                            if (type == 'YYYY') {
+                            if (pmk.current_span == 'year') {
                                 d += 15811200000; //add 6 months
-                            } else if(type == 'YYYY-MM') {
+                            } else if(pmk.current_span == 'month') {
                                 d += 1337400000; //add 15 days
                             }
                             return moment(d).format(pmk.span_format[pmk.current_span].moment.show_short);
