@@ -899,7 +899,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
         pmk.his[tab][scope].api.update();
         pmk.loading.his[tab][scope] = false;
 
-        var aux_total_views;
+        var aux_total_views = 0;
         angular.forEach(data.values, function(val){
             aux_total_views += val[1];
         })
