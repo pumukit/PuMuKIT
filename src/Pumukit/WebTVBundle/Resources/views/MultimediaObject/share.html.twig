@@ -33,17 +33,16 @@
         </div>
       </li>
       <li class="list-group-item">
-        <div class="share_url">   
+        <div class="share_url">
           <span>{% trans %} URL: {% endtrans %}</span>
-          <input type="text" value="{{ url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id}) }}" 
+          <input type="text" value="{{ url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id}) }}"
                  onclick="this.select()" style="width: 70%; border: 1px solid #ccc; float:right; padding: 0; margin: 0;" readonly="readonly"/>
         </div>
       </li>
       <li class="list-group-item">
-        <div class="share_url">   
+        <div class="share_url">
           <span>{% trans %} IFRAME: {% endtrans %}</span>
-          {% if track.id is defined %}{% set tracko = track.id %}{% else %}{% set tracko = null %}{% endif %}
-          <input type="text" value="<iframe src='{{url('pumukit_videoplayer_index', {'id':multimediaObject.id, 'track_id':track.id})}}&id={{multimediaObject.id}}'
+          <input type="text" value="<iframe src='{{url('pumukit_webtv_multimediaobject_iframe', {'id':multimediaObject.id, 'track_id':track.id})}}'
                                     id='paellaiframe'
                                     frameborder='0'
                                     border='0'
