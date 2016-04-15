@@ -261,17 +261,17 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                     tickFormat: function(d){
                         if (typeof(d)=='number'){
                             //Fix typo #9590
-                            if (pmk.current_span == 'year') {
-                                d += 15811200000; //add 6 months
-                            } else if(pmk.current_span == 'month') {
-                                d += 1337400000; //add 15 days
+                            var tab = pmk.view.tabes.series ? 'series':'objects';
+                            var scope = pmk.view.scope == 'general'? 'general':'particular';
+                            if (d < pmk.his[tab][scope].data[0].values[0][0]) {
+                                d = pmk.his[tab][scope].data[0].values[0][0];
                             }
                             return moment(d).format(pmk.span_format[pmk.current_span].moment.show_short);
                         }
                         return d;
                     },
-                    rotateLabels: 30,
-                        showMaxMin: false
+                    rotateLabels: 45,
+                    showMaxMin: false
                 },
                 yAxis: {
                     axisLabel: 'Views',
