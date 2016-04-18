@@ -83,8 +83,8 @@ class SeriesController extends AdminController implements NewAdminController
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-
-        $form = $this->createForm(new SeriesType($translator, $locale), $resource);
+        $disablePudenew = !$this->container->getParameter('show_latest_with_pudenew');
+        $form = $this->createForm(new SeriesType($translator, $locale, $disablePudenew), $resource);
 
         $method = $request->getMethod();
         if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
