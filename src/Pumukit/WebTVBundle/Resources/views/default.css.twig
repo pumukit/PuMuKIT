@@ -101,15 +101,18 @@ p.disabled {
 }
 /*BOOTSTRAP OVERRIDE*/
 .label {
-    margin: 2px;
-    background: {{ label_background }};
+    margin: 0px;
+    padding: 0px;
+    background: none;
     color: {{ label_font }};
-    border-radius: 5px;
-    padding: 5px;
 }
 .label a{
     background: {{ label_background }};
     color: {{ label_font }};
+    padding: 5px;
+    margin: 2px;
+    border-radius: 5px;
+    display: inline-block;
 }
 .label a:hover{
     background: grey;
