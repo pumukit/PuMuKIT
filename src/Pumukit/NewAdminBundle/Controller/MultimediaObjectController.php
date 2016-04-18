@@ -151,6 +151,13 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $options = array('not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS));
         $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource, $options);
 
+        //If the 'pudenew' tag is not being used, set the display to 'false'.
+        if(!$this->container->getParameter('show_latest_with_pudenew')) {
+            $this->get('doctrine_mongodb.odm.document_manager')
+                 ->getRepository('PumukitSchemaBundle:Tag')
+                 ->findOneByCod('PUDENEW')
+                 ->setDisplay(false);
+        }
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
 
