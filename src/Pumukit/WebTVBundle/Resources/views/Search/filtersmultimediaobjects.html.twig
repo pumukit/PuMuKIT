@@ -70,7 +70,7 @@
       <div id="advanced-date-search" {{ activated?'':'style="display:none"' }}>
         <div class="col-xs-6">
           <label for="start">{% trans %}Start date{% endtrans %}:</label>
-          <a style="padding-left:20px;cursor:pointer;" onclick="toggleDateSelect()">{% trans %} Select by year {% endtrans %}</a>
+          <a style="margin-right:-15px;cursor:pointer;" onclick="toggleDateSelect()">{% trans %} Select by year {% endtrans %}</a>
           <div class="input-group date" id='start'>
             <input type='text' class="form-control" name="start" value="{{ app.request.query.get('start') }}" placeholder="From" onblur="submitForm(this);" {{ activated?'':'disabled'}}/>
             <span class="input-group-addon">
