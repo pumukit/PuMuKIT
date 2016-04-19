@@ -111,11 +111,17 @@
 
   <script type="text/javascript">
    $(function() {
-       $( "#start" ).datetimepicker({useCurrent: false, viewMode: 'years', format: 'DD/MM/YYYY'{#, minDate: '{{min_record_date}}', maxDate: '{{max_record_date}}'  #}});
-       $( "#start" ).on("dp.change", function(e){$("#form_search").submit();});
-       $( "#end" ).datetimepicker({useCurrent: false, viewMode: 'years', format: 'DD/MM/YYYY'{#, minDate: '{{min_record_date}}', maxDate: '{{max_record_date}}' #}});
-       $( "#end" ).on("dp.change", function(e){$("#form_search").submit();});
-
+       var isMobile = $(window).width() <= 480 || Modernizr.touchevents;
+       if(isMobile && Modernizr.inputtypes.date) {
+           $('#start input').attr('type', 'date');
+           $('#end input').attr('type', 'date');
+       }
+       else {
+           $( "#start" ).datetimepicker({useCurrent: false, viewMode: 'years', format: 'YYYY-MM-DD'});
+           $( "#start" ).on("dp.change", function(e){$("#form_search").submit();});
+           $( "#end" ).datetimepicker({useCurrent: false, viewMode: 'years', format: 'YYYY-MM-DD'});
+           $( "#end" ).on("dp.change", function(e){$("#form_search").submit();});
+       }
    });
    function submitForm(elem) {
        $('#search_spinner').show();
