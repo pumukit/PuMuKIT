@@ -37,7 +37,12 @@ body {
 .checkbox.pmk_disabled_checkbox input[type=checkbox]:disabled~.check,
 .checkbox.pmk_disabled_checkbox input[type=checkbox]:disabled~.check:before,
 .checkbox.pmk_disabled_checkbox input[type=checkbox]:disabled~.check:after,
-.checkbox.pmk_disabled_checkbox label {
+.checkbox.pmk_disabled_checkbox label,
+label.pmk_disabled_checkbox input[type=checkbox]:disabled~.check,
+label.pmk_disabled_checkbox input[type=checkbox]:disabled~.check:before,
+label.pmk_disabled_checkbox input[type=checkbox]:disabled~.check:after,
+label.pmk_disabled_checkbox
+{
   color:gray
 }
 
@@ -73,7 +78,7 @@ body {
 
 .pmk-preview {
     position: relative;
-    width: 172px; 
+    width: 172px;
     margin: auto;
     height: 130px;
     padding: 0px 0px 10px;
@@ -142,7 +147,7 @@ body {
 .pagerfanta select {
   vertical-align: top;
   background-color: #ffffff;
-  border: 1px solid #ddd;  
+  border: 1px solid #ddd;
   height: 29px;
   line-height: 29px;
   color: #009587;
@@ -163,7 +168,7 @@ body {
     color: #fff;
 }
 .pagination > li > a,
-.pagination > li > span, 
+.pagination > li > span,
 .pagination > li > a:hover,
 .pagination > li > span:hover {
     color: #009587;
@@ -215,7 +220,7 @@ body {
  * Icons for tag tree
  */
 .pmk-tag-tree .collapsed i.tag_icon:before {
-    content: "\e89b"; /*mdi-navigation-chevron-right*/    
+    content: "\e89b"; /*mdi-navigation-chevron-right*/
 }
 
 .pmk-tag-tree .expanded i.tag_icon:before {
@@ -470,12 +475,12 @@ body .well-pumukit,.container .well-pumukit,.container-fluid .well-pumukit,body 
   width: 500px;
   margin: 10px auto 0 auto;
   box-shadow: 0 0 30px rgba(0,0,0,0.4);
- 
+
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
 }
- 
+
 .shell-top-bar {
   text-align: center;
   color: #525252;
@@ -485,14 +490,14 @@ body .well-pumukit,.container .well-pumukit,.container-fluid .well-pumukit,body 
   font-size: 0.85em;
   border: 1px solid #CCCCCC;
   border-bottom: none;
- 
+
   -webkit-border-top-left-radius: 3px;
   -webkit-border-top-right-radius: 3px;
   -moz-border-radius-topleft: 3px;
   -moz-border-radius-topright: 3px;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
- 
+
   background: #f7f7f7; /* Old browsers */
   background: -moz-linear-gradient(top,  #f7f7f7 0%, #B8B8B8 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f7f7f7), color-stop(100%,#B8B8B8)); /* Chrome,Safari4+ */
@@ -502,7 +507,7 @@ body .well-pumukit,.container .well-pumukit,.container-fluid .well-pumukit,body 
   background: linear-gradient(to bottom,  #f7f7f7 0%,#B8B8B8 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', endColorstr='#B8B8B8',GradientType=0 ); /* IE6-9 */
 }
- 
+
 .shell-body {
   margin: 0;
   padding: 5px;
@@ -511,7 +516,7 @@ body .well-pumukit,.container .well-pumukit,.container-fluid .well-pumukit,body 
   color: #45D40C;
   font: 0.8em 'Andale Mono', Consolas, 'Courier New';
   line-height: 1.6em;
- 
+
   -webkit-border-bottom-right-radius: 3px;
   -webkit-border-bottom-left-radius: 3px;
   -moz-border-radius-bottomright: 3px;
@@ -522,14 +527,14 @@ body .well-pumukit,.container .well-pumukit,.container-fluid .well-pumukit,body 
   height: 300px;
   overflow-y: scroll;
 }
- 
+
 .shell-body li.command:before {
   content: '$';
   position: absolute;
   left: 0;
   top: 0;
 }
- 
+
 .shell-body li {
   word-wrap: break-word;
   position: relative;
