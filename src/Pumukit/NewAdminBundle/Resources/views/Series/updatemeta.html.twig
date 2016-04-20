@@ -84,7 +84,7 @@
 	  {{ form_row(form['i18n_line2']) }}
 
           {# This iterates over all children except for the excluded ones. form_widget doesn't print the same field twice, so it works ala form_rest(form) #}
-	  {% for child in form if (child.vars.id not in exclude_fields) %}
+	  {% for child in form if (child.vars.id not in exclude_fields and not child.rendered) %}
             {{ form_row(child) }}
           {% endfor %}
         </div>
