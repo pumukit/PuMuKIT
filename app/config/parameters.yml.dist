@@ -28,3 +28,4 @@ parameters:
     pumukit2.inbox:   "%kernel.root_dir%/../web/storage/inbox"
     pumukit2.tmp:     "%kernel.root_dir%/../web/storage/tmp"
     pumukit2.delete_on_disk: true
+    pumukit2.use_series_channels: false   #If true the "Series Type" logic will be used.

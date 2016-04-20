@@ -31,8 +31,7 @@
     <div>
       <fieldset>
         <div class="col-md-7">
-
-	  {% for child in form if (child.vars.id not in ['pumukitnewadmin_series_i18n_header', 'pumukitnewadmin_series_i18n_footer', 'pumukitnewadmin_series_i18n_line2', 'pumukitnewadmin_series_template']) %}
+	  {% for child in form if (child.vars.id not in show_later_fields and child.vars.id not in exclude_fields) %}
             {{ form_row(child) }}
 	  {% endfor %}
 
@@ -84,8 +83,10 @@
 
 	  {{ form_row(form['i18n_line2']) }}
 
-
-          {{ form_rest(form) }}
+          {# This iterates over all children except for the excluded ones. form_widget doesn't print the same field twice, so it works ala form_rest(form) #}
+	  {% for child in form if (child.vars.id not in exclude_fields and not child.rendered) %}
+            {{ form_row(child) }}
+          {% endfor %}
         </div>
       </fieldset>
     </div>

@@ -135,6 +135,14 @@ class SeriesController extends AdminController implements NewAdminController
 
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
 
+        //These fields are form fields that are rendered separately, so they should be 'excluded' from the generic foreach.
+        //FIXME: There is a cleaner approach FOR SURE.
+        $exclude_fields = array();
+        $show_later_fields = array('pumukitnewadmin_series_i18n_header', 'pumukitnewadmin_series_i18n_footer', 'pumukitnewadmin_series_i18n_line2', 'pumukitnewadmin_series_template');
+        $showSeriesTypeTab = $this->container->hasParameter('pumukit2.use_series_channels') && $this->container->getParameter('pumukit2.use_series_channels');
+        if(!$showSeriesTypeTab)
+            $exclude_fields[] = 'pumukitnewadmin_series_series_type';
+
         return $this->render('PumukitNewAdminBundle:Series:update.html.twig',
                              array(
                                    'series'                   => $resource,
@@ -146,6 +154,8 @@ class SeriesController extends AdminController implements NewAdminController
                                    'personal_scope_role_code' => $personalScopeRoleCode,
                                    'pub_decisions'            => $pubDecisionsTags,
                                    'parent_tags'              => $parentTags,
+                                   'exclude_fields'           => $exclude_fields,
+                                   'show_later_fields'        => $show_later_fields,
                                    'template'                 => '_template'
                                    )
                              );
