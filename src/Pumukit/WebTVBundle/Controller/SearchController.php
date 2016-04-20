@@ -62,7 +62,7 @@ class SearchController extends Controller implements WebTVController
         return array('type' => 'series',
         'objects' => $pagerfanta,
         'search_years' => $searchYears,
-        'number_cols' => $numberCols, 
+        'number_cols' => $numberCols,
         'total_objects' => $totalObjects);
     }
 
@@ -179,7 +179,7 @@ class SearchController extends Controller implements WebTVController
         if($searchByTagCod) {
             $parentTagOptional = $tagRepo->findOneByCod($searchByTagCod);
         }
-        
+
         return $parentTagOptional;
     }
 
@@ -236,11 +236,11 @@ class SearchController extends Controller implements WebTVController
         }
         else {
             if ($startFound != '') {
-                $start = \DateTime::createFromFormat('!d/m/Y', $startFound);
+                $start = \DateTime::createFromFormat('!Y-m-d', $startFound);
                 $queryBuilder->field($dateField)->gt($start);
             }
             if ($endFound != '') {
-                $end = \DateTime::createFromFormat('!d/m/Y', $endFound);
+                $end = \DateTime::createFromFormat('!Y-m-d', $endFound);
                 $end->modify("+1 day");
                 $queryBuilder->field($dateField)->lt($end);
             }

@@ -16,10 +16,11 @@ class SeriesType extends AbstractType
     private $translator;
     private $locale;
 
-    public function __construct(TranslatorInterface $translator, $locale='en')
+    public function __construct(TranslatorInterface $translator, $locale='en', $disablePudenew = true)
     {
         $this->translator = $translator;
         $this->locale = $locale;
+        $this->disablePudenew = $disablePudenew;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -27,6 +28,8 @@ class SeriesType extends AbstractType
         $builder
             ->add('announce', 'checkbox',
                   array(
+                      'label_attr' => $this->disablePudenew ? array('class' => 'pmk_disabled_checkbox') : array(),
+                      'disabled' => $this->disablePudenew,
                         'required' => false,
                         'label' => $this->translator->trans('Last Added (Announced)', array(), null, $this->locale)))
             ->add('i18n_title', 'texti18n',
@@ -73,8 +76,8 @@ class SeriesType extends AbstractType
                         'label' => $this->translator->trans('Headline', array(), null, $this->locale)))
            ->add('template', 'choice',
                   array(
-                        'choices' => array('date' => 'date', 'date_all' => 'date_all', 
-                                           'date_subserial' => 'date_subserial', 'subserial' => 'subserial', 
+                        'choices' => array('date' => 'date', 'date_all' => 'date_all',
+                                           'date_subserial' => 'date_subserial', 'subserial' => 'subserial',
                                            'multisubserial' => 'multisubserial'),
                         'empty_data' => null,
                         'mapped' => false,
@@ -87,13 +90,13 @@ class SeriesType extends AbstractType
             $event->getForm()->get("template")->setData($series->getProperty("template"));
         });
 
-        
+
         $builder->addEventListener(FormEvents::SUBMIT, function(FormEvent $event) {
             $template = $event->getForm()->get("template")->getData();
             $series = $event->getData();
             $series->setProperty("template", $template);
         });
-        
+
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
