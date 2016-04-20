@@ -42,7 +42,8 @@
       <li class="list-group-item">
         <div class="share_url">
           <span>{% trans %} IFRAME: {% endtrans %}</span>
-          <input type="text" value="<iframe src='{{url('pumukit_webtv_multimediaobject_iframe', {'id':multimediaObject.id, 'track_id':track.id})}}'
+          {% set trackid = (track.id is defined)?track.id:null %}
+          <input type="text" value="<iframe src='{{url('pumukit_webtv_multimediaobject_iframe', {'id':multimediaObject.id, 'track_id': trackid})}}'
                                     id='paellaiframe'
                                     frameborder='0'
                                     border='0'
