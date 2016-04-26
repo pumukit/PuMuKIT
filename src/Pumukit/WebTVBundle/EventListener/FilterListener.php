@@ -54,10 +54,7 @@ class FilterListener
             if(!isset($routeParams["track"]) || $routeParams["track"]) {
                 $filter->setParameter("display_track_tag", "display");
             }
-            if(isset($routeParams["no_channels"]) && $routeParams["no_channels"]) {
-                $filter->setParameter("pub_channel_tag", array('$nin' => array()));
-            }
-            else {
+            if(!isset($routeParams["no_channels"]) || !$routeParams["no_channels"]) {
                 $filter->setParameter("pub_channel_tag", "PUCHWEBTV");
             }
         }
