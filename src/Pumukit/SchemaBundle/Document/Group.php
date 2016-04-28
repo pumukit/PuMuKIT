@@ -72,8 +72,8 @@ class Group
      */
     public function __construct()
     {
-        $createdAt = new \Datetime('now');
-        $updatedAt = new \Datetime('now');
+        $this->createdAt = new \Datetime('now');
+        $this->updatedAt = new \Datetime('now');
     }
 
     /**
