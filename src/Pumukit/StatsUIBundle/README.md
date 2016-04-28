@@ -3,6 +3,9 @@ PuMuKIT Stats UI
 
 Bundle based on [Symfony](http://symfony.com/) to work with the [PuMuKIT2 Video Platform](https://github.com/campusdomar/PuMuKIT2/blob/2.1.x/README.md).
 
+![Stats](Resources/data/screenshot.png)
+
+
 Installation
 ------------
 
