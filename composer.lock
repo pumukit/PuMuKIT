@@ -2829,16 +2829,16 @@
         },
         {
             "name": "teltek/pmk2-stats-ui-bundle",
-            "version": "1.0.0",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teltek/PuMuKIT2-stats-ui-bundle.git",
-                "reference": "ceadef0a1fe8ce8281c5fdfd61e3ee198f2fd312"
+                "reference": "7aff03a07fc44d7c8904903e21fff0fe28d6bbc1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teltek/PuMuKIT2-stats-ui-bundle/zipball/ceadef0a1fe8ce8281c5fdfd61e3ee198f2fd312",
-                "reference": "ceadef0a1fe8ce8281c5fdfd61e3ee198f2fd312",
+                "url": "https://api.github.com/repos/teltek/PuMuKIT2-stats-ui-bundle/zipball/7aff03a07fc44d7c8904903e21fff0fe28d6bbc1",
+                "reference": "7aff03a07fc44d7c8904903e21fff0fe28d6bbc1",
                 "shasum": ""
             },
             "require": {
@@ -2871,7 +2871,7 @@
                 "teltek",
                 "ui"
             ],
-            "time": "2016-03-08 15:41:20"
+            "time": "2016-04-28 08:04:08"
         },
         {
             "name": "twig/extensions",
