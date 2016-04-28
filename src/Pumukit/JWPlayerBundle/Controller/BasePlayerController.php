@@ -28,6 +28,9 @@ class BasePlayerController extends BasePlayerControllero implements WebTVControl
         if ($response instanceof Response) {
             return $response;
         }
+        //Go to opencast
+        if( $multimediaObject->getProperty('opencast'))
+            return $this->forward('PumukitBasePlayerBundle:BasePlayer:opencast', array('request' => $request, 'multimediaObject' => $multimediaObject));
 
         $track = $request->query->has('track_id') ?
                  $multimediaObject->getTrackById($request->query->get('track_id')) :
@@ -99,7 +102,6 @@ class BasePlayerController extends BasePlayerControllero implements WebTVControl
         $isOldBrowser = $userAgentParserService->isOldBrowser($userAgent);
 
         $this->dispatchViewEvent($multimediaObject);
-
         return array('intro' => $this->getIntro($request->query->get('intro')),
                      'multimediaObject' => $multimediaObject,
                      'is_mobile_device' => $isMobileDevice,
