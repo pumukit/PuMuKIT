@@ -66,7 +66,7 @@
            <!-- MATTERHORN -->
            {% if mm.getProperty('opencast') is not empty %}
            <div id="material" class="file matterhorn">
-             <a href="{{ url('pumukit_webtv_multimediaobject_index', {'id': mm.id}) }}">{% spaceless %}
+             <a href="{{ url_mmobj }}">{% spaceless %}
                {% trans %}Video{% endtrans %}
                {% if (mm.getBroadcast().getBroadcastTypeId() != public_broadcast()) %}
                {% trans %}private{% endtrans %}

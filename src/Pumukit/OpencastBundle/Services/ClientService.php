@@ -494,8 +494,8 @@ class ClientService
         if ($method == 'GET') {
             if (200 != $output['status']) {
               $this->logger->addError(__CLASS__.'['.__FUNCTION__.'](line '.__LINE__
-                                      .') Error Processing Request : '.$requestUrl.'.');
-              throw new \Exception(sprintf('Error Processing Request (%s)', $requestUrl), 1);
+                                      .') Error (' . $output['status'] .') Processing Request : '.$requestUrl.'.');
+              throw new \Exception(sprintf('Error %s Processing Request (%s)', $output['status'], $requestUrl), 1);
             }
         }
 

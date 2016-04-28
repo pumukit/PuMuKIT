@@ -179,6 +179,7 @@ window.submit_delete_permissionprofile = function(id, permissionProfileName)
         var url = "{{ path('pumukitnewadmin_permissionprofile_delete', {'id': '__id__'})|raw }}";
         var message = '{% trans %}Permission Profile{% endtrans %} "'+permissionProfileName+'" {% trans %}successfully deleted{% endtrans %}.';
         $('#list_permissionprofiles').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
+            $('[data-toggle="tooltip"]').tooltip();
             if (textStatus !== "error") {
                 success(message);
             } else {
@@ -1756,6 +1757,7 @@ $(document).on('submit', '#pumukitnewadmin_permissionprofile_form_create', funct
                             no_success(message);
                         }else{
                             $('#list_permissionprofiles').html(response);
+                            $('[data-toggle="tooltip"]').tooltip()
                             var message = '{% trans %}Permission Profile successfully created.{% endtrans %}';
                             success(message);
                         }
@@ -1788,6 +1790,7 @@ $(document).on('submit', '#pumukitnewadmin_permissionprofile_form_update', funct
                             no_success(message);
                         }else{
                             $('#list_permissionprofiles').html(response);
+                            $('[data-toggle="tooltip"]').tooltip();
                             var message = '{% trans %}Permission Profile successfully updated.{% endtrans %}';
                             success(message);
                         }
@@ -1827,29 +1830,107 @@ processPermissionProfilesOk = function(){
             var $this = $(this);
             checked_permissions.push($this.attr("id"));
     });
-    var not_checked_permissions = [];
-    $('.not_system_permission_permissionprofile_checkbox:not(:checked)').each(function(){
-            var $this = $(this);
-            not_checked_permissions.push($this.attr("id"));
-    });
 
     var message = '{% trans %}Permission Profiles successfully updated.{% endtrans %}';
     var route = '{{ path('pumukitnewadmin_permissionprofile_batch_update')|raw }}';
     $.ajax({
             url: route,
             type: 'POST',
-            data: {'selected_default': selected_default, 'selected_scopes': JSON.stringify(selected_scopes), 'checked_permissions': JSON.stringify(checked_permissions), 'not_checked_permissions': JSON.stringify(not_checked_permissions)},
+            data: {'selected_default': selected_default, 'selected_scopes': JSON.stringify(selected_scopes), 'checked_permissions': JSON.stringify(checked_permissions)},
             error: function(jqXHR, textStatus, errorThrown){
                 no_success(errorThrown + ': ' + jqXHR.responseText);
             },
             success: function(response){
                 $('#list_permissionprofiles').html(response);
+                $('[data-toggle="tooltip"]').tooltip();
                 success(message);
             }
     });
 
     return false;
 }
+
+$(document).on('click', '.not_system_permission_permissionprofile_checkbox', function(event){
+    var element = event.target;
+    var checkedElement = element.checked;
+    var elementId = element.id.split('__')[1];
+    var selectedScope = $('select#pumukitnewadmin_permissionprofile_scope_' + elementId + ' option:selected');
+    var scope = selectedScope.attr("value");
+    if (checkedElement) {
+        var dependencies = get_permission_dependencies(element, scope);
+        var dependenciesLength = dependencies.length;
+        for (var i = 0; i < dependenciesLength; i++) {
+            $("#"+dependencies[i]).prop("checked", "checked");
+        }
+    } else {
+        delete_dependent_permissions(elementId, scope, element.id);
+        fix_permission_dependencies(elementId, scope);
+    }
+});
+
+function get_permission_dependencies(element, scope) {
+    if (scope.indexOf('GLOBAL') > -1) {
+        var rawDependencies = element.getAttribute('data-dependencies-global');
+    } else {
+        var rawDependencies = element.getAttribute('data-dependencies-personal');
+    }
+    return rawDependencies.split(' ');
+}
+
+function delete_dependent_permissions(elementId, scope, fullPermission){
+    var permissionProfileId = '__' + elementId + '__permission';
+    var elementsToDelete = [];
+    var elementsDescriptionToDelete = "";
+    $("[id^='ROLE_'][id$="+permissionProfileId+"]:checked").each(function (i, element) {
+        var dependencies = get_permission_dependencies(element, scope);
+        var dependenciesLength = dependencies.length;
+        for (var i = 0; i < dependenciesLength; i++) {
+            if (dependencies[i] == fullPermission) {
+                elementsToDelete.push(element.id);
+                var permission = element.id.split("__")[0];
+                var fullDescription = $("#"+permission).html().replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+                var description = fullDescription.split(' <i')[0];
+                elementsDescriptionToDelete += '"' + description + '", ';
+                break;
+            }
+        }
+    });
+    if (elementsDescriptionToDelete.slice(-2) == ', ') {
+        elementsDescriptionToDelete = elementsDescriptionToDelete.slice(0, -2);
+    }
+    var elementsToDeleteLength = elementsToDelete.length;
+    if (elementsToDeleteLength > 0) {
+        var permissionToDelete = fullPermission.split("__")[0];
+        var permissionFullDescription = $("#"+permissionToDelete).html().replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+        var permissionDescription = '"' + permissionFullDescription.split(' <i')[0] + '"';
+        if (window.confirm("{% trans %}The permission{% endtrans %} " + permissionDescription + " {% trans %}is dependent of the permission(s){% endtrans %}: " + elementsDescriptionToDelete + ". {% trans %}If you click OK you will uncheck all these permissions. Are you sure?{% endtrans %}")) {
+            for (var i = 0; i < elementsToDeleteLength; i++) {
+                $("#"+elementsToDelete[i]).prop("checked", "");
+            }
+        }
+    }
+}
+
+function fix_permission_dependencies(elementId, scope){
+    var permissionProfileId = '__' + elementId + '__permission';
+    $("[id^='ROLE_'][id$="+permissionProfileId+"]:checked").each(function (i, element) {
+        var dependencies = get_permission_dependencies(element, scope);
+        var dependenciesLength = dependencies.length;
+        for (var i = 0; i < dependenciesLength; i++) {
+            if (!$("#"+dependencies[i]).prop("checked")) {
+                $("#"+dependencies[i]).prop("checked", "checked");
+            }
+        }
+    });
+}
+
+function fix_permission_scope_none(elementId){
+    var permissionProfileId = '__' + elementId + '__permission';
+    $("[id^='ROLE_'][id$="+permissionProfileId+"]:checked").each(function (i, element) {
+        $("#"+element.id).prop("checked", "");
+    });
+}
+
 
 function test_material_form_url(url){
     $('.error').hide();
@@ -1909,6 +1990,7 @@ function checkScope(id)
            if ($(permissions[i]).closest("div").attr("class") != "checkbox pmk_disabled_checkbox") {
                $(permissions[i]).closest("div").attr("class", "checkbox pmk_disabled_checkbox");
            }
+           fix_permission_scope_none(id);
        } else {
            if ($(permissions[i]).attr("disabled") == "disabled") {
                $(permissions[i]).removeAttr("disabled");
@@ -1916,6 +1998,7 @@ function checkScope(id)
            if ($(permissions[i]).closest("div").attr("class") == "checkbox pmk_disabled_checkbox") {
                $(permissions[i]).closest("div").attr("class", "checkbox");
            }
+           fix_permission_dependencies(id, scope_id);
        }
     }
 }

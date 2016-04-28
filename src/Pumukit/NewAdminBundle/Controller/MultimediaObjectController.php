@@ -53,7 +53,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                 $update_session = false;
             }
         }
- 
+
         if($update_session){
             $this->get('session')->remove('admin/mms/id');
         }
@@ -151,6 +151,13 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $options = array('not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS));
         $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource, $options);
 
+        //If the 'pudenew' tag is not being used, set the display to 'false'.
+        if(!$this->container->getParameter('show_latest_with_pudenew')) {
+            $this->get('doctrine_mongodb.odm.document_manager')
+                 ->getRepository('PumukitSchemaBundle:Tag')
+                 ->findOneByCod('PUDENEW')
+                 ->setDisplay(false);
+        }
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
 
@@ -166,7 +173,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $activeEditor = $this->checkHasEditor();
         $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
         $allBundles = $this->container->getParameter('kernel.bundles');
-        $opencastExists = array_key_exists('OpencastBundle', $allBundles);
+        $opencastExists = array_key_exists('PumukitOpencastBundle', $allBundles);
 
         return array(
                      'mm'                       => $resource,
@@ -263,12 +270,12 @@ class MultimediaObjectController extends SortableAdminController implements NewA
           if ($config->isApiRequest()) {
             return $this->handleView($this->view($formMeta));
           }
-          
+
           /*
             $criteria = $this->getCriteria($config);
             $resources = $this->getResources($request, $config, $criteria);
           */
-          
+
           $mms = $this->getListMultimediaObjects($series);
 
           return $this->render('PumukitNewAdminBundle:MultimediaObject:list.html.twig',
@@ -276,7 +283,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                                      'series' => $series,
                                      'mms' => $mms
                                      )
-                               );         
+                               );
         }
 
         if ($config->isApiRequest()) {
@@ -299,7 +306,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                                    )
                              );
     }
-    
+
     /**
      * Display the form for editing or update the resource.
      */
@@ -394,7 +401,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * 
+     *
      */
     public function getChildrenTagAction(Tag $tag, Request $request)
     {
@@ -471,7 +478,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                                        'group' => $n->getPath()
                                        );
         }
-        
+
         $json['prototype'] = $resource->isPrototype();
         return new JsonResponse($json);
     }
@@ -572,17 +579,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $resourceId = $resource->getId();
         $seriesId = $resource->getSeries()->getId();
 
-        if(!$this->isGranted(Permission::MODIFY_OWNER)) {
-            $loggedInUser = $this->getUser();
-            $personService = $this->get('pumukitschema.person');
-            $person = $personService->getPersonFromLoggedInUser($loggedInUser);
-            $role = $personService->getPersonalScopeRole();
-            if( !$person ||
-                !$resource->containsPersonWithRole($person, $role) ||
-                count($resource->getPeopleByRole($role, true)) > 1) {
-                return new Response('You don\'t have enough permissions to delete this mmobj. Contact your administrator.', Response::HTTP_FORBIDDEN);
-            }
-        }
+        if(!$this->isUserAllowedToDelete($resource))
+            return new Response('You don\'t have enough permissions to delete this mmobj. Contact your administrator.', Response::HTTP_FORBIDDEN);
 
         try {
             $this->get('pumukitschema.factory')->deleteMultimediaObject($resource);
@@ -594,7 +592,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             $this->get('session')->remove('admin/mms/id');
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list', 
+        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list',
                                                   array('seriesId' => $seriesId)));
     }
 
@@ -609,6 +607,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $factory = $this->get('pumukitschema.factory');
         foreach ($ids as $id) {
             $resource = $this->find($id);
+            if(!$this->isUserAllowedToDelete($resource))
+                continue;
             try{
                 $factory->deleteMultimediaObject($resource);
             } catch (\Exception $e) {
@@ -645,7 +645,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $this->get('pumukitschema.factory')->cloneMultimediaObject($resource);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list', 
+        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list',
                                                   array('seriesId' => $seriesId)));
     }
 
@@ -697,7 +697,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                 $update_session = false;
             }
         }
- 
+
         if($update_session){
             $this->get('session')->remove('admin/mms/id');
         }
@@ -785,8 +785,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
               ->getQuery()
               ->execute();
         }
-        
-        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));      
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));
     }
 
     /**
@@ -805,7 +805,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $mms = $multimediaObjectRepo->findBySeries($multimediaObject->getSeries())->toArray();
         $tags = $multimediaObject->getTags()->toArray();
         $this->get('pumukitschema.tag')->resetTags($mms, $tags);
-        
+
         return new JsonResponse("");
     }
 
@@ -823,5 +823,27 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $activeEditor = array_key_exists('pumukit_videoeditor_index', $routes);
 
         return $activeEditor;
+    }
+
+    /**
+     * Returns true if the user has enough permissions to delete the $resource passed
+     *
+     * This function will always return true if the user the MODIFY_ONWER permission. Otherwise,
+     * it checks if it is the owner of the object (and there are no other owners) and returns false if not.
+     */
+    protected function isUserAllowedToDelete(MultimediaObject $resource)
+    {
+        if(!$this->isGranted(Permission::MODIFY_OWNER)) {
+            $loggedInUser = $this->getUser();
+            $personService = $this->get('pumukitschema.person');
+            $person = $personService->getPersonFromLoggedInUser($loggedInUser);
+            $role = $personService->getPersonalScopeRole();
+            if( !$person ||
+                !$resource->containsPersonWithRole($person, $role) ||
+                count($resource->getPeopleByRole($role, true)) > 1) {
+                return false;
+            }
+        }
+        return true;
     }
 }

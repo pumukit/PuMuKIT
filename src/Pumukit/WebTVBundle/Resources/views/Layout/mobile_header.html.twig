@@ -4,21 +4,23 @@
       <span class="navbar-brand">
         {% include 'PumukitWebTVBundle:Layout:logo.html.twig' %}
       </span>
-      <span class="pull-right" style="margin:15px 2px">
-        {% include 'PumukitWebTVBundle:Index:loginbox.html.twig' %}
-      </span>
-      {% render( controller( 'PumukitWebTVBundle:Widget:languageselect') ) %}
+      <span class="pull-right"> {# This gets all objects together, so when the bar is too small, it nicely goes to the second row alltogether#}
+        <span class="pull-right" style="margin:15px 2px">
+          {% include 'PumukitWebTVBundle:Index:loginbox.html.twig' %}
+        </span>
+        {% render( controller( 'PumukitWebTVBundle:Widget:languageselect') ) %}
 
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#pumukit-navbar-collapse-1">
-        <span class="sr-only">TOGGLE NAVIGATION</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#pumukit-navbar-collapse-2">
-        <span class="sr-only">TOGGLE SEARCH</span>
-        <span class="glyphicon glyphicon-search"></span>
-      </button>
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#pumukit-navbar-collapse-1">
+          <span class="sr-only">TOGGLE NAVIGATION</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#pumukit-navbar-collapse-2">
+          <span class="sr-only">TOGGLE SEARCH</span>
+          <span class="glyphicon glyphicon-search"></span>
+        </button>
+      </span>
     </div>
     <div class="collapse navbar-collapse" id="pumukit-navbar-collapse-2">
       {% include 'PumukitWebTVBundle:Layout:search_box.html.twig' %}

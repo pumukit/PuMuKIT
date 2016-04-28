@@ -36,6 +36,8 @@ class MyLocalCommand extends ContainerAwareCommand
         $output->writeln('<info>Executing "pumukit:init:repo tag" to add the PUDEUNI tag</info>');
         $this->addNewTags($output);
         $output->writeln('Added PUDEUNI publishing decision');
+        $this->updateSeriesTitleInMultimediaObjects();
+        $output->writeln('Mongo MultimediaObject collection updated with SeriesTitle field.');
     }
 
     protected function updateViewsLog()
@@ -146,6 +148,25 @@ class MyLocalCommand extends ContainerAwareCommand
             $output = new BufferedOutput();
         $input = new ArrayInput(array('command' => 'pumukit:init:repo','repo' => 'tag'));
         $command->run($input, $output);
+    }
+
+    /**
+     * NOTE: This function is to update the seriesTitle field in each
+     *       MultimediaObject for MongoDB Search Index purposes.
+     *       Do not modify it.
+     */
+    protected function updateSeriesTitleInMultimediaObjects()
+    {
+        $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+        $mmRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+
+        $multimediaObjects = $mmRepo->findAll();
+        foreach ($multimediaObjects as $multimediaObject) {
+            $series = $multimediaObject->getSeries();
+            $multimediaObject->setSeries($series);
+            $dm->persist($multimediaObject);
+        }
+        $dm->flush();
     }
 }
 

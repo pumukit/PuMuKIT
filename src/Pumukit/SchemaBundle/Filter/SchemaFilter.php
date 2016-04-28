@@ -17,9 +17,11 @@ class SchemaFilter extends BsonFilter
 
     private function getCriteria()
     {
-        $criteria = array(
-                         'tags.cod' => $this->getParameter('pub_channel_tag'),
-                          );
+        $criteria = array();
+
+        if ($this->hasParameter('pub_channel_tag')) {
+            $criteria['tags.cod'] = $this->getParameter('pub_channel_tag');
+        }
         if ($this->hasParameter('status')) {
             $criteria['status'] = $this->getParameter('status');
         }

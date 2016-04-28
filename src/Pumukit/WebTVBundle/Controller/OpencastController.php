@@ -33,7 +33,8 @@ class OpencastController extends PlayerController implements WebTVController
 
         $mmobjService = $this->get('pumukitschema.multimedia_object');
         if ($this->container->hasParameter('pumukit.opencast.use_redirect') && $this->container->getParameter('pumukit.opencast.use_redirect')) {
-            $event = new ViewedEvent($multimediaObject, $track);
+
+            $event = new ViewedEvent($multimediaObject, null);
             $this->get('event_dispatcher')->dispatch(BasePlayerEvents::MULTIMEDIAOBJECT_VIEW, $event);
             if ($invert = $multimediaObject->getProperty('opencastinvert')) {
                 $opencasturl .= '&display=invert';

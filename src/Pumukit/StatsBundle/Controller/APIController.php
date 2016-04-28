@@ -96,20 +96,29 @@ class APIController extends Controller implements NewAdminController
 
         $groupBy = $request->get('group_by') ?: 'month';
 
+        //NOTE: $criteria is the same as $criteria_mmobj to provide backwards compatibility.
+        $criteria_mmobj = $request->get('criteria_mmobj') ?: $criteria;
+        $criteria_series = $request->get('criteria_series') ?: array();
+
         $options['from_date'] = $fromDate;
         $options['to_date'] = $toDate;
         $options['limit'] = $limit;
         $options['page'] = $page;
         $options['sort'] = $sort;
         $options['group_by'] = $groupBy;
+        $options['criteria_mmobj'] = $criteria_mmobj;
+        $options['criteria_series'] = $criteria_series;
 
-        list($views, $total) = $viewsService->getTotalViewedGrouped($criteria, $options);
+        list($views, $total) = $viewsService->getTotalViewedGrouped($options);
 
         $views = array(
             'limit' => $limit,
             'page' => $page,
             'total' => $total,
-            'criteria' => $criteria,
+            'criteria' => array(
+                'criteria_mmobj' => $criteria_mmobj,
+                'criteria_series' => $criteria_series,
+            ),
             'sort' => $sort,
             'group_by' => $groupBy,
             'from_date' => $fromDate,
@@ -144,13 +153,12 @@ class APIController extends Controller implements NewAdminController
         $options['sort'] = $sort;
         $options['group_by'] = $groupBy;
 
-        list($views, $total) = $viewsService->getTotalViewedGroupedByMmobj(new \MongoId($mmobjId), $criteria, $options);
+        list($views, $total) = $viewsService->getTotalViewedGroupedByMmobj(new \MongoId($mmobjId), $options);
 
         $views = array(
             'limit' => $limit,
             'page' => $page,
             'total' => $total,
-            'criteria' => $criteria,
             'sort' => $sort,
             'group_by' => $groupBy,
             'from_date' => $fromDate,
@@ -186,13 +194,12 @@ class APIController extends Controller implements NewAdminController
         $options['sort'] = $sort;
         $options['group_by'] = $groupBy;
 
-        list($views, $total) = $viewsService->getTotalViewedGroupedBySeries(new \MongoId($seriesId), $criteria, $options);
+        list($views, $total) = $viewsService->getTotalViewedGroupedBySeries(new \MongoId($seriesId), $options);
 
         $views = array(
             'limit' => $limit,
             'page' => $page,
             'total' => $total,
-            'criteria' => $criteria,
             'sort' => $sort,
             'group_by' => $groupBy,
             'from_date' => $fromDate,

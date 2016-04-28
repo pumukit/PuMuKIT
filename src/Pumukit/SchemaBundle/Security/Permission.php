@@ -2,6 +2,8 @@
 
 namespace Pumukit\SchemaBundle\Security;
 
+use Pumukit\SchemaBundle\Document\PermissionProfile;
+
 class Permission
 {
     const ACCESS_DASHBOARD = 'ROLE_ACCESS_DASHBOARD';
@@ -27,26 +29,152 @@ class Permission
     const MODIFY_OWNER = 'ROLE_MODIFY_OWNER';
 
     public static $permissionDescription = array(
-                                                Permission::ACCESS_DASHBOARD => "Access Dashboard",
-                                                Permission::ACCESS_MULTIMEDIA_SERIES => "Access Multimedia Series",
-                                                Permission::ACCESS_LIVE_CHANNELS => "Access Live Channels",
-                                                Permission::ACCESS_LIVE_EVENTS => "Access Live Events",
-                                                Permission::ACCESS_JOBS => "Access Jobs",
-                                                Permission::ACCESS_PEOPLE => "Access People",
-                                                Permission::ACCESS_TAGS => "Access Tags",
-                                                Permission::ACCESS_BROADCASTS => "Access Broadcasts",
-                                                Permission::ACCESS_SERIES_TYPES => "Access Series Types",
-                                                Permission::ACCESS_ADMIN_USERS => "Access Admin Users",
-                                                Permission::ACCESS_PERMISSION_PROFILES => "Access Permission Profiles",
-                                                Permission::ACCESS_ROLES => "Access Roles",
-                                                Permission::ACCESS_IMPORTER => "Access Importer",
-                                                Permission::CHANGE_MMOBJECT_STATUS => "Change Multimedia Object Status",
-                                                Permission::CHANGE_MMOBJECT_PUBCHANNEL => "Change Multimedia Object Publication Channel",
-                                                Permission::ACCESS_PUBLICATION_TAB => "Access Publication Tab",
-                                                Permission::ACCESS_ADVANCED_UPLOAD => "Access Advanced Upload",
-                                                Permission::ACCESS_WIZARD_UPLOAD => "Access Wizard Upload",
-                                                Permission::ACCESS_API => "Access API",
-                                                Permission::ACCESS_INBOX => "Access Inbox",
-                                                Permission::MODIFY_OWNER => "Modify Owner"
-                                                );
+        Permission::ACCESS_DASHBOARD => array(
+            'description' => "Access Dashboard",
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array()
+            )
+        ),
+        Permission::ACCESS_MULTIMEDIA_SERIES => array(
+            'description' => "Access Multimedia Series",
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array()
+            )
+        ),
+        Permission::ACCESS_LIVE_CHANNELS => array(
+            'description' => "Access Live Channels",
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array()
+            )
+        ),
+        Permission::ACCESS_LIVE_EVENTS => array(
+            'description' => "Access Live Events",
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array()
+            )
+        ),
+        Permission::ACCESS_JOBS => array(
+            'description' => "Access Jobs",
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array()
+            )
+        ),
+        Permission::ACCESS_PEOPLE => array(
+            'description' => "Access People",
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array()
+            )
+        ),
+        Permission::ACCESS_TAGS => array(
+            'description' => "Access Tags",
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array()
+            )
+        ),
+        Permission::ACCESS_BROADCASTS => array(
+            'description' => "Access Broadcasts",
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array()
+            )
+        ),
+        Permission::ACCESS_SERIES_TYPES => array(
+            'description' => "Access Series Types",
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array()
+            )
+        ),
+        Permission::ACCESS_ADMIN_USERS => array(
+            'description' => "Access Admin Users",
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array()
+            )
+        ),
+        Permission::ACCESS_PERMISSION_PROFILES => array(
+            'description' => "Access Permission Profiles",
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array()
+            )
+        ),
+        Permission::ACCESS_ROLES => array(
+            'description' => "Access Roles",
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array()
+            )
+        ),
+        Permission::ACCESS_IMPORTER => array(
+            'description' => "Access Importer",
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array()
+            )
+        ),
+        Permission::CHANGE_MMOBJECT_STATUS => array(
+            'description' => "Change Multimedia Object Status",
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array()
+            )
+        ),
+        Permission::CHANGE_MMOBJECT_PUBCHANNEL => array(
+            'description' => "Change Multimedia Object Publication Channel",
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array()
+            )
+        ),
+        Permission::ACCESS_PUBLICATION_TAB => array(
+            'description' => "Access Publication Tab",
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array()
+            )
+        ),
+        Permission::ACCESS_ADVANCED_UPLOAD => array(
+            'description' => "Access Advanced Upload",
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array()
+            )
+        ),
+        Permission::ACCESS_WIZARD_UPLOAD => array(
+            'description' => "Access Wizard Upload",
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array()
+            )
+        ),
+        Permission::ACCESS_API => array(
+            'description' => "Access API",
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array()
+            )
+        ),
+        Permission::ACCESS_INBOX => array(
+            'description' => "Access Inbox",
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array()
+            )
+        ),
+        Permission::MODIFY_OWNER => array(
+            'description' => "Modify Owner",
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array()
+            )
+        ),
+    );
 }

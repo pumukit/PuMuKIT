@@ -43,6 +43,16 @@ class MultimediaObject
     private $series;
 
     /**
+     * NOTE: This field is for MongoDB Search Index purposes.
+     *       Do not use this field and do not create setter and/or getter.
+     *
+     * @var string $seriesTitle
+     *
+     * @MongoDB\Raw
+     */
+    private $seriesTitle = array('en' => '');
+
+    /**
      * @var Broadcast $broadcast
      *
      * @MongoDB\ReferenceOne(targetDocument="Broadcast", inversedBy="multimedia_object", simple=true)
@@ -750,6 +760,9 @@ class MultimediaObject
     public function setSeries(Series $series)
     {
         $this->series = $series;
+        // NOTE: This field is for MongoDB Search Index purposes.
+        //       Do not use this field and do not create setter and/or getter.
+        $this->seriesTitle = $series->getI18nTitle();
     }
 
     /**

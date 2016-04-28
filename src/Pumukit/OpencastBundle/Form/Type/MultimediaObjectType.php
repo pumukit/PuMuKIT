@@ -29,9 +29,9 @@ class MultimediaObjectType extends AbstractType
                         'required' => false,
                         'mapped' => false,
                         'label' => $this->translator->trans('Invert', array(), null, $this->locale), ))
-          ->add('opencastlanguage', 'customlanguage',
+            ->add('opencastlanguage', 'customlanguage',
                   array(
-                        'required' => false,
+                        'required' => true,
                         'mapped' => false,
                         'label' => $this->translator->trans('Language', array(), null, $this->locale), ))
             ->add('durationinminutesandseconds', new TrackdurationType(),

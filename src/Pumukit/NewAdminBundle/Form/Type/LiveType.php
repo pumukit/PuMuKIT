@@ -53,10 +53,7 @@ class LiveType extends AbstractType
             ->add('ip_source', 'text',
                   array(
                         'required' => false,
-                        'label' => $this->translator->trans('IP source', array(), null, $this->locale)))
-            ->add('index_play', 'checkbox',
-                  array('required' => false,
-                        'label' => $this->translator->trans('Home announce', array(), null, $this->locale)));
+                        'label' => $this->translator->trans('IP source', array(), null, $this->locale)));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
