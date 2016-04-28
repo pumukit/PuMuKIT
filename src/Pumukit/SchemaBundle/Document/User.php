@@ -4,6 +4,7 @@ namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use FOS\UserBundle\Document\User as BaseUser;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Pumukit\SchemaBundle\Document\User
@@ -43,8 +44,27 @@ class User extends BaseUser
      */
     protected $origin = 'local';
 
+    /**
+     * @var ArrayCollection $adminGroups
+     *
+     * @MongoDB\ReferenceMany(targetDocument="Group")
+     */
+    private $adminGroups;
+
+    /**
+     * @var ArrayCollection $memberGroups
+     *
+     * @MongoDB\ReferenceMany(targetDocument="Group")
+     */
+    private $memberGroups;
+
+    /**
+     * Constructor
+     */
     public function __construct($genUserSalt = false)
     {
+        $this->adminGroups = new ArrayCollection();
+        $this->memberGroups = new ArrayCollection();
         parent::__construct();
         if(false == $genUserSalt){
             $this->salt = '';
@@ -129,5 +149,89 @@ class User extends BaseUser
     public function getOrigin()
     {
         return $this->origin;
+    }
+
+    /**
+     * Contains adminGroup
+     *
+     * @param Group $adminGroup
+     *
+     * @return boolean
+     */
+    public function containsAdminGroup(Group $adminGroup)
+    {
+        return $this->adminGroups->contains($adminGroup);
+    }
+
+    /**
+     * Add admin group
+     *
+     * @param Group $adminGroup
+     */
+    public function addAdminGroup(Group $adminGroup)
+    {
+        return $this->adminGroups->add($adminGroup);
+    }
+
+    /**
+     * Remove admin group
+     *
+     * @param Group $adminGroup
+     */
+    public function removeAdminGroup(Group $adminGroup)
+    {
+        $this->adminGroups->removeElement($adminGroup);
+    }
+
+    /**
+     * Get adminGroups
+     *
+     * @return ArrayCollection
+     */
+    public function getAdminGroups()
+    {
+        return $this->adminGroups;
+    }
+
+    /**
+     * Contains memberGroup
+     *
+     * @param Group $memberGroup
+     *
+     * @return boolean
+     */
+    public function containsMemberGroup(Group $memberGroup)
+    {
+        return $this->memberGroups->contains($memberGroup);
+    }
+
+    /**
+     * Add member group
+     *
+     * @param Group $memberGroup
+     */
+    public function addMemberGroup(Group $memberGroup)
+    {
+        return $this->memberGroups->add($memberGroup);
+    }
+
+    /**
+     * Remove member group
+     *
+     * @param Group $memberGroup
+     */
+    public function removeMemberGroup(Group $memberGroup)
+    {
+        $this->memberGroups->removeElement($memberGroup);
+    }
+
+    /**
+     * Get memberGroups
+     *
+     * @return ArrayCollection
+     */
+    public function getMemberGroups()
+    {
+        return $this->memberGroups;
     }
 }
