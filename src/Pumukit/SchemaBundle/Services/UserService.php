@@ -526,7 +526,7 @@ class UserService
      */
     public function deleteAdminGroup(Group $group, User $user, $executeFlush = true)
     {
-        if (!$user->containsAdminGroup($group)) {
+        if ($user->containsAdminGroup($group)) {
             $user->removeAdminGroup($group);
             $this->dm->persist($user);
             if ($executeFlush) {
@@ -545,7 +545,7 @@ class UserService
      */
     public function deleteMemberGroup(Group $group, User $user, $executeFlush = true)
     {
-        if (!$user->containsMemberGroup($group)) {
+        if ($user->containsMemberGroup($group)) {
             $user->removeMemberGroup($group);
             $this->dm->persist($user);
             if ($executeFlush) {
