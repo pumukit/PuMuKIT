@@ -300,4 +300,37 @@ final class SchemaEvents
      * @var string
      */
     const USER_DELETE = 'user.delete';
+
+    /**
+     * The group.create event is thrown each time a
+     * group is created.
+     *
+     * The event listener receives an
+     * Pumukit\SchemaBundle\Event\GroupEvent instance.
+     *
+     * @var string
+     */
+    const GROUP_CREATE = 'group.create';
+
+    /**
+     * The group.update event is thrown each time a
+     * group is updated.
+     *
+     * The event listener receives an
+     * Pumukit\SchemaBundle\Event\GroupEvent instance.
+     *
+     * @var string
+     */
+    const GROUP_UPDATE = 'group.update';
+
+    /**
+     * The group.delete event is thrown each time a
+     * group is deleted.
+     *
+     * The event listener receives an
+     * Pumukit\SchemaBundle\Event\GroupEvent instance.
+     *
+     * @var string
+     */
+    const GROUP_DELETE = 'group.delete';
 }
