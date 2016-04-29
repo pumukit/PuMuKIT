@@ -16,7 +16,7 @@ class Group
     const GROUP_ORIGIN_LDAP = 'ldap';
 
     /**
-     * @var int $id
+     * @var string $id
      *
      * @MongoDB\Id(strategy="auto")
      */
@@ -74,6 +74,16 @@ class Group
     {
         $this->createdAt = new \Datetime('now');
         $this->updatedAt = new \Datetime('now');
+    }
+
+    /**
+     * Get id
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
