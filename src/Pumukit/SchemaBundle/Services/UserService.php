@@ -5,6 +5,7 @@ namespace Pumukit\SchemaBundle\Services;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Security\Permission;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -442,5 +443,115 @@ class UserService
         }
 
         return false;
+    }
+
+    /**
+     * Add Group to user
+     *
+     * @param Group $group
+     * @param User $user
+     * @param boolean $asAdmin
+     * @param boolean $executeFlush
+     */
+    public function addGroup(Group $group, User $user, $asAdmin = false, $executeFlush = true)
+    {
+        if ($asAdmin) {
+            $this->addAdminGroup($group, $user, $executeFlush);
+        } else {
+            $this->addMemberGroup($group, $user, $executeFlush);
+        }
+    }
+
+    /**
+     * Add admin group to user
+     *
+     * @param Group $group
+     * @param User $user
+     * @param boolean $executeFlush
+     */
+    public function addAdminGroup(Group $group, User $user, $executeFlush = true)
+    {
+        if (!$user->containsAdminGroup($group)) {
+            $user->addAdminGroup($group);
+            $this->dm->persist($user);
+            if ($executeFlush) {
+                $this->dm->flush();
+            }
+            $this->dispatcher->dispatchUpdate($user);
+        }
+    }
+
+    /**
+     * Add member group to user
+     *
+     * @param Group $group
+     * @param User $user
+     * @param boolean $executeFlush
+     */
+    public function addMemberGroup(Group $group, User $user, $executeFlush = true)
+    {
+        if (!$user->containsMemberGroup($group)) {
+            $user->addMemberGroup($group);
+            $this->dm->persist($user);
+            if ($executeFlush) {
+                $this->dm->flush();
+            }
+            $this->dispatcher->dispatchUpdate($user);
+        }
+    }
+
+    /**
+     * Delete Group to user
+     *
+     * @param Group $group
+     * @param User $user
+     * @param boolean $asAdmin
+     * @param boolean $executeFlush
+     */
+    public function deleteGroup(Group $group, User $user, $asAdmin = false, $executeFlush = true)
+    {
+        if ($asAdmin) {
+            $this->deleteAdminGroup($group, $user, $executeFlush);
+        } else {
+            $this->deleteMemberGroup($group, $user, $executeFlush);
+        }
+    }
+
+    /**
+     * Delete admin group to user
+     *
+     * @param Group $group
+     * @param User $user
+     * @param boolean $executeFlush
+     */
+    public function deleteAdminGroup(Group $group, User $user, $executeFlush = true)
+    {
+        if (!$user->containsAdminGroup($group)) {
+            $user->removeAdminGroup($group);
+            $this->dm->persist($user);
+            if ($executeFlush) {
+                $this->dm->flush();
+            }
+            $this->dispatcher->dispatchUpdate($user);
+        }
+    }
+
+    /**
+     * Delete member group to user
+     *
+     * @param Group $group
+     * @param User $user
+     * @param boolean $executeFlush
+     */
+    public function deleteMemberGroup(Group $group, User $user, $executeFlush = true)
+    {
+        if (!$user->containsMemberGroup($group)) {
+            $user->removeMemberGroup($group);
+            $this->dm->persist($user);
+            if ($executeFlush) {
+                $this->dm->flush();
+            }
+            $this->dispatcher->dispatchUpdate($user);
+        }
     }
 }

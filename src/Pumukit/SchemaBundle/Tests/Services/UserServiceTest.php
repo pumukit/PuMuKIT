@@ -5,6 +5,7 @@ namespace Pumukit\SchemaBundle\Tests\Services;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\UserService;
@@ -424,5 +425,271 @@ class UserServiceTest extends WebTestCase
         $this->assertFalse($this->userService->hasGlobalScope($user));
         $this->assertFalse($this->userService->hasPersonalScope($user));
         $this->assertTrue($this->userService->hasNoneScope($user));
+    }
+
+    public function testAddGroup()
+    {
+        $group1 = new Group();
+        $group1->setKey('key1');
+        $group1->setName('name1');
+
+        $group2 = new Group();
+        $group2->setKey('key2');
+        $group2->setName('name2');
+
+        $group3 = new Group();
+        $group3->setKey('key3');
+        $group3->setName('name3');
+
+        $user = new User();
+        $user->setUsername('test');
+        $user->setEmail('test@mail.com');
+
+        $this->dm->persist($group1);
+        $this->dm->persist($group2);
+        $this->dm->persist($group3);
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $this->assertEquals(0, count($user->getAdminGroups()));
+        $this->assertEquals(0, count($user->getMemberGroups()));
+        $this->assertFalse($user->containsAdminGroup($group1));
+        $this->assertFalse($user->containsAdminGroup($group2));
+        $this->assertFalse($user->containsMemberGroup($group1));
+        $this->assertFalse($user->containsMemberGroup($group2));
+
+        $this->userService->addAdminGroup($group1, $user);
+
+        $this->assertEquals(1, count($user->getAdminGroups()));
+        $this->assertEquals(0, count($user->getMemberGroups()));
+        $this->assertTrue($user->containsAdminGroup($group1));
+        $this->assertFalse($user->containsAdminGroup($group2));
+        $this->assertFalse($user->containsMemberGroup($group1));
+        $this->assertFalse($user->containsMemberGroup($group2));
+
+        $this->userService->addAdminGroup($group1, $user);
+
+        $this->assertEquals(1, count($user->getAdminGroups()));
+        $this->assertEquals(0, count($user->getMemberGroups()));
+        $this->assertTrue($user->containsAdminGroup($group1));
+        $this->assertFalse($user->containsAdminGroup($group2));
+        $this->assertFalse($user->containsAdminGroup($group3));
+        $this->assertFalse($user->containsMemberGroup($group1));
+        $this->assertFalse($user->containsMemberGroup($group2));
+        $this->assertFalse($user->containsMemberGroup($group3));
+
+        $this->userService->addAdminGroup($group2, $user);
+
+        $this->assertEquals(2, count($user->getAdminGroups()));
+        $this->assertEquals(0, count($user->getMemberGroups()));
+        $this->assertTrue($user->containsAdminGroup($group1));
+        $this->assertTrue($user->containsAdminGroup($group2));
+        $this->assertFalse($user->containsAdminGroup($group3));
+        $this->assertFalse($user->containsMemberGroup($group1));
+        $this->assertFalse($user->containsMemberGroup($group2));
+        $this->assertFalse($user->containsMemberGroup($group3));
+
+        $this->userService->addMemberGroup($group1, $user);
+
+        $this->assertEquals(2, count($user->getAdminGroups()));
+        $this->assertEquals(1, count($user->getMemberGroups()));
+        $this->assertTrue($user->containsAdminGroup($group1));
+        $this->assertTrue($user->containsAdminGroup($group2));
+        $this->assertFalse($user->containsAdminGroup($group3));
+        $this->assertTrue($user->containsMemberGroup($group1));
+        $this->assertFalse($user->containsMemberGroup($group2));
+        $this->assertFalse($user->containsMemberGroup($group3));
+
+        $this->userService->addMemberGroup($group1, $user);
+
+        $this->assertEquals(2, count($user->getAdminGroups()));
+        $this->assertEquals(1, count($user->getMemberGroups()));
+        $this->assertTrue($user->containsAdminGroup($group1));
+        $this->assertTrue($user->containsAdminGroup($group2));
+        $this->assertFalse($user->containsAdminGroup($group3));
+        $this->assertTrue($user->containsMemberGroup($group1));
+        $this->assertFalse($user->containsMemberGroup($group2));
+        $this->assertFalse($user->containsMemberGroup($group3));
+
+        $this->userService->addMemberGroup($group2, $user);
+
+        $this->assertEquals(2, count($user->getAdminGroups()));
+        $this->assertEquals(2, count($user->getMemberGroups()));
+        $this->assertTrue($user->containsAdminGroup($group1));
+        $this->assertTrue($user->containsAdminGroup($group2));
+        $this->assertFalse($user->containsAdminGroup($group3));
+        $this->assertTrue($user->containsMemberGroup($group1));
+        $this->assertTrue($user->containsMemberGroup($group2));
+        $this->assertFalse($user->containsMemberGroup($group3));
+
+        $asAdmin = false;
+
+        $this->userService->addGroup($group3, $user, $asAdmin);
+
+        $this->assertEquals(2, count($user->getAdminGroups()));
+        $this->assertEquals(3, count($user->getMemberGroups()));
+        $this->assertTrue($user->containsAdminGroup($group1));
+        $this->assertTrue($user->containsAdminGroup($group2));
+        $this->assertFalse($user->containsAdminGroup($group3));
+        $this->assertTrue($user->containsMemberGroup($group1));
+        $this->assertTrue($user->containsMemberGroup($group2));
+        $this->assertTrue($user->containsMemberGroup($group3));
+
+        $asAdmin = true;
+
+        $this->userService->addGroup($group3, $user, $asAdmin);
+
+        $this->assertEquals(3, count($user->getAdminGroups()));
+        $this->assertEquals(3, count($user->getMemberGroups()));
+        $this->assertTrue($user->containsAdminGroup($group1));
+        $this->assertTrue($user->containsAdminGroup($group2));
+        $this->assertTrue($user->containsAdminGroup($group3));
+        $this->assertTrue($user->containsMemberGroup($group1));
+        $this->assertTrue($user->containsMemberGroup($group2));
+        $this->assertTrue($user->containsMemberGroup($group3));
+    }
+
+    public function testDeleteGroup()
+    {
+        $group1 = new Group();
+        $group1->setKey('key1');
+        $group1->setName('name1');
+
+        $group2 = new Group();
+        $group2->setKey('key2');
+        $group2->setName('name2');
+
+        $group3 = new Group();
+        $group3->setKey('key3');
+        $group3->setName('name3');
+
+        $user = new User();
+        $user->setUsername('test');
+        $user->setEmail('test@mail.com');
+
+        $this->dm->persist($group1);
+        $this->dm->persist($group2);
+        $this->dm->persist($group3);
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $this->assertEquals(0, count($user->getAdminGroups()));
+        $this->assertEquals(0, count($user->getMemberGroups()));
+        $this->assertFalse($user->containsAdminGroup($group1));
+        $this->assertFalse($user->containsAdminGroup($group2));
+        $this->assertFalse($user->containsMemberGroup($group1));
+        $this->assertFalse($user->containsMemberGroup($group2));
+
+        $this->userService->addAdminGroup($group1, $user);
+
+        $this->assertEquals(1, count($user->getAdminGroups()));
+        $this->assertEquals(0, count($user->getMemberGroups()));
+        $this->assertTrue($user->containsAdminGroup($group1));
+        $this->assertFalse($user->containsAdminGroup($group2));
+        $this->assertFalse($user->containsMemberGroup($group1));
+        $this->assertFalse($user->containsMemberGroup($group2));
+
+        $this->userService->deleteAdminGroup($group1, $user);
+
+        $this->assertEquals(0, count($user->getAdminGroups()));
+        $this->assertEquals(0, count($user->getMemberGroups()));
+        $this->assertFalse($user->containsAdminGroup($group1));
+        $this->assertFalse($user->containsAdminGroup($group2));
+        $this->assertFalse($user->containsAdminGroup($group3));
+        $this->assertFalse($user->containsMemberGroup($group1));
+        $this->assertFalse($user->containsMemberGroup($group2));
+        $this->assertFalse($user->containsMemberGroup($group3));
+
+        $this->userService->deleteAdminGroup($group2, $user);
+
+        $this->assertEquals(0, count($user->getAdminGroups()));
+        $this->assertEquals(0, count($user->getMemberGroups()));
+        $this->assertFalse($user->containsAdminGroup($group1));
+        $this->assertFalse($user->containsAdminGroup($group2));
+        $this->assertFalse($user->containsAdminGroup($group3));
+        $this->assertFalse($user->containsMemberGroup($group1));
+        $this->assertFalse($user->containsMemberGroup($group2));
+        $this->assertFalse($user->containsMemberGroup($group3));
+
+        $this->userService->addMemberGroup($group1, $user);
+
+        $this->assertEquals(0, count($user->getAdminGroups()));
+        $this->assertEquals(1, count($user->getMemberGroups()));
+        $this->assertFalse($user->containsAdminGroup($group1));
+        $this->assertFalse($user->containsAdminGroup($group2));
+        $this->assertFalse($user->containsAdminGroup($group3));
+        $this->assertTrue($user->containsMemberGroup($group1));
+        $this->assertFalse($user->containsMemberGroup($group2));
+        $this->assertFalse($user->containsMemberGroup($group3));
+
+        $this->userService->addMemberGroup($group1, $user);
+
+        $this->assertEquals(2, count($user->getAdminGroups()));
+        $this->assertEquals(1, count($user->getMemberGroups()));
+        $this->assertTrue($user->containsAdminGroup($group1));
+        $this->assertTrue($user->containsAdminGroup($group2));
+        $this->assertFalse($user->containsAdminGroup($group3));
+        $this->assertTrue($user->containsMemberGroup($group1));
+        $this->assertFalse($user->containsMemberGroup($group2));
+        $this->assertFalse($user->containsMemberGroup($group3));
+
+        $this->userService->addMemberGroup($group2, $user);
+
+        $this->assertEquals(0, count($user->getAdminGroups()));
+        $this->assertEquals(2, count($user->getMemberGroups()));
+        $this->assertFalse($user->containsAdminGroup($group1));
+        $this->assertFalse($user->containsAdminGroup($group2));
+        $this->assertFalse($user->containsAdminGroup($group3));
+        $this->assertTrue($user->containsMemberGroup($group1));
+        $this->assertTrue($user->containsMemberGroup($group2));
+        $this->assertFalse($user->containsMemberGroup($group3));
+
+        $this->userService->addMemberGroup($group3, $user);
+
+        $this->assertEquals(1, count($user->getAdminGroups()));
+        $this->assertEquals(2, count($user->getMemberGroups()));
+        $this->assertFalse($user->containsAdminGroup($group1));
+        $this->assertFalse($user->containsAdminGroup($group2));
+        $this->assertTrue($user->containsAdminGroup($group3));
+        $this->assertTrue($user->containsMemberGroup($group1));
+        $this->assertTrue($user->containsMemberGroup($group2));
+        $this->assertFalse($user->containsMemberGroup($group3));
+
+        $this->userService->deleteMemberGroup($group2, $user);
+
+        $this->assertEquals(1, count($user->getAdminGroups()));
+        $this->assertEquals(1, count($user->getMemberGroups()));
+        $this->assertFalse($user->containsAdminGroup($group1));
+        $this->assertFalse($user->containsAdminGroup($group2));
+        $this->assertTrue($user->containsAdminGroup($group3));
+        $this->assertTrue($user->containsMemberGroup($group1));
+        $this->assertFalse($user->containsMemberGroup($group2));
+        $this->assertFalse($user->containsMemberGroup($group3));
+
+        $asAdmin = false;
+
+        $this->userService->deleteGroup($group2, $user, $asAdmin);
+
+        $this->assertEquals(1, count($user->getAdminGroups()));
+        $this->assertEquals(0, count($user->getMemberGroups()));
+        $this->assertFalse($user->containsAdminGroup($group1));
+        $this->assertFalse($user->containsAdminGroup($group2));
+        $this->assertTrue($user->containsAdminGroup($group3));
+        $this->assertFalse($user->containsMemberGroup($group1));
+        $this->assertFalse($user->containsMemberGroup($group2));
+        $this->assertFalse($user->containsMemberGroup($group3));
+
+        $asAdmin = true;
+
+        $this->userService->deleteGroup($group2, $user, $asAdmin);
+
+        $this->assertEquals(0, count($user->getAdminGroups()));
+        $this->assertEquals(0, count($user->getMemberGroups()));
+        $this->assertFalse($user->containsAdminGroup($group1));
+        $this->assertFalse($user->containsAdminGroup($group2));
+        $this->assertFalse($user->containsAdminGroup($group3));
+        $this->assertFalse($user->containsMemberGroup($group1));
+        $this->assertFalse($user->containsMemberGroup($group2));
+        $this->assertFalse($user->containsMemberGroup($group3));
     }
 }
