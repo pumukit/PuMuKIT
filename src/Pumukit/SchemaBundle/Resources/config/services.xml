@@ -117,6 +117,10 @@
             <argument type="service" id="event_dispatcher"/>
         </service>
 
+        <service id="pumukitschema.group_dispatcher" class="Pumukit\SchemaBundle\Services\GroupEventDispatcherService">
+            <argument type="service" id="event_dispatcher"/>
+        </service>
+
         <!-- EMBEDDED DOCUMENTS EVENT DISPATCHER SERVICES -->
 
         <service id="pumukitschema.link_dispatcher" class="Pumukit\SchemaBundle\Services\LinkEventDispatcherService">
