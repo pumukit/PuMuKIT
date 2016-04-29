@@ -59,6 +59,7 @@ class UserServiceTest extends WebTestCase
     public function setUp()
     {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:User')->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:Group')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:PermissionProfile')->remove(array());
         $this->dm->flush();
     }
@@ -582,6 +583,8 @@ class UserServiceTest extends WebTestCase
 
         $this->userService->addAdminGroup($group1, $user);
 
+        $user = $this->repo->find($user->getId());
+
         $this->assertEquals(1, count($user->getAdminGroups()));
         $this->assertEquals(0, count($user->getMemberGroups()));
         $this->assertTrue($user->containsAdminGroup($group1));
@@ -590,6 +593,8 @@ class UserServiceTest extends WebTestCase
         $this->assertFalse($user->containsMemberGroup($group2));
 
         $this->userService->deleteAdminGroup($group1, $user);
+
+        $user = $this->repo->find($user->getId());
 
         $this->assertEquals(0, count($user->getAdminGroups()));
         $this->assertEquals(0, count($user->getMemberGroups()));
@@ -602,6 +607,8 @@ class UserServiceTest extends WebTestCase
 
         $this->userService->deleteAdminGroup($group2, $user);
 
+        $user = $this->repo->find($user->getId());
+
         $this->assertEquals(0, count($user->getAdminGroups()));
         $this->assertEquals(0, count($user->getMemberGroups()));
         $this->assertFalse($user->containsAdminGroup($group1));
@@ -613,6 +620,8 @@ class UserServiceTest extends WebTestCase
 
         $this->userService->addMemberGroup($group1, $user);
 
+        $user = $this->repo->find($user->getId());
+
         $this->assertEquals(0, count($user->getAdminGroups()));
         $this->assertEquals(1, count($user->getMemberGroups()));
         $this->assertFalse($user->containsAdminGroup($group1));
@@ -624,16 +633,20 @@ class UserServiceTest extends WebTestCase
 
         $this->userService->addMemberGroup($group1, $user);
 
-        $this->assertEquals(2, count($user->getAdminGroups()));
+        $user = $this->repo->find($user->getId());
+
+        $this->assertEquals(0, count($user->getAdminGroups()));
         $this->assertEquals(1, count($user->getMemberGroups()));
-        $this->assertTrue($user->containsAdminGroup($group1));
-        $this->assertTrue($user->containsAdminGroup($group2));
+        $this->assertFalse($user->containsAdminGroup($group1));
+        $this->assertFalse($user->containsAdminGroup($group2));
         $this->assertFalse($user->containsAdminGroup($group3));
         $this->assertTrue($user->containsMemberGroup($group1));
         $this->assertFalse($user->containsMemberGroup($group2));
         $this->assertFalse($user->containsMemberGroup($group3));
 
         $this->userService->addMemberGroup($group2, $user);
+
+        $user = $this->repo->find($user->getId());
 
         $this->assertEquals(0, count($user->getAdminGroups()));
         $this->assertEquals(2, count($user->getMemberGroups()));
@@ -644,7 +657,9 @@ class UserServiceTest extends WebTestCase
         $this->assertTrue($user->containsMemberGroup($group2));
         $this->assertFalse($user->containsMemberGroup($group3));
 
-        $this->userService->addMemberGroup($group3, $user);
+        $this->userService->addAdminGroup($group3, $user);
+
+        $user = $this->repo->find($user->getId());
 
         $this->assertEquals(1, count($user->getAdminGroups()));
         $this->assertEquals(2, count($user->getMemberGroups()));
@@ -657,6 +672,8 @@ class UserServiceTest extends WebTestCase
 
         $this->userService->deleteMemberGroup($group2, $user);
 
+        $user = $this->repo->find($user->getId());
+
         $this->assertEquals(1, count($user->getAdminGroups()));
         $this->assertEquals(1, count($user->getMemberGroups()));
         $this->assertFalse($user->containsAdminGroup($group1));
@@ -668,7 +685,9 @@ class UserServiceTest extends WebTestCase
 
         $asAdmin = false;
 
-        $this->userService->deleteGroup($group2, $user, $asAdmin);
+        $this->userService->deleteGroup($group1, $user, $asAdmin);
+
+        $user = $this->repo->find($user->getId());
 
         $this->assertEquals(1, count($user->getAdminGroups()));
         $this->assertEquals(0, count($user->getMemberGroups()));
@@ -681,7 +700,9 @@ class UserServiceTest extends WebTestCase
 
         $asAdmin = true;
 
-        $this->userService->deleteGroup($group2, $user, $asAdmin);
+        $this->userService->deleteGroup($group3, $user, $asAdmin);
+
+        $user = $this->repo->find($user->getId());
 
         $this->assertEquals(0, count($user->getAdminGroups()));
         $this->assertEquals(0, count($user->getMemberGroups()));
