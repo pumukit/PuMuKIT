@@ -1,0 +1,94 @@
+<div class="table-responsive well">
+  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_GROUPS')) %}
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th width="1%">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" onclick="window.click_checkbox_all('group', this.checked)">
+            </label>
+          </div>
+        </th>
+        <th colspan="2" width="5%"></th>
+        {% include 'PumukitNewAdminBundle:Group:listth.html.twig' %}
+      </tr>
+    </thead>
+
+    <tbody>
+      {% if groups|length == 0 %}
+      <tr>
+        <td colspan="9">
+          {% trans %}There are no groups with those values.{% endtrans %}
+        </td>
+      </tr>
+      {% endif %}
+
+      {% for group in groups %}
+      <tr>
+        <td>
+          <div class="checkbox">
+            <label>
+              <input id="{{ group.id }}" class="group_checkbox" type="checkbox" size="1">
+            </label>
+          </div>
+        </td>
+        <td>
+          <a title="{% trans %}Edit Group{% endtrans %} {{ group.getName() }}" href="{{ path('pumukitnewadmin_group_update', {'id': group.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+            <i class="mdi-editor-mode-edit"></i>
+          </a>
+        </td>
+        <td>
+          {% if false %}
+          {# countUsersInGroup[group.id] != 0
+          <i title="{% trans %}Cannot delete the data of{% endtrans %} '{{ group.name }}'. '{{ countMmGroups[group.id] }}' {% trans %}multimedia object(s) contain(s) this group{% endtrans %}." class="mdi-content-block" style="color:#009587"></i>
+          #}
+          {% else %} {# TODO #}
+          <a href="#" title="Delete Group '{{ group.name }}'" onclick="window.submit_delete_group('{{ group.id }}', 'countUsersInGroup', '{% autoescape 'js' %}{{ group.getName() }}{% endautoescape %}'); return false;">
+            <i class="mdi-content-clear"></i>
+          </a>
+          {% endif %}
+        </td>
+        <td>
+          {{ group.id }}
+        </td>
+        <td>
+          {{ group.getKey() }}
+        </td>
+        <td>
+          {{ group.getName() }}
+        </td>
+        <td>
+          {{ group.getOrigin() }}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="9">
+            {# TODO review column size to be responsive #}
+            {% set column = ((groups.getNbPages/5)|round(0, 'floor')) %}
+            <div class="col-md-8">
+              {{ groups.getNbResults }} 
+              {% transchoice groups.getNbResults %}
+	          {0} groups|{1} group|]1,Inf] groups
+	          {% endtranschoice %}
+	          {% if app.session.get('admin/group/criteria')|length != 0%}
+              <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
+	          {% endif %}
+            </div>
+            <div class="col-md-4 text-right">
+              <div class="pagerfanta">
+                {% set sorting = {('sorting[' ~ (app.session.get('admin/group/sort')) ~ ']') : (app.session.get('admin/group/type')) } %}
+                {{ pagerfanta(groups, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_group_index", "routeParams": sorting}) }}
+              </div>
+            </div>
+        </th>
+      </tr>
+    </tfoot>
+  </table>
+  {% else %}
+    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+  {% endif %}
+</div>

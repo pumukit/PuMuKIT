@@ -75,6 +75,9 @@ class Builder extends ContainerAware
             if ($authorizationChecker->isGranted(Permission::ACCESS_ADMIN_USERS)) {
                 $management->addChild('Admin users', array('route' => 'pumukitnewadmin_user_index'))->setExtra('translation_domain', 'NewAdminBundle');
             }
+            if ($authorizationChecker->isGranted(Permission::ACCESS_GROUPS)) {
+                $management->addChild('Groups', array('route' => 'pumukitnewadmin_group_index'))->setExtra('translation_domain', 'NewAdminBundle');
+            }
             if ($authorizationChecker->isGranted(Permission::ACCESS_PERMISSION_PROFILES)) {
                 $management->addChild('Permission profiles', array('route' => 'pumukitnewadmin_permissionprofile_index'))->setExtra('translation_domain', 'NewAdminBundle');
             }
