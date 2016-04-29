@@ -1,0 +1,45 @@
+pumukitnewadmin_group_index:
+    pattern: /
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:indexAction
+        _sylius:
+            filterable: true
+
+pumukitnewadmin_group_create:
+    pattern: /create
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:createAction
+        _sylius:
+            redirect: pumukitnewadmin_group_index
+
+pumukitnewadmin_group_update:
+    pattern: /{id}/edit
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:updateAction
+        _sylius:
+            redirect: pumukitnewadmin_group_index
+
+pumukitnewadmin_group_batch_delete:
+    pattern: /batchdelete
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:batchDeleteAction
+        _sylius:
+            redirect: pumukitnewadmin_group_index
+
+pumukitnewadmin_group_delete:
+    pattern: /{id}/delete
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:deleteAction
+        _sylius:
+            redirect: pumukitnewadmin_group_index
+
+pumukitnewadmin_group_list:
+    pattern: /list
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:listAction
