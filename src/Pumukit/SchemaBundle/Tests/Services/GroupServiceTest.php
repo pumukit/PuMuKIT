@@ -335,4 +335,15 @@ class GroupServiceTest extends WebTestCase
 
         $this->assertEquals(1, count($this->repo->findAll()));
     }
+
+    public function testFindById()
+    {
+        $group = new Group();
+        $group->setKey('testing');
+        $group->setName('testing@mail.com');
+        $this->dm->persist($group);
+        $this->dm->flush($group);
+
+        $this->assertEquals($group, $this->groupService->findById($group->getId()));
+    }
 }

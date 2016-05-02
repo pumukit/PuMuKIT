@@ -114,4 +114,15 @@ class GroupService
             ->getQuery()
             ->execute();
     }
+
+    /**
+     * Find group by id
+     *
+     * @param string $id
+     * @return Group
+     */
+    public function findById($id)
+    {
+        return $this->repo->find($id);
+    }
 }
