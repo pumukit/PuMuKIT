@@ -1,0 +1,48 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <h4 class="modal-title" id="myModalLabel">{% trans %}edit groups for user{% endtrans %}:</h4>
+  <h2 class="modal-title">&laquo;{{ user.getUsername() }}&raquo;</h2>
+</div>
+
+<div class="modal-body">
+  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADMIN_USERS')) %}
+  {% for mode in ['admin', 'member'] %}
+  <div class="panel panel-default">
+    <div class="panel-heading">{{ mode|capitalize }}</div>
+    <div class="panel-body" id="group_mode_{{ mode }}">
+      <div style="overflow:hidden;height: 270px">
+	    <div style="width:390px; float: left; height: 260px; border: 1px solid #bbb; overflow-x: hidden; overflow-y: scroll" class="tag list-group pmk-tag-tree" id="not_added_groups_{{ mode }}">
+            {% include 'PumukitNewAdminBundle:User:listgroupsajax.html.twig' with {'user': user, 'mode': mode, 'groups': groups} %}
+	    </div>
+
+	    <div style="float: left; padding: 130px 5px 0px">
+	      <a href="#" onclick="$('#added_groups_{{ mode }} > a.active').trigger('dblclick'); return false;">&#8592;</a>
+	      <a href="#" onclick="$('#not_added_groups_{{ mode }} > a.active').trigger('dblclick'); return false;">&#8594;</a>
+	    </div>
+        {# Groups added to the user under the mode admin or member #}
+	    <div style="width:390px; height:260px; border: 1px solid #bbb; float: left; overflow-x: hidden; overflow-y: scroll" class="tag" id="select_tag_{{ mode }}">
+	      <div class="tag_tree list-group" id="added_groups_{{ mode }}" >
+            {% if mode == 'admin' %}
+            {% set user_groups = user.getAdminGroups() %}
+            {% else %}
+            {% set user_groups = user.getMemberGroups() %}
+            {% endif %}
+	        {% for user_group in user_groups %}
+              <a href="#" class="list-group-item" id="added_group_{{ user_group.id }}_{{ mode }}'"
+                 onclick="javascript:return select_group(this);"
+                 ondblclick="javascript:delete_group('{{ user_group.id }}', '{{ user.id }}', '{{ mode }}', '{{ group.key }}', '{{ group.name }}');">
+                <i class="mdi-social-group"></i>
+                {{ user_group.key }} - {{ user_group.name }}
+              </a>
+	        {% endfor %}
+	      </div>
+	    </div>
+	 </div>
+    </div>
+  </div>
+  {% endfor %}
+{#   <div style="height:41px"></div> #}
+  {% else %}
+    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+  {% endif %}
+</div>

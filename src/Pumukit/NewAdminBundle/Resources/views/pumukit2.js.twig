@@ -2058,3 +2058,39 @@ function checkScope(id)
        }
     }
 }
+
+
+function select_group(element)
+{
+  $(element).siblings(".active").removeClass("active").end().addClass("active");
+  return false;
+}
+
+function add_group(group_id, user_id, mode, group_key, group_name)
+{
+    create_element_group_in_added_groups(group_id, user_id, mode, group_key, group_name);
+    element_to_delete = "#not_added_group_" + group_id + "_" + mode;
+    delete_element_group_from_select(element_to_delete, group_id, user_id, mode, group_key, group_name);
+}
+
+function delete_group(group_id, user_id, mode, group_key, group_name)
+{
+    element_to_delete = "#added_group_" + group_id + "_" + mode;
+    delete_element_group_from_select(element_to_delete, group_id, user_id, mode, group_key, group_name);
+    create_element_group_in_not_added_groups(group_id, user_id, mode, group_key, group_name);
+}
+
+function create_element_group_in_added_groups(group_id, user_id, mode, group_key, group_name) {
+  var $ul = $('#added_groups_'+mode);
+  $ul.append('<a href="#" ondblclick="javascript:delete_group(\'' + group_id + '\', \'' + user_id + '\', \'' + mode + '\', \'' + group_key + '\', \'' + group_name + '\');" onclick="return select_group(this);" class="list-group-item" id="added_group_' + group_id + '_' + mode +'"><i class="mdi-social-group"></i> ' + group_key + ' - ' + group_name +'</a>');
+}
+
+function create_element_group_in_not_added_groups(group_id, user_id, mode, group_key, group_name) {
+  var $ul = $('#not_added_groups_'+mode);
+  $ul.append('<a href="#" ondblclick="javascript:add_group(\'' + group_id + '\', \'' + user_id +'\', \'' + mode + '\', \'' + group_key + '\', \'' + group_name + '\');" onclick="return select_group(this);" class="list-group-item" id="not_added_group_' + group_id + '_' + mode +'"><i class="mdi-social-group"></i> ' + group_key + ' - ' + group_name +'</a>');
+}
+
+function delete_element_group_from_select(element_id, group_id, user_id, mode, group_key, group_name) {
+    var $_element = $(element_id);
+    if ($_element)  $_element.remove();
+}
