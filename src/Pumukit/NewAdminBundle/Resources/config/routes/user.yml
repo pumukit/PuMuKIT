@@ -49,3 +49,15 @@ pumukitnewadmin_user_promote:
     methods: [POST]
     defaults:
         _controller: pumukitnewadmin.controller.user:promoteAction
+
+pumukitnewadmin_user_editgroups:
+    pattern: /editgroups
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.user:editGroupsAction
+
+pumukitnewadmin_user_updategroups:
+    pattern: /updategroups
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.user:updateGroupsAction

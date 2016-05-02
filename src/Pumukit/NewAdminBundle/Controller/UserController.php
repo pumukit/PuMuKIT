@@ -168,6 +168,55 @@ class UserController extends AdminController implements NewAdminController
         return parent::batchDeleteAction($request);
     }
 
+    /**
+     * Edit groups form
+     * @Template("PumukitNewAdminBundle:User:editgroups.html.twig")
+     */
+    public function editGroupsAction(Request $request)
+    {
+        $user = $this->findOr404($request);
+        $groups = $this->get('pumukitschema.group')->findAll();
+
+        return array(
+                     'user' => $user,
+                     'groups' => $groups
+                     );
+    }
+
+    /**
+     * Update groups form
+     */
+    public function updateGroupsAction(Request $request)
+    {
+        if ('POST' === $request->getMethod()){
+            $values = $request->get('values');
+            if ('string' === gettype($values)){
+                $values = json_decode($values, true);
+            }
+
+            // TODO
+            $this->modifyUserGroups($values);
+        }
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_group_list'));
+    }
+
+    /**
+     * Modify User Groups
+     */
+    private function modifyUserGroups($values)
+    {
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+
+        foreach ($values as $id => $value){
+            // Add as admin
+            // Add as viewer
+            // Remove as admin
+            // Remove as viewer
+        }
+        $dm->flush();
+    }
+
     private function isAllowedToBeDeleted(User $userToDelete)
     {
         $repo = $this

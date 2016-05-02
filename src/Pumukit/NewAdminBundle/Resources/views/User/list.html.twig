@@ -10,7 +10,7 @@
               </label>
             </div>
           </th>
-          <th colspan="2" width="3%"></th>
+          <th colspan="3" width="5%"></th>
           <th>{% trans %}Name and Surname{% endtrans %}</th>
           <th>{% trans %}Username{% endtrans %}</th>
           <th>{% trans %}Permission Profile{% endtrans %}</th>
@@ -49,6 +49,11 @@
             </a>
           </td>
           <td>
+          <a href="{{ path('pumukitnewadmin_user_editgroups', {'id': user.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+            <i class="mdi-social-group" data-toggle="tooltip" data-placement="right" title="Describe groups {# {{ oneseries|series_text }} #}({% trans %}Click to modify groups{% endtrans %})"></i>
+          </a>
+          </td>
+          <td>
 	          {% if user.fullname is not empty %}{{ user.fullname }}{% endif %}
           </td>
           <td>
@@ -72,7 +77,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <th colspan="8">
+          <th colspan="9">
             <div class="col-md-8" id="numberUsers">
               {{ users.getNbResults }}
               {% transchoice users.getNbResults %}
