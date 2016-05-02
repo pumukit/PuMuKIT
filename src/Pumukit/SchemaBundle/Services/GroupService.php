@@ -125,4 +125,14 @@ class GroupService
     {
         return $this->repo->find($id);
     }
+
+    /**
+     * Find all
+     *
+     * @return ArrayCollection
+     */
+    public function findAll()
+    {
+        return $this->repo->findAll();
+    }
 }

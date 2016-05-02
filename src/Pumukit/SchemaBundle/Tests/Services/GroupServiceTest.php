@@ -342,8 +342,30 @@ class GroupServiceTest extends WebTestCase
         $group->setKey('testing');
         $group->setName('testing@mail.com');
         $this->dm->persist($group);
-        $this->dm->flush($group);
+        $this->dm->flush();
 
         $this->assertEquals($group, $this->groupService->findById($group->getId()));
+    }
+
+    public function testFindAll()
+    {
+        $group1 = new Group();
+        $group1->setKey('testing1');
+        $group1->setName('testing1@mail.com');
+
+        $group2 = new Group();
+        $group2->setKey('testing2');
+        $group2->setName('testing2@mail.com');
+
+        $group3 = new Group();
+        $group3->setKey('testing3');
+        $group3->setName('testing3@mail.com');
+
+        $this->dm->persist($group1);
+        $this->dm->persist($group2);
+        $this->dm->persist($group3);
+        $this->dm->flush();
+
+        $this->assertEquals(3, count($this->groupService->findAll()));
     }
 }
