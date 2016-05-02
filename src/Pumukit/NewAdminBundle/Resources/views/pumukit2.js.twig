@@ -365,6 +365,24 @@ window.submit_delete_person = function(id, countMm, personHName)
     }
 }
 
+window.submit_delete_group = function(id, countUsers, groupName)
+{
+    if (countUsers == 0){
+        if (window.confirm("{% trans %}Are you sure you want to delete the data of{% endtrans %} "+groupName+"?")){
+            var url = "{{ path('pumukitnewadmin_group_delete', {'id': '__id__'})|raw }}";
+            $('#list_groups').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
+                if(XMLHttpRequest.status >= 400){
+                    no_success('{% trans %}Error deleting Group{% endtrans %} "'+groupName+'": ' + responseText);
+                }else{
+                    success('{% trans %}Group{% endtrans %} "'+groupName+'" {% trans %}successfully deleted.{% endtrans %}');
+                }
+            });
+    }
+    }else{
+        window.alert('{% trans %}Cannot delete the data of{% endtrans %} '+groupName+'. '+ countUsers+' {% trans %}user(s) belong(s) to this group{% endtrans %}.');
+    }
+}
+
 window.click_fila_url = function(element, tr, url)
 {
   $('#preview_'+element).load(url);
@@ -1201,6 +1219,41 @@ $(document).on('click', '#pumukitnewadmin_person_phone_sort_not_selected', funct
     return false;
 });
 
+$(document).on('click', '#pumukitnewadmin_group_name_sort_selected', function(){
+    var type = $('#pumukitnewadmin_group_sort_change_type').val();
+    var route = "{{ path('pumukitnewadmin_group_list', {'sorting': {'name': '__type__'}})|raw }}";
+    $('#list_groups').load(route.replace('__type__', type), {'_method':'POST'});
+    return false;
+});
+$(document).on('click', '#pumukitnewadmin_group_name_sort_not_selected', function(){
+    var route = "{{ path('pumukitnewadmin_group_list', {'sorting': {'name': 'asc'}})|raw }}";
+    $('#list_groups').load(route, {'_method':'POST'});
+    return false;
+});
+
+$(document).on('click', '#pumukitnewadmin_group_key_sort_selected', function(){
+    var type = $('#pumukitnewadmin_group_sort_change_type').val();
+    var route = "{{ path('pumukitnewadmin_group_list', {'sorting': {'key': '__type__'}})|raw }}";
+    $('#list_groups').load(route.replace('__type__', type), {'_method':'POST'});
+    return false;
+});
+$(document).on('click', '#pumukitnewadmin_group_key_sort_not_selected', function(){
+    var route = "{{ path('pumukitnewadmin_group_list', {'sorting': {'key': 'asc'}})|raw }}";
+    $('#list_groups').load(route, {'_method':'POST'});
+    return false;
+});
+
+$(document).on('click', '#pumukitnewadmin_group_origin_sort_selected', function(){
+    var type = $('#pumukitnewadmin_group_sort_change_type').val();
+    var route = "{{ path('pumukitnewadmin_group_list', {'sorting': {'origin': '__type__'}})|raw }}";
+    $('#list_groups').load(route.replace('__type__', type), {'_method':'POST'});
+    return false;
+});
+$(document).on('click', '#pumukitnewadmin_group_origin_sort_not_selected', function(){
+    var route = "{{ path('pumukitnewadmin_group_list', {'sorting': {'origin': 'asc'}})|raw }}";
+    $('#list_groups').load(route, {'_method':'POST'});
+    return false;
+});
 
 /**
  * Tab
@@ -1373,6 +1426,9 @@ get_batch_delete_route = function(element, ids)
             break;
         case 'broadcast':
             route = '{{ path('pumukitnewadmin_broadcast_batch_delete', {'ids': '__ids__'})|raw }}';
+            break;
+        case 'group':
+            route = '{{ path('pumukitnewadmin_group_batch_delete', {'ids': '__ids__'})|raw }}';
             break;
     }
 
