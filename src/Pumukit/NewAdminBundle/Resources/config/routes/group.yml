@@ -43,3 +43,5 @@ pumukitnewadmin_group_list:
     methods: [GET, POST]
     defaults:
         _controller: pumukitnewadmin.controller.group:listAction
+        _sylius:
+            filterable: true
