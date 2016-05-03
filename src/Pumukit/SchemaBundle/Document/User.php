@@ -47,14 +47,14 @@ class User extends BaseUser
     /**
      * @var ArrayCollection $adminGroups
      *
-     * @MongoDB\ReferenceMany(targetDocument="Group")
+     * @MongoDB\ReferenceMany(targetDocument="Group", simple=true)
      */
     private $adminGroups;
 
     /**
      * @var ArrayCollection $memberGroups
      *
-     * @MongoDB\ReferenceMany(targetDocument="Group")
+     * @MongoDB\ReferenceMany(targetDocument="Group", simple=true)
      */
     private $memberGroups;
 
