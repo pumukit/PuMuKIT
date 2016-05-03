@@ -184,36 +184,112 @@ class UserController extends AdminController implements NewAdminController
     }
 
     /**
-     * Update groups form
+     * Update groups action
      */
     public function updateGroupsAction(Request $request)
     {
+        $user = $this->findOr404($request);
         if ('POST' === $request->getMethod()){
-            $values = $request->get('values');
-            if ('string' === gettype($values)){
-                $values = json_decode($values, true);
+            $addAdminGroups = $request->get('addAdminGroups');
+            if ('string' === gettype($addAdminGroups)){
+                $addAdminGroups = json_decode($addAdminGroups, true);
+            }
+            $addMemberGroups = $request->get('addMemberGroups');
+            if ('string' === gettype($addMemberGroups)){
+                $addMemberGroups = json_decode($addMemberGroups, true);
+            }
+            $deleteAdminGroups = $request->get('deleteAdminGroups');
+            if ('string' === gettype($deleteAdminGroups)){
+                $deleteAdminGroups = json_decode($deleteAdminGroups, true);
+            }
+            $deleteMemberGroups = $request->get('deleteMemberGroups');
+            if ('string' === gettype($deleteMemberGroups)){
+                $deleteMemberGroups = json_decode($deleteMemberGroups, true);
             }
 
-            // TODO
-            $this->modifyUserGroups($values);
+            $this->modifyUserGroups($user, $addAdminGroups, $addMemberGroups, $deleteAdminGroups, $deleteMemberGroups);
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_group_list'));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_user_list'));
+    }
+
+    /**
+     * Get user groups
+     */
+    public function getGroupsAction(Request $request)
+    {
+        $user = $this->findOr404($request);
+        $addAdminGroups = array();
+        $addMemberGroups = array();
+        $addAdminGroupsIds = array();
+        $addMemberGroupsIds = array();
+        $deleteAdminGroups = array();
+        $deleteMemberGroups = array();
+        if ('GET' === $request->getMethod()){
+            foreach ($user->getAdminGroups() as $group) {
+                $addAdminGroups[$group->getId()] = array('key' => $group->getKey(), 'name' => $group->getName());
+                $addAdminGroupsIds[] = new \MongoId($group->getId());
+            }
+            foreach ($user->getMemberGroups() as $group) {
+                $addMemberGroups[$group->getId()] = array('key' => $group->getKey(), 'name' => $group->getName());
+                $addMemberGroupsIds[] = new \MongoId($group->getId());
+            }
+            $adminGroupsToDelete = $this->getGroupsToDelete($addAdminGroupsIds);
+            $memberGroupsToDelete = $this->getGroupsToDelete($addMemberGroupsIds);
+            foreach ($adminGroupsToDelete as $group) {
+                $deleteAdminGroups[$group->getId()] = array('key' => $group->getKey(), 'name' => $group->getName());
+            }
+            foreach ($memberGroupsToDelete as $group) {
+                $deleteMemberGroups[$group->getId()] = array('key' => $group->getKey(), 'name' => $group->getName());
+            }
+        }
+
+        return new JsonResponse(array(
+                                      'addAdmin' => $addAdminGroups,
+                                      'addMember' => $addMemberGroups,
+                                      'deleteAdmin' => $deleteAdminGroups,
+                                      'deleteMember' => $deleteMemberGroups
+                                      ));
     }
 
     /**
      * Modify User Groups
      */
-    private function modifyUserGroups($values)
+    private function modifyUserGroups(User $user, $addAdminGroups = array(), $addMemberGroups = array(), $deleteAdminGroups = array(), $deleteMemberGroups = array())
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $groupRepo = $dm->getRepository('PumukitSchemaBundle:Group');
+        $userService = $this->get('pumukitschema.user');
 
-        foreach ($values as $id => $value){
-            // Add as admin
-            // Add as viewer
-            // Remove as admin
-            // Remove as viewer
+        foreach ($addAdminGroups as $addAdminGroup){
+            $groupId = split('_', $addAdminGroup)[2];
+            $group = $groupRepo->find($groupId);
+            if ($group) {
+                $userService->addAdminGroup($group, $user, false);
+            }
         }
+        foreach ($addMemberGroups as $addMemberGroup){
+            $groupId = split('_', $addMemberGroup)[2];
+            $group = $groupRepo->find($groupId);
+            if ($group) {
+                $userService->addMemberGroup($group, $user, false);
+            }
+        }
+        foreach ($deleteAdminGroups as $deleteAdminGroup){
+            $groupId = split('_', $deleteAdminGroup)[2];
+            $group = $groupRepo->find($groupId);
+            if ($group) {
+                $userService->deleteAdminGroup($group, $user, false);
+            }
+        }
+        foreach ($deleteMemberGroups as $deleteMemberGroup){
+            $groupId = split('_', $deleteMemberGroup)[2];
+            $group = $groupRepo->find($groupId);
+            if ($group) {
+                $userService->deleteMemberGroup($group, $user, false);
+            }
+        }
+
         $dm->flush();
     }
 
@@ -340,5 +416,16 @@ class UserController extends AdminController implements NewAdminController
         }
 
         return new JsonResponse(array('ok'));
+    }
+
+    private function getGroupsToDelete($ids = array())
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $groupRepo = $dm->getRepository('PumukitSchemaBundle:Group');
+        $groups = $groupRepo->createQueryBuilder()
+            ->field('_id')->notIn($ids)
+            ->getQuery()
+            ->execute();
+        return $groups;
     }
 }

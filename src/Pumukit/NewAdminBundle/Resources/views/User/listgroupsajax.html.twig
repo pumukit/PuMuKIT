@@ -1,10 +1,10 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADMIN_USERS')) %}
-{% for group in groups %}
+{% for group in groups if (mode == 'admin' and group not in user.getAdminGroups()) or (mode == 'member' and group not in user.getMemberGroups()) %}
 <a href="#" 
-   id="not_added_group_{{ group.id }}_{{ mode }}"
+   id="delete_group_{{ group.id }}_{{ mode }}"
    onclick="javascript:return select_group(this);" 
    ondblclick="javascript:add_group('{{ group.id }}', '{{ user.id }}', '{{ mode }}', '{{ group.key }}', '{{ group.name }}');"
-   class="list-group-item notload tag_li_parent_{{ mode }}">
+   class="list-group-item notload delete-group-item-{{ mode }}">
   <i class="mdi-social-group"></i>
   {{ group.key }} - {{ group.name }}
 </a>
