@@ -7,6 +7,7 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\User;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 
@@ -62,6 +63,7 @@ class PumukitAdminExtension extends \Twig_Extension
             new \Twig_SimpleFilter('mms_announce_text', array($this, 'getMmsAnnounceText')),
             new \Twig_SimpleFilter('filter_profiles', array($this, 'filterProfiles')),
             new \Twig_SimpleFilter('count_multimedia_objects', array($this, 'countMultimediaObjects')),
+            new \Twig_SimpleFilter('user_groups_text', array($this, 'getUserGroupsText')),
         );
     }
 
@@ -521,5 +523,36 @@ class PumukitAdminExtension extends \Twig_Extension
 
         $this->countMmobjsWithTag[$series->getId()][$tagCod] = $count;
         return $count;
+    }
+
+    /**
+     * Get user groups text.
+     *
+     * @param User $user
+     *
+     * @return string
+     */
+    public function getUserGroupsText(User $user)
+    {
+        $userGroupsText = '';
+        $adminGroups = $user->getAdminGroups();
+        $memberGroups = $user->getMemberGroups();
+        if (count($adminGroups) > 0) {
+            $userGroupsText .= "ADMIN GROUPS\n";
+            foreach ($adminGroups as $group) {
+                $userGroupsText .= "- ".$group->getName()."\n";
+            }
+        }
+        if (count($memberGroups) > 0) {
+            $userGroupsText .= "MEMBER GROUPS\n";
+            foreach ($memberGroups as $group) {
+                $userGroupsText .= "- ".$group->getName()."\n";
+            }
+        }
+        if ($userGroupsText === '') {
+            $userGroupsText = "This user does not belong to any group.\n";
+        }
+
+        return $userGroupsText;
     }
 }
