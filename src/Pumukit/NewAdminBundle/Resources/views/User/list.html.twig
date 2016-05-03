@@ -50,7 +50,7 @@
           </td>
           <td>
           <a href="{{ path('pumukitnewadmin_user_editgroups', {'id': user.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
-            <i class="mdi-social-group" data-toggle="tooltip" data-placement="right" title="Describe groups {# {{ oneseries|series_text }} #}({% trans %}Click to modify groups{% endtrans %})"></i>
+            <i class="mdi-social-group" data-toggle="tooltip" data-placement="right" title="{{ user|user_groups_text }}({% trans %}Click to modify groups{% endtrans %})"></i>
           </a>
           </td>
           <td>
