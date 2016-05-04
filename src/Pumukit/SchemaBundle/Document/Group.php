@@ -12,8 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Group
 {
-    const GROUP_ORIGIN_LOCAL = 'local';
-    const GROUP_ORIGIN_LDAP = 'ldap';
+    const ORIGIN_LOCAL = 'local';
+    const ORIGIN_LDAP = 'ldap';
 
     /**
      * @var string $id
@@ -44,7 +44,7 @@ class Group
      *
      * @MongoDB\String
      */
-    protected $origin = self::GROUP_ORIGIN_LOCAL;
+    protected $origin = self::ORIGIN_LOCAL;
 
     /**
      * @var date $createdAt
