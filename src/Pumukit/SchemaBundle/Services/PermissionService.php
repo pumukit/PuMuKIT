@@ -97,9 +97,6 @@ class PermissionService
             }
 
             $dependencies = $defaultDeps;
-            if(isset($externalPermission['dependencies']) && !isset($externalPermission['dependencies']['global'])){
-                var_dump($externalPermission);exit();
-            }
             if(isset($externalPermission['dependencies'])) {
                 $dependencies[PermissionProfile::SCOPE_GLOBAL] = $externalPermission['dependencies']['global'];
                 $dependencies[PermissionProfile::SCOPE_PERSONAL] = $externalPermission['dependencies']['personal'];
