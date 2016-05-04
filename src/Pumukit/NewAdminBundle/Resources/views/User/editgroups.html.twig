@@ -11,11 +11,18 @@
   <div class="panel panel-default">
     <div class="panel-heading">{{ mode|capitalize }}</div>
     <div class="panel-body" id="group_mode_{{ mode }}">
-      <div style="overflow:hidden;height: 230px">
+      <div class="row" style="margin-right: 0px; margin-left: 0px;">
+        <div style="width:430px; float: left;">
+          {% trans %}Groups{% endtrans %}:
+        </div>
+        <div style="width:390px; float: left;">
+          {% trans %}Selected Groups{% endtrans %}:
+        </div>
+      </div>
+      <div style="overflow:hidden;height: 240px">
 	    <div style="width:390px; float: left; height: 220px; border: 1px solid #bbb; overflow-x: hidden; overflow-y: scroll" class="tag list-group pmk-tag-tree" id="delete_groups_{{ mode }}">
-            {% include 'PumukitNewAdminBundle:User:listgroupsajax.html.twig' with {'user': user, 'mode': mode, 'groups': groups} %}
+          {% include 'PumukitNewAdminBundle:User:listgroupsajax.html.twig' with {'user': user, 'mode': mode, 'groups': groups} %}
 	    </div>
-
 	    <div style="float: left; padding: 110px 5px 0px">
 	      <a href="#" onclick="$('#add_groups_{{ mode }} > a.active').trigger('dblclick'); return false;">&#8592;</a>
 	      <a href="#" onclick="$('#delete_groups_{{ mode }} > a.active').trigger('dblclick'); return false;">&#8594;</a>
@@ -38,8 +45,8 @@
               </a>
 	        {% endfor %}
 	      </div>
-	    </div>
-	 </div>
+        </div>
+	  </div>
     </div>
   </div>
   {% endfor %}
