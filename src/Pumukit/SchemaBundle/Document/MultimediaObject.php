@@ -2514,6 +2514,16 @@ class MultimediaObject
     }
 
     /**
+     * Set groups
+     *
+     * @param ArrayCollection $groups
+     */
+    public function setGroups(ArrayCollection $groups)
+    {
+        $this->groups = $groups;
+    }
+
+    /**
      * Get groups
      *
      * @return ArrayCollection
