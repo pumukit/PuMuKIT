@@ -62,6 +62,98 @@ class GroupController extends AdminController implements NewAdminController
     }
 
     /**
+     * Create Action
+     * Overwrite to use group service
+     * to check if exists and dispatch event
+     *
+     * @param Request $request
+     *
+     * @return RedirectResponse|Response
+     */
+    public function createAction(Request $request)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $config = $this->getConfiguration();
+
+        $group = $this->createNew();
+        $form = $this->getForm($group);
+
+        if ($form->handleRequest($request)->isValid()) {
+            try {
+                $group = $this->get('pumukitschema.group')->create($group);
+            } catch (\Exception $e) {
+                return new JsonResponse(array($e->getMessage()), Response::HTTP_BAD_REQUEST);
+            }
+
+            if ($this->config->isApiRequest()) {
+                return $this->handleView($this->view($group, 201));
+            }
+
+            if (null === $group) {
+              return $this->redirect($this->generateUrl('pumukitnewadmin_group_list'));
+            }
+
+            return $this->redirect($this->generateUrl('pumukitnewadmin_group_list'));
+        }
+
+        if ($this->config->isApiRequest()) {
+            return $this->handleView($this->view($form));
+        }
+
+        return $this->render("PumukitNewAdminBundle:Group:create.html.twig",
+                             array(
+                                   'group' => $group,
+                                   'form' => $form->createView()
+                                   ));
+    }
+
+    /**
+     * Update Action
+     * Overwrite to avoid updating groups
+     * from ldap and to use group service
+     * to update group and dispatch event
+     *
+     * @param Request $request
+     *
+     * @return RedirectResponse|Response
+     */
+    public function updateAction(Request $request)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $config = $this->getConfiguration();
+        $group = $this->findOr404($request);
+        if ($group->getOrigin() == Group::ORIGIN_LDAP) {
+            return new Response("Not allowed to update LDAP Group", Response::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        $form = $this->getForm($group);
+
+        if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+            try {
+                $group = $this->get('pumukitschema.group')->update($group);
+            } catch (\Exception $e) {
+                return new JsonResponse(array("status" => $e->getMessage()), Response::HTTP_BAD_REQUEST);
+            }
+
+            if ($this->config->isApiRequest()) {
+                return $this->handleView($this->view($group, 204));
+            }
+
+            return $this->redirect($this->generateUrl('pumukitnewadmin_group_list'));
+        }
+
+        if ($this->config->isApiRequest()) {
+            return $this->handleView($this->view($form));
+        }
+
+        return $this->render("PumukitNewAdminBundle:Group:update.html.twig",
+                             array(
+                                   'group' => $group,
+                                   'form' => $form->createView()
+                                   ));
+    }
+
+    /**
      * Delete Group
      *
      * @Template("PumukitNewAdminBundle:Group:list.html")
