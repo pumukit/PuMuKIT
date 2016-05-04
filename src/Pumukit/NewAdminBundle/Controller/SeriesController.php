@@ -114,6 +114,9 @@ class SeriesController extends AdminController implements NewAdminController
 
         $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
 
+        $groupService = $this->get('pumukitschema.group');
+        $allGroups = $groupService->findAll();
+
         try {
             $personalScopeRole = $personService->getPersonalScopeRole();
         } catch (\Exception $e) {
@@ -156,7 +159,8 @@ class SeriesController extends AdminController implements NewAdminController
                                    'parent_tags'              => $parentTags,
                                    'exclude_fields'           => $exclude_fields,
                                    'show_later_fields'        => $show_later_fields,
-                                   'template'                 => '_template'
+                                   'template'                 => '_template',
+                                   'groups'                   => $allGroups
                                    )
                              );
     }

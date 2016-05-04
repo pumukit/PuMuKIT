@@ -175,6 +175,9 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $allBundles = $this->container->getParameter('kernel.bundles');
         $opencastExists = array_key_exists('PumukitOpencastBundle', $allBundles);
 
+        $groupService = $this->get('pumukitschema.group');
+        $allGroups = $groupService->findAll();
+
         return array(
                      'mm'                       => $resource,
                      'form_meta'                => $formMeta->createView(),
@@ -191,7 +194,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                      'template'                 => $template,
                      'active_editor'            => $activeEditor,
                      'opencast_exists'          => $opencastExists,
-                     'not_change_pub_channel'   => $notChangePubChannel
+                     'not_change_pub_channel'   => $notChangePubChannel,
+                     'groups'                   => $allGroups
                      );
     }
 
@@ -224,8 +228,10 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $factoryService = $this->get('pumukitschema.factory');
         $personService = $this->get('pumukitschema.person');
+        $groupService = $this->get('pumukitschema.group');
 
         $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
+        $allGroups = $groupService->findAll();
 
         try {
             $personalScopeRole = $personService->getPersonalScopeRole();
@@ -302,7 +308,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                                    'pub_channels'             => $pubChannelsTags,
                                    'pub_decisions'            => $pubDecisionsTags,
                                    'parent_tags'              => $parentTags,
-                                   'not_change_pub_channel'   => $notChangePubChannel
+                                   'not_change_pub_channel'   => $notChangePubChannel,
+                                   'groups'                   => $allGroups
                                    )
                              );
     }
@@ -382,6 +389,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         if (null === $roles){
             throw new \Exception('Not found any role.');
         }
+        $groupService = $this->get('pumukitschema.group');
+        $allGroups = $groupService->findAll();
 
         return $this->render('PumukitNewAdminBundle:MultimediaObject:edit.html.twig',
                              array(
@@ -395,7 +404,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                                    'pub_channels'             => $pubChannelsTags,
                                    'pub_decisions'            => $pubDecisionsTags,
                                    'parent_tags'              => $parentTags,
-                                   'not_change_pub_channel'   => $notChangePubChannel
+                                   'not_change_pub_channel'   => $notChangePubChannel,
+                                   'groups'                   => $allGroups
                                    )
                              );
     }
