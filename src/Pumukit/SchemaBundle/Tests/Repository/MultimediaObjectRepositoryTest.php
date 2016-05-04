@@ -17,6 +17,7 @@ use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\Group;
 
 class MultimediaObjectRepositoryTest extends WebTestCase
 {
@@ -26,6 +27,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
     private $factoryService;
     private $mmsPicService;
     private $tagService;
+    private $groupRepo;
 
     public function __construct()
     {
@@ -42,6 +44,8 @@ class MultimediaObjectRepositoryTest extends WebTestCase
             ->get('pumukitschema.mmspic');
         $this->tagService = static::$kernel->getContainer()
             ->get('pumukitschema.tag');
+        $this->groupRepo = $this->dm
+            ->getRepository('PumukitSchemaBundle:Group');
     }
 
     public function setUp()
@@ -60,6 +64,8 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')
             ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')
+            ->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:Group')
             ->remove(array());
         $this->dm->flush();
     }
@@ -2062,6 +2068,54 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertFalse(in_array($prototype, $multimediaObjects));
     }
 
+    public function testMultimediaObjectGroups()
+    {
+        $this->assertEquals(0, count($this->groupRepo->findAll()));
+
+        $key1 = 'Group1';
+        $name1 = 'Group 1';
+        $group1 = $this->createGroup($key1, $name1);
+
+        $this->assertEquals(1, count($this->groupRepo->findAll()));
+
+        $key2 = 'Group2';
+        $name2 = 'Group 2';
+        $group2 = $this->createGroup($key2, $name2);
+
+        $this->assertEquals(2, count($this->groupRepo->findAll()));
+
+        $multimediaObject = new MultimediaObject();
+        $multimediaObject->setTitle('test');
+        $multimediaObject->addGroup($group1);
+
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        $this->assertTrue($multimediaObject->containsGroup($group1));
+        $this->assertFalse($multimediaObject->containsGroup($group2));
+        $this->assertEquals(1, $multimediaObject->getGroups()->count());
+
+        $multimediaObject->addGroup($group2);
+
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        $this->assertTrue($multimediaObject->containsGroup($group1));
+        $this->assertTrue($multimediaObject->containsGroup($group2));
+        $this->assertEquals(2, $multimediaObject->getGroups()->count());
+
+        $multimediaObject->removeGroup($group1);
+
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        $this->assertFalse($multimediaObject->containsGroup($group1));
+        $this->assertTrue($multimediaObject->containsGroup($group2));
+        $this->assertEquals(1, $multimediaObject->getGroups()->count());
+
+        $this->assertEquals(2, count($this->groupRepo->findAll()));
+    }
+
     private function createPerson($name)
     {
         $email = $name.'@mail.es';
@@ -2188,5 +2242,18 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->flush();
 
         return $broadcast;
+    }
+
+    private function createGroup($key='Group1', $name='Group 1')
+    {
+        $group = new Group();
+
+        $group->setKey($key);
+        $group->setName($name);
+
+        $this->dm->persist($group);
+        $this->dm->flush();
+
+        return $group;
     }
 }

@@ -95,6 +95,13 @@ class MultimediaObject
     private $links;
 
     /**
+     * @var ArrayCollection $groups
+     *
+     * @MongoDB\ReferenceMany(targetDocument="Group", simple=true)
+     */
+    private $groups;
+
+    /**
      * @var int $rank
      *
      * @MongoDB\Int
@@ -217,6 +224,7 @@ class MultimediaObject
         $this->links = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->people = new ArrayCollection();
+        $this->groups = new ArrayCollection();
     }
 
     public function __toString()
@@ -2470,6 +2478,52 @@ class MultimediaObject
     }
 
     // End of people section
+
+    // Group section
+
+    /**
+     * Contains group
+     *
+     * @param Group $group
+     *
+     * @return boolean
+     */
+    public function containsgroup(Group $group)
+    {
+        return $this->groups->contains($group);
+    }
+
+    /**
+     * Add admin group
+     *
+     * @param Group $group
+     */
+    public function addgroup(Group $group)
+    {
+        return $this->groups->add($group);
+    }
+
+    /**
+     * Remove admin group
+     *
+     * @param Group $group
+     */
+    public function removegroup(Group $group)
+    {
+        $this->groups->removeElement($group);
+    }
+
+    /**
+     * Get groups
+     *
+     * @return ArrayCollection
+     */
+    public function getgroups()
+    {
+        return $this->groups;
+    }
+
+    // End of Group section
 
     /**  
      * Update duration
