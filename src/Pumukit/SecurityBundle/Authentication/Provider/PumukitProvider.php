@@ -80,7 +80,7 @@ class PumukitProvider implements AuthenticationProviderInterface
                 throw new \Exception('Unable to assign a Permission Profile to the new User. There is no default Permission Profile');
             }
             $user->setPermissionProfile($defaultPermissionProfile);
-            $user->setOrigin('cas');
+            $user->setOrigin(User::ORIGIN_LDAP);
             $user->setEnabled(true);
 
             $userService->create($user);
