@@ -386,7 +386,7 @@ class UserService
         }
         $user->setPermissionProfile($defaultPermissionProfile);
         $user->setEnabled($enabled);
-        //$user->setOrigin('cas');
+        //$user->setOrigin(User::ORIGIN_LDAP);
 
         return $user;
     }
@@ -553,5 +553,21 @@ class UserService
             }
             $this->dispatcher->dispatchUpdate($user);
         }
+    }
+
+    /**
+     * Is allowed to modify group
+     *
+     * @param User $user
+     * @param Group $group
+     * @return boolean
+     */
+    public function isAllowedToModifyUserGroup(User $user, Group $group)
+    {
+        if (($user->getOrigin() === User::ORIGIN_LOCAL) && ($group->getOrigin() === Group::ORIGIN_LOCAL)) {
+            return true;
+        }
+
+        return false;
     }
 }

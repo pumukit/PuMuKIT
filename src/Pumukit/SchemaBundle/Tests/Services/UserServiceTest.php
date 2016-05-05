@@ -718,4 +718,38 @@ class UserServiceTest extends WebTestCase
         $this->assertFalse($user->containsMemberGroup($group2));
         $this->assertFalse($user->containsMemberGroup($group3));
     }
+
+    public function testIsAllowedToModifyUserGroup()
+    {
+        $localGroup = new Group();
+        $localGroup->setKey('local_key');
+        $localGroup->setName('Local Group');
+        $localGroup->setOrigin(Group::ORIGIN_LOCAL);
+
+        $ldapGroup = new Group();
+        $ldapGroup->setKey('ldap_key');
+        $ldapGroup->setName('LDAP Group');
+        $ldapGroup->setOrigin(Group::ORIGIN_LDAP);
+
+        $localUser = new User();
+        $localUser->setUsername('local_user');
+        $localUser->setEmail('local_user@mail.com');
+        $localUser->setOrigin(User::ORIGIN_LOCAL);
+
+        $ldapUser = new User();
+        $ldapUser->setUsername('ldap_user');
+        $ldapUser->setEmail('ldap_user@mail.com');
+        $ldapUser->setOrigin(User::ORIGIN_LDAP);
+
+        $this->dm->persist($localGroup);
+        $this->dm->persist($ldapGroup);
+        $this->dm->persist($localUser);
+        $this->dm->persist($ldapUser);
+        $this->dm->flush();
+
+        $this->assertTrue($this->userService->isAllowedToModifyUserGroup($localUser, $localGroup));
+        $this->assertFalse($this->userService->isAllowedToModifyUserGroup($ldapUser, $ldapGroup));
+        $this->assertFalse($this->userService->isAllowedToModifyUserGroup($localUser, $ldapGroup));
+        $this->assertFalse($this->userService->isAllowedToModifyUserGroup($ldapUser, $localGroup));
+    }
 }
