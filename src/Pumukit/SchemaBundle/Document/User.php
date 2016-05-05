@@ -13,6 +13,9 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class User extends BaseUser
 {
+    const ORIGIN_LOCAL = 'local';
+    const ORIGIN_LDAP = 'ldap';
+
     /**
      * @var int $id
      *
@@ -42,7 +45,7 @@ class User extends BaseUser
      *
      * @MongoDB\String
      */
-    protected $origin = 'local';
+    protected $origin = self::ORIGIN_LOCAL;
 
     /**
      * @var ArrayCollection $adminGroups
