@@ -752,4 +752,31 @@ class UserServiceTest extends WebTestCase
         $this->assertFalse($this->userService->isAllowedToModifyUserGroup($localUser, $ldapGroup));
         $this->assertFalse($this->userService->isAllowedToModifyUserGroup($ldapUser, $localGroup));
     }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  is from LDAP and can not be modified
+     */
+    public function testUpdateException()
+    {
+        $permissions1 = array(Permission::ACCESS_DASHBOARD, Permission::ACCESS_ROLES);
+        $permissionProfile1 = new PermissionProfile();
+        $permissionProfile1->setPermissions($permissions1);
+        $permissionProfile1->setName('permissionprofile1');
+        $permissionProfile1->setScope(PermissionProfile::SCOPE_PERSONAL);
+        $this->dm->persist($permissionProfile1);
+        $this->dm->flush();
+
+        $username = 'test';
+        $email = 'test@mail.com';
+        $user = new User();
+        $user->setUsername($username);
+        $user->setEmail($email);
+        $user->setPermissionProfile($permissionProfile1);
+        $user->setOrigin(User::ORIGIN_LDAP);
+
+        $user = $this->userService->create($user);
+        $user->setUsername('test2');
+        $user = $this->userService->update($user);
+    }
 }

@@ -175,6 +175,9 @@ class UserController extends AdminController implements NewAdminController
     public function editGroupsAction(Request $request)
     {
         $user = $this->findOr404($request);
+        if ($user->getOrigin() === User::ORIGIN_LDAP) {
+            return new Response("Not allowed to update this user '".$user->getUsername()."' from LDAP", Response::HTTP_BAD_REQUEST);
+        }
         $groups = $this->get('pumukitschema.group')->findAll();
 
         return array(
@@ -189,6 +192,9 @@ class UserController extends AdminController implements NewAdminController
     public function updateGroupsAction(Request $request)
     {
         $user = $this->findOr404($request);
+        if ($user->getOrigin() === User::ORIGIN_LDAP) {
+            return new Response("Not allowed to update this user '".$user->getUsername()."' from LDAP", Response::HTTP_BAD_REQUEST);
+        }
         if ('POST' === $request->getMethod()){
             $addAdminGroups = $request->get('addAdminGroups');
             if ('string' === gettype($addAdminGroups)){
@@ -333,6 +339,9 @@ class UserController extends AdminController implements NewAdminController
             if (($userToUpdate === $this->getUniqueAdminUser()) && (!$userToUpdate->isSuperAdmin())) {
                 return new Response("Can not update this unique admin user '".$userToUpdate->getUsername()."'", 409);
             }
+        }
+        if ($userToUpdate->getOrigin() === User::ORIGIN_LDAP) {
+            return new Response("Not allowed to update this user '".$userToUpdate->getUsername()."' from LDAP", Response::HTTP_BAD_REQUEST);
         }
 
         return true;
