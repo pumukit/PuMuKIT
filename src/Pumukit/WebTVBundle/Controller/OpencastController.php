@@ -67,23 +67,21 @@ class OpencastController extends PlayerController implements WebTVController
         $isMobileDevice = ($mobileDetectorService->isMobile($userAgent) || $mobileDetectorService->isTablet($userAgent));
         $isOldBrowser = $userAgentParserService->isOldBrowser($userAgent);
 
-        if (!$isMobileDevice) {
-            if ($response instanceof Response) {
-                return $response;
-            }
-
-            $this->updateBreadcrumbs($multimediaObject);
-
-            $editorChapters = $this->getChapterMarks($multimediaObject);
-
-            return array(
-                'intro' => $this->getIntro($request->query->get('intro')),
-                'multimediaObject' => $multimediaObject,
-                'is_old_browser' => $isOldBrowser,
-                'is_mobile_device' => $isMobileDevice,
-                'editor_chapters' => $editorChapters,
-                'autostart' => $request->query->get('autostart', 'true')
-            );
+        if ($response instanceof Response) {
+            return $response;
         }
+
+        $this->updateBreadcrumbs($multimediaObject);
+
+        $editorChapters = $this->getChapterMarks($multimediaObject);
+
+        return array(
+            'intro' => $this->getIntro($request->query->get('intro')),
+            'multimediaObject' => $multimediaObject,
+            'is_old_browser' => $isOldBrowser,
+            'is_mobile_device' => $isMobileDevice,
+            'editor_chapters' => $editorChapters,
+            'autostart' => $request->query->get('autostart', 'true')
+        );
     }
 }
