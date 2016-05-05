@@ -320,7 +320,7 @@
       </trans-unit>
       <trans-unit id="1fdfc5c8c6cd57405ff05809a180ae8b" resname="Select by date range">
         <source>Select by date range</source>
-        <target>Selección por rango de fechas</target>
+        <target>Selección por fechas</target>
       </trans-unit>
       <trans-unit id="ed36a1ef76a59ee3f15180e0441188ad" resname="Any">
         <source>Any</source>
