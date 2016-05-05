@@ -89,7 +89,7 @@
         </div>
       </div>
       <div id="simple-date-search" {{ activated?'style="display:none"':'' }}>
-        <div class="col-md-6 col-xs-12">
+        <div class="col-md-12 col-xs-12">
           <label for="year">{% trans %}Year{% endtrans %}</label>
           <a style="padding-left:20px;cursor:pointer;" onclick="toggleDateSelect()">{% trans %}Select by date range {% endtrans %}</a>
           <select id='year' name='year' class='form-control' onchange="submitForm(this);" {{ activated?'disabled':''}}>
