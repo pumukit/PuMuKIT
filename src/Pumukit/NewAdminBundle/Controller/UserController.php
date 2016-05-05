@@ -196,19 +196,19 @@ class UserController extends AdminController implements NewAdminController
             return new Response("Not allowed to update this user '".$user->getUsername()."' from LDAP", Response::HTTP_BAD_REQUEST);
         }
         if ('POST' === $request->getMethod()){
-            $addAdminGroups = $request->get('addAdminGroups');
+            $addAdminGroups = $request->get('addAdminGroups', array());
             if ('string' === gettype($addAdminGroups)){
                 $addAdminGroups = json_decode($addAdminGroups, true);
             }
-            $addMemberGroups = $request->get('addMemberGroups');
+            $addMemberGroups = $request->get('addMemberGroups', array());
             if ('string' === gettype($addMemberGroups)){
                 $addMemberGroups = json_decode($addMemberGroups, true);
             }
-            $deleteAdminGroups = $request->get('deleteAdminGroups');
+            $deleteAdminGroups = $request->get('deleteAdminGroups', array());
             if ('string' === gettype($deleteAdminGroups)){
                 $deleteAdminGroups = json_decode($deleteAdminGroups, true);
             }
-            $deleteMemberGroups = $request->get('deleteMemberGroups');
+            $deleteMemberGroups = $request->get('deleteMemberGroups', array());
             if ('string' === gettype($deleteMemberGroups)){
                 $deleteMemberGroups = json_decode($deleteMemberGroups, true);
             }
@@ -268,28 +268,28 @@ class UserController extends AdminController implements NewAdminController
         $userService = $this->get('pumukitschema.user');
 
         foreach ($addAdminGroups as $addAdminGroup){
-            $groupId = split('_', $addAdminGroup)[2];
+            $groupId = explode('_', $addAdminGroup)[2];
             $group = $groupRepo->find($groupId);
             if ($group) {
                 $userService->addAdminGroup($group, $user, false);
             }
         }
         foreach ($addMemberGroups as $addMemberGroup){
-            $groupId = split('_', $addMemberGroup)[2];
+            $groupId = explode('_', $addMemberGroup)[2];
             $group = $groupRepo->find($groupId);
             if ($group) {
                 $userService->addMemberGroup($group, $user, false);
             }
         }
         foreach ($deleteAdminGroups as $deleteAdminGroup){
-            $groupId = split('_', $deleteAdminGroup)[2];
+            $groupId = explode('_', $deleteAdminGroup)[2];
             $group = $groupRepo->find($groupId);
             if ($group) {
                 $userService->deleteAdminGroup($group, $user, false);
             }
         }
         foreach ($deleteMemberGroups as $deleteMemberGroup){
-            $groupId = split('_', $deleteMemberGroup)[2];
+            $groupId = explode('_', $deleteMemberGroup)[2];
             $group = $groupRepo->find($groupId);
             if ($group) {
                 $userService->deleteMemberGroup($group, $user, false);
