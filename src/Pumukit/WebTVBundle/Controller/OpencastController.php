@@ -19,10 +19,27 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class OpencastController extends PlayerController implements WebTVController
 {
     /**
-     * @Route("/video_opencast/{id}", name="pumukit_webtv_opencast_index", defaults={"show_hide": true})
      * @Template("PumukitWebTVBundle:MultimediaObject:index.html.twig")
      */
-    public function indexAction( MultimediaObject $multimediaObject, Request $request ){
+    public function magicAction( MultimediaObject $multimediaObject, Request $request ) {
+        $array = $this->doAction($multimediaObject, $request);
+        $array['magic_url'] = true;
+        return $this->render('PumukitWebTVBundle:MultimediaObject:index.html.twig',
+                             $array
+        );
+    }
+
+    /**
+     * @Template("PumukitWebTVBundle:MultimediaObject:index.html.twig")
+     */
+    public function indexAction( MultimediaObject $multimediaObject, Request $request ) {
+        $array = $this->doAction($multimediaObject, $request);
+        return $this->render('PumukitWebTVBundle:MultimediaObject:index.html.twig',
+                             $array
+        );
+    }
+
+    public function doAction( MultimediaObject $multimediaObject, Request $request ){
         $response = $this->testBroadcast($multimediaObject, $request);
         if ($response instanceof Response) {
             return $response;
@@ -59,12 +76,14 @@ class OpencastController extends PlayerController implements WebTVController
 
             $editorChapters = $this->getChapterMarks($multimediaObject);
 
-            return $this->render('PumukitWebTVBundle:MultimediaObject:index.html.twig',
-                                 array('intro' => $this->getIntro($request->query->get('intro')),
-                                       'multimediaObject' => $multimediaObject,
-                                       'is_old_browser' => $isOldBrowser,
-                                       'is_mobile_device' => $isMobileDevice,
-                                       'editor_chapters' => $editorChapters,));
+            return array(
+                'intro' => $this->getIntro($request->query->get('intro')),
+                'multimediaObject' => $multimediaObject,
+                'is_old_browser' => $isOldBrowser,
+                'is_mobile_device' => $isMobileDevice,
+                'editor_chapters' => $editorChapters,
+                'autostart' => $request->query->get('autostart', 'true')
+            );
         }
     }
 }
