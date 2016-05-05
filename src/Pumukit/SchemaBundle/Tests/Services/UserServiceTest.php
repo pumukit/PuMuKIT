@@ -779,4 +779,454 @@ class UserServiceTest extends WebTestCase
         $user->setUsername('test2');
         $user = $this->userService->update($user);
     }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  Not allowed to add group
+     */
+    public function testExceptionAddGroupLocalLdap()
+    {
+        $localGroup = new Group();
+        $localGroup->setKey('local_key');
+        $localGroup->setName('Local Group');
+        $localGroup->setOrigin(Group::ORIGIN_LOCAL);
+
+        $ldapUser = new User();
+        $ldapUser->setUsername('ldap_user');
+        $ldapUser->setEmail('ldap_user@mail.com');
+        $ldapUser->setOrigin(User::ORIGIN_LDAP);
+
+        $this->dm->persist($localGroup);
+        $this->dm->persist($ldapUser);
+        $this->dm->flush();
+
+        $this->userService->addGroup($localGroup, $ldapUser);
+    }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  Not allowed to add group
+     */
+    public function testExceptionAddGroupLdapLocal()
+    {
+        $ldapGroup = new Group();
+        $ldapGroup->setKey('ldap_key');
+        $ldapGroup->setName('LDAP Group');
+        $ldapGroup->setOrigin(Group::ORIGIN_LDAP);
+
+        $localUser = new User();
+        $localUser->setUsername('local_user');
+        $localUser->setEmail('local_user@mail.com');
+        $localUser->setOrigin(User::ORIGIN_LOCAL);
+
+        $this->dm->persist($ldapGroup);
+        $this->dm->persist($localUser);
+        $this->dm->flush();
+
+        $this->userService->addGroup($ldapGroup, $localUser);
+    }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  Not allowed to add group
+     */
+    public function testExceptionAddGroupLdapLdap()
+    {
+        $ldapGroup = new Group();
+        $ldapGroup->setKey('ldap_key');
+        $ldapGroup->setName('LDAP Group');
+        $ldapGroup->setOrigin(Group::ORIGIN_LDAP);
+
+        $ldapUser = new User();
+        $ldapUser->setUsername('ldap_user');
+        $ldapUser->setEmail('ldap_user@mail.com');
+        $ldapUser->setOrigin(User::ORIGIN_LDAP);
+
+        $this->dm->persist($ldapGroup);
+        $this->dm->persist($ldapUser);
+        $this->dm->flush();
+
+        $this->userService->addGroup($ldapGroup, $ldapUser);
+    }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  Not allowed to add admin group
+     */
+    public function testExceptionAddAdminGroupLocalLdap()
+    {
+        $localGroup = new Group();
+        $localGroup->setKey('local_key');
+        $localGroup->setName('Local Group');
+        $localGroup->setOrigin(Group::ORIGIN_LOCAL);
+
+        $ldapUser = new User();
+        $ldapUser->setUsername('ldap_user');
+        $ldapUser->setEmail('ldap_user@mail.com');
+        $ldapUser->setOrigin(User::ORIGIN_LDAP);
+
+        $this->dm->persist($localGroup);
+        $this->dm->persist($ldapUser);
+        $this->dm->flush();
+
+        $this->userService->addAdminGroup($localGroup, $ldapUser);
+    }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  Not allowed to add admin group
+     */
+    public function testExceptionAddAdminGroupLdapLocal()
+    {
+        $ldapGroup = new Group();
+        $ldapGroup->setKey('ldap_key');
+        $ldapGroup->setName('LDAP Group');
+        $ldapGroup->setOrigin(Group::ORIGIN_LDAP);
+
+        $localUser = new User();
+        $localUser->setUsername('local_user');
+        $localUser->setEmail('local_user@mail.com');
+        $localUser->setOrigin(User::ORIGIN_LOCAL);
+
+        $this->dm->persist($ldapGroup);
+        $this->dm->persist($localUser);
+        $this->dm->flush();
+
+        $this->userService->addAdminGroup($ldapGroup, $localUser);
+    }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  Not allowed to add admin group
+     */
+    public function testExceptionAddAdminGroupLdapLdap()
+    {
+        $ldapGroup = new Group();
+        $ldapGroup->setKey('ldap_key');
+        $ldapGroup->setName('LDAP Group');
+        $ldapGroup->setOrigin(Group::ORIGIN_LDAP);
+
+        $ldapUser = new User();
+        $ldapUser->setUsername('ldap_user');
+        $ldapUser->setEmail('ldap_user@mail.com');
+        $ldapUser->setOrigin(User::ORIGIN_LDAP);
+
+        $this->dm->persist($ldapGroup);
+        $this->dm->persist($ldapUser);
+        $this->dm->flush();
+
+        $this->userService->addAdminGroup($ldapGroup, $ldapUser);
+    }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  Not allowed to add member group
+     */
+    public function testExceptionAddMemberGroupLocalLdap()
+    {
+        $localGroup = new Group();
+        $localGroup->setKey('local_key');
+        $localGroup->setName('Local Group');
+        $localGroup->setOrigin(Group::ORIGIN_LOCAL);
+
+        $ldapUser = new User();
+        $ldapUser->setUsername('ldap_user');
+        $ldapUser->setEmail('ldap_user@mail.com');
+        $ldapUser->setOrigin(User::ORIGIN_LDAP);
+
+        $this->dm->persist($localGroup);
+        $this->dm->persist($ldapUser);
+        $this->dm->flush();
+
+        $this->userService->addMemberGroup($localGroup, $ldapUser);
+    }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  Not allowed to add member group
+     */
+    public function testExceptionAddMemberGroupLdapLocal()
+    {
+        $ldapGroup = new Group();
+        $ldapGroup->setKey('ldap_key');
+        $ldapGroup->setName('LDAP Group');
+        $ldapGroup->setOrigin(Group::ORIGIN_LDAP);
+
+        $localUser = new User();
+        $localUser->setUsername('local_user');
+        $localUser->setEmail('local_user@mail.com');
+        $localUser->setOrigin(User::ORIGIN_LOCAL);
+
+        $this->dm->persist($ldapGroup);
+        $this->dm->persist($localUser);
+        $this->dm->flush();
+
+        $this->userService->addMemberGroup($ldapGroup, $localUser);
+    }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  Not allowed to add member group
+     */
+    public function testExceptionAddMemberGroupLdapLdap()
+    {
+        $ldapGroup = new Group();
+        $ldapGroup->setKey('ldap_key');
+        $ldapGroup->setName('LDAP Group');
+        $ldapGroup->setOrigin(Group::ORIGIN_LDAP);
+
+        $ldapUser = new User();
+        $ldapUser->setUsername('ldap_user');
+        $ldapUser->setEmail('ldap_user@mail.com');
+        $ldapUser->setOrigin(User::ORIGIN_LDAP);
+
+        $this->dm->persist($ldapGroup);
+        $this->dm->persist($ldapUser);
+        $this->dm->flush();
+
+        $this->userService->addMemberGroup($ldapGroup, $ldapUser);
+    }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  Not allowed to delete group
+     */
+    public function testExceptionDeleteGroupLocalLdap()
+    {
+        $localGroup = new Group();
+        $localGroup->setKey('local_key');
+        $localGroup->setName('Local Group');
+        $localGroup->setOrigin(Group::ORIGIN_LOCAL);
+
+        $ldapUser = new User();
+        $ldapUser->setUsername('ldap_user');
+        $ldapUser->setEmail('ldap_user@mail.com');
+        $ldapUser->setOrigin(User::ORIGIN_LDAP);
+
+        $this->dm->persist($localGroup);
+        $this->dm->persist($ldapUser);
+        $this->dm->flush();
+
+        $ldapUser->addAdminGroup($localGroup);
+        $this->dm->persist($ldapUser);
+        $this->dm->flush();
+
+        $this->userService->deleteGroup($localGroup, $ldapUser);
+    }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  Not allowed to delete group
+     */
+    public function testExceptionDeleteGroupLdapLocal()
+    {
+        $ldapGroup = new Group();
+        $ldapGroup->setKey('ldap_key');
+        $ldapGroup->setName('LDAP Group');
+        $ldapGroup->setOrigin(Group::ORIGIN_LDAP);
+
+        $localUser = new User();
+        $localUser->setUsername('local_user');
+        $localUser->setEmail('local_user@mail.com');
+        $localUser->setOrigin(User::ORIGIN_LOCAL);
+
+        $this->dm->persist($ldapGroup);
+        $this->dm->persist($localUser);
+        $this->dm->flush();
+
+        $localUser->addAdminGroup($ldapGroup);
+        $this->dm->persist($localUser);
+        $this->dm->flush();
+
+        $this->userService->deleteGroup($ldapGroup, $localUser);
+    }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  Not allowed to delete group
+     */
+    public function testExceptionDeleteGroupLdapLdap()
+    {
+        $ldapGroup = new Group();
+        $ldapGroup->setKey('ldap_key');
+        $ldapGroup->setName('LDAP Group');
+        $ldapGroup->setOrigin(Group::ORIGIN_LDAP);
+
+        $ldapUser = new User();
+        $ldapUser->setUsername('ldap_user');
+        $ldapUser->setEmail('ldap_user@mail.com');
+        $ldapUser->setOrigin(User::ORIGIN_LDAP);
+
+        $this->dm->persist($ldapGroup);
+        $this->dm->persist($ldapUser);
+        $this->dm->flush();
+
+        $ldapUser->addAdminGroup($ldapGroup);
+        $this->dm->persist($ldapUser);
+        $this->dm->flush();
+
+        $this->userService->deleteGroup($ldapGroup, $ldapUser);
+    }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  Not allowed to delete admin group
+     */
+    public function testExceptionDeleteAdminGroupLocalLdap()
+    {
+        $localGroup = new Group();
+        $localGroup->setKey('local_key');
+        $localGroup->setName('Local Group');
+        $localGroup->setOrigin(Group::ORIGIN_LOCAL);
+
+        $ldapUser = new User();
+        $ldapUser->setUsername('ldap_user');
+        $ldapUser->setEmail('ldap_user@mail.com');
+        $ldapUser->setOrigin(User::ORIGIN_LDAP);
+
+        $this->dm->persist($localGroup);
+        $this->dm->persist($ldapUser);
+        $this->dm->flush();
+
+        $ldapUser->addAdminGroup($localGroup);
+        $this->dm->persist($ldapUser);
+        $this->dm->flush();
+
+        $this->userService->deleteAdminGroup($localGroup, $ldapUser);
+    }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  Not allowed to delete admin group
+     */
+    public function testExceptionDeleteAdminGroupLdapLocal()
+    {
+        $ldapGroup = new Group();
+        $ldapGroup->setKey('ldap_key');
+        $ldapGroup->setName('LDAP Group');
+        $ldapGroup->setOrigin(Group::ORIGIN_LDAP);
+
+        $localUser = new User();
+        $localUser->setUsername('local_user');
+        $localUser->setEmail('local_user@mail.com');
+        $localUser->setOrigin(User::ORIGIN_LOCAL);
+
+        $this->dm->persist($ldapGroup);
+        $this->dm->persist($localUser);
+        $this->dm->flush();
+
+        $localUser->addAdminGroup($ldapGroup);
+        $this->dm->persist($localUser);
+        $this->dm->flush();
+
+        $this->userService->deleteAdminGroup($ldapGroup, $localUser);
+    }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  Not allowed to delete admin group
+     */
+    public function testExceptionDeleteAdminGroupLdapLdap()
+    {
+        $ldapGroup = new Group();
+        $ldapGroup->setKey('ldap_key');
+        $ldapGroup->setName('LDAP Group');
+        $ldapGroup->setOrigin(Group::ORIGIN_LDAP);
+
+        $ldapUser = new User();
+        $ldapUser->setUsername('ldap_user');
+        $ldapUser->setEmail('ldap_user@mail.com');
+        $ldapUser->setOrigin(User::ORIGIN_LDAP);
+
+        $this->dm->persist($ldapGroup);
+        $this->dm->persist($ldapUser);
+        $this->dm->flush();
+
+        $ldapUser->addAdminGroup($ldapGroup);
+        $this->dm->persist($ldapUser);
+        $this->dm->flush();
+
+        $this->userService->deleteAdminGroup($ldapGroup, $ldapUser);
+    }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  Not allowed to delete member group
+     */
+    public function testExceptionDeleteMemberGroupLocalLdap()
+    {
+        $localGroup = new Group();
+        $localGroup->setKey('local_key');
+        $localGroup->setName('Local Group');
+        $localGroup->setOrigin(Group::ORIGIN_LOCAL);
+
+        $ldapUser = new User();
+        $ldapUser->setUsername('ldap_user');
+        $ldapUser->setEmail('ldap_user@mail.com');
+        $ldapUser->setOrigin(User::ORIGIN_LDAP);
+
+        $this->dm->persist($localGroup);
+        $this->dm->persist($ldapUser);
+        $this->dm->flush();
+
+        $ldapUser->addMemberGroup($localGroup);
+        $this->dm->persist($ldapUser);
+        $this->dm->flush();
+
+        $this->userService->deleteMemberGroup($localGroup, $ldapUser);
+    }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  Not allowed to delete member group
+     */
+    public function testExceptionDeleteMemberGroupLdapLocal()
+    {
+        $ldapGroup = new Group();
+        $ldapGroup->setKey('ldap_key');
+        $ldapGroup->setName('LDAP Group');
+        $ldapGroup->setOrigin(Group::ORIGIN_LDAP);
+
+        $localUser = new User();
+        $localUser->setUsername('local_user');
+        $localUser->setEmail('local_user@mail.com');
+        $localUser->setOrigin(User::ORIGIN_LOCAL);
+
+        $this->dm->persist($ldapGroup);
+        $this->dm->persist($localUser);
+        $this->dm->flush();
+
+        $localUser->addMemberGroup($ldapGroup);
+        $this->dm->persist($localUser);
+        $this->dm->flush();
+
+        $this->userService->deleteMemberGroup($ldapGroup, $localUser);
+    }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  Not allowed to delete member group
+     */
+    public function testExceptionDeleteMemberGroupLdapLdap()
+    {
+        $ldapGroup = new Group();
+        $ldapGroup->setKey('ldap_key');
+        $ldapGroup->setName('LDAP Group');
+        $ldapGroup->setOrigin(Group::ORIGIN_LDAP);
+
+        $ldapUser = new User();
+        $ldapUser->setUsername('ldap_user');
+        $ldapUser->setEmail('ldap_user@mail.com');
+        $ldapUser->setOrigin(User::ORIGIN_LDAP);
+
+        $this->dm->persist($ldapGroup);
+        $this->dm->persist($ldapUser);
+        $this->dm->flush();
+
+        $ldapUser->addMemberGroup($ldapGroup);
+        $this->dm->persist($ldapUser);
+        $this->dm->flush();
+
+        $this->userService->deleteMemberGroup($ldapGroup, $ldapUser);
+    }
 }

@@ -458,6 +458,9 @@ class UserService
      */
     public function addGroup(Group $group, User $user, $asAdmin = false, $executeFlush = true)
     {
+        if (!$this->isAllowedToModifyUserGroup($user, $group)) {
+            throw new \Exception('Not allowed to add group "'.$group->getKey().'" to user "'.$user->getUsername().'".');
+        }
         if ($asAdmin) {
             $this->addAdminGroup($group, $user, $executeFlush);
         } else {
@@ -474,6 +477,9 @@ class UserService
      */
     public function addAdminGroup(Group $group, User $user, $executeFlush = true)
     {
+        if (!$this->isAllowedToModifyUserGroup($user, $group)) {
+            throw new \Exception('Not allowed to add admin group "'.$group->getKey().'" to user "'.$user->getUsername().'".');
+        }
         if (!$user->containsAdminGroup($group)) {
             $user->addAdminGroup($group);
             $this->dm->persist($user);
@@ -493,6 +499,9 @@ class UserService
      */
     public function addMemberGroup(Group $group, User $user, $executeFlush = true)
     {
+        if (!$this->isAllowedToModifyUserGroup($user, $group)) {
+            throw new \Exception('Not allowed to add member group "'.$group->getKey().'" to user "'.$user->getUsername().'".');
+        }
         if (!$user->containsMemberGroup($group)) {
             $user->addMemberGroup($group);
             $this->dm->persist($user);
@@ -513,6 +522,9 @@ class UserService
      */
     public function deleteGroup(Group $group, User $user, $asAdmin = false, $executeFlush = true)
     {
+        if (!$this->isAllowedToModifyUserGroup($user, $group)) {
+            throw new \Exception('Not allowed to delete group "'.$group->getKey().'" from user "'.$user->getUsername().'".');
+        }
         if ($asAdmin) {
             $this->deleteAdminGroup($group, $user, $executeFlush);
         } else {
@@ -529,6 +541,9 @@ class UserService
      */
     public function deleteAdminGroup(Group $group, User $user, $executeFlush = true)
     {
+        if (!$this->isAllowedToModifyUserGroup($user, $group)) {
+            throw new \Exception('Not allowed to delete admin group "'.$group->getKey().'" from user "'.$user->getUsername().'".');
+        }
         if ($user->containsAdminGroup($group)) {
             $user->removeAdminGroup($group);
             $this->dm->persist($user);
@@ -548,6 +563,9 @@ class UserService
      */
     public function deleteMemberGroup(Group $group, User $user, $executeFlush = true)
     {
+        if (!$this->isAllowedToModifyUserGroup($user, $group)) {
+            throw new \Exception('Not allowed to delete member group "'.$group->getKey().'" from user "'.$user->getUsername().'".');
+        }
         if ($user->containsMemberGroup($group)) {
             $user->removeMemberGroup($group);
             $this->dm->persist($user);
