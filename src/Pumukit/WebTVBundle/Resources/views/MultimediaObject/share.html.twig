@@ -44,7 +44,7 @@
           <span>{% trans %} IFRAME: {% endtrans %}</span>
           {% set trackid = (track.id is defined)?track.id:null %}
           <input type="text" value="<iframe src='{{url('pumukit_webtv_multimediaobject_iframe', {'id':multimediaObject.id, 'track_id': trackid})}}'
-                                    id='paellaiframe'
+                                    id='pumukitiframe'
                                     frameborder='0'
                                     border='0'
                                     width='100%'
