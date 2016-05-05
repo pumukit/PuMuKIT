@@ -108,8 +108,8 @@ class GroupService
     public function countUsersInGroup(Group $group)
     {
         $qb = $this->userRepo->createQueryBuilder();
-        $qb->addOr($qb->expr()->field('adminGroups.id')->equals($group->getId()));
-        $qb->addOr($qb->expr()->field('memberGroups.id')->equals($group->getId()));
+        $qb->addOr($qb->expr()->field('adminGroups')->equals($group->getId()));
+        $qb->addOr($qb->expr()->field('memberGroups')->equals($group->getId()));
         return $qb->count()
             ->getQuery()
             ->execute();

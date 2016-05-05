@@ -69,6 +69,7 @@ class UserServiceTest extends WebTestCase
         $permissions1 = array(Permission::ACCESS_DASHBOARD, Permission::ACCESS_ROLES);
         $permissionProfile1 = new PermissionProfile();
         $permissionProfile1->setPermissions($permissions1);
+        $permissionProfile1->setName('permissionprofile1');
         $permissionProfile1->setScope(PermissionProfile::SCOPE_PERSONAL);
         $this->dm->persist($permissionProfile1);
         $this->dm->flush();
@@ -96,6 +97,7 @@ class UserServiceTest extends WebTestCase
         $permissions2 = array(Permission::ACCESS_TAGS);
         $permissionProfile2 = new PermissionProfile();
         $permissionProfile2->setPermissions($permissions2);
+        $permissionProfile2->setName('permissionprofile2');
         $permissionProfile2->setScope(PermissionProfile::SCOPE_GLOBAL);
         $this->dm->persist($permissionProfile2);
         $this->dm->flush();
@@ -386,12 +388,15 @@ class UserServiceTest extends WebTestCase
     public function testHasScopes()
     {
         $globalProfile = new PermissionProfile();
+        $globalProfile->setName('global');
         $globalProfile->setScope(PermissionProfile::SCOPE_GLOBAL);
 
         $personalProfile = new PermissionProfile();
+        $personalProfile->setName('personal');
         $personalProfile->setScope(PermissionProfile::SCOPE_PERSONAL);
 
         $noneProfile = new PermissionProfile();
+        $noneProfile->setName('none');
         $noneProfile->setScope(PermissionProfile::SCOPE_NONE);
 
         $this->dm->persist($globalProfile);
