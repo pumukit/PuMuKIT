@@ -233,20 +233,36 @@ class UserController extends AdminController implements NewAdminController
         $deleteMemberGroups = array();
         if ('GET' === $request->getMethod()){
             foreach ($user->getAdminGroups() as $group) {
-                $addAdminGroups[$group->getId()] = array('key' => $group->getKey(), 'name' => $group->getName());
+                $addAdminGroups[$group->getId()] = array(
+                                                         'key' => $group->getKey(),
+                                                         'name' => $group->getName(),
+                                                         'origin' => $group->getOrigin()
+                                                         );
                 $addAdminGroupsIds[] = new \MongoId($group->getId());
             }
             foreach ($user->getMemberGroups() as $group) {
-                $addMemberGroups[$group->getId()] = array('key' => $group->getKey(), 'name' => $group->getName());
+                $addMemberGroups[$group->getId()] = array(
+                                                          'key' => $group->getKey(),
+                                                          'name' => $group->getName(),
+                                                          'origin' => $group->getOrigin()
+                                                          );
                 $addMemberGroupsIds[] = new \MongoId($group->getId());
             }
             $adminGroupsToDelete = $this->getGroupsToDelete($addAdminGroupsIds);
             $memberGroupsToDelete = $this->getGroupsToDelete($addMemberGroupsIds);
             foreach ($adminGroupsToDelete as $group) {
-                $deleteAdminGroups[$group->getId()] = array('key' => $group->getKey(), 'name' => $group->getName());
+                $deleteAdminGroups[$group->getId()] = array(
+                                                            'key' => $group->getKey(),
+                                                            'name' => $group->getName(),
+                                                            'origin' => $group->getOrigin()
+                                                            );
             }
             foreach ($memberGroupsToDelete as $group) {
-                $deleteMemberGroups[$group->getId()] = array('key' => $group->getKey(), 'name' => $group->getName());
+                $deleteMemberGroups[$group->getId()] = array(
+                                                             'key' => $group->getKey(),
+                                                             'name' => $group->getName(),
+                                                             'origin' => $group->getOrigin()
+                                                             );
             }
         }
 
