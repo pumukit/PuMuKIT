@@ -7,13 +7,13 @@
 <div class="modal-body">
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADMIN_USERS')) %}
   <input type="hidden" id="user_id" value="{{ user.id }}"/>
-  {% for mode in ['admin', 'member'] %}
+  {% for mode in ['member', 'admin'] %}
   <div class="panel panel-default">
-    <div class="panel-heading">{{ mode|capitalize }}</div>
+    <div class="panel-heading" style="text-align:center;">{{ mode|upper }}</div>
     <div class="panel-body" id="group_mode_{{ mode }}">
       <div class="row" style="margin-right: 0px; margin-left: 0px;">
         <div style="width:430px; float: left;">
-          {% trans %}Groups{% endtrans %}:
+          {% trans %}Available Groups{% endtrans %}:
         </div>
         <div style="width:390px; float: left;">
           {% trans %}Selected Groups{% endtrans %}:
@@ -36,13 +36,23 @@
             {% set user_groups = user.getMemberGroups() %}
             {% endif %}
 	        {% for user_group in user_groups %}
-              <a href="#" class="list-group-item add-group-item-{{ mode }}"
+              {% if (user_group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LDAP')) %}
+              <a href="#" class="list-group-item disabled-group-item"
+                 id="add_group_{{ user_group.id }}_{{ mode }}"
+                 onclick="return false;"
+                 ondblclick="javascript:window.alert('Not allowed to delete LDAP group {{ user_group.key }}');">
+                <i class="mdi-social-group"></i>
+                {{ user_group.key }} - {{ user_group.name }} - ({{ user_group.origin|upper }})
+              </a>
+              {% else %}
+              <a href="#" class="list-group-item"
                  id="add_group_{{ user_group.id }}_{{ mode }}"
                  onclick="javascript:return select_group(this);"
-                 ondblclick="javascript:delete_group('{{ user_group.id }}', '{{ user.id }}', '{{ mode }}', '{{ user_group.key }}', '{{ user_group.name }}');">
+                 ondblclick="javascript:delete_group('{{ user_group.id }}', '{{ user.id }}', '{{ mode }}', '{{ user_group.key }}', '{{ user_group.name }}', '{{ user_group.origin }}');">
                 <i class="mdi-social-group"></i>
-                {{ user_group.key }} - {{ user_group.name }}
+                {{ user_group.key }} - {{ user_group.name }} - ({{ user_group.origin }})
               </a>
+              {% endif %}
 	        {% endfor %}
 	      </div>
         </div>

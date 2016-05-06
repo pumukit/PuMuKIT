@@ -189,6 +189,9 @@ class UserService
      */
     public function update(User $user, $executeFlush = true)
     {
+        if ($user->getOrigin() === User::ORIGIN_LDAP) {
+            throw new \Exception('The user "'.$user->getUsername().'" is from LDAP and can not be modified.');
+        }
         $permissionProfile = $user->getPermissionProfile();
         if (null == $permissionProfile) throw new \Exception('The User "'.$user->getUsername().'" has no Permission Profile assigned.');
         /** NOTE: User roles have:
@@ -386,7 +389,7 @@ class UserService
         }
         $user->setPermissionProfile($defaultPermissionProfile);
         $user->setEnabled($enabled);
-        //$user->setOrigin('cas');
+        //$user->setOrigin(User::ORIGIN_LDAP);
 
         return $user;
     }
@@ -472,6 +475,9 @@ class UserService
     public function addAdminGroup(Group $group, User $user, $executeFlush = true)
     {
         if (!$user->containsAdminGroup($group)) {
+            if (!$this->isAllowedToModifyUserGroup($user, $group)) {
+                throw new \Exception('Not allowed to add admin group "'.$group->getKey().'" to user "'.$user->getUsername().'".');
+            }
             $user->addAdminGroup($group);
             $this->dm->persist($user);
             if ($executeFlush) {
@@ -491,6 +497,9 @@ class UserService
     public function addMemberGroup(Group $group, User $user, $executeFlush = true)
     {
         if (!$user->containsMemberGroup($group)) {
+            if (!$this->isAllowedToModifyUserGroup($user, $group)) {
+                throw new \Exception('Not allowed to add member group "'.$group->getKey().'" to user "'.$user->getUsername().'".');
+            }
             $user->addMemberGroup($group);
             $this->dm->persist($user);
             if ($executeFlush) {
@@ -527,6 +536,9 @@ class UserService
     public function deleteAdminGroup(Group $group, User $user, $executeFlush = true)
     {
         if ($user->containsAdminGroup($group)) {
+            if (!$this->isAllowedToModifyUserGroup($user, $group)) {
+                throw new \Exception('Not allowed to delete admin group "'.$group->getKey().'" from user "'.$user->getUsername().'".');
+            }
             $user->removeAdminGroup($group);
             $this->dm->persist($user);
             if ($executeFlush) {
@@ -546,6 +558,9 @@ class UserService
     public function deleteMemberGroup(Group $group, User $user, $executeFlush = true)
     {
         if ($user->containsMemberGroup($group)) {
+            if (!$this->isAllowedToModifyUserGroup($user, $group)) {
+                throw new \Exception('Not allowed to delete member group "'.$group->getKey().'" from user "'.$user->getUsername().'".');
+            }
             $user->removeMemberGroup($group);
             $this->dm->persist($user);
             if ($executeFlush) {
@@ -553,5 +568,21 @@ class UserService
             }
             $this->dispatcher->dispatchUpdate($user);
         }
+    }
+
+    /**
+     * Is allowed to modify group
+     *
+     * @param User $user
+     * @param Group $group
+     * @return boolean
+     */
+    public function isAllowedToModifyUserGroup(User $user, Group $group)
+    {
+        if (($user->getOrigin() === User::ORIGIN_LOCAL) && ($group->getOrigin() === Group::ORIGIN_LOCAL)) {
+            return true;
+        }
+
+        return false;
     }
 }

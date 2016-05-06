@@ -35,10 +35,10 @@ class GroupService
     public function create(Group $group)
     {
         if ($this->repo->findOneByKey($group->getKey())) {
-            throw new \Exception('There is already a group created with key "'.$group->getKey().'".');
+            throw new \Exception('There is already a group created with key '.$group->getKey().'.');
         }
         if ($this->repo->findOneByName($group->getName())) {
-            throw new \Exception('There is already a group created with name "'.$group->getName().'".');
+            throw new \Exception('There is already a group created with name '.$group->getName().'.');
         }
         $this->dm->persist($group);
         $this->dm->flush();
@@ -60,14 +60,14 @@ class GroupService
         $auxKeyGroup = $this->repo->findOneByKey($group->getKey());
         if ($auxKeyGroup) {
             if ($auxKeyGroup->getId() != $group->getId()) {
-                throw new \Exception('There is already a group created with key "'.$group->getKey().'".');
+                throw new \Exception('There is already a group created with key '.$group->getKey().'.');
             }
         }
 
         $auxNameGroup = $this->repo->findOneByName($group->getName());
         if ($auxNameGroup) {
             if ($auxNameGroup->getId() != $group->getId()) {
-                throw new \Exception('There is already a group created with name "'.$group->getName().'".');
+                throw new \Exception('There is already a group created with name '.$group->getName().'.');
             }
         }
 
@@ -108,8 +108,8 @@ class GroupService
     public function countUsersInGroup(Group $group)
     {
         $qb = $this->userRepo->createQueryBuilder();
-        $qb->addOr($qb->expr()->field('adminGroups.id')->equals($group->getId()));
-        $qb->addOr($qb->expr()->field('memberGroups.id')->equals($group->getId()));
+        $qb->addOr($qb->expr()->field('adminGroups')->equals($group->getId()));
+        $qb->addOr($qb->expr()->field('memberGroups')->equals($group->getId()));
         return $qb->count()
             ->getQuery()
             ->execute();

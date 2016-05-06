@@ -333,7 +333,7 @@ class GroupServiceTest extends WebTestCase
 
         $group = $this->groupService->delete($group);
 
-        $this->assertEquals(1, count($this->repo->findAll()));
+        $this->assertEquals(0, count($this->repo->findAll()));
     }
 
     public function testFindById()

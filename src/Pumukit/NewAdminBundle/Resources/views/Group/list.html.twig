@@ -34,13 +34,17 @@
           </div>
         </td>
         <td>
+          {% if group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LDAP') %}
+          <i title="{% trans %}Cannot edit the data of{% endtrans %} '{{ group.name }}'. {% trans %}Origin is{% endtrans %} '{{ constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LDAP') }}'." class="mdi-content-block" style="color:#009587"></i>
+          {% else %}
           <a title="{% trans %}Edit Group{% endtrans %} {{ group.getName() }}" href="{{ path('pumukitnewadmin_group_update', {'id': group.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
             <i class="mdi-editor-mode-edit"></i>
           </a>
+          {% endif %}
         </td>
         <td>
           {% if countUsersInGroup[group.id] != 0 %}
-          <i title="{% trans %}Cannot delete the data of{% endtrans %} '{{ group.name }}'. '{{ countUsersInGroups[group.id] }}' {% trans %}user(s) belong(s) to this group{% endtrans %}." class="mdi-content-block" style="color:#009587"></i>
+          <i title="{% trans %}Cannot delete the data of{% endtrans %} '{{ group.name }}'. '{{ countUsersInGroup[group.id] }}' {% trans %}user(s) belong(s) to this group{% endtrans %}." class="mdi-content-block" style="color:#009587"></i>
           {% else %}
           <a href="#" title="Delete Group '{{ group.name }}'" onclick="window.submit_delete_group('{{ group.id }}', '{{ countUsersInGroup[group.id] }}', '{% autoescape 'js' %}{{ group.getName() }}{% endautoescape %}'); return false;">
             <i class="mdi-content-clear"></i>

@@ -2066,28 +2066,52 @@ function select_group(element)
   return false;
 }
 
-function add_group(group_id, user_id, mode, group_key, group_name)
+function add_group(group_id, user_id, mode, group_key, group_name, group_origin)
 {
-    create_element_group_in_add_groups(group_id, user_id, mode, group_key, group_name);
+    create_element_group_in_add_groups(group_id, user_id, mode, group_key, group_name, group_origin);
     element_to_delete = "#delete_group_" + group_id + "_" + mode;
-    delete_element_group_from_select(element_to_delete, group_id, user_id, mode, group_key, group_name);
+    delete_element_group_from_select(element_to_delete, group_id, user_id, mode, group_key, group_name, group_origin);
 }
 
-function delete_group(group_id, user_id, mode, group_key, group_name)
+function delete_group(group_id, user_id, mode, group_key, group_name, group_origin)
 {
     element_to_delete = "#add_group_" + group_id + "_" + mode;
     delete_element_group_from_select(element_to_delete);
-    create_element_group_in_delete_groups(group_id, user_id, mode, group_key, group_name);
+    create_element_group_in_delete_groups(group_id, user_id, mode, group_key, group_name, group_origin);
 }
 
-function create_element_group_in_add_groups(group_id, user_id, mode, group_key, group_name) {
-  var $ul = $('#add_groups_'+mode);
-  $ul.append('<a href="#" ondblclick="javascript:delete_group(\'' + group_id + '\', \'' + user_id + '\', \'' + mode + '\', \'' + group_key + '\', \'' + group_name + '\');" onclick="return select_group(this);" class="list-group-item add-group-item-'+mode+'" id="add_group_' + group_id + '_' + mode +'"><i class="mdi-social-group"></i> ' + group_key + ' - ' + group_name +'</a>');
+function create_element_group_in_add_groups(group_id, user_id, mode, group_key, group_name, group_origin) {
+    var ldap_origin = '{{ constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LDAP')}}';
+    if (group_origin == ldap_origin) {
+        var item_class = 'class="list-group-item disabled-group-item"';
+        var item_onclick = 'onclick="return false;"';
+        var item_ondblclick = 'ondblclick="javascript:window.alert(\'Not allowed to delete LDAP group ' + group_key + '\');"';
+        group_origin = group_origin.toUpperCase();
+    } else {
+        var item_class = 'class="list-group-item add-group-item-'+mode+'"';
+        var item_onclick = 'onclick="return select_group(this);"';
+        var item_ondblclick = 'ondblclick="javascript:delete_group(\'' + group_id + '\', \'' + user_id + '\', \'' + mode + '\', \'' + group_key + '\', \'' + group_name + '\', \'' + group_origin + '\');"';
+    }
+    var item_text = '<a href="#" ' + item_class + ' ' + item_onclick + ' ' + item_ondblclick + ' id="add_group_' + group_id + '_' + mode +'"><i class="mdi-social-group"></i> ' + group_key + ' - ' + group_name + ' - (' + group_origin + ')</a>';
+    var $add_groups_list = $('#add_groups_'+mode);
+    $add_groups_list.append(item_text);
 }
 
-function create_element_group_in_delete_groups(group_id, user_id, mode, group_key, group_name) {
-  var $ul = $('#delete_groups_'+mode);
-  $ul.append('<a href="#" ondblclick="javascript:add_group(\'' + group_id + '\', \'' + user_id +'\', \'' + mode + '\', \'' + group_key + '\', \'' + group_name + '\');" onclick="return select_group(this);" class="list-group-item delete-group-item-'+mode+'" id="delete_group_' + group_id + '_' + mode +'"><i class="mdi-social-group"></i> ' + group_key + ' - ' + group_name +'</a>');
+function create_element_group_in_delete_groups(group_id, user_id, mode, group_key, group_name, group_origin) {
+    var ldap_origin = '{{ constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LDAP')}}';
+    if (group_origin == ldap_origin) {
+        var item_class = 'class="list-group-item disabled-group-item"';
+        var item_onclick = 'onclick="return false;"';
+        var item_ondblclick = 'ondblclick="javascript:window.alert(\'Not allowed to add LDAP group ' + group_key + '\');"';
+        group_origin = group_origin.toUpperCase();
+    } else {
+        var item_class = 'class="list-group-item delete-group-item-'+mode+'"';
+        var item_onclick = 'onclick="return select_group(this);"';
+        var item_ondblclick = 'ondblclick="javascript:add_group(\'' + group_id + '\', \'' + user_id +'\', \'' + mode + '\', \'' + group_key + '\', \'' + group_name + '\', \'' + group_origin + '\');"';
+    }
+    var item_text = '<a href="#" ' + item_class + ' ' + item_onclick + ' ' + item_ondblclick + ' id="delete_group_' + group_id + '_' + mode +'"><i class="mdi-social-group"></i> ' + group_key + ' - ' + group_name + ' - (' + group_origin + ')</a>';
+    var $delete_groups_list = $('#delete_groups_'+mode);
+    $delete_groups_list.append(item_text);
 }
 
 function delete_element_group_from_select(element_id) {
@@ -2153,22 +2177,26 @@ $(document).on('click', '#pumukitnewadmin_user_groups_reset', function() {
             for (var group_id in addAdminGroups) {
                 var group_key = addAdminGroups[group_id].key;
                 var group_name = addAdminGroups[group_id].name;
-                add_group(group_id, user_id, 'admin', group_key, group_name);
+                var group_origin = addAdminGroups[group_id].origin;
+                add_group(group_id, user_id, 'admin', group_key, group_name, group_origin);
             }
             for (var group_id in addMemberGroups) {
                 var group_key = addMemberGroups[group_id].key;
                 var group_name = addMemberGroups[group_id].name;
-                add_group(group_id, user_id, 'member', group_key, group_name);
+                var group_origin = addMemberGroups[group_id].origin;
+                add_group(group_id, user_id, 'member', group_key, group_name, group_origin);
             }
             for (var group_id in deleteAdminGroups) {
                 var group_key = deleteAdminGroups[group_id].key;
                 var group_name = deleteAdminGroups[group_id].name;
-                delete_group(group_id, user_id, 'admin', group_key, group_name);
+                var group_origin = deleteAdminGroups[group_id].origin;
+                delete_group(group_id, user_id, 'admin', group_key, group_name, group_origin);
             }
             for (var group_id in deleteMemberGroups) {
                 var group_key = deleteMemberGroups[group_id].key;
                 var group_name = deleteMemberGroups[group_id].name;
-                delete_group(group_id, user_id, 'member', group_key, group_name);
+                var group_origin = deleteMemberGroups[group_id].origin;
+                delete_group(group_id, user_id, 'member', group_key, group_name, group_origin);
             }
         }
     });
