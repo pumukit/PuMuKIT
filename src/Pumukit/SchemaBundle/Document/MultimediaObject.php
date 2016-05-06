@@ -2516,9 +2516,9 @@ class MultimediaObject
     /**
      * Set groups
      *
-     * @param ArrayCollection $groups
+     * @param ArrayCollection|PersistentCollection $groups
      */
-    public function setGroups(ArrayCollection $groups)
+    public function setGroups($groups)
     {
         $this->groups = $groups;
     }

@@ -1,0 +1,23 @@
+{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_GROUPS')) %}
+{% for group in groups if group not in mm.getGroups() %}
+{% if (group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LDAP')) %}
+<a href="#" 
+   id="delete_mm{{ template }}_group_{{ group.id }}"
+   onclick="return false;" 
+   ondblclick="javascript:window.alert('Not allowed to add LDAP group {{ group.key }}');"
+   class="list-group-item notload disabled-group-item">
+  <i class="mdi-social-group"></i>
+  {{ group.key }} - {{ group.name }} - ({{ group.origin|upper }})
+</a>
+{% else %}
+<a href="#" 
+   id="delete_mm{{ template }}_group_{{ group.id }}"
+   onclick="javascript:return select_group(this);" 
+   ondblclick="javascript:add_mm_group('{{ group.id }}', '{{ mm.id }}', '{{ template }}', '{{ group.key }}', '{{ group.name }}');"
+   class="list-group-item notload delete-mm{{ template }}-group-item">
+  <i class="mdi-social-group"></i>
+  {{ group.key }} - {{ group.name }} - ({{ group.origin }})
+</a>
+{% endif %}
+{% endfor %}
+{% endif %}

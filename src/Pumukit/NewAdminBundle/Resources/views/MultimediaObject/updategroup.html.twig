@@ -15,7 +15,7 @@
       <div class="form-row">
         <dd>
           <div id="group_mms{{ template }}">
-	        {% include 'PumukitNewAdminBundle:Group:listrelation.html.twig' with {'groups': groups, 'mm': mm} %}
+	        {% include 'PumukitNewAdminBundle:MultimediaObject:listgrouprelation.html.twig' with {'groups': groups, 'mm': mm, 'template': template} %}
           </div>
         </dd>
       </div>
