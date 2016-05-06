@@ -3,7 +3,7 @@
   <div class="form-group col-md-4">
     <label for="search">{% trans %}Search{% endtrans %}:</label>
     <div class="input-group">
-      <input type="text" class="form-control" id="search" name="search" value="{{ app.request.query.get('search') }}" placeholder="Search">
+      <input type="text" class="form-control" id="search" name="search" value="{{ app.request.query.get('search') }}" placeholder="{% trans %}Search{% endtrans %}">
       <div class="input-group-btn">
         <button type="submit" class="btn btn-default">
           <span class="glyphicon glyphicon-search"></span>
@@ -21,7 +21,7 @@
           <label for="start">{% trans %}Start date{% endtrans %}:</label>
           <a style="margin-right:-15px;cursor:pointer;" onclick="toggleDateSelect()">{% trans %} Select by year {% endtrans %}</a>
           <div class="input-group date date-picker" id='start'>
-            <input type='text' class="form-control"  dataformat="" name="start" value="{{ app.request.query.get('start') }}" placeholder="From" onchange="javascript:submitForm(this);" {{ activated?'':'disabled'}}/>
+            <input type='text' class="form-control"  dataformat="" name="start" value="{{ app.request.query.get('start') }}" placeholder="{% trans %}From{% endtrans %}" onchange="javascript:submitForm(this);" {{ activated?'':'disabled'}}/>
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
             </span>
@@ -30,7 +30,7 @@
         <div class="col-xs-6">
           <label for="end">{% trans %}Finish date{% endtrans %}:</label>
           <div class="input-group date date-picker" id="end">
-            <input type="text" class="form-control"  name="end" value="{{ app.request.query.get('end') }}" placeholder="Until" onchange="javascript:submitForm(this);" {{ activated?'':'disabled'}}/>
+            <input type="text" class="form-control"  name="end" value="{{ app.request.query.get('end') }}" placeholder="{% trans %}Until{% endtrans %}" onchange="javascript:submitForm(this);" {{ activated?'':'disabled'}}/>
             <div class="input-group-addon">
               <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
             </div>
@@ -53,7 +53,7 @@
   </div>
   <div class="form-group col-md-2 col-sm-2 col-xs-12">
     <label for="reset">{% trans %}Reset filters{% endtrans %}:</label>
-    <input type="button" class="btn btn-default form-control" id="exampleInputEmail1" placeholder="Email" value="{% trans %}Reset filters{% endtrans %}"
+    <input type="button" class="btn btn-default form-control" id="exampleInputEmail1" placeholder="{% trans %}Email{% endtrans %}" value="{% trans %}Reset filters{% endtrans %}"
            onclick="window.location.href=window.location.pathname">
   </div>
 
@@ -90,6 +90,6 @@
 </form>
 <div>
   <a href="{{ path('pumukit_webtv_search_multimediaobjects') }}">
-    Search by multimedia objects
+    {% trans %}Search by multimedia objects{% endtrans %}
   </a>
 </div>
