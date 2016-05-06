@@ -535,17 +535,17 @@ class PumukitAdminExtension extends \Twig_Extension
     public function getUserGroupsText(User $user)
     {
         $userGroupsText = '';
-        $adminGroups = $user->getAdminGroups();
         $memberGroups = $user->getMemberGroups();
-        if (count($adminGroups) > 0) {
-            $userGroupsText .= "ADMIN GROUPS\n";
-            foreach ($adminGroups as $group) {
-                $userGroupsText .= "- ".$group->getName()."\n";
-            }
-        }
+        $adminGroups = $user->getAdminGroups();
         if (count($memberGroups) > 0) {
             $userGroupsText .= "MEMBER GROUPS\n";
             foreach ($memberGroups as $group) {
+                $userGroupsText .= "- ".$group->getName()."\n";
+            }
+        }
+        if (count($adminGroups) > 0) {
+            $userGroupsText .= "ADMIN GROUPS\n";
+            foreach ($adminGroups as $group) {
                 $userGroupsText .= "- ".$group->getName()."\n";
             }
         }
