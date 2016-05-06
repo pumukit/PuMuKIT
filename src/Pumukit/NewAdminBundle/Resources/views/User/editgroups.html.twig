@@ -7,13 +7,13 @@
 <div class="modal-body">
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADMIN_USERS')) %}
   <input type="hidden" id="user_id" value="{{ user.id }}"/>
-  {% for mode in ['admin', 'member'] %}
+  {% for mode in ['member', 'admin'] %}
   <div class="panel panel-default">
-    <div class="panel-heading">{{ mode|capitalize }}</div>
+    <div class="panel-heading" style="text-align:center;">{{ mode|upper }}</div>
     <div class="panel-body" id="group_mode_{{ mode }}">
       <div class="row" style="margin-right: 0px; margin-left: 0px;">
         <div style="width:430px; float: left;">
-          {% trans %}Groups{% endtrans %}:
+          {% trans %}Available Groups{% endtrans %}:
         </div>
         <div style="width:390px; float: left;">
           {% trans %}Selected Groups{% endtrans %}:
