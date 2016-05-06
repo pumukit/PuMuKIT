@@ -3,18 +3,21 @@
 {% if (group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LDAP')) %}
 <a href="#" 
    id="delete_group_{{ group.id }}_{{ mode }}"
-   onclick="javascript:return select_group(this);" 
+   onclick="return false;" 
    ondblclick="javascript:window.alert('Not allowed to add LDAP group {{ group.key }}');"
-   class="list-group-item notload delete-group-item-{{ mode }}">
+   class="list-group-item notload disabled-group-item">
+  <i class="mdi-social-group"></i>
+  {{ group.key }} - {{ group.name }} - ({{ group.origin|upper }})
+</a>
 {% else %}
 <a href="#" 
    id="delete_group_{{ group.id }}_{{ mode }}"
    onclick="javascript:return select_group(this);" 
    ondblclick="javascript:add_group('{{ group.id }}', '{{ user.id }}', '{{ mode }}', '{{ group.key }}', '{{ group.name }}', '{{ group.origin }}');"
    class="list-group-item notload delete-group-item-{{ mode }}">
-{% endif %}
   <i class="mdi-social-group"></i>
   {{ group.key }} - {{ group.name }} - ({{ group.origin }})
 </a>
+{% endif %}
 {% endfor %}
 {% endif %}
