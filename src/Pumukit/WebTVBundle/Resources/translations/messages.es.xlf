@@ -368,51 +368,51 @@
       </trans-unit>
       <trans-unit id="e6b06dea9ac5e0330e37ee581f323e90" resname="Show videos">
         <source>Show videos</source>
-        <target>__Show videos</target>
+        <target>Mostrar vídeos</target>
       </trans-unit>
       <trans-unit id="8904f2049376128f0e548157cbd7d160" resname="Most viewed since last month">
         <source>Most viewed since last month</source>
-        <target>__Most viewed since last month</target>
+        <target>Más vistos desde el último mes</target>
       </trans-unit>
       <trans-unit id="3e0fa00ee2fba747e8419e80c1da2d72" resname="Share on Facebook">
         <source>Share on Facebook</source>
-        <target>__Share on Facebook</target>
+        <target>Compartir en Facebook</target>
       </trans-unit>
       <trans-unit id="82aeb3b62f0627a4bb4ee48193f254d2" resname="Share on Google +">
         <source>Share on Google +</source>
-        <target>__Share on Google +</target>
+        <target>Compartir en Google +</target>
       </trans-unit>
       <trans-unit id="1d951d9b21da3a1d8de14c19b3238cf1" resname="Share on Twitter">
         <source>Share on Twitter</source>
-        <target>__Share on Twitter</target>
+        <target>Compartir en Twitter</target>
       </trans-unit>
       <trans-unit id="5da618e8e4b89c66fe86e32cdafde142" resname="From">
         <source>From</source>
-        <target>__From</target>
+        <target>Desde</target>
       </trans-unit>
       <trans-unit id="3728af837fe70019577ddb0ed7125ee5" resname="Until">
         <source>Until</source>
-        <target>__Until</target>
+        <target>Hasta</target>
       </trans-unit>
       <trans-unit id="4a71d7d71737bd12fc51c2bc8024e84a" resname="Not multimedia objects found">
         <source>Not multimedia objects found</source>
-        <target>__Not multimedia objects found</target>
+        <target>No se han encontrado objetos multimedia</target>
       </trans-unit>
       <trans-unit id="8bd1fd42b739b6b760f57f023580794f" resname="Private audio">
         <source>Private audio</source>
-        <target>__Private audio</target>
+        <target>Audio privado</target>
       </trans-unit>
       <trans-unit id="cb5760cc8a804f5f7085d3692f736117" resname="Search by series">
         <source>Search by series</source>
-        <target>__Search by series</target>
+        <target>Buscar por series</target>
       </trans-unit>
       <trans-unit id="ce8ae9da5b7cd6c3df2929543a9af92d" resname="Email">
         <source>Email</source>
-        <target>__Email</target>
+        <target>Email</target>
       </trans-unit>
       <trans-unit id="c532a205df1024f1522fc8921b86723a" resname="Search by multimedia objects">
         <source>Search by multimedia objects</source>
-        <target>__Search by multimedia objects</target>
+        <target>Buscar por objetos multimedia</target>
       </trans-unit>
     </body>
   </file>
