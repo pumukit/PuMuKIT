@@ -51,11 +51,6 @@ class FilterListener
             && $event->isMasterRequest()
             && $isFilterActivated) {
 
-            //@deprecated: delete when back-office is not in EN
-            $req->setLocale('en');
-            $req->getSession()->set('_locale', 'en');
-            
-
             if ($this->addUserAsPerson) {
                 $loggedInUser = $this->getLoggedInUser();
                 if ((!$loggedInUser->hasRole(PermissionProfile::SCOPE_GLOBAL)) &&
