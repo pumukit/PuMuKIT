@@ -2081,13 +2081,31 @@ function delete_group(group_id, user_id, mode, group_key, group_name, group_orig
 }
 
 function create_element_group_in_add_groups(group_id, user_id, mode, group_key, group_name, group_origin) {
-  var $ul = $('#add_groups_'+mode);
-  $ul.append('<a href="#" ondblclick="javascript:delete_group(\'' + group_id + '\', \'' + user_id + '\', \'' + mode + '\', \'' + group_key + '\', \'' + group_name + '\', \'' + group_origin + '\');" onclick="return select_group(this);" class="list-group-item add-group-item-'+mode+'" id="add_group_' + group_id + '_' + mode +'"><i class="mdi-social-group"></i> ' + group_key + ' - ' + group_name + ' - (' + group_origin + ')</a>');
+    var ldap_origin = '{{ constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LDAP')}}';
+    if (group_origin == ldap_origin) {
+        var item_class = 'class="list-group-item"';
+        var item_ondblclick = 'ondblclick="javascript:window.alert(\'Not allowed to delete LDAP group ' + group_key + '\');"';
+    } else {
+        var item_class = 'class="list-group-item add-group-item-'+mode+'"';
+        var item_ondblclick = 'ondblclick="javascript:delete_group(\'' + group_id + '\', \'' + user_id + '\', \'' + mode + '\', \'' + group_key + '\', \'' + group_name + '\', \'' + group_origin + '\');"';
+    }
+    var item_text = '<a href="#" ' + item_ondblclick + ' onclick="return select_group(this);" ' + item_class + ' id="add_group_' + group_id + '_' + mode +'"><i class="mdi-social-group"></i> ' + group_key + ' - ' + group_name + ' - (' + group_origin + ')</a>';
+    var $add_groups_list = $('#add_groups_'+mode);
+    $add_groups_list.append(item_text);
 }
 
 function create_element_group_in_delete_groups(group_id, user_id, mode, group_key, group_name, group_origin) {
-  var $ul = $('#delete_groups_'+mode);
-  $ul.append('<a href="#" ondblclick="javascript:add_group(\'' + group_id + '\', \'' + user_id +'\', \'' + mode + '\', \'' + group_key + '\', \'' + group_name + '\', \'' + group_origin + '\');" onclick="return select_group(this);" class="list-group-item delete-group-item-'+mode+'" id="delete_group_' + group_id + '_' + mode +'"><i class="mdi-social-group"></i> ' + group_key + ' - ' + group_name + ' - (' + group_origin + ')</a>');
+    var ldap_origin = '{{ constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LDAP')}}';
+    if (group_origin == ldap_origin) {
+        var item_class = 'class="list-group-item"';
+        var item_ondblclick = 'ondblclick="javascript:window.alert(\'Not allowed to add LDAP group ' + group_key + '\');"';
+    } else {
+        var item_class = 'class="list-group-item delete-group-item-'+mode+'"';
+        var item_ondblclick = 'ondblclick="javascript:add_group(\'' + group_id + '\', \'' + user_id +'\', \'' + mode + '\', \'' + group_key + '\', \'' + group_name + '\', \'' + group_origin + '\');"';
+    }
+    var item_text = '<a href="#" ' + item_ondblclick + ' onclick="return select_group(this);" ' + item_class + ' id="delete_group_' + group_id + '_' + mode +'"><i class="mdi-social-group"></i> ' + group_key + ' - ' + group_name + ' - (' + group_origin + ')</a>';
+    var $delete_groups_list = $('#delete_groups_'+mode);
+    $delete_groups_list.append(item_text);
 }
 
 function delete_element_group_from_select(element_id) {
