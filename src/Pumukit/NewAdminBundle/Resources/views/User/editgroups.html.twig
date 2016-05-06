@@ -36,10 +36,17 @@
             {% set user_groups = user.getMemberGroups() %}
             {% endif %}
 	        {% for user_group in user_groups %}
-              <a href="#" class="list-group-item add-group-item-{{ mode }}"
+              {% if (user_group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LDAP')) %}
+              <a href="#" class="list-group-item"
+                 id="add_group_{{ user_group.id }}_{{ mode }}"
+                 onclick="javascript:return select_group(this);"
+                 ondblclick="javascript:window.alert('Not allowed to delete LDAP group {{ user_group.key }}');">
+              {% else %}
+              <a href="#" class="list-group-item"
                  id="add_group_{{ user_group.id }}_{{ mode }}"
                  onclick="javascript:return select_group(this);"
                  ondblclick="javascript:delete_group('{{ user_group.id }}', '{{ user.id }}', '{{ mode }}', '{{ user_group.key }}', '{{ user_group.name }}', '{{ user_group.origin }}');">
+              {% endif %}
                 <i class="mdi-social-group"></i>
                 {{ user_group.key }} - {{ user_group.name }} - ({{ user_group.origin }})
               </a>
