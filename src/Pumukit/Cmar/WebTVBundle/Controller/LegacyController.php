@@ -57,6 +57,7 @@ class LegacyController extends Controller
     
     /**
      * @Route("/pumoodle/embed/m/{pumukit1id}")
+     * @Route("/mmobj/iframe/id/{pumukit1id}")
      */
     public function multimediaObjectIframeAction($pumukit1id)
     {
