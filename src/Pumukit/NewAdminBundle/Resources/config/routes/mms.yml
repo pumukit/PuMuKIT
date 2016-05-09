@@ -166,3 +166,20 @@ pumukitnewadmin_mms_sync_tags:
     defaults:
         _controller: pumukitnewadmin.controller.mms:syncTagsAction
 
+pumukitnewadmin_mms_editgroups:
+    pattern: /editgroups
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:editGroupsAction
+
+pumukitnewadmin_mms_updategroups:
+    pattern: /updategroups
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:updateGroupsAction
+
+pumukitnewadmin_mms_getgroups:
+    pattern: /getgroups
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:getGroupsAction
