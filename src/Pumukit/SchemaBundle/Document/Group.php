@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Pumukit\SchemaBundle\Document\Group
  *
- * @MongoDB\Document
+ * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\GroupRepository")
  */
 class Group
 {
