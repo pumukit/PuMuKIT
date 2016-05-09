@@ -7,6 +7,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 
 
@@ -123,5 +124,52 @@ class MultimediaObjectService
         $multimediaObject->incNumview();
         $this->updateMultimediaObject($multimediaObject);
     }
+
+    /**
+     * Add  group to multimediaObject
+     *
+     * @param Group $group
+     * @param MultimediaObject $multimediaObject
+     * @param boolean $executeFlush
+     */
+    public function addGroup(Group $group, MultimediaObject $multimediaObject, $executeFlush = true)
+    {
+        if (!$multimediaObject->containsGroup($group)) {
+            // TODO: develop function
+            /* if (!$this->isAllowedToModifyMultimediaObjectGroup($multimediaObject, $group)) { */
+            /*     throw new \Exception('Not allowed to add  group "'.$group->getKey().'" to multimediaObject "'.$multimediaObject->getMultimediaObjectname().'".'); */
+            /* } */
+            $multimediaObject->addGroup($group);
+            $this->dm->persist($multimediaObject);
+            if ($executeFlush) {
+                $this->dm->flush();
+            }
+            $this->dispatcher->dispatchUpdate($multimediaObject);
+        }
+    }
+
+    /**
+     * Delete  group to multimediaObject
+     *
+     * @param Group $group
+     * @param MultimediaObject $multimediaObject
+     * @param boolean $executeFlush
+     */
+    public function deleteGroup(Group $group, MultimediaObject $multimediaObject, $executeFlush = true)
+    {
+        if ($multimediaObject->containsGroup($group)) {
+            // TODO: develop function
+            /* if (!$this->isAllowedToModifyMultimediaObjectGroup($multimediaObject, $group)) { */
+            /*     throw new \Exception('Not allowed to delete  group "'.$group->getKey().'" from multimediaObject "'.$multimediaObject->getMultimediaObjectname().'".'); */
+            /* } */
+            $multimediaObject->removeGroup($group);
+            $this->dm->persist($multimediaObject);
+            if ($executeFlush) {
+                $this->dm->flush();
+            }
+            $this->dispatcher->dispatchUpdate($multimediaObject);
+        }
+    }
+
 }
 

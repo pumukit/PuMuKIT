@@ -7,6 +7,7 @@ use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Group;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
 
@@ -293,5 +294,138 @@ class MultimediaObjectServiceTest extends WebTestCase
         $privateBroadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PRI);
         $this->dm->persist($privateBroadcast);
         $this->dm->flush();
+    }
+
+    public function testAddGroup()
+    {
+        $group1 = new Group();
+        $group1->setKey('key1');
+        $group1->setName('name1');
+
+        $group2 = new Group();
+        $group2->setKey('key2');
+        $group2->setName('name2');
+
+        $group3 = new Group();
+        $group3->setKey('key3');
+        $group3->setName('name3');
+
+        $multimediaObject = new MultimediaObject();
+        $multimediaObject->setTitle('test');
+
+        $this->dm->persist($group1);
+        $this->dm->persist($group2);
+        $this->dm->persist($group3);
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        $this->assertEquals(0, count($multimediaObject->getGroups()));
+        $this->assertFalse($multimediaObject->containsGroup($group1));
+        $this->assertFalse($multimediaObject->containsGroup($group2));
+        $this->assertFalse($multimediaObject->containsGroup($group3));
+
+        $this->mmsService->addGroup($group1, $multimediaObject);
+
+        $this->assertEquals(1, count($multimediaObject->getGroups()));
+        $this->assertTrue($multimediaObject->containsGroup($group1));
+        $this->assertFalse($multimediaObject->containsGroup($group2));
+        $this->assertFalse($multimediaObject->containsGroup($group3));
+
+        $this->mmsService->addGroup($group2, $multimediaObject);
+
+        $this->assertEquals(2, count($multimediaObject->getGroups()));
+        $this->assertTrue($multimediaObject->containsGroup($group1));
+        $this->assertTrue($multimediaObject->containsGroup($group2));
+        $this->assertFalse($multimediaObject->containsGroup($group3));
+
+        $this->mmsService->addGroup($group3, $multimediaObject);
+
+        $this->assertEquals(3, count($multimediaObject->getGroups()));
+        $this->assertTrue($multimediaObject->containsGroup($group1));
+        $this->assertTrue($multimediaObject->containsGroup($group2));
+        $this->assertTrue($multimediaObject->containsGroup($group3));
+    }
+
+    public function testDeleteGroup()
+    {
+        $group1 = new Group();
+        $group1->setKey('key1');
+        $group1->setName('name1');
+
+        $group2 = new Group();
+        $group2->setKey('key2');
+        $group2->setName('name2');
+
+        $group3 = new Group();
+        $group3->setKey('key3');
+        $group3->setName('name3');
+
+        $multimediaObject = new MultimediaObject();
+        $multimediaObject->setTitle('test');
+
+        $this->dm->persist($group1);
+        $this->dm->persist($group2);
+        $this->dm->persist($group3);
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        $this->assertEquals(0, count($multimediaObject->getGroups()));
+        $this->assertFalse($multimediaObject->containsGroup($group1));
+        $this->assertFalse($multimediaObject->containsGroup($group2));
+        $this->assertFalse($multimediaObject->containsGroup($group3));
+
+        $this->mmsService->addGroup($group1, $multimediaObject);
+
+        $multimediaObject = $this->repo->find($multimediaObject->getId());
+
+        $this->assertEquals(1, count($multimediaObject->getGroups()));
+        $this->assertTrue($multimediaObject->containsGroup($group1));
+        $this->assertFalse($multimediaObject->containsGroup($group2));
+        $this->assertFalse($multimediaObject->containsGroup($group3));
+
+        $this->mmsService->deleteGroup($group1, $multimediaObject);
+
+        $multimediaObject = $this->repo->find($multimediaObject->getId());
+
+        $this->assertEquals(0, count($multimediaObject->getGroups()));
+        $this->assertFalse($multimediaObject->containsGroup($group1));
+        $this->assertFalse($multimediaObject->containsGroup($group2));
+        $this->assertFalse($multimediaObject->containsGroup($group3));
+
+        $this->mmsService->deleteGroup($group2, $multimediaObject);
+
+        $multimediaObject = $this->repo->find($multimediaObject->getId());
+
+        $this->assertEquals(0, count($multimediaObject->getGroups()));
+        $this->assertFalse($multimediaObject->containsGroup($group1));
+        $this->assertFalse($multimediaObject->containsGroup($group2));
+        $this->assertFalse($multimediaObject->containsGroup($group3));
+
+        $this->mmsService->addGroup($group3, $multimediaObject);
+
+        $multimediaObject = $this->repo->find($multimediaObject->getId());
+
+        $this->assertEquals(1, count($multimediaObject->getGroups()));
+        $this->assertFalse($multimediaObject->containsGroup($group1));
+        $this->assertFalse($multimediaObject->containsGroup($group2));
+        $this->assertTrue($multimediaObject->containsGroup($group3));
+
+        $this->mmsService->deleteGroup($group1, $multimediaObject);
+
+        $multimediaObject = $this->repo->find($multimediaObject->getId());
+
+        $this->assertEquals(1, count($multimediaObject->getGroups()));
+        $this->assertFalse($multimediaObject->containsGroup($group1));
+        $this->assertFalse($multimediaObject->containsGroup($group2));
+        $this->assertTrue($multimediaObject->containsGroup($group3));
+
+        $this->mmsService->deleteGroup($group3, $multimediaObject);
+
+        $multimediaObject = $this->repo->find($multimediaObject->getId());
+
+        $this->assertEquals(0, count($multimediaObject->getGroups()));
+        $this->assertFalse($multimediaObject->containsGroup($group1));
+        $this->assertFalse($multimediaObject->containsGroup($group2));
+        $this->assertFalse($multimediaObject->containsGroup($group3));
     }
 }
