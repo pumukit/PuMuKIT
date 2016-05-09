@@ -2115,26 +2115,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(1, $multimediaObject->getGroups()->count());
 
         $this->assertEquals(2, count($this->groupRepo->findAll()));
-
-        $groupsA = new ArrayCollection();
-        $multimediaObject->setGroups($groupsA);
-        $this->dm->persist($multimediaObject);
-        $this->dm->flush();
-
-        $this->assertFalse($multimediaObject->containsGroup($group1));
-        $this->assertFalse($multimediaObject->containsGroup($group2));
-        $this->assertEquals(0, $multimediaObject->getGroups()->count());
-
-        $groupsB = new ArrayCollection();
-        $groupsB->add($group1);
-        $groupsB->add($group2);
-        $multimediaObject->setGroups($groupsB);
-        $this->dm->persist($multimediaObject);
-        $this->dm->flush();
-
-        $this->assertTrue($multimediaObject->containsGroup($group1));
-        $this->assertTrue($multimediaObject->containsGroup($group2));
-        $this->assertEquals(2, $multimediaObject->getGroups()->count());
     }
 
     private function createPerson($name)

@@ -328,7 +328,6 @@ class FactoryService
         $new->setI18nKeyword($prototype->getI18nKeyword());
         $new->setCopyright($prototype->getCopyright());
         $new->setLicense($prototype->getLicense());
-        $new->setGroups($prototype->getGroups());
 
         if ($broadcast = $prototype->getBroadcast()) {
             $new->setBroadcast($broadcast);
@@ -343,6 +342,10 @@ class FactoryService
             foreach ($embeddedRole->getPeople() as $embeddedPerson) {
                 $new->addPersonWithRole($embeddedPerson, $embeddedRole);
             }
+        }
+
+        foreach ($prototype->getGroups() as $group) {
+            $new->addGroup($group);
         }
 
         return $new;
@@ -371,7 +374,6 @@ class FactoryService
         $new->setI18nKeyword($src->getI18nKeyword());
         $new->setCopyright($src->getCopyright());
         $new->setLicense($src->getLicense());
-        $new->setGroups($src->getGroups());
         // NOTE: #7408 Specify which properties are clonable
         $new->setProperty("subseries", $src->getProperty("subseries"));
         $new->setProperty("subseriestitle", $src->getProperty("subseriestitle"));
@@ -386,6 +388,10 @@ class FactoryService
             foreach ($embeddedRole->getPeople() as $embeddedPerson) {
                 $new->addPersonWithRole($embeddedPerson, $embeddedRole);
             }
+        }
+
+        foreach ($src->getGroups() as $group) {
+            $new->addGroup($group);
         }
 
         $new->setSeries($src->getSeries());
