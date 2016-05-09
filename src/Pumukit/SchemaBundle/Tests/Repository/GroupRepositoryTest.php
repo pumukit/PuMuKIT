@@ -41,4 +41,30 @@ class GroupRepositoryTest extends WebTestCase
 
         $this->assertEquals(1, count($this->repo->findAll()));
     }
+
+    public function testFindByIdNotIn()
+    {
+        $group1 = new Group();
+        $group1->setKey('Group1');
+        $group1->setName('Group 1');
+
+        $group2 = new Group();
+        $group2->setKey('Group2');
+        $group2->setName('Group 2');
+
+        $group3 = new Group();
+        $group3->setKey('Group3');
+        $group3->setName('Group 3');
+
+        $this->dm->persist($group1);
+        $this->dm->persist($group2);
+        $this->dm->persist($group3);
+        $this->dm->flush();
+
+        $ids = array(new \MongoId($group1->getId()), new \MongoId($group3->getId()));
+        $groups = $this->repo->findByIdNotIn($ids)->toArray();
+        $this->assertFalse(in_array($group1, $groups));
+        $this->assertTrue(in_array($group2, $groups));
+        $this->assertFalse(in_array($group3, $groups));
+    }
 }
