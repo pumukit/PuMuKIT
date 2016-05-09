@@ -135,4 +135,16 @@ class GroupService
     {
         return $this->repo->findAll();
     }
+
+    /**
+     * Find groups not in
+     * the given array
+     *
+     * @param array $ids
+     * @return Cursor
+     */
+    public function findByIdNotIn($ids = array())
+    {
+        return $this->repo->findByIdNotIn($ids);
+    }
 }
