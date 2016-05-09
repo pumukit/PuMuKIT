@@ -2066,21 +2066,38 @@ function select_group(element)
   return false;
 }
 
-function add_group(group_id, user_id, mode, group_key, group_name, group_origin)
+function add_group(group_id, user_id, mode, group_key, group_name, group_origin, resource)
 {
-    create_element_group_in_add_groups(group_id, user_id, mode, group_key, group_name, group_origin);
-    element_to_delete = "#delete_group_" + group_id + "_" + mode;
-    delete_element_group_from_select(element_to_delete, group_id, user_id, mode, group_key, group_name, group_origin);
+    create_element_group_in_add_groups(group_id, user_id, mode, group_key, group_name, group_origin, resource);
+    if (resource == "user") {
+        element_to_delete = "#delete_group_" + group_id + "_" + mode;
+    } else {
+        $('#remember_save_' + resource + '_group').show();
+        element_to_delete = "#delete_" + resource + "_group_" + group_id;
+    }
+    delete_element_group_from_select(element_to_delete, group_id, user_id, mode, group_key, group_name, group_origin, resource);
 }
 
-function delete_group(group_id, user_id, mode, group_key, group_name, group_origin)
+function delete_group(group_id, user_id, mode, group_key, group_name, group_origin, resource)
 {
-    element_to_delete = "#add_group_" + group_id + "_" + mode;
+    if (resource == "user") {
+        element_to_delete = "#add_group_" + group_id + "_" + mode;
+    } else {
+        $('#remember_save_' + resource + '_group').show();
+        element_to_delete = "#add_" + resource + "_group_" + group_id;
+    }
     delete_element_group_from_select(element_to_delete);
-    create_element_group_in_delete_groups(group_id, user_id, mode, group_key, group_name, group_origin);
+    create_element_group_in_delete_groups(group_id, user_id, mode, group_key, group_name, group_origin, resource);
 }
 
-function create_element_group_in_add_groups(group_id, user_id, mode, group_key, group_name, group_origin) {
+function create_element_group_in_add_groups(group_id, user_id, mode, group_key, group_name, group_origin, resource) {
+    if (resource == "user") {
+        var item_id = 'id="add_group_' + group_id + '_' + mode;
+        var $add_groups_list = $('#add_groups_'+mode);
+    } else {
+        var item_id = 'id="add_' + resource + '_group_' + group_id;
+        var $add_groups_list = $('#add_' + resource + '_groups');
+    }
     var ldap_origin = '{{ constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LDAP')}}';
     if (group_origin == ldap_origin) {
         var item_class = 'class="list-group-item disabled-group-item"';
@@ -2088,16 +2105,26 @@ function create_element_group_in_add_groups(group_id, user_id, mode, group_key, 
         var item_ondblclick = 'ondblclick="javascript:window.alert(\'Not allowed to delete LDAP group ' + group_key + '\');"';
         group_origin = group_origin.toUpperCase();
     } else {
-        var item_class = 'class="list-group-item add-group-item-'+mode+'"';
+        if (resource == "user") {
+            var item_class = 'class="list-group-item add-group-item-'+mode+'"';
+        } else {
+            var item_class = 'class="list-group-item add-' + resource + '-group-item"';
+        }
         var item_onclick = 'onclick="return select_group(this);"';
-        var item_ondblclick = 'ondblclick="javascript:delete_group(\'' + group_id + '\', \'' + user_id + '\', \'' + mode + '\', \'' + group_key + '\', \'' + group_name + '\', \'' + group_origin + '\');"';
+        var item_ondblclick = 'ondblclick="javascript:delete_group(\'' + group_id + '\', \'' + user_id + '\', \'' + mode + '\', \'' + group_key + '\', \'' + group_name + '\', \'' + group_origin + '\', \'' + resource + '\');"';
     }
-    var item_text = '<a href="#" ' + item_class + ' ' + item_onclick + ' ' + item_ondblclick + ' id="add_group_' + group_id + '_' + mode +'"><i class="mdi-social-group"></i> ' + group_key + ' - ' + group_name + ' - (' + group_origin + ')</a>';
-    var $add_groups_list = $('#add_groups_'+mode);
+    var item_text = '<a href="#" ' + item_class + ' ' + item_onclick + ' ' + item_ondblclick + ' ' + item_id + '"><i class="mdi-social-group"></i> ' + group_key + ' - ' + group_name + ' - (' + group_origin + ')</a>';
     $add_groups_list.append(item_text);
 }
 
-function create_element_group_in_delete_groups(group_id, user_id, mode, group_key, group_name, group_origin) {
+function create_element_group_in_delete_groups(group_id, user_id, mode, group_key, group_name, group_origin, resource) {
+    if (resource == "user") {
+        var item_id = 'id="delete_group_' + group_id + '_' + mode;
+        var $delete_groups_list = $('#delete_groups_'+mode);
+    } else {
+        var item_id = 'id="delete_' + resource + '_group_' + group_id;
+        var $delete_groups_list = $('#delete_' + resource + '_groups');
+    }
     var ldap_origin = '{{ constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LDAP')}}';
     if (group_origin == ldap_origin) {
         var item_class = 'class="list-group-item disabled-group-item"';
@@ -2105,12 +2132,15 @@ function create_element_group_in_delete_groups(group_id, user_id, mode, group_ke
         var item_ondblclick = 'ondblclick="javascript:window.alert(\'Not allowed to add LDAP group ' + group_key + '\');"';
         group_origin = group_origin.toUpperCase();
     } else {
-        var item_class = 'class="list-group-item delete-group-item-'+mode+'"';
+        if (resource == "user") {
+            var item_class = 'class="list-group-item delete-group-item-'+mode+'"';
+        } else {
+            var item_class = 'class="list-group-item delete-' + resource + '-group-item"';
+        }
         var item_onclick = 'onclick="return select_group(this);"';
-        var item_ondblclick = 'ondblclick="javascript:add_group(\'' + group_id + '\', \'' + user_id +'\', \'' + mode + '\', \'' + group_key + '\', \'' + group_name + '\', \'' + group_origin + '\');"';
+        var item_ondblclick = 'ondblclick="javascript:add_group(\'' + group_id + '\', \'' + user_id +'\', \'' + mode + '\', \'' + group_key + '\', \'' + group_name + '\', \'' + group_origin + '\', \'' + resource + '\');"';
     }
-    var item_text = '<a href="#" ' + item_class + ' ' + item_onclick + ' ' + item_ondblclick + ' id="delete_group_' + group_id + '_' + mode +'"><i class="mdi-social-group"></i> ' + group_key + ' - ' + group_name + ' - (' + group_origin + ')</a>';
-    var $delete_groups_list = $('#delete_groups_'+mode);
+    var item_text = '<a href="#" ' + item_class + ' ' + item_onclick + ' ' + item_ondblclick + ' ' + item_id +'"><i class="mdi-social-group"></i> ' + group_key + ' - ' + group_name + ' - (' + group_origin + ')</a>';
     $delete_groups_list.append(item_text);
 }
 
@@ -2200,4 +2230,84 @@ $(document).on('click', '#pumukitnewadmin_user_groups_reset', function() {
             }
         }
     });
+});
+
+function pumukitnewadmin_mm_updategroup_submit(mm_id, template) {
+    $('#remember_save_mm' + template + '_group').hide();
+    var route = "{{ path('pumukitnewadmin_mms_updategroups', {'id': '__id__'})|raw }}";
+    route = route.replace('__id__', mm_id);
+    var addGroups = [];
+    var deleteGroups = [];
+    $('a.add-mm'+template+'-group-item').each(function(){
+        addGroups.push($(this).attr("id"));
+    });
+    $('a.delete-mm'+template+'-group-item').each(function(){
+        deleteGroups.push($(this).attr("id"));
+    });
+    $.ajax({
+        url: route,
+        type: 'POST',
+        data: {'addGroups': addGroups, 'deleteGroups': deleteGroups},
+        error: function(jqXHR, textStatus, errorThrown){
+            no_success(errorThrown + ': ' + jqXHR.responseText);
+        },
+        success: function(response){
+            var message = 'Successfully updated groups in Mm.';
+            success(message);
+        }
+    });
+}
+
+$(document).on('click', '#pumukitnewadmin_mm_updategroup_submit', function() {
+    var mm_id = $('#mm_id').val();
+    pumukitnewadmin_mm_updategroup_submit(mm_id, '');
+});
+
+$(document).on('click', '#pumukitnewadmin_mm_template_updategroup_submit', function() {
+    var mm_id = $('#mm_id').val();
+    pumukitnewadmin_mm_updategroup_submit(mm_id, '_template');
+});
+
+function pumukitnewadmin_mm_updategroup_reset(mm_id, template, resource) {
+    $('#remember_save_mm' + template + '_group').hide();
+    var route = "{{ path('pumukitnewadmin_mms_getgroups', {'id': '__id__'})|raw }}";
+    route = route.replace('__id__', mm_id);
+    $.ajax({
+        url: route,
+        type: 'GET',
+        error: function(jqXHR, textStatus, errorThrown){
+            no_success(errorThrown + ': ' + jqXHR.responseText);
+        },
+        success: function(response){
+            var addGroups = response.addGroups;
+            var deleteGroups = response.deleteGroups;
+            $('#add_mm'+template+'_groups').empty();
+            $('#delete_mm'+template+'_groups').empty();
+            for (var group_id in addGroups) {
+                var group_key = addGroups[group_id].key;
+                var group_name = addGroups[group_id].name;
+                var group_origin = addGroups[group_id].origin;
+                add_group(group_id, mm_id, template, group_key, group_name, group_origin, resource);
+            }
+            for (var group_id in deleteGroups) {
+                var group_key = deleteGroups[group_id].key;
+                var group_name = deleteGroups[group_id].name;
+                var group_origin = deleteGroups[group_id].origin;
+                delete_group(group_id, mm_id, template, group_key, group_name, group_origin, resource);
+            }
+            $('#remember_save_mm' + template + '_group').hide();
+        }
+    });
+}
+
+$(document).on('click', '#pumukitnewadmin_mm_updategroup_reset', function() {
+    var mm_id = $('#mm_id').val();
+    var resource = 'mm';
+    pumukitnewadmin_mm_updategroup_reset(mm_id, '', resource);
+});
+
+$(document).on('click', '#pumukitnewadmin_mm_template_updategroup_reset', function() {
+    var mm_id = $('#mm_id').val();
+    var resource = 'mm_template';
+    pumukitnewadmin_mm_updategroup_reset(mm_id, '_template', resource);
 });

@@ -48,7 +48,7 @@
               <a href="#" class="list-group-item"
                  id="add_group_{{ user_group.id }}_{{ mode }}"
                  onclick="javascript:return select_group(this);"
-                 ondblclick="javascript:delete_group('{{ user_group.id }}', '{{ user.id }}', '{{ mode }}', '{{ user_group.key }}', '{{ user_group.name }}', '{{ user_group.origin }}');">
+                 ondblclick="javascript:delete_group('{{ user_group.id }}', '{{ user.id }}', '{{ mode }}', '{{ user_group.key }}', '{{ user_group.name }}', '{{ user_group.origin }}', 'user');">
                 <i class="mdi-social-group"></i>
                 {{ user_group.key }} - {{ user_group.name }} - ({{ user_group.origin }})
               </a>

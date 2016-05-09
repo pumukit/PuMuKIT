@@ -13,7 +13,7 @@
 <a href="#" 
    id="delete_group_{{ group.id }}_{{ mode }}"
    onclick="javascript:return select_group(this);" 
-   ondblclick="javascript:add_group('{{ group.id }}', '{{ user.id }}', '{{ mode }}', '{{ group.key }}', '{{ group.name }}', '{{ group.origin }}');"
+   ondblclick="javascript:add_group('{{ group.id }}', '{{ user.id }}', '{{ mode }}', '{{ group.key }}', '{{ group.name }}', '{{ group.origin }}', 'user');"
    class="list-group-item notload delete-group-item-{{ mode }}">
   <i class="mdi-social-group"></i>
   {{ group.key }} - {{ group.name }} - ({{ group.origin }})
