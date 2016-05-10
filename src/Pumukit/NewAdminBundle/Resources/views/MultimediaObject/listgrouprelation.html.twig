@@ -1,4 +1,3 @@
-{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_GROUPS')) %}
 <table>
   <tdody>
     <input type="hidden" id="mm_id" value="{{ mm.id }}"/>
@@ -50,6 +49,3 @@
     </div>
 </tbody>
 </table>
-{% else %}
-{% trans %}You don't have enough permissions to access this content.{% endtrans %}
-{% endif %}

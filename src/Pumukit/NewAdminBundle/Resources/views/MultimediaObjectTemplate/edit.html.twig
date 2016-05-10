@@ -13,11 +13,9 @@
       <li>
         <a href="#personMmTemplate" aria-controls="personMmTemplate" role="tab" data-toggle="tab">{% trans %}People{% endtrans %}</a>
       </li>
-      {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_GROUPS')) %}
       <li>
         <a href="#groupMmTemplate" aria-controls="groupMmTemplate" role="tab" data-toggle="tab">{% trans %}Owners & Groups{% endtrans %}</a>
       </li>
-      {% endif %}
     </ul>
     <div class="tab-content">
       <div id="metaMmTemplate" role="tabpanel" class="tab-pane active">
@@ -31,11 +29,9 @@
       <div id="personMmTemplate" role="tabpanel" class="tab-pane">
         {% include 'PumukitNewAdminBundle:MultimediaObject:updateperson.html.twig' with {'mm': mmtemplate, 'roles': roles} %}
       </div>
-      {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_GROUPS')) %}
       <div id="groupMmTemplate" role="tabpanel" class="tab-pane">
         {% include 'PumukitNewAdminBundle:MultimediaObject:updategroup.html.twig' with {'mm': mmtemplate, 'personal_scope_role': personal_scope_role} %}
       </div>
-      {% endif %}
     </div>
   </div>
 </div>

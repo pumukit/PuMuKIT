@@ -1,4 +1,3 @@
-{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_GROUPS')) %}
 {% for group in groups if group not in mm.getGroups() and (group.origin != constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LDAP')) %}
 <a href="#" 
    id="delete_mm{{ template }}_group_{{ group.id }}"
@@ -9,4 +8,3 @@
   {{ group.key }} - {{ group.name }} - ({{ group.origin }})
 </a>
 {% endfor %}
-{% endif %}
