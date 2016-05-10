@@ -306,7 +306,7 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
-     * Find series by person id
+     * Find series by person id and role code
      *
      * @param string $personId
      * @param string $roleCod
@@ -319,6 +319,40 @@ class MultimediaObjectRepository extends DocumentRepository
             $qb->expr()->field('people._id')->equals(new \MongoId($personId))
                 ->field('cod')->equals($roleCod)
                                         );
+        return $qb->distinct('series')
+          ->getQuery()
+          ->execute();
+    }
+
+    /**
+     * Find series by person id
+     * and role code or groups
+     *
+     * @param string          $personId
+     * @param string          $roleCod
+     * @param ArrayCollection $groups
+     * @return ArrayCollection
+     */
+    public function findSeriesFieldByPersonIdAndRoleCodOrGroups($personId, $roleCod, $groups)
+    {
+        // TODO #10479: Find better way to get array with only IDs of groups
+        if ($groups) {
+            if (gettype($groups) !== 'array') {
+                $groups = $groups->toArray();
+                $groupsIds = array();
+                foreach ($groups as $group) {
+                    $groupsIds[] = new \MongoId($group->getId());
+                }
+            }
+        } else {
+            $groupsIds = array();
+        }
+        $qb = $this->createQueryBuilder();
+        $qb->addOr($qb->expr()->field('groups')->in($groupsIds));
+        $qb->addOr($qb->expr()->field('people')->elemMatch(
+            $qb->expr()->field('people._id')->equals(new \MongoId($personId))
+                ->field('cod')->equals($roleCod)
+        ));
         return $qb->distinct('series')
           ->getQuery()
           ->execute();
