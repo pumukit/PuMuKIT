@@ -40,7 +40,7 @@
           </td>
           <td>
             {% if user.origin == constant('Pumukit\\SchemaBundle\\Document\\User::ORIGIN_LDAP') %}
-            <i title="{% trans %}Cannot edit the data of{% endtrans %} '{{ user.username }}'. {% trans %}Origin is{% endtrans %} '{{ constant('Pumukit\\SchemaBundle\\Document\\User::ORIGIN_LDAP') }}'." class="mdi-content-block" style="color:#009587"></i>
+            <i data-toggle="tooltip" data-placement="right" title="{% trans %}LDAP defined users can not be edited here, contact your LDAP administrator.{% endtrans %}" class="mdi-content-block" style="color:#009587"></i>
             {% else %}
             <a title="{% trans %}Edit User{% endtrans %} {{ user.fullname }}" href="{{ path('pumukitnewadmin_user_update', {'id': user.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
               <i class="mdi-editor-mode-edit"></i>
@@ -54,7 +54,7 @@
           </td>
           <td>
             {% if user.origin == constant('Pumukit\\SchemaBundle\\Document\\User::ORIGIN_LDAP') %}
-            <i class="mdi-social-group" data-toggle="tooltip" data-placement="right" title="{{ user|user_groups_text }}({% trans %}Not allowed to add/delete groups to {% endtrans %} '{{ user.username }}'. {% trans %}Origin is{% endtrans %} '{{ constant('Pumukit\\SchemaBundle\\Document\\User::ORIGIN_LDAP') }}'.)"></i>
+            <i class="mdi-social-group" data-toggle="tooltip" data-placement="right" title="{{ user|user_groups_text }}({% trans %}Groups of LDAP defined users can not be edited here, contact your LDAP administrator{% endtrans %})"></i>
             {% else %}
             <a href="{{ path('pumukitnewadmin_user_editgroups', {'id': user.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
               <i class="mdi-social-group" data-toggle="tooltip" data-placement="right" title="{{ user|user_groups_text }}({% trans %}Click to modify groups{% endtrans %})"></i>

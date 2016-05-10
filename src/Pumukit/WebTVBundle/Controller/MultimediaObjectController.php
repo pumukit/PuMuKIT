@@ -87,7 +87,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
             return $response;
         }
 
-        $response = $this->preExecute($multimediaObject, $request);
+        $response = $this->preExecute($multimediaObject, $request, true);
         if($response instanceof Response) {
             return $response;
         }
@@ -123,7 +123,6 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
 
         $limit = $this->container->getParameter('limit_objs_player_series');
 
-
         $multimediaObjects = $mmobjRepo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED), $limit);
 
         return array('series' => $series,
@@ -144,10 +143,13 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
         return array('multimediaObjects' => $relatedMms);
     }
 
-    public function preExecute(MultimediaObject $multimediaObject, Request $request)
+    public function preExecute(MultimediaObject $multimediaObject, Request $request, $secret = false)
     {
         if ($opencasturl = $multimediaObject->getProperty('opencasturl')) {
-            return $this->forward('PumukitWebTVBundle:Opencast:index', array('request' => $request, 'multimediaObject' => $multimediaObject));
+            if($secret)
+                return $this->forward('PumukitWebTVBundle:Opencast:magic', array('request' => $request, 'multimediaObject' => $multimediaObject));
+            else
+                return $this->forward('PumukitWebTVBundle:Opencast:index', array('request' => $request, 'multimediaObject' => $multimediaObject));
         }
     }
 }

@@ -443,4 +443,15 @@ class UserController extends AdminController implements NewAdminController
 
         return new JsonResponse(array('ok'));
     }
+
+    private function getGroupsToDelete($ids = array())
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $groupRepo = $dm->getRepository('PumukitSchemaBundle:Group');
+        $groups = $groupRepo->createQueryBuilder()
+            ->field('_id')->notIn($ids)
+            ->getQuery()
+            ->execute();
+        return $groups;
+    }
 }

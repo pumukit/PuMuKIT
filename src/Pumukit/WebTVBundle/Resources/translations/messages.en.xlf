@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+  <file source-language="es" target-language="en" datatype="plaintext" original="file.ext">
     <body>
       <trans-unit id="b900119b283c0339c634733d27d98912" resname="Health Sciences">
         <source>Health Sciences</source>
@@ -265,6 +265,122 @@
       <trans-unit id="8d098c874004071be31f616d9edfdd2f" resname="Private video">
         <source>Private video</source>
         <target>Private video</target>
+      </trans-unit>
+      <trans-unit id="39ad68dfe686cfdda66b23ae04ef45d6" resname="{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos">
+        <source>{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos</source>
+        <target>{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos</target>
+      </trans-unit>
+      <trans-unit id="e6b06dea9ac5e0330e37ee581f323e90" resname="Show videos">
+        <source>Show videos</source>
+        <target>Show videos</target>
+      </trans-unit>
+      <trans-unit id="445bd664985fd3d87bdfdc0da47507fa" resname="No resources available">
+        <source>No resources available</source>
+        <target>No resources available</target>
+      </trans-unit>
+      <trans-unit id="5ab88857f33f829648393a4f0cdfab8f" resname="Private Video">
+        <source>Private Video</source>
+        <target>Private Video</target>
+      </trans-unit>
+      <trans-unit id="e01c294e24ff18aa879b207078fed4c4" resname="This video is private with restricted access">
+        <source>This video is private with restricted access</source>
+        <target>This video is private with restricted access</target>
+      </trans-unit>
+      <trans-unit id="d2e23e955956256bed1752d5f85b0899" resname="Log in is required to watch it">
+        <source>Log in is required to watch it</source>
+        <target>Log in is required to watch it</target>
+      </trans-unit>
+      <trans-unit id="d4a3404790a7d7c5dc96d18cdaa8850a" resname="Go to back-office">
+        <source>Go to back-office</source>
+        <target>Go to back-office</target>
+      </trans-unit>
+      <trans-unit id="054c9692816df8b7212f4407755f82a2" resname="Manage my videos">
+        <source>Manage my videos</source>
+        <target>Manage my videos</target>
+      </trans-unit>
+      <trans-unit id="4394c8d8e63c470de62ced3ae85de5ae" resname="Log out">
+        <source>Log out</source>
+        <target>Log out</target>
+      </trans-unit>
+      <trans-unit id="bffe9a3c9a7e00ba00a11749e022d911" resname="Log in">
+        <source>Log in</source>
+        <target>Log in</target>
+      </trans-unit>
+      <trans-unit id="8904f2049376128f0e548157cbd7d160" resname="Most viewed since last month">
+        <source>Most viewed since last month</source>
+        <target>Most viewed since last month</target>
+      </trans-unit>
+      <trans-unit id="7e2708aeb65763c54052f57ed1a1ec1d" resname="Attachments">
+        <source>Attachments</source>
+        <target>Attachments</target>
+      </trans-unit>
+      <trans-unit id="404eb0c9cf5314b4ddfa9914d2b2ce94" resname="There are no attachments">
+        <source>There are no attachments</source>
+        <target>There are no attachments</target>
+      </trans-unit>
+      <trans-unit id="3e0fa00ee2fba747e8419e80c1da2d72" resname="Share on Facebook">
+        <source>Share on Facebook</source>
+        <target>Share on Facebook</target>
+      </trans-unit>
+      <trans-unit id="82aeb3b62f0627a4bb4ee48193f254d2" resname="Share on Google +">
+        <source>Share on Google +</source>
+        <target>Share on Google +</target>
+      </trans-unit>
+      <trans-unit id="1d951d9b21da3a1d8de14c19b3238cf1" resname="Share on Twitter">
+        <source>Share on Twitter</source>
+        <target>Share on Twitter</target>
+      </trans-unit>
+      <trans-unit id="318ad6c5b14a4f5c80f83363033e94cc" resname="Select by year">
+        <source>Select by year</source>
+        <target>Select by year</target>
+      </trans-unit>
+      <trans-unit id="5da618e8e4b89c66fe86e32cdafde142" resname="From">
+        <source>From</source>
+        <target>From</target>
+      </trans-unit>
+      <trans-unit id="3728af837fe70019577ddb0ed7125ee5" resname="Until">
+        <source>Until</source>
+        <target>Until</target>
+      </trans-unit>
+      <trans-unit id="537c66b24ef5c83b7382cdc3f34885f2" resname="Year">
+        <source>Year</source>
+        <target>Year</target>
+      </trans-unit>
+      <trans-unit id="1fdfc5c8c6cd57405ff05809a180ae8b" resname="Select by date range">
+        <source>Select by date range</source>
+        <target>Select by date range</target>
+      </trans-unit>
+      <trans-unit id="ed36a1ef76a59ee3f15180e0441188ad" resname="Any">
+        <source>Any</source>
+        <target>Any</target>
+      </trans-unit>
+      <trans-unit id="cb5760cc8a804f5f7085d3692f736117" resname="Search by series">
+        <source>Search by series</source>
+        <target>Search by series</target>
+      </trans-unit>
+      <trans-unit id="ce8ae9da5b7cd6c3df2929543a9af92d" resname="Email">
+        <source>Email</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="c532a205df1024f1522fc8921b86723a" resname="Search by multimedia objects">
+        <source>Search by multimedia objects</source>
+        <target>Search by multimedia objects</target>
+      </trans-unit>
+      <trans-unit id="0a18493501c4a7d1e08bb9e4fbe98a3b" resname="Multimedia objects search">
+        <source>Multimedia objects search</source>
+        <target>Multimedia objects search</target>
+      </trans-unit>
+      <trans-unit id="3c53c398c3e076a5b04c2c94e0e7921c" resname="Total search results:">
+        <source>Total search results:</source>
+        <target>Total search results:</target>
+      </trans-unit>
+      <trans-unit id="4a71d7d71737bd12fc51c2bc8024e84a" resname="Not multimedia objects found">
+        <source>Not multimedia objects found</source>
+        <target>Not multimedia objects found</target>
+      </trans-unit>
+      <trans-unit id="8bd1fd42b739b6b760f57f023580794f" resname="Private audio">
+        <source>Private audio</source>
+        <target>Private audio</target>
       </trans-unit>
     </body>
   </file>

@@ -29,7 +29,7 @@ id;cod;tree_parent_cod;metatag;display;name_en;name_es;name_gl;name_de
 12662;102109;102;0;1;Culinary Arts;Artes culinarias;Artes culinarias;Kochkunst
 22662;102110;102;0;1;Visual Art;Arte Visual;Arte Visual;Bildende Kunst
 32662;102111;102;0;1;Fashion;Moda;Moda;Mode
-42662;102112;102;0;1;Media Arts;Media Arts;Media Arts;Medienkunst
+42662;102112;102;0;1;Media Arts;Artes audiovisuales;Artes audiovisuales;Medienkunst
 52662;102113;102;0;1;Photography;Fotografía;Fotografía;Fotografie
 2631;103;ITUNESU;0;1;Health & Medicine;Salud y Medicina;Saúde e Medicina;Gesundheit & Medizin
 2663;103100;103;0;1;Anatomy & Physiology;Anatomía y Fisiología;Anatomía e Fisioloxía;Anatomie & Physiologie
@@ -108,7 +108,7 @@ id;cod;tree_parent_cod;metatag;display;name_en;name_es;name_gl;name_de
 2722;109107;109;0;1;Geology;Geología;Xeoloxía;Geologie
 2723;109108;109;0;1;Physics;Física;Física;Physik
 12723;109109;109;0;1;Environment;Medio Ambiente;Medio Ambiente;Umwelt
-2638;110;ITUNESU;0;1;Psychology & Social Science;Ciencias Sociale y Psicologías;Ciencias Sociais e Psicoloxía;Psychologie & Sozialwissenschaft
+2638;110;ITUNESU;0;1;Psychology & Social Science;Ciencias Sociales y Psicologías;Ciencias Sociais e Psicoloxía;Psychologie & Sozialwissenschaft
 2724;110100;110;0;1;Law;Derecho;Dereito;Recht
 2725;110101;110;0;1;Political Science;Ciencias Políticas;Ciencias Políticas;Politikwissenschaft
 2726;110102;110;0;1;Public Administration;Administración Pública;Administración Pública;Öffentliche Verwaltung
@@ -126,8 +126,8 @@ id;cod;tree_parent_cod;metatag;display;name_en;name_es;name_gl;name_de
 2736;111106;111;0;1;Women’s Studies;Estudios sobre mujeres;Estudos sobre mulleres;Frauenforschung
 12736;111107;111;0;1;African Studies;Estudios de África;Estudios de África;Afrikanistik
 22736;111108;111;0;1;American Studies;Estudios de América;Estudios de América;Amerikanistik
-32736;111109;111;0;1;Cross-cultural Studies;Estudos Transculturales;Estudos Transculturais;Interkulturelle Studien
-42736;111110;111;0;1;Immigration & Emigration;Inmigración e Emigración;Inmigración e Emigración;Ein- & Auswanderung
+32736;111109;111;0;1;Cross-cultural Studies;Estudios Transculturales;Estudos Transculturais;Interkulturelle Studien
+42736;111110;111;0;1;Immigration & Emigration;Inmigración y Emigración;Inmigración e Emigración;Ein- & Auswanderung
 52736;111111;111;0;1;Race & Ethnicity Studies;Estudios de raza y etnia;Estudios de raza e etnia.;Ethnizitätsforschung
 62736;111112;111;0;1;Sexuality Studies;Estudios de Sexsualidad;Estudios de Sexualidade;Sexualitätenforschung
 2640;112;ITUNESU;0;1;Teaching & Learning;Enseñanza y Educación;Ensinanza e Educación;Lehren & Lernen
