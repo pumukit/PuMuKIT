@@ -325,15 +325,16 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
-     * Find series by person id
+     * Find by person id
      * and role code or groups
+     * query builder
      *
      * @param string          $personId
      * @param string          $roleCod
      * @param ArrayCollection $groups
-     * @return ArrayCollection
+     * @return QueryBuilder
      */
-    public function findSeriesFieldByPersonIdAndRoleCodOrGroups($personId, $roleCod, $groups)
+    public function findByPersonIdAndRoleCodOrGroupsQueryBuilder($personId, $roleCod, $groups)
     {
         // TODO #10479: Find better way to get array with only IDs of groups
         if ($groups) {
@@ -353,11 +354,56 @@ class MultimediaObjectRepository extends DocumentRepository
             $qb->expr()->field('people._id')->equals(new \MongoId($personId))
                 ->field('cod')->equals($roleCod)
         ));
+        return $qb;
+    }
+
+    /**
+     * Find by person id
+     * and role code or groups
+     * query
+     *
+     * @param string          $personId
+     * @param string          $roleCod
+     * @param ArrayCollection $groups
+     * @return Query
+     */
+    public function findByPersonIdAndRoleCodOrGroupsQuery($personId, $roleCod, $groups)
+    {
+        $qb = $this->findByPersonIdAndRoleCodOrGroupsQueryBuilder($personId, $roleCod, $groups);
+        return $qb->getQuery();
+    }
+
+    /**
+     * Find by person id
+     * and role code or groups
+     *
+     * @param string          $personId
+     * @param string          $roleCod
+     * @param ArrayCollection $groups
+     * @return ArrayCollection
+     */
+    public function findByPersonIdAndRoleCodOrGroups($personId, $roleCod, $groups)
+    {
+        $query = $this->findByPersonIdAndRoleCodOrGroupsQuery($personId, $roleCod, $groups);
+        return $query->execute();
+    }
+
+    /**
+     * Find series by person id
+     * and role code or groups
+     *
+     * @param string          $personId
+     * @param string          $roleCod
+     * @param ArrayCollection $groups
+     * @return ArrayCollection
+     */
+    public function findSeriesFieldByPersonIdAndRoleCodOrGroups($personId, $roleCod, $groups)
+    {
+        $qb = $this->findByPersonIdAndRoleCodOrGroupsQueryBuilder($personId, $roleCod, $groups);
         return $qb->distinct('series')
           ->getQuery()
           ->execute();
     }
-
     // Find Multimedia Objects with Tags
 
     /**
