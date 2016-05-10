@@ -121,7 +121,9 @@ class SearchController extends Controller implements WebTVController
         ->getRepository('PumukitSchemaBundle:MultimediaObject')
         ->createStandardQueryBuilder()->sort('record_date','asc')->limit(1)
         ->getQuery()->getSingleResult();
-        $minRecordDate = $firstMmobj->getRecordDate()->format('m/d/Y');
+        $minRecordDate = $firstMmobj ?
+          $firstMmobj->getRecordDate()->format('m/d/Y') :
+          date('m/d/Y', time() - (365 * 24 * 60 * 60));
         $maxRecordDate = date('m/d/Y');
         // --- Get years array ---
         $searchYears = $this->getMmobjsYears();

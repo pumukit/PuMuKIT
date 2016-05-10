@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="es" datatype="plaintext" original="file.ext">
+  <file source-language="es" target-language="es" datatype="plaintext" original="file.ext">
     <body>
       <trans-unit id="b900119b283c0339c634733d27d98912" resname="Health Sciences">
         <source>Health Sciences</source>
@@ -16,11 +16,11 @@
       </trans-unit>
       <trans-unit id="5dc3368bd1d6e900406c812bbf1e5a86" resname="Technical science">
         <source>Technical science</source>
-        <target>Ciencias tecnologicas</target>
+        <target>Ciencias tecnológicas</target>
       </trans-unit>
       <trans-unit id="1741e76bc095bfafab0bdd36b2d853b9" resname="Social and Legal sciences">
         <source>Social and Legal sciences</source>
-        <target>Ciencias Juridico-Sociales</target>
+        <target>Ciencias Jurídico-Sociales</target>
       </trans-unit>
       <trans-unit id="d163fae6668b451e5ba411e30dd142cd" resname="PuMuKIT">
         <source>PuMuKIT</source>
@@ -162,7 +162,7 @@
         <source>Series search</source>
         <target>Buscar series</target>
       </trans-unit>
-      <trans-unit id="12b214e7c67af198fa672b60161eac75" resname="Multimedia objects search">
+      <trans-unit id="0a18493501c4a7d1e08bb9e4fbe98a3b" resname="Multimedia objects search">
         <source>Multimedia objects search</source>
         <target>Buscar objetos multimedia</target>
       </trans-unit>
@@ -274,7 +274,7 @@
         <source>Private video</source>
         <target>Vídeo privado</target>
       </trans-unit>
-      <trans-unit id="5b3150e30d4963ac18c88f081ecf8876" resname="{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos">
+      <trans-unit id="39ad68dfe686cfdda66b23ae04ef45d6" resname="{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos">
         <source>{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos</source>
         <target>{0}0 Vídeos|{1}%count% Vídeo|]1,Inf[%count% Vídeos</target>
       </trans-unit>
@@ -312,7 +312,7 @@
       </trans-unit>
       <trans-unit id="318ad6c5b14a4f5c80f83363033e94cc" resname="Select by year">
         <source>Select by year</source>
-        <target>Selección por año</target>
+        <target>Usar años</target>
       </trans-unit>
       <trans-unit id="537c66b24ef5c83b7382cdc3f34885f2" resname="Year">
         <source>Year</source>
@@ -320,7 +320,7 @@
       </trans-unit>
       <trans-unit id="1fdfc5c8c6cd57405ff05809a180ae8b" resname="Select by date range">
         <source>Select by date range</source>
-        <target>Selección por rango de fechas</target>
+        <target>Selección por fechas</target>
       </trans-unit>
       <trans-unit id="ed36a1ef76a59ee3f15180e0441188ad" resname="Any">
         <source>Any</source>
@@ -330,45 +330,89 @@
         <source>Total search results:</source>
         <target>Resultados de búsqueda totales:</target>
       </trans-unit>
-      <trans-unit id="xtra-1" resname="Home">
+      <trans-unit id="8cf04a9734132302f96da8e113e80ce5" resname="Home">
         <source>Home</source>
         <target>Principal</target>
       </trans-unit>
-      <trans-unit id="xtra-2" resname="Latest Uploads">
+      <trans-unit id="b3e5ff3eb8faf64fda7a6d32de6ade6d" resname="Latest Uploads">
         <source>Latest Uploads</source>
         <target>Últimos Subidos</target>
       </trans-unit>
-      <trans-unit id="xtra-3" resname="By subject catalogue">
+      <trans-unit id="aaf40ad2ab7b5e9a1f5a19c78b6c5bc4" resname="By subject catalogue">
         <source>By subject catalogue</source>
         <target>Catálogo por temas</target>
       </trans-unit>
-      <trans-unit id="xtra-channel-0" resname="University">
+      <trans-unit id="50c60ac437e4d4ef19c77bdca5bbcf3b" resname="University">
         <source>University</source>
         <target>Universidad</target>
       </trans-unit>
-      <trans-unit id="xtra-channel-1" resname="Business">
+      <trans-unit id="d6e6cb19e3b9c02f89d6cd54cfa7c613" resname="Business">
         <source>Business</source>
         <target>Negocios</target>
       </trans-unit>
-      <trans-unit id="xtra-channel-2" resname="Natural Sciences">
+      <trans-unit id="ebad4be1614b6dfe62375ab4bf370622" resname="Natural Sciences">
         <source>Natural Sciences</source>
         <target>Ciencias Naturales</target>
       </trans-unit>
-      <trans-unit id="xtra-channel-3" resname="Health &amp; Medicine">
+      <trans-unit id="a5e73d8e9203cea937ad6205c80036f2" resname="Health &amp; Medicine">
         <source>Health &amp; Medicine</source>
-        <target>Salud &amp; Medicina</target>
+        <target><![CDATA[Salud & Medicina]]></target>
       </trans-unit>
-      <trans-unit id="xtra-channel-4" resname="Humanities">
-        <source>Humanities</source>
-        <target>Humanidades</target>
-      </trans-unit>
-      <trans-unit id="xtra-channel-5" resname="Law">
+      <trans-unit id="81588d326cebe6416d3904db93603af1" resname="Law">
         <source>Law</source>
         <target>Ley</target>
       </trans-unit>
-      <trans-unit id="xtra-channel-6" resname="Social Matters &amp; Education">
+      <trans-unit id="95948e3320f29c1714d31c3070d1f61b" resname="Social Matters &amp; Education">
         <source>Social Matters &amp; Education</source>
-        <target>Ámbito Social &amp; Educación</target>
+        <target><![CDATA[Ámbito Social & Educación]]></target>
+      </trans-unit>
+      <trans-unit id="e6b06dea9ac5e0330e37ee581f323e90" resname="Show videos">
+        <source>Show videos</source>
+        <target>Mostrar vídeos</target>
+      </trans-unit>
+      <trans-unit id="8904f2049376128f0e548157cbd7d160" resname="Most viewed since last month">
+        <source>Most viewed since last month</source>
+        <target>Más vistos desde el último mes</target>
+      </trans-unit>
+      <trans-unit id="3e0fa00ee2fba747e8419e80c1da2d72" resname="Share on Facebook">
+        <source>Share on Facebook</source>
+        <target>Compartir en Facebook</target>
+      </trans-unit>
+      <trans-unit id="82aeb3b62f0627a4bb4ee48193f254d2" resname="Share on Google +">
+        <source>Share on Google +</source>
+        <target>Compartir en Google +</target>
+      </trans-unit>
+      <trans-unit id="1d951d9b21da3a1d8de14c19b3238cf1" resname="Share on Twitter">
+        <source>Share on Twitter</source>
+        <target>Compartir en Twitter</target>
+      </trans-unit>
+      <trans-unit id="5da618e8e4b89c66fe86e32cdafde142" resname="From">
+        <source>From</source>
+        <target>Desde</target>
+      </trans-unit>
+      <trans-unit id="3728af837fe70019577ddb0ed7125ee5" resname="Until">
+        <source>Until</source>
+        <target>Hasta</target>
+      </trans-unit>
+      <trans-unit id="4a71d7d71737bd12fc51c2bc8024e84a" resname="Not multimedia objects found">
+        <source>Not multimedia objects found</source>
+        <target>No se han encontrado objetos multimedia</target>
+      </trans-unit>
+      <trans-unit id="8bd1fd42b739b6b760f57f023580794f" resname="Private audio">
+        <source>Private audio</source>
+        <target>Audio privado</target>
+      </trans-unit>
+      <trans-unit id="cb5760cc8a804f5f7085d3692f736117" resname="Search by series">
+        <source>Search by series</source>
+        <target>Buscar por series</target>
+      </trans-unit>
+      <trans-unit id="ce8ae9da5b7cd6c3df2929543a9af92d" resname="Email">
+        <source>Email</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="c532a205df1024f1522fc8921b86723a" resname="Search by multimedia objects">
+        <source>Search by multimedia objects</source>
+        <target>Buscar por objetos multimedia</target>
       </trans-unit>
     </body>
   </file>

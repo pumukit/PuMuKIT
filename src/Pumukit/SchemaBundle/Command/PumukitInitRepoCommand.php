@@ -57,7 +57,7 @@ EOT
     {
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->allPermissions = $this->getContainer()->get('pumukitschema.permission')->getAllPermissions();
-        $this->pmk2_allLocales = $this->getContainer()->getParameter('pumukit2.locales');
+        $this->pmk2_allLocales = array_unique(array_merge($this->getContainer()->getParameter('pumukit2.locales'), array('en')));
         $repoName = $input->getArgument('repo');
 
         if ($input->getOption('force')) {
