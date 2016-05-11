@@ -344,6 +344,8 @@ class MultimediaObjectRepository extends DocumentRepository
                 foreach ($groups as $group) {
                     $groupsIds[] = new \MongoId($group->getId());
                 }
+            } else {
+                $groupsIds = $groups;
             }
         } else {
             $groupsIds = array();
