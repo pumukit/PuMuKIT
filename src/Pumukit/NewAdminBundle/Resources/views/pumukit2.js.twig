@@ -2084,16 +2084,16 @@ function delete_group(group_id, user_id, mode, group_key, group_name, group_orig
 }
 
 function create_element_group_in_add_groups(group_id, user_id, mode, group_key, group_name, group_origin) {
-    var ldap_origin = '{{ constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LDAP')}}';
-    if (group_origin == ldap_origin) {
-        var item_class = 'class="list-group-item disabled-group-item"';
-        var item_onclick = 'onclick="return false;"';
-        var item_ondblclick = 'ondblclick="javascript:window.alert(\'LDAP defined groups. Contact your LDAP administrator to change membership.\');"';
-        group_origin = group_origin.toUpperCase();
-    } else {
+    var local_origin = '{{ constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')}}';
+    if (group_origin == local_origin) {
         var item_class = 'class="list-group-item add-group-item-'+mode+'"';
         var item_onclick = 'onclick="return select_group(this);"';
         var item_ondblclick = 'ondblclick="javascript:delete_group(\'' + group_id + '\', \'' + user_id + '\', \'' + mode + '\', \'' + group_key + '\', \'' + group_name + '\', \'' + group_origin + '\');"';
+    } else {
+        var item_class = 'class="list-group-item disabled-group-item"';
+        var item_onclick = 'onclick="return false;"';
+        var item_ondblclick = 'ondblclick="javascript:window.alert(\'Not local defined groups. Contact your directory service administrator to change membership.\');"';
+        group_origin = group_origin.toUpperCase();
     }
     var item_text = '<a href="#" ' + item_class + ' ' + item_onclick + ' ' + item_ondblclick + ' id="add_group_' + group_id + '_' + mode +'"><i class="mdi-social-group"></i> ' + group_key + ' - ' + group_name + ' - (' + group_origin + ')</a>';
     var $add_groups_list = $('#add_groups_'+mode);
@@ -2101,8 +2101,8 @@ function create_element_group_in_add_groups(group_id, user_id, mode, group_key, 
 }
 
 function create_element_group_in_delete_groups(group_id, user_id, mode, group_key, group_name, group_origin) {
-    var ldap_origin = '{{ constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LDAP')}}';
-    if (group_origin != ldap_origin) {
+    var local_origin = '{{ constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')}}';
+    if (group_origin == local_origin) {
         var item_class = 'class="list-group-item delete-group-item-'+mode+'"';
         var item_onclick = 'onclick="return select_group(this);"';
         var item_ondblclick = 'ondblclick="javascript:add_group(\'' + group_id + '\', \'' + user_id +'\', \'' + mode + '\', \'' + group_key + '\', \'' + group_name + '\', \'' + group_origin + '\');"';

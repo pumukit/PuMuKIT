@@ -1,5 +1,5 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADMIN_USERS')) %}
-{% for group in groups if ((mode == 'admin' and group not in user.getAdminGroups()) or (mode == 'member' and group not in user.getMemberGroups())) and (group.origin != constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LDAP')) %}
+{% for group in groups if ((mode == 'admin' and group not in user.getAdminGroups()) or (mode == 'member' and group not in user.getMemberGroups())) and (group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')) %}
 <a href="#" 
    id="delete_group_{{ group.id }}_{{ mode }}"
    onclick="javascript:return select_group(this);" 

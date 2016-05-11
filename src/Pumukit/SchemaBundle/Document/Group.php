@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Group
 {
     const ORIGIN_LOCAL = 'local';
-    const ORIGIN_LDAP = 'ldap';
 
     /**
      * @var string $id

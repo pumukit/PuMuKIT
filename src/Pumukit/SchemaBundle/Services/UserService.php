@@ -189,8 +189,8 @@ class UserService
      */
     public function update(User $user, $executeFlush = true)
     {
-        if ($user->getOrigin() === User::ORIGIN_LDAP) {
-            throw new \Exception('The user "'.$user->getUsername().'" is from LDAP and can not be modified.');
+        if ($user->getOrigin() !== User::ORIGIN_LOCAL) {
+            throw new \Exception('The user "'.$user->getUsername().'" is not local and can not be modified.');
         }
         $permissionProfile = $user->getPermissionProfile();
         if (null == $permissionProfile) throw new \Exception('The User "'.$user->getUsername().'" has no Permission Profile assigned.');
@@ -389,7 +389,7 @@ class UserService
         }
         $user->setPermissionProfile($defaultPermissionProfile);
         $user->setEnabled($enabled);
-        //$user->setOrigin(User::ORIGIN_LDAP);
+        //$user->setOrigin('cas');
 
         return $user;
     }
