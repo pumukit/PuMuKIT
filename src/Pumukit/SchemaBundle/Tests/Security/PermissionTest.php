@@ -38,7 +38,7 @@ class PermissionTest extends \PHPUnit_Framework_TestCase
             )
         );
         $accessMultimediaSeries = array(
-            'description' => "Access Multimedia Series",
+            'description' => "Access Media Manager",
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()
