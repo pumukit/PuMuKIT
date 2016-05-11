@@ -29,18 +29,16 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         $criteria = $this->getCriteria($config);
         $permissionProfiles = $this->getResources($request, $config, $criteria);
 
-        $permissionService = $this->get('pumukitschema.permission');
-        $permissions = $permissionService->getAllPermissions();
-        $dependencies = $permissionService->getAllDependencies();
+        list($permissions, $dependencies) = $this->getPermissions();
         $scopes = PermissionProfile::$scopeDescription;
 
         $createBroadcastsEnabled = !$this->container->getParameter('pumukit_new_admin.disable_broadcast_creation');
+        $showSeriesTypeTab = $this->container->hasParameter('pumukit2.use_series_channels') && $this->container->getParameter('pumukit2.use_series_channels');
 
         return array(
                      'permissionprofiles' => $permissionProfiles,
                      'permissions' => $permissions,
                      'scopes' => $scopes,
-                     'broadcast_enabled' => $createBroadcastsEnabled,
                      'dependencies' => $dependencies
                      );
     }
@@ -69,18 +67,14 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         }
         $permissionProfiles->setCurrentPage($page);
 
-        $permissionService = $this->get('pumukitschema.permission');
-        $permissions = $permissionService->getAllPermissions();
-        $dependencies = $permissionService->getAllDependencies();
+        list($permissions, $dependencies) = $this->getPermissions();
         $scopes = PermissionProfile::$scopeDescription;
-
-        $createBroadcastsEnabled = !$this->container->getParameter('pumukit_new_admin.disable_broadcast_creation');
+        
 
         return array(
                      'permissionprofiles' => $permissionProfiles,
                      'permissions' => $permissions,
                      'scopes' => $scopes,
-                     'broadcast_enabled' => $createBroadcastsEnabled,
                      'dependencies' => $dependencies
                      );
     }
@@ -359,5 +353,24 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         }
 
         return $resources;
+    }
+
+
+    private function getPermissions()
+    {
+        $permissionService = $this->get('pumukitschema.permission');
+        $permissions = $permissionService->getAllPermissions();
+
+        if ($this->container->getParameter('pumukit_new_admin.disable_broadcast_creation')) {
+            unset($permissions[Permission::ACCESS_BROADCASTS]);
+        }
+
+        if (!$this->container->hasParameter('pumukit2.use_series_channels') or !$this->container->getParameter('pumukit2.use_series_channels')) {
+            unset($permissions[Permission::ACCESS_SERIES_TYPES]);
+        }
+
+        $dependencies = $permissionService->getAllDependencies();
+
+        return array($permissions, $dependencies);
     }
 }
