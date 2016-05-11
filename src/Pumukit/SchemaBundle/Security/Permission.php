@@ -37,7 +37,7 @@ class Permission
             )
         ),
         Permission::ACCESS_MULTIMEDIA_SERIES => array(
-            'description' => "Access Multimedia Series",
+            'description' => "Access Media Manager",
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()
