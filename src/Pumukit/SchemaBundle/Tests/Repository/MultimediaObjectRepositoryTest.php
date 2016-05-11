@@ -2207,7 +2207,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mm1->addPersonWithRole($person1, $role1);
         $mm2->addPersonWithRole($person2, $role2);
         $mm3->addPersonWithRole($person1, $role1);
-        //$mm3->addPersonWithRole($person2, $role2);
         $mm4->addPersonWithRole($person1, $role3);
 
         $mm1->addGroup($group1);
@@ -2486,6 +2485,56 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertTrue(in_array($series1->getId(), $seriesPerson2Role3User8->toArray()));
         $this->assertTrue(in_array($series2->getId(), $seriesPerson2Role3User8->toArray()));
         $this->assertTrue(in_array($series3->getId(), $seriesPerson2Role3User8->toArray()));
+    }
+
+    public function testFindWithGroup()
+    {
+        $key1 = 'Group1';
+        $name1 = 'Group 1';
+        $group1 = $this->createGroup($key1, $name1);
+
+        $key2 = 'Group2';
+        $name2 = 'Group 2';
+        $group2 = $this->createGroup($key2, $name2);
+
+        $broadcast = new Broadcast();
+        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
+        $broadcast->setDefaultSel(true);
+        $this->dm->persist($broadcast);
+        $this->dm->flush();
+
+        $series = $this->createSeries("Series");
+
+        $this->dm->persist($series);
+        $this->dm->flush();
+
+        $mm1 = $this->createMultimediaObjectAssignedToSeries('MmObject 1', $series);
+        $mm2 = $this->createMultimediaObjectAssignedToSeries('MmObject 2', $series);
+
+        $mm1->addGroup($group1);
+        $mm1->addGroup($group2);
+        $mm2->addGroup($group2);
+
+        $this->dm->persist($mm1);
+        $this->dm->persist($mm2);
+        $this->dm->flush();
+
+        $this->assertEquals(2, count($mm1->getGroups()));
+        $this->assertEquals(1, count($mm2->getGroups()));
+        $this->assertTrue(in_array($group1, $mm1->getGroups()->toArray()));
+        $this->assertTrue(in_array($group2, $mm1->getGroups()->toArray()));
+        $this->assertFalse(in_array($group1, $mm2->getGroups()->toArray()));
+        $this->assertTrue(in_array($group2, $mm2->getGroups()->toArray()));
+
+        $mmsGroup1 = $this->repo->findWithGroup($group1);
+        $mmsGroup2 = $this->repo->findWithGroup($group2);
+
+        $this->assertEquals(1, count($mmsGroup1));
+        $this->assertEquals(2, count($mmsGroup2));
+        $this->assertTrue(in_array($mm1, $mmsGroup1->toArray()));
+        $this->assertFalse(in_array($mm2, $mmsGroup1->toArray()));
+        $this->assertTrue(in_array($mm1, $mmsGroup2->toArray()));
+        $this->assertTrue(in_array($mm2, $mmsGroup2->toArray()));
     }
 
     private function createPerson($name)

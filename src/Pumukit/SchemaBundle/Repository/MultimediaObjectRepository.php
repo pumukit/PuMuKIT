@@ -7,6 +7,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\Group;
 
 /**
  * MultimediaObjectRepository
@@ -1152,6 +1153,45 @@ class MultimediaObjectRepository extends DocumentRepository
             $qb = $this->createStandardQueryBuilder();
         else
             $qb = $this->createQueryBuilder();
+        return $qb->getQuery()->execute();
+    }
+
+    /**
+     * Create QueryBuilder to find multimedia objects with group
+     *
+     * @param Group $group
+     * @param array $sort
+     * @return QueryBuilder
+     */
+    public function createBuilderWithGroup(Group $group, $sort = array())
+    {
+        $qb = $this->createQueryBuilder()
+            ->field('groups')->in(array(new \MongoId($group->getId())));
+
+        if (0 !== count($sort) ){
+          $qb->sort($sort);
+        }
+
+        return $qb;
+    }
+
+    /**
+     * Find multimedia objects with group
+     *
+     * @param Group $group
+     * @param array $sort
+     * @param int $limit
+     * @param int $page
+     * @return ArrayCollection
+     */
+    public function findWithGroup(Group $group, $sort = array(), $limit = 0, $page = 0)
+    {
+        $qb = $this->createBuilderWithGroup($group, $sort);
+
+        if ($limit > 0){
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
         return $qb->getQuery()->execute();
     }
 }
