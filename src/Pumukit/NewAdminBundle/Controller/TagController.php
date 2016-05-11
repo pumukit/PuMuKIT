@@ -54,14 +54,14 @@ class TagController extends Controller implements NewAdminController
     public function deleteAction(Tag $tag, Request $request)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
-        if (0 == $num = count($tag->getChildren())) {
+        if (0 == $num = count($tag->getChildren()) && 0 == $tag->getNumberMultimediaObjects()) {
             $dm->remove($tag);
             $dm->flush();
 
             return new JsonResponse(array("status" => "Deleted"), 200);
         }
 
-        return new JsonResponse(array("status" => "Tag with children (".$num.")"), 404);
+        return new JsonResponse(array("status" => "Tag with children (".$num.")"), 409);
     }
 
     /**
@@ -158,7 +158,7 @@ class TagController extends Controller implements NewAdminController
         $tagsWithChildren = array();
         foreach ($ids as $id) {
             $tag = $repo->find($id);
-            if (0 == count($tag->getChildren())) {
+            if (0 == count($tag->getChildren()) && 0 == $tag->getNumberMultimediaObjects()) {
                 $tags[] = $tag;
             }else{
                 $tagsWithChildren[] = $tag;
@@ -171,7 +171,7 @@ class TagController extends Controller implements NewAdminController
                 $message .= "Tag '".$tag->getCod()."' with children (".count($tag->getChildren())."). ";
             }
 
-            return new JsonResponse(array("status" => $message), 404);
+            return new JsonResponse(array("status" => $message), 409);
         }else{
             foreach ($tags as $tag){
                 $dm->remove($tag);
