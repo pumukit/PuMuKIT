@@ -64,6 +64,7 @@
           $('#start input').attr('type', 'date');
           $('#end input').attr('type', 'date');
           $('#advanced-date-search .input-group-addon').remove();
+          $('.date').removeClass('input-group');
       }
       else {
           $( "#start" ).datetimepicker({useCurrent: false, viewMode: 'years', format: 'YYYY-MM-DD'});
