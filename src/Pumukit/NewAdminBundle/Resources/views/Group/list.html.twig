@@ -34,12 +34,12 @@
           </div>
         </td>
         <td>
-          {% if group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LDAP') %}
-          <i data-toggle="tooltip" data-placement="right" title="{% trans %}LDAP defined groups can not be edited here, contact your LDAP administrator.{% endtrans %}" class="mdi-content-block" style="color:#009587"></i>
-          {% else %}
+          {% if group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL') %}
           <a title="{% trans %}Edit Group{% endtrans %} {{ group.getName() }}" href="{{ path('pumukitnewadmin_group_update', {'id': group.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
             <i class="mdi-editor-mode-edit"></i>
           </a>
+          {% else %}
+          <i data-toggle="tooltip" data-placement="right" title="{% trans %}Not local defined groups can not be edited here, contact your directory service administrator.{% endtrans %}" class="mdi-content-block" style="color:#009587"></i>
           {% endif %}
         </td>
         <td>

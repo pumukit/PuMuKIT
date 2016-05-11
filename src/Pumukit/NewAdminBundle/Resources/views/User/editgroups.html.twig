@@ -36,21 +36,21 @@
             {% set user_groups = user.getMemberGroups() %}
             {% endif %}
 	        {% for user_group in user_groups %}
-              {% if (user_group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LDAP')) %}
-              <a href="#" class="list-group-item disabled-group-item"
-                 id="add_group_{{ user_group.id }}_{{ mode }}"
-                 onclick="return false;"
-                 ondblclick="javascript:window.alert('LDAP defined groups. Contact your LDAP administrator to change membership.');">
-                <i class="mdi-social-group"></i>
-                {{ user_group.key }} - {{ user_group.name }} - ({{ user_group.origin|upper }})
-              </a>
-              {% else %}
+              {% if (user_group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')) %}
               <a href="#" class="list-group-item"
                  id="add_group_{{ user_group.id }}_{{ mode }}"
                  onclick="javascript:return select_group(this);"
                  ondblclick="javascript:delete_group('{{ user_group.id }}', '{{ user.id }}', '{{ mode }}', '{{ user_group.key }}', '{{ user_group.name }}', '{{ user_group.origin }}', 'user');">
                 <i class="mdi-social-group"></i>
                 {{ user_group.key }} - {{ user_group.name }} - ({{ user_group.origin }})
+              </a>
+              {% else %}
+              <a href="#" class="list-group-item disabled-group-item"
+                 id="add_group_{{ user_group.id }}_{{ mode }}"
+                 onclick="return false;"
+                 ondblclick="javascript:window.alert('Not local defined groups. Contact your directory service administrator to change membership.');">
+                <i class="mdi-social-group"></i>
+                {{ user_group.key }} - {{ user_group.name }} - ({{ user_group.origin|upper }})
               </a>
               {% endif %}
 	        {% endfor %}

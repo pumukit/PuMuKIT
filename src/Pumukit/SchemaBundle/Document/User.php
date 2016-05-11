@@ -14,7 +14,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 class User extends BaseUser
 {
     const ORIGIN_LOCAL = 'local';
-    const ORIGIN_LDAP = 'ldap';
 
     /**
      * @var int $id

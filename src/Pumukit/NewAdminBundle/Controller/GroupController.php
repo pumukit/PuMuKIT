@@ -109,8 +109,8 @@ class GroupController extends AdminController implements NewAdminController
 
     /**
      * Update Action
-     * Overwrite to avoid updating groups
-     * from ldap and to use group service
+     * Overwrite to avoid updating not
+     * local groups and to use group service
      * to update group and dispatch event
      *
      * @param Request $request
@@ -122,8 +122,8 @@ class GroupController extends AdminController implements NewAdminController
         $dm = $this->get('doctrine_mongodb')->getManager();
         $config = $this->getConfiguration();
         $group = $this->findOr404($request);
-        if ($group->getOrigin() == Group::ORIGIN_LDAP) {
-            return new Response("Not allowed to update LDAP Group", Response::HTTP_METHOD_NOT_ALLOWED);
+        if ($group->getOrigin() !== Group::ORIGIN_LOCAL) {
+            return new Response("Not allowed to update not local Group", Response::HTTP_METHOD_NOT_ALLOWED);
         }
 
         $form = $this->getForm($group);
