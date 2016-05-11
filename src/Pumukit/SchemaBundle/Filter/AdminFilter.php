@@ -24,8 +24,11 @@ class AdminFilter extends BsonFilter
     private function getMultimediaObjectCriteria()
     {
         $criteria = array();
-        if (isset($this->parameters['people'])) {
-            $criteria['people'] = $this->parameters['people'];
+        if (isset($this->parameters['person_id']) && isset($this->parameters['role_code']) && isset($this->parameters['groups'])) {
+            $criteria['$or'] = array(
+                array('people' => $this->parameters['people']), 
+                array('groups' => $this->parameters['groups'])
+            );
         }
 
         return $criteria;
@@ -35,8 +38,8 @@ class AdminFilter extends BsonFilter
     {
         $criteria = array();
         if (null == $this->seriesIds) {
-            if (isset($this->parameters['person_id']) && isset($this->parameters['role_code'])) {
-                $criteria["_id"] = $this->getSeriesMongoQuery($this->parameters['person_id'], $this->parameters['role_code']);
+            if (isset($this->parameters['person_id']) && isset($this->parameters['role_code']) && isset($this->parameters['admin_groups'])) {
+                $criteria["_id"] = $this->getSeriesMongoQuery($this->parameters['person_id'], $this->parameters['role_code'], $this->parameters['admin_groups']);
             }
         }
 
@@ -53,14 +56,15 @@ class AdminFilter extends BsonFilter
      *
      * @param MongoId $personId
      * @param string  $roleCode
+     * @param array   $adminGroups
      * @return array
      */
-    private function getSeriesMongoQuery($personId, $roleCode)
+    private function getSeriesMongoQuery($personId, $roleCode, $adminGroups)
     {
         $seriesIds = array();
         if ((null != $personId) && (null != $roleCode)) {
             $repoMmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-            $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCod($personId, $roleCode);
+            $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCodOrGroups($personId, $roleCode, $adminGroups);
             $seriesIds['$in'] = $referencedSeries->toArray();
         }
 
