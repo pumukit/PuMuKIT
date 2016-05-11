@@ -237,4 +237,29 @@ class User extends BaseUser
     {
         return $this->memberGroups;
     }
+
+    /**
+     * Get groups ids
+     *
+     * @param boolean $admin if TRUE, return admin groups, if FALSE member groups
+     * @return array
+     */
+    public function getGroupsIds($admin=false)
+    {
+        $groupsIds = array();
+        if ($admin) {
+            $groups = $this->getAdminGroups();
+        } else {
+            $groups = $this->getMemberGroups();
+        }
+        if ($groups) {
+            $userGroups = $groups->toArray();
+        } else {
+            $userGroups = array();
+        }
+        foreach ($userGroups as $group) {
+            $groupsIds[] = new \MongoId($group->getId());
+        }
+        return $groupsIds;
+    }
 }

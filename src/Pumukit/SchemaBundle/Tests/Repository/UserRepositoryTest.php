@@ -182,6 +182,44 @@ class UserRepositoryTest extends WebTestCase
         $this->assertEquals(2, count($this->groupRepo->findAll()));
     }
 
+    public function testGetGroupsIds()
+    {
+        $key1 = 'Group1';
+        $name1 = 'Group 1';
+        $group1 = $this->createGroup($key1, $name1);
+
+        $key2 = 'Group2';
+        $name2 = 'Group 2';
+        $group2 = $this->createGroup($key2, $name2);
+
+        $user = new User();
+        $user->setEmail('testgroup@mail.com');
+        $user->setUsername('testgroup');
+        $user->addAdminGroup($group1);
+
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $this->assertEquals(0, count($user->getGroupsIds()));
+        $this->assertEquals(1, count($user->getGroupsIds(true)));
+
+        $user->addAdminGroup($group2);
+
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $this->assertEquals(0, count($user->getGroupsIds()));
+        $this->assertEquals(2, count($user->getGroupsIds(true)));
+
+        $user->addMemberGroup($group2);
+
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $this->assertEquals(1, count($user->getGroupsIds()));
+        $this->assertEquals(2, count($user->getGroupsIds(true)));
+    }
+
     private function createGroup($key='Group1', $name='Group 1')
     {
         $group = new Group();
