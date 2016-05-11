@@ -18,7 +18,6 @@ class Permission
     const ACCESS_ADMIN_USERS = 'ROLE_ACCESS_ADMIN_USERS';
     const ACCESS_PERMISSION_PROFILES = 'ROLE_ACCESS_PERMISSION_PROFILES';
     const ACCESS_ROLES = 'ROLE_ACCESS_ROLES';
-    const ACCESS_IMPORTER = 'ROLE_ACCESS_IMPORTER';
     const CHANGE_MMOBJECT_STATUS = 'ROLE_CHANGE_MMOBJECT_STATUS';
     const CHANGE_MMOBJECT_PUBCHANNEL = 'ROLE_CHANGE_MMOBJECT_PUBCHANNEL';
     const ACCESS_PUBLICATION_TAB = 'ROLE_ACCESS_PUBLICATION_TAB';
@@ -108,13 +107,6 @@ class Permission
         ),
         Permission::ACCESS_ROLES => array(
             'description' => "Access Roles",
-            'dependencies' => array(
-                PermissionProfile::SCOPE_GLOBAL => array(),
-                PermissionProfile::SCOPE_PERSONAL => array()
-            )
-        ),
-        Permission::ACCESS_IMPORTER => array(
-            'description' => "Access Importer",
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()

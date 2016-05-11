@@ -107,5 +107,10 @@ class PumukitOpencastExtension extends Extension
 
         $container->setParameter('pumukit_opencast.scheduler_on_menu', $config['scheduler_on_menu']);
         $container->setParameter('pumukit_opencast.dashboard_on_menu', $config['dashboard_on_menu']);
+
+        $permissions = array(array('role' => 'ROLE_ACCESS_IMPORTER', 'description' => 'Access Importer'));
+        $newPermissions = array_merge($container->getParameter('pumukitschema.external_permissions'), $permissions);
+        $container->setParameter('pumukitschema.external_permissions', $newPermissions);
+
     }
 }

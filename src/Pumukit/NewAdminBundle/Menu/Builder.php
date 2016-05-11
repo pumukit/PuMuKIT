@@ -83,7 +83,7 @@ class Builder extends ContainerAware
             }
         }
 
-        if ($showImporterTab && $authorizationChecker->isGranted(Permission::ACCESS_IMPORTER)) {
+        if ($showImporterTab && $authorizationChecker->isGranted('ROLE_ACCESS_IMPORTER')) {
             $importer = $menu->addChild('Tools')->setExtra('translation_domain', 'NewAdminBundle');
             $importer->addChild('OC-Importer', array('route' => 'pumukitopencast'))->setExtra('translation_domain', 'NewAdminBundle');
         }

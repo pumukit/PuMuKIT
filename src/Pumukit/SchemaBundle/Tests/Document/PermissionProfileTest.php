@@ -15,7 +15,7 @@ class PermissionProfileTest extends \PHPUnit_Framework_TestCase
                             Permission::ACCESS_MULTIMEDIA_SERIES,
                             Permission::ACCESS_LIVE_CHANNELS,
                             Permission::ACCESS_LIVE_EVENTS,
-                            Permission::ACCESS_IMPORTER
+                            'ROLE_ACCESS_IMPORTER'
                             );
         $system = true;
         $default = true;
@@ -44,7 +44,7 @@ class PermissionProfileTest extends \PHPUnit_Framework_TestCase
                             Permission::ACCESS_MULTIMEDIA_SERIES,
                             Permission::ACCESS_LIVE_CHANNELS,
                             Permission::ACCESS_LIVE_EVENTS,
-                            Permission::ACCESS_IMPORTER
+                            'ROLE_ACCESS_IMPORTER'
                             );
         $system = true;
         $default = true;
@@ -92,7 +92,7 @@ class PermissionProfileTest extends \PHPUnit_Framework_TestCase
                             Permission::ACCESS_MULTIMEDIA_SERIES,
                             Permission::ACCESS_LIVE_CHANNELS,
                             Permission::ACCESS_LIVE_EVENTS,
-                            Permission::ACCESS_IMPORTER,
+                            'ROLE_ACCESS_IMPORTER',
                             Permission::ACCESS_ADMIN_USERS
                             );
 
@@ -113,7 +113,7 @@ class PermissionProfileTest extends \PHPUnit_Framework_TestCase
                             Permission::ACCESS_MULTIMEDIA_SERIES,
                             Permission::ACCESS_LIVE_CHANNELS,
                             Permission::ACCESS_LIVE_EVENTS,
-                            Permission::ACCESS_IMPORTER
+                            'ROLE_ACCESS_IMPORTER'
                             );
         $system = true;
         $default = true;

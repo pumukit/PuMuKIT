@@ -9,3 +9,11 @@ The OpencastBundle comes deactivated by default. In order to use it, it must be 
 ```bash
 php app/console pumukit:install:bundle Pumukit/OpencastBundle/PumukitOpencastBundle
 ```
+
+3. If permission profiles have been created before installing the bundle with the `pumukit:init:repo` command, update it executing the following commands:
+```bash
+php app/console pumukit:permission:update Administrator ROLE_ACCESS_IMPORTER
+php app/console pumukit:permission:update Publisher ROLE_ACCESS_IMPORTER
+php app/console pumukit:permission:update Ingestor ROLE_ACCESS_IMPORTER
+```
+
