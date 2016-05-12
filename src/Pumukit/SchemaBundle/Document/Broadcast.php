@@ -17,6 +17,8 @@ class Broadcast
     const BROADCAST_TYPE_PUB = 'public';
     const BROADCAST_TYPE_PRI = 'private';
     const BROADCAST_TYPE_COR = 'corporative';
+    const BROADCAST_TYPE_LDAP = 'ldap';
+    const BROADCAST_TYPE_GROUPS = 'groups';
 
   /**
    * @var int $id
