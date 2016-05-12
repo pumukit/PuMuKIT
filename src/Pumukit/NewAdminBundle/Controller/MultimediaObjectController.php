@@ -13,10 +13,12 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectPubType;
+use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectBroadcastType;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
@@ -944,5 +946,35 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         }
 
         $dm->flush();
+    }
+
+    /**
+     * Update Broadcast Action
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "id"})
+     * @Template("PumukitNewAdminBundle:MultimediaObject:updatebroadcast.html.twig")
+     */
+    public function updateBroadcastAction(MultimediaObject $multimediaObject, Request $request)
+    {
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
+        $form = $this->createForm(new MultimediaObjectBroadcastType($translator, $locale), $multimediaObject);
+        if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
+            if ($form->bind($request)->isValid()) {
+                try {
+                    // TODO
+                } catch (\Exception $e) {
+                    // TODO
+                }
+            } else {
+                // TODO
+            }
+            // TODO
+            return new Response();
+        }
+        return array(
+                     'mm' => $multimediaObject,
+                     'form' => $form->createView()
+                     );
+
     }
 }
