@@ -1,4 +1,6 @@
 id;name;broadcast_type_id;passwd;default_sel;description_es;description_gl;description_en
-1;"Public";"public";"123456";0;"Perfil de acceso público";"Perfil de acceso público";"Public access profile"
-2;"Private";"private";"123456";0;"Perfil de acceso privado";"Perfil de acceso privado";"Private access profile"
-3;"Corporative";"corporative";"123456";0;"Perfil de acceso corporativo";"Perfil de acceso corporativo";"Corporative access profile"
+1;"Public";"public";"123456";1;"Perfil de acceso público";"Perfil de acceso público";"Public access profile"
+2;"Protected by password";"corporative";"123456";0;"Perfil de acceso protegido por contraseña";"Perfil de acceso protexido por contrasinal";"Password protected access profile"
+3;"Protected by LDAP";"ldap";"123456";0;"Perfil de acceso privado a través de LDAP";"Perfil de acceso privado a través de LDAP";"LDAP private access profile"
+4;"Protected by Groups";"groups";"123456";0;"Perfil de acceso protegido por grupos";"Perfil de acceso protexido por grupos";"Groups protected access profile"
+5;"Private";"private";"123456";0;"Perfil de acceso privado";"Perfil de acceso privado";"Private access profile"
