@@ -13,7 +13,6 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectPubType;
-use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectBroadcastType;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -957,7 +956,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     {
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $form = $this->createForm(new MultimediaObjectBroadcastType($translator, $locale), $multimediaObject);
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $broadcasts = $dm->getRepository('PumukitSchemaBundle:Broadcast')->findAll();
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
             if ($form->bind($request)->isValid()) {
                 try {
@@ -973,7 +973,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         }
         return array(
                      'mm' => $multimediaObject,
-                     'form' => $form->createView()
+                     'broadcasts' => $broadcasts
                      );
 
     }

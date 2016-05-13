@@ -3,13 +3,28 @@
   <h4 class="modal-title" id="myModalLabel">{% trans %}modify broadcast profile of multimedia object{% endtrans %}</h4>
 </div>
 <div class="modal-body">
-  {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
   <form autocomplete="off" id="pumukitnewadmin_mms_updatebroadcast_submit"
      action="{{ path('pumukitnewadmin_mms_updatebroadcast', {'id': mm.id}) }}" method="POST">
     <fieldset>
-      {% for child in form %}
-        {{ form_row(child) }}
-      {% endfor %}
+      <div class="form-group">
+        <label class="control-label required">{% trans %}Broadcast Profile{% endtrans %}</label>
+        <div id="pumukitnewadmin_mms_broadcast_broadcast">
+          {% for broadcast in broadcasts %}
+          <div class="radio">
+            <label class="required">
+              <input id="pumukitnewadmin_mms_broadcast_broadcast_{{ broadcast.getBroadcastTypeId() }}" name="pumukitnewadmin_mms_broadcast[broadcast]" required="required" value="{{ broadcast.id }}" type="radio" {{ mm.broadcast == broadcast ? 'checked="checked"':'' }}><span class="circle"></span><span class="check"></span>
+              {{ broadcast.name }}
+            </label>
+          </div>
+            {% if broadcast.getBroadcastTypeId() == constant('Pumukit\\SchemaBundle\\Document\\Broadcast::BROADCAST_TYPE_COR') %}
+            {% include 'PumukitNewAdminBundle:MultimediaObject:broadcastpassword.html.twig' %}
+            {% elseif broadcast.getBroadcastTypeId() == constant('Pumukit\\SchemaBundle\\Document\\Broadcast::BROADCAST_TYPE_GROUPS') %}
+            {# {% include 'PumukitNewAdminBundle:MultimediaObject:broadcastgroups.html.twig' %} #}
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      <!-- <div class="form-control-wrapper"><input id="pumukitnewadmin_mms_broadcast__token" name="pumukitnewadmin_mms_broadcast[_token]" class="form-control" value="dAe2SmRbYvftLiWCYb2B6TsT0o1fwAVBNF8EsHFRS3A" type="hidden"><span class="material-input"></span></div> -->
     </fieldset>
     <div class="modal-footer">
       <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
