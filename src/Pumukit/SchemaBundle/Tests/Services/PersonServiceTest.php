@@ -7,7 +7,6 @@ use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\User;
 
 class PersonServiceTest extends WebTestCase
@@ -43,7 +42,6 @@ class PersonServiceTest extends WebTestCase
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Person')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Role')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')->remove(array());
         $this->dm->flush();
     }
 
@@ -132,12 +130,6 @@ class PersonServiceTest extends WebTestCase
 
         $this->dm->persist($roleActor);
         $this->dm->persist($rolePresenter);
-        $this->dm->flush();
-
-        $broadcast = new Broadcast();
-        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
-        $broadcast->setDefaultSel(true);
-        $this->dm->persist($broadcast);
         $this->dm->flush();
 
         $series = $this->factoryService->createSeries();
@@ -230,12 +222,6 @@ class PersonServiceTest extends WebTestCase
 
     public function testFindSeriesWithPerson()
     {
-        $broadcast = new Broadcast();
-        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
-        $broadcast->setDefaultSel(true);
-        $this->dm->persist($broadcast);
-        $this->dm->flush();
-
         $series1 = $this->factoryService->createSeries();
         $title1 = 'Series 1';
         $series1->setTitle($title1);
@@ -357,12 +343,6 @@ class PersonServiceTest extends WebTestCase
         $this->dm->persist($roleActor);
         $this->dm->flush();
 
-        $broadcast = new Broadcast();
-        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
-        $broadcast->setDefaultSel(true);
-        $this->dm->persist($broadcast);
-        $this->dm->flush();
-
         $series = $this->factoryService->createSeries();
 
         $mm = $this->factoryService->createMultimediaObject($series);
@@ -434,12 +414,6 @@ class PersonServiceTest extends WebTestCase
         $this->dm->persist($roleActor);
         $this->dm->flush();
 
-        $broadcast = new Broadcast();
-        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
-        $broadcast->setDefaultSel(true);
-        $this->dm->persist($broadcast);
-        $this->dm->flush();
-
         $series = $this->factoryService->createSeries();
 
         $mm1 = $this->factoryService->createMultimediaObject($series);
@@ -483,12 +457,6 @@ class PersonServiceTest extends WebTestCase
 
         $this->dm->persist($roleActor);
         $this->dm->persist($rolePresenter);
-        $this->dm->flush();
-
-        $broadcast = new Broadcast();
-        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
-        $broadcast->setDefaultSel(true);
-        $this->dm->persist($broadcast);
         $this->dm->flush();
 
         $series = $this->factoryService->createSeries();
@@ -591,12 +559,6 @@ class PersonServiceTest extends WebTestCase
         $this->dm->persist($rolePresenter);
         $this->dm->flush();
 
-        $broadcast = new Broadcast();
-        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
-        $broadcast->setDefaultSel(true);
-        $this->dm->persist($broadcast);
-        $this->dm->flush();
-
         $series = $this->factoryService->createSeries();
 
         $mm1 = $this->factoryService->createMultimediaObject($series);
@@ -690,12 +652,6 @@ class PersonServiceTest extends WebTestCase
 
         $this->dm->persist($personBob);
         $this->dm->persist($roleActor);
-        $this->dm->flush();
-
-        $broadcast = new Broadcast();
-        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
-        $broadcast->setDefaultSel(true);
-        $this->dm->persist($broadcast);
         $this->dm->flush();
 
         $series = $this->factoryService->createSeries();

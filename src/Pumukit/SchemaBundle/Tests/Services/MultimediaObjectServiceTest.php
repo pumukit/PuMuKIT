@@ -3,7 +3,6 @@
 namespace Pumukit\SchemaBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -16,7 +15,6 @@ class MultimediaObjectServiceTest extends WebTestCase
     private $dm;
     private $repo;
     private $tagRepo;
-    private $broadcastRepo;
     private $factory;
     private $mmsService;
     private $tagService;
@@ -32,8 +30,6 @@ class MultimediaObjectServiceTest extends WebTestCase
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->tagRepo = $this->dm
           ->getRepository('PumukitSchemaBundle:Tag');
-        $this->broadcastRepo = $this->dm
-          ->getRepository('PumukitSchemaBundle:Broadcast');
         $this->factory = static::$kernel->getContainer()
           ->get('pumukitschema.factory');
         $this->mmsService = static::$kernel->getContainer()
@@ -46,7 +42,6 @@ class MultimediaObjectServiceTest extends WebTestCase
     {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')->remove(array());
         $this->dm->flush();
     }
@@ -54,16 +49,9 @@ class MultimediaObjectServiceTest extends WebTestCase
     public function testIsPublished()
     {
         $this->createTags();
-        $this->createBroadcasts();
 
         $series = $this->factory->createSeries();
         $mm = $this->factory->createMultimediaObject($series);
-
-        $privateBroadcast = $this->broadcastRepo->findOneBy(array('broadcast_type_id' => Broadcast::BROADCAST_TYPE_PRI));
-
-        $mm->setBroadcast($privateBroadcast);
-        $this->dm->persist($mm);
-        $this->dm->flush();
 
         $webTVCode = 'PUCHWEBTV';
         $this->assertFalse($this->mmsService->isPublished($mm, $webTVCode));
@@ -78,34 +66,9 @@ class MultimediaObjectServiceTest extends WebTestCase
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertFalse($this->mmsService->isPublished($mm, $webTVCode));
-
-        $publicBroadcast = $this->broadcastRepo->findOneBy(array('broadcast_type_id' => Broadcast::BROADCAST_TYPE_PUB));
-        $mm->setBroadcast($publicBroadcast);
-        $this->dm->persist($mm);
-        $this->dm->flush();
-
-        $this->assertTrue($this->mmsService->isPublished($mm, $webTVCode));
-
-        $corporativeBroadcast = $this->broadcastRepo->findOneBy(array('broadcast_type_id' => Broadcast::BROADCAST_TYPE_COR));
-        $mm->setBroadcast($corporativeBroadcast);
-        $this->dm->persist($mm);
-        $this->dm->flush();
-
         $this->assertTrue($this->mmsService->isPublished($mm, $webTVCode));
 
         $mm->setStatus(MultimediaObject::STATUS_HIDE);
-        $this->dm->persist($mm);
-        $this->dm->flush();
-
-        $this->assertFalse($this->mmsService->isPublished($mm, $webTVCode));
-
-        $mm->setStatus(MultimediaObject::STATUS_PUBLISHED);
-        $this->dm->persist($mm);
-        $this->dm->flush();
-
-        $privateBroadcast = $this->broadcastRepo->findOneBy(array('broadcast_type_id' => Broadcast::BROADCAST_TYPE_PRI));
-        $mm->setBroadcast($privateBroadcast);
         $this->dm->persist($mm);
         $this->dm->flush();
 
@@ -115,7 +78,6 @@ class MultimediaObjectServiceTest extends WebTestCase
     public function testIsHidden()
     {
         $this->createTags();
-        $this->createBroadcasts();
 
         $series = $this->factory->createSeries();
         $mm = $this->factory->createMultimediaObject($series);
@@ -181,7 +143,6 @@ class MultimediaObjectServiceTest extends WebTestCase
     public function testCanBeDisplayed()
     {
         $this->createTags();
-        $this->createBroadcasts();
 
         $series = $this->factory->createSeries();
         $mm = $this->factory->createMultimediaObject($series);
@@ -272,27 +233,6 @@ class MultimediaObjectServiceTest extends WebTestCase
         $webTVTag->setParent($pubChannelTag);
 
         $this->dm->persist($webTVTag);
-        $this->dm->flush();
-    }
-
-    private function createBroadcasts()
-    {
-        $publicBroadcast = new Broadcast();
-        $publicBroadcast->setName('pub');
-        $publicBroadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
-        $this->dm->persist($publicBroadcast);
-        $this->dm->flush();
-
-        $corporativeBroadcast = new Broadcast();
-        $corporativeBroadcast->setName('cor');
-        $corporativeBroadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_COR);
-        $this->dm->persist($corporativeBroadcast);
-        $this->dm->flush();
-
-        $privateBroadcast = new Broadcast();
-        $privateBroadcast->setName('pri');
-        $privateBroadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PRI);
-        $this->dm->persist($privateBroadcast);
         $this->dm->flush();
     }
 

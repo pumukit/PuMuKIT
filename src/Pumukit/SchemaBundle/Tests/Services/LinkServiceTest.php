@@ -4,7 +4,6 @@ namespace Pumukit\SchemaBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Link;
-use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class LinkServiceTest extends WebTestCase
@@ -33,14 +32,11 @@ class LinkServiceTest extends WebTestCase
     {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')->remove(array());
         $this->dm->flush();
     }
 
     public function testAddLinkToMultimediaObject()
     {
-        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
-
         $series = $this->factoryService->createSeries();
         $mm = $this->factoryService->createMultimediaObject($series);
 
@@ -55,8 +51,6 @@ class LinkServiceTest extends WebTestCase
 
     public function testUpdateLinkInMultimediaObject()
     {
-        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
-
         $series = $this->factoryService->createSeries();
         $mm = $this->factoryService->createMultimediaObject($series);
 
@@ -82,8 +76,6 @@ class LinkServiceTest extends WebTestCase
 
     public function testRemoveLinkFromMultimediaObject()
     {
-        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
-
         $series = $this->factoryService->createSeries();
         $mm = $this->factoryService->createMultimediaObject($series);
 
@@ -112,8 +104,6 @@ class LinkServiceTest extends WebTestCase
 
     public function testUpAndDownLinkInMultimediaObject()
     {
-        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
-
         $series = $this->factoryService->createSeries();
         $mm = $this->factoryService->createMultimediaObject($series);
 
@@ -145,24 +135,5 @@ class LinkServiceTest extends WebTestCase
         $links = array($link3, $link2, $link1);
         $this->assertEquals($links, $mm->getLinks()->toArray());
         
-    }
-
-    private function createBroadcast($broadcastTypeId)
-    {
-        $broadcast = new Broadcast();
-        $broadcast->setName(ucfirst($broadcastTypeId));
-        $broadcast->setBroadcastTypeId($broadcastTypeId);
-        $broadcast->setPasswd('password');
-        if (0 === strcmp(Broadcast::BROADCAST_TYPE_PRI, $broadcastTypeId)) {
-            $broadcast->setDefaultSel(true);
-        } else {
-            $broadcast->setDefaultSel(false);
-        }
-        $broadcast->setDescription(ucfirst($broadcastTypeId).' broadcast');
-
-        $this->dm->persist($broadcast);
-        $this->dm->flush();
-
-        return $broadcast;
     }
 }

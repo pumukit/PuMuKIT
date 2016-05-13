@@ -11,7 +11,6 @@ namespace Pumukit\SchemaBundle\Tests\Other;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Broadcast;
 
 class MultimediaObjectInSeriesTest extends WebTestCase
 {
@@ -33,13 +32,10 @@ class MultimediaObjectInSeriesTest extends WebTestCase
 
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')->remove(array());
     }
 
     public function testCreateNewMultimediaObject()
     {
-        $broadcast = $this->createBroadcast();
-
         $series = $this->factoryService->createSeries();
 
         $this->factoryService->createMultimediaObject($series);
@@ -75,16 +71,5 @@ class MultimediaObjectInSeriesTest extends WebTestCase
           }
         }
         $this->assertEquals(3, $i);
-    }
-
-    private function createBroadcast()
-    {
-        $broadcast = new Broadcast();
-        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
-        $broadcast->setDefaultSel(true);
-        $this->dm->persist($broadcast);
-        $this->dm->flush();
-
-        return $broadcast;
     }
 }
