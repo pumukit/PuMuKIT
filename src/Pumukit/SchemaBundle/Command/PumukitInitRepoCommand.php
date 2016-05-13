@@ -408,7 +408,7 @@ EOT
         $broadcast = new Broadcast();
 
         $broadcast->setName($csv_array[1]);
-        if (in_array($csv_array[2], array(Broadcast::BROADCAST_TYPE_PUB, Broadcast::BROADCAST_TYPE_PRI, Broadcast::BROADCAST_TYPE_COR, Broadcast::BROADCAST_TYPE_LDAP, Broadcast::BROADCAST_TYPE_GROUPS))){
+        if (in_array($csv_array[2], array(Broadcast::BROADCAST_TYPE_PUB, Broadcast::BROADCAST_TYPE_PRI, Broadcast::BROADCAST_TYPE_COR))){
             $broadcast->setBroadcastTypeId($csv_array[2]);
         }else{
             $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PRI);
