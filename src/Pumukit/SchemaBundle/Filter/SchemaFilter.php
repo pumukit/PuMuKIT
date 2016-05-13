@@ -4,7 +4,6 @@ namespace Pumukit\SchemaBundle\Filter;
 
 use Doctrine\ODM\MongoDB\Mapping\ClassMetaData;
 use Doctrine\ODM\MongoDB\Query\Filter\BsonFilter;
-use Pumukit\SchemaBundle\Document\Broadcast;
 
 class SchemaFilter extends BsonFilter
 {
@@ -24,12 +23,6 @@ class SchemaFilter extends BsonFilter
         }
         if ($this->hasParameter('status')) {
             $criteria['status'] = $this->getParameter('status');
-        }
-        if ($this->hasParameter('private_broadcast')) {
-            $privateBroadcastCriteria = $this->getParameter('private_broadcast');
-            if (null != $privateBroadcastCriteria) {
-                $criteria['broadcast'] = $privateBroadcastCriteria;
-            }
         }
         if ($this->hasParameter('display_track_tag')) {
             $criteria['$or'] = array(
