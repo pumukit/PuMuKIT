@@ -55,6 +55,8 @@ class MultimediaObject
     /**
      * @var Broadcast $broadcast
      *
+     * DEPRECATED in version 2.3
+     *
      * @MongoDB\ReferenceOne(targetDocument="Broadcast", inversedBy="multimedia_object", simple=true)
      */
     private $broadcast;
@@ -786,6 +788,8 @@ class MultimediaObject
     /**
      * Set broadcast
      *
+     * DEPRECATED in version 2.3
+     *
      * @param Broadcast $broadcast
      */
     public function setBroadcast(Broadcast $broadcast)
@@ -802,6 +806,8 @@ class MultimediaObject
     /**
      * Get broadcast
      *
+     * DEPRECATED in version 2.3
+     *
      * @return Broadcast
      */
     public function getBroadcast()
@@ -812,6 +818,8 @@ class MultimediaObject
     
     /**
      * Get broadcast
+     *
+     * DEPRECATED in version 2.3
      *
      * @return Broadcast
      */

@@ -5,6 +5,9 @@ namespace Pumukit\SchemaBundle\Tests\Document;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
+/**
+ * DEPRECATED in version 2.3
+ */
 class BroadcastTest extends \PHPUnit_Framework_TestCase
 {
     public function testSetterAndGetter()

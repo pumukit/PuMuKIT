@@ -10,6 +10,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Pumukit\SchemaBundle\Document\Broadcast
  *
+ * DEPRECATED in version 2.3
+ *
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\BroadcastRepository")
  */
 class Broadcast

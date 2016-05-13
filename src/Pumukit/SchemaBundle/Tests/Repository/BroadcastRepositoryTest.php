@@ -5,6 +5,9 @@ namespace Pumukit\SchemaBundle\Tests\Repository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Broadcast;
 
+/**
+ * DEPRECATED in version 2.3
+ */
 class BroadcastRepositoryTest extends WebTestCase
 {
     private $dm;
