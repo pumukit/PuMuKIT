@@ -4,7 +4,7 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\Group;
@@ -32,11 +32,9 @@ class MultimediaObjectService
     public function isPublished($mm, $pubChannelCod)
     {
         $hasStatus = $mm->getStatus() == MultimediaObject::STATUS_PUBLISHED;
-        $broadcastType = $mm->getBroadcast()->getBroadcastTypeId();
-        $hasBroadcast = $broadcastType  == Broadcast::BROADCAST_TYPE_PUB || $broadcastType == Broadcast::BROADCAST_TYPE_COR;
         $hasPubChannel = $mm->containsTagWithCod($pubChannelCod);
 
-        return $hasStatus && $hasBroadcast && $hasPubChannel;
+        return $hasStatus && $hasPubChannel;
     }
 
     /**
