@@ -7,6 +7,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
 
 /**
@@ -843,18 +844,7 @@ class MultimediaObjectRepository extends DocumentRepository
 
         $qb->sort('rank', 'asc');
 
-        $aux = $qb->getQuery()->execute();
-
-        //TODO Multimedia Objects with Broadcast public or corporative
-        $multimediaObjects = array();
-        foreach ($aux as $mm){
-            $mmBroadcast = $mm->getBroadcast()->getBroadcastTypeId();
-            if (($mmBroadcast == Broadcast::BROADCAST_TYPE_PUB) || ($mmBroadcast == Broadcast::BROADCAST_TYPE_COR)){
-                $multimediaObjects[] = $mm;
-            }
-        }
-
-        return $multimediaObjects;
+        return $qb->getQuery()->execute();
     }
 
 
@@ -870,6 +860,34 @@ class MultimediaObjectRepository extends DocumentRepository
           ->field('broadcast')->references($broadcast)
           ->getQuery()
           ->execute();
+    }
+
+    /**
+     * Find by embedded broadcast
+     *
+     * @param  EmbeddedBroadcast $broadcast
+     * @return ArrayCollection
+     */
+    public function findByEmbeddedBroadcast(EmbeddedBroadcast $embeddedBroadcast)
+    {
+        return $this->createQueryBuilder()
+            ->field('embeddedBroadcast._id')->equals(new \MongoId($embeddedBroadcast->getId()))
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * Find by embedded broadcast type
+     *
+     * @param  string             $type
+     * @return ArrayCollection
+     */
+    public function findByEmbeddedBroadcastType($type)
+    {
+        return $this->createQueryBuilder()
+            ->field('embeddedBroadcast.type')->equals($type)
+            ->getQuery()
+            ->execute();
     }
 
     /**
@@ -976,12 +994,8 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb = $this->createQueryBuilder()
           ->field('_id')->notEqual($multimediaObject->getId())
           ->field('series')->notEqual($multimediaObject->getSeries()->getId())
-          ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED);
-
-        // Broadcast public
-        $broadcastRepo = $this->dm->getRepository('PumukitSchemaBundle:Broadcast');
-        $broadcast = $broadcastRepo->findPublicBroadcast();
-        $qb->field('broadcast')->references($broadcast);
+          ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED)
+          ->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC);
 
         // Includes PUCHWEBTV code
         $tagRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');

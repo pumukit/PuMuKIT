@@ -56,10 +56,18 @@ class MultimediaObject
      * @var Broadcast $broadcast
      *
      * DEPRECATED in version 2.3
+     * use EmbeddedBroadcast instead
      *
      * @MongoDB\ReferenceOne(targetDocument="Broadcast", inversedBy="multimedia_object", simple=true)
      */
     private $broadcast;
+
+    /**
+     * @var EmbeddedBroadcast $embeddedBroadcast
+     *
+     * @MongoDB\EmbedOne(targetDocument="EmbeddedBroadcast")
+     */
+    private $embeddedBroadcast;
 
     /**
      * @var ArrayCollection $tags
@@ -827,7 +835,37 @@ class MultimediaObject
     {
       return (bool)(!$this->broadcast || Broadcast::BROADCAST_TYPE_PUB == $this->broadcast->getBroadcastTypeId());
     }
+
         
+    /**
+     * Set embedded broadcast
+     *
+     * @param EmbeddedBroadcast $embeddedBroadcast
+     */
+    public function setEmbeddedBroadcast(EmbeddedBroadcast $embeddedBroadcast)
+    {
+        $this->embeddedBroadcast = $embeddedBroadcast;
+    }
+
+    /**
+     * Get embeddedBroadcast
+     *
+     * @return EmbeddedBroadcast
+     */
+    public function getEmbeddedBroadcast()
+    {
+        return $this->embeddedBroadcast;
+    }
+
+    /**
+     * Is public embedded broadcast
+     *
+     * @return Broadcast
+     */
+    public function isPublicEmbeddedBroadcast()
+    {
+      return (bool)(!$this->embeddedBroadcast || EmbeddedBroadcast::TYPE_PUBLIC === $this->embeddedBroadcast->getType());
+    }
 
     // Start tag section. Caution: MultimediaObject tags are Tag objects, not strings.
     /**
@@ -2496,7 +2534,7 @@ class MultimediaObject
      *
      * @return boolean
      */
-    public function containsgroup(Group $group)
+    public function containsGroup(Group $group)
     {
         return $this->groups->contains($group);
     }
@@ -2506,7 +2544,7 @@ class MultimediaObject
      *
      * @param Group $group
      */
-    public function addgroup(Group $group)
+    public function addGroup(Group $group)
     {
         return $this->groups->add($group);
     }
@@ -2516,7 +2554,7 @@ class MultimediaObject
      *
      * @param Group $group
      */
-    public function removegroup(Group $group)
+    public function removeGroup(Group $group)
     {
         $this->groups->removeElement($group);
     }
@@ -2526,7 +2564,7 @@ class MultimediaObject
      *
      * @return ArrayCollection
      */
-    public function getgroups()
+    public function getGroups()
     {
         return $this->groups;
     }

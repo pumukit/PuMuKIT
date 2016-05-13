@@ -16,6 +16,7 @@ use Pumukit\SchemaBundle\Document\EmbeddedTag;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\User;
@@ -670,12 +671,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
     {
         $this->assertEquals(0, count($this->repo->findAll()));
 
-        $broadcast = new Broadcast();
-        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
-        $broadcast->setDefaultSel(true);
-        $this->dm->persist($broadcast);
-        $this->dm->flush();
-
         $series1 = $this->createSeries('Series 1');
         $mm11 = $this->factoryService->createMultimediaObject($series1);
         $mm12 = $this->factoryService->createMultimediaObject($series1);
@@ -726,12 +721,28 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
     public function testFindByBroadcast()
     {
-        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
-        $series1 = $this->createSeries('Series 1');
-        $mm11 = $this->factoryService->createMultimediaObject($series1);
-        $mm12 = $this->factoryService->createMultimediaObject($series1);
+        $broadcast1 = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
+        $broadcast2 = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
 
-        $this->assertEquals(3, count($this->repo->findByBroadcast($broadcast)));
+        $mm1 = new MultimediaObject();
+        $mm1->setTitle('mm1');
+        $mm1->setBroadcast($broadcast1);
+
+        $mm2 = new MultimediaObject();
+        $mm2->setTitle('mm1');
+        $mm2->setBroadcast($broadcast1);
+
+        $mm3 = new MultimediaObject();
+        $mm3->setTitle('mm1');
+        $mm3->setBroadcast($broadcast2);
+
+        $this->dm->persist($mm1);
+        $this->dm->persist($mm2);
+        $this->dm->persist($mm3);
+        $this->dm->flush();
+
+        $this->assertEquals(2, count($this->repo->findByBroadcast($broadcast1)));
+        $this->assertEquals(1, count($this->repo->findByBroadcast($broadcast2)));
     }
 
     public function testFindWithStatus()
@@ -2535,6 +2546,102 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertFalse(in_array($mm2, $mmsGroup1->toArray()));
         $this->assertTrue(in_array($mm1, $mmsGroup2->toArray()));
         $this->assertTrue(in_array($mm2, $mmsGroup2->toArray()));
+    }
+
+    public function testEmbeddedBroadcast()
+    {
+        $key1 = 'Group1';
+        $name1 = 'Group 1';
+        $group1 = $this->createGroup($key1, $name1);
+
+        $key2 = 'Group2';
+        $name2 = 'Group 2';
+        $group2 = $this->createGroup($key2, $name2);
+
+        $mm = new MultimediaObject();
+        $mm->setTitle('test');
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $type = EmbeddedBroadcast::TYPE_PASSWORD;
+        $name = EmbeddedBroadcast::NAME_PASSWORD;
+        $password = '123456';
+
+        $embeddedBroadcast = new EmbeddedBroadcast();
+        $embeddedBroadcast->setType($type);
+        $embeddedBroadcast->setName($name);
+        $embeddedBroadcast->setPassword($password);
+        $embeddedBroadcast->addGroup($group1);
+        $embeddedBroadcast->addGroup($group2);
+
+        $mm->setEmbeddedBroadcast($embeddedBroadcast);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $multimediaObject = $this->repo->find($mm->getId());
+        $embBroadcast = $multimediaObject->getEmbeddedBroadcast();
+
+        $this->assertEquals($type, $embBroadcast->getType());
+        $this->assertEquals($name, $embBroadcast->getName());
+        $this->assertEquals($password, $embBroadcast->getPassword());
+        $this->assertTrue($embBroadcast->containsGroup($group1));
+        $this->assertTrue($embBroadcast->containsGroup($group2));
+        $this->assertEquals($name, $embBroadcast->__toString());
+        $this->assertTrue($embBroadcast->isPasswordValid());
+
+        $embBroadcast->removeGroup($group2);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $mmObj = $this->repo->find($multimediaObject->getId());
+        $embBroad = $mmObj->getEmbeddedBroadcast();
+
+        $this->assertTrue($embBroad->containsGroup($group1));
+        $this->assertFalse($embBroad->containsGroup($group2));
+    }
+
+    public function testFindByEmbeddedBroadcast()
+    {
+        $mm1 = new MultimediaObject();
+        $mm1->setTitle('test2');
+        $this->dm->persist($mm1);
+        $this->dm->flush();
+
+        $mm2 = new MultimediaObject();
+        $mm2->setTitle('test1');
+        $this->dm->persist($mm2);
+        $this->dm->flush();
+
+        $type1 = EmbeddedBroadcast::TYPE_PASSWORD;
+        $name1 = EmbeddedBroadcast::NAME_PASSWORD;
+        $password1 = '123456';
+
+        $embeddedBroadcast1 = new EmbeddedBroadcast();
+        $embeddedBroadcast1->setType($type1);
+        $embeddedBroadcast1->setName($name1);
+        $embeddedBroadcast1->setPassword($password1);
+
+        $type2 = EmbeddedBroadcast::TYPE_PUBLIC;
+        $name2 = EmbeddedBroadcast::NAME_PUBLIC;
+        $password2 = '123456';
+
+        $embeddedBroadcast2 = new EmbeddedBroadcast();
+        $embeddedBroadcast2->setType($type2);
+        $embeddedBroadcast2->setName($name2);
+        $embeddedBroadcast2->setPassword($password2);
+
+        $mm1->setEmbeddedBroadcast($embeddedBroadcast1);
+        $mm2->setEmbeddedBroadcast($embeddedBroadcast2);
+        $this->dm->persist($mm1);
+        $this->dm->persist($mm2);
+        $this->dm->flush();
+
+        $this->assertEquals(1, count($this->repo->findByEmbeddedBroadcast($mm1->getEmbeddedBroadcast())));
+        $this->assertEquals(1, count($this->repo->findByEmbeddedBroadcast($mm2->getEmbeddedBroadcast())));
+        $this->assertEquals(1, count($this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_PASSWORD)));
+        $this->assertEquals(1, count($this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_PUBLIC)));
+        $this->assertEquals(0, count($this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_LDAP)));
+        $this->assertEquals(0, count($this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_GROUPS)));
     }
 
     private function createPerson($name)
