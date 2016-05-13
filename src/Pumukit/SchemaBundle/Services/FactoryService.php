@@ -6,7 +6,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\EncoderBundle\Document\Job;
 
@@ -19,6 +19,7 @@ class FactoryService
     private $tagService;
     private $personService;
     private $userService;
+    private $embeddedBroadcastService;
     private $mmsDispatcher;
     private $seriesDispatcher;
     private $translator;
@@ -26,13 +27,13 @@ class FactoryService
     private $defaultCopyright;
     private $addUserAsPerson;
 
-
-    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, MultimediaObjectEventDispatcherService $mmsDispatcher, SeriesEventDispatcherService $seriesDispatcher, TranslatorInterface $translator, $addUserAsPerson=true, array $locales = array(), $defaultCopyright = "")
+    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, EmbeddedBroadcastService $embeddedBroadcastService, MultimediaObjectEventDispatcherService $mmsDispatcher, SeriesEventDispatcherService $seriesDispatcher, TranslatorInterface $translator, $addUserAsPerson=true, array $locales = array(), $defaultCopyright = "")
     {
         $this->dm = $documentManager;
         $this->tagService = $tagService;
         $this->personService = $personService;
         $this->userService = $userService;
+        $this->embeddedBroadcastService = $embeddedBroadcastService;
         $this->mmsDispatcher = $mmsDispatcher;
         $this->seriesDispatcher = $seriesDispatcher;
         $this->translator = $translator;
@@ -88,11 +89,7 @@ class FactoryService
     {
         $mm = new MultimediaObject();
         $mm->setStatus(MultimediaObject::STATUS_PROTOTYPE);
-        $broadcast = $this->getDefaultBroadcast();
-        if ($broadcast) {
-            $mm->setBroadcast($broadcast);
-            $this->dm->persist($broadcast);
-        }
+        $mm = $this->embeddedBroadcastService->setByType($mm, EmbeddedBroadcast::TYPE_PUBLIC, false);
         $mm->setPublicDate(new \DateTime("now"));
         $mm->setRecordDate($mm->getPublicDate());
         $mm->setCopyright($this->defaultCopyright);        
@@ -127,11 +124,7 @@ class FactoryService
                 $title = $this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE, array(), null, $locale);
                 $mm->setTitle($title, $locale);
             }
-            $broadcast = $this->getDefaultBroadcast();
-            if ($broadcast) {
-                $mm->setBroadcast($broadcast);
-                $this->dm->persist($broadcast);
-            }
+            $mm = $this->embeddedBroadcastService->setByType($mm, EmbeddedBroadcast::TYPE_PUBLIC, false);
         }
         $mm->setPublicDate(new \DateTime("now"));
         $mm->setRecordDate($mm->getPublicDate());
@@ -150,24 +143,6 @@ class FactoryService
         $this->seriesDispatcher->dispatchUpdate($series);
 
         return $mm;
-    }
-
-    /**
-     * Gets default broadcast or public one
-     *
-     * @return Broadcast
-     */
-    public function getDefaultBroadcast()
-    {
-        $repoBroadcast = $this->dm->getRepository('PumukitSchemaBundle:Broadcast');
-
-        $broadcast = $repoBroadcast->findDefaultSel();
-
-        if (null == $broadcast) {
-            $broadcast = $repoBroadcast->findPublicBroadcast();
-        }
-
-        return $broadcast;
     }
 
     /**
@@ -329,10 +304,13 @@ class FactoryService
         $new->setCopyright($prototype->getCopyright());
         $new->setLicense($prototype->getLicense());
 
-        if ($broadcast = $prototype->getBroadcast()) {
-            $new->setBroadcast($broadcast);
-            $this->dm->persist($broadcast);
+        if ($embeddedBroadcast = $prototype->getEmbeddedBroadcast()) {
+            $clonedEmbeddedBroadcast = $this->embeddedBroadcastService->cloneResource($embeddedBroadcast);
+            $new->setEmbeddedBroadcast($clonedEmbeddedBroadcast);
+        } else {
+            $new = $this->embeddedBroadcastService->setByType($new, EmbeddedBroadcast::TYPE_PUBLIC, false);
         }
+
 
         foreach ($prototype->getTags() as $tag) {
           $tagAdded = $this->tagService->addTagToMultimediaObject($new, $tag->getId(), false);
@@ -425,9 +403,11 @@ class FactoryService
             $this->dm->flush();//necessary?
         }
 
-        if ($broadcast = $src->getBroadcast()) {
-            $new->setBroadcast($broadcast);
-            $this->dm->persist($broadcast);
+        if ($embeddedBroadcast = $src->getEmbeddedBroadcast()) {
+            $clonedEmbeddedBroadcast = $this->embeddedBroadcastService->cloneResource($embeddedBroadcast);
+            $new->setEmbeddedBroadcast($clonedEmbeddedBroadcast);
+        } else {
+            $new = $this->embeddedBroadcastService->setByType($new, EmbeddedBroadcast::TYPE_PUBLIC, false);
         }
 
         $new->setPublicDate($src->getPublicDate());

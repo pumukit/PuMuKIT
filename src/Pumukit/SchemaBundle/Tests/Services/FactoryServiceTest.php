@@ -5,7 +5,7 @@ namespace Pumukit\SchemaBundle\Tests\Services;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\SeriesType;
-use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Tag;
@@ -43,8 +43,6 @@ class FactoryServiceTest extends WebTestCase
           ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
           ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')
-          ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Role')
           ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')
@@ -54,8 +52,6 @@ class FactoryServiceTest extends WebTestCase
 
     public function testCreateSeries()
     {
-        $this->createBroadcasts();
-
         $series = $this->factory->createSeries();
 
         $this->assertEquals(1, count($this->seriesRepo->findAll()));
@@ -73,8 +69,6 @@ class FactoryServiceTest extends WebTestCase
 
     public function testCreateMultimediaObject()
     {
-        $this->createBroadcasts();
-
         $series = $this->factory->createSeries();
         $mmobj = $this->factory->createMultimediaObject($series);
 
@@ -93,8 +87,6 @@ class FactoryServiceTest extends WebTestCase
 
     public function testUpdateMultimediaObjectTemplate()
     {
-        $this->createBroadcasts();
-
         $series = $this->factory->createSeries();
 
         $mmobj = $this->factory->createMultimediaObject($series);
@@ -118,8 +110,6 @@ class FactoryServiceTest extends WebTestCase
 
     public function testSeriesType()
     {
-        $this->createBroadcasts();
-
         $series_type1 = new SeriesType();
         $name_type1 = 'Series type 1';
         $series_type1->setName($name_type1);
@@ -170,8 +160,6 @@ class FactoryServiceTest extends WebTestCase
 
     public function testFindSeriesById()
     {
-        $this->createBroadcasts();
-
         $series = $this->factory->createSeries();
 
         $this->assertEquals($series, $this->factory->findSeriesById($series->getId(), null));
@@ -181,8 +169,6 @@ class FactoryServiceTest extends WebTestCase
 
     public function testFindMultimediaObjectById()
     {
-        $this->createBroadcasts();
-
         $series = $this->factory->createSeries();
         $mm = $this->factory->createMultimediaObject($series);
 
@@ -229,8 +215,6 @@ class FactoryServiceTest extends WebTestCase
 
     public function testGetMultimediaObjectTemplate()
     {
-        $this->createBroadcasts();
-
         $series = $this->factory->createSeries();
 
         $this->assertTrue($this->factory->getMultimediaObjectPrototype($series)->isPrototype());
@@ -263,8 +247,6 @@ class FactoryServiceTest extends WebTestCase
 
     public function testDeleteSeries()
     {
-        $this->createBroadcasts();
-
         $series = $this->factory->createSeries();
         $mmobj = $this->factory->createMultimediaObject($series);
 
@@ -279,12 +261,9 @@ class FactoryServiceTest extends WebTestCase
 
     public function testDeleteResource()
     {
-        $this->createBroadcasts();
-
         $series = $this->factory->createSeries();
         $mmobj = $this->factory->createMultimediaObject($series);
 
-        $this->assertEquals(3, count($this->dm->getRepository('PumukitSchemaBundle:Broadcast')->findAll()));
         $this->assertEquals(1, count($this->seriesRepo->findAll()));
         $this->assertEquals(2, count($this->mmobjRepo->findAll()));
 
@@ -296,16 +275,6 @@ class FactoryServiceTest extends WebTestCase
 
         $this->assertEquals(0, count($this->seriesRepo->findAll()));
         $this->assertEquals(0, count($this->mmobjRepo->findAll()));
-
-        $broadcasts = $this->dm->getRepository('PumukitSchemaBundle:Broadcast')->findAll();
-        $count = count($broadcasts);
-        foreach($broadcasts as $broadcast){
-          $this->assertEquals($count, count($this->dm->getRepository('PumukitSchemaBundle:Broadcast')->findAll()));
-            $this->factory->deleteResource($broadcast);
-            --$count;
-        }
-        $this->assertEquals(0, count($this->dm->getRepository('PumukitSchemaBundle:Broadcast')->findAll()));
-
 
         $role = new Role();
         $role->setCod('role');
@@ -319,8 +288,6 @@ class FactoryServiceTest extends WebTestCase
 
     public function testClone()
     {
-        $this->createBroadcasts();
-
         $series = $this->factory->createSeries();
         $src = $this->factory->createMultimediaObject($series);
 
@@ -364,36 +331,14 @@ class FactoryServiceTest extends WebTestCase
         $this->assertEquals($new->getRecordDate(), $src->getRecordDate());
         $this->assertEquals($new->getStatus(), MultimediaObject::STATUS_BLOQ);
         
-        $this->assertEquals($new->getBroadcast(), $src->getBroadcast());
+        $this->assertEquals($new->getEmbeddedBroadcast()->getType(), $src->getEmbeddedBroadcast()->getType());
+        $this->assertEquals($new->getEmbeddedBroadcast()->getName(), $src->getEmbeddedBroadcast()->getName());
+        $this->assertEquals($new->getEmbeddedBroadcast()->getPassword(), $src->getEmbeddedBroadcast()->getPassword());
+        $this->assertEquals(count($new->getEmbeddedBroadcast()->getGroups()), count($src->getEmbeddedBroadcast()->getGroups()));
+        foreach ($src->getEmbeddedBroadcast()->getGroups() as $group) {
+            $this->assertTrue($new->getEmbeddedBroadcast()->containsGroup($group));
+        }
         $this->assertEquals(count($new->getRoles()), count($src->getRoles()));
         $this->assertEquals(count($new->getTags()), count($src->getTags()));
-    }
-
-    private function createBroadcasts()
-    {
-        $locale = 'en';
-
-        $broadcastPrivate = new Broadcast();
-        $broadcastPrivate->setLocale($locale);
-        $broadcastPrivate->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PRI);
-        $broadcastPrivate->setDefaultSel(true);
-        $broadcastPrivate->setName('Private');
-
-        $broadcastPublic = new Broadcast();
-        $broadcastPublic->setLocale($locale);
-        $broadcastPublic->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
-        $broadcastPublic->setDefaultSel(false);
-        $broadcastPublic->setName('Public');
-
-        $broadcastCorporative = new Broadcast();
-        $broadcastCorporative->setLocale($locale);
-        $broadcastCorporative->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_COR);
-        $broadcastCorporative->setDefaultSel(false);
-        $broadcastCorporative->setName('Corporative');
-
-        $this->dm->persist($broadcastPrivate);
-        $this->dm->persist($broadcastPublic);
-        $this->dm->persist($broadcastCorporative);
-        $this->dm->flush();
     }
 }

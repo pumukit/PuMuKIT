@@ -42,6 +42,7 @@
             <argument type="service" id="pumukitschema.tag" />
             <argument type="service" id="pumukitschema.person" />
             <argument type="service" id="pumukitschema.user" />
+            <argument type="service" id="pumukitschema.embeddedbroadcast" />
             <argument type="service" id="pumukitschema.multimediaobject_dispatcher" />
             <argument type="service" id="pumukitschema.series_dispatcher" />
             <argument type="service" id="translator" />
@@ -204,6 +205,10 @@
         <service id="security.role_hierarchy" class="%security.role_hierarchy.class%" public="false">
             <argument>%security.role_hierarchy.roles%</argument>
             <argument type="service" id="pumukitschema.permission"/>
+        </service>
+
+        <service id="pumukitschema.embeddedbroadcast" class="Pumukit\SchemaBundle\Services\EmbeddedBroadcastService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
 
     </services>
