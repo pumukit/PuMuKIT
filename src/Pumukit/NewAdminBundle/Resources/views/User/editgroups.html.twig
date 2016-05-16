@@ -48,7 +48,7 @@
               <a href="#" class="list-group-item disabled-group-item"
                  id="add_group_{{ user_group.id }}_{{ mode }}"
                  onclick="return false;"
-                 ondblclick="javascript:window.alert('Not local defined groups. Contact your directory service administrator to change membership.');">
+                 ondblclick="javascript:window.alert('External defined groups. Contact your directory service administrator to change membership.');">
                 <i class="mdi-social-group"></i>
                 {{ user_group.key }} - {{ user_group.name }} - ({{ user_group.origin|upper }})
               </a>

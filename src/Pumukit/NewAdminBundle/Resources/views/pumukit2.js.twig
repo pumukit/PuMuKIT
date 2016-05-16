@@ -2092,7 +2092,7 @@ function create_element_group_in_add_groups(group_id, user_id, mode, group_key, 
     } else {
         var item_class = 'class="list-group-item disabled-group-item"';
         var item_onclick = 'onclick="return false;"';
-        var item_ondblclick = 'ondblclick="javascript:window.alert(\'Not local defined groups. Contact your directory service administrator to change membership.\');"';
+        var item_ondblclick = 'ondblclick="javascript:window.alert(\'External defined groups. Contact your directory service administrator to change membership.\');"';
         group_origin = group_origin.toUpperCase();
     }
     var item_text = '<a href="#" ' + item_class + ' ' + item_onclick + ' ' + item_ondblclick + ' id="add_group_' + group_id + '_' + mode +'"><i class="mdi-social-group"></i> ' + group_key + ' - ' + group_name + ' - (' + group_origin + ')</a>';
