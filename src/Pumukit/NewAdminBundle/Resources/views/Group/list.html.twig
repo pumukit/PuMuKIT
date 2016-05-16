@@ -44,7 +44,7 @@
         </td>
         <td>
           {% if countUsersInGroup[group.id] != 0 %}
-          <i data-toggle="tooltip" data-placement="right" title="{% trans %}Cannot delete the data of{% endtrans %} '{{ group.name }}'. '{{ countUsersInGroup[group.id] }}' {% trans %}user(s) belong(s) to this group{% endtrans %}." class="mdi-content-block" style="color:#009587"></i>
+          <i data-toggle="tooltip" data-placement="right" title="{% trans %}Impossible to delete: group not empty.{% endtrans %} '{{ countUsersInGroup[group.id] }}' {% trans %}user(s) belong(s) to this group{% endtrans %}." class="mdi-content-block" style="color:#009587"></i>
           {% else %}
           <a href="#" title="Delete Group '{{ group.name }}'" onclick="window.submit_delete_group('{{ group.id }}', '{{ countUsersInGroup[group.id] }}', '{% autoescape 'js' %}{{ group.getName() }}{% endautoescape %}'); return false;">
             <i class="mdi-content-clear"></i>

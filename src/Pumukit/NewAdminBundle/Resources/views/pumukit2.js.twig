@@ -379,7 +379,7 @@ window.submit_delete_group = function(id, countUsers, groupName)
             });
     }
     }else{
-        window.alert('{% trans %}Cannot delete the data of{% endtrans %} '+groupName+'. '+ countUsers+' {% trans %}user(s) belong(s) to this group{% endtrans %}.');
+        window.alert('{% trans %}Impossible to delete: group not empty.{% endtrans %} '+ countUsers+' {% trans %}user(s) belong(s) to this group{% endtrans %}.');
     }
 }
 
