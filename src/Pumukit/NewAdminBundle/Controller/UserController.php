@@ -175,9 +175,6 @@ class UserController extends AdminController implements NewAdminController
     public function editGroupsAction(Request $request)
     {
         $user = $this->findOr404($request);
-        if ($user->getOrigin() !== User::ORIGIN_LOCAL) {
-            return new Response("Not allowed to update this not local user '".$user->getUsername()."'", Response::HTTP_BAD_REQUEST);
-        }
         $groups = $this->get('pumukitschema.group')->findAll();
 
         return array(

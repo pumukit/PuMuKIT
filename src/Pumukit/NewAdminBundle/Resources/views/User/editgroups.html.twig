@@ -36,7 +36,7 @@
             {% set user_groups = user.getMemberGroups() %}
             {% endif %}
 	        {% for user_group in user_groups %}
-              {% if (user_group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')) %}
+              {% if (user_group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')) and (user.origin == constant('Pumukit\\SchemaBundle\\Document\\User::ORIGIN_LOCAL')) %}
               <a href="#" class="list-group-item"
                  id="add_group_{{ user_group.id }}_{{ mode }}"
                  onclick="javascript:return select_group(this);"
@@ -45,10 +45,17 @@
                 {{ user_group.key }} - {{ user_group.name }} - ({{ user_group.origin }})
               </a>
               {% else %}
+              {% if (user_group.origin != constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')) and (user.origin != constant('Pumukit\\SchemaBundle\\Document\\User::ORIGIN_LOCAL')) %}
+              {% set message = 'External defined group and user. Contact your directory service administrator to change membership.' %}
+              {% elseif (user_group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')) and (user.origin != constant('Pumukit\\SchemaBundle\\Document\\User::ORIGIN_LOCAL')) %}
+              {% set message = 'External defined group. Contact your directory service administrator to change membership.' %}
+              {% else %}
+              {% set message = 'External defined user. Contact your directory service administrator to change membership.' %}
+              {% endif %}
               <a href="#" class="list-group-item disabled-group-item"
                  id="add_group_{{ user_group.id }}_{{ mode }}"
                  onclick="return false;"
-                 ondblclick="javascript:window.alert('Not local defined groups. Contact your directory service administrator to change membership.');">
+                 ondblclick="javascript:window.alert('{{ message }}');">
                 <i class="mdi-social-group"></i>
                 {{ user_group.key }} - {{ user_group.name }} - ({{ user_group.origin|upper }})
               </a>
@@ -61,9 +68,13 @@
   </div>
   {% endfor %}
   <div class="modal-footer">
+    {% if (user.origin == constant('Pumukit\\SchemaBundle\\Document\\User::ORIGIN_LOCAL')) %}
     <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
     <button type="button" class="btn btn-primary btn-raised" id="pumukitnewadmin_user_groups_reset">{% trans %}Reset{% endtrans %}</button>
     <button type="submit" class="btn btn-pumukit btn-raised" id="pumukitnewadmin_user_groups_submit">{% trans %}Save changes{% endtrans %}</button>
+    {% else %}
+    <button type="button" class="btn btn-pumukit btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
+    {% endif %}
   </div>
   {% else %}
     {% trans %}You don't have enough permissions to access this content.{% endtrans %}
