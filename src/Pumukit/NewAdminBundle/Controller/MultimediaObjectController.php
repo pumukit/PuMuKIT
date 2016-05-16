@@ -957,7 +957,9 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $broadcasts = $dm->getRepository('PumukitSchemaBundle:Broadcast')->findAll();
+        $broadcasts = $this->get('pumukitschema.embeddedbroadcast')->getAllTypes();
+        $groupService = $this->get('pumukitschema.group');
+        $allGroups = $groupService->findAll();
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
             if ($form->bind($request)->isValid()) {
                 try {
@@ -973,7 +975,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         }
         return array(
                      'mm' => $multimediaObject,
-                     'broadcasts' => $broadcasts
+                     'broadcasts' => $broadcasts,
+                     'groups' => $allGroups
                      );
 
     }

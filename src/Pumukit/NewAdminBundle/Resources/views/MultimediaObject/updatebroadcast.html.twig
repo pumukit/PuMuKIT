@@ -9,17 +9,17 @@
       <div class="form-group">
         <label class="control-label required">{% trans %}Broadcast Profile{% endtrans %}</label>
         <div id="pumukitnewadmin_mms_broadcast_broadcast">
-          {% for broadcast in broadcasts %}
+          {% for broadcast_type, broadcast_name in broadcasts %}
           <div class="radio">
             <label class="required">
-              <input id="pumukitnewadmin_mms_broadcast_broadcast_{{ broadcast.getBroadcastTypeId() }}" name="pumukitnewadmin_mms_broadcast[broadcast]" required="required" value="{{ broadcast.id }}" type="radio" {{ mm.broadcast == broadcast ? 'checked="checked"':'' }}><span class="circle"></span><span class="check"></span>
-              {{ broadcast.name }}
+              <input id="pumukitnewadmin_mms_broadcast_broadcast_{{ broadcast_type }}" name="pumukitnewadmin_mms_broadcast[broadcast]" required="required" value="{{ broadcast_type }}" type="radio" {{ mm.getEmbeddedBroadcast() ? ((mm.getEmbeddedBroadcast().getType() == broadcast_type) ? 'checked="checked"':'') : '' }}><span class="circle"></span><span class="check"></span>
+              {{ broadcast_name }}
             </label>
           </div>
-            {% if broadcast.getBroadcastTypeId() == constant('Pumukit\\SchemaBundle\\Document\\Broadcast::BROADCAST_TYPE_COR') %}
-            {% include 'PumukitNewAdminBundle:MultimediaObject:broadcastpassword.html.twig' %}
-            {% elseif broadcast.getBroadcastTypeId() == constant('Pumukit\\SchemaBundle\\Document\\Broadcast::BROADCAST_TYPE_GROUPS') %}
-            {# {% include 'PumukitNewAdminBundle:MultimediaObject:broadcastgroups.html.twig' %} #}
+            {% if broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PASSWORD') %}
+            {% include 'PumukitNewAdminBundle:MultimediaObject:broadcastpassword.html.twig' with {'embeddedbroadcast': mm.getEmbeddedBroadcast()} %}
+            {% elseif broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_GROUPS') %}
+            {% include 'PumukitNewAdminBundle:MultimediaObject:broadcastgroups.html.twig' with {'embeddedBroadcast': mm.getEmbeddedBroadcast(), 'groups': groups} %}
             {% endif %}
           {% endfor %}
         </div>

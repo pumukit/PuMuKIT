@@ -1,0 +1,43 @@
+<table>
+  <tbody>
+    <input type="hidden" id="mm_id" value="{{ mm.id }}"/>
+    <div class="panel panel-default">
+      <div class="panel-heading">{% trans %}GROUPS{% endtrans %}</div>
+      <div class="panel-body" id="group_broadcast">
+        <div class="row" style="margin-right: 0px; margin-left: 0px;">
+          <div style="width:430px; float: left;">
+            {% trans %}Available Groups{% endtrans %}:
+          </div>
+          <div style="width:390px; float: left;">
+            {% trans %}Broadcast current Groups{% endtrans %}:
+          </div>
+        </div>
+        <div style="overflow:hidden;height: 240px">
+	      <div style="width:390px; float: left; height: 220px; border: 1px solid #bbb; overflow-x: hidden; overflow-y: scroll" class="tag list-group pmk-tag-tree" id="delete_mm_groups">
+            {% include 'PumukitNewAdminBundle:MultimediaObject:broadcastgroupsajax.html.twig' with {'mm': mm, 'groups': groups} %}
+	      </div>
+	      <div style="float: left; padding: 110px 5px 0px">
+	        <a href="#" onclick="$('#add_mm_groups > a.active').trigger('dblclick'); return false;">&#8592;</a>
+	        <a href="#" onclick="$('#delete_mm_groups > a.active').trigger('dblclick'); return false;">&#8594;</a>
+	      </div>
+          {# Groups added to the multimedia object #}
+	      <div style="width:390px; height:220px; border: 1px solid #bbb; float: left; overflow-x: hidden; overflow-y: scroll" class="tag" id="added_mm_groups">
+	        <div class="tag_tree list-group" id="add_mm_groups" >
+              {% if embeddedBroadcast %}
+	          {% for broadcast_group in embeddedBroadcast.getGroups() %}
+              <a href="#" class="list-group-item add-mm-group-item"
+                 id="add_mm_group_{{ broadcast_group.id }}"
+                 onclick="javascript:return select_group(this);"
+                 ondblclick="javascript:delete_group('{{ broadcast_group.id }}', '{{ mm.id }}', '{{ broadcast_group.key }}', '{{ broadcast_group.name }}', '{{ broadcast_group.origin }}');">
+                <i class="mdi-social-group"></i>
+                {{ broadcast_group.key }} - {{ broadcast_group.name }} - ({{ broadcast_group.origin }})
+              </a>
+	          {% endfor %}
+              {% endif %}
+	        </div>
+          </div>
+	    </div>
+      </div>
+    </div>
+  </tbody>
+</table>
