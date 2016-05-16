@@ -1,5 +1,5 @@
 <table>
-  <tdody>
+  <tbody>
     <input type="hidden" id="mm_id" value="{{ mm.id }}"/>
     <div class="panel panel-default">
       <div class="panel-heading">{% trans %}GROUPS{% endtrans %}</div>
@@ -24,7 +24,6 @@
 	      <div style="width:390px; height:220px; border: 1px solid #bbb; float: left; overflow-x: hidden; overflow-y: scroll" class="tag" id="added_mm{{ template }}_groups">
 	        <div class="tag_tree list-group" id="add_mm{{ template }}_groups" >
 	          {% for mm_group in mm.getGroups() %}
-              {% if (mm_group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')) %}
               <a href="#" class="list-group-item add-mm{{ template }}-group-item"
                  id="add_mm{{ template }}_group_{{ mm_group.id }}"
                  onclick="javascript:return select_group(this);"
@@ -32,20 +31,11 @@
                 <i class="mdi-social-group"></i>
                 {{ mm_group.key }} - {{ mm_group.name }} - ({{ mm_group.origin }})
               </a>
-              {% else %}
-              <a href="#" class="list-group-item disabled-group-item"
-                 id="add_mm{{ template }}_group_{{ mm_group.id }}"
-                 onclick="return false;"
-                 ondblclick="javascript:window.alert('Not local defined groups. Contact your directory service administrator to change membership.');">
-                <i class="mdi-social-group"></i>
-                {{ mm_group.key }} - {{ mm_group.name }} - ({{ mm_group.origin|upper }})
-              </a>
-              {% endif %}
 	          {% endfor %}
 	        </div>
           </div>
 	    </div>
       </div>
     </div>
-</tbody>
+  </tbody>
 </table>
