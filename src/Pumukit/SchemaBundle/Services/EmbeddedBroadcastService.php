@@ -91,4 +91,19 @@ class EmbeddedBroadcastService
 
         return $new;
     }
+
+    /**
+     * Get all broadcast types
+     *
+     * @return array
+     */
+    public function getAllTypes()
+    {
+        return array(
+                     EmbeddedBroadcast::TYPE_PUBLIC => EmbeddedBroadcast::NAME_PUBLIC,
+                     EmbeddedBroadcast::TYPE_PASSWORD => EmbeddedBroadcast::NAME_PASSWORD,
+                     EmbeddedBroadcast::TYPE_LDAP => EmbeddedBroadcast::NAME_LDAP,
+                     EmbeddedBroadcast::TYPE_GROUPS => EmbeddedBroadcast::NAME_GROUPS
+                     );
+    }
 }

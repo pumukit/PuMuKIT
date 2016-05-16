@@ -118,4 +118,15 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
         $clonedLdapBroadcast = $this->embeddedBroadcastService->cloneResource($ldapBroadcast);
         $this->assertEquals($ldapBroadcast, $clonedLdapBroadcast);
     }
+
+    public function testGetAllBroadcastTypes()
+    {
+        $broadcasts = array(
+                            EmbeddedBroadcast::TYPE_PUBLIC => EmbeddedBroadcast::NAME_PUBLIC,
+                            EmbeddedBroadcast::TYPE_PASSWORD => EmbeddedBroadcast::NAME_PASSWORD,
+                            EmbeddedBroadcast::TYPE_LDAP => EmbeddedBroadcast::NAME_LDAP,
+                            EmbeddedBroadcast::TYPE_GROUPS => EmbeddedBroadcast::NAME_GROUPS
+                            );
+        $this->assertEquals($broadcasts, $this->embeddedBroadcastService->getAllTypes());
+    }
 }
