@@ -237,19 +237,20 @@ window.down_seriespic = function(id, seriesId) {
     $(div_id).load(url.replace('___id___', id), {method:'POST'});
 }
 
-window.submit_delete_person_relation = function(id, roleId, mmId, hName, template)
+window.submit_delete_person_relation = function(id, roleId, mmId, hName, template, owner)
 {
     if (window.confirm("{% trans %}Are you sure you want to delete the relation of{% endtrans %} "+hName+"?")){
         if ('_template' === template){
-            var tag_id = '#'+roleId+'_person_mms'+template;
+            var role_id = '#'+roleId+'_person_mms'+template;
         }else{
-            var tag_id = '#'+roleId+'_person_mms';
+            var role_id = '#'+roleId+'_person_mms';
         }
-        var url = "{{ path('pumukitnewadmin_person_delete_relation', {'id': '__id__', 'roleId': '__roleId__','mmId': '__mmId__'})|raw }}";
+        var url = "{{ path('pumukitnewadmin_person_delete_relation', {'id': '__id__', 'roleId': '__roleId__','mmId': '__mmId__', 'owner': '__owner__'})|raw }}";
         url = url.replace('__id__', id);
         url = url.replace('__roleId__', roleId);
         url = url.replace('__mmId__', mmId);
-        $(tag_id).load(url, {'_method': 'DELETE'});
+        url = url.replace('__owner__', owner);
+        $(role_id).load(url, {'_method': 'DELETE'});
         var url = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'})|raw }}";
         $('#preview_mm').load(url.replace('__mmId__', mmId), function(responseText, textStatus, XMLHttpRequest){
 	    if(XMLHttpRequest.status >= 400){

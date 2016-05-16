@@ -271,6 +271,7 @@ class PersonController extends AdminController implements NewAdminController
         if ($role->getCod() === $this->container->getParameter('pumukitschema.personal_scope_role_code')) {
             $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
         }
+        $owner = $request->get('owner', false);
 
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
@@ -291,7 +292,13 @@ class PersonController extends AdminController implements NewAdminController
 
                 $template = $multimediaObject->isPrototype() ? '_template' : '';
 
-                return $this->render('PumukitNewAdminBundle:Person:listrelation.html.twig',
+                if ($owner === 'owner') {
+                    $twigTemplate = 'PumukitNewAdminBundle:MultimediaObject:listownerrelation.html.twig';
+                } else {
+                    $twigTemplate = 'PumukitNewAdminBundle:Person:listrelation.html.twig';
+                }
+
+                return $this->render($twigTemplate,
                                      array(
                                            'people' => $multimediaObject->getPeopleByRole($role, true),
                                            'role' => $role,
@@ -316,7 +323,8 @@ class PersonController extends AdminController implements NewAdminController
                      'role' => $role,
                      'mm' => $multimediaObject,
                      'template' => $template,
-                     'form' => $form->createView()
+                     'form' => $form->createView(),
+                     'owner' => $owner
                      );
     }
 
@@ -453,13 +461,13 @@ class PersonController extends AdminController implements NewAdminController
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
-     * @Template("PumukitNewAdminBundle:Person:listrelation.html.twig")
      */
     public function deleteRelationAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
         if ($role->getCod() === $this->container->getParameter('pumukitschema.personal_scope_role_code')) {
             $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
         }
+        $owner = $request->get('owner', false);
 
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
@@ -474,14 +482,21 @@ class PersonController extends AdminController implements NewAdminController
         if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
             $template = '_template';
         }
-        
-        return array(
-                     'people' => $multimediaObject->getPeopleByRole($role, true),
-                     'role' => $role,
-                     'personal_scope_role_code' => $personalScopeRoleCode,
-                     'mm' => $multimediaObject,
-                     'template' => $template
-                     );
+
+        if ($owner === 'owner') {
+            $twigTemplate = 'PumukitNewAdminBundle:MultimediaObject:listownerrelation.html.twig';
+        } else {
+            $twigTemplate = 'PumukitNewAdminBundle:Person:listrelation.html.twig';
+        }
+
+        return $this->render($twigTemplate,
+                             array(
+                                   'people' => $multimediaObject->getPeopleByRole($role, true),
+                                   'role' => $role,
+                                   'personal_scope_role_code' => $personalScopeRoleCode,
+                                   'mm' => $multimediaObject,
+                                   'template' => $template
+                                   ));
     }
 
     /**
