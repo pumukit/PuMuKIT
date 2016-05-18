@@ -7,7 +7,7 @@
   <form autocomplete="off"
         onsubmit="$('#myModal').modal('hide');
                   $.ajax({
-                          url: '{{ path('pumukitnewadmin_person_create_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}',
+                          url: '{{ path('pumukitnewadmin_person_create_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id, 'owner': owner}) }}',
                           type: 'POST',
                           data: $(this).serialize(),
                           success: function(response){

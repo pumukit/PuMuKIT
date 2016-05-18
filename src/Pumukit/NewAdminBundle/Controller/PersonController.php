@@ -213,6 +213,7 @@ class PersonController extends AdminController implements NewAdminController
         if ($role->getCod() === $this->container->getParameter('pumukitschema.personal_scope_role_code')) {
             $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
         }
+        $owner = $request->get('owner', false);
 
         $person = new Person();
         $person->setName(preg_replace('/\d+ - /', '', $request->get('name')));
@@ -241,7 +242,13 @@ class PersonController extends AdminController implements NewAdminController
                 }
                 return new Response($textStatus, 409);
             }
-            return $this->render('PumukitNewAdminBundle:Person:listrelation.html.twig',
+            if ($owner === 'owner') {
+                $twigTemplate = 'PumukitNewAdminBundle:MultimediaObject:listownerrelation.html.twig';
+            } else {
+                $twigTemplate = 'PumukitNewAdminBundle:Person:listrelation.html.twig';
+            }
+
+            return $this->render($twigTemplate,
                                  array(
                                        'people' => $multimediaObject->getPeopleByRole($role, true),
                                        'role' => $role,
@@ -259,6 +266,7 @@ class PersonController extends AdminController implements NewAdminController
                      'mm' => $multimediaObject,
                      'template' => $template,
                      'form' => $form->createView(),
+                     'owner' => $owner
                      );
     }
 
