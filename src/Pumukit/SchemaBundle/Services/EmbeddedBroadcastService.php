@@ -39,7 +39,7 @@ class EmbeddedBroadcastService
     }
 
     /**
-     * Create public embedded broadcast
+     * Create embedded broadcast by type
      *
      * @param  string            $type
      * @return EmbeddedBroadcast
@@ -67,6 +67,16 @@ class EmbeddedBroadcastService
         }
 
         return $embeddedBroadcast;
+    }
+
+    /**
+     * Create public embedded broadcast
+     *
+     * @return EmbeddedBroadcast
+     */
+    public function createPublicEmbeddedBroadcast()
+    {
+        return $this->createEmbeddedBroadcastByType(EmbeddedBroadcast::TYPE_PUBLIC);
     }
 
     /**

@@ -129,4 +129,12 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
                             );
         $this->assertEquals($broadcasts, $this->embeddedBroadcastService->getAllTypes());
     }
+
+    public function testCreatePublicEmbeddedBroadcast()
+    {
+        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm);
+        $publicBroadcast = $embeddedBroadcastService->createPublicEmbeddedBroadcast();
+        $this->assertEquals(EmbeddedBroadcast::TYPE_PUBLIC, $publicBroadcast->getType());
+        $this->assertEquals(EmbeddedBroadcast::NAME_PUBLIC, $publicBroadcast->getName());
+    }
 }
