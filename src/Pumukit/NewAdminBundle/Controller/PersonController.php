@@ -189,12 +189,15 @@ class PersonController extends AdminController implements NewAdminController
         $template = $multimediaObject->isPrototype() ? '_template' : '';
         $ldapEnabled = $this->container->has('pumukit_ldap.ldap');
 
+        $owner = $request->get('owner', false);
+
         return array(
                      'people' => $resources,
                      'mm' => $multimediaObject,
                      'role' => $role,
                      'template' => $template,
-                     'ldap_enabled' => $ldapEnabled
+                     'ldap_enabled' => $ldapEnabled,
+                     'owner' => $owner
                      );
     }
 
@@ -358,8 +361,14 @@ class PersonController extends AdminController implements NewAdminController
         if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
             $template = '_template';
         }
-        
-        return $this->render('PumukitNewAdminBundle:Person:listrelation.html.twig', 
+        $owner = $request->get('owner', false);
+        if ($owner === 'owner') {
+            $twigTemplate = 'PumukitNewAdminBundle:MultimediaObject:listownerrelation.html.twig';
+        } else {
+            $twigTemplate = 'PumukitNewAdminBundle:Person:listrelation.html.twig';
+        }
+
+        return $this->render($twigTemplate,
                              array(
                                    'people' => $multimediaObject->getPeopleByRole($role, true),
                                    'role' => $role,
