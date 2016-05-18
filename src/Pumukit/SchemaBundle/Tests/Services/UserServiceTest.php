@@ -772,4 +772,42 @@ class UserServiceTest extends WebTestCase
 
         $this->userService->deleteGroup($casGroup, $casUser);
     }
+
+    public function testFindWithGroup()
+    {
+        $localGroup = new Group();
+        $localGroup->setKey('local_key');
+        $localGroup->setName('Local Group');
+        $localGroup->setOrigin(Group::ORIGIN_LOCAL);
+
+        $casGroup = new Group();
+        $casGroup->setKey('cas_key');
+        $casGroup->setName('CAS Group');
+        $casGroup->setOrigin('cas');
+
+        $localUser = new User();
+        $localUser->setUsername('local_user');
+        $localUser->setEmail('local_user@mail.com');
+        $localUser->setOrigin(User::ORIGIN_LOCAL);
+        $localUser->addGroup($localGroup);
+
+        $casUser = new User();
+        $casUser->setUsername('cas_user');
+        $casUser->setEmail('cas_user@mail.com');
+        $casUser->setOrigin('cas');
+        $casUser->addGroup($casGroup);
+
+        $this->dm->persist($localGroup);
+        $this->dm->persist($casGroup);
+        $this->dm->persist($localUser);
+        $this->dm->persist($casUser);
+        $this->dm->flush();
+
+        $usersLocalGroup = $this->userService->findWithGroup($localGroup)->toArray();
+        $usersCasGroup = $this->userService->findWithGroup($casGroup)->toArray();
+        $this->assertTrue(in_array($localUser, $usersLocalGroup));
+        $this->assertFalse(in_array($casUser, $usersLocalGroup));
+        $this->assertFalse(in_array($localUser, $usersCasGroup));
+        $this->assertTrue(in_array($casUser, $usersCasGroup));
+    }
 }

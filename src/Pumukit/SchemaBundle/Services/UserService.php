@@ -507,4 +507,18 @@ class UserService
 
         return false;
     }
+
+    /**
+     * Find with group
+     *
+     * @param Group
+     * @return Cursor
+     */
+    public function findWithGroup(Group $group)
+    {
+        return $this->repo->createQueryBuilder()
+            ->field('groups')->in(array(new \MongoId($group->getId())))
+            ->getQuery()
+            ->execute();
+    }
 }
