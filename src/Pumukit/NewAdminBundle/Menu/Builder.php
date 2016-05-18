@@ -14,7 +14,6 @@ class Builder extends ContainerAware
 
         // Add translations in src/Pumukit/NewAdminBundle/Resource/translations/NewAdminBundle.locale.yml
         $authorizationChecker = $this->container->get('security.authorization_checker');
-        $createBroadcastDisabled = $this->container->getParameter('pumukit_new_admin.disable_broadcast_creation');
         $showImporterTab = $this->container->hasParameter('pumukit_opencast.show_importer_tab') && $this->container->getParameter('pumukit_opencast.show_importer_tab');
         $showDashboardTab = $this->container->getParameter('pumukit2.show_dashboard_tab');
         $showSeriesTypeTab = $this->container->hasParameter('pumukit2.use_series_channels') && $this->container->getParameter('pumukit2.use_series_channels');
@@ -53,16 +52,13 @@ class Builder extends ContainerAware
             $menu->addChild('Encoder jobs', array('route' => 'pumukit_encoder_info'))->setExtra('translation_domain', 'NewAdminBundle');
         }
         if ($authorizationChecker->isGranted(Permission::ACCESS_PEOPLE) || $authorizationChecker->isGranted(Permission::ACCESS_TAGS) ||
-            $authorizationChecker->isGranted(Permission::ACCESS_BROADCASTS) || $authorizationChecker->isGranted(Permission::ACCESS_SERIES_TYPES)) {
+            $authorizationChecker->isGranted(Permission::ACCESS_SERIES_TYPES)) {
             $tables = $menu->addChild('Tables')->setExtra('translation_domain', 'NewAdminBundle');
             if ($authorizationChecker->isGranted(Permission::ACCESS_PEOPLE)) {
                 $tables->addChild('People', array('route' => 'pumukitnewadmin_person_index'))->setExtra('translation_domain', 'NewAdminBundle');
             }
             if ($authorizationChecker->isGranted(Permission::ACCESS_TAGS)) {
                 $tables->addChild('Tags', array('route' => 'pumukitnewadmin_tag_index'))->setExtra('translation_domain', 'NewAdminBundle');
-            }
-            if ($authorizationChecker->isGranted(Permission::ACCESS_BROADCASTS) && !$createBroadcastDisabled) {
-                $tables->addChild('Broadcast profiles', array('route' => 'pumukitnewadmin_broadcast_index'))->setExtra('translation_domain', 'NewAdminBundle');
             }
             if ($showSeriesTypeTab && $authorizationChecker->isGranted(Permission::ACCESS_SERIES_TYPES)) {
                 $tables->addChild('Series types', array('route' => 'pumukitnewadmin_seriestype_index'))->setExtra('translation_domain', 'NewAdminBundle');
