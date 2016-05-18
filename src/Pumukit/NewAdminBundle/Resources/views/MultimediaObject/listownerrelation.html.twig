@@ -1,7 +1,7 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE')) %}
     <input type="hidden" id="mm_id" value="{{ mm.id }}"/>
     <div class="panel panel-default">
-      <div class="panel-heading">{% trans %}OWNERS{% endtrans %}</div>
+      <div class="panel-heading">{% trans %}OWNERS: Users that can admin this multimedia object{% endtrans %}</div>
       <div class="panel-body" id="group_mm{{ template }}">
         <table class="table">
           <thead>
