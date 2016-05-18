@@ -27,6 +27,8 @@ class GroupType extends AbstractType
                   array('label' => $this->translator->trans('Key', array(), null, $this->locale)))
             ->add('name', 'text',
                   array('label' => $this->translator->trans('Name', array(), null, $this->locale)))
+            ->add('comments', 'text',
+                  array('label' => $this->translator->trans('Comments', array(), null, $this->locale)))
             ;
     }
 
