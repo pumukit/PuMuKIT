@@ -35,7 +35,6 @@ class EmbeddedBroadcast
      * @var string $name
      *
      * @MongoDB\String
-     * @MongoDB\UniqueIndex(safe=1)
      */
     private $name = self::NAME_PUBLIC;
 
