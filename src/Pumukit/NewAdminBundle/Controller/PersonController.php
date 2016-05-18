@@ -413,8 +413,14 @@ class PersonController extends AdminController implements NewAdminController
         if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
             $template = '_template';
         }
-        
-        return $this->render('PumukitNewAdminBundle:Person:listrelation.html.twig', 
+        $owner = $request->get('owner', false);
+        if ($owner === 'owner') {
+            $twigTemplate = 'PumukitNewAdminBundle:MultimediaObject:listownerrelation.html.twig';
+        } else {
+            $twigTemplate = 'PumukitNewAdminBundle:Person:listrelation.html.twig';
+        }
+
+        return $this->render($twigTemplate,
                              array(
                                    'people' => $multimediaObject->getPeopleByRole($role, true),
                                    'role' => $role,
@@ -445,8 +451,14 @@ class PersonController extends AdminController implements NewAdminController
         if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
             $template = '_template';
         }
-        
-        return $this->render('PumukitNewAdminBundle:Person:listrelation.html.twig', 
+        $owner = $request->get('owner', false);
+        if ($owner === 'owner') {
+            $twigTemplate = 'PumukitNewAdminBundle:MultimediaObject:listownerrelation.html.twig';
+        } else {
+            $twigTemplate = 'PumukitNewAdminBundle:Person:listrelation.html.twig';
+        }
+
+        return $this->render($twigTemplate,
                              array(
                                    'people' => $multimediaObject->getPeopleByRole($role, true),
                                    'role' => $role,
