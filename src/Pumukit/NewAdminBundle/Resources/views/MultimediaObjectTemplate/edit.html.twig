@@ -11,10 +11,10 @@
         <a href="#tagMmTemplate" aria-controls="tagMmTemplate" role="tab" data-toggle="tab">{% trans %}Tags{% endtrans %}</a>
       </li>
       <li>
-        <a href="#personMmTemplate" aria-controls="personMmTemplate" role="tab" data-toggle="tab">{% trans %}People{% endtrans %}</a>
+        <a href="#groupMmTemplate" aria-controls="groupMmTemplate" role="tab" data-toggle="tab">{% trans %}Owners & Groups{% endtrans %}</a>
       </li>
       <li>
-        <a href="#groupMmTemplate" aria-controls="groupMmTemplate" role="tab" data-toggle="tab">{% trans %}Owners & Groups{% endtrans %}</a>
+        <a href="#personMmTemplate" aria-controls="personMmTemplate" role="tab" data-toggle="tab">{% trans %}People{% endtrans %}</a>
       </li>
     </ul>
     <div class="tab-content">
@@ -25,12 +25,13 @@
       <div id="tagMmTemplate" role="tabpanel" class="tab-pane">
         {% include 'PumukitNewAdminBundle:MultimediaObject:updatetag.html.twig' with {'mm': mmtemplate, 'parent_tags': parent_tags, 'template': true} %}
       </div>
+
+      <div id="groupMmTemplate" role="tabpanel" class="tab-pane">
+        {% include 'PumukitNewAdminBundle:MultimediaObject:updategroup.html.twig' with {'mm': mmtemplate, 'personal_scope_role': personal_scope_role} %}
+      </div>
       
       <div id="personMmTemplate" role="tabpanel" class="tab-pane">
         {% include 'PumukitNewAdminBundle:MultimediaObject:updateperson.html.twig' with {'mm': mmtemplate, 'roles': roles} %}
-      </div>
-      <div id="groupMmTemplate" role="tabpanel" class="tab-pane">
-        {% include 'PumukitNewAdminBundle:MultimediaObject:updategroup.html.twig' with {'mm': mmtemplate, 'personal_scope_role': personal_scope_role} %}
       </div>
     </div>
   </div>

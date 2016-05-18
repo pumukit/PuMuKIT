@@ -26,6 +26,9 @@
         <a href="#tagMm" aria-controls="tagMm" role="tab" data-toggle="tab">{% trans %}Tags{% endtrans %}</a>
       </li>
       <li>
+        <a href="#groupMm" aria-controls="groupMm" role="tab" data-toggle="tab">{% trans %}Owners & Groups{% endtrans %}</a>
+      </li>
+      <li>
         <a href="#personMm" aria-controls="personMm" role="tab" data-toggle="tab">{% trans %}People{% endtrans %}</a>
       </li>
       <li>
@@ -36,9 +39,6 @@
           <a href="#editorMm" aria-controls="editorMm" role="tab" data-toggle="tab">{% trans %}Media Edition{% endtrans %}</a>
         </li>
       {% endif %}
-      <li>
-        <a href="#groupMm" aria-controls="groupMm" role="tab" data-toggle="tab">{% trans %}Owners & Groups{% endtrans %}</a>
-      </li>
     </ul>
   
     <div class="tab-content">
@@ -55,6 +55,10 @@
         {% include 'PumukitNewAdminBundle:MultimediaObject:updatetag.html.twig' with {'mm': mm, 'parent_tags': parent_tags, 'template': false} %}
       </div>
 
+      <div id="groupMm" role="tabpanel" class="tab-pane">
+        {% include 'PumukitNewAdminBundle:MultimediaObject:updategroup.html.twig' with {'mm': mm, 'personal_scope_role': personal_scope_role} %}
+      </div>
+
       <div id="personMm" role="tabpanel" class="tab-pane">
         {% include 'PumukitNewAdminBundle:MultimediaObject:updateperson.html.twig' with {'mm': mm, 'roles': roles} %}
       </div>
@@ -67,9 +71,6 @@
           {% include 'PumukitNewAdminBundle:MultimediaObject:editor.html.twig' with {'mm': mm, 'jobs': jobs} %}
         </div>
       {% endif %}
-      <div id="groupMm" role="tabpanel" class="tab-pane">
-        {% include 'PumukitNewAdminBundle:MultimediaObject:updategroup.html.twig' with {'mm': mm, 'personal_scope_role': personal_scope_role} %}
-      </div>
     </div>
   </div>
   {% else %}

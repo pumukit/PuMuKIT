@@ -237,19 +237,20 @@ window.down_seriespic = function(id, seriesId) {
     $(div_id).load(url.replace('___id___', id), {method:'POST'});
 }
 
-window.submit_delete_person_relation = function(id, roleId, mmId, hName, template)
+window.submit_delete_person_relation = function(id, roleId, mmId, hName, template, owner)
 {
     if (window.confirm("{% trans %}Are you sure you want to delete the relation of{% endtrans %} "+hName+"?")){
         if ('_template' === template){
-            var tag_id = '#'+roleId+'_person_mms'+template;
+            var role_id = '#'+roleId+'_person_mms'+template;
         }else{
-            var tag_id = '#'+roleId+'_person_mms';
+            var role_id = '#'+roleId+'_person_mms';
         }
-        var url = "{{ path('pumukitnewadmin_person_delete_relation', {'id': '__id__', 'roleId': '__roleId__','mmId': '__mmId__'})|raw }}";
+        var url = "{{ path('pumukitnewadmin_person_delete_relation', {'id': '__id__', 'roleId': '__roleId__','mmId': '__mmId__', 'owner': '__owner__'})|raw }}";
         url = url.replace('__id__', id);
         url = url.replace('__roleId__', roleId);
         url = url.replace('__mmId__', mmId);
-        $(tag_id).load(url, {'_method': 'DELETE'});
+        url = url.replace('__owner__', owner);
+        $(role_id).load(url, {'_method': 'DELETE'});
         var url = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'})|raw }}";
         $('#preview_mm').load(url.replace('__mmId__', mmId), function(responseText, textStatus, XMLHttpRequest){
 	    if(XMLHttpRequest.status >= 400){
@@ -379,7 +380,7 @@ window.submit_delete_group = function(id, countUsers, groupName)
             });
     }
     }else{
-        window.alert('{% trans %}Cannot delete the data of{% endtrans %} '+groupName+'. '+ countUsers+' {% trans %}user(s) belong(s) to this group{% endtrans %}.');
+        window.alert('{% trans %}Impossible to delete: group not empty.{% endtrans %} '+ countUsers+' {% trans %}user(s) belong(s) to this group{% endtrans %}.');
     }
 }
 
@@ -2113,7 +2114,7 @@ function create_element_group_in_add_groups(group_id, user_id, mode, group_key, 
     } else {
         var item_class = 'class="list-group-item disabled-group-item"';
         var item_onclick = 'onclick="return false;"';
-        var item_ondblclick = 'ondblclick="javascript:window.alert(\'Not local defined groups. Contact your directory service administrator to change membership.\');"';
+        var item_ondblclick = 'ondblclick="javascript:window.alert(\'External defined groups. Contact your directory service administrator to change membership.\');"';
         group_origin = group_origin.toUpperCase();
     }
     var item_text = '<a href="#" ' + item_class + ' ' + item_onclick + ' ' + item_ondblclick + ' ' + item_id + '"><i class="mdi-social-group"></i> ' + group_key + ' - ' + group_name + ' - (' + group_origin + ')</a>';

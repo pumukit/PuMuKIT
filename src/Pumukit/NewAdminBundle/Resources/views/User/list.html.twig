@@ -44,7 +44,7 @@
               <i class="mdi-editor-mode-edit"></i>
             </a>
             {% else %}
-            <i data-toggle="tooltip" data-placement="right" title="{% trans %}Not local defined users can not be edited here, contact your directory service administrator.{% endtrans %}" class="mdi-content-block" style="color:#009587"></i>
+            <i data-toggle="tooltip" data-placement="right" title="{% trans %}External defined users can not be edited here, contact your directory service administrator.{% endtrans %}" class="mdi-content-block" style="color:#009587"></i>
             {% endif %}
           </td>
           <td>
@@ -53,13 +53,9 @@
             </a>
           </td>
           <td>
-            {% if user.origin == constant('Pumukit\\SchemaBundle\\Document\\User::ORIGIN_LOCAL') %}
             <a href="{{ path('pumukitnewadmin_user_editgroups', {'id': user.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
-              <i class="mdi-social-group" data-toggle="tooltip" data-placement="right" title="{{ user|user_groups_text }}({% trans %}Click to modify groups{% endtrans %})"></i>
+              <i class="mdi-social-group" data-toggle="tooltip" data-placement="right" title="{% trans %}User Groups{% endtrans %}"></i>
             </a>
-            {% else %}
-            <i class="mdi-social-group" data-toggle="tooltip" data-placement="right" title="{{ user|user_groups_text }}({% trans %}Groups of not local defined users can not be edited here, contact your directory service administrator{% endtrans %})"></i>
-            {% endif %}
           </td>
           <td>
 	          {% if user.fullname is not empty %}{{ user.fullname }}{% endif %}
