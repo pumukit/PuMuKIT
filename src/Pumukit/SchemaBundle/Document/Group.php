@@ -40,6 +40,13 @@ class Group implements GroupInterface
     protected $name;
 
     /**
+     * @var string $comments
+     *
+     * @MongoDB\String
+     */
+    protected $comments;
+
+    /**
      * @var string $origin
      *
      * @MongoDB\String
@@ -124,6 +131,26 @@ class Group implements GroupInterface
     public function getKey()
     {
         return $this->key;
+    }
+
+    /**
+     * Set comments
+     *
+     * @param string $comments
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+    }
+
+    /**
+     * Get comments
+     *
+     * @return string
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 
     /**

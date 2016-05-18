@@ -12,14 +12,20 @@ class GroupTest extends \PHPUnit_Framework_TestCase
 
         $key = 'GROUPA';
         $name = "Group A";
+        $comments = 'Group created to test setter and getter';
+        $origin = Group::ORIGIN_LOCAL;
         $updatedAt = new \Datetime('now');
 
         $group->setKey($key);
         $group->setName($name);
+        $group->setComments($comments);
+        $group->setOrigin($origin);
         $group->setUpdatedAt($updatedAt);
 
         $this->assertEquals($key, $group->getKey());
         $this->assertEquals($name, $group->getName());
+        $this->assertEquals($comments, $group->getComments());
+        $this->assertEquals($origin, $group->getOrigin());
         $this->assertEquals($updatedAt, $group->getUpdatedAt());
     }
 
