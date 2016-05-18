@@ -273,44 +273,6 @@ class GroupServiceTest extends WebTestCase
         $this->assertEquals(0, count($this->repo->findAll()));
     }
 
-    /**
-     * @expectedException         Exception
-     * @expectedExceptionMessage  Not allowed to delete Group
-     */
-    public function testDeleteException()
-    {
-        $this->assertEquals(0, count($this->repo->findAll()));
-
-        $key = 'key';
-        $name = 'name';
-
-        $group = new Group();
-        $group->setKey($key);
-        $group->setName($name);
-
-        $group = $this->groupService->create($group);
-
-        $this->assertEquals(1, count($this->repo->findAll()));
-        $this->assertEquals($group, $this->repo->findOneByKey($key));
-        $this->assertEquals($group, $this->repo->findOneByName($name));
-        $this->assertEquals($group, $this->repo->find($group->getId()));
-
-        $user = new User();
-        $user->setUsername('test3');
-        $user->setPassword('pass3');
-
-        $this->dm->persist($user);
-        $this->dm->flush();
-
-        $user->addGroup($group);
-        $this->dm->persist($user);
-        $this->dm->flush();
-
-        $group = $this->groupService->delete($group);
-
-        $this->assertEquals(0, count($this->repo->findAll()));
-    }
-
     public function testFindById()
     {
         $group = new Group();

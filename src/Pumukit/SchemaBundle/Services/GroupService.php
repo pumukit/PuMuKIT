@@ -90,9 +90,6 @@ class GroupService
      */
     public function delete(Group $group, $executeFlush = true)
     {
-        if (($count = $this->countUsersInGroup($group)) > 0) {
-            throw new \Exception('Not allowed to delete Group "'.$group->getKey().'". '.$count.' users belong(s) to this group.');
-        }
         $this->dm->remove($group);
         if ($executeFlush) $this->dm->flush();
 
