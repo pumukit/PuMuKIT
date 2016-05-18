@@ -54,14 +54,17 @@ class GroupServiceTest extends WebTestCase
         $user1 = new User();
         $user1->setUsername('test1');
         $user1->setPassword('pass1');
+        $user1->setEmail('test1@mail.com');
 
         $user2 = new User();
         $user2->setUsername('test2');
         $user2->setPassword('pass2');
+        $user2->setEmail('test2@mail.com');
 
         $user3 = new User();
         $user3->setUsername('test3');
         $user3->setPassword('pass3');
+        $user3->setEmail('test3@mail.com');
 
         $this->dm->persist($group1);
         $this->dm->persist($group2);
@@ -73,40 +76,12 @@ class GroupServiceTest extends WebTestCase
         $this->assertEquals(0, $this->groupService->countUsersInGroup($group1));
         $this->assertEquals(0, $this->groupService->countUsersInGroup($group2));
 
-        $user1->addAdminGroup($group1);
+        $user1->addGroup($group1);
         $this->dm->persist($user1);
         $this->dm->flush();
 
         $this->assertEquals(1, $this->groupService->countUsersInGroup($group1));
         $this->assertEquals(0, $this->groupService->countUsersInGroup($group2));
-
-        $user1->addMemberGroup($group1);
-        $this->dm->persist($user1);
-        $this->dm->flush();
-
-        $this->assertEquals(1, $this->groupService->countUsersInGroup($group1));
-        $this->assertEquals(0, $this->groupService->countUsersInGroup($group2));
-
-        $user2->addMemberGroup($group1);
-        $this->dm->persist($user2);
-        $this->dm->flush();
-
-        $this->assertEquals(2, $this->groupService->countUsersInGroup($group1));
-        $this->assertEquals(0, $this->groupService->countUsersInGroup($group2));
-
-        $user3->addMemberGroup($group2);
-        $this->dm->persist($user3);
-        $this->dm->flush();
-
-        $this->assertEquals(2, $this->groupService->countUsersInGroup($group1));
-        $this->assertEquals(1, $this->groupService->countUsersInGroup($group2));
-
-        $user1->addMemberGroup($group2);
-        $this->dm->persist($user1);
-        $this->dm->flush();
-
-        $this->assertEquals(2, $this->groupService->countUsersInGroup($group1));
-        $this->assertEquals(2, $this->groupService->countUsersInGroup($group2));
     }
 
     public function testCreate()
@@ -327,7 +302,7 @@ class GroupServiceTest extends WebTestCase
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $user->addMemberGroup($group);
+        $user->addGroup($group);
         $this->dm->persist($user);
         $this->dm->flush();
 
