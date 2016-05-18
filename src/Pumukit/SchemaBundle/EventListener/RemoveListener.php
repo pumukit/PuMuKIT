@@ -6,6 +6,7 @@ use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\EncoderBundle\Document\Job;
 
 class RemoveListener
@@ -66,6 +67,16 @@ class RemoveListener
             foreach ($document->getMaterials() as $material) {
                 $document = $materialService->removeMaterialFromMultimediaObject($document, $material->getId());
             }
+        }
+
+        if ($document instanceof Group) {
+            $dm = $this->container->get("doctrine_mongodb.odm.document_manager");
+            $userService = $this->container->get("pumukitschema.user");
+            $users = $userService->findWithGroup($document);
+            foreach ($users as $user) {
+                $userService->deleteGroup($document, $user, false);
+            }
+            $dm->flush();
         }
     }
 }
