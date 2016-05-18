@@ -89,7 +89,8 @@ class FactoryService
     {
         $mm = new MultimediaObject();
         $mm->setStatus(MultimediaObject::STATUS_PROTOTYPE);
-        $mm = $this->embeddedBroadcastService->setByType($mm, EmbeddedBroadcast::TYPE_PUBLIC, false);
+        $embeddedBroadcast = $this->embeddedBroadcastService->createPublicEmbeddedBroadcast();
+        $mm->setEmbeddedBroadcast($embeddedBroadcast);
         $mm->setPublicDate(new \DateTime("now"));
         $mm->setRecordDate($mm->getPublicDate());
         $mm->setCopyright($this->defaultCopyright);        
