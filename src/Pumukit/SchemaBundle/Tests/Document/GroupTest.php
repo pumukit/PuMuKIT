@@ -22,4 +22,21 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($name, $group->getName());
         $this->assertEquals($updatedAt, $group->getUpdatedAt());
     }
+
+    public function testGroupInterface()
+    {
+        $group = new Group();
+
+        $key = 'GROUPA';
+        $name = "Group A";
+
+        $group->setKey($key);
+        $group->setName($name);
+
+        $this->assertEquals($group, $group->addRole('role_test'));
+        $this->assertFalse($group->hasRole('role_test'));
+        $this->assertEquals(array(), $group->getRoles());
+        $this->assertEquals($group, $group->removeRole('role_test'));
+        $this->assertEquals($group, $group->setRoles(array()));
+    }
 }

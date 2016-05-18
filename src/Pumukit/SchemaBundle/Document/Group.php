@@ -4,13 +4,14 @@ namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
+use FOS\UserBundle\Model\GroupInterface;
 
 /**
  * Pumukit\SchemaBundle\Document\Group
  *
  * @MongoDB\Document
  */
-class Group
+class Group implements GroupInterface
 {
     const ORIGIN_LOCAL = 'local';
 
@@ -173,5 +174,63 @@ class Group
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Defined to implement GroupInterface
+     *
+     * @param string $role
+     *
+     * @return self
+     */
+    public function addRole($role)
+    {
+        return $this;
+    }
+
+    /**
+     * Defined to implement GroupInterface
+     *
+     * @param string $role
+     *
+     * @return boolean
+     */
+    public function hasRole($role)
+    {
+        return false;
+    }
+
+    /**
+     * Defined to implement GroupInterface
+     *
+     * @return array
+     */
+    public function getRoles()
+    {
+        return array();
+    }
+
+    /**
+     * Defined to implement GroupInterface
+     *
+     * @param string $role
+     *
+     * @return self
+     */
+    public function removeRole($role)
+    {
+        return $this;
+    }
+
+    /**
+     * Defined to implement GroupInterface
+     *
+     * @param array $roles
+     *
+     * @return self
+     */
+    public function setRoles(array $roles)
+    {
+        return $this;
     }
 }
