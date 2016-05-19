@@ -52,9 +52,9 @@ class EmbeddedBroadcastService
             $embeddedBroadcast->setType(EmbeddedBroadcast::TYPE_PASSWORD);
             $embeddedBroadcast->setName(EmbeddedBroadcast::NAME_PASSWORD);
             break;
-        case EmbeddedBroadcast::TYPE_LDAP:
-            $embeddedBroadcast->setType(EmbeddedBroadcast::TYPE_LDAP);
-            $embeddedBroadcast->setName(EmbeddedBroadcast::NAME_LDAP);
+        case EmbeddedBroadcast::TYPE_LOGIN:
+            $embeddedBroadcast->setType(EmbeddedBroadcast::TYPE_LOGIN);
+            $embeddedBroadcast->setName(EmbeddedBroadcast::NAME_LOGIN);
             break;
         case EmbeddedBroadcast::TYPE_GROUPS:
             $embeddedBroadcast->setType(EmbeddedBroadcast::TYPE_GROUPS);
@@ -112,7 +112,7 @@ class EmbeddedBroadcastService
         return array(
                      EmbeddedBroadcast::TYPE_PUBLIC => EmbeddedBroadcast::NAME_PUBLIC,
                      EmbeddedBroadcast::TYPE_PASSWORD => EmbeddedBroadcast::NAME_PASSWORD,
-                     EmbeddedBroadcast::TYPE_LDAP => EmbeddedBroadcast::NAME_LDAP,
+                     EmbeddedBroadcast::TYPE_LOGIN => EmbeddedBroadcast::NAME_LOGIN,
                      EmbeddedBroadcast::TYPE_GROUPS => EmbeddedBroadcast::NAME_GROUPS
                      );
     }

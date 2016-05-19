@@ -2643,7 +2643,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(1, count($this->repo->findByEmbeddedBroadcast($mm2->getEmbeddedBroadcast())));
         $this->assertEquals(1, count($this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_PASSWORD)));
         $this->assertEquals(1, count($this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_PUBLIC)));
-        $this->assertEquals(0, count($this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_LDAP)));
+        $this->assertEquals(0, count($this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_LOGIN)));
         $this->assertEquals(0, count($this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_GROUPS)));
     }
 

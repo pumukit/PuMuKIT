@@ -16,12 +16,12 @@ class EmbeddedBroadcast
 {
     const TYPE_PUBLIC = 'public';
     const TYPE_PASSWORD = 'password';
-    const TYPE_LDAP = 'ldap';
+    const TYPE_LOGIN = 'login';
     const TYPE_GROUPS = 'groups';
 
     const NAME_PUBLIC = 'Public';
     const NAME_PASSWORD = 'Protected with Password';
-    const NAME_LDAP = 'Protected with LDAP';
+    const NAME_LOGIN = 'Protected with Login';
     const NAME_GROUPS = 'Protected with Groups';
 
     /**
