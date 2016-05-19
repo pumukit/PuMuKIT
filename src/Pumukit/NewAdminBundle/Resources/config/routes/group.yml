@@ -45,3 +45,9 @@ pumukitnewadmin_group_list:
         _controller: pumukitnewadmin.controller.group:listAction
         _sylius:
             filterable: true
+
+pumukitnewadmin_group_info:
+    pattern: /{id}/info
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:infoAction

@@ -5,6 +5,7 @@ namespace Pumukit\SchemaBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use FOS\UserBundle\Document\User as BaseUser;
 use Doctrine\Common\Collections\ArrayCollection;
+use FOS\UserBundle\Model\GroupInterface;
 
 /**
  * Pumukit\SchemaBundle\Document\User
@@ -47,26 +48,18 @@ class User extends BaseUser
     protected $origin = self::ORIGIN_LOCAL;
 
     /**
-     * @var ArrayCollection $adminGroups
+     * @var ArrayCollection $groups
      *
      * @MongoDB\ReferenceMany(targetDocument="Group", simple=true)
      */
-    private $adminGroups;
-
-    /**
-     * @var ArrayCollection $memberGroups
-     *
-     * @MongoDB\ReferenceMany(targetDocument="Group", simple=true)
-     */
-    private $memberGroups;
+    protected $groups;
 
     /**
      * Constructor
      */
     public function __construct($genUserSalt = false)
     {
-        $this->adminGroups = new ArrayCollection();
-        $this->memberGroups = new ArrayCollection();
+        $this->groups = new ArrayCollection();
         parent::__construct();
         if(false == $genUserSalt){
             $this->salt = '';
@@ -154,109 +147,56 @@ class User extends BaseUser
     }
 
     /**
-     * Contains adminGroup
+     * Contains Group
      *
-     * @param Group $adminGroup
-     *
-     * @return boolean
-     */
-    public function containsAdminGroup(Group $adminGroup)
-    {
-        return $this->adminGroups->contains($adminGroup);
-    }
-
-    /**
-     * Add admin group
-     *
-     * @param Group $adminGroup
-     */
-    public function addAdminGroup(Group $adminGroup)
-    {
-        return $this->adminGroups->add($adminGroup);
-    }
-
-    /**
-     * Remove admin group
-     *
-     * @param Group $adminGroup
-     */
-    public function removeAdminGroup(Group $adminGroup)
-    {
-        $this->adminGroups->removeElement($adminGroup);
-    }
-
-    /**
-     * Get adminGroups
-     *
-     * @return ArrayCollection
-     */
-    public function getAdminGroups()
-    {
-        return $this->adminGroups;
-    }
-
-    /**
-     * Contains memberGroup
-     *
-     * @param Group $memberGroup
+     * @param GroupInterface $group
      *
      * @return boolean
      */
-    public function containsMemberGroup(Group $memberGroup)
+    public function containsGroup(GroupInterface $group)
     {
-        return $this->memberGroups->contains($memberGroup);
+        return $this->groups->contains($group);
     }
 
     /**
-     * Add member group
+     * Add  group
      *
-     * @param Group $memberGroup
+     * @param GroupInterface $group
      */
-    public function addMemberGroup(Group $memberGroup)
+    public function addGroup(GroupInterface $group)
     {
-        return $this->memberGroups->add($memberGroup);
+        return $this->groups->add($group);
     }
 
     /**
-     * Remove member group
+     * Remove  group
      *
-     * @param Group $memberGroup
+     * @param GroupInterface $group
      */
-    public function removeMemberGroup(Group $memberGroup)
+    public function removeGroup(GroupInterface $group)
     {
-        $this->memberGroups->removeElement($memberGroup);
+        $this->groups->removeElement($group);
     }
 
     /**
-     * Get memberGroups
+     * Get Groups
      *
      * @return ArrayCollection
      */
-    public function getMemberGroups()
+    public function getGroups()
     {
-        return $this->memberGroups;
+        return $this->groups;
     }
 
     /**
      * Get groups ids
      *
-     * @param boolean $admin if TRUE, return admin groups, if FALSE member groups
      * @return array
      */
-    public function getGroupsIds($admin=false)
+    public function getGroupsIds()
     {
         $groupsIds = array();
-        if ($admin) {
-            $groups = $this->getAdminGroups();
-        } else {
-            $groups = $this->getMemberGroups();
-        }
-        if ($groups) {
-            $userGroups = $groups->toArray();
-        } else {
-            $userGroups = array();
-        }
-        foreach ($userGroups as $group) {
+        foreach ($this->getGroups() as $group) {
             $groupsIds[] = new \MongoId($group->getId());
         }
         return $groupsIds;

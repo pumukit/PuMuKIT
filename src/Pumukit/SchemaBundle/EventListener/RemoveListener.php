@@ -71,11 +71,16 @@ class RemoveListener
 
         if ($document instanceof Group) {
             $dm = $this->container->get("doctrine_mongodb.odm.document_manager");
-            $mmobjRepo = $dm->getRepository("PumukitSchemaBundle:MultimediaObject");
             $mmsService = $this->container->get("pumukitschema.multimedia_object");
+            $mmobjRepo = $dm->getRepository("PumukitSchemaBundle:MultimediaObject");
             $multimediaObjects = $mmobjRepo->findWithGroup($document);
             foreach ($multimediaObjects as $multimediaObject) {
                 $mmsService->deleteGroup($document, $multimediaObject, false);
+            }
+            $userService = $this->container->get("pumukitschema.user");
+            $users = $userService->findWithGroup($document);
+            foreach ($users as $user) {
+                $userService->deleteGroup($document, $user, false);
             }
             $dm->flush();
         }

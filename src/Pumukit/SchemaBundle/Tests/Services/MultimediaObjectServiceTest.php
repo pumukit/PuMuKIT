@@ -43,6 +43,7 @@ class MultimediaObjectServiceTest extends WebTestCase
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:Group')->remove(array());
         $this->dm->flush();
     }
 

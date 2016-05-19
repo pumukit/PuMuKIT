@@ -449,36 +449,19 @@ class UserService
     }
 
     /**
-     * Add Group to user
-     *
-     * @param Group $group
-     * @param User $user
-     * @param boolean $asAdmin
-     * @param boolean $executeFlush
-     */
-    public function addGroup(Group $group, User $user, $asAdmin = false, $executeFlush = true)
-    {
-        if ($asAdmin) {
-            $this->addAdminGroup($group, $user, $executeFlush);
-        } else {
-            $this->addMemberGroup($group, $user, $executeFlush);
-        }
-    }
-
-    /**
-     * Add admin group to user
+     * Add group to user
      *
      * @param Group $group
      * @param User $user
      * @param boolean $executeFlush
      */
-    public function addAdminGroup(Group $group, User $user, $executeFlush = true)
+    public function addGroup(Group $group, User $user, $executeFlush = true)
     {
-        if (!$user->containsAdminGroup($group)) {
+        if (!$user->containsGroup($group)) {
             if (!$this->isAllowedToModifyUserGroup($user, $group)) {
-                throw new \Exception('Not allowed to add admin group "'.$group->getKey().'" to user "'.$user->getUsername().'".');
+                throw new \Exception('Not allowed to add group "'.$group->getKey().'" to user "'.$user->getUsername().'".');
             }
-            $user->addAdminGroup($group);
+            $user->addGroup($group);
             $this->dm->persist($user);
             if ($executeFlush) {
                 $this->dm->flush();
@@ -488,80 +471,19 @@ class UserService
     }
 
     /**
-     * Add member group to user
+     * Delete group from user
      *
      * @param Group $group
      * @param User $user
      * @param boolean $executeFlush
      */
-    public function addMemberGroup(Group $group, User $user, $executeFlush = true)
+    public function deleteGroup(Group $group, User $user, $executeFlush = true)
     {
-        if (!$user->containsMemberGroup($group)) {
+        if ($user->containsGroup($group)) {
             if (!$this->isAllowedToModifyUserGroup($user, $group)) {
-                throw new \Exception('Not allowed to add member group "'.$group->getKey().'" to user "'.$user->getUsername().'".');
+                throw new \Exception('Not allowed to delete group "'.$group->getKey().'" from user "'.$user->getUsername().'".');
             }
-            $user->addMemberGroup($group);
-            $this->dm->persist($user);
-            if ($executeFlush) {
-                $this->dm->flush();
-            }
-            $this->dispatcher->dispatchUpdate($user);
-        }
-    }
-
-    /**
-     * Delete Group to user
-     *
-     * @param Group $group
-     * @param User $user
-     * @param boolean $asAdmin
-     * @param boolean $executeFlush
-     */
-    public function deleteGroup(Group $group, User $user, $asAdmin = false, $executeFlush = true)
-    {
-        if ($asAdmin) {
-            $this->deleteAdminGroup($group, $user, $executeFlush);
-        } else {
-            $this->deleteMemberGroup($group, $user, $executeFlush);
-        }
-    }
-
-    /**
-     * Delete admin group to user
-     *
-     * @param Group $group
-     * @param User $user
-     * @param boolean $executeFlush
-     */
-    public function deleteAdminGroup(Group $group, User $user, $executeFlush = true)
-    {
-        if ($user->containsAdminGroup($group)) {
-            if (!$this->isAllowedToModifyUserGroup($user, $group)) {
-                throw new \Exception('Not allowed to delete admin group "'.$group->getKey().'" from user "'.$user->getUsername().'".');
-            }
-            $user->removeAdminGroup($group);
-            $this->dm->persist($user);
-            if ($executeFlush) {
-                $this->dm->flush();
-            }
-            $this->dispatcher->dispatchUpdate($user);
-        }
-    }
-
-    /**
-     * Delete member group to user
-     *
-     * @param Group $group
-     * @param User $user
-     * @param boolean $executeFlush
-     */
-    public function deleteMemberGroup(Group $group, User $user, $executeFlush = true)
-    {
-        if ($user->containsMemberGroup($group)) {
-            if (!$this->isAllowedToModifyUserGroup($user, $group)) {
-                throw new \Exception('Not allowed to delete member group "'.$group->getKey().'" from user "'.$user->getUsername().'".');
-            }
-            $user->removeMemberGroup($group);
+            $user->removeGroup($group);
             $this->dm->persist($user);
             if ($executeFlush) {
                 $this->dm->flush();
@@ -584,5 +506,19 @@ class UserService
         }
 
         return false;
+    }
+
+    /**
+     * Find with group
+     *
+     * @param Group
+     * @return Cursor
+     */
+    public function findWithGroup(Group $group)
+    {
+        return $this->repo->createQueryBuilder()
+            ->field('groups')->in(array(new \MongoId($group->getId())))
+            ->getQuery()
+            ->execute();
     }
 }

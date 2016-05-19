@@ -74,7 +74,7 @@ class FilterListener
                     if (null != $groups = $this->getGroupsMongoQuery($loggedInUser)) {
                         $filter->setParameter("groups", $groups);
                     }
-                    $filter->setParameter("admin_groups", $loggedInUser->getGroupsIds(true));
+                    $filter->setParameter("series_groups", $loggedInUser->getGroupsIds());
                 }
             }
         }
@@ -132,7 +132,7 @@ class FilterListener
     private function getGroupsMongoQuery(User $user)
     {
         $groups = array();
-        $groups['$in'] = $user->getGroupsIds(true);
+        $groups['$in'] = $user->getGroupsIds();
 
         return $groups;
     }

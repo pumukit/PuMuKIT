@@ -2,14 +2,17 @@
   <tbody>
     <input type="hidden" id="mm_id" value="{{ mm.id }}"/>
     <div class="panel panel-default">
-      <div class="panel-heading">{% trans %}ADMIN GROUPS: Groups that can admin this multimedia object{% endtrans %}</div>
+      <div class="panel-heading">
+        {% trans %}ADMIN GROUPS{% endtrans %}&nbsp;
+        <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Groups that can admin this multimedia object{% endtrans %}"></i>
+      </div>
       <div class="panel-body" id="group_mm{{ template }}">
         <div class="row" style="margin-right: 0px; margin-left: 0px;">
           <div style="width:430px; float: left;">
             {% trans %}Available Groups{% endtrans %}:
           </div>
           <div style="width:390px; float: left;">
-            {% trans %}Multimedia Object current Groups{% endtrans %}:
+            <strong>{% trans %}Selected Admin Groups{% endtrans %}:</strong>
           </div>
         </div>
         <div style="overflow:hidden;height: 240px">
@@ -27,7 +30,7 @@
               <a href="#" class="list-group-item add-mm{{ template }}-group-item"
                  id="add_mm{{ template }}_group_{{ mm_group.id }}"
                  onclick="javascript:return select_group(this);"
-                 ondblclick="javascript:delete_group('{{ mm_group.id }}', '{{ mm.id }}', '{{ template }}', '{{ mm_group.key }}', '{{ mm_group.name }}', '{{ mm_group.origin }}', 'mm{{ template }}');">
+                 ondblclick="javascript:delete_group('{{ mm_group.id }}', '{{ mm.id }}', '{{ mm_group.key }}', '{{ mm_group.name }}', '{{ mm_group.origin }}', 'mm{{ template }}');">
                 <i class="mdi-social-group"></i>
                 {{ mm_group.key }} - {{ mm_group.name }} - ({{ mm_group.origin }})
               </a>

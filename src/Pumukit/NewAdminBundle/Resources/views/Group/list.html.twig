@@ -10,7 +10,7 @@
             </label>
           </div>
         </th>
-        <th colspan="2" width="5%"></th>
+        <th colspan="3" width="5%"></th>
         {% include 'PumukitNewAdminBundle:Group:listth.html.twig' %}
       </tr>
     </thead>
@@ -18,7 +18,7 @@
     <tbody>
       {% if groups|length == 0 %}
       <tr>
-        <td colspan="9">
+        <td colspan="10">
           {% trans %}There are no groups with those values.{% endtrans %}
         </td>
       </tr>
@@ -43,13 +43,14 @@
           {% endif %}
         </td>
         <td>
-          {% if countUsersInGroup[group.id] != 0 %}
-          <i data-toggle="tooltip" data-placement="right" title="{% trans %}Impossible to delete: group not empty.{% endtrans %} '{{ countUsersInGroup[group.id] }}' {% trans %}user(s) belong(s) to this group{% endtrans %}." class="mdi-content-block" style="color:#009587"></i>
-          {% else %}
           <a href="#" title="Delete Group '{{ group.name }}'" onclick="window.submit_delete_group('{{ group.id }}', '{{ countUsersInGroup[group.id] }}', '{% autoescape 'js' %}{{ group.getName() }}{% endautoescape %}'); return false;">
             <i class="mdi-content-clear"></i>
           </a>
-          {% endif %}
+        </td>
+        <td>
+          <a title="{% trans %}Group Info{% endtrans %}" href="{{ path('pumukitnewadmin_group_info', {'id': group.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+            <i class="mdi-action-info"></i>
+          </a>
         </td>
         <td>
           {{ group.getKey() }}
