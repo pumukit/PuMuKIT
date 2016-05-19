@@ -2,7 +2,10 @@
   <tbody>
     <input type="hidden" id="mm_id" value="{{ mm.id }}"/>
     <div class="panel panel-default">
-      <div class="panel-heading">{% trans %}ADMIN GROUPS: Groups that can admin this multimedia object{% endtrans %}</div>
+      <div class="panel-heading">
+        {% trans %}ADMIN GROUPS{% endtrans %}&nbsp;
+        <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Groups that can admin this multimedia object{% endtrans %}"></i>
+      </div>
       <div class="panel-body" id="group_mm{{ template }}">
         <div class="row" style="margin-right: 0px; margin-left: 0px;">
           <div style="width:430px; float: left;">
