@@ -17,7 +17,7 @@
             </label>
           </div>
             {% if broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PASSWORD') %}
-            {% include 'PumukitNewAdminBundle:MultimediaObject:broadcastpassword.html.twig' with {'embeddedbroadcast': mm.getEmbeddedBroadcast()} %}
+            {% include 'PumukitNewAdminBundle:MultimediaObject:broadcastpassword.html.twig' with {'embeddedBroadcast': mm.getEmbeddedBroadcast()} %}
             {% elseif broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_GROUPS') %}
             {% include 'PumukitNewAdminBundle:MultimediaObject:broadcastgroups.html.twig' with {'embeddedBroadcast': mm.getEmbeddedBroadcast(), 'groups': groups} %}
             {% endif %}

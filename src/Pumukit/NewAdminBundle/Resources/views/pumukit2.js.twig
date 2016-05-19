@@ -1596,11 +1596,83 @@ $(document).ready(function(){
             }
         });
 
+        $('#broadcast_password_1').on('click', function() {
+            $('#broadcast_password_1').attr('type', 'password');
+            check_pass($('#broadcast_password_1').val(), $('#broadcast_password_2').val());
+        });
+
+        $('#broadcast_password_2').on('click', function() {
+            $('#broadcast_password_2').attr('type', 'password');
+            check_pass($('#broadcast_password_1').val(), $('#broadcast_password_2').val());
+        });
+
+        $('#broadcast_password_1').on('change', function() {
+            $('#broadcast_password_1').attr('type', 'password');
+            check_pass($('#broadcast_password_1').val(), $('#broadcast_password_2').val());
+        });
+
+        $('#broadcast_password_2').on('change', function() {
+            $('#broadcast_password_2').attr('type', 'password');
+            check_pass($('#broadcast_password_1').val(), $('#broadcast_password_2').val());
+        });
+
+        $('#broadcast_password_show_hide').on('click', function() {
+            var type1 = $('#broadcast_password_1').attr('type');
+            var type2 = $('#broadcast_password_2').attr('type');
+            if (type1 == 'text') {
+                $('#broadcast_password_1').attr('type', 'password');
+            } else {
+                $('#broadcast_password_1').attr('type', 'text');
+            }
+            if (type2 == 'text') {
+                $('#broadcast_password_2').attr('type', 'password');
+            } else {
+                $('#broadcast_password_2').attr('type', 'text');
+            }
+        });
+
+        $('#broadcast_password_generate').on('click', function() {
+            generate_random_password('broadcast_password_1', 'broadcast_password_2');
+        });
     })
     .on('show.bs.modal', function() {
         $('.modal-content').html('');
     });
 });
+
+function check_pass(pass1, pass2) {
+    if ((pass1 == pass2) && (pass1 != '')) {
+        $('#broadcast_password_check_fail').hide();
+        return true;
+    }  else {
+        $('#broadcast_password_check_fail').show();
+        return false;
+    }
+}
+
+function generate_random_password(pass1_id, pass2_id) {
+    var password = '';
+    var randomchar = '';
+    var numberofdigits = Math.floor((Math.random() * 7) + 6 );
+    $('#broadcast_password_check_fail').hide();
+    for (var count=1; count<=numberofdigits; count++) {
+        var chargroup = Math.floor((Math.random() * 3) + 1 );
+        if ( chargroup == 1 ) {
+            randomchar = Math.floor((Math.random() * 26) + 65);
+        }
+        if ( chargroup == 2 ) {
+            randomchar = Math.floor((Math.random() * 26) + 65);
+        }
+        if ( chargroup == 3 ) {
+            randomchar = Math.floor((Math.random() * 26) + 65);
+        }
+        password+=String.fromCharCode(randomchar);
+    }
+    $('#'+pass1_id).attr('type', 'password');
+    $('#'+pass2_id).attr('type', 'password');
+    $('#'+pass1_id).val(password);
+    $('#'+pass2_id).val(password);
+}
 
 $(document).on('submit', '#pumukitnewadmin_event_create_form', function() {
     $(this).find(':submit').prop('disabled', true);
