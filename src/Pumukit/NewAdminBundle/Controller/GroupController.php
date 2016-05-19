@@ -253,4 +253,22 @@ class GroupController extends AdminController implements NewAdminController
 
         return array($key => $value);
     }
+
+    /**
+     * Info Action
+     * @Template()
+     * @param Request $request
+     *
+     * @return RedirectResponse|Response
+     */
+    public function infoAction(Request $request)
+    {
+        $group = $this->findOr404($request);
+        $users = $this->get('pumukitschema.group')->findUsersInGroup($group);
+
+        return array(
+                     'group' => $group,
+                     'users' => $users
+                     );
+    }
 }

@@ -1,0 +1,24 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <h4 class="modal-title" id="myModalLabel">{% trans %}group info{% endtrans %}</h4>
+  <h2 class="modal-title">&laquo;{{ group.getName() }}&raquo;</h2>
+</div>
+<div class="modal-body">
+  <div id="group_users" class="panel panel-default">
+    <div class="panel-heading" style="text-align:center;">{% trans %}USERS{% endtrans %}</div>
+    <div class="panel-body" id="group_list_users">
+      <div class="row" style="margin-right: 0px; margin-left: 0px;">
+	    <div style="width:390px; height:220px; border: 1px solid #bbb; float: left; overflow-x: hidden; overflow-y: scroll" class="tag" id="list_of_users">
+	      <div class="tag_tree list-group" id="added_users" >
+	        {% for user in users %}
+            {{ user.username }}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}OK{% endtrans %}</button>
+  </div>
+</div>
