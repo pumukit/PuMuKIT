@@ -29,8 +29,6 @@
              paella.events.trigger(paella.events.showEditor);
              var intervalId = setInterval(function(){
                  intervalCount++;
-                 console.log(intervalCount);
-                 console.log(paella.editor.pluginManager.trackPlugins.length);
                  //#10767: 3 for trimming, breaks and chapter marks.
                  if(6 == intervalCount || 3 == paella.editor.pluginManager.trackPlugins.length) {
                      clearInterval(intervalId);
