@@ -84,6 +84,63 @@ class GroupServiceTest extends WebTestCase
         $this->assertEquals(0, $this->groupService->countUsersInGroup($group2));
     }
 
+    public function testFindUsersInGroup()
+    {
+        $group1 = new Group();
+        $group1->setKey('key1');
+        $group1->setName('name1');
+
+        $group2 = new Group();
+        $group2->setKey('key2');
+        $group2->setName('name2');
+
+        $user1 = new User();
+        $user1->setUsername('test1');
+        $user1->setPassword('pass1');
+        $user1->setEmail('test1@mail.com');
+
+        $user2 = new User();
+        $user2->setUsername('test2');
+        $user2->setPassword('pass2');
+        $user2->setEmail('test2@mail.com');
+
+        $user3 = new User();
+        $user3->setUsername('test3');
+        $user3->setPassword('pass3');
+        $user3->setEmail('test3@mail.com');
+
+        $this->dm->persist($group1);
+        $this->dm->persist($group2);
+        $this->dm->persist($user1);
+        $this->dm->persist($user2);
+        $this->dm->persist($user3);
+        $this->dm->flush();
+
+        $usersGroup1 = $this->groupService->findUsersInGroup($group1)->toArray();
+        $usersGroup2 = $this->groupService->findUsersInGroup($group2)->toArray();
+
+        $this->assertFalse(in_array($user1, $usersGroup1));
+        $this->assertFalse(in_array($user2, $usersGroup1));
+        $this->assertFalse(in_array($user3, $usersGroup1));
+        $this->assertFalse(in_array($user1, $usersGroup2));
+        $this->assertFalse(in_array($user2, $usersGroup2));
+        $this->assertFalse(in_array($user3, $usersGroup2));
+
+        $user1->addGroup($group1);
+        $this->dm->persist($user1);
+        $this->dm->flush();
+
+        $usersGroup1 = $this->groupService->findUsersInGroup($group1)->toArray();
+        $usersGroup2 = $this->groupService->findUsersInGroup($group2)->toArray();
+
+        $this->assertTrue(in_array($user1, $usersGroup1));
+        $this->assertFalse(in_array($user2, $usersGroup1));
+        $this->assertFalse(in_array($user3, $usersGroup1));
+        $this->assertFalse(in_array($user1, $usersGroup2));
+        $this->assertFalse(in_array($user2, $usersGroup2));
+        $this->assertFalse(in_array($user3, $usersGroup2));
+    }
+
     public function testCreate()
     {
         $this->assertEquals(0, count($this->repo->findAll()));

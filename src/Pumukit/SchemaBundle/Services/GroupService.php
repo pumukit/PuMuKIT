@@ -112,6 +112,20 @@ class GroupService
     }
 
     /**
+     * Find users in group
+     *
+     * @param Group $group
+     * @return Cursor
+     */
+    public function findUsersInGroup(Group $group)
+    {
+        return $this->userRepo->createQueryBuilder()
+            ->field('groups')->equals($group->getId())
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
      * Find group by id
      *
      * @param string $id
