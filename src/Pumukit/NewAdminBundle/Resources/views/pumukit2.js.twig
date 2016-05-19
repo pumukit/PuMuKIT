@@ -1581,6 +1581,21 @@ $(document).ready(function(){
                 no_success('NGINX ERROR: '+message);
             }
         });
+
+        $('input[type=radio][name=pumukitnewadmin_mms_broadcast]').on('change', function() {
+            var value = $(this).val();
+            if (value == '{{ constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PASSWORD') }}') { 
+                $('#broadcast_groups').addClass('pumukitnewadmin-broadcast-hidden');
+                $('#broadcast_password').removeClass('pumukitnewadmin-broadcast-hidden');
+            } else if (value == '{{ constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_GROUPS') }}') {
+                $('#broadcast_password').addClass('pumukitnewadmin-broadcast-hidden');
+                $('#broadcast_groups').removeClass('pumukitnewadmin-broadcast-hidden');
+            } else {
+                $('#broadcast_password').addClass('pumukitnewadmin-broadcast-hidden');
+                $('#broadcast_groups').addClass('pumukitnewadmin-broadcast-hidden');
+            }
+        });
+
     })
     .on('show.bs.modal', function() {
         $('.modal-content').html('');
