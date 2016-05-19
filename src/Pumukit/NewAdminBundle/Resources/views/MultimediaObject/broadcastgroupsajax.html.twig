@@ -3,8 +3,8 @@
 <a href="#" 
    id="delete_broadcast_group_{{ group.id }}"
    onclick="javascript:return select_group(this);" 
-   ondblclick="javascript:add_group('{{ group.id }}', '{{ embeddedBroadcast.id }}', '{{ group.key }}', '{{ group.name }}', '{{ group.origin }}');"
-   class="list-group-item notload delete-broadcast{{ template }}-group-item">
+   ondblclick="javascript:add_group('{{ group.id }}', '{{ embeddedBroadcast.id }}', '{{ group.key }}', '{{ group.name }}', '{{ group.origin }}', 'mm');"
+   class="list-group-item notload delete-broadcast-group-item">
   <i class="mdi-social-group"></i>
   {{ group.key }} - {{ group.name }} - ({{ group.origin }})
 </a>
