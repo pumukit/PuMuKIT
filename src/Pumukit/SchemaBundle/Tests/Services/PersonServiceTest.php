@@ -719,10 +719,12 @@ class PersonServiceTest extends WebTestCase
     {
         $this->assertEquals(0, count($this->repo->findAll()));
 
+        $username = 'user1';
         $fullname = 'User fullname';
         $email = 'user@mail.com';
 
         $user = new User();
+        $user->setUsername($username);
         $user->setFullname($fullname);
         $user->setEmail($email);
 
@@ -749,10 +751,14 @@ class PersonServiceTest extends WebTestCase
         $people = $this->repo->findAll();
         $this->assertEquals(1, count($people));
 
+        $username2 = 'user2';
+        $fullname2 = 'User fullname 2';
+        $email2 = 'user2@mail.com';
 
         $user2 = new User();
-        $user2->setFullname($fullname);
-        $user2->setEmail($email);
+        $user2->setUsername($username2);
+        $user2->setFullname($fullname2);
+        $user2->setEmail($email2);
 
         $this->dm->persist($user2);
         $this->dm->flush();

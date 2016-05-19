@@ -163,10 +163,6 @@ class GroupController extends AdminController implements NewAdminController
         $groupService = $this->get('pumukitschema.group');
         $group = $groupService->findById($request->get('id'));
         try {
-            $response = $this->groupCanBeDeleted($group);
-            if ($response instanceof Response){
-                return $response;
-            }
             $groupService->delete($group);
         } catch (\Exception $e) {
             return new Response("Can not delete Group '".$group->getName()."'. ".$e->getMessage(), Response::HTTP_BAD_REQUEST);
@@ -191,10 +187,6 @@ class GroupController extends AdminController implements NewAdminController
         foreach ($ids as $id) {
             $group = $groupService->findById($id);
             try {
-                $response = $this->groupCanBeDeleted($group);
-                if ($response instanceof Response){
-                    return $response;
-                }
                 $groupService->delete($group);
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
@@ -263,24 +255,20 @@ class GroupController extends AdminController implements NewAdminController
     }
 
     /**
-     * Group can be deleted
+     * Info Action
+     * @Template()
+     * @param Request $request
      *
-     * @param Group $group
-     * @return boolean|Response
+     * @return RedirectResponse|Response
      */
-    private function groupCanBeDeleted(Group $group)
+    public function infoAction(Request $request)
     {
-        $groupService = $this->get('pumukitschema.group');
-        if (0 !== ($usersInGroup = $groupService->countUsersInGroup($group))){
-            $message = "Can not delete Group '".$group->getName()."'. ";
-            if (1 === $usersInGroup) {
-                $message .= "There is 1 user belonging to this Group.";
-            } else {
-                $message .= "There  are ".$usersInGroup." belonging to this Group.";
-            }
-            return new Response($message, Response::HTTP_BAD_REQUEST);
-        }
+        $group = $this->findOr404($request);
+        $users = $this->get('pumukitschema.group')->findUsersInGroup($group);
 
-        return true;
+        return array(
+                     'group' => $group,
+                     'users' => $users
+                     );
     }
 }

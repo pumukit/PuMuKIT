@@ -90,9 +90,6 @@ class GroupService
      */
     public function delete(Group $group, $executeFlush = true)
     {
-        if (($count = $this->countUsersInGroup($group)) > 0) {
-            throw new \Exception('Not allowed to delete Group "'.$group->getKey().'". '.$count.' users belong(s) to this group.');
-        }
         $this->dm->remove($group);
         if ($executeFlush) $this->dm->flush();
 
@@ -107,10 +104,23 @@ class GroupService
      */
     public function countUsersInGroup(Group $group)
     {
-        $qb = $this->userRepo->createQueryBuilder();
-        $qb->addOr($qb->expr()->field('adminGroups')->equals($group->getId()));
-        $qb->addOr($qb->expr()->field('memberGroups')->equals($group->getId()));
-        return $qb->count()
+        return $this->userRepo->createQueryBuilder()
+            ->field('groups')->equals($group->getId())
+            ->count()
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * Find users in group
+     *
+     * @param Group $group
+     * @return Cursor
+     */
+    public function findUsersInGroup(Group $group)
+    {
+        return $this->userRepo->createQueryBuilder()
+            ->field('groups')->equals($group->getId())
             ->getQuery()
             ->execute();
     }

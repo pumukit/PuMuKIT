@@ -115,69 +115,32 @@ class UserRepositoryTest extends WebTestCase
         $user = new User();
         $user->setEmail('testgroup@mail.com');
         $user->setUsername('testgroup');
-        $user->addAdminGroup($group1);
+        $user->addGroup($group1);
 
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertTrue($user->containsAdminGroup($group1));
-        $this->assertFalse($user->containsAdminGroup($group2));
-        $this->assertFalse($user->containsMemberGroup($group1));
-        $this->assertFalse($user->containsMemberGroup($group2));
-        $this->assertEquals(1, $user->getAdminGroups()->count());
-        $this->assertEquals(0, $user->getMemberGroups()->count());
+        $this->assertTrue($user->containsGroup($group1));
+        $this->assertFalse($user->containsGroup($group2));
+        $this->assertEquals(1, $user->getGroups()->count());
 
-        $user->addAdminGroup($group2);
+        $user->addGroup($group2);
 
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertTrue($user->containsAdminGroup($group1));
-        $this->assertTrue($user->containsAdminGroup($group2));
-        $this->assertFalse($user->containsMemberGroup($group1));
-        $this->assertFalse($user->containsMemberGroup($group2));
-        $this->assertEquals(2, $user->getAdminGroups()->count());
-        $this->assertEquals(0, $user->getMemberGroups()->count());
+        $this->assertTrue($user->containsGroup($group1));
+        $this->assertTrue($user->containsGroup($group2));
+        $this->assertEquals(2, $user->getGroups()->count());
 
-        $user->removeAdminGroup($group1);
+        $user->removeGroup($group1);
 
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertFalse($user->containsAdminGroup($group1));
-        $this->assertTrue($user->containsAdminGroup($group2));
-        $this->assertFalse($user->containsMemberGroup($group1));
-        $this->assertFalse($user->containsMemberGroup($group2));
-        $this->assertEquals(1, $user->getAdminGroups()->count());
-        $this->assertEquals(0, $user->getMemberGroups()->count());
-
-        $this->assertEquals(2, count($this->groupRepo->findAll()));
-
-        $user->addMemberGroup($group1);
-
-        $this->dm->persist($user);
-        $this->dm->flush();
-
-        $this->assertFalse($user->containsAdminGroup($group1));
-        $this->assertTrue($user->containsAdminGroup($group2));
-        $this->assertTrue($user->containsMemberGroup($group1));
-        $this->assertFalse($user->containsMemberGroup($group2));
-        $this->assertEquals(1, $user->getAdminGroups()->count());
-        $this->assertEquals(1, $user->getMemberGroups()->count());
-
-        $this->assertEquals(2, count($this->groupRepo->findAll()));
-
-        $user->removeMemberGroup($group1);
-
-        $this->dm->persist($user);
-        $this->dm->flush();
-
-        $this->assertFalse($user->containsAdminGroup($group1));
-        $this->assertTrue($user->containsAdminGroup($group2));
-        $this->assertFalse($user->containsMemberGroup($group1));
-        $this->assertFalse($user->containsMemberGroup($group2));
-        $this->assertEquals(1, $user->getAdminGroups()->count());
-        $this->assertEquals(0, $user->getMemberGroups()->count());
+        $this->assertFalse($user->containsGroup($group1));
+        $this->assertTrue($user->containsGroup($group2));
+        $this->assertEquals(1, $user->getGroups()->count());
 
         $this->assertEquals(2, count($this->groupRepo->findAll()));
     }
@@ -195,29 +158,25 @@ class UserRepositoryTest extends WebTestCase
         $user = new User();
         $user->setEmail('testgroup@mail.com');
         $user->setUsername('testgroup');
-        $user->addAdminGroup($group1);
 
         $this->dm->persist($user);
         $this->dm->flush();
 
         $this->assertEquals(0, count($user->getGroupsIds()));
-        $this->assertEquals(1, count($user->getGroupsIds(true)));
 
-        $user->addAdminGroup($group2);
-
-        $this->dm->persist($user);
-        $this->dm->flush();
-
-        $this->assertEquals(0, count($user->getGroupsIds()));
-        $this->assertEquals(2, count($user->getGroupsIds(true)));
-
-        $user->addMemberGroup($group2);
+        $user->addGroup($group1);
 
         $this->dm->persist($user);
         $this->dm->flush();
 
         $this->assertEquals(1, count($user->getGroupsIds()));
-        $this->assertEquals(2, count($user->getGroupsIds(true)));
+
+        $user->addGroup($group2);
+
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $this->assertEquals(2, count($user->getGroupsIds()));
     }
 
     private function createGroup($key='Group1', $name='Group 1')

@@ -457,102 +457,36 @@ class UserServiceTest extends WebTestCase
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertEquals(0, count($user->getAdminGroups()));
-        $this->assertEquals(0, count($user->getMemberGroups()));
-        $this->assertFalse($user->containsAdminGroup($group1));
-        $this->assertFalse($user->containsAdminGroup($group2));
-        $this->assertFalse($user->containsMemberGroup($group1));
-        $this->assertFalse($user->containsMemberGroup($group2));
+        $this->assertEquals(0, count($user->getGroups()));
+        $this->assertFalse($user->containsGroup($group1));
+        $this->assertFalse($user->containsGroup($group2));
 
-        $this->userService->addAdminGroup($group1, $user);
+        $this->userService->addGroup($group1, $user);
 
-        $this->assertEquals(1, count($user->getAdminGroups()));
-        $this->assertEquals(0, count($user->getMemberGroups()));
-        $this->assertTrue($user->containsAdminGroup($group1));
-        $this->assertFalse($user->containsAdminGroup($group2));
-        $this->assertFalse($user->containsMemberGroup($group1));
-        $this->assertFalse($user->containsMemberGroup($group2));
+        $this->assertEquals(1, count($user->getGroups()));
+        $this->assertTrue($user->containsGroup($group1));
+        $this->assertFalse($user->containsGroup($group2));
 
-        $this->userService->addAdminGroup($group1, $user);
+        $this->userService->addGroup($group1, $user);
 
-        $this->assertEquals(1, count($user->getAdminGroups()));
-        $this->assertEquals(0, count($user->getMemberGroups()));
-        $this->assertTrue($user->containsAdminGroup($group1));
-        $this->assertFalse($user->containsAdminGroup($group2));
-        $this->assertFalse($user->containsAdminGroup($group3));
-        $this->assertFalse($user->containsMemberGroup($group1));
-        $this->assertFalse($user->containsMemberGroup($group2));
-        $this->assertFalse($user->containsMemberGroup($group3));
+        $this->assertEquals(1, count($user->getGroups()));
+        $this->assertTrue($user->containsGroup($group1));
+        $this->assertFalse($user->containsGroup($group2));
+        $this->assertFalse($user->containsGroup($group3));
 
-        $this->userService->addAdminGroup($group2, $user);
+        $this->userService->addGroup($group2, $user);
 
-        $this->assertEquals(2, count($user->getAdminGroups()));
-        $this->assertEquals(0, count($user->getMemberGroups()));
-        $this->assertTrue($user->containsAdminGroup($group1));
-        $this->assertTrue($user->containsAdminGroup($group2));
-        $this->assertFalse($user->containsAdminGroup($group3));
-        $this->assertFalse($user->containsMemberGroup($group1));
-        $this->assertFalse($user->containsMemberGroup($group2));
-        $this->assertFalse($user->containsMemberGroup($group3));
+        $this->assertEquals(2, count($user->getGroups()));
+        $this->assertTrue($user->containsGroup($group1));
+        $this->assertTrue($user->containsGroup($group2));
+        $this->assertFalse($user->containsGroup($group3));
 
-        $this->userService->addMemberGroup($group1, $user);
+        $this->userService->addGroup($group3, $user);
 
-        $this->assertEquals(2, count($user->getAdminGroups()));
-        $this->assertEquals(1, count($user->getMemberGroups()));
-        $this->assertTrue($user->containsAdminGroup($group1));
-        $this->assertTrue($user->containsAdminGroup($group2));
-        $this->assertFalse($user->containsAdminGroup($group3));
-        $this->assertTrue($user->containsMemberGroup($group1));
-        $this->assertFalse($user->containsMemberGroup($group2));
-        $this->assertFalse($user->containsMemberGroup($group3));
-
-        $this->userService->addMemberGroup($group1, $user);
-
-        $this->assertEquals(2, count($user->getAdminGroups()));
-        $this->assertEquals(1, count($user->getMemberGroups()));
-        $this->assertTrue($user->containsAdminGroup($group1));
-        $this->assertTrue($user->containsAdminGroup($group2));
-        $this->assertFalse($user->containsAdminGroup($group3));
-        $this->assertTrue($user->containsMemberGroup($group1));
-        $this->assertFalse($user->containsMemberGroup($group2));
-        $this->assertFalse($user->containsMemberGroup($group3));
-
-        $this->userService->addMemberGroup($group2, $user);
-
-        $this->assertEquals(2, count($user->getAdminGroups()));
-        $this->assertEquals(2, count($user->getMemberGroups()));
-        $this->assertTrue($user->containsAdminGroup($group1));
-        $this->assertTrue($user->containsAdminGroup($group2));
-        $this->assertFalse($user->containsAdminGroup($group3));
-        $this->assertTrue($user->containsMemberGroup($group1));
-        $this->assertTrue($user->containsMemberGroup($group2));
-        $this->assertFalse($user->containsMemberGroup($group3));
-
-        $asAdmin = false;
-
-        $this->userService->addGroup($group3, $user, $asAdmin);
-
-        $this->assertEquals(2, count($user->getAdminGroups()));
-        $this->assertEquals(3, count($user->getMemberGroups()));
-        $this->assertTrue($user->containsAdminGroup($group1));
-        $this->assertTrue($user->containsAdminGroup($group2));
-        $this->assertFalse($user->containsAdminGroup($group3));
-        $this->assertTrue($user->containsMemberGroup($group1));
-        $this->assertTrue($user->containsMemberGroup($group2));
-        $this->assertTrue($user->containsMemberGroup($group3));
-
-        $asAdmin = true;
-
-        $this->userService->addGroup($group3, $user, $asAdmin);
-
-        $this->assertEquals(3, count($user->getAdminGroups()));
-        $this->assertEquals(3, count($user->getMemberGroups()));
-        $this->assertTrue($user->containsAdminGroup($group1));
-        $this->assertTrue($user->containsAdminGroup($group2));
-        $this->assertTrue($user->containsAdminGroup($group3));
-        $this->assertTrue($user->containsMemberGroup($group1));
-        $this->assertTrue($user->containsMemberGroup($group2));
-        $this->assertTrue($user->containsMemberGroup($group3));
+        $this->assertEquals(3, count($user->getGroups()));
+        $this->assertTrue($user->containsGroup($group1));
+        $this->assertTrue($user->containsGroup($group2));
+        $this->assertTrue($user->containsGroup($group3));
     }
 
     public function testDeleteGroup()
@@ -579,144 +513,53 @@ class UserServiceTest extends WebTestCase
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertEquals(0, count($user->getAdminGroups()));
-        $this->assertEquals(0, count($user->getMemberGroups()));
-        $this->assertFalse($user->containsAdminGroup($group1));
-        $this->assertFalse($user->containsAdminGroup($group2));
-        $this->assertFalse($user->containsMemberGroup($group1));
-        $this->assertFalse($user->containsMemberGroup($group2));
+        $this->assertEquals(0, count($user->getGroups()));
+        $this->assertFalse($user->containsGroup($group1));
+        $this->assertFalse($user->containsGroup($group2));
 
-        $this->userService->addAdminGroup($group1, $user);
+        $this->userService->addGroup($group1, $user);
 
         $user = $this->repo->find($user->getId());
 
-        $this->assertEquals(1, count($user->getAdminGroups()));
-        $this->assertEquals(0, count($user->getMemberGroups()));
-        $this->assertTrue($user->containsAdminGroup($group1));
-        $this->assertFalse($user->containsAdminGroup($group2));
-        $this->assertFalse($user->containsMemberGroup($group1));
-        $this->assertFalse($user->containsMemberGroup($group2));
+        $this->assertEquals(1, count($user->getGroups()));
+        $this->assertTrue($user->containsGroup($group1));
+        $this->assertFalse($user->containsGroup($group2));
 
-        $this->userService->deleteAdminGroup($group1, $user);
+        $this->userService->deleteGroup($group1, $user);
 
         $user = $this->repo->find($user->getId());
 
-        $this->assertEquals(0, count($user->getAdminGroups()));
-        $this->assertEquals(0, count($user->getMemberGroups()));
-        $this->assertFalse($user->containsAdminGroup($group1));
-        $this->assertFalse($user->containsAdminGroup($group2));
-        $this->assertFalse($user->containsAdminGroup($group3));
-        $this->assertFalse($user->containsMemberGroup($group1));
-        $this->assertFalse($user->containsMemberGroup($group2));
-        $this->assertFalse($user->containsMemberGroup($group3));
+        $this->assertEquals(0, count($user->getGroups()));
+        $this->assertFalse($user->containsGroup($group1));
+        $this->assertFalse($user->containsGroup($group2));
+        $this->assertFalse($user->containsGroup($group3));
 
-        $this->userService->deleteAdminGroup($group2, $user);
+        $this->userService->deleteGroup($group2, $user);
 
         $user = $this->repo->find($user->getId());
 
-        $this->assertEquals(0, count($user->getAdminGroups()));
-        $this->assertEquals(0, count($user->getMemberGroups()));
-        $this->assertFalse($user->containsAdminGroup($group1));
-        $this->assertFalse($user->containsAdminGroup($group2));
-        $this->assertFalse($user->containsAdminGroup($group3));
-        $this->assertFalse($user->containsMemberGroup($group1));
-        $this->assertFalse($user->containsMemberGroup($group2));
-        $this->assertFalse($user->containsMemberGroup($group3));
+        $this->assertEquals(0, count($user->getGroups()));
+        $this->assertFalse($user->containsGroup($group1));
+        $this->assertFalse($user->containsGroup($group2));
+        $this->assertFalse($user->containsGroup($group3));
 
-        $this->userService->addMemberGroup($group1, $user);
+        $this->userService->addGroup($group3, $user);
 
         $user = $this->repo->find($user->getId());
 
-        $this->assertEquals(0, count($user->getAdminGroups()));
-        $this->assertEquals(1, count($user->getMemberGroups()));
-        $this->assertFalse($user->containsAdminGroup($group1));
-        $this->assertFalse($user->containsAdminGroup($group2));
-        $this->assertFalse($user->containsAdminGroup($group3));
-        $this->assertTrue($user->containsMemberGroup($group1));
-        $this->assertFalse($user->containsMemberGroup($group2));
-        $this->assertFalse($user->containsMemberGroup($group3));
+        $this->assertEquals(1, count($user->getGroups()));
+        $this->assertFalse($user->containsGroup($group1));
+        $this->assertFalse($user->containsGroup($group2));
+        $this->assertTrue($user->containsGroup($group3));
 
-        $this->userService->addMemberGroup($group1, $user);
+        $this->userService->deleteGroup($group3, $user);
 
         $user = $this->repo->find($user->getId());
 
-        $this->assertEquals(0, count($user->getAdminGroups()));
-        $this->assertEquals(1, count($user->getMemberGroups()));
-        $this->assertFalse($user->containsAdminGroup($group1));
-        $this->assertFalse($user->containsAdminGroup($group2));
-        $this->assertFalse($user->containsAdminGroup($group3));
-        $this->assertTrue($user->containsMemberGroup($group1));
-        $this->assertFalse($user->containsMemberGroup($group2));
-        $this->assertFalse($user->containsMemberGroup($group3));
-
-        $this->userService->addMemberGroup($group2, $user);
-
-        $user = $this->repo->find($user->getId());
-
-        $this->assertEquals(0, count($user->getAdminGroups()));
-        $this->assertEquals(2, count($user->getMemberGroups()));
-        $this->assertFalse($user->containsAdminGroup($group1));
-        $this->assertFalse($user->containsAdminGroup($group2));
-        $this->assertFalse($user->containsAdminGroup($group3));
-        $this->assertTrue($user->containsMemberGroup($group1));
-        $this->assertTrue($user->containsMemberGroup($group2));
-        $this->assertFalse($user->containsMemberGroup($group3));
-
-        $this->userService->addAdminGroup($group3, $user);
-
-        $user = $this->repo->find($user->getId());
-
-        $this->assertEquals(1, count($user->getAdminGroups()));
-        $this->assertEquals(2, count($user->getMemberGroups()));
-        $this->assertFalse($user->containsAdminGroup($group1));
-        $this->assertFalse($user->containsAdminGroup($group2));
-        $this->assertTrue($user->containsAdminGroup($group3));
-        $this->assertTrue($user->containsMemberGroup($group1));
-        $this->assertTrue($user->containsMemberGroup($group2));
-        $this->assertFalse($user->containsMemberGroup($group3));
-
-        $this->userService->deleteMemberGroup($group2, $user);
-
-        $user = $this->repo->find($user->getId());
-
-        $this->assertEquals(1, count($user->getAdminGroups()));
-        $this->assertEquals(1, count($user->getMemberGroups()));
-        $this->assertFalse($user->containsAdminGroup($group1));
-        $this->assertFalse($user->containsAdminGroup($group2));
-        $this->assertTrue($user->containsAdminGroup($group3));
-        $this->assertTrue($user->containsMemberGroup($group1));
-        $this->assertFalse($user->containsMemberGroup($group2));
-        $this->assertFalse($user->containsMemberGroup($group3));
-
-        $asAdmin = false;
-
-        $this->userService->deleteGroup($group1, $user, $asAdmin);
-
-        $user = $this->repo->find($user->getId());
-
-        $this->assertEquals(1, count($user->getAdminGroups()));
-        $this->assertEquals(0, count($user->getMemberGroups()));
-        $this->assertFalse($user->containsAdminGroup($group1));
-        $this->assertFalse($user->containsAdminGroup($group2));
-        $this->assertTrue($user->containsAdminGroup($group3));
-        $this->assertFalse($user->containsMemberGroup($group1));
-        $this->assertFalse($user->containsMemberGroup($group2));
-        $this->assertFalse($user->containsMemberGroup($group3));
-
-        $asAdmin = true;
-
-        $this->userService->deleteGroup($group3, $user, $asAdmin);
-
-        $user = $this->repo->find($user->getId());
-
-        $this->assertEquals(0, count($user->getAdminGroups()));
-        $this->assertEquals(0, count($user->getMemberGroups()));
-        $this->assertFalse($user->containsAdminGroup($group1));
-        $this->assertFalse($user->containsAdminGroup($group2));
-        $this->assertFalse($user->containsAdminGroup($group3));
-        $this->assertFalse($user->containsMemberGroup($group1));
-        $this->assertFalse($user->containsMemberGroup($group2));
-        $this->assertFalse($user->containsMemberGroup($group3));
+        $this->assertEquals(0, count($user->getGroups()));
+        $this->assertFalse($user->containsGroup($group1));
+        $this->assertFalse($user->containsGroup($group2));
+        $this->assertFalse($user->containsGroup($group3));
     }
 
     public function testIsAllowedToModifyUserGroup()
@@ -782,9 +625,9 @@ class UserServiceTest extends WebTestCase
 
     /**
      * @expectedException         Exception
-     * @expectedExceptionMessage  Not allowed to add admin group
+     * @expectedExceptionMessage  Not allowed to add group
      */
-    public function testExceptionAddAdminGroupLocalCas()
+    public function testExceptionAddGroupLocalCas()
     {
         $localGroup = new Group();
         $localGroup->setKey('local_key');
@@ -800,14 +643,14 @@ class UserServiceTest extends WebTestCase
         $this->dm->persist($casUser);
         $this->dm->flush();
 
-        $this->userService->addAdminGroup($localGroup, $casUser);
+        $this->userService->addGroup($localGroup, $casUser);
     }
 
     /**
      * @expectedException         Exception
-     * @expectedExceptionMessage  Not allowed to add admin group
+     * @expectedExceptionMessage  Not allowed to add group
      */
-    public function testExceptionAddAdminGroupCasLocal()
+    public function testExceptionAddGroupCasLocal()
     {
         $casGroup = new Group();
         $casGroup->setKey('cas_key');
@@ -823,14 +666,14 @@ class UserServiceTest extends WebTestCase
         $this->dm->persist($localUser);
         $this->dm->flush();
 
-        $this->userService->addAdminGroup($casGroup, $localUser);
+        $this->userService->addGroup($casGroup, $localUser);
     }
 
     /**
      * @expectedException         Exception
-     * @expectedExceptionMessage  Not allowed to add admin group
+     * @expectedExceptionMessage  Not allowed to add group
      */
-    public function testExceptionAddAdminGroupCasCas()
+    public function testExceptionAddGroupCasCas()
     {
         $casGroup = new Group();
         $casGroup->setKey('cas_key');
@@ -846,14 +689,14 @@ class UserServiceTest extends WebTestCase
         $this->dm->persist($casUser);
         $this->dm->flush();
 
-        $this->userService->addAdminGroup($casGroup, $casUser);
+        $this->userService->addGroup($casGroup, $casUser);
     }
 
     /**
      * @expectedException         Exception
-     * @expectedExceptionMessage  Not allowed to add member group
+     * @expectedExceptionMessage  Not allowed to delete group
      */
-    public function testExceptionAddMemberGroupLocalCas()
+    public function testExceptionDeleteGroupLocalCas()
     {
         $localGroup = new Group();
         $localGroup->setKey('local_key');
@@ -869,14 +712,18 @@ class UserServiceTest extends WebTestCase
         $this->dm->persist($casUser);
         $this->dm->flush();
 
-        $this->userService->addMemberGroup($localGroup, $casUser);
+        $casUser->addGroup($localGroup);
+        $this->dm->persist($casUser);
+        $this->dm->flush();
+
+        $this->userService->deleteGroup($localGroup, $casUser);
     }
 
     /**
      * @expectedException         Exception
-     * @expectedExceptionMessage  Not allowed to add member group
+     * @expectedExceptionMessage  Not allowed to delete group
      */
-    public function testExceptionAddMemberGroupCasLocal()
+    public function testExceptionDeleteGroupCasLocal()
     {
         $casGroup = new Group();
         $casGroup->setKey('cas_key');
@@ -892,14 +739,18 @@ class UserServiceTest extends WebTestCase
         $this->dm->persist($localUser);
         $this->dm->flush();
 
-        $this->userService->addMemberGroup($casGroup, $localUser);
+        $localUser->addGroup($casGroup);
+        $this->dm->persist($localUser);
+        $this->dm->flush();
+
+        $this->userService->deleteGroup($casGroup, $localUser);
     }
 
     /**
      * @expectedException         Exception
-     * @expectedExceptionMessage  Not allowed to add member group
+     * @expectedExceptionMessage  Not allowed to delete group
      */
-    public function testExceptionAddMemberGroupCasCas()
+    public function testExceptionDeleteGroupCasCas()
     {
         $casGroup = new Group();
         $casGroup->setKey('cas_key');
@@ -915,42 +766,20 @@ class UserServiceTest extends WebTestCase
         $this->dm->persist($casUser);
         $this->dm->flush();
 
-        $this->userService->addMemberGroup($casGroup, $casUser);
+        $casUser->addGroup($casGroup);
+        $this->dm->persist($casUser);
+        $this->dm->flush();
+
+        $this->userService->deleteGroup($casGroup, $casUser);
     }
 
-    /**
-     * @expectedException         Exception
-     * @expectedExceptionMessage  Not allowed to delete admin group
-     */
-    public function testExceptionDeleteAdminGroupLocalCas()
+    public function testFindWithGroup()
     {
         $localGroup = new Group();
         $localGroup->setKey('local_key');
         $localGroup->setName('Local Group');
         $localGroup->setOrigin(Group::ORIGIN_LOCAL);
 
-        $casUser = new User();
-        $casUser->setUsername('cas_user');
-        $casUser->setEmail('cas_user@mail.com');
-        $casUser->setOrigin('cas');
-
-        $this->dm->persist($localGroup);
-        $this->dm->persist($casUser);
-        $this->dm->flush();
-
-        $casUser->addAdminGroup($localGroup);
-        $this->dm->persist($casUser);
-        $this->dm->flush();
-
-        $this->userService->deleteAdminGroup($localGroup, $casUser);
-    }
-
-    /**
-     * @expectedException         Exception
-     * @expectedExceptionMessage  Not allowed to delete admin group
-     */
-    public function testExceptionDeleteAdminGroupCasLocal()
-    {
         $casGroup = new Group();
         $casGroup->setKey('cas_key');
         $casGroup->setName('CAS Group');
@@ -960,123 +789,25 @@ class UserServiceTest extends WebTestCase
         $localUser->setUsername('local_user');
         $localUser->setEmail('local_user@mail.com');
         $localUser->setOrigin(User::ORIGIN_LOCAL);
-
-        $this->dm->persist($casGroup);
-        $this->dm->persist($localUser);
-        $this->dm->flush();
-
-        $localUser->addAdminGroup($casGroup);
-        $this->dm->persist($localUser);
-        $this->dm->flush();
-
-        $this->userService->deleteAdminGroup($casGroup, $localUser);
-    }
-
-    /**
-     * @expectedException         Exception
-     * @expectedExceptionMessage  Not allowed to delete admin group
-     */
-    public function testExceptionDeleteAdminGroupCasCas()
-    {
-        $casGroup = new Group();
-        $casGroup->setKey('cas_key');
-        $casGroup->setName('CAS Group');
-        $casGroup->setOrigin('cas');
+        $localUser->addGroup($localGroup);
 
         $casUser = new User();
         $casUser->setUsername('cas_user');
         $casUser->setEmail('cas_user@mail.com');
         $casUser->setOrigin('cas');
-
-        $this->dm->persist($casGroup);
-        $this->dm->persist($casUser);
-        $this->dm->flush();
-
-        $casUser->addAdminGroup($casGroup);
-        $this->dm->persist($casUser);
-        $this->dm->flush();
-
-        $this->userService->deleteAdminGroup($casGroup, $casUser);
-    }
-
-    /**
-     * @expectedException         Exception
-     * @expectedExceptionMessage  Not allowed to delete member group
-     */
-    public function testExceptionDeleteMemberGroupLocalCas()
-    {
-        $localGroup = new Group();
-        $localGroup->setKey('local_key');
-        $localGroup->setName('Local Group');
-        $localGroup->setOrigin(Group::ORIGIN_LOCAL);
-
-        $casUser = new User();
-        $casUser->setUsername('cas_user');
-        $casUser->setEmail('cas_user@mail.com');
-        $casUser->setOrigin('cas');
+        $casUser->addGroup($casGroup);
 
         $this->dm->persist($localGroup);
-        $this->dm->persist($casUser);
-        $this->dm->flush();
-
-        $casUser->addMemberGroup($localGroup);
-        $this->dm->persist($casUser);
-        $this->dm->flush();
-
-        $this->userService->deleteMemberGroup($localGroup, $casUser);
-    }
-
-    /**
-     * @expectedException         Exception
-     * @expectedExceptionMessage  Not allowed to delete member group
-     */
-    public function testExceptionDeleteMemberGroupCasLocal()
-    {
-        $casGroup = new Group();
-        $casGroup->setKey('cas_key');
-        $casGroup->setName('CAS Group');
-        $casGroup->setOrigin('cas');
-
-        $localUser = new User();
-        $localUser->setUsername('local_user');
-        $localUser->setEmail('local_user@mail.com');
-        $localUser->setOrigin(User::ORIGIN_LOCAL);
-
         $this->dm->persist($casGroup);
         $this->dm->persist($localUser);
-        $this->dm->flush();
-
-        $localUser->addMemberGroup($casGroup);
-        $this->dm->persist($localUser);
-        $this->dm->flush();
-
-        $this->userService->deleteMemberGroup($casGroup, $localUser);
-    }
-
-    /**
-     * @expectedException         Exception
-     * @expectedExceptionMessage  Not allowed to delete member group
-     */
-    public function testExceptionDeleteMemberGroupCasCas()
-    {
-        $casGroup = new Group();
-        $casGroup->setKey('cas_key');
-        $casGroup->setName('CAS Group');
-        $casGroup->setOrigin('cas');
-
-        $casUser = new User();
-        $casUser->setUsername('cas_user');
-        $casUser->setEmail('cas_user@mail.com');
-        $casUser->setOrigin('cas');
-
-        $this->dm->persist($casGroup);
         $this->dm->persist($casUser);
         $this->dm->flush();
 
-        $casUser->addMemberGroup($casGroup);
-        $this->dm->persist($casUser);
-        $this->dm->flush();
-
-        $this->userService->deleteMemberGroup($casGroup, $casUser);
+        $usersLocalGroup = $this->userService->findWithGroup($localGroup)->toArray();
+        $usersCasGroup = $this->userService->findWithGroup($casGroup)->toArray();
+        $this->assertTrue(in_array($localUser, $usersLocalGroup));
+        $this->assertFalse(in_array($casUser, $usersLocalGroup));
+        $this->assertFalse(in_array($localUser, $usersCasGroup));
+        $this->assertTrue(in_array($casUser, $usersCasGroup));
     }
 }

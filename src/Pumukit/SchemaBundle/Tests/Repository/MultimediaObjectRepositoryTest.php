@@ -69,6 +69,8 @@ class MultimediaObjectRepositoryTest extends WebTestCase
             ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Group')
             ->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:User')
+            ->remove(array());
         $this->dm->flush();
     }
 
@@ -2133,40 +2135,41 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $group3 = $this->createGroup($key3, $name3);
 
         $user1 = new User();
+        $user1->setEmail('user1@mail.com');
         $user1->setUsername('user1');
         $user2 = new User();
+        $user2->setEmail('user2@mail.com');
         $user2->setUsername('user2');
-        $user2->addAdminGroup($group1);
-        $user2->addMemberGroup($group2);
+        $user2->addGroup($group1);
         $user3 = new User();
+        $user3->setEmail('user3@mail.com');
         $user3->setUsername('user3');
-        $user3->addAdminGroup($group2);
-        $user3->addMemberGroup($group2);
+        $user3->addGroup($group2);
         $user4 = new User();
+        $user4->setEmail('user4@mail.com');
         $user4->setUsername('user4');
-        $user4->addAdminGroup($group3);
-        $user4->addMemberGroup($group2);
+        $user4->addGroup($group3);
         $user5 = new User();
+        $user5->setEmail('user5@mail.com');
         $user5->setUsername('user5');
-        $user5->addAdminGroup($group1);
-        $user5->addAdminGroup($group2);
-        $user5->addMemberGroup($group2);
+        $user5->addGroup($group1);
+        $user5->addGroup($group2);
         $user6 = new User();
+        $user6->setEmail('user6@mail.com');
         $user6->setUsername('user6');
-        $user6->addAdminGroup($group1);
-        $user6->addAdminGroup($group3);
-        $user6->addMemberGroup($group2);
+        $user6->addGroup($group1);
+        $user6->addGroup($group3);
         $user7 = new User();
+        $user7->setEmail('user7@mail.com');
         $user7->setUsername('user7');
-        $user7->addAdminGroup($group2);
-        $user7->addAdminGroup($group3);
-        $user7->addMemberGroup($group2);
+        $user7->addGroup($group2);
+        $user7->addGroup($group3);
         $user8 = new User();
+        $user8->setEmail('user8@mail.com');
         $user8->setUsername('user8');
-        $user8->addAdminGroup($group1);
-        $user8->addAdminGroup($group2);
-        $user8->addAdminGroup($group3);
-        $user8->addMemberGroup($group2);
+        $user8->addGroup($group1);
+        $user8->addGroup($group2);
+        $user8->addGroup($group3);
         $this->dm->persist($user1);
         $this->dm->persist($user2);
         $this->dm->persist($user3);
@@ -2222,12 +2225,12 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->flush();
 
         // Test find by person and role or groups
-        $seriesPerson1Role1User1 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role1->getCod(), $user1->getAdminGroups());
-        $seriesPerson1Role2User1 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role2->getCod(), $user1->getAdminGroups());
-        $seriesPerson1Role3User1 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role3->getCod(), $user1->getAdminGroups());
-        $seriesPerson2Role1User1 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role1->getCod(), $user1->getAdminGroups());
-        $seriesPerson2Role2User1 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role2->getCod(), $user1->getAdminGroups());
-        $seriesPerson2Role3User1 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role3->getCod(), $user1->getAdminGroups());
+        $seriesPerson1Role1User1 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role1->getCod(), $user1->getGroups());
+        $seriesPerson1Role2User1 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role2->getCod(), $user1->getGroups());
+        $seriesPerson1Role3User1 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role3->getCod(), $user1->getGroups());
+        $seriesPerson2Role1User1 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role1->getCod(), $user1->getGroups());
+        $seriesPerson2Role2User1 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role2->getCod(), $user1->getGroups());
+        $seriesPerson2Role3User1 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role3->getCod(), $user1->getGroups());
 
         $this->assertEquals(1, count($seriesPerson1Role1User1));
         $this->assertEquals(0, count($seriesPerson1Role2User1));
@@ -2255,12 +2258,12 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertFalse(in_array($series2->getId(), $seriesPerson2Role3User1->toArray()));
         $this->assertFalse(in_array($series3->getId(), $seriesPerson2Role3User1->toArray()));
 
-        $seriesPerson1Role1User2 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role1->getCod(), $user2->getAdminGroups());
-        $seriesPerson1Role2User2 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role2->getCod(), $user2->getAdminGroups());
-        $seriesPerson1Role3User2 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role3->getCod(), $user2->getAdminGroups());
-        $seriesPerson2Role1User2 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role1->getCod(), $user2->getAdminGroups());
-        $seriesPerson2Role2User2 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role2->getCod(), $user2->getAdminGroups());
-        $seriesPerson2Role3User2 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role3->getCod(), $user2->getAdminGroups());
+        $seriesPerson1Role1User2 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role1->getCod(), $user2->getGroups());
+        $seriesPerson1Role2User2 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role2->getCod(), $user2->getGroups());
+        $seriesPerson1Role3User2 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role3->getCod(), $user2->getGroups());
+        $seriesPerson2Role1User2 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role1->getCod(), $user2->getGroups());
+        $seriesPerson2Role2User2 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role2->getCod(), $user2->getGroups());
+        $seriesPerson2Role3User2 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role3->getCod(), $user2->getGroups());
 
         $this->assertEquals(1, count($seriesPerson1Role1User2));
         $this->assertEquals(1, count($seriesPerson1Role2User2));
@@ -2288,12 +2291,12 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertFalse(in_array($series2->getId(), $seriesPerson2Role3User2->toArray()));
         $this->assertFalse(in_array($series3->getId(), $seriesPerson2Role3User2->toArray()));
 
-        $seriesPerson1Role1User3 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role1->getCod(), $user3->getAdminGroups());
-        $seriesPerson1Role2User3 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role2->getCod(), $user3->getAdminGroups());
-        $seriesPerson1Role3User3 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role3->getCod(), $user3->getAdminGroups());
-        $seriesPerson2Role1User3 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role1->getCod(), $user3->getAdminGroups());
-        $seriesPerson2Role2User3 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role2->getCod(), $user3->getAdminGroups());
-        $seriesPerson2Role3User3 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role3->getCod(), $user3->getAdminGroups());
+        $seriesPerson1Role1User3 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role1->getCod(), $user3->getGroups());
+        $seriesPerson1Role2User3 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role2->getCod(), $user3->getGroups());
+        $seriesPerson1Role3User3 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role3->getCod(), $user3->getGroups());
+        $seriesPerson2Role1User3 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role1->getCod(), $user3->getGroups());
+        $seriesPerson2Role2User3 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role2->getCod(), $user3->getGroups());
+        $seriesPerson2Role3User3 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role3->getCod(), $user3->getGroups());
 
         $this->assertEquals(2, count($seriesPerson1Role1User3));
         $this->assertEquals(2, count($seriesPerson1Role2User3));
@@ -2321,12 +2324,12 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertFalse(in_array($series2->getId(), $seriesPerson2Role3User3->toArray()));
         $this->assertTrue(in_array($series3->getId(), $seriesPerson2Role3User3->toArray()));
 
-        $seriesPerson1Role1User4 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role1->getCod(), $user4->getAdminGroups());
-        $seriesPerson1Role2User4 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role2->getCod(), $user4->getAdminGroups());
-        $seriesPerson1Role3User4 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role3->getCod(), $user4->getAdminGroups());
-        $seriesPerson2Role1User4 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role1->getCod(), $user4->getAdminGroups());
-        $seriesPerson2Role2User4 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role2->getCod(), $user4->getAdminGroups());
-        $seriesPerson2Role3User4 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role3->getCod(), $user4->getAdminGroups());
+        $seriesPerson1Role1User4 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role1->getCod(), $user4->getGroups());
+        $seriesPerson1Role2User4 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role2->getCod(), $user4->getGroups());
+        $seriesPerson1Role3User4 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role3->getCod(), $user4->getGroups());
+        $seriesPerson2Role1User4 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role1->getCod(), $user4->getGroups());
+        $seriesPerson2Role2User4 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role2->getCod(), $user4->getGroups());
+        $seriesPerson2Role3User4 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role3->getCod(), $user4->getGroups());
 
         $this->assertEquals(2, count($seriesPerson1Role1User4));
         $this->assertEquals(2, count($seriesPerson1Role2User4));
@@ -2354,12 +2357,12 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertTrue(in_array($series2->getId(), $seriesPerson2Role3User4->toArray()));
         $this->assertFalse(in_array($series3->getId(), $seriesPerson2Role3User4->toArray()));
 
-        $seriesPerson1Role1User5 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role1->getCod(), $user5->getAdminGroups());
-        $seriesPerson1Role2User5 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role2->getCod(), $user5->getAdminGroups());
-        $seriesPerson1Role3User5 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role3->getCod(), $user5->getAdminGroups());
-        $seriesPerson2Role1User5 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role1->getCod(), $user5->getAdminGroups());
-        $seriesPerson2Role2User5 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role2->getCod(), $user5->getAdminGroups());
-        $seriesPerson2Role3User5 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role3->getCod(), $user5->getAdminGroups());
+        $seriesPerson1Role1User5 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role1->getCod(), $user5->getGroups());
+        $seriesPerson1Role2User5 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role2->getCod(), $user5->getGroups());
+        $seriesPerson1Role3User5 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role3->getCod(), $user5->getGroups());
+        $seriesPerson2Role1User5 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role1->getCod(), $user5->getGroups());
+        $seriesPerson2Role2User5 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role2->getCod(), $user5->getGroups());
+        $seriesPerson2Role3User5 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role3->getCod(), $user5->getGroups());
 
         $this->assertEquals(2, count($seriesPerson1Role1User5));
         $this->assertEquals(2, count($seriesPerson1Role2User5));
@@ -2387,12 +2390,12 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertFalse(in_array($series2->getId(), $seriesPerson2Role3User5->toArray()));
         $this->assertTrue(in_array($series3->getId(), $seriesPerson2Role3User5->toArray()));
 
-        $seriesPerson1Role1User6 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role1->getCod(), $user6->getAdminGroups());
-        $seriesPerson1Role2User6 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role2->getCod(), $user6->getAdminGroups());
-        $seriesPerson1Role3User6 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role3->getCod(), $user6->getAdminGroups());
-        $seriesPerson2Role1User6 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role1->getCod(), $user6->getAdminGroups());
-        $seriesPerson2Role2User6 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role2->getCod(), $user6->getAdminGroups());
-        $seriesPerson2Role3User6 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role3->getCod(), $user6->getAdminGroups());
+        $seriesPerson1Role1User6 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role1->getCod(), $user6->getGroups());
+        $seriesPerson1Role2User6 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role2->getCod(), $user6->getGroups());
+        $seriesPerson1Role3User6 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role3->getCod(), $user6->getGroups());
+        $seriesPerson2Role1User6 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role1->getCod(), $user6->getGroups());
+        $seriesPerson2Role2User6 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role2->getCod(), $user6->getGroups());
+        $seriesPerson2Role3User6 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role3->getCod(), $user6->getGroups());
 
         $this->assertEquals(2, count($seriesPerson1Role1User6));
         $this->assertEquals(2, count($seriesPerson1Role2User6));
@@ -2420,12 +2423,12 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertTrue(in_array($series2->getId(), $seriesPerson2Role3User6->toArray()));
         $this->assertFalse(in_array($series3->getId(), $seriesPerson2Role3User6->toArray()));
 
-        $seriesPerson1Role1User7 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role1->getCod(), $user7->getAdminGroups());
-        $seriesPerson1Role2User7 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role2->getCod(), $user7->getAdminGroups());
-        $seriesPerson1Role3User7 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role3->getCod(), $user7->getAdminGroups());
-        $seriesPerson2Role1User7 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role1->getCod(), $user7->getAdminGroups());
-        $seriesPerson2Role2User7 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role2->getCod(), $user7->getAdminGroups());
-        $seriesPerson2Role3User7 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role3->getCod(), $user7->getAdminGroups());
+        $seriesPerson1Role1User7 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role1->getCod(), $user7->getGroups());
+        $seriesPerson1Role2User7 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role2->getCod(), $user7->getGroups());
+        $seriesPerson1Role3User7 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role3->getCod(), $user7->getGroups());
+        $seriesPerson2Role1User7 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role1->getCod(), $user7->getGroups());
+        $seriesPerson2Role2User7 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role2->getCod(), $user7->getGroups());
+        $seriesPerson2Role3User7 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role3->getCod(), $user7->getGroups());
 
         $this->assertEquals(3, count($seriesPerson1Role1User7));
         $this->assertEquals(3, count($seriesPerson1Role2User7));
@@ -2453,12 +2456,12 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertTrue(in_array($series2->getId(), $seriesPerson2Role3User7->toArray()));
         $this->assertTrue(in_array($series3->getId(), $seriesPerson2Role3User7->toArray()));
 
-        $seriesPerson1Role1User8 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role1->getCod(), $user8->getAdminGroups());
-        $seriesPerson1Role2User8 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role2->getCod(), $user8->getAdminGroups());
-        $seriesPerson1Role3User8 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role3->getCod(), $user8->getAdminGroups());
-        $seriesPerson2Role1User8 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role1->getCod(), $user8->getAdminGroups());
-        $seriesPerson2Role2User8 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role2->getCod(), $user8->getAdminGroups());
-        $seriesPerson2Role3User8 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role3->getCod(), $user8->getAdminGroups());
+        $seriesPerson1Role1User8 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role1->getCod(), $user8->getGroups());
+        $seriesPerson1Role2User8 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role2->getCod(), $user8->getGroups());
+        $seriesPerson1Role3User8 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person1->getId(), $role3->getCod(), $user8->getGroups());
+        $seriesPerson2Role1User8 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role1->getCod(), $user8->getGroups());
+        $seriesPerson2Role2User8 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role2->getCod(), $user8->getGroups());
+        $seriesPerson2Role3User8 = $this->repo->findSeriesFieldByPersonIdAndRoleCodOrGroups($person2->getId(), $role3->getCod(), $user8->getGroups());
 
         $this->assertEquals(3, count($seriesPerson1Role1User8));
         $this->assertEquals(3, count($seriesPerson1Role2User8));

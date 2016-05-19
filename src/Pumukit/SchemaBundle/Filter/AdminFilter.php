@@ -38,8 +38,8 @@ class AdminFilter extends BsonFilter
     {
         $criteria = array();
         if (null == $this->seriesIds) {
-            if (isset($this->parameters['person_id']) && isset($this->parameters['role_code']) && isset($this->parameters['admin_groups'])) {
-                $criteria["_id"] = $this->getSeriesMongoQuery($this->parameters['person_id'], $this->parameters['role_code'], $this->parameters['admin_groups']);
+            if (isset($this->parameters['person_id']) && isset($this->parameters['role_code']) && isset($this->parameters['series_groups'])) {
+                $criteria["_id"] = $this->getSeriesMongoQuery($this->parameters['person_id'], $this->parameters['role_code'], $this->parameters['series_groups']);
             }
         }
 
@@ -56,15 +56,15 @@ class AdminFilter extends BsonFilter
      *
      * @param MongoId $personId
      * @param string  $roleCode
-     * @param array   $adminGroups
+     * @param array   $groups
      * @return array
      */
-    private function getSeriesMongoQuery($personId, $roleCode, $adminGroups)
+    private function getSeriesMongoQuery($personId, $roleCode, $groups)
     {
         $seriesIds = array();
         if ((null != $personId) && (null != $roleCode)) {
             $repoMmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-            $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCodOrGroups($personId, $roleCode, $adminGroups);
+            $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCodOrGroups($personId, $roleCode, $groups);
             $seriesIds['$in'] = $referencedSeries->toArray();
         }
 

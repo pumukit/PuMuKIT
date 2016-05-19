@@ -193,24 +193,16 @@ class UserController extends AdminController implements NewAdminController
             return new Response("Not allowed to update this not local user '".$user->getUsername()."'", Response::HTTP_BAD_REQUEST);
         }
         if ('POST' === $request->getMethod()){
-            $addAdminGroups = $request->get('addAdminGroups', array());
-            if ('string' === gettype($addAdminGroups)){
-                $addAdminGroups = json_decode($addAdminGroups, true);
+            $addGroups = $request->get('addGroups', array());
+            if ('string' === gettype($addGroups)){
+                $addGroups = json_decode($addGroups, true);
             }
-            $addMemberGroups = $request->get('addMemberGroups', array());
-            if ('string' === gettype($addMemberGroups)){
-                $addMemberGroups = json_decode($addMemberGroups, true);
-            }
-            $deleteAdminGroups = $request->get('deleteAdminGroups', array());
-            if ('string' === gettype($deleteAdminGroups)){
-                $deleteAdminGroups = json_decode($deleteAdminGroups, true);
-            }
-            $deleteMemberGroups = $request->get('deleteMemberGroups', array());
-            if ('string' === gettype($deleteMemberGroups)){
-                $deleteMemberGroups = json_decode($deleteMemberGroups, true);
+            $deleteGroups = $request->get('deleteGroups', array());
+            if ('string' === gettype($deleteGroups)){
+                $deleteGroups = json_decode($deleteGroups, true);
             }
 
-            $this->modifyUserGroups($user, $addAdminGroups, $addMemberGroups, $deleteAdminGroups, $deleteMemberGroups);
+            $this->modifyUserGroups($user, $addGroups, $deleteGroups);
         }
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_user_list'));
@@ -223,90 +215,55 @@ class UserController extends AdminController implements NewAdminController
     {
         $user = $this->findOr404($request);
         $groupService = $this->get('pumukitschema.group');
-        $addAdminGroups = array();
-        $addMemberGroups = array();
-        $addAdminGroupsIds = array();
-        $addMemberGroupsIds = array();
-        $deleteAdminGroups = array();
-        $deleteMemberGroups = array();
+        $addGroups = array();
+        $addGroupsIds = array();
+        $deleteGroups = array();
         if ('GET' === $request->getMethod()){
-            foreach ($user->getAdminGroups() as $group) {
-                $addAdminGroups[$group->getId()] = array(
-                                                         'key' => $group->getKey(),
-                                                         'name' => $group->getName(),
-                                                         'origin' => $group->getOrigin()
-                                                         );
-                $addAdminGroupsIds[] = new \MongoId($group->getId());
+            foreach ($user->getGroups() as $group) {
+                $addGroups[$group->getId()] = array(
+                                                    'key' => $group->getKey(),
+                                                    'name' => $group->getName(),
+                                                    'origin' => $group->getOrigin()
+                                                    );
+                $addGroupsIds[] = new \MongoId($group->getId());
             }
-            foreach ($user->getMemberGroups() as $group) {
-                $addMemberGroups[$group->getId()] = array(
-                                                          'key' => $group->getKey(),
-                                                          'name' => $group->getName(),
-                                                          'origin' => $group->getOrigin()
-                                                          );
-                $addMemberGroupsIds[] = new \MongoId($group->getId());
-            }
-            $adminGroupsToDelete = $groupService->findByIdNotIn($addAdminGroupsIds);
-            $memberGroupsToDelete = $groupService->findByIdNotIn($addMemberGroupsIds);
-            foreach ($adminGroupsToDelete as $group) {
-                $deleteAdminGroups[$group->getId()] = array(
-                                                            'key' => $group->getKey(),
-                                                            'name' => $group->getName(),
-                                                            'origin' => $group->getOrigin()
-                                                            );
-            }
-            foreach ($memberGroupsToDelete as $group) {
-                $deleteMemberGroups[$group->getId()] = array(
-                                                             'key' => $group->getKey(),
-                                                             'name' => $group->getName(),
-                                                             'origin' => $group->getOrigin()
-                                                             );
+            $groupsToDelete = $groupService->findByIdNotIn($addGroupsIds);
+            foreach ($groupsToDelete as $group) {
+                $deleteGroups[$group->getId()] = array(
+                                                       'key' => $group->getKey(),
+                                                       'name' => $group->getName(),
+                                                       'origin' => $group->getOrigin()
+                                                       );
             }
         }
 
         return new JsonResponse(array(
-                                      'addAdmin' => $addAdminGroups,
-                                      'addMember' => $addMemberGroups,
-                                      'deleteAdmin' => $deleteAdminGroups,
-                                      'deleteMember' => $deleteMemberGroups
+                                      'add' => $addGroups,
+                                      'delete' => $deleteGroups
                                       ));
     }
 
     /**
      * Modify User Groups
      */
-    private function modifyUserGroups(User $user, $addAdminGroups = array(), $addMemberGroups = array(), $deleteAdminGroups = array(), $deleteMemberGroups = array())
+    private function modifyUserGroups(User $user, $addGroups = array(), $deleteGroups = array())
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $groupRepo = $dm->getRepository('PumukitSchemaBundle:Group');
         $userService = $this->get('pumukitschema.user');
 
-        foreach ($addAdminGroups as $addAdminGroup){
-            $groupId = explode('_', $addAdminGroup)[2];
+        foreach ($addGroups as $addGroup){
+            $groupId = explode('_', $addGroup)[2];
             $group = $groupRepo->find($groupId);
             if ($group) {
-                $userService->addAdminGroup($group, $user, false);
+                $userService->addGroup($group, $user, false);
             }
         }
-        foreach ($addMemberGroups as $addMemberGroup){
-            $groupId = explode('_', $addMemberGroup)[2];
+        foreach ($deleteGroups as $deleteGroup){
+            $groupId = explode('_', $deleteGroup)[2];
             $group = $groupRepo->find($groupId);
             if ($group) {
-                $userService->addMemberGroup($group, $user, false);
-            }
-        }
-        foreach ($deleteAdminGroups as $deleteAdminGroup){
-            $groupId = explode('_', $deleteAdminGroup)[2];
-            $group = $groupRepo->find($groupId);
-            if ($group) {
-                $userService->deleteAdminGroup($group, $user, false);
-            }
-        }
-        foreach ($deleteMemberGroups as $deleteMemberGroup){
-            $groupId = explode('_', $deleteMemberGroup)[2];
-            $group = $groupRepo->find($groupId);
-            if ($group) {
-                $userService->deleteMemberGroup($group, $user, false);
+                $userService->deleteGroup($group, $user, false);
             }
         }
 
