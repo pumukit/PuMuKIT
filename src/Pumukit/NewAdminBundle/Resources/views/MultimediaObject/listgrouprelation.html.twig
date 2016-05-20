@@ -17,7 +17,7 @@
         </div>
         <div style="overflow:hidden;height: 240px">
 	      <div style="width:390px; float: left; height: 220px; border: 1px solid #bbb; overflow-x: hidden; overflow-y: scroll" class="tag list-group pmk-tag-tree" id="delete_mm{{ template }}_groups">
-            {% include 'PumukitNewAdminBundle:MultimediaObject:listgroupsajax.html.twig' with {'mm': mm, 'groups': groups, 'template': template} %}
+            {% include 'PumukitNewAdminBundle:MultimediaObject:availablegroups.html.twig' with {'resource': mm, 'groups': groups, 'resource_name': 'mm'~template} %}
 	      </div>
 	      <div style="float: left; padding: 110px 5px 0px">
 	        <a href="#" onclick="$('#add_mm{{ template }}_groups > a.active').trigger('dblclick'); return false;">&#8592;</a>
@@ -26,15 +26,7 @@
           {# Groups added to the multimedia object #}
 	      <div style="width:390px; height:220px; border: 1px solid #bbb; float: left; overflow-x: hidden; overflow-y: scroll" class="tag" id="added_mm{{ template }}_groups">
 	        <div class="tag_tree list-group" id="add_mm{{ template }}_groups" >
-	          {% for mm_group in mm.getGroups() %}
-              <a href="#" class="list-group-item add-mm{{ template }}-group-item"
-                 id="add_mm{{ template }}_group_{{ mm_group.id }}"
-                 onclick="javascript:return select_group(this);"
-                 ondblclick="javascript:delete_group('{{ mm_group.id }}', '{{ mm.id }}', '{{ mm_group.key }}', '{{ mm_group.name }}', '{{ mm_group.origin }}', 'mm{{ template }}');">
-                <i class="mdi-social-group"></i>
-                {{ mm_group.key }} - {{ mm_group.name }} - ({{ mm_group.origin }})
-              </a>
-	          {% endfor %}
+              {% include 'PumukitNewAdminBundle:MultimediaObject:selectedgroups.html.twig' with {'resource': mm, 'groups': groups, 'resource_name': 'mm'~template} %}
 	        </div>
           </div>
 	    </div>

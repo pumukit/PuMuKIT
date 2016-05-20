@@ -9,30 +9,24 @@
             {% trans %}Available Groups{% endtrans %}:
           </div>
           <div style="width:390px; float: left;">
-            {% trans %}Broadcast current Groups{% endtrans %}:
+            <strong>{% trans %}Selected Groups{% endtrans %}:</strong>
           </div>
         </div>
         <div style="overflow:hidden;height: 240px">
-	      <div style="width:390px; float: left; height: 220px; border: 1px solid #bbb; overflow-x: hidden; overflow-y: scroll" class="tag list-group pmk-tag-tree" id="delete_mm_groups">
-            {% include 'PumukitNewAdminBundle:MultimediaObject:broadcastgroupsajax.html.twig' with {'mm': mm, 'groups': groups} %}
+	      <div style="width:390px; float: left; height: 220px; border: 1px solid #bbb; overflow-x: hidden; overflow-y: scroll" class="tag list-group pmk-tag-tree" id="delete_broadcast_groups">
+            {% if embeddedBroadcast %}
+            {% include 'PumukitNewAdminBundle:MultimediaObject:availablegroups.html.twig' with {'resource': embeddedBroadcast, 'groups': groups, 'resource_name': 'broadcast'} %}
+            {% endif %}
 	      </div>
 	      <div style="float: left; padding: 110px 5px 0px">
-	        <a href="#" onclick="$('#add_mm_groups > a.active').trigger('dblclick'); return false;">&#8592;</a>
-	        <a href="#" onclick="$('#delete_mm_groups > a.active').trigger('dblclick'); return false;">&#8594;</a>
+	        <a href="#" onclick="$('#add_broadcast_groups > a.active').trigger('dblclick'); return false;">&#8592;</a>
+	        <a href="#" onclick="$('#delete_broadcast_groups > a.active').trigger('dblclick'); return false;">&#8594;</a>
 	      </div>
           {# Groups added to the multimedia object #}
-	      <div style="width:390px; height:220px; border: 1px solid #bbb; float: left; overflow-x: hidden; overflow-y: scroll" class="tag" id="added_mm_groups">
-	        <div class="tag_tree list-group" id="add_mm_groups" >
+	      <div style="width:390px; height:220px; border: 1px solid #bbb; float: left; overflow-x: hidden; overflow-y: scroll" class="tag" id="added_broadcast_groups">
+	        <div class="tag_tree list-group" id="add_broadcast_groups" >
               {% if embeddedBroadcast %}
-	          {% for broadcast_group in embeddedBroadcast.getGroups() %}
-              <a href="#" class="list-group-item add-mm-group-item"
-                 id="add_mm_group_{{ broadcast_group.id }}"
-                 onclick="javascript:return select_group(this);"
-                 ondblclick="javascript:delete_group('{{ broadcast_group.id }}', '{{ mm.id }}', '{{ broadcast_group.key }}', '{{ broadcast_group.name }}', '{{ broadcast_group.origin }}');">
-                <i class="mdi-social-group"></i>
-                {{ broadcast_group.key }} - {{ broadcast_group.name }} - ({{ broadcast_group.origin }})
-              </a>
-	          {% endfor %}
+              {% include 'PumukitNewAdminBundle:MultimediaObject:selectedgroups.html.twig' with {'resource': embeddedBroadcast, 'groups': groups, 'resource_name': 'broadcast'} %}
               {% endif %}
 	        </div>
           </div>

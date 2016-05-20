@@ -1,0 +1,26 @@
+{% for user_group in user.getGroups() %}
+{% if (user_group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')) and (user.origin == constant('Pumukit\\SchemaBundle\\Document\\User::ORIGIN_LOCAL')) %}
+<a href="#" class="list-group-item"
+   id="add_group_{{ user_group.id }}"
+   onclick="javascript:return select_group(this);"
+   ondblclick="javascript:delete_group('{{ user_group.id }}', '{{ user_group.key }}', '{{ user_group.name }}', '{{ user_group.origin }}', 'user');">
+  <i class="mdi-social-group"></i>
+  {{ user_group.key }} - {{ user_group.name }} - ({{ user_group.origin }})
+</a>
+{% else %}
+{% if (user_group.origin != constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')) and (user.origin != constant('Pumukit\\SchemaBundle\\Document\\User::ORIGIN_LOCAL')) %}
+{% set message = 'External defined group and user. Contact your directory service administrator to change membership.' %}
+{% elseif (user_group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')) and (user.origin != constant('Pumukit\\SchemaBundle\\Document\\User::ORIGIN_LOCAL')) %}
+{% set message = 'External defined group. Contact your directory service administrator to change membership.' %}
+{% else %}
+{% set message = 'External defined user. Contact your directory service administrator to change membership.' %}
+{% endif %}
+<a href="#" class="list-group-item disabled-group-item"
+   id="add_group_{{ user_group.id }}"
+   onclick="return false;"
+   ondblclick="javascript:window.alert('{{ message }}');">
+  <i class="mdi-social-group"></i>
+  {{ user_group.key }} - {{ user_group.name }} - ({{ user_group.origin|upper }})
+</a>
+{% endif %}
+{% endfor %}

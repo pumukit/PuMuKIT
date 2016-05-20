@@ -3,7 +3,7 @@
 <a href="#" 
    id="delete_group_{{ group.id }}"
    onclick="javascript:return select_group(this);" 
-   ondblclick="javascript:add_group('{{ group.id }}', '{{ user.id }}', '{{ group.key }}', '{{ group.name }}', '{{ group.origin }}', 'user');"
+   ondblclick="javascript:add_group('{{ group.id }}', '{{ group.key }}', '{{ group.name }}', '{{ group.origin }}', 'user');"
    class="list-group-item notload delete-group-item">
   <i class="mdi-social-group"></i>
   {{ group.key }} - {{ group.name }} - ({{ group.origin }})
