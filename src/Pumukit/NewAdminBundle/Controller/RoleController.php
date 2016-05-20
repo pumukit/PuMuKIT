@@ -88,4 +88,56 @@ class RoleController extends SortableAdminController implements NewAdminControll
 
         return $resources;
     }
+
+    /**
+     * Delete action
+     */
+    public function deleteAction(Request $request)
+    {
+        $config = $this->getConfiguration();
+        $resource = $this->findOr404($request);
+        $resourceId = $resource->getId();
+        $resourceName = $config->getResourceName();
+
+        if (0 !== $resource->getNumberPeopleInMultimediaObject()) {
+            return new Response("Can not delete role '".$resource->getName()."', There are Multimedia objects with this role. ", 409);
+        }
+
+        $this->get('pumukitschema.factory')->deleteResource($resource);
+        if ($resourceId === $this->get('session')->get('admin/'.$resourceName.'/id')){
+            $this->get('session')->remove('admin/'.$resourceName.'/id');
+        }
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+    }
+
+
+    public function batchDeleteAction(Request $request)
+    {
+        $ids = $this->getRequest()->get('ids');
+
+        if ('string' === gettype($ids)){
+            $ids = json_decode($ids, true);
+        }
+
+        $config = $this->getConfiguration();
+        $resourceName = $config->getResourceName();
+
+        $factory = $this->get('pumukitschema.factory');
+        foreach ($ids as $id) {
+            $resource = $this->find($id);
+            if (0 !== $resource->getNumberPeopleInMultimediaObject()) continue;
+
+            try{
+                $factory->deleteResource($resource);
+            } catch (\Exception $e) {
+                return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
+            }
+            if ($id === $this->get('session')->get('admin/'.$resourceName.'/id')){
+                $this->get('session')->remove('admin/'.$resourceName.'/id');
+            }
+        }
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+    }
 }
