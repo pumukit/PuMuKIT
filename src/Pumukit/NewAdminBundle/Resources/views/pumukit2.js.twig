@@ -2159,19 +2159,19 @@ function select_group(element)
   return false;
 }
 
-function add_group(group_id, user_id, group_key, group_name, group_origin, resource)
+function add_group(group_id, group_key, group_name, group_origin, resource)
 {
-    create_element_group_in_add_groups(group_id, user_id, group_key, group_name, group_origin, resource);
+    create_element_group_in_add_groups(group_id, group_key, group_name, group_origin, resource);
     if (resource == "user") {
         element_to_delete = "#delete_group_" + group_id;
     } else {
         $('#remember_save_' + resource + '_group').show();
         element_to_delete = "#delete_" + resource + "_group_" + group_id;
     }
-    delete_element_group_from_select(element_to_delete, group_id, user_id, group_key, group_name, group_origin, resource);
+    delete_element_group_from_select(element_to_delete, group_id, group_key, group_name, group_origin, resource);
 }
 
-function delete_group(group_id, user_id, group_key, group_name, group_origin, resource)
+function delete_group(group_id, group_key, group_name, group_origin, resource)
 {
     if (resource == "user") {
         element_to_delete = "#add_group_" + group_id;
@@ -2180,10 +2180,10 @@ function delete_group(group_id, user_id, group_key, group_name, group_origin, re
         element_to_delete = "#add_" + resource + "_group_" + group_id;
     }
     delete_element_group_from_select(element_to_delete);
-    create_element_group_in_delete_groups(group_id, user_id, group_key, group_name, group_origin, resource);
+    create_element_group_in_delete_groups(group_id, group_key, group_name, group_origin, resource);
 }
 
-function create_element_group_in_add_groups(group_id, user_id, group_key, group_name, group_origin, resource) {
+function create_element_group_in_add_groups(group_id, group_key, group_name, group_origin, resource) {
     if (resource == "user") {
         var item_id = 'id="add_group_' + group_id;
         var $add_groups_list = $('#add_groups');
@@ -2199,7 +2199,7 @@ function create_element_group_in_add_groups(group_id, user_id, group_key, group_
             var item_class = 'class="list-group-item add-' + resource + '-group-item"';
         }
         var item_onclick = 'onclick="return select_group(this);"';
-        var item_ondblclick = 'ondblclick="javascript:delete_group(\'' + group_id + '\', \'' + user_id + '\', \'' + group_key + '\', \'' + group_name + '\', \'' + group_origin + '\', \'' + resource + '\');"';
+        var item_ondblclick = 'ondblclick="javascript:delete_group(\'' + group_id + '\', \'' + group_key + '\', \'' + group_name + '\', \'' + group_origin + '\', \'' + resource + '\');"';
     } else {
         var item_class = 'class="list-group-item disabled-group-item"';
         var item_onclick = 'onclick="return false;"';
@@ -2210,7 +2210,7 @@ function create_element_group_in_add_groups(group_id, user_id, group_key, group_
     $add_groups_list.append(item_text);
 }
 
-function create_element_group_in_delete_groups(group_id, user_id, group_key, group_name, group_origin, resource) {
+function create_element_group_in_delete_groups(group_id, group_key, group_name, group_origin, resource) {
     var local_origin = '{{ constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')}}';
     if (group_origin == local_origin) {
         if (resource == "user") {
@@ -2223,7 +2223,7 @@ function create_element_group_in_delete_groups(group_id, user_id, group_key, gro
             var $delete_groups_list = $('#delete_' + resource + '_groups');
         }
         var item_onclick = 'onclick="return select_group(this);"';
-        var item_ondblclick = 'ondblclick="javascript:add_group(\'' + group_id + '\', \'' + user_id +'\', \'' + group_key + '\', \'' + group_name + '\', \'' + group_origin + '\', \'' + resource + '\');"';
+        var item_ondblclick = 'ondblclick="javascript:add_group(\'' + group_id + '\', \'' + group_key + '\', \'' + group_name + '\', \'' + group_origin + '\', \'' + resource + '\');"';
         var item_text = '<a href="#" ' + item_class + ' ' + item_onclick + ' ' + item_ondblclick + ' ' + item_id +'"><i class="mdi-social-group"></i> ' + group_key + ' - ' + group_name + ' - (' + group_origin + ')</a>';
         $delete_groups_list.append(item_text);
     }
@@ -2281,13 +2281,13 @@ $(document).on('click', '#pumukitnewadmin_user_groups_reset', function() {
                 var group_key = addGroups[group_id].key;
                 var group_name = addGroups[group_id].name;
                 var group_origin = addGroups[group_id].origin;
-                add_group(group_id, user_id, group_key, group_name, group_origin, 'user');
+                add_group(group_id, group_key, group_name, group_origin, 'user');
             }
             for (var group_id in deleteGroups) {
                 var group_key = deleteGroups[group_id].key;
                 var group_name = deleteGroups[group_id].name;
                 var group_origin = deleteGroups[group_id].origin;
-                delete_group(group_id, user_id, group_key, group_name, group_origin, 'user');
+                delete_group(group_id, group_key, group_name, group_origin, 'user');
             }
         }
     });
@@ -2348,13 +2348,13 @@ function pumukitnewadmin_mm_updategroup_reset(mm_id, template, resource) {
                 var group_key = addGroups[group_id].key;
                 var group_name = addGroups[group_id].name;
                 var group_origin = addGroups[group_id].origin;
-                add_group(group_id, mm_id, group_key, group_name, group_origin, resource);
+                add_group(group_id, group_key, group_name, group_origin, resource);
             }
             for (var group_id in deleteGroups) {
                 var group_key = deleteGroups[group_id].key;
                 var group_name = deleteGroups[group_id].name;
                 var group_origin = deleteGroups[group_id].origin;
-                delete_group(group_id, mm_id, group_key, group_name, group_origin, resource);
+                delete_group(group_id, group_key, group_name, group_origin, resource);
             }
             $('#remember_save_mm' + template + '_group').hide();
         }
@@ -2371,4 +2371,75 @@ $(document).on('click', '#pumukitnewadmin_mm_template_updategroup_reset', functi
     var mm_id = $('#mm_id').val();
     var resource = 'mm_template';
     pumukitnewadmin_mm_updategroup_reset(mm_id, '_template', resource);
+});
+
+$(document).on('click', '#pumukitnewadmin_mm_broadcast_updategroup_reset', function() {
+    var resource = 'broadcast';
+    var route = "{{ path('pumukitnewadmin_mms_broadcast_info', {'id': '__id__'})|raw }}";
+    var mm_id = $('#pumukitnewadmin_mms_broadcast_mm_id').val();
+    route = route.replace('__id__', mm_id);
+    $.ajax({
+        url: route,
+        type: 'GET',
+        error: function(jqXHR, textStatus, errorThrown){
+            no_success(errorThrown + ': ' + jqXHR.responseText);
+        },
+        success: function(response){
+            var type = response.type;
+            $('input[type=radio][id=pumukitnewadmin_mms_broadcast_type_' + type + ']').prop('checked', 'checked');
+            var password = response.password;
+            $('#broadcast_password_1').val(password);
+            $('#broadcast_password_2').val(password);
+            var groups = response.groups;
+            var addGroups = groups['addGroups'];
+            var deleteGroups = groups['deleteGroups'];
+            $('#add_broadcast_groups').empty();
+            $('#delete_broadcast_groups').empty();
+            for (var group_id in addGroups) {
+                var group_key = addGroups[group_id].key;
+                var group_name = addGroups[group_id].name;
+                var group_origin = addGroups[group_id].origin;
+                add_group(group_id, group_key, group_name, group_origin, resource);
+            }
+            for (var group_id in deleteGroups) {
+                var group_key = deleteGroups[group_id].key;
+                var group_name = deleteGroups[group_id].name;
+                var group_origin = deleteGroups[group_id].origin;
+                delete_group(group_id, group_key, group_name, group_origin, resource);
+            }
+        }
+    });
+});
+
+$(document).on('submit', '#pumukitnewadmin_mms_updatebroadcast_submit', function() {
+    $('#myModal').modal('hide');
+    var route = '{{ path('pumukitnewadmin_mms_updatebroadcast', {'id': '__mmId__'})|raw }}';
+    var mmId = $('#pumukitnewadmin_mms_broadcast_mm_id').val();
+    var broadcast_type = $('input[type=radio][name=pumukitnewadmin_mms_broadcast]:checked').val();
+    if (check_pass($('#broadcast_password_1').val(), $('#broadcast_password_2').val())) {
+        return false;
+    }
+    var password = $('#broadcast_password_1').val();
+    var addGroups = [];
+    var deleteGroups = [];
+    $('a.add-broadcast-group-item').each(function(){
+        addGroups.push($(this).attr("id"));
+    });
+    $('a.delete-broadcast-group-item').each(function(){
+        deleteGroups.push($(this).attr("id"));
+    });
+    $.ajax({
+        url: route.replace('__mmId__', mmId),
+        type: 'POST',
+        data: {'type': broadcast_type, 'password': password, 'addGroups': addGroups, 'deleteGroups': deleteGroups},
+        error: function (jqXHR, textStatus, errorThrown) {
+            no_success(errorThrown + ': ' + jqXHR.responseText);            
+        },
+        success: function (response, textStatus, jqXHR) {
+            $('#pumukitnewadmin_mm_broadcast_description').html(response['description']);
+            var message = 'Successfully updated groups in Broadcast.';
+            success(message);
+        }
+    });
+    return false;
 });
