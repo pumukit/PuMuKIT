@@ -4,18 +4,21 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
+use Pumukit\SchemaBundle\Document\Group;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
 class EmbeddedBroadcastService
 {
     private $dm;
+    private $dispatcher;
 
     /**
      * Constructor
      */
-    public function __construct(DocumentManager $documentManager)
+    public function __construct(DocumentManager $documentManager, MultimediaObjectEventDispatcherService $dispatcher)
     {
         $this->dm = $documentManager;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -115,5 +118,113 @@ class EmbeddedBroadcastService
                      EmbeddedBroadcast::TYPE_LOGIN => EmbeddedBroadcast::NAME_LOGIN,
                      EmbeddedBroadcast::TYPE_GROUPS => EmbeddedBroadcast::NAME_GROUPS
                      );
+    }
+
+    /**
+     * Update type and name
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param string           $type
+     * @param boolean          $executeFlush
+     * @return MultimediaObject
+     */
+    public function updateTypeAndName($type, MultimediaObject $multimediaObject, $executeFlush = true)
+    {
+        $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
+        if ($embeddedBroadcast) {
+            $allTypes = $this->getAllTypes();
+            if (($type !== $embeddedBroadcast->getType()) && array_key_exists($type, $allTypes)) {
+                $embeddedBroadcast->setType($type);
+                $embeddedBroadcast->setName($allTypes[$type]);
+                $this->dm->persist($multimediaObject);
+                if ($executeFlush) {
+                    $this->dm->flush();
+                }
+                $this->dispatcher->dispatchUpdate($multimediaObject);
+            }
+        }
+
+        return $multimediaObject;
+}
+
+    /**
+     * Update password
+     *
+     * @param string           $password
+     * @param MultimediaObject $multimediaObject
+     * @param boolean          $executeFlush
+     * @return MultimediaObject
+     */
+    public function updatePassword($password, MultimediaObject $multimediaObject, $executeFlush = true)
+    {
+        $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
+        if ($embeddedBroadcast) {
+            if ($password !== $embeddedBroadcast->getPassword()) {
+                $embeddedBroadcast->setPassword($password);
+                $this->dm->persist($multimediaObject);
+                if ($executeFlush) {
+                    $this->dm->flush();
+                }
+                $this->dispatcher->dispatchUpdate($multimediaObject);
+            }
+        }
+
+        return $multimediaObject;
+    }
+
+    /**
+     * Add group to embeddedBroadcast
+     *
+     * @param Group $group
+     * @param MultimediaObject $multimediaObject
+     * @param boolean $executeFlush
+     */
+    public function addGroup(Group $group, MultimediaObject $multimediaObject, $executeFlush = true)
+    {
+        $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
+        if ($embeddedBroadcast) {
+            if (!$embeddedBroadcast->containsGroup($group)) {
+                // TODO: develop function
+                /* if (!$this->isAllowedToModifyMultimediaObjectGroup($multimediaObject, $group)) { */
+                /*     throw new \Exception('Not allowed to add  group "'.$group->getKey().'" to multimediaObject "'.$multimediaObject->getMultimediaObjectname().'".'); */
+                /* } */
+                $embeddedBroadcast->addGroup($group);
+                $this->dm->persist($multimediaObject);
+                if ($executeFlush) {
+                    $this->dm->flush();
+                }
+                $this->dispatcher->dispatchUpdate($multimediaObject);
+            }
+        } else {
+
+        }
+    }
+
+    /**
+     * Delete group from embedded Broadcasr
+     *
+     * @param Group $group
+     * @param MultimediaObject $multimediaObject
+     * @param boolean $executeFlush
+     */
+    public function deleteGroup(Group $group, MultimediaObject $multimediaObject, $executeFlush = true)
+    {
+        $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
+        if ($embeddedBroadcast) {
+            if ($embeddedBroadcast->containsGroup($group)) {
+                // TODO: develop function
+                /* if (!$this->isAllowedToModifyMultimediaObjectGroup($multimediaObject, $group)) { */
+                /*     throw new \Exception('Not allowed to delete  group "'.$group->getKey().'" from multimediaObject "'.$multimediaObject->getMultimediaObjectname().'".'); */
+                /* } */
+                $embeddedBroadcast->removeGroup($group);
+                $this->dm->persist($multimediaObject);
+                if ($executeFlush) {
+                    $this->dm->flush();
+                }
+                $this->dispatcher->dispatchUpdate($multimediaObject);
+            }
+        } else {
+
+        }
     }
 }

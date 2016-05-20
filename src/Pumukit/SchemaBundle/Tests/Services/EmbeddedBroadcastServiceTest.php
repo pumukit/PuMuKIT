@@ -13,6 +13,7 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
     private $dm;
     private $mmRepo;
     private $embeddedBroadcastService;
+    private $dispatcher;
 
     public function __construct()
     {
@@ -25,17 +26,20 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
             ->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->embeddedBroadcastService = static::$kernel->getContainer()
             ->get('pumukitschema.embeddedbroadcast');
+        $this->dispatcher = static::$kernel->getContainer()
+            ->get('pumukitschema.multimediaobject_dispatcher');
     }
 
     public function setUp()
     {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:Group')->remove(array());
         $this->dm->flush();
     }
 
     public function testCreateEmbeddedBroadcastByType()
     {
-        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm);
+        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->dispatcher);
         $passwordBroadcast = $embeddedBroadcastService->createEmbeddedBroadcastByType(EmbeddedBroadcast::TYPE_PASSWORD);
         $ldapBroadcast = $embeddedBroadcastService->createEmbeddedBroadcastByType(EmbeddedBroadcast::TYPE_LOGIN);
         $groupsBroadcast = $embeddedBroadcastService->createEmbeddedBroadcastByType(EmbeddedBroadcast::TYPE_GROUPS);
@@ -132,9 +136,179 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
 
     public function testCreatePublicEmbeddedBroadcast()
     {
-        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm);
+        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->dispatcher);
         $publicBroadcast = $embeddedBroadcastService->createPublicEmbeddedBroadcast();
         $this->assertEquals(EmbeddedBroadcast::TYPE_PUBLIC, $publicBroadcast->getType());
         $this->assertEquals(EmbeddedBroadcast::NAME_PUBLIC, $publicBroadcast->getName());
+    }
+
+    public function testUpdateTypeAndName()
+    {
+        $multimediaObject = new MultimediaObject();
+        $multimediaObject->setTitle('test');
+
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        $mm = $this->embeddedBroadcastService->setByType($multimediaObject, EmbeddedBroadcast::TYPE_PASSWORD);
+        $embeddedBroadcast = $mm->getEmbeddedBroadcast();
+
+        $this->assertEquals(EmbeddedBroadcast::TYPE_PASSWORD, $embeddedBroadcast->getType());
+        $this->assertEquals(EmbeddedBroadcast::NAME_PASSWORD, $embeddedBroadcast->getName());
+        $this->assertNotEquals(EmbeddedBroadcast::TYPE_LOGIN, $embeddedBroadcast->getType());
+        $this->assertNotEquals(EmbeddedBroadcast::NAME_LOGIN, $embeddedBroadcast->getName());
+
+        $mm = $this->embeddedBroadcastService->updateTypeAndName(EmbeddedBroadcast::TYPE_LOGIN, $multimediaObject);
+
+        $this->assertNotEquals(EmbeddedBroadcast::TYPE_PASSWORD, $embeddedBroadcast->getType());
+        $this->assertNotEquals(EmbeddedBroadcast::NAME_PASSWORD, $embeddedBroadcast->getName());
+        $this->assertEquals(EmbeddedBroadcast::TYPE_LOGIN, $embeddedBroadcast->getType());
+        $this->assertEquals(EmbeddedBroadcast::NAME_LOGIN, $embeddedBroadcast->getName());
+    }
+
+    public function testUpdatePassword()
+    {
+        $multimediaObject = new MultimediaObject();
+        $multimediaObject->setTitle('test');
+
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        $mm = $this->embeddedBroadcastService->setByType($multimediaObject, EmbeddedBroadcast::TYPE_PASSWORD);
+        $embeddedBroadcast = $mm->getEmbeddedBroadcast();
+
+        $this->assertNull($embeddedBroadcast->getPassword());
+
+        $password = 'testing_password';
+        $mm = $this->embeddedBroadcastService->updatePassword($password, $multimediaObject);
+
+        $this->assertEquals($password, $embeddedBroadcast->getPassword());
+    }
+
+    public function testAddGroup()
+    {
+        $group1 = new Group();
+        $group1->setKey('key1');
+        $group1->setName('name1');
+
+        $group2 = new Group();
+        $group2->setKey('key2');
+        $group2->setName('name2');
+
+        $group3 = new Group();
+        $group3->setKey('key3');
+        $group3->setName('name3');
+
+        $multimediaObject = new MultimediaObject();
+        $multimediaObject->setTitle('test');
+
+        $this->dm->persist($group1);
+        $this->dm->persist($group2);
+        $this->dm->persist($group3);
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        $mm = $this->embeddedBroadcastService->setByType($multimediaObject, EmbeddedBroadcast::TYPE_PASSWORD);
+        $embeddedBroadcast = $mm->getEmbeddedBroadcast();
+
+        $this->assertEquals(0, count($embeddedBroadcast->getGroups()));
+        $this->assertFalse($embeddedBroadcast->containsGroup($group1));
+        $this->assertFalse($embeddedBroadcast->containsGroup($group2));
+        $this->assertFalse($embeddedBroadcast->containsGroup($group3));
+
+        $this->embeddedBroadcastService->addGroup($group1, $multimediaObject);
+
+        $this->assertEquals(1, count($embeddedBroadcast->getGroups()));
+        $this->assertTrue($embeddedBroadcast->containsGroup($group1));
+        $this->assertFalse($embeddedBroadcast->containsGroup($group2));
+        $this->assertFalse($embeddedBroadcast->containsGroup($group3));
+
+        $this->embeddedBroadcastService->addGroup($group2, $multimediaObject);
+
+        $this->assertEquals(2, count($embeddedBroadcast->getGroups()));
+        $this->assertTrue($embeddedBroadcast->containsGroup($group1));
+        $this->assertTrue($embeddedBroadcast->containsGroup($group2));
+        $this->assertFalse($embeddedBroadcast->containsGroup($group3));
+
+        $this->embeddedBroadcastService->addGroup($group3, $multimediaObject);
+
+        $this->assertEquals(3, count($embeddedBroadcast->getGroups()));
+        $this->assertTrue($embeddedBroadcast->containsGroup($group1));
+        $this->assertTrue($embeddedBroadcast->containsGroup($group2));
+        $this->assertTrue($embeddedBroadcast->containsGroup($group3));
+    }
+
+    public function testDeleteGroup()
+    {
+        $group1 = new Group();
+        $group1->setKey('key1');
+        $group1->setName('name1');
+
+        $group2 = new Group();
+        $group2->setKey('key2');
+        $group2->setName('name2');
+
+        $group3 = new Group();
+        $group3->setKey('key3');
+        $group3->setName('name3');
+
+        $multimediaObject = new MultimediaObject();
+        $multimediaObject->setTitle('test');
+
+        $this->dm->persist($group1);
+        $this->dm->persist($group2);
+        $this->dm->persist($group3);
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        $mm = $this->embeddedBroadcastService->setByType($multimediaObject, EmbeddedBroadcast::TYPE_PASSWORD);
+        $embeddedBroadcast = $mm->getEmbeddedBroadcast();
+
+        $this->assertEquals(0, count($embeddedBroadcast->getGroups()));
+        $this->assertFalse($embeddedBroadcast->containsGroup($group1));
+        $this->assertFalse($embeddedBroadcast->containsGroup($group2));
+        $this->assertFalse($embeddedBroadcast->containsGroup($group3));
+
+        $this->embeddedBroadcastService->addGroup($group1, $multimediaObject);
+
+        $this->assertEquals(1, count($embeddedBroadcast->getGroups()));
+        $this->assertTrue($embeddedBroadcast->containsGroup($group1));
+        $this->assertFalse($embeddedBroadcast->containsGroup($group2));
+        $this->assertFalse($embeddedBroadcast->containsGroup($group3));
+
+        $this->embeddedBroadcastService->deleteGroup($group1, $multimediaObject);
+
+        $this->assertEquals(0, count($embeddedBroadcast->getGroups()));
+        $this->assertFalse($embeddedBroadcast->containsGroup($group1));
+        $this->assertFalse($embeddedBroadcast->containsGroup($group2));
+        $this->assertFalse($embeddedBroadcast->containsGroup($group3));
+
+        $this->embeddedBroadcastService->deleteGroup($group2, $multimediaObject);
+
+        $this->assertEquals(0, count($embeddedBroadcast->getGroups()));
+        $this->assertFalse($embeddedBroadcast->containsGroup($group1));
+        $this->assertFalse($embeddedBroadcast->containsGroup($group2));
+        $this->assertFalse($embeddedBroadcast->containsGroup($group3));
+
+        $this->embeddedBroadcastService->addGroup($group3, $multimediaObject);
+
+        $this->assertEquals(1, count($embeddedBroadcast->getGroups()));
+        $this->assertFalse($embeddedBroadcast->containsGroup($group1));
+        $this->assertFalse($embeddedBroadcast->containsGroup($group2));
+        $this->assertTrue($embeddedBroadcast->containsGroup($group3));
+
+        $this->embeddedBroadcastService->deleteGroup($group1, $multimediaObject);
+
+        $this->assertEquals(1, count($embeddedBroadcast->getGroups()));
+        $this->assertFalse($embeddedBroadcast->containsGroup($group1));
+        $this->assertFalse($embeddedBroadcast->containsGroup($group2));
+        $this->assertTrue($embeddedBroadcast->containsGroup($group3));
+
+        $this->embeddedBroadcastService->deleteGroup($group3, $multimediaObject);
+
+        $this->assertEquals(0, count($embeddedBroadcast->getGroups()));
+        $this->assertFalse($embeddedBroadcast->containsGroup($group1));
+        $this->assertFalse($embeddedBroadcast->containsGroup($group2));
+        $this->assertFalse($embeddedBroadcast->containsGroup($group3));
     }
 }
