@@ -6,13 +6,14 @@
   <form autocomplete="off" id="pumukitnewadmin_mms_updatebroadcast_submit"
      action="{{ path('pumukitnewadmin_mms_updatebroadcast', {'id': mm.id}) }}" method="POST">
     <fieldset>
+      <input type="hidden" id="pumukitnewadmin_mms_broadcast_mm_id" name="" value="{{ mm.id }}"/>
       <div class="form-group">
         <label class="control-label required">{% trans %}Broadcast Profile{% endtrans %}</label>
         <div id="pumukitnewadmin_mms_broadcast_broadcast">
           {% for broadcast_type, broadcast_name in broadcasts %}
           <div class="radio">
             <label class="required">
-              <input id="pumukitnewadmin_mms_broadcast_broadcast_{{ broadcast_type }}" name="pumukitnewadmin_mms_broadcast" required="required" value="{{ broadcast_type }}" type="radio" {{ mm.getEmbeddedBroadcast() ? ((mm.getEmbeddedBroadcast().getType() == broadcast_type) ? 'checked="checked"':'') : '' }}><span class="circle"></span><span class="check"></span>
+              <input id="pumukitnewadmin_mms_broadcast_type_{{ broadcast_type }}" name="pumukitnewadmin_mms_broadcast" required="required" value="{{ broadcast_type }}" type="radio" {{ mm.getEmbeddedBroadcast() ? ((mm.getEmbeddedBroadcast().getType() == broadcast_type) ? 'checked="checked"':'') : '' }}><span class="circle"></span><span class="check"></span>
               {{ broadcast_name }}
             </label>
           </div>
@@ -28,7 +29,8 @@
     </fieldset>
     <div class="modal-footer">
       <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
-      <button type="submit" class="btn btn-primary btn-raised">{% trans %}Save changes{% endtrans %}</button>
+      <button type="button" id="pumukitnewadmin_mm_broadcast_updategroup_reset" class="btn btn-primary btn-raised">{% trans %}Reset{% endtrans %}</button>
+      <button type="submit" id="pumukitnewadmin_mm_broadcast_updategroup_submit" class="btn btn-pumukit btn-raised">{% trans %}Save changes{% endtrans %}</button>
     </div>
   </form>
 </div>
