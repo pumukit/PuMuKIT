@@ -209,6 +209,7 @@
 
         <service id="pumukitschema.embeddedbroadcast" class="Pumukit\SchemaBundle\Services\EmbeddedBroadcastService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="pumukitschema.multimediaobject_dispatcher" />
         </service>
 
     </services>
