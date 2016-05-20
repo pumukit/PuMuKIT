@@ -20,7 +20,7 @@
       </div>
       <div style="overflow:hidden;height: 240px">
 	    <div style="width:390px; float: left; height: 220px; border: 1px solid #bbb; overflow-x: hidden; overflow-y: scroll" class="tag list-group pmk-tag-tree" id="delete_groups">
-          {% include 'PumukitNewAdminBundle:User:listgroupsajax.html.twig' with {'user': user, 'groups': groups} %}
+          {% include 'PumukitNewAdminBundle:User:availablegroups.html.twig' with {'user': user, 'groups': groups} %}
 	    </div>
 	    <div style="float: left; padding: 110px 5px 0px">
 	      <a href="#" onclick="$('#add_groups > a.active').trigger('dblclick'); return false;">&#8592;</a>
@@ -29,32 +29,7 @@
         {# Groups added to the user #}
 	    <div style="width:390px; height:220px; border: 1px solid #bbb; float: left; overflow-x: hidden; overflow-y: scroll" class="tag" id="select_tag">
 	      <div class="tag_tree list-group" id="add_groups" >
-	        {% for user_group in user.getGroups() %}
-              {% if (user_group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')) and (user.origin == constant('Pumukit\\SchemaBundle\\Document\\User::ORIGIN_LOCAL')) %}
-              <a href="#" class="list-group-item"
-                 id="add_group_{{ user_group.id }}"
-                 onclick="javascript:return select_group(this);"
-                 ondblclick="javascript:delete_group('{{ user_group.id }}', '{{ user.id }}', '{{ user_group.key }}', '{{ user_group.name }}', '{{ user_group.origin }}', 'user');">
-                <i class="mdi-social-group"></i>
-                {{ user_group.key }} - {{ user_group.name }} - ({{ user_group.origin }})
-              </a>
-              {% else %}
-              {% if (user_group.origin != constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')) and (user.origin != constant('Pumukit\\SchemaBundle\\Document\\User::ORIGIN_LOCAL')) %}
-              {% set message = 'External defined group and user. Contact your directory service administrator to change membership.' %}
-              {% elseif (user_group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')) and (user.origin != constant('Pumukit\\SchemaBundle\\Document\\User::ORIGIN_LOCAL')) %}
-              {% set message = 'External defined group. Contact your directory service administrator to change membership.' %}
-              {% else %}
-              {% set message = 'External defined user. Contact your directory service administrator to change membership.' %}
-              {% endif %}
-              <a href="#" class="list-group-item disabled-group-item"
-                 id="add_group_{{ user_group.id }}"
-                 onclick="return false;"
-                 ondblclick="javascript:window.alert('{{ message }}');">
-                <i class="mdi-social-group"></i>
-                {{ user_group.key }} - {{ user_group.name }} - ({{ user_group.origin|upper }})
-              </a>
-              {% endif %}
-	        {% endfor %}
+            {% include 'PumukitNewAdminBundle:User:selectedgroups.html.twig' with {'user': user, 'groups': groups} %}
 	      </div>
         </div>
 	  </div>
