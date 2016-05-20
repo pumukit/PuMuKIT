@@ -184,6 +184,12 @@ pumukitnewadmin_mms_getgroups:
     defaults:
         _controller: pumukitnewadmin.controller.mms:getGroupsAction
 
+pumukitnewadmin_mms_broadcast_info:
+    pattern: /{id}/broadcastinfo
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:getBroadcastInfoAction
+
 pumukitnewadmin_mms_updatebroadcast:
     pattern: /{id}/updatebroadcast
     methods: [GET, POST]

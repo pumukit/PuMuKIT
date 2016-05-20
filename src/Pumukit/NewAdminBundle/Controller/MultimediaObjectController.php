@@ -885,38 +885,81 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * Get user groups
+     * Get groups
      */
     public function getGroupsAction(Request $request)
     {
         $multimediaObject = $this->findOr404($request);
-        $groupService = $this->get('pumukitschema.group');
-        $addGroups = array();
-        $deleteGroups = array();
-        $addGroupsIds = array();
-        if ('GET' === $request->getMethod()){
-            foreach ($multimediaObject->getGroups() as $group) {
-                $addGroups[$group->getId()] = array(
-                                                    'key' => $group->getKey(),
-                                                    'name' => $group->getName(),
-                                                    'origin' => $group->getOrigin()
-                                                    );
-                $addGroupsIds[] = new \MongoId($group->getId());
-            }
-            $groupsToDelete = $groupService->findByIdNotIn($addGroupsIds);
-            foreach ($groupsToDelete as $group) {
-                $deleteGroups[$group->getId()] = array(
-                                                       'key' => $group->getKey(),
-                                                       'name' => $group->getName(),
-                                                       'origin' => $group->getOrigin()
-                                                       );
-            }
-        }
+        $groups = $this->getResourceGroups($multimediaObject->getGroups());
 
-        return new JsonResponse(array(
-                                      'addGroups' => $addGroups,
-                                      'deleteGroups' => $deleteGroups
-                                      ));
+        return new JsonResponse($groups);
+    }
+
+    /**
+     * Get embedded Broadcast groups
+     */
+    public function getBroadcastInfoAction(Request $request)
+    {
+        $multimediaObject = $this->findOr404($request);
+        $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
+        if ($embeddedBroadcast) {
+            $type = $embeddedBroadcast->getType();
+            $password = $embeddedBroadcast->getPassword();
+            $groups = $this->getResourceGroups($embeddedBroadcast->getGroups());
+        } else {
+            $type = EmbeddedBroadcast::TYPE_PUBLIC;
+            $password = '';
+            $groups = array('addGroups' => array(), 'deleteGroups' => array());
+        }
+        $info = array(
+                      'type' => $type,
+                      'password' => $password,
+                      'groups' => $groups
+                      );
+
+        return new JsonResponse($info);
+    }
+
+    /**
+     * Update Broadcast Action
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "id"})
+     * @Template("PumukitNewAdminBundle:MultimediaObject:updatebroadcast.html.twig")
+     */
+    public function updateBroadcastAction(MultimediaObject $multimediaObject, Request $request)
+    {
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $broadcasts = $this->get('pumukitschema.embeddedbroadcast')->getAllTypes();
+        $groupService = $this->get('pumukitschema.group');
+        $allGroups = $groupService->findAll();
+        if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
+            try {
+                $type = $request->get('type', null);
+                $password = $request->get('password', null);
+                $addGroups = $request->get('addGroups', array());
+                if ('string' === gettype($addGroups)){
+                    $addGroups = json_decode($addGroups, true);
+                }
+                $deleteGroups = $request->get('deleteGroups', array());
+                if ('string' === gettype($deleteGroups)){
+                    $deleteGroups = json_decode($deleteGroups, true);
+                }
+                $this->modifyBroadcastGroups($multimediaObject, $type, $password, $addGroups, $deleteGroups);
+            } catch (\Exception $e) {
+                // TODO
+            }
+            $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
+            $description = array('description' => (string)$embeddedBroadcast);
+
+            return new JsonResponse($description);
+        }
+        return array(
+                     'mm' => $multimediaObject,
+                     'broadcasts' => $broadcasts,
+                     'groups' => $allGroups
+                     );
+
     }
 
     /**
@@ -928,7 +971,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $groupRepo = $dm->getRepository('PumukitSchemaBundle:Group');
         $multimediaObjectService = $this->get('pumukitschema.multimedia_object');
         $index = $multimediaObject->isPrototype() ? 4 : 3;
-
         foreach ($addGroups as $addGroup){
             $groupId = explode('_', $addGroup)[$index];
             $group = $groupRepo->find($groupId);
@@ -948,36 +990,57 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * Update Broadcast Action
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "id"})
-     * @Template("PumukitNewAdminBundle:MultimediaObject:updatebroadcast.html.twig")
+     * Modify EmbeddedBroadcast Groups
      */
-    public function updateBroadcastAction(MultimediaObject $multimediaObject, Request $request)
+    private function modifyBroadcastGroups(MultimediaObject $multimediaObject, $type = EmbeddedBroadcast::TYPE_PUBLIC, $password = '', $addGroups = array(), $deleteGroups = array())
     {
-        $translator = $this->get('translator');
-        $locale = $request->getLocale();
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $broadcasts = $this->get('pumukitschema.embeddedbroadcast')->getAllTypes();
-        $groupService = $this->get('pumukitschema.group');
-        $allGroups = $groupService->findAll();
-        if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
-            if ($form->bind($request)->isValid()) {
-                try {
-                    // TODO
-                } catch (\Exception $e) {
-                    // TODO
-                }
-            } else {
-                // TODO
+        $groupRepo = $dm->getRepository('PumukitSchemaBundle:Group');
+        $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
+        $embeddedBroadcastService->updateTypeAndName($type, $multimediaObject, false);
+        $embeddedBroadcastService->updatePassword($password, $multimdiaObject, false);
+        $index = 3;
+        foreach ($addGroups as $addGroup){
+            $groupId = explode('_', $addGroup)[$index];
+            $group = $groupRepo->find($groupId);
+            if ($group) {
+                $embeddedBroadcastService->addGroup($group, $multimediaObject, false);
             }
-            // TODO
-            return new Response();
         }
-        return array(
-                     'mm' => $multimediaObject,
-                     'broadcasts' => $broadcasts,
-                     'groups' => $allGroups
-                     );
+        foreach ($deleteGroups as $deleteGroup){
+            $groupId = explode('_', $deleteGroup)[$index];
+            $group = $groupRepo->find($groupId);
+            if ($group) {
+                $embeddedBroadcastService->deleteGroup($group, $multimediaObject, false);
+            }
+        }
 
+        $dm->flush();
+    }
+
+    private function getResourceGroups($groups = array())
+    {
+        $groupService = $this->get('pumukitschema.group');
+        $addGroups = array();
+        $deleteGroups = array();
+        $addGroupsIds = array();
+        foreach ($groups as $group) {
+            $addGroups[$group->getId()] = array(
+                                                'key' => $group->getKey(),
+                                                'name' => $group->getName(),
+                                                'origin' => $group->getOrigin()
+                                                );
+            $addGroupsIds[] = new \MongoId($group->getId());
+        }
+        $groupsToDelete = $groupService->findByIdNotIn($addGroupsIds);
+        foreach ($groupsToDelete as $group) {
+            $deleteGroups[$group->getId()] = array(
+                                                   'key' => $group->getKey(),
+                                                   'name' => $group->getName(),
+                                                   'origin' => $group->getOrigin()
+                                                   );
+        }
+
+        return array('addGroups' => $addGroups, 'deleteGroups' => $deleteGroups);
     }
 }
