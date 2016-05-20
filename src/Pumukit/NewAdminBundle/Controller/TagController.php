@@ -54,7 +54,7 @@ class TagController extends Controller implements NewAdminController
     public function deleteAction(Tag $tag, Request $request)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
-        if (0 == $num = count($tag->getChildren()) && 0 == $tag->getNumberMultimediaObjects()) {
+        if (0 == ($num = count($tag->getChildren())) && 0 == $tag->getNumberMultimediaObjects()) {
             $dm->remove($tag);
             $dm->flush();
 
