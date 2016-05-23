@@ -366,13 +366,23 @@ window.submit_delete_person = function(id, countMm, personHName)
     }
 }
 
-window.submit_delete_group = function(id, countUsers, groupName)
+window.submit_delete_group = function(id, countUsers, countAdminMultimediaObjects, countPlayMultimediaObjects, groupName)
 {
     var message = "{% trans %}Are you sure you want to delete the group{% endtrans %} "+groupName+"?";
     if (countUsers == 1) {
         message = message + " {% trans %}There is 1 user related to this group.{% endtrans %}";
     } else if (countUsers > 1) {
         message = message + " {% trans %}There are{% endtrans %} " + countUsers + " {% trans %}users related to this group.{% endtrans %}";
+    }
+    if (countAdminMultimediaObjects == 1) {
+        message = message + " {% trans %}There is 1 admin multimedia object related to this group.{% endtrans %}";
+    } else if (countAdminMultimediaObjects > 1) {
+        message = message + " {% trans %}There are{% endtrans %} " + countAdminMultimediaObjects + " {% trans %}admin multimedia objects related to this group.{% endtrans %}";
+    }
+    if (countPlayMultimediaObjects == 1) {
+        message = message + " {% trans %}There is 1 play multimedia object related to this group.{% endtrans %}";
+    } else if (countPlayMultimediaObjects > 1) {
+        message = message + " {% trans %}There are{% endtrans %} " + countPlayMultimediaObjects + " {% trans %}play multimedia objects related to this group.{% endtrans %}";
     }
     if (window.confirm(message)){
         var url = "{{ path('pumukitnewadmin_group_delete', {'id': '__id__'})|raw }}";

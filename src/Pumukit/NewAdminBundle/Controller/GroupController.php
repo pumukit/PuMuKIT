@@ -27,17 +27,14 @@ class GroupController extends AdminController implements NewAdminController
         $config = $this->getConfiguration();
 
         $criteria = $this->getCriteria($config);
-        $resources = $this->getResources($request, $config, $criteria);
+        $groups = $this->getResources($request, $config, $criteria);
 
         $groupService = $this->get('pumukitschema.group');
-        $countUsersInGroup = array();
-        foreach($resources as $group){
-            $countUsersInGroup[$group->getId()] = $groupService->countUsersInGroup($group);
-        }
+        $countResources = $groupService->countResources($groups);
 
         return array(
-                     'groups' => $resources,
-                     'countUsersInGroup' => $countUsersInGroup,
+                     'groups' => $groups,
+                     'countResources' => $countResources
                      );
     }
 
@@ -50,17 +47,14 @@ class GroupController extends AdminController implements NewAdminController
     {
         $config = $this->getConfiguration();
         $criteria = $this->getCriteria($config);
-        $resources = $this->getResources($request, $config, $criteria);
+        $groups = $this->getResources($request, $config, $criteria);
 
         $groupService = $this->get('pumukitschema.group');
-        $countUsersInGroup = array();
-        foreach($resources as $group){
-            $countUsersInGroup[$group->getId()] = $groupService->countUsersInGroup($group);
-        }
+        $countResources = $groupService->countResources($groups);
 
         return array(
-                     'groups' => $resources,
-                     'countUsersInGroup' => $countUsersInGroup,
+                     'groups' => $groups,
+                     'countResources' => $countResources
                      );
     }
 

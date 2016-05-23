@@ -43,7 +43,7 @@
           {% endif %}
         </td>
         <td>
-          <a href="#" title="Delete Group '{{ group.name }}'" onclick="window.submit_delete_group('{{ group.id }}', '{{ countUsersInGroup[group.id] }}', '{% autoescape 'js' %}{{ group.getName() }}{% endautoescape %}'); return false;">
+          <a href="#" title="Delete Group '{{ group.name }}'" onclick="window.submit_delete_group('{{ group.id }}', '{{ countResources[group.id]['users'] }}', '{{ countResources[group.id]['adminMultimediaObjects'] }}', '{{ countResources[group.id]['playMultimediaObjects'] }}', '{% autoescape 'js' %}{{ group.getName() }}{% endautoescape %}'); return false;">
             <i class="mdi-content-clear"></i>
           </a>
         </td>
