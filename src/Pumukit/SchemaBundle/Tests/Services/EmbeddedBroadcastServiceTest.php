@@ -39,7 +39,7 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
 
     public function testCreateEmbeddedBroadcastByType()
     {
-        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->dispatcher);
+        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->dispatcher, false);
         $passwordBroadcast = $embeddedBroadcastService->createEmbeddedBroadcastByType(EmbeddedBroadcast::TYPE_PASSWORD);
         $ldapBroadcast = $embeddedBroadcastService->createEmbeddedBroadcastByType(EmbeddedBroadcast::TYPE_LOGIN);
         $groupsBroadcast = $embeddedBroadcastService->createEmbeddedBroadcastByType(EmbeddedBroadcast::TYPE_GROUPS);
@@ -125,18 +125,27 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
 
     public function testGetAllBroadcastTypes()
     {
+        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->dispatcher, false);
         $broadcasts = array(
                             EmbeddedBroadcast::TYPE_PUBLIC => EmbeddedBroadcast::NAME_PUBLIC,
                             EmbeddedBroadcast::TYPE_PASSWORD => EmbeddedBroadcast::NAME_PASSWORD,
                             EmbeddedBroadcast::TYPE_LOGIN => EmbeddedBroadcast::NAME_LOGIN,
                             EmbeddedBroadcast::TYPE_GROUPS => EmbeddedBroadcast::NAME_GROUPS
                             );
-        $this->assertEquals($broadcasts, $this->embeddedBroadcastService->getAllTypes());
+        $this->assertEquals($broadcasts, $embeddedBroadcastService->getAllTypes());
+
+        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->dispatcher, true);
+        $broadcasts = array(
+                            EmbeddedBroadcast::TYPE_PUBLIC => EmbeddedBroadcast::NAME_PUBLIC,
+                            EmbeddedBroadcast::TYPE_LOGIN => EmbeddedBroadcast::NAME_LOGIN,
+                            EmbeddedBroadcast::TYPE_GROUPS => EmbeddedBroadcast::NAME_GROUPS
+                            );
+        $this->assertEquals($broadcasts, $embeddedBroadcastService->getAllTypes());
     }
 
     public function testCreatePublicEmbeddedBroadcast()
     {
-        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->dispatcher);
+        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->dispatcher, false);
         $publicBroadcast = $embeddedBroadcastService->createPublicEmbeddedBroadcast();
         $this->assertEquals(EmbeddedBroadcast::TYPE_PUBLIC, $publicBroadcast->getType());
         $this->assertEquals(EmbeddedBroadcast::NAME_PUBLIC, $publicBroadcast->getName());

@@ -11,14 +11,16 @@ class EmbeddedBroadcastService
 {
     private $dm;
     private $dispatcher;
+    private $disabledBroadcast;
 
     /**
      * Constructor
      */
-    public function __construct(DocumentManager $documentManager, MultimediaObjectEventDispatcherService $dispatcher)
+    public function __construct(DocumentManager $documentManager, MultimediaObjectEventDispatcherService $dispatcher, $disabledBroadcast)
     {
         $this->dm = $documentManager;
         $this->dispatcher = $dispatcher;
+        $this->disabledBroadcast = $disabledBroadcast;
     }
 
     /**
@@ -112,6 +114,14 @@ class EmbeddedBroadcastService
      */
     public function getAllTypes()
     {
+        if ($this->disabledBroadcast) {
+            return array(
+                         EmbeddedBroadcast::TYPE_PUBLIC => EmbeddedBroadcast::NAME_PUBLIC,
+                         EmbeddedBroadcast::TYPE_LOGIN => EmbeddedBroadcast::NAME_LOGIN,
+                         EmbeddedBroadcast::TYPE_GROUPS => EmbeddedBroadcast::NAME_GROUPS
+                         );
+        }
+
         return array(
                      EmbeddedBroadcast::TYPE_PUBLIC => EmbeddedBroadcast::NAME_PUBLIC,
                      EmbeddedBroadcast::TYPE_PASSWORD => EmbeddedBroadcast::NAME_PASSWORD,
