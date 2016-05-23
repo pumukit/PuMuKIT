@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Intl\Intl;
 use Symfony\Component\Finder\Finder;
+use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Security\Permission;
@@ -162,6 +163,26 @@ class DefaultController extends Controller
                 }
 
                 if ('single' === $option){
+                    $filetype = $this->getKeyData('filetype', $trackData);
+                    if ('file' === $filetype){
+                        $filePath = $request->files->get('resource')->getPathname();
+                    }elseif ('inbox' === $filetype){
+                        $filePath = $request->get('file');
+                    }else{
+                        throw new \Exception('Not uploaded file or inbox path');
+                    }
+
+                    try {
+                        //exception if is not a mediafile (video or audio)
+                        $duration = $inspectionService->getDuration($filePath);
+                    } catch (\Exception $e) {
+                        throw new \Exception('The file is not a video or audio');
+                    }
+
+                    if(0 == $duration) {
+                        throw new \Exception('The media file duration is zero');
+                    }
+
                     $series = $this->getSeries($seriesData);
                     $multimediaObjectData = $this->getKeyData('multimediaobject', $formData);
 
@@ -170,15 +191,18 @@ class DefaultController extends Controller
 
                     $multimediaObject = $this->createMultimediaObject($multimediaObjectData, $series);
 
-                    $filetype = $this->getKeyData('filetype', $trackData);
+
                     if ('file' === $filetype){
                         $selectedPath = $request->get('resource');
-                        $multimediaObject = $jobService->createTrackFromLocalHardDrive($multimediaObject, $request->files->get('resource'), $profile, $priority, $language, $description);
+                        $multimediaObject = $jobService->createTrackFromLocalHardDrive($multimediaObject, $request->files->get('resource'), $profile, $priority, $language, $description,
+                                                                                       array(), $duration, JobService::ADD_JOB_NOT_CHECKS);
                     }elseif ('inbox' === $filetype){
                         $this->denyAccessUnlessGranted(Permission::ACCESS_INBOX);
                         $selectedPath = $request->get('file');
-                        $multimediaObject = $jobService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description);
+                        $multimediaObject = $jobService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description,
+                                                                                      array(), $duration, JobService::ADD_JOB_NOT_CHECKS);
                     }
+
                     if ($multimediaObject && $pubchannel){
                         foreach($pubchannel as $tagCode => $valueOn){
                             $addedTags = $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
