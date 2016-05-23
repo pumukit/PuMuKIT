@@ -947,7 +947,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                 }
                 $this->modifyBroadcastGroups($multimediaObject, $type, $password, $addGroups, $deleteGroups);
             } catch (\Exception $e) {
-                // TODO
+                return new JsonResponse(array('error' => $e->getMessage()), JsonResponse::HTTP_BAD_REQUEST);
             }
             $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
             $description = array('description' => (string)$embeddedBroadcast);
@@ -998,7 +998,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $groupRepo = $dm->getRepository('PumukitSchemaBundle:Group');
         $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
         $embeddedBroadcastService->updateTypeAndName($type, $multimediaObject, false);
-        $embeddedBroadcastService->updatePassword($password, $multimdiaObject, false);
+        $embeddedBroadcastService->updatePassword($password, $multimediaObject, false);
         $index = 3;
         foreach ($addGroups as $addGroup){
             $groupId = explode('_', $addGroup)[$index];
