@@ -10,6 +10,7 @@ class GroupService
     private $dm;
     private $repo;
     private $userRepo;
+    private $mmobjRepo;
     private $dispatcher;
 
     /**
@@ -24,6 +25,7 @@ class GroupService
         $this->dispatcher = $dispatcher;
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:Group');
         $this->userRepo = $this->dm->getRepository('PumukitSchemaBundle:User');
+        $this->mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
     }
 
     /**
@@ -94,6 +96,52 @@ class GroupService
         if ($executeFlush) $this->dm->flush();
 
         $this->dispatcher->dispatchDelete($group);
+    }
+
+    /**
+     * Count resources in group
+     *
+     * @param Group $group
+     * @return array
+     */
+    public function countResourcesInGroup(Group $group)
+    {
+        $users = array();
+        $adminMultimediaObjects = array();
+        $playMultimediaObjects = array();
+        foreach($groups as $group){
+            $users[$group->getId()] = $this->countUsersInGroup($group);
+            $adminMultimediaObjects[$group->getId()] = $this->countAdminMultimediaObjectsInGroup($group);
+            $playMultimediaObjects[$group->getId()] = $this->countPlayMultimediaObjectsInGroup($group);
+        }
+
+        return array(
+                     'users' => $users,
+                     'adminMultimediaObjects' => $adminMultimediaObjects,
+                     'playMultimediaObjects' => $playMultimediaObjects
+                     );
+    }
+
+    /**
+     * Count admin multimediaObjects in group
+     *
+     * @param Group $group
+     * @return integer
+     */
+    public function countAdminMultimediaObjectsInGroup(Group $group)
+    {
+        return $this->mmobjRepo->countWithGroup($group);
+    }
+
+    /**
+     * Count play multimediaObjects in group
+     *
+     * @param Group $group
+     * @return integer
+     */
+    public function countPlayMultimediaObjectsInGroup(Group $group)
+    {
+        return $this->mmobjRepo->countWithGroupInEmbeddedBroadcast($group);
     }
 
     /**
