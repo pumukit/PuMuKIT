@@ -222,7 +222,7 @@ class DefaultController extends Controller
                              'uploaded' => 'failed',
                              'message' => $message,
                              'option' => $option,
-                             'seriesId' => null,
+                             'seriesId' => $seriesId,
                              'mmId' => null,
                              'show_series' => $showSeries
                              );
@@ -233,7 +233,7 @@ class DefaultController extends Controller
                          'uploaded' => 'failed',
                          'message' => 'No data received',
                          'option' => $option,
-                         'seriesId' => null,
+                         'seriesId' => $seriesId,
                          'mmId' => null,
                          'show_series' => $showSeries
                          );
@@ -298,7 +298,12 @@ class DefaultController extends Controller
         $option = $request->get('option');
         $showSeries = $request->get('show_series');
 
+        $series = $this->getDoctrine()
+          ->getRepository('PumukitSchemaBundle:Series')
+          ->find($request->get('seriesId'));
+
         return array(
+                     'series' => $series,
                      'message' => $errorMessage,
                      'option' => $option,
                      'show_series' => $showSeries
