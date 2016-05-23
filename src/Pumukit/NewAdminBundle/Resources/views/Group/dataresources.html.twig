@@ -1,0 +1,3 @@
+{% for resource in resources %}
+<p><a href="#" onclick="delete_{{ resource_name }}_from_group('{{ resource.id }}', '{{ group.id }}');"><i class="mdi-content-clear"/></a>&nbsp;{{ (resource_name == 'user') ? resource.username : resource.getTitle() }}</p>
+{% endfor %}

@@ -4,18 +4,19 @@
   <h2 class="modal-title">&laquo;{{ group.getName() }}&raquo;</h2>
 </div>
 <div class="modal-body">
-  <div id="group_users" class="panel panel-default">
-    <div class="panel-heading" style="text-align:center;">{% trans %}USERS{% endtrans %}</div>
-    <div class="panel-body" id="group_list_users">
-      <div class="row" style="margin-right: 0px; margin-left: 0px;">
-	    <div style="width:390px; height:220px; border: 1px solid #bbb; float: left; overflow-x: hidden; overflow-y: scroll" class="tag" id="list_of_users">
-	      <div class="tag_tree list-group" id="added_users" >
-	        {% for user in users %}
-            {{ user.username }}
-            {% endfor %}
-          </div>
-        </div>
-      </div>
+  <div class="col-md-4">
+    <div id="group_users" class="panel panel-default">
+      {% include 'PumukitNewAdminBundle:Group:inforesources.html.twig' with {'resources': users, 'title': 'USERS', 'resource_name': 'user'} %}
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div id="group_mms" class="panel panel-default">
+      {% include 'PumukitNewAdminBundle:Group:inforesources.html.twig' with {'resources': admin_multimedia_objects, 'title': 'ADMIN MULTIMEDIA OBJECTS', 'resource_name': 'multimediaobject'} %}
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div id="group_broadcasts" class="panel panel-default">
+      {% include 'PumukitNewAdminBundle:Group:inforesources.html.twig' with {'resources': viewer_multimedia_objects, 'title': 'PLAY MULTIMEDIA OBJECTS', 'resource_name': 'embeddedbroadcast'} %}
     </div>
   </div>
   <div class="modal-footer">

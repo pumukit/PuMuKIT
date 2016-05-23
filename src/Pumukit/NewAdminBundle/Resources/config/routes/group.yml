@@ -51,3 +51,27 @@ pumukitnewadmin_group_info:
     methods: [GET]
     defaults:
         _controller: pumukitnewadmin.controller.group:infoAction
+
+pumukitnewadmin_group_data_resources:
+    pattern: /{id}/dataresources
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:dataResourcesAction
+
+pumukitnewadmin_group_delete_user:
+    pattern: /{id}/deleteuser/{userId}
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:deleteUserAction
+
+pumukitnewadmin_group_delete_multimediaobject:
+    pattern: /{id}/deletemultimediaobject/{mmId}
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:deleteMultimediaObjectAction
+
+pumukitnewadmin_group_delete_embeddedbroadcast:
+    pattern: /{id}/deleteembeddedbroadcast/{mmId}
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:deleteEmbeddedBroadcastAction

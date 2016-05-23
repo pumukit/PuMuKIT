@@ -7,7 +7,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_GROUPS')")
@@ -265,10 +268,89 @@ class GroupController extends AdminController implements NewAdminController
     {
         $group = $this->findOr404($request);
         $users = $this->get('pumukitschema.group')->findUsersInGroup($group);
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $adminMultimediaObjects = $mmobjRepo->findWithGroup($group);
+        $viewerMultimediaObjects = $mmobjRepo->findWithGroupInEmbeddedBroadcast($group);
 
         return array(
                      'group' => $group,
-                     'users' => $users
+                     'users' => $users,
+                     'admin_multimedia_objects' => $adminMultimediaObjects,
+                     'viewer_multimedia_objects' => $viewerMultimediaObjects
                      );
+    }
+
+    /**
+     * Data Resource Action
+     * @Template("PumukitNewAdminBundle:Group:dataresources.html.twig")
+     * @param Request $request
+     *
+     * @return RedirectResponse|Response
+     */
+    public function dataResourcesAction(Group $group, Request $request)
+    {
+        $resourceName = $request->get('resourceName', null);
+        if (!$resourceName) {
+            throw new \Exception('Missing resource name');
+        }
+        if ('user' === $resourceName) {
+            $resources = $this->get('pumukitschema.group')->findUsersInGroup($group);
+        } elseif ('multimediaobject' === $resourceName) {
+            $dm = $this->get('doctrine_mongodb.odm.document_manager');
+            $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+            $resources = $mmobjRepo->findWithGroup($group);
+        } elseif ('embeddedbroadcast' === $resourceName) {
+            $dm = $this->get('doctrine_mongodb.odm.document_manager');
+            $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+            $resources = $mmobjRepo->findWithGroupInEmbeddedBroadcast($group);
+        } else {
+            throw new \Exception('Invalid resource name');
+        }
+
+        return array(
+                     'group'         => $group,
+                     'resources'     => $resources,
+                     'resource_name' => $resourceName
+                     );
+    }
+
+    /**
+     * Delete User from Group action
+     *
+     * @ParamConverter("user", class="PumukitSchemaBundle:User", options={"id" = "userId"})
+     */
+    public function deleteUserAction(User $user, Request $request)
+    {
+        $group = $this->findOr404($request);
+        $user = $this->get('pumukitschema.user')->deleteGroup($group, $user);
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', array('id' => $group->getId(), 'resourceName' => 'user')));
+    }
+
+    /**
+     * Delete MultimediaObject from Group action
+     *
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     */
+    public function deleteMultimediaObjectAction(MultimediaObject $multimediaObject, Request $request)
+    {
+        $group = $this->findOr404($request);
+        $multimediaobject = $this->get('pumukitschema.multimedia_object')->deleteGroup($group, $multimediaObject);
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', array('id' => $group->getId(), 'resourceName' => 'multimediaobject')));
+    }
+
+    /**
+     * Delete Embeddedbroadcast from Group action
+     *
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     */
+    public function deleteEmbeddedBroadcastAction(MultimediaObject $multimediaObject, Request $request)
+    {
+        $group = $this->findOr404($request);
+        $multimediaobject = $this->get('pumukitschema.embeddedbroadcast')->deleteGroup($group, $multimediaObject);
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', array('id' => $group->getId(), 'resourceName' => 'embeddedbroadcast')));
     }
 }

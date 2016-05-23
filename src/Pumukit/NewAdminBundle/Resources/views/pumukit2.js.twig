@@ -1641,10 +1641,10 @@ $(document).ready(function(){
 });
 
 function check_pass(pass1, pass2) {
-    if ((pass1 == pass2) && (pass1 != '')) {
+    if (pass1 == pass2) {
         $('#broadcast_password_check_fail').hide();
         return true;
-    }  else {
+    } else {
         $('#broadcast_password_check_fail').show();
         return false;
     }
@@ -2416,7 +2416,7 @@ $(document).on('submit', '#pumukitnewadmin_mms_updatebroadcast_submit', function
     var route = '{{ path('pumukitnewadmin_mms_updatebroadcast', {'id': '__mmId__'})|raw }}';
     var mmId = $('#pumukitnewadmin_mms_broadcast_mm_id').val();
     var broadcast_type = $('input[type=radio][name=pumukitnewadmin_mms_broadcast]:checked').val();
-    if (!check_pass($('#broadcast_password_1').val(), $('#broadcast_password_2').val())) {
+    if (false == check_pass($('#broadcast_password_1').val(), $('#broadcast_password_2').val())) {
         no_success('Passwords do not match');
         return false;
     }
@@ -2444,3 +2444,63 @@ $(document).on('submit', '#pumukitnewadmin_mms_updatebroadcast_submit', function
     });
     return false;
 });
+
+delete_user_from_group = function(user_id, group_id)
+{
+    var route = "{{ path('pumukitnewadmin_group_delete_user', {'id': '__groupId__', 'userId': '__userId__'})|raw }}";
+    route = route.replace('__groupId__', group_id);
+    route = route.replace('__userId__', user_id);
+    $.ajax({
+            url: route,
+            type: 'POST',
+            error: function(jqXHR, textStatus, errorThrown) {
+            no_success(errorThrown + ': ' + jqXHR.responseText);
+        },
+        success: function (response, textStatus, jqXHR) {
+            $('#pumukitnewadmin_group_added_users').html(response);
+            var message = 'Successfully delete User from Group.';
+            success(message);
+        }
+    });
+    return false;
+}
+
+delete_multimediaobject_from_group = function(mm_id, group_id)
+{
+    var route = "{{ path('pumukitnewadmin_group_delete_multimediaobject', {'id': '__groupId__', 'mmId': '__mmId__'})|raw }}";
+    route = route.replace('__groupId__', group_id);
+    route = route.replace('__mmId__', mm_id);
+    $.ajax({
+            url: route,
+            type: 'POST',
+            error: function(jqXHR, textStatus, errorThrown) {
+            no_success(errorThrown + ': ' + jqXHR.responseText);
+        },
+        success: function (response, textStatus, jqXHR) {
+            $('#pumukitnewadmin_group_added_multimediaobjects').html(response);
+            var message = 'Successfully delete MultimediaObject from Group.';
+            success(message);
+        }
+    });
+    return false;
+}
+
+delete_embeddedbroadcast_from_group = function(mm_id, group_id)
+{
+    var route = "{{ path('pumukitnewadmin_group_delete_embeddedbroadcast', {'id': '__groupId__', 'mmId': '__mmId__'})|raw }}";
+    route = route.replace('__groupId__', group_id);
+    route = route.replace('__mmId__', mm_id);
+    $.ajax({
+            url: route,
+            type: 'POST',
+            error: function(jqXHR, textStatus, errorThrown) {
+            no_success(errorThrown + ': ' + jqXHR.responseText);
+        },
+        success: function (response, textStatus, jqXHR) {
+            $('#pumukitnewadmin_group_added_embeddedbroadcasts').html(response);
+            var message = 'Successfully delete MultimediaObject from Group.';
+            success(message);
+        }
+    });
+    return false;
+}
