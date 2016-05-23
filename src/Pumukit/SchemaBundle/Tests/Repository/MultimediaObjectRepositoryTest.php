@@ -2613,6 +2613,90 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertTrue(in_array($mm2, $mmsGroup2->toArray()));
     }
 
+    public function testCountWithGroup()
+    {
+        $key1 = 'Group1';
+        $name1 = 'Group 1';
+        $group1 = $this->createGroup($key1, $name1);
+
+        $key2 = 'Group2';
+        $name2 = 'Group 2';
+        $group2 = $this->createGroup($key2, $name2);
+
+        $broadcast = new Broadcast();
+        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
+        $broadcast->setDefaultSel(true);
+        $this->dm->persist($broadcast);
+        $this->dm->flush();
+
+        $series = $this->createSeries("Series");
+
+        $this->dm->persist($series);
+        $this->dm->flush();
+
+        $mm1 = $this->createMultimediaObjectAssignedToSeries('MmObject 1', $series);
+        $mm2 = $this->createMultimediaObjectAssignedToSeries('MmObject 2', $series);
+
+        $mm1->addGroup($group1);
+        $mm1->addGroup($group2);
+        $mm2->addGroup($group2);
+
+        $this->dm->persist($mm1);
+        $this->dm->persist($mm2);
+        $this->dm->flush();
+
+        $this->assertEquals(1, $this->repo->countWithGroup($group1));
+        $this->assertEquals(2, $this->repo->countWithGroup($group2));
+    }
+
+    public function testCountWithGroupInEmbeddedBroadcast()
+    {
+        $key1 = 'Group1';
+        $name1 = 'Group 1';
+        $group1 = $this->createGroup($key1, $name1);
+
+        $key2 = 'Group2';
+        $name2 = 'Group 2';
+        $group2 = $this->createGroup($key2, $name2);
+
+        $broadcast = new Broadcast();
+        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
+        $broadcast->setDefaultSel(true);
+        $this->dm->persist($broadcast);
+        $this->dm->flush();
+
+        $series = $this->createSeries("Series");
+
+        $this->dm->persist($series);
+        $this->dm->flush();
+
+        $mm1 = $this->createMultimediaObjectAssignedToSeries('MmObject 1', $series);
+        $mm2 = $this->createMultimediaObjectAssignedToSeries('MmObject 2', $series);
+
+        $type = EmbeddedBroadcast::TYPE_GROUPS;
+        $name = EmbeddedBroadcast::NAME_GROUPS;
+
+        $embeddedBroadcast1 = new EmbeddedBroadcast();
+        $embeddedBroadcast1->setType($type);
+        $embeddedBroadcast1->setName($name);
+        $embeddedBroadcast1->addGroup($group1);
+        $embeddedBroadcast1->addGroup($group2);
+
+        $embeddedBroadcast2 = new EmbeddedBroadcast();
+        $embeddedBroadcast2->setType($type);
+        $embeddedBroadcast2->setName($name);
+        $embeddedBroadcast2->addGroup($group2);
+
+        $mm1->setEmbeddedBroadcast($embeddedBroadcast1);
+        $mm2->setEmbeddedBroadcast($embeddedBroadcast2);
+        $this->dm->persist($mm1);
+        $this->dm->persist($mm2);
+        $this->dm->flush();
+
+        $this->assertEquals(1, $this->repo->countWithGroupInEmbeddedBroadcast($group1));
+        $this->assertEquals(2, $this->repo->countWithGroupInEmbeddedBroadcast($group2));
+    }
+
     public function testEmbeddedBroadcast()
     {
         $key1 = 'Group1';

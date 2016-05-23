@@ -1210,6 +1210,26 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
+     * Count multimedia objects with group
+     *
+     * @param Group $group
+     * @param array $sort
+     * @param int $limit
+     * @param int $page
+     * @return ArrayCollection
+     */
+    public function countWithGroup(Group $group, $sort = array(), $limit = 0, $page = 0)
+    {
+        $qb = $this->createBuilderWithGroup($group, $sort);
+
+        if ($limit > 0){
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
+        return $qb->count()->getQuery()->execute();
+    }
+
+    /**
      * Create QueryBuilder to find multimedia objects with group
      *
      * @param Group $group
@@ -1246,5 +1266,25 @@ class MultimediaObjectRepository extends DocumentRepository
         }
 
         return $qb->getQuery()->execute();
+    }
+
+    /**
+     * Count multimedia objects with group in embedded broadcast
+     *
+     * @param Group $group
+     * @param array $sort
+     * @param int $limit
+     * @param int $page
+     * @return ArrayCollection
+     */
+    public function countWithGroupInEmbeddedBroadcast(Group $group, $sort = array(), $limit = 0, $page = 0)
+    {
+        $qb = $this->createBuilderWithGroupInEmbeddedBroadcast($group, $sort);
+
+        if ($limit > 0){
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
+        return $qb->count()->getQuery()->execute();
     }
 }
