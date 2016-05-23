@@ -101,9 +101,10 @@ class GroupService
     /**
      * Count resources
      *
+     * @param array $groups
      * @return array
      */
-    public function countResources()
+    public function countResources($groups)
     {
         $countResources = array();
         foreach($groups as $group){
