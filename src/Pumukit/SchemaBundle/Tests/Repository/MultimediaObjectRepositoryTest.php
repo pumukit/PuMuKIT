@@ -2592,6 +2592,20 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals($name, $embBroadcast->__toString());
         $this->assertTrue($embBroadcast->isPasswordValid());
 
+        $type2 = EmbeddedBroadcast::TYPE_GROUPS;
+        $name2 = EmbeddedBroadcast::NAME_GROUPS;
+        $embBroadcast->setType($type2);
+        $embBroadcast->setName($name2);
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        $multimediaObject = $this->repo->find($mm->getId());
+        $embBroadcast = $multimediaObject->getEmbeddedBroadcast();
+
+        $this->assertEquals($type2, $embBroadcast->getType());
+        $this->assertEquals($name2, $embBroadcast->getName());
+        $this->assertEquals($name2 . ': '.$group1->getName().', '.$group2->getName(), $embBroadcast->__toString());
+
         $embBroadcast->removeGroup($group2);
         $this->dm->persist($mm);
         $this->dm->flush();

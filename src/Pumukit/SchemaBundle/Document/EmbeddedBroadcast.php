@@ -184,7 +184,19 @@ class EmbeddedBroadcast
      */
     public function __toString()
     {
-        return $this->getName();
+        $groups = $this->getGroups();
+        $groupsDescription = '';
+        if (($this->getType() === self::TYPE_GROUPS) && ($groups)) {
+            $groupsDescription = ': ';
+            foreach ($groups as $group) {
+                $groupsDescription .= $group->getName();
+                if ($group != $groups->last()) {
+                    $groupsDescription .= ', ';
+                }
+            }
+        }
+
+        return $this->getName() . $groupsDescription;
     }
 
     /**
