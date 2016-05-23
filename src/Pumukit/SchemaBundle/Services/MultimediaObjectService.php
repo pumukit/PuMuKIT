@@ -133,10 +133,6 @@ class MultimediaObjectService
     public function addGroup(Group $group, MultimediaObject $multimediaObject, $executeFlush = true)
     {
         if (!$multimediaObject->containsGroup($group)) {
-            // TODO: develop function
-            /* if (!$this->isAllowedToModifyMultimediaObjectGroup($multimediaObject, $group)) { */
-            /*     throw new \Exception('Not allowed to add  group "'.$group->getKey().'" to multimediaObject "'.$multimediaObject->getMultimediaObjectname().'".'); */
-            /* } */
             $multimediaObject->addGroup($group);
             $this->dm->persist($multimediaObject);
             if ($executeFlush) {
@@ -156,10 +152,6 @@ class MultimediaObjectService
     public function deleteGroup(Group $group, MultimediaObject $multimediaObject, $executeFlush = true)
     {
         if ($multimediaObject->containsGroup($group)) {
-            // TODO: develop function
-            /* if (!$this->isAllowedToModifyMultimediaObjectGroup($multimediaObject, $group)) { */
-            /*     throw new \Exception('Not allowed to delete  group "'.$group->getKey().'" from multimediaObject "'.$multimediaObject->getMultimediaObjectname().'".'); */
-            /* } */
             $multimediaObject->removeGroup($group);
             $this->dm->persist($multimediaObject);
             if ($executeFlush) {
