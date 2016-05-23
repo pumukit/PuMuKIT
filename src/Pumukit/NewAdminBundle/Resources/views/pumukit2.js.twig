@@ -2416,7 +2416,8 @@ $(document).on('submit', '#pumukitnewadmin_mms_updatebroadcast_submit', function
     var route = '{{ path('pumukitnewadmin_mms_updatebroadcast', {'id': '__mmId__'})|raw }}';
     var mmId = $('#pumukitnewadmin_mms_broadcast_mm_id').val();
     var broadcast_type = $('input[type=radio][name=pumukitnewadmin_mms_broadcast]:checked').val();
-    if (check_pass($('#broadcast_password_1').val(), $('#broadcast_password_2').val())) {
+    if (!check_pass($('#broadcast_password_1').val(), $('#broadcast_password_2').val())) {
+        no_success('Passwords do not match');
         return false;
     }
     var password = $('#broadcast_password_1').val();
