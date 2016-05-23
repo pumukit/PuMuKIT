@@ -2,7 +2,10 @@
   <tbody>
     <input type="hidden" id="mm_id" value="{{ mm.id }}"/>
     <div id="broadcast_groups" class="panel panel-default{{ mm.getEmbeddedBroadcast() ? ((mm.getEmbeddedBroadcast().getType() == broadcast_type) ? '':' pumukitnewadmin-broadcast-hidden') : ' pumukitnewadmin-broadcast-hidden' }}">
-      <div class="panel-heading">{% trans %}GROUPS{% endtrans %}</div>
+      <div class="panel-heading">
+        {% trans %}BROADCAST GROUPS{% endtrans %}
+        <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Groups that can play this multimedia object in the frontend{% endtrans %}"></i>
+      </div>
       <div class="panel-body" id="group_broadcast">
         <div class="row" style="margin-right: 0px; margin-left: 0px;">
           <div style="width:430px; float: left;">
