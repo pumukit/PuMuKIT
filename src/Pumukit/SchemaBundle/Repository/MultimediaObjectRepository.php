@@ -1208,4 +1208,43 @@ class MultimediaObjectRepository extends DocumentRepository
 
         return $qb->getQuery()->execute();
     }
+
+    /**
+     * Create QueryBuilder to find multimedia objects with group
+     *
+     * @param Group $group
+     * @param array $sort
+     * @return QueryBuilder
+     */
+    public function createBuilderWithGroupInEmbeddedBroadcast(Group $group, $sort = array())
+    {
+        $qb = $this->createQueryBuilder()
+            ->field('embeddedBroadcast.groups')->in(array(new \MongoId($group->getId())));
+
+        if (0 !== count($sort) ){
+          $qb->sort($sort);
+        }
+
+        return $qb;
+    }
+
+    /**
+     * Find multimedia objects with group
+     *
+     * @param Group $group
+     * @param array $sort
+     * @param int $limit
+     * @param int $page
+     * @return ArrayCollection
+     */
+    public function findWithGroupInEmbeddedBroadcast(Group $group, $sort = array(), $limit = 0, $page = 0)
+    {
+        $qb = $this->createBuilderWithGroupInEmbeddedBroadcast($group, $sort);
+
+        if ($limit > 0){
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
+        return $qb->getQuery()->execute();
+    }
 }

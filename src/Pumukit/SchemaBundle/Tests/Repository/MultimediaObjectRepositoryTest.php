@@ -2551,6 +2551,68 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertTrue(in_array($mm2, $mmsGroup2->toArray()));
     }
 
+    public function testFindWithGroupInEmbeddedBroadcast()
+    {
+        $key1 = 'Group1';
+        $name1 = 'Group 1';
+        $group1 = $this->createGroup($key1, $name1);
+
+        $key2 = 'Group2';
+        $name2 = 'Group 2';
+        $group2 = $this->createGroup($key2, $name2);
+
+        $broadcast = new Broadcast();
+        $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
+        $broadcast->setDefaultSel(true);
+        $this->dm->persist($broadcast);
+        $this->dm->flush();
+
+        $series = $this->createSeries("Series");
+
+        $this->dm->persist($series);
+        $this->dm->flush();
+
+        $mm1 = $this->createMultimediaObjectAssignedToSeries('MmObject 1', $series);
+        $mm2 = $this->createMultimediaObjectAssignedToSeries('MmObject 2', $series);
+
+        $type = EmbeddedBroadcast::TYPE_GROUPS;
+        $name = EmbeddedBroadcast::NAME_GROUPS;
+
+        $embeddedBroadcast1 = new EmbeddedBroadcast();
+        $embeddedBroadcast1->setType($type);
+        $embeddedBroadcast1->setName($name);
+        $embeddedBroadcast1->addGroup($group1);
+        $embeddedBroadcast1->addGroup($group2);
+
+        $embeddedBroadcast2 = new EmbeddedBroadcast();
+        $embeddedBroadcast2->setType($type);
+        $embeddedBroadcast2->setName($name);
+        $embeddedBroadcast2->addGroup($group2);
+
+        $mm1->setEmbeddedBroadcast($embeddedBroadcast1);
+        $mm2->setEmbeddedBroadcast($embeddedBroadcast2);
+        $this->dm->persist($mm1);
+        $this->dm->persist($mm2);
+        $this->dm->flush();
+
+        $this->assertEquals(2, count($embeddedBroadcast1->getGroups()));
+        $this->assertEquals(1, count($embeddedBroadcast2->getGroups()));
+        $this->assertTrue(in_array($group1, $embeddedBroadcast1->getGroups()->toArray()));
+        $this->assertTrue(in_array($group2, $embeddedBroadcast1->getGroups()->toArray()));
+        $this->assertFalse(in_array($group1, $embeddedBroadcast2->getGroups()->toArray()));
+        $this->assertTrue(in_array($group2, $embeddedBroadcast2->getGroups()->toArray()));
+
+        $mmsGroup1 = $this->repo->findWithGroupInEmbeddedBroadcast($group1);
+        $mmsGroup2 = $this->repo->findWithGroupInEmbeddedBroadcast($group2);
+
+        $this->assertEquals(1, count($mmsGroup1));
+        $this->assertEquals(2, count($mmsGroup2));
+        $this->assertTrue(in_array($mm1, $mmsGroup1->toArray()));
+        $this->assertFalse(in_array($mm2, $mmsGroup1->toArray()));
+        $this->assertTrue(in_array($mm1, $mmsGroup2->toArray()));
+        $this->assertTrue(in_array($mm2, $mmsGroup2->toArray()));
+    }
+
     public function testEmbeddedBroadcast()
     {
         $key1 = 'Group1';
