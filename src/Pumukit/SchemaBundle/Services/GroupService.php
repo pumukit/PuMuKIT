@@ -99,6 +99,21 @@ class GroupService
     }
 
     /**
+     * Count resources
+     *
+     * @return array
+     */
+    public function countResources()
+    {
+        $countResources = array();
+        foreach($groups as $group){
+            $countResources[$group->getId()] = $this->countResourcesInGroup($group);
+        }
+
+        return $countResources;
+    }
+
+    /**
      * Count resources in group
      *
      * @param Group $group
@@ -106,20 +121,12 @@ class GroupService
      */
     public function countResourcesInGroup(Group $group)
     {
-        $users = array();
-        $adminMultimediaObjects = array();
-        $playMultimediaObjects = array();
-        foreach($groups as $group){
-            $users[$group->getId()] = $this->countUsersInGroup($group);
-            $adminMultimediaObjects[$group->getId()] = $this->countAdminMultimediaObjectsInGroup($group);
-            $playMultimediaObjects[$group->getId()] = $this->countPlayMultimediaObjectsInGroup($group);
-        }
+        $countResources = array();
+        $countResources['users'] = $this->countUsersInGroup($group);
+        $countResources['adminMultimediaObjects'] = $this->countAdminMultimediaObjectsInGroup($group);
+        $countResources['playMultimediaObjects'] = $this->countPlayMultimediaObjectsInGroup($group);
 
-        return array(
-                     'users' => $users,
-                     'adminMultimediaObjects' => $adminMultimediaObjects,
-                     'playMultimediaObjects' => $playMultimediaObjects
-                     );
+        return $countResources;
     }
 
     /**

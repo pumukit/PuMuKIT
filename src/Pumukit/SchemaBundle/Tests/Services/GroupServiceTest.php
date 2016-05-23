@@ -471,7 +471,7 @@ class GroupServiceTest extends WebTestCase
         $this->assertEquals(2, $this->groupService->countPlayMultimediaObjectsInGroup($group2));
     }
 
-    public function countResourcesInGroup()
+    public function countResources()
     {
         $group1 = new Group();
         $group1->setKey('Group1');
@@ -561,6 +561,15 @@ class GroupServiceTest extends WebTestCase
         $this->assertEquals(2, $resourcesInGroup2['playMultimediaObjects']);
         $this->assertEquals(1, $resourcesInGroup1['users']);
         $this->assertEquals(0, $resourcesInGroup2['users']);
+
+        $resources = $this->groupService->countResources();
+
+        $this->assertEquals(1, $resources[$group1->getId()]['adminMultimediaObjects']);
+        $this->assertEquals(2, $resources[$group2->getId()]['adminMultimediaObjects']);
+        $this->assertEquals(1, $resources[$group1->getId()]['playMultimediaObjects']);
+        $this->assertEquals(2, $resources[$group2->getId()]['playMultimediaObjects']);
+        $this->assertEquals(1, $resources[$group1->getId()]['users']);
+        $this->assertEquals(0, $resources[$group2->getId()]['users']);
 
     }
 }
