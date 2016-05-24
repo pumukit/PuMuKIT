@@ -5,21 +5,37 @@ namespace Pumukit\SchemaBundle\Services;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Document\User;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class EmbeddedBroadcastService
 {
     private $dm;
+    private $mmsService;
     private $dispatcher;
     private $disabledBroadcast;
+    private $authorizationChecker;
+    private $router;
+    private $templating;
 
     /**
      * Constructor
      */
-    public function __construct(DocumentManager $documentManager, MultimediaObjectEventDispatcherService $dispatcher, $disabledBroadcast)
+    public function __construct(DocumentManager $documentManager, MultimediaObjectService $mmsService, MultimediaObjectEventDispatcherService $dispatcher, AuthorizationCheckerInterface $authorizationChecker, EngineInterface $templating, Router $router, $disabledBroadcast)
     {
         $this->dm = $documentManager;
+        $this->mmsService = $mmsService;
         $this->dispatcher = $dispatcher;
+        $this->authorizationChecker = $authorizationChecker;
+        $this->templating = $templating;
+        $this->router = $router;
         $this->disabledBroadcast = $disabledBroadcast;
     }
 
@@ -226,5 +242,114 @@ class EmbeddedBroadcastService
             }
             $this->dispatcher->dispatchUpdate($multimediaObject);
         }
+    }
+
+    /**
+     * Can User play multimediaObject
+     *
+     * @param  MultimediaObject $multimediaObject
+     * @param  User             $user
+     * @param  string           $phpAuthPassword
+     * @param  boolean          $forceAuth
+     * @return
+     */
+    public function canUserPlayMultimediaObject(MultimediaObject $multimediaObject, User $user, $phpAuthPassword, $forceAuth = false)
+    {
+        $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
+        if (!$embeddedBroadcast) {
+            return true;
+        }
+        if (EmbeddedBroadcast::TYPE_PUBLIC === $embeddedBroadcast->getType()) {
+            return true;
+        }
+        if (EmbeddedBroadcast::TYPE_LOGIN === $embeddedBroadcast->getType()) {
+            return $this->isUserLoggedIn($forceAuth);
+        }
+        if (EmbeddedBroadcast::TYPE_GROUPS === $embeddedBroadcast->getType()) {
+            return $this->isUserLoggedInAndInGroups($multimediaObject, $user, $forceAuth);
+        }
+        if (EmbeddedBroadcast::TYPE_PASSWORD === $embeddedBroadcast->getType()) {
+            return $this->isPasswordCorrect($phpAuthPassword);
+        }
+
+        return $this->renderErrorNotAuthenticated($forceAuth);
+    }
+
+    /**
+     * Is user related to multimedia object
+     *
+     * @param  MultimediaObject $multimediaObject
+     * @param  User             $user
+     * @return boolean
+     */
+    public function isUserRelatedToMultimediaObject(MultimediaObject $multimediaObject, User $user)
+    {
+        $userGroups = $user->getGroups()->toArray();
+        if ($embeddedBroadcast= $multimediaObject->getEmbeddedBroadcast()) {
+            $playGroups = $embeddedBroadcast->getGroups()->toArray();
+        } else {
+            $playGroups = array();
+        }
+        $adminGroups = $multimediaObject->getGroups()->toArray();
+        $commonPlayGroups = array_intersect($playGroups, $userGroups);
+        $commonAdminGroups = array_intersect($adminGroups, $userGroups);
+        $userIsOwner = $this->mmsService->isUserOwner($user, $multimediaObject);
+
+        return $commonPlayGroups || $commonAdminGroups || $userIsOwner;
+    }
+
+    private function isAuthenticatedFully()
+    {
+        return $this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY');
+    }
+
+    private function isUserLoggedIn($forceAuth = false)
+    {
+        if ($this->isAuthenticatedFully()){
+            return true;
+        }
+
+        return $this->renderErrorNotAuthenticated($forceAuth);
+    }
+
+    private function isUserLoggedInAndInGroups(MultimediaObject $multimediaObject, User $user, $forceAuth = false)
+    {
+        if ($this->isAuthenticatedFully()){
+            if ($this->isUserRelatedToMultimediaObject($multimediaObject, $user)) {
+                return true;
+            }
+        }
+
+        return $this->renderErrorNotAuthenticated($forceAuth);
+    }
+
+    private function isPasswordCorrect(MultimediaObject $multimediaObject, $phpAuthPassword)
+    {
+        if ($embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast()) {
+            if ($phpAuthPassword === $embeddedBroadcast->getPassword()) {
+                return true;
+            }
+        }
+
+        return $this->renderErrorPassword();
+    }
+
+    private function renderErrorNotAuthenticated($forceAuth = false)
+    {
+        if ($forceAuth) {
+            throw new AccessDeniedException('Unable to access this page!');
+        }
+        $renderedView = $this->templating->render('PumukitWebTVBundle:Index:403forbidden.html.twig', array('show_forceauth' => true));
+
+        return new Response($renderedView, 403);
+
+    }
+
+    private function renderErrorPassword()
+    {
+        $seriesUrl = $this->router->generate('pumukit_webtv_series_index', array('id' => $multimediaObject->getSeries()->getId()), true);
+        $redReq = new RedirectResponse($seriesUrl, 302);
+
+        return new Response($redReq->getContent(), 401, array('WWW-Authenticate' => 'Basic realm="Resource not public."'));
     }
 }
