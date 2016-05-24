@@ -1,18 +1,3 @@
-//-- send height to other domains --
-currentIframeSize = 0;
-window.addEventListener("message", receiveMessage, false);
-function receiveMessage(event){
-    if(event.data = 'gimme_iframe_height') {
-        window.setInterval(function(){
-            var size = $('body').outerHeight(true);
-            if ( currentIframeSize != size ){
-                currentIframeSize = size;
-                event.source.postMessage({height: size}, event.origin);
-            }
-        }, 250);
-    }
-}
-//-- send height to other domains --
 window.submit_delete_role = function(id, countMm)
 {
     if (countMm == 0){
@@ -445,7 +430,7 @@ window.submit_series_change_pub = function()
             var channel = $('#pub_channel_change_pub_'+channelsId[i]+'_mm_'+mmId);
             channels[channelsId[i]] = channel.prop('checked')
         }
-        values[mmId] = {'status': $('#status_change_pub_'+mmId+' option:selected').val(), 'channels': channels};
+        values[mmId] = {'status': $('#status_change_pub_'+mmId+' option:selected').val(), 'channels': channels};        
     });
     if (values.size == 0) return false;
 
@@ -744,7 +729,7 @@ window.change_select = function(element, selector, pluralName, seriesId)
            no_success('{% trans %}Select any user.{% endtrans %}');
            break;
         }
-
+    
         var node = selector.find(':selected');
         var profile = node.data('profile');
         var profilename = node.data('profilename');
@@ -753,7 +738,7 @@ window.change_select = function(element, selector, pluralName, seriesId)
             type: 'POST',
             data: {'ids': ids, 'profile': profile},
             error: function(jqXHR, textStatus, errorThrown){ debugger; },
-            success: function(response){
+            success: function(response){ 
                 ids.forEach(function(e){$('#profile'+e).html(profilename)})
                 $('.' + element + '_checkbox:checked').each(function(){
                     var $this = $(this);
@@ -780,12 +765,12 @@ function select_tree_tag(element)
   return false;
 }
 
-function toggle_tree_tag(element, id, mm_id, tag_id, tag_cod)
+function toggle_tree_tag(element, id, mm_id, tag_id, tag_cod) 
 {
   parent = $(element.parentElement);
   if (parent.hasClass("notload")) {
     parent.removeClass("notload");
-
+  
     var route = "{{ path('pumukitnewadmin_mms_getchildrentag', {'id': 'PLACEHOLDER_TAG_ID'})|raw }}";
     route = route.replace('PLACEHOLDER_MM_ID', mm_id).replace('PLACEHOLDER_TAG_ID', id);
 
@@ -795,14 +780,14 @@ function toggle_tree_tag(element, id, mm_id, tag_id, tag_cod)
     parent.addClass("expanded").removeClass("collapsed");
   } else {
     if (parent.hasClass("expanded")) {
-      $(".c_" + tag_cod).hide();
+      $(".c_" + tag_cod).hide();      
       $(".c_" + tag_cod+".expanded").removeClass("expanded").addClass("collapsed");
       parent.removeClass("expanded").addClass("collapsed");
     } else {
       $(".tag_li_parent_" + id).show();
       parent.addClass("expanded").removeClass("collapsed");
     }
-
+    
   }
 
 }
@@ -852,7 +837,7 @@ function inc_num_mm(tag_id, num)
   }
 }
 
-function add_tree_tag(tag_id, mm_id, block_tag_id)
+function add_tree_tag(tag_id, mm_id, block_tag_id) 
 {
   var route = "{{ path('pumukitnewadmin_mms_addtag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' })|raw }}";
   route = route.replace('PLACEHOLDER_MM_ID', mm_id).replace('PLACEHOLDER_TAG_ID', tag_id);
@@ -869,14 +854,14 @@ function add_tree_tag(tag_id, mm_id, block_tag_id)
 }
 
 
-function del_tree_tag(tag_id, mm_id)
+function del_tree_tag(tag_id, mm_id) 
 {
   var route = "{{ path('pumukitnewadmin_mms_deletetag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' })|raw }}";
   route = route.replace('PLACEHOLDER_TAG_ID', tag_id).replace('PLACEHOLDER_MM_ID', mm_id);
   $.ajax({
-    url: route,
+    url: route, 
     type: 'DELETE',
-    parameters: {'_method': 'DELETE'},
+    parameters: {'_method': 'DELETE'}, 
     success: function(response){
       for (var i=0; i<response.deleted.length; i++) {
         var c = response.deleted[i];
@@ -914,14 +899,14 @@ function filter_series(form)
     if (to_date.val() != "" && from_date.val() >= to_date.val()) {
         to_date[0].setCustomValidity("{% trans %}From date must be less than to date{% endtrans %}");
     }else{
-        $('#list_series').load('{{ path('pumukitnewadmin_series_list')|raw }}', $(form).serialize());
+        $('#list_series').load('{{ path('pumukitnewadmin_series_list')|raw }}', $(form).serialize());    
     }
-
+  
     return false;
 }
 
 function comprobar_date(date, re){
-    return !re.test(date);
+    return !re.test(date); 
 }
 
 procesaOk = function(){
@@ -1107,7 +1092,7 @@ $(document).on('click', '#pumukitnewadmin_series_multimedia_objects_sort_selecte
     $('#list_series').load(route.replace('__type__', type), {'_method':'POST'});
     return false;
 });
-
+ 
 $(document).on('click', '#pumukitnewadmin_series_multimedia_objects_sort_not_selected', function(){
     var inputROId = $('#inputROId').val();
     if (inputROId) {
@@ -1428,9 +1413,9 @@ window.fileServerTree = function(element, type, dir, num, input)
                            ((file.content) ? ' [' + (file.content) + ' video(s)]' : '') +
                            '</span></a>';
                     if(type == 'dir') {
-                        links += '<a style="color:blue; text-decoration: underline" class="list-group-item element" href="#" onclick="fileServerSelect(this, \'' + file.path + '\');">' +
-                                 '<span style="padding-left: ' + (10 *num)  + 'px"><i class="mdi- tag_icon"></i></span>' +
-                                 '{% trans %}This directory{% endtrans %}' +
+                        links += '<a style="color:blue; text-decoration: underline" class="list-group-item element" href="#" onclick="fileServerSelect(this, \'' + file.path + '\');">' + 
+                                 '<span style="padding-left: ' + (10 *num)  + 'px"><i class="mdi- tag_icon"></i></span>' + 
+                                 '{% trans %}This directory{% endtrans %}' + 
                                  '</a>';
                     }
                   }
