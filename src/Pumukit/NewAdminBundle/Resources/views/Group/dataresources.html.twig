@@ -1,3 +1,7 @@
 {% for resource in resources %}
+{% if 'user' == resource_name and group.origin != constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL') %}
+<p><a href="#"><i data-toggle="tooltip" data-placement="right" title="{% trans %}External defined users and groups can not be edited here, contact your directory service administrator.{% endtrans %}" class="mdi-action-info" style="color:#009587"></i></a>&nbsp;{{ (resource_name == 'user') ? resource.username : resource.getTitle() }}</p>
+{% else %}
 <p><a href="#" onclick="delete_{{ resource_name }}_from_group('{{ resource.id }}', '{{ group.id }}');"><i class="mdi-content-clear"/></a>&nbsp;{{ (resource_name == 'user') ? resource.username : resource.getTitle() }}</p>
+{% endif %}
 {% endfor %}
