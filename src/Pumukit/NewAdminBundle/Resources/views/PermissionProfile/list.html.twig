@@ -79,7 +79,6 @@
           {% endfor %}
         </tr>
         {% for key,permission in permissions %}
-        {% if broadcast_enabled or (key != constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_BROADCASTS')) %}
         <tr>
           <td id="{{ key }}">
             {{ permission }}{% if ((dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_GLOBAL')]|length > 0) or (dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_PERSONAL')]|length > 0)) %} <i data-original-title="{% for dependency in dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_GLOBAL')] %}{% if loop.first %}GLOBAL SCOPE DEPENDENCIES: {% endif %}{{ permissions[dependency] }}{% if loop.last %}. {% else %}, {% endif %}{% endfor %}{% for dependency in dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_PERSONAL')] %}{% if loop.first %}PERSONAL SCOPE DEPENDENCIES: {% endif %}{{ permissions[dependency] }}{% if loop.last %}.{% else %}, {% endif %}{% endfor %}" class="mdi-action-info" data-toggle="tooltip" data-placement="right" title=""></i>{% endif %}
@@ -100,7 +99,6 @@
           </td>
           {% endfor %}
         </tr>
-        {% endif %}
         {% endfor %}
       </tbody>
     </table>

@@ -69,8 +69,10 @@
       {% set activated = app.request.query.get('start') or app.request.query.get('end') %}
       <div id="advanced-date-search" {{ activated?'':'style="display:none"' }}>
         <div class="col-xs-6">
-          <label for="start">{% trans %}Start date{% endtrans %}:</label>
-          <a style="margin-right:-15px;cursor:pointer;" onclick="toggleDateSelect()">{% trans %} Select by year {% endtrans %}</a>
+          <span  style="white-space: nowrap; overflow: hidden;">
+            <label for="start">{% trans %}Start date{% endtrans %}:</label>
+            <a style="margin-right:-15px;cursor:pointer;" onclick="toggleDateSelect()">{% trans %} Select by year {% endtrans %}</a>
+          </span>
           <div class="input-group date" id='start'>
             <input type='text' class="form-control" name="start" value="{{ app.request.query.get('start') }}" placeholder="{% trans %}From{% endtrans %}" onblur="submitForm(this);" {{ activated?'':'disabled'}}/>
             <span class="input-group-addon">
@@ -116,6 +118,7 @@
            $('#start input').attr('type', 'date');
            $('#end input').attr('type', 'date');
            $('#advanced-date-search .input-group-addon').remove();
+           $('.date').removeClass('input-group');
        }
        else {
            $( "#start" ).datetimepicker({useCurrent: false, viewMode: 'years', format: 'YYYY-MM-DD'});

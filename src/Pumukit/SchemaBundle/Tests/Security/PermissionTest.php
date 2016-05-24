@@ -21,7 +21,6 @@ class PermissionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(array_key_exists(Permission::ACCESS_ADMIN_USERS, Permission::$permissionDescription));
         $this->assertTrue(array_key_exists(Permission::ACCESS_ROLES, Permission::$permissionDescription));
         $this->assertTrue(array_key_exists(Permission::ACCESS_PERMISSION_PROFILES, Permission::$permissionDescription));
-        $this->assertTrue(array_key_exists(Permission::ACCESS_IMPORTER, Permission::$permissionDescription));
         $this->assertTrue(array_key_exists(Permission::CHANGE_MMOBJECT_STATUS, Permission::$permissionDescription));
         $this->assertTrue(array_key_exists(Permission::CHANGE_MMOBJECT_PUBCHANNEL, Permission::$permissionDescription));
         $this->assertTrue(array_key_exists(Permission::ACCESS_PUBLICATION_TAB, Permission::$permissionDescription));
@@ -38,7 +37,7 @@ class PermissionTest extends \PHPUnit_Framework_TestCase
             )
         );
         $accessMultimediaSeries = array(
-            'description' => "Access Multimedia Series",
+            'description' => "Access Media Manager",
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()
@@ -190,7 +189,6 @@ class PermissionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($accessAdminUsers, Permission::$permissionDescription[Permission::ACCESS_ADMIN_USERS]);
         $this->assertEquals($accessRoles, Permission::$permissionDescription[Permission::ACCESS_ROLES]);
         $this->assertEquals($accessPermissionProfiles, Permission::$permissionDescription[Permission::ACCESS_PERMISSION_PROFILES]);
-        $this->assertEquals($accessImporter, Permission::$permissionDescription[Permission::ACCESS_IMPORTER]);
         $this->assertEquals($changeMmObjectStatus, Permission::$permissionDescription[Permission::CHANGE_MMOBJECT_STATUS]);
         $this->assertEquals($changeMmObjectPubChannel, Permission::$permissionDescription[Permission::CHANGE_MMOBJECT_PUBCHANNEL]);
         $this->assertEquals($accessPublicationTab, Permission::$permissionDescription[Permission::ACCESS_PUBLICATION_TAB]);

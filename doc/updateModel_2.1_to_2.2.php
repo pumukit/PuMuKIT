@@ -107,6 +107,9 @@ class MyLocalCommand extends ContainerAwareCommand
             else {
                 $person = new Person();
                 $person->setName($user->getFullname());
+                if('' == trim($user->getFullname()) && $user->hasRole('ROLE_SUPER_ADMIN')) {
+                    $person->setName('Administrator');
+                }
                 $person->setEmail($user->getEmail());
             }
             //Set the person user
