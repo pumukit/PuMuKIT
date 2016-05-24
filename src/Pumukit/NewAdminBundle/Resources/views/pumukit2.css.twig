@@ -1,10 +1,5 @@
 body {
   padding-bottom: 60px;
-{% if pumukit2_info.nakedBackofficeSubdomain is defined
-   and app.request.getHttpHost == pumukit2_info.nakedBackofficeSubdomain
-   and pumukit2_info.nakedBackofficeColor is defined %}
-  background-color: {{ pumukit2_info.nakedBackofficeColor }};
-{% endif %}
 }
 
 .checkbox {

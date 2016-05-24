@@ -37,10 +37,7 @@
 <script src="{{ asset('/bundles/pumukitnewadmin/js/jquery-ui-1.11.3.custom.min.js') }}"></script>
 {% endblock %}
 {% block body_base %}
-{% if pumukit2_info.nakedBackofficeSubdomain is not defined
-      or app.request.getHttpHost != pumukit2_info.nakedBackofficeSubdomain %}
-  {% include 'PumukitNewAdminBundle::menu.html.twig' %}
-{% endif %}
+{% include 'PumukitNewAdminBundle::menu.html.twig' %}
 <div class="container-fluid main">
   {% block body %}{% endblock %}
 </div>
@@ -50,8 +47,5 @@
     </div>
   </div>
 </div>
-{% if pumukit2_info.nakedBackofficeSubdomain is not defined
-      or app.request.getHttpHost != pumukit2_info.nakedBackofficeSubdomain %}
-  {% include 'PumukitNewAdminBundle::footer.html.twig' %}
-{% endif %}
+{% include 'PumukitNewAdminBundle::footer.html.twig' %}
 {% endblock body_base %}
