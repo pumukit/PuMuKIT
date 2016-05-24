@@ -1,4 +1,4 @@
-{% for group in groups if (group not in resource.getGroups() and (group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL'))) %}
+{% for group in groups if group not in resource.getGroups() %}
 <a href="#" 
    id="delete_{{ resource_name }}_group_{{ group.id }}"
    onclick="javascript:return select_group(this);" 
