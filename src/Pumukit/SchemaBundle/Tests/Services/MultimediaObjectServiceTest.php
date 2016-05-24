@@ -7,6 +7,7 @@ use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Document\User;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
 
@@ -44,6 +45,7 @@ class MultimediaObjectServiceTest extends WebTestCase
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Group')->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:User')->remove(array());
         $this->dm->flush();
     }
 
@@ -368,5 +370,48 @@ class MultimediaObjectServiceTest extends WebTestCase
         $this->assertFalse($multimediaObject->containsGroup($group1));
         $this->assertFalse($multimediaObject->containsGroup($group2));
         $this->assertFalse($multimediaObject->containsGroup($group3));
+    }
+
+    public function testIsUserOwner()
+    {
+        $user1 = new User();
+        $user1->setUsername('user1');
+        $user1->setEmail('user1@mail.com');
+
+        $user2 = new User();
+        $user2->setUsername('user2');
+        $user2->setEmail('user2@mail.com');
+
+        $this->dm->persist($user1);
+        $this->dm->persist($user2);
+        $this->dm->flush();
+
+        $owners1 = array();
+        $owners2 = array($user1->getId());
+        $owners3 = array($user1->getId(), $user2->getId());
+
+        $mm1 = new MultimediaObject();
+        $mm1->setTitle('mm1');
+        $mm1->setProperty('owners', $owners1);
+
+        $mm2 = new MultimediaObject();
+        $mm2->setTitle('mm2');
+        $mm2->setProperty('owners', $owners2);
+
+        $mm3 = new MultimediaObject();
+        $mm3->setTitle('mm3');
+        $mm3->setProperty('owners', $owners3);
+
+        $this->dm->persist($mm1);
+        $this->dm->persist($mm2);
+        $this->dm->persist($mm3);
+        $this->dm->flush();
+
+        $this->assertFalse($this->mmsService->isUserOwner($user1, $mm1));
+        $this->assertFalse($this->mmsService->isUserOwner($user2, $mm1));
+        $this->assertTrue($this->mmsService->isUserOwner($user1, $mm2));
+        $this->assertFalse($this->mmsService->isUserOwner($user2, $mm2));
+        $this->assertTrue($this->mmsService->isUserOwner($user1, $mm3));
+        $this->assertTrue($this->mmsService->isUserOwner($user2, $mm3));
     }
 }
