@@ -260,4 +260,14 @@ class Group implements GroupInterface
     {
         return $this;
     }
+
+    /**
+     * To string
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->key;
+    }
 }
