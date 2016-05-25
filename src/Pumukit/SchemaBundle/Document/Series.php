@@ -1009,7 +1009,7 @@ class Series
   }
 
   /**
-   * DEPRECATED: Use PicService, function getFirstUrlPic($object, $absolute, $hd)
+   * @deprecated: Use PicService, function getFirstUrlPic($object, $absolute, $hd)
    *
    * Get first pic url
    *

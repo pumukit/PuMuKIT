@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Broadcast;
 
 /**
- * DEPRECATED in version 2.3
+ * @deprecated in version 2.3
  */
 class BroadcastRepositoryTest extends WebTestCase
 {

@@ -55,7 +55,7 @@ class MultimediaObject
     /**
      * @var Broadcast $broadcast
      *
-     * DEPRECATED in version 2.3
+     * @deprecated in version 2.3
      * use EmbeddedBroadcast instead
      *
      * @MongoDB\ReferenceOne(targetDocument="Broadcast", inversedBy="multimedia_object", simple=true)
@@ -796,7 +796,7 @@ class MultimediaObject
     /**
      * Set broadcast
      *
-     * DEPRECATED in version 2.3
+     * @deprecated in version 2.3
      *
      * @param Broadcast $broadcast
      */
@@ -814,7 +814,7 @@ class MultimediaObject
     /**
      * Get broadcast
      *
-     * DEPRECATED in version 2.3
+     * @deprecated in version 2.3
      *
      * @return Broadcast
      */
@@ -827,7 +827,7 @@ class MultimediaObject
     /**
      * Get broadcast
      *
-     * DEPRECATED in version 2.3
+     * @deprecated in version 2.3
      *
      * @return Broadcast
      */
@@ -1170,7 +1170,7 @@ class MultimediaObject
     }
 
     /**
-     * DEPRECATED: Use PicService, function getFirstUrlPic($object, $absolute, $hd)
+     * @deprecated: Use PicService, function getFirstUrlPic($object, $absolute, $hd)
      *
      * Get first pic url
      *

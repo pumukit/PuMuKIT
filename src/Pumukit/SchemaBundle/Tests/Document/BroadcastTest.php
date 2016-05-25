@@ -6,7 +6,7 @@ use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
- * DEPRECATED in version 2.3
+ * @deprecated in version 2.3
  */
 class BroadcastTest extends \PHPUnit_Framework_TestCase
 {

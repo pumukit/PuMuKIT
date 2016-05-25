@@ -47,7 +47,7 @@ EOT
     }
 
     /**
-     * DEPRECATED in version 2.3
+     * @deprecated in version 2.3
      */
     private function syncNumberMultimediaObjectsOnBroadcast(InputInterface $input, OutputInterface $output)
     {
