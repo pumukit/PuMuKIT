@@ -27,6 +27,9 @@ class Builder extends ContainerAware
             $series = $menu->addChild('Media Manager', array('route' => 'pumukitnewadmin_series_index'))->setExtra('translation_domain', 'NewAdminBundle');
             $series->addChild('Multimedia', array('route' => 'pumukitnewadmin_mms_index'))->setExtra('translation_domain', 'NewAdminBundle');
             $series->setDisplayChildren(false);
+        }
+
+        if ($authorizationChecker->isGranted('ROLE_ACCESS_STATS')) {
             $stats = $menu->addChild('Stats')->setExtra('translation_domain', 'NewAdminBundle');
             $stats->addChild('Series', array('route' => 'pumukit_stats_series_index'))->setExtra('translation_domain', 'NewAdminBundle');
             $stats->addChild('Multimedia Objects', array('route' => 'pumukit_stats_mmobj_index'))->setExtra('translation_domain', 'NewAdminBundle');
