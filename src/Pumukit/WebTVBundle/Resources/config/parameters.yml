@@ -24,19 +24,18 @@ parameters:
   show_mostviewed_lastmonth: false                        # If true it shows only the most viewed during last month.
   show_latest_with_pudenew:  false                        # Set whether to use the PUDENEW tag for 'Recently Added' and 'Latest Uploads'
 
-  pumukit_web_tv.breadcrumbs_all_title: 'All'       
+  pumukit_web_tv.breadcrumbs_all_title: 'All'
   pumukit_web_tv.breadcrumbs_all_route: 'pumukit_webtv_medialibrary_index'
 
   pumukit_web_tv.breadcrumbs_parentweb:             # 'If set to an array, a 'parent' will always appear as first element in the breadcrumbs service.
-#    title:  'Pumukit University' 
+#    title:  'Pumukit University'
 #    url:    'http://www.pumukit.org'
 
   pumukit_web_tv.default_pic: '/bundles/pumukitwebtv/images/no_pic.jpg'
   pumukit_web_tv.linktagtosearch: false             # If set to true, the links to tags will link to a search template with the tag already selected on the search.
 
   pumukit_web_tv.media_library.filter_tags:
-    - DIRECTRIZ
-    - UNESCO
+    - ITUNESU
 
   pumukit2.intro:            null                   # If set to an url, plays that url before every video.
 
