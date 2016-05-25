@@ -72,7 +72,7 @@ class TrackController extends Controller implements NewAdminController
             return array(
                          'mm' => $multimediaObject,
                          'uploaded' => 'failed',
-                         'message' => preg_replace( "/\r|\n/", "", $e->getMessage())
+                         'message' => 'The file is not a valid video or audio file'
                          );
         }
 

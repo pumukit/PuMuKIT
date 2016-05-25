@@ -27,6 +27,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class JobService
 {
+    const ADD_JOB_UNIQUE = 1;
+    const ADD_JOB_NOT_CHECKS = 2;
+
     private $dm;
     private $repo;
     private $profileService;
@@ -39,7 +42,7 @@ class JobService
     private $environment;
     private $tokenStorage;
 
-    public function __construct(DocumentManager $documentManager, ProfileService $profileService, CpuService $cpuService, 
+    public function __construct(DocumentManager $documentManager, ProfileService $profileService, CpuService $cpuService,
                                 InspectionServiceInterface $inspectionService, EventDispatcherInterface $dispatcher, LoggerInterface $logger,
                                 TrackService $trackService, TokenStorage $tokenStorage, $environment="dev", $tmpPath=null)
     {
@@ -57,7 +60,7 @@ class JobService
     }
 
     /**
-     * Create track from local hard drive with job service
+     * Create track from local hard drive with job service. AddJob method wrapper.
      *
      * @param MultimediaObject $multimediaObject
      * @param UploadedFile $file
@@ -67,7 +70,7 @@ class JobService
      * @param array $description
      * @return MultimediaObject
      */
-    public function createTrackFromLocalHardDrive(MultimediaObject $multimediaObject, UploadedFile $trackFile, $profile, $priority, $language, $description)
+    public function createTrackFromLocalHardDrive(MultimediaObject $multimediaObject, UploadedFile $trackFile, $profile, $priority, $language, $description, $initVars = array(), $duration = 0, $flags = 0)
     {
         if(UPLOAD_ERR_OK != $trackFile->getError()) {
            throw new \Exception($trackFile->getErrorMessage());
@@ -79,13 +82,13 @@ class JobService
 
         $pathFile = $trackFile->move($this->tmpPath."/".$multimediaObject->getId(), $trackFile->getClientOriginalName());
 
-        $this->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description);
+        $this->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description, $initVars, $duration, $flags);
 
         return $multimediaObject;
     }
 
     /**
-     * Create track from inbox on server with job service
+     * Create track from inbox on server with job service. AddJob method wrapper.
      *
      * @param MultimediaObject $multimediaObject
      * @param string $trackUrl
@@ -95,58 +98,85 @@ class JobService
      * @param array $description
      * @return MultimediaObject
      */
-    public function createTrackFromInboxOnServer(MultimediaObject $multimediaObject, $trackUrl, $profile, $priority, $language, $description)
+    public function createTrackFromInboxOnServer(MultimediaObject $multimediaObject, $trackUrl, $profile, $priority, $language, $description, $initVars = array(), $duration = 0, $flags = 0)
     {
         if (!is_file($trackUrl)) {
             throw new FileNotFoundException($trackUrl);
         }
 
-        $this->addJob($trackUrl, $profile, $priority, $multimediaObject, $language, $description);
+        $this->addJob($trackUrl, $profile, $priority, $multimediaObject, $language, $description, $initVars, $duration, $flags);
 
         return $multimediaObject;
     }
 
     /**
      * Add job checking if not exists.
+     *
+     * @deprecated: Use addJob with JobService::ADD_JOB_UNIQUE flag.
      */
     public function addUniqueJob($pathFile, $profile, $priority, MultimediaObject $multimediaObject, $language = null, $description = array(), $initVars = array())
     {
-        $job = $this->repo->findOneBy(array("profile" => $profile, "mm_id" => $multimediaObject->getId()));
-
-        if ($job) {
-            return $job;
-        } else {
-            return $this->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description, $initVars);
-        }
+        $this->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description, $initVars, 0, self::ADD_JOB_UNIQUE);
     }
 
     /**
-     * Add job
+     * Add a encoder job
+     *
+     * @param string $pathFile Absolute path of the multimedia object
+     * @param string $profile Encoder profile name
+     * @param int $priority Priority of the new job
+     * @param MultimediaObject $multimediaObject
+     * @param string $language
+     * @param array $description
+     * @param array $initVars Init values of the Job
+     * @param int $duration Only necesary in JobService::ADD_JOB_NOT_CHECKS
+     * @param int $flags A bit field of constants to customize the job creation: JobService::ADD_JOB_UNIQUE, JobService::ADD_JOB_NOT_CHECKS
+     *
+     * @return Job
      */
-    public function addJob($pathFile, $profile, $priority, MultimediaObject $multimediaObject, $language = null, $description = array(), $initVars = array())
+    public function addJob($pathFile, $profile, $priority, MultimediaObject $multimediaObject, $language = null, $description = array(), $initVars = array(), $duration = 0, $flags = 0)
     {
-        $this->checkService();
 
-        if (!is_file($pathFile)) {
-            $this->logger->addError('[addJob] FileNotFoundException: Could not find file "'.$pathFile);
-            throw new FileNotFoundException($pathFile); 
+        if (self::ADD_JOB_UNIQUE & $flags) {
+            $job = $this->repo->findOneBy(array("profile" => $profile, "mm_id" => $multimediaObject->getId()));
+
+            if ($job) {
+                return $job;
+            }
         }
+
+        $this->checkService();
 
         if (null === $this->profileService->getProfile($profile)){
             $this->logger->addError('[addJob] Can not find given profile with name "'.$profile);
             throw new \Exception("Can't find given profile with name ".$profile);
         }
-        
+
         if (null === $multimediaObject){
             $this->logger->addError('[addJob] Given null multimedia object');
             throw new \Exception("Given null multimedia object");
         }
 
-        try{
-            $duration = $this->inspectionService->getDuration($pathFile);
-        }catch (\Exception $e){
-            $this->logger->addError('[addJob] InspectionService getDuration error message: '. $e->getMessage());
-            throw new \Exception($e->getMessage());
+        if (!(self::ADD_JOB_NOT_CHECKS & $flags)) {
+            if (!is_file($pathFile)) {
+                $this->logger->addError('[addJob] FileNotFoundException: Could not find file "'.$pathFile);
+                throw new FileNotFoundException($pathFile);
+            }
+            try{
+                $duration = $this->inspectionService->getDuration($pathFile);
+            }catch (\Exception $e){
+                $this->logger->addError('[addJob] InspectionService getDuration error message: '. $e->getMessage());
+                throw new \Exception($e->getMessage());
+            }
+
+            if (0 == $duration) {
+                $this->logger->addError('[addJob] File duration is zero');
+                throw new \Exception('File duration is zero');
+            }
+        }
+
+        if(0 == $duration) {
+            throw new \Exception('The media file duration is zero');
         }
 
         $job = new Job();
@@ -208,7 +238,7 @@ class JobService
             $this->logger->addError('[resumeJob] Can not find job with id '.$id);
             throw new \Exception("Can't find job with id ".$id);
         }
-        $this->changeStatus($job, Job::STATUS_PAUSED, Job::STATUS_WAITING);      
+        $this->changeStatus($job, Job::STATUS_PAUSED, Job::STATUS_WAITING);
     }
 
     /**
@@ -257,12 +287,12 @@ class JobService
             $this->logger->addError('[updateJobPriority] Can not find job with id '.$id);
             throw new \Exception("Can't find job with id ".$id);
         }
-        
+
         $job->setPriority($priority);
         $this->dm->persist($job);
         $this->dm->flush();
     }
-    
+
     /**
      * Get all jobs status
      */
@@ -276,7 +306,7 @@ class JobService
                      'error' => count($this->repo->findWithStatus(array(Job::STATUS_ERROR)))
                      );
     }
-    
+
     /**
      * Get next job
      *
@@ -308,7 +338,7 @@ class JobService
 
             return $nextJob;
         }
-        
+
         return null;
     }
 
@@ -367,9 +397,9 @@ class JobService
         $commandLine = $this->renderBat($job);
 
         $this->mkdir(dirname($job->getPathEnd()));
-        
+
         $executor = $this->getExecutor($profile['app'], $cpu);
-        
+
         try{
             $out = $executor->execute($commandLine, $cpu);
             $job->setOutput($out);
@@ -448,7 +478,7 @@ class JobService
         }
 
         $vars['properties'] = $mmobj->getProperties();
-        
+
         $vars['input'] = $job->getPathIni();
         $vars['output'] = $job->getPathEnd();
 
@@ -461,12 +491,12 @@ class JobService
 
         $commandLine = $twig->render('bat', $vars);
         $this->logger->addInfo('[renderBat] CommandLine: ' . $commandLine);
-    
+
         $cpu = $this->cpuService->getCpuByName($job->getCpu());
         if(CpuService::TYPE_WINDOWS === $cpu['type']){
             //TODO - PATH UNIX TRANSCODER and PATH WIN TRANSCODER
         }
-        
+
         return $commandLine;
     }
 
@@ -482,7 +512,7 @@ class JobService
             $this->dm->flush();
         }
     }
-    
+
 
     /**
      * Set path end auto
@@ -498,7 +528,7 @@ class JobService
             $this->logger->addError('[setPathEndAndExtensions] Error getting multimedia object to set path_end.');
             throw new \Exception('Error getting multimedia object to set path_end.');
         }
-   
+
         if (!$job->getProfile()) {
             $this->logger->addError('[setPathEndAndExtensions] Error with profile name to set path_end.');
             throw new \Exception('Error with profile name to set path_end.');
@@ -507,7 +537,7 @@ class JobService
         $profile = $this->getProfile($job);
         $mmobj = $this->getMultimediaObject($job);
 
-        $extension = pathinfo($job->getPathIni(), PATHINFO_EXTENSION);        
+        $extension = pathinfo($job->getPathIni(), PATHINFO_EXTENSION);
         $pathEnd = $this->getPathEnd($profile, $mmobj->getSeries()->getId(), $job->getId(), $extension);
 
         $job->setPathEnd($pathEnd);
@@ -527,14 +557,14 @@ class JobService
 
         $this->mkdir($tempDir);
 
-        return realpath($tempDir) . '/' . $file . '.' . $finalExtension;      
+        return realpath($tempDir) . '/' . $file . '.' . $finalExtension;
     }
 
 
     public function createTrackWithJob($job)
-    {                             
+    {
         $multimediaObject = $this->getMultimediaObject($job);
-      
+
         return $this->createTrack($multimediaObject, $job->getPathEnd(), $job->getProfile(), $job->getLanguageId(), $job->getI18nDescription());
     }
 
@@ -542,15 +572,15 @@ class JobService
     {
         $profile = $this->profileService->getProfile($profileName);
 
-        $pathEnd = $this->getPathEnd($profile, 
-                                     $multimediaObject->getSeries()->getId(), 
+        $pathEnd = $this->getPathEnd($profile,
+                                     $multimediaObject->getSeries()->getId(),
                                      pathinfo($pathFile, PATHINFO_FILENAME),
                                      pathinfo($pathFile, PATHINFO_EXTENSION));
 
         if (!copy($pathFile, $pathEnd)) {
           throw new \Exception("Error to copy file");
         }
-        
+
         return $this->createTrack($multimediaObject, $pathEnd, $profileName, $language, $description);
     }
 

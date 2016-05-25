@@ -41,7 +41,7 @@
 {% set mmobj_selected_background = mmobj_selected_background | default('#ededed') %}
 {% set mmobj_serie_background = mmobj_serie_background | default(mmobj_selected_background) %}
 {% set mmobj_serie_font = mmobj_serie_font | default(mmobj_selected_font_color) %}
-{% set navbar_background = navbar_background | default(default_light_background) %}
+{% set navbar_background = navbar_background | default(menu_background) %}
 {% set navbar_font = navbar_background | default(default_light_font) %}
 {% set panel_default_background = panel_default_background | default(default_light_background) %}
 {% set panel_default_font = panel_default_font | default(default_light_font) %}
@@ -545,7 +545,6 @@ body.opencast-layout .breadcrumb_wrapper {
     min-height: 600px;
     max-width: {{ content_max_width }};
 }
-
 /*CIES*/
 .announces {
     margin-top: 40px;
