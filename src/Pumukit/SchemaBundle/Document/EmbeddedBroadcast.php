@@ -20,9 +20,9 @@ class EmbeddedBroadcast
     const TYPE_GROUPS = 'groups';
 
     const NAME_PUBLIC = 'Public';
-    const NAME_PASSWORD = 'Protected with Password';
-    const NAME_LOGIN = 'Protected with Login';
-    const NAME_GROUPS = 'Protected with Groups';
+    const NAME_PASSWORD = 'Password protected';
+    const NAME_LOGIN = 'Only logged in Users';
+    const NAME_GROUPS = 'Only Users in Groups';
 
     /**
      * @var int $id
