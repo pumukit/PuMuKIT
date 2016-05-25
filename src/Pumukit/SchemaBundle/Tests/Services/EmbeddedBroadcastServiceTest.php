@@ -499,6 +499,11 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
 
         $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $authorizationChecker, $templating, $this->router, false);
 
+        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, null, '', false);
+        $this->assertTrue($response instanceof Response);
+        $this->assertEquals(403, $response->getStatusCode());
+        $this->assertEquals($content, $response->getContent());
+
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false);
         $this->assertTrue($response instanceof Response);
         $this->assertEquals(403, $response->getStatusCode());
