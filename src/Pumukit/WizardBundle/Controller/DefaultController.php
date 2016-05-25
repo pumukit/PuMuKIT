@@ -176,11 +176,11 @@ class DefaultController extends Controller
                         //exception if is not a mediafile (video or audio)
                         $duration = $inspectionService->getDuration($filePath);
                     } catch (\Exception $e) {
-                        throw new \Exception('The file is not a video or audio');
+                        throw new \Exception('The file is not a valid video or audio file');
                     }
 
                     if(0 == $duration) {
-                        throw new \Exception('The media file duration is zero');
+                        throw new \Exception('The file is not a valid video or audio file (duration is zero)');
                     }
 
                     $series = $this->getSeries($seriesData);

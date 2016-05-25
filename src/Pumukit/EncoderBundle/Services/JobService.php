@@ -168,6 +168,11 @@ class JobService
                 $this->logger->addError('[addJob] InspectionService getDuration error message: '. $e->getMessage());
                 throw new \Exception($e->getMessage());
             }
+
+            if (0 == $duration) {
+                $this->logger->addError('[addJob] File duration is zero');
+                throw new \Exception('File duration is zero');
+            }
         }
 
         if(0 == $duration) {
