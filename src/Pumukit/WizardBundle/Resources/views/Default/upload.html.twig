@@ -2,8 +2,8 @@
   var showSeries = "{{ show_series }}";
   var option = "{{ option }}";
   var uploaded = '{{ uploaded }}';
+  var seriesId = "{{ seriesId }}";
   if ('success' == uploaded){
-    var seriesId = "{{ seriesId }}";
     if ('single' == option){
       var mmId = "{{ mmId }}";
       var route = "{{ path('pumukitwizard_default_end', {'seriesId': '__seriesId__', 'mmId': '__mmId__', 'option': '__option__', 'show_series': '__showSeries__'})|raw }}";
@@ -18,9 +18,10 @@
     parent.success('{% trans %}New Track(s) added.{% endtrans %}');
   }else{
     var message = "{{ message }}";
-    var route = "{{ path('pumukitwizard_default_error', {'option': '__option__', 'show_series': '__showSeries__'})|raw }}";
+    var route = "{{ path('pumukitwizard_default_error', {'seriesId': '__seriesId__', 'option': '__option__', 'show_series': '__showSeries__'})|raw }}";
     route = route.replace('__option__', option);
     route = route.replace('__showSeries__', showSeries);
+    route = route.replace('__seriesId__', seriesId);
     parent.$('#pumukitwizard_body').load(route, {'errormessage': message, '_method': 'POST'});
     parent.no_success('{{ message }}');
   }

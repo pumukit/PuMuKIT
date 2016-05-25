@@ -107,8 +107,10 @@ class InspectionFfprobeService implements InspectionServiceInterface
         $process->setTimeout(60);
         $process->run();
         if (!$process->isSuccessful()) {
-            throw new \RuntimeException('Exception executing "' . $command . '": ' . $process->getExitCode() . ' ' . 
-                $process->getExitCodeText().'. '.$process->getErrorOutput());
+            $message = 'Exception executing "' . $command . '": ' . $process->getExitCode() . ' ' . 
+              $process->getExitCodeText().'. '.$process->getErrorOutput();
+            $this->logger->error($message);
+            throw new \RuntimeException($message);
         }
 
         return $process->getOutput();
