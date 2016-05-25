@@ -2,7 +2,6 @@
 
 namespace Pumukit\WebTVBundle\Controller;
 
-use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

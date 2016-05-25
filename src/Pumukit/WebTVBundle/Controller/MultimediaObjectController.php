@@ -5,7 +5,6 @@ namespace Pumukit\WebTVBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -74,7 +73,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
     {
         $mmobjService = $this->get('pumukitschema.multimedia_object');
         if($mmobjService->isPublished($multimediaObject,'PUCHWEBTV')){
-            if($mmobjService->hasPlayableResource($multimediaObject) && Broadcast::BROADCAST_TYPE_PUB === $multimediaObject->getBroadcast()->getBroadcastTypeId()){
+            if($mmobjService->hasPlayableResource($multimediaObject) && $multimediaObject->isPublicEmbeddedBroadcast()){
                 return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId())));
             }
         } elseif( ($multimediaObject->getStatus() != MultimediaObject::STATUS_PUBLISHED
