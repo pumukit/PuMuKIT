@@ -1,9 +1,8 @@
 body {
   padding-bottom: 60px;
-{% if pumukit2_info.nakedBackofficeSubdomain is defined
-   and app.request.getHttpHost == pumukit2_info.nakedBackofficeSubdomain
-   and pumukit2_info.nakedBackofficeColor is defined %}
-  background-color: {{ pumukit2_info.nakedBackofficeColor }};
+
+{% if app.request.attributes.get('nakedbackoffice_color') %}
+  background-color: {{ app.request.attributes.get('nakedbackoffice_color') }};
 {% endif %}
 }
 

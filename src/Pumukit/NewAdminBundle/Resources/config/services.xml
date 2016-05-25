@@ -50,5 +50,10 @@
       <argument>%pumukitschema.enable_add_user_as_person%</argument>
       <tag name="kernel.event_listener" event="kernel.controller" />
     </service>
+
+    <service id="pumukitnewadmin.nakedbackoffice" class="Pumukit\NewAdminBundle\EventListener\NakedBackofficeListener">
+      <argument>%pumukit2.info%</argument>
+      <tag name="kernel.event_listener" event="kernel.controller" />
+    </service>
   </services>
 </container>
