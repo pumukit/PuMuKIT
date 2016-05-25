@@ -269,7 +269,7 @@ class EmbeddedBroadcastService
             return $this->isUserLoggedInAndInGroups($multimediaObject, $user, $forceAuth);
         }
         if (EmbeddedBroadcast::TYPE_PASSWORD === $embeddedBroadcast->getType()) {
-            return $this->isPasswordCorrect($phpAuthPassword);
+            return $this->isPasswordCorrect($multimediaObject, $phpAuthPassword);
         }
 
         return $this->renderErrorNotAuthenticated($forceAuth);
@@ -326,12 +326,13 @@ class EmbeddedBroadcastService
     private function isPasswordCorrect(MultimediaObject $multimediaObject, $phpAuthPassword)
     {
         if ($embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast()) {
-            if ($phpAuthPassword === $embeddedBroadcast->getPassword()) {
+            $embeddedPassword = $embeddedBroadcast->getPassword();
+            if (($phpAuthPassword == $embeddedPassword) && (null !== $embeddedPassword)) {
                 return true;
             }
         }
 
-        return $this->renderErrorPassword();
+        return $this->renderErrorPassword($multimediaObject);
     }
 
     private function renderErrorNotAuthenticated($forceAuth = false)
@@ -345,7 +346,7 @@ class EmbeddedBroadcastService
 
     }
 
-    private function renderErrorPassword()
+    private function renderErrorPassword(MultimediaObject $multimediaObject)
     {
         $seriesUrl = $this->router->generate('pumukit_webtv_series_index', array('id' => $multimediaObject->getSeries()->getId()), true);
         $redReq = new RedirectResponse($seriesUrl, 302);

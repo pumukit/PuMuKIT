@@ -3,11 +3,13 @@
 namespace Pumukit\SchemaBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Response;
 use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\Series;
 
 class EmbeddedBroadcastServiceTest extends WebTestCase
 {
@@ -457,7 +459,11 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
         $this->dm->persist($mm);
         $this->dm->flush();
 
+        // Test No EmbeddedBroadcast
+
         $this->assertTrue($this->embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false));
+
+        // Test TYPE_PUBLIC
 
         $embeddedBroadcast = new EmbeddedBroadcast();
         $embeddedBroadcast->setType(EmbeddedBroadcast::TYPE_PUBLIC);
@@ -468,9 +474,234 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
 
         $this->assertTrue($this->embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false));
 
-        //TODO:
-        // TEST LOGIN
-        // TEST GROUPS
-        // TEST PASSWORD
+        // Test TYPE_LOGIN
+
+        $embeddedBroadcast = $mm->getEmbeddedBroadcast();
+        $embeddedBroadcast->setType(EmbeddedBroadcast::TYPE_LOGIN);
+        $embeddedBroadcast->setName(EmbeddedBroadcast::NAME_LOGIN);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $authorizationChecker = $this->getMockBuilder('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $authorizationChecker->expects($this->any())
+            ->method('isGranted')
+            ->will($this->returnValue(false));
+
+        $content = 'test';
+        $templating = $this->getMockBuilder('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $templating->expects($this->any())
+            ->method('render')
+            ->will($this->returnValue($content));
+
+        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $authorizationChecker, $templating, $this->router, false);
+
+        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false);
+        $this->assertTrue($response instanceof Response);
+        $this->assertEquals(403, $response->getStatusCode());
+        $this->assertEquals($content, $response->getContent());
+
+        $authorizationChecker = $this->getMockBuilder('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $authorizationChecker->expects($this->any())
+            ->method('isGranted')
+            ->will($this->returnValue(true));
+
+        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $authorizationChecker, $templating, $this->router, false);
+
+        $this->assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false));
+
+        // Test TYPE_GROUPS
+
+        $group1 = new Group();
+        $group1->setKey('key1');
+        $group1->setName('name1');
+
+        $group2 = new Group();
+        $group2->setKey('key2');
+        $group2->setName('name2');
+
+        $group3 = new Group();
+        $group3->setKey('key3');
+        $group3->setName('name3');
+
+        $this->dm->persist($group1);
+        $this->dm->persist($group2);
+        $this->dm->persist($group3);
+        $this->dm->flush();
+
+        $embeddedBroadcast = $mm->getEmbeddedBroadcast();
+        $embeddedBroadcast->setType(EmbeddedBroadcast::TYPE_GROUPS);
+        $embeddedBroadcast->setName(EmbeddedBroadcast::NAME_GROUPS);
+        $mm->addGroup($group2);
+        $user->addGroup($group1);
+        $this->dm->persist($user);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false);
+        $this->assertTrue($response instanceof Response);
+        $this->assertEquals(403, $response->getStatusCode());
+        $this->assertEquals($content, $response->getContent());
+
+        $embeddedBroadcast = $mm->getEmbeddedBroadcast();
+        $embeddedBroadcast->addGroup($group3);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false);
+        $this->assertTrue($response instanceof Response);
+        $this->assertEquals(403, $response->getStatusCode());
+        $this->assertEquals($content, $response->getContent());
+
+        $mm->addGroup($group1);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $this->assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false));
+
+        $mm->removeGroup($group1);
+        $mm->addGroup($group3);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false);
+        $this->assertTrue($response instanceof Response);
+        $this->assertEquals(403, $response->getStatusCode());
+        $this->assertEquals($content, $response->getContent());
+
+        $embeddedBroadcast = $mm->getEmbeddedBroadcast();
+        $embeddedBroadcast->addGroup($group1);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $this->assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false));
+
+        $embeddedBroadcast = $mm->getEmbeddedBroadcast();
+        $embeddedBroadcast->removeGroup($group1);
+        $embeddedBroadcast->addGroup($group2);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false);
+        $this->assertTrue($response instanceof Response);
+        $this->assertEquals(403, $response->getStatusCode());
+        $this->assertEquals($content, $response->getContent());
+
+        $owners = array($user->getId());
+        $mm->setProperty('owners', $owners);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $this->assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false));
+
+        $mm->addGroup($group1);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $this->assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false));
+
+        $embeddedBroadcast = $mm->getEmbeddedBroadcast();
+        $embeddedBroadcast->addGroup($group1);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $this->assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false));
+
+        // Test TYPE_PASSWORD
+
+        $series = new Series();
+        $series->setTitle('series');
+        $this->dm->persist($series);
+        $this->dm->flush();
+
+        $embeddedBroadcast = $mm->getEmbeddedBroadcast();
+        $embeddedBroadcast->setType(EmbeddedBroadcast::TYPE_PASSWORD);
+        $embeddedBroadcast->setName(EmbeddedBroadcast::NAME_PASSWORD);
+        $mm->setSeries($series);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $password = '';
+        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, $password, false);
+        $this->assertTrue($response instanceof Response);
+        $this->assertEquals(401, $response->getStatusCode());
+
+        $embeddedBroadcast = $mm->getEmbeddedBroadcast();
+        $embeddedBroadcast->setPassword($password);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $this->assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, $password, false));
+
+        $password = 'password';
+        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, $password, false);
+        $this->assertTrue($response instanceof Response);
+        $this->assertEquals(401, $response->getStatusCode());
+
+        $embeddedBroadcast = $mm->getEmbeddedBroadcast();
+        $embeddedBroadcast->setPassword('not matching password');
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, $password, false);
+        $this->assertTrue($response instanceof Response);
+        $this->assertEquals(401, $response->getStatusCode());
+
+        $embeddedBroadcast = $mm->getEmbeddedBroadcast();
+        $embeddedBroadcast->setPassword($password);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $this->assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, $password, false));
+    }
+
+
+    /**
+     * @expectedException         Symfony\Component\Security\Core\Exception\AccessDeniedException
+     * @expectedExceptionMessage  Unable to access this page
+     */
+    public function testAccessDeniedException()
+    {
+        $user = new User();
+        $user->setUsername('user');
+        $user->setEmail('user@mail.com');
+
+        $mm = new MultimediaObject();
+        $mm->setTitle('mm');
+
+        $this->dm->persist($user);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $embeddedBroadcast = new EmbeddedBroadcast();
+        $embeddedBroadcast->setType(EmbeddedBroadcast::TYPE_LOGIN);
+        $embeddedBroadcast->setName(EmbeddedBroadcast::NAME_LOGIN);
+        $mm->setEmbeddedBroadcast($embeddedBroadcast);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $authorizationChecker = $this->getMockBuilder('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $authorizationChecker->expects($this->any())
+            ->method('isGranted')
+            ->will($this->returnValue(false));
+
+        $content = 'test';
+        $templating = $this->getMockBuilder('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $templating->expects($this->any())
+            ->method('render')
+            ->will($this->returnValue($content));
+
+        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $authorizationChecker, $templating, $this->router, false);
+
+        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', true);
     }
 }
