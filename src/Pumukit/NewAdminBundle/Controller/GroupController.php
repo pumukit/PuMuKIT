@@ -25,17 +25,10 @@ class GroupController extends AdminController implements NewAdminController
     public function indexAction(Request $request)
     {
         $config = $this->getConfiguration();
-
         $criteria = $this->getCriteria($config);
         $groups = $this->getResources($request, $config, $criteria);
 
-        $groupService = $this->get('pumukitschema.group');
-        $countResources = $groupService->countResources($groups);
-
-        return array(
-                     'groups' => $groups,
-                     'countResources' => $countResources
-                     );
+        return array('groups' => $groups);
     }
 
     /**
@@ -49,13 +42,7 @@ class GroupController extends AdminController implements NewAdminController
         $criteria = $this->getCriteria($config);
         $groups = $this->getResources($request, $config, $criteria);
 
-        $groupService = $this->get('pumukitschema.group');
-        $countResources = $groupService->countResources($groups);
-
-        return array(
-                     'groups' => $groups,
-                     'countResources' => $countResources
-                     );
+        return array('groups' => $groups);
     }
 
     /**
@@ -266,12 +253,19 @@ class GroupController extends AdminController implements NewAdminController
         $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $adminMultimediaObjects = $mmobjRepo->findWithGroup($group);
         $viewerMultimediaObjects = $mmobjRepo->findWithGroupInEmbeddedBroadcast($group);
+        $groupService = $this->get('pumukitschema.group');
+        $countResources = $groupService->countResourcesInGroup($group);
+        $canBeDeleted = $groupService->canBeDeleted($group);
+        $deleteMessage = $groupService->getDeleteMessage($group, $request->get('_locale'));
 
         return array(
                      'group' => $group,
                      'users' => $users,
                      'admin_multimedia_objects' => $adminMultimediaObjects,
-                     'viewer_multimedia_objects' => $viewerMultimediaObjects
+                     'viewer_multimedia_objects' => $viewerMultimediaObjects,
+                     'countResources' => $countResources,
+                     'can_delete' => $canBeDeleted,
+                     'delete_group_message' => $deleteMessage
                      );
     }
 
