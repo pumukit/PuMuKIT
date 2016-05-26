@@ -158,13 +158,12 @@ class DefaultController extends Controller
             // TODO Fragment this. Develop better way.
             $option = $this->getKeyData('option', $typeData);
             try{
-                if (empty($_FILES) && empty($_POST)){
-                    throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
-                }
-
                 if ('single' === $option){
                     $filetype = $this->getKeyData('filetype', $trackData);
                     if ('file' === $filetype){
+                        if(!$request->files->get('resource')->isValid()) {
+                          throw new \Exception($request->files->get('resource')->getErrorMessage());
+                        }
                         $filePath = $request->files->get('resource')->getPathname();
                     }elseif ('inbox' === $filetype){
                         $filePath = $request->get('file');
