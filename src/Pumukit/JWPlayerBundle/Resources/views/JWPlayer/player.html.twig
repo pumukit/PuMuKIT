@@ -23,14 +23,14 @@
          image: "{{ multimediaObject|first_url_pic(true) }}",
          {% endif %}
      },{
-         file: "{{ asset(track.url, absolute=true) }}",
+         file: "{{ asset(track_url(track), absolute=true) }}",
          {{ captions_block }}
          {% if ('true' != autostart) or track.isOnlyAudio() %}
          image: "{{ multimediaObject|first_url_pic(true) }}",
          {% endif %}
      }],
      {% else %}
-     file: "{{ asset(track.url, absolute=true) }}",
+     file: "{{ asset(track_url(track), absolute=true) }}",
      {{ captions_block }}
      {% if (('true' != autostart) or track.isOnlyAudio()) %}
      image: "{{ multimediaObject|first_url_pic(true) }}",
