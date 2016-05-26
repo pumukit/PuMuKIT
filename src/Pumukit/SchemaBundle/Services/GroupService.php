@@ -99,6 +99,30 @@ class GroupService
     }
 
     /**
+     * Can be deleted
+     *
+     * @param  Group $group
+     * @return boolean
+     */
+    public function canBeDeleted(Group $group)
+    {
+        if (Group::ORIGIN_LOCAL != $group->getOrigin()) {
+            return false;
+        }
+        if (0 < $this->countUsersInGroup($group)) {
+            return false;
+        }
+        if (0 < $this->countAdminMultimediaObjectsInGroup($group)) {
+            return false;
+        }
+        if (0 < $this->countPlayMultimediaObjectsInGroup($group)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Count resources
      *
      * @param array $groups

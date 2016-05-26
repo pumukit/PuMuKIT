@@ -571,6 +571,64 @@ class GroupServiceTest extends WebTestCase
         $this->assertEquals(2, $resources[$group2->getId()]['playMultimediaObjects']);
         $this->assertEquals(1, $resources[$group1->getId()]['users']);
         $this->assertEquals(0, $resources[$group2->getId()]['users']);
+    }
 
+    public function testCanBeDeleted()
+    {
+        $externalGroup = new Group();
+        $externalGroup->setKey('external');
+        $externalGroup->setName('external');
+        $externalGroup->setOrigin('external');
+        $this->dm->persist($externalGroup);
+        $this->dm->flush();
+
+        $this->assertFalse($this->groupService->canBeDeleted($externalGroup));
+
+        $group = new Group();
+        $group->setKey('key1');
+        $group->setName('group');
+        $group->setOrigin(Group::ORIGIN_LOCAL);
+
+        $this->dm->persist($group);
+        $this->dm->flush();
+
+        $user = new User();
+        $user->setUsername('user');
+        $user->setEmail('user@mail.com');
+        $user->addGroup($group);
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $this->assertFalse($this->groupService->canBeDeleted($group));
+
+        $user->removeGroup($group);
+
+        $mm = new MultimediaObject();
+        $mm->setTitle('mm');
+        $mm->addGroup($group);
+
+        $this->dm->persist($user);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $this->assertFalse($this->groupService->canBeDeleted($group));
+
+        $mm->removeGroup($group);
+        $embeddedBroadcast = new EmbeddedBroadcast();
+        $embeddedBroadcast->setType(EmbeddedBroadcast::TYPE_GROUPS);
+        $embeddedBroadcast->setName(EmbeddedBroadcast::NAME_GROUPS);
+        $embeddedBroadcast->addGroup($group);
+        $mm->setEmbeddedBroadcast($embeddedBroadcast);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $this->assertFalse($this->groupService->canBeDeleted($group));
+
+        $embeddedBroadcast = $mm->getEmbeddedBroadcast();
+        $embeddedBroadcast->removeGroup($group);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $this->assertTrue($this->groupService->canBeDeleted($group));
     }
 }
