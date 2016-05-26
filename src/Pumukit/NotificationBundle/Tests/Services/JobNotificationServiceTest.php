@@ -30,17 +30,18 @@ class JobNotificationServiceTest extends WebTestCase
 
     public function setUp()
     {
+        if (!array_key_exists("PumukitNotificationBundle", $this->container->getParameter('kernel.bundles'))) {
+            $this->markTestSkipped('NotificationBundle is not installed');
+        }
+        $this->jobNotificationService = $this->container
+          ->get('pumukit_notification.listener');
+
         $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')->remove(array());
         $this->dm->flush();
     }
 
     public function testOnJobSuccess()
     {
-        $this->markTestSkipped('S');
-
-        $this->jobNotificationService = $this->container
-          ->get('pumukit_notification.listener');
-
         $multimediaObject= $this->createNewMultimediaObjectWithTrack();
 
         $job = $this->createNewJob(Job::STATUS_WAITING, $multimediaObject);
@@ -58,11 +59,6 @@ class JobNotificationServiceTest extends WebTestCase
 
     public function testOnJobError()
     {
-        $this->markTestSkipped('S');
-
-        $this->jobNotificationService = $this->container
-          ->get('pumukit_notification.listener');
-
         $multimediaObject= $this->createNewMultimediaObjectWithTrack();
 
         $job = $this->createNewJob(Job::STATUS_WAITING, $multimediaObject);
