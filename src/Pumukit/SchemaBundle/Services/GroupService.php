@@ -4,6 +4,7 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Pumukit\SchemaBundle\Document\Group;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class GroupService
 {
@@ -12,17 +13,20 @@ class GroupService
     private $userRepo;
     private $mmobjRepo;
     private $dispatcher;
+    private $translator;
 
     /**
      * Constructor
      *
      * @param DocumentManager $documentManager
      * @param GroupEventDispatcherService $dispatcher
+     * @param TranslatorInterface $translator
      */
-    public function __construct(DocumentManager $documentManager, GroupEventDispatcherService $dispatcher)
+    public function __construct(DocumentManager $documentManager, GroupEventDispatcherService $dispatcher, TranslatorInterface $translator)
     {
         $this->dm = $documentManager;
         $this->dispatcher = $dispatcher;
+        $this->translator = $translator;
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:Group');
         $this->userRepo = $this->dm->getRepository('PumukitSchemaBundle:User');
         $this->mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
@@ -123,6 +127,78 @@ class GroupService
         }
 
         return true;
+    }
+
+
+    /**
+     * Get delete message
+     *
+     * @param  Group  $group
+     * @param  string $locale
+     * @return string
+     */
+    public function getDeleteMessage(Group $group, $locale)
+    {
+        $message = '';
+        if (Group::ORIGIN_LOCAL != $group->getOrigin()) {
+            $enMessage = 'Group cannot be deleted because the Group is external. Contact your directory server administrator. You can delete relations with MultimediaObjects if any.';
+            $message = $this->translator->trans($enMessage, array(), null, $locale);
+
+            return $message;
+        }
+        $users = $this->countUsersInGroup($group);
+        $admin = $this->countAdminMultimediaObjectsInGroup($group);
+        $play = $this->countPlayMultimediaObjectsInGroup($group);
+
+        if ((0 === $users) && (0 === $admin) && (0 === $play)) {
+            $enMessage = 'Click on Delete Group button to delete the Group.';
+            $message = $this->translator->trans($enMessage, array(), null, $locale);
+        } elseif ((0 < $users) && (0 === $admin) && (0 === $play)) {
+            if (1 === $users) {
+                $enMessage = 'Group cannot be deleted because there is 1 user related. Please, delete this relation first.';
+                $message = $this->translator->trans($enMessage, array(), null, $locale);
+            } else {
+                $enMessage = "Group cannot be deleted because there are %s users related. Please, delete these relations first.";
+                $message = $this->translator->trans($enMessage, array(), null, $locale);
+                $message = sprintf($message, $users);
+            }
+        } elseif ((0 === $users) && (0 < $admin) && (0 === $play)) {
+            if (1 === $admin) {
+                $enMessage = 'Group cannot be deleted because there is 1 admin MultimediaObject related. Please, delete this relation first.';
+                $message = $this->translator->trans($enMessage, array(), null, $locale);
+            } else {
+                $enMessage = 'Group cannot be deleted because there are %s admin MultimediaObjects related. Please, delete these relations first.';
+                $message = $this->translator->trans($enMessage, array(), null, $locale);
+                $message = sprintf($message, $admin);
+            }
+        } elseif ((0 === $users) && (0 === $admin) && (0 < $play)) {
+            if (1 === $play) {
+                $enMessage = 'Group cannot be deleted because there is 1 play MultimediaObject related. Please, delete this relation first.';
+                $message = $this->translator->trans($enMessage, array(), null, $locale);
+            } else {
+                $enMessage = 'Group cannot be deleted because there are %s play MultimediaObject related. Please, delete these relations first.';
+                $message = $this->translator->trans($enMessage, array(), null, $locale);
+                $message = sprintf($message, $play);
+            }
+        } elseif ((0 < $users) && (0 < $admin) && (0 === $play)) {
+            $enMessage = "Group cannot be deleted because there are %s user(s) and %s admin MultimediaObject(s) related. Please, delete these relations first.";
+            $message = $this->translator->trans($enMessage, array(), null, $locale);
+            $message = sprintf($message, $users, $admin);
+        } elseif ((0 < $users) && (0 === $admin) && (0 < $play)) {
+            $enMessage = "Group cannot be deleted because there are %s user(s) and %s play MultimediaObject(s) related. Please, delete these relations first.";
+            $message = $this->translator->trans($enMessage, array(), null, $locale);
+            $message = sprintf($message, $users, $play);
+        } elseif ((0 === $users) && (0 < $admin) && (0 < $play)) {
+            $enMessage = "Group cannot be deleted because there are %s admin MultimediaObject(s) and %s play MultimediaObject(s) related. Please, delete these relations first.";
+            $message = $this->translator->trans($enMessage, array(), null, $locale);
+            $message = sprintf($message, $admin, $play);
+        } elseif ((0 < $users) && (0 < $admin) && (0 < $play)) {
+            $enMessage = "Group cannot be deleted because there are %s user(s), %s admin MultimediaObject(s) and %s play MultimediaObject(s) related. Please, delete these relations first.";
+            $message = $this->translator->trans($enMessage, array(), null, $locale);
+            $message = sprintf($message, $users, $admin, $play);
+        }
+
+        return $message;
     }
 
     /**

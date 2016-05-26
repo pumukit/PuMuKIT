@@ -187,6 +187,7 @@
         <service id="pumukitschema.group" class="Pumukit\SchemaBundle\Services\GroupService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="pumukitschema.group_dispatcher" />
+            <argument type="service" id="translator" />
         </service>
 
         <service id="pumukitschema.pic" class="Pumukit\SchemaBundle\Services\PicService">
