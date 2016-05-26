@@ -18,17 +18,18 @@ class DefaultControllerTest extends WebTestCase
         $options = array('environment'=>'test');
         static::bootKernel($options);
 
-        $container = static::$kernel->getContainer();
-        $this->dm = $container->get('doctrine_mongodb.odm.document_manager');
-        $this->router = $container->get('router');
-        $this->factory = $container->get('pumukitschema.factory');
-        if (!array_key_exists("PumukitPodcastBundle", $container->getParameter('kernel.bundles'))) {
-            $this->skipTests = true;
-        }
+        $this->container = static::$kernel->getContainer();
+        $this->dm = $this->container->get('doctrine_mongodb.odm.document_manager');
+        $this->router = $this->container->get('router');
+        $this->factory = $this->container->get('pumukitschema.factory');
     }
 
-    public function setUp()
+    protected function setUp()
     {
+        if (!array_key_exists("PumukitPodcastBundle", $this->container->getParameter('kernel.bundles'))) {
+            $this->markTestSkipped('PodcastBundle is not installed');
+        }
+
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
             ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
@@ -37,9 +38,6 @@ class DefaultControllerTest extends WebTestCase
 
     public function testVideo()
     {
-        if ($this->skipTests) {
-            $this->markTestSkipped('S');
-        }
 
         $route = $this->router->generate('pumukit_podcast_video', array());
         $crawler = $this->client->request('GET', $route);
@@ -71,9 +69,6 @@ class DefaultControllerTest extends WebTestCase
 
     public function testAudio()
     {
-        if ($this->skipTests) {
-            $this->markTestSkipped('S');
-        }
 
         $route = $this->router->generate('pumukit_podcast_audio', array());
         $crawler = $this->client->request('GET', $route);
@@ -105,9 +100,6 @@ class DefaultControllerTest extends WebTestCase
 
     public function testSeriesVideo()
     {
-        if ($this->skipTests) {
-            $this->markTestSkipped('S');
-        }
 
         $series = $this->factory->createSeries();
         $route = $this->router->generate('pumukit_podcast_series_video', array('id' => $series->getId()));
@@ -140,9 +132,6 @@ class DefaultControllerTest extends WebTestCase
 
     public function testSeriesAudio()
     {
-        if ($this->skipTests) {
-            $this->markTestSkipped('S');
-        }
 
         $series = $this->factory->createSeries();
         $route = $this->router->generate('pumukit_podcast_series_audio', array('id' => $series->getId()));
@@ -175,10 +164,6 @@ class DefaultControllerTest extends WebTestCase
 
     public function testSeriesCollection()
     {
-        if ($this->skipTests) {
-            $this->markTestSkipped('S');
-        }
-
         $series = $this->factory->createSeries();
         $route = $this->router->generate('pumukit_podcast_series_collection', array('id' => $series->getId()));
         $crawler = $this->client->request('GET', $route);
