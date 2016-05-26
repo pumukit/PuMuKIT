@@ -43,14 +43,14 @@ class JobServiceTest extends WebTestCase
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')->remove(array());
         $this->dm->flush();
-        
+
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
         $cpuService = new CpuService($this->getDemoCpus(), $this->dm);
         $dispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $inspectionService = $this->getMock('Pumukit\InspectionBundle\Services\InspectionServiceInterface');
         $inspectionService->expects($this->any())->method('getDuration')->will($this->returnValue(5));
         $this->resourcesDir = realpath(__DIR__.'/../Resources').'/';
-        $this->jobService = new JobService($this->dm, $profileService, $cpuService, 
+        $this->jobService = new JobService($this->dm, $profileService, $cpuService,
                                            $inspectionService, $dispatcher, $this->logger,
                                            $this->trackService, $this->tokenStorage, "test", null);
     }
@@ -119,7 +119,7 @@ class JobServiceTest extends WebTestCase
         $this->deleteCreatedFiles();
         unlink($filePath);
     }
-    
+
     public function testAddJob()
     {
         $profiles = $this->getDemoProfiles();
@@ -228,8 +228,6 @@ class JobServiceTest extends WebTestCase
 
     public function testGetNextJob()
     {
-        $this->markTestSkipped('S');
-
         $job1 = $this->createNewJob(null, 1);
         $job2 = $this->createNewJob(null, 2);
         $job3 = $this->createNewJob(null, 1);
@@ -370,7 +368,7 @@ class JobServiceTest extends WebTestCase
                                             'description' => 'Pumukit transcoder'
                                             )
                       );
-        
+
         return $cpus;
     }
 
