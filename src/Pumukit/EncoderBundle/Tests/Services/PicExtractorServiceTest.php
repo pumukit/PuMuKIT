@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Filesystem\Filesystem;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\EncoderBundle\Services\PicExtractorService;
+use Pumukit\InspectionBundle\Utils\TestCommand;
 
 class PicExtractorServiceTest extends WebTestCase
 {
@@ -35,6 +36,10 @@ class PicExtractorServiceTest extends WebTestCase
 
     public function setUp()
     {
+        if (TestCommand::commandExists('avconv') == false) {
+          $this->markTestSkipped('PicExtractor test marks as skipped (No avconv).');
+        }
+
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
         $this->dm->flush();
@@ -69,11 +74,11 @@ class PicExtractorServiceTest extends WebTestCase
 
         $this->assertNotNull($pic->getWidth());
         $this->assertNotNull($pic->getHeight());
-        
+
         $picPath = $this->resourcesDir.'/series/'.$multimediaObject->getSeries()->getId().'/video/'.$multimediaObject->getId().'/';
         $this->assertStringStartsWith($picPath, $pic->getPath());
 
-        $picUrl = $this->targetUrl.'/series/'.$multimediaObject->getSeries()->getId().'/video/'.$multimediaObject->getId().'/'; 
+        $picUrl = $this->targetUrl.'/series/'.$multimediaObject->getSeries()->getId().'/video/'.$multimediaObject->getId().'/';
         $this->assertStringStartsWith($picUrl, $pic->getUrl());
 
         $this->deleteCreatedFiles();

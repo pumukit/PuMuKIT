@@ -2,6 +2,7 @@
 namespace Pumukit\InspectionBundle\Tests\Services;
 
 use Pumukit\InspectionBundle\Services\InspectionMediainfoService;
+use Pumukit\InspectionBundle\Utils\TestCommand;
 use Pumukit\SchemaBundle\Document\Track;
 
 class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
@@ -13,14 +14,14 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        if (TestCommand::commandExists('mediainfo') == false) {
+          $this->markTestSkipped('Mediainfo test marks skipped (No mediainfo command).');
+        }
+
         $this->resources_dir = realpath(__DIR__.'/../Resources') . DIRECTORY_SEPARATOR;
         $this->wrong_file1   = $this->resources_dir . "textfile.txt";
         $this->wrong_file2   = $this->resources_dir . "zerosizefile.txt";
         $this->vid_no_audio = $this->resources_dir . 'SCREEN.mp4';
-
-        if (false) {
-          $this->markTestSkipped('Mediainfo test marks skipped.');
-        }
     }
 
     /**
