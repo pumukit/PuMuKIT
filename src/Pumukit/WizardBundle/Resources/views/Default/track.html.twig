@@ -87,7 +87,7 @@
         </div>
         {% endif %}
         <div class="form-group" id="pumukitwizard_track_language">
-          <label for="pumukitwizard_track_language" class="control-label">{% trans %}Language{% endtrans %}</label>
+          <label for="pumukitwizard_track_language" class="control-label">{% trans %}Video/Audio language{% endtrans %}</label>
           <select id="pumukitwizard_track_language" name="pumukitwizard_form_data[track][language]" class="form-control">
             {% for locale, language in languages %}
             <option value="{{ locale }}" {{ (locale == app.request.getLocale())?'selected="selected"':''}}>{{ language }}</option>
