@@ -10,6 +10,8 @@ use Pumukit\EncoderBundle\Services\CpuService;
 use Symfony\Component\HttpFoundation\File\File;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Symfony\Bridge\Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 class FuncionalTest extends WebTestCase
 {
@@ -32,15 +34,16 @@ class FuncionalTest extends WebTestCase
         $this->profileService = static::$kernel->getContainer()->get('pumukitencoder.profile');
         $this->cpuService = static::$kernel->getContainer()->get('pumukitencoder.cpu');
         $this->inspectionService = static::$kernel->getContainer()->get('pumukit.inspection');
+        $this->trackService = static::$kernel->getContainer()->get('pumukitschema.track');
         $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
     }
 
 
     public function setUp()
     {
-        $this->markTestSkipped('Funcional test not available.');
+        $this->markTestSkipped('Functional tests not available. (A little better, but still broken)');
 
-        $this->vidoeInputPath = realpath(__DIR__.'/../Resources') . '/CAMERA.mp4';
+        $this->videoInputPath = realpath(__DIR__.'/../Resources') . '/CAMERA.mp4';
 
         $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
@@ -48,17 +51,17 @@ class FuncionalTest extends WebTestCase
         $this->dm->flush();
 
         $dispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $this->jobService = new JobService($this->dm, $this->profileService, $this->cpuService, $this->inspectionService, $dispatcher, realpath(__DIR__.'/../Resources').'/encoder_test.log', $this->tokenStorage, "test");
+        $logger = new Logger('job_service_test_logger');
+        $logger->pushHandler(new StreamHandler(realpath(__DIR__.'/../Resources').'/encoder_test.log', Logger::WARNING));
+        $this->jobService = new JobService($this->dm, $this->profileService, $this->cpuService, $this->inspectionService, $dispatcher, $logger, $this->trackService, $this->tokenStorage, "test");
     }
 
     public function testSimpleEncoding()
     {
         $series = $this->createSeries("series title");
         $mm = $this->createMultimediaObjectAssignedToSeries("mm title", $series);
-        $job = $this->jobService->addJob($this->vidoeInputPath, "master_copy", 0, $mm);
-        
-        dump($job);
-        
+        $job = $this->jobService->addJob($this->videoInputPath, "master_copy", 0, $mm);
+
         $this->jobService->execute($job);
 
         $this->assertEquals(1, count($mm->getTracks()));
