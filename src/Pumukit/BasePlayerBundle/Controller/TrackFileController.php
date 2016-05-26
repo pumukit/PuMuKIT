@@ -17,10 +17,20 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class TrackFileController extends Controller
 {
     /**
-     * @Route("/trackfile/{id}", name="pumukit_trackfile_index" )
+     * @Route("/trackfile/{id}.{ext}", name="pumukit_trackfile_index" )
      */
-    public function indexAction(Track $track, Request $request)
+    public function indexAction($id, Request $request)
     {
-        return $this->forward($track->getUrl());
+        $mmobjRepo = $this
+          ->get('doctrine_mongodb.odm.document_manager')
+          ->getRepository('PumukitSchemaBundle:MultimediaObject');
+
+        $mmobj = $mmobjRepo->findOneByTrackId($id);
+        if(!$mmobj) {
+            throw $this->createNotFoundException("Not mmobj found with the track id: $id");
+        }
+        $track = $mmobj->getTrackById($id);
+
+        return $this->redirect($track->getUrl());
     }
 }
