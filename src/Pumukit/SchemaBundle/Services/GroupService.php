@@ -92,6 +92,9 @@ class GroupService
      */
     public function delete(Group $group, $executeFlush = true)
     {
+        if (!$this->canBeDeleted($group)) {
+            throw new \Exception('Not allowed to delete external Group');
+        }
         $this->dm->remove($group);
         if ($executeFlush) $this->dm->flush();
 

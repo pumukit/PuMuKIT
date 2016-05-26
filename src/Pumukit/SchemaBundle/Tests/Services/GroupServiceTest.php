@@ -315,10 +315,12 @@ class GroupServiceTest extends WebTestCase
 
         $key = 'key';
         $name = 'name';
+        $origin = Group::ORIGIN_LOCAL;
 
         $group = new Group();
         $group->setKey($key);
         $group->setName($name);
+        $group->setOrigin($origin);
 
         $group = $this->groupService->create($group);
 
@@ -330,6 +332,32 @@ class GroupServiceTest extends WebTestCase
         $group = $this->groupService->delete($group);
 
         $this->assertEquals(0, count($this->repo->findAll()));
+    }
+
+    /**
+     * @expectedException Exception
+     * @expectedExceptionMessage Not allowed to delete external Group
+     */
+    public function testDeleteException()
+    {
+        $this->assertEquals(0, count($this->repo->findAll()));
+
+        $key = 'key';
+        $name = 'name';
+        $origin = 'external';
+
+        $group = new Group();
+        $group->setKey($key);
+        $group->setName($name);
+        $group->setOrigin($origin);
+
+        $group = $this->groupService->create($group);
+
+        $this->assertEquals(1, count($this->repo->findAll()));
+
+        $group = $this->groupService->delete($group);
+
+        $this->assertEquals(1, count($this->repo->findAll()));
     }
 
     public function testFindById()
