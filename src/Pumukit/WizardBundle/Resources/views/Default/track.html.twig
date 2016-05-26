@@ -40,6 +40,7 @@
     </div>
     <fieldset>
       <div class="col-md-6">
+        {% if is_granted('ROLE_SCOPE_GLOBAL') %}
         <div class="form-group" id="pumukitwizard_track_profile">
           <label for="pumukitwizard_track_profile" class="control-label">{% trans %}Profile{% endtrans %}</label>
           {% for key in master_profiles|keys %}
@@ -48,6 +49,7 @@
           </div>
           {% endfor %}
         </div>
+        {% endif %}
 	    <div class="form-group" id="pumukitwizard_track_pubchannel">
 	      <label for="pumukitwizard_track_pubchannel" class="control-label">{% trans %}Publication Channels{% endtrans %}:</label>
           {% for pub in pub_channels %}

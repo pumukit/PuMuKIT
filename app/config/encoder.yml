@@ -10,6 +10,7 @@ pumukit_encoder:
             display: false
             wizard: true
             master: true
+            tags: copy
             resolution_hor: 0
             resolution_ver: 0
             framerate: 0

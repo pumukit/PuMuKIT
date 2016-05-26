@@ -145,7 +145,13 @@ class DefaultController extends Controller
             $typeData = $this->getKeyData('type', $formData);
             $trackData = $this->getKeyData('track', $formData);
 
-            $profile = $this->getKeyData('profile', $trackData);
+            if ($this->isGranted('ROLE_SCOPE_GLOBAL')) {
+                $profile = $this->getKeyData('profile', $trackData, null);
+            } else {
+                $profile = $this->get('pumukitencoder.profile')->getDefaultMasterProfile();
+            }
+            if (!$profile) throw \Exception('Not exists master profile');
+
             $priority = $this->getKeyData('priority', $trackData, 2);
             $language = $this->getKeyData('language', $trackData);
             $description = $this->getKeyData('description', $trackData);
