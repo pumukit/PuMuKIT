@@ -137,4 +137,15 @@
     </fieldset>
   </form>
 </div>
+
+<script type="text/javascript">
+{# USED to integrate with Moodle#}
+(function(){
+  var aux = $('#naked_backoffice_pubchannel_default_enabled').data('enabled'); 
+  if (aux) {
+    $('#pumukitwizard_track_pubchannel_'+ aux).prop('checked', true)
+  }
+})();
+</script>
+
 {% endblock wizard_body %}
