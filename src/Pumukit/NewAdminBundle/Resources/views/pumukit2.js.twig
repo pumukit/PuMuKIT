@@ -2202,7 +2202,7 @@ function create_element_group_in_add_groups(group_id, group_key, group_name, gro
         var $add_groups_list = $('#add_' + resource + '_groups');
     }
     var local_origin = '{{ constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')}}';
-    if (group_origin == local_origin) {
+    if ((group_origin == local_origin) || (resource != "user")){
         if (resource == "user") {
             var item_class = 'class="list-group-item add-group-item"';
         } else {
@@ -2222,7 +2222,7 @@ function create_element_group_in_add_groups(group_id, group_key, group_name, gro
 
 function create_element_group_in_delete_groups(group_id, group_key, group_name, group_origin, resource) {
     var local_origin = '{{ constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')}}';
-    if (group_origin == local_origin) {
+    if ((group_origin == local_origin) || (resource != "user")) {
         if (resource == "user") {
             var item_id = 'id="delete_group_' + group_id;
             var item_class = 'class="list-group-item delete-group-item"';
