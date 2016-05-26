@@ -78,7 +78,7 @@ class InspectionMediainfoService implements InspectionServiceInterface
                     break;
 
                 case "Audio":
-                    $track->setAcodec((string)$xml_track->Format[0]); 
+                    $track->setAcodec((string)$xml_track->Format[0]);
                     $track->setChannels(intval($xml_track->Channel_s_));
                     break;
             }
@@ -107,9 +107,9 @@ class InspectionMediainfoService implements InspectionServiceInterface
         $process->setTimeout(60);
         $process->run();
         if (!$process->isSuccessful()) {
-            $message = 'Exception executing "' . $command . '": ' . $process->getExitCode() . ' ' . 
+            $message = 'Exception executing "' . $command . '": ' . $process->getExitCode() . ' ' .
               $process->getExitCodeText().'. '.$process->getErrorOutput();
-            $this->logger->error($message);
+            if($this->logger) $this->logger->error($message);
             throw new \RuntimeException($message);
         }
 
