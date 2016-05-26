@@ -70,6 +70,7 @@
           {% endif %}
           {% endfor %}
 	    </div>
+        {% if is_granted('ROLE_SCOPE_GLOBAL') %}
         <div class="form-group" id="pumukitwizard_track_priority">
           <label for="pumukitwizard_track_priority" class="control-label">{% trans %}Priority{% endtrans %}</label>        
           <div class="radio">
@@ -82,6 +83,7 @@
             <label><input type="radio" name="pumukitwizard_form_data[track][priority]" value="3"/>{% trans %}High-Priority{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</label>
           </div>
         </div>
+        {% endif %}
         <div class="form-group" id="pumukitwizard_track_language">
           <label for="pumukitwizard_track_language" class="control-label">{% trans %}Language{% endtrans %}</label>
           <select id="pumukitwizard_track_language" name="pumukitwizard_form_data[track][language]" class="form-control">

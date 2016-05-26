@@ -146,7 +146,7 @@ class DefaultController extends Controller
             $trackData = $this->getKeyData('track', $formData);
 
             $profile = $this->getKeyData('profile', $trackData);
-            $priority = $this->getKeyData('priority', $trackData);
+            $priority = $this->getKeyData('priority', $trackData, 2);
             $language = $this->getKeyData('language', $trackData);
             $description = $this->getKeyData('description', $trackData);
 
@@ -352,14 +352,9 @@ class DefaultController extends Controller
     /**
      * Get key data
      */
-    private function getKeyData($key='nonexistingkey', $formData=array())
+    private function getKeyData($key, $formData, $default = array())
     {
-        $keyData = array();
-        if(array_key_exists($key, $formData)){
-            $keyData = $formData[$key];
-        }
-
-        return $keyData;
+        return array_key_exists($key, $formData) ? $formData[$key] : $default;
     }
 
     /**
