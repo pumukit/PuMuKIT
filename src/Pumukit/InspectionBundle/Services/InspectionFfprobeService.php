@@ -78,12 +78,12 @@ class InspectionFfprobeService implements InspectionServiceInterface
                     break;
 
                 case "audio":
-                    $track->setAcodec((string)$stream->codec_name); 
+                    $track->setAcodec((string)$stream->codec_name);
                     $track->setChannels(intval($stream->channels));
                     break;
-                
+
             }
-            $track->setOnlyAudio($only_audio);                
+            $track->setOnlyAudio($only_audio);
         }
     }
 
@@ -107,9 +107,9 @@ class InspectionFfprobeService implements InspectionServiceInterface
         $process->setTimeout(60);
         $process->run();
         if (!$process->isSuccessful()) {
-            $message = 'Exception executing "' . $command . '": ' . $process->getExitCode() . ' ' . 
+            $message = 'Exception executing "' . $command . '": ' . $process->getExitCode() . ' ' .
               $process->getExitCodeText().'. '.$process->getErrorOutput();
-            $this->logger->error($message);
+            if($this->logger) $this->logger->error($message);
             throw new \RuntimeException($message);
         }
 
