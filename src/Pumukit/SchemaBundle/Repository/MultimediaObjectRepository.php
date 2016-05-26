@@ -130,6 +130,20 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
+     * Find multimedia objects by track id
+     *
+     * @param string $trackId
+     * @return ArrayCollection
+     */
+    public function findOneByTrackId($personId)
+    {
+        return $this->createStandardQueryBuilder()
+          ->field('tracks._id')->equals(new \MongoId($personId))
+          ->getQuery()
+          ->getSingleResult();
+    }
+
+    /**
      * Find multimedia objects by person id
      * with given role
      *
