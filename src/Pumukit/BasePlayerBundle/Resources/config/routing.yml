@@ -4,6 +4,6 @@ pumukit_base_player_parent:
     prefix:   /
 
 pumukit_base_player:
-    resource: "@BasePlayerBundle/Controller/"
+    resource: "@PumukitBasePlayerBundle/Controller/"
     type:     annotation
     prefix:   /
