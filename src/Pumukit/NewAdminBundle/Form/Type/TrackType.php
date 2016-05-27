@@ -27,7 +27,7 @@ class TrackType extends AbstractType
           ->add('language', 'customlanguage',
                 array(
                       'required' => true,
-                      'label' => $this->translator->trans('Language', array(), null, $this->locale)));
+                      'label' => $this->translator->trans('Video/Audio language', array(), null, $this->locale)));
     }
     
     public function setDefaultOptions(OptionsResolverInterface $resolver)

@@ -23,7 +23,7 @@ class RemoveListenerTest extends WebTestCase
     private $factoryService;
     private $resourcesDir;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
@@ -38,10 +38,7 @@ class RemoveListenerTest extends WebTestCase
         $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
 
         $this->resourcesDir = realpath(__DIR__.'/../Resources');
-    }
 
-    public function setUp()
-    {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
           ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')

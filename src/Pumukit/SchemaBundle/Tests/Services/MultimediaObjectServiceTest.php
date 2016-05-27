@@ -20,7 +20,7 @@ class MultimediaObjectServiceTest extends WebTestCase
     private $mmsService;
     private $tagService;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
@@ -39,10 +39,7 @@ class MultimediaObjectServiceTest extends WebTestCase
           ->get('pumukitschema.multimedia_object');
         $this->tagService = static::$kernel->getContainer()
           ->get('pumukitschema.tag');
-    }
 
-    public function setUp()
-    {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')->remove(array());

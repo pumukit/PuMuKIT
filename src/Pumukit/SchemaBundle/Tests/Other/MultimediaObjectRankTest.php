@@ -13,7 +13,7 @@ class MultimediaObjectRankTest extends WebTestCase
     private $qb;
     private $factoryService;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
@@ -21,10 +21,7 @@ class MultimediaObjectRankTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
-    }
 
-    public function setUp()
-    {
         //DELETE DATABASE
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
             ->remove(array());

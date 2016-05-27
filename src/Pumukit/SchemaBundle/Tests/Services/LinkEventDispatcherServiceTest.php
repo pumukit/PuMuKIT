@@ -16,17 +16,14 @@ class LinkEventDispatcherServiceTest extends WebTestCase
 
     private $linkDispatcher;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
 
         $this->dispatcher = static::$kernel->getContainer()
           ->get('event_dispatcher');
-    }
 
-    public function setUp()
-    {
         MockUpLinkListener::$called = false;
         MockUpLinkListener::$title = LinkEventDispatcherServiceTest::EMPTY_TITLE;
         MockUpLinkListener::$url = LinkEventDispatcherServiceTest::EMPTY_URL;

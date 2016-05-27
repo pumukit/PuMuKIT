@@ -40,6 +40,7 @@
     </div>
     <fieldset>
       <div class="col-md-6">
+        {% if is_granted('ROLE_SCOPE_GLOBAL') %}
         <div class="form-group" id="pumukitwizard_track_profile">
           <label for="pumukitwizard_track_profile" class="control-label">{% trans %}Profile{% endtrans %}</label>
           {% for key in master_profiles|keys %}
@@ -48,6 +49,7 @@
           </div>
           {% endfor %}
         </div>
+        {% endif %}
 	    <div class="form-group" id="pumukitwizard_track_pubchannel">
 	      <label for="pumukitwizard_track_pubchannel" class="control-label">{% trans %}Publication Channels{% endtrans %}:</label>
           {% for pub in pub_channels %}
@@ -70,6 +72,7 @@
           {% endif %}
           {% endfor %}
 	    </div>
+        {% if is_granted('ROLE_SCOPE_GLOBAL') %}
         <div class="form-group" id="pumukitwizard_track_priority">
           <label for="pumukitwizard_track_priority" class="control-label">{% trans %}Priority{% endtrans %}</label>        
           <div class="radio">
@@ -82,8 +85,9 @@
             <label><input type="radio" name="pumukitwizard_form_data[track][priority]" value="3"/>{% trans %}High-Priority{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</label>
           </div>
         </div>
+        {% endif %}
         <div class="form-group" id="pumukitwizard_track_language">
-          <label for="pumukitwizard_track_language" class="control-label">{% trans %}Language{% endtrans %}</label>
+          <label for="pumukitwizard_track_language" class="control-label">{% trans %}Video/Audio language{% endtrans %}</label>
           <select id="pumukitwizard_track_language" name="pumukitwizard_form_data[track][language]" class="form-control">
             {% for locale, language in languages %}
             <option value="{{ locale }}" {{ (locale == app.request.getLocale())?'selected="selected"':''}}>{{ language }}</option>
@@ -133,4 +137,15 @@
     </fieldset>
   </form>
 </div>
+
+<script type="text/javascript">
+{# USED to integrate with Moodle#}
+(function(){
+  var aux = $('#naked_backoffice_pubchannel_default_enabled').data('enabled'); 
+  if (aux) {
+    $('#pumukitwizard_track_pubchannel_'+ aux).prop('checked', true)
+  }
+})();
+</script>
+
 {% endblock wizard_body %}

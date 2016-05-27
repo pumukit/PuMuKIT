@@ -145,8 +145,14 @@ class DefaultController extends Controller
             $typeData = $this->getKeyData('type', $formData);
             $trackData = $this->getKeyData('track', $formData);
 
-            $profile = $this->getKeyData('profile', $trackData);
-            $priority = $this->getKeyData('priority', $trackData);
+            if ($this->isGranted('ROLE_SCOPE_GLOBAL')) {
+                $profile = $this->getKeyData('profile', $trackData, null);
+            } else {
+                $profile = $this->get('pumukitencoder.profile')->getDefaultMasterProfile();
+            }
+            if (!$profile) throw \Exception('Not exists master profile');
+
+            $priority = $this->getKeyData('priority', $trackData, 2);
             $language = $this->getKeyData('language', $trackData);
             $description = $this->getKeyData('description', $trackData);
 
@@ -158,13 +164,12 @@ class DefaultController extends Controller
             // TODO Fragment this. Develop better way.
             $option = $this->getKeyData('option', $typeData);
             try{
-                if (empty($_FILES) && empty($_POST)){
-                    throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
-                }
-
                 if ('single' === $option){
                     $filetype = $this->getKeyData('filetype', $trackData);
                     if ('file' === $filetype){
+                        if(!$request->files->get('resource')->isValid()) {
+                          throw new \Exception($request->files->get('resource')->getErrorMessage());
+                        }
                         $filePath = $request->files->get('resource')->getPathname();
                     }elseif ('inbox' === $filetype){
                         $filePath = $request->get('file');
@@ -353,14 +358,9 @@ class DefaultController extends Controller
     /**
      * Get key data
      */
-    private function getKeyData($key='nonexistingkey', $formData=array())
+    private function getKeyData($key, $formData, $default = array())
     {
-        $keyData = array();
-        if(array_key_exists($key, $formData)){
-            $keyData = $formData[$key];
-        }
-
-        return $keyData;
+        return array_key_exists($key, $formData) ? $formData[$key] : $default;
     }
 
     /**

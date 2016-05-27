@@ -18,17 +18,14 @@ class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
 
     private $personWithRoleDispatcher;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
 
         $this->dispatcher = static::$kernel->getContainer()
           ->get('event_dispatcher');
-    }
 
-    public function setUp()
-    {
         MockUpPersonWithRoleListener::$called = false;
         MockUpPersonWithRoleListener::$title = PersonWithRoleEventDispatcherServiceTest::EMPTY_TITLE;
         MockUpPersonWithRoleListener::$name = PersonWithRoleEventDispatcherServiceTest::EMPTY_NAME;

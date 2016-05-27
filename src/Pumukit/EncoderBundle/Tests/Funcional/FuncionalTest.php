@@ -21,7 +21,7 @@ class FuncionalTest extends WebTestCase
     private $jobService;
     private $tokenStorage;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
@@ -33,11 +33,7 @@ class FuncionalTest extends WebTestCase
         $this->cpuService = static::$kernel->getContainer()->get('pumukitencoder.cpu');
         $this->inspectionService = static::$kernel->getContainer()->get('pumukit.inspection');
         $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
-    }
 
-
-    public function setUp()
-    {
         $this->markTestSkipped('Funcional test not available.');
 
         $this->vidoeInputPath = realpath(__DIR__.'/../Resources') . '/CAMERA.mp4';

@@ -22,7 +22,7 @@ class PicServiceTest extends WebTestCase
     private $localhost = 'http://localhost';
     private $webDir;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
@@ -32,10 +32,7 @@ class PicServiceTest extends WebTestCase
         $this->context = static::$kernel->getContainer()->get('router.request_context');
         $this->rootDir = static::$kernel->getContainer()->getParameter('kernel.root_dir');
         $this->webDir = realpath($this->rootDir.'/../web/bundles/pumukitschema');
-    }
 
-    public function setUp()
-    {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
         $this->dm->flush();

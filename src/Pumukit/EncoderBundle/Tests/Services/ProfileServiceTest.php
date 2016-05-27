@@ -12,17 +12,14 @@ class ProfileServiceTest extends WebTestCase
     private $repo;
     private $profileService;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
-    }
 
-    public function setUp()
-    {
         $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')->remove(array());
         $this->dm->flush();
 
@@ -55,6 +52,25 @@ class ProfileServiceTest extends WebTestCase
         $this->assertEquals(0, count($this->profileService->getMasterProfiles(false)));
     }
 
+    public function testGetDefaultMasterProfile()
+    {
+        $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
+        $this->assertEquals('MASTER_VIDEO_H264', $profileService->getDefaultMasterProfile());
+
+        $profiles = array('MASTER_COPY' => $this->getDemoProfiles()['MASTER_COPY']);
+        $profileService = new ProfileService($profiles, $this->dm);
+        $this->assertEquals('MASTER_COPY', $profileService->getDefaultMasterProfile());
+
+        $profile = $this->getDemoProfiles()['MASTER_VIDEO_H264'];
+        $profile['master'] = false;
+        $profiles = array('VIDEO_H264' => $profile);
+        $profileService = new ProfileService($profiles, $this->dm);
+        $this->assertNull($profileService->getDefaultMasterProfile());
+
+        $profileService = new ProfileService(array(), $this->dm);
+        $this->assertNull($profileService->getDefaultMasterProfile());
+    }
+
     public function testGetProfile()
     {
         $profiles = $this->getDemoProfiles();
@@ -80,7 +96,7 @@ class ProfileServiceTest extends WebTestCase
                                                  'display' => false,
                                                  'wizard' => true,
                                                  'master' => true,
-                                                 'tags' => 'uno,dos tres',
+                                                 'tags' => 'uno,dos tres, copy',
                                                  'resolution_hor' => 0,
                                                  'resolution_ver' => 0,
                                                  'framerate' => '0',

@@ -19,7 +19,7 @@ class MaterialServiceTest extends WebTestCase
     private $uploadsPath;
     private $materialDispatcher;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
@@ -37,10 +37,7 @@ class MaterialServiceTest extends WebTestCase
 
         $this->originalFilePath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'file.pdf';
         $this->uploadsPath = realpath(__DIR__.'/../../../../../web/uploads/material');
-    }
 
-    public function setUp()
-    {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')->remove(array());

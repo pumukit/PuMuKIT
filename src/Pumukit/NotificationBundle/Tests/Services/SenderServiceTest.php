@@ -19,7 +19,7 @@ class SenderServiceTest extends WebTestCase
     private $notificateErrorsToSender;
     private $environment;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'dev');
         static::bootKernel($options);
@@ -35,10 +35,7 @@ class SenderServiceTest extends WebTestCase
         $this->senderName = 'Mercefan';
         $this->notificateErrorsToSender = true;
         $this->environment = 'dev';
-    }
 
-    public function setUp()
-    {
         $this->senderService = new SenderService($this->mailer, $this->templating, $this->translator, $this->enable, $this->senderEmail, $this->senderName, $this->notificateErrorsToSender, $this->environment);
     }
 

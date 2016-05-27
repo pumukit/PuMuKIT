@@ -18,7 +18,7 @@ class PicExtractorServiceTest extends WebTestCase
     private $targetPath;
     private $targetUrl;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
@@ -31,10 +31,7 @@ class PicExtractorServiceTest extends WebTestCase
         $this->resourcesDir = realpath(__DIR__.'/../Resources');
         $this->targetPath = $this->resourcesDir;
         $this->targetUrl = '/uploads';
-    }
 
-    public function setUp()
-    {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
         $this->dm->flush();

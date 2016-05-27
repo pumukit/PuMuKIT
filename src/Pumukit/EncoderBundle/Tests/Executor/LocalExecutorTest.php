@@ -7,7 +7,7 @@ use Pumukit\EncoderBundle\Executor\LocalExecutor;
 
 class LocalExecutorTest extends WebTestCase
 {
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);

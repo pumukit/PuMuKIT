@@ -14,7 +14,7 @@ class LinkServiceTest extends WebTestCase
     private $linkService;
     private $factoryService;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
@@ -27,10 +27,7 @@ class LinkServiceTest extends WebTestCase
           ->get('pumukitschema.link');
         $this->factoryService = static::$kernel->getContainer()
           ->get('pumukitschema.factory');
-    }
 
-    public function setUp()
-    {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')->remove(array());

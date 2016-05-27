@@ -72,7 +72,7 @@ class JobService
      */
     public function createTrackFromLocalHardDrive(MultimediaObject $multimediaObject, UploadedFile $trackFile, $profile, $priority, $language, $description, $initVars = array(), $duration = 0, $flags = 0)
     {
-        if(UPLOAD_ERR_OK != $trackFile->getError()) {
+        if(!$trackFile->isValid()) {
            throw new \Exception($trackFile->getErrorMessage());
         }
 

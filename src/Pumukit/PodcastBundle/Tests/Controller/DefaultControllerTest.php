@@ -12,7 +12,7 @@ class DefaultControllerTest extends WebTestCase
     private $factory;
     private $skipTests = false;
 
-    public function __construct()
+    public function setUp()
     {
         $this->client = static::createClient();
         $options = array('environment'=>'test');
@@ -25,10 +25,7 @@ class DefaultControllerTest extends WebTestCase
         if (!array_key_exists("PumukitPodcastBundle", $container->getParameter('kernel.bundles'))) {
             $this->skipTests = true;
         }
-    }
 
-    public function setUp()
-    {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
             ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
