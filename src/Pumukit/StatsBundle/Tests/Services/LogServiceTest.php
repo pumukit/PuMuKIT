@@ -12,7 +12,7 @@ use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 class LogServiceTest extends WebTestCase
 {
     private $dm;
-    private $repo;    
+    private $repo;
     private $factoryService;
     private $tokenStorage;
 
@@ -29,14 +29,14 @@ class LogServiceTest extends WebTestCase
             ->get('pumukitschema.factory');
         $this->tokenStorage = static::$kernel->getContainer()
           ->get('security.token_storage');
-        
+
         $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog')
             ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
             ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
             ->remove(array());
-        
+
     }
 
     private function createMockRequestStack()
@@ -47,7 +47,7 @@ class LogServiceTest extends WebTestCase
 
         return $requestStack;
     }
-    
+
     private function createEvent($withTrack = true)
     {
         $series = $this->factoryService->createSeries();
@@ -59,11 +59,24 @@ class LogServiceTest extends WebTestCase
             $this->dm->persist($multimediaObject);
             $this->dm->flush();
         } else {
-            $track = null;            
+            $track = null;
         }
 
-        return new ViewedEvent($multimediaObject, $track);    
+        return new ViewedEvent($multimediaObject, $track);
     }
+
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->repo = null;
+        $this->factoryService = null;
+        $this->tokenStorage = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
+
 
     public function testonMultimediaObjectViewed()
     {
@@ -83,5 +96,5 @@ class LogServiceTest extends WebTestCase
         $event = $this->createEvent(false);
         $service->onMultimediaObjectViewed($event);
         $this->assertEquals(1, count($this->repo->findAll()));
-    }    
+    }
 }

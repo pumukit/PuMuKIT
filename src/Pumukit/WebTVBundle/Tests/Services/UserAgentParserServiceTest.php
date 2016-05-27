@@ -28,6 +28,14 @@ class UserAgentParserServiceTest extends WebTestCase
                                 array('string'=>'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; en) Opera', 'old'=> true));
   }
 
+  public function tearDown()
+  {
+      $this->agentService = null;
+      $this->agentStrings = null;
+      gc_collect_cycles();
+      parent::tearDown();
+  }
+
   public function testIsOldBrowser()
   {
     foreach($this->agentStrings as $userAgent){
