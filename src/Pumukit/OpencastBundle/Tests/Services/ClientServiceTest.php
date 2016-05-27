@@ -36,12 +36,21 @@ class ClientServiceTest extends WebTestCase
 
     }
 
+    public function tearDown()
+    {
+        $this->clientService = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
+
+
     public function testGetMediaPackages()
     {
         $this->markTestSkipped(
           'Integration test.'
         );
-    
+
         $media = $this->clientService->getMediaPackages(0,0,0);
     }
 }

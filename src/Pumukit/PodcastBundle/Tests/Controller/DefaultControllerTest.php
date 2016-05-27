@@ -14,14 +14,15 @@ class DefaultControllerTest extends WebTestCase
 
     public function setUp()
     {
+        $options = array('environment'=>'test');
+        static::bootKernel($options);
         $this->container = static::$kernel->getContainer();
+
         if (!array_key_exists("PumukitPodcastBundle", $this->container->getParameter('kernel.bundles'))) {
             $this->markTestSkipped('PodcastBundle is not installed');
         }
 
         $this->client = static::createClient();
-        $options = array('environment'=>'test');
-        static::bootKernel($options);
 
         $this->dm = $this->container->get('doctrine_mongodb.odm.document_manager');
         $this->router = $this->container->get('router');
@@ -36,6 +37,22 @@ class DefaultControllerTest extends WebTestCase
             ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
             ->remove(array());
+    }
+
+    public function tearDown()
+    {
+        if(isset($this->dm))
+            $this->dm->close();
+        $this->container = null;
+        $this->client = null;
+        $this->dm = null;
+        $this->router = null;
+        $this->factory = null;
+        $this->dm = null;
+        $this->router = null;
+        $this->factory = null;
+        gc_collect_cycles();
+        parent::tearDown();
     }
 
     public function testVideo()

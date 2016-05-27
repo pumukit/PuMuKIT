@@ -39,6 +39,26 @@ class SenderServiceTest extends WebTestCase
         $this->senderService = new SenderService($this->mailer, $this->templating, $this->translator, $this->enable, $this->senderEmail, $this->senderName, $this->notificateErrorsToSender, $this->environment);
     }
 
+    public function tearDown()
+    {
+        if(isset($this->dm))
+            $this->dm->close();
+        $this->dm = null;
+        $this->mailer = null;
+        $this->templating = null;
+        $this->translator = null;
+        $this->enable = null;
+        $this->senderEmail = null;
+        $this->senderName = null;
+        $this->notificateErrorsToSender = null;
+        $this->environment = null;
+        $this->senderService = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
+
+
     public function testIsEnabled()
     {
         $this->assertEquals($this->enable, $this->senderService->isEnabled());
