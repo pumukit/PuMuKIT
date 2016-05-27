@@ -32,6 +32,19 @@ class TagServiceTest extends WebTestCase
           ->remove(array());
     }
 
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->tagRepo = null;
+        $this->mmobjRepo = null;
+        $this->tagService = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
+
+
     public function testAddTagToMultimediaObject()
     {
         $mmobj = $this->createMultimediaObject('titulo cualquiera');
@@ -47,7 +60,7 @@ class TagServiceTest extends WebTestCase
         $this->assertEquals(3, count($addedTags));
         $this->assertTrue($this->mmobjRepo->find($mmobj->getId())->containsTag($tag));
         $this->assertEquals(0, count($this->tagService->addTagToMultimediaObject($mmobj, $tag->getId())));
-        $this->assertEquals(1, $tag->getNumberMultimediaObjects());        
+        $this->assertEquals(1, $tag->getNumberMultimediaObjects());
     }
 
     /**
@@ -62,7 +75,7 @@ class TagServiceTest extends WebTestCase
         $this->tagService->addTagToMultimediaObject($mmobj, $tag);
         $this->tagService->removeTagFromMultimediaObject($mmobj, $tag);
     }
-    
+
     public function testAddTagWithoutRoot()
     {
         $mmobj = $this->createMultimediaObject('titulo cualquiera');
@@ -196,9 +209,9 @@ class TagServiceTest extends WebTestCase
         $this->assertEquals(0, count($this->mmobjRepo->find($mmobj->getId())->getTags()));
         $this->assertEquals(0, $this->tagRepo->findOneByCod('tag1')->getNumberMultimediaObjects());
         $this->assertEquals(0, $this->tagRepo->findOneByCod('parent')->getNumberMultimediaObjects());
-        $this->assertEquals(0, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());        
+        $this->assertEquals(0, $this->tagRepo->findOneByCod('brother')->getNumberMultimediaObjects());
     }
-    
+
     public function testResetTags()
     {
         $mmobj1 = $this->createMultimediaObject('mmobj1');
@@ -239,7 +252,7 @@ class TagServiceTest extends WebTestCase
         $this->assertEquals(0, $tag1->getNumberMultimediaObjects());
         $this->assertEquals(0, $tag2->getNumberMultimediaObjects());
         $this->assertEquals(0, $tag3->getNumberMultimediaObjects());
-        
+
     }
 
     /**
@@ -292,9 +305,9 @@ class TagServiceTest extends WebTestCase
 
         $this->assertEquals(0, $tag1->getNumberMultimediaObjects());
         $this->assertEquals(0, $tag2->getNumberMultimediaObjects());
-        $this->assertEquals(0, $tag3->getNumberMultimediaObjects());        
+        $this->assertEquals(0, $tag3->getNumberMultimediaObjects());
     }
-    
+
     public function testSaveTag()
     {
         $cod = 'tag1';

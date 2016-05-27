@@ -34,6 +34,14 @@ class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
         $this->personWithRoleDispatcher = new PersonWithRoleEventDispatcherService($this->dispatcher);
     }
 
+    public function tearDown()
+    {
+        $this->dispatcher = null;
+        $this->personWithRoleDispatcher = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::PERSONWITHROLE_CREATE, function($event, $name)

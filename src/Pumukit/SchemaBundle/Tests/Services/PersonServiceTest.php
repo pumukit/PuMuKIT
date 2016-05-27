@@ -44,6 +44,19 @@ class PersonServiceTest extends WebTestCase
         $this->dm->flush();
     }
 
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->repo = null;
+        $this->roleRepo = null;
+        $this->repoMmobj = null;
+        $this->personService = null;
+        $this->factoryService = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
     public function testSavePerson()
     {
         $person = new Person();
@@ -809,6 +822,6 @@ class PersonServiceTest extends WebTestCase
         $this->personService->removeUserFromPerson($user, $person, true);
 
         $this->assertEquals($person, $user->getPerson());
-        $this->assertEquals(null, $person->getUser());        
+        $this->assertEquals(null, $person->getUser());
     }
 }

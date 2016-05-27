@@ -24,7 +24,7 @@ class SeriesEventDispatcherServiceTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb.odm.document_manager');
         $this->dispatcher = new EventDispatcher();
-        
+
 
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
         $this->dm->flush();
@@ -33,6 +33,16 @@ class SeriesEventDispatcherServiceTest extends WebTestCase
         MockUpSeriesListener::$title = SeriesEventDispatcherServiceTest::EMPTY_TITLE;
 
         $this->seriesDispatcher = new SeriesEventDispatcherService($this->dispatcher);
+    }
+
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->dispatcher = null;
+        $this->seriesDispatcher = null;
+        gc_collect_cycles();
+        parent::tearDown();
     }
 
     public function testDispatchCreate()

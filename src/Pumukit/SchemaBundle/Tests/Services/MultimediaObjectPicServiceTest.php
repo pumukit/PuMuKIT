@@ -43,6 +43,20 @@ class MultimediaObjectPicServiceTest extends WebTestCase
         $this->dm->flush();
     }
 
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->repo = null;
+        $this->factoryService = null;
+        $this->mmsPicService = null;
+        $this->picDispatcher = null;
+        $this->originalPicPath = null;
+        $this->uploadsPath = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
     public function testGetRecommendedPics()
     {
         $pic1 = new Pic();

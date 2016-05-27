@@ -24,6 +24,17 @@ class TagRepositoryTest extends WebTestCase
         $this->dm->flush();
     }
 
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->repo = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
+
+
     public function createTestTree()
     {
         $tag = new Tag();
@@ -162,7 +173,7 @@ class TagRepositoryTest extends WebTestCase
         $this->dm->flush();
         $this->assertEquals(5, $tagB2A->getLevel());
         $this->assertEquals(6, count($this->repo->findAll()));
-        
+
         //Test delete
         $this->dm->remove($tagB);
         $this->dm->flush();

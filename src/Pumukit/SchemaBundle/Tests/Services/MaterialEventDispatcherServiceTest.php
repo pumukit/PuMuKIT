@@ -31,6 +31,14 @@ class MaterialEventDispatcherServiceTest extends WebTestCase
         $this->materialDispatcher = new MaterialEventDispatcherService($this->dispatcher);
     }
 
+    public function tearDown()
+    {
+        $this->dispatcher = null;
+        $this->linkDispatcher = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::MATERIAL_CREATE, function($event, $name)
@@ -43,7 +51,7 @@ class MaterialEventDispatcherServiceTest extends WebTestCase
 
                                            MockUpMaterialListener::$called = true;
                                            MockUpMaterialListener::$title = $multimediaObject->getTitle();
-                                           MockUpMaterialListener::$url = $material->getUrl();        
+                                           MockUpMaterialListener::$url = $material->getUrl();
                                        });
 
         $this->assertFalse(MockUpMaterialListener::$called);
@@ -78,7 +86,7 @@ class MaterialEventDispatcherServiceTest extends WebTestCase
 
                                            MockUpMaterialListener::$called = true;
                                            MockUpMaterialListener::$title = $multimediaObject->getTitle();
-                                           MockUpMaterialListener::$url = $material->getUrl();        
+                                           MockUpMaterialListener::$url = $material->getUrl();
                                        });
 
         $this->assertFalse(MockUpMaterialListener::$called);
@@ -116,7 +124,7 @@ class MaterialEventDispatcherServiceTest extends WebTestCase
 
                                            MockUpMaterialListener::$called = true;
                                            MockUpMaterialListener::$title = $multimediaObject->getTitle();
-                                           MockUpMaterialListener::$url = $material->getUrl();        
+                                           MockUpMaterialListener::$url = $material->getUrl();
                                        });
 
         $this->assertFalse(MockUpMaterialListener::$called);

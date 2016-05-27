@@ -30,6 +30,17 @@ class SeriesServiceTest extends WebTestCase
         $this->dm->flush();
     }
 
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->repo = null;
+        $this->seriesService = null;
+        $this->seriesDispatcher = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
     public function testResetMagicUrl()
     {
         $series = new Series();
