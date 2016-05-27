@@ -14,17 +14,14 @@ class MultimediaObjectEventDispatcherServiceTest extends WebTestCase
 
     private $multimediaObjectDispatcher;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
 
         $this->dispatcher = static::$kernel->getContainer()
           ->get('event_dispatcher');
-    }
 
-    public function setUp()
-    {
         MockUpMultimediaObjectListener::$called = false;
         MockUpMultimediaObjectListener::$title = MultimediaObjectEventDispatcherServiceTest::EMPTY_TITLE;
 

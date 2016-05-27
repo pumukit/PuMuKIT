@@ -21,7 +21,7 @@ class UserServiceTest extends WebTestCase
     private $permissionProfileRepo;
     private $userService;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
@@ -53,10 +53,7 @@ class UserServiceTest extends WebTestCase
 
         $listener = new PermissionProfileListener($this->dm, $this->userService);
         $dispatcher->addListener('permissionprofile.update', array($listener, 'postUpdate'));
-    }
 
-    public function setUp()
-    {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:User')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:PermissionProfile')->remove(array());
         $this->dm->flush();

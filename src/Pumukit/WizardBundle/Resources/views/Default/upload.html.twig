@@ -15,7 +15,6 @@
     route = route.replace('__option__', option);
     route = route.replace('__showSeries__', showSeries);
     parent.$('#pumukitwizard_body').load(route, {'_method':'POST'});
-    parent.success('{% trans %}New Track(s) added.{% endtrans %}');
   }else{
     var message = "{{ message }}";
     var route = "{{ path('pumukitwizard_default_error', {'seriesId': '__seriesId__', 'option': '__option__', 'show_series': '__showSeries__'})|raw }}";

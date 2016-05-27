@@ -19,7 +19,7 @@ class JobGeneratorListenerTest extends WebTestCase
     private $logger;
     private $profileService;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
@@ -27,10 +27,7 @@ class JobGeneratorListenerTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->logger = static::$kernel->getContainer()->get('logger');
         
-    }
 
-    public function setUp()
-    {
 
         $streamserver = array('dir_out' => sys_get_temp_dir());
         $testProfiles = array('video' => array('target' => 'TAGA TAGC', 'resolution_hor' => 0, 'resolution_ver' => 0, 'audio' => false, 'streamserver' => $streamserver),

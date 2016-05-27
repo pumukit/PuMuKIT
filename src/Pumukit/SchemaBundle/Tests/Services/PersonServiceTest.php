@@ -18,7 +18,7 @@ class PersonServiceTest extends WebTestCase
     private $personService;
     private $factoryService;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
@@ -35,10 +35,7 @@ class PersonServiceTest extends WebTestCase
           ->get('pumukitschema.person');
         $this->factoryService = static::$kernel->getContainer()
           ->get('pumukitschema.factory');
-    }
 
-    public function setUp()
-    {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Person')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Role')->remove(array());

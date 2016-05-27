@@ -19,8 +19,12 @@ class PicExtractorServiceTest extends WebTestCase
     private $targetPath;
     private $targetUrl;
 
-    public function __construct()
+    public function setUp()
     {
+        if (TestCommand::commandExists('avconv') == false) {
+          $this->markTestSkipped('PicExtractor test marks as skipped (No avconv).');
+        }
+
         $options = array('environment' => 'test');
         static::bootKernel($options);
 
@@ -32,13 +36,6 @@ class PicExtractorServiceTest extends WebTestCase
         $this->resourcesDir = realpath(__DIR__.'/../Resources');
         $this->targetPath = $this->resourcesDir;
         $this->targetUrl = '/uploads';
-    }
-
-    public function setUp()
-    {
-        if (TestCommand::commandExists('avconv') == false) {
-          $this->markTestSkipped('PicExtractor test marks as skipped (No avconv).');
-        }
 
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());

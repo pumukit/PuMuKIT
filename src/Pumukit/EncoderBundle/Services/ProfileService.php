@@ -80,6 +80,32 @@ class ProfileService
     }
 
     /**
+     * Get the default master profile.
+     * See #7482
+     *
+     */
+    public function getDefaultMasterProfile()
+    {
+        $masterProfiles = $this->getMasterProfiles(true);
+
+        $tags = array('copy');
+        $masterNotCopyProfiles = array_filter($masterProfiles, function ($profile) use ($tags) {
+            return (0 != count(array_diff($tags, array_filter(preg_split('/[,\s]+/', $profile['tags'])))));
+        });
+
+        if ($masterNotCopyProfiles) {
+            return array_keys($masterNotCopyProfiles)[0];
+        }
+
+        // Use copy master profiles if not-copy master profile doesn't exists
+        if ($masterProfiles) {
+            return array_keys($masterProfiles)[0];
+        }
+
+        return null;
+    }
+
+    /**
      * Get given profile
      * @param string the profile name (case sensitive)
      */

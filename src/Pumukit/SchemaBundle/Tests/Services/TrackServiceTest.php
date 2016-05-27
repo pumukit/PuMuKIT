@@ -21,7 +21,7 @@ class TrackServiceTest extends WebTestCase
     private $tokenStorage;
     private $trackDispatcher;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
@@ -40,10 +40,7 @@ class TrackServiceTest extends WebTestCase
           ->get('pumukitschema.track_dispatcher');
         $this->tokenStorage = static::$kernel->getContainer()
           ->get('security.token_storage');
-    }
 
-    public function setUp()
-    {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
           ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')

@@ -22,7 +22,7 @@ class JobServiceTest extends WebTestCase
     private $trackService;
     private $factory;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
@@ -34,10 +34,7 @@ class JobServiceTest extends WebTestCase
         $this->trackService = static::$kernel->getContainer()->get('pumukitschema.track');
         $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
         $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
-    }
 
-    public function setUp()
-    {
         $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());

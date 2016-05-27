@@ -18,7 +18,7 @@ class MultimediaObjectPicServiceTest extends WebTestCase
     private $uploadsPath;
     private $picDispatcher;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
@@ -36,10 +36,7 @@ class MultimediaObjectPicServiceTest extends WebTestCase
 
         $this->originalPicPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'logo.png';
         $this->uploadsPath = realpath(__DIR__.'/../../../../../web/uploads/pic');
-    }
 
-    public function setUp()
-    {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')->remove(array());

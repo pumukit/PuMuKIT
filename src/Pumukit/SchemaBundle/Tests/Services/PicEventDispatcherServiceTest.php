@@ -16,17 +16,14 @@ class PicEventDispatcherServiceTest extends WebTestCase
 
     private $picDispatcher;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
 
         $this->dispatcher = static::$kernel->getContainer()
           ->get('event_dispatcher');
-    }
 
-    public function setUp()
-    {
         MockUpPicListener::$called = false;
         MockUpPicListener::$title = PicEventDispatcherServiceTest::EMPTY_TITLE;
         MockUpPicListener::$url = PicEventDispatcherServiceTest::EMPTY_URL;

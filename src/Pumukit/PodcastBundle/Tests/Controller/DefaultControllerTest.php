@@ -12,23 +12,25 @@ class DefaultControllerTest extends WebTestCase
     private $factory;
     private $skipTests = false;
 
-    public function __construct()
+    public function setUp()
     {
+        $this->container = static::$kernel->getContainer();
+        if (!array_key_exists("PumukitPodcastBundle", $this->container->getParameter('kernel.bundles'))) {
+            $this->markTestSkipped('PodcastBundle is not installed');
+        }
+
         $this->client = static::createClient();
         $options = array('environment'=>'test');
         static::bootKernel($options);
 
-        $this->container = static::$kernel->getContainer();
         $this->dm = $this->container->get('doctrine_mongodb.odm.document_manager');
         $this->router = $this->container->get('router');
         $this->factory = $this->container->get('pumukitschema.factory');
-    }
 
-    protected function setUp()
-    {
-        if (!array_key_exists("PumukitPodcastBundle", $this->container->getParameter('kernel.bundles'))) {
-            $this->markTestSkipped('PodcastBundle is not installed');
-        }
+        $container = static::$kernel->getContainer();
+        $this->dm = $container->get('doctrine_mongodb.odm.document_manager');
+        $this->router = $container->get('router');
+        $this->factory = $container->get('pumukitschema.factory');
 
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
             ->remove(array());

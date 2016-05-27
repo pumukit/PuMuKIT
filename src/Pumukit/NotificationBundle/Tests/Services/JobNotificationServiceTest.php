@@ -18,21 +18,19 @@ class JobNotificationServiceTest extends WebTestCase
     private $container;
     private $jobNotificationService;
 
-    public function __construct()
+    public function setUp()
     {
+        if (!array_key_exists("PumukitNotificationBundle", $this->container->getParameter('kernel.bundles'))) {
+            $this->markTestSkipped('NotificationBundle is not installed');
+        }
+
         $options = array('environment' => 'test');
         static::bootKernel($options);
         $this->container = static::$kernel->getContainer();
 
         $this->dm = $this->container->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
-    }
 
-    public function setUp()
-    {
-        if (!array_key_exists("PumukitNotificationBundle", $this->container->getParameter('kernel.bundles'))) {
-            $this->markTestSkipped('NotificationBundle is not installed');
-        }
         $this->jobNotificationService = $this->container
           ->get('pumukit_notification.listener');
 

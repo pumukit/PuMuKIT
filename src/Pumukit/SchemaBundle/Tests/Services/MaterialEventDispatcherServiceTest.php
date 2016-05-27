@@ -16,17 +16,14 @@ class MaterialEventDispatcherServiceTest extends WebTestCase
 
     private $materialDispatcher;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
 
         $this->dispatcher = static::$kernel->getContainer()
           ->get('event_dispatcher');
-    }
 
-    public function setUp()
-    {
         MockUpMaterialListener::$called = false;
         MockUpMaterialListener::$title = MaterialEventDispatcherServiceTest::EMPTY_TITLE;
         MockUpMaterialListener::$url = MaterialEventDispatcherServiceTest::EMPTY_URL;
