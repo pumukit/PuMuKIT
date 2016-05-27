@@ -228,13 +228,13 @@ class JobServiceTest extends WebTestCase
 
     public function testGetNextJob()
     {
-        $job1 = $this->createNewJob(null, 1);
-        $job2 = $this->createNewJob(null, 2);
-        $job3 = $this->createNewJob(null, 1);
-        $job4 = $this->createNewJob(null, 3);
-        $job5 = $this->createNewJob(null, 2);
-        $job6 = $this->createNewJob(null, 3);
-        $job7 = $this->createNewJob(null, 1);
+        $job1 = $this->createNewJob(null, 1, 0);
+        $job2 = $this->createNewJob(null, 2, 1);
+        $job3 = $this->createNewJob(null, 1, 2);
+        $job4 = $this->createNewJob(null, 3, 3);
+        $job5 = $this->createNewJob(null, 2, 4);
+        $job6 = $this->createNewJob(null, 3, 5);
+        $job7 = $this->createNewJob(null, 1, 6);
 
         $this->assertEquals($job4, $this->jobService->getNextJob());
 
@@ -328,7 +328,7 @@ class JobServiceTest extends WebTestCase
         $this->assertEquals(Job::STATUS_ERROR, $this->jobService->getStatusError());
     }
 
-    private function createNewJob($status = null, $priority = null)
+    private function createNewJob($status = null, $priority = null, $timeadd = 0)
     {
         $job = new Job();
         if (null !== $status){
@@ -337,7 +337,10 @@ class JobServiceTest extends WebTestCase
         if (null !== $priority){
             $job->setPriority($priority);
         }
-        $job->setTimeini(new \DateTime('now'));
+        $datetime = new \DateTime('now');
+        $datetime->modify("+$timeadd hour");
+        $job->setTimeini($datetime);
+        dump($job->getTimeini());
         $this->dm->persist($job);
         $this->dm->flush();
 
