@@ -76,7 +76,7 @@
             {% endfor %}
           </div>
         </div>
-        <div class="form-group" id="pumukitwizard_multimediaobject_i18n_line2">
+        <div class="form-group" id="pumukitwizard_multimediaobject_i18n_line2" {% if not is_granted('ROLE_SCOPE_GLOBAL') %} style="display:none"{% endif %}>
           <label for="pumukitwizard_multimediaobject_i18n_line2" class="control-label">{% trans %}Headline{% endtrans %}</label>
           <div>
             {% for locale in locales %}
