@@ -39,6 +39,8 @@ class TrackUrlServiceTest extends WebTestCase
         $this->dm->persist($mmobj);
         $this->dm->flush();
 
+        $this->assertEquals($mmobj->getNumview(), 0);
+
         $client = static::createClient();
         $genUrl = $this->trackurlService->generateTrackFileUrl($track);
         // @Route("/trackfile/{id}.{ext}", name="pumukit_trackfile_index" )
@@ -46,5 +48,6 @@ class TrackUrlServiceTest extends WebTestCase
         $this->assertEquals( $genUrl, 'trackfile/'.$track->getId().'.mp4');
         $this->assertEquals( 302, $client->getResponse()->getStatusCode());
         $this->assertEquals( $track->getUrl(), $client->getResponse()->getTargetUrl());
+        $this->assertEquals($mmobj->getNumview(), 1);
     }
 }
