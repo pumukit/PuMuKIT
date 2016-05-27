@@ -18,7 +18,7 @@ class SeriesRepositoryTest extends WebTestCase
     private $personService;
     private $factoryService;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
@@ -27,10 +27,7 @@ class SeriesRepositoryTest extends WebTestCase
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:Series');
         $this->personService = static::$kernel->getContainer()->get('pumukitschema.person');
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
-    }
 
-    public function setUp()
-    {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
             ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Role')

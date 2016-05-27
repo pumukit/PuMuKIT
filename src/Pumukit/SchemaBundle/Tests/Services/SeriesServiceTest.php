@@ -12,7 +12,7 @@ class SeriesServiceTest extends WebTestCase
     private $repo;
     private $seriesService;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
@@ -25,10 +25,7 @@ class SeriesServiceTest extends WebTestCase
           ->get('pumukitschema.seriespic');
         $this->seriesDispatcher = static::$kernel->getContainer()
           ->get('pumukitschema.series_dispatcher');
-    }
 
-    public function setUp()
-    {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
         $this->dm->flush();
     }

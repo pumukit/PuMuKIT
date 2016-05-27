@@ -17,7 +17,7 @@ class EventPicServiceTest extends WebTestCase
     private $originalPicPath;
     private $uploadsPath;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
@@ -28,10 +28,7 @@ class EventPicServiceTest extends WebTestCase
 
         $this->originalPicPath = realpath(__DIR__.'/../Resources').'/logo.png';
         $this->uploadsPath = realpath(__DIR__.'/../../../../../web/uploads/pic');
-    }
 
-    public function setUp()
-    {
         $this->dm->getDocumentCollection('PumukitLiveBundle:Live')->remove(array());
         $this->dm->getDocumentCollection('PumukitLiveBundle:Event')->remove(array());
         $this->dm->flush();

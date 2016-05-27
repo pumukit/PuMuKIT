@@ -27,7 +27,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
     private $mmsPicService;
     private $tagService;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
@@ -42,10 +42,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
             ->get('pumukitschema.mmspic');
         $this->tagService = static::$kernel->getContainer()
             ->get('pumukitschema.tag');
-    }
 
-    public function setUp()
-    {
         //DELETE DATABASE
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
             ->remove(array());

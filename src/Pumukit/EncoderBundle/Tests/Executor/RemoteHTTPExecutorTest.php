@@ -7,7 +7,7 @@ use Pumukit\EncoderBundle\Executor\RemoteHTTPExecutor;
 
 class RemoteHTTPExecutorTest extends WebTestCase
 {
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);

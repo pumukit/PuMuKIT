@@ -18,7 +18,7 @@ class JobNotificationServiceTest extends WebTestCase
     private $container;
     private $jobNotificationService;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
@@ -26,10 +26,7 @@ class JobNotificationServiceTest extends WebTestCase
 
         $this->dm = $this->container->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
-    }
 
-    public function setUp()
-    {
         $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')->remove(array());
         $this->dm->flush();
     }

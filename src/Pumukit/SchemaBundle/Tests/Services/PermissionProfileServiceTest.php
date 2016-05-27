@@ -15,7 +15,7 @@ class PermissionProfileServiceTest extends WebTestCase
     private $dispatcher;
     private $permissionService;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
@@ -30,10 +30,7 @@ class PermissionProfileServiceTest extends WebTestCase
           ->get('pumukitschema.permissionprofile_dispatcher');
         $this->permissionService = static::$kernel->getContainer()
           ->get('pumukitschema.permission');
-    }
 
-    public function setUp()
-    {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:PermissionProfile')->remove(array());
         $this->dm->flush();
 

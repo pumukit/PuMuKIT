@@ -16,17 +16,14 @@ class TrackEventDispatcherServiceTest extends WebTestCase
 
     private $trackDispatcher;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
 
         $this->dispatcher = static::$kernel->getContainer()
           ->get('event_dispatcher');
-    }
 
-    public function setUp()
-    {
         MockUpTrackListener::$called = false;
         MockUpTrackListener::$title = TrackEventDispatcherServiceTest::EMPTY_TITLE;
         MockUpTrackListener::$url = TrackEventDispatcherServiceTest::EMPTY_URL;

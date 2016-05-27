@@ -11,7 +11,7 @@ class PermissionServiceTest extends WebTestCase
 {
     private $permissionService;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);

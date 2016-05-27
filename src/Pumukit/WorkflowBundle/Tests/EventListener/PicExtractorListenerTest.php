@@ -22,7 +22,7 @@ class PicExtractorListenerTest extends WebTestCase
     private $picExtractorService;
     private $autoExtractPic = true;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
@@ -34,10 +34,7 @@ class PicExtractorListenerTest extends WebTestCase
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->mmsPicService = static::$kernel->getContainer()->get('pumukitschema.mmspic');
         $this->picExtractorService = static::$kernel->getContainer()->get('pumukitencoder.picextractor');
-    }
 
-    public function setUp()
-    {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
             ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
