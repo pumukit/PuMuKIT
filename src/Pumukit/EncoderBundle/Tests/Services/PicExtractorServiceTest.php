@@ -47,6 +47,23 @@ class PicExtractorServiceTest extends WebTestCase
         $this->picExtractor = new PicExtractorService($this->dm, $this->mmsPicService, $width, $height, $this->targetPath, $this->targetUrl, $command);
     }
 
+    public function tearDown()
+    {
+        if(isset($this->dm))
+            $this->dm->close();
+        $this->dm = null;
+        $this->mmobjRepo = null;
+        $this->factory = null;
+        $this->mmsPicService = null;
+        $this->inspectionService = null;
+        $this->resourcesDir = null;
+        $this->targetPath = null;
+        $this->targetUrl = null;
+        $this->picExtractor = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
     public function testExtractPic()
     {
         $series = $this->factory->createSeries();

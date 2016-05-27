@@ -52,6 +52,22 @@ class JobServiceTest extends WebTestCase
                                            $this->trackService, $this->tokenStorage, "test", null);
     }
 
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->repo = null;
+        $this->repoMmobj = null;
+        $this->logger = null;
+        $this->trackService = null;
+        $this->tokenStorage = null;
+        $this->factory = null;
+        $this->resourcesDir = null;
+        $this->jobService = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
     public function testCreateTrackFromLocalHardDrive()
     {
         $this->createBroadcasts();
@@ -337,7 +353,6 @@ class JobServiceTest extends WebTestCase
         $datetime = new \DateTime('now');
         $datetime->modify("+$timeadd hour");
         $job->setTimeini($datetime);
-        dump($job->getTimeini());
         $this->dm->persist($job);
         $this->dm->flush();
 

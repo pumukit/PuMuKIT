@@ -48,6 +48,24 @@ class RemoveListenerTest extends WebTestCase
         $this->dm->flush();
     }
 
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->logger = null;
+        $this->dm = null;
+        $this->repoJobs = null;
+        $this->repoMmobj = null;
+        $this->repoSeries = null;
+        $this->factoryService = null;
+        $this->trackService = null;
+        $this->tokenStorage = null;
+        $this->resourcesDir = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
+
+
     public function testPostTrackRemove()
     {
         $series = $this->factoryService->createSeries();

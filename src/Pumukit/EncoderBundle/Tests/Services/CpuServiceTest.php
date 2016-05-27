@@ -26,6 +26,16 @@ class CpuServiceTest extends WebTestCase
         $this->cpuService = new CpuService($this->getDemoCpus(), $this->dm);
     }
 
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->repo = null;
+        $this->cpuService = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
     public function testGetFreeCpu()
     {
         $cpus = $this->getDemoCpus();
@@ -115,7 +125,7 @@ class CpuServiceTest extends WebTestCase
                                             'description' => 'Pumukit transcoder'
                                             )
                       );
-        
+
         return $cpus;
     }
 }
