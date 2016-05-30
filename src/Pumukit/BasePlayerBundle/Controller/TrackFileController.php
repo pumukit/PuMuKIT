@@ -31,15 +31,22 @@ class TrackFileController extends Controller
         }
         $track = $mmobj->getTrackById($id);
 
-        $range = $request->headers->get('range');
-        $start = $request->headers->get('start');
-        if ((!$range && !$start)
-            || ($range && substr($range, 0, 8) == "bytes=0-")
-            || ($start !== null && $start == 0)
-        ){
+        if($this->shouldIncreaseViews($track, $request)) {
             $this->dispatchViewEvent($mmobj, $track);
         }
         return $this->redirect($track->getUrl());
+    }
+
+    protected function shouldIncreaseViews(Track $track, Request $request) {
+        $range = $request->headers->get('range');
+        $start = $request->headers->get('start');
+        if (!$range && !$start)
+            return true;
+        if($range && substr($range, 0, 8) == "bytes=0-")
+            return true;
+        if($start !== null && $start == 0)
+            return true;
+        return false;
     }
 
     protected function dispatchViewEvent(MultimediaObject $multimediaObject, Track $track = null)
