@@ -2,13 +2,15 @@
 
 namespace Pumukit\BasePlayerBundle\Twig;
 
-use Symfony\Component\Routing\RequestContext;
+
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\BasePlayerBundle\Services\TrackUrlService;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\MaterialService;
 use Pumukit\SchemaBundle\Services\PicService;
-use Doctrine\ODM\MongoDB\DocumentManager;
+use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class BasePlayerExtension extends \Twig_Extension
 {
@@ -50,8 +52,9 @@ class BasePlayerExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function generateTrackFileUrl($track, $absolute=false)
+    public function generateTrackFileUrl($track, $reference_type = UrlGeneratorInterface::RELATIVE_PATH)
     {
-        return $this->trackService->generateTrackFileUrl($track, $absolute);
+        return $this->trackService->generateTrackFileUrl($track, $reference_type);
     }
+
 }

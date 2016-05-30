@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\WebTVBundle\Tests\Services;
+namespace Pumukit\BasePlayerBundle\Tests\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;

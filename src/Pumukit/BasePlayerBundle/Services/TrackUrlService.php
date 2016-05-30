@@ -17,14 +17,14 @@ class TrackUrlService
         $this->router = $router;
     }
 
-    public function generateTrackFileUrl(Track $track, $absolute = false)
+    public function generateTrackFileUrl(Track $track, $reference_type = UrlGeneratorInterface::RELATIVE_PATH)
     {
         $ext = pathinfo($track->getUrl(), PATHINFO_EXTENSION);
         $params = array(
             'id' => $track->getId(),
             'ext' => $ext,
         );
-        $url = $this->router->generate('pumukit_trackfile_index', $params, $absolute ? UrlGeneratorInterface::ABSOLUTE_PATH: UrlGeneratorInterface::RELATIVE_PATH);
+        $url = $this->router->generate('pumukit_trackfile_index', $params, $reference_type);
         return $url;
     }
 }
