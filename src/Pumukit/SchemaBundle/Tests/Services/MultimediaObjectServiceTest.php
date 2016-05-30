@@ -47,6 +47,20 @@ class MultimediaObjectServiceTest extends WebTestCase
         $this->dm->flush();
     }
 
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->repo = null;
+        $this->tagRepo = null;
+        $this->broadcastRepo = null;
+        $this->factory = null;
+        $this->mmsService = null;
+        $this->tagService = null;
+            gc_collect_cycles();
+        parent::tearDown();
+    }
+
     public function testIsPublished()
     {
         $this->createTags();
@@ -63,7 +77,7 @@ class MultimediaObjectServiceTest extends WebTestCase
 
         $webTVCode = 'PUCHWEBTV';
         $this->assertFalse($this->mmsService->isPublished($mm, $webTVCode));
-        
+
         $webTVTag = $this->tagRepo->findOneByCod($webTVCode);
         $addedTags = $this->tagService->addTagToMultimediaObject($mm, $webTVTag->getId());
 
@@ -118,7 +132,7 @@ class MultimediaObjectServiceTest extends WebTestCase
 
         $webTVCode = 'PUCHWEBTV';
         $this->assertFalse($this->mmsService->isHidden($mm, $webTVCode));
-        
+
         $webTVTag = $this->tagRepo->findOneByCod($webTVCode);
         $addedTags = $this->tagService->addTagToMultimediaObject($mm, $webTVTag->getId());
 
@@ -183,7 +197,7 @@ class MultimediaObjectServiceTest extends WebTestCase
         $mm = $this->factory->createMultimediaObject($series);
 
         $webTVCode = 'PUCHWEBTV';
-        
+
         $webTVTag = $this->tagRepo->findOneByCod($webTVCode);
         $addedTags = $this->tagService->addTagToMultimediaObject($mm, $webTVTag->getId());
 

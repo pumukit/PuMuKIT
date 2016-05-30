@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Filesystem\Filesystem;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\EncoderBundle\Services\PicExtractorService;
+use Pumukit\InspectionBundle\Utils\TestCommand;
 
 class PicExtractorServiceTest extends WebTestCase
 {
@@ -20,6 +21,10 @@ class PicExtractorServiceTest extends WebTestCase
 
     public function setUp()
     {
+        if (TestCommand::commandExists('avconv') == false) {
+          $this->markTestSkipped('PicExtractor test marks as skipped (No avconv).');
+        }
+
         $options = array('environment' => 'test');
         static::bootKernel($options);
 
@@ -40,6 +45,23 @@ class PicExtractorServiceTest extends WebTestCase
         $height = 242;
         $command = 'avconv -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"';
         $this->picExtractor = new PicExtractorService($this->dm, $this->mmsPicService, $width, $height, $this->targetPath, $this->targetUrl, $command);
+    }
+
+    public function tearDown()
+    {
+        if(isset($this->dm))
+            $this->dm->close();
+        $this->dm = null;
+        $this->mmobjRepo = null;
+        $this->factory = null;
+        $this->mmsPicService = null;
+        $this->inspectionService = null;
+        $this->resourcesDir = null;
+        $this->targetPath = null;
+        $this->targetUrl = null;
+        $this->picExtractor = null;
+        gc_collect_cycles();
+        parent::tearDown();
     }
 
     public function testExtractPic()
@@ -66,11 +88,11 @@ class PicExtractorServiceTest extends WebTestCase
 
         $this->assertNotNull($pic->getWidth());
         $this->assertNotNull($pic->getHeight());
-        
+
         $picPath = $this->resourcesDir.'/series/'.$multimediaObject->getSeries()->getId().'/video/'.$multimediaObject->getId().'/';
         $this->assertStringStartsWith($picPath, $pic->getPath());
 
-        $picUrl = $this->targetUrl.'/series/'.$multimediaObject->getSeries()->getId().'/video/'.$multimediaObject->getId().'/'; 
+        $picUrl = $this->targetUrl.'/series/'.$multimediaObject->getSeries()->getId().'/video/'.$multimediaObject->getId().'/';
         $this->assertStringStartsWith($picUrl, $pic->getUrl());
 
         $this->deleteCreatedFiles();

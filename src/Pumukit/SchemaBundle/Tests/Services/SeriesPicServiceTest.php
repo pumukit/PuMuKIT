@@ -45,6 +45,23 @@ class SeriesPicServiceTest extends WebTestCase
         $this->dm->flush();
     }
 
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->repo = null;
+        $this->factoryService = null;
+        $this->seriesPicService = null;
+        $this->mmsPicService = null;
+        $this->seriesDispatcher = null;
+        $this->originalPicPath = null;
+        $this->uploadsPath = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
+
+
     public function testGetRecommendedPics()
     {
         $pic1 = new Pic();
@@ -154,7 +171,7 @@ class SeriesPicServiceTest extends WebTestCase
 
             $bannerTargetUrl = 'http://domain.com/banner';
             $series = $this->seriesPicService->addPicFile($series, $picFile, true, $bannerTargetUrl);
-        
+
             $this->assertEquals(2, count($series->getPics()));
         }
 

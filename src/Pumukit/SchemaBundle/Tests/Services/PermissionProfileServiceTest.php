@@ -37,6 +37,19 @@ class PermissionProfileServiceTest extends WebTestCase
         $this->permissionProfileService = new PermissionProfileService($this->dm, $this->dispatcher, $this->permissionService);
     }
 
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->repo = null;
+        $this->permissionProfileService = null;
+        $this->dispatcher = null;
+        $this->permissionService = null;
+        $this->permissionProfileService = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
     public function testUpdate()
     {
         $permissionProfile1 = new PermissionProfile();

@@ -25,6 +25,17 @@ class PermissionProfileRepositoryTest extends WebTestCase
             ->remove(array());
     }
 
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->repo = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
+
+
     public function testEmpty()
     {
         $this->assertEmpty($this->repo->findAll());

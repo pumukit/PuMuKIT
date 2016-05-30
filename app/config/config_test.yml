@@ -1,5 +1,5 @@
 imports:
-    - { resource: config_dev.yml }
+    - { resource: config.yml }
 
 framework:
     test: ~
@@ -67,3 +67,16 @@ pumukit_encoder:
             app: ffmpeg
             rel_duration_size: 1
             rel_duration_trans: 1
+
+
+monolog:
+    handlers:
+        main:
+            type:   stream
+            path:   "%kernel.logs_dir%/%kernel.environment%.log"
+            level:  error
+        encoder:
+            type:   stream
+            path:   "%kernel.logs_dir%/encoder_%kernel.environment%.log"
+            level:  error
+            channels: [encoder]

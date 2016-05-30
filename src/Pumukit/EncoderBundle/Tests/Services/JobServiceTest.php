@@ -40,16 +40,32 @@ class JobServiceTest extends WebTestCase
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')->remove(array());
         $this->dm->flush();
-        
+
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
         $cpuService = new CpuService($this->getDemoCpus(), $this->dm);
         $dispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $inspectionService = $this->getMock('Pumukit\InspectionBundle\Services\InspectionServiceInterface');
         $inspectionService->expects($this->any())->method('getDuration')->will($this->returnValue(5));
         $this->resourcesDir = realpath(__DIR__.'/../Resources').'/';
-        $this->jobService = new JobService($this->dm, $profileService, $cpuService, 
+        $this->jobService = new JobService($this->dm, $profileService, $cpuService,
                                            $inspectionService, $dispatcher, $this->logger,
                                            $this->trackService, $this->tokenStorage, "test", null);
+    }
+
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->repo = null;
+        $this->repoMmobj = null;
+        $this->logger = null;
+        $this->trackService = null;
+        $this->tokenStorage = null;
+        $this->factory = null;
+        $this->resourcesDir = null;
+        $this->jobService = null;
+        gc_collect_cycles();
+        parent::tearDown();
     }
 
     public function testCreateTrackFromLocalHardDrive()
@@ -116,7 +132,7 @@ class JobServiceTest extends WebTestCase
         $this->deleteCreatedFiles();
         unlink($filePath);
     }
-    
+
     public function testAddJob()
     {
         $profiles = $this->getDemoProfiles();
@@ -225,15 +241,13 @@ class JobServiceTest extends WebTestCase
 
     public function testGetNextJob()
     {
-        $this->markTestSkipped('S');
-
-        $job1 = $this->createNewJob(null, 1);
-        $job2 = $this->createNewJob(null, 2);
-        $job3 = $this->createNewJob(null, 1);
-        $job4 = $this->createNewJob(null, 3);
-        $job5 = $this->createNewJob(null, 2);
-        $job6 = $this->createNewJob(null, 3);
-        $job7 = $this->createNewJob(null, 1);
+        $job1 = $this->createNewJob(null, 1, 0);
+        $job2 = $this->createNewJob(null, 2, 1);
+        $job3 = $this->createNewJob(null, 1, 2);
+        $job4 = $this->createNewJob(null, 3, 3);
+        $job5 = $this->createNewJob(null, 2, 4);
+        $job6 = $this->createNewJob(null, 3, 5);
+        $job7 = $this->createNewJob(null, 1, 6);
 
         $this->assertEquals($job4, $this->jobService->getNextJob());
 
@@ -327,7 +341,7 @@ class JobServiceTest extends WebTestCase
         $this->assertEquals(Job::STATUS_ERROR, $this->jobService->getStatusError());
     }
 
-    private function createNewJob($status = null, $priority = null)
+    private function createNewJob($status = null, $priority = null, $timeadd = 0)
     {
         $job = new Job();
         if (null !== $status){
@@ -336,7 +350,9 @@ class JobServiceTest extends WebTestCase
         if (null !== $priority){
             $job->setPriority($priority);
         }
-        $job->setTimeini(new \DateTime('now'));
+        $datetime = new \DateTime('now');
+        $datetime->modify("+$timeadd hour");
+        $job->setTimeini($datetime);
         $this->dm->persist($job);
         $this->dm->flush();
 
@@ -367,7 +383,7 @@ class JobServiceTest extends WebTestCase
                                             'description' => 'Pumukit transcoder'
                                             )
                       );
-        
+
         return $cpus;
     }
 

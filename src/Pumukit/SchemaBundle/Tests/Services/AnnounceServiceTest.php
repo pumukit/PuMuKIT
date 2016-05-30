@@ -53,6 +53,18 @@ class AnnounceServiceTest extends WebTestCase
         $this->dm->flush();
     }
 
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->seriesRepo = null;
+        $this->mmobjRepo = null;
+        $this->announceService = null;
+        $this->factoryService = null;
+        $this->tagService = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
     public function testGetLast()
     {
         $series1 = $this->factoryService->createSeries();

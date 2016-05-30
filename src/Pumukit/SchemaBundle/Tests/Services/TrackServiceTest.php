@@ -52,12 +52,30 @@ class TrackServiceTest extends WebTestCase
         $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')
           ->remove(array());
         $this->dm->flush();
-        
+
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
         $this->trackService = new TrackService($this->dm, $this->trackDispatcher, $profileService, null, true);
 
         $this->tmpDir = $this->trackService->getTempDirs()[0];
     }
+
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->logger = null;
+        $this->dm = null;
+        $this->repoJobs = null;
+        $this->repoMmobj = null;
+        $this->factoryService = null;
+        $this->trackDispatcher = null;
+        $this->tokenStorage = null;
+        $this->trackService = null;
+        $this->tmpDir = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
+
 
     public function testAddTrackToMultimediaObject()
     {
@@ -254,7 +272,7 @@ class TrackServiceTest extends WebTestCase
                                             'description' => 'Pumukit transcoder'
                                             )
                       );
-        
+
         return $cpus;
     }
 

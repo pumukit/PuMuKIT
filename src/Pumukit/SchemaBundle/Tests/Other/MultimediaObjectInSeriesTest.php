@@ -36,6 +36,19 @@ class MultimediaObjectInSeriesTest extends WebTestCase
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')->remove(array());
     }
 
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->factoryService = null;
+        $this->dm = null;
+        $this->seriesRepo = null;
+        $this->mmobjRepo = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
+
+
     public function testCreateNewMultimediaObject()
     {
         $broadcast = $this->createBroadcast();

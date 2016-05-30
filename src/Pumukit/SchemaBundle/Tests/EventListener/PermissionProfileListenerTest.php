@@ -62,6 +62,20 @@ class PermissionProfileListenerTest extends WebTestCase
         $this->dm->flush();
     }
 
+    public function tearDown()
+    {
+        $this->dm = null;
+        $this->userRepo = null;
+        $this->permissionProfileRepo = null;
+        $this->permissionProfileService = null;
+        $this->userService = null;
+        $this->listener = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
+
+
     public function testPostUpdate()
     {
         $permissionProfile1 = new PermissionProfile();

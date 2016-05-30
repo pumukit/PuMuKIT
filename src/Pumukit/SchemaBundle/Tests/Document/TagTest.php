@@ -14,7 +14,7 @@ class TagTest extends WebTestCase
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
-        
+
         $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb')->getManager();
         $this->tagRepo = $this->dm
@@ -25,7 +25,19 @@ class TagTest extends WebTestCase
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')
       ->remove(array());
     }
-    
+
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->tagRepo = null;
+        $this->tagService = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
+
+
     public function testGetterAndSetter()
     {
         $title = 'title';
@@ -127,7 +139,7 @@ class TagTest extends WebTestCase
         $this->dm->persist( $tag_child );
         $this->dm->persist( $tag_grandchild );
         $this->dm->flush();
- 
+
         $this->assertEquals(null, $tag_parent->getParent());
         $this->assertFalse( $tag_parent->isChildOf( $tag_child ) );
         $this->assertFalse( $tag_child->isChildOf( $tag_child ) );
@@ -147,13 +159,13 @@ class TagTest extends WebTestCase
         $this->assertEquals('Parent|ParentChild|GrandChild|', $tag_grandchild->getPath() );
         $this->assertEquals( $tag_parent, $tag_child->getParent() );
         $this->assertTrue( $tag_child->isChildOf( $tag_parent ) );
-        $this->assertTrue( $tag_grandchild->isDescendantOf( $tag_parent ) );        
+        $this->assertTrue( $tag_grandchild->isDescendantOf( $tag_parent ) );
         $this->assertTrue( $tag_child->isDescendantOfByCod( $tag_parent->getCod() ) );
         $this->assertTrue( $tag_grandchild->isDescendantOfByCod( $tag_parent->getCod() ) );
 
         $this->assertFalse( $tag_grandchild->isChildOf( $tag_parent ) );
         $this->assertFalse( $tag_parent->isChildOf( $tag_child ) );
-        $this->assertFalse( $tag_parent->isDescendantOf( $tag_child ) );        
+        $this->assertFalse( $tag_parent->isDescendantOf( $tag_child ) );
         $this->assertFalse( $tag_parent->isDescendantOfByCod( $tag_child->getCod() ) );
     }
 }

@@ -34,6 +34,17 @@ class LinkServiceTest extends WebTestCase
         $this->dm->flush();
     }
 
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->repoMmobj = null;
+        $this->linkService = null;
+        $this->factoryService = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
     public function testAddLinkToMultimediaObject()
     {
         $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
@@ -141,7 +152,7 @@ class LinkServiceTest extends WebTestCase
         $this->linkService->downLinkInMultimediaObject($mm, $link2->getId());
         $links = array($link3, $link2, $link1);
         $this->assertEquals($links, $mm->getLinks()->toArray());
-        
+
     }
 
     private function createBroadcast($broadcastTypeId)

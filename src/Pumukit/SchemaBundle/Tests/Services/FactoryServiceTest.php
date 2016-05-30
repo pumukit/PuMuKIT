@@ -52,6 +52,18 @@ class FactoryServiceTest extends WebTestCase
         $this->dm->flush();
     }
 
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->seriesRepo = null;
+        $this->mmobjRepo = null;
+        $this->translator = null;
+        $this->factory = null;
+        $this->locales = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
     public function testCreateSeries()
     {
         $this->createBroadcasts();
@@ -257,7 +269,7 @@ class FactoryServiceTest extends WebTestCase
 
         $tagB->setParent($tagA);
         $tagC->setParent($tagA);
-        
+
         $this->assertEquals(2, count($this->factory->getTagsByCod('A', true)));
     }
 
@@ -363,7 +375,7 @@ class FactoryServiceTest extends WebTestCase
         $this->assertEquals($new->getPublicDate(), $src->getPublicDate());
         $this->assertEquals($new->getRecordDate(), $src->getRecordDate());
         $this->assertEquals($new->getStatus(), MultimediaObject::STATUS_BLOQ);
-        
+
         $this->assertEquals($new->getBroadcast(), $src->getBroadcast());
         $this->assertEquals(count($new->getRoles()), count($src->getRoles()));
         $this->assertEquals(count($new->getTags()), count($src->getTags()));

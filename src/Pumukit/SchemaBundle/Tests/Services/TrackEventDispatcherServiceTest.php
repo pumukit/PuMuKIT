@@ -31,6 +31,16 @@ class TrackEventDispatcherServiceTest extends WebTestCase
         $this->trackDispatcher = new TrackEventDispatcherService($this->dispatcher);
     }
 
+    public function tearDown()
+    {
+        $this->dispatcher = null;
+        $this->trackDispatcher = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
+
+
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::TRACK_CREATE, function($event, $name)
@@ -43,7 +53,7 @@ class TrackEventDispatcherServiceTest extends WebTestCase
 
                                            MockUpTrackListener::$called = true;
                                            MockUpTrackListener::$title = $multimediaObject->getTitle();
-                                           MockUpTrackListener::$url = $track->getUrl();        
+                                           MockUpTrackListener::$url = $track->getUrl();
                                        });
 
         $this->assertFalse(MockUpTrackListener::$called);
@@ -78,7 +88,7 @@ class TrackEventDispatcherServiceTest extends WebTestCase
 
                                            MockUpTrackListener::$called = true;
                                            MockUpTrackListener::$title = $multimediaObject->getTitle();
-                                           MockUpTrackListener::$url = $track->getUrl();        
+                                           MockUpTrackListener::$url = $track->getUrl();
                                        });
 
         $this->assertFalse(MockUpTrackListener::$called);
@@ -116,7 +126,7 @@ class TrackEventDispatcherServiceTest extends WebTestCase
 
                                            MockUpTrackListener::$called = true;
                                            MockUpTrackListener::$title = $multimediaObject->getTitle();
-                                           MockUpTrackListener::$url = $track->getUrl();        
+                                           MockUpTrackListener::$url = $track->getUrl();
                                        });
 
         $this->assertFalse(MockUpTrackListener::$called);

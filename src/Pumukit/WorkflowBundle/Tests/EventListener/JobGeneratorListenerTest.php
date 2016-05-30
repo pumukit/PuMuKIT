@@ -26,7 +26,7 @@ class JobGeneratorListenerTest extends WebTestCase
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->logger = static::$kernel->getContainer()->get('logger');
-        
+
 
 
         $streamserver = array('dir_out' => sys_get_temp_dir());
@@ -37,7 +37,7 @@ class JobGeneratorListenerTest extends WebTestCase
                               'audio' => array('target' => 'TAGA TAGC', 'resolution_hor' => 0, 'resolution_ver' => 0, 'audio' => true, 'streamserver' => $streamserver),
                               'audio2' => array('target' => 'TAGB*, TAGC', 'resolution_hor' => 0, 'resolution_ver' => 0, 'audio' => true, 'streamserver' => $streamserver));
         $profileService = new ProfileService($testProfiles, $this->dm);
-      
+
         $jobService = $this->getMockBuilder('Pumukit\EncoderBundle\Services\JobService')
                           ->disableOriginalConstructor()
                           ->getMock();
@@ -45,19 +45,32 @@ class JobGeneratorListenerTest extends WebTestCase
                    ->method('addUniqueJob')
                    ->will($this->returnArgument(1));
 
-        
+
         $logger = $this->getMockBuilder('Symfony\Component\HttpKernel\Log\LoggerInterface')
                        ->disableOriginalConstructor()
                        ->getMock();
-                
+
         $this->jobGeneratorListener = new JobGeneratorListener($this->dm, $jobService, $profileService, $this->logger);
     }
 
-    
+
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->logger = null;
+        $this->jobGeneratorListener = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
+
+
+
     public function testGetTargets()
     {
         //TODO workaround to solve problems with @dataProvider
-        $data = array(        
+        $data = array(
             array('', array('standard' => array(), 'force' => array())),
             array('TAG', array('standard' => array('TAG'), 'force' => array())),
             array('TAG1 TAG2', array('standard' => array('TAG1', 'TAG2'), 'force' => array())),
@@ -86,7 +99,7 @@ class JobGeneratorListenerTest extends WebTestCase
         $mmobj = new MultimediaObject();
         $mmobj->addTrack($track);
 
-        $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGA'));      
+        $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGA'));
         $this->assertEquals(array('video'), $jobs);
 
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGC'));
@@ -114,7 +127,7 @@ class JobGeneratorListenerTest extends WebTestCase
         $mmobj = new MultimediaObject();
         $mmobj->addTrack($track);
 
-        $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGA'));      
+        $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGA'));
         $this->assertEquals(array('video'), $jobs);
 
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGC'));
@@ -129,7 +142,7 @@ class JobGeneratorListenerTest extends WebTestCase
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGFP'));
         $this->assertEquals(array('videoSD', 'videoHD'), $jobs);
     }
-    
+
 
 
     public function testGenerateJobsForAudio()
@@ -155,7 +168,7 @@ class JobGeneratorListenerTest extends WebTestCase
 
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGFP'));
         $this->assertEquals(array(), $jobs);  //generate a video from an audio has no sense.
-        
+
     }
 
     private function invokeMethod(&$object, $methodName, array $parameters = array())

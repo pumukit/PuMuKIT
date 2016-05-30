@@ -40,6 +40,19 @@ class PicServiceTest extends WebTestCase
         $this->picService = new PicService($this->context, $this->webDir, $this->defaultSeriesPic, $this->defaultVideoPic, $this->defaultAudioHDPic, $this->defaultAudioSDPic);
     }
 
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->factoryService = null;
+        $this->context = null;
+        $this->rootDir = null;
+        $this->webDir = null;
+        $this->picService = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
     public function testGetFirstUrlPic()
     {
         // SERIES SECTION

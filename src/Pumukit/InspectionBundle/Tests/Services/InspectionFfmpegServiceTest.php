@@ -23,6 +23,16 @@ class InspectionFfmpegServiceTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function tearDown()
+    {
+        $this->resources_dir = null;
+        $this->wrong_file1   = null;
+        $this->wrong_file2   = null;
+        $this->vid_no_audio = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
     /**
      * @expectedException BadMethodCallException
      */

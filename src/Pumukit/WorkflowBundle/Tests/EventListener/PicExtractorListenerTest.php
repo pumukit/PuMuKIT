@@ -54,6 +54,23 @@ class PicExtractorListenerTest extends WebTestCase
         $this->picExtractorListener = new PicExtractorListener($this->dm, $mmsPicService, $picExtractorService, $this->logger, $this->autoExtractPic);
     }
 
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->repo = null;
+        $this->logger = null;
+        $this->videoPath = null;
+        $this->factoryService = null;
+        $this->mmsPicService = null;
+        $this->picExtractorService = null;
+        $this->picExtractorListener = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
+
+
     public function testGeneratePicFromVideo()
     {
         $series = $this->factoryService->createSeries();

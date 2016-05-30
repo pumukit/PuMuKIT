@@ -28,6 +28,14 @@ class MultimediaObjectEventDispatcherServiceTest extends WebTestCase
         $this->multimediaObjectDispatcher = new MultimediaObjectEventDispatcherService($this->dispatcher);
     }
 
+    public function tearDown()
+    {
+        $this->dispatcher = null;
+        $this->multimediaObjectDispatcher = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::MULTIMEDIAOBJECT_CREATE, function($event, $name)
