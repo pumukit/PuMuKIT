@@ -44,6 +44,21 @@ class MaterialServiceTest extends WebTestCase
         $this->dm->flush();
     }
 
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->repoMmobj = null;
+        $this->materialService = null;
+        $this->materialDispatcher = null;
+        $this->factoryService = null;
+
+        $this->originalFilePath = null;
+        $this->uploadsPath = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
     public function testAddMaterialUrl()
     {
         $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
@@ -111,23 +126,23 @@ class MaterialServiceTest extends WebTestCase
         $filePath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'fileCopy.pdf';
         if (copy($this->originalFilePath, $filePath)){
             $file = new UploadedFile($filePath, 'file.pdf', null, null, null, true);
-            
+
             $formData['i18n_name'] = array('en' => 'Material');
             $formData['hide'] = false;
             $formData['mime_type'] = '9';
-            
+
             $mm = $this->materialService->addMaterialFile($mm, $file, $formData);
             $mm = $this->repoMmobj->find($mm->getId());
-            
+
             $this->assertEquals(1, count($mm->getMaterials()));
-          
+
             $material = $mm->getMaterials()[0];
             $this->assertTrue($mm->containsMaterial($material));
 
             $uploadedFile = '/uploads/material/'.$mm->getId().DIRECTORY_SEPARATOR.$file->getClientOriginalName();
             $this->assertEquals($uploadedFile, $material->getUrl());
         }
-        
+
         $this->deleteCreatedFiles();
     }
 
@@ -153,13 +168,13 @@ class MaterialServiceTest extends WebTestCase
 
         $materials = $mm->getMaterials();
         $material = $materials[0];
-        
+
         $materialPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'materialCopy';
         if (copy($this->originalFilePath, $materialPath)){
             $materialFile = new UploadedFile($materialPath, 'material', null, null, null, true);
             $mm = $this->materialService->addMaterialFile($mm, $materialFile, $formData);
             $mm = $this->repoMmobj->find($mm->getId());
-            
+
             $this->assertEquals(2, count($mm->getMaterials()));
 
             $material = $mm->getMaterials()[1];
@@ -211,13 +226,13 @@ class MaterialServiceTest extends WebTestCase
         $material2 = $materials[1];
         $material3 = $materials[2];
         $arrayMaterials = array($material1, $material2, $material3);
-        
+
         $this->assertEquals($arrayMaterials, $mm->getMaterials()->toArray());
 
         $mm = $this->materialService->upMaterialInMultimediaObject($mm, $material2->getId());
         $mm = $this->repoMmobj->find($mm->getId());
 
-        $arrayMaterials = array($material2, $material1, $material3);        
+        $arrayMaterials = array($material2, $material1, $material3);
         $this->assertEquals($arrayMaterials, $mm->getMaterials()->toArray());
 
         $mm = $this->materialService->downMaterialInMultimediaObject($mm, $material1->getId());

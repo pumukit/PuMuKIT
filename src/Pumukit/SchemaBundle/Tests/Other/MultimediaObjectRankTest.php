@@ -30,6 +30,18 @@ class MultimediaObjectRankTest extends WebTestCase
         $this->dm->flush();
     }
 
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->repo = null;
+        $this->factoryService = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
+
+
     public function testRank()
     {
         $series = $this->createSeries("Stark's growing pains");
@@ -105,7 +117,7 @@ class MultimediaObjectRankTest extends WebTestCase
         $this->assertEquals(1, $mm2->getRank());
         $this->assertEquals(2, $mm3->getRank());
         $this->assertEquals(3, $mm4->getRank());
-        
+
     }
 
     private function createMultimediaObjectAssignedToSeries($title, Series $series)

@@ -31,6 +31,14 @@ class LinkEventDispatcherServiceTest extends WebTestCase
         $this->linkDispatcher = new LinkEventDispatcherService($this->dispatcher);
     }
 
+    public function tearDown()
+    {
+        $this->dispatcher = null;
+        $this->linkDispatcher = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::LINK_CREATE, function($event, $name)
@@ -43,7 +51,7 @@ class LinkEventDispatcherServiceTest extends WebTestCase
 
                                            MockUpLinkListener::$called = true;
                                            MockUpLinkListener::$title = $multimediaObject->getTitle();
-                                           MockUpLinkListener::$url = $link->getUrl();        
+                                           MockUpLinkListener::$url = $link->getUrl();
                                        });
 
         $this->assertFalse(MockUpLinkListener::$called);
@@ -78,7 +86,7 @@ class LinkEventDispatcherServiceTest extends WebTestCase
 
                                            MockUpLinkListener::$called = true;
                                            MockUpLinkListener::$title = $multimediaObject->getTitle();
-                                           MockUpLinkListener::$url = $link->getUrl();        
+                                           MockUpLinkListener::$url = $link->getUrl();
                                        });
 
         $this->assertFalse(MockUpLinkListener::$called);
@@ -116,7 +124,7 @@ class LinkEventDispatcherServiceTest extends WebTestCase
 
                                            MockUpLinkListener::$called = true;
                                            MockUpLinkListener::$title = $multimediaObject->getTitle();
-                                           MockUpLinkListener::$url = $link->getUrl();        
+                                           MockUpLinkListener::$url = $link->getUrl();
                                        });
 
         $this->assertFalse(MockUpLinkListener::$called);

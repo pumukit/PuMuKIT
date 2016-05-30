@@ -59,6 +59,19 @@ class UserServiceTest extends WebTestCase
         $this->dm->flush();
     }
 
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->repo = null;
+        $this->permissionProfileRepo = null;
+        $this->userService = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
+
+
     public function testCreateAndUpdate()
     {
         $permissions1 = array(Permission::ACCESS_DASHBOARD, Permission::ACCESS_ROLES);
@@ -325,7 +338,7 @@ class UserServiceTest extends WebTestCase
 
         $user = $this->userService->delete($user);
 
-        $this->assertCount(0, $this->repo->findAll());        
+        $this->assertCount(0, $this->repo->findAll());
     }
 
     public function testInstantiate()

@@ -31,6 +31,14 @@ class PicEventDispatcherServiceTest extends WebTestCase
         $this->picDispatcher = new PicEventDispatcherService($this->dispatcher);
     }
 
+    public function tearDown()
+    {
+        $this->dispatcher = null;
+        $this->picDispatcher = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::PIC_CREATE, function($event, $name)
@@ -43,7 +51,7 @@ class PicEventDispatcherServiceTest extends WebTestCase
 
                                            MockUpPicListener::$called = true;
                                            MockUpPicListener::$title = $multimediaObject->getTitle();
-                                           MockUpPicListener::$url = $pic->getUrl();        
+                                           MockUpPicListener::$url = $pic->getUrl();
                                        });
 
         $this->assertFalse(MockUpPicListener::$called);
@@ -78,7 +86,7 @@ class PicEventDispatcherServiceTest extends WebTestCase
 
                                            MockUpPicListener::$called = true;
                                            MockUpPicListener::$title = $multimediaObject->getTitle();
-                                           MockUpPicListener::$url = $pic->getUrl();        
+                                           MockUpPicListener::$url = $pic->getUrl();
                                        });
 
         $this->assertFalse(MockUpPicListener::$called);
@@ -116,7 +124,7 @@ class PicEventDispatcherServiceTest extends WebTestCase
 
                                            MockUpPicListener::$called = true;
                                            MockUpPicListener::$title = $multimediaObject->getTitle();
-                                           MockUpPicListener::$url = $pic->getUrl();        
+                                           MockUpPicListener::$url = $pic->getUrl();
                                        });
 
         $this->assertFalse(MockUpPicListener::$called);

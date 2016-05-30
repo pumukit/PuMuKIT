@@ -24,7 +24,7 @@ class UserEventDispatcherServiceTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb.odm.document_manager');
         $this->dispatcher = new EventDispatcher();
-        
+
 
         $this->dm->getDocumentCollection('PumukitSchemaBundle:User')->remove(array());
         $this->dm->flush();
@@ -34,6 +34,18 @@ class UserEventDispatcherServiceTest extends WebTestCase
 
         $this->userDispatcher = new UserEventDispatcherService($this->dispatcher);
     }
+
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->dispatcher = null;
+        $this->userDispatcher = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
+
 
     public function testDispatchCreate()
     {

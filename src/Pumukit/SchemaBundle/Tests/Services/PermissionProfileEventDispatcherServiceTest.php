@@ -34,6 +34,16 @@ class PermissionProfileEventDispatcherServiceTest extends WebTestCase
         $this->permissionProfileDispatcher = new PermissionProfileEventDispatcherService($this->dispatcher);
     }
 
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->dispatcher = null;
+        $this->permissionProfileDispatcher = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::PERMISSIONPROFILE_CREATE, function($event, $name)

@@ -20,6 +20,13 @@ class PermissionServiceTest extends WebTestCase
           ->get('pumukitschema.permission');
     }
 
+    public function tearDown()
+    {
+        $this->permissionService = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
     public function testGetExternalPermissions()
     {
         $externalPermissions = $this->getExternalPermissions();

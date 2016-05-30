@@ -27,6 +27,18 @@ class SeriesTypeRepositoryTest extends WebTestCase
         $this->dm->flush();
     }
 
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->repo = null;
+        $this->factoryService = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
+
+
     public function testRepositoryEmpty()
     {
         $this->assertEquals(0, count($this->repo->findAll()));

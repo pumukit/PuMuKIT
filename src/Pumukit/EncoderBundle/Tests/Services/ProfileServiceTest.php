@@ -25,6 +25,15 @@ class ProfileServiceTest extends WebTestCase
 
         $this->profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
     }
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->repo = null;
+        $this->profileService = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
 
     public function testGetProfiles()
     {

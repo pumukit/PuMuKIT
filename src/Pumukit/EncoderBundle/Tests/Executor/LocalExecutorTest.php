@@ -12,7 +12,7 @@ class LocalExecutorTest extends WebTestCase
         $options = array('environment' => 'test');
         static::bootKernel($options);
     }
-    
+
     public function testSimple()
     {
         $executor = new LocalExecutor();

@@ -24,20 +24,36 @@ class JobNotificationServiceTest extends WebTestCase
         static::bootKernel($options);
         $this->container = static::$kernel->getContainer();
 
+        if (!array_key_exists("PumukitNotificationBundle", $this->container->getParameter('kernel.bundles'))) {
+            $this->markTestSkipped('NotificationBundle is not installed');
+        }
+
         $this->dm = $this->container->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
+
+        $this->jobNotificationService = $this->container
+          ->get('pumukit_notification.listener');
 
         $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')->remove(array());
         $this->dm->flush();
     }
 
+    public function tearDown()
+    {
+        if(isset($this->dm))
+            $this->dm->close();
+        $this->container = null;
+        $this->dm = null;
+        $this->repo = null;
+        $this->jobNotificationService = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
+
+
     public function testOnJobSuccess()
     {
-        $this->markTestSkipped('S');
-
-        $this->jobNotificationService = $this->container
-          ->get('pumukit_notification.listener');
-
         $multimediaObject= $this->createNewMultimediaObjectWithTrack();
 
         $job = $this->createNewJob(Job::STATUS_WAITING, $multimediaObject);
@@ -55,11 +71,6 @@ class JobNotificationServiceTest extends WebTestCase
 
     public function testOnJobError()
     {
-        $this->markTestSkipped('S');
-
-        $this->jobNotificationService = $this->container
-          ->get('pumukit_notification.listener');
-
         $multimediaObject= $this->createNewMultimediaObjectWithTrack();
 
         $job = $this->createNewJob(Job::STATUS_WAITING, $multimediaObject);

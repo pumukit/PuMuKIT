@@ -22,11 +22,22 @@ class JobRepositoryTest extends WebTestCase
         $this->dm->flush();
     }
 
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->repo = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
+
+
     public function testRepositoryEmpty()
     {
         $this->assertEquals(0, count($this->repo->findAll()));
     }
-  
+
     public function testRepository()
     {
         $mm_id = '54ad3f5e6e4cd68a278b4573';
@@ -43,7 +54,7 @@ class JobRepositoryTest extends WebTestCase
         $name = 'video1';
         $pausedJob = $this->newJob($mm_id, $name);
         $pausedJob->setStatus(Job::STATUS_PAUSED);
-        
+
         $mm_id = '54ad3f5e6e4cd68a278b4574';
         $name = 'video2';
         $waitingJob = $this->newJob($mm_id, $name);
@@ -144,7 +155,7 @@ class JobRepositoryTest extends WebTestCase
         $job1 = $this->newJob($mm_id, $name);
         $job1->setTimeini(new \DateTime("15-12-2015 9:00:01"));
         $job1->setPriority(2);
-        
+
         $mm_id = '54ad3f5e6e4cd68a278b4574';
         $name = 'video2';
         $job2 = $this->newJob($mm_id, $name);
@@ -198,7 +209,7 @@ class JobRepositoryTest extends WebTestCase
         $this->assertEquals($job3, $this->repo->findHigherPriorityWithStatus(array(Job::STATUS_WAITING)));
         $this->assertNotEquals($job7, $this->repo->findHigherPriorityWithStatus(array(Job::STATUS_WAITING)));
 
-        $this->assertEquals($job0, $this->repo->findHigherPriorityWithStatus(array(Job::STATUS_PAUSED)));    
+        $this->assertEquals($job0, $this->repo->findHigherPriorityWithStatus(array(Job::STATUS_PAUSED)));
   }
 
     public function testFindNotFinishedByMultimediaObjectId()
