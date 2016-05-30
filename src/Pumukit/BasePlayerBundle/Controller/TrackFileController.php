@@ -31,6 +31,14 @@ class TrackFileController extends Controller
         }
         $track = $mmobj->getTrackById($id);
 
+        $this->dispatchViewEvent($mmobj, $track);
         return $this->redirect($track->getUrl());
     }
+
+    protected function dispatchViewEvent(MultimediaObject $multimediaObject, Track $track = null)
+    {
+        $event = new ViewedEvent($multimediaObject, $track);
+        $this->get('event_dispatcher')->dispatch(BasePlayerEvents::MULTIMEDIAOBJECT_VIEW, $event);
+    }
+
 }

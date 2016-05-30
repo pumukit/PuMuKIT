@@ -4,6 +4,7 @@ namespace Pumukit\WebTVBundle\Tests\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Track;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -18,6 +19,7 @@ class TrackUrlServiceTest extends WebTestCase
         static::bootKernel($options);
         $container = static::$kernel->getContainer();
         $this->dm = $container->get('doctrine_mongodb')->getManager();
+        $this->mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->trackurlService = $container->get('pumukit_baseplayer.trackurl');
     }
 
@@ -25,6 +27,7 @@ class TrackUrlServiceTest extends WebTestCase
     {
         $this->dm->close();
         $this->dm = null;
+        $this->mmobjRepo = null;
         $this->trackurlService = null;
         gc_collect_cycles();
         parent::tearDown();
@@ -33,21 +36,27 @@ class TrackUrlServiceTest extends WebTestCase
     public function testGenerateTrackFileUrl()
     {
         $track = new Track();
-        $track->setUrl('funnyurl.mp4');
+        $series = new Series();
         $mmobj = new MultimediaObject();
+        $track->setUrl('funnyurl.mp4');
+        $mmobj->setSeries($series);
         $mmobj->addTrack($track);
+        $this->dm->persist($series);
         $this->dm->persist($mmobj);
         $this->dm->flush();
 
-        $this->assertEquals($mmobj->getNumview(), 0);
+        $this->assertEquals(0 ,$mmobj->getNumview());
 
         $client = static::createClient();
         $genUrl = $this->trackurlService->generateTrackFileUrl($track);
-        // @Route("/trackfile/{id}.{ext}", name="pumukit_trackfile_index" )
         $crawler = $client->request('GET', $genUrl);
+        // @Route("/trackfile/{id}.{ext}", name="pumukit_trackfile_index" )
         $this->assertEquals( $genUrl, 'trackfile/'.$track->getId().'.mp4');
         $this->assertEquals( 302, $client->getResponse()->getStatusCode());
         $this->assertEquals( $track->getUrl(), $client->getResponse()->getTargetUrl());
-        $this->assertEquals($mmobj->getNumview(), 1);
+        //Reload mmobj to check for new views.
+        $this->dm->clear();
+        $mmobj = $this->mmobjRepo->find($mmobj->getId());
+        $this->assertEquals(1, $mmobj->getNumview());
     }
 }
