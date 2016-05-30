@@ -49,7 +49,7 @@ class TrackUrlServiceTest extends WebTestCase
 
         $client = static::createClient();
         $genUrl = $this->trackurlService->generateTrackFileUrl($track);
-        $crawler = $client->request('GET', $genUrl);
+        $client->request('GET', $genUrl);
         // @Route("/trackfile/{id}.{ext}", name="pumukit_trackfile_index" )
         $this->assertEquals( $genUrl, 'trackfile/'.$track->getId().'.mp4');
         $this->assertEquals( 302, $client->getResponse()->getStatusCode());
@@ -58,5 +58,31 @@ class TrackUrlServiceTest extends WebTestCase
         $this->dm->clear();
         $mmobj = $this->mmobjRepo->find($mmobj->getId());
         $this->assertEquals(1, $mmobj->getNumview());
+        $client = static::createClient();
+        $client->request('GET', $genUrl, array(), array(), array('HTTP_RANGE' => 'bytes=123-246'));
+        $this->dm->clear();
+        $mmobj = $this->mmobjRepo->find($mmobj->getId());
+        $this->assertEquals(1, $mmobj->getNumview());
+        //Views should work if range = 0
+        $client = static::createClient();
+        $client->request('GET', $genUrl, array(), array(), array('HTTP_RANGE' => 'bytes=0-1256'));
+        $client = static::createClient();
+        $client->request('GET', $genUrl, array(), array(), array('HTTP_RANGE' => 'bytes=0-'));
+        $this->dm->clear();
+        $mmobj = $this->mmobjRepo->find($mmobj->getId());
+        $this->assertEquals(3, $mmobj->getNumview());
+        //Start should also work
+        $client = static::createClient();
+        $client->request('GET', $genUrl, array(), array(), array('HTTP_START' => 0));
+        $client = static::createClient();
+        //xTreme case: If either 'start' or 'range' is valid, it adds a numView.
+        $client->request('GET', $genUrl, array(), array(), array('HTTP_START' => 1254, 'HTTP_RANGE' => 'bytes=0-1256'));
+        $client = static::createClient();
+        $client->request('GET', $genUrl, array(), array(), array('HTTP_START' => 0, 'HTTP_RANGE' => 'bytes=123-1256'));
+        $client = static::createClient();
+        $client->request('GET', $genUrl, array(), array(), array('HTTP_START' => 1254, 'HTTP_RANGE' => 'bytes=123-1256'));
+        $this->dm->clear();
+        $mmobj = $this->mmobjRepo->find($mmobj->getId());
+        $this->assertEquals(6, $mmobj->getNumview());
     }
 }

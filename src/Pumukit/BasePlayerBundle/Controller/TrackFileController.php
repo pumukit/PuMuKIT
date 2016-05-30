@@ -31,7 +31,14 @@ class TrackFileController extends Controller
         }
         $track = $mmobj->getTrackById($id);
 
-        $this->dispatchViewEvent($mmobj, $track);
+        $range = $request->headers->get('range');
+        $start = $request->headers->get('start');
+        if ((!$range && !$start)
+            || ($range && substr($range, 0, 8) == "bytes=0-")
+            || ($start !== null && $start == 0)
+        ){
+            $this->dispatchViewEvent($mmobj, $track);
+        }
         return $this->redirect($track->getUrl());
     }
 
