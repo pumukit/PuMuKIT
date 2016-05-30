@@ -1,15 +1,15 @@
 <?php
 
-namespace Pumukit\StatsBundle\Tests\Services;
+namespace Pumukit\StatsBundle\Tests\EventListener;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\StatsBundle\Services\LogService;
+use Pumukit\StatsBundle\EventListener\Log;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 
-class LogServiceTest extends WebTestCase
+class LogTest extends WebTestCase
 {
     private $dm;
     private $repo;
@@ -36,7 +36,15 @@ class LogServiceTest extends WebTestCase
             ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
             ->remove(array());
+    }
 
+    public function tearDown() {
+        $this->dm = null;
+        $this->repo = null;
+        $this->factoryService = null;
+        $this->tokenStorage = null;
+        gc_collect_cycles();
+        parent::tearDown();
     }
 
     private function createMockRequestStack()
@@ -65,23 +73,10 @@ class LogServiceTest extends WebTestCase
         return new ViewedEvent($multimediaObject, $track);
     }
 
-    public function tearDown()
-    {
-        $this->dm->close();
-        $this->dm = null;
-        $this->repo = null;
-        $this->factoryService = null;
-        $this->tokenStorage = null;
-        gc_collect_cycles();
-        parent::tearDown();
-    }
-
-
-
     public function testonMultimediaObjectViewed()
     {
         $requestStack = $this->createMockRequestStack();
-        $service = new LogService($this->dm, $requestStack, $this->tokenStorage);
+        $service = new Log($this->dm, $requestStack, $this->tokenStorage);
 
         $event = $this->createEvent();
         $service->onMultimediaObjectViewed($event);
@@ -91,7 +86,7 @@ class LogServiceTest extends WebTestCase
     public function testonMultimediaObjectWithoutTrackViewed()
     {
         $requestStack = $this->createMockRequestStack();
-        $service = new LogService($this->dm, $requestStack, $this->tokenStorage);
+        $service = new Log($this->dm, $requestStack, $this->tokenStorage);
 
         $event = $this->createEvent(false);
         $service->onMultimediaObjectViewed($event);
