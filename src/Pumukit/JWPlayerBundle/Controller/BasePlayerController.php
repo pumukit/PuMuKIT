@@ -36,8 +36,6 @@ class BasePlayerController extends BasePlayerControllero implements WebTVControl
                  $multimediaObject->getTrackById($request->query->get('track_id')) :
                  $multimediaObject->getFilteredTrackWithTags(array('display'));
 
-        $this->dispatchViewEvent($multimediaObject, $track);
-
         if($track && $track->containsTag("download")) {
             return $this->redirect($track->getUrl());
         }
