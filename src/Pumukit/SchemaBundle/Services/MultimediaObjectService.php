@@ -100,22 +100,6 @@ class MultimediaObjectService
         return $multimediaObject;
     }
 
-
-
-    public function onMultimediaObjectViewed(ViewedEvent $event)
-    {
-        $track = $event->getTrack();
-        $multimediaObject = $event->getMultimediaObject();
-
-        if(!$this->isViewableTrack($track))
-            return;
-
-        $multimediaObject->incNumview();
-        $track && $track->incNumview();
-
-        $this->updateMultimediaObject($multimediaObject);
-    }
-
     /**
      * Inc num view of multimedia object
      *
@@ -125,11 +109,5 @@ class MultimediaObjectService
     {
         $multimediaObject->incNumview();
         $this->updateMultimediaObject($multimediaObject);
-    }
-
-
-    private function isViewableTrack(Track $track)
-    {
-        return !$track || !$track->containsTag('presentation/delivery');
     }
 }

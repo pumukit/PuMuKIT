@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\StatsBundle\Services;
+namespace Pumukit\StatsBundle\EventListener;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
@@ -9,7 +9,7 @@ use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\StatsBundle\Document\ViewsLog;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 
-class LogService
+class Log
 {
     private $dm;
     private $requestStack;
@@ -61,7 +61,7 @@ class LogService
      * @param Track $track
      * @return boolean
      */
-    private function isViewableTrack(Track $track)
+    private function isViewableTrack(Track $track = null)
     {
         //'presentation/delivery' corresponds to the opencast slides, thus should not be counted
         return !$track || !$track->containsTag('presentation/delivery');
