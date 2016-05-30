@@ -8,7 +8,7 @@ pumukit_jw_player:
 
 pumukit_base_player:
     resource: @PumukitBasePlayerBundle/Resources/config/routing.yml
-    type:     annotation
+    prefix:   /
 
 pumukit_stats:
     resource: "@PumukitStatsBundle/Controller/"
