@@ -521,4 +521,18 @@ class UserService
             ->getQuery()
             ->execute();
     }
+
+    /**
+     * Delete all users from group
+     *
+     * @param  Group
+     */
+    public function deleteAllUsersFromGroup(Group $group)
+    {
+        $users = $this->findWithGroup($group);
+        foreach ($users as $user) {
+            $this->deleteGroup($group, $user, false);
+        }
+        $this->dm->flush();
+    }
 }

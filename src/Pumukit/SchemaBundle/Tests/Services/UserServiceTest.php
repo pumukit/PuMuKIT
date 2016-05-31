@@ -810,4 +810,40 @@ class UserServiceTest extends WebTestCase
         $this->assertFalse(in_array($localUser, $usersCasGroup));
         $this->assertTrue(in_array($casUser, $usersCasGroup));
     }
+
+    public function testDeleteAllUsersFromGroup()
+    {
+        $group = new Group();
+        $group->setKey('key');
+        $group->setName('group');
+        $this->dm->persist($group);
+        $this->dm->flush();
+
+        $this->assertEquals(0, count($this->userService->findWithGroup($group)->toArray()));
+
+        $user1 = new User();
+        $user1->setUsername('user1');
+        $user1->setEmail('user1@mail.com');
+        $user1->addGroup($group);
+
+        $user2 = new User();
+        $user2->setUsername('user2');
+        $user2->setEmail('user2@mail.com');
+        $user2->addGroup($group);
+
+        $user3 = new User();
+        $user3->setUsername('user3');
+        $user3->setEmail('user3@mail.com');
+        $user3->addGroup($group);
+
+        $this->dm->persist($user1);
+        $this->dm->persist($user2);
+        $this->dm->persist($user3);
+        $this->dm->flush();
+
+        $this->assertEquals(3, count($this->userService->findWithGroup($group)->toArray()));
+
+        $this->userService->deleteAllUsersFromGroup($group);
+        $this->assertEquals(0, count($this->userService->findWithGroup($group)->toArray()));
+    }
 }
