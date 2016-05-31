@@ -177,5 +177,19 @@ class MultimediaObjectService
 
         return false;
     }
+
+    /**
+     * Delete all multimedia objects from group
+     *
+     * @param Group
+     */
+    public function deleteAllMultimediaObjectsFromGroup(Group $group)
+    {
+        $multimediaObjects = $this->repo->findWithGroup($group);
+        foreach ($multimediaObjects as $multimediaObject) {
+            $this->deleteGroup($group, $multimediaObject, false);
+        }
+        $this->dm->flush();
+    }
 }
 

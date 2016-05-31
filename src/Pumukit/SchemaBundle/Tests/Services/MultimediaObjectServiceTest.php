@@ -414,4 +414,37 @@ class MultimediaObjectServiceTest extends WebTestCase
         $this->assertTrue($this->mmsService->isUserOwner($user1, $mm3));
         $this->assertTrue($this->mmsService->isUserOwner($user2, $mm3));
     }
+
+    public function testDeleteAllMultimediaObjectsFromGroup()
+    {
+        $group = new Group();
+        $group->setKey('key');
+        $group->setName('group');
+        $this->dm->persist($group);
+        $this->dm->flush();
+
+        $this->assertEquals(0, count($this->repo->findWithGroup($group)->toArray()));
+
+        $mm1 = new MultimediaObject();
+        $mm1->setTitle('mm1');
+        $mm1->addGroup($group);
+
+        $mm2 = new MultimediaObject();
+        $mm2->setTitle('mm2');
+        $mm2->addGroup($group);
+
+        $mm3 = new MultimediaObject();
+        $mm3->setTitle('mm3');
+        $mm3->addGroup($group);
+
+        $this->dm->persist($mm1);
+        $this->dm->persist($mm2);
+        $this->dm->persist($mm3);
+        $this->dm->flush();
+
+        $this->assertEquals(3, count($this->repo->findWithGroup($group)->toArray()));
+
+        $this->mmsService->deleteAllMultimediaObjectsFromGroup($group);
+        $this->assertEquals(0, count($this->repo->findWithGroup($group)->toArray()));
+    }
 }
