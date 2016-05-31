@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class EmbeddedBroadcastService
 {
     private $dm;
+    private $repo;
     private $mmsService;
     private $dispatcher;
     private $disabledBroadcast;
@@ -31,6 +32,7 @@ class EmbeddedBroadcastService
     public function __construct(DocumentManager $documentManager, MultimediaObjectService $mmsService, MultimediaObjectEventDispatcherService $dispatcher, AuthorizationCheckerInterface $authorizationChecker, EngineInterface $templating, Router $router, $disabledBroadcast)
     {
         $this->dm = $documentManager;
+        $this->repo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->mmsService = $mmsService;
         $this->dispatcher = $dispatcher;
         $this->authorizationChecker = $authorizationChecker;
@@ -359,5 +361,19 @@ class EmbeddedBroadcastService
         $redReq = new RedirectResponse($seriesUrl, 302);
 
         return new Response($redReq->getContent(), 401, array('WWW-Authenticate' => 'Basic realm="Resource not public."'));
+    }
+
+    /**
+     * Delete all embedded broadcasts from group
+     *
+     * @param Group
+     */
+    public function deleteAllFromGroup(Group $group)
+    {
+        $multimediaObjects = $this->repo->findWithGroupInEmbeddedBroadcast($group);
+        foreach ($multimediaObjects as $multimediaObject) {
+            $this->deleteGroup($group, $multimediaObject, false);
+        }
+        $this->dm->flush();
     }
 }

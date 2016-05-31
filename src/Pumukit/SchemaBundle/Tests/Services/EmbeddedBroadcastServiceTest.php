@@ -709,4 +709,44 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
 
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', true);
     }
+
+    public function testDeleteAllFromGroup()
+    {
+        $group = new Group();
+        $group->setKey('key');
+        $group->setName('group');
+        $this->dm->persist($group);
+        $this->dm->flush();
+
+        $this->assertEquals(0, count($this->mmRepo->findWithGroupInEmbeddedBroadcast($group)->toArray()));
+
+        $mm1 = new MultimediaObject();
+        $mm1->setTitle('mm1');
+        $emb1 = new EmbeddedBroadcast();
+        $emb1->addGroup($group);
+        $mm1->setEmbeddedBroadcast($emb1);
+
+        $mm2 = new MultimediaObject();
+        $mm2->setTitle('mm2');
+        $emb2 = new EmbeddedBroadcast();
+        $emb2->addGroup($group);
+        $mm2->setEmbeddedBroadcast($emb2);
+
+        $mm3 = new MultimediaObject();
+        $mm3->setTitle('mm3');
+        $mm3->addGroup($group);
+        $emb3 = new EmbeddedBroadcast();
+        $emb3->addGroup($group);
+        $mm3->setEmbeddedBroadcast($emb3);
+
+        $this->dm->persist($mm1);
+        $this->dm->persist($mm2);
+        $this->dm->persist($mm3);
+        $this->dm->flush();
+
+        $this->assertEquals(3, count($this->mmRepo->findWithGroupInEmbeddedBroadcast($group)->toArray()));
+
+        $this->embeddedBroadcastService->deleteAllFromGroup($group);
+        $this->assertEquals(0, count($this->mmRepo->findWithGroupInEmbeddedBroadcast($group)->toArray()));
+    }
 }
