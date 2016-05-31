@@ -32,8 +32,9 @@ class GroupServiceTest extends WebTestCase
 
         $dispatcher = new EventDispatcher();
         $groupDispatcher = new GroupEventDispatcherService($dispatcher);
+        $translator = static::$kernel->getContainer()->get('translator');
 
-        $this->groupService = new GroupService($this->dm, $groupDispatcher);
+        $this->groupService = new GroupService($this->dm, $groupDispatcher, $translator);
     }
 
     public function setUp()
