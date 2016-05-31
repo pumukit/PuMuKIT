@@ -386,4 +386,41 @@ class GroupController extends AdminController implements NewAdminController
         return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', array('id' => $group->getId(), 'resourceName' => 'user')));
     }
 
+    /**
+     * Delete all multimediaObjects from group
+     *
+     * @param Group $group
+     * @param Request $request
+     * @return Response
+     */
+    public function deleteAllMultimediaObjectsAction(Group $group, Request $request)
+    {
+        try {
+            $mmsService = $this->get('pumukitschema.multimedia_object');
+            $mmsService->deleteAllFromGroup($group);
+        } catch (\Exception $e) {
+            return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', array('id' => $group->getId(), 'resourceName' => 'multimediaobject')));
+    }
+
+    /**
+     * Delete all embeddedbroadcasts from group
+     *
+     * @param Group $group
+     * @param Request $request
+     * @return Response
+     */
+    public function deleteAllEmbeddedBroadcastsAction(Group $group, Request $request)
+    {
+        try {
+            $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
+            $embeddedBroadcastService->deleteAllFromGroup($group);
+        } catch (\Exception $e) {
+            return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', array('id' => $group->getId(), 'resourceName' => 'embeddedbroadcast')));
+    }
 }
