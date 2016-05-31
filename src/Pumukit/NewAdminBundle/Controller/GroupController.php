@@ -355,7 +355,6 @@ class GroupController extends AdminController implements NewAdminController
             $groupService = $this->get('pumukitschema.group');
             $canBeDeleted = $groupService->canBeDeleted($group);
             $value = $canBeDeleted ? 1:0;
-            $countResources = $groupService->countResourcesInGroup($group);
             $deleteMessage = $groupService->getDeleteMessage($group, $request->get('_locale'));
         } catch (\Exception $e){
             return new JsonResponse(array('error' => $e->getMessage()), Response::HTTP_BAD_REQUEST);
@@ -363,9 +362,7 @@ class GroupController extends AdminController implements NewAdminController
 
         return new JsonResponse(array(
                                       'canbedeleted' => $value,
-                                      'deleteMessage' => $deleteMessage,
-                                      'countResources' => $countResources,
-                                      'groupName' => $group->getName()
+                                      'deleteMessage' => $deleteMessage
                                       ));
     }
 

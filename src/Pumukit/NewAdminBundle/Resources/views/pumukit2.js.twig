@@ -366,25 +366,11 @@ window.submit_delete_person = function(id, countMm, personHName)
     }
 }
 
-window.submit_delete_group = function(id, countUsers, countAdminMultimediaObjects, countPlayMultimediaObjects, groupName)
+window.submit_delete_group = function(id, groupName)
 {
-    var message = "{% trans %}Are you sure you want to delete the group{% endtrans %} "+groupName+"?";
-    if (countUsers == 1) {
-        message = message + " {% trans %}There is 1 user related to this group.{% endtrans %}";
-    } else if (countUsers > 1) {
-        message = message + " {% trans %}There are{% endtrans %} " + countUsers + " {% trans %}users related to this group.{% endtrans %}";
-    }
-    if (countAdminMultimediaObjects == 1) {
-        message = message + " {% trans %}There is 1 admin multimedia object related to this group.{% endtrans %}";
-    } else if (countAdminMultimediaObjects > 1) {
-        message = message + " {% trans %}There are{% endtrans %} " + countAdminMultimediaObjects + " {% trans %}admin multimedia objects related to this group.{% endtrans %}";
-    }
-    if (countPlayMultimediaObjects == 1) {
-        message = message + " {% trans %}There is 1 play multimedia object related to this group.{% endtrans %}";
-    } else if (countPlayMultimediaObjects > 1) {
-        message = message + " {% trans %}There are{% endtrans %} " + countPlayMultimediaObjects + " {% trans %}play multimedia objects related to this group.{% endtrans %}";
-    }
+    var message = "{% trans %}ATTENTION!! Are you sure you want to delete the group{% endtrans %} "+groupName+"?";
     if (window.confirm(message)){
+        $('#myModal').modal('hide');
         var url = "{{ path('pumukitnewadmin_group_delete', {'id': '__id__'})|raw }}";
         $('#list_groups').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
             if(XMLHttpRequest.status >= 400){
@@ -2600,13 +2586,6 @@ can_be_deleted = function(group_id)
                 no_success(errorThrown + ': ' + jqXHR.responseText);
             },
             success: function (response, textStatus, jqXHR) {
-                var countResources = response.countResources;
-                var users = countResources['users'];
-                var admin = countResources['adminMultimediaObjects'];
-                var play = countResources['playMultimediaObjects'];
-                var groupName = response.groupName;
-                // var onclick_actions = '"window.submit_delete_group(\''+group_id+'\', \''+users +'\', \''+admin+'\', \''+play+'\', '\'+groupName+'\'); return false;"';
-                // $('#pumukitnewadmin_group_delete').attr("onclick", onclick_actions);
                 $('#delete_group_message').html(response.deleteMessage);
                 if (response.canbedeleted == 1) {
                     $('#pumukitnewadmin_group_delete').prop("disabled", false);

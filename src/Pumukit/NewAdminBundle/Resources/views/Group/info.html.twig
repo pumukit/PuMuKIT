@@ -27,6 +27,6 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-    <button id="pumukitnewadmin_group_delete" type="submit" class="btn btn-pumukit btn-raised" onclick="window.submit_delete_group('{{ group.id }}', '{{ countResources['users'] }}', '{{ countResources['adminMultimediaObjects'] }}', '{{ countResources['playMultimediaObjects'] }}', '{% autoescape 'js' %}{{ group.getName() }}{% endautoescape %}'); return false;"{{ can_delete ? '': ' disabled="disabled"' }}>{% trans %}Delete Group{% endtrans %}</button>
+    <button id="pumukitnewadmin_group_delete" type="submit" class="btn btn-pumukit btn-raised" onclick="window.submit_delete_group('{{ group.id }}', '{% autoescape 'js' %}{{ group.getName() }}{% endautoescape %}'); return false;"{{ can_delete ? '': ' disabled="disabled"' }}>{% trans %}Delete Group{% endtrans %}</button>
   </div>
 </div>

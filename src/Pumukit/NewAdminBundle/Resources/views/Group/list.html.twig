@@ -50,11 +50,6 @@
             <i data-toggle="tooltip" data-placement="right" title="{% trans %}Delete Group relations{% endtrans %}" class="mdi-content-clear" style="color:#009587!important;"></i>
             {% endif %}
           </a>
-{#
-          <a href="#" title="Delete Group '{{ group.name }}'" onclick="window.submit_delete_group('{{ group.id }}', '{{ countResources[group.id]['users'] }}', '{{ countResources[group.id]['adminMultimediaObjects'] }}', '{{ countResources[group.id]['playMultimediaObjects'] }}', '{% autoescape 'js' %}{{ group.getName() }}{% endautoescape %}'); return false;">
-            <i class="mdi-content-clear"></i>
-          </a>
-#}
         </td>
         <td>
           <a title="{% trans %}Group Info{% endtrans %}" href="{{ path('pumukitnewadmin_group_info', {'id': group.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
