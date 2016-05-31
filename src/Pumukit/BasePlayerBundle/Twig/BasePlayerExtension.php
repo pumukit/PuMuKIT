@@ -45,6 +45,13 @@ class BasePlayerExtension extends \Twig_Extension
         );
     }
 
+    public function getFilters()
+    {
+        return array(
+            new \Twig_SimpleFilter('first_public_track', array($this, 'getFirstPublicTrackFilter')),
+        );
+    }
+
     /**
      *
      * @param Track $track            Track to get an url for.
@@ -57,4 +64,13 @@ class BasePlayerExtension extends \Twig_Extension
         return $this->trackService->generateTrackFileUrl($track, $reference_type);
     }
 
+    /**
+     *
+     * @param MultimediaObject $mmobj
+     *
+     * @return Track
+     */
+    public function getFirstPublicTrackFilter(MultimediaObject $mmobj) {
+        return $mmobj->getFilteredTrackWithTags(array('display'));
+    }
 }
