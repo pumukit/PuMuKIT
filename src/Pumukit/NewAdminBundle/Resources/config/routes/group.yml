@@ -60,19 +60,19 @@ pumukitnewadmin_group_data_resources:
 
 pumukitnewadmin_group_delete_user:
     pattern: /{id}/deleteuser/{userId}
-    methods: [POST]
+    methods: [DELETE]
     defaults:
         _controller: pumukitnewadmin.controller.group:deleteUserAction
 
 pumukitnewadmin_group_delete_multimediaobject:
     pattern: /{id}/deletemultimediaobject/{mmId}
-    methods: [POST]
+    methods: [DELETE]
     defaults:
         _controller: pumukitnewadmin.controller.group:deleteMultimediaObjectAction
 
 pumukitnewadmin_group_delete_embeddedbroadcast:
     pattern: /{id}/deleteembeddedbroadcast/{mmId}
-    methods: [POST]
+    methods: [DELETE]
     defaults:
         _controller: pumukitnewadmin.controller.group:deleteEmbeddedBroadcastAction
 

@@ -2514,6 +2514,7 @@ delete_user_from_group = function(user_id, group_id, count)
     $.ajax({
             url: route,
             type: 'POST',
+            data: {'_method': 'DELETE'},
             error: function(jqXHR, textStatus, errorThrown) {
             no_success(errorThrown + ': ' + jqXHR.responseText);
         },
@@ -2537,6 +2538,7 @@ delete_multimediaobject_from_group = function(mm_id, group_id, count)
     $.ajax({
             url: route,
             type: 'POST',
+            data: {'_method': 'DELETE'},
             error: function(jqXHR, textStatus, errorThrown) {
             no_success(errorThrown + ': ' + jqXHR.responseText);
         },
@@ -2560,6 +2562,7 @@ delete_embeddedbroadcast_from_group = function(mm_id, group_id, count)
     $.ajax({
             url: route,
             type: 'POST',
+            data: {'_method': 'DELETE'},
             error: function(jqXHR, textStatus, errorThrown) {
             no_success(errorThrown + ': ' + jqXHR.responseText);
         },
