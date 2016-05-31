@@ -25,6 +25,7 @@ class GroupServiceTest extends WebTestCase
 
         $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb')->getManager();
+        $translator = static::$kernel->getContainer()->get('translator');
         $this->repo = $this->dm
           ->getRepository('PumukitSchemaBundle:Group');
         $this->userRepo = $this->dm
@@ -33,7 +34,7 @@ class GroupServiceTest extends WebTestCase
         $dispatcher = new EventDispatcher();
         $groupDispatcher = new GroupEventDispatcherService($dispatcher);
 
-        $this->groupService = new GroupService($this->dm, $groupDispatcher);
+        $this->groupService = new GroupService($this->dm, $groupDispatcher, $translator);
     }
 
     public function setUp()
