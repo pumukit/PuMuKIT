@@ -16,5 +16,4 @@ body { margin: 0; padding: 0; }
 {% block keywords %}{{ parent() }} - {{ multimediaObject.keyword }}{% endblock %}
 
 {% block body_base %}
-    {% include 'PumukitJWPlayerBundle:JWPlayer:player.html.twig' with {'width': 'window.document.documentElement.clientWidth', 'height': 'window.document.documentElement.clientHeight', 'autostart': autostart, 'responsive': true} %}
 {% endblock %}
