@@ -341,4 +341,29 @@ class GroupController extends AdminController implements NewAdminController
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', array('id' => $group->getId(), 'resourceName' => 'embeddedbroadcast')));
     }
+
+    /**
+     * Can be deleted
+     *
+     * @param  Group   $group
+     * @param  Request $request
+     * @return JsonResponse
+     */
+    public function canBeDeletedAction(Group $group, Request $request)
+    {
+        try {
+            $groupService = $this->get('pumukitschema.group');
+            $canBeDeleted = $groupService->canBeDeleted($group);
+            $value = $canBeDeleted ? 1:0;
+            $countResources = $groupService->countResourcesInGroup($group);
+        } catch (\Exception $e){
+            return new JsonResponse(array('error' => $e->getMessage()), Response::HTTP_BAD_REQUEST);
+        }
+
+        return new JsonResponse(array(
+                                      'canbedeleted' => $value,
+                                      'countResources' => $countResources,
+                                      'groupName' => $group->getName()
+                                      ));
+    }
 }

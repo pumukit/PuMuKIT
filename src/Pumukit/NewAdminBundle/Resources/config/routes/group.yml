@@ -75,3 +75,9 @@ pumukitnewadmin_group_delete_embeddedbroadcast:
     methods: [POST]
     defaults:
         _controller: pumukitnewadmin.controller.group:deleteEmbeddedBroadcastAction
+
+pumukitnewadmin_group_can_be_deleted:
+    pattern: /{id}/canbedeleted
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:canBeDeletedAction
