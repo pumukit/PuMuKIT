@@ -195,10 +195,32 @@ class User extends BaseUser
      */
     public function getGroupsIds()
     {
-        $groupsIds = array();
-        foreach ($this->getGroups() as $group) {
-            $groupsIds[] = new \MongoId($group->getId());
+
+        // Performance boost (Don't repeat it, only if it's exceptionally necesary)
+        if ($this->groups instanceof \Doctrine\ODM\MongoDB\PersistentCollection and !$this->groups->isDirty()) {
+            //See PersistentCollection class (coll + mongoData)
+            return array_merge(
+                array_map(function($g) {return new \MongoId($g->getId());}, $this->groups->unwrap()->toArray()),
+                $this->groups->getMongoData()
+            );
         }
-        return $groupsIds;
+      
+        return array_map(function($g) {return new \MongoId($g->getId());}, $this->groups->toArray());
     }
+
+
+    /**
+     * Returns the user roles
+     *
+     * Note: Override BaseUser::getRole to avoid call User::getGroups and avoid a query.
+     *
+     * @return array The roles
+     */
+    public function getRoles()
+    {
+        $roles = $this->roles;
+        $roles[] = static::ROLE_DEFAULT;
+        return array_unique($roles);
+    }
+
 }

@@ -230,6 +230,8 @@ class Group implements GroupInterface
     /**
      * Defined to implement GroupInterface
      *
+     * Note: If implementation changes User::getRoles must be updated
+     *
      * @return array
      */
     public function getRoles()
