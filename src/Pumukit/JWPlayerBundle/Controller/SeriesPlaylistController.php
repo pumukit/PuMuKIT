@@ -20,25 +20,23 @@ class SeriesPlaylistController extends Controller implements WebTVController
         $playlistService = $this->get('pumukit_baseplayer.seriesplaylist');
         $mmobjs = $playlistService->getPlaylistMmobjs($series);
         return array(
-            'series' => $series,
             'playlist_mmobjs' => $mmobjs,
-            'multimediaObject' => $series,
+            'object' => $series,
             'responsive' => true,
         );
     }
 
     /**
      * @Route("/series_playlist/magic/{secret}", name="pumukit_videoplayer_magicindex", defaults={"show_hide": true, "no_channels": true} )
-     * @Template("PumukitJWPlayerBundle:JWPlayer:index.html.twig")
+     * @Template("PumukitJWPlayerBundle:JWPlayer:player_playlist.html.twig")
      */
     public function magicIndexAction(Series $series, Request $request)
     {
         $playlistService = $this->get('pumukit_baseplayer.seriesplaylist');
         $mmobjs = $playlistService->getPlaylistMmobjs($series);
         return array(
-            'series' => $series,
             'playlist_mmobjs' => $mmobjs,
-            'multimediaObject' => $series,
+            'object' => $series,
             'responsive' => true,
         );
     }
