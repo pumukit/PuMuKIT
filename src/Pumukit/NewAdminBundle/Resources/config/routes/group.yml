@@ -81,3 +81,9 @@ pumukitnewadmin_group_can_be_deleted:
     methods: [GET]
     defaults:
         _controller: pumukitnewadmin.controller.group:canBeDeletedAction
+
+pumukitnewadmin_group_delete_all_users:
+    pattern: /{id}/deleteallusers
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:deleteAllUsersAction

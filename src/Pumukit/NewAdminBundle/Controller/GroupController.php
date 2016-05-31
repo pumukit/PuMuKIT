@@ -366,4 +366,24 @@ class GroupController extends AdminController implements NewAdminController
                                       'groupName' => $group->getName()
                                       ));
     }
+
+    /**
+     * Delete all users from group
+     *
+     * @param Group $group
+     * @param Request $request
+     * @return Response
+     */
+    public function deleteAllUsersAction(Group $group, Request $request)
+    {
+        try {
+            $userService = $this->get('pumukitschema.user');
+            $userService->deleteAllFromGroup($group);
+        } catch (\Exception $e) {
+            return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', array('id' => $group->getId(), 'resourceName' => 'user')));
+    }
+
 }
