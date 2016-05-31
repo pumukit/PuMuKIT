@@ -2455,7 +2455,7 @@ $(document).on('submit', '#pumukitnewadmin_mms_updatebroadcast_submit', function
     return false;
 });
 
-delete_user_from_group = function(user_id, group_id)
+delete_user_from_group = function(user_id, group_id, count)
 {
     var route = "{{ path('pumukitnewadmin_group_delete_user', {'id': '__groupId__', 'userId': '__userId__'})|raw }}";
     route = route.replace('__groupId__', group_id);
@@ -2468,14 +2468,17 @@ delete_user_from_group = function(user_id, group_id)
         },
         success: function (response, textStatus, jqXHR) {
             $('#pumukitnewadmin_group_added_users').html(response);
+            if (count == 1) {
+                $('#pumukitnewadmin_group_delete_all_relation_user').attr('disabled', 'disabled');
+            }
             var message = 'Successfully delete User from Group.';
             success(message);
         }
-    });
+    }).done(can_be_deleted(group_id));
     return false;
 }
 
-delete_multimediaobject_from_group = function(mm_id, group_id)
+delete_multimediaobject_from_group = function(mm_id, group_id, count)
 {
     var route = "{{ path('pumukitnewadmin_group_delete_multimediaobject', {'id': '__groupId__', 'mmId': '__mmId__'})|raw }}";
     route = route.replace('__groupId__', group_id);
@@ -2488,14 +2491,17 @@ delete_multimediaobject_from_group = function(mm_id, group_id)
         },
         success: function (response, textStatus, jqXHR) {
             $('#pumukitnewadmin_group_added_multimediaobjects').html(response);
+            if (count == 1) {
+                $('#pumukitnewadmin_group_delete_all_relation_multimediaobject').attr('disabled', 'disabled');
+            }
             var message = 'Successfully delete MultimediaObject from Group.';
             success(message);
         }
-    });
+    }).done(can_be_deleted(group_id));
     return false;
 }
 
-delete_embeddedbroadcast_from_group = function(mm_id, group_id)
+delete_embeddedbroadcast_from_group = function(mm_id, group_id, count)
 {
     var route = "{{ path('pumukitnewadmin_group_delete_embeddedbroadcast', {'id': '__groupId__', 'mmId': '__mmId__'})|raw }}";
     route = route.replace('__groupId__', group_id);
@@ -2508,9 +2514,38 @@ delete_embeddedbroadcast_from_group = function(mm_id, group_id)
         },
         success: function (response, textStatus, jqXHR) {
             $('#pumukitnewadmin_group_added_embeddedbroadcasts').html(response);
+            if (count == 1) {
+                $('#pumukitnewadmin_group_delete_all_relation_embeddedbroadcast').attr('disabled', 'disabled');
+            }
             var message = 'Successfully delete MultimediaObject from Group.';
             success(message);
         }
+    }).done(can_be_deleted(group_id));
+    return false;
+}
+
+can_be_deleted = function(group_id)
+{
+    var route = "{{ path('pumukitnewadmin_group_can_be_deleted', {'id': '__groupId__'})|raw }}";
+    route = route.replace('__groupId__', group_id);
+    $.ajax({
+            url: route,
+            type: 'GET',
+            error: function(jqXHR, textStatus, errorThrown) {
+                no_success(errorThrown + ': ' + jqXHR.responseText);
+            },
+            success: function (response, textStatus, jqXHR) {
+                var countResources = response.countResources;
+                var users = countResources['users'];
+                var admin = countResources['adminMultimediaObjects'];
+                var play = countResources['playMultimediaObjects'];
+                var groupName = response.groupName;
+                // var onclick_actions = '"window.submit_delete_group(\''+group_id+'\', \''+users +'\', \''+admin+'\', \''+play+'\', '\'+groupName+'\'); return false;"';
+                // $('#pumukitnewadmin_group_delete').attr("onclick", onclick_actions);
+                if (response.canbedeleted == 1) {
+                    $('#pumukitnewadmin_group_delete').prop("disabled", false);
+                }
+            }
     });
     return false;
 }

@@ -1,16 +1,8 @@
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   <h4 class="modal-title" id="myModalLabel">{% trans %}group info{% endtrans %}</h4>
-  <div class="col-md-6">
+  <div class="col-md-12">
     <h2 class="modal-title">&laquo;{{ group.getName() }}&raquo;</h2>
-  </div>
-  <div class="col-md-6" style="text-align:right;">
-    <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-    {% if can_delete %}
-    <button type="button" class="btn btn-primary btn-raised" onclick="window.submit_delete_group('{{ group.id }}', '{{ countResources['users'] }}', '{{ countResources['adminMultimediaObjects'] }}', '{{ countResources['playMultimediaObjects'] }}', '{% autoescape 'js' %}{{ group.getName() }}{% endautoescape %}'); return false;">{% trans %}Delete Group{% endtrans %}</button>
-    {% else %}
-    disable button
-    {% endif %}
   </div>
   <div id="delete_group_message" class="col-md-12">
     {{ delete_group_message }}
@@ -18,29 +10,22 @@
 </div>
 <div class="modal-body">
   <div class="col-md-4">
-    <div id="group_users" class="panel panel-default">
-      {% include 'PumukitNewAdminBundle:Group:inforesources.html.twig' with {'resources': users, 'title': 'USERS', 'resource_name': 'user'} %}
+    <div id="group_users" class="panel panel-default" style="margin-top: 20px;">
+      {% include 'PumukitNewAdminBundle:Group:inforesources.html.twig' with {'resources': users, 'title': 'USERS', 'resource_name': 'user', 'count': countResources['users']} %}
     </div>
   </div>
   <div class="col-md-4">
-    <div id="group_mms" class="panel panel-default">
-      {% include 'PumukitNewAdminBundle:Group:inforesources.html.twig' with {'resources': admin_multimedia_objects, 'title': 'ADMIN MULTIMEDIA OBJECTS', 'resource_name': 'multimediaobject'} %}
+    <div id="group_mms" class="panel panel-default" style="margin-top: 20px;">
+      {% include 'PumukitNewAdminBundle:Group:inforesources.html.twig' with {'resources': admin_multimedia_objects, 'title': 'ADMIN MULTIMEDIA OBJECTS', 'resource_name': 'multimediaobject', 'count': countResources['adminMultimediaObjects']} %}
     </div>
   </div>
   <div class="col-md-4">
-    <div id="group_broadcasts" class="panel panel-default">
-      {% include 'PumukitNewAdminBundle:Group:inforesources.html.twig' with {'resources': viewer_multimedia_objects, 'title': 'PLAY MULTIMEDIA OBJECTS', 'resource_name': 'embeddedbroadcast'} %}
+    <div id="group_broadcasts" class="panel panel-default" style="margin-top: 20px;">
+      {% include 'PumukitNewAdminBundle:Group:inforesources.html.twig' with {'resources': viewer_multimedia_objects, 'title': 'PLAY MULTIMEDIA OBJECTS', 'resource_name': 'embeddedbroadcast', 'count': countResources['playMultimediaObjects']} %}
     </div>
-  </div>
-  <div class="col-md-4">
-    <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Delete All{% endtrans %}</button>
-  </div>
-  <div class="col-md-4">
-    <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Delete All{% endtrans %}</button>
-  </div>
-  <div class="col-md-4">
-    <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Delete All{% endtrans %}</button>
   </div>
   <div class="modal-footer">
+    <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+    <button id="pumukitnewadmin_group_delete" type="submit" class="btn btn-pumukit btn-raised" onclick="window.submit_delete_group('{{ group.id }}', '{{ countResources['users'] }}', '{{ countResources['adminMultimediaObjects'] }}', '{{ countResources['playMultimediaObjects'] }}', '{% autoescape 'js' %}{{ group.getName() }}{% endautoescape %}'); return false;"{{ can_delete ? '': ' disabled="disabled"' }}>{% trans %}Delete Group{% endtrans %}</button>
   </div>
 </div>
