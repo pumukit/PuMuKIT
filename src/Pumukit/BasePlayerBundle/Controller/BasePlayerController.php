@@ -22,7 +22,7 @@ class BasePlayerController extends Controller
      */
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
     {
-        
+
     }
 
     protected function testBroadcast(MultimediaObject $multimediaObject, Request $request)
@@ -68,12 +68,6 @@ class BasePlayerController extends Controller
     {
         $event = new ViewedEvent($multimediaObject, $track);
         $this->get('event_dispatcher')->dispatch(BasePlayerEvents::MULTIMEDIAOBJECT_VIEW, $event);
-    }
-
-    protected function updateBreadcrumbs(MultimediaObject $multimediaObject)
-    {
-        $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
-        $breadcrumbs->addMultimediaObject($multimediaObject);
     }
 
     protected function getIntro($queryIntro = false)

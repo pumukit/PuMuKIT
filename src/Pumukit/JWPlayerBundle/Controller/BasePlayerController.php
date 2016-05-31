@@ -19,7 +19,7 @@ use Pumukit\BasePlayerBundle\Controller\BasePlayerController as BasePlayerContro
 class BasePlayerController extends BasePlayerControllero implements WebTVController
 {
     /**
-     * @Route("/videoplayer/{id}", name="pumukit_videoplayer_index" )
+     * @Route("/videoplayer/{id}", name="pumukit_videoplayer_index", defaults={"no_channels": true} )
      * @Template("PumukitJWPlayerBundle:JWPlayer:index.html.twig")
      */
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
@@ -36,8 +36,6 @@ class BasePlayerController extends BasePlayerControllero implements WebTVControl
                  $multimediaObject->getTrackById($request->query->get('track_id')) :
                  $multimediaObject->getFilteredTrackWithTags(array('display'));
 
-        $this->dispatchViewEvent($multimediaObject, $track);
-
         if($track && $track->containsTag("download")) {
             return $this->redirect($track->getUrl());
         }
@@ -49,7 +47,7 @@ class BasePlayerController extends BasePlayerControllero implements WebTVControl
     }
 
     /**
-     * @Route("/videoplayer/magic/{secret}", name="pumukit_videoplayer_magicindex", defaults={"show_hide": true} )
+     * @Route("/videoplayer/magic/{secret}", name="pumukit_videoplayer_magicindex", defaults={"show_hide": true, "no_channels": true} )
      * @Template("PumukitJWPlayerBundle:JWPlayer:index.html.twig")
      */
     public function magicIndexAction(MultimediaObject $multimediaObject, Request $request)
@@ -78,8 +76,6 @@ class BasePlayerController extends BasePlayerControllero implements WebTVControl
             return $this->redirect($track->getUrl());
         }
 
-
-        $this->updateBreadcrumbs($multimediaObject);
         return array('autostart' => $request->query->get('autostart', 'true'),
                      'intro' => $this->getIntro($request->query->get('intro')),
                      'multimediaObject' => $multimediaObject,

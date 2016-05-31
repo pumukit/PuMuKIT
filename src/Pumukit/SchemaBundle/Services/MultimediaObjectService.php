@@ -22,7 +22,7 @@ class MultimediaObjectService
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->dispatcher = $dispatcher;
     }
-    
+
     /**
      * Returns true if the $mm is published. ( Keep updated with SchemaFilter->getCriteria() )
      * @param MultimediaObject
@@ -70,7 +70,7 @@ class MultimediaObjectService
     public function canBeDisplayed($mm, $pubChannelCod){
         return $this->isPublished($mm, $pubChannelCod) && $this->hasPlayableResource($mm);
     }
-    
+
     /**
      * Resets the magic url for a given multimedia object. Returns the secret id.
      *
@@ -83,7 +83,7 @@ class MultimediaObjectService
         $this->dm->flush();
         return $mm->getSecret();
     }
-    
+
     /**
      * Update multimedia object
      *
@@ -100,19 +100,6 @@ class MultimediaObjectService
         return $multimediaObject;
     }
 
-
-
-    public function onMultimediaObjectViewed(ViewedEvent $event)
-    {
-        $track = $event->getTrack();
-        $multimediaObject = $event->getMultimediaObject();
-
-        $multimediaObject->incNumview();
-        $track && $track->incNumview();
-
-        $this->updateMultimediaObject($multimediaObject);
-    }
-
     /**
      * Inc num view of multimedia object
      *
@@ -124,4 +111,3 @@ class MultimediaObjectService
         $this->updateMultimediaObject($multimediaObject);
     }
 }
-

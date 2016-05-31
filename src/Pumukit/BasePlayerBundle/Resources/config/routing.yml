@@ -7,8 +7,3 @@ pumukit_base_player:
     resource: "@PumukitBasePlayerBundle/Controller/"
     type:     annotation
     prefix:   /
-
-pumukit_jw_player:
-    resource: "@PumukitJWPlayerBundle/Controller/"
-    type:     annotation
-    prefix:   /
