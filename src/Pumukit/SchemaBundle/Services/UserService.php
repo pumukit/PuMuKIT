@@ -527,7 +527,7 @@ class UserService
      *
      * @param  Group
      */
-    public function deleteAllUsersFromGroup(Group $group)
+    public function deleteAllFromGroup(Group $group)
     {
         $users = $this->findWithGroup($group);
         foreach ($users as $user) {

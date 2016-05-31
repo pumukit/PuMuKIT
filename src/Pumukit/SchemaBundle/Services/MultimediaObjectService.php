@@ -183,7 +183,7 @@ class MultimediaObjectService
      *
      * @param Group
      */
-    public function deleteAllMultimediaObjectsFromGroup(Group $group)
+    public function deleteAllFromGroup(Group $group)
     {
         $multimediaObjects = $this->repo->findWithGroup($group);
         foreach ($multimediaObjects as $multimediaObject) {

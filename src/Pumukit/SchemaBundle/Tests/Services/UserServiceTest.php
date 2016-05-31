@@ -811,7 +811,7 @@ class UserServiceTest extends WebTestCase
         $this->assertTrue(in_array($casUser, $usersCasGroup));
     }
 
-    public function testDeleteAllUsersFromGroup()
+    public function testDeleteAllFromGroup()
     {
         $group = new Group();
         $group->setKey('key');
@@ -843,7 +843,7 @@ class UserServiceTest extends WebTestCase
 
         $this->assertEquals(3, count($this->userService->findWithGroup($group)->toArray()));
 
-        $this->userService->deleteAllUsersFromGroup($group);
+        $this->userService->deleteAllFromGroup($group);
         $this->assertEquals(0, count($this->userService->findWithGroup($group)->toArray()));
     }
 }

@@ -415,7 +415,7 @@ class MultimediaObjectServiceTest extends WebTestCase
         $this->assertTrue($this->mmsService->isUserOwner($user2, $mm3));
     }
 
-    public function testDeleteAllMultimediaObjectsFromGroup()
+    public function testDeleteAllFromGroup()
     {
         $group = new Group();
         $group->setKey('key');
@@ -444,7 +444,7 @@ class MultimediaObjectServiceTest extends WebTestCase
 
         $this->assertEquals(3, count($this->repo->findWithGroup($group)->toArray()));
 
-        $this->mmsService->deleteAllMultimediaObjectsFromGroup($group);
+        $this->mmsService->deleteAllFromGroup($group);
         $this->assertEquals(0, count($this->repo->findWithGroup($group)->toArray()));
     }
 }
