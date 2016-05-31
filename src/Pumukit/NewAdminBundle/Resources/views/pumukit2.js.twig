@@ -2607,6 +2607,7 @@ can_be_deleted = function(group_id)
                 var groupName = response.groupName;
                 // var onclick_actions = '"window.submit_delete_group(\''+group_id+'\', \''+users +'\', \''+admin+'\', \''+play+'\', '\'+groupName+'\'); return false;"';
                 // $('#pumukitnewadmin_group_delete').attr("onclick", onclick_actions);
+                $('#delete_group_message').html(response.deleteMessage);
                 if (response.canbedeleted == 1) {
                     $('#pumukitnewadmin_group_delete').prop("disabled", false);
                 }

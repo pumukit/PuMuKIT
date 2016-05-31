@@ -356,12 +356,14 @@ class GroupController extends AdminController implements NewAdminController
             $canBeDeleted = $groupService->canBeDeleted($group);
             $value = $canBeDeleted ? 1:0;
             $countResources = $groupService->countResourcesInGroup($group);
+            $deleteMessage = $groupService->getDeleteMessage($group, $request->get('_locale'));
         } catch (\Exception $e){
             return new JsonResponse(array('error' => $e->getMessage()), Response::HTTP_BAD_REQUEST);
         }
 
         return new JsonResponse(array(
                                       'canbedeleted' => $value,
+                                      'deleteMessage' => $deleteMessage,
                                       'countResources' => $countResources,
                                       'groupName' => $group->getName()
                                       ));
