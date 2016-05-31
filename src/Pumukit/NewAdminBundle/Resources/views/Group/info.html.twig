@@ -3,6 +3,7 @@
   <h4 class="modal-title" id="myModalLabel">{% trans %}group info{% endtrans %}</h4>
   <div class="col-md-12">
     <h2 class="modal-title">&laquo;{{ group.getName() }}&raquo;</h2>
+    <input type="hidden" name="pumukitnewadmin_group_id" id="pumukitnewadmin_group_id" value="{{ group.id }}">
   </div>
   <div id="delete_group_message" class="col-md-12">
     {{ delete_group_message }}

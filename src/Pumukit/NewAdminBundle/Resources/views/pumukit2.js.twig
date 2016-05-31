@@ -1644,6 +1644,27 @@ $(document).ready(function(){
         $('#broadcast_password_generate').on('click', function() {
             generate_random_password('broadcast_password_1', 'broadcast_password_2');
         });
+
+        $(document).on('click', '#pumukitnewadmin_group_delete_all_relation_user', function() {
+            var route = "{{ path('pumukitnewadmin_group_delete_all_users', {'id': '__groupId__'})|raw }}";
+            var group_id = $('#pumukitnewadmin_group_id').val();
+            route = route.replace('__groupId__', group_id);
+            $.ajax({
+                    url: route,
+                    type: 'POST',
+                    data: {'_method': 'DELETE'},
+                    error: function(jqXHR, textStatus, errorThrown) {
+                    no_success(errorThrown + ': ' + jqXHR.responseText);
+                },
+                success: function (response, textStatus, jqXHR) {
+                    $('#pumukitnewadmin_group_added_users').html(response);
+                    $('#pumukitnewadmin_group_delete_all_relation_user').attr('disabled', 'disabled');
+                    var message = 'Successfully delete User from Group.';
+                    success(message);
+                }
+            }).done(can_be_deleted(group_id));
+            return false;
+        });
     })
     .on('show.bs.modal', function() {
         $('.modal-content').html('');
