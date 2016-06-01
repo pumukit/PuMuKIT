@@ -2498,7 +2498,9 @@ $(document).on('submit', '#pumukitnewadmin_mms_updatebroadcast_submit', function
             no_success(errorThrown + ': ' + jqXHR.responseText);            
         },
         success: function (response, textStatus, jqXHR) {
-            $('#pumukitnewadmin_mm_broadcast_description').html(response['description']);
+            var template = response['template'];
+            var div_id = '#pumukitnewadmin_mm' + template + '_broadcast_description';
+            $(div_id).html(response['description']);
             var message = 'Successfully updated groups in Broadcast.';
             success(message);
         }

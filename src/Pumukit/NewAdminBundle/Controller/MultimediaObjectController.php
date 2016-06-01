@@ -950,9 +950,13 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                 return new JsonResponse(array('error' => $e->getMessage()), JsonResponse::HTTP_BAD_REQUEST);
             }
             $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
-            $description = array('description' => (string)$embeddedBroadcast);
+            $template = $multimediaObject->isPrototype() ? '_template' : '';
+            $jsonResponse = array(
+                                  'description' => (string)$embeddedBroadcast,
+                                  'template' => $template
+                                  );
 
-            return new JsonResponse($description);
+            return new JsonResponse($jsonResponse);
         }
         return array(
                      'mm' => $multimediaObject,
