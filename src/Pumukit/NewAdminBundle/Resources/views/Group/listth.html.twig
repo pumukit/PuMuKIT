@@ -28,3 +28,13 @@
     <a href="#" id="pumukitnewadmin_group_origin_sort_not_selected">{% trans %}Origin{% endtrans %}</a>
   </th>
 {% endif %}
+
+{% if 'comments' == app.session.get('admin/group/sort') %}
+  <th>
+    <a href="#" id="pumukitnewadmin_group_comments_sort_selected">{% trans %}Comments{% endtrans %}{{ app.session.get('admin/group/type')=='asc'?'&nbsp;&#x25B4;':'&nbsp;&#x25BE;' }}</a>
+  </th>
+  {% else %}
+  <th>
+    <a href="#" id="pumukitnewadmin_group_comments_sort_not_selected">{% trans %}Comments{% endtrans %}</a>
+  </th>
+{% endif %}

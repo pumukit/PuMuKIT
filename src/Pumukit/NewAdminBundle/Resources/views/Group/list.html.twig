@@ -18,7 +18,7 @@
     <tbody>
       {% if groups|length == 0 %}
       <tr>
-        <td colspan="10">
+        <td colspan="11">
           {% trans %}There are no groups with those values.{% endtrans %}
         </td>
       </tr>
@@ -64,6 +64,9 @@
         </td>
         <td>
           {{ group.getOrigin() }}
+        </td>
+        <td>
+          {{ group.getComments()[:100] }}
         </td>
       </tr>
       {% endfor %}
