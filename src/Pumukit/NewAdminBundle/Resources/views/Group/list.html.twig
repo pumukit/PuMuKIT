@@ -39,7 +39,7 @@
             <i class="mdi-editor-mode-edit"></i>
           </a>
           {% else %}
-          <i data-toggle="tooltip" data-placement="right" title="{% trans %}External defined groups can not be edited here, contact your directory service administrator.{% endtrans %}" class="mdi-editor-mode-edit" style="color:#009587!important;"></i>
+          <i data-toggle="tooltip" data-placement="right" title="{% trans %}External defined groups can not be edited here, contact your directory service administrator.{% endtrans %}" class="mdi-editor-mode-edit" style="color:grey!important;"></i>
           {% endif %}
         </td>
         <td>
@@ -47,7 +47,7 @@
             {% if group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL') %}
             <i data-toggle="tooltip" data-placement="right" title="{% trans %}Delete Group or Group relations{% endtrans %}" class="mdi-content-clear"></i>
             {% else %}
-            <i data-toggle="tooltip" data-placement="right" title="{% trans %}Delete Group relations{% endtrans %}" class="mdi-content-clear" style="color:#009587!important;"></i>
+            <i data-toggle="tooltip" data-placement="right" title="{% trans %}Delete Group relations{% endtrans %}" class="mdi-content-clear" style="color:grey!important;"></i>
             {% endif %}
           </a>
         </td>
