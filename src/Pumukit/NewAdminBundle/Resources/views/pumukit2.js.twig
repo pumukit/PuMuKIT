@@ -2508,6 +2508,41 @@ $(document).on('submit', '#pumukitnewadmin_mms_updatebroadcast_submit', function
     return false;
 });
 
+$(document).on('submit', '#pumukitnewadmin_series_updatebroadcast_submit', function() {
+    $('#myModal').modal('hide');
+    var route = '{{ path('pumukitnewadmin_series_updatebroadcast', {'id': '__seriesId__'})|raw }}';
+    var seriesId = $('#pumukitnewadmin_series_broadcast_series_id').val();
+    var broadcast_type = $('input[type=radio][name=pumukitnewadmin_mms_broadcast]:checked').val();
+    if (false == check_pass($('#broadcast_password_1').val(), $('#broadcast_password_2').val())) {
+        no_success('Passwords do not match');
+        return false;
+    }
+    var password = $('#broadcast_password_1').val();
+    var addGroups = [];
+    var deleteGroups = [];
+    $('a.add-broadcast-group-item').each(function(){
+        addGroups.push($(this).attr("id"));
+    });
+    $('a.delete-broadcast-group-item').each(function(){
+        deleteGroups.push($(this).attr("id"));
+    });
+    $.ajax({
+        url: route.replace('__seriesId__', seriesId),
+        type: 'POST',
+        data: {'type': broadcast_type, 'password': password, 'addGroups': addGroups, 'deleteGroups': deleteGroups},
+        error: function (jqXHR, textStatus, errorThrown) {
+            no_success(errorThrown + ': ' + jqXHR.responseText);
+        },
+        success: function (response, textStatus, jqXHR) {
+            var div_id = '#pumukitnewadmin_mm_template_broadcast_description';
+            $(div_id).html(response['description']);
+            var message = 'Successfully updated Broadcast in all Multimedia Objects.';
+            success(message);
+        }
+    });
+    return false;
+});
+
 delete_user_from_group = function(user_id, group_id, count)
 {
     var route = "{{ path('pumukitnewadmin_group_delete_user', {'id': '__groupId__', 'userId': '__userId__'})|raw }}";

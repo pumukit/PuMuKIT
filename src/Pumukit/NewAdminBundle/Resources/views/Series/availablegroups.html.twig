@@ -1,0 +1,10 @@
+{% for group in groups %}
+<a href="#" 
+   id="delete_{{ resource_name }}_group_{{ group.id }}"
+   onclick="javascript:return select_group(this);" 
+   ondblclick="javascript:add_group('{{ group.id }}', '{{ group.key }}', '{{ group.name }}', '{{ group.origin }}', '{{ resource_name }}');"
+   class="list-group-item notload delete-{{ resource_name }}-group-item">
+  <i class="mdi-social-group"></i>
+  {{ group.key }} - {{ group.name }} - ({{ group.origin }})
+</a>
+{% endfor %}
