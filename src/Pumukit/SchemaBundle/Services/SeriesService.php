@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Pic;
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\Finder\Finder;
@@ -14,12 +15,14 @@ class SeriesService
 {
     private $dm;
     private $repo;
+    private $mmRepo;
     private $seriesDispatcher;
 
     public function __construct(DocumentManager $documentManager, SeriesEventDispatcherService $seriesDispatcher)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:Series');
+        $this->mmRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->seriesDispatcher = $seriesDispatcher;
     }
     
@@ -37,5 +40,36 @@ class SeriesService
 
         return $series->getSecret();
     }
- 
+
+    /**
+     * Same Embedded Broadcast
+     *
+     * @param Series $series
+     * @return boolean
+     */
+    public function sameEmbeddedBroadcast(Series $series)
+    {
+        $prototype = $this->mmRepo->findPrototype($series);
+        $embeddedBroadcast = $prototype->getEmbeddedBroadcast();
+        if (!$embeddedBroadcast) {
+            return false;
+        }
+        $type = $embeddedBroadcast->getType();
+        if ((EmbeddedBroadcast::TYPE_PUBLIC === $type) || (EmbeddedBroadcast::TYPE_LOGIN === $type)) {
+            $count = $this->mmRepo->countInSeriesWithEmbeddedBroadcastType($series, $type);
+        } elseif (EmbeddedBroadcast::TYPE_PASSWORD === $type) {
+            $count = $this->mmRepo->countInSeriesWithEmbeddedBroadcastPassword($series, $type, $embeddedBroadcast->getPassword());
+        } elseif (EmbeddedBroadcast::TYPE_GROUPS === $type) {
+            $groups = array();
+            foreach ($embeddedBroadcast->getGroups() as $group) {
+                $groups[] = new \MongoId($group->getId());
+            }
+            $count = $this->mmRepo->countInSeriesWithEmbeddedBroadcastGroups($series, $type, $groups);
+        } else {
+            $count = 0;
+        }
+        $total = $this->mmRepo->countInSeriesWithPrototype($series);
+
+        return ($total === $count);
+    }
 }
