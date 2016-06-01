@@ -1287,4 +1287,76 @@ class MultimediaObjectRepository extends DocumentRepository
 
         return $qb->count()->getQuery()->execute();
     }
+
+    /**
+     * Count in series with embedded broadcast type
+     *
+     * @param Series $series
+     * @param string $type
+     * @return integer
+     */
+    public function countInSeriesWithEmbeddedBroadcastType(Series $series, $type = '')
+    {
+        return $this->createQueryBuilder()
+            ->field('series')->references($series)
+            ->field('embeddedBroadcast.type')->equals($type)
+            ->count()
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * Count in series with embedded broadcast password
+     *
+     * @param Series $series
+     * @param string $type
+     * @param string $password
+     * @return integer
+     */
+    public function countInSeriesWithEmbeddedBroadcastPassword(Series $series, $type = '', $password = '')
+    {
+        return $this->createQueryBuilder()
+            ->field('series')->references($series)
+            ->field('embeddedBroadcast.type')->equals($type)
+            ->field('embeddedBroadcast.password')->equals($password)
+            ->count()
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * Count in series with embedded broadcast groups
+     *
+     * @param Series $series
+     * @param string $type
+     * @param array $groups
+     * @return integer
+     */
+    public function countInSeriesWithEmbeddedBroadcastGroups(Series $series, $type = '', $groups = array())
+    {
+        return $this->createQueryBuilder()
+            ->field('series')->references($series)
+            ->field('embeddedBroadcast.type')->equals($type)
+            ->field('embeddedBroadcast.groups')->equals($groups)
+            ->count()
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * Count number of all multimedia objects in a Series
+     * (including prototype)
+     *
+     * @param Series $series
+     * @return integer
+     */
+    public function countInSeriesWithPrototype($series)
+    {
+      return $this
+        ->createQueryBuilder()
+        ->field('series')->references($series)
+        ->count()
+        ->getQuery()
+        ->execute();
+    }
 }

@@ -1677,6 +1677,15 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mm23->setSeries($series2);
         $mm24->setSeries($series2);
 
+        $mm11->setStatus(MultimediaObject::STATUS_PUBLISHED);
+        $mm12->setStatus(MultimediaObject::STATUS_PUBLISHED);
+        $mm13->setStatus(MultimediaObject::STATUS_PROTOTYPE);
+
+        $mm21->setStatus(MultimediaObject::STATUS_PUBLISHED);
+        $mm22->setStatus(MultimediaObject::STATUS_BLOQ);
+        $mm23->setStatus(MultimediaObject::STATUS_PROTOTYPE);
+        $mm24->setStatus(MultimediaObject::STATUS_PUBLISHED);
+
         $this->dm->persist($mm11);
         $this->dm->persist($mm12);
         $this->dm->persist($mm13);
@@ -1686,8 +1695,8 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mm24);
         $this->dm->flush();
 
-        $this->assertEquals(3, $this->repo->countInSeries($series1));
-        $this->assertEquals(4, $this->repo->countInSeries($series2));
+        $this->assertEquals(2, $this->repo->countInSeries($series1));
+        $this->assertEquals(3, $this->repo->countInSeries($series2));
     }
 
     public function testCountPeopleWithRoleCode()
@@ -2805,6 +2814,219 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(1, count($this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_PUBLIC)));
         $this->assertEquals(0, count($this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_LOGIN)));
         $this->assertEquals(0, count($this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_GROUPS)));
+    }
+
+    public function testCountInSeriesWithPrototype()
+    {
+        $series1 = new Series();
+        $series2 = new Series();
+
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->flush();
+
+        $mm11 = new MultimediaObject();
+        $mm12 = new MultimediaObject();
+        $mm13 = new MultimediaObject();
+
+        $mm21 = new MultimediaObject();
+        $mm22 = new MultimediaObject();
+        $mm23 = new MultimediaObject();
+        $mm24 = new MultimediaObject();
+
+        $mm11->setSeries($series1);
+        $mm12->setSeries($series1);
+        $mm13->setSeries($series1);
+
+        $mm21->setSeries($series2);
+        $mm22->setSeries($series2);
+        $mm23->setSeries($series2);
+        $mm24->setSeries($series2);
+
+        $mm11->setStatus(MultimediaObject::STATUS_PUBLISHED);
+        $mm12->setStatus(MultimediaObject::STATUS_PUBLISHED);
+        $mm13->setStatus(MultimediaObject::STATUS_PUBLISHED);
+
+        $mm21->setStatus(MultimediaObject::STATUS_PUBLISHED);
+        $mm22->setStatus(MultimediaObject::STATUS_BLOQ);
+        $mm23->setStatus(MultimediaObject::STATUS_PROTOTYPE);
+        $mm24->setStatus(MultimediaObject::STATUS_PUBLISHED);
+
+        $this->dm->persist($mm11);
+        $this->dm->persist($mm12);
+        $this->dm->persist($mm13);
+        $this->dm->persist($mm21);
+        $this->dm->persist($mm22);
+        $this->dm->persist($mm23);
+        $this->dm->persist($mm24);
+        $this->dm->flush();
+
+        $this->assertEquals(3, $this->repo->countInSeriesWithPrototype($series1));
+        $this->assertEquals(4, $this->repo->countInSeriesWithPrototype($series2));
+    }
+
+    public function testCountInSeriesWithEmbeddedBroadcast()
+    {
+        $series1 = new Series();
+        $series2 = new Series();
+
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->flush();
+
+        $key1 = 'Group1';
+        $name1 = 'Group 1';
+        $group1 = $this->createGroup($key1, $name1);
+
+        $key2 = 'Group2';
+        $name2 = 'Group 2';
+        $group2 = $this->createGroup($key2, $name2);
+
+        $typePassword = EmbeddedBroadcast::TYPE_PASSWORD;
+        $namePassword = EmbeddedBroadcast::NAME_PASSWORD;
+
+        $typePublic = EmbeddedBroadcast::TYPE_PUBLIC;
+        $namePublic = EmbeddedBroadcast::NAME_PUBLIC;
+
+        $typeLogin = EmbeddedBroadcast::TYPE_LOGIN;
+        $nameLogin = EmbeddedBroadcast::NAME_LOGIN;
+
+        $typeGroups = EmbeddedBroadcast::TYPE_GROUPS;
+        $nameGroups = EmbeddedBroadcast::NAME_GROUPS;
+
+        $password1 = 'password1';
+        $password2 = 'password2';
+
+        $embeddedBroadcast11 = new EmbeddedBroadcast();
+        $embeddedBroadcast11->setType($typePassword);
+        $embeddedBroadcast11->setName($namePassword);
+        $embeddedBroadcast11->setPassword($password1);
+        $embeddedBroadcast11->addGroup($group1);
+        $embeddedBroadcast11->addGroup($group2);
+
+        $embeddedBroadcast12 = new EmbeddedBroadcast();
+        $embeddedBroadcast12->setType($typePassword);
+        $embeddedBroadcast12->setName($namePassword);
+        $embeddedBroadcast12->setPassword($password1);
+        $embeddedBroadcast12->addGroup($group1);
+
+        $embeddedBroadcast13 = new EmbeddedBroadcast();
+        $embeddedBroadcast13->setType($typePassword);
+        $embeddedBroadcast13->setName($namePassword);
+        $embeddedBroadcast13->setPassword($password2);
+        $embeddedBroadcast13->addGroup($group1);
+        $embeddedBroadcast13->addGroup($group2);
+
+        $embeddedBroadcast14 = new EmbeddedBroadcast();
+        $embeddedBroadcast14->setType($typePublic);
+        $embeddedBroadcast14->setName($namePublic);
+        $embeddedBroadcast14->setPassword($password1);
+        $embeddedBroadcast14->addGroup($group1);
+        $embeddedBroadcast14->addGroup($group2);
+
+        $embeddedBroadcast21 = new EmbeddedBroadcast();
+        $embeddedBroadcast21->setType($typeLogin);
+        $embeddedBroadcast21->setName($nameLogin);
+        $embeddedBroadcast21->setPassword($password1);
+        $embeddedBroadcast21->addGroup($group1);
+        $embeddedBroadcast21->addGroup($group2);
+
+        $embeddedBroadcast22 = new EmbeddedBroadcast();
+        $embeddedBroadcast22->setType($typeGroups);
+        $embeddedBroadcast22->setName($nameGroups);
+        $embeddedBroadcast22->setPassword($password2);
+        $embeddedBroadcast22->addGroup($group1);
+        $embeddedBroadcast22->addGroup($group2);
+
+        $embeddedBroadcast23 = new EmbeddedBroadcast();
+        $embeddedBroadcast23->setType($typeGroups);
+        $embeddedBroadcast23->setName($nameGroups);
+        $embeddedBroadcast23->setPassword($password2);
+        $embeddedBroadcast23->addGroup($group2);
+
+        $embeddedBroadcast24 = new EmbeddedBroadcast();
+        $embeddedBroadcast24->setType($typeGroups);
+        $embeddedBroadcast24->setName($nameGroups);
+        $embeddedBroadcast24->setPassword($password1);
+        $embeddedBroadcast24->addGroup($group1);
+        $embeddedBroadcast24->addGroup($group2);
+
+        $mm11 = new MultimediaObject();
+        $mm12 = new MultimediaObject();
+        $mm13 = new MultimediaObject();
+        $mm14 = new MultimediaObject();
+
+        $mm21 = new MultimediaObject();
+        $mm22 = new MultimediaObject();
+        $mm23 = new MultimediaObject();
+        $mm24 = new MultimediaObject();
+
+        $mm11->setSeries($series1);
+        $mm12->setSeries($series1);
+        $mm13->setSeries($series1);
+        $mm14->setSeries($series1);
+
+        $mm21->setSeries($series2);
+        $mm22->setSeries($series2);
+        $mm23->setSeries($series2);
+        $mm24->setSeries($series2);
+
+        $mm11->setStatus(MultimediaObject::STATUS_PUBLISHED);
+        $mm12->setStatus(MultimediaObject::STATUS_PROTOTYPE);
+        $mm13->setStatus(MultimediaObject::STATUS_BLOQ);
+
+        $mm21->setStatus(MultimediaObject::STATUS_PUBLISHED);
+        $mm22->setStatus(MultimediaObject::STATUS_BLOQ);
+        $mm23->setStatus(MultimediaObject::STATUS_PROTOTYPE);
+        $mm24->setStatus(MultimediaObject::STATUS_PUBLISHED);
+
+        $mm11->setEmbeddedBroadcast($embeddedBroadcast11);
+        $mm12->setEmbeddedBroadcast($embeddedBroadcast12);
+        $mm13->setEmbeddedBroadcast($embeddedBroadcast13);
+        $mm14->setEmbeddedBroadcast($embeddedBroadcast14);
+
+        $mm21->setEmbeddedBroadcast($embeddedBroadcast21);
+        $mm22->setEmbeddedBroadcast($embeddedBroadcast22);
+        $mm23->setEmbeddedBroadcast($embeddedBroadcast23);
+        $mm24->setEmbeddedBroadcast($embeddedBroadcast24);
+
+        $this->dm->persist($mm11);
+        $this->dm->persist($mm12);
+        $this->dm->persist($mm13);
+        $this->dm->persist($mm14);
+        $this->dm->persist($mm21);
+        $this->dm->persist($mm22);
+        $this->dm->persist($mm23);
+        $this->dm->persist($mm24);
+        $this->dm->flush();
+
+        $groups1 = array(new \MongoId($group1->getId()), new \MongoId($group2->getId()));
+        $groups2 = array(new \MongoId($group2->getId()), new \MongoId($group1->getId()));
+        $groups3 = array(new \MongoId($group2->getId()));
+        $groups4 = array(new \MongoId($group1->getId()));
+        $groups5 = array();
+
+        $this->assertEquals(1, $this->repo->countInSeriesWithEmbeddedBroadcastType($series1, $typePublic));
+        $this->assertEquals(0, $this->repo->countInSeriesWithEmbeddedBroadcastType($series2, $typePublic));
+        $this->assertEquals(0, $this->repo->countInSeriesWithEmbeddedBroadcastType($series1, $typeLogin));
+        $this->assertEquals(1, $this->repo->countInSeriesWithEmbeddedBroadcastType($series2, $typeLogin));
+
+        $this->assertEquals(2, $this->repo->countInSeriesWithEmbeddedBroadcastPassword($series1, $typePassword, $password1));
+        $this->assertEquals(1, $this->repo->countInSeriesWithEmbeddedBroadcastPassword($series1, $typePassword, $password2));
+        $this->assertEquals(0, $this->repo->countInSeriesWithEmbeddedBroadcastPassword($series2, $typePassword, $password1));
+        $this->assertEquals(0, $this->repo->countInSeriesWithEmbeddedBroadcastPassword($series2, $typePassword, $password2));
+
+        $this->assertEquals(0, $this->repo->countInSeriesWithEmbeddedBroadcastGroups($series1, $typeGroups, $groups1));
+        $this->assertEquals(0, $this->repo->countInSeriesWithEmbeddedBroadcastGroups($series1, $typeGroups, $groups2));
+        $this->assertEquals(0, $this->repo->countInSeriesWithEmbeddedBroadcastGroups($series1, $typeGroups, $groups3));
+        $this->assertEquals(0, $this->repo->countInSeriesWithEmbeddedBroadcastGroups($series1, $typeGroups, $groups4));
+        $this->assertEquals(0, $this->repo->countInSeriesWithEmbeddedBroadcastGroups($series1, $typeGroups, $groups5));
+
+        $this->assertEquals(2, $this->repo->countInSeriesWithEmbeddedBroadcastGroups($series2, $typeGroups, $groups1));
+        $this->assertEquals(0, $this->repo->countInSeriesWithEmbeddedBroadcastGroups($series2, $typeGroups, $groups2));
+        $this->assertEquals(1, $this->repo->countInSeriesWithEmbeddedBroadcastGroups($series2, $typeGroups, $groups3));
+        $this->assertEquals(0, $this->repo->countInSeriesWithEmbeddedBroadcastGroups($series2, $typeGroups, $groups4));
+        $this->assertEquals(0, $this->repo->countInSeriesWithEmbeddedBroadcastGroups($series2, $typeGroups, $groups5));
     }
 
     private function createPerson($name)
