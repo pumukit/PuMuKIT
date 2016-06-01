@@ -564,6 +564,14 @@ class SeriesController extends AdminController implements NewAdminController
         $broadcasts = $this->get('pumukitschema.embeddedbroadcast')->getAllTypes();
         $groupService = $this->get('pumukitschema.group');
         $allGroups = $groupService->findAll();
+        $seriesService = $this->get('pumukitschema.series');
+        $sameBroadcast = $seriesService->sameEmbeddedBroadcast($series);
+        if ($sameBroadcast) {
+            $prototype = $mmRepo->findPrototype($series);
+            $embeddedBroadcast = $prototype->getEmbeddedBroadcast();
+        } else {
+            $embeddedBroadcast = false;
+        }
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
             try {
                 $type = $request->get('type', null);
@@ -593,7 +601,9 @@ class SeriesController extends AdminController implements NewAdminController
         return array(
                      'series' => $series,
                      'broadcasts' => $broadcasts,
-                     'groups' => $allGroups
+                     'groups' => $allGroups,
+                     'sameBroadcast' => $sameBroadcast,
+                     'embeddedBroadcast' => $embeddedBroadcast
                      );
 
     }

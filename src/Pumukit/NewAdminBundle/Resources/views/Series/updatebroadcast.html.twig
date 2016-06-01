@@ -14,7 +14,7 @@
           {% for broadcast_type, broadcast_name in broadcasts %}
           <div class="radio">
             <label class="required">
-              <input id="pumukitnewadmin_series_broadcast_type_{{ broadcast_type }}" name="pumukitnewadmin_mms_broadcast" required="required" value="{{ broadcast_type }}" type="radio"><span class="circle"></span><span class="check"></span>
+              <input id="pumukitnewadmin_series_broadcast_type_{{ broadcast_type }}" name="pumukitnewadmin_mms_broadcast" required="required" value="{{ broadcast_type }}" type="radio" {{ embeddedBroadcast ? ((embeddedBroadcast.getType() == broadcast_type) ? ' checked="checked"':'') : '' }}><span class="circle"></span><span class="check"></span>
               {{ broadcast_name }}
             </label>
             {% if broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PUBLIC') %}
