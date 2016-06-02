@@ -43,7 +43,7 @@
           {% endif %}
         </td>
         <td>
-          <a title="{% trans %}Delete Group{% endtrans %}" href="{{ path('pumukitnewadmin_group_info', {'id': group.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+          <a title="{% trans %}Delete Group{% endtrans %}" href="{{ path('pumukitnewadmin_group_info', {'id': group.id, 'action': true}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
             {% if group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL') %}
             <i data-toggle="tooltip" data-placement="right" title="{% trans %}Delete Group or Group relations{% endtrans %}" class="mdi-content-clear"></i>
             {% else %}
@@ -52,7 +52,7 @@
           </a>
         </td>
         <td>
-          <a title="{% trans %}Group Info{% endtrans %}" href="{{ path('pumukitnewadmin_group_info', {'id': group.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+          <a title="{% trans %}Group Info{% endtrans %}" href="{{ path('pumukitnewadmin_group_info', {'id': group.id, 'action': false}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
             <i class="mdi-action-info"></i>
           </a>
         </td>

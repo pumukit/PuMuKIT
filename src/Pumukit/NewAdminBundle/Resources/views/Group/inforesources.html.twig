@@ -8,6 +8,8 @@
     </div>
   </div>
 </div>
+{% if action %}
 <div class="col-md-12 text-center">
   <button id="pumukitnewadmin_group_delete_all_relation_{{ resource_name }}" type="button" class="btn btn-pumukit btn-raised btn-xs" style="margin-top: 20px; margin-bottom:40px;"{{ ((count == 0) or ((resource_name == 'user') and (group.origin != constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')))) ? ' disabled="disabled"': '' }}>{% trans %}Delete All{% endtrans %}</button>
 </div>
+{% endif %}

@@ -248,6 +248,7 @@ class GroupController extends AdminController implements NewAdminController
     public function infoAction(Request $request)
     {
         $group = $this->findOr404($request);
+        $action = $request->get('action', false);
         $users = $this->get('pumukitschema.group')->findUsersInGroup($group);
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
@@ -260,6 +261,7 @@ class GroupController extends AdminController implements NewAdminController
 
         return array(
                      'group' => $group,
+                     'action' => $action,
                      'users' => $users,
                      'admin_multimedia_objects' => $adminMultimediaObjects,
                      'viewer_multimedia_objects' => $viewerMultimediaObjects,
@@ -278,6 +280,7 @@ class GroupController extends AdminController implements NewAdminController
      */
     public function dataResourcesAction(Group $group, Request $request)
     {
+        $action = $request->get('action', '0');
         $resourceName = $request->get('resourceName', null);
         if (!$resourceName) {
             throw new \Exception('Missing resource name');
@@ -298,6 +301,7 @@ class GroupController extends AdminController implements NewAdminController
 
         return array(
                      'group'         => $group,
+                     'action'        => $action,
                      'resources'     => $resources,
                      'resource_name' => $resourceName
                      );
@@ -310,10 +314,11 @@ class GroupController extends AdminController implements NewAdminController
      */
     public function deleteUserAction(User $user, Request $request)
     {
+        $action = $request->get('action', '0');
         $group = $this->findOr404($request);
         $user = $this->get('pumukitschema.user')->deleteGroup($group, $user);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', array('id' => $group->getId(), 'resourceName' => 'user')));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', array('id' => $group->getId(), 'resourceName' => 'user', 'action' => $action)));
     }
 
     /**
@@ -323,10 +328,11 @@ class GroupController extends AdminController implements NewAdminController
      */
     public function deleteMultimediaObjectAction(MultimediaObject $multimediaObject, Request $request)
     {
+        $action = $request->get('action', '0');
         $group = $this->findOr404($request);
         $multimediaobject = $this->get('pumukitschema.multimedia_object')->deleteGroup($group, $multimediaObject);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', array('id' => $group->getId(), 'resourceName' => 'multimediaobject')));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', array('id' => $group->getId(), 'resourceName' => 'multimediaobject', 'action' => $action)));
     }
 
     /**
@@ -336,10 +342,11 @@ class GroupController extends AdminController implements NewAdminController
      */
     public function deleteEmbeddedBroadcastAction(MultimediaObject $multimediaObject, Request $request)
     {
+        $action = $request->get('action', '0');
         $group = $this->findOr404($request);
         $multimediaobject = $this->get('pumukitschema.embeddedbroadcast')->deleteGroup($group, $multimediaObject);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', array('id' => $group->getId(), 'resourceName' => 'embeddedbroadcast')));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', array('id' => $group->getId(), 'resourceName' => 'embeddedbroadcast', 'action' => $action)));
     }
 
     /**
