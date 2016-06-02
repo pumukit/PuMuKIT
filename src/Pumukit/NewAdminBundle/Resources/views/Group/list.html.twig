@@ -62,7 +62,7 @@
           {{ group.getOrigin() }}
         </td>
         <td>
-          {{ group.getComments()[:100] }}
+          {{ group.getComments()[:100] }}{% if ((group.getComments()|length) > 100 ) %}...{% endif %}
         </td>
       </tr>
       {% endfor %}
