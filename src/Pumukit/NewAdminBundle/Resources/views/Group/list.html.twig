@@ -44,11 +44,7 @@
         </td>
         <td>
           <a title="{% trans %}Delete Group{% endtrans %}" href="{{ path('pumukitnewadmin_group_info', {'id': group.id, 'action': true}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
-            {% if group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL') %}
             <i data-toggle="tooltip" data-placement="right" title="{% trans %}Delete Group or Group relations{% endtrans %}" class="mdi-content-clear"></i>
-            {% else %}
-            <i data-toggle="tooltip" data-placement="right" title="{% trans %}Delete Group relations{% endtrans %}" class="mdi-content-clear" style="color:grey!important;"></i>
-            {% endif %}
           </a>
         </td>
         <td>
