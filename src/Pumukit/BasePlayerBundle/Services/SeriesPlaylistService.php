@@ -27,4 +27,24 @@ class SeriesPlaylistService
 
         return $mmobjs;
     }
+
+    public function getPlaylistFirstMmobj(Series $series)
+    {
+        $mmobjs = array();
+        $qb = $this->mmobjRepo->createStandardQueryBuilder()
+                   ->field('series')->references($series);
+        $mmobjs = $qb->getQuery()->getSingleResult();
+
+        return $mmobjs;
+    }
+
+    public function getMmobjFromIdAndPlaylist($mmobjId, Series $series)
+    {
+        $qb = $this->mmobjRepo->createStandardQueryBuilder()
+                   ->field('series')->references($series)
+                   ->field('id')->equals(new \MongoId($mmobjId));
+        $mmobj = $qb->getQuery()->getSingleResult();
+
+        return $mmobj;
+    }
 }
