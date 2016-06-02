@@ -50,6 +50,21 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
         $this->dm->flush();
     }
 
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->mmRepo = null;
+        $this->embeddedBroadcastService = null;
+        $this->mmsService = null;
+        $this->dispatcher = null;
+        $this->authorizationChecker = null;
+        $this->templating = null;
+        $this->router = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
     public function testCreateEmbeddedBroadcastByType()
     {
         $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $this->authorizationChecker, $this->templating, $this->router, false);

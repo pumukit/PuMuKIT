@@ -41,6 +41,17 @@ class GroupServiceTest extends WebTestCase
         $this->dm->flush();
     }
 
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->repo = null;
+        $this->userRepo = null;
+        $this->groupService = null;
+        gc_collect_cycles();
+        parent::tearDown();
+    }
+
     public function testCountUsersInGroup()
     {
         $group1 = new Group();

@@ -14,6 +14,7 @@ class GroupEventDispatcherServiceTest extends WebTestCase
     const EMPTY_NAME = 'EMTPY_NAME';
 
     private $dm;
+    private $dispatcher;
     private $groupDispatcher;
 
     public function setUp()
@@ -32,6 +33,16 @@ class GroupEventDispatcherServiceTest extends WebTestCase
         MockUpGroupListener::$name = GroupEventDispatcherServiceTest::EMPTY_NAME;
 
         $this->groupDispatcher = new GroupEventDispatcherService($this->dispatcher);
+    }
+
+    public function tearDown()
+    {
+        $this->dm->close();
+        $this->dm = null;
+        $this->dispatcher = null;
+        $this->groupDispatcher = null;
+        gc_collect_cycles();
+        parent::tearDown();
     }
 
     public function testDispatchCreate()
