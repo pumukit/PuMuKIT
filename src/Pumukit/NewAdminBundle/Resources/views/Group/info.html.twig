@@ -9,9 +9,6 @@
     <h2 class="modal-title">&laquo;{{ group.getName() }}&raquo;</h2>
     <input type="hidden" name="pumukitnewadmin_group_id" id="pumukitnewadmin_group_id" value="{{ group.id }}">
   </div>
-  <div id="delete_group_message" class="col-md-12">
-    {{ delete_group_message }}
-  </div>
 </div>
 <div class="modal-body">
   <div class="col-md-4">
@@ -32,7 +29,7 @@
   <div class="modal-footer">
     {% if action %}
     <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-    <button id="pumukitnewadmin_group_delete" type="submit" class="btn btn-pumukit btn-raised" onclick="window.submit_delete_group('{{ group.id }}', '{% autoescape 'js' %}{{ group.getName() }}{% endautoescape %}'); return false;"{{ can_delete ? '': ' disabled="disabled"' }}>{% trans %}Delete Group{% endtrans %}</button>
+    <button id="pumukitnewadmin_group_delete" type="submit" class="btn btn-pumukit btn-raised" onclick="window.submit_delete_group('{{ group.id }}', '{% autoescape 'js' %}{{ group.getName() }}{% endautoescape %}', '{% autoescape 'js' %}{{ delete_group_message }}{% endautoescape %}', '{{ can_delete }}'); return false;">{% trans %}Delete Group{% endtrans %}</button>
     {% else %}
     <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
     {% endif %}

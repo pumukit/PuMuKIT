@@ -369,7 +369,8 @@ class GroupController extends AdminController implements NewAdminController
 
         return new JsonResponse(array(
                                       'canbedeleted' => $value,
-                                      'deleteMessage' => $deleteMessage
+                                      'deleteMessage' => $deleteMessage,
+                                      'groupName'    => $group->getName()
                                       ));
     }
 

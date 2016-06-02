@@ -151,7 +151,7 @@ class GroupService
         $play = $this->countPlayMultimediaObjectsInGroup($group);
 
         if ((0 === $users) && (0 === $admin) && (0 === $play)) {
-            $enMessage = 'Click on Delete Group button to delete the Group.';
+            $enMessage = 'ATTENTION!! Are you sure you want to delete this group?';
             $message = $this->translator->trans($enMessage, array(), null, $locale);
         } elseif ((0 < $users) && (0 === $admin) && (0 === $play)) {
             if (1 === $users) {

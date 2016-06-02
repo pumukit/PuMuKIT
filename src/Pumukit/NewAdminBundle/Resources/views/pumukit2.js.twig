@@ -366,10 +366,11 @@ window.submit_delete_person = function(id, countMm, personHName)
     }
 }
 
-window.submit_delete_group = function(id, groupName)
+window.submit_delete_group = function(id, groupName, deleteMessage, canBeDeleted)
 {
-    var message = "{% trans %}ATTENTION!! Are you sure you want to delete this group?{% endtrans %}";
-    if (window.confirm(message)){
+    if (canBeDeleted == 0) {
+        window.alert(deleteMessage);
+    } else if (window.confirm(deleteMessage)){
         $('#myModal').modal('hide');
         var url = "{{ path('pumukitnewadmin_group_delete', {'id': '__id__'})|raw }}";
         $('#list_groups').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
@@ -380,6 +381,7 @@ window.submit_delete_group = function(id, groupName)
             }
         });
     }
+    return false;
 }
 
 window.click_fila_url = function(element, tr, url)
@@ -2624,10 +2626,11 @@ can_be_deleted = function(group_id)
                 no_success(errorThrown + ': ' + jqXHR.responseText);
             },
             success: function (response, textStatus, jqXHR) {
-                $('#delete_group_message').html(response.deleteMessage);
-                if (response.canbedeleted == 1) {
-                    $('#pumukitnewadmin_group_delete').prop("disabled", false);
-                }
+                var group_name = {% autoescape 'js' %}response.groupName{% endautoescape %};
+                var delete_message = {% autoescape 'js' %}response.deleteMessage{% endautoescape %};
+                var can_be_deleted = response.canbedeleted;
+                var onclick_value = "window.submit_delete_group('"+group_id+"', '"+group_name+"', '"+delete_message+"', '"+can_be_deleted+"'); return false;";
+                $('#pumukitnewadmin_group_delete').attr('onclick', onclick_value);
             }
     });
     return false;
