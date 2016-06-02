@@ -18,7 +18,7 @@ class GroupServiceTest extends WebTestCase
     private $userRepo;
     private $groupService;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
@@ -35,10 +35,7 @@ class GroupServiceTest extends WebTestCase
         $translator = static::$kernel->getContainer()->get('translator');
 
         $this->groupService = new GroupService($this->dm, $groupDispatcher, $translator);
-    }
 
-    public function setUp()
-    {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:User')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Group')->remove(array());
         $this->dm->flush();

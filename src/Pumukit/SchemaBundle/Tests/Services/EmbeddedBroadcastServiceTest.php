@@ -22,7 +22,7 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
     private $templating;
     private $router;
 
-    public function __construct()
+    public function setUp()
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
@@ -43,10 +43,7 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
             ->get('templating');
         $this->router = static::$kernel->getContainer()
             ->get('router');
-    }
 
-    public function setUp()
-    {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Group')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:User')->remove(array());
