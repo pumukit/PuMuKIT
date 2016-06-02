@@ -128,10 +128,9 @@ class MyLocalCommand extends ContainerAwareCommand
             else {
                 $permissionProfile = $permViewer;
             }
-            var_dump($permissionProfile->getName());
             $user->setPermissionProfile($permissionProfile);
             $userService->update($user);
-            var_dump($user->getRoles());
+
             $dm->persist($user);
             $dm->flush();
         }
