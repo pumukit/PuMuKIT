@@ -13,11 +13,13 @@ class Permission
     const ACCESS_JOBS = 'ROLE_ACCESS_JOBS';
     const ACCESS_PEOPLE = 'ROLE_ACCESS_PEOPLE';
     const ACCESS_TAGS = 'ROLE_ACCESS_TAGS';
+    // @deprecated in version 2.3
     const ACCESS_BROADCASTS = 'ROLE_ACCESS_BROADCASTS';
     const ACCESS_SERIES_TYPES = 'ROLE_ACCESS_SERIES_TYPES';
     const ACCESS_ADMIN_USERS = 'ROLE_ACCESS_ADMIN_USERS';
     const ACCESS_PERMISSION_PROFILES = 'ROLE_ACCESS_PERMISSION_PROFILES';
     const ACCESS_ROLES = 'ROLE_ACCESS_ROLES';
+    const ACCESS_GROUPS = 'ROLE_ACCESS_GROUPS';
     const CHANGE_MMOBJECT_STATUS = 'ROLE_CHANGE_MMOBJECT_STATUS';
     const CHANGE_MMOBJECT_PUBCHANNEL = 'ROLE_CHANGE_MMOBJECT_PUBCHANNEL';
     const ACCESS_PUBLICATION_TAB = 'ROLE_ACCESS_PUBLICATION_TAB';
@@ -93,6 +95,13 @@ class Permission
         ),
         Permission::ACCESS_ADMIN_USERS => array(
             'description' => "Access Admin Users",
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array()
+            )
+        ),
+        Permission::ACCESS_GROUPS => array(
+            'description' => "Access Groups",
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()

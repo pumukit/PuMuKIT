@@ -10,7 +10,7 @@
               </label>
             </div>
           </th>
-          <th colspan="2" width="3%"></th>
+          <th colspan="3" width="5%"></th>
           <th>{% trans %}Name and Surname{% endtrans %}</th>
           <th>{% trans %}Username{% endtrans %}</th>
           <th>{% trans %}Permission Profile{% endtrans %}</th>
@@ -39,13 +39,26 @@
             </div>
           </td>
           <td>
+            {% if user.origin == constant('Pumukit\\SchemaBundle\\Document\\User::ORIGIN_LOCAL') %}
             <a title="{% trans %}Edit User{% endtrans %} {{ user.fullname }}" href="{{ path('pumukitnewadmin_user_update', {'id': user.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
               <i class="mdi-editor-mode-edit"></i>
             </a>
+            {% else %}
+            <i data-toggle="tooltip" data-placement="right" title="{% trans %}External defined users can not be edited here, contact your directory service administrator.{% endtrans %}" class="mdi-editor-mode-edit" style="color:grey!important"></i>
+            {% endif %}
           </td>
           <td>
+            {% if user.origin == constant('Pumukit\\SchemaBundle\\Document\\User::ORIGIN_LOCAL') %}
             <a href="#" onclick="window.submit_delete_user('{{ user.id }}', '{% autoescape 'js' %}{{ user.fullname }}{% endautoescape %}'); return false;">
               <i class="mdi-content-clear"></i>
+            </a>
+            {% else %}
+            <i data-toggle="tooltip" data-placement="right" title="{% trans %}External defined users can not be deleted here, contact your directory service administrator.{% endtrans %}" class="mdi-content-clear" style="color:grey!important"></i>
+            {% endif %}
+          </td>
+          <td>
+            <a href="{{ path('pumukitnewadmin_user_editgroups', {'id': user.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+              <i class="mdi-social-group" data-toggle="tooltip" data-placement="right" title="{% trans %}User Groups{% endtrans %}"></i>
             </a>
           </td>
           <td>
@@ -72,7 +85,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <th colspan="8">
+          <th colspan="9">
             <div class="col-md-8" id="numberUsers">
               {{ users.getNbResults }}
               {% transchoice users.getNbResults %}

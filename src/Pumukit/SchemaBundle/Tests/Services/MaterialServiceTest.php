@@ -4,7 +4,6 @@ namespace Pumukit\SchemaBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Material;
-use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Pumukit\SchemaBundle\Services\MaterialService;
@@ -40,7 +39,6 @@ class MaterialServiceTest extends WebTestCase
 
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')->remove(array());
         $this->dm->flush();
     }
 
@@ -61,8 +59,6 @@ class MaterialServiceTest extends WebTestCase
 
     public function testAddMaterialUrl()
     {
-        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
-
         $series = $this->factoryService->createSeries();
         $mm = $this->factoryService->createMultimediaObject($series);
 
@@ -82,8 +78,6 @@ class MaterialServiceTest extends WebTestCase
 
     public function testUpdateMaterialInMultimediaObject()
     {
-        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
-
         $series = $this->factoryService->createSeries();
         $mm = $this->factoryService->createMultimediaObject($series);
 
@@ -115,8 +109,6 @@ class MaterialServiceTest extends WebTestCase
 
     public function testAddMaterialFile()
     {
-        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
-
         $series = $this->factoryService->createSeries();
         $mm = $this->factoryService->createMultimediaObject($series);
         $mm = $this->repoMmobj->findAll()[0];
@@ -148,8 +140,6 @@ class MaterialServiceTest extends WebTestCase
 
     public function testRemoveMaterialFromMultimediaObject()
     {
-        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
-
         $series = $this->factoryService->createSeries();
         $mm = $this->factoryService->createMultimediaObject($series);
 
@@ -187,8 +177,6 @@ class MaterialServiceTest extends WebTestCase
 
     public function testUpAndDownMaterialInMultimediaObject()
     {
-        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
-
         $series = $this->factoryService->createSeries();
         $mm = $this->factoryService->createMultimediaObject($series);
 
@@ -290,25 +278,6 @@ class MaterialServiceTest extends WebTestCase
         $this->assertTrue(in_array($material3, $captions));
         $this->assertFalse(in_array($material4, $captions));
         $this->assertTrue(in_array($material5, $captions));
-    }
-
-    private function createBroadcast($broadcastTypeId)
-    {
-        $broadcast = new Broadcast();
-        $broadcast->setName(ucfirst($broadcastTypeId));
-        $broadcast->setBroadcastTypeId($broadcastTypeId);
-        $broadcast->setPasswd('password');
-        if (0 === strcmp(Broadcast::BROADCAST_TYPE_PRI, $broadcastTypeId)) {
-            $broadcast->setDefaultSel(true);
-        } else {
-            $broadcast->setDefaultSel(false);
-        }
-        $broadcast->setDescription(ucfirst($broadcastTypeId).' broadcast');
-
-        $this->dm->persist($broadcast);
-        $this->dm->flush();
-
-        return $broadcast;
     }
 
     private function deleteCreatedFiles()

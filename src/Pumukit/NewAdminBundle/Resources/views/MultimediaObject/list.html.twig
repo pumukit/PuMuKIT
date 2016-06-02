@@ -10,7 +10,7 @@
             </label>
           </div>
         </th>
-        <th colspan="6" width="5%"></th>
+        <th colspan="5" width="5%"></th>
         <th width="1%">{% trans %}Audio/Video{% endtrans %}</th>
         <th width="1%">{% trans %}Img{% endtrans %}</th>
         <th>{% trans %}Title{% endtrans %}</th>
@@ -35,11 +35,6 @@
         </td>
         <td>
 	      {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-action-spellcheck">':'&nbsp;' }}
-        </td>
-        <td>
-          <a href="#" onclick="window.submit_delete_mms('{{ mm.id }}'); return false;">
-            <i class="mdi-content-clear"></i>
-          </a>
         </td>
         <td>
 	      {% include 'PumukitNewAdminBundle:MultimediaObject:updatemenu.html.twig' with {'mm': mm} %}
@@ -98,7 +93,6 @@
     {% for i in range %}
       <tr>
   	    <td>&nbsp;</td>
-        <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>

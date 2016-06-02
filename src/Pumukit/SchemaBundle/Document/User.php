@@ -4,6 +4,8 @@ namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use FOS\UserBundle\Document\User as BaseUser;
+use Doctrine\Common\Collections\ArrayCollection;
+use FOS\UserBundle\Model\GroupInterface;
 
 /**
  * Pumukit\SchemaBundle\Document\User
@@ -12,6 +14,8 @@ use FOS\UserBundle\Document\User as BaseUser;
  */
 class User extends BaseUser
 {
+    const ORIGIN_LOCAL = 'local';
+
     /**
      * @var int $id
      *
@@ -41,10 +45,21 @@ class User extends BaseUser
      *
      * @MongoDB\String
      */
-    protected $origin = 'local';
+    protected $origin = self::ORIGIN_LOCAL;
 
+    /**
+     * @var ArrayCollection $groups
+     *
+     * @MongoDB\ReferenceMany(targetDocument="Group", simple=true)
+     */
+    protected $groups;
+
+    /**
+     * Constructor
+     */
     public function __construct($genUserSalt = false)
     {
+        $this->groups = new ArrayCollection();
         parent::__construct();
         if(false == $genUserSalt){
             $this->salt = '';
@@ -129,5 +144,61 @@ class User extends BaseUser
     public function getOrigin()
     {
         return $this->origin;
+    }
+
+    /**
+     * Contains Group
+     *
+     * @param GroupInterface $group
+     *
+     * @return boolean
+     */
+    public function containsGroup(GroupInterface $group)
+    {
+        return $this->groups->contains($group);
+    }
+
+    /**
+     * Add  group
+     *
+     * @param GroupInterface $group
+     */
+    public function addGroup(GroupInterface $group)
+    {
+        return $this->groups->add($group);
+    }
+
+    /**
+     * Remove  group
+     *
+     * @param GroupInterface $group
+     */
+    public function removeGroup(GroupInterface $group)
+    {
+        $this->groups->removeElement($group);
+    }
+
+    /**
+     * Get Groups
+     *
+     * @return ArrayCollection
+     */
+    public function getGroups()
+    {
+        return $this->groups;
+    }
+
+    /**
+     * Get groups ids
+     *
+     * @return array
+     */
+    public function getGroupsIds()
+    {
+        $groupsIds = array();
+        foreach ($this->getGroups() as $group) {
+            $groupsIds[] = new \MongoId($group->getId());
+        }
+        return $groupsIds;
     }
 }

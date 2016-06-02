@@ -5,6 +5,7 @@ namespace Pumukit\SchemaBundle\Services;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Security\Permission;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -188,6 +189,9 @@ class UserService
      */
     public function update(User $user, $executeFlush = true)
     {
+        if ($user->getOrigin() !== User::ORIGIN_LOCAL) {
+            throw new \Exception('The user "'.$user->getUsername().'" is not local and can not be modified.');
+        }
         $permissionProfile = $user->getPermissionProfile();
         if (null == $permissionProfile) throw new \Exception('The User "'.$user->getUsername().'" has no Permission Profile assigned.');
         /** NOTE: User roles have:
@@ -442,5 +446,93 @@ class UserService
         }
 
         return false;
+    }
+
+    /**
+     * Add group to user
+     *
+     * @param Group $group
+     * @param User $user
+     * @param boolean $executeFlush
+     */
+    public function addGroup(Group $group, User $user, $executeFlush = true)
+    {
+        if (!$user->containsGroup($group)) {
+            if (!$this->isAllowedToModifyUserGroup($user, $group)) {
+                throw new \Exception('Not allowed to add group "'.$group->getKey().'" to user "'.$user->getUsername().'".');
+            }
+            $user->addGroup($group);
+            $this->dm->persist($user);
+            if ($executeFlush) {
+                $this->dm->flush();
+            }
+            $this->dispatcher->dispatchUpdate($user);
+        }
+    }
+
+    /**
+     * Delete group from user
+     *
+     * @param Group $group
+     * @param User $user
+     * @param boolean $executeFlush
+     */
+    public function deleteGroup(Group $group, User $user, $executeFlush = true)
+    {
+        if ($user->containsGroup($group)) {
+            if (!$this->isAllowedToModifyUserGroup($user, $group)) {
+                throw new \Exception('Not allowed to delete group "'.$group->getKey().'" from user "'.$user->getUsername().'".');
+            }
+            $user->removeGroup($group);
+            $this->dm->persist($user);
+            if ($executeFlush) {
+                $this->dm->flush();
+            }
+            $this->dispatcher->dispatchUpdate($user);
+        }
+    }
+
+    /**
+     * Is allowed to modify group
+     *
+     * @param User $user
+     * @param Group $group
+     * @return boolean
+     */
+    public function isAllowedToModifyUserGroup(User $user, Group $group)
+    {
+        if (($user->getOrigin() === User::ORIGIN_LOCAL) && ($group->getOrigin() === Group::ORIGIN_LOCAL)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Find with group
+     *
+     * @param Group
+     * @return Cursor
+     */
+    public function findWithGroup(Group $group)
+    {
+        return $this->repo->createQueryBuilder()
+            ->field('groups')->in(array(new \MongoId($group->getId())))
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * Delete all users from group
+     *
+     * @param  Group
+     */
+    public function deleteAllFromGroup(Group $group)
+    {
+        $users = $this->findWithGroup($group);
+        foreach ($users as $user) {
+            $this->deleteGroup($group, $user, false);
+        }
+        $this->dm->flush();
     }
 }

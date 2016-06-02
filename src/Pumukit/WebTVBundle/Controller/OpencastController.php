@@ -6,7 +6,6 @@ use Pumukit\BasePlayerBundle\Event\BasePlayerEvents;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\WebTVBundle\Controller\PlayerController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -40,7 +39,8 @@ class OpencastController extends PlayerController implements WebTVController
     }
 
     public function doAction( MultimediaObject $multimediaObject, Request $request ){
-        $response = $this->testBroadcast($multimediaObject, $request);
+        $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
+        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $request->headers->get('PHP_AUTH_PW'), $request->query->get('force-auth'));
         if ($response instanceof Response) {
             return $response;
         }

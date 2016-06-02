@@ -1,0 +1,36 @@
+<table>
+  <tbody>
+    <input type="hidden" id="mm_id" value="{{ mm.id }}"/>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        {% trans %}ADMIN GROUPS{% endtrans %}&nbsp;
+        <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Groups that can admin this multimedia object{% endtrans %}"></i>
+      </div>
+      <div class="panel-body" id="group_mm{{ template }}">
+        <div class="row" style="margin-right: 0px; margin-left: 0px;">
+          <div style="width:430px; float: left;">
+            {% trans %}Available Groups{% endtrans %}:
+          </div>
+          <div style="width:390px; float: left;">
+            <strong>{% trans %}Selected Admin Groups{% endtrans %}:</strong>
+          </div>
+        </div>
+        <div style="overflow:hidden;height: 240px">
+	      <div style="width:390px; float: left; height: 220px; border: 1px solid #bbb; overflow-x: hidden; overflow-y: scroll" class="tag list-group pmk-tag-tree" id="delete_mm{{ template }}_groups">
+            {% include 'PumukitNewAdminBundle:MultimediaObject:availablegroups.html.twig' with {'resource': mm, 'groups': groups, 'resource_name': 'mm'~template} %}
+	      </div>
+	      <div style="float: left; padding: 110px 5px 0px">
+	        <a href="#" onclick="$('#add_mm{{ template }}_groups > a.active').trigger('dblclick'); return false;">&#8592;</a>
+	        <a href="#" onclick="$('#delete_mm{{ template }}_groups > a.active').trigger('dblclick'); return false;">&#8594;</a>
+	      </div>
+          {# Groups added to the multimedia object #}
+	      <div style="width:390px; height:220px; border: 1px solid #bbb; float: left; overflow-x: hidden; overflow-y: scroll" class="tag" id="added_mm{{ template }}_groups">
+	        <div class="tag_tree list-group" id="add_mm{{ template }}_groups" >
+              {% include 'PumukitNewAdminBundle:MultimediaObject:selectedgroups.html.twig' with {'resource': mm, 'groups': groups, 'resource_name': 'mm'~template} %}
+	        </div>
+          </div>
+	    </div>
+      </div>
+    </div>
+  </tbody>
+</table>

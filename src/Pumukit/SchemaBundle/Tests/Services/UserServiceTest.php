@@ -5,6 +5,7 @@ namespace Pumukit\SchemaBundle\Tests\Services;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\UserService;
@@ -55,6 +56,7 @@ class UserServiceTest extends WebTestCase
         $dispatcher->addListener('permissionprofile.update', array($listener, 'postUpdate'));
 
         $this->dm->getDocumentCollection('PumukitSchemaBundle:User')->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:Group')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:PermissionProfile')->remove(array());
         $this->dm->flush();
     }
@@ -77,6 +79,7 @@ class UserServiceTest extends WebTestCase
         $permissions1 = array(Permission::ACCESS_DASHBOARD, Permission::ACCESS_ROLES);
         $permissionProfile1 = new PermissionProfile();
         $permissionProfile1->setPermissions($permissions1);
+        $permissionProfile1->setName('permissionprofile1');
         $permissionProfile1->setScope(PermissionProfile::SCOPE_PERSONAL);
         $this->dm->persist($permissionProfile1);
         $this->dm->flush();
@@ -104,6 +107,7 @@ class UserServiceTest extends WebTestCase
         $permissions2 = array(Permission::ACCESS_TAGS);
         $permissionProfile2 = new PermissionProfile();
         $permissionProfile2->setPermissions($permissions2);
+        $permissionProfile2->setName('permissionprofile2');
         $permissionProfile2->setScope(PermissionProfile::SCOPE_GLOBAL);
         $this->dm->persist($permissionProfile2);
         $this->dm->flush();
@@ -394,12 +398,15 @@ class UserServiceTest extends WebTestCase
     public function testHasScopes()
     {
         $globalProfile = new PermissionProfile();
+        $globalProfile->setName('global');
         $globalProfile->setScope(PermissionProfile::SCOPE_GLOBAL);
 
         $personalProfile = new PermissionProfile();
+        $personalProfile->setName('personal');
         $personalProfile->setScope(PermissionProfile::SCOPE_PERSONAL);
 
         $noneProfile = new PermissionProfile();
+        $noneProfile->setName('none');
         $noneProfile->setScope(PermissionProfile::SCOPE_NONE);
 
         $this->dm->persist($globalProfile);
@@ -435,4 +442,419 @@ class UserServiceTest extends WebTestCase
         $this->assertFalse($this->userService->hasPersonalScope($user));
         $this->assertTrue($this->userService->hasNoneScope($user));
     }
+
+    public function testAddGroup()
+    {
+        $group1 = new Group();
+        $group1->setKey('key1');
+        $group1->setName('name1');
+
+        $group2 = new Group();
+        $group2->setKey('key2');
+        $group2->setName('name2');
+
+        $group3 = new Group();
+        $group3->setKey('key3');
+        $group3->setName('name3');
+
+        $user = new User();
+        $user->setUsername('test');
+        $user->setEmail('test@mail.com');
+
+        $this->dm->persist($group1);
+        $this->dm->persist($group2);
+        $this->dm->persist($group3);
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $this->assertEquals(0, count($user->getGroups()));
+        $this->assertFalse($user->containsGroup($group1));
+        $this->assertFalse($user->containsGroup($group2));
+
+        $this->userService->addGroup($group1, $user);
+
+        $this->assertEquals(1, count($user->getGroups()));
+        $this->assertTrue($user->containsGroup($group1));
+        $this->assertFalse($user->containsGroup($group2));
+
+        $this->userService->addGroup($group1, $user);
+
+        $this->assertEquals(1, count($user->getGroups()));
+        $this->assertTrue($user->containsGroup($group1));
+        $this->assertFalse($user->containsGroup($group2));
+        $this->assertFalse($user->containsGroup($group3));
+
+        $this->userService->addGroup($group2, $user);
+
+        $this->assertEquals(2, count($user->getGroups()));
+        $this->assertTrue($user->containsGroup($group1));
+        $this->assertTrue($user->containsGroup($group2));
+        $this->assertFalse($user->containsGroup($group3));
+
+        $this->userService->addGroup($group3, $user);
+
+        $this->assertEquals(3, count($user->getGroups()));
+        $this->assertTrue($user->containsGroup($group1));
+        $this->assertTrue($user->containsGroup($group2));
+        $this->assertTrue($user->containsGroup($group3));
+    }
+
+    public function testDeleteGroup()
+    {
+        $group1 = new Group();
+        $group1->setKey('key1');
+        $group1->setName('name1');
+
+        $group2 = new Group();
+        $group2->setKey('key2');
+        $group2->setName('name2');
+
+        $group3 = new Group();
+        $group3->setKey('key3');
+        $group3->setName('name3');
+
+        $user = new User();
+        $user->setUsername('test');
+        $user->setEmail('test@mail.com');
+
+        $this->dm->persist($group1);
+        $this->dm->persist($group2);
+        $this->dm->persist($group3);
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $this->assertEquals(0, count($user->getGroups()));
+        $this->assertFalse($user->containsGroup($group1));
+        $this->assertFalse($user->containsGroup($group2));
+
+        $this->userService->addGroup($group1, $user);
+
+        $user = $this->repo->find($user->getId());
+
+        $this->assertEquals(1, count($user->getGroups()));
+        $this->assertTrue($user->containsGroup($group1));
+        $this->assertFalse($user->containsGroup($group2));
+
+        $this->userService->deleteGroup($group1, $user);
+
+        $user = $this->repo->find($user->getId());
+
+        $this->assertEquals(0, count($user->getGroups()));
+        $this->assertFalse($user->containsGroup($group1));
+        $this->assertFalse($user->containsGroup($group2));
+        $this->assertFalse($user->containsGroup($group3));
+
+        $this->userService->deleteGroup($group2, $user);
+
+        $user = $this->repo->find($user->getId());
+
+        $this->assertEquals(0, count($user->getGroups()));
+        $this->assertFalse($user->containsGroup($group1));
+        $this->assertFalse($user->containsGroup($group2));
+        $this->assertFalse($user->containsGroup($group3));
+
+        $this->userService->addGroup($group3, $user);
+
+        $user = $this->repo->find($user->getId());
+
+        $this->assertEquals(1, count($user->getGroups()));
+        $this->assertFalse($user->containsGroup($group1));
+        $this->assertFalse($user->containsGroup($group2));
+        $this->assertTrue($user->containsGroup($group3));
+
+        $this->userService->deleteGroup($group3, $user);
+
+        $user = $this->repo->find($user->getId());
+
+        $this->assertEquals(0, count($user->getGroups()));
+        $this->assertFalse($user->containsGroup($group1));
+        $this->assertFalse($user->containsGroup($group2));
+        $this->assertFalse($user->containsGroup($group3));
+    }
+
+    public function testIsAllowedToModifyUserGroup()
+    {
+        $localGroup = new Group();
+        $localGroup->setKey('local_key');
+        $localGroup->setName('Local Group');
+        $localGroup->setOrigin(Group::ORIGIN_LOCAL);
+
+        $casGroup = new Group();
+        $casGroup->setKey('cas_key');
+        $casGroup->setName('CAS Group');
+        $casGroup->setOrigin('cas');
+
+        $localUser = new User();
+        $localUser->setUsername('local_user');
+        $localUser->setEmail('local_user@mail.com');
+        $localUser->setOrigin(User::ORIGIN_LOCAL);
+
+        $casUser = new User();
+        $casUser->setUsername('cas_user');
+        $casUser->setEmail('cas_user@mail.com');
+        $casUser->setOrigin('cas');
+
+        $this->dm->persist($localGroup);
+        $this->dm->persist($casGroup);
+        $this->dm->persist($localUser);
+        $this->dm->persist($casUser);
+        $this->dm->flush();
+
+        $this->assertTrue($this->userService->isAllowedToModifyUserGroup($localUser, $localGroup));
+        $this->assertFalse($this->userService->isAllowedToModifyUserGroup($casUser, $casGroup));
+        $this->assertFalse($this->userService->isAllowedToModifyUserGroup($localUser, $casGroup));
+        $this->assertFalse($this->userService->isAllowedToModifyUserGroup($casUser, $localGroup));
+    }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  is not local and can not be modified
+     */
+    public function testUpdateException()
+    {
+        $permissions1 = array(Permission::ACCESS_DASHBOARD, Permission::ACCESS_ROLES);
+        $permissionProfile1 = new PermissionProfile();
+        $permissionProfile1->setPermissions($permissions1);
+        $permissionProfile1->setName('permissionprofile1');
+        $permissionProfile1->setScope(PermissionProfile::SCOPE_PERSONAL);
+        $this->dm->persist($permissionProfile1);
+        $this->dm->flush();
+
+        $username = 'test';
+        $email = 'test@mail.com';
+        $user = new User();
+        $user->setUsername($username);
+        $user->setEmail($email);
+        $user->setPermissionProfile($permissionProfile1);
+        $user->setOrigin('cas');
+
+        $user = $this->userService->create($user);
+        $user->setUsername('test2');
+        $user = $this->userService->update($user);
+    }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  Not allowed to add group
+     */
+    public function testExceptionAddGroupLocalCas()
+    {
+        $localGroup = new Group();
+        $localGroup->setKey('local_key');
+        $localGroup->setName('Local Group');
+        $localGroup->setOrigin(Group::ORIGIN_LOCAL);
+
+        $casUser = new User();
+        $casUser->setUsername('cas_user');
+        $casUser->setEmail('cas_user@mail.com');
+        $casUser->setOrigin('cas');
+
+        $this->dm->persist($localGroup);
+        $this->dm->persist($casUser);
+        $this->dm->flush();
+
+        $this->userService->addGroup($localGroup, $casUser);
+    }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  Not allowed to add group
+     */
+    public function testExceptionAddGroupCasLocal()
+    {
+        $casGroup = new Group();
+        $casGroup->setKey('cas_key');
+        $casGroup->setName('CAS Group');
+        $casGroup->setOrigin('cas');
+
+        $localUser = new User();
+        $localUser->setUsername('local_user');
+        $localUser->setEmail('local_user@mail.com');
+        $localUser->setOrigin(User::ORIGIN_LOCAL);
+
+        $this->dm->persist($casGroup);
+        $this->dm->persist($localUser);
+        $this->dm->flush();
+
+        $this->userService->addGroup($casGroup, $localUser);
+    }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  Not allowed to add group
+     */
+    public function testExceptionAddGroupCasCas()
+    {
+        $casGroup = new Group();
+        $casGroup->setKey('cas_key');
+        $casGroup->setName('CAS Group');
+        $casGroup->setOrigin('cas');
+
+        $casUser = new User();
+        $casUser->setUsername('cas_user');
+        $casUser->setEmail('cas_user@mail.com');
+        $casUser->setOrigin('cas');
+
+        $this->dm->persist($casGroup);
+        $this->dm->persist($casUser);
+        $this->dm->flush();
+
+        $this->userService->addGroup($casGroup, $casUser);
+    }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  Not allowed to delete group
+     */
+    public function testExceptionDeleteGroupLocalCas()
+    {
+        $localGroup = new Group();
+        $localGroup->setKey('local_key');
+        $localGroup->setName('Local Group');
+        $localGroup->setOrigin(Group::ORIGIN_LOCAL);
+
+        $casUser = new User();
+        $casUser->setUsername('cas_user');
+        $casUser->setEmail('cas_user@mail.com');
+        $casUser->setOrigin('cas');
+
+        $this->dm->persist($localGroup);
+        $this->dm->persist($casUser);
+        $this->dm->flush();
+
+        $casUser->addGroup($localGroup);
+        $this->dm->persist($casUser);
+        $this->dm->flush();
+
+        $this->userService->deleteGroup($localGroup, $casUser);
+    }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  Not allowed to delete group
+     */
+    public function testExceptionDeleteGroupCasLocal()
+    {
+        $casGroup = new Group();
+        $casGroup->setKey('cas_key');
+        $casGroup->setName('CAS Group');
+        $casGroup->setOrigin('cas');
+
+        $localUser = new User();
+        $localUser->setUsername('local_user');
+        $localUser->setEmail('local_user@mail.com');
+        $localUser->setOrigin(User::ORIGIN_LOCAL);
+
+        $this->dm->persist($casGroup);
+        $this->dm->persist($localUser);
+        $this->dm->flush();
+
+        $localUser->addGroup($casGroup);
+        $this->dm->persist($localUser);
+        $this->dm->flush();
+
+        $this->userService->deleteGroup($casGroup, $localUser);
+    }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  Not allowed to delete group
+     */
+    public function testExceptionDeleteGroupCasCas()
+    {
+        $casGroup = new Group();
+        $casGroup->setKey('cas_key');
+        $casGroup->setName('CAS Group');
+        $casGroup->setOrigin('cas');
+
+        $casUser = new User();
+        $casUser->setUsername('cas_user');
+        $casUser->setEmail('cas_user@mail.com');
+        $casUser->setOrigin('cas');
+
+        $this->dm->persist($casGroup);
+        $this->dm->persist($casUser);
+        $this->dm->flush();
+
+        $casUser->addGroup($casGroup);
+        $this->dm->persist($casUser);
+        $this->dm->flush();
+
+        $this->userService->deleteGroup($casGroup, $casUser);
+    }
+
+    public function testFindWithGroup()
+    {
+        $localGroup = new Group();
+        $localGroup->setKey('local_key');
+        $localGroup->setName('Local Group');
+        $localGroup->setOrigin(Group::ORIGIN_LOCAL);
+
+        $casGroup = new Group();
+        $casGroup->setKey('cas_key');
+        $casGroup->setName('CAS Group');
+        $casGroup->setOrigin('cas');
+
+        $localUser = new User();
+        $localUser->setUsername('local_user');
+        $localUser->setEmail('local_user@mail.com');
+        $localUser->setOrigin(User::ORIGIN_LOCAL);
+        $localUser->addGroup($localGroup);
+
+        $casUser = new User();
+        $casUser->setUsername('cas_user');
+        $casUser->setEmail('cas_user@mail.com');
+        $casUser->setOrigin('cas');
+        $casUser->addGroup($casGroup);
+
+        $this->dm->persist($localGroup);
+        $this->dm->persist($casGroup);
+        $this->dm->persist($localUser);
+        $this->dm->persist($casUser);
+        $this->dm->flush();
+
+        $usersLocalGroup = $this->userService->findWithGroup($localGroup)->toArray();
+        $usersCasGroup = $this->userService->findWithGroup($casGroup)->toArray();
+        $this->assertTrue(in_array($localUser, $usersLocalGroup));
+        $this->assertFalse(in_array($casUser, $usersLocalGroup));
+        $this->assertFalse(in_array($localUser, $usersCasGroup));
+        $this->assertTrue(in_array($casUser, $usersCasGroup));
+    }
+
+    public function testDeleteAllFromGroup()
+    {
+        $group = new Group();
+        $group->setKey('key');
+        $group->setName('group');
+        $this->dm->persist($group);
+        $this->dm->flush();
+
+        $this->assertEquals(0, count($this->userService->findWithGroup($group)->toArray()));
+
+        $user1 = new User();
+        $user1->setUsername('user1');
+        $user1->setEmail('user1@mail.com');
+        $user1->addGroup($group);
+
+        $user2 = new User();
+        $user2->setUsername('user2');
+        $user2->setEmail('user2@mail.com');
+        $user2->addGroup($group);
+
+        $user3 = new User();
+        $user3->setUsername('user3');
+        $user3->setEmail('user3@mail.com');
+        $user3->addGroup($group);
+
+        $this->dm->persist($user1);
+        $this->dm->persist($user2);
+        $this->dm->persist($user3);
+        $this->dm->flush();
+
+        $this->assertEquals(3, count($this->userService->findWithGroup($group)->toArray()));
+
+        $this->userService->deleteAllFromGroup($group);
+        $this->assertEquals(0, count($this->userService->findWithGroup($group)->toArray()));
+    }
 }
+

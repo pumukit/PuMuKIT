@@ -168,6 +168,108 @@ class UserController extends AdminController implements NewAdminController
         return parent::batchDeleteAction($request);
     }
 
+    /**
+     * Edit groups form
+     * @Template("PumukitNewAdminBundle:User:editgroups.html.twig")
+     */
+    public function editGroupsAction(Request $request)
+    {
+        $user = $this->findOr404($request);
+        $groups = $this->get('pumukitschema.group')->findAll();
+
+        return array(
+                     'user' => $user,
+                     'groups' => $groups
+                     );
+    }
+
+    /**
+     * Update groups action
+     */
+    public function updateGroupsAction(Request $request)
+    {
+        $user = $this->findOr404($request);
+        if ($user->getOrigin() !== User::ORIGIN_LOCAL) {
+            return new Response("Not allowed to update this not local user '".$user->getUsername()."'", Response::HTTP_BAD_REQUEST);
+        }
+        if ('POST' === $request->getMethod()){
+            $addGroups = $request->get('addGroups', array());
+            if ('string' === gettype($addGroups)){
+                $addGroups = json_decode($addGroups, true);
+            }
+            $deleteGroups = $request->get('deleteGroups', array());
+            if ('string' === gettype($deleteGroups)){
+                $deleteGroups = json_decode($deleteGroups, true);
+            }
+
+            $this->modifyUserGroups($user, $addGroups, $deleteGroups);
+        }
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_user_list'));
+    }
+
+    /**
+     * Get user groups
+     */
+    public function getGroupsAction(Request $request)
+    {
+        $user = $this->findOr404($request);
+        $groupService = $this->get('pumukitschema.group');
+        $addGroups = array();
+        $addGroupsIds = array();
+        $deleteGroups = array();
+        if ('GET' === $request->getMethod()){
+            foreach ($user->getGroups() as $group) {
+                $addGroups[$group->getId()] = array(
+                                                    'key' => $group->getKey(),
+                                                    'name' => $group->getName(),
+                                                    'origin' => $group->getOrigin()
+                                                    );
+                $addGroupsIds[] = new \MongoId($group->getId());
+            }
+            $groupsToDelete = $groupService->findByIdNotIn($addGroupsIds);
+            foreach ($groupsToDelete as $group) {
+                $deleteGroups[$group->getId()] = array(
+                                                       'key' => $group->getKey(),
+                                                       'name' => $group->getName(),
+                                                       'origin' => $group->getOrigin()
+                                                       );
+            }
+        }
+
+        return new JsonResponse(array(
+                                      'add' => $addGroups,
+                                      'delete' => $deleteGroups
+                                      ));
+    }
+
+    /**
+     * Modify User Groups
+     */
+    private function modifyUserGroups(User $user, $addGroups = array(), $deleteGroups = array())
+    {
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $groupRepo = $dm->getRepository('PumukitSchemaBundle:Group');
+        $userService = $this->get('pumukitschema.user');
+
+        foreach ($addGroups as $addGroup){
+            $groupId = explode('_', $addGroup)[2];
+            $group = $groupRepo->find($groupId);
+            if ($group) {
+                $userService->addGroup($group, $user, false);
+            }
+        }
+        foreach ($deleteGroups as $deleteGroup){
+            $groupId = explode('_', $deleteGroup)[2];
+            $group = $groupRepo->find($groupId);
+            if ($group) {
+                $userService->deleteGroup($group, $user, false);
+            }
+        }
+
+        $dm->flush();
+    }
+
     private function isAllowedToBeDeleted(User $userToDelete)
     {
         $repo = $this
@@ -208,6 +310,9 @@ class UserController extends AdminController implements NewAdminController
             if (($userToUpdate === $this->getUniqueAdminUser()) && (!$userToUpdate->isSuperAdmin())) {
                 return new Response("Can not update this unique admin user '".$userToUpdate->getUsername()."'", 409);
             }
+        }
+        if ($userToUpdate->getOrigin() !== User::ORIGIN_LOCAL) {
+            return new Response("Not allowed to update this not local user '".$userToUpdate->getUsername()."'", Response::HTTP_BAD_REQUEST);
         }
 
         return true;

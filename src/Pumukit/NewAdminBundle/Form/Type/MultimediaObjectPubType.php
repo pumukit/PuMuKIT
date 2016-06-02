@@ -29,8 +29,8 @@ class MultimediaObjectPubType extends AbstractType
                                            MultimediaObject::STATUS_HIDE => 'Hidden'
                                            ),
                         'disabled' => $options['not_granted_change_status'],
-                        'label' => $this->translator->trans('Status', array(), null, $this->locale) ))
-            ->add('broadcast', null, array('label' => $this->translator->trans('Broadcast Profile', array(), null, $this->locale)));
+                        'label' => $this->translator->trans('Status', array(), null, $this->locale)))
+            ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

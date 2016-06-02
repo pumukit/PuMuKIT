@@ -1,0 +1,44 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <h3 class="modal-title" id="myModalLabel">{% trans %}Modify broadcast profile of multimedia object{% endtrans %}</h3>
+</div>
+<div class="modal-body">
+  <form autocomplete="off" id="pumukitnewadmin_mms_updatebroadcast_submit"
+     action="{{ path('pumukitnewadmin_mms_updatebroadcast', {'id': mm.id}) }}" method="POST">
+    <fieldset>
+      <input type="hidden" id="pumukitnewadmin_mms_broadcast_mm_id" name="" value="{{ mm.id }}"/>
+      <div class="form-group">
+        <label class="control-label required">{% trans %}Broadcast Profile{% endtrans %}</label>
+        <div id="pumukitnewadmin_mms_broadcast_broadcast">
+          {% for broadcast_type, broadcast_name in broadcasts %}
+          <div class="radio">
+            <label class="required">
+              <input id="pumukitnewadmin_mms_broadcast_type_{{ broadcast_type }}" name="pumukitnewadmin_mms_broadcast" required="required" value="{{ broadcast_type }}" type="radio" {{ mm.getEmbeddedBroadcast() ? ((mm.getEmbeddedBroadcast().getType() == broadcast_type) ? 'checked="checked"':'') : '' }}><span class="circle"></span><span class="check"></span>
+              {{ broadcast_name }}
+            </label>
+            {% if broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PUBLIC') %}
+            <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Any Internet user can play this multimedia object in the video portal{% endtrans %}"></i>
+            {% elseif broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PASSWORD') %}
+            <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Only users with the defined password can play this multimedia object in the video portal{% endtrans %}"></i>
+            {% elseif broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_LOGIN') %}
+            <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Only logged in users in the system can play this multimedia object in the video portal{% endtrans %}"></i>
+            {% elseif broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_GROUPS') %}
+            <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Only users in the selected Groups can play this multimedia object in the video portal{% endtrans %}"></i>
+            {% endif %}
+          </div>
+            {% if broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PASSWORD') %}
+            {% include 'PumukitNewAdminBundle:MultimediaObject:broadcastpassword.html.twig' with {'embeddedBroadcast': mm.getEmbeddedBroadcast()} %}
+            {% elseif broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_GROUPS') %}
+            {% include 'PumukitNewAdminBundle:MultimediaObject:broadcastgroups.html.twig' with {'embeddedBroadcast': mm.getEmbeddedBroadcast(), 'groups': groups} %}
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </fieldset>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
+      <button type="button" id="pumukitnewadmin_mm_broadcast_updategroup_reset" class="btn btn-primary btn-raised">{% trans %}Reset{% endtrans %}</button>
+      <button type="submit" id="pumukitnewadmin_mm_broadcast_updategroup_submit" class="btn btn-pumukit btn-raised">{% trans %}Save changes{% endtrans %}</button>
+    </div>
+  </form>
+</div>

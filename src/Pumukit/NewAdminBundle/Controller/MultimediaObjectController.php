@@ -17,6 +17,7 @@ use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
@@ -175,6 +176,9 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $allBundles = $this->container->getParameter('kernel.bundles');
         $opencastExists = array_key_exists('PumukitOpencastBundle', $allBundles);
 
+        $groupService = $this->get('pumukitschema.group');
+        $allGroups = $groupService->findAll();
+
         return array(
                      'mm'                       => $resource,
                      'form_meta'                => $formMeta->createView(),
@@ -191,7 +195,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                      'template'                 => $template,
                      'active_editor'            => $activeEditor,
                      'opencast_exists'          => $opencastExists,
-                     'not_change_pub_channel'   => $notChangePubChannel
+                     'not_change_pub_channel'   => $notChangePubChannel,
+                     'groups'                   => $allGroups
                      );
     }
 
@@ -224,8 +229,10 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $factoryService = $this->get('pumukitschema.factory');
         $personService = $this->get('pumukitschema.person');
+        $groupService = $this->get('pumukitschema.group');
 
         $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
+        $allGroups = $groupService->findAll();
 
         try {
             $personalScopeRole = $personService->getPersonalScopeRole();
@@ -302,7 +309,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                                    'pub_channels'             => $pubChannelsTags,
                                    'pub_decisions'            => $pubDecisionsTags,
                                    'parent_tags'              => $parentTags,
-                                   'not_change_pub_channel'   => $notChangePubChannel
+                                   'not_change_pub_channel'   => $notChangePubChannel,
+                                   'groups'                   => $allGroups
                                    )
                              );
     }
@@ -382,6 +390,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         if (null === $roles){
             throw new \Exception('Not found any role.');
         }
+        $groupService = $this->get('pumukitschema.group');
+        $allGroups = $groupService->findAll();
 
         return $this->render('PumukitNewAdminBundle:MultimediaObject:edit.html.twig',
                              array(
@@ -395,7 +405,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                                    'pub_channels'             => $pubChannelsTags,
                                    'pub_decisions'            => $pubDecisionsTags,
                                    'parent_tags'              => $parentTags,
-                                   'not_change_pub_channel'   => $notChangePubChannel
+                                   'not_change_pub_channel'   => $notChangePubChannel,
+                                   'groups'                   => $allGroups
                                    )
                              );
     }
@@ -845,5 +856,195 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             }
         }
         return true;
+    }
+
+    /**
+     * Update groups action
+     */
+    public function updateGroupsAction(Request $request)
+    {
+        // TODO. Add security permission to access.
+        $multimediaObject = $this->findOr404($request);
+        if ('POST' === $request->getMethod()){
+            $addGroups = $request->get('addGroups', array());
+            if ('string' === gettype($addGroups)){
+                $addGroups = json_decode($addGroups, true);
+            }
+            $deleteGroups = $request->get('deleteGroups', array());
+            if ('string' === gettype($deleteGroups)){
+                $deleteGroups = json_decode($deleteGroups, true);
+            }
+            try {
+                $this->modifyMultimediaObjectGroups($multimediaObject, $addGroups, $deleteGroups);
+            } catch (\Exception $e) {
+                return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
+            }
+        }
+
+        return new JsonResponse(array('success'));
+    }
+
+    /**
+     * Get groups
+     */
+    public function getGroupsAction(Request $request)
+    {
+        $multimediaObject = $this->findOr404($request);
+        $groups = $this->getResourceGroups($multimediaObject->getGroups());
+
+        return new JsonResponse($groups);
+    }
+
+    /**
+     * Get embedded Broadcast groups
+     */
+    public function getBroadcastInfoAction(Request $request)
+    {
+        $multimediaObject = $this->findOr404($request);
+        $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
+        if ($embeddedBroadcast) {
+            $type = $embeddedBroadcast->getType();
+            $password = $embeddedBroadcast->getPassword();
+            $groups = $this->getResourceGroups($embeddedBroadcast->getGroups());
+        } else {
+            $type = EmbeddedBroadcast::TYPE_PUBLIC;
+            $password = '';
+            $groups = array('addGroups' => array(), 'deleteGroups' => array());
+        }
+        $info = array(
+                      'type' => $type,
+                      'password' => $password,
+                      'groups' => $groups
+                      );
+
+        return new JsonResponse($info);
+    }
+
+    /**
+     * Update Broadcast Action
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "id"})
+     * @Template("PumukitNewAdminBundle:MultimediaObject:updatebroadcast.html.twig")
+     */
+    public function updateBroadcastAction(MultimediaObject $multimediaObject, Request $request)
+    {
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $broadcasts = $this->get('pumukitschema.embeddedbroadcast')->getAllTypes();
+        $groupService = $this->get('pumukitschema.group');
+        $allGroups = $groupService->findAll();
+        if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
+            try {
+                $type = $request->get('type', null);
+                $password = $request->get('password', null);
+                $addGroups = $request->get('addGroups', array());
+                if ('string' === gettype($addGroups)){
+                    $addGroups = json_decode($addGroups, true);
+                }
+                $deleteGroups = $request->get('deleteGroups', array());
+                if ('string' === gettype($deleteGroups)){
+                    $deleteGroups = json_decode($deleteGroups, true);
+                }
+                $this->modifyBroadcastGroups($multimediaObject, $type, $password, $addGroups, $deleteGroups);
+            } catch (\Exception $e) {
+                return new JsonResponse(array('error' => $e->getMessage()), JsonResponse::HTTP_BAD_REQUEST);
+            }
+            $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
+            $template = $multimediaObject->isPrototype() ? '_template' : '';
+            $jsonResponse = array(
+                                  'description' => (string)$embeddedBroadcast,
+                                  'template' => $template
+                                  );
+
+            return new JsonResponse($jsonResponse);
+        }
+        return array(
+                     'mm' => $multimediaObject,
+                     'broadcasts' => $broadcasts,
+                     'groups' => $allGroups
+                     );
+
+    }
+
+    /**
+     * Modify MultimediaObject Groups
+     */
+    private function modifyMultimediaObjectGroups(MultimediaObject $multimediaObject, $addGroups = array(), $deleteGroups = array())
+    {
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $groupRepo = $dm->getRepository('PumukitSchemaBundle:Group');
+        $multimediaObjectService = $this->get('pumukitschema.multimedia_object');
+        $index = $multimediaObject->isPrototype() ? 4 : 3;
+        foreach ($addGroups as $addGroup){
+            $groupId = explode('_', $addGroup)[$index];
+            $group = $groupRepo->find($groupId);
+            if ($group) {
+                $multimediaObjectService->addGroup($group, $multimediaObject, false);
+            }
+        }
+        foreach ($deleteGroups as $deleteGroup){
+            $groupId = explode('_', $deleteGroup)[$index];
+            $group = $groupRepo->find($groupId);
+            if ($group) {
+                $multimediaObjectService->deleteGroup($group, $multimediaObject, false);
+            }
+        }
+
+        $dm->flush();
+    }
+
+    /**
+     * Modify EmbeddedBroadcast Groups
+     */
+    private function modifyBroadcastGroups(MultimediaObject $multimediaObject, $type = EmbeddedBroadcast::TYPE_PUBLIC, $password = '', $addGroups = array(), $deleteGroups = array())
+    {
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $groupRepo = $dm->getRepository('PumukitSchemaBundle:Group');
+        $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
+        $embeddedBroadcastService->updateTypeAndName($type, $multimediaObject, false);
+        $embeddedBroadcastService->updatePassword($password, $multimediaObject, false);
+        $index = 3;
+        foreach ($addGroups as $addGroup){
+            $groupId = explode('_', $addGroup)[$index];
+            $group = $groupRepo->find($groupId);
+            if ($group) {
+                $embeddedBroadcastService->addGroup($group, $multimediaObject, false);
+            }
+        }
+        foreach ($deleteGroups as $deleteGroup){
+            $groupId = explode('_', $deleteGroup)[$index];
+            $group = $groupRepo->find($groupId);
+            if ($group) {
+                $embeddedBroadcastService->deleteGroup($group, $multimediaObject, false);
+            }
+        }
+
+        $dm->flush();
+    }
+
+    private function getResourceGroups($groups = array())
+    {
+        $groupService = $this->get('pumukitschema.group');
+        $addGroups = array();
+        $deleteGroups = array();
+        $addGroupsIds = array();
+        foreach ($groups as $group) {
+            $addGroups[$group->getId()] = array(
+                                                'key' => $group->getKey(),
+                                                'name' => $group->getName(),
+                                                'origin' => $group->getOrigin()
+                                                );
+            $addGroupsIds[] = new \MongoId($group->getId());
+        }
+        $groupsToDelete = $groupService->findByIdNotIn($addGroupsIds);
+        foreach ($groupsToDelete as $group) {
+            $deleteGroups[$group->getId()] = array(
+                                                   'key' => $group->getKey(),
+                                                   'name' => $group->getName(),
+                                                   'origin' => $group->getOrigin()
+                                                   );
+        }
+
+        return array('addGroups' => $addGroups, 'deleteGroups' => $deleteGroups);
     }
 }

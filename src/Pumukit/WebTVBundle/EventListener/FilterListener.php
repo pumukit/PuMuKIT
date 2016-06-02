@@ -3,7 +3,6 @@
 namespace Pumukit\WebTVBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\WebTVBundle\Controller\WebTVController;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
@@ -48,9 +47,6 @@ class FilterListener
             } else {
                 $filter->setParameter("status", MultimediaObject::STATUS_PUBLISHED);
             }
-            if(!isset($routeParams["broadcast"]) || $routeParams["broadcast"]) {
-                $filter->setParameter("private_broadcast", $this->getBroadcastCriteria());
-            }
             if(!isset($routeParams["track"]) || $routeParams["track"]) {
                 $filter->setParameter("display_track_tag", "display");
             }
@@ -58,24 +54,5 @@ class FilterListener
                 $filter->setParameter("pub_channel_tag", "PUCHWEBTV");
             }
         }
-    }
-
-    private function getPrivateBroadcastIds()
-    {
-        $broadcastRepo = $this->dm->getRepository('PumukitSchemaBundle:Broadcast');
-        $privateBroadcastIds = $broadcastRepo->findDistinctIdsByBroadcastTypeId(Broadcast::BROADCAST_TYPE_PRI);
-        if (null != $privateBroadcastIds) {
-            return $privateBroadcastIds->toArray();
-        }
-        return array();
-    }
-
-    private function getBroadcastCriteria()
-    {
-        $privateBroadcastIds = $this->getPrivateBroadcastIds();
-        if (null != $privateBroadcastIds) {
-            return array('$nin' => $privateBroadcastIds);
-        }
-        return array();
     }
 }

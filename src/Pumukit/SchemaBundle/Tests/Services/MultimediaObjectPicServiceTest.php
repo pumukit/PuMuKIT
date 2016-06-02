@@ -4,7 +4,6 @@ namespace Pumukit\SchemaBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Pic;
-use Pumukit\SchemaBundle\Document\Broadcast;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
 
@@ -39,7 +38,6 @@ class MultimediaObjectPicServiceTest extends WebTestCase
 
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')->remove(array());
         $this->dm->flush();
     }
 
@@ -85,8 +83,6 @@ class MultimediaObjectPicServiceTest extends WebTestCase
         $this->dm->persist($pic5);
         $this->dm->flush();
 
-        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
-
         $series1 = $this->factoryService->createSeries();
         $series2 = $this->factoryService->createSeries();
 
@@ -116,8 +112,6 @@ class MultimediaObjectPicServiceTest extends WebTestCase
 
     public function testAddPicUrl()
     {
-        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
-
         $series = $this->factoryService->createSeries();
         $mm = $this->factoryService->createMultimediaObject($series);
 
@@ -133,8 +127,6 @@ class MultimediaObjectPicServiceTest extends WebTestCase
 
     public function testAddPicFile()
     {
-        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
-
         $series = $this->factoryService->createSeries();
         $mm = $this->factoryService->createMultimediaObject($series);
 
@@ -160,8 +152,6 @@ class MultimediaObjectPicServiceTest extends WebTestCase
 
     public function testRemovePicFromMultimediaObject()
     {
-        $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PUB);
-
         $series = $this->factoryService->createSeries();
         $mm = $this->factoryService->createMultimediaObject($series);
 
@@ -188,25 +178,6 @@ class MultimediaObjectPicServiceTest extends WebTestCase
     public function testInvalidTargetPath()
     {
         $mmspicService = new MultimediaObjectPicService($this->dm, $this->picDispatcher, "/non/existing/path", "/uploads/pic", true);
-    }
-
-    private function createBroadcast($broadcastTypeId)
-    {
-        $broadcast = new Broadcast();
-        $broadcast->setName(ucfirst($broadcastTypeId));
-        $broadcast->setBroadcastTypeId($broadcastTypeId);
-        $broadcast->setPasswd('password');
-        if (0 === strcmp(Broadcast::BROADCAST_TYPE_PRI, $broadcastTypeId)) {
-            $broadcast->setDefaultSel(true);
-        } else {
-            $broadcast->setDefaultSel(false);
-        }
-        $broadcast->setDescription(ucfirst($broadcastTypeId).' broadcast');
-
-        $this->dm->persist($broadcast);
-        $this->dm->flush();
-
-        return $broadcast;
     }
 
     private function deleteCreatedFiles()

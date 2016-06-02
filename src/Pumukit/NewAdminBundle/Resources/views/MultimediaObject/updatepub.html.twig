@@ -49,7 +49,12 @@
 	        {% include 'PumukitNewAdminBundle:MultimediaObject:listpub.html.twig' with {'mm': mm, 'pubs': pub_decisions, 'pub_type': 'decisions'} %}
 	      </div>
         </div>
-	    {{ form_row(form_pub['broadcast']) }}
+	    <div class="form-group" id="pumukitnewadmin_mms_pub_broadcast">
+	      <label for="announce_label" class="control-label">{% trans %}Broadcast profile{% endtrans %}</label>
+	      <div id="list_pubbroadcast_{{ mm.id }}">
+	        {% include 'PumukitNewAdminBundle:MultimediaObject:listbroadcast.html.twig' with {'mm': mm} %}
+	      </div>
+        </div>
         {{ form_rest(form_pub) }}
       </div>
     </fieldset>

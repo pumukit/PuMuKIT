@@ -4,7 +4,6 @@ namespace Pumukit\SchemaBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\TrackService;
 use Pumukit\EncoderBundle\Services\ProfileService;
@@ -46,8 +45,6 @@ class TrackServiceTest extends WebTestCase
         $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
           ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
-          ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')
           ->remove(array());
         $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')
           ->remove(array());
@@ -92,8 +89,6 @@ class TrackServiceTest extends WebTestCase
 
     public function testUpdateTrackInMultimediaObject()
     {
-        $this->createBroadcasts();
-
         $series = $this->factoryService->createSeries();
         $multimediaObject = $this->factoryService->createMultimediaObject($series);
 
@@ -122,8 +117,6 @@ class TrackServiceTest extends WebTestCase
 
     public function testRemoveTrackFromMultimediaObject()
     {
-        $this->createBroadcasts();
-
         $series = $this->factoryService->createSeries();
         $multimediaObject = $this->factoryService->createMultimediaObject($series);
 
@@ -157,8 +150,6 @@ class TrackServiceTest extends WebTestCase
 
     public function testUpAndDownTrackInMultimediaObject()
     {
-        $this->createBroadcasts();
-
         $series = $this->factoryService->createSeries();
         $multimediaObject = $this->factoryService->createMultimediaObject($series);
 
@@ -203,34 +194,6 @@ class TrackServiceTest extends WebTestCase
 
         $arrayTracks = array($track1, $track3, $track2, $track5, $track4);
         $this->assertEquals($arrayTracks, $multimediaObject->getTracks()->toArray());
-    }
-
-    private function createBroadcasts()
-    {
-        $locale = 'en';
-
-        $broadcastPrivate = new Broadcast();
-        $broadcastPrivate->setLocale($locale);
-        $broadcastPrivate->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PRI);
-        $broadcastPrivate->setDefaultSel(true);
-        $broadcastPrivate->setName('Private');
-
-        $broadcastPublic = new Broadcast();
-        $broadcastPublic->setLocale($locale);
-        $broadcastPublic->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
-        $broadcastPublic->setDefaultSel(false);
-        $broadcastPublic->setName('Public');
-
-        $broadcastCorporative = new Broadcast();
-        $broadcastCorporative->setLocale($locale);
-        $broadcastCorporative->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_COR);
-        $broadcastCorporative->setDefaultSel(false);
-        $broadcastCorporative->setName('Corporative');
-
-        $this->dm->persist($broadcastPrivate);
-        $this->dm->persist($broadcastPublic);
-        $this->dm->persist($broadcastCorporative);
-        $this->dm->flush();
     }
 
     private function createFormData($number)

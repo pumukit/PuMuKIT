@@ -9,27 +9,19 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Pumukit\SchemaBundle\Document\Tag;
-use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Security\Permission;
 
 class PumukitInitRepoCommand extends ContainerAwareCommand
 {
-    const BROADCAST_DEFAULT = 'default';
-    const BROADCAST_LDAP = 'ldap';
-
     private $dm = null;
     private $tagsRepo = null;
-    private $broadcastsRepo = null;
     private $rolesRepo = null;
 
     private $tagsPath = "../Resources/data/tags/";
-    private $broadcastsPath = "../Resources/data/broadcasts/";
     private $rolesPath = "../Resources/data/roles/";
     private $permissionProfilesPath = "../Resources/data/permissionprofiles/";
-
-    private $broadcastOption = self::BROADCAST_DEFAULT;
 
     private $allPermissions;
     private $tagRequiredFields = array('cod', 'tree_parent_cod', 'metatag', 'display', 'name_en');
@@ -39,9 +31,8 @@ class PumukitInitRepoCommand extends ContainerAwareCommand
         $this
             ->setName('pumukit:init:repo')
             ->setDescription('Load Pumukit data fixtures to your database')
-            ->addArgument('repo', InputArgument::REQUIRED, 'Select the repo to init: tag, broadcast, role, permissionprofile, all')
+            ->addArgument('repo', InputArgument::REQUIRED, 'Select the repo to init: tag, role, permissionprofile, all')
             ->addArgument('file', InputArgument::OPTIONAL, 'Input CSV path')
-            ->addOption('option', 'o', InputOption::VALUE_OPTIONAL, 'Input Broadcast option: default, ldap. Default if none given.', $this->broadcastOption)
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
             ->setHelp(<<<EOT
 
@@ -65,8 +56,6 @@ EOT
                 case "all":
                   $errorExecuting = $this->executeTags($input, $output);
                     if (-1 === $errorExecuting) return -1;
-                    $errorExecuting = $this->executeBroadcasts($input, $output);
-                    if (-1 === $errorExecuting) return -1;
                     $errorExecuting = $this->executeRoles($input, $output);
                     if (-1 === $errorExecuting) return -1;
                     $errorExecuting = $this->executePermissionProfiles($input, $output);
@@ -74,10 +63,6 @@ EOT
                     break;
                 case "tag":
                     $errorExecuting = $this->executeTags($input, $output);
-                    if (-1 === $errorExecuting) return -1;
-                    break;
-                case "broadcast":
-                    $errorExecuting = $this->executeBroadcasts($input, $output);
                     if (-1 === $errorExecuting) return -1;
                     break;
                 case "role":
@@ -124,42 +109,6 @@ EOT
         } else {
             foreach ($finder as $tagFile) {
                 $this->createFromFile($tagFile, $root, $output, 'tag', $verbose);
-            }
-        }
-
-        return 0;
-    }
-
-    protected function executeBroadcasts(InputInterface $input, OutputInterface $output)
-    {
-        $this->broadcastsRepo = $this->dm->getRepository("PumukitSchemaBundle:Broadcast");
-
-        if ($broadcastOption = $input->getOption('option')) {
-            if (($broadcastOption === self::BROADCAST_DEFAULT) || ($broadcastOption === self::BROADCAST_LDAP)) {
-                $this->broadcastOption = $broadcastOption;
-            } else {
-                throw new \Exception('Broadcast Option: "'.$broadcastOption.'" not valid. Valid values: "'
-                                    .self::BROADCAST_DEFAULT.'" or "'.self::BROADCAST_LDAP.'".');
-            }
-        }
-
-        $finder = new Finder();
-        $finder->files()->in(__DIR__.'/'.$this->broadcastsPath);
-        $file = $input->getArgument('file');
-        if ((0 == strcmp($file, "")) && (!$finder)) {
-            $output->writeln("<error>Broadcasts: There's no data to initialize</error>");
-
-            return -1;
-        }
-        $this->removeBroadcasts();
-        if ($file) {
-            $this->createFromFile($file, null, $output, 'broadcast');
-        } else {
-            foreach ($finder as $broadcastFile) {
-                if (0 === strpos(pathinfo($broadcastFile, PATHINFO_FILENAME), $this->broadcastOption)) {
-                    $this->createFromFile($broadcastFile, null, $output, 'broadcast');
-                    break;
-                }
             }
         }
 
@@ -215,11 +164,6 @@ EOT
     protected function removeTags()
     {
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')->remove(array());
-    }
-
-    protected function removeBroadcasts()
-    {
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')->remove(array());
     }
 
     protected function removeRoles()
@@ -291,7 +235,6 @@ EOT
         while (($currentRow = fgetcsv($file, 300, ";")) !== false) {
             $number = count($currentRow);
             if (('tag' === $repoName) ||
-                (('broadcast' === $repoName) && ($number == 5 || $number == 8)) ||
                 (('role' === $repoName) && ($number == 7 || $number == 10)) ||
                 (('permissionprofile' === $repoName) && ($number == 6))){
                 //Check header rows
@@ -326,11 +269,6 @@ EOT
                                 continue;
                             }
                             $output->writeln('<info>Tag persisted - new id: '.$tag->getId().' cod: '.$tag->getCod().'</info>');
-                            break;
-                        case 'broadcast':
-                            $broadcast = $this->createBroadcastFromCsvArray($currentRow);
-                            $idCodMapping[$currentRow[0]] = $broadcast;
-                            $output->writeln("Broadcast persisted - new id: ".$broadcast->getId()." name: ".$broadcast->getName().", type: ".$broadcast->getBroadcastTypeId());
                             break;
                         case 'role':
                             $role = $this->createRoleFromCsvArray($currentRow);
@@ -398,37 +336,6 @@ EOT
         $this->dm->persist($tag);
 
         return $tag;
-    }
-
-    /**
-     * Create Broadcast from CSV array
-     */
-    private function createBroadcastFromCsvArray($csv_array)
-    {
-        $broadcast = new Broadcast();
-
-        $broadcast->setName($csv_array[1]);
-        if (in_array($csv_array[2], array(Broadcast::BROADCAST_TYPE_PUB, Broadcast::BROADCAST_TYPE_PRI, Broadcast::BROADCAST_TYPE_COR))){
-            $broadcast->setBroadcastTypeId($csv_array[2]);
-        }else{
-            $broadcast->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PRI);
-        }
-        $broadcast->setPasswd($csv_array[3]);
-        $broadcast->setDefaultSel($csv_array[4]);
-        // NOTE Take care of csv language order!
-        if (isset($csv_array[5])) {
-            $broadcast->setDescription($csv_array[5], 'es');
-        }
-        if (isset($csv_array[6])) {
-            $broadcast->setDescription($csv_array[6], 'gl');
-        }
-        if (isset($csv_array[7])) {
-            $broadcast->setDescription($csv_array[7], 'en');
-        }
-
-        $this->dm->persist($broadcast);
-
-        return $broadcast;
     }
 
     /**

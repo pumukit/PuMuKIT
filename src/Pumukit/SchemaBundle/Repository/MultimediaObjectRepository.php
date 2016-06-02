@@ -7,6 +7,8 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
+use Pumukit\SchemaBundle\Document\Group;
 
 /**
  * MultimediaObjectRepository
@@ -320,7 +322,7 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
-     * Find series by person id
+     * Find series by person id and role code
      *
      * @param string $personId
      * @param string $roleCod
@@ -338,6 +340,88 @@ class MultimediaObjectRepository extends DocumentRepository
           ->execute();
     }
 
+    /**
+     * Find by person id
+     * and role code or groups
+     * query builder
+     *
+     * @param string          $personId
+     * @param string          $roleCod
+     * @param ArrayCollection $groups
+     * @return QueryBuilder
+     */
+    public function findByPersonIdAndRoleCodOrGroupsQueryBuilder($personId, $roleCod, $groups)
+    {
+        // TODO #10479: Find better way to get array with only IDs of groups
+        if ($groups) {
+            if (gettype($groups) !== 'array') {
+                $groups = $groups->toArray();
+                $groupsIds = array();
+                foreach ($groups as $group) {
+                    $groupsIds[] = new \MongoId($group->getId());
+                }
+            } else {
+                $groupsIds = $groups;
+            }
+        } else {
+            $groupsIds = array();
+        }
+        $qb = $this->createQueryBuilder();
+        $qb->addOr($qb->expr()->field('groups')->in($groupsIds));
+        $qb->addOr($qb->expr()->field('people')->elemMatch(
+            $qb->expr()->field('people._id')->equals(new \MongoId($personId))
+                ->field('cod')->equals($roleCod)
+        ));
+        return $qb;
+    }
+
+    /**
+     * Find by person id
+     * and role code or groups
+     * query
+     *
+     * @param string          $personId
+     * @param string          $roleCod
+     * @param ArrayCollection $groups
+     * @return Query
+     */
+    public function findByPersonIdAndRoleCodOrGroupsQuery($personId, $roleCod, $groups)
+    {
+        $qb = $this->findByPersonIdAndRoleCodOrGroupsQueryBuilder($personId, $roleCod, $groups);
+        return $qb->getQuery();
+    }
+
+    /**
+     * Find by person id
+     * and role code or groups
+     *
+     * @param string          $personId
+     * @param string          $roleCod
+     * @param ArrayCollection $groups
+     * @return ArrayCollection
+     */
+    public function findByPersonIdAndRoleCodOrGroups($personId, $roleCod, $groups)
+    {
+        $query = $this->findByPersonIdAndRoleCodOrGroupsQuery($personId, $roleCod, $groups);
+        return $query->execute();
+    }
+
+    /**
+     * Find series by person id
+     * and role code or groups
+     *
+     * @param string          $personId
+     * @param string          $roleCod
+     * @param ArrayCollection $groups
+     * @return ArrayCollection
+     */
+    public function findSeriesFieldByPersonIdAndRoleCodOrGroups($personId, $roleCod, $groups)
+    {
+        $qb = $this->findByPersonIdAndRoleCodOrGroupsQueryBuilder($personId, $roleCod, $groups);
+        return $qb->distinct('series')
+          ->getQuery()
+          ->execute();
+    }
     // Find Multimedia Objects with Tags
 
     /**
@@ -774,18 +858,7 @@ class MultimediaObjectRepository extends DocumentRepository
 
         $qb->sort('rank', 'asc');
 
-        $aux = $qb->getQuery()->execute();
-
-        //TODO Multimedia Objects with Broadcast public or corporative
-        $multimediaObjects = array();
-        foreach ($aux as $mm){
-            $mmBroadcast = $mm->getBroadcast()->getBroadcastTypeId();
-            if (($mmBroadcast == Broadcast::BROADCAST_TYPE_PUB) || ($mmBroadcast == Broadcast::BROADCAST_TYPE_COR)){
-                $multimediaObjects[] = $mm;
-            }
-        }
-
-        return $multimediaObjects;
+        return $qb->getQuery()->execute();
     }
 
 
@@ -801,6 +874,34 @@ class MultimediaObjectRepository extends DocumentRepository
           ->field('broadcast')->references($broadcast)
           ->getQuery()
           ->execute();
+    }
+
+    /**
+     * Find by embedded broadcast
+     *
+     * @param  EmbeddedBroadcast $broadcast
+     * @return ArrayCollection
+     */
+    public function findByEmbeddedBroadcast(EmbeddedBroadcast $embeddedBroadcast)
+    {
+        return $this->createQueryBuilder()
+            ->field('embeddedBroadcast._id')->equals(new \MongoId($embeddedBroadcast->getId()))
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * Find by embedded broadcast type
+     *
+     * @param  string             $type
+     * @return ArrayCollection
+     */
+    public function findByEmbeddedBroadcastType($type)
+    {
+        return $this->createQueryBuilder()
+            ->field('embeddedBroadcast.type')->equals($type)
+            ->getQuery()
+            ->execute();
     }
 
     /**
@@ -907,12 +1008,8 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb = $this->createQueryBuilder()
           ->field('_id')->notEqual($multimediaObject->getId())
           ->field('series')->notEqual($multimediaObject->getSeries()->getId())
-          ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED);
-
-        // Broadcast public
-        $broadcastRepo = $this->dm->getRepository('PumukitSchemaBundle:Broadcast');
-        $broadcast = $broadcastRepo->findPublicBroadcast();
-        $qb->field('broadcast')->references($broadcast);
+          ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED)
+          ->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC);
 
         // Includes PUCHWEBTV code
         $tagRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
@@ -1085,5 +1182,196 @@ class MultimediaObjectRepository extends DocumentRepository
         else
             $qb = $this->createQueryBuilder();
         return $qb->getQuery()->execute();
+    }
+
+    /**
+     * Create QueryBuilder to find multimedia objects with group
+     *
+     * @param Group $group
+     * @param array $sort
+     * @return QueryBuilder
+     */
+    public function createBuilderWithGroup(Group $group, $sort = array())
+    {
+        $qb = $this->createQueryBuilder()
+            ->field('groups')->in(array(new \MongoId($group->getId())));
+
+        if (0 !== count($sort) ){
+          $qb->sort($sort);
+        }
+
+        return $qb;
+    }
+
+    /**
+     * Find multimedia objects with group
+     *
+     * @param Group $group
+     * @param array $sort
+     * @param int $limit
+     * @param int $page
+     * @return ArrayCollection
+     */
+    public function findWithGroup(Group $group, $sort = array(), $limit = 0, $page = 0)
+    {
+        $qb = $this->createBuilderWithGroup($group, $sort);
+
+        if ($limit > 0){
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
+     * Count multimedia objects with group
+     *
+     * @param Group $group
+     * @param array $sort
+     * @param int $limit
+     * @param int $page
+     * @return ArrayCollection
+     */
+    public function countWithGroup(Group $group, $sort = array(), $limit = 0, $page = 0)
+    {
+        $qb = $this->createBuilderWithGroup($group, $sort);
+
+        if ($limit > 0){
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
+        return $qb->count()->getQuery()->execute();
+    }
+
+    /**
+     * Create QueryBuilder to find multimedia objects with group
+     *
+     * @param Group $group
+     * @param array $sort
+     * @return QueryBuilder
+     */
+    public function createBuilderWithGroupInEmbeddedBroadcast(Group $group, $sort = array())
+    {
+        $qb = $this->createQueryBuilder()
+            ->field('embeddedBroadcast.groups')->in(array(new \MongoId($group->getId())));
+
+        if (0 !== count($sort) ){
+          $qb->sort($sort);
+        }
+
+        return $qb;
+    }
+
+    /**
+     * Find multimedia objects with group
+     *
+     * @param Group $group
+     * @param array $sort
+     * @param int $limit
+     * @param int $page
+     * @return ArrayCollection
+     */
+    public function findWithGroupInEmbeddedBroadcast(Group $group, $sort = array(), $limit = 0, $page = 0)
+    {
+        $qb = $this->createBuilderWithGroupInEmbeddedBroadcast($group, $sort);
+
+        if ($limit > 0){
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
+     * Count multimedia objects with group in embedded broadcast
+     *
+     * @param Group $group
+     * @param array $sort
+     * @param int $limit
+     * @param int $page
+     * @return ArrayCollection
+     */
+    public function countWithGroupInEmbeddedBroadcast(Group $group, $sort = array(), $limit = 0, $page = 0)
+    {
+        $qb = $this->createBuilderWithGroupInEmbeddedBroadcast($group, $sort);
+
+        if ($limit > 0){
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
+        return $qb->count()->getQuery()->execute();
+    }
+
+    /**
+     * Count in series with embedded broadcast type
+     *
+     * @param Series $series
+     * @param string $type
+     * @return integer
+     */
+    public function countInSeriesWithEmbeddedBroadcastType(Series $series, $type = '')
+    {
+        return $this->createQueryBuilder()
+            ->field('series')->references($series)
+            ->field('embeddedBroadcast.type')->equals($type)
+            ->count()
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * Count in series with embedded broadcast password
+     *
+     * @param Series $series
+     * @param string $type
+     * @param string $password
+     * @return integer
+     */
+    public function countInSeriesWithEmbeddedBroadcastPassword(Series $series, $type = '', $password = '')
+    {
+        return $this->createQueryBuilder()
+            ->field('series')->references($series)
+            ->field('embeddedBroadcast.type')->equals($type)
+            ->field('embeddedBroadcast.password')->equals($password)
+            ->count()
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * Count in series with embedded broadcast groups
+     *
+     * @param Series $series
+     * @param string $type
+     * @param array $groups
+     * @return integer
+     */
+    public function countInSeriesWithEmbeddedBroadcastGroups(Series $series, $type = '', $groups = array())
+    {
+        return $this->createQueryBuilder()
+            ->field('series')->references($series)
+            ->field('embeddedBroadcast.type')->equals($type)
+            ->field('embeddedBroadcast.groups')->all($groups)
+            ->field('embeddedBroadcast.groups')->size(count($groups))
+            ->count()
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * Count number of all multimedia objects in a Series
+     * (including prototype)
+     *
+     * @param Series $series
+     * @return integer
+     */
+    public function countInSeriesWithPrototype($series)
+    {
+      return $this
+        ->createQueryBuilder()
+        ->field('series')->references($series)
+        ->count()
+        ->getQuery()
+        ->execute();
     }
 }

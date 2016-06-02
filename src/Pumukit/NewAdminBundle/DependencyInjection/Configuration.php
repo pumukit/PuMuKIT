@@ -23,7 +23,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
           ->children()
             ->booleanNode('disable_broadcast_creation')
-              ->defaultFalse()
+              ->defaultTrue()
               ->info('Disable the creation of new Broadcasts')
             ->end()
           ->end();

@@ -192,7 +192,6 @@ class StatsServiceTest extends WebTestCase
 
         $filter = $this->dm->getFilterCollection()->enable('frontend');
         $filter->setParameter('pub_channel_tag', '1');
-        $filter->setParameter('private_broadcast', array('$nin' => array('1', '2', '3')));
 
         $filter = $this->dm->getFilterCollection()->enable('channel');
         $filter->setParameter('channel_tag', '1');

@@ -10,7 +10,6 @@ use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\Broadcast;
 
 class JobServiceTest extends WebTestCase
 {
@@ -38,7 +37,6 @@ class JobServiceTest extends WebTestCase
         $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Broadcast')->remove(array());
         $this->dm->flush();
 
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
@@ -70,8 +68,6 @@ class JobServiceTest extends WebTestCase
 
     public function testCreateTrackFromLocalHardDrive()
     {
-        $this->createBroadcasts();
-
         $series = $this->factory->createSeries();
         $multimediaObject = $this->factory->createMultimediaObject($series);
 
@@ -103,8 +99,6 @@ class JobServiceTest extends WebTestCase
 
     public function testCreateTrackFromInboxOnServer()
     {
-        $this->createBroadcasts();
-
         $series = $this->factory->createSeries();
         $multimediaObject = $this->factory->createMultimediaObject($series);
 
@@ -440,34 +434,6 @@ class JobServiceTest extends WebTestCase
                           );
 
         return $profiles;
-    }
-
-    private function createBroadcasts()
-    {
-        $locale = 'en';
-
-        $broadcastPrivate = new Broadcast();
-        $broadcastPrivate->setLocale($locale);
-        $broadcastPrivate->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PRI);
-        $broadcastPrivate->setDefaultSel(true);
-        $broadcastPrivate->setName('Private');
-
-        $broadcastPublic = new Broadcast();
-        $broadcastPublic->setLocale($locale);
-        $broadcastPublic->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_PUB);
-        $broadcastPublic->setDefaultSel(false);
-        $broadcastPublic->setName('Public');
-
-        $broadcastCorporative = new Broadcast();
-        $broadcastCorporative->setLocale($locale);
-        $broadcastCorporative->setBroadcastTypeId(Broadcast::BROADCAST_TYPE_COR);
-        $broadcastCorporative->setDefaultSel(false);
-        $broadcastCorporative->setName('Corporative');
-
-        $this->dm->persist($broadcastPrivate);
-        $this->dm->persist($broadcastPublic);
-        $this->dm->persist($broadcastCorporative);
-        $this->dm->flush();
     }
 
     private function deleteCreatedFiles()

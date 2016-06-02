@@ -7,9 +7,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Security\Permission;
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\NewAdminBundle\Form\Type\SeriesType;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectTemplateMetaType;
 use Pagerfanta\Adapter\ArrayAdapter;
@@ -114,6 +116,9 @@ class SeriesController extends AdminController implements NewAdminController
 
         $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
 
+        $groupService = $this->get('pumukitschema.group');
+        $allGroups = $groupService->findAll();
+
         try {
             $personalScopeRole = $personService->getPersonalScopeRole();
         } catch (\Exception $e) {
@@ -156,7 +161,8 @@ class SeriesController extends AdminController implements NewAdminController
                                    'parent_tags'              => $parentTags,
                                    'exclude_fields'           => $exclude_fields,
                                    'show_later_fields'        => $show_later_fields,
-                                   'template'                 => '_template'
+                                   'template'                 => '_template',
+                                   'groups'                   => $allGroups
                                    )
                              );
     }
@@ -542,5 +548,103 @@ class SeriesController extends AdminController implements NewAdminController
             }
         }
         return true;
+    }
+
+    /**
+     * Update Broadcast Action
+     * @ParamConverter("series", class="PumukitSchemaBundle:Series", options={"id" = "id"})
+     * @Template("PumukitNewAdminBundle:Series:updatebroadcast.html.twig")
+     */
+    public function updateBroadcastAction(Series $series, Request $request)
+    {
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $mmRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $broadcasts = $this->get('pumukitschema.embeddedbroadcast')->getAllTypes();
+        $groupService = $this->get('pumukitschema.group');
+        $allGroups = $groupService->findAll();
+        $seriesService = $this->get('pumukitschema.series');
+        $sameBroadcast = $seriesService->sameEmbeddedBroadcast($series);
+        if ($sameBroadcast) {
+            $prototype = $mmRepo->findPrototype($series);
+            $embeddedBroadcast = $prototype->getEmbeddedBroadcast();
+        } else {
+            $embeddedBroadcast = false;
+        }
+        if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
+            try {
+                $type = $request->get('type', null);
+                $password = $request->get('password', null);
+                $addGroups = $request->get('addGroups', array());
+                if ('string' === gettype($addGroups)){
+                    $addGroups = json_decode($addGroups, true);
+                }
+                $deleteGroups = $request->get('deleteGroups', array());
+                if ('string' === gettype($deleteGroups)){
+                    $deleteGroups = json_decode($deleteGroups, true);
+                }
+
+                $multimediaObjects = $mmRepo->findBySeries($series);
+                foreach ($multimediaObjects as $multimediaObject) {
+                    $this->modifyBroadcastGroups($multimediaObject, $type, $password, $addGroups, $deleteGroups, false);
+                }
+                $dm->flush();
+            } catch (\Exception $e) {
+                return new JsonResponse(array('error' => $e->getMessage()), JsonResponse::HTTP_BAD_REQUEST);
+            }
+            $prototype = $mmRepo->findPrototype($series);
+            $embeddedBroadcast = $prototype->getEmbeddedBroadcast();
+
+            return new JsonResponse(array('description' => (string)$embeddedBroadcast));
+        }
+        return array(
+                     'series' => $series,
+                     'broadcasts' => $broadcasts,
+                     'groups' => $allGroups,
+                     'sameBroadcast' => $sameBroadcast,
+                     'embeddedBroadcast' => $embeddedBroadcast
+                     );
+
+    }
+
+    /**
+     * Modify EmbeddedBroadcast Groups
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param string           $type
+     * @param string           $password
+     * @param array            $addGroups
+     * @param array            $deleteGroups
+     * @param boolean          $executeFlush
+     */
+    private function modifyBroadcastGroups(MultimediaObject $multimediaObject, $type = EmbeddedBroadcast::TYPE_PUBLIC, $password = '', $addGroups = array(), $deleteGroups = array(), $executeFlush = true)
+    {
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $groupRepo = $dm->getRepository('PumukitSchemaBundle:Group');
+        $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
+        $embeddedBroadcastService->updateTypeAndName($type, $multimediaObject, false);
+        if ($type === EmbeddedBroadcast::TYPE_PASSWORD) {
+            $embeddedBroadcastService->updatePassword($password, $multimediaObject, false);
+        } elseif ($type === EmbeddedBroadcast::TYPE_GROUPS) {
+            $index = 3;
+            foreach ($addGroups as $addGroup){
+                $groupId = explode('_', $addGroup)[$index];
+                $group = $groupRepo->find($groupId);
+                if ($group) {
+                    $embeddedBroadcastService->addGroup($group, $multimediaObject, false);
+                }
+            }
+            foreach ($deleteGroups as $deleteGroup){
+                $groupId = explode('_', $deleteGroup)[$index];
+                $group = $groupRepo->find($groupId);
+                if ($group) {
+                    $embeddedBroadcastService->deleteGroup($group, $multimediaObject, false);
+                }
+            }
+        }
+        if ($executeFlush) {
+            $dm->flush();
+        }
     }
 }

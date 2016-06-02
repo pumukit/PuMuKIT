@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\NewAdminBundle\Controller\NewAdminController;
 
 class FilterListener
@@ -53,9 +54,7 @@ class FilterListener
 
             if ($this->addUserAsPerson) {
                 $loggedInUser = $this->getLoggedInUser();
-                if ((!$loggedInUser->hasRole(PermissionProfile::SCOPE_GLOBAL)) &&
-                    ($loggedInUser->hasRole(PermissionProfile::SCOPE_PERSONAL) ||
-                     $loggedInUser->hasRole(PermissionProfile::SCOPE_NONE))) {
+                if ($loggedInUser->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
                     $filter = $this->dm->getFilterCollection()->enable("backoffice");
 
                     $person = $this->personService->getPersonFromLoggedInUser($loggedInUser);
@@ -71,6 +70,11 @@ class FilterListener
                     if (null != $roleCode = $this->personService->getPersonalScopeRoleCode()) {
                         $filter->setParameter("role_code", $roleCode);
                     }
+
+                    if (null != $groups = $this->getGroupsMongoQuery($loggedInUser)) {
+                        $filter->setParameter("groups", $groups);
+                    }
+                    $filter->setParameter("series_groups", $loggedInUser->getGroupsIds());
                 }
             }
         }
@@ -110,5 +114,26 @@ class FilterListener
         }
 
         return null;
+    }
+
+    /**
+     * Get groups mongo query
+     *
+     * Match the MultimediaObjects
+     * with some of the admin groups
+     * of the given user
+     *
+     * Query in MongoDB:
+     * {"groups":{"$in":["___MongoID_of_Group_1___", "___MongoID_of_Group_2___"...]}}
+     *
+     * @param  User  $user
+     * @return array $groups
+     */
+    private function getGroupsMongoQuery(User $user)
+    {
+        $groups = array();
+        $groups['$in'] = $user->getGroupsIds();
+
+        return $groups;
     }
 }

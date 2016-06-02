@@ -5,6 +5,9 @@ namespace Pumukit\SchemaBundle\Tests\EventListener;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\EncoderBundle\Document\Job;
 
 class RemoveListenerTest extends WebTestCase
@@ -13,9 +16,11 @@ class RemoveListenerTest extends WebTestCase
     private $repoJobs;
     private $repoMmobj;
     private $repoSeries;
+    private $repoUser;
     private $jobService;
     private $factoryService;
     private $resourcesDir;
+    private $embeddedBroadcastService;
 
     public function setUp()
     {
@@ -27,7 +32,10 @@ class RemoveListenerTest extends WebTestCase
         $this->repoJobs = $this->dm->getRepository('PumukitEncoderBundle:Job');
         $this->repoMmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->repoSeries = $this->dm->getRepository('PumukitSchemaBundle:Series');
+        $this->repoUser = $this->dm->getRepository('PumukitSchemaBundle:User');
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
+        $this->embeddedBroadcastService = static::$kernel->getContainer()
+            ->get('pumukitschema.embeddedbroadcast');
         $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
 
         $this->resourcesDir = realpath(__DIR__.'/../Resources');
@@ -35,6 +43,8 @@ class RemoveListenerTest extends WebTestCase
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
           ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
+          ->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:Group')
           ->remove(array());
         $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')
           ->remove(array());
@@ -74,7 +84,6 @@ class RemoveListenerTest extends WebTestCase
         $this->assertEquals(1, count($this->repoSeries->findAll()));
         $this->assertEquals(1, count($this->repoMmobj->findAll()));
         $this->assertEquals(0, count($this->repoJobs->findAll()));
-
     }
 
     /**
@@ -100,6 +109,140 @@ class RemoveListenerTest extends WebTestCase
 
 
         $this->deleteCreatedFiles();
+    }
+
+    public function testPreRemoveGroup()
+    {
+        $key1 = 'Group1';
+        $name1 = 'Group 1';
+        $group1 = $this->createGroup($key1, $name1);
+
+        $key2 = 'Group2';
+        $name2 = 'Group 2';
+        $group2 = $this->createGroup($key2, $name2);
+
+        $series = $this->factoryService->createSeries();
+
+        $this->dm->persist($series);
+        $this->dm->flush();
+
+        $mm1 = $this->factoryService->createMultimediaObject($series);
+        $mm2 = $this->factoryService->createMultimediaObject($series);
+
+        $mm1->addGroup($group1);
+        $mm1->addGroup($group2);
+        $mm2->addGroup($group2);
+
+        $this->dm->persist($mm1);
+        $this->dm->persist($mm2);
+        $this->dm->flush();
+
+        $this->embeddedBroadcastService->updateTypeAndName(EmbeddedBroadcast::TYPE_GROUPS, $mm1, false);
+        $this->embeddedBroadcastService->updateTypeAndName(EmbeddedBroadcast::TYPE_GROUPS, $mm2, false);
+        $this->embeddedBroadcastService->addGroup($group1, $mm1, false);
+        $this->embeddedBroadcastService->addGroup($group2, $mm1, false);
+        $this->embeddedBroadcastService->addGroup($group2, $mm2, false);
+        $this->dm->flush();
+
+        $embeddedBroadcast1 = $mm1->getEmbeddedBroadcast();
+        $embeddedBroadcast2 = $mm2->getEmbeddedBroadcast();
+
+        $this->assertEquals(2, count($mm1->getGroups()));
+        $this->assertEquals(1, count($mm2->getGroups()));
+        $this->assertTrue(in_array($group1, $mm1->getGroups()->toArray()));
+        $this->assertTrue(in_array($group2, $mm1->getGroups()->toArray()));
+        $this->assertFalse(in_array($group1, $mm2->getGroups()->toArray()));
+        $this->assertTrue(in_array($group2, $mm2->getGroups()->toArray()));
+
+        $this->assertEquals(2, count($embeddedBroadcast1->getGroups()));
+        $this->assertEquals(1, count($embeddedBroadcast2->getGroups()));
+        $this->assertTrue(in_array($group1, $embeddedBroadcast1->getGroups()->toArray()));
+        $this->assertTrue(in_array($group2, $embeddedBroadcast1->getGroups()->toArray()));
+        $this->assertFalse(in_array($group1, $embeddedBroadcast2->getGroups()->toArray()));
+        $this->assertTrue(in_array($group2, $embeddedBroadcast2->getGroups()->toArray()));
+
+        $this->dm->remove($group1);
+        $this->dm->flush();
+
+        $mm1 = $this->repoMmobj->find($mm1->getId());
+        $mm2 = $this->repoMmobj->find($mm2->getId());
+
+        $this->assertEquals(1, count($mm1->getGroups()));
+        $this->assertEquals(1, count($mm2->getGroups()));
+        $this->assertFalse(in_array($group1, $mm1->getGroups()->toArray()));
+        $this->assertTrue(in_array($group2, $mm1->getGroups()->toArray()));
+        $this->assertFalse(in_array($group1, $mm2->getGroups()->toArray()));
+        $this->assertTrue(in_array($group2, $mm2->getGroups()->toArray()));
+
+        $this->assertEquals(1, count($embeddedBroadcast1->getGroups()));
+        $this->assertEquals(1, count($embeddedBroadcast2->getGroups()));
+        $this->assertFalse(in_array($group1, $embeddedBroadcast1->getGroups()->toArray()));
+        $this->assertTrue(in_array($group2, $embeddedBroadcast1->getGroups()->toArray()));
+        $this->assertFalse(in_array($group1, $embeddedBroadcast2->getGroups()->toArray()));
+        $this->assertTrue(in_array($group2, $embeddedBroadcast2->getGroups()->toArray()));
+
+        $this->dm->remove($group2);
+        $this->dm->flush();
+
+        $mm1 = $this->repoMmobj->find($mm1->getId());
+        $mm2 = $this->repoMmobj->find($mm2->getId());
+
+        $this->assertEquals(0, count($mm1->getGroups()));
+        $this->assertEquals(0, count($mm2->getGroups()));
+        $this->assertFalse(in_array($group1, $mm1->getGroups()->toArray()));
+        $this->assertFalse(in_array($group2, $mm1->getGroups()->toArray()));
+        $this->assertFalse(in_array($group1, $mm2->getGroups()->toArray()));
+        $this->assertFalse(in_array($group2, $mm2->getGroups()->toArray()));
+
+        $this->assertEquals(0, count($embeddedBroadcast1->getGroups()));
+        $this->assertEquals(0, count($embeddedBroadcast2->getGroups()));
+        $this->assertFalse(in_array($group1, $embeddedBroadcast1->getGroups()->toArray()));
+        $this->assertFalse(in_array($group2, $embeddedBroadcast1->getGroups()->toArray()));
+        $this->assertFalse(in_array($group1, $embeddedBroadcast2->getGroups()->toArray()));
+        $this->assertFalse(in_array($group2, $embeddedBroadcast2->getGroups()->toArray()));
+
+        $key1 = 'Group1';
+        $name1 = 'Group 1';
+        $group1 = $this->createGroup($key1, $name1);
+
+        $key2 = 'Group2';
+        $name2 = 'Group 2';
+        $group2 = $this->createGroup($key2, $name2);
+
+        $user1 = $this->createUser('1');
+        $user2 = $this->createUser('2');
+        $user1->addGroup($group1);
+        $user1->addGroup($group2);
+        $user2->addGroup($group2);
+        $this->dm->persist($user1);
+        $this->dm->persist($user2);
+        $this->dm->flush();
+        $this->assertEquals(2, count($user1->getGroups()));
+        $this->assertEquals(1, count($user2->getGroups()));
+        $this->assertTrue(in_array($group1, $user1->getGroups()->toArray()));
+        $this->assertTrue(in_array($group2, $user1->getGroups()->toArray()));
+        $this->assertFalse(in_array($group1, $user2->getGroups()->toArray()));
+        $this->assertTrue(in_array($group2, $user2->getGroups()->toArray()));
+        $this->dm->remove($group1);
+        $this->dm->flush();
+        $user1 = $this->repoUser->find($user1->getId());
+        $user2 = $this->repoUser->find($user2->getId());
+        $this->assertEquals(1, count($user1->getGroups()));
+        $this->assertEquals(1, count($user2->getGroups()));
+        $this->assertFalse(in_array($group1, $user1->getGroups()->toArray()));
+        $this->assertTrue(in_array($group2, $user1->getGroups()->toArray()));
+        $this->assertFalse(in_array($group1, $user2->getGroups()->toArray()));
+        $this->assertTrue(in_array($group2, $user2->getGroups()->toArray()));
+        $this->dm->remove($group2);
+        $this->dm->flush();
+        $user1 = $this->repoUser->find($user1->getId());
+        $user2 = $this->repoUser->find($user2->getId());
+        $this->assertEquals(0, count($user1->getGroups()));
+        $this->assertEquals(0, count($user2->getGroups()));
+        $this->assertFalse(in_array($group1, $user1->getGroups()->toArray()));
+        $this->assertFalse(in_array($group2, $user1->getGroups()->toArray()));
+        $this->assertFalse(in_array($group1, $user2->getGroups()->toArray()));
+        $this->assertFalse(in_array($group2, $user2->getGroups()->toArray()));
     }
 
     private function createJobWithStatus($status=Job::STATUS_WAITING, $multimediaObject)
@@ -141,4 +284,27 @@ class RemoveListenerTest extends WebTestCase
             }
         }
     }
+
+    private function createGroup($key='Group1', $name='Group 1')
+    {
+        $group = new Group();
+        $group->setKey($key);
+        $group->setName($name);
+        $this->dm->persist($group);
+        $this->dm->flush();
+        return $group;
+    }
+
+    private function createUser($number)
+    {
+        $username = 'username'.$number;
+        $email = 'user'.$number.'@mail.com';
+        $user = new User();
+        $user->setUsername($username);
+        $user->setEmail($email);
+        $this->dm->persist($user);
+        $this->dm->flush();
+        return $user;
+    }
 }
+

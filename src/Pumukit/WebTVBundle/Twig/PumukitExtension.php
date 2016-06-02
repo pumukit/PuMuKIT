@@ -4,6 +4,7 @@ namespace Pumukit\WebTVBundle\Twig;
 
 use Symfony\Component\Routing\RequestContext;
 use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\MaterialService;
 use Pumukit\SchemaBundle\Services\PicService;
@@ -257,8 +258,10 @@ class PumukitExtension extends \Twig_Extension
     {
         $url = str_replace('%id%', $multimediaObject->getProperty('opencast'), $multimediaObject->getProperty('opencasturl'));
 
-        $broadcast_type = $multimediaObject->getBroadcast()->getBroadcastTypeId();
-        if (Broadcast::BROADCAST_TYPE_PUB == $broadcast_type) {
+        $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
+        if (!$embeddedBroadcast) {
+            $url_player = '/cmarwatch.html';
+        } elseif (EmbeddedBroadcast::TYPE_PUBLIC == $embeddedBroadcast->getType()) {
             $url_player = '/cmarwatch.html';
         } else {
             $url_player = '/securitywatch.html';

@@ -19,7 +19,7 @@
     {% endif %}
     <button type="button" class="btn btn-primary btn-raised"
             onclick="if('' != $('#person_id').val()){
-                                                     var route = '{{ path('pumukitnewadmin_person_link', {'id': '__personId__', 'roleId': role.id, 'mmId': mm.id} ) }}';
+                                                     var route = '{{ path('pumukitnewadmin_person_link', {'id': '__personId__', 'roleId': role.id, 'mmId': mm.id, 'owner': owner} ) }}';
                                                      var personId = $('#person_id').val();
                                                      $('#{{ role.id }}_person_mms{{ template }}').load(route.replace('__personId__', personId), {'_method':'POST'}, function(){
                                                          success('{% trans %}Person successfully associated to Multimedia Object{% endtrans %} \'{{ mm.getTitle() }}\' {% trans %}with role{% endtrans %} \'{{ role.getName() }}\'');
@@ -36,7 +36,7 @@
     <button type="button" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
             id="create_relation" href="#"
             onclick="var aux = $('#name').val();
-                     var route = '{{ path('pumukitnewadmin_person_create_relation', {'mmId': mm.id, 'roleId': role.id, 'name': '__aux__'}) }}';
+                     var route = '{{ path('pumukitnewadmin_person_create_relation', {'mmId': mm.id, 'roleId': role.id, 'name': '__aux__', 'owner': owner}) }}';
                      $('#create_relation').attr('href', encodeURI(route.replace('__aux__', aux))); return true;">
       {% trans %}New{% endtrans %}
     </button>

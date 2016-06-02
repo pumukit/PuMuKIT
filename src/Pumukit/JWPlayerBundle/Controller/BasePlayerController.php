@@ -5,7 +5,6 @@ namespace Pumukit\JWPlayerBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +23,8 @@ class BasePlayerController extends BasePlayerControllero implements WebTVControl
      */
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $response = $this->testBroadcast($multimediaObject, $request);
+        $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
+        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $request->headers->get('PHP_AUTH_PW'), $request->query->get('force-auth'));
         if ($response instanceof Response) {
             return $response;
         }
@@ -54,7 +54,7 @@ class BasePlayerController extends BasePlayerControllero implements WebTVControl
     {
         $mmobjService = $this->get('pumukitschema.multimedia_object');
         if($mmobjService->isPublished($multimediaObject,'PUCHWEBTV')){
-            if($mmobjService->hasPlayableResource($multimediaObject) && Broadcast::BROADCAST_TYPE_PUB === $multimediaObject->getBroadcast()->getBroadcastTypeId()){
+            if($mmobjService->hasPlayableResource($multimediaObject) && $multimediaObject->isPublicEmbeddedBroadcast()){
                 return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId())));
             }
         } elseif( ($multimediaObject->getStatus() != MultimediaObject::STATUS_PUBLISHED
@@ -63,7 +63,8 @@ class BasePlayerController extends BasePlayerControllero implements WebTVControl
             return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
         }
 
-        $response = $this->testBroadcast($multimediaObject, $request);
+        $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
+        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $request->headers->get('PHP_AUTH_PW'), $request->query->get('force-auth'));
         if ($response instanceof Response) {
             return $response;
         }

@@ -55,9 +55,19 @@ class MultimediaObject
     /**
      * @var Broadcast $broadcast
      *
+     * @deprecated in version 2.3
+     * use EmbeddedBroadcast instead
+     *
      * @MongoDB\ReferenceOne(targetDocument="Broadcast", inversedBy="multimedia_object", simple=true)
      */
     private $broadcast;
+
+    /**
+     * @var EmbeddedBroadcast $embeddedBroadcast
+     *
+     * @MongoDB\EmbedOne(targetDocument="EmbeddedBroadcast")
+     */
+    private $embeddedBroadcast;
 
     /**
      * @var ArrayCollection $tags
@@ -93,6 +103,13 @@ class MultimediaObject
      * @MongoDB\EmbedMany(targetDocument="Link")
      */
     private $links;
+
+    /**
+     * @var ArrayCollection $groups
+     *
+     * @MongoDB\ReferenceMany(targetDocument="Group", simple=true)
+     */
+    private $groups;
 
     /**
      * @var int $rank
@@ -217,6 +234,7 @@ class MultimediaObject
         $this->links = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->people = new ArrayCollection();
+        $this->groups = new ArrayCollection();
     }
 
     public function __toString()
@@ -778,6 +796,8 @@ class MultimediaObject
     /**
      * Set broadcast
      *
+     * @deprecated in version 2.3
+     *
      * @param Broadcast $broadcast
      */
     public function setBroadcast(Broadcast $broadcast)
@@ -794,6 +814,8 @@ class MultimediaObject
     /**
      * Get broadcast
      *
+     * @deprecated in version 2.3
+     *
      * @return Broadcast
      */
     public function getBroadcast()
@@ -805,13 +827,45 @@ class MultimediaObject
     /**
      * Get broadcast
      *
+     * @deprecated in version 2.3
+     *
      * @return Broadcast
      */
     public function isPublicBroadcast()
     {
       return (bool)(!$this->broadcast || Broadcast::BROADCAST_TYPE_PUB == $this->broadcast->getBroadcastTypeId());
     }
+
         
+    /**
+     * Set embedded broadcast
+     *
+     * @param EmbeddedBroadcast $embeddedBroadcast
+     */
+    public function setEmbeddedBroadcast(EmbeddedBroadcast $embeddedBroadcast)
+    {
+        $this->embeddedBroadcast = $embeddedBroadcast;
+    }
+
+    /**
+     * Get embeddedBroadcast
+     *
+     * @return EmbeddedBroadcast
+     */
+    public function getEmbeddedBroadcast()
+    {
+        return $this->embeddedBroadcast;
+    }
+
+    /**
+     * Is public embedded broadcast
+     *
+     * @return Broadcast
+     */
+    public function isPublicEmbeddedBroadcast()
+    {
+      return (bool)(!$this->embeddedBroadcast || EmbeddedBroadcast::TYPE_PUBLIC === $this->embeddedBroadcast->getType());
+    }
 
     // Start tag section. Caution: MultimediaObject tags are Tag objects, not strings.
     /**
@@ -1116,7 +1170,7 @@ class MultimediaObject
     }
 
     /**
-     * DEPRECATED: Use PicService, function getFirstUrlPic($object, $absolute, $hd)
+     * @deprecated: Use PicService, function getFirstUrlPic($object, $absolute, $hd)
      *
      * Get first pic url
      *
@@ -2470,6 +2524,52 @@ class MultimediaObject
     }
 
     // End of people section
+
+    // Group section
+
+    /**
+     * Contains group
+     *
+     * @param Group $group
+     *
+     * @return boolean
+     */
+    public function containsGroup(Group $group)
+    {
+        return $this->groups->contains($group);
+    }
+
+    /**
+     * Add admin group
+     *
+     * @param Group $group
+     */
+    public function addGroup(Group $group)
+    {
+        return $this->groups->add($group);
+    }
+
+    /**
+     * Remove admin group
+     *
+     * @param Group $group
+     */
+    public function removeGroup(Group $group)
+    {
+        $this->groups->removeElement($group);
+    }
+
+    /**
+     * Get groups
+     *
+     * @return ArrayCollection
+     */
+    public function getGroups()
+    {
+        return $this->groups;
+    }
+
+    // End of Group section
 
     /**  
      * Update duration

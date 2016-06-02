@@ -4,9 +4,11 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 
 
@@ -31,11 +33,9 @@ class MultimediaObjectService
     public function isPublished($mm, $pubChannelCod)
     {
         $hasStatus = $mm->getStatus() == MultimediaObject::STATUS_PUBLISHED;
-        $broadcastType = $mm->getBroadcast()->getBroadcastTypeId();
-        $hasBroadcast = $broadcastType  == Broadcast::BROADCAST_TYPE_PUB || $broadcastType == Broadcast::BROADCAST_TYPE_COR;
         $hasPubChannel = $mm->containsTagWithCod($pubChannelCod);
 
-        return $hasStatus && $hasBroadcast && $hasPubChannel;
+        return $hasStatus && $hasPubChannel;
     }
 
     /**
@@ -109,5 +109,73 @@ class MultimediaObjectService
     {
         $multimediaObject->incNumview();
         $this->updateMultimediaObject($multimediaObject);
+    }
+
+    /**
+     * Add  group to multimediaObject
+     *
+     * @param Group $group
+     * @param MultimediaObject $multimediaObject
+     * @param boolean $executeFlush
+     */
+    public function addGroup(Group $group, MultimediaObject $multimediaObject, $executeFlush = true)
+    {
+        if (!$multimediaObject->containsGroup($group)) {
+            $multimediaObject->addGroup($group);
+            $this->dm->persist($multimediaObject);
+            if ($executeFlush) {
+                $this->dm->flush();
+            }
+            $this->dispatcher->dispatchUpdate($multimediaObject);
+        }
+    }
+
+    /**
+     * Delete  group to multimediaObject
+     *
+     * @param Group $group
+     * @param MultimediaObject $multimediaObject
+     * @param boolean $executeFlush
+     */
+    public function deleteGroup(Group $group, MultimediaObject $multimediaObject, $executeFlush = true)
+    {
+        if ($multimediaObject->containsGroup($group)) {
+            $multimediaObject->removeGroup($group);
+            $this->dm->persist($multimediaObject);
+            if ($executeFlush) {
+                $this->dm->flush();
+            }
+            $this->dispatcher->dispatchUpdate($multimediaObject);
+        }
+    }
+
+    /**
+     * Is user owner
+     *
+     * @param  User             $user
+     * @param  MultimediaObject $multimediaObject
+     * @return boolean
+     */
+    public function isUserOwner(User $user, MultimediaObject $multimediaObject)
+    {
+        if ($owners = $multimediaObject->getProperty('owners')) {
+            return in_array($user->getId(), $owners);
+        }
+
+        return false;
+    }
+
+    /**
+     * Delete all multimedia objects from group
+     *
+     * @param Group
+     */
+    public function deleteAllFromGroup(Group $group)
+    {
+        $multimediaObjects = $this->repo->findWithGroup($group);
+        foreach ($multimediaObjects as $multimediaObject) {
+            $this->deleteGroup($group, $multimediaObject, false);
+        }
+        $this->dm->flush();
     }
 }

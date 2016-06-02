@@ -8,11 +8,20 @@ class UserTest extends \PHPUnit_Framework_TestCase
 {
     public function testSetterAndGetter()
     {
+        $username = "username";
         $fullname = "fullname";
+        $origin1 = User::ORIGIN_LOCAL;
 
         $user = new User();
 
+        $user->setUsername($username);
         $user->setFullname($fullname);
+        $user->setOrigin($origin1);
         $this->assertEquals($fullname, $user->getFullname());
+        $this->assertEquals($origin1, $user->getOrigin());
+
+        $origin2 = User::ORIGIN_LOCAL;
+        $user->setOrigin($origin2);
+        $this->assertEquals($origin2, $user->getOrigin());
     }
 }

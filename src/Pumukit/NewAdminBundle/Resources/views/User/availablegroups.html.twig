@@ -1,0 +1,14 @@
+{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADMIN_USERS')) and (user.origin == constant('Pumukit\\SchemaBundle\\Document\\User::ORIGIN_LOCAL')) %}
+{% for group in groups if (group not in user.getGroups()) and (group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')) %}
+<a href="#" 
+   id="delete_group_{{ group.id }}"
+   onclick="javascript:return select_group(this);" 
+   ondblclick="javascript:add_group('{{ group.id }}', '{{ group.key }}', '{{ group.name }}', '{{ group.origin }}', 'user');"
+   class="list-group-item notload delete-group-item">
+  <i class="mdi-social-group"></i>
+  {{ group.key }} - {{ group.name }} - ({{ group.origin }})
+</a>
+{% endfor %}
+{% else %}
+<ul><li>{% trans %}External defined user. User Groups cannot be edited. Contact your directory service administrator to change membership.{% endtrans %}</li></ul>
+{% endif %}

@@ -24,8 +24,10 @@ class MultimediaObjectTemplateController extends MultimediaObjectController impl
 
         $factoryService = $this->get('pumukitschema.factory');
         $personService = $this->get('pumukitschema.person');
+        $groupService = $this->get('pumukitschema.group');
 
         $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
+        $allGroups = $groupService->findAll();
 
         $roles = $personService->getRoles();
         if (null === $roles){
@@ -74,7 +76,8 @@ class MultimediaObjectTemplateController extends MultimediaObjectController impl
                                    'personal_scope_role'      => $personalScopeRole,
                                    'personal_scope_role_code' => $personalScopeRoleCode,
                                    'pub_decisions'            => $pubDecisionsTags,
-                                   'parent_tags'              => $parentTags
+                                   'parent_tags'              => $parentTags,
+                                   'groups'                   => $allGroups
                                    )
                              );
     }

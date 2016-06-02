@@ -237,19 +237,20 @@ window.down_seriespic = function(id, seriesId) {
     $(div_id).load(url.replace('___id___', id), {method:'POST'});
 }
 
-window.submit_delete_person_relation = function(id, roleId, mmId, hName, template)
+window.submit_delete_person_relation = function(id, roleId, mmId, hName, template, owner)
 {
     if (window.confirm("{% trans %}Are you sure you want to delete the relation of{% endtrans %} "+hName+"?")){
         if ('_template' === template){
-            var tag_id = '#'+roleId+'_person_mms'+template;
+            var role_id = '#'+roleId+'_person_mms'+template;
         }else{
-            var tag_id = '#'+roleId+'_person_mms';
+            var role_id = '#'+roleId+'_person_mms';
         }
-        var url = "{{ path('pumukitnewadmin_person_delete_relation', {'id': '__id__', 'roleId': '__roleId__','mmId': '__mmId__'})|raw }}";
+        var url = "{{ path('pumukitnewadmin_person_delete_relation', {'id': '__id__', 'roleId': '__roleId__','mmId': '__mmId__', 'owner': '__owner__'})|raw }}";
         url = url.replace('__id__', id);
         url = url.replace('__roleId__', roleId);
         url = url.replace('__mmId__', mmId);
-        $(tag_id).load(url, {'_method': 'DELETE'});
+        url = url.replace('__owner__', owner);
+        $(role_id).load(url, {'_method': 'DELETE'});
         var url = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'})|raw }}";
         $('#preview_mm').load(url.replace('__mmId__', mmId), function(responseText, textStatus, XMLHttpRequest){
 	    if(XMLHttpRequest.status >= 400){
@@ -363,6 +364,24 @@ window.submit_delete_person = function(id, countMm, personHName)
     }else{
         window.alert('{% trans %}Cannot delete the data of{% endtrans %} '+personHName+'. '+ countMm+' {% trans %}multimedia object(s) contain(s) this person{% endtrans %}.');
     }
+}
+
+window.submit_delete_group = function(id, groupName, deleteMessage, canBeDeleted)
+{
+    if (canBeDeleted == 0) {
+        window.alert(deleteMessage);
+    } else if (window.confirm(deleteMessage)){
+        $('#myModal').modal('hide');
+        var url = "{{ path('pumukitnewadmin_group_delete', {'id': '__id__'})|raw }}";
+        $('#list_groups').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
+            if(XMLHttpRequest.status >= 400){
+                no_success('{% trans %}Error deleting Group{% endtrans %} "'+groupName+'": ' + responseText);
+            }else{
+                success('{% trans %}Group{% endtrans %} "'+groupName+'" {% trans %}successfully deleted.{% endtrans %}');
+            }
+        });
+    }
+    return false;
 }
 
 window.click_fila_url = function(element, tr, url)
@@ -944,6 +963,9 @@ procesaReset = function(){
  */
 $(document).ajaxSuccess(function() {
   $.material.init();
+  $("body").tooltip({
+    selector: '[data-toggle="tooltip"]'
+  });
 });
 
 $(document).ajaxError(function(event, xhr, settings) {
@@ -1201,6 +1223,41 @@ $(document).on('click', '#pumukitnewadmin_person_phone_sort_not_selected', funct
     return false;
 });
 
+$(document).on('click', '#pumukitnewadmin_group_name_sort_selected', function(){
+    var type = $('#pumukitnewadmin_group_sort_change_type').val();
+    var route = "{{ path('pumukitnewadmin_group_list', {'sorting': {'name': '__type__'}})|raw }}";
+    $('#list_groups').load(route.replace('__type__', type), {'_method':'POST'});
+    return false;
+});
+$(document).on('click', '#pumukitnewadmin_group_name_sort_not_selected', function(){
+    var route = "{{ path('pumukitnewadmin_group_list', {'sorting': {'name': 'asc'}})|raw }}";
+    $('#list_groups').load(route, {'_method':'POST'});
+    return false;
+});
+
+$(document).on('click', '#pumukitnewadmin_group_key_sort_selected', function(){
+    var type = $('#pumukitnewadmin_group_sort_change_type').val();
+    var route = "{{ path('pumukitnewadmin_group_list', {'sorting': {'key': '__type__'}})|raw }}";
+    $('#list_groups').load(route.replace('__type__', type), {'_method':'POST'});
+    return false;
+});
+$(document).on('click', '#pumukitnewadmin_group_key_sort_not_selected', function(){
+    var route = "{{ path('pumukitnewadmin_group_list', {'sorting': {'key': 'asc'}})|raw }}";
+    $('#list_groups').load(route, {'_method':'POST'});
+    return false;
+});
+
+$(document).on('click', '#pumukitnewadmin_group_origin_sort_selected', function(){
+    var type = $('#pumukitnewadmin_group_sort_change_type').val();
+    var route = "{{ path('pumukitnewadmin_group_list', {'sorting': {'origin': '__type__'}})|raw }}";
+    $('#list_groups').load(route.replace('__type__', type), {'_method':'POST'});
+    return false;
+});
+$(document).on('click', '#pumukitnewadmin_group_origin_sort_not_selected', function(){
+    var route = "{{ path('pumukitnewadmin_group_list', {'sorting': {'origin': 'asc'}})|raw }}";
+    $('#list_groups').load(route, {'_method':'POST'});
+    return false;
+});
 
 /**
  * Tab
@@ -1374,6 +1431,9 @@ get_batch_delete_route = function(element, ids)
         case 'broadcast':
             route = '{{ path('pumukitnewadmin_broadcast_batch_delete', {'ids': '__ids__'})|raw }}';
             break;
+        case 'group':
+            route = '{{ path('pumukitnewadmin_group_batch_delete', {'ids': '__ids__'})|raw }}';
+            break;
     }
 
     return route.replace('__ids__', JSON.stringify(ids)) ;
@@ -1519,11 +1579,167 @@ $(document).ready(function(){
                 no_success('NGINX ERROR: '+message);
             }
         });
+
+        $('input[type=radio][name=pumukitnewadmin_mms_broadcast]').on('change', function() {
+            var value = $(this).val();
+            if (value == '{{ constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PASSWORD') }}') { 
+                $('#broadcast_groups').addClass('pumukitnewadmin-broadcast-hidden');
+                $('#broadcast_password').removeClass('pumukitnewadmin-broadcast-hidden');
+            } else if (value == '{{ constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_GROUPS') }}') {
+                $('#broadcast_password').addClass('pumukitnewadmin-broadcast-hidden');
+                $('#broadcast_groups').removeClass('pumukitnewadmin-broadcast-hidden');
+            } else {
+                $('#broadcast_password').addClass('pumukitnewadmin-broadcast-hidden');
+                $('#broadcast_groups').addClass('pumukitnewadmin-broadcast-hidden');
+            }
+        });
+
+        $('#broadcast_password_1').on('click', function() {
+            $('#broadcast_password_1').attr('type', 'password');
+            check_pass($('#broadcast_password_1').val(), $('#broadcast_password_2').val());
+        });
+
+        $('#broadcast_password_2').on('click', function() {
+            $('#broadcast_password_2').attr('type', 'password');
+            check_pass($('#broadcast_password_1').val(), $('#broadcast_password_2').val());
+        });
+
+        $('#broadcast_password_1').on('change', function() {
+            $('#broadcast_password_1').attr('type', 'password');
+            check_pass($('#broadcast_password_1').val(), $('#broadcast_password_2').val());
+        });
+
+        $('#broadcast_password_2').on('change', function() {
+            $('#broadcast_password_2').attr('type', 'password');
+            check_pass($('#broadcast_password_1').val(), $('#broadcast_password_2').val());
+        });
+
+        $('#broadcast_password_show_hide').on('click', function() {
+            var type1 = $('#broadcast_password_1').attr('type');
+            var type2 = $('#broadcast_password_2').attr('type');
+            if (type1 == 'text') {
+                $('#broadcast_password_1').attr('type', 'password');
+            } else {
+                $('#broadcast_password_1').attr('type', 'text');
+            }
+            if (type2 == 'text') {
+                $('#broadcast_password_2').attr('type', 'password');
+            } else {
+                $('#broadcast_password_2').attr('type', 'text');
+            }
+        });
+
+        $('#broadcast_password_generate').on('click', function() {
+            generate_random_password('broadcast_password_1', 'broadcast_password_2');
+        });
+
+        $(document).on('click', '#pumukitnewadmin_group_delete_all_relation_user', function() {
+            if (window.confirm('{% trans %}ATTENTION: Are you sure you want to all User from this Group?{% endtrans %}')) {
+                var route = "{{ path('pumukitnewadmin_group_delete_all_users', {'id': '__groupId__'})|raw }}";
+                var group_id = $('#pumukitnewadmin_group_id').val();
+                route = route.replace('__groupId__', group_id);
+                $.ajax({
+                        url: route,
+                        type: 'POST',
+                        data: {'_method': 'DELETE'},
+                        error: function(jqXHR, textStatus, errorThrown) {
+                        no_success(errorThrown + ': ' + jqXHR.responseText);
+                    },
+                    success: function (response, textStatus, jqXHR) {
+                        $('#pumukitnewadmin_group_added_users').html(response);
+                        $('#pumukitnewadmin_group_delete_all_relation_user').attr('disabled', 'disabled');
+                        var message = 'Successfully delete User from Group.';
+                        success(message);
+                    }
+                }).done(can_be_deleted(group_id));
+            }
+            return false;
+        });
+
+        $(document).on('click', '#pumukitnewadmin_group_delete_all_relation_multimediaobject', function() {
+            if (window.confirm('{% trans %}ATTENTION: Are you sure you want to all Admin Multimedia Objects from this Group?{% endtrans %}')) {
+                var route = "{{ path('pumukitnewadmin_group_delete_all_multimediaobjects', {'id': '__groupId__'})|raw }}";
+                var group_id = $('#pumukitnewadmin_group_id').val();
+                route = route.replace('__groupId__', group_id);
+                $.ajax({
+                        url: route,
+                        type: 'POST',
+                        data: {'_method': 'DELETE'},
+                        error: function(jqXHR, textStatus, errorThrown) {
+                        no_success(errorThrown + ': ' + jqXHR.responseText);
+                    },
+                    success: function (response, textStatus, jqXHR) {
+                        $('#pumukitnewadmin_group_added_multimediaobjects').html(response);
+                        $('#pumukitnewadmin_group_delete_all_relation_multimediaobject').attr('disabled', 'disabled');
+                        var message = 'Successfully delete admin MultimediaObjects from Group.';
+                        success(message);
+                    }
+                }).done(can_be_deleted(group_id));
+            }
+            return false;
+        });
+
+        $(document).on('click', '#pumukitnewadmin_group_delete_all_relation_embeddedbroadcast', function() {
+            if (window.confirm('{% trans %}ATTENTION: Are you sure you want to all Play Multimedia Objects from this Group?{% endtrans %}')) {
+                var route = "{{ path('pumukitnewadmin_group_delete_all_embeddedbroadcasts', {'id': '__groupId__'})|raw }}";
+                var group_id = $('#pumukitnewadmin_group_id').val();
+                route = route.replace('__groupId__', group_id);
+                $.ajax({
+                        url: route,
+                        type: 'POST',
+                        data: {'_method': 'DELETE'},
+                        error: function(jqXHR, textStatus, errorThrown) {
+                        no_success(errorThrown + ': ' + jqXHR.responseText);
+                    },
+                    success: function (response, textStatus, jqXHR) {
+                        $('#pumukitnewadmin_group_added_embeddedbroadcasts').html(response);
+                        $('#pumukitnewadmin_group_delete_all_relation_embeddedbroadcast').attr('disabled', 'disabled');
+                        var message = 'Successfully delete play MultimediaObjects from Group.';
+                        success(message);
+                    }
+                }).done(can_be_deleted(group_id));
+            }
+            return false;
+        });
     })
     .on('show.bs.modal', function() {
         $('.modal-content').html('');
     });
 });
+
+function check_pass(pass1, pass2) {
+    if (pass1 == pass2) {
+        $('#broadcast_password_check_fail').hide();
+        return true;
+    } else {
+        $('#broadcast_password_check_fail').show();
+        return false;
+    }
+}
+
+function generate_random_password(pass1_id, pass2_id) {
+    var password = '';
+    var randomchar = '';
+    var numberofdigits = Math.floor((Math.random() * 7) + 6 );
+    $('#broadcast_password_check_fail').hide();
+    for (var count=1; count<=numberofdigits; count++) {
+        var chargroup = Math.floor((Math.random() * 3) + 1 );
+        if ( chargroup == 1 ) {
+            randomchar = Math.floor((Math.random() * 26) + 65);
+        }
+        if ( chargroup == 2 ) {
+            randomchar = Math.floor((Math.random() * 26) + 65);
+        }
+        if ( chargroup == 3 ) {
+            randomchar = Math.floor((Math.random() * 26) + 65);
+        }
+        password+=String.fromCharCode(randomchar);
+    }
+    $('#'+pass1_id).attr('type', 'password');
+    $('#'+pass2_id).attr('type', 'password');
+    $('#'+pass1_id).val(password);
+    $('#'+pass2_id).val(password);
+}
 
 $(document).on('submit', '#pumukitnewadmin_event_create_form', function() {
     $(this).find(':submit').prop('disabled', true);
@@ -2001,4 +2217,433 @@ function checkScope(id)
            fix_permission_dependencies(id, scope_id);
        }
     }
+}
+
+
+function select_group(element)
+{
+  $(element).siblings(".active").removeClass("active").end().addClass("active");
+  return false;
+}
+
+function add_group(group_id, group_key, group_name, group_origin, resource)
+{
+    create_element_group_in_add_groups(group_id, group_key, group_name, group_origin, resource);
+    if (resource == "user") {
+        element_to_delete = "#delete_group_" + group_id;
+    } else {
+        $('#remember_save_' + resource + '_group').show();
+        element_to_delete = "#delete_" + resource + "_group_" + group_id;
+    }
+    delete_element_group_from_select(element_to_delete, group_id, group_key, group_name, group_origin, resource);
+}
+
+function delete_group(group_id, group_key, group_name, group_origin, resource)
+{
+    if (resource == "user") {
+        element_to_delete = "#add_group_" + group_id;
+    } else {
+        $('#remember_save_' + resource + '_group').show();
+        element_to_delete = "#add_" + resource + "_group_" + group_id;
+    }
+    delete_element_group_from_select(element_to_delete);
+    create_element_group_in_delete_groups(group_id, group_key, group_name, group_origin, resource);
+}
+
+function create_element_group_in_add_groups(group_id, group_key, group_name, group_origin, resource) {
+    if (resource == "user") {
+        var item_id = 'id="add_group_' + group_id;
+        var $add_groups_list = $('#add_groups');
+    } else {
+        var item_id = 'id="add_' + resource + '_group_' + group_id;
+        var $add_groups_list = $('#add_' + resource + '_groups');
+    }
+    var local_origin = '{{ constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')}}';
+    if ((group_origin == local_origin) || (resource != "user")){
+        if (resource == "user") {
+            var item_class = 'class="list-group-item add-group-item"';
+        } else {
+            var item_class = 'class="list-group-item add-' + resource + '-group-item"';
+        }
+        var item_onclick = 'onclick="return select_group(this);"';
+        var item_ondblclick = 'ondblclick="javascript:delete_group(\'' + group_id + '\', \'' + group_key + '\', \'' + group_name + '\', \'' + group_origin + '\', \'' + resource + '\');"';
+    } else {
+        var item_class = 'class="list-group-item disabled-group-item"';
+        var item_onclick = 'onclick="return false;"';
+        var item_ondblclick = 'ondblclick="javascript:window.alert(\'External defined groups. Contact your directory service administrator to change membership.\');"';
+        group_origin = group_origin.toUpperCase();
+    }
+    var item_text = '<a href="#" ' + item_class + ' ' + item_onclick + ' ' + item_ondblclick + ' ' + item_id + '"><i class="mdi-social-group"></i> ' + group_key + ' - ' + group_name + ' - (' + group_origin + ')</a>';
+    $add_groups_list.append(item_text);
+}
+
+function create_element_group_in_delete_groups(group_id, group_key, group_name, group_origin, resource) {
+    var local_origin = '{{ constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')}}';
+    if ((group_origin == local_origin) || (resource != "user")) {
+        if (resource == "user") {
+            var item_id = 'id="delete_group_' + group_id;
+            var item_class = 'class="list-group-item delete-group-item"';
+            var $delete_groups_list = $('#delete_groups');
+        } else {
+            var item_id = 'id="delete_' + resource + '_group_' + group_id;
+            var item_class = 'class="list-group-item delete-' + resource + '-group-item"';
+            var $delete_groups_list = $('#delete_' + resource + '_groups');
+        }
+        var item_onclick = 'onclick="return select_group(this);"';
+        var item_ondblclick = 'ondblclick="javascript:add_group(\'' + group_id + '\', \'' + group_key + '\', \'' + group_name + '\', \'' + group_origin + '\', \'' + resource + '\');"';
+        var item_text = '<a href="#" ' + item_class + ' ' + item_onclick + ' ' + item_ondblclick + ' ' + item_id +'"><i class="mdi-social-group"></i> ' + group_key + ' - ' + group_name + ' - (' + group_origin + ')</a>';
+        $delete_groups_list.append(item_text);
+    }
+}
+
+function delete_element_group_from_select(element_id) {
+    var $_element = $(element_id);
+    if ($_element) $_element.remove();
+}
+
+$(document).on('click', '#pumukitnewadmin_user_groups_submit', function() {
+    $('#myModal').modal('hide');
+    var user_id = $('#user_id').val();
+    var route = "{{ path('pumukitnewadmin_user_updategroups', {'id': '__id__'})|raw }}";
+    route = route.replace('__id__', user_id);
+    var addGroups = [];
+    var deleteGroups = [];
+    $('a.add-group-item').each(function(){
+        addGroups.push($(this).attr("id"));
+    });
+    $('a.delete-group-item').each(function(){
+        deleteGroups.push($(this).attr("id"));
+    });
+    $.ajax({
+        url: route,
+        type: 'POST',
+        data: {'addGroups': addGroups, 'deleteGroups': deleteGroups},
+        error: function(jqXHR, textStatus, errorThrown){
+            no_success(errorThrown + ': ' + jqXHR.responseText);
+        },
+        success: function(response){
+            $('#list_users').html(response);
+            var message = 'Successfully updated groups in User.';
+            success(message);
+        }
+    });
+});
+
+$(document).on('click', '#pumukitnewadmin_user_groups_reset', function() {
+    var user_id = $('#user_id').val();
+    var route = "{{ path('pumukitnewadmin_user_getgroups', {'id': '__id__'})|raw }}";
+    route = route.replace('__id__', user_id);
+    $.ajax({
+        url: route,
+        type: 'GET',
+        error: function(jqXHR, textStatus, errorThrown){
+            no_success(errorThrown + ': ' + jqXHR.responseText);
+        },
+        success: function(response){
+            var addGroups = response.add;
+            var deleteGroups = response.delete;
+            $('#add_groups').empty();
+            $('#delete_groups').empty();
+            for (var group_id in addGroups) {
+                var group_key = addGroups[group_id].key;
+                var group_name = addGroups[group_id].name;
+                var group_origin = addGroups[group_id].origin;
+                add_group(group_id, group_key, group_name, group_origin, 'user');
+            }
+            for (var group_id in deleteGroups) {
+                var group_key = deleteGroups[group_id].key;
+                var group_name = deleteGroups[group_id].name;
+                var group_origin = deleteGroups[group_id].origin;
+                delete_group(group_id, group_key, group_name, group_origin, 'user');
+            }
+        }
+    });
+});
+
+function pumukitnewadmin_mm_updategroup_submit(mm_id, template) {
+    $('#remember_save_mm' + template + '_group').hide();
+    var route = "{{ path('pumukitnewadmin_mms_updategroups', {'id': '__id__'})|raw }}";
+    route = route.replace('__id__', mm_id);
+    var addGroups = [];
+    var deleteGroups = [];
+    $('a.add-mm'+template+'-group-item').each(function(){
+        addGroups.push($(this).attr("id"));
+    });
+    $('a.delete-mm'+template+'-group-item').each(function(){
+        deleteGroups.push($(this).attr("id"));
+    });
+    $.ajax({
+        url: route,
+        type: 'POST',
+        data: {'addGroups': addGroups, 'deleteGroups': deleteGroups},
+        error: function(jqXHR, textStatus, errorThrown){
+            no_success(errorThrown + ': ' + jqXHR.responseText);
+        },
+        success: function(response){
+            var message = 'Successfully updated groups in Mm.';
+            success(message);
+        }
+    });
+}
+
+$(document).on('click', '#pumukitnewadmin_mm_updategroup_submit', function() {
+    var mm_id = $('#mm_id').val();
+    pumukitnewadmin_mm_updategroup_submit(mm_id, '');
+});
+
+$(document).on('click', '#pumukitnewadmin_mm_template_updategroup_submit', function() {
+    var mm_id = $('#mm_id').val();
+    pumukitnewadmin_mm_updategroup_submit(mm_id, '_template');
+});
+
+function pumukitnewadmin_mm_updategroup_reset(mm_id, template, resource) {
+    $('#remember_save_mm' + template + '_group').hide();
+    var route = "{{ path('pumukitnewadmin_mms_getgroups', {'id': '__id__'})|raw }}";
+    route = route.replace('__id__', mm_id);
+    $.ajax({
+        url: route,
+        type: 'GET',
+        error: function(jqXHR, textStatus, errorThrown){
+            no_success(errorThrown + ': ' + jqXHR.responseText);
+        },
+        success: function(response){
+            var addGroups = response.addGroups;
+            var deleteGroups = response.deleteGroups;
+            $('#add_mm'+template+'_groups').empty();
+            $('#delete_mm'+template+'_groups').empty();
+            for (var group_id in addGroups) {
+                var group_key = addGroups[group_id].key;
+                var group_name = addGroups[group_id].name;
+                var group_origin = addGroups[group_id].origin;
+                add_group(group_id, group_key, group_name, group_origin, resource);
+            }
+            for (var group_id in deleteGroups) {
+                var group_key = deleteGroups[group_id].key;
+                var group_name = deleteGroups[group_id].name;
+                var group_origin = deleteGroups[group_id].origin;
+                delete_group(group_id, group_key, group_name, group_origin, resource);
+            }
+            $('#remember_save_mm' + template + '_group').hide();
+        }
+    });
+}
+
+$(document).on('click', '#pumukitnewadmin_mm_updategroup_reset', function() {
+    var mm_id = $('#mm_id').val();
+    var resource = 'mm';
+    pumukitnewadmin_mm_updategroup_reset(mm_id, '', resource);
+});
+
+$(document).on('click', '#pumukitnewadmin_mm_template_updategroup_reset', function() {
+    var mm_id = $('#mm_id').val();
+    var resource = 'mm_template';
+    pumukitnewadmin_mm_updategroup_reset(mm_id, '_template', resource);
+});
+
+$(document).on('click', '#pumukitnewadmin_mm_broadcast_updategroup_reset', function() {
+    var resource = 'broadcast';
+    var route = "{{ path('pumukitnewadmin_mms_broadcast_info', {'id': '__id__'})|raw }}";
+    var mm_id = $('#pumukitnewadmin_mms_broadcast_mm_id').val();
+    route = route.replace('__id__', mm_id);
+    $.ajax({
+        url: route,
+        type: 'GET',
+        error: function(jqXHR, textStatus, errorThrown){
+            no_success(errorThrown + ': ' + jqXHR.responseText);
+        },
+        success: function(response){
+            var type = response.type;
+            $('input[type=radio][id=pumukitnewadmin_mms_broadcast_type_' + type + ']').prop('checked', 'checked');
+            var password = response.password;
+            $('#broadcast_password_1').val(password);
+            $('#broadcast_password_2').val(password);
+            var groups = response.groups;
+            var addGroups = groups['addGroups'];
+            var deleteGroups = groups['deleteGroups'];
+            $('#add_broadcast_groups').empty();
+            $('#delete_broadcast_groups').empty();
+            for (var group_id in addGroups) {
+                var group_key = addGroups[group_id].key;
+                var group_name = addGroups[group_id].name;
+                var group_origin = addGroups[group_id].origin;
+                add_group(group_id, group_key, group_name, group_origin, resource);
+            }
+            for (var group_id in deleteGroups) {
+                var group_key = deleteGroups[group_id].key;
+                var group_name = deleteGroups[group_id].name;
+                var group_origin = deleteGroups[group_id].origin;
+                delete_group(group_id, group_key, group_name, group_origin, resource);
+            }
+        }
+    });
+});
+
+$(document).on('submit', '#pumukitnewadmin_mms_updatebroadcast_submit', function() {
+    $('#myModal').modal('hide');
+    var route = '{{ path('pumukitnewadmin_mms_updatebroadcast', {'id': '__mmId__'})|raw }}';
+    var mmId = $('#pumukitnewadmin_mms_broadcast_mm_id').val();
+    var broadcast_type = $('input[type=radio][name=pumukitnewadmin_mms_broadcast]:checked').val();
+    if (false == check_pass($('#broadcast_password_1').val(), $('#broadcast_password_2').val())) {
+        no_success('Passwords do not match');
+        return false;
+    }
+    var password = $('#broadcast_password_1').val();
+    var addGroups = [];
+    var deleteGroups = [];
+    $('a.add-broadcast-group-item').each(function(){
+        addGroups.push($(this).attr("id"));
+    });
+    $('a.delete-broadcast-group-item').each(function(){
+        deleteGroups.push($(this).attr("id"));
+    });
+    $.ajax({
+        url: route.replace('__mmId__', mmId),
+        type: 'POST',
+        data: {'type': broadcast_type, 'password': password, 'addGroups': addGroups, 'deleteGroups': deleteGroups},
+        error: function (jqXHR, textStatus, errorThrown) {
+            no_success(errorThrown + ': ' + jqXHR.responseText);            
+        },
+        success: function (response, textStatus, jqXHR) {
+            var template = response['template'];
+            var div_id = '#pumukitnewadmin_mm' + template + '_broadcast_description';
+            $(div_id).html(response['description']);
+            var message = 'Successfully updated groups in Broadcast.';
+            success(message);
+        }
+    });
+    return false;
+});
+
+$(document).on('submit', '#pumukitnewadmin_series_updatebroadcast_submit', function() {
+    $('#myModal').modal('hide');
+    var route = '{{ path('pumukitnewadmin_series_updatebroadcast', {'id': '__seriesId__'})|raw }}';
+    var seriesId = $('#pumukitnewadmin_series_broadcast_series_id').val();
+    var broadcast_type = $('input[type=radio][name=pumukitnewadmin_mms_broadcast]:checked').val();
+    if (false == check_pass($('#broadcast_password_1').val(), $('#broadcast_password_2').val())) {
+        no_success('Passwords do not match');
+        return false;
+    }
+    var password = $('#broadcast_password_1').val();
+    var addGroups = [];
+    var deleteGroups = [];
+    $('a.add-broadcast-group-item').each(function(){
+        addGroups.push($(this).attr("id"));
+    });
+    $('a.delete-broadcast-group-item').each(function(){
+        deleteGroups.push($(this).attr("id"));
+    });
+    $.ajax({
+        url: route.replace('__seriesId__', seriesId),
+        type: 'POST',
+        data: {'type': broadcast_type, 'password': password, 'addGroups': addGroups, 'deleteGroups': deleteGroups},
+        error: function (jqXHR, textStatus, errorThrown) {
+            no_success(errorThrown + ': ' + jqXHR.responseText);
+        },
+        success: function (response, textStatus, jqXHR) {
+            var div_id = '#pumukitnewadmin_mm_template_broadcast_description';
+            $(div_id).html(response['description']);
+            var message = 'Successfully updated Broadcast in all Multimedia Objects.';
+            success(message);
+        }
+    });
+    return false;
+});
+
+delete_user_from_group = function(user_id, group_id, count, action)
+{
+    if (window.confirm('{% trans %}ATTENTION: Are you sure you want to remove this User from this Group?{% endtrans %}')) {
+        var route = "{{ path('pumukitnewadmin_group_delete_user', {'id': '__groupId__', 'userId': '__userId__'})|raw }}";
+        route = route.replace('__groupId__', group_id);
+        route = route.replace('__userId__', user_id);
+        $.ajax({
+                url: route,
+                type: 'POST',
+                data: {'_method': 'DELETE', 'action': action},
+                error: function(jqXHR, textStatus, errorThrown) {
+                    no_success(errorThrown + ': ' + jqXHR.responseText);
+                },
+                success: function (response, textStatus, jqXHR) {
+                    $('#pumukitnewadmin_group_added_users').html(response);
+                    if (count == 1) {
+                        $('#pumukitnewadmin_group_delete_all_relation_user').attr('disabled', 'disabled');
+                    }
+                    var message = 'Successfully delete User from Group.';
+                    success(message);
+                }
+        }).done(can_be_deleted(group_id));
+    }
+    return false;
+}
+
+delete_multimediaobject_from_group = function(mm_id, group_id, count, action)
+{
+    if (window.confirm('{% trans %}ATTENTION: Are you sure you want to remove this Admin Multimedia Object from this Group?{% endtrans %}')) {
+        var route = "{{ path('pumukitnewadmin_group_delete_multimediaobject', {'id': '__groupId__', 'mmId': '__mmId__'})|raw }}";
+        route = route.replace('__groupId__', group_id);
+        route = route.replace('__mmId__', mm_id);
+        $.ajax({
+                url: route,
+                type: 'POST',
+                data: {'_method': 'DELETE', 'action': action},
+                error: function(jqXHR, textStatus, errorThrown) {
+                no_success(errorThrown + ': ' + jqXHR.responseText);
+                },
+                success: function (response, textStatus, jqXHR) {
+                    $('#pumukitnewadmin_group_added_multimediaobjects').html(response);
+                    if (count == 1) {
+                        $('#pumukitnewadmin_group_delete_all_relation_multimediaobject').attr('disabled', 'disabled');
+                    }
+                    var message = 'Successfully delete MultimediaObject from Group.';
+                    success(message);
+                }
+        }).done(can_be_deleted(group_id));
+    }
+    return false;
+}
+
+delete_embeddedbroadcast_from_group = function(mm_id, group_id, count, action)
+{
+    if (window.confirm('{% trans %}ATTENTION: Are you sure you want to remove this Play Multimedia Object from this Group?{% endtrans %}')) {
+        var route = "{{ path('pumukitnewadmin_group_delete_embeddedbroadcast', {'id': '__groupId__', 'mmId': '__mmId__'})|raw }}";
+        route = route.replace('__groupId__', group_id);
+        route = route.replace('__mmId__', mm_id);
+        $.ajax({
+                url: route,
+                type: 'POST',
+                data: {'_method': 'DELETE', 'action': action},
+                error: function(jqXHR, textStatus, errorThrown) {
+                no_success(errorThrown + ': ' + jqXHR.responseText);
+                },
+                success: function (response, textStatus, jqXHR) {
+                    $('#pumukitnewadmin_group_added_embeddedbroadcasts').html(response);
+                    if (count == 1) {
+                        $('#pumukitnewadmin_group_delete_all_relation_embeddedbroadcast').attr('disabled', 'disabled');
+                    }
+                    var message = 'Successfully delete MultimediaObject from Group.';
+                    success(message);
+                }
+        }).done(can_be_deleted(group_id));
+    }
+    return false;
+}
+
+can_be_deleted = function(group_id)
+{
+    var route = "{{ path('pumukitnewadmin_group_can_be_deleted', {'id': '__groupId__'})|raw }}";
+    route = route.replace('__groupId__', group_id);
+    $.ajax({
+            url: route,
+            type: 'GET',
+            error: function(jqXHR, textStatus, errorThrown) {
+                no_success(errorThrown + ': ' + jqXHR.responseText);
+            },
+            success: function (response, textStatus, jqXHR) {
+                var group_name = {% autoescape 'js' %}response.groupName{% endautoescape %};
+                var delete_message = {% autoescape 'js' %}response.deleteMessage{% endautoescape %};
+                var can_be_deleted = response.canbedeleted;
+                var onclick_value = "window.submit_delete_group('"+group_id+"', '"+group_name+"', '"+delete_message+"', '"+can_be_deleted+"'); return false;";
+                $('#pumukitnewadmin_group_delete').attr('onclick', onclick_value);
+            }
+    });
+    return false;
 }

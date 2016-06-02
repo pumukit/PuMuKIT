@@ -1,0 +1,101 @@
+pumukitnewadmin_group_index:
+    pattern: /
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:indexAction
+        _sylius:
+            filterable: true
+
+pumukitnewadmin_group_create:
+    pattern: /create
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:createAction
+        _sylius:
+            redirect: pumukitnewadmin_group_index
+
+pumukitnewadmin_group_update:
+    pattern: /{id}/edit
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:updateAction
+        _sylius:
+            redirect: pumukitnewadmin_group_index
+
+pumukitnewadmin_group_batch_delete:
+    pattern: /batchdelete
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:batchDeleteAction
+        _sylius:
+            redirect: pumukitnewadmin_group_index
+
+pumukitnewadmin_group_delete:
+    pattern: /{id}/delete
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:deleteAction
+        _sylius:
+            redirect: pumukitnewadmin_group_index
+
+pumukitnewadmin_group_list:
+    pattern: /list
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:listAction
+        _sylius:
+            filterable: true
+
+pumukitnewadmin_group_info:
+    pattern: /{id}/info
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:infoAction
+
+pumukitnewadmin_group_data_resources:
+    pattern: /{id}/dataresources
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:dataResourcesAction
+
+pumukitnewadmin_group_delete_user:
+    pattern: /{id}/deleteuser/{userId}
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:deleteUserAction
+
+pumukitnewadmin_group_delete_multimediaobject:
+    pattern: /{id}/deletemultimediaobject/{mmId}
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:deleteMultimediaObjectAction
+
+pumukitnewadmin_group_delete_embeddedbroadcast:
+    pattern: /{id}/deleteembeddedbroadcast/{mmId}
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:deleteEmbeddedBroadcastAction
+
+pumukitnewadmin_group_can_be_deleted:
+    pattern: /{id}/canbedeleted
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:canBeDeletedAction
+
+pumukitnewadmin_group_delete_all_users:
+    pattern: /{id}/deleteallusers
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:deleteAllUsersAction
+
+pumukitnewadmin_group_delete_all_multimediaobjects:
+    pattern: /{id}/deleteallmultimediaobjects
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:deleteAllMultimediaObjectsAction
+
+pumukitnewadmin_group_delete_all_embeddedbroadcasts:
+    pattern: /{id}/deleteallembeddedbroadcasts
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.group:deleteAllEmbeddedBroadcastsAction
