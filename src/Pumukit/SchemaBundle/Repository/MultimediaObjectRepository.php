@@ -1337,7 +1337,8 @@ class MultimediaObjectRepository extends DocumentRepository
         return $this->createQueryBuilder()
             ->field('series')->references($series)
             ->field('embeddedBroadcast.type')->equals($type)
-            ->field('embeddedBroadcast.groups')->equals($groups)
+            ->field('embeddedBroadcast.groups')->all($groups)
+            ->field('embeddedBroadcast.groups')->size(count($groups))
             ->count()
             ->getQuery()
             ->execute();
