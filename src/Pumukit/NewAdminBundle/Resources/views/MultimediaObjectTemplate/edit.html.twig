@@ -24,7 +24,7 @@
     </ul>
     <div class="tab-content">
       {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %}
-      <div id="pubMmTemplate" role="tabpanel" class="tab-pane{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %} active{% endif %}">
+      <div id="pubMmTemplate" role="tabpanel" class="tab-pane active">
         {% include 'PumukitNewAdminBundle:MultimediaObjectTemplate:updatepub.html.twig' with {'mm': mmtemplate, 'template': '_template'} %}
       </div>
       {% endif %}
