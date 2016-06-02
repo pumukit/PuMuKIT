@@ -368,7 +368,7 @@ window.submit_delete_person = function(id, countMm, personHName)
 
 window.submit_delete_group = function(id, groupName)
 {
-    var message = "{% trans %}ATTENTION!! Are you sure you want to delete the group{% endtrans %} "+groupName+"?";
+    var message = "{% trans %}ATTENTION!! Are you sure you want to delete this group?{% endtrans %}";
     if (window.confirm(message)){
         $('#myModal').modal('hide');
         var url = "{{ path('pumukitnewadmin_group_delete', {'id': '__id__'})|raw }}";
