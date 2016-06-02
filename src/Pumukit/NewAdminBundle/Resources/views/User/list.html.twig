@@ -58,11 +58,7 @@
           </td>
           <td>
             <a href="{{ path('pumukitnewadmin_user_editgroups', {'id': user.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
-              {% if user.origin == constant('Pumukit\\SchemaBundle\\Document\\User::ORIGIN_LOCAL') %}
               <i class="mdi-social-group" data-toggle="tooltip" data-placement="right" title="{% trans %}User Groups{% endtrans %}"></i>
-              {% else %}
-              <i class="mdi-social-group" data-toggle="tooltip" data-placement="right" title="{% trans %}User Groups{% endtrans %}"  style="color:grey!important"></i>
-              {% endif %}
             </a>
           </td>
           <td>
