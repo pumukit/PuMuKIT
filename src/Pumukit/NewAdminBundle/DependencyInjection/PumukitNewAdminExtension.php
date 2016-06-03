@@ -5,6 +5,7 @@ namespace Pumukit\NewAdminBundle\DependencyInjection;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader;
 
 /**
@@ -26,5 +27,13 @@ class PumukitNewAdminExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
+
+        if ($container->hasParameter('pumukit2.naked_backoffice_domain')) {
+            $definition = new Definition('Pumukit\NewAdminBundle\EventListener\NakedBackofficeListener',
+                array('%pumukit2.naked_backoffice_domain%', '%pumukit2.naked_backoffice_background%'));
+
+            $definition->addTag('kernel.event_listener', array('event' => 'kernel.controller', 'method' => 'onKernelController'));
+            $container->setDefinition('pumukitnewadmin.nakedbackoffice', $definition);
+        }
     }
 }

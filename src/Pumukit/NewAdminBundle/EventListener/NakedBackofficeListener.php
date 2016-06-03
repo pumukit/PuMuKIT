@@ -14,21 +14,24 @@ use Pumukit\NewAdminBundle\Controller\NewAdminController;
 
 class NakedBackofficeListener
 {
-    public function __construct($pmk2_info)
+    private $domain;
+    private $background;
+
+    public function __construct($domain, $background)
     {
-        $this->pmk2_info = $pmk2_info;
+        $this->domain = $domain;
+        $this->background = $background;
     }
+
     public function onKernelController(FilterControllerEvent $event)
     {
-        $req = $event->getRequest();
-        if (isset($this->pmk2_info['nakedBackofficeSubdomain'])
-            && $req->getHttpHost() == $this->pmk2_info['nakedBackofficeSubdomain']) {
-            $req->attributes->set('nakedbackoffice', true);
-            if(isset($this->pmk2_info['nakedBackofficeColor']))
-                $req->attributes->set('nakedbackoffice_color', $this->pmk2_info['nakedBackofficeColor']);
-        }
+        if ($event->isMasterRequest()) {
+            $req = $event->getRequest();
 
-        $routeParams = $req->attributes->get("_route_params");
-        $isFilterActivated = (!isset($routeParams["filter"]) || $routeParams["filter"]);
+            if ($req->getHttpHost() == $this->domain) {
+                $req->attributes->set('nakedbackoffice', true);
+                $req->attributes->set('nakedbackoffice_color', $this->background);
+            }
+        }
     }
 }
