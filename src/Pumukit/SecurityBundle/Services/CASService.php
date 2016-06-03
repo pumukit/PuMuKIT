@@ -10,21 +10,27 @@ class CASService
     private $casAllowedIpClients;
     private $environment;
     private $initialize = false;
+    private $env;
+    private $cacheDir;
 
-    public function __construct($casUrl, $casPort, $casUri, $casAllowedIpClients)
+    public function __construct($casUrl, $casPort, $casUri, $casAllowedIpClients, $env = 'prod', $cacheDir = null)
     {
         $this->casUrl = $casUrl;
         $this->casPort = $casPort;
         $this->casUri = $casUri;
         $this->casAllowedIpClients = $casAllowedIpClients;
-//        $this->prepare();
+        $this->env = $env;
+        $this->cacheDir = $cacheDir;
+
     }
 
     private function prepare()
     {
         $this->initialize = true;
         \phpCAS::client(CAS_VERSION_2_0, $this->casUrl, $this->casPort, $this->casUri, false);
-        //\phpCAS::setDebug('/tmp/cas.log');
+        if ('dev' == $this->env) {
+            \phpCAS::setDebug($this->cacheDir ?  ($this->cacheDir . '/cas.log') : '/tmp/cas.log');
+        }
         \phpCAS::setNoCasServerValidation();
         //\phpCAS::setSingleSignoutCallback(array($this, 'casSingleSignOut'));
         //\phpCAS::setPostAuthenticateCallback(array($this, 'casPostAuth'));

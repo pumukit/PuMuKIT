@@ -11,6 +11,8 @@
         <argument>%pumukit_security.cas_port%</argument>
         <argument>%pumukit_security.cas_uri%</argument>
         <argument>%pumukit_security.cas_allowed_ip_clients%</argument>
+        <argument>%kernel.environment%</argument>
+        <argument>%kernel.cache_dir%</argument>
       </service>
       
       <service id="pumukit.security.authentication.provider" class="Pumukit\SecurityBundle\Authentication\Provider\PumukitProvider" public="false">
