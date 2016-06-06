@@ -51,17 +51,41 @@ class FactoryService
     }
 
     /**
-     * Create a new series with default values
+     * Wrapper for createCollection. Creates a TYPE_SERIES collection.
      *
      * @param  User   $loggedInUser
      * @return Series
      */
     public function createSeries(User $loggedInUser = null)
     {
+        return $this->createCollection(Series::TYPE_SERIES, $loggedInUser);
+    }
+
+    /**
+     * Wrapper for createColletion. Creates a TYPE_PLAYLIST collection.
+     *
+     * @param  User   $loggedInUser
+     * @return Series
+     */
+    public function createPlaylist(User $loggedInUser = null)
+    {
+        return $this->createCollection(Series::TYPE_PLAYLIST, $loggedInUser);
+    }
+
+    /**
+     * Create a new collection (series or playlist) with default values
+     *
+     * @param Integer $collectionType
+     * @param  User   $loggedInUser
+     * @return Series
+     */
+    public function createCollection($collectionType, User $loggedInUser = null)
+    {
         $series = new Series();
 
         $series->setPublicDate(new \DateTime("now"));
         $series->setCopyright($this->defaultCopyright);
+        $series->setType($collectionType);
         foreach ($this->locales as $locale) {
             $title = $this->translator->trans(self::DEFAULT_SERIES_TITLE, array(), null, $locale);
             $series->setTitle($title, $locale);
@@ -93,7 +117,7 @@ class FactoryService
         $mm->setEmbeddedBroadcast($embeddedBroadcast);
         $mm->setPublicDate(new \DateTime("now"));
         $mm->setRecordDate($mm->getPublicDate());
-        $mm->setCopyright($this->defaultCopyright);        
+        $mm->setCopyright($this->defaultCopyright);
         foreach ($this->locales as $locale) {
             $title = $this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE, array(), null, $locale);
             $mm->setTitle($title, $locale);
@@ -164,7 +188,7 @@ class FactoryService
         } else {
           return null;
         }
-        
+
         return $series;
     }
 
@@ -232,14 +256,14 @@ class FactoryService
     public function deleteSeries(Series $series)
     {
         $repoMmobjs = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-         
+
         $multimediaObjects = $repoMmobjs->findBySeries($series);
         foreach($multimediaObjects as $mm){
             $series->removeMultimediaObject($mm);
             $this->dm->remove($mm);
             $this->mmsDispatcher->dispatchDelete($mm);
         }
-         
+
         $this->dm->remove($series);
 
         $this->dm->flush();
