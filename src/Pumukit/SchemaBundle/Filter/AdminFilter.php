@@ -8,8 +8,6 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class AdminFilter extends BsonFilter
 {
-    private $seriesIds = null;
-
     public function addFilterCriteria(ClassMetadata $targetDocument)
     {
         if ("Pumukit\SchemaBundle\Document\MultimediaObject" === $targetDocument->reflClass->name) {
@@ -36,12 +34,9 @@ class AdminFilter extends BsonFilter
     private function getSeriesCriteria()
     {
         $criteria = array();
-        if (null == $this->seriesIds) {
-            if (isset($this->parameters['person_id']) && isset($this->parameters['role_code']) && isset($this->parameters['series_groups'])) {
-                $criteria["_id"] = $this->getSeriesMongoQuery($this->parameters['person_id'], $this->parameters['role_code'], $this->parameters['series_groups']);
-            }
+        if (isset($this->parameters['person_id']) && isset($this->parameters['role_code']) && isset($this->parameters['series_groups'])) {
+            $criteria["_id"] = $this->getSeriesMongoQuery($this->parameters['person_id'], $this->parameters['role_code'], $this->parameters['series_groups']);
         }
-
         return $criteria;
     }
 
