@@ -449,7 +449,7 @@ window.submit_series_change_pub = function()
             var channel = $('#pub_channel_change_pub_'+channelsId[i]+'_mm_'+mmId);
             channels[channelsId[i]] = channel.prop('checked')
         }
-        values[mmId] = {'status': $('#status_change_pub_'+mmId+' option:selected').val(), 'channels': channels};        
+        values[mmId] = {'status': $('#status_change_pub_'+mmId+' option:selected').val(), 'channels': channels};
     });
     if (values.size == 0) return false;
 
@@ -748,7 +748,7 @@ window.change_select = function(element, selector, pluralName, seriesId)
            no_success('{% trans %}Select any user.{% endtrans %}');
            break;
         }
-    
+
         var node = selector.find(':selected');
         var profile = node.data('profile');
         var profilename = node.data('profilename');
@@ -757,7 +757,7 @@ window.change_select = function(element, selector, pluralName, seriesId)
             type: 'POST',
             data: {'ids': ids, 'profile': profile},
             error: function(jqXHR, textStatus, errorThrown){ debugger; },
-            success: function(response){ 
+            success: function(response){
                 ids.forEach(function(e){$('#profile'+e).html(profilename)})
                 $('.' + element + '_checkbox:checked').each(function(){
                     var $this = $(this);
@@ -784,12 +784,12 @@ function select_tree_tag(element)
   return false;
 }
 
-function toggle_tree_tag(element, id, mm_id, tag_id, tag_cod) 
+function toggle_tree_tag(element, id, mm_id, tag_id, tag_cod)
 {
   parent = $(element.parentElement);
   if (parent.hasClass("notload")) {
     parent.removeClass("notload");
-  
+
     var route = "{{ path('pumukitnewadmin_mms_getchildrentag', {'id': 'PLACEHOLDER_TAG_ID'})|raw }}";
     route = route.replace('PLACEHOLDER_MM_ID', mm_id).replace('PLACEHOLDER_TAG_ID', id);
 
@@ -799,14 +799,14 @@ function toggle_tree_tag(element, id, mm_id, tag_id, tag_cod)
     parent.addClass("expanded").removeClass("collapsed");
   } else {
     if (parent.hasClass("expanded")) {
-      $(".c_" + tag_cod).hide();      
+      $(".c_" + tag_cod).hide();
       $(".c_" + tag_cod+".expanded").removeClass("expanded").addClass("collapsed");
       parent.removeClass("expanded").addClass("collapsed");
     } else {
       $(".tag_li_parent_" + id).show();
       parent.addClass("expanded").removeClass("collapsed");
     }
-    
+
   }
 
 }
@@ -856,7 +856,7 @@ function inc_num_mm(tag_id, num)
   }
 }
 
-function add_tree_tag(tag_id, mm_id, block_tag_id) 
+function add_tree_tag(tag_id, mm_id, block_tag_id)
 {
   var route = "{{ path('pumukitnewadmin_mms_addtag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' })|raw }}";
   route = route.replace('PLACEHOLDER_MM_ID', mm_id).replace('PLACEHOLDER_TAG_ID', tag_id);
@@ -873,14 +873,14 @@ function add_tree_tag(tag_id, mm_id, block_tag_id)
 }
 
 
-function del_tree_tag(tag_id, mm_id) 
+function del_tree_tag(tag_id, mm_id)
 {
   var route = "{{ path('pumukitnewadmin_mms_deletetag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' })|raw }}";
   route = route.replace('PLACEHOLDER_TAG_ID', tag_id).replace('PLACEHOLDER_MM_ID', mm_id);
   $.ajax({
-    url: route, 
+    url: route,
     type: 'DELETE',
-    parameters: {'_method': 'DELETE'}, 
+    parameters: {'_method': 'DELETE'},
     success: function(response){
       for (var i=0; i<response.deleted.length; i++) {
         var c = response.deleted[i];
@@ -918,14 +918,14 @@ function filter_series(form)
     if (to_date.val() != "" && from_date.val() >= to_date.val()) {
         to_date[0].setCustomValidity("{% trans %}From date must be less than to date{% endtrans %}");
     }else{
-        $('#list_series').load('{{ path('pumukitnewadmin_series_list')|raw }}', $(form).serialize());    
+        $('#list_series').load('{{ path('pumukitnewadmin_series_list')|raw }}', $(form).serialize());
     }
-  
+
     return false;
 }
 
 function comprobar_date(date, re){
-    return !re.test(date); 
+    return !re.test(date);
 }
 
 procesaOk = function(){
@@ -1051,6 +1051,34 @@ $(function() {
     });
     return false;
   });
+  $('#pumukitnewadmin_playlist_new_button').on('click', function () {
+    var route = "{{ path('pumukitnewadmin_playlist_create') }}";
+    $('#filter_series')[0].reset();
+    $.ajax(route, {
+            type: 'GET',
+            error: function(jqXHR, textStatus, errorThrown){
+                        var responseText = jqXHR.responseText.split("<title>").pop().split("</title>").shift();
+                        var message = responseText.replace(/(\r\n|\n|\r)/gm,"");
+                        no_success(errorThrown+': '+textStatus+', '+message);
+	        },
+            success: function(response, textStatus, jqXHR){
+			    var seriesId = response['seriesId'];
+
+                // NOTE: Important to call listAction first to update series id in session
+                var routeList = "{{ path('pumukitnewadmin_playlist_list', {'selectedSeriesId': '__seriesId__'})|raw }}";
+                $('#list_series').load(routeList.replace('__seriesId__', seriesId), function(){
+                    var routeShow = "{{ path('pumukitnewadmin_playlist_show', {'id': '__seriesId__'})|raw }}";
+                    $('#preview_series').load(routeShow.replace('__seriesId__', seriesId));
+                    var routeUpdate = "{{ path('pumukitnewadmin_playlist_update', {'id': '__seriesId__'})|raw }}";
+                    $('#edit_series').load(routeUpdate.replace('__seriesId__', seriesId), function(){
+                        init_tabs();
+                    });
+                });
+	            success('{% trans %}Series successfully created.{% endtrans %}');
+	        }
+    });
+    return false;
+  });
 });
 
 $(document).on('click', '#pumukitnewadmin_series_title_sort_selected', function(){
@@ -1114,7 +1142,7 @@ $(document).on('click', '#pumukitnewadmin_series_multimedia_objects_sort_selecte
     $('#list_series').load(route.replace('__type__', type), {'_method':'POST'});
     return false;
 });
- 
+
 $(document).on('click', '#pumukitnewadmin_series_multimedia_objects_sort_not_selected', function(){
     var inputROId = $('#inputROId').val();
     if (inputROId) {
@@ -1407,6 +1435,9 @@ get_batch_delete_route = function(element, ids)
         case 'series':
             route = '{{ path('pumukitnewadmin_series_batch_delete', {'ids': '__ids__'})|raw }}';
             break;
+        case 'series':
+            route = '{{ path('pumukitnewadmin_playlist_batch_delete', {'ids': '__ids__'})|raw }}';
+            break;
         case 'seriestype':
             route = '{{ path('pumukitnewadmin_seriestype_batch_delete', {'ids': '__ids__'})|raw }}';
             break;
@@ -1473,9 +1504,9 @@ window.fileServerTree = function(element, type, dir, num, input)
                            ((file.content) ? ' [' + (file.content) + ' video(s)]' : '') +
                            '</span></a>';
                     if(type == 'dir') {
-                        links += '<a style="color:blue; text-decoration: underline" class="list-group-item element" href="#" onclick="fileServerSelect(this, \'' + file.path + '\');">' + 
-                                 '<span style="padding-left: ' + (10 *num)  + 'px"><i class="mdi- tag_icon"></i></span>' + 
-                                 '{% trans %}This directory{% endtrans %}' + 
+                        links += '<a style="color:blue; text-decoration: underline" class="list-group-item element" href="#" onclick="fileServerSelect(this, \'' + file.path + '\');">' +
+                                 '<span style="padding-left: ' + (10 *num)  + 'px"><i class="mdi- tag_icon"></i></span>' +
+                                 '{% trans %}This directory{% endtrans %}' +
                                  '</a>';
                     }
                   }
