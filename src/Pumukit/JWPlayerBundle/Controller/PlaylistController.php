@@ -7,9 +7,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Pumukit\WebTVBundle\Controller\WebTVController;
+use Pumukit\BasePlayerBundle\Controller\BasePlaylistController;
 
-class PlaylistController extends Controller implements WebTVController
+class PlaylistController extends BasePlaylistController
 {
     /**
      * @Route("/playlist/{id}", name="pumukit_seriesplaylist_index", defaults={"no_channels": true} )
