@@ -25,6 +25,7 @@ class GroupServiceTest extends WebTestCase
 
         $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb')->getManager();
+        $translator = static::$kernel->getContainer()->get('translator');
         $this->repo = $this->dm
           ->getRepository('PumukitSchemaBundle:Group');
         $this->userRepo = $this->dm
