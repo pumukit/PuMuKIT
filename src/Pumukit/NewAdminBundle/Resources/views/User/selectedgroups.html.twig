@@ -1,5 +1,5 @@
 {% for user_group in user.getGroups() %}
-{% if (user_group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')) and (user.origin == constant('Pumukit\\SchemaBundle\\Document\\User::ORIGIN_LOCAL')) %}
+{% if user_group.isLocal() and user.isLocal() %}
 <a href="#" class="list-group-item"
    id="add_group_{{ user_group.id }}"
    onclick="javascript:return select_group(this);"
@@ -8,9 +8,9 @@
   {{ user_group.key }} - {{ user_group.name }} - ({{ user_group.origin }})
 </a>
 {% else %}
-{% if (user_group.origin != constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')) and (user.origin != constant('Pumukit\\SchemaBundle\\Document\\User::ORIGIN_LOCAL')) %}
+{% if (not user_group.isLocal() and not user.isLocal()) %}
 {% set message = 'External defined group and user. Contact your directory service administrator to change membership.' %}
-{% elseif (user_group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')) and (user.origin != constant('Pumukit\\SchemaBundle\\Document\\User::ORIGIN_LOCAL')) %}
+{% elseif (user_group.isLocal() and not user.isLocal()) %}
 {% set message = 'External defined group. Contact your directory service administrator to change membership.' %}
 {% else %}
 {% set message = 'External defined user. Contact your directory service administrator to change membership.' %}

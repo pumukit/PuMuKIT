@@ -1,5 +1,5 @@
-{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADMIN_USERS')) and (user.origin == constant('Pumukit\\SchemaBundle\\Document\\User::ORIGIN_LOCAL')) %}
-{% for group in groups if (group not in user.getGroups()) and (group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')) %}
+{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADMIN_USERS')) and user.isLocal() %}
+{% for group in groups if (group not in user.getGroups() and group.isLocal()) %}
 <a href="#" 
    id="delete_group_{{ group.id }}"
    onclick="javascript:return select_group(this);" 

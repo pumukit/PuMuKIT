@@ -189,7 +189,7 @@ class UserService
      */
     public function update(User $user, $executeFlush = true)
     {
-        if ($user->getOrigin() !== User::ORIGIN_LOCAL) {
+        if (!$user->isLocal()) {
             throw new \Exception('The user "'.$user->getUsername().'" is not local and can not be modified.');
         }
         $permissionProfile = $user->getPermissionProfile();
@@ -501,11 +501,7 @@ class UserService
      */
     public function isAllowedToModifyUserGroup(User $user, Group $group)
     {
-        if (($user->getOrigin() === User::ORIGIN_LOCAL) && ($group->getOrigin() === Group::ORIGIN_LOCAL)) {
-            return true;
-        }
-
-        return false;
+        return ($user->isLocal() && $group->isLocal());
     }
 
     /**

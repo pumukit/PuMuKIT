@@ -189,7 +189,7 @@ class UserController extends AdminController implements NewAdminController
     public function updateGroupsAction(Request $request)
     {
         $user = $this->findOr404($request);
-        if ($user->getOrigin() !== User::ORIGIN_LOCAL) {
+        if (!$user->isLocal()) {
             return new Response("Not allowed to update this not local user '".$user->getUsername()."'", Response::HTTP_BAD_REQUEST);
         }
         if ('POST' === $request->getMethod()){
@@ -311,7 +311,7 @@ class UserController extends AdminController implements NewAdminController
                 return new Response("Can not update this unique admin user '".$userToUpdate->getUsername()."'", 409);
             }
         }
-        if ($userToUpdate->getOrigin() !== User::ORIGIN_LOCAL) {
+        if (!$userToUpdate->isLocal()) {
             return new Response("Not allowed to update this not local user '".$userToUpdate->getUsername()."'", Response::HTTP_BAD_REQUEST);
         }
 

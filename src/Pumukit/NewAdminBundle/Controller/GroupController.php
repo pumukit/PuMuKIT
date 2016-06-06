@@ -106,7 +106,7 @@ class GroupController extends AdminController implements NewAdminController
         $dm = $this->get('doctrine_mongodb')->getManager();
         $config = $this->getConfiguration();
         $group = $this->findOr404($request);
-        if ($group->getOrigin() !== Group::ORIGIN_LOCAL) {
+        if (!$group->isLocal()) {
             return new Response("Not allowed to update not local Group", Response::HTTP_METHOD_NOT_ALLOWED);
         }
 
