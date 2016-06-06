@@ -30,6 +30,12 @@ sylius_resource:
             classes:
                 model: Pumukit\SchemaBundle\Document\Series
                 controller: Pumukit\NewAdminBundle\Controller\SeriesController
+        pumukitnewadmin.playlist:
+            driver: doctrine/mongodb-odm
+            templates: PumukitNewAdminBundle:Playlist
+            classes:
+                model: Pumukit\SchemaBundle\Document\Series
+                controller: Pumukit\NewAdminBundle\Controller\PlaylistController
         pumukitnewadmin.mmtemplate:
             driver: doctrine/mongodb-odm
             templates: PumukitnewadminBundle:MultimediaObjectTemplate
