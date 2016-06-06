@@ -12,8 +12,8 @@ use Pumukit\WebTVBundle\Controller\WebTVController;
 abstract class BasePlaylistController extends Controller implements WebTVController
 {
     /**
-     * @Route("/playlist/{id}", name="pumukit_seriesplaylist_index", defaults={"no_channels": true} )
-     * @Route("/playlist/magic/{secret}", name="pumukit_videoplayer_magicindex", defaults={"show_hide": true, "no_channels": true} )
+     * @Route("/playlist/{id}", name="pumukit_playlistplayer_index", defaults={"no_channels": true} )
+     * @Route("/playlist/magic/{secret}", name="pumukit_playlistplayer_magicindex", defaults={"show_hide": true, "no_channels": true} )
      */
     abstract public function indexAction(Series $series, Request $request);
 }
