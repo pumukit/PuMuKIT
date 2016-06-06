@@ -24,6 +24,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $origin2 = 'ldap';
         $user->setOrigin($origin2);
         $this->assertEquals($origin2, $user->getOrigin());
-        $this->assertTrue($user->isLocal());
+        $this->assertFalse($user->isLocal());
     }
 }
