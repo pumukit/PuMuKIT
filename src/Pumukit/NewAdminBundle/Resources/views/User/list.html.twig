@@ -39,7 +39,7 @@
             </div>
           </td>
           <td>
-            {% if user.origin == constant('Pumukit\\SchemaBundle\\Document\\User::ORIGIN_LOCAL') %}
+            {% if user.isLocal() %}
             <a title="{% trans %}Edit User{% endtrans %} {{ user.fullname }}" href="{{ path('pumukitnewadmin_user_update', {'id': user.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
               <i class="mdi-editor-mode-edit"></i>
             </a>
@@ -48,7 +48,7 @@
             {% endif %}
           </td>
           <td>
-            {% if user.origin == constant('Pumukit\\SchemaBundle\\Document\\User::ORIGIN_LOCAL') %}
+            {% if user.isLocal() %}
             <a href="#" onclick="window.submit_delete_user('{{ user.id }}', '{% autoescape 'js' %}{{ user.fullname }}{% endautoescape %}'); return false;">
               <i class="mdi-content-clear"></i>
             </a>

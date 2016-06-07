@@ -274,7 +274,7 @@ class EmbeddedBroadcastService
             return $this->isPasswordCorrect($multimediaObject, $phpAuthPassword);
         }
 
-        return $this->renderErrorNotAuthenticated($forceAuth);
+        return $this->renderErrorNotAuthenticated($forceAuth, $user);
     }
 
     /**
@@ -318,7 +318,7 @@ class EmbeddedBroadcastService
             return true;
         }
 
-        return $this->renderErrorNotAuthenticated($forceAuth);
+        return $this->renderErrorNotAuthenticated($forceAuth, $user);
     }
 
     private function isUserLoggedInAndInGroups(MultimediaObject $multimediaObject, User $user = null, $forceAuth = false)
@@ -329,7 +329,7 @@ class EmbeddedBroadcastService
             }
         }
 
-        return $this->renderErrorNotAuthenticated($forceAuth);
+        return $this->renderErrorNotAuthenticated($forceAuth, $user);
     }
 
     private function isPasswordCorrect(MultimediaObject $multimediaObject, $phpAuthPassword)
@@ -344,9 +344,9 @@ class EmbeddedBroadcastService
         return $this->renderErrorPassword($multimediaObject);
     }
 
-    private function renderErrorNotAuthenticated($forceAuth = false)
+    private function renderErrorNotAuthenticated($forceAuth = false, User $user = null)
     {
-        if ((boolean)$forceAuth) {
+        if ($forceAuth and !$this->isAuthenticatedFully($user)) {
             throw new AccessDeniedException('Unable to access this page!');
         }
         $renderedView = $this->templating->render('PumukitWebTVBundle:Index:403forbidden.html.twig', array('show_forceauth' => true));

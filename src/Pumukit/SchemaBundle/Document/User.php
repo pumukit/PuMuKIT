@@ -147,6 +147,16 @@ class User extends BaseUser
     }
 
     /**
+     * Is the origin local
+     *
+     * @return bool
+     */
+    public function isLocal()
+    {
+        return self::ORIGIN_LOCAL == $this->origin;
+    }
+
+    /**
      * Contains Group
      *
      * @param GroupInterface $group
@@ -222,5 +232,4 @@ class User extends BaseUser
         $roles[] = static::ROLE_DEFAULT;
         return array_unique($roles);
     }
-
 }

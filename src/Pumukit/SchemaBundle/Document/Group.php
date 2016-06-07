@@ -174,6 +174,16 @@ class Group implements GroupInterface
     }
 
     /**
+     * Is the origin local
+     *
+     * @return bool
+     */
+    public function isLocal()
+    {
+        return self::ORIGIN_LOCAL == $this->origin;
+    }
+
+    /**
      * Get createdAt
      *
      * @return string

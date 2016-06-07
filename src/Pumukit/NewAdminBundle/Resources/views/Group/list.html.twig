@@ -34,7 +34,7 @@
           </div>
         </td>
         <td>
-          {% if group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL') %}
+          {% if group.isLocal() %}
           <a title="{% trans %}Edit Group{% endtrans %} {{ group.getName() }}" href="{{ path('pumukitnewadmin_group_update', {'id': group.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
             <i class="mdi-editor-mode-edit"></i>
           </a>

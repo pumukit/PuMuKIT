@@ -113,7 +113,7 @@ class GroupService
      */
     public function canBeDeleted(Group $group)
     {
-        if (Group::ORIGIN_LOCAL != $group->getOrigin()) {
+        if (!$group->isLocal()) {
             return false;
         }
         if (0 < $this->countUsersInGroup($group)) {
@@ -140,7 +140,7 @@ class GroupService
     public function getDeleteMessage(Group $group, $locale)
     {
         $message = '';
-        if (Group::ORIGIN_LOCAL != $group->getOrigin()) {
+        if (!$group->isLocal()) {
             $enMessage = 'Group cannot be deleted because the Group is external. Contact your directory server administrator. You can delete relations with MultimediaObjects if any.';
             $message = $this->translator->trans($enMessage, array(), null, $locale);
 
