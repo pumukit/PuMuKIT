@@ -20,7 +20,7 @@
           </select>
         </div>
         <div class="col-md-10 text-right">
-          {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_CREATE_PLAYLIST')) %}
+          {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
 	      <a title="{% trans %}Create new playlist{% endtrans %}" id="pumukitnewadmin_playlist_new_button" class="btn btn-pumukit btn-raised" href="#">{% trans %}New{% endtrans %}</a>
           {% endif %}
         </div>
@@ -38,7 +38,7 @@
       {% if(app.session.has('admin/series/id')) %}
         {{ render_hinclude(url('pumukitnewadmin_playlist_show', {'id': app.session.get('admin/series/id')})) }}
       {% else %}
-        {% trans %}Select any series.{% endtrans %}
+        {% trans %}Select any playlist.{% endtrans %}
       {% endif %}
     </div>
     {% include 'PumukitNewAdminBundle:Playlist:acordeon.html.twig' with {'name': 'series', 'broadcasts': 'broadcasts', 'seriestypes': 'seriestypes'} %}
