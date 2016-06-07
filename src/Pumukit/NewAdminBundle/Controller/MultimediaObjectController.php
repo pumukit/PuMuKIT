@@ -497,7 +497,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     /**
      * Update Tags in Multimedia Object from form
      */
-    private function updateTags($checkedTags, $codStart, $resource)
+    protected function updateTags($checkedTags, $codStart, $resource)
     {
         if (null !== $checkedTags) {
           foreach ($resource->getTags() as $tag) {
@@ -524,7 +524,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
      * Get the view list of multimedia objects
      * belonging to a series
      */
-    private function getListMultimediaObjects(Series $series, $newMultimediaObjectId=null)
+    protected function getListMultimediaObjects(Series $series, $newMultimediaObjectId=null)
     {
         $session = $this->get('session');
         $page = $session->get('admin/mms/page', 1);
@@ -820,7 +820,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         return new JsonResponse("");
     }
 
-    private function dispatchUpdate($multimediaObject)
+    protected function dispatchUpdate($multimediaObject)
     {
         $event = new MultimediaObjectEvent($multimediaObject);
         $this->get('event_dispatcher')->dispatch(SchemaEvents::MULTIMEDIAOBJECT_UPDATE, $event);
