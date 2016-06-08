@@ -118,7 +118,8 @@ class PlaylistMultimediaObjectController extends MultimediaObjectController
     {
         $value = $request->query->get('search', '');
         $criteria = array('$text' => array('$search' => $value));
-        $queryBuilder = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:MultimediaObject')->createQueryBuilder();
+        $queryBuilder = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder();
+        $criteria = array_merge($queryBuilder->getQueryArray(), $criteria);
         $queryBuilder->setQueryArray($criteria);
         $adapter = new DoctrineODMMongoDBAdapter($queryBuilder);
         $mmobjs = new Pagerfanta($adapter);
