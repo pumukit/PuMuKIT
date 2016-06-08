@@ -41,7 +41,28 @@ class PlaylistMultimediaObjectController extends MultimediaObjectController
         $this->get('session')->set('admin/playlist/id', $series->getId());
 
         if($request->query->has('mmid')) {
-            $this->get('session')->set('admin/mms/id', $request->query->get('mmid'));
+            $this->get('session')->set('admin/playlistmms/id', $request->query->get('mmid'));
+        }
+
+        $mms = $this->getPlaylistMmobjs($series);
+        return array(
+                     'playlist' => $series,
+                     'mms' => $mms
+                     );
+    }
+
+
+    public function listAction(Request $request)
+    {
+        $factoryService = $this->get('pumukitschema.factory');
+        $sessionId = $this->get('session')->get('admin/playlist/id', null);
+        $series = $factoryService->findSeriesById($request->query->get('id'), $sessionId);
+        if(!$series) throw $this->createNotFoundException();
+
+        $this->get('session')->set('admin/playlist/id', $series->getId());
+
+        if($request->query->has('mmid')) {
+            $this->get('session')->set('admin/playlistmms/id', $request->query->get('mmid'));
         }
 
         $mms = $this->getPlaylistMmobjs($series);
@@ -84,6 +105,39 @@ class PlaylistMultimediaObjectController extends MultimediaObjectController
      */
     public function addMmobjModalAction()
     {
-        return array();
+        /* $service = $this->get('pumukitschema.person');
+           $mmobjs = $service->getMmobjsFromUser($this->getUser()); */
+        //MOCK
+        $mmobjs = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:MultimediaObject')->findAll();
+        return array('my_mmobjs' => $mmobjs);
+    }
+    /**
+     * @Template("PumukitNewAdminBundle:PlaylistMultimediaObject:search_mmobjs_modal.html.twig")
+     */
+    public function searchMmobjsModalAction(Request $request)
+    {
+        $value = $request->query->get('search', '');
+        $criteria = array('$text' => array('$search' => $value));
+        $queryBuilder = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:MultimediaObject')->createQueryBuilder();
+        $queryBuilder->setQueryArray($criteria);
+        $adapter = new DoctrineODMMongoDBAdapter($queryBuilder);
+        $mmobjs = new Pagerfanta($adapter);
+        return array('mmobjs' => $mmobjs);
+    }
+
+    /**
+     * @Template("PumukitNewAdminBundle:PlaylistMultimediaObject:url_mmobj_modal.html.twig")
+     */
+    public function urlMmobjModalAction(Request $request)
+    {
+        $id = $request->query->get('mmid', '');
+        $mmobj = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:MultimediaObject')->find($id);
+        return array('mmobj' => $mmobj);
+    }
+
+
+    public function addBatchMmobjsAction(Request $request)
+    {
+        return $this->redirect($this->generateUrl('pumukitnewadmin_playlistmms_list'));
     }
 }
