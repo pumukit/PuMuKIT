@@ -1,0 +1,31 @@
+<form autocomplete="off"
+{#      onsubmit="$.ajax({
+                url: '{{ path('pumukitnewadmin_playlist', {'id': resource.id}) }}',
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function(response){
+                var resource_name = '{{ resource_name }}';
+                if ('event' == resource_name) {
+                $('#list_events').html(response);
+                $('#preview_event').load('{{ path('pumukitnewadmin_event_show', {'id': resource.id})|raw }}');
+                } else {
+                $('#pic_{{ resource_name }}_{{ resource.id }}').html(response);
+                }
+                success('{% trans %}New Thumbnail added.{% endtrans %}');
+                }
+                });
+                return false;"
+      action="{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id}) }}"#}
+      method="post" style="height:10=%">
+  SEARCH:
+  <input type="search" id="modal_search"/>
+  <button type="button" id="modal_search_button">SEARCH</button>
+  <fieldset id="modal_search_list" style="height:80%;overflow:auto">
+  </fieldset>
+</form>
+<script>
+$('#modal_search_button').on('click', function(){
+    var search_text=$('#modal_search').val();
+    $('#modal_search_list').load('https://pumukit2.armazeg.org/app_dev.php/admin/playlist/mms/modal_search?search='+search_text);
+});
+</script>

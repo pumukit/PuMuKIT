@@ -1,0 +1,14 @@
+<form style="height:100%;">
+  SELECT VIDEOS:
+  <hr>
+  <fieldset style="height:80%;overflow:auto">
+    {% for mmobj in my_mmobjs %}
+      <div class="col-md-6">
+        <label class="">
+          <input type="checkbox" name="{{mmobj.id}}" id="{{mmobj.id}}" class=""/>
+          {{mmobj.title}} - {{mmobj.series.title}}
+        </label>
+      </div>
+    {% endfor %}
+  </fieldset>
+</form>

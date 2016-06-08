@@ -1,0 +1,14 @@
+<hr>
+<b>{{ mmobjs.getNbResults }} {% trans %}Mm. Obj.{% endtrans %}:</b>
+<br>
+<br>
+<div class="row">
+  {% for mmobj in mmobjs %}
+    <div class="col-md-6">
+      <label class="">
+        <input type="checkbox" name="{{mmobj.id}}" id="{{mmobj.id}}" class=""/>
+        {{mmobj.title}} - {{mmobj.series.title}}
+      </label>
+    </div>
+  {% endfor %}
+</div>

@@ -1,0 +1,46 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <h3 class="modal-title" id="myModalLabel">{% trans %}Add Multimedia Object to Playlist{% endtrans %}</h4>
+</div>
+<div class="modal-body">
+  <div role="tabpanel">
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="search" class="active">
+        <a href="#search" aria-controls="search" role="tab" data-toggle="tab">
+          SEARCH
+        </a>
+      </li>
+      <li role="url">
+        <a href="#url" aria-controls="url" role="tab" data-toggle="tab">
+          URL
+        </a>
+      </li>
+      <li role="my_videos">
+        <a href="#my_videos" aria-controls="my_videos" role="tab" data-toggle="tab">
+          MY VIDEOS
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="tab-content" style="height:480px">
+    <div role="tabpanel" class="tab-pane active" id="search" style="height:100%">
+      <div class="well" style="height:100%">
+        {% include 'PumukitNewAdminBundle:PlaylistMultimediaObject:search_pane.html.twig' %}
+      </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="url" style="height:100%">
+      <div class="well"style="height:100%">
+        {% include 'PumukitNewAdminBundle:PlaylistMultimediaObject:url_pane.html.twig' %}
+      </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="my_videos" style="height:100%">
+      <div class="well" style="height:100%">
+        {% include 'PumukitNewAdminBundle:PlaylistMultimediaObject:myvideos_pane.html.twig' %}
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-pumukit btn-raised" data-dismiss="modal" id="add_videos_modal_button" disabled="disabled">{% trans %}Add videos{% endtrans %}</button>
+    <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+  </div>
+</div>

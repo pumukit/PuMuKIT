@@ -1,0 +1,21 @@
+<form>
+  INSERT URL:
+  <input type="text" id="modal_url"/>
+  <div id="modal_url_loader" style="display:none">
+    LOADER GIF...
+  </div>
+  <fieldset id="modal_url_list">
+  </fieldset>
+</form>
+<script>
+$('#modal_url').on('input', function(){
+    var url = $(this).val();
+    console.log(url);
+    $('#modal_url_loader').show();
+    $('#modal_url_list').hide();
+    $('#modal_url_list').load('https://pumukit2.armazeg.org/app_dev.php/admin/playlist/mms/modal_url?mmid='+url, function(){
+        $('#modal_url_loader').hide();
+        $('#modal_url_list').show();
+    });
+});
+</script>
