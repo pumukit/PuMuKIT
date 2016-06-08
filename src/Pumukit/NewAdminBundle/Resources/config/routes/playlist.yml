@@ -57,12 +57,6 @@ pumukitnewadmin_playlist_copy:
         _sylius:
             redirect: pumukitnewadmin_playlist_index
 
-pumukitnewadmin_playlist_show:
-    pattern: /{id}/show
-    methods: [GET]
-    defaults:
-        _controller: pumukitnewadmin.controller.playlist:showAction
-
 pumukitnewadmin_playlist_list:
     pattern: /list
     methods: [GET, POST]
@@ -75,14 +69,8 @@ pumukitnewadmin_playlist_invert_announce:
     defaults:
         _controller: pumukitnewadmin.controller.playlist:invertAnnounceAction
 
-pumukitnewadmin_playlist_changepub:
-    pattern: /changepub
+pumukitnewadmin_playlist_show:
+    pattern: /{id}/show
     methods: [GET]
     defaults:
-        _controller: pumukitnewadmin.controller.playlist:changePubAction
-
-pumukitnewadmin_playlist_updatepub:
-    pattern: /updatepub
-    methods: [POST]
-    defaults:
-        _controller: pumukitnewadmin.controller.playlist:updatePubAction
+        _controller: pumukitnewadmin.controller.playlist:showAction
