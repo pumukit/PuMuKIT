@@ -14,7 +14,7 @@ use Pumukit\NewAdminBundle\Form\Type\SeriesType;
 use Pumukit\NewAdminBundle\Form\Type\PlaylistType;
 
 /**
- * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
+ * @Security("is_granted('ROLE_ACCESS_EDIT_PLAYLIST')")
  */
 class PlaylistController extends CollectionController
 {
