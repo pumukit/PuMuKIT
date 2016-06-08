@@ -156,17 +156,6 @@ window.submit_clone_mms = function(id)
 window.submit_delete_series = function(id, seriesTitle, countMm)
 {
     var url = "{{ path('pumukitnewadmin_series_delete', {'id': '__id__'})|raw }}";
-    window.submit_delete_collection(id, seriesTitle, countMm, url);
-}
-
-window.submit_delete_playlist = function(id, seriesTitle, countMm)
-{
-    var url = "{{ path('pumukitnewadmin_playlist_delete', {'id': '__id__'})|raw }}";
-    window.submit_delete_collection(id, seriesTitle, countMm, url);
-}
-
-window.submit_delete_collection = function(id, seriesTitle, countMm, url)
-{
     if (window.confirm('{% trans %}Are you sure you want to delete the series{% endtrans %} "'+seriesTitle+'"? {% trans %}This series has{% endtrans %} '+countMm+' {% trans %}multimedia object(s){% endtrans %}.')){
         var message = '{% trans %}Series{% endtrans %} "'+seriesTitle+'" {% trans %}successfully deleted{% endtrans %}.';
         var sessionId = $($('tr.success').find('input.series_checkbox')[0]).attr('id');
@@ -175,6 +164,26 @@ window.submit_delete_collection = function(id, seriesTitle, countMm, url)
                 if (id === sessionId) {
                     $('#preview_series').html('{% trans %}Select any series.{% endtrans %}');
                     $('#edit_series').html('');
+                }
+                success(message);
+            } else {
+                no_success(XMLHttpRequest['statusText'] + ': ' + responseText);
+            }
+        });
+    }
+}
+
+window.submit_delete_playlist = function(id, playlistTitle, countMm)
+{
+    var url = "{{ path('pumukitnewadmin_playlist_delete', {'id': '__id__'})|raw }}";
+    if (window.confirm('{% trans %}Are you sure you want to delete the playlist{% endtrans %} "'+playlistTitle+'"? {% trans %}This playlist has{% endtrans %} '+countMm+' {% trans %}multimedia object(s){% endtrans %}.')){
+        var message = '{% trans %}Playlist{% endtrans %} "'+playlistTitle+'" {% trans %}successfully deleted{% endtrans %}.';
+        var sessionId = $($('tr.success').find('input.playlist_checkbox')[0]).attr('id');
+        $('#list_playlists').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
+            if (textStatus !== "error") {
+                if (id === sessionId) {
+                    $('#preview_playlist').html('{% trans %}Select any playlist.{% endtrans %}');
+                    $('#edit_playlist').html('');
                 }
                 success(message);
             } else {
@@ -1064,7 +1073,7 @@ $(function() {
   });
   $('#pumukitnewadmin_playlist_new_button').on('click', function () {
     var route = "{{ path('pumukitnewadmin_playlist_create') }}";
-    $('#filter_series')[0].reset();
+    $('#filter_playlist')[0].reset();
     $.ajax(route, {
             type: 'GET',
             error: function(jqXHR, textStatus, errorThrown){
@@ -1073,19 +1082,19 @@ $(function() {
                         no_success(errorThrown+': '+textStatus+', '+message);
 	        },
             success: function(response, textStatus, jqXHR){
-			    var seriesId = response['seriesId'];
+			    var playlistId = response['playlistId'];
 
                 // NOTE: Important to call listAction first to update series id in session
-                var routeList = "{{ path('pumukitnewadmin_playlist_list', {'selectedSeriesId': '__seriesId__'})|raw }}";
-                $('#list_series').load(routeList.replace('__seriesId__', seriesId), function(){
-                    var routeShow = "{{ path('pumukitnewadmin_playlist_show', {'id': '__seriesId__'})|raw }}";
-                    $('#preview_series').load(routeShow.replace('__seriesId__', seriesId));
-                    var routeUpdate = "{{ path('pumukitnewadmin_playlist_update', {'id': '__seriesId__'})|raw }}";
-                    $('#edit_series').load(routeUpdate.replace('__seriesId__', seriesId), function(){
+                var routeList = "{{ path('pumukitnewadmin_playlist_list', {'selectedSeriesId': '__playlistId__'})|raw }}";
+                $('#list_playlists').load(routeList.replace('__playlistId__', playlistId), function(){
+                    var routeShow = "{{ path('pumukitnewadmin_playlist_show', {'id': '__playlistId__'})|raw }}";
+                    $('#preview_playlist').load(routeShow.replace('__playlistId__', playlistId));
+                    var routeUpdate = "{{ path('pumukitnewadmin_playlist_update', {'id': '__playlistId__'})|raw }}";
+                    $('#edit_playlist').load(routeUpdate.replace('__playlistId__', playlistId), function(){
                         init_tabs();
                     });
                 });
-	            success('{% trans %}Series successfully created.{% endtrans %}');
+	            success('{% trans %}Playlist successfully created.{% endtrans %}');
 	        }
     });
     return false;
@@ -1446,7 +1455,7 @@ get_batch_delete_route = function(element, ids)
         case 'series':
             route = '{{ path('pumukitnewadmin_series_batch_delete', {'ids': '__ids__'})|raw }}';
             break;
-        case 'series':
+        case 'playlist':
             route = '{{ path('pumukitnewadmin_playlist_batch_delete', {'ids': '__ids__'})|raw }}';
             break;
         case 'seriestype':
