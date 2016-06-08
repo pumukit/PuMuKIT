@@ -374,6 +374,8 @@ class SeriesController extends AdminController implements NewAdminController
         $repository = $this->getRepository();
         $session = $this->get('session');
         $session_namespace = 'admin/series';
+        //Added TYPE_SERIES to criteria (and type null, for backwards compatibility)
+        $criteria = array_merge($criteria, array('type' => array('$in' => array( Series::TYPE_SERIES, null))));
 
         if ($config->isPaginated()) {
             if (array_key_exists('multimedia_objects', $sorting)){
