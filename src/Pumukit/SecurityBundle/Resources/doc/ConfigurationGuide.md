@@ -25,3 +25,6 @@ pumukit_security:
     cas_port: 443
     cas_uri: 'cas'
 ```
+
+
+Note: Single Sign Out only works with native PHP session save handlers.
