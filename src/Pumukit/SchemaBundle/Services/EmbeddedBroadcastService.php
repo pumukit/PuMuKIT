@@ -346,7 +346,7 @@ class EmbeddedBroadcastService
 
     private function renderErrorNotAuthenticated($forceAuth = false, User $user = null)
     {
-        if ($forceAuth and !$this->isAuthenticatedFully($user)) {
+        if ($forceAuth && !$this->isAuthenticatedFully($user)) {
             throw new AccessDeniedException('Unable to access this page!');
         }
         $renderedView = $this->templating->render('PumukitWebTVBundle:Index:403forbidden.html.twig', array('show_forceauth' => true));
