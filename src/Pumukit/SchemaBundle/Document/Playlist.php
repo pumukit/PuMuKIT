@@ -58,6 +58,15 @@ class Playlist
         $this->multimedia_objects->removeElement($multimedia_object);
     }
 
+    /**
+     * Remove multimedia object by its position in the playlist.
+     *
+     * @param integer $pos Position (starting from 0) of the mmobj in the playlist.
+     */
+    public function removeMultimediaObjectByPos($pos)
+    {
+        $this->multimedia_objects->remove($pos);
+    }
 
     /**
      * Get multimedia_objects
