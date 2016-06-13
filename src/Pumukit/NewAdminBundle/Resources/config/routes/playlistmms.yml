@@ -14,20 +14,6 @@ pumukitnewadmin_playlistmms_create:
         _sylius:
             redirect: pumukitnewadmin_playlistmms_index
 
-pumukitnewadmin_playlistmms_batch_delete:
-    pattern: /batch_delete
-    methods: [DELETE]
-    defaults:
-        _controller: pumukitnewadmin.controller.playlistmms:batchDeleteAction
-        _sylius:
-            redirect: pumukitnewadmin_playlistmms_index
-
-pumukitnewadmin_playlistmms_delete:
-    pattern: /{id}/delete
-    methods: [DELETE]
-    defaults:
-        _controller: pumukitnewadmin.controller.playlistmms:deleteAction
-
 pumukitnewadmin_playlistmms_show:
     pattern: /{id}/show
     methods: [GET, POST]
@@ -91,19 +77,31 @@ pumukitnewadmin_playlistmms_reorder:
         _controller: pumukitnewadmin.controller.playlistmms:reorderAction
 
 pumukitnewadmin_playlistmms_modal:
-    pattern: /modal
+    pattern: /{id}/modal
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.playlistmms:addMmobjModalAction
+        _controller: pumukitnewadmin.controller.playlistmms:modalAction
 
-pumukitnewadmin_playlistmms_search_modal:
+pumukitnewadmin_playlistmms_modal_search:
     pattern: /modal_search
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.playlistmms:searchMmobjsModalAction
+        _controller: pumukitnewadmin.controller.playlistmms:searchModalAction
 
-pumukitnewadmin_playlistmms_url_modal:
+pumukitnewadmin_playlistmms_modal_url:
     pattern: /modal_url
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.playlistmms:urlMmobjModalAction
+        _controller: pumukitnewadmin.controller.playlistmms:urlModalAction
+
+pumukitnewadmin_playlistmms_batch_add:
+    pattern: /{id}/add
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistmms:addBatchAction
+
+pumukitnewadmin_playlistmms_batch_delete:
+    pattern: /{id}/delete
+    methods: [GET, POST, DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistmms:deleteBatchAction
