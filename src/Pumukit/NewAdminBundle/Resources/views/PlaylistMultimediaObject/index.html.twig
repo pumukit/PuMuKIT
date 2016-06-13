@@ -54,15 +54,23 @@
             </div>
           </div>
         </div>
+        {# Kept the 'info' template #}
         {# TODO: Edition deactivated for now. #}
         {# <div class="alert alert-warning warning">
           {% trans %} WARNING: The changes made below will be applied to the original object. {% endtrans %}
-        </div>
-        <div id="edit_playlistmm">
+        </div>#}
+        <div class="well">
+          <div id="edit_playlistmm">
           {% if(app.session.get('admin/playlist/id', false) and app.session.get('admin/playlistmms/id', false)) %}
-            {{ render(url('pumukitnewadmin_mms_edit', {'id': app.session.get('admin/playlistmms/id'), 'playlistId': app.session.get('admin/playlist/id')})) }}
+                <div id="links_mm_{{ app.session.get('admin/playlistmms/id') }}">
+                  {% render(url('pumukitnewadmin_mms_links', {'id': app.session.get('admin/playlistmms/id')})) %}
+                </div>
+          {% else %}
+                <legend>{% trans %}Info{% endtrans %}</legend>
+                {% trans %}Select any multimedia object.{% endtrans %}
           {% endif %}
-        </div> #}
+          </div>
+        </div>
       </div>
 
       <div id="tv_admin_bar" class="col-md-2">
@@ -70,6 +78,7 @@
           {% if(app.session.get('admin/playlistmms/id', false)) %}
             {{ render_hinclude(url('pumukitnewadmin_playlistmms_show', {'id': app.session.get('admin/playlistmms/id'), 'pos': app.session.get('admin/playlistmms/pos')})) }}
           {% else %}
+            <legend>{% trans %}Preview{% endtrans %}</legend>
             {% trans %}Select any multimedia object.{% endtrans %}
           {% endif %}
         </div>
