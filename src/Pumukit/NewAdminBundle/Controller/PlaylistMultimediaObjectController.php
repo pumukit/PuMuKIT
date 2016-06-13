@@ -203,7 +203,7 @@ class PlaylistMultimediaObjectController extends Controller implements NewAdminC
         //$mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $mms = $playlist->getPlaylist()->getMultimediaObjects();
         foreach ($mmobjIds as $pos => $id) {
-            if($mms[$pos]->getId() == $id)
+            if(isset($mms[$pos]) && $mms[$pos]->getId() == $id)
                 $playlist->getPlaylist()->removeMultimediaObjectByPos($pos);
         }
         $dm->persist($playlist);

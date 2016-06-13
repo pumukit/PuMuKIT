@@ -45,7 +45,7 @@
               </a>
             </td>
             <td>
-	      {% include 'PumukitNewAdminBundle:MultimediaObject:updatemenu.html.twig' with {'mm': mm} %}
+	      {% include 'PumukitNewAdminBundle:PlaylistMultimediaObject:updatemenu.html.twig' with {'mm': mm, 'mm_pos':mm_pos} %}
             </td>
             <td>
 	      {% if mms.getCurrentPage() != 1 or not loop.first %}
