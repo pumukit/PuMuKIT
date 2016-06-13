@@ -1,6 +1,10 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 <div class="col-md-9" id="pumukitnewadmin_mm{{ template }}_broadcast_description">
-{{ mm.getEmbeddedBroadcast() }}
+  {% if mm.getEmbeddedBroadcast() %}
+  {{ mm.getEmbeddedBroadcast() }}
+  {% else %}
+  {% trans %}None{% endtrans %}
+  {% endif %}
 </div>
 <div class="col-md-3 text-right">
   <a title="{% trans %}Change broadcast profile{% endtrans %}" href="{{ path('pumukitnewadmin_mms_updatebroadcast', {'id': mm.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}Change{% endtrans %}</a>
