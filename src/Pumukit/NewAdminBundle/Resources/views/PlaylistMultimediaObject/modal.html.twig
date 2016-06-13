@@ -24,18 +24,18 @@
   </div>
   <div class="tab-content" style="height:480px">
     <div role="tabpanel" class="tab-pane active" id="search" style="height:100%">
-      <div class="well" style="height:100%">
-        {% include 'PumukitNewAdminBundle:PlaylistMultimediaObject:search_pane.html.twig' %}
+      <div class="well" style="height:100%;overflow:auto;">
+        {% include 'PumukitNewAdminBundle:PlaylistMultimediaObject:modal_search.html.twig' %}
       </div>
     </div>
     <div role="tabpanel" class="tab-pane" id="url" style="height:100%">
-      <div class="well"style="height:100%">
-        {% include 'PumukitNewAdminBundle:PlaylistMultimediaObject:url_pane.html.twig' %}
+      <div class="well"style="height:100%;overflow:auto;">
+        {% include 'PumukitNewAdminBundle:PlaylistMultimediaObject:modal_url.html.twig' %}
       </div>
     </div>
     <div role="tabpanel" class="tab-pane" id="my_videos" style="height:100%">
-      <div class="well" style="height:100%">
-        {% include 'PumukitNewAdminBundle:PlaylistMultimediaObject:myvideos_pane.html.twig' %}
+      <div class="well" style="height:100%;overflow:auto;">
+        {% include 'PumukitNewAdminBundle:PlaylistMultimediaObject:modal_myvideos.html.twig' %}
       </div>
     </div>
   </div>
@@ -44,3 +44,42 @@
     <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
   </div>
 </div>
+<script>
+ //Enables the add_videos button if any valid video is selected:
+ //We check if the form under the opened tab has a checked element.
+ $('ul.nav li a').click(function(event){
+     var id = $(this).attr('aria-controls');
+     $('#add_videos_modal_button').prop('disabled', true);
+     $('#'+id+' form.modal_form input:checkbox').each(function(){
+         if($(this).prop('checked')) {
+             $('#add_videos_modal_button').prop('disabled', false);
+             return false;
+         }
+     });
+ });
+ //We check if the form we just changed has a checked element.
+ $('form.modal_form').on('change', function(event){
+     $(this).find('input:checkbox').each(function(){
+         $('#add_videos_modal_button').prop('disabled', true);
+         if($(this).prop('checked')) {
+             $('#add_videos_modal_button').prop('disabled', false);
+             return false;
+         }
+     });
+ });
+
+ //The 'Add video' logic consist on sending the selected object ids and updating the view through ajax.
+ $('#add_videos_modal_button').click(function(){
+     var ids = [];
+     $('.tab-pane.active fieldset input:checkbox').each(function(elem){
+         if($(this).prop('checked'))
+             ids.push($(this).prop('id'));
+     });
+     //Does ajax to add objects and update view.
+     var route = "{{ path('pumukitnewadmin_playlistmms_batch_add',{'id': playlist.id ,'ids':'__ids__'}) }}";
+     route = route.replace('__ids__', JSON.stringify(ids));
+     $('#list_playlistmms').load(route,function(){
+         console.log('hahahahaha');
+     });
+ });
+</script>
