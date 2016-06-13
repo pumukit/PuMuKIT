@@ -4,7 +4,11 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         {% trans %}ADMIN GROUPS{% endtrans %}&nbsp;
+        {% if template %}
+        <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Groups that can admin this series{% endtrans %}"></i>
+        {% else %}
         <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Groups that can admin this multimedia object{% endtrans %}"></i>
+        {% endif %}
       </div>
       <div class="panel-body" id="group_mm{{ template }}">
         <div class="row" style="margin-right: 0px; margin-left: 0px;">
