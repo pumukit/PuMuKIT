@@ -30,21 +30,11 @@
                 <option value="default" selected="selected">{% trans %}Select an action{% endtrans %}...</option>
                 <option disabled="">---</option>
                 <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
-                <option value="invert_announce_selected">{% trans %}Announce/Not announce selected{% endtrans %}</option>
                 <option disabled="">---</option>
                 <option value="order_pub_date_desc">{% trans %}List multimedia objects in descending order of publication date{% endtrans %}</option>
                 <option value="order_pub_date_asc">{% trans %}List multimedia objects in ascending order of publication date{% endtrans %}</option>
                 <option value="order_rec_date_desc">{% trans %}List multimedia objects in descending order of recording date{% endtrans %}</option>
                 <option value="order_rec_date_asc">{% trans %}List multimedia objects in ascending order of recording date{% endtrans %}</option>
-                <option disabled="">---</option>
-                <option value="cut_mm">{% trans %}Cut multimedia objects{% endtrans %}</option>
-                {% if app.session.has('admin/playlistmms/cut') and app.session.get('admin/playlistmms/cut')%}
-                  <option value="paste_mm" id="paste_mm">
-                    {% trans %}Paste multimedia objects{% endtrans %} ({% for id in app.session.get('admin/playlistmms/cut') %}{{ id }}{% if not loop.last %},&nbsp;{% endif %}{% endfor %})
-                  </option>
-                {% else %}
-                  <option value="paste_mm" id="paste_mm" style="display:none"></option>
-                {% endif %}
                 <option disabled="">---</option>
                 <option value="playlist_preview" id="{{ playlist.secret }}">{% trans %}Preview show of the playlist{% endtrans %}</option>
               </select>
