@@ -7,6 +7,7 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 
@@ -73,6 +74,7 @@ class PumukitAdminExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFunction('php_upload_max_filesize', array($this, 'getPhpUploadMaxFilesize')),
             new \Twig_SimpleFunction('path_exists', array($this, 'existsRoute')),
+            new \Twig_SimpleFunction('broadcast_description', array($this, 'getBroadcastDescription')),
         );
     }
 
@@ -468,6 +470,38 @@ class PumukitAdminExtension extends \Twig_Extension
     public function countMultimediaObjects($series)
     {
         return $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->countInSeries($series);
+    }
+
+    /**
+     * Get Broadcast description
+     *
+     * @param string $broadcastType
+     * @param string $template
+     *
+     * @return string
+     */
+    public function getBroadcastDescription($broadcastType, $template)
+    {
+        $description = '';
+        if (($broadcastType === EmbeddedBroadcast::TYPE_PUBLIC) && $template) {
+            $description = $this->translator->trans('Any Internet user can play the new multimedia objects created from this video template in the video portal');
+        } else if ($broadcastType === EmbeddedBroadcast::TYPE_PUBLIC) {
+            $description = $this->translator->trans('Any Internet user can play this multimedia object in the video portal');
+        } else if (($broadcastType === EmbeddedBroadcast::TYPE_PASSWORD) && $template) {
+            $description = $this->translator->trans('Only users with the defined password can play the new multimedia objects created from this video template in the video portal');
+        } else if ($broadcastType === EmbeddedBroadcast::TYPE_PASSWORD) {
+            $description = $this->translator->trans('Only users with the defined password can play this multimedia object in the video portal');
+        } else if (($broadcastType === EmbeddedBroadcast::TYPE_LOGIN) && $template) {
+            $description = $this->translator->trans('Only logged in users in the system can play the new multimedia objects created from this video template in the video portal');
+        } else if ($broadcastType === EmbeddedBroadcast::TYPE_LOGIN) {
+            $description = $this->translator->trans('Only logged in users in the system can play this multimedia object in the video portal');
+        } else if (($broadcastType === EmbeddedBroadcast::TYPE_GROUPS) && $template) {
+            $description = $this->translator->trans('Only users in the selected Groups can play the new multimedia objects created from this video template in the video portal');
+        } else if ($broadcastType === EmbeddedBroadcast::TYPE_GROUPS) {
+            $description = $this->translator->trans('Only users in the selected Groups can play this multimedia object in the video portal');
+        }
+
+        return $description;
     }
 
     //TODO: Pass to a SERVICE

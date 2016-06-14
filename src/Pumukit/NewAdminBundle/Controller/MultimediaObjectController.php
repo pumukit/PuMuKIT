@@ -933,6 +933,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $broadcasts = $this->get('pumukitschema.embeddedbroadcast')->getAllTypes();
         $groupService = $this->get('pumukitschema.group');
         $allGroups = $groupService->findAll();
+        $template = $multimediaObject->isPrototype() ? '_template' : '';
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
             try {
                 $type = $request->get('type', null);
@@ -950,7 +951,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                 return new JsonResponse(array('error' => $e->getMessage()), JsonResponse::HTTP_BAD_REQUEST);
             }
             $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
-            $template = $multimediaObject->isPrototype() ? '_template' : '';
             $jsonResponse = array(
                                   'description' => (string)$embeddedBroadcast,
                                   'template' => $template
@@ -961,7 +961,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         return array(
                      'mm' => $multimediaObject,
                      'broadcasts' => $broadcasts,
-                     'groups' => $allGroups
+                     'groups' => $allGroups,
+                     'template' => $template
                      );
 
     }
