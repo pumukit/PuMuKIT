@@ -35,7 +35,7 @@ class Configuration implements ConfigurationInterface
               ->defaultNull()
             ->end()
             ->scalarNode('itunes_category')
-              ->info('Itunes category of the channel. Default value: Education')
+              ->info('Itunes category of the channel. Default value: Education. This value must be in English: https://validator.w3.org/feed/docs/error/InvalidItunesCategory.html')
               ->defaultValue('Education')
             ->end()
             ->scalarNode('itunes_summary')
