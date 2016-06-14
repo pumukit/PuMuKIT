@@ -21,9 +21,9 @@ class AdminFilter extends BsonFilter
     private function getMultimediaObjectCriteria()
     {
         $criteria = array();
-        if (isset($this->parameters['person_id']) && isset($this->parameters['role_code']) && isset($this->parameters['groups'])) {
+        if (isset($this->parameters['people']) && isset($this->parameters['groups'])) {
             $criteria['$or'] = array(
-                array('people' => $this->parameters['people']), 
+                array('people' => $this->parameters['people']),
                 array('groups' => $this->parameters['groups'])
             );
         }
