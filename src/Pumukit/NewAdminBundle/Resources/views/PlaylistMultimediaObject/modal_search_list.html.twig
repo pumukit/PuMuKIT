@@ -15,3 +15,14 @@
     </div>
   {% endfor %}
 </div>
+<script>
+ //Adds a 'select' effect when clicking and selecting a mmobj
+ $(".mmobj input:checkbox").on('click', function(){
+     if($(this).prop('checked')) {
+         $(this).siblings(".mmobj_elem").addClass('checked');
+     }
+     else {
+         $(this).siblings(".mmobj_elem").removeClass('checked');
+     }
+ });
+</script>
