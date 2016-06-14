@@ -19,13 +19,14 @@ use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectPubType;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
+use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * @Security("is_granted('ROLE_ACCESS_EDIT_PLAYLIST')")
  */
-class PlaylistMultimediaObjectController extends Controller implements NewAdminController
+class PlaylistMultimediaObjectController extends Controller
 {
     /**
      * Overwrite to search criteria with date
@@ -123,20 +124,23 @@ class PlaylistMultimediaObjectController extends Controller implements NewAdminC
      * It is meant to be used through ajax.
      * @Template("PumukitNewAdminBundle:PlaylistMultimediaObject:modal.html.twig")
      */
-    public function modalAction(Series $playlist)
+    public function modalAction(Series $playlist, Request $request)
     {
-        $mmobjs = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:MultimediaObject')->findAllAsIterable();
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $mmobjs = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findAllAsIterable();
 
         return array(
             'my_mmobjs' => $mmobjs,
             'playlist' => $playlist
         );
     }
+
     /**
      * @Template("PumukitNewAdminBundle:PlaylistMultimediaObject:modal_search_list.html.twig")
      */
     public function searchModalAction(Request $request)
     {
+        $this->enableFilter();
         $value = $request->query->get('search', '');
         $criteria = array('$text' => array('$search' => $value));
         $queryBuilder = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder();
@@ -153,9 +157,13 @@ class PlaylistMultimediaObjectController extends Controller implements NewAdminC
      */
     public function urlModalAction(Request $request)
     {
+        $this->enableFilter();
         $id = $request->query->get('mmid', '');
         $mmobj = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:MultimediaObject')->find($id);
-        return array('mmobj' => $mmobj);
+        return array(
+            'mmobj' => $mmobj,
+            'mmobj_id' => $id
+        );
     }
 
 
@@ -239,5 +247,30 @@ class PlaylistMultimediaObjectController extends Controller implements NewAdminC
         $activeEditor = array_key_exists('pumukit_videoeditor_index', $routes);
 
         return $activeEditor;
+    }
+
+    //Disables the standard backoffice filter and enables the 'personal' filter. (Check own videos or public videos)
+    protected function enableFilter()
+    {
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $filter = $dm->getFilterCollection()->enable("personal");
+        $user = $this->get('security.context')->getToken()->getUser();
+        if ($this->isGranted(PermissionProfile::SCOPE_GLOBAL)){
+            return;
+        }
+        $filter = $dm->getFilterCollection()->disable("backoffice");
+        $person = $this->get('pumukitschema.person')->getPersonFromLoggedInUser($user);
+        $people = array();
+        if ((null != $person) && (null != ($roleCode = $this->get('pumukitschema.person')->getPersonalScopeRoleCode()))) {
+            $people['$elemMatch'] = array();
+            $people['$elemMatch']['people._id'] = new \MongoId($person->getId());
+            $people['$elemMatch']['cod'] = $roleCode;
+        }
+        $groups = array();
+        $groups['$in'] = $user->getGroupsIds();
+        $filter->setParameter('people', $people);
+        $filter->setParameter('groups', $groups);
+        $filter->setParameter('status', MultimediaObject::STATUS_PUBLISHED);
+        $filter->setParameter("display_track_tag", "display");
     }
 }
