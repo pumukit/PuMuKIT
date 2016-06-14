@@ -3,13 +3,15 @@ SEARCH:
 <button type="button" id="modal_search_button">SEARCH</button>
 <form class="modal_form"
       autocomplete="off"
-      method="post" style="height:100%">
-  <fieldset id="modal_search_list" style="height:78%">
+      method="post" style="height:78%">
+  <fieldset id="modal_search_list" style="height:100%">
   </fieldset>
 </form>
 <script>
 $('#modal_search_button').on('click', function(){
     var search_text=$('#modal_search').val();
-    $('#modal_search_list').load('https://pumukit2.armazeg.org/app_dev.php/admin/playlist/mms/modal_search?search='+search_text);
+    var url = '{{ path('pumukitnewadmin_playlistmms_modal_search' , {'search':'__search__'})}}';
+    url = url.replace('__search__', search_text);
+    $('#modal_search_list').load(url);
 });
 </script>

@@ -32,7 +32,7 @@ INSERT URL:
      $('#modal_url_wrong_url').hide();
      $('#modal_url_loader').show();
      $('#modal_url_list').hide();
-     var listUrl = 'https://pumukit2.armazeg.org/app_dev.php/admin/playlist/mms/modal_url?mmid=__id__';
+     var listUrl = '{{ path('pumukitnewadmin_playlistmms_modal_url', {'mmid':'__id__'})}}'
      listUrl = listUrl.replace('__id__', id);
      $('#modal_url_list').load(listUrl, function(){
          $('#modal_url_loader').hide();

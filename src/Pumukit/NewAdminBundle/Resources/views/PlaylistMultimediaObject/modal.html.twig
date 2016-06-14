@@ -78,8 +78,6 @@
      //Does ajax to add objects and update view.
      var route = "{{ path('pumukitnewadmin_playlistmms_batch_add',{'id': playlist.id ,'ids':'__ids__'}) }}";
      route = route.replace('__ids__', JSON.stringify(ids));
-     $('#list_playlistmms').load(route,function(){
-         console.log('hahahahaha');
-     });
+     $('#list_playlistmms').load(route);
  });
 </script>
