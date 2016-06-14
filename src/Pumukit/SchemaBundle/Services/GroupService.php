@@ -40,10 +40,15 @@ class GroupService
      */
     public function create(Group $group)
     {
-        if ($this->repo->findOneByKey($group->getKey())) {
+        $groupByKey = $this->repo->findOneByKey($group->getKey());
+        $groupByName = $this->repo->findOneByName($group->getName());
+        if ($groupByKey && $groupByName) {
+            throw new \Exception('There is already a group created with key '.$group->getKey().' and a group created with name '.$group->getName().'.');
+        }
+        if ($groupByKey) {
             throw new \Exception('There is already a group created with key '.$group->getKey().'.');
         }
-        if ($this->repo->findOneByName($group->getName())) {
+        if ($groupByName) {
             throw new \Exception('There is already a group created with name '.$group->getName().'.');
         }
         $this->dm->persist($group);

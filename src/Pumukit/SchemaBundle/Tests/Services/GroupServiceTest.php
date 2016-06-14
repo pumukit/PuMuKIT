@@ -174,9 +174,9 @@ class GroupServiceTest extends WebTestCase
 
     /**
      * @expectedException         Exception
-     * @expectedExceptionMessage  There is already a group created with key
+     * @expectedExceptionMessage  There is already a group created with key key and a group created with name name
      */
-    public function testCreateExceptionKey()
+    public function testCreateExceptionKeyAndName()
     {
         $key = 'key';
         $name = 'name';
@@ -190,6 +190,30 @@ class GroupServiceTest extends WebTestCase
         $group2 = new Group();
         $group2->setKey($key);
         $group2->setName($name);
+
+        $group2 = $this->groupService->create($group2);
+    }
+
+    /**
+     * @expectedException         Exception
+     * @expectedExceptionMessage  There is already a group created with key
+     */
+    public function testCreateExceptionKey()
+    {
+        $key = 'key';
+        $name1 = 'name1';
+
+        $group1 = new Group();
+        $group1->setKey($key);
+        $group1->setName($name1);
+
+        $group1 = $this->groupService->create($group1);
+
+        $name2 = 'name2';
+
+        $group2 = new Group();
+        $group2->setKey($key);
+        $group2->setName($name2);
 
         $group2 = $this->groupService->create($group2);
     }
