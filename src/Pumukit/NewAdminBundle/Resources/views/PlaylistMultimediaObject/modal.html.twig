@@ -22,7 +22,7 @@
       </li>
     </ul>
   </div>
-  <div class="tab-content" style="height:480px">
+  <div class="tab-content" style="height:580px">
     <div role="tabpanel" class="tab-pane active" id="search" style="height:100%">
       <div class="well" style="height:100%;overflow:auto;">
         {% include 'PumukitNewAdminBundle:PlaylistMultimediaObject:modal_search.html.twig' %}
@@ -44,6 +44,7 @@
     <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
   </div>
 </div>
+{# STYLE + JAVASCRIPT #}
 <script>
  //Enables the add_videos button if any valid video is selected:
  //We check if the form under the opened tab has a checked element.
@@ -58,7 +59,7 @@
      });
  });
  //We check if the form we just changed has a checked element.
- $('form.modal_form').on('change', function(event){
+ $('form.modal_form').on('change', function(){
      $(this).find('input:checkbox').each(function(){
          $('#add_videos_modal_button').prop('disabled', true);
          if($(this).prop('checked')) {
@@ -67,7 +68,6 @@
          }
      });
  });
-
  //The 'Add video' logic consist on sending the selected object ids and updating the view through ajax.
  $('#add_videos_modal_button').click(function(){
      var ids = [];
@@ -81,3 +81,17 @@
      $('#list_playlistmms').load(route);
  });
 </script>
+<style>
+ /*-- Style for the 'select' effect --*/
+ .mmobj_elem {
+   padding: 5px;
+ }
+ .mmobj_elem:hover {
+   background-color: #ededed;
+ }
+ .mmobj_elem.checked {
+   border: 4px orange solid;
+   margin: -4px;
+ }
+</style>
+{# END STYLE + JAVASCRIPT #}
