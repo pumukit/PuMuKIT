@@ -198,6 +198,182 @@
         <source>This series does not have any multimedia objects.</source>
         <target>Esta serie non ten obxetos multimedia.</target>
       </trans-unit>
+      <trans-unit id="132482b5ee2d95cfcbe8ae9b288c047b" resname="{0}no videos yet|{1}1 video|]1,Inf[%count% videos">
+        <source>{0}no videos yet|{1}1 video|]1,Inf[%count% videos</source>
+        <target>{0}aínda non hai vídeos|{1}1 vídeo|]1,Inf[%count% vídeos</target>
+      </trans-unit>
+      <trans-unit id="39ad68dfe686cfdda66b23ae04ef45d6" resname="{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos">
+        <source>{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos</source>
+        <target>{0}0 Vídeos|{1}%count% Vídeo|]1,Inf[%count% Vídeos</target>
+      </trans-unit>
+      <trans-unit id="e6b06dea9ac5e0330e37ee581f323e90" resname="Show videos">
+        <source>Show videos</source>
+        <target>Amosar vídeos</target>
+      </trans-unit>
+      <trans-unit id="445bd664985fd3d87bdfdc0da47507fa" resname="No resources available">
+        <source>No resources available</source>
+        <target>Non hai recursos dispoñibles</target>
+      </trans-unit>
+      <trans-unit id="5ab88857f33f829648393a4f0cdfab8f" resname="Private Video">
+        <source>Private Video</source>
+        <target>Vídeo Privado</target>
+      </trans-unit>
+      <trans-unit id="e01c294e24ff18aa879b207078fed4c4" resname="This video is private with restricted access">
+        <source>This video is private with restricted access</source>
+        <target>Este vídeo é privado con acceso restrinxido</target>
+      </trans-unit>
+      <trans-unit id="c525e0d86d7e6c4901a1c82950e9d913" resname="Log in with a valid user is required to watch it">
+        <source>Log in with a valid user is required to watch it</source>
+        <target>Requírese iniciar sesión con un usuario válido para velo</target>
+      </trans-unit>
+      <trans-unit id="af1b98adf7f686b84cd0b443e022b7a0" resname="Categories">
+        <source>Categories</source>
+        <target>Categorías</target>
+      </trans-unit>
+      <trans-unit id="d4a3404790a7d7c5dc96d18cdaa8850a" resname="Go to back-office">
+        <source>Go to back-office</source>
+        <target>Ir a back-office</target>
+      </trans-unit>
+      <trans-unit id="054c9692816df8b7212f4407755f82a2" resname="Manage my videos">
+        <source>Manage my videos</source>
+        <target>Xestionar os meus vídeos</target>
+      </trans-unit>
+      <trans-unit id="4394c8d8e63c470de62ced3ae85de5ae" resname="Log out">
+        <source>Log out</source>
+        <target>Cerrar sesión</target>
+      </trans-unit>
+      <trans-unit id="bffe9a3c9a7e00ba00a11749e022d911" resname="Log in">
+        <source>Log in</source>
+        <target>Iniciar sesión</target>
+      </trans-unit>
+      <trans-unit id="8904f2049376128f0e548157cbd7d160" resname="Most viewed since last month">
+        <source>Most viewed since last month</source>
+        <target>Máis vistos dende o último mes</target>
+      </trans-unit>
+      <trans-unit id="2d31a9042ca0f50dce8ae60553645e5d" resname="Most viewed">
+        <source>Most viewed</source>
+        <target>Máis vistos</target>
+      </trans-unit>
+      <trans-unit id="945d258623dcac0fa86586d6a0056452" resname="Recently added">
+        <source>Recently added</source>
+        <target>Engadidos recentemente</target>
+      </trans-unit>
+      <trans-unit id="e5e13447e7fd56ed3179869f274069bb" resname="Full Catalogue">
+        <source>Full Catalogue</source>
+        <target>Catálogo completo</target>
+      </trans-unit>
+      <trans-unit id="33d8042bd735c559cc3206f4bc99aedc" resname="Sort by">
+        <source>Sort by</source>
+        <target>Ordenar por</target>
+      </trans-unit>
+      <trans-unit id="44749712dbec183e983dcd78a7736c41" resname="Date">
+        <source>Date</source>
+        <target>Data</target>
+      </trans-unit>
+      <trans-unit id="05602ad27c432a05f26a92b6bc277994" resname="Alphabetically">
+        <source>Alphabetically</source>
+        <target>Alfabéticamente</target>
+      </trans-unit>
+      <trans-unit id="fed711884ae4b45839ecd6ef36ae02e6" resname="Recording date">
+        <source>Recording date</source>
+        <target>Data de grabación</target>
+      </trans-unit>
+      <trans-unit id="20c95ce3b877c9ea1fa186ac6d47c4a3" resname="Marks:">
+        <source>Marks:</source>
+        <target>Marcas:</target>
+      </trans-unit>
+      <trans-unit id="7e2708aeb65763c54052f57ed1a1ec1d" resname="Attachments">
+        <source>Attachments</source>
+        <target>Materiais</target>
+      </trans-unit>
+      <trans-unit id="404eb0c9cf5314b4ddfa9914d2b2ce94" resname="There are no attachments">
+        <source>There are no attachments</source>
+        <target>Non hai materiais</target>
+      </trans-unit>
+      <trans-unit id="d2fc53cc95bd888332468705b5cca88d" resname="Share this video">
+        <source>Share this video</source>
+        <target>Comparte este vídeo</target>
+      </trans-unit>
+      <trans-unit id="3e0fa00ee2fba747e8419e80c1da2d72" resname="Share on Facebook">
+        <source>Share on Facebook</source>
+        <target>Compartir en Facebook</target>
+      </trans-unit>
+      <trans-unit id="82aeb3b62f0627a4bb4ee48193f254d2" resname="Share on Google +">
+        <source>Share on Google +</source>
+        <target>Compartir en Google +</target>
+      </trans-unit>
+      <trans-unit id="1d951d9b21da3a1d8de14c19b3238cf1" resname="Share on Twitter">
+        <source>Share on Twitter</source>
+        <target>Compartir en Twitter</target>
+      </trans-unit>
+      <trans-unit id="3b3d06023f6353f8fd05f859b298573e" resname="URL:">
+        <source>URL:</source>
+        <target>URL:</target>
+      </trans-unit>
+      <trans-unit id="7610774817c30466188bfb70778b7a48" resname="IFRAME:">
+        <source>IFRAME:</source>
+        <target>IFRAME:</target>
+      </trans-unit>
+      <trans-unit id="4994a8ffeba4ac3140beb89e8d41f174" resname="Language">
+        <source>Language</source>
+        <target>Idioma</target>
+      </trans-unit>
+      <trans-unit id="318ad6c5b14a4f5c80f83363033e94cc" resname="Select by year">
+        <source>Select by year</source>
+        <target>Empregar anos</target>
+      </trans-unit>
+      <trans-unit id="5da618e8e4b89c66fe86e32cdafde142" resname="From">
+        <source>From</source>
+        <target>Dende</target>
+      </trans-unit>
+      <trans-unit id="3728af837fe70019577ddb0ed7125ee5" resname="Until">
+        <source>Until</source>
+        <target>Ata</target>
+      </trans-unit>
+      <trans-unit id="537c66b24ef5c83b7382cdc3f34885f2" resname="Year">
+        <source>Year</source>
+        <target>Ano</target>
+      </trans-unit>
+      <trans-unit id="1fdfc5c8c6cd57405ff05809a180ae8b" resname="Select by date range">
+        <source>Select by date range</source>
+        <target>Selección por datas</target>
+      </trans-unit>
+      <trans-unit id="ed36a1ef76a59ee3f15180e0441188ad" resname="Any">
+        <source>Any</source>
+        <target>Calquera</target>
+      </trans-unit>
+      <trans-unit id="cb5760cc8a804f5f7085d3692f736117" resname="Search by series">
+        <source>Search by series</source>
+        <target>Buscar por series</target>
+      </trans-unit>
+      <trans-unit id="ce8ae9da5b7cd6c3df2929543a9af92d" resname="Email">
+        <source>Email</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="c532a205df1024f1522fc8921b86723a" resname="Search by multimedia objects">
+        <source>Search by multimedia objects</source>
+        <target>Buscar por obxectos multimedia</target>
+      </trans-unit>
+      <trans-unit id="0a18493501c4a7d1e08bb9e4fbe98a3b" resname="Multimedia objects search">
+        <source>Multimedia objects search</source>
+        <target>Buscar obxectos multimedia</target>
+      </trans-unit>
+      <trans-unit id="3c53c398c3e076a5b04c2c94e0e7921c" resname="Total search results:">
+        <source>Total search results:</source>
+        <target>Resultados de búsqueda totais:</target>
+      </trans-unit>
+      <trans-unit id="4a71d7d71737bd12fc51c2bc8024e84a" resname="Not multimedia objects found">
+        <source>Not multimedia objects found</source>
+        <target>Non se atoparon obxectos multimedia</target>
+      </trans-unit>
+      <trans-unit id="8d098c874004071be31f616d9edfdd2f" resname="Private video">
+        <source>Private video</source>
+        <target>Vídeo privado</target>
+      </trans-unit>
+      <trans-unit id="8bd1fd42b739b6b760f57f023580794f" resname="Private audio">
+        <source>Private audio</source>
+        <target>Audio privado</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
