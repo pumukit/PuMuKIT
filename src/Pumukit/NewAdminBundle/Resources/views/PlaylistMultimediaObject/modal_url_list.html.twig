@@ -21,3 +21,13 @@
   </b>
   {{ mmobj_id }}
 {% endif %}
+<script>
+ function resizeFrame(elem){
+     var width = $(elem).width()
+         var height = width/16*9;
+     $(elem).height(height);
+ }
+ $(window).resize(function(){
+     resizeFrame($('#paellaiframe'));
+ });
+</script>
