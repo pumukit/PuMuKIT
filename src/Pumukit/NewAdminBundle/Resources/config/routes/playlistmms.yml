@@ -19,12 +19,14 @@ pumukitnewadmin_playlistmms_show:
     methods: [GET, POST]
     defaults:
         _controller: pumukitnewadmin.controller.playlistmms:showAction
+        filter: false
 
 pumukitnewadmin_playlistmms_info:
     pattern: /{id}/info
     methods: [GET, POST]
     defaults:
         _controller: pumukitnewadmin.controller.playlistmms:infoAction
+        filter: false
 
 pumukitnewadmin_playlistmms_up:
     pattern: /{id}/up

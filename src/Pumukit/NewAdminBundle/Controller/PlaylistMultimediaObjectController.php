@@ -114,8 +114,9 @@ class PlaylistMultimediaObjectController extends Controller
     //TODO: This? Or getResources(like in PlaylistController?)
     protected function getPlaylistMmobjs(Series $series, $request)
     {
-        $mms = $series->getPlaylist()->getMultimediaObjects();
-        $adapter = new DoctrineCollectionAdapter($mms);
+        $this->disableBackofficeFilter();
+        $mmsList = $series->getPlaylist()->getMultimediaObjects();
+        $adapter = new DoctrineCollectionAdapter($mmsList);
         $pagerfanta = new Pagerfanta($adapter);
 
         $session = $this->get('session');
@@ -187,6 +188,7 @@ class PlaylistMultimediaObjectController extends Controller
 
     public function addBatchAction(Series $playlist, Request $request)
     {
+        $this->enableFilter();
         $mmobjIds = $this->getRequest()->get('ids', '');
         if(!$mmobjIds)
             throw $this->createNotFoundException();
@@ -243,6 +245,7 @@ class PlaylistMultimediaObjectController extends Controller
      */
     public function addMmobjAction(Series $series, Request $request)
     {
+        $this->enableFilter();
         if(!$request->query->has('mm_id'))
             throw new \Exception('The request is missing the \'mm_id\' parameter');
 
@@ -271,12 +274,12 @@ class PlaylistMultimediaObjectController extends Controller
     protected function enableFilter()
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $filter = $dm->getFilterCollection()->enable("personal");
         $user = $this->get('security.context')->getToken()->getUser();
         if ($this->isGranted(PermissionProfile::SCOPE_GLOBAL)){
             return;
         }
-        $filter = $dm->getFilterCollection()->disable("backoffice");
+        $dm->getFilterCollection()->disable("backoffice");
+        $filter = $dm->getFilterCollection()->enable("personal");
         $person = $this->get('pumukitschema.person')->getPersonFromLoggedInUser($user);
         $people = array();
         if ((null != $person) && (null != ($roleCode = $this->get('pumukitschema.person')->getPersonalScopeRoleCode()))) {
@@ -290,5 +293,10 @@ class PlaylistMultimediaObjectController extends Controller
         $filter->setParameter('groups', $groups);
         $filter->setParameter('status', MultimediaObject::STATUS_PUBLISHED);
         $filter->setParameter("display_track_tag", "display");
+    }
+
+    //Disables the back office filter.
+    protected function disableBackofficeFilter(){
+        $this->get('doctrine_mongodb.odm.document_manager')->getFilterCollection()->disable("backoffice");
     }
 }
