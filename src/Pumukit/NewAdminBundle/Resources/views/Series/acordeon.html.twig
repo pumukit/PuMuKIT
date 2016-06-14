@@ -1,6 +1,6 @@
 {% set criteria = app.session.get('admin/series/criteria') %}
 <div class="well">
-  <form autocomplete="off" id="filter_series" class="form" 
+  <form autocomplete="off" id="filter_series" class="form"
         onsubmit="return filter_series(this);">
     <fieldset>
       <div id="accordion" class="panel-group" role="tablist" arirole="tablist" aria-multiselectable="true">
@@ -27,7 +27,7 @@
                   <input type="text" class="form-control" name="criteria[search]" id="filters_search" value="{{ criteria['search']|default("") }}">
                 </div>
               </div>
-              
+
               {# <div class="form-group">
                 <label for="filters_person" class="control-label">{% trans %}Person{% endtrans %}:</label>
                 <div>
@@ -83,8 +83,7 @@
   </form>
 </div>
 
-
-<script>
+<script type="text/javascript">
   function resetSearchForm() {
     $('filters_title').value = '';
     $('filters_person').value = '';
