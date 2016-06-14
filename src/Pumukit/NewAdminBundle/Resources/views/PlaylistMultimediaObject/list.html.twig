@@ -149,7 +149,7 @@
 <script>
  $('.mm_listed').click(function(){
      var show_url = "{{ path('pumukitnewadmin_playlistmms_show', {'id': '__mmid__', 'pos':'__pos__'}) }}";
-     var edit_url = "{{ path('pumukitnewadmin_mms_links', {'id': '__mmid__'}) }}";
+     var edit_url = "{{ path('pumukitnewadmin_playlistmms_info', {'id': '__mmid__'}) }}";
      var id = $(this).data('id');
      var pos = $(this).data('pos');
      $('.success').removeClass('success');

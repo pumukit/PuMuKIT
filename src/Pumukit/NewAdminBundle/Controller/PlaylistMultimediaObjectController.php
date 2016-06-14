@@ -71,6 +71,24 @@ class PlaylistMultimediaObjectController extends Controller
     }
 
     /**
+     * Displays the 'info' tab.
+     * @Template("PumukitNewAdminBundle:MultimediaObject:links.html.twig")
+     */
+    public function infoAction(MultimediaObject $mmobj, Request $request)
+    {
+        $mmService = $this->get('pumukitschema.multimedia_object');
+        $warningOnUnpublished = $this->container->getParameter('pumukit2.warning_on_unpublished');
+
+        return array(
+             'mm' => $mmobj,
+             'is_published' => $mmService->isPublished($mmobj, 'PUCHWEBTV'),
+             'is_hidden' => $mmService->isHidden($mmobj, 'PUCHWEBTV'),
+             'is_playable' => $mmService->hasPlayableResource($mmobj),
+             'warning_on_unpublished' => $warningOnUnpublished,
+        );
+    }
+
+    /**
      * @Template
      */
     public function listAction(Request $request)
