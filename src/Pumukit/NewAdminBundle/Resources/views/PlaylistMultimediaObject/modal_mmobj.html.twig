@@ -1,0 +1,20 @@
+<div class="media">
+  <div class="media-left">
+    <div class="thumbnail" style="width:100px;text-align:center;float:left;">
+      {#<span class="video-duration">{{ mmobj_duration(mmobj) | duration_string }}</span>#}
+      <img alt="serial_pic" class="serial thumbnailimg" src="{{ mmobj|first_url_pic(true) }}"/>
+      {#div class="thumbnailholder"></div>#}
+    </div>
+  </div>
+  <div class="media-body">
+    <div class="media-heading">
+      {{ mmobj.title }} - {{ mmobj.series.title }}
+    </div>
+    <div style="overflow:hidden;height:3em">
+      {{ mmobj.description }}
+    </div>
+    <div class="date mmobj">
+      {{ mmobj.recordDate|date("d/m/Y") }}
+    </div>
+  </div>
+</div>
