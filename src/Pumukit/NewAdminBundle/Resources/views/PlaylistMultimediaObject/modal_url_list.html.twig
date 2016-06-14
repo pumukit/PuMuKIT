@@ -1,11 +1,11 @@
-<hr>
-<br>
-<br>
 {% if mmobj %}
   <label class="">
     <input type="checkbox" name="{{mmobj.id}}" id="{{mmobj.id}}" class=""/>
     {{mmobj.title}} - {{mmobj.series.title}}
   </label>
 {% else %}
-  There is no mmobj with that url/id.
+  <b>
+  {% trans %}There is no Multimedia Object with the following id: {% endtrans %}
+  </b>
+  {{ mmobj_id }}
 {% endif %}

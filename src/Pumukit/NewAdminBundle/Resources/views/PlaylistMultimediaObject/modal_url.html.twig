@@ -1,21 +1,42 @@
 INSERT URL:
-<input type="text" id="modal_url"/>
+<input type="text" id="modal_url" style="width:100%"/>
+<hr>
+<br>
+<br>
 <form class="modal_form">
   <div id="modal_url_loader" style="display:none">
     LOADER GIF...
+  </div>
+  <div id="modal_url_wrong_url" style="display:none">
+    <b>{% trans %} The url does not have a valid format. {% endtrans %}</b>
+    <div>{% trans %} Please, enter an url with the following format: <b>https://example.domain.org/video/XXXXXXXX</b> {% endtrans %}</div>
+    <p>{% trans %} or enter the ID of the Multimedia Object. {% endtrans %}</p>
   </div>
   <fieldset id="modal_url_list">
   </fieldset>
 </form>
 <script>
-$('#modal_url').on('input', function(){
-    var url = $(this).val();
-    console.log(url);
-    $('#modal_url_loader').show();
-    $('#modal_url_list').hide();
-    $('#modal_url_list').load('https://pumukit2.armazeg.org/app_dev.php/admin/playlist/mms/modal_url?mmid='+url, function(){
-        $('#modal_url_loader').hide();
-        $('#modal_url_list').show();
-    });
-});
+ $('#modal_url').on('input', function(){
+     var searchField = $(this).val();
+     var id = searchField; //The searchField could potentially be an id;
+     if(!searchField.match(/^\w*$$/g)) {
+         var regexResults = /video\/(\w*)\b/.exec(id);
+         if(!regexResults) {
+             $('#modal_url_loader').hide();
+             $('#modal_url_list').hide();
+             $('#modal_url_wrong_url').show();
+             return;
+         }
+         id = regexResults[1];
+     }
+     $('#modal_url_wrong_url').hide();
+     $('#modal_url_loader').show();
+     $('#modal_url_list').hide();
+     var listUrl = 'https://pumukit2.armazeg.org/app_dev.php/admin/playlist/mms/modal_url?mmid=__id__';
+     listUrl = listUrl.replace('__id__', id);
+     $('#modal_url_list').load(listUrl, function(){
+         $('#modal_url_loader').hide();
+         $('#modal_url_list').show();
+     });
+ });
 </script>
