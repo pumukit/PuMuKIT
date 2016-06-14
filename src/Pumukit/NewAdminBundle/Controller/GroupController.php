@@ -62,22 +62,27 @@ class GroupController extends AdminController implements NewAdminController
         $group = $this->createNew();
         $form = $this->getForm($group);
 
-        if ($form->handleRequest($request)->isValid()) {
-            try {
-                $group = $this->get('pumukitschema.group')->create($group);
-            } catch (\Exception $e) {
-                return new JsonResponse(array($e->getMessage()), Response::HTTP_BAD_REQUEST);
-            }
+        if (in_array($request->getMethod(), array('POST', 'PUT'))) {
+            $formHandleRequest = $form->handleRequest($request);
+            if ($formHandleRequest->isValid()) {
+                try {
+                    $group = $this->get('pumukitschema.group')->create($group);
+                } catch (\Exception $e) {
+                    return new JsonResponse(array($e->getMessage()), Response::HTTP_BAD_REQUEST);
+                }
 
-            if ($this->config->isApiRequest()) {
-                return $this->handleView($this->view($group, 201));
-            }
+                if ($this->config->isApiRequest()) {
+                    return $this->handleView($this->view($group, 201));
+                }
 
-            if (null === $group) {
-              return $this->redirect($this->generateUrl('pumukitnewadmin_group_list'));
-            }
+                if (null === $group) {
+                    return $this->redirect($this->generateUrl('pumukitnewadmin_group_list'));
+                }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_group_list'));
+                return $this->redirect($this->generateUrl('pumukitnewadmin_group_list'));
+            } else {
+                return new JsonResponse(array('Form not valid'), Response::HTTP_BAD_REQUEST);
+            }
         }
 
         if ($this->config->isApiRequest()) {
