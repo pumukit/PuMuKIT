@@ -7,6 +7,8 @@
   <a href="#" onclick="delete_{{ resource_name }}_from_group('{{ resource.id }}', '{{ group.id }}', '{{ loop.length }}', '{{ action }}');">
     <i class="mdi-content-clear"/>
   </a>
+  {% else %}
+  &#8226;
   {% endif %}
   &nbsp;{{ (resource_name == 'user') ? resource.username : resource.getTitle() }}</p>
 {% endif %}
