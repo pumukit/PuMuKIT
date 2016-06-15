@@ -77,9 +77,16 @@
 
     $.post('{{ path('pumukitnewadmin_playlist_create') }}', new_playlist_form.serialize())
     .done(function(data){
-      $('#add_playlist_form').prepend('<div class="checkbox" style="padding-top: 10px"><label><input checked="checked" type="checkbox" class="add_playlist_form_checkbox" name="pub_' + data.playlistId + '" id="' + data.playlistId + '" /> ' + data.title + '</label> </div>');
+      var div = $('<div class="checkbox" style="padding-top: 10px" />');
+      var label = $('<label />');
+      var input = $('<input checked="checked" type="checkbox" class="add_playlist_form_checkbox" name="pub_' + data.playlistId + '" id="' + data.playlistId + '" />');
+      label.text(data.title);
+      label.prepend(input);
+      div.append(label);
+      $('#add_playlist_form').prepend(div);
       new_playlist_form[0].reset();
       $('.new_playlist').toggle();
+      $('#add_playlist_form_none').hide();
     });
   });
   $('#new_playlist_btn').on('click', function(e){
