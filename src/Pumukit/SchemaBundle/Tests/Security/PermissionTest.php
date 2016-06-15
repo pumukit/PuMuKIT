@@ -178,7 +178,7 @@ class PermissionTest extends \PHPUnit_Framework_TestCase
             )
         );
         $modifyOwner = array(
-            'description' => "Modify Owner",
+            'description' => "Modify Owners & Groups",
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()
