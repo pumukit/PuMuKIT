@@ -52,7 +52,7 @@ class SeriesPlaylistServiceTest extends WebTestCase
         $this->dm->flush();
 
         $playlistMmobjs = $this->seriesPlaylistService->getPlaylistMmobjs($series);
-        $this->assertEquals(3, count($playlistMmobjs));
+        $this->assertEquals(3, $playlistMmobjs->count());
         //TODO: Add tests when service includes more functionality.
     }
 }
