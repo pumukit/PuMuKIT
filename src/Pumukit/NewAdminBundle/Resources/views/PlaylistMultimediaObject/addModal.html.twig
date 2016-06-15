@@ -87,6 +87,9 @@
       new_playlist_form[0].reset();
       $('.new_playlist').toggle();
       $('#add_playlist_form_none').hide();
+    })
+    .fail(function(){
+      no_success('{% trans %}Error creating playlist{% endtrans %}')
     });
   });
   $('#new_playlist_btn').on('click', function(e){
@@ -115,6 +118,9 @@
     $.post('{{ path('pumukitnewadmin_playlistmms_batch_add_to_several_playlist') }}', data)
     .done(function(e){
       $('#myModal').modal('hide');
+    })
+    .fail(function(){
+      no_success('{% trans %}Error adding object to playlist{% endtrans %}')
     });
   });
 })();
