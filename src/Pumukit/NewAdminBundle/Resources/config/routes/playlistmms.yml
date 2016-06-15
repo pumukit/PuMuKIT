@@ -117,3 +117,18 @@ pumukitnewadmin_playlistmms_batch_delete:
     methods: [GET, POST, DELETE]
     defaults:
         _controller: pumukitnewadmin.controller.playlistmms:deleteBatchAction
+
+pumukitnewadmin_playlistmms_modal_add:
+    pattern: /modal
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistmms:addModalAction
+
+pumukitnewadmin_playlistmms_batch_add_to_several_playlist:
+    pattern: /
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistmms:addBatchToSeveralPlaylistAction
+
+
+

@@ -681,6 +681,28 @@ window.change_select = function(element, selector, pluralName, seriesId)
             });
         }
         break;
+    case 'add_playlist':
+        var ids = [];
+        $('.' + element + '_checkbox:checked').each(function(){
+            var $this = $(this);
+            ids.push($this.attr("id"));
+        });
+        if (ids.length == 0) {
+          no_success('No multimedia object selected');
+          break;
+        }
+        
+        var url = "{{ path('pumukitnewadmin_playlistmms_modal_add', {'ids': '__ids__'})|raw }}";
+        $.ajax({
+            url: url.replace('__ids__', JSON.stringify(ids)),
+            type: 'GET',
+            success: function(response){
+                var $modal = $('#myModal');
+                $modal.modal('show');
+                $modal.find('.modal-content').html(response);
+            }
+        });
+        break;
 /* TODO
       //status mm
     case 'set_status_0_sel':
