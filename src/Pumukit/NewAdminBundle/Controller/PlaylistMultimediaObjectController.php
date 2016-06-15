@@ -259,6 +259,39 @@ class PlaylistMultimediaObjectController extends Controller
         $dm->flush();
     }
 
+    /**
+     * Moves the mmobj in $initPos to $endPos
+     */
+    protected function moveAction(Series $playlist, $initPos, $endPos) {
+        $actionResponse = $this->redirect($this->generateUrl('pumukitnewadmin_playlistmms_index', array('id' => $playlist->getId())));
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $playlist->getPlaylist()->moveMultimediaObject($initPos, $endPos);
+        $dm->persist($playlist);
+        $dm->flush();
+        return $actionResponse;
+    }
+
+    public function upAction(Series $playlist, Request $request) {
+        $initPos = $request->query->get('mm_pos');
+        $this->moveAction($playlist, $initPos, $endPos);
+    }
+
+    public function downAction(Series $playlist, Request $request) {
+        $initPos = $request->query->get('mm_pos');
+        $this->moveAction($playlist, $initPos, $endPos);
+    }
+
+    public function topAction(Series $playlist, Request $request) {
+        $initPos = $request->query->get('mm_pos');
+        $this->moveAction($playlist, $initPos, $endPos);
+    }
+
+    public function bottomAction(Series $playlist, Request $request) {
+        $initPos = $request->query->get('mm_pos');
+        $this->moveAction($playlist, $initPos, $endPos);
+    }
+
+
     //Workaround function to check if the VideoEditorBundle is installed.
     protected function checkHasEditor()
     {
