@@ -50,16 +50,16 @@
             <td>
 	      {% if mms.getCurrentPage() != 1 or not loop.first %}
 	        {% spaceless %}
-	          <a href="{{ path('pumukitnewadmin_playlistmms_down', {'id': mm.id}) }}" title="{% trans %}Move one position up{% endtrans %}">&#8593;</a>
-	          <a href="{{ path('pumukitnewadmin_playlistmms_bottom', {'id': mm.id}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}"><i class="mdi-editor-vertical-align-top"></i></a>
+	          <a href="{{ path('pumukitnewadmin_playlistmms_up', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move one position up{% endtrans %}">&#8593;</a>
+	          <a href="{{ path('pumukitnewadmin_playlistmms_top', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}"><i class="mdi-editor-vertical-align-top"></i></a>
 	        {% endspaceless %}
 	      {% endif %}
             </td>
             <td>
 	      {% if (mms.getCurrentPage() != mms.getNbPages()) or (loop.index + ((mms.getCurrentPage() - 1 ) * mms.getMaxPerPage()) != mms.getNbResults())  %}
 	        {% spaceless %}
- 	          <a href="{{ path('pumukitnewadmin_playlistmms_up', {'id': mm.id}) }}" title="{% trans %}Move one position down{% endtrans %}">&#8595;</a>
-	          <a href="{{ path('pumukitnewadmin_playlistmms_top', {'id': mm.id}) }}" title="{% trans %}Move to the end of the list{% endtrans %}"><i class="mdi-editor-vertical-align-bottom"></i></a>
+ 	          <a href="{{ path('pumukitnewadmin_playlistmms_down', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move one position down{% endtrans %}">&#8595;</a>
+	          <a href="{{ path('pumukitnewadmin_playlistmms_bottom', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move to the end of the list{% endtrans %}"><i class="mdi-editor-vertical-align-bottom"></i></a>
 	        {% endspaceless %}
 	      {% endif %}
             </td>
