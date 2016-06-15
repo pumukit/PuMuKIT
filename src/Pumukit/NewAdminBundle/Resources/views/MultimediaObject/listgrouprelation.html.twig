@@ -11,24 +11,24 @@
         {% endif %}
       </div>
       <div class="panel-body" id="group_mm{{ template }}">
-        <div class="row" style="margin-right: 0px; margin-left: 0px;">
-          <div style="width:430px; float: left;">
+        <div class="row pumukitnewadmin-groups-list-title-row">
+          <div class="pumukitnewadmin-groups-list-title list-title-3">
             {% trans %}Available Groups{% endtrans %}:
           </div>
-          <div style="width:390px; float: left;">
+          <div class="pumukitnewadmin-groups-list-title list-title-4">
             <strong>{% trans %}Selected Admin Groups{% endtrans %}:</strong>
           </div>
         </div>
-        <div style="overflow:hidden;height: 240px">
-	      <div style="width:390px; float: left; height: 220px; border: 1px solid #bbb; overflow-x: hidden; overflow-y: scroll" class="tag list-group pmk-tag-tree" id="delete_mm{{ template }}_groups">
+        <div class="pumukitnewadmin-groups-boxes">
+	      <div class="tag list-group pmk-tag-tree pumukitnewadmin-groups-list-box list-box-width" id="delete_mm{{ template }}_groups">
             {% include 'PumukitNewAdminBundle:MultimediaObject:availablegroups.html.twig' with {'resource': mm, 'groups': groups, 'resource_name': 'mm'~template} %}
 	      </div>
-	      <div style="float: left; padding: 110px 5px 0px">
+	      <div class="pumukitnewadmin-groups-arrows">
 	        <a href="#" onclick="$('#add_mm{{ template }}_groups > a.active').trigger('dblclick'); return false;">&#8592;</a>
 	        <a href="#" onclick="$('#delete_mm{{ template }}_groups > a.active').trigger('dblclick'); return false;">&#8594;</a>
 	      </div>
           {# Groups added to the multimedia object #}
-	      <div style="width:390px; height:220px; border: 1px solid #bbb; float: left; overflow-x: hidden; overflow-y: scroll" class="tag" id="added_mm{{ template }}_groups">
+	      <div class="tag pumukitnewadmin-groups-list-box list-box-width" id="added_mm{{ template }}_groups">
 	        <div class="tag_tree list-group" id="add_mm{{ template }}_groups" >
               {% include 'PumukitNewAdminBundle:MultimediaObject:selectedgroups.html.twig' with {'resource': mm, 'groups': groups, 'resource_name': 'mm'~template} %}
 	        </div>

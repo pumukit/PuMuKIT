@@ -4,16 +4,16 @@
     {% trans %}BROADCAST GROUPS{% endtrans %}
   </div>
   <div class="panel-body" id="group_broadcast">
-    <div class="row" style="margin-right: 0px; margin-left: 0px;">
-      <div style="width:415px; float: left;">
+    <div class="row pumukitnewadmin-groups-list-title-row">
+      <div class="pumukitnewadmin-groups-list-title list-title-1">
         {% trans %}Available Groups{% endtrans %}:
       </div>
-      <div style="width:375px; float: left;">
+      <div class="pumukitnewadmin-groups-list-title list-title-2">
         <strong>{% trans %}Selected Groups{% endtrans %}:</strong>
       </div>
     </div>
-    <div style="overflow:hidden;height: 240px">
-	  <div style="width:375px; float: left; height: 220px; border: 1px solid #bbb; overflow-x: hidden; overflow-y: scroll" class="tag list-group pmk-tag-tree" id="delete_broadcast_groups">
+    <div class="pumukitnewadmin-groups-boxes">
+	  <div class="tag list-group pmk-tag-tree pumukitnewadmin-groups-list-box" id="delete_broadcast_groups">
         {% if embeddedBroadcast %}
         {% set resource_groups = embeddedBroadcast.getGroups() %}
         {% else %}
@@ -21,12 +21,12 @@
         {% endif %}
         {% include 'PumukitNewAdminBundle:Series:availablegroups.html.twig' with {'resource_groups': resource_groups, 'groups': groups, 'resource_name': 'broadcast'} %}
 	  </div>
-	  <div style="float: left; padding: 110px 5px 0px">
+	  <div class="pumukitnewadmin-groups-arrows">
 	    <a href="#" onclick="$('#add_broadcast_groups > a.active').trigger('dblclick'); return false;">&#8592;</a>
 	    <a href="#" onclick="$('#delete_broadcast_groups > a.active').trigger('dblclick'); return false;">&#8594;</a>
 	  </div>
       {# Groups added to all the multimedia object in the series #}
-	  <div style="width:375px; height:220px; border: 1px solid #bbb; float: left; overflow-x: hidden; overflow-y: scroll" class="tag" id="added_broadcast_groups">
+	  <div class="tag pumukitnewadmin-groups-list-box" id="added_broadcast_groups">
 	    <div class="tag_tree list-group" id="add_broadcast_groups" >
           {% if embeddedBroadcast %}
           {% include 'PumukitNewAdminBundle:Series:selectedgroups.html.twig' with {'resource': embeddedBroadcast, 'groups': groups, 'resource_name': 'broadcast'} %}
