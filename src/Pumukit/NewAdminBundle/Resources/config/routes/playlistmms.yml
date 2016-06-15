@@ -32,6 +32,7 @@ pumukitnewadmin_playlistmms_up:
     pattern: /{id}/up
     methods: [GET, PUT, POST]
     defaults:
+        filter: false
         _controller: pumukitnewadmin.controller.playlistmms:upAction
         _sylius:
             redirect: pumukitnewadmin_playlistmms_index
@@ -40,6 +41,7 @@ pumukitnewadmin_playlistmms_down:
     pattern: /{id}/down
     methods: [GET, PUT, POST]
     defaults:
+        filter: false
         _controller: pumukitnewadmin.controller.playlistmms:downAction
         _sylius:
             redirect: pumukitnewadmin_playlistmms_index
@@ -48,6 +50,7 @@ pumukitnewadmin_playlistmms_top:
     pattern: /{id}/top
     methods: [GET, PUT, POST]
     defaults:
+        filter: false
         _controller: pumukitnewadmin.controller.playlistmms:topAction
         _sylius:
             redirect: pumukitnewadmin_playlistmms_index
@@ -56,6 +59,7 @@ pumukitnewadmin_playlistmms_bottom:
     pattern: /{id}/bottom
     methods: [GET, PUT, POST]
     defaults:
+        filter: false
         _controller: pumukitnewadmin.controller.playlistmms:bottomAction
         _sylius:
             redirect: pumukitnewadmin_playlistmms_index
