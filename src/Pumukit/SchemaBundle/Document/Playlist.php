@@ -16,7 +16,7 @@ class Playlist
     /**
      * @var ArrayCollection $multimedia_objects
      *
-     * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", simple=true)
+     * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", simple=true, strategy="set")
      * @Serializer\Exclude
      */
     private $multimedia_objects;
@@ -76,5 +76,37 @@ class Playlist
     public function getMultimediaObjects()
     {
         return $this->multimedia_objects;
+    }
+
+    /**
+     * Move multimedia_objects
+     *
+     * @return ArrayCollection
+     */
+    public function moveMultimediaObject($posStart, $posEnd)
+    {
+        $maxPos = $this->multimedia_objects->count();
+        if($posStart - $posEnd == 0
+           || $posStart < 0 || $posStart > $maxPos) {
+            return false; //If start is out of range or start/end is the same, do nothing.
+        }
+        $posEnd = $posEnd % $maxPos; //Out of bounds.
+        if($posEnd < 0) {
+            $posEnd = $maxPos + $posEnd;
+        }
+        $tempObject = $this->multimedia_objects->get($posStart);
+        if($posStart - $posEnd > 0) {
+            for($i = $posStart; $i > $posEnd; $i--) {
+                $prevObject = $this->multimedia_objects->get($i-1);
+                $this->multimedia_objects->set($i, $prevObject);
+            }
+        }
+        else {
+            for($i = $posStart; $i < $posEnd; $i++) {
+                $nextObject = $this->multimedia_objects->get($i+1);
+                $this->multimedia_objects->set($i, $nextObject);
+            }
+        }
+        $this->multimedia_objects->set($posEnd, $tempObject);
     }
 }
