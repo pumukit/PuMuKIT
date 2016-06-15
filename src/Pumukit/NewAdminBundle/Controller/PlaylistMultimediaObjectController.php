@@ -114,7 +114,6 @@ class PlaylistMultimediaObjectController extends Controller
     //TODO: This? Or getResources(like in PlaylistController?)
     protected function getPlaylistMmobjs(Series $series, $request)
     {
-        $this->disableBackofficeFilter();
         $mmsList = $series->getPlaylist()->getMultimediaObjects();
         $adapter = new DoctrineCollectionAdapter($mmsList);
         $pagerfanta = new Pagerfanta($adapter);
@@ -293,10 +292,5 @@ class PlaylistMultimediaObjectController extends Controller
         $filter->setParameter('groups', $groups);
         $filter->setParameter('status', MultimediaObject::STATUS_PUBLISHED);
         $filter->setParameter("display_track_tag", "display");
-    }
-
-    //Disables the back office filter.
-    protected function disableBackofficeFilter(){
-        $this->get('doctrine_mongodb.odm.document_manager')->getFilterCollection()->disable("backoffice");
     }
 }
