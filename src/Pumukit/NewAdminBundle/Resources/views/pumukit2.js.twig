@@ -1097,7 +1097,7 @@ $(function() {
     var route = "{{ path('pumukitnewadmin_playlist_create') }}";
     $('#filter_playlist')[0].reset();
     $.ajax(route, {
-            type: 'GET',
+            type: 'POST',
             error: function(jqXHR, textStatus, errorThrown){
                         var responseText = jqXHR.responseText.split("<title>").pop().split("</title>").shift();
                         var message = responseText.replace(/(\r\n|\n|\r)/gm,"");
