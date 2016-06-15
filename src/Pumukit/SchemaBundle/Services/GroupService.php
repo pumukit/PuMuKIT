@@ -307,7 +307,7 @@ class GroupService
      */
     public function findAll()
     {
-        return $this->repo->findAll();
+        return $this->repo->findBy(array(), array('key' => 1));
     }
 
     /**
