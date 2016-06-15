@@ -317,8 +317,8 @@ class PlaylistMultimediaObjectController extends Controller
           ->getQuery()
           ->execute();
 
-        $multimediaObjet = $request->get('id') ? $repoMms->find($request->get('id')) : null;
-        
+        $multimediaObject = $request->get('id') ? $repoMms->find($request->get('id')) : null;
+
         $count = 0;
         if ($request->get('ids')) {
             $ids = json_decode($request->get('ids'));
@@ -327,7 +327,7 @@ class PlaylistMultimediaObjectController extends Controller
 
         return array(
             'series' => $series,
-            'multimediaObjet' => $multimediaObjet,
+            'multimediaObject' => $multimediaObject,
             'id' => $request->get('id'),
             'ids' => $request->get('ids'),
             'num_mm' => $count,
@@ -353,7 +353,7 @@ class PlaylistMultimediaObjectController extends Controller
 
         $mmobjIds = $this->getIdOrIds($request, 'ids', 'id');
         $playlistIds = $this->getIdOrIds($request, 'series_ids', 'series_id');
-  
+
 
         $mmObjs = $mmobjRepo->findBy(array('_id' => array('$in' => $mmobjIds)));
         $playlists = $seriesRepo->findBy(array('_id' => array('$in' => $playlistIds)));
@@ -378,15 +378,15 @@ class PlaylistMultimediaObjectController extends Controller
     {
       if ($request->request->has($idKey)) {
         return array($request->request->get($idKey));
-      } elseif ($request->request->has($idsKey)) { 
+      } elseif ($request->request->has($idsKey)) {
         $ids = $request->request->get($idsKey);
         if ('string' === gettype($ids)) {
           return json_decode($ids, true);
         } else {
           return $ids;
         }
-      } 
-      
+      }
+
       throw $this->createNotFoundException();
     }
 }

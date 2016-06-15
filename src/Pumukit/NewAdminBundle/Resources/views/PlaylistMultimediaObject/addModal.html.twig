@@ -5,9 +5,9 @@
   <h4 class="modal-title" id="myModalLabel">{% trans %}Add to playlist{% endtrans %}</h4>
 </div>
 <div class="modal-body">
-  
-  {% if multimediaObjet %}
-    {% trans with {'%title%': multimediaObjet.title|default(ids) } %}Add the object "%title%" to the playlist{% endtrans %}:
+
+  {% if multimediaObject %}
+    {% trans with {'%title%': multimediaObject.title|default(ids) } %}Add the object "%title%" to the playlist{% endtrans %}:
   {% else %}
     {% trans with {'%num%': num_mm|default('') } %}Add %num% multimedia objects to the playlist{% endtrans %}::
   {% endif %}
@@ -51,7 +51,7 @@
                     <span class="input-group-addon">{{ locale }}</span>
                   </div>
                 {% endfor %}
-              </div>    
+              </div>
             </fieldset>
           </form>
         </div>
@@ -71,7 +71,7 @@
 <script type="text/javascript">
 (function(){
   var new_playlist_form = $('#new_playlist_form');
-   
+
   new_playlist_form.on('submit', function(e){
     e.preventDefault();
 
@@ -108,7 +108,7 @@
     }
     var id = $('#add_playlist_form_id').val();
     var data = {'ids': ids, 'id': id, series_ids: []};
-   
+
     $('.add_playlist_form_checkbox:checked').each(function(){
         var $this = $(this);
         data.series_ids.push($this.attr("id"));
