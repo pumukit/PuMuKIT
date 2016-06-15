@@ -47,7 +47,7 @@
                 {# TODO two culture #}
                 {% for locale in locales %}
                   <div class="input-group">
-                    <input type="text" name="playlist_title[{{ locale }}]" class="form-control" placeholder="title {{locale}}"/>
+                    <input type="text" name="playlist_title[{{ locale }}]" class="new_playlist_form_title form-control" placeholder="title {{locale}}"/>
                     <span class="input-group-addon">{{ locale }}</span>
                   </div>
                 {% endfor %}
@@ -58,7 +58,7 @@
       </div>
 
       <div class="modal-footer">
-        <button id="new_playlist_btn" style="display:none" type="button" class="new_playlist pull-left btn btn-default btn-primary">{% trans %}Create playlist{% endtrans %}</button>
+        <button disabled="disabled" id="new_playlist_btn" style="display:none" type="button" class="new_playlist pull-left btn btn-default btn-primary">{% trans %}Create playlist{% endtrans %}</button>
         <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
         <button id="add_playlist_btn" type="submit" class="btn btn-pumukit">{% trans %}OK{% endtrans %}</button>
       </div>
@@ -123,6 +123,17 @@
       no_success('{% trans %}Error adding object to playlist{% endtrans %}')
     });
   });
+
+  var new_playlist_form_title = $('.new_playlist_form_title');
+  new_playlist_form_title.on('input', function(e){
+    var empty = false;
+    new_playlist_form_title.each(function(i, e){
+        if ("" == e.value) {
+            empty = true;
+        }
+    });
+    $('#new_playlist_btn').attr('disabled', empty);
+  })
 })();
 
 </script>
