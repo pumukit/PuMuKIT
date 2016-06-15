@@ -293,4 +293,100 @@ class PlaylistMultimediaObjectController extends Controller
         $filter->setParameter('status', MultimediaObject::STATUS_PUBLISHED);
         $filter->setParameter("display_track_tag", "display");
     }
+
+    //Disables the back office filter.
+    protected function disableBackofficeFilter(){
+        $this->get('doctrine_mongodb.odm.document_manager')->getFilterCollection()->disable("backoffice");
+    }
+
+
+    /**
+     * Show modal to add one or more mmobjs to a playlist.
+     * @Template
+     */
+    public function addModalAction(Request $request)
+    {
+        $repoSeries = $this->getDoctrine()
+            ->getRepository('PumukitSchemaBundle:Series');
+        $repoMms = $this->getDoctrine()
+            ->getRepository('PumukitSchemaBundle:MultimediaObject');
+
+        $series = $repoSeries->createQueryBuilder()
+          ->field('type')->equals(Series::TYPE_PLAYLIST)
+          ->sort('public_date', -1)
+          ->getQuery()
+          ->execute();
+
+        $multimediaObjet = $request->get('id') ? $repoMms->find($request->get('id')) : null;
+        
+        $count = 0;
+        if ($request->get('ids')) {
+            $ids = json_decode($request->get('ids'));
+            $count = count($ids);
+        }
+
+        return array(
+            'series' => $series,
+            'multimediaObjet' => $multimediaObjet,
+            'id' => $request->get('id'),
+            'ids' => $request->get('ids'),
+            'num_mm' => $count,
+            'locales' => $this->container->getParameter('pumukit2.locales')
+        );
+    }
+
+
+    /**
+     *
+     * ids
+     * id
+     *
+     * series_id
+     * series_ids
+     */
+    public function addBatchToSeveralPlaylistAction(Request $request)
+    {
+
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $seriesRepo = $dm->getRepository('PumukitSchemaBundle:Series');
+
+        $mmobjIds = $this->getIdOrIds($request, 'ids', 'id');
+        $playlistIds = $this->getIdOrIds($request, 'series_ids', 'series_id');
+  
+
+        $mmObjs = $mmobjRepo->findBy(array('_id' => array('$in' => $mmobjIds)));
+        $playlists = $seriesRepo->findBy(array('_id' => array('$in' => $playlistIds)));
+
+        foreach ($playlists as $playlist) {
+            foreach ($mmObjs as $mmObj) {
+                $playlist->getPlaylist()->addMultimediaObject($mmObj);
+            }
+            $dm->persist($playlist);
+        }
+        $dm->flush();
+
+
+        return new JsonResponse(array());
+    }
+
+
+    /**
+     * TODO
+     */
+    private function getIdOrIds(Request $request, $idsKey = 'ids', $idKey = 'id')
+    {
+      if ($request->request->has($idKey)) {
+        return array($request->request->get($idKey));
+      } elseif ($request->request->has($idsKey)) { 
+        $ids = $request->request->get($idsKey);
+        if ('string' === gettype($ids)) {
+          return json_decode($ids, true);
+        } else {
+          return $ids;
+        }
+      } 
+      
+      throw $this->createNotFoundException();
+    }
 }

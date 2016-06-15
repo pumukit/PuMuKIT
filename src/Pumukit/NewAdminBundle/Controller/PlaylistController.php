@@ -65,10 +65,10 @@ class PlaylistController extends CollectionController
     public function createAction(Request $request)
     {
         $factory = $this->get('pumukitschema.factory');
-        $collection = $factory->createPlaylist($this->getUser());
+        $collection = $factory->createPlaylist($this->getUser(), $request->request->get('playlist_title'));
         $this->get('session')->set('admin/playlist/id', $collection->getId());
-
-        return new JsonResponse(array('playlistId' => $collection->getId()));
+       
+        return new JsonResponse(array('playlistId' => $collection->getId(), 'title' => $collection->getTitle()));
     }
 
     /**

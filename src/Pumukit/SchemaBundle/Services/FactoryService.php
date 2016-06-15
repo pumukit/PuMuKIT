@@ -56,9 +56,9 @@ class FactoryService
      * @param  User   $loggedInUser
      * @return Series
      */
-    public function createSeries(User $loggedInUser = null)
+    public function createSeries(User $loggedInUser = null, array $title = null)
     {
-        return $this->createCollection(Series::TYPE_SERIES, $loggedInUser);
+        return $this->createCollection(Series::TYPE_SERIES, $loggedInUser, $title);
     }
 
     /**
@@ -67,9 +67,9 @@ class FactoryService
      * @param  User   $loggedInUser
      * @return Series
      */
-    public function createPlaylist(User $loggedInUser = null)
+    public function createPlaylist(User $loggedInUser = null, array $title = null)
     {
-        return $this->createCollection(Series::TYPE_PLAYLIST, $loggedInUser);
+        return $this->createCollection(Series::TYPE_PLAYLIST, $loggedInUser, $title);
     }
 
     /**
@@ -79,16 +79,20 @@ class FactoryService
      * @param  User   $loggedInUser
      * @return Series
      */
-    public function createCollection($collectionType, User $loggedInUser = null)
+    public function createCollection($collectionType, User $loggedInUser = null, array $title = null)
     {
         $series = new Series();
 
         $series->setPublicDate(new \DateTime("now"));
         $series->setCopyright($this->defaultCopyright);
         $series->setType($collectionType);
-        foreach ($this->locales as $locale) {
-            $title = $this->translator->trans(self::DEFAULT_SERIES_TITLE, array(), null, $locale);
-            $series->setTitle($title, $locale);
+        if ($title) {
+            $series->setI18nTitle($title);
+        } else {
+            foreach ($this->locales as $locale) {
+                $title = $this->translator->trans(self::DEFAULT_SERIES_TITLE, array(), null, $locale);
+                $series->setTitle($title, $locale);
+            }
         }
 
         $mm = $this->createMultimediaObjectPrototype($series, $loggedInUser);

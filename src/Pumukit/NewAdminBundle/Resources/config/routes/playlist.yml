@@ -15,7 +15,7 @@ pumukitnewadmin_playlist_search:
 
 pumukitnewadmin_playlist_create:
     pattern: /create
-    methods: [GET, POST]
+    methods: [POST]
     defaults:
         _controller: pumukitnewadmin.controller.playlist:createAction
         _sylius:
