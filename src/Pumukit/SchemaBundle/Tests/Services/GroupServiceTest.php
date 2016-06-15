@@ -370,7 +370,7 @@ class GroupServiceTest extends WebTestCase
 
     /**
      * @expectedException Exception
-     * @expectedExceptionMessage Not allowed to delete external Group
+     * @expectedExceptionMessage Not allowed to delete Group "key": is external Group and/or has existent relations with users and multimedia objects.
      */
     public function testDeleteException()
     {

@@ -102,7 +102,7 @@ class GroupService
     public function delete(Group $group, $executeFlush = true)
     {
         if (!$this->canBeDeleted($group)) {
-            throw new \Exception('Not allowed to delete external Group');
+            throw new \Exception('Not allowed to delete Group "'.$group->getKey().'": is external Group and/or has existent relations with users and multimedia objects.');
         }
         $this->dm->remove($group);
         if ($executeFlush) $this->dm->flush();
