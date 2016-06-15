@@ -60,7 +60,7 @@
       <div class="modal-footer">
         <button disabled="disabled" id="new_playlist_btn" style="display:none" type="button" class="new_playlist pull-left btn btn-default btn-primary">{% trans %}Create playlist{% endtrans %}</button>
         <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-        <button id="add_playlist_btn" type="submit" class="btn btn-pumukit">{% trans %}OK{% endtrans %}</button>
+        <button disabled="disabled" id="add_playlist_btn" type="submit" class="btn btn-pumukit">{% trans %}OK{% endtrans %}</button>
       </div>
 
   </div>
@@ -134,6 +134,12 @@
     });
     $('#new_playlist_btn').attr('disabled', empty);
   })
+
+
+  $('.add_playlist_form_checkbox').on('change', function(e){
+    var empty = (0 == $('.add_playlist_form_checkbox:checked').length);
+    $('#add_playlist_btn').attr('disabled', empty);
+  });
 })();
 
 </script>
