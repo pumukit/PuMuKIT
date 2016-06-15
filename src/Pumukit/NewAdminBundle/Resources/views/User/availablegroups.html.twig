@@ -4,9 +4,9 @@
    id="delete_group_{{ group.id }}"
    onclick="javascript:return select_group(this);" 
    ondblclick="javascript:add_group('{{ group.id }}', '{{ group.key }}', '{{ group.name }}', '{{ group.origin }}', 'user');"
-   class="list-group-item notload delete-group-item">
+   class="list-group-item notload delete-group-item pumukitnewadmin-trim-row">
   <i class="mdi-social-group"></i>
-  {{ group.key[:10] }}{% if ((group.getKey()|length) > 10 ) %}...{% endif %} - {{ group.name[:20] }}{% if ((group.getName()|length) > 20 ) %}...{% endif %} - ({{ group.origin }})
+  {{ group.key }} - {{ group.name }} - ({{ group.origin }})
 </a>
 {% endfor %}
 {% else %}

@@ -1,11 +1,11 @@
 {% for user_group in user.getGroups() %}
 {% if user_group.isLocal() and user.isLocal() %}
-<a href="#" class="list-group-item"
+<a href="#" class="list-group-item pumukitnewadmin-trim-row"
    id="add_group_{{ user_group.id }}"
    onclick="javascript:return select_group(this);"
    ondblclick="javascript:delete_group('{{ user_group.id }}', '{{ user_group.key }}', '{{ user_group.name }}', '{{ user_group.origin }}', 'user');">
   <i class="mdi-social-group"></i>
-  {{ user_group.key[:10] }}{% if ((user_group.getKey()|length) > 10 ) %}...{% endif %} - {{ user_group.name[:20] }}{% if ((user_group.getName()|length) > 20 ) %}...{% endif %} - ({{ user_group.origin }})
+  {{ user_group.key }} - {{ user_group.name }} - ({{ user_group.origin }})
 </a>
 {% else %}
 {% if (not user_group.isLocal() and not user.isLocal()) %}

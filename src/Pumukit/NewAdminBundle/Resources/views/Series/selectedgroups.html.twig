@@ -1,9 +1,9 @@
 {% for group in resource.getGroups() %}
-<a href="#" class="list-group-item add-{{ resource_name }}-group-item"
+<a href="#" class="list-group-item add-{{ resource_name }}-group-item pumukitnewadmin-trim-row"
    id="add_{{ resource_name }}_group_{{ group.id }}"
    onclick="javascript:return select_group(this);"
    ondblclick="javascript:delete_group('{{ group.id }}', '{{ group.key }}', '{{ group.name }}', '{{ group.origin }}', '{{ resource_name }}');">
   <i class="mdi-social-group"></i>
-  {{ group.key[:10] }}{% if ((group.getKey()|length) > 10 ) %}...{% endif %} - {{ group.name[:20] }}{% if ((group.getName()|length) > 20 ) %}...{% endif %} - ({{ group.origin }})
+  {{ group.key }} - {{ group.name }} - ({{ group.origin }})
 </a>
 {% endfor %}
