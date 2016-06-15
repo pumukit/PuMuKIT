@@ -1,3 +1,4 @@
+{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::MODIFY_OWNER')) %}
 {% for group in groups if group not in resource.getGroups() %}
 <a href="#" 
    id="delete_{{ resource_name }}_group_{{ group.id }}"
@@ -8,3 +9,14 @@
   {{ group.key }} - {{ group.name }} - ({{ group.origin }})
 </a>
 {% endfor %}
+{% else %}
+{% for group in groups if group not in resource.getGroups() %}
+<a href="#"
+   id="delete_{{ resource_name }}_group_{{ group.id }}"
+   onclick="javascript:return select_group(this);"
+   class="list-group-item notload delete-{{ resource_name }}-group-item pumukitnewadmin-trim-row">
+  <i class="mdi-social-group"></i>
+  {{ group.key }} - {{ group.name }} - ({{ group.origin }})
+</a>
+{% endfor %}
+{% endif %}

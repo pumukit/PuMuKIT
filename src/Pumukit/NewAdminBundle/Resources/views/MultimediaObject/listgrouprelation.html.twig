@@ -23,10 +23,17 @@
 	      <div class="tag list-group pmk-tag-tree pumukitnewadmin-groups-list-box list-box-width" id="delete_mm{{ template }}_groups">
             {% include 'PumukitNewAdminBundle:MultimediaObject:availablegroups.html.twig' with {'resource': mm, 'groups': groups, 'resource_name': 'mm'~template} %}
 	      </div>
+          {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::MODIFY_OWNER')) %}
 	      <div class="pumukitnewadmin-groups-arrows">
 	        <a href="#" onclick="$('#add_mm{{ template }}_groups > a.active').trigger('dblclick'); return false;">&#8592;</a>
 	        <a href="#" onclick="$('#delete_mm{{ template }}_groups > a.active').trigger('dblclick'); return false;">&#8594;</a>
 	      </div>
+          {% else %}
+	      <div class="pumukitnewadmin-groups-arrows">
+	        <a href="#" onclick="return false;">&#8592;</a>
+	        <a href="#" onclick="return false;">&#8594;</a>
+	      </div>
+          {% endif %}
           {# Groups added to the multimedia object #}
 	      <div class="tag pumukitnewadmin-groups-list-box list-box-width" id="added_mm{{ template }}_groups">
 	        <div class="tag_tree list-group" id="add_mm{{ template }}_groups" >
