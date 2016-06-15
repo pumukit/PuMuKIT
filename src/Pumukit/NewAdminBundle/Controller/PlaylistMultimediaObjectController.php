@@ -188,7 +188,7 @@ class PlaylistMultimediaObjectController extends Controller
     public function addBatchAction(Series $playlist, Request $request)
     {
         $this->enableFilter();
-        $mmobjIds = $request->get('ids', '');
+        $mmobjIds = $request->query->get('ids', '');
         if(!$mmobjIds)
             throw $this->createNotFoundException();
         //Sanity check. (May be remove if we want to mix series and playlists in the future.)
@@ -215,7 +215,7 @@ class PlaylistMultimediaObjectController extends Controller
 
     public function deleteBatchAction(Series $playlist, Request $request)
     {
-        $mmobjIds = $request->get('ids', '');
+        $mmobjIds = $request->query->get('ids', '');
         if(!$mmobjIds)
             throw $this->createNotFoundException();
         //Sanity check. (May be remove if we want to mix series and playlists in the future.)
