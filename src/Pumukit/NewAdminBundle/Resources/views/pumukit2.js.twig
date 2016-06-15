@@ -2273,7 +2273,15 @@ function create_element_group_in_add_groups(group_id, group_key, group_name, gro
         var item_ondblclick = 'ondblclick="javascript:window.alert(\'External defined groups. Contact your directory service administrator to change membership.\');"';
         group_origin = group_origin.toUpperCase();
     }
-    var item_text = '<a href="#" ' + item_class + ' ' + item_onclick + ' ' + item_ondblclick + ' ' + item_id + '"><i class="mdi-social-group"></i> ' + group_key + ' - ' + group_name + ' - (' + group_origin + ')</a>';
+    group_key_dots = '';
+    group_name_dots = '';
+    if (group_key.length > 10) {
+        group_key_dots = '...';
+    }
+    if (group_name.length > 20) {
+        group_name_dots = '...';
+    }
+    var item_text = '<a href="#" ' + item_class + ' ' + item_onclick + ' ' + item_ondblclick + ' ' + item_id + '"><i class="mdi-social-group"></i> ' + group_key.substring(0, 10) + group_key_dots + ' - ' + group_name.substring(0, 20) + group_name_dots + ' - (' + group_origin + ')</a>';
     $add_groups_list.append(item_text);
 }
 
@@ -2291,7 +2299,15 @@ function create_element_group_in_delete_groups(group_id, group_key, group_name, 
         }
         var item_onclick = 'onclick="return select_group(this);"';
         var item_ondblclick = 'ondblclick="javascript:add_group(\'' + group_id + '\', \'' + group_key + '\', \'' + group_name + '\', \'' + group_origin + '\', \'' + resource + '\');"';
-        var item_text = '<a href="#" ' + item_class + ' ' + item_onclick + ' ' + item_ondblclick + ' ' + item_id +'"><i class="mdi-social-group"></i> ' + group_key + ' - ' + group_name + ' - (' + group_origin + ')</a>';
+        group_key_dots = '';
+        group_name_dots = '';
+        if (group_key.length > 10) {
+            group_key_dots = '...';
+        }
+        if (group_name.length > 20) {
+            group_name_dots = '...';
+        }
+        var item_text = '<a href="#" ' + item_class + ' ' + item_onclick + ' ' + item_ondblclick + ' ' + item_id +'"><i class="mdi-social-group"></i> ' + group_key.substring(0, 10) + group_key_dots + ' - ' + group_name.substring(0, 20) + group_name_dots + ' - (' + group_origin + ')</a>';
         $delete_groups_list.append(item_text);
     }
 }

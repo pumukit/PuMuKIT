@@ -4,6 +4,6 @@
    onclick="javascript:return select_group(this);"
    ondblclick="javascript:delete_group('{{ group.id }}', '{{ group.key }}', '{{ group.name }}', '{{ group.origin }}', '{{ resource_name }}');">
   <i class="mdi-social-group"></i>
-  {{ group.key }} - {{ group.name }} - ({{ group.origin }})
+  {{ group.key[:10] }}{% if ((group.getKey()|length) > 10 ) %}...{% endif %} - {{ group.name[:20] }}{% if ((group.getName()|length) > 20 ) %}...{% endif %} - ({{ group.origin }})
 </a>
 {% endfor %}
