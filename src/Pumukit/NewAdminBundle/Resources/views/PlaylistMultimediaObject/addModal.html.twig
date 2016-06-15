@@ -26,6 +26,8 @@
                 {{ oneseries.title }}
               </label>
             </div>
+          {% else %}
+              <p id="add_playlist_form_none" class="text-muted" style="margin-left: 15px">{% trans %}There are no playlist, please create one.{% endtrans %}</p>
           {% endfor %}
           <input type="hidden" id="add_playlist_form_ids" name="ids" value="{{ids}}"/>
           <input type="hidden" id="add_playlist_form_id" name="id" value="{{id}}"/>
