@@ -86,6 +86,8 @@ class Playlist
     public function moveMultimediaObject($posStart, $posEnd)
     {
         $maxPos = $this->multimedia_objects->count();
+        if($maxPos < 1)
+            return false;
         if($posStart - $posEnd == 0
            || $posStart < 0 || $posStart > $maxPos) {
             return false; //If start is out of range or start/end is the same, do nothing.
