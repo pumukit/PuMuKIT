@@ -26,11 +26,15 @@ class SeriesPlaylistService
                    ->field('series')->references($series);
         $mmobjs = $qb->getQuery()->execute();
 
-        $playlist = $series->getPlaylist()->getMultimediaObjects()->getIterator();
-
         $iterable = new \AppendIterator();
         $iterable->append($mmobjs);
-        $iterable->append($playlist);
+
+        $playlist = $series->getPlaylist();
+        if(!$playlist)
+            return $iterable;
+
+        $playlistMmobjs = $playlist->getMultimediaObjects()->getIterator();
+        $iterable->append($playlistMmobjs);
         return $iterable;
     }
 
