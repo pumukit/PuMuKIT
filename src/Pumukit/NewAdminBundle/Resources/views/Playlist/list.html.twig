@@ -39,7 +39,7 @@
 	      {{ oneseries.getTitle() }}
             </td>
             <td onclick="click_fila_edit_urls('playlist', this, '{{ path('pumukitnewadmin_playlist_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_playlist_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}')">
-              {{ oneseries|count_multimedia_objects }}
+              {{ oneseries.getPlaylist().getMultimediaObjects()|length }}
             </td>
           </tr>
   {% else %}
