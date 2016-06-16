@@ -44,7 +44,7 @@
 </div>
 
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_BROADCASTS')) %}
-<script>
+<script type="text/javascript">
 document.getElementById('pumukitnewadmin_broadcast_broadcast_type_id').addEventListener('change', function(event) {
   document.getElementById('pumukitnewadmin_broadcast_passwd').required = (event.target.value != "public");
 });

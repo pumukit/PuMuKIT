@@ -1,0 +1,26 @@
+<div class="dropdown">
+  <i class="mdi-navigation-menu" id="list_pics_mm_{{ mm.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="list_pics_mm_{{ mm.id }}">
+    <li>
+      <a href="#" onclick="delete_mm('{{ mm.id }}','{{ mm_pos }}')">
+        <i class="mdi-content-clear"></i>{% trans %}Delete multimedia object{% endtrans %}
+      </a>
+    </li>
+    <li>
+      <a href="#" onclick="return false;">
+        <strong>{% trans %}Cancel{% endtrans %}...</strong>
+      </a>
+    </li>
+  </ul>
+</div>
+<script type="text/javascript">
+ function delete_mm(id, pos ){
+     var ids = {};
+     ids[pos] = id;
+     var url ="{{ path('pumukitnewadmin_playlistmms_batch_delete', {'id': playlist.id , 'ids':'__ids__'} ) }}";
+     url = url.replace('__ids__', JSON.stringify(ids));
+     $('#list_playlistmms').load(url, function(){
+         //TODO: reload show and info.
+     });
+ }
+</script>

@@ -1,0 +1,28 @@
+<hr>
+<b>{{ mmobjs.getNbResults }} {% trans %}Mm. Obj.{% endtrans %}:</b>
+<br>
+<br>
+<div class="row" style="height:100%;overflow:auto">
+  <br>
+  {% for mmobj in mmobjs %}
+    <div class="col-md-12 mmobj">
+      <label style="width:100%">
+        <input type="checkbox" name="{{mmobj.id}}" id="{{mmobj.id}}" style="display:none"/>
+        <div class="mmobj_elem">
+          {% include "PumukitNewAdminBundle:PlaylistMultimediaObject:modal_mmobj.html.twig" %}
+        </div>
+      </label>
+    </div>
+  {% endfor %}
+</div>
+<script type="text/javascript">
+ //Adds a 'select' effect when clicking and selecting a mmobj
+ $(".mmobj input:checkbox").on('click', function(){
+     if($(this).prop('checked')) {
+         $(this).siblings(".mmobj_elem").addClass('checked');
+     }
+     else {
+         $(this).siblings(".mmobj_elem").removeClass('checked');
+     }
+ });
+</script>

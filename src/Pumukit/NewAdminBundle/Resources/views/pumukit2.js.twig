@@ -155,8 +155,8 @@ window.submit_clone_mms = function(id)
 
 window.submit_delete_series = function(id, seriesTitle, countMm)
 {
+    var url = "{{ path('pumukitnewadmin_series_delete', {'id': '__id__'})|raw }}";
     if (window.confirm('{% trans %}Are you sure you want to delete the series{% endtrans %} "'+seriesTitle+'"? {% trans %}This series has{% endtrans %} '+countMm+' {% trans %}multimedia object(s){% endtrans %}.')){
-        var url = "{{ path('pumukitnewadmin_series_delete', {'id': '__id__'})|raw }}";
         var message = '{% trans %}Series{% endtrans %} "'+seriesTitle+'" {% trans %}successfully deleted{% endtrans %}.';
         var sessionId = $($('tr.success').find('input.series_checkbox')[0]).attr('id');
         $('#list_series').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
@@ -164,6 +164,26 @@ window.submit_delete_series = function(id, seriesTitle, countMm)
                 if (id === sessionId) {
                     $('#preview_series').html('{% trans %}Select any series.{% endtrans %}');
                     $('#edit_series').html('');
+                }
+                success(message);
+            } else {
+                no_success(XMLHttpRequest['statusText'] + ': ' + responseText);
+            }
+        });
+    }
+}
+
+window.submit_delete_playlist = function(id, playlistTitle, countMm)
+{
+    var url = "{{ path('pumukitnewadmin_playlist_delete', {'id': '__id__'})|raw }}";
+    if (window.confirm('{% trans %}Are you sure you want to delete the playlist{% endtrans %} "'+playlistTitle+'"? {% trans %}This playlist has{% endtrans %} '+countMm+' {% trans %}multimedia object(s){% endtrans %}.')){
+        var message = '{% trans %}Playlist{% endtrans %} "'+playlistTitle+'" {% trans %}successfully deleted{% endtrans %}.';
+        var sessionId = $($('tr.success').find('input.playlist_checkbox')[0]).attr('id');
+        $('#list_playlists').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
+            if (textStatus !== "error") {
+                if (id === sessionId) {
+                    $('#preview_playlist').html('{% trans %}Select any playlist.{% endtrans %}');
+                    $('#edit_playlist').html('');
                 }
                 success(message);
             } else {
@@ -449,7 +469,7 @@ window.submit_series_change_pub = function()
             var channel = $('#pub_channel_change_pub_'+channelsId[i]+'_mm_'+mmId);
             channels[channelsId[i]] = channel.prop('checked')
         }
-        values[mmId] = {'status': $('#status_change_pub_'+mmId+' option:selected').val(), 'channels': channels};        
+        values[mmId] = {'status': $('#status_change_pub_'+mmId+' option:selected').val(), 'channels': channels};
     });
     if (values.size == 0) return false;
 
@@ -661,6 +681,28 @@ window.change_select = function(element, selector, pluralName, seriesId)
             });
         }
         break;
+    case 'add_playlist':
+        var ids = [];
+        $('.' + element + '_checkbox:checked').each(function(){
+            var $this = $(this);
+            ids.push($this.attr("id"));
+        });
+        if (ids.length == 0) {
+          no_success('No multimedia object selected');
+          break;
+        }
+        
+        var url = "{{ path('pumukitnewadmin_playlistmms_modal_add', {'ids': '__ids__'})|raw }}";
+        $.ajax({
+            url: url.replace('__ids__', JSON.stringify(ids)),
+            type: 'GET',
+            success: function(response){
+                var $modal = $('#myModal');
+                $modal.modal('show');
+                $modal.find('.modal-content').html(response);
+            }
+        });
+        break;
 /* TODO
       //status mm
     case 'set_status_0_sel':
@@ -748,7 +790,7 @@ window.change_select = function(element, selector, pluralName, seriesId)
            no_success('{% trans %}Select any user.{% endtrans %}');
            break;
         }
-    
+
         var node = selector.find(':selected');
         var profile = node.data('profile');
         var profilename = node.data('profilename');
@@ -757,7 +799,7 @@ window.change_select = function(element, selector, pluralName, seriesId)
             type: 'POST',
             data: {'ids': ids, 'profile': profile},
             error: function(jqXHR, textStatus, errorThrown){ debugger; },
-            success: function(response){ 
+            success: function(response){
                 ids.forEach(function(e){$('#profile'+e).html(profilename)})
                 $('.' + element + '_checkbox:checked').each(function(){
                     var $this = $(this);
@@ -784,12 +826,12 @@ function select_tree_tag(element)
   return false;
 }
 
-function toggle_tree_tag(element, id, mm_id, tag_id, tag_cod) 
+function toggle_tree_tag(element, id, mm_id, tag_id, tag_cod)
 {
   parent = $(element.parentElement);
   if (parent.hasClass("notload")) {
     parent.removeClass("notload");
-  
+
     var route = "{{ path('pumukitnewadmin_mms_getchildrentag', {'id': 'PLACEHOLDER_TAG_ID'})|raw }}";
     route = route.replace('PLACEHOLDER_MM_ID', mm_id).replace('PLACEHOLDER_TAG_ID', id);
 
@@ -799,14 +841,14 @@ function toggle_tree_tag(element, id, mm_id, tag_id, tag_cod)
     parent.addClass("expanded").removeClass("collapsed");
   } else {
     if (parent.hasClass("expanded")) {
-      $(".c_" + tag_cod).hide();      
+      $(".c_" + tag_cod).hide();
       $(".c_" + tag_cod+".expanded").removeClass("expanded").addClass("collapsed");
       parent.removeClass("expanded").addClass("collapsed");
     } else {
       $(".tag_li_parent_" + id).show();
       parent.addClass("expanded").removeClass("collapsed");
     }
-    
+
   }
 
 }
@@ -856,7 +898,7 @@ function inc_num_mm(tag_id, num)
   }
 }
 
-function add_tree_tag(tag_id, mm_id, block_tag_id) 
+function add_tree_tag(tag_id, mm_id, block_tag_id)
 {
   var route = "{{ path('pumukitnewadmin_mms_addtag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' })|raw }}";
   route = route.replace('PLACEHOLDER_MM_ID', mm_id).replace('PLACEHOLDER_TAG_ID', tag_id);
@@ -873,14 +915,14 @@ function add_tree_tag(tag_id, mm_id, block_tag_id)
 }
 
 
-function del_tree_tag(tag_id, mm_id) 
+function del_tree_tag(tag_id, mm_id)
 {
   var route = "{{ path('pumukitnewadmin_mms_deletetag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' })|raw }}";
   route = route.replace('PLACEHOLDER_TAG_ID', tag_id).replace('PLACEHOLDER_MM_ID', mm_id);
   $.ajax({
-    url: route, 
+    url: route,
     type: 'DELETE',
-    parameters: {'_method': 'DELETE'}, 
+    parameters: {'_method': 'DELETE'},
     success: function(response){
       for (var i=0; i<response.deleted.length; i++) {
         var c = response.deleted[i];
@@ -918,14 +960,14 @@ function filter_series(form)
     if (to_date.val() != "" && from_date.val() >= to_date.val()) {
         to_date[0].setCustomValidity("{% trans %}From date must be less than to date{% endtrans %}");
     }else{
-        $('#list_series').load('{{ path('pumukitnewadmin_series_list')|raw }}', $(form).serialize());    
+        $('#list_series').load('{{ path('pumukitnewadmin_series_list')|raw }}', $(form).serialize());
     }
-  
+
     return false;
 }
 
 function comprobar_date(date, re){
-    return !re.test(date); 
+    return !re.test(date);
 }
 
 procesaOk = function(){
@@ -1051,6 +1093,34 @@ $(function() {
     });
     return false;
   });
+  $('#pumukitnewadmin_playlist_new_button').on('click', function () {
+    var route = "{{ path('pumukitnewadmin_playlist_create') }}";
+    $('#filter_playlist')[0].reset();
+    $.ajax(route, {
+            type: 'POST',
+            error: function(jqXHR, textStatus, errorThrown){
+                        var responseText = jqXHR.responseText.split("<title>").pop().split("</title>").shift();
+                        var message = responseText.replace(/(\r\n|\n|\r)/gm,"");
+                        no_success(errorThrown+': '+textStatus+', '+message);
+	        },
+            success: function(response, textStatus, jqXHR){
+			    var playlistId = response['playlistId'];
+
+                // NOTE: Important to call listAction first to update series id in session
+                var routeList = "{{ path('pumukitnewadmin_playlist_list', {'selectedSeriesId': '__playlistId__'})|raw }}";
+                $('#list_playlists').load(routeList.replace('__playlistId__', playlistId), function(){
+                    var routeShow = "{{ path('pumukitnewadmin_playlist_show', {'id': '__playlistId__'})|raw }}";
+                    $('#preview_playlist').load(routeShow.replace('__playlistId__', playlistId));
+                    var routeUpdate = "{{ path('pumukitnewadmin_playlist_update', {'id': '__playlistId__'})|raw }}";
+                    $('#edit_playlist').load(routeUpdate.replace('__playlistId__', playlistId), function(){
+                        init_tabs();
+                    });
+                });
+	            success('{% trans %}Playlist successfully created.{% endtrans %}');
+	        }
+    });
+    return false;
+  });
 });
 
 $(document).on('click', '#pumukitnewadmin_series_title_sort_selected', function(){
@@ -1114,7 +1184,7 @@ $(document).on('click', '#pumukitnewadmin_series_multimedia_objects_sort_selecte
     $('#list_series').load(route.replace('__type__', type), {'_method':'POST'});
     return false;
 });
- 
+
 $(document).on('click', '#pumukitnewadmin_series_multimedia_objects_sort_not_selected', function(){
     var inputROId = $('#inputROId').val();
     if (inputROId) {
@@ -1407,6 +1477,9 @@ get_batch_delete_route = function(element, ids)
         case 'series':
             route = '{{ path('pumukitnewadmin_series_batch_delete', {'ids': '__ids__'})|raw }}';
             break;
+        case 'playlist':
+            route = '{{ path('pumukitnewadmin_playlist_batch_delete', {'ids': '__ids__'})|raw }}';
+            break;
         case 'seriestype':
             route = '{{ path('pumukitnewadmin_seriestype_batch_delete', {'ids': '__ids__'})|raw }}';
             break;
@@ -1473,9 +1546,9 @@ window.fileServerTree = function(element, type, dir, num, input)
                            ((file.content) ? ' [' + (file.content) + ' video(s)]' : '') +
                            '</span></a>';
                     if(type == 'dir') {
-                        links += '<a style="color:blue; text-decoration: underline" class="list-group-item element" href="#" onclick="fileServerSelect(this, \'' + file.path + '\');">' + 
-                                 '<span style="padding-left: ' + (10 *num)  + 'px"><i class="mdi- tag_icon"></i></span>' + 
-                                 '{% trans %}This directory{% endtrans %}' + 
+                        links += '<a style="color:blue; text-decoration: underline" class="list-group-item element" href="#" onclick="fileServerSelect(this, \'' + file.path + '\');">' +
+                                 '<span style="padding-left: ' + (10 *num)  + 'px"><i class="mdi- tag_icon"></i></span>' +
+                                 '{% trans %}This directory{% endtrans %}' +
                                  '</a>';
                     }
                   }

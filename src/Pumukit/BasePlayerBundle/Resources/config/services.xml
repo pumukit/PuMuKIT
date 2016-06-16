@@ -10,6 +10,10 @@
           <argument type="service" id="router" />
         </service>
 
+        <service id="pumukit_baseplayer.seriesplaylist" class="Pumukit\BasePlayerBundle\Services\SeriesPlaylistService">
+          <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+        </service>
+
         <service id="pumukit_baseplayer.twig_extension" class="Pumukit\BasePlayerBundle\Twig\BasePlayerExtension">
           <tag name="twig.extension" />
           <argument type="service" id="doctrine_mongodb.odm.document_manager" />

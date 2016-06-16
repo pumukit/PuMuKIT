@@ -24,6 +24,7 @@ class Permission
     const CHANGE_MMOBJECT_PUBCHANNEL = 'ROLE_CHANGE_MMOBJECT_PUBCHANNEL';
     const ACCESS_PUBLICATION_TAB = 'ROLE_ACCESS_PUBLICATION_TAB';
     const ACCESS_ADVANCED_UPLOAD = 'ROLE_ACCESS_ADVANCED_UPLOAD';
+    const ACCESS_EDIT_PLAYLIST = 'ROLE_ACCESS_EDIT_PLAYLIST';
     const ACCESS_WIZARD_UPLOAD = 'ROLE_ACCESS_WIZARD_UPLOAD';
     const ACCESS_API = 'ROLE_ACCESS_API';
     const ACCESS_INBOX = 'ROLE_ACCESS_INBOX';
@@ -144,6 +145,13 @@ class Permission
         ),
         Permission::ACCESS_ADVANCED_UPLOAD => array(
             'description' => "Access Advanced Upload",
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array()
+            )
+        ),
+        Permission::ACCESS_EDIT_PLAYLIST => array(
+            'description' => "Access Edit Playlist",
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()

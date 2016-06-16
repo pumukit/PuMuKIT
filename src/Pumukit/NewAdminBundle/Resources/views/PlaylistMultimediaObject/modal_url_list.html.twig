@@ -1,0 +1,40 @@
+{% if mmobj %}
+    <input type="checkbox" name="{{mmobj.id}}" id="{{mmobj.id}}" checked="checked" disabled="disabled" style="display:none"/>
+    <h3>{{mmobj.title}} - {{mmobj.series.title}}</h3>
+    <div style="display:block;width:80%;margin: 0 auto;">
+      {% set url_iframe = url('pumukit_videoplayer_index', {'id':mmobj.id, 'autostart':false}) %}
+      <iframe src="{{url_iframe}}"
+              id="paellaiframe"
+              frameborder="0"
+              border="0"
+              width="100%"
+              onload="resizeFrame(this)"
+              height="200px"
+              scrolling="no"
+              allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+{% else %}
+  <b>
+    {% trans %}There is no Multimedia Object with the following id: {% endtrans %}
+  </b>
+  {{ mmobj_id }}
+{% endif %}
+<script type="text/javascript">
+ function resizeFrame(elem){
+     var width = $(elem).width()
+         var height = width/16*9;
+     $(elem).height(height);
+ }
+ $(window).resize(function(){
+     resizeFrame($('#paellaiframe'));
+ });
+ //Updates add video button.
+ $('#add_videos_modal_button').prop('disabled', true);
+ $('#url .mmobj_elem').removeClass('checked');
+ $('iframe#paellaiframe').load(function(){
+     $('#add_videos_modal_button').prop('disabled', false);
+     $('#url .mmobj_elem').addClass('checked');
+ });
+</script>

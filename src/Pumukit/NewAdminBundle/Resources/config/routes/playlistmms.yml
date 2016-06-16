@@ -1,0 +1,134 @@
+pumukitnewadmin_playlistmms_index:
+    pattern: /
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistmms:indexAction
+        _sylius:
+            filterable: true
+
+pumukitnewadmin_playlistmms_create:
+    pattern: /{id}/create
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistmms:createAction
+        _sylius:
+            redirect: pumukitnewadmin_playlistmms_index
+
+pumukitnewadmin_playlistmms_show:
+    pattern: /{id}/show
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistmms:showAction
+        filter: false
+
+pumukitnewadmin_playlistmms_info:
+    pattern: /{id}/info
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistmms:infoAction
+        filter: false
+
+pumukitnewadmin_playlistmms_up:
+    pattern: /{id}/up
+    methods: [GET, PUT, POST]
+    defaults:
+        filter: false
+        _controller: pumukitnewadmin.controller.playlistmms:upAction
+        _sylius:
+            redirect: pumukitnewadmin_playlistmms_index
+
+pumukitnewadmin_playlistmms_down:
+    pattern: /{id}/down
+    methods: [GET, PUT, POST]
+    defaults:
+        filter: false
+        _controller: pumukitnewadmin.controller.playlistmms:downAction
+        _sylius:
+            redirect: pumukitnewadmin_playlistmms_index
+
+pumukitnewadmin_playlistmms_top:
+    pattern: /{id}/top
+    methods: [GET, PUT, POST]
+    defaults:
+        filter: false
+        _controller: pumukitnewadmin.controller.playlistmms:topAction
+        _sylius:
+            redirect: pumukitnewadmin_playlistmms_index
+
+pumukitnewadmin_playlistmms_bottom:
+    pattern: /{id}/bottom
+    methods: [GET, PUT, POST]
+    defaults:
+        filter: false
+        _controller: pumukitnewadmin.controller.playlistmms:bottomAction
+        _sylius:
+            redirect: pumukitnewadmin_playlistmms_index
+
+pumukitnewadmin_playlistmms_list:
+    pattern: /list
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistmms:listAction
+
+pumukitnewadmin_playlistmms_cut:
+    pattern: /cut
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistmms:cutAction
+
+pumukitnewadmin_playlistmms_paste:
+    pattern: /paste
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistmms:pasteAction
+
+pumukitnewadmin_playlistmms_reorder:
+    pattern: /reorder
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistmms:reorderAction
+
+pumukitnewadmin_playlistmms_modal:
+    pattern: /{id}/modal
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistmms:modalAction
+
+pumukitnewadmin_playlistmms_modal_search:
+    pattern: /modal_search
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistmms:searchModalAction
+
+pumukitnewadmin_playlistmms_modal_url:
+    pattern: /modal_url
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistmms:urlModalAction
+
+pumukitnewadmin_playlistmms_batch_add:
+    pattern: /{id}/add
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistmms:addBatchAction
+
+pumukitnewadmin_playlistmms_batch_delete:
+    pattern: /{id}/delete
+    methods: [GET, POST, DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistmms:deleteBatchAction
+
+pumukitnewadmin_playlistmms_modal_add:
+    pattern: /modal
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistmms:addModalAction
+
+pumukitnewadmin_playlistmms_batch_add_to_several_playlist:
+    pattern: /
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistmms:addBatchToSeveralPlaylistAction
+
+
+

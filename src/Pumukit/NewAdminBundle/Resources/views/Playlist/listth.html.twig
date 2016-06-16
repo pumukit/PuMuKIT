@@ -1,0 +1,11 @@
+<input type="hidden" name="pumukitnewadmin_series_sort_change_type" id="pumukitnewadmin_series_sort_change_type" value="{{ app.session.get('admin/series/type')=='asc'?'desc':'asc' }}"/>
+{% if 'title' == app.session.get('admin/series/sort') %}
+  <th>
+    <a href="#" id="pumukitnewadmin_series_title_sort_selected">{% trans %}Title{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
+  </th>
+{% else %}
+  <th>
+    <a href="#" id="pumukitnewadmin_series_title_sort_not_selected">{% trans %}Title{% endtrans %}</a>
+  </th>
+{% endif %}
+<th width="2%">{% trans %}Num. Mm.Obj.{% endtrans %}</th>

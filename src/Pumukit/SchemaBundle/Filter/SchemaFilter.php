@@ -14,7 +14,7 @@ class SchemaFilter extends BsonFilter
         }
     }
 
-    private function getCriteria()
+    protected function getCriteria()
     {
         $criteria = array();
 

@@ -30,6 +30,18 @@ sylius_resource:
             classes:
                 model: Pumukit\SchemaBundle\Document\Series
                 controller: Pumukit\NewAdminBundle\Controller\SeriesController
+        pumukitnewadmin.playlist:
+            driver: doctrine/mongodb-odm
+            templates: PumukitNewAdminBundle:Playlist
+            classes:
+                model: Pumukit\SchemaBundle\Document\Series
+                controller: Pumukit\NewAdminBundle\Controller\PlaylistController
+        pumukitnewadmin.collection:
+            driver: doctrine/mongodb-odm
+            templates: PumukitNewAdminBundle:Playlist
+            classes:
+                model: Pumukit\SchemaBundle\Document\Series
+                controller: Pumukit\NewAdminBundle\Controller\CollectionController
         pumukitnewadmin.mmtemplate:
             driver: doctrine/mongodb-odm
             templates: PumukitnewadminBundle:MultimediaObjectTemplate
@@ -42,6 +54,12 @@ sylius_resource:
             classes:
                 model: Pumukit\SchemaBundle\Document\MultimediaObject
                 controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController
+        pumukitnewadmin.playlistmms:
+            driver: doctrine/mongodb-odm
+            templates: PumukitNewAdminBundle:PlaylistMultimediaObject
+            classes:
+                model: Pumukit\SchemaBundle\Document\MultimediaObject
+                controller: Pumukit\NewAdminBundle\Controller\PlaylistMultimediaObjectController
         pumukitnewadmin.seriespic:
             driver: doctrine/mongodb-odm
             templates: PumukitNewAdminBundle:Pic

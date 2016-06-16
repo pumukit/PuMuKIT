@@ -1,0 +1,15 @@
+<div class="dropdown">
+  <i class="mdi-navigation-menu" id="list_pics_{{ oneseries.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="list_pics_{{ oneseries.id }}">
+    <li>
+      <a href="#" onclick="window.submit_delete_playlist('{{ oneseries.id }}', '{{ oneseries.getTitle() }}', '{{ oneseries|count_multimedia_objects }}'); return false;">
+        <i class="mdi-content-clear"></i> {% trans %}Delete the playlist{% endtrans %}
+      </a>
+    </li>
+    <li>
+      <a href="#" onclick="return false;">
+        <strong>{% trans %}Cancel{% endtrans %}...</strong>
+      </a>
+    </li>
+  </ul>
+</div>

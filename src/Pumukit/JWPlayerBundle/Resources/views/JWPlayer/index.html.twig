@@ -12,9 +12,8 @@ body { margin: 0; padding: 0; }
   {% if jwplayer_key is defined %}<script type="text/javascript">jwplayer.key="{{ jwplayer_key }}";</script>{% endif %}
 {% endblock%}
 
-{% block title %}{{ parent() }} - {{ multimediaObject.title }}{% endblock %}
-{% block keywords %}{{ parent() }} - {{ multimediaObject.keyword }}{% endblock %}
+{% block title %}{{ parent() }} - {{ object.title }}{% endblock %}
+{% block keywords %}{{ parent() }} - {{ object.keyword }}{% endblock %}
 
 {% block body_base %}
-    {% include 'PumukitJWPlayerBundle:JWPlayer:player.html.twig' with {'width': 'window.document.documentElement.clientWidth', 'height': 'window.document.documentElement.clientHeight', 'autostart': autostart, 'responsive': true} %}
 {% endblock %}

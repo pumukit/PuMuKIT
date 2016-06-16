@@ -1,0 +1,76 @@
+pumukitnewadmin_playlist_index:
+    pattern: /
+    methods: [GET]
+    defaults:
+
+        _controller: pumukitnewadmin.controller.playlist:indexAction
+        _sylius:
+            filterable: true
+
+pumukitnewadmin_playlist_search:
+    pattern: /search
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlist:searchAction
+
+pumukitnewadmin_playlist_create:
+    pattern: /create
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlist:createAction
+        _sylius:
+            redirect: pumukitnewadmin_playlist_index
+
+pumukitnewadmin_playlist_update:
+    pattern: /{id}/update
+    methods: [GET, POST, DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlist:updateAction
+
+pumukitnewadmin_playlist_batch_delete:
+    pattern: /batchdelete
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlist:batchDeleteAction
+        _sylius:
+            redirect: pumukitnewadmin_playlist_list
+
+pumukitnewadmin_playlist_delete:
+    pattern: /{id}/delete
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlist:deleteAction
+        _sylius:
+            redirect: pumukitnewadmin_playlist_index
+
+pumukitnewadmin_playlist_generate_magic_url:
+    pattern: /{id}/generatemagic
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlist:generateMagicUrlAction
+
+pumukitnewadmin_playlist_copy:
+    pattern: /{id}/copy
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlist:copyAction
+        _sylius:
+            redirect: pumukitnewadmin_playlist_index
+
+pumukitnewadmin_playlist_list:
+    pattern: /list
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlist:listAction
+
+pumukitnewadmin_playlist_invert_announce:
+    pattern: /invertannounce
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlist:invertAnnounceAction
+
+pumukitnewadmin_playlist_show:
+    pattern: /{id}/show
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlist:showAction

@@ -49,6 +49,14 @@ pumukitnewadmin_series:
     resource: @PumukitNewAdminBundle/Resources/config/routes/series.yml
     prefix: /admin/series
 
+pumukitnewadmin_playlist:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/playlist.yml
+    prefix: /admin/playlist
+
+pumukitnewadmin_collection:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/collection.yml
+    prefix: /admin/collection
+
 pumukitnewadmin_mmtemplate:
     resource: @PumukitNewAdminBundle/Resources/config/routes/mmtemplate.yml
     prefix: /admin/mmtemplate
@@ -56,6 +64,10 @@ pumukitnewadmin_mmtemplate:
 pumukitnewadmin_mms:
     resource: @PumukitNewAdminBundle/Resources/config/routes/mms.yml
     prefix: /admin/mms
+
+pumukitnewadmin_playlistmms:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/playlistmms.yml
+    prefix: /admin/playlist/mms
 
 pumukitnewadmin_seriespic:
     resource: @PumukitNewAdminBundle/Resources/config/routes/seriespic.yml
