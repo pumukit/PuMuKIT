@@ -40,7 +40,6 @@ class SeriesPlaylistService
 
     public function getPlaylistFirstMmobj(Series $series)
     {
-        $mmobj = array();
         $qb = $this->mmobjRepo->createStandardQueryBuilder()
                    ->field('series')->references($series);
         $mmobj = $qb->getQuery()->getSingleResult();
