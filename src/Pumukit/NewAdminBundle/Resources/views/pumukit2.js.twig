@@ -1742,7 +1742,7 @@ $(document).ready(function(){
             generate_random_password('broadcast_password_1', 'broadcast_password_2');
         });
 
-        $(document).on('click', '#pumukitnewadmin_group_delete_all_relation_user', function() {
+        $(document).on('click', '#pumukitnewadmin_group_delete_all_relation_user', function(event) {
             if (window.confirm('{% trans %}ATTENTION: Are you sure you want to delete all User from this Group?{% endtrans %}')) {
                 var route = "{{ path('pumukitnewadmin_group_delete_all_users', {'id': '__groupId__'})|raw }}";
                 var group_id = $('#pumukitnewadmin_group_id').val();
@@ -1762,10 +1762,12 @@ $(document).ready(function(){
                     }
                 }).done(can_be_deleted(group_id));
             }
+            event.preventDefault();
+            event.stopPropagation();
             return false;
         });
 
-        $(document).on('click', '#pumukitnewadmin_group_delete_all_relation_multimediaobject', function() {
+        $(document).on('click', '#pumukitnewadmin_group_delete_all_relation_multimediaobject', function(event) {
             if (window.confirm('{% trans %}ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?{% endtrans %}')) {
                 var route = "{{ path('pumukitnewadmin_group_delete_all_multimediaobjects', {'id': '__groupId__'})|raw }}";
                 var group_id = $('#pumukitnewadmin_group_id').val();
@@ -1785,10 +1787,12 @@ $(document).ready(function(){
                     }
                 }).done(can_be_deleted(group_id));
             }
+            event.preventDefault();
+            event.stopPropagation();
             return false;
         });
 
-        $(document).on('click', '#pumukitnewadmin_group_delete_all_relation_embeddedbroadcast', function() {
+        $(document).on('click', '#pumukitnewadmin_group_delete_all_relation_embeddedbroadcast', function(event) {
             if (window.confirm('{% trans %}ATTENTION: Are you sure you want to delete all Play Multimedia Objects from this Group?{% endtrans %}')) {
                 var route = "{{ path('pumukitnewadmin_group_delete_all_embeddedbroadcasts', {'id': '__groupId__'})|raw }}";
                 var group_id = $('#pumukitnewadmin_group_id').val();
@@ -1808,6 +1812,8 @@ $(document).ready(function(){
                     }
                 }).done(can_be_deleted(group_id));
             }
+            event.preventDefault();
+            event.stopPropagation();
             return false;
         });
     })
