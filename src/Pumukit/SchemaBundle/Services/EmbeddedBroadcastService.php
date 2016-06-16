@@ -324,6 +324,11 @@ class EmbeddedBroadcastService
     private function isUserLoggedInAndInGroups(MultimediaObject $multimediaObject, User $user = null, $forceAuth = false)
     {
         if ($this->isAuthenticatedFully($user)){
+            if ($permissionProfile = $user->getPermissionProfile()) {
+                if ($permissionProfile->isGlobal()) {
+                    return true;
+                }
+            }
             if ($this->isUserRelatedToMultimediaObject($multimediaObject, $user)) {
                 return true;
             }

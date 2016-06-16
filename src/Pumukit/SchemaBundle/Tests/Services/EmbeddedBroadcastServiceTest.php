@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\PermissionProfile;
 
 class EmbeddedBroadcastServiceTest extends WebTestCase
 {
@@ -464,10 +465,15 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
         $user->setUsername('user');
         $user->setEmail('user@mail.com');
 
+        $permissionProfile = new PermissionProfile();
+        $permissionProfile->setScope(PermissionProfile::SCOPE_NONE);
+        $permissionProfile->setName('permission profile');
+
         $mm = new MultimediaObject();
         $mm->setTitle('mm');
 
         $this->dm->persist($user);
+        $this->dm->persist($permissionProfile);
         $this->dm->persist($mm);
         $this->dm->flush();
 
@@ -568,6 +574,39 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
         $embeddedBroadcast = $mm->getEmbeddedBroadcast();
         $embeddedBroadcast->addGroup($group3);
         $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false);
+        $this->assertTrue($response instanceof Response);
+        $this->assertEquals(403, $response->getStatusCode());
+        $this->assertEquals($content, $response->getContent());
+
+        $user->setPermissionProfile($permissionProfile);
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false);
+        $this->assertTrue($response instanceof Response);
+        $this->assertEquals(403, $response->getStatusCode());
+        $this->assertEquals($content, $response->getContent());
+
+        $permissionProfile->setScope(PermissionProfile::SCOPE_PERSONAL);
+        $this->dm->persist($permissionProfile);
+        $this->dm->flush();
+
+        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false);
+        $this->assertTrue($response instanceof Response);
+        $this->assertEquals(403, $response->getStatusCode());
+        $this->assertEquals($content, $response->getContent());
+
+        $permissionProfile->setScope(PermissionProfile::SCOPE_GLOBAL);
+        $this->dm->persist($permissionProfile);
+        $this->dm->flush();
+
+        $this->assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false));
+
+        $permissionProfile->setScope(PermissionProfile::SCOPE_PERSONAL);
+        $this->dm->persist($permissionProfile);
         $this->dm->flush();
 
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false);
