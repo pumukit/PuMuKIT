@@ -1743,7 +1743,7 @@ $(document).ready(function(){
         });
 
         $(document).on('click', '#pumukitnewadmin_group_delete_all_relation_user', function() {
-            if (window.confirm('{% trans %}ATTENTION: Are you sure you want to all User from this Group?{% endtrans %}')) {
+            if (window.confirm('{% trans %}ATTENTION: Are you sure you want to delete all User from this Group?{% endtrans %}')) {
                 var route = "{{ path('pumukitnewadmin_group_delete_all_users', {'id': '__groupId__'})|raw }}";
                 var group_id = $('#pumukitnewadmin_group_id').val();
                 route = route.replace('__groupId__', group_id);
@@ -1766,7 +1766,7 @@ $(document).ready(function(){
         });
 
         $(document).on('click', '#pumukitnewadmin_group_delete_all_relation_multimediaobject', function() {
-            if (window.confirm('{% trans %}ATTENTION: Are you sure you want to all Admin Multimedia Objects from this Group?{% endtrans %}')) {
+            if (window.confirm('{% trans %}ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?{% endtrans %}')) {
                 var route = "{{ path('pumukitnewadmin_group_delete_all_multimediaobjects', {'id': '__groupId__'})|raw }}";
                 var group_id = $('#pumukitnewadmin_group_id').val();
                 route = route.replace('__groupId__', group_id);
@@ -1789,7 +1789,7 @@ $(document).ready(function(){
         });
 
         $(document).on('click', '#pumukitnewadmin_group_delete_all_relation_embeddedbroadcast', function() {
-            if (window.confirm('{% trans %}ATTENTION: Are you sure you want to all Play Multimedia Objects from this Group?{% endtrans %}')) {
+            if (window.confirm('{% trans %}ATTENTION: Are you sure you want to delete all Play Multimedia Objects from this Group?{% endtrans %}')) {
                 var route = "{{ path('pumukitnewadmin_group_delete_all_embeddedbroadcasts', {'id': '__groupId__'})|raw }}";
                 var group_id = $('#pumukitnewadmin_group_id').val();
                 route = route.replace('__groupId__', group_id);
