@@ -327,12 +327,6 @@ class PlaylistMultimediaObjectController extends Controller
         $filter->setParameter("display_track_tag", "display");
     }
 
-    //Disables the back office filter.
-    protected function disableBackofficeFilter(){
-        $this->get('doctrine_mongodb.odm.document_manager')->getFilterCollection()->disable("backoffice");
-    }
-
-
     /**
      * Show modal to add one or more mmobjs to a playlist.
      * @Template
