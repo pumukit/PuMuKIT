@@ -84,6 +84,7 @@
       label.prepend(input);
       div.append(label);
       $('#add_playlist_form').prepend(div);
+      $('#add_playlist_btn').attr('disabled', false);
       new_playlist_form[0].reset();
       $('.new_playlist').toggle();
       $('#add_playlist_form_none').hide();
@@ -136,7 +137,7 @@
   })
 
 
-  $('.add_playlist_form_checkbox').on('change', function(e){
+  $('#add_playlist_form').on('change', '.add_playlist_form_checkbox', function(e){
     var empty = (0 == $('.add_playlist_form_checkbox:checked').length);
     $('#add_playlist_btn').attr('disabled', empty);
   });
