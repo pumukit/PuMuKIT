@@ -173,19 +173,42 @@ class GroupController extends AdminController implements NewAdminController
         }
 
         $groupService = $this->get('pumukitschema.group');
+        $translator = $this->get('translator');
+        $notDeleted = array();
         foreach ($ids as $id) {
             $group = $groupService->findById($id);
             try {
                 $groupService->delete($group);
             } catch (\Exception $e) {
-                return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
+                if (0 === strpos($e->getMessage(), 'Not allowed to delete')) {
+                    $notDeleted[] = $group->getKey();
+                } else {
+                    return new JsonResponse($e->getMessage(), Response::HTTP_BAD_REQUEST);
+                }
             }
             if ($id === $this->get('session')->get('admin/group/id')){
                 $this->get('session')->remove('admin/group/id');
             }
         }
+        if ($notDeleted) {
+            $code = Response::HTTP_BAD_REQUEST;
+            $message = $translator->trans("Not allowed to delete Groups:");
+            foreach ($notDeleted as $key) {
+                if ($key === reset($notDeleted)) {
+                    $message = $message . ' ';
+                } elseif ($key === end($notDeleted)) {
+                    $message = $message . ' and ';
+                } else {
+                    $message = $message . ', ';
+                }
+                $message = $message . $key;
+            }
+        } else {
+            $code = Response::HTTP_OK;
+            $message = $translator->trans('Groups successfully deleted');
+        }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_group_list'));
+        return new JsonResponse($message, $code);
     }
 
     /**

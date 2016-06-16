@@ -593,6 +593,42 @@ window.change_select = function(element, selector, pluralName, seriesId)
             });
         }
         break;
+
+    case 'delete_selected_groups':
+        var ids = [];
+        $('.' + element + '_checkbox:checked').each(function(){
+            var $this = $(this);
+            ids.push($this.attr("id"));
+        });
+        if (ids.length == 0) break;
+        if (confirm('{% trans %}Are you sure you want to delete selected groups?{% endtrans %}')) {
+            var route = get_batch_delete_route(element, ids);
+            var sucess = true;
+            var messge = '';
+            $.ajax({
+                    url: route,
+                    type: 'POST',
+                    data: {'_method': 'DELETE'},
+                    error: function(jqXHR, textStatus, errorThrown){
+                            message = errorThrown + ': ' + jqXHR.responseText;
+                            use_success = false;
+                    },
+                    success: function(response){
+                            message = response;
+                            use_success = true;
+                    }
+            }).always(function(data, textStatus, jqXHR){
+                var list_route = '{{ path('pumukitnewadmin_group_list')|raw }}';
+                $('#list_groups').load(list_route, {'_method': 'POST'});
+                if (use_success) {
+                    success(message);
+                } else {
+                    no_success(message);
+                }
+            });
+        }
+        break;
+
     case 'series_preview':
         var url = "{{ url('pumukit_webtv_series_magicindex', {secret: '__mmSecret__'}) }}";
         var secret = selector.find(':selected').attr('id');
