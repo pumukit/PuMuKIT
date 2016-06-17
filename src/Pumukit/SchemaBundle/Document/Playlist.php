@@ -79,6 +79,16 @@ class Playlist
     }
 
     /**
+     * Get the mongo id list of multimedia objects
+     *
+     * @return ArrayCollection
+     */
+    public function getMultimediaObjectsIdList()
+    {
+        return $this->multimedia_objects->getMongoData();
+    }
+
+    /**
      * Move multimedia_objects
      *
      * @return ArrayCollection
