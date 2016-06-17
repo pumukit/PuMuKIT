@@ -273,14 +273,14 @@ class PlaylistMultimediaObjectController extends Controller
 
     public function upAction(Series $playlist, Request $request) {
         $initPos = $request->query->get('mm_pos');
-        $endPos = $initPos < 1 ? 0 : $initPos - 1;
+        $endPos = ($initPos < 1) ? 0 : $initPos - 1;
         return $this->moveAction($playlist, $initPos, $endPos);
     }
 
     public function downAction(Series $playlist, Request $request) {
         $initPos = $request->query->get('mm_pos');
-        $lastPos = $playlist->getMultimediaObjects()->count() - 1;
-        $endPos = $initPos >= $lastPos ? $lastPos : $initPos + 1;
+        $lastPos = $playlist->getPlaylist()->getMultimediaObjects()->count() - 1;
+        $endPos = ($initPos >= $lastPos) ? $lastPos : $initPos + 1;
         return $this->moveAction($playlist, $initPos, $endPos);
     }
 
@@ -292,8 +292,8 @@ class PlaylistMultimediaObjectController extends Controller
 
     public function bottomAction(Series $playlist, Request $request) {
         $initPos = $request->query->get('mm_pos');
-        $lastPos = $playlist->getMultimediaObjects()->count() - 1;
-        return $this->moveAction($playlist, $initPos, $lasPos);
+        $lastPos = -1;
+        return $this->moveAction($playlist, $initPos, $lastPos);
     }
 
 
