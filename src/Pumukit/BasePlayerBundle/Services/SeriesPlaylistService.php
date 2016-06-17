@@ -8,6 +8,7 @@ use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Doctrine\Common\Collections\Criteria;
+use Pumukit\BasePlayerBundle\Utils\CountableAppendIterator;
 
 class SeriesPlaylistService
 {
@@ -25,7 +26,7 @@ class SeriesPlaylistService
                    ->field('series')->references($series);
         $seriesMmobjs = $qb->getQuery()->execute();
 
-        $iterable = new \AppendIterator();
+        $iterable = new CountableAppendIterator();
         $iterable->append($seriesMmobjs);
 
         //Is there a better way to get the ORDERED FILTERED objects from the embed mmobjs?

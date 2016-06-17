@@ -279,7 +279,8 @@ class PlaylistMultimediaObjectController extends Controller
 
     public function downAction(Series $playlist, Request $request) {
         $initPos = $request->query->get('mm_pos');
-        $lastPos = $playlist->getPlaylist()->getMultimediaObjects()->count() - 1;
+        $numMmobjs = count($playlist->getPlaylist()->getMultimediaObjects());
+        $lastPos = $numMmobjs - 1;
         $endPos = ($initPos >= $lastPos) ? $lastPos : $initPos + 1;
         return $this->moveAction($playlist, $initPos, $endPos);
     }
