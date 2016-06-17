@@ -21,20 +21,28 @@ class SeriesPlaylistService
 
     public function getPlaylistMmobjs(Series $series)
     {
-        $mmobjs = array();
         $qb = $this->mmobjRepo->createStandardQueryBuilder()
                    ->field('series')->references($series);
-        $mmobjs = $qb->getQuery()->execute();
+        $seriesMmobjs = $qb->getQuery()->execute();
 
         $iterable = new \AppendIterator();
-        $iterable->append($mmobjs);
+        $iterable->append($seriesMmobjs);
 
-        $playlist = $series->getPlaylist();
+        //Is there a better way to get the ORDERED FILTERED objects from the embed mmobjs?
+        $playlistMmobjs = $series->getPlaylist()->getMultimediaObjectsIdList();
+        $playlistMmobjsFiltered = $this->mmobjRepo->createQueryBuilder()->field('id')->in($playlistMmobjs)->getQuery()->execute();
+        $playlist = array();
+        foreach($playlistMmobjs as $playMmobj){
+            foreach($playlistMmobjsFiltered as $mmobj) {
+                if($playMmobj == $mmobj->getId())
+                    $playlist[] = $mmobj;
+            }
+        }
+
         if(!$playlist)
             return $iterable;
 
-        $playlistMmobjs = $playlist->getMultimediaObjects()->getIterator();
-        $iterable->append($playlistMmobjs);
+        $iterable->append(new \ArrayIterator($playlist));
         return $iterable;
     }
 
@@ -44,8 +52,17 @@ class SeriesPlaylistService
                    ->field('series')->references($series);
         $mmobj = $qb->getQuery()->getSingleResult();
 
-        if(!$mmobj)
-            $mmobj = $series->getPlaylist()->getMultimediaObjects()->first();
+        if(!$mmobj) {
+            //Is there a better way to get the first FILTERED object from the embed mmobjs?
+            $playlistMmobjs = $series->getPlaylist()->getMultimediaObjectsIdList();
+            $mmobjs = $this->mmobjRepo->createQueryBuilder()->field('id')->in($playlistMmobjs)->getQuery()->execute();
+            foreach($playlistMmobjs as $playMmobj){
+                foreach($mmobjs as $mmobj) {
+                    if($playMmobj == $mmobj->getId())
+                        return $mmobj;
+                }
+            }
+        }
 
         return $mmobj;
     }
@@ -64,6 +81,7 @@ class SeriesPlaylistService
                 }
             );
             $mmobj = $mmobj->first();
+            $mmobj = $this->mmobjRepo->createQueryBuilder()->field('id')->equals(new \MongoId($mmobj->getId()))->getQuery()->getSingleResult();
         }
 
         return $mmobj;
