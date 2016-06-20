@@ -32,7 +32,7 @@ class SeriesPlaylistService
     public function getPlaylistMmobjs(Series $series)
     {
         $qb = $this->mmobjRepo->createStandardQueryBuilder()
-                   ->field('series')->references($series);
+                   ->field('series')->references($series)->sort('rank', 'asc');
         $seriesMmobjs = $qb->getQuery()->execute();
 
         $iterable = new CountableAppendIterator();
@@ -70,7 +70,7 @@ class SeriesPlaylistService
     public function getPlaylistFirstMmobj(Series $series)
     {
         $qb = $this->mmobjRepo->createStandardQueryBuilder()
-                   ->field('series')->references($series);
+                   ->field('series')->references($series)->sort('rank', 'asc');
         $mmobj = $qb->getQuery()->getSingleResult();
 
         if(!$mmobj) {
