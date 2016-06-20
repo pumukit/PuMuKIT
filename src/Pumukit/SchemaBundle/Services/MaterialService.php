@@ -11,7 +11,7 @@ use Symfony\Component\Finder\Finder;
 
 class MaterialService
 {
-    const MIME_TYPE_CAPTIONS = 'vtt';
+    protected static $mimeTypeCaptions = array('vtt', 'srt', 'dfxp');
 
     private $dm;
     private $dispatcher;
@@ -151,10 +151,10 @@ class MaterialService
      */
     public function getCaptions(MultimediaObject $multimediaObject)
     {
-        $mimeTypeCaptions = self::MIME_TYPE_CAPTIONS;
+        $mimeTypeCaptions = self::$mimeTypeCaptions;
         return $multimediaObject->getMaterials()->filter(function ($material) use ($mimeTypeCaptions) {
-            return $material->getMimeType() === $mimeTypeCaptions;
-          });
+            return in_array($material->getMimeType(), $mimeTypeCaptions);
+        });
     }
 
     /**

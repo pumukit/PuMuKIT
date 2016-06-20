@@ -42,7 +42,8 @@ class MaterialType extends AbstractType
                                    'gz' => 'gz - Compress file',
                                    'doc' => 'doc - Word file',
                                    'srt' => 'srt - Text-captions srt',
-                                   'vtt' => 'vtt - Video Text Tracks'
+                                   'vtt' => 'vtt - Video Text Tracks',
+                                   'dfxp' => 'dfxp - Distribution Format Exchange Profile'
                                    ),
                 'label' => $this->translator->trans('Type')))
       ;
