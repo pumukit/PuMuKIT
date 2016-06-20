@@ -92,7 +92,6 @@ class SeriesPlaylistServiceTest extends WebTestCase
     public function testGetPlaylistMmobjs()
     {
         $playlistMmobjs = $this->seriesPlaylistService->getPlaylistMmobjs($this->testSeries);
-        $this->assertEquals(4, count($playlistMmobjs));
         $this->assertEquals(array(
             $this->testMmobjs['published'],
             $this->testMmobjs['hidden'],
