@@ -25,18 +25,41 @@ class MultimediaObjectMetaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('i18n_title', 'texti18n', array('required' => false, 'label' => $this->translator->trans('Title', array(), null, $this->locale)))
-            ->add('i18n_subtitle', 'texti18n', array('required' => false, 'label' => $this->translator->trans('Subtitle', array(), null, $this->locale)))
-            ->add('i18n_keyword', 'texti18n', array('required' => false, 'label' => $this->translator->trans('Keyword', array(), null, $this->locale)))
-            ->add('copyright', 'text', array('required' => false, 'label' => $this->translator->trans('Copyright', array(), null, $this->locale)))
-            ->add('license', 'text', array('required' => false, 'label' => $this->translator->trans('License', array(), null, $this->locale)))           
-            ->add('public_date', new Html5dateType(), array('data_class' => 'DateTime', 'label' => $this->translator->trans('Public Date', array(), null, $this->locale)))
-            ->add('record_date', new Html5dateType(), array('data_class' => 'DateTime', 'label' => $this->translator->trans('Date of holding', array(), null, $this->locale)))
-            ->add('i18n_description', 'textareai18n', array('required' => false, 'label' => $this->translator->trans('Description', array(), null, $this->locale)))
-            ->add('i18n_line2', 'textareai18n', array('required' => false, 'label' => $this->translator->trans('Headline', array(), null, $this->locale)))
-            ->add('subseries', 'checkbox', array('mapped' => false, 'required' => false, 'label' => $this->translator->trans('Subseries', array(), null, $this->locale)))
-            ->add('subseriestitle', 'texti18n', array('mapped' => false, 'required' => false, 'label' => $this->translator->trans('Subseries', array(), null, $this->locale)))
-          ;
+            ->add('i18n_title', 'texti18n',
+                  array('required' => false,
+                        'label' => $this->translator->trans('Title', array(), null, $this->locale)))
+            ->add('i18n_subtitle', 'texti18n',
+                  array('required' => false,
+                        'label' => $this->translator->trans('Subtitle', array(), null, $this->locale)))
+            ->add('i18n_keyword', 'texti18n',
+                  array('required' => false,
+                        'label' => $this->translator->trans('Keyword', array(), null, $this->locale)))
+            ->add('copyright', 'text',
+                  array('required' => false,
+                        'label' => $this->translator->trans('Copyright', array(), null, $this->locale)))
+            ->add('license', 'text',
+                  array('required' => false,
+                        'label' => $this->translator->trans('License', array(), null, $this->locale)))
+            ->add('public_date', new Html5dateType(),
+                  array('data_class' => 'DateTime',
+                        'label' => $this->translator->trans('Public Date', array(), null, $this->locale)))
+            ->add('record_date', new Html5dateType(),
+                  array('data_class' => 'DateTime',
+                        'label' => $this->translator->trans('Date of holding', array(), null, $this->locale)))
+            ->add('i18n_description', 'textareai18n',
+                  array('required' => false,
+                        'label' => $this->translator->trans('Description', array(), null, $this->locale)))
+            ->add('i18n_line2', 'textareai18n',
+                  array('required' => false,
+                        'label' => $this->translator->trans('Headline', array(), null, $this->locale)))
+            ->add('subseries', 'checkbox',
+                  array('mapped' => false,
+                        'required' => false,
+                        'label' => $this->translator->trans('Subseries', array(), null, $this->locale)))
+            ->add('subseriestitle', 'texti18n',
+                  array('mapped' => false,
+                        'required' => false,
+                        'label' => $this->translator->trans('Subseries', array(), null, $this->locale)));
 
         $builder->addEventListener(FormEvents::POST_SET_DATA, function(FormEvent $event) {
             $multimediaObject = $event->getData();
