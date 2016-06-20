@@ -23,6 +23,8 @@ class PumukitSchemaExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('pumukitschema.default_copyright', $config['default_copyright']);
+        $container->setParameter('pumukitschema.default_license', $config['default_license']);
         $container->setParameter('pumukitschema.default_series_pic', $config['default_series_pic']);
         $container->setParameter('pumukitschema.default_video_pic', $config['default_video_pic']);
         $container->setParameter('pumukitschema.default_audio_hd_pic', $config['default_audio_hd_pic']);
