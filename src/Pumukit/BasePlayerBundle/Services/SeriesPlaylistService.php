@@ -38,10 +38,11 @@ class SeriesPlaylistService
         $iterable = new CountableAppendIterator();
         $iterable->append($seriesMmobjs);
 
-        //Is there a better way to get the ORDERED FILTERED objects from the embed mmobjs?
         $playlistMmobjs = $series->getPlaylist()->getMultimediaObjectsIdList();
         $playlistMmobjsFiltered = $this->mmobjRepo->createQueryBuilder()->field('id')->in($playlistMmobjs)->getQuery()->execute();
         $playlist = array();
+        //This foreach orders the $playlistMmobjsFiltered results according to the order they appear in $playlistMmobjs.
+        //Ideally, mongo should return them ordered already, but I couldn't find how to achieve that.
         foreach($playlistMmobjs as $playMmobj){
             foreach($playlistMmobjsFiltered as $mmobj) {
                 if($playMmobj == $mmobj->getId())
@@ -74,9 +75,10 @@ class SeriesPlaylistService
         $mmobj = $qb->getQuery()->getSingleResult();
 
         if(!$mmobj) {
-            //Is there a better way to get the first FILTERED object from the embed mmobjs?
             $playlistMmobjs = $series->getPlaylist()->getMultimediaObjectsIdList();
             $mmobjs = $this->mmobjRepo->createQueryBuilder()->field('id')->in($playlistMmobjs)->getQuery()->execute();
+            //This foreach orders the $playlistMmobjsFiltered results according to the order they appear in $playlistMmobjs.
+            //Ideally, mongo should return them ordered already, but I couldn't find how to achieve that.
             foreach($playlistMmobjs as $playMmobj){
                 foreach($mmobjs as $mmobj) {
                     if($playMmobj == $mmobj->getId())
