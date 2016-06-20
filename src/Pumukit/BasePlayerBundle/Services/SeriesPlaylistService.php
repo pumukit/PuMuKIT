@@ -20,6 +20,15 @@ class SeriesPlaylistService
         $this->mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
     }
 
+    /**
+     * Returns an iterator with all mmobjs belonging to the playlist
+     *
+     * This function returns an iterator with the 'series' mmobjs (mmobj whose series ref is this Collection)
+     * followed by the 'playlist' mmobjs (mmobjs whose ids are on the playlist embedded document on this Collection)
+     *
+     * @param Series $series The series to return mmobjs from.
+     * @return CountableAppendIterator
+     */
     public function getPlaylistMmobjs(Series $series)
     {
         $qb = $this->mmobjRepo->createStandardQueryBuilder()
@@ -47,6 +56,17 @@ class SeriesPlaylistService
         return $iterable;
     }
 
+    /**
+     * Returns the 'first' mmobj on the playlist
+     *
+     * This function returns the first mmobj on the playlist. If there are any multimedia
+     * objects which references this Collection, the first of those (using the rank criteria)
+     * will be returned. Otherwise, the first valid mmobj belonging to the playlist embed
+     * document will be returned.
+     *
+     * @param Series $series The series to return the first mmobj from.
+     * @return MultimediaObject
+     */
     public function getPlaylistFirstMmobj(Series $series)
     {
         $qb = $this->mmobjRepo->createStandardQueryBuilder()
@@ -68,6 +88,15 @@ class SeriesPlaylistService
         return $mmobj;
     }
 
+    /**
+     * Returns the mmobj with the given id, if belongs to the series. Otherwise it returns null.
+     *
+     * This function is used to check whether the given mmobj id is valid and belongs to the given series.
+     *
+     * @param string $mmobjId The id of the multimedia object.
+     * @param Series $series The series to return the first mmobj from.
+     * @return MultimediaObject
+     */
     public function getMmobjFromIdAndPlaylist($mmobjId, Series $series)
     {
         $qb = $this->mmobjRepo->createStandardQueryBuilder()
