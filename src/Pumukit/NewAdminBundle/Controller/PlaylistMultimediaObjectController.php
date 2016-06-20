@@ -273,22 +273,28 @@ class PlaylistMultimediaObjectController extends Controller
 
     public function upAction(Series $playlist, Request $request) {
         $initPos = $request->query->get('mm_pos');
-        $this->moveAction($playlist, $initPos, $endPos);
+        $endPos = ($initPos < 1) ? 0 : $initPos - 1;
+        return $this->moveAction($playlist, $initPos, $endPos);
     }
 
     public function downAction(Series $playlist, Request $request) {
         $initPos = $request->query->get('mm_pos');
-        $this->moveAction($playlist, $initPos, $endPos);
+        $numMmobjs = count($playlist->getPlaylist()->getMultimediaObjects());
+        $lastPos = $numMmobjs - 1;
+        $endPos = ($initPos >= $lastPos) ? $lastPos : $initPos + 1;
+        return $this->moveAction($playlist, $initPos, $endPos);
     }
 
     public function topAction(Series $playlist, Request $request) {
         $initPos = $request->query->get('mm_pos');
-        $this->moveAction($playlist, $initPos, $endPos);
+        $firstPos = 0;
+        return $this->moveAction($playlist, $initPos, $firstPos);
     }
 
     public function bottomAction(Series $playlist, Request $request) {
         $initPos = $request->query->get('mm_pos');
-        $this->moveAction($playlist, $initPos, $endPos);
+        $lastPos = -1;
+        return $this->moveAction($playlist, $initPos, $lastPos);
     }
 
 
@@ -326,12 +332,6 @@ class PlaylistMultimediaObjectController extends Controller
         $filter->setParameter('status', MultimediaObject::STATUS_PUBLISHED);
         $filter->setParameter("display_track_tag", "display");
     }
-
-    //Disables the back office filter.
-    protected function disableBackofficeFilter(){
-        $this->get('doctrine_mongodb.odm.document_manager')->getFilterCollection()->disable("backoffice");
-    }
-
 
     /**
      * Show modal to add one or more mmobjs to a playlist.

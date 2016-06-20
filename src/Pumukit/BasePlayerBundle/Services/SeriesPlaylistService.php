@@ -8,6 +8,7 @@ use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Doctrine\Common\Collections\Criteria;
+use Pumukit\BasePlayerBundle\Utils\CountableAppendIterator;
 
 class SeriesPlaylistService
 {
@@ -19,34 +20,85 @@ class SeriesPlaylistService
         $this->mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
     }
 
+    /**
+     * Returns an iterator with all mmobjs belonging to the playlist
+     *
+     * This function returns an iterator with the 'series' mmobjs (mmobj whose series ref is this Collection)
+     * followed by the 'playlist' mmobjs (mmobjs whose ids are on the playlist embedded document on this Collection)
+     *
+     * @param Series $series The series to return mmobjs from.
+     * @return CountableAppendIterator
+     */
     public function getPlaylistMmobjs(Series $series)
     {
-        $mmobjs = array();
         $qb = $this->mmobjRepo->createStandardQueryBuilder()
-                   ->field('series')->references($series);
-        $mmobjs = $qb->getQuery()->execute();
+                   ->field('series')->references($series)->sort('rank', 'asc');
+        $seriesMmobjs = $qb->getQuery()->execute();
 
-        $playlist = $series->getPlaylist()->getMultimediaObjects()->getIterator();
+        $iterable = new CountableAppendIterator();
+        $iterable->append($seriesMmobjs);
 
-        $iterable = new \AppendIterator();
-        $iterable->append($mmobjs);
-        $iterable->append($playlist);
+        $playlistMmobjs = $series->getPlaylist()->getMultimediaObjectsIdList();
+        $playlistMmobjsFiltered = $this->mmobjRepo->createQueryBuilder()->field('id')->in($playlistMmobjs)->getQuery()->execute();
+        $playlist = array();
+        //This foreach orders the $playlistMmobjsFiltered results according to the order they appear in $playlistMmobjs.
+        //Ideally, mongo should return them ordered already, but I couldn't find how to achieve that.
+        foreach($playlistMmobjs as $playMmobj){
+            foreach($playlistMmobjsFiltered as $mmobj) {
+                if($playMmobj == $mmobj->getId())
+                    $playlist[] = $mmobj;
+            }
+        }
+
+        if(!$playlist)
+            return $iterable;
+
+        $iterable->append(new \ArrayIterator($playlist));
         return $iterable;
     }
 
+    /**
+     * Returns the 'first' mmobj on the playlist
+     *
+     * This function returns the first mmobj on the playlist. If there are any multimedia
+     * objects which references this Collection, the first of those (using the rank criteria)
+     * will be returned. Otherwise, the first valid mmobj belonging to the playlist embed
+     * document will be returned.
+     *
+     * @param Series $series The series to return the first mmobj from.
+     * @return MultimediaObject
+     */
     public function getPlaylistFirstMmobj(Series $series)
     {
-        $mmobj = array();
         $qb = $this->mmobjRepo->createStandardQueryBuilder()
-                   ->field('series')->references($series);
+                   ->field('series')->references($series)->sort('rank', 'asc');
         $mmobj = $qb->getQuery()->getSingleResult();
 
-        if(!$mmobj)
-            $mmobj = $series->getPlaylist()->getMultimediaObjects()->first();
+        if(!$mmobj) {
+            $playlistMmobjs = $series->getPlaylist()->getMultimediaObjectsIdList();
+            $mmobjs = $this->mmobjRepo->createQueryBuilder()->field('id')->in($playlistMmobjs)->getQuery()->execute();
+            //This foreach orders the $playlistMmobjsFiltered results according to the order they appear in $playlistMmobjs.
+            //Ideally, mongo should return them ordered already, but I couldn't find how to achieve that.
+            foreach($playlistMmobjs as $playMmobj){
+                foreach($mmobjs as $mmobj) {
+                    if($playMmobj == $mmobj->getId())
+                        return $mmobj;
+                }
+            }
+        }
 
         return $mmobj;
     }
 
+    /**
+     * Returns the mmobj with the given id, if belongs to the series. Otherwise it returns null.
+     *
+     * This function is used to check whether the given mmobj id is valid and belongs to the given series.
+     *
+     * @param string $mmobjId The id of the multimedia object.
+     * @param Series $series The series to return the first mmobj from.
+     * @return MultimediaObject
+     */
     public function getMmobjFromIdAndPlaylist($mmobjId, Series $series)
     {
         $qb = $this->mmobjRepo->createStandardQueryBuilder()
@@ -61,6 +113,7 @@ class SeriesPlaylistService
                 }
             );
             $mmobj = $mmobj->first();
+            $mmobj = $this->mmobjRepo->createQueryBuilder()->field('id')->equals(new \MongoId($mmobj->getId()))->getQuery()->getSingleResult();
         }
 
         return $mmobj;

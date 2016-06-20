@@ -4,10 +4,18 @@ namespace Pumukit\SchemaBundle\Tests\Document;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Playlist;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class PlaylistTest extends WebTestCase
 {
+
+    public function testCreate()
+    {
+        $playlist = new Playlist();
+        $this->assertEquals(array(), $playlist->getMultimediaObjectsIdList());
+    }
+
     public function testMoveMultimediaObject()
     {
         $playlist = new Series();

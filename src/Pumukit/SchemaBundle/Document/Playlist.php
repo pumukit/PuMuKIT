@@ -16,7 +16,7 @@ class Playlist
     /**
      * @var ArrayCollection $multimedia_objects
      *
-     * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", simple=true, strategy="set")
+     * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", simple=true, strategy="setArray")
      * @Serializer\Exclude
      */
     private $multimedia_objects;
@@ -79,6 +79,21 @@ class Playlist
     }
 
     /**
+     * Get the mongo id list of multimedia objects
+     *
+     * @return ArrayCollection
+     */
+    public function getMultimediaObjectsIdList()
+    {
+        $mmobjIds = array_map(
+            function($m){
+                return new \MongoId($m->getId());
+            }, $this->multimedia_objects->toArray()
+        );
+        return $mmobjIds;
+    }
+
+    /**
      * Move multimedia_objects
      *
      * @return ArrayCollection
@@ -86,6 +101,8 @@ class Playlist
     public function moveMultimediaObject($posStart, $posEnd)
     {
         $maxPos = $this->multimedia_objects->count();
+        if($maxPos < 1)
+            return false;
         if($posStart - $posEnd == 0
            || $posStart < 0 || $posStart > $maxPos) {
             return false; //If start is out of range or start/end is the same, do nothing.

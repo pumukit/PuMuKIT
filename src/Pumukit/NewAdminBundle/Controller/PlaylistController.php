@@ -67,7 +67,7 @@ class PlaylistController extends CollectionController
         $factory = $this->get('pumukitschema.factory');
         $collection = $factory->createPlaylist($this->getUser(), $request->request->get('playlist_title'));
         $this->get('session')->set('admin/playlist/id', $collection->getId());
-       
+
         return new JsonResponse(array('playlistId' => $collection->getId(), 'title' => $collection->getTitle()));
     }
 
@@ -187,10 +187,13 @@ class PlaylistController extends CollectionController
      */
     protected function getResources(Request $request)
     {
+        $sorting = $this->getSorting($request);
         $criteria = $this->getCriteria($request);
         $criteria = array_merge($criteria, array('type' => Series::TYPE_PLAYLIST));
         $queryBuilder = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:Series')->createQueryBuilder();
         $queryBuilder->setQueryArray($criteria);
+        //Sort playlist
+        $queryBuilder->sort($sorting);
         $resources = $this->createPager($queryBuilder, $request, 'admin/playlist');
         return $resources;
     }
@@ -213,4 +216,24 @@ class PlaylistController extends CollectionController
 
         return $new_criteria;
     }
+
+    /**
+     * Gets the sorting values from the request and initialize session vars accordingly if necessary.
+     *
+     */
+    private function getSorting(Request $request)
+    {
+      $session = $this->get('session');
+
+      if ($sorting = $request->get('sorting')){
+          $session->set('admin/playlist/type', current($sorting));
+          $session->set('admin/playlist/sort', key($sorting));
+      }
+
+      $value = $session->get('admin/playlist/type', 'desc');
+      $key = $session->get('admin/playlist/sort', 'public_date');
+
+      return  array($key => $value);
+    }
+
 }

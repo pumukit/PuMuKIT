@@ -17,8 +17,10 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class MultimediaObject
 {
     const STATUS_PUBLISHED = 0;
-    const STATUS_BLOQ = 1;
-    const STATUS_HIDE = 2;
+    const STATUS_BLOQ = 1; //Kept for backwards compatibility
+    const STATUS_BLOCKED = 1;
+    const STATUS_HIDE = 2; //Kept for backwards compatibility
+    const STATUS_HIDDEN = 2;
     const STATUS_NEW = -1;
     const STATUS_PROTOTYPE = -2;
 
@@ -448,7 +450,7 @@ class MultimediaObject
      * Set subtitle
      *
      * @param string $subtitle
-     * @param string|null $locale 
+     * @param string|null $locale
      */
     public function setSubtitle($subtitle, $locale = null)
     {
@@ -500,7 +502,7 @@ class MultimediaObject
      * Set description
      *
      * @param string $description
-     * @param string|null $locale 
+     * @param string|null $locale
      */
     public function setDescription($description, $locale = null)
     {
@@ -552,7 +554,7 @@ class MultimediaObject
      * Set line2
      *
      * @param string $line2
-     * @param string|null $locale 
+     * @param string|null $locale
      */
     public function setLine2($line2, $locale = null)
     {
@@ -644,7 +646,7 @@ class MultimediaObject
      * Set keyword
      *
      * @param string $keyword
-     * @param string|null $locale 
+     * @param string|null $locale
      */
     public function setKeyword($keyword, $locale = null)
     {
@@ -823,7 +825,7 @@ class MultimediaObject
         return $this->broadcast;
     }
 
-    
+
     /**
      * Get broadcast
      *
@@ -836,7 +838,7 @@ class MultimediaObject
       return (bool)(!$this->broadcast || Broadcast::BROADCAST_TYPE_PUB == $this->broadcast->getBroadcastTypeId());
     }
 
-        
+
     /**
      * Set embedded broadcast
      *
@@ -980,7 +982,7 @@ class MultimediaObject
 
         return true;
     }
-    
+
     /**
      * Contains all tags with codes
      * The original string tag logic used array_intersect and count to check it.
@@ -998,7 +1000,7 @@ class MultimediaObject
         }
 
         return true;
-    }    
+    }
 
     /**
      * Contains any tags
@@ -1018,7 +1020,7 @@ class MultimediaObject
 
         return false;
     }
-    
+
     /**
      * Contains any tags with codes
      * The original string tag logic used array_intersect and count to check it.
@@ -1037,7 +1039,7 @@ class MultimediaObject
 
         return false;
     }
-    
+
     // End of tags section
 
 
@@ -1187,10 +1189,10 @@ class MultimediaObject
                 break;
             }
         }
-      
+
         return $url;
     }
-    
+
     /**
      * Get pics with tag
      *
@@ -2409,7 +2411,7 @@ class MultimediaObject
 
         return $hasRemoved;
     }
-    
+
     /**
      * Get person with role
      *
@@ -2423,7 +2425,7 @@ class MultimediaObject
         if ($this->containsPersonWithRole($person, $role)) {
             return $this->getEmbeddedRole($role)->getEmbeddedPerson($person);
         }
-      
+
         return false;
     }
 
@@ -2571,7 +2573,7 @@ class MultimediaObject
 
     // End of Group section
 
-    /**  
+    /**
      * Update duration
      */
     private function updateDuration()
