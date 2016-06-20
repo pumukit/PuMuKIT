@@ -85,7 +85,12 @@ class Playlist
      */
     public function getMultimediaObjectsIdList()
     {
-        return $this->multimedia_objects->getMongoData();
+        $mmobjIds = array_map(
+            function($m){
+                return new \MongoId($m->getId());
+            }, $this->multimedia_objects->toArray()
+        );
+        return $mmobjIds;
     }
 
     /**

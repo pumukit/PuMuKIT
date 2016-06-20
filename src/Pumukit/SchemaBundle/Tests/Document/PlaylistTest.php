@@ -13,10 +13,8 @@ class PlaylistTest extends WebTestCase
     public function testCreate()
     {
         $playlist = new Playlist();
-        $this->assertEquals(0, $playlist->getMultimediaObjectsIdList());
+        $this->assertEquals(array(), $playlist->getMultimediaObjectsIdList());
     }
-
-
 
     public function testMoveMultimediaObject()
     {
