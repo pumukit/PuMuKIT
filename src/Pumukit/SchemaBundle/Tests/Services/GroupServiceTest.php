@@ -151,6 +151,23 @@ class GroupServiceTest extends WebTestCase
         $this->assertFalse(in_array($user1, $usersGroup2));
         $this->assertFalse(in_array($user2, $usersGroup2));
         $this->assertFalse(in_array($user3, $usersGroup2));
+
+        // sort
+
+        $user2->addGroup($group1);
+        $user3->addGroup($group1);
+        $this->dm->persist($user2);
+        $this->dm->persist($user3);
+        $this->dm->flush();
+
+        $sort1 = array('username' => 1);
+        $users1Group1 = $this->groupService->findUsersInGroup($group1, $sort1)->toArray();
+
+        $sort_1 = array('username' => -1);
+        $users_1Group1 = $this->groupService->findUsersInGroup($group1, $sort_1)->toArray();
+
+        $this->assertEquals(array($user1, $user2, $user3), array_values($users1Group1));
+        $this->assertEquals(array($user3, $user2, $user1), array_values($users_1Group1));
     }
 
     public function testCreate()

@@ -279,13 +279,17 @@ class GroupService
      * Find users in group
      *
      * @param Group $group
+     * @param array $sort
      * @return Cursor
      */
-    public function findUsersInGroup(Group $group)
+    public function findUsersInGroup(Group $group, $sort = array())
     {
-        return $this->userRepo->createQueryBuilder()
-            ->field('groups')->equals($group->getId())
-            ->getQuery()
+        $qb = $this->userRepo->createQueryBuilder()
+            ->field('groups')->equals($group->getId());
+        if (0 !== count($sort)) {
+            $qb->sort($sort);
+        }
+        return $qb->getQuery()
             ->execute();
     }
 

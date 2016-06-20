@@ -1256,7 +1256,7 @@ class MultimediaObjectRepository extends DocumentRepository
             ->field('embeddedBroadcast.groups')->in(array(new \MongoId($group->getId())));
 
         if (0 !== count($sort) ){
-          $qb->sort($sort);
+            $qb->sort($sort);
         }
 
         return $qb;

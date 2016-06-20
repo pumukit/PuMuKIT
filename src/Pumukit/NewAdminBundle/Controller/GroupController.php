@@ -276,16 +276,19 @@ class GroupController extends AdminController implements NewAdminController
     public function infoAction(Request $request)
     {
         $group = $this->findOr404($request);
+        $locale = $request->getLocale();
         $action = $request->get('action', false);
-        $users = $this->get('pumukitschema.group')->findUsersInGroup($group);
+        $usersSort = array('username' => 1);
+        $users = $this->get('pumukitschema.group')->findUsersInGroup($group, $usersSort);
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $adminMultimediaObjects = $mmobjRepo->findWithGroup($group);
-        $viewerMultimediaObjects = $mmobjRepo->findWithGroupInEmbeddedBroadcast($group);
+        $sort = array('title'.$locale => 1);
+        $adminMultimediaObjects = $mmobjRepo->findWithGroup($group, $sort);
+        $viewerMultimediaObjects = $mmobjRepo->findWithGroupInEmbeddedBroadcast($group, $sort);
         $groupService = $this->get('pumukitschema.group');
         $countResources = $groupService->countResourcesInGroup($group);
         $canBeDeleted = $groupService->canBeDeleted($group);
-        $deleteMessage = $groupService->getDeleteMessage($group, $request->get('_locale'));
+        $deleteMessage = $groupService->getDeleteMessage($group, $locale);
 
         return array(
                      'group' => $group,
@@ -390,7 +393,8 @@ class GroupController extends AdminController implements NewAdminController
             $groupService = $this->get('pumukitschema.group');
             $canBeDeleted = $groupService->canBeDeleted($group);
             $value = $canBeDeleted ? 1:0;
-            $deleteMessage = $groupService->getDeleteMessage($group, $request->get('_locale'));
+            $locale = $request->getLocale();
+            $deleteMessage = $groupService->getDeleteMessage($group, $locale);
         } catch (\Exception $e){
             return new JsonResponse(array('error' => $e->getMessage()), Response::HTTP_BAD_REQUEST);
         }
