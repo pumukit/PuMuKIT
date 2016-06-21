@@ -109,7 +109,7 @@ class MultimediaObject
     /**
      * @var ArrayCollection $groups
      *
-     * @MongoDB\ReferenceMany(targetDocument="Group", simple=true)
+     * @MongoDB\ReferenceMany(targetDocument="Group", simple=true, sort={"key":1})
      */
     private $groups;
 
