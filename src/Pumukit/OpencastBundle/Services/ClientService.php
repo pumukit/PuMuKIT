@@ -4,6 +4,7 @@ namespace Pumukit\OpencastBundle\Services;
 
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Services\PermissionService;
 
 class ClientService
 {
@@ -19,6 +20,7 @@ class ClientService
     private $manageOpencastUsers;
     private $insecure = false;
     private $logger;
+    private $permissionService;
 
     /**
      * Constructor.
@@ -33,7 +35,8 @@ class ClientService
      * @param LoggerInterface $logger
      */
     public function __construct($url = '', $user = '', $passwd = '', $player = '/engage/ui/watch.html', $scheduler = '/admin/index.html#/recordings', $dashboard = '/dashboard/index.html',
-                                $deleteArchiveMediaPackage = false, $deletionWorkflowName = 'delete-archive', $manageOpencastUsers = false, $insecure = false, $adminUrl = null, LoggerInterface $logger)
+                                $deleteArchiveMediaPackage = false, $deletionWorkflowName = 'delete-archive', $manageOpencastUsers = false, $insecure = false, $adminUrl = null, LoggerInterface $logger,
+                                PermissionService $permissionService)
     {
         $this->logger = $logger;
 
@@ -55,6 +58,7 @@ class ClientService
         $this->manageOpencastUsers = $manageOpencastUsers;
         $this->insecure = $insecure;
         $this->adminUrl = $adminUrl;
+        $this->permissionService = $permissionService;
     }
 
     /**

@@ -45,7 +45,8 @@ class PumukitOpencastExtension extends Extension
               ->addArgument($config['manage_opencast_users'])
               ->addArgument(new Parameter('pumukit2.insecure_http_client'))
               ->addArgument($config['admin_host'])
-              ->addArgument(new Reference('logger'));
+              ->addArgument(new Reference('logger'))
+              ->addArgument(new Reference('pumukitschema.permission'));
 
             $container
               ->register('pumukit_opencast.job', "Pumukit\OpencastBundle\Services\OpencastService")
