@@ -1,12 +1,37 @@
 {% extends 'PumukitWebTVBundle::layout.html.twig' %}
 {% block body %}
-    <h1 class="titulo_widget titulo_widget_grande">
-      {% trans %}401 Unauthorized{% endtrans %}
-    </h1>
-	<div class="grid_10 mm_player">
-      <div class="date"></div>
-      <h2 style="color:red;">{% trans %}No permission to access this video{% endtrans %}</h2>
-	</div>
-	<div class="grid_5">
-	</div>
+<h1 class="widget slidebar" style="text-align: center; padding-top: 40px;">
+  {% trans %}Private Video{% endtrans %}
+</h1>
+<div class="grid_10 mm_player">
+  <div class="date"></div>
+  <h2 style="text-align: center;">{% trans %}This video is private with restricted access{% endtrans %}.</h2>
+</div>
+<div class="grid_5">
+  <h3 class="text-center">{% trans %}Enter a valid password to watch it{% endtrans %}</h3>
+  <br/>
+  <div class="text-center">
+    <form name="passwdForm" method="post" action="{{ path('pumukit_webtv_multimediaobject_index', {'id': mm.id})|raw}}">
+      <input id="broadcast_password" name="broadcast_password" type="password" placeholder="{% trans %}Introduce a password{% endtrans %}..." value="" size="17" maxlength="256" style="margin: 5px;"/>
+      {#     <button type="submit" class="btn btn-primary btn-flat"
+                     name="submit" title="{% trans %}Enter Password{% endtrans %}"
+                     onclick="$.ajax({
+                              url: '{{ path('pumukit_webtv_multimediaobject_index', {'id': mm.id})|raw}}',
+                              method: 'GET',
+                              data: {'password': $('#broadcast_password').val()},
+                              error: function() {
+                              console.log('error');
+                              },
+                              success: function(response) {
+                              console.log('success');
+                              console.log(response);
+                              }
+                              });
+                              return false;
+                            //privatevideo_check_password('{{ mm.id }}', $('#broadcast_password').val());">{% trans %}Enter Password{% endtrans %}</button> #}
+      {% set diff = (app.request.getQueryString) ? '&' : '?' %}
+      <button type="submit" class="btn btn-primary btn-flat" name="submit" title="Log In" onclick="location.href='{{ app.request.requestUri }}{{ diff }}broadcast_password=test'">enter pass</button>
+    </form>
+  </div>
+</div>
 {% endblock %}

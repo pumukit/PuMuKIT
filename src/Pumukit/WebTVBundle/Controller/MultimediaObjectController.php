@@ -23,7 +23,8 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
     {
         $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
-        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $request->headers->get('PHP_AUTH_PW'), $request->query->get('force-auth'));
+        $password = $request->get('broadcast_password');
+        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $request->headers->get('PHP_AUTH_PW'), $request->query->get('force-auth'), $password);
         if ($response instanceof Response) {
             return $response;
         }
@@ -83,7 +84,8 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
         }
 
         $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
-        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $request->headers->get('PHP_AUTH_PW'), $request->query->get('force-auth'));
+        $password = $request->get('broadcast_password');
+        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $request->headers->get('PHP_AUTH_PW'), $request->query->get('force-auth'), $password);
         if ($response instanceof Response) {
             return $response;
         }

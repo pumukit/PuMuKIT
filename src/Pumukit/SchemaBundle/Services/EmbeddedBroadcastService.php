@@ -249,7 +249,7 @@ class EmbeddedBroadcastService
      * @param  boolean          $forceAuth
      * @return
      */
-    public function canUserPlayMultimediaObject(MultimediaObject $multimediaObject, User $user = null, $phpAuthPassword, $forceAuth = false)
+    public function canUserPlayMultimediaObject(MultimediaObject $multimediaObject, User $user = null, $phpAuthPassword, $forceAuth = false, $password = '')
     {
         $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
         if (!$embeddedBroadcast) {
@@ -265,7 +265,7 @@ class EmbeddedBroadcastService
             return $this->isUserLoggedInAndInGroups($multimediaObject, $user, $forceAuth);
         }
         if (EmbeddedBroadcast::TYPE_PASSWORD === $embeddedBroadcast->getType()) {
-            return $this->isPasswordCorrect($multimediaObject, $phpAuthPassword);
+            return $this->isPasswordCorrect($multimediaObject, $phpAuthPassword, $password);
         }
 
         return $this->renderErrorNotAuthenticated($forceAuth, $user);
@@ -331,11 +331,12 @@ class EmbeddedBroadcastService
         return $this->renderErrorNotAuthenticated($forceAuth, $user);
     }
 
-    private function isPasswordCorrect(MultimediaObject $multimediaObject, $phpAuthPassword)
+    private function isPasswordCorrect(MultimediaObject $multimediaObject, $phpAuthPassword, $password)
     {
         if ($embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast()) {
             $embeddedPassword = $embeddedBroadcast->getPassword();
-            if (($phpAuthPassword == $embeddedPassword) && (null !== $embeddedPassword)) {
+            //            if (($phpAuthPassword == $embeddedPassword) && (null !== $embeddedPassword)) {
+            if (($password == $embeddedPassword) && (null !== $embeddedPassword)) {
                 return true;
             }
         }
@@ -359,7 +360,10 @@ class EmbeddedBroadcastService
         $seriesUrl = $this->router->generate('pumukit_webtv_series_index', array('id' => $multimediaObject->getSeries()->getId()), true);
         $redReq = new RedirectResponse($seriesUrl, 302);
 
-        return new Response($redReq->getContent(), 401, array('WWW-Authenticate' => 'Basic realm="Resource not public."'));
+        $renderedView = $this->templating->render('PumukitWebTVBundle:Index:401unauthorized.html.twig', array('show_forceauth' => true, 'mm' => $multimediaObject));
+
+        return new Response($renderedView, 401);
+        //        return new Response($redReq->getContent(), 401, array('WWW-Authenticate' => 'Basic realm="Resource not public."'));
     }
 
     /**
