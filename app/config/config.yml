@@ -69,6 +69,9 @@ doctrine_mongodb:
                 backoffice:
                     class:     Pumukit\SchemaBundle\Filter\AdminFilter
                     enabled:   false
+                personal:
+                    class:     Pumukit\SchemaBundle\Filter\PersonalFilter
+                    enabled:   false
 
 
 # Swiftmailer Configuration
