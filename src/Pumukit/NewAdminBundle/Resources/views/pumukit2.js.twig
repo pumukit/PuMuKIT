@@ -1781,12 +1781,16 @@ $(document).ready(function(){
             if (value == '{{ constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PASSWORD') }}') { 
                 $('#broadcast_groups').addClass('pumukitnewadmin-broadcast-hidden');
                 $('#broadcast_password').removeClass('pumukitnewadmin-broadcast-hidden');
+                can_enable_broadcast_password_save_button();
             } else if (value == '{{ constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_GROUPS') }}') {
                 $('#broadcast_password').addClass('pumukitnewadmin-broadcast-hidden');
                 $('#broadcast_groups').removeClass('pumukitnewadmin-broadcast-hidden');
+                can_enable_broadcast_groups_save_button();
             } else {
                 $('#broadcast_password').addClass('pumukitnewadmin-broadcast-hidden');
                 $('#broadcast_groups').addClass('pumukitnewadmin-broadcast-hidden');
+                var submit_button = get_submit_button_id();
+                $(submit_button).prop('disabled', false);
             }
         });
 
@@ -1846,11 +1850,21 @@ $(document).ready(function(){
 });
 
 function check_pass(pass1, pass2) {
-    if (pass1 == pass2) {
+    var submit_button = get_submit_button_id();
+    if ((pass1 == '') || (pass2 == '')){
         $('#broadcast_password_check_fail').hide();
+        $('#broadcast_password_check_empty').show();
+        $(submit_button).prop('disabled', true);
+        return false;
+    } else if (pass1 == pass2) {
+        $('#broadcast_password_check_fail').hide();
+        $('#broadcast_password_check_empty').hide();
+        $(submit_button).prop('disabled', false);
         return true;
     } else {
+        $('#broadcast_password_check_empty').hide();
         $('#broadcast_password_check_fail').show();
+        $(submit_button).prop('disabled', true);
         return false;
     }
 }
@@ -2374,6 +2388,9 @@ function add_group(group_id, group_key, group_name, group_origin, resource)
         element_to_delete = "#delete_" + resource + "_group_" + group_id;
     }
     delete_element_group_from_select(element_to_delete, group_id, group_key, group_name, group_origin, resource);
+    if (resource != "user") {
+        can_enable_broadcast_groups_save_button();
+    }
 }
 
 function delete_group(group_id, group_key, group_name, group_origin, resource)
@@ -2386,6 +2403,9 @@ function delete_group(group_id, group_key, group_name, group_origin, resource)
     }
     delete_element_group_from_select(element_to_delete);
     create_element_group_in_delete_groups(group_id, group_key, group_name, group_origin, resource);
+    if (resource != "user") {
+        can_enable_broadcast_groups_save_button();
+    }
 }
 
 function create_element_group_in_add_groups(group_id, group_key, group_name, group_origin, resource) {
@@ -2784,4 +2804,39 @@ can_be_deleted = function(group_id)
             }
     });
     return false;
+}
+
+can_enable_broadcast_groups_save_button = function(resource)
+{
+    var submit_button = get_submit_button_id();
+    if ($.trim($('#add_broadcast_groups').html()) == '') {
+        $(submit_button).prop('disabled', true);
+    } else {
+        $(submit_button).prop('disabled', false);
+    }
+    return false;
+}
+
+can_enable_broadcast_password_save_button = function()
+{
+    var pass1 = $('#broadcast_password_1').val();
+    var pass2 = $('#broadcast_password_2').val();
+    var submit_button = get_submit_button_id();
+    if ((pass1 == '') || (pass2 == '')){
+        $(submit_button).prop('disabled', true);
+    } else if (pass1 == pass2) {
+        $(submit_button).prop('disabled', false);
+    } else {
+        $(submit_button).prop('disabled', true);
+    }
+    return false;
+}
+
+get_submit_button_id = function()
+{
+    if ($('#pumukitnewadmin_series_broadcast_series_id').val() == undefined) {
+        return '#pumukitnewadmin_mm_broadcast_updategroup_submit';
+    } else {
+        return '#pumukitnewadmin_series_broadcast_updategroup_submit';
+    }
 }
