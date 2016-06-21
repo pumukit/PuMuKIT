@@ -27,6 +27,11 @@
       <tag name="form.type" alias="customlanguage" />
     </service>
 
+    <service id="form.type.license" class="Pumukit\NewAdminBundle\Form\Type\Base\LicenseType">
+      <argument>%pumukit_new_admin.licenses%</argument>
+      <tag name="form.type" alias="license" />
+    </service>
+
     <service id="pumukitnewadmin.kernelexception.listener" class="Pumukit\NewAdminBundle\EventListener\ExceptionListener">
       <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" priority="255" />
     </service>

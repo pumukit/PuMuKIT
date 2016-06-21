@@ -48,7 +48,8 @@
             <argument type="service" id="translator" />
             <argument>%pumukitschema.enable_add_user_as_person%</argument>
             <argument>%pumukit2.locales%</argument>
-            <argument type="expression">parameter('pumukit2.info')['title']</argument>
+            <argument type="expression">parameter('pumukitschema.default_copyright') ? parameter('pumukitschema.default_copyright') : parameter('pumukit2.info')['title']</argument>
+            <argument>%pumukitschema.default_license%</argument>
         </service>
 
         <service id="pumukitschema.seriespic" class="Pumukit\SchemaBundle\Services\SeriesPicService">

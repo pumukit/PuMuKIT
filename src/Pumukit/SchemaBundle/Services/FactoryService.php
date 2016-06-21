@@ -25,9 +25,10 @@ class FactoryService
     private $translator;
     private $locales;
     private $defaultCopyright;
+    private $defaultLicense;
     private $addUserAsPerson;
 
-    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, EmbeddedBroadcastService $embeddedBroadcastService, MultimediaObjectEventDispatcherService $mmsDispatcher, SeriesEventDispatcherService $seriesDispatcher, TranslatorInterface $translator, $addUserAsPerson=true, array $locales = array(), $defaultCopyright = "")
+    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, EmbeddedBroadcastService $embeddedBroadcastService, MultimediaObjectEventDispatcherService $mmsDispatcher, SeriesEventDispatcherService $seriesDispatcher, TranslatorInterface $translator, $addUserAsPerson=true, array $locales = array(), $defaultCopyright = "", $defaultLicense = "")
     {
         $this->dm = $documentManager;
         $this->tagService = $tagService;
@@ -39,6 +40,7 @@ class FactoryService
         $this->translator = $translator;
         $this->locales = $locales;
         $this->defaultCopyright = $defaultCopyright;
+        $this->defaultLicense = $defaultLicense;
         $this->addUserAsPerson = $addUserAsPerson;
     }
 
@@ -85,6 +87,7 @@ class FactoryService
 
         $series->setPublicDate(new \DateTime("now"));
         $series->setCopyright($this->defaultCopyright);
+        $series->setLicense($this->defaultLicense);
         $series->setType($collectionType);
         if ($title) {
             $series->setI18nTitle($title);
@@ -122,6 +125,7 @@ class FactoryService
         $mm->setPublicDate(new \DateTime("now"));
         $mm->setRecordDate($mm->getPublicDate());
         $mm->setCopyright($this->defaultCopyright);
+        $mm->setLicense($this->defaultLicense);
         foreach ($this->locales as $locale) {
             $title = $this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE, array(), null, $locale);
             $mm->setTitle($title, $locale);

@@ -22,6 +22,14 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
           ->children()
+            ->scalarNode('default_copyright')
+              ->defaultValue('')
+              ->info('Default copyright for Series and MultimediaObject')
+            ->end()
+            ->scalarNode('default_license')
+              ->defaultValue('')
+              ->info('Default license for Series and MultimediaObject')
+            ->end()
             ->scalarNode('default_series_pic')
               ->defaultValue('/bundles/pumukitschema/images/series_folder.png')
               ->info('Default Series picture')
