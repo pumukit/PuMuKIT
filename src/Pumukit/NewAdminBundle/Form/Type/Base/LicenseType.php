@@ -3,13 +3,10 @@
 namespace Pumukit\NewAdminBundle\Form\Type\Base;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Intl\Intl;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 
 class LicenseType extends AbstractType
 {
-
     private $licenses = array();
 
     public function __construct(array $licenses = array())
@@ -17,18 +14,16 @@ class LicenseType extends AbstractType
         $this->licenses = $licenses;
     }
 
-
     /**
      * {@inheritdoc}
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-                                     'required'  => true,
+                                     'required' => true,
                                      'choices' => $this->licenses,
                                      ));
     }
-
 
     /**
      * {@inheritdoc}
@@ -38,6 +33,7 @@ class LicenseType extends AbstractType
         if (0 == count($this->licenses)) {
             return 'text';
         }
+
         return 'choice';
     }
 
