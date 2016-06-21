@@ -1676,6 +1676,81 @@ function tag_delete(id, cod, pid, numberMultimediaObjects) {
 // END OF TAG SECTION //
 
 $(document).ready(function(){
+    $(document).on('click', '#pumukitnewadmin_group_delete_all_relation_user', function(event) {
+        if (window.confirm('{% trans %}ATTENTION: Are you sure you want to delete all User from this Group?{% endtrans %}')) {
+            var route = "{{ path('pumukitnewadmin_group_delete_all_users', {'id': '__groupId__'})|raw }}";
+            var group_id = $('#pumukitnewadmin_group_id').val();
+            route = route.replace('__groupId__', group_id);
+            $.ajax({
+                    url: route,
+                    type: 'POST',
+                    data: {'_method': 'DELETE'},
+                    error: function(jqXHR, textStatus, errorThrown) {
+                    no_success(errorThrown + ': ' + jqXHR.responseText);
+                },
+                success: function (response, textStatus, jqXHR) {
+                    $('#pumukitnewadmin_group_added_users').html(response);
+                    $('#pumukitnewadmin_group_delete_all_relation_user').attr('disabled', 'disabled');
+                    var message = 'Successfully delete User from Group.';
+                    success(message);
+                }
+            }).done(can_be_deleted(group_id));
+        }
+        event.preventDefault();
+        event.stopPropagation();
+        return false;
+    });
+
+    $(document).on('click', '#pumukitnewadmin_group_delete_all_relation_multimediaobject', function(event) {
+        if (window.confirm('{% trans %}ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?{% endtrans %}')) {
+            var route = "{{ path('pumukitnewadmin_group_delete_all_multimediaobjects', {'id': '__groupId__'})|raw }}";
+            var group_id = $('#pumukitnewadmin_group_id').val();
+            route = route.replace('__groupId__', group_id);
+            $.ajax({
+                    url: route,
+                    type: 'POST',
+                    data: {'_method': 'DELETE'},
+                    error: function(jqXHR, textStatus, errorThrown) {
+                    no_success(errorThrown + ': ' + jqXHR.responseText);
+                },
+                success: function (response, textStatus, jqXHR) {
+                    $('#pumukitnewadmin_group_added_multimediaobjects').html(response);
+                    $('#pumukitnewadmin_group_delete_all_relation_multimediaobject').attr('disabled', 'disabled');
+                    var message = 'Successfully delete admin MultimediaObjects from Group.';
+                    success(message);
+                }
+            }).done(can_be_deleted(group_id));
+        }
+        event.preventDefault();
+        event.stopPropagation();
+        return false;
+    });
+
+    $(document).on('click', '#pumukitnewadmin_group_delete_all_relation_embeddedbroadcast', function(event) {
+        if (window.confirm('{% trans %}ATTENTION: Are you sure you want to delete all Play Multimedia Objects from this Group?{% endtrans %}')) {
+            var route = "{{ path('pumukitnewadmin_group_delete_all_embeddedbroadcasts', {'id': '__groupId__'})|raw }}";
+            var group_id = $('#pumukitnewadmin_group_id').val();
+            route = route.replace('__groupId__', group_id);
+            $.ajax({
+                    url: route,
+                    type: 'POST',
+                    data: {'_method': 'DELETE'},
+                    error: function(jqXHR, textStatus, errorThrown) {
+                    no_success(errorThrown + ': ' + jqXHR.responseText);
+                },
+                success: function (response, textStatus, jqXHR) {
+                    $('#pumukitnewadmin_group_added_embeddedbroadcasts').html(response);
+                    $('#pumukitnewadmin_group_delete_all_relation_embeddedbroadcast').attr('disabled', 'disabled');
+                    var message = 'Successfully delete play MultimediaObjects from Group.';
+                    success(message);
+                }
+            }).done(can_be_deleted(group_id));
+        }
+        event.preventDefault();
+        event.stopPropagation();
+        return false;
+    });
+
     $('#myModal')
     .on('shown.bs.modal', function () {
         $('#iframeUpload').on("load", function(){
@@ -1752,80 +1827,6 @@ $(document).ready(function(){
             generate_random_password('broadcast_password_1', 'broadcast_password_2');
         });
 
-        $(document).on('click', '#pumukitnewadmin_group_delete_all_relation_user', function(event) {
-            if (window.confirm('{% trans %}ATTENTION: Are you sure you want to delete all User from this Group?{% endtrans %}')) {
-                var route = "{{ path('pumukitnewadmin_group_delete_all_users', {'id': '__groupId__'})|raw }}";
-                var group_id = $('#pumukitnewadmin_group_id').val();
-                route = route.replace('__groupId__', group_id);
-                $.ajax({
-                        url: route,
-                        type: 'POST',
-                        data: {'_method': 'DELETE'},
-                        error: function(jqXHR, textStatus, errorThrown) {
-                        no_success(errorThrown + ': ' + jqXHR.responseText);
-                    },
-                    success: function (response, textStatus, jqXHR) {
-                        $('#pumukitnewadmin_group_added_users').html(response);
-                        $('#pumukitnewadmin_group_delete_all_relation_user').attr('disabled', 'disabled');
-                        var message = 'Successfully delete User from Group.';
-                        success(message);
-                    }
-                }).done(can_be_deleted(group_id));
-            }
-            event.preventDefault();
-            event.stopPropagation();
-            return false;
-        });
-
-        $(document).on('click', '#pumukitnewadmin_group_delete_all_relation_multimediaobject', function(event) {
-            if (window.confirm('{% trans %}ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?{% endtrans %}')) {
-                var route = "{{ path('pumukitnewadmin_group_delete_all_multimediaobjects', {'id': '__groupId__'})|raw }}";
-                var group_id = $('#pumukitnewadmin_group_id').val();
-                route = route.replace('__groupId__', group_id);
-                $.ajax({
-                        url: route,
-                        type: 'POST',
-                        data: {'_method': 'DELETE'},
-                        error: function(jqXHR, textStatus, errorThrown) {
-                        no_success(errorThrown + ': ' + jqXHR.responseText);
-                    },
-                    success: function (response, textStatus, jqXHR) {
-                        $('#pumukitnewadmin_group_added_multimediaobjects').html(response);
-                        $('#pumukitnewadmin_group_delete_all_relation_multimediaobject').attr('disabled', 'disabled');
-                        var message = 'Successfully delete admin MultimediaObjects from Group.';
-                        success(message);
-                    }
-                }).done(can_be_deleted(group_id));
-            }
-            event.preventDefault();
-            event.stopPropagation();
-            return false;
-        });
-
-        $(document).on('click', '#pumukitnewadmin_group_delete_all_relation_embeddedbroadcast', function(event) {
-            if (window.confirm('{% trans %}ATTENTION: Are you sure you want to delete all Play Multimedia Objects from this Group?{% endtrans %}')) {
-                var route = "{{ path('pumukitnewadmin_group_delete_all_embeddedbroadcasts', {'id': '__groupId__'})|raw }}";
-                var group_id = $('#pumukitnewadmin_group_id').val();
-                route = route.replace('__groupId__', group_id);
-                $.ajax({
-                        url: route,
-                        type: 'POST',
-                        data: {'_method': 'DELETE'},
-                        error: function(jqXHR, textStatus, errorThrown) {
-                        no_success(errorThrown + ': ' + jqXHR.responseText);
-                    },
-                    success: function (response, textStatus, jqXHR) {
-                        $('#pumukitnewadmin_group_added_embeddedbroadcasts').html(response);
-                        $('#pumukitnewadmin_group_delete_all_relation_embeddedbroadcast').attr('disabled', 'disabled');
-                        var message = 'Successfully delete play MultimediaObjects from Group.';
-                        success(message);
-                    }
-                }).done(can_be_deleted(group_id));
-            }
-            event.preventDefault();
-            event.stopPropagation();
-            return false;
-        });
     })
     .on('show.bs.modal', function() {
         $('.modal-content').html('');
