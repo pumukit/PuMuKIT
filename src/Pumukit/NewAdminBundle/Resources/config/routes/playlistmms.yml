@@ -3,6 +3,7 @@ pumukitnewadmin_playlistmms_index:
     methods: [GET]
     defaults:
         _controller: pumukitnewadmin.controller.playlistmms:indexAction
+        filter: false
         _sylius:
             filterable: true
 
@@ -69,6 +70,7 @@ pumukitnewadmin_playlistmms_list:
     methods: [GET, POST]
     defaults:
         _controller: pumukitnewadmin.controller.playlistmms:listAction
+        filter: false
 
 pumukitnewadmin_playlistmms_cut:
     pattern: /cut
@@ -129,6 +131,3 @@ pumukitnewadmin_playlistmms_batch_add_to_several_playlist:
     methods: [POST]
     defaults:
         _controller: pumukitnewadmin.controller.playlistmms:addBatchToSeveralPlaylistAction
-
-
-
