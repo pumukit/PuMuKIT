@@ -282,7 +282,11 @@ class GroupController extends AdminController implements NewAdminController
         $users = $this->get('pumukitschema.group')->findUsersInGroup($group, $usersSort);
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $sort = array('title'.$locale => 1);
+        if ($locale) {
+            $sort = array('title.'.$locale => 1);
+        } else {
+            $sort = array('title' => 1);
+        }
         $adminMultimediaObjects = $mmobjRepo->findWithGroup($group, $sort);
         $viewerMultimediaObjects = $mmobjRepo->findWithGroupInEmbeddedBroadcast($group, $sort);
         $groupService = $this->get('pumukitschema.group');
