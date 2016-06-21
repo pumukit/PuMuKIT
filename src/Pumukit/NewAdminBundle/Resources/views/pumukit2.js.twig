@@ -2677,7 +2677,7 @@ $(document).on('submit', '#pumukitnewadmin_series_updatebroadcast_submit', funct
 
 delete_user_from_group = function(user_id, group_id, count, action)
 {
-    if (window.confirm('{% trans %}ATTENTION: Are you sure you want to remove this User from this Group?{% endtrans %}')) {
+    if (window.confirm('{% trans %}ATTENTION: Are you sure you want to delete this User from this Group?{% endtrans %}')) {
         var route = "{{ path('pumukitnewadmin_group_delete_user', {'id': '__groupId__', 'userId': '__userId__'})|raw }}";
         route = route.replace('__groupId__', group_id);
         route = route.replace('__userId__', user_id);
@@ -2703,7 +2703,7 @@ delete_user_from_group = function(user_id, group_id, count, action)
 
 delete_multimediaobject_from_group = function(mm_id, group_id, count, action)
 {
-    if (window.confirm('{% trans %}ATTENTION: Are you sure you want to remove this Admin Multimedia Object from this Group?{% endtrans %}')) {
+    if (window.confirm('{% trans %}ATTENTION: Are you sure you want to delete this Admin Multimedia Object from this Group?{% endtrans %}')) {
         var route = "{{ path('pumukitnewadmin_group_delete_multimediaobject', {'id': '__groupId__', 'mmId': '__mmId__'})|raw }}";
         route = route.replace('__groupId__', group_id);
         route = route.replace('__mmId__', mm_id);
@@ -2729,7 +2729,7 @@ delete_multimediaobject_from_group = function(mm_id, group_id, count, action)
 
 delete_embeddedbroadcast_from_group = function(mm_id, group_id, count, action)
 {
-    if (window.confirm('{% trans %}ATTENTION: Are you sure you want to remove this Play Multimedia Object from this Group?{% endtrans %}')) {
+    if (window.confirm('{% trans %}ATTENTION: Are you sure you want to delete this Play Multimedia Object from this Group?{% endtrans %}')) {
         var route = "{{ path('pumukitnewadmin_group_delete_embeddedbroadcast', {'id': '__groupId__', 'mmId': '__mmId__'})|raw }}";
         route = route.replace('__groupId__', group_id);
         route = route.replace('__mmId__', mm_id);
