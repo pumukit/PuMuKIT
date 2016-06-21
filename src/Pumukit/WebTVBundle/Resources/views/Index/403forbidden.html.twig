@@ -10,7 +10,7 @@
 	<div class="grid_5">
       {% if show_forceauth %}
         {% set diff = (app.request.getQueryString) ? '&' : '?' %}
-        <h3 class="text-center">{% trans %}Log in with a valid user is required to watch it{% endtrans %}</h3>
+        <h3 class="text-center">{% trans %}Log in with a valid user is required to watch it{% endtrans %}.</h3>
         <br/>
         {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
         <div class="text-center">
