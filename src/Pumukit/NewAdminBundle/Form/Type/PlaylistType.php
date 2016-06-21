@@ -35,6 +35,7 @@ class PlaylistType extends AbstractType
             ->add('i18n_description', 'textareai18n',
                   array(
                         'required' => false,
+                        'attr' => array('style' => 'resize:vertical;'),
                         'label' => $this->translator->trans('Description', array(), null, $this->locale)));
     }
 

@@ -34,7 +34,10 @@ class TagType extends AbstractType
             ->add('i18n_title', 'texti18n',
                   array('label' => $this->translator->trans('Title', array(), null, $this->locale)))
             ->add('i18n_description', 'textareai18n',
-                  array('required' => false, 'label' => $this->translator->trans('Description', array(), null, $this->locale)));
+                  array(
+                        'required' => false,
+                        'attr' => array('style' => 'resize:vertical;'),
+                        'label' => $this->translator->trans('Description', array(), null, $this->locale)));
 
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {

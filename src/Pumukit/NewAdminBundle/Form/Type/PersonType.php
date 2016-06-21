@@ -39,6 +39,7 @@ class PersonType extends AbstractType
             ->add('i18n_bio', 'textareai18n',
                   array(
                         'required' => false,
+                        'attr' => array('style' => 'resize:vertical;'),
                         'label' => $this->translator->trans('Bio', array(), null, $this->locale)))
             ->add('email', 'email',
                   array(

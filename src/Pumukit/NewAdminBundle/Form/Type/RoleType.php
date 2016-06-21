@@ -36,6 +36,7 @@ class RoleType extends AbstractType
             ->add('i18n_text', 'textareai18n',
                   array(
                         'required' => false,
+                        'attr' => array('style' => 'resize:vertical;'),
                         'label' => $this->translator->trans('Text', array(), null, $this->locale)));
     }
 
