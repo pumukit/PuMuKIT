@@ -24,6 +24,7 @@ class PumukitNewAdminExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('pumukit_new_admin.disable_broadcast_creation', $config['disable_broadcast_creation']);
+        $container->setParameter('pumukit_new_admin.licenses', array());
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');

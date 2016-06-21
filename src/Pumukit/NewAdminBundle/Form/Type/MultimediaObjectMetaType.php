@@ -37,7 +37,7 @@ class MultimediaObjectMetaType extends AbstractType
             ->add('copyright', 'text',
                   array('required' => false,
                         'label' => $this->translator->trans('Copyright', array(), null, $this->locale)))
-            ->add('license', 'text',
+            ->add('license', 'license',
                   array('required' => false,
                         'label' => $this->translator->trans('License', array(), null, $this->locale)))
             ->add('public_date', new Html5dateType(),

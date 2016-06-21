@@ -45,7 +45,7 @@ class SeriesType extends AbstractType
                   array(
                         'required' => false,
                         'label' => $this->translator->trans('Copyright', array(), null, $this->locale), ))
-            ->add('license', 'text',
+            ->add('license', 'license',
                   array(
                         'required' => false,
                         'label' => $this->translator->trans('License', array(), null, $this->locale), ))
