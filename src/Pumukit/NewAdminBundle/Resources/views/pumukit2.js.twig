@@ -1365,6 +1365,18 @@ $(document).on('click', '#pumukitnewadmin_group_origin_sort_not_selected', funct
     return false;
 });
 
+$(document).on('click', '#pumukitnewadmin_group_comments_sort_selected', function(){
+    var type = $('#pumukitnewadmin_group_sort_change_type').val();
+    var route = "{{ path('pumukitnewadmin_group_list', {'sorting': {'comments': '__type__'}})|raw }}";
+    $('#list_groups').load(route.replace('__type__', type), {'_method':'POST'});
+    return false;
+});
+$(document).on('click', '#pumukitnewadmin_group_comments_sort_not_selected', function(){
+    var route = "{{ path('pumukitnewadmin_group_list', {'sorting': {'comments': 'asc'}})|raw }}";
+    $('#list_groups').load(route, {'_method':'POST'});
+    return false;
+});
+
 /**
  * Tab
  */
