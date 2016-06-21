@@ -24,6 +24,7 @@ class MultimediaObjectMetaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+<<<<<<< HEAD
             ->add('i18n_title', 'texti18n',
                   array('required' => false,
                         'label' => $this->translator->trans('Title', array(), null, $this->locale), ))
@@ -61,7 +62,6 @@ class MultimediaObjectMetaType extends AbstractType
                   array('mapped' => false,
                         'required' => false,
                         'label' => $this->translator->trans('Subseries', array(), null, $this->locale), ));
-
         $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
             $multimediaObject = $event->getData();
             $event->getForm()->get('subseries')->setData($multimediaObject->getProperty('subseries'));
