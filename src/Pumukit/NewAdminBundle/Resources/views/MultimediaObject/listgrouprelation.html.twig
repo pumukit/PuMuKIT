@@ -30,8 +30,8 @@
 	      </div>
           {% else %}
 	      <div class="pumukitnewadmin-groups-arrows">
-	        <a href="#" onclick="return false;">&#8592;</a>
-	        <a href="#" onclick="return false;">&#8594;</a>
+	        <a href="#" onclick="window.alert('{% trans %}WARNING: You do not have enough permissions to modify admin groups.{% endtrans %}');return false;">&#8592;</a>
+	        <a href="#" onclick="window.alert('{% trans %}WARNING: You do not have enough permissions to modify admin groups.{% endtrans %}');return false;">&#8594;</a>
 	      </div>
           {% endif %}
           {# Groups added to the multimedia object #}
