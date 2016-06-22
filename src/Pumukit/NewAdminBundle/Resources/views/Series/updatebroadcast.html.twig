@@ -38,7 +38,7 @@
     </fieldset>
     <div class="modal-footer">
       <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
-      <button type="submit" id="pumukitnewadmin_series_broadcast_updategroup_submit" class="btn btn-pumukit btn-raised">{% trans %}Save changes{% endtrans %}</button>
+      <button type="submit" id="pumukitnewadmin_series_broadcast_updategroup_submit" class="btn btn-pumukit btn-raised"{{ embeddedBroadcast ? '':' disabled' }}>{% trans %}Save changes{% endtrans %}</button>
     </div>
   </form>
 </div>
