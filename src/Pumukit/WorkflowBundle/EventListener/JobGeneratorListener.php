@@ -63,6 +63,14 @@ class JobGeneratorListener
         foreach($this->profiles as $targetProfile => $profile) {
             $targets = $this->getTargets($profile['target']);
             
+            $track = $multimediaObject->getTrackWithTag('profile:'.$targetProfile);
+            if ($track) {
+                $this->logger->info(sprintf("JobGeneratorListener doesn't create a new job (%s) for multimedia object %s ".
+                                            "because it already contains a track created with this profile", 
+                                            $targetProfile, $multimediaObject->getId()));
+                continue;
+            }
+
             if((in_array($pubChannelCod, $targets['standard']))
                && ($multimediaObject->isOnlyAudio() == $profile['audio'])){
 
