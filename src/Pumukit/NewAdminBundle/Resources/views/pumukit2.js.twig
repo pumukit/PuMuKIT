@@ -2641,9 +2641,12 @@ $(document).on('submit', '#pumukitnewadmin_mms_updatebroadcast_submit', function
     var route = '{{ path('pumukitnewadmin_mms_updatebroadcast', {'id': '__mmId__'})|raw }}';
     var mmId = $('#pumukitnewadmin_mms_broadcast_mm_id').val();
     var broadcast_type = $('input[type=radio][name=pumukitnewadmin_mms_broadcast]:checked').val();
-    if (false == check_pass($('#broadcast_password_1').val(), $('#broadcast_password_2').val())) {
-        no_success('Passwords do not match');
-        return false;
+    var password_type = '{{ constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PASSWORD') }}';
+    if (broadcast_type == password_type) {
+        if (false == check_pass($('#broadcast_password_1').val(), $('#broadcast_password_2').val())) {
+            no_success('Passwords do not match');
+            return false;
+        }
     }
     var password = $('#broadcast_password_1').val();
     var addGroups = [];
@@ -2677,9 +2680,12 @@ $(document).on('submit', '#pumukitnewadmin_series_updatebroadcast_submit', funct
     var route = '{{ path('pumukitnewadmin_series_updatebroadcast', {'id': '__seriesId__'})|raw }}';
     var seriesId = $('#pumukitnewadmin_series_broadcast_series_id').val();
     var broadcast_type = $('input[type=radio][name=pumukitnewadmin_mms_broadcast]:checked').val();
-    if (false == check_pass($('#broadcast_password_1').val(), $('#broadcast_password_2').val())) {
-        no_success('Passwords do not match');
-        return false;
+    var password_type = '{{ constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PASSWORD') }}';
+    if (broadcast_type == password_type) {
+        if (false == check_pass($('#broadcast_password_1').val(), $('#broadcast_password_2').val())) {
+            no_success('Passwords do not match');
+            return false;
+        }
     }
     var password = $('#broadcast_password_1').val();
     var addGroups = [];

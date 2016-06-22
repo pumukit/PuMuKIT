@@ -11,6 +11,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Security\Permission;
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectPubType;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
@@ -1003,20 +1004,23 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $groupRepo = $dm->getRepository('PumukitSchemaBundle:Group');
         $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
         $embeddedBroadcastService->updateTypeAndName($type, $multimediaObject, false);
-        $embeddedBroadcastService->updatePassword($password, $multimediaObject, false);
-        $index = 3;
-        foreach ($addGroups as $addGroup){
-            $groupId = explode('_', $addGroup)[$index];
-            $group = $groupRepo->find($groupId);
-            if ($group) {
-                $embeddedBroadcastService->addGroup($group, $multimediaObject, false);
+        if ($type === EmbeddedBroadcast::TYPE_PASSWORD) {
+            $embeddedBroadcastService->updatePassword($password, $multimediaObject, false);
+        } elseif ($type === EmbeddedBroadcast::TYPE_GROUPS) {
+            $index = 3;
+            foreach ($addGroups as $addGroup){
+                $groupId = explode('_', $addGroup)[$index];
+                $group = $groupRepo->find($groupId);
+                if ($group) {
+                    $embeddedBroadcastService->addGroup($group, $multimediaObject, false);
+                }
             }
-        }
-        foreach ($deleteGroups as $deleteGroup){
-            $groupId = explode('_', $deleteGroup)[$index];
-            $group = $groupRepo->find($groupId);
-            if ($group) {
-                $embeddedBroadcastService->deleteGroup($group, $multimediaObject, false);
+            foreach ($deleteGroups as $deleteGroup){
+                $groupId = explode('_', $deleteGroup)[$index];
+                $group = $groupRepo->find($groupId);
+                if ($group) {
+                    $embeddedBroadcastService->deleteGroup($group, $multimediaObject, false);
+                }
             }
         }
 
