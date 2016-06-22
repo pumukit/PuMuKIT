@@ -13,6 +13,13 @@
   {% else %}
   &#8226;
   {% endif %}
-  &nbsp;{{ (resource_name == 'user') ? resource.username : resource.getTitle() }}</p>
+  &nbsp;
+  {% if (resource_name == 'user') %}
+  {{ resource.username }}
+  {% elseif (resource.isPrototype()) %}
+  {{ resource.getTitle() }}&nbsp;({% trans %}Video Template of Series{% endtrans %}:&nbsp;{{ resource.getSeries().getTitle() }})
+  {% else %}
+  {{ resource.getTitle() }}
+  {% endif %}
 {% endif %}
 {% endfor %}
