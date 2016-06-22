@@ -259,27 +259,67 @@ window.down_seriespic = function(id, seriesId) {
 
 window.submit_delete_person_relation = function(id, roleId, mmId, hName, template, owner)
 {
-    if (window.confirm("{% trans %}Are you sure you want to delete the relation of{% endtrans %} "+hName+"?")){
-        if ('_template' === template){
-            var role_id = '#'+roleId+'_person_mms'+template;
-        }else{
-            var role_id = '#'+roleId+'_person_mms';
+    var message = "{% trans %}Are you sure you want to delete the relation of{% endtrans %} "+hName+"?";
+    var resource = 'mm' + template;
+    var person_id = id;
+    var owners = [];
+    var addGroups = [];
+    $('a.'+resource+'-personal-scope-person-id').each(function(){
+        owners.push($(this).attr("id"));
+    });
+    $('a.add-'+resource+'-group-item').each(function(){
+        addGroups.push($(this).attr("id"));
+    });
+    var route = "{{ path('pumukitnewadmin_mms_user_last_relation')|raw }}";
+    var response_message = false;
+    $.ajax({
+        url: route,
+        type: 'GET',
+        data: {'personId': person_id, 'owners': owners, 'addGroups': addGroups},
+        error: function(jqXHR, textStatus, errorThrown){
+            response_message = errorThrown + ': ' + jqXHR.responseText;
+        },
+        success: function(response){
+            response_message = response;
         }
-        var url = "{{ path('pumukitnewadmin_person_delete_relation', {'id': '__id__', 'roleId': '__roleId__','mmId': '__mmId__', 'owner': '__owner__'})|raw }}";
-        url = url.replace('__id__', id);
-        url = url.replace('__roleId__', roleId);
-        url = url.replace('__mmId__', mmId);
-        url = url.replace('__owner__', owner);
-        $(role_id).load(url, {'_method': 'DELETE'});
-        var url = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'})|raw }}";
-        $('#preview_mm').load(url.replace('__mmId__', mmId), function(responseText, textStatus, XMLHttpRequest){
-	    if(XMLHttpRequest.status >= 400){
-                no_success('{% trans %}Error deleting Person{% endtrans %} "'+personHName+' from MultimediaObject": ' + responseText);
-	    } else {
-                success('{% trans %}Person successfully removed from Multimedia Object{% endtrans %}');
+    }).always(function(data, textStatus, jqXHR){
+            if (response_message === false) {
+                if (person_id == null) {
+                    $('#warning_personal_user_'+resource+'_group').hide();
+                    $('#remember_save_'+resource+'_group').show();
+                }
+            } else if (response_message === true) {
+                if (person_id == null) {
+                    $('#remember_save_'+resource+'_group').hide();
+                    $('#warning_personal_user_'+resource+'_group').show();
+                }
             }
-	});
-    }
+            if (response_message) {
+                message = "{% trans %}WARNING: You will no longer have access to this Multimedia Object.{% endtrans %} " + message;
+            }
+            if (window.confirm(message)){
+                if ('_template' === template){
+                    var role_id = '#'+roleId+'_person_mms'+template;
+                }else{
+                    var role_id = '#'+roleId+'_person_mms';
+                }
+                var url = "{{ path('pumukitnewadmin_person_delete_relation', {'id': '__id__', 'roleId': '__roleId__','mmId': '__mmId__', 'owner': '__owner__'})|raw }}";
+                url = url.replace('__id__', id);
+                url = url.replace('__roleId__', roleId);
+                url = url.replace('__mmId__', mmId);
+                url = url.replace('__owner__', owner);
+                $(role_id).load(url, {'_method': 'DELETE'});
+                var url = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'})|raw }}";
+                $('#preview_mm').load(url.replace('__mmId__', mmId), function(responseText, textStatus, XMLHttpRequest){
+                    if(XMLHttpRequest.status >= 400){
+                        no_success('{% trans %}Error deleting Person{% endtrans %} "'+personHName+' from MultimediaObject": ' + responseText);
+                    } else {
+                        success('{% trans %}Person successfully removed from Multimedia Object{% endtrans %}');
+                    }
+                });
+            }
+    });
+
 }
 
 window.submit_delete_link = function(id, mmId)
@@ -2391,6 +2431,9 @@ function add_group(group_id, group_key, group_name, group_origin, resource)
     if (resource != "user") {
         can_enable_broadcast_groups_save_button();
     }
+    if ((resource != "user") && (resource != "series")) {
+        is_last_user_relation_to_admin_mm(resource, null);
+    }
 }
 
 function delete_group(group_id, group_key, group_name, group_origin, resource)
@@ -2405,6 +2448,9 @@ function delete_group(group_id, group_key, group_name, group_origin, resource)
     create_element_group_in_delete_groups(group_id, group_key, group_name, group_origin, resource);
     if (resource != "user") {
         can_enable_broadcast_groups_save_button();
+    }
+    if ((resource != "user") && (resource != "series")) {
+        is_last_user_relation_to_admin_mm(resource, null);
     }
 }
 
@@ -2424,14 +2470,14 @@ function create_element_group_in_add_groups(group_id, group_key, group_name, gro
             var item_class = 'class="list-group-item add-' + resource + '-group-item pumukitnewadmin-trim-row"';
         }
         var item_onclick = 'onclick="return select_group(this);"';
-        var item_ondblclick = 'ondblclick="javascript:delete_group(\'' + group_id + '\', \'' + group_key + '\', \'' + group_name + '\', \'' + group_origin + '\', \'' + resource + '\');"';
+        var item_ondblclick = 'ondblclick="javascript:delete_group(\''+group_id+'\', \''+group_key+'\', \''+group_name+'\', \''+group_origin+'\', \''+resource+'\');"';
     } else {
         var item_class = 'class="list-group-item disabled-group-item pumukitnewadmin-trim-row"';
         var item_onclick = 'onclick="return false;"';
         var item_ondblclick = 'ondblclick="javascript:window.alert(\'External defined groups. Contact your directory service administrator to change membership.\');"';
         group_origin = group_origin.toUpperCase();
     }
-    var item_text = '<a href="#" ' + item_class + ' ' + item_onclick + ' ' + item_ondblclick + ' ' + item_id + '"><i class="mdi-social-group"></i> ' + group_key +' - ' + group_name + ' - (' + group_origin + ')</a>';
+    var item_text = '<a href="#" '+item_class+' '+item_onclick+' '+item_ondblclick+' '+item_id+'"><i class="mdi-social-group"></i> '+group_key+' - '+group_name+' - ('+group_origin+')</a>';
     $add_groups_list.append(item_text);
 }
 
@@ -2448,8 +2494,8 @@ function create_element_group_in_delete_groups(group_id, group_key, group_name, 
             var $delete_groups_list = $('#delete_' + resource + '_groups');
         }
         var item_onclick = 'onclick="return select_group(this);"';
-        var item_ondblclick = 'ondblclick="javascript:add_group(\'' + group_id + '\', \'' + group_key + '\', \'' + group_name + '\', \'' + group_origin + '\', \'' + resource + '\');"';
-        var item_text = '<a href="#" ' + item_class + ' ' + item_onclick + ' ' + item_ondblclick + ' ' + item_id +'"><i class="mdi-social-group"></i> ' + group_key + ' - ' + group_name + ' - (' + group_origin + ')</a>';
+        var item_ondblclick = 'ondblclick="javascript:add_group(\''+group_id+'\', \''+group_key+'\', \''+group_name+'\', \''+group_origin+'\', \''+resource+'\');"';
+        var item_text = '<a href="#" '+item_class+' '+item_onclick+' '+item_ondblclick+' '+item_id+'"><i class="mdi-social-group"></i> '+group_key+' - '+group_name+' - ('+group_origin+')</a>';
         $delete_groups_list.append(item_text);
     }
 }
@@ -2845,4 +2891,43 @@ get_submit_button_id = function()
     } else {
         return '#pumukitnewadmin_series_broadcast_updategroup_submit';
     }
+}
+
+is_last_user_relation_to_admin_mm = function(resource, person_id)
+{
+    var owners = [];
+    var addGroups = [];
+    $('a.'+resource+'-personal-scope-person-id').each(function(){
+        owners.push($(this).attr("id"));
+    });
+    $('a.add-'+resource+'-group-item').each(function(){
+        addGroups.push($(this).attr("id"));
+    });
+    var route = "{{ path('pumukitnewadmin_mms_user_last_relation')|raw }}";
+    var message = '';
+    $.ajax({
+        url: route,
+        type: 'GET',
+        data: {'personId': person_id, 'owners': owners, 'addGroups': addGroups},
+        error: function(jqXHR, textStatus, errorThrown){
+            message = errorThrown + ': ' + jqXHR.responseText;
+        },
+        success: function(response){
+            message = response;
+        }
+    }).always(function(data, textStatus, jqXHR){
+            if (message === false) {
+                if (person_id == null) {
+                    $('#warning_personal_user_'+resource+'_group').hide();
+                    $('#remember_save_'+resource+'_group').show();
+                }
+            } else if (message === true) {
+                if (person_id == null) {
+                    $('#remember_save_'+resource+'_group').hide();
+                    $('#warning_personal_user_'+resource+'_group').show();
+                }
+            }
+    });
+
+    return false;
 }
