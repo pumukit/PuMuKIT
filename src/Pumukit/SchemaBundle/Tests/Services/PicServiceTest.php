@@ -16,6 +16,7 @@ class PicServiceTest extends WebTestCase
     private $picService;
     private $context;
     private $defaultSeriesPic = '/images/series.jpg';
+    private $defaultPlaylistPic = '/images/playlist.jpg';
     private $defaultVideoPic = '/images/video.jpg';
     private $defaultAudioHDPic = '/images/audio_hd.jpg';
     private $defaultAudioSDPic = '/images/audio_sd.jpg';
@@ -37,7 +38,7 @@ class PicServiceTest extends WebTestCase
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
         $this->dm->flush();
 
-        $this->picService = new PicService($this->context, $this->webDir, $this->defaultSeriesPic, $this->defaultVideoPic, $this->defaultAudioHDPic, $this->defaultAudioSDPic);
+        $this->picService = new PicService($this->context, $this->webDir, $this->defaultSeriesPic, $this->defaultPlaylistPic, $this->defaultVideoPic, $this->defaultAudioHDPic, $this->defaultAudioSDPic);
     }
 
     public function tearDown()
