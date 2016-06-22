@@ -51,7 +51,7 @@ class TrackUrlServiceTest extends WebTestCase
         $genUrl = $this->trackurlService->generateTrackFileUrl($track);
         $client->request('GET', $genUrl);
         // @Route("/trackfile/{id}.{ext}", name="pumukit_trackfile_index" )
-        $this->assertEquals( $genUrl, 'trackfile/'.$track->getId().'.mp4');
+        $this->assertEquals( $genUrl, '/trackfile/'.$track->getId().'.mp4');
         $this->assertEquals( 302, $client->getResponse()->getStatusCode());
         $this->assertEquals( $track->getUrl(), $client->getResponse()->getTargetUrl());
         //Reload mmobj to check for new views.
