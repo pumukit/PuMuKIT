@@ -59,6 +59,20 @@ class Playlist
     }
 
     /**
+     * Removes all references to the multimedia objects with the given id
+     *
+     * @param MultimediaObject $multimedia_object
+     */
+    public function removeAllMultimediaObjectsById($mmobjId)
+    {
+        foreach($this->multimedia_objects as $key => $mmobj) {
+            if($mmobj->getId() == $mmobjId) {
+                $this->multimedia_objects->remove($key);
+            }
+        }
+    }
+
+    /**
      * Remove multimedia object by its position in the playlist.
      *
      * @param integer $pos Position (starting from 0) of the mmobj in the playlist.

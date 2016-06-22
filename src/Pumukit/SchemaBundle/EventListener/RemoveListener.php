@@ -39,6 +39,8 @@ class RemoveListener
                 throw new \Exception("Can not delete Multimedia Object with id '".$document->getId()."'.".
                                      " It has '".$executingJobs->count()."' jobs executing.");
             }
+            $mmsService = $this->container->get("pumukitschema.multimedia_object");
+            $mmsService->removeFromAllPlaylists($document);
 
             $tagService = $this->container->get("pumukitschema.tag");
             foreach($document->getTags() as $tag) {

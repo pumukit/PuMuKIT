@@ -22,6 +22,7 @@ class MultimediaObjectService
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->seriesRepo = $this->dm->getRepository('PumukitSchemaBundle:Series');
         $this->dispatcher = $dispatcher;
     }
 
@@ -175,6 +176,24 @@ class MultimediaObjectService
         $multimediaObjects = $this->repo->findWithGroup($group);
         foreach ($multimediaObjects as $multimediaObject) {
             $this->deleteGroup($group, $multimediaObject, false);
+        }
+        $this->dm->flush();
+    }
+
+    /**
+     * Removes this multimedia object reference from all existing playlists.
+     *
+     * @param MultimediaObject $multimediaObject
+     */
+    public function removeFromAllPlaylists(MultimediaObject $multimediaObject)
+    {
+        $qb = $this->seriesRepo->createQueryBuilder()->field('playlist.multimedia_objects')->equals(new \MongoId($multimediaObject->getId()));
+        //Doing some variation of this should work as well. (Not this code particularly).
+        //$qb = $this->seriesRepo->createQueryBuilder()->field('playlist.multimedia_objects')->pullAll(array(new \MongoId($multimediaObject->getId())));
+        $playlists = $qb->getQuery()->execute();
+        foreach($playlists as $playlist) {
+            $playlist->getPlaylist()->removeAllMultimediaObjectsById($multimediaObject->getId());
+            $this->dm->persist($playlist);
         }
         $this->dm->flush();
     }
