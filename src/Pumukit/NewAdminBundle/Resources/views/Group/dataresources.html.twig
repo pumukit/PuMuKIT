@@ -1,6 +1,9 @@
 {% for resource in resources %}
 {% if 'user' == resource_name and not group.isLocal() %}
-<p><a href="#"><i data-toggle="tooltip" data-placement="right" title="{% trans %}External defined users and groups can not be edited here, contact your directory service administrator.{% endtrans %}" class="mdi-action-info" style="color:#009587"></i></a>&nbsp;{{ (resource_name == 'user') ? resource.username : resource.getTitle() }}</p>
+<p>
+  <a href="#">
+    <i data-toggle="tooltip" data-placement="right" title="{% trans %}External defined users and groups can not be edited here, contact your directory service administrator.{% endtrans %}" class="mdi-action-info" style="color:#009587"></i>
+  </a>&nbsp;{{ resource.username }}</p>
 {% else %}
 <p>
   {% if action %}
