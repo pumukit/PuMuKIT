@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Security\Permission;
@@ -966,6 +967,90 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                      'template' => $template
                      );
 
+    }
+
+    /**
+     * User last relation
+     */
+    public function userLastRelationAction(Request $request)
+    {
+        $loggedInUser = $this->getUser();
+        $userService = $this->get('pumukitschema.user');
+        if (!$userService->hasPersonalScope($loggedInUser)) {
+            return new JsonResponse(false, Response::HTTP_OK);
+        }
+        if ($request->isMethod('GET')) {
+            try {
+                $personId = $request->get('personId', null);
+                $owners = $request->get('owners', array());
+                if ('string' === gettype($owners)){
+                    $addGroups = json_decode($owners, true);
+                }
+                $addGroups = $request->get('addGroups', array());
+                if ('string' === gettype($addGroups)){
+                    $addGroups = json_decode($addGroups, true);
+                }
+                $response = $this->isUserLastRelation($loggedInUser, $personId, $owners, $addGroups);
+            } catch (\Exception $e) {
+                return new JsonResponse(array('error' => $e->getMessage()), JsonResponse::HTTP_BAD_REQUEST);
+            }
+        }
+
+        return new JsonResponse($response, Response::HTTP_OK);
+    }
+
+    /**
+     * Is User last relation
+     */
+    private function isUserLastRelation(User $loggedInUser, $personId = null, $owners = array(), $addGroups = array())
+    {
+        $personToRemoveIsLogged = false;
+        $userInOwners = false;
+        $userInAddGroups = false;
+
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $personRepo = $dm->getRepository('PumukitSchemaBundle:Person');
+
+        $personToRemove = $personRepo->find($personId);
+        if ($personToRemove) {
+            $userService = $this->get('pumukitschema.user');
+            if (!$userService->hasPersonalScope($personToRemove->getUser())) {
+                return false;
+            }
+            if ($loggedInUser === $personToRemove->getUser()) {
+                $personToRemoveIsLogged = true;
+            }
+        }
+
+        foreach ($owners as $owner) {
+            $personId = end(explode('_', $owner));
+            $person = $personRepo->find($personId);
+            if ($person) {
+                if ($loggedInUser === $person->getUser()) {
+                    $userInOwners = true;
+                    break;
+                }
+            }
+        }
+
+        $userGroups = $loggedInUser->getGroups()->toArray();
+        foreach ($addGroups as $addGroup){
+            $groupId = end(explode('_', $addGroup));
+            $group = $groupRepo->find($groupId);
+            if ($group) {
+                if (in_array($group, $userGroups)) {
+                    $userInAddGroups = true;
+                    break;
+                }
+            }
+        }
+
+        // Show warning??
+        if (($personToRemoveIsLogged && !$userInAddGroups) || (!$userInOwners && !$userInAddGroups)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

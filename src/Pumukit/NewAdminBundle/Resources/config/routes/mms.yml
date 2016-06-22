@@ -195,3 +195,9 @@ pumukitnewadmin_mms_updatebroadcast:
     methods: [GET, POST]
     defaults:
         _controller: pumukitnewadmin.controller.mms:updateBroadcastAction
+
+pumukitnewadmin_mms_user_last_relation:
+    pattern: /user/lastrelation
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:userLastRelationAction
