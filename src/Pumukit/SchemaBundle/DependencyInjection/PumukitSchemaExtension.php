@@ -26,6 +26,7 @@ class PumukitSchemaExtension extends Extension
         $container->setParameter('pumukitschema.default_copyright', $config['default_copyright']);
         $container->setParameter('pumukitschema.default_license', $config['default_license']);
         $container->setParameter('pumukitschema.default_series_pic', $config['default_series_pic']);
+        $container->setParameter('pumukitschema.default_playlist_pic', $config['default_playlist_pic']);
         $container->setParameter('pumukitschema.default_video_pic', $config['default_video_pic']);
         $container->setParameter('pumukitschema.default_audio_hd_pic', $config['default_audio_hd_pic']);
         $container->setParameter('pumukitschema.default_audio_sd_pic', $config['default_audio_sd_pic']);
@@ -35,7 +36,7 @@ class PumukitSchemaExtension extends Extension
         $container->setParameter('pumukitschema.external_permissions', $config['external_permissions']);
         $container->setParameter('pumukitschema.gen_user_salt', $config['gen_user_salt']);
 
-        // To use with CAS (rewrite session_id with the CAS ticket) 
+        // To use with CAS (rewrite session_id with the CAS ticket)
         $container->setParameter('security.authentication.session_strategy.strategy', SessionAuthenticationStrategy::NONE);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
