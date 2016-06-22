@@ -59,7 +59,7 @@ class BasePlayerExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function generateTrackFileUrl($track, $reference_type = UrlGeneratorInterface::RELATIVE_PATH)
+    public function generateTrackFileUrl($track, $reference_type = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         return $this->trackService->generateTrackFileUrl($track, $reference_type);
     }

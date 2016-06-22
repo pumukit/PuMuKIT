@@ -17,7 +17,7 @@ class TrackUrlService
         $this->router = $router;
     }
 
-    public function generateTrackFileUrl(Track $track, $reference_type = UrlGeneratorInterface::RELATIVE_PATH)
+    public function generateTrackFileUrl(Track $track, $reference_type = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         $ext = pathinfo($track->getUrl(), PATHINFO_EXTENSION);
         $params = array(
