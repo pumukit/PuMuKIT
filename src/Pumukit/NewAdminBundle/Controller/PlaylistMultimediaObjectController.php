@@ -389,9 +389,8 @@ class PlaylistMultimediaObjectController extends Controller
         $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $seriesRepo = $dm->getRepository('PumukitSchemaBundle:Series');
 
-        $mmobjIds = $this->getIdOrIds($request, 'ids', 'id');
-        $playlistIds = $this->getIdOrIds($request, 'series_ids', 'series_id');
-
+        $mmobjIds = $this->getIds($request, 'ids');
+        $playlistIds = $this->getIds($request, 'series_ids');
 
         $mmObjs = $mmobjRepo->findBy(array('_id' => array('$in' => $mmobjIds)));
         $playlists = $seriesRepo->findBy(array('_id' => array('$in' => $playlistIds)));
@@ -404,7 +403,6 @@ class PlaylistMultimediaObjectController extends Controller
         }
         $dm->flush();
 
-
         return new JsonResponse(array());
     }
 
@@ -412,19 +410,16 @@ class PlaylistMultimediaObjectController extends Controller
     /**
      * TODO
      */
-    private function getIdOrIds(Request $request, $idsKey = 'ids', $idKey = 'id')
+    private function getIds(Request $request, $idsKey = 'ids')
     {
-      if ($request->request->has($idKey)) {
-        return array($request->request->get($idKey));
-      } elseif ($request->request->has($idsKey)) {
-        $ids = $request->request->get($idsKey);
-        if ('string' === gettype($ids)) {
-          return json_decode($ids, true);
-        } else {
-          return $ids;
+        if ($request->request->has($idsKey)) {
+            $ids = $request->request->get($idsKey);
+            if ('string' === gettype($ids)) {
+                return json_decode($ids, true);
+            } else {
+                return $ids;
+            }
         }
-      }
-
-      throw $this->createNotFoundException();
+        throw $this->createNotFoundException();
     }
 }
