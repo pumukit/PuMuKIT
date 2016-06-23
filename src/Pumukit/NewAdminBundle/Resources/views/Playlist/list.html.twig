@@ -18,7 +18,7 @@
 
       <tbody>
         {% for oneseries in series %}
-          <tr style="cursor: pointer" {% if(app.session.get('admin/series/id') == oneseries.id ) %} class="success" {% endif %}>
+          <tr style="cursor: pointer" {% if(app.session.get('admin/playlist/id') == oneseries.id ) %} class="success" {% endif %}>
             <td>
               <div class="checkbox">
                 <label>
@@ -69,15 +69,15 @@
               <div class="col-md-6">
                 {{ series.getNbResults }}
                 {% transchoice series.getNbResults %}
-	        {0} series|{1} series|]1,Inf] series
+	        {0} playlist|{1} playlist|]1,Inf] playlists
 	            {% endtranschoice %}
-	            {% if app.session.get('admin/series/criteria')|length != 0%}
+	            {% if app.session.get('admin/playlist/criteria')|length != 0%}
                       <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
 	            {% endif %}
               </div>
               <div class="col-md-6 text-right">
                 <div class="pagerfanta">
-                  {% set sorting = {('sorting[' ~ (app.session.get('admin/series/sort')) ~ ']') : (app.session.get('admin/series/type')) } %}
+                  {% set sorting = {('sorting[' ~ (app.session.get('admin/playlist/sort')) ~ ']') : (app.session.get('admin/playlist/type')) } %}
                   {{ pagerfanta(series, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_playlist_index", "routeParams": sorting}) }}
 
                   <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_playlist_index') }}' + '?page=1&paginate=' + this.value">
