@@ -30,7 +30,7 @@
                 </a>
               </td>
               <td>
-                <a href="#" onclick="window.submit_delete_person_relation('{{ person.id }}', '{{ role.id }}', '{{ mm.id }}', '{{ person.getHName() }}', '{{ template }}', 'owner'); return false;">
+                <a href="#" onclick="is_last_user_relation_to_admin_mm('mm'+'{{ template }}', '{{ person.id }}', '{{ role.id }}', '{{ mm.id }}', '{{ person.getHName() }}', '{{ template }}', 'owner'); return false;">
                   <i class="mdi-content-clear"></i>
                 </a>
               </td>

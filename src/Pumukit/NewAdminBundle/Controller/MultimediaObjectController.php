@@ -979,7 +979,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         if (!$userService->hasPersonalScope($loggedInUser)) {
             return new JsonResponse(false, Response::HTTP_OK);
         }
-        if ($request->isMethod('GET')) {
+        if ($request->isMethod('POST')) {
             try {
                 $personId = $request->get('personId', null);
                 $owners = $request->get('owners', array());
@@ -992,7 +992,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                 }
                 $response = $this->isUserLastRelation($loggedInUser, $personId, $owners, $addGroups);
             } catch (\Exception $e) {
-                return new JsonResponse(array('error' => $e->getMessage()), JsonResponse::HTTP_BAD_REQUEST);
+                return new JsonResponse($e->getMessage(), JsonResponse::HTTP_BAD_REQUEST);
             }
         }
 
@@ -1010,20 +1010,23 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $personRepo = $dm->getRepository('PumukitSchemaBundle:Person');
+        $groupRepo = $dm->getRepository('PumukitSchemaBundle:Group');
 
         $personToRemove = $personRepo->find($personId);
         if ($personToRemove) {
             $userService = $this->get('pumukitschema.user');
-            if (!$userService->hasPersonalScope($personToRemove->getUser())) {
+            $userToRemove = $personToRemove->getUser();
+            if (!$userService->hasPersonalScope($userToRemove)) {
                 return false;
             }
-            if ($loggedInUser === $personToRemove->getUser()) {
+            if ($loggedInUser === $userToRemove) {
                 $personToRemoveIsLogged = true;
             }
         }
 
         foreach ($owners as $owner) {
-            $personId = end(explode('_', $owner));
+            $ownerArray = explode('_', $owner);
+            $personId = end($ownerArray);
             $person = $personRepo->find($personId);
             if ($person) {
                 if ($loggedInUser === $person->getUser()) {
@@ -1035,7 +1038,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $userGroups = $loggedInUser->getGroups()->toArray();
         foreach ($addGroups as $addGroup){
-            $groupId = end(explode('_', $addGroup));
+            $addGroupArray = explode('_', $addGroup);
+            $groupId = end($addGroupArray);
             $group = $groupRepo->find($groupId);
             if ($group) {
                 if (in_array($group, $userGroups)) {
@@ -1046,7 +1050,9 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         }
 
         // Show warning??
-        if (($personToRemoveIsLogged && !$userInAddGroups) || (!$userInOwners && !$userInAddGroups)) {
+        if (($personToRemoveIsLogged && !$userInAddGroups) ||
+            (!$personToRemoveIsLogged && !$userInOwners && !$userInAddGroups) ||
+            (!$userInOwners && !$userInAddGroups)) {
             return true;
         }
 

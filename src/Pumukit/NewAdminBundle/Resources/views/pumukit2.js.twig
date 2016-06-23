@@ -280,69 +280,32 @@ window.down_playlistpic = function(id, seriesId) {
     $(div_id).load(url.replace('___id___', id), {method:'POST'});
 }
 
-window.submit_delete_person_relation = function(id, roleId, mmId, hName, template, owner)
+window.submit_delete_person_relation = function(id, roleId, mmId, hName, template, owner, message)
 {
-    var message = "{% trans %}Are you sure you want to delete the relation of{% endtrans %} "+hName+"?";
-    var resource = 'mm' + template;
-    var person_id = id;
-    var owners = [];
-    var addGroups = [];
-    $('a.'+resource+'-personal-scope-person-id').each(function(){
-        owners.push($(this).attr("id"));
-    });
-    $('a.add-'+resource+'-group-item').each(function(){
-        addGroups.push($(this).attr("id"));
-    });
-    var route = "{{ path('pumukitnewadmin_mms_user_last_relation')|raw }}";
-    var response_message = false;
-    $.ajax({
-        url: route,
-        type: 'GET',
-        data: {'personId': person_id, 'owners': owners, 'addGroups': addGroups},
-        error: function(jqXHR, textStatus, errorThrown){
-            response_message = errorThrown + ': ' + jqXHR.responseText;
-        },
-        success: function(response){
-            response_message = response;
+    if (message == null) {
+        message = "{% trans %}Are you sure you want to delete the relation of{% endtrans %} "+hName+"?";
+    }
+    if (window.confirm(message)){
+        if ('_template' === template){
+            var role_id = '#'+roleId+'_person_mms'+template;
+        }else{
+            var role_id = '#'+roleId+'_person_mms';
         }
-    }).always(function(data, textStatus, jqXHR){
-            if (response_message === false) {
-                if (person_id == null) {
-                    $('#warning_personal_user_'+resource+'_group').hide();
-                    $('#remember_save_'+resource+'_group').show();
-                }
-            } else if (response_message === true) {
-                if (person_id == null) {
-                    $('#remember_save_'+resource+'_group').hide();
-                    $('#warning_personal_user_'+resource+'_group').show();
-                }
+        var url = "{{ path('pumukitnewadmin_person_delete_relation', {'id': '__id__', 'roleId': '__roleId__','mmId': '__mmId__', 'owner': '__owner__'})|raw }}";
+        url = url.replace('__id__', id);
+        url = url.replace('__roleId__', roleId);
+        url = url.replace('__mmId__', mmId);
+        url = url.replace('__owner__', owner);
+        $(role_id).load(url, {'_method': 'DELETE'});
+        var url = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'})|raw }}";
+        $('#preview_mm').load(url.replace('__mmId__', mmId), function(responseText, textStatus, XMLHttpRequest){
+            if(XMLHttpRequest.status >= 400){
+                no_success('{% trans %}Error deleting Person{% endtrans %} "'+personHName+' from MultimediaObject": ' + responseText);
+            } else {
+                success('{% trans %}Person successfully removed from Multimedia Object{% endtrans %}');
             }
-            if (response_message) {
-                message = "{% trans %}WARNING: You will no longer have access to this Multimedia Object.{% endtrans %} " + message;
-            }
-            if (window.confirm(message)){
-                if ('_template' === template){
-                    var role_id = '#'+roleId+'_person_mms'+template;
-                }else{
-                    var role_id = '#'+roleId+'_person_mms';
-                }
-                var url = "{{ path('pumukitnewadmin_person_delete_relation', {'id': '__id__', 'roleId': '__roleId__','mmId': '__mmId__', 'owner': '__owner__'})|raw }}";
-                url = url.replace('__id__', id);
-                url = url.replace('__roleId__', roleId);
-                url = url.replace('__mmId__', mmId);
-                url = url.replace('__owner__', owner);
-                $(role_id).load(url, {'_method': 'DELETE'});
-                var url = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'})|raw }}";
-                $('#preview_mm').load(url.replace('__mmId__', mmId), function(responseText, textStatus, XMLHttpRequest){
-                    if(XMLHttpRequest.status >= 400){
-                        no_success('{% trans %}Error deleting Person{% endtrans %} "'+personHName+' from MultimediaObject": ' + responseText);
-                    } else {
-                        success('{% trans %}Person successfully removed from Multimedia Object{% endtrans %}');
-                    }
-                });
-            }
-    });
-
+        });
+    }
 }
 
 window.submit_delete_link = function(id, mmId)
@@ -2447,7 +2410,6 @@ function add_group(group_id, group_key, group_name, group_origin, resource)
     if (resource == "user") {
         element_to_delete = "#delete_group_" + group_id;
     } else {
-        $('#remember_save_' + resource + '_group').show();
         element_to_delete = "#delete_" + resource + "_group_" + group_id;
     }
     delete_element_group_from_select(element_to_delete, group_id, group_key, group_name, group_origin, resource);
@@ -2456,6 +2418,8 @@ function add_group(group_id, group_key, group_name, group_origin, resource)
     }
     if ((resource != "user") && (resource != "series")) {
         is_last_user_relation_to_admin_mm(resource, null);
+    } else if (resource != "user") {
+        $('#remember_save_' + resource + '_group').show();
     }
 }
 
@@ -2464,7 +2428,6 @@ function delete_group(group_id, group_key, group_name, group_origin, resource)
     if (resource == "user") {
         element_to_delete = "#add_group_" + group_id;
     } else {
-        $('#remember_save_' + resource + '_group').show();
         element_to_delete = "#add_" + resource + "_group_" + group_id;
     }
     delete_element_group_from_select(element_to_delete);
@@ -2474,6 +2437,8 @@ function delete_group(group_id, group_key, group_name, group_origin, resource)
     }
     if ((resource != "user") && (resource != "series")) {
         is_last_user_relation_to_admin_mm(resource, null);
+    } else if (resource != "user") {
+        $('#remember_save_' + resource + '_group').show();
     }
 }
 
@@ -2916,11 +2881,12 @@ get_submit_button_id = function()
     }
 }
 
-is_last_user_relation_to_admin_mm = function(resource, person_id)
+is_last_user_relation_to_admin_mm = function(resource, person_id, roleId, mmId, hName, template, owner)
 {
     var owners = [];
     var addGroups = [];
-    $('a.'+resource+'-personal-scope-person-id').each(function(){
+    owners_class = '.'+resource+'-personal-scope-person-id';
+    $(owners_class).each(function(){
         owners.push($(this).attr("id"));
     });
     $('a.add-'+resource+'-group-item').each(function(){
@@ -2928,28 +2894,41 @@ is_last_user_relation_to_admin_mm = function(resource, person_id)
     });
     var route = "{{ path('pumukitnewadmin_mms_user_last_relation')|raw }}";
     var message = '';
+    var use_success = true;
     $.ajax({
         url: route,
-        type: 'GET',
+        type: 'POST',
         data: {'personId': person_id, 'owners': owners, 'addGroups': addGroups},
         error: function(jqXHR, textStatus, errorThrown){
             message = errorThrown + ': ' + jqXHR.responseText;
+            use_success = false;
         },
         success: function(response){
             message = response;
+            use_success = true;
         }
     }).always(function(data, textStatus, jqXHR){
+        if (use_success) {
+            var delete_message = "{% trans %}Are you sure you want to delete the relation of{% endtrans %} "+hName+"?";
             if (message === false) {
                 if (person_id == null) {
                     $('#warning_personal_user_'+resource+'_group').hide();
                     $('#remember_save_'+resource+'_group').show();
+                } else {
+                    window.submit_delete_person_relation(person_id, roleId, mmId, hName, template, owner, null);
                 }
             } else if (message === true) {
                 if (person_id == null) {
                     $('#remember_save_'+resource+'_group').hide();
                     $('#warning_personal_user_'+resource+'_group').show();
+                } else {
+                    delete_message = "{% trans %}WARNING: You will no longer have access to this Multimedia Object.{% endtrans %} " + delete_message;
+                    window.submit_delete_person_relation(person_id, roleId, mmId, hName, template, owner, delete_message);
                 }
             }
+        } else {
+            no_success(message);
+        }
     });
 
     return false;
