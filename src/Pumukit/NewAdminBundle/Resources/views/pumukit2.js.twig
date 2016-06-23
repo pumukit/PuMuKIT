@@ -282,8 +282,9 @@ window.down_playlistpic = function(id, seriesId) {
 
 window.submit_delete_person_relation = function(id, roleId, mmId, hName, template, owner, message)
 {
+    var default_message = "{% trans %}Are you sure you want to delete the relation of{% endtrans %} "+hName+"?";
     if (message == null) {
-        message = "{% trans %}Are you sure you want to delete the relation of{% endtrans %} "+hName+"?";
+        message = default_message;
     }
     if (window.confirm(message)){
         if ('_template' === template){
@@ -296,15 +297,19 @@ window.submit_delete_person_relation = function(id, roleId, mmId, hName, templat
         url = url.replace('__roleId__', roleId);
         url = url.replace('__mmId__', mmId);
         url = url.replace('__owner__', owner);
-        $(role_id).load(url, {'_method': 'DELETE'});
-        var url = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'})|raw }}";
-        $('#preview_mm').load(url.replace('__mmId__', mmId), function(responseText, textStatus, XMLHttpRequest){
-            if(XMLHttpRequest.status >= 400){
-                no_success('{% trans %}Error deleting Person{% endtrans %} "'+personHName+' from MultimediaObject": ' + responseText);
-            } else {
-                success('{% trans %}Person successfully removed from Multimedia Object{% endtrans %}');
-            }
-        });
+        if ($.trim(message) == $.trim(default_message)) {
+            $(role_id).load(url, {'_method': 'DELETE'});
+            var url = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'})|raw }}";
+            $('#preview_mm').load(url.replace('__mmId__', mmId), function(responseText, textStatus, XMLHttpRequest){
+                if(XMLHttpRequest.status >= 400){
+                    no_success('{% trans %}Error deleting Person{% endtrans %} "'+personHName+' from MultimediaObject": ' + responseText);
+                } else {
+                    success('{% trans %}Person successfully removed from Multimedia Object{% endtrans %}');
+                }
+            });
+        } else {
+            //  TODO: Remove and redirect
+        }
     }
 }
 
