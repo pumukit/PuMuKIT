@@ -990,73 +990,13 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                 if ('string' === gettype($addGroups)){
                     $addGroups = json_decode($addGroups, true);
                 }
-                $response = $this->isUserLastRelation($loggedInUser, $personId, $owners, $addGroups);
+                $response = $userService->isUserLastRelation($loggedInUser, $personId, $owners, $addGroups);
             } catch (\Exception $e) {
                 return new JsonResponse($e->getMessage(), JsonResponse::HTTP_BAD_REQUEST);
             }
         }
 
         return new JsonResponse($response, Response::HTTP_OK);
-    }
-
-    /**
-     * Is User last relation
-     */
-    private function isUserLastRelation(User $loggedInUser, $personId = null, $owners = array(), $addGroups = array())
-    {
-        $personToRemoveIsLogged = false;
-        $userInOwners = false;
-        $userInAddGroups = false;
-
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $personRepo = $dm->getRepository('PumukitSchemaBundle:Person');
-        $groupRepo = $dm->getRepository('PumukitSchemaBundle:Group');
-
-        $personToRemove = $personRepo->find($personId);
-        if ($personToRemove) {
-            $userService = $this->get('pumukitschema.user');
-            $userToRemove = $personToRemove->getUser();
-            if (!$userService->hasPersonalScope($userToRemove)) {
-                return false;
-            }
-            if ($loggedInUser === $userToRemove) {
-                $personToRemoveIsLogged = true;
-            }
-        }
-
-        foreach ($owners as $owner) {
-            $ownerArray = explode('_', $owner);
-            $personId = end($ownerArray);
-            $person = $personRepo->find($personId);
-            if ($person) {
-                if ($loggedInUser === $person->getUser()) {
-                    $userInOwners = true;
-                    break;
-                }
-            }
-        }
-
-        $userGroups = $loggedInUser->getGroups()->toArray();
-        foreach ($addGroups as $addGroup){
-            $addGroupArray = explode('_', $addGroup);
-            $groupId = end($addGroupArray);
-            $group = $groupRepo->find($groupId);
-            if ($group) {
-                if (in_array($group, $userGroups)) {
-                    $userInAddGroups = true;
-                    break;
-                }
-            }
-        }
-
-        // Show warning??
-        if (($personToRemoveIsLogged && !$userInAddGroups) ||
-            (!$personToRemoveIsLogged && !$userInOwners && !$userInAddGroups) ||
-            (!$userInOwners && !$userInAddGroups)) {
-            return true;
-        }
-
-        return false;
     }
 
     /**
