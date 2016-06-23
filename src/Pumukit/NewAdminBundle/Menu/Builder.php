@@ -25,7 +25,7 @@ class Builder extends ContainerAware
         if ($authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_SERIES)) {
             $mediaManager = $menu->addChild('Media Manager')->setExtra('translation_domain', 'NewAdminBundle');
             $series = $mediaManager->addChild('Series', array('route' => 'pumukitnewadmin_series_index'))->setExtra('translation_domain', 'NewAdminBundle');
-            $playlists = $mediaManager->addChild('Playlists', array('route' => 'pumukitnewadmin_playlist_index'))->setExtra('translation_domain', 'NewAdminBundle');
+            $playlists = $mediaManager->addChild('Moodle Playlists', array('route' => 'pumukitnewadmin_playlist_index'))->setExtra('translation_domain', 'NewAdminBundle');
             $series->addChild('Multimedia', array('route' => 'pumukitnewadmin_mms_index'))->setExtra('translation_domain', 'NewAdminBundle');
             $series->setDisplayChildren(false);
         }
