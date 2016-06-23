@@ -80,7 +80,7 @@
       var div = $('<div class="checkbox" style="padding-top: 10px" />');
       var label = $('<label />');
       var input = $('<input checked="checked" type="checkbox" class="add_playlist_form_checkbox" name="pub_' + data.playlistId + '" id="' + data.playlistId + '" />');
-      label.text(data.title);
+      label.text(' ' + data.title);
       label.prepend(input);
       div.append(label);
       $('#add_playlist_form').prepend(div);
@@ -108,13 +108,14 @@
         ids = JSON.parse(ids);
     }
     var id = $('#add_playlist_form_id').val();
-    var data = {'ids': ids, 'id': id, series_ids: []};
+    if(id != "")
+          ids = [id];
+    var data = {'ids': ids, series_ids: []};
 
     $('.add_playlist_form_checkbox:checked').each(function(){
         var $this = $(this);
         data.series_ids.push($this.attr("id"));
     });
-
     //TODO Only if a checkbox is check
     $.post('{{ path('pumukitnewadmin_playlistmms_batch_add_to_several_playlist') }}', data)
     .done(function(e){
