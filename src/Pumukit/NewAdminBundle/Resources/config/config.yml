@@ -60,6 +60,12 @@ sylius_resource:
             classes:
                 model: Pumukit\SchemaBundle\Document\MultimediaObject
                 controller: Pumukit\NewAdminBundle\Controller\PlaylistMultimediaObjectController
+        pumukitnewadmin.playlistpic:
+            driver: doctrine/mongodb-odm
+            templates: PumukitNewAdminBundle:Pic
+            classes:
+                model: Pumukit\SchemaBundle\Document\Pic
+                controller: Pumukit\NewAdminBundle\Controller\PlaylistPicController
         pumukitnewadmin.seriespic:
             driver: doctrine/mongodb-odm
             templates: PumukitNewAdminBundle:Pic

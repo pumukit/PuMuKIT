@@ -39,8 +39,8 @@
 	    <dl>
 	      <dt>{% trans %}Thumbnails{% endtrans %}</dt>
 	      <dd>
-                <div id="pic_series_{{ series.id }}">
-		  {% include 'PumukitNewAdminBundle:Pic:list.html.twig' with {'resource': series, 'resource_name': 'series'} %}
+                <div id="pic_playlist_{{ series.id }}">
+		  {% include 'PumukitNewAdminBundle:Pic:list.html.twig' with {'resource': series, 'resource_name': 'playlist'} %}
                 </div>
 	      </dd>
 	    </dl>

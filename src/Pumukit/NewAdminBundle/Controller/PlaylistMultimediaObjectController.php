@@ -45,6 +45,11 @@ class PlaylistMultimediaObjectController extends Controller
         if($request->query->has('mmid')) {
             $session->set('admin/playlistmms/id', $request->query->get('mmid'));
         }
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        //If the session mms does not exist, we must remove the value or the app will crash.
+        if(!$mmobjRepo->find($session->get('admin/playlistmms/id', null)))
+            $session->remove('admin/playlistmms/id');
         $mms = $this->getPlaylistMmobjs($series, $request);
         return array(
                      'playlist' => $series,

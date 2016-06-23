@@ -19,11 +19,12 @@ class PicService
      */
     protected $context;
 
-    public function __construct(RequestContext $context, $webDir='', $defaultSeriesPic='', $defaultVideoPic='', $defaultAudioHDPic='', $defaultAudioSDPic='')
+    public function __construct(RequestContext $context, $webDir='', $defaultSeriesPic='', $defaultPlaylistPic='', $defaultVideoPic='', $defaultAudioHDPic='', $defaultAudioSDPic='')
     {
         $this->context = $context;
         $this->webDir = $webDir;
         $this->defaultSeriesPic = $defaultSeriesPic;
+        $this->defaultPlaylistPic = $defaultPlaylistPic;
         $this->defaultVideoPic = $defaultVideoPic;
         $this->defaultAudioHDPic = $defaultAudioHDPic;
         $this->defaultAudioSDPic = $defaultAudioSDPic;
@@ -83,6 +84,8 @@ class PicService
     public function getDefaultUrlPicForObject($object, $absolute=false, $hd=true)
     {
         if ($object instanceof Series) {
+            if($object->getType() == Series::TYPE_PLAYLIST)
+                return $this->getDefaultPlaylistUrlPic($absolute);
             return $this->getDefaultSeriesUrlPic($absolute);
         } elseif ($object instanceof MultimediaObject) {
             return $this->getDefaultMultimediaObjectUrlPic($absolute, $object->isOnlyAudio(), $hd);
@@ -106,6 +109,23 @@ class PicService
             return $this->getAbsoluteUrlPic($this->defaultSeriesPic);
         }
         return $this->defaultSeriesPic;
+    }
+
+    /**
+     * Get default playlist url pic
+     *
+     * Returns the default url pic
+     * according to absolute url parameter
+     *
+     * @param boolean $absolute Returns absolute path
+     * @returns string
+     */
+    public function getDefaultPlaylistUrlPic($absolute=false)
+    {
+        if ($absolute) {
+            return $this->getAbsoluteUrlPic($this->defaultPlaylistPic);
+        }
+        return $this->defaultPlaylistPic;
     }
 
     /**
