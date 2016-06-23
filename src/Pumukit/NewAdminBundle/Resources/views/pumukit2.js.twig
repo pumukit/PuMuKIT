@@ -2404,7 +2404,7 @@ function select_group(element)
   return false;
 }
 
-function add_group(group_id, group_key, group_name, group_origin, resource)
+function add_group(group_id, group_key, group_name, group_origin, resource, reset = false)
 {
     create_element_group_in_add_groups(group_id, group_key, group_name, group_origin, resource);
     if (resource == "user") {
@@ -2416,14 +2416,14 @@ function add_group(group_id, group_key, group_name, group_origin, resource)
     if (resource != "user") {
         can_enable_broadcast_groups_save_button();
     }
-    if ((resource != "user") && (resource != "series")) {
+    if ((!reset) && (resource != "user") && (resource != "series")) {
         is_last_user_relation_to_admin_mm(resource, null);
     } else if (resource != "user") {
         $('#remember_save_' + resource + '_group').show();
     }
 }
 
-function delete_group(group_id, group_key, group_name, group_origin, resource)
+function delete_group(group_id, group_key, group_name, group_origin, resource, reset = false)
 {
     if (resource == "user") {
         element_to_delete = "#add_group_" + group_id;
@@ -2435,7 +2435,7 @@ function delete_group(group_id, group_key, group_name, group_origin, resource)
     if (resource != "user") {
         can_enable_broadcast_groups_save_button();
     }
-    if ((resource != "user") && (resource != "series")) {
+    if ((!reset) && (resource != "user") && (resource != "series")) {
         is_last_user_relation_to_admin_mm(resource, null);
     } else if (resource != "user") {
         $('#remember_save_' + resource + '_group').show();
@@ -2540,13 +2540,13 @@ $(document).on('click', '#pumukitnewadmin_user_groups_reset', function() {
                 var group_key = addGroups[group_id].key;
                 var group_name = addGroups[group_id].name;
                 var group_origin = addGroups[group_id].origin;
-                add_group(group_id, group_key, group_name, group_origin, 'user');
+                add_group(group_id, group_key, group_name, group_origin, 'user', true);
             }
             for (var group_id in deleteGroups) {
                 var group_key = deleteGroups[group_id].key;
                 var group_name = deleteGroups[group_id].name;
                 var group_origin = deleteGroups[group_id].origin;
-                delete_group(group_id, group_key, group_name, group_origin, 'user');
+                delete_group(group_id, group_key, group_name, group_origin, 'user', true);
             }
         }
     });
@@ -2607,13 +2607,13 @@ function pumukitnewadmin_mm_updategroup_reset(mm_id, template, resource) {
                 var group_key = addGroups[group_id].key;
                 var group_name = addGroups[group_id].name;
                 var group_origin = addGroups[group_id].origin;
-                add_group(group_id, group_key, group_name, group_origin, resource);
+                add_group(group_id, group_key, group_name, group_origin, resource, true);
             }
             for (var group_id in deleteGroups) {
                 var group_key = deleteGroups[group_id].key;
                 var group_name = deleteGroups[group_id].name;
                 var group_origin = deleteGroups[group_id].origin;
-                delete_group(group_id, group_key, group_name, group_origin, resource);
+                delete_group(group_id, group_key, group_name, group_origin, resource, true);
             }
             $('#remember_save_mm' + template + '_group').hide();
         }
@@ -2658,13 +2658,13 @@ $(document).on('click', '#pumukitnewadmin_mm_broadcast_updategroup_reset', funct
                 var group_key = addGroups[group_id].key;
                 var group_name = addGroups[group_id].name;
                 var group_origin = addGroups[group_id].origin;
-                add_group(group_id, group_key, group_name, group_origin, resource);
+                add_group(group_id, group_key, group_name, group_origin, resource, true);
             }
             for (var group_id in deleteGroups) {
                 var group_key = deleteGroups[group_id].key;
                 var group_name = deleteGroups[group_id].name;
                 var group_origin = deleteGroups[group_id].origin;
-                delete_group(group_id, group_key, group_name, group_origin, resource);
+                delete_group(group_id, group_key, group_name, group_origin, resource, true);
             }
         }
     });
