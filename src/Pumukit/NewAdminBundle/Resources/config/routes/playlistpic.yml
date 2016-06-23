@@ -1,0 +1,82 @@
+pumukitnewadmin_playlistpic_index:
+    pattern: /
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistpic:indexAction
+        _sylius:
+            filterable: true
+
+pumukitnewadmin_playlistpic_create:
+    pattern: /create/{id}
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistpic:createAction
+        _sylius:
+            redirect: pumukitnewadmin_playlist_index
+
+pumukitnewadmin_playlistpic_update:
+    pattern: /{id}/update
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistpic:updateAction
+
+pumukitnewadmin_playlistpic_batch_delete:
+    pattern: /batch_delete
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistpic:batchDeleteAction
+        _sylius:
+            redirect: pumukitnewadmin_playlist_index
+
+pumukitnewadmin_playlistpic_delete:
+    pattern: /{id}/delete
+    methods: [DELETE]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistpic:deleteAction
+
+
+pumukitnewadmin_playlistpic_up:
+    pattern: /{id}/up
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistpic:upAction
+
+
+pumukitnewadmin_playlistpic_down:
+    pattern: /{id}/down
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistpic:downAction
+
+
+pumukitnewadmin_playlistpic_list:
+    pattern: /{id}/list
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistpic:listAction
+
+
+pumukitnewadmin_playlistpic_show:
+    pattern: /{id}/show
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistpic:showAction
+
+
+pumukitnewadmin_playlistpic_upload:
+    pattern: /{id}/upload
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistpic:uploadAction
+
+pumukitnewadmin_playlistpic_picstoaddlist:
+    pattern: /{id}/picstoaddlist
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistpic:picstoaddlistAction
+
+pumukitnewadmin_playlistpic_banner:
+    pattern: /{id}/banner
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistpic:bannerAction

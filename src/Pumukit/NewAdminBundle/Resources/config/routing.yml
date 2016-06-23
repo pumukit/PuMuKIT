@@ -69,6 +69,10 @@ pumukitnewadmin_playlistmms:
     resource: @PumukitNewAdminBundle/Resources/config/routes/playlistmms.yml
     prefix: /admin/playlist/mms
 
+pumukitnewadmin_playlistpic:
+    resource: @PumukitNewAdminBundle/Resources/config/routes/playlistpic.yml
+    prefix: /admin/playlistpic
+
 pumukitnewadmin_seriespic:
     resource: @PumukitNewAdminBundle/Resources/config/routes/seriespic.yml
     prefix: /admin/seriespic

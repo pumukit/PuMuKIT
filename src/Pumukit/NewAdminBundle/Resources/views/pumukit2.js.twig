@@ -243,6 +243,15 @@ window.delete_seriespic = function(id, seriesId) {
     }
 }
 
+window.delete_playlistpic = function(id, seriesId) {
+    if (window.confirm('{% trans %}Are you sure you want to delete this thumbnail?{% endtrans %}')) {
+        var url = '{{ path('pumukitnewadmin_seriespic_delete', {'id': '___id___'})|raw }}';
+        $.ajax(url.replace('___id___', id), {'method': 'DELETE', 'success': function(){success('{% trans %}Thumbnail removed.{% endtrans %}');}});
+        url = '{{ path('pumukitnewadmin_playlist_update', {'id': '___id___'})|raw }}';
+        $('#edit_playlist').load(url.replace('___id___', seriesId), {'_method': 'GET'});
+    }
+}
+
 window.up_seriespic = function(id, seriesId) {
     var url = '{{ path('pumukitnewadmin_seriespic_up', {'id': '___id___'})|raw }}';
     var div_id = '#pic_series___seriesId__';
@@ -253,6 +262,20 @@ window.up_seriespic = function(id, seriesId) {
 window.down_seriespic = function(id, seriesId) {
     var url = '{{ path('pumukitnewadmin_seriespic_down', {'id': '___id___'})|raw }}';
     var div_id = '#pic_series___seriesId__';
+    div_id = div_id.replace('__seriesId__', seriesId);
+    $(div_id).load(url.replace('___id___', id), {method:'POST'});
+}
+
+window.up_playlistpic = function(id, seriesId) {
+    var url = '{{ path('pumukitnewadmin_playlistpic_up', {'id': '___id___'})|raw }}';
+    var div_id = '#pic_playlist___seriesId__';
+    div_id = div_id.replace('__seriesId__', seriesId);
+    $(div_id).load(url.replace('___id___', id), {method:'POST'});
+}
+
+window.down_playlistpic = function(id, seriesId) {
+    var url = '{{ path('pumukitnewadmin_playlistpic_down', {'id': '___id___'})|raw }}';
+    var div_id = '#pic_playlist___seriesId__';
     div_id = div_id.replace('__seriesId__', seriesId);
     $(div_id).load(url.replace('___id___', id), {method:'POST'});
 }
@@ -727,7 +750,7 @@ window.change_select = function(element, selector, pluralName, seriesId)
           no_success('No multimedia object selected');
           break;
         }
-        
+
         var url = "{{ path('pumukitnewadmin_playlistmms_modal_add', {'ids': '__ids__'})|raw }}";
         $.ajax({
             url: url.replace('__ids__', JSON.stringify(ids)),
@@ -1778,7 +1801,7 @@ $(document).ready(function(){
 
         $('input[type=radio][name=pumukitnewadmin_mms_broadcast]').on('change', function() {
             var value = $(this).val();
-            if (value == '{{ constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PASSWORD') }}') { 
+            if (value == '{{ constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PASSWORD') }}') {
                 $('#broadcast_groups').addClass('pumukitnewadmin-broadcast-hidden');
                 $('#broadcast_password').removeClass('pumukitnewadmin-broadcast-hidden');
                 can_enable_broadcast_password_save_button();
@@ -2662,7 +2685,7 @@ $(document).on('submit', '#pumukitnewadmin_mms_updatebroadcast_submit', function
         type: 'POST',
         data: {'type': broadcast_type, 'password': password, 'addGroups': addGroups, 'deleteGroups': deleteGroups},
         error: function (jqXHR, textStatus, errorThrown) {
-            no_success(errorThrown + ': ' + jqXHR.responseText);            
+            no_success(errorThrown + ': ' + jqXHR.responseText);
         },
         success: function (response, textStatus, jqXHR) {
             var template = response['template'];
