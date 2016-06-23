@@ -180,9 +180,18 @@ class PlaylistMultimediaObjectController extends Controller
      */
     public function urlModalAction(Request $request)
     {
+        $broadcastService = $this->get('pumukitschema.embeddedbroadcast');
+        $mmobjService = $this->get('pumukitschema.multimedia_object');
         $this->enableFilter();
         $id = $request->query->get('mmid', '');
         $mmobj = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:MultimediaObject')->find($id);
+        $user = $this->getUser();
+	if($mmobj) {
+	    $canBePlayed = $broadcastService->canUserPlayMultimediaObject($mmobj, $user);
+	    $canUserPlay = $mmobjService->canBeDisplayed($mmobj, 'PUCHWEBTV');
+	}
+        if($mmobj && (!$canBePlayed || !$canUserPlay))
+            $mmobj = null;
         return array(
             'mmobj' => $mmobj,
             'mmobj_id' => $id

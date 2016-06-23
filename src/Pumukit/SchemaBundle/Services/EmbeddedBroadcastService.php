@@ -255,7 +255,7 @@ class EmbeddedBroadcastService
      * @param  boolean          $forceAuth
      * @return
      */
-    public function canUserPlayMultimediaObject(MultimediaObject $multimediaObject, User $user = null, $phpAuthPassword, $forceAuth = false)
+    public function canUserPlayMultimediaObject(MultimediaObject $multimediaObject, User $user = null, $phpAuthPassword = '', $forceAuth = false)
     {
         $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
         if (!$embeddedBroadcast) {
