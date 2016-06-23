@@ -80,7 +80,7 @@
       var div = $('<div class="checkbox" style="padding-top: 10px" />');
       var label = $('<label />');
       var input = $('<input checked="checked" type="checkbox" class="add_playlist_form_checkbox" name="pub_' + data.playlistId + '" id="' + data.playlistId + '" />');
-      label.text(data.title);
+      label.text(' ' + data.title);
       label.prepend(input);
       div.append(label);
       $('#add_playlist_form').prepend(div);
