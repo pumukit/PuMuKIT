@@ -14,6 +14,8 @@ class UserService
 {
     private $dm;
     private $repo;
+    private $personRepo;
+    private $groupRepo;
     private $permissionService;
     private $personalScopeDeleteOwners;
     private $dispatcher;
@@ -32,6 +34,8 @@ class UserService
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:User');
+        $this->personRepo = $this->dm->getRepository('PumukitSchemaBundle:Person');
+        $this->groupRepo = $this->dm->getRepository('PumukitSchemaBundle:Group');
         $this->permissionService = $permissionService;
         $this->dispatcher = $dispatcher;
         $this->personalScopeDeleteOwners = $personalScopeDeleteOwners;
@@ -530,5 +534,105 @@ class UserService
             $this->deleteGroup($group, $user, false);
         }
         $this->dm->flush();
+    }
+
+    /**
+     * Is User last relation
+     *
+     * @param  User    $user
+     * @param  string  $personId
+     * @param  array   $owners
+     * @param  array   $addGroups
+     * @return boolean TRUE if the user is no longer related to multimedia object, FALSE otherwise
+     */
+    public function isUserLastRelation(User $loggedInUser, $personId = null, $owners = array(), $addGroups = array())
+    {
+        $personToRemoveIsLogged = $this->isLoggedPersonToRemoveFromOwner($loggedInUser, $personId);
+        $userInOwners = $this->isUserInOwners($loggedInUser, $owners);
+        $userInAddGroups = $this->isUserInGroups($loggedInUser, $addGroups);
+
+        // Show warning??
+        if (($personToRemoveIsLogged && !$userInAddGroups) ||
+            (!$personToRemoveIsLogged && !$userInOwners && !$userInAddGroups) ||
+            (!$userInOwners && !$userInAddGroups)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Is logged in the person to be removed from owner of a multimedia object
+     *
+     * @param  User    $loggedInUser
+     * @param  string  $personId
+     * @return boolean TRUE if person to remove from owner is logged in, FALSE otherwise
+     */
+    public function isLoggedPersonToRemoveFromOwner(User $loggedInUser, $personId)
+    {
+        $personToRemove = $this->personRepo->find($personId);
+        if ($personToRemove) {
+            $userToRemove = $personToRemove->getUser();
+            if (!$userToRemove) {
+                return false;
+            } elseif ($this->hasGlobalScope($userToRemove)) {
+                return false;
+            } elseif ($loggedInUser === $userToRemove) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Is user in owners array
+     *
+     * @param  User    $user
+     * @param  array   $owners
+     * @return boolean TRUE if user is in owners array, FALSE otherwise
+     */
+    public function isUserInOwners(User $loggedInUser, $owners = array())
+    {
+        $userInOwners = false;
+        foreach ($owners as $owner) {
+            $ownerArray = explode('_', $owner);
+            $personId = end($ownerArray);
+            $person = $this->personRepo->find($personId);
+            if ($person) {
+                if ($loggedInUser === $person->getUser()) {
+                    $userInOwners = true;
+                    break;
+                }
+            }
+        }
+
+        return $userInOwners;
+    }
+
+    /**
+     * User has group in common with given groups array
+     *
+     * @param  User    $loggedInUser
+     * @param  array   $groups
+     * @return boolean TRUE if user has a group in common with the given groups array, FALSE otherwise
+     */
+    public function isUserInGroups(User $loggedInUser, $groups = array())
+    {
+        $userInAddGroups = false;
+        $userGroups = $loggedInUser->getGroups()->toArray();
+        foreach ($groups as $groupString){
+            $groupArray = explode('_', $groupString);
+            $groupId = end($groupArray);
+            $group = $this->groupRepo->find($groupId);
+            if ($group) {
+                if (in_array($group, $userGroups)) {
+                    $userInAddGroups = true;
+                    break;
+                }
+            }
+        }
+
+        return $userInAddGroups;
     }
 }

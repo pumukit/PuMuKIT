@@ -5,6 +5,7 @@ namespace Pumukit\SchemaBundle\Tests\Services;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Security\Permission;
@@ -855,6 +856,192 @@ class UserServiceTest extends WebTestCase
 
         $this->userService->deleteAllFromGroup($group);
         $this->assertEquals(0, count($this->userService->findWithGroup($group)->toArray()));
+    }
+
+    public function testIsUserLastRelation()
+    {
+        $permissions1 = array(Permission::ACCESS_DASHBOARD, Permission::ACCESS_ROLES);
+        $permissionProfile1 = new PermissionProfile();
+        $permissionProfile1->setPermissions($permissions1);
+        $permissionProfile1->setName('permissionprofile1');
+        $permissionProfile1->setScope(PermissionProfile::SCOPE_GLOBAL);
+        $this->dm->persist($permissionProfile1);
+        $this->dm->flush();
+
+        $user = new User();
+        $user->setUsername('user');
+        $user->setEmail('user@mail.com');
+        $user->setPermissionProfile($permissionProfile1);
+
+        $person1 = new Person();
+        $person1->setEmail('person1@mail.com');
+        $person2 = new Person();
+        $person2->setEmail('person2@mail.com');
+        $person3 = new Person();
+        $person3->setEmail('person3@mail.com');
+
+        $group1 = new Group();
+        $group1->setKey('key1');
+        $group1->setName('group1');
+        $group2 = new Group();
+        $group2->setKey('key2');
+        $group2->setName('group2');
+
+        $this->dm->persist($user);
+        $this->dm->persist($person1);
+        $this->dm->persist($person2);
+        $this->dm->persist($person3);
+        $this->dm->persist($group1);
+        $this->dm->persist($group2);
+        $this->dm->flush();
+
+        $user->setPerson($person2);
+        $person2->setUser($user);
+        $this->dm->persist($user);
+        $this->dm->persist($person2);
+        $this->dm->flush();
+
+        $aux = 'first_second_';
+        $owners1 = array($aux . $person2->getId(), $aux . $person3->getId());
+        $owners2 = array($aux . $person1->getId(), $aux . $person2->getId(), $aux . $person3->getId());
+        $groups = array($aux . $group1->getId(), $aux . $group2->getId());
+
+        $this->assertFalse($this->userService->isUserLastRelation($user, $person1->getId(), $owners1, $groups));
+        $this->assertFalse($this->userService->isUserLastRelation($user, $person2->getId(), $owners1, $groups));
+        $this->assertFalse($this->userService->isUserLastRelation($user, $person3->getId(), $owners1, $groups));
+
+        $permissionProfile1->setScope(PermissionProfile::SCOPE_PERSONAL);
+        $this->dm->persist($permissionProfile1);
+        $this->dm->flush();
+
+        $this->assertFalse($this->userService->isUserLastRelation($user, $person1->getId(), $owners1, $groups));
+        $this->assertTrue($this->userService->isUserLastRelation($user, $person2->getId(), $owners1, $groups));
+        $this->assertFalse($this->userService->isUserLastRelation($user, $person3->getId(), $owners1, $groups));
+
+        $user->addGroup($group2);
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $this->assertFalse($this->userService->isUserLastRelation($user, $person1->getId(), $owners1, $groups));
+        $this->assertFalse($this->userService->isUserLastRelation($user, $person2->getId(), $owners1, $groups));
+        $this->assertFalse($this->userService->isUserLastRelation($user, $person3->getId(), $owners1, $groups));
+
+        $this->assertTrue($this->userService->isUserLastRelation($user, $person1->getId(), array(), array()));
+        $this->assertTrue($this->userService->isUserLastRelation($user, $person2->getId(), array(), array()));
+        $this->assertTrue($this->userService->isUserLastRelation($user, $person3->getId(), array(), array()));
+    }
+
+    public function testIsLoggedPersonToRemoveFromOwner()
+    {
+        $permissions1 = array(Permission::ACCESS_DASHBOARD, Permission::ACCESS_ROLES);
+        $permissionProfile1 = new PermissionProfile();
+        $permissionProfile1->setPermissions($permissions1);
+        $permissionProfile1->setName('permissionprofile1');
+        $permissionProfile1->setScope(PermissionProfile::SCOPE_GLOBAL);
+        $this->dm->persist($permissionProfile1);
+        $this->dm->flush();
+
+        $user = new User();
+        $user->setUsername('user');
+        $user->setEmail('user@mail.com');
+        $user->setPermissionProfile($permissionProfile1);
+
+        $person1 = new Person();
+        $person1->setEmail('person1@mail.com');
+
+        $person2 = new Person();
+        $person2->setEmail('person2@mail.com');
+
+        $person3 = new Person();
+        $person3->setEmail('person3@mail.com');
+
+        $this->dm->persist($user);
+        $this->dm->persist($person1);
+        $this->dm->persist($person2);
+        $this->dm->persist($person3);
+        $this->dm->flush();
+
+        $user->setPerson($person2);
+        $person2->setUser($user);
+        $this->dm->persist($user);
+        $this->dm->persist($person2);
+        $this->dm->flush();
+
+        $this->assertFalse($this->userService->isLoggedPersonToRemoveFromOwner($user, $person1->getId()));
+        $this->assertFalse($this->userService->isLoggedPersonToRemoveFromOwner($user, $person2->getId()));
+        $this->assertFalse($this->userService->isLoggedPersonToRemoveFromOwner($user, $person3->getId()));
+
+        $permissionProfile1->setScope(PermissionProfile::SCOPE_PERSONAL);
+        $this->dm->persist($permissionProfile1);
+        $this->dm->flush();
+
+        $this->assertFalse($this->userService->isLoggedPersonToRemoveFromOwner($user, $person1->getId()));
+        $this->assertTrue($this->userService->isLoggedPersonToRemoveFromOwner($user, $person2->getId()));
+        $this->assertFalse($this->userService->isLoggedPersonToRemoveFromOwner($user, $person3->getId()));
+    }
+
+    public function testIsUserInOwners()
+    {
+        $user = new User();
+        $user->setUsername('user');
+        $user->setEmail('user@mail.com');
+
+        $person1 = new Person();
+        $person1->setEmail('person1@mail.com');
+
+        $person2 = new Person();
+        $person2->setEmail('person2@mail.com');
+
+        $person3 = new Person();
+        $person3->setEmail('person3@mail.com');
+
+        $this->dm->persist($user);
+        $this->dm->persist($person1);
+        $this->dm->persist($person2);
+        $this->dm->persist($person3);
+        $this->dm->flush();
+
+        $user->setPerson($person1);
+        $person1->setUser($user);
+        $this->dm->persist($user);
+        $this->dm->persist($person1);
+        $this->dm->flush();
+
+        $aux = 'first_second_';
+
+        $owners1 = array($aux . $person2->getId(), $aux . $person3->getId());
+        $this->assertFalse($this->userService->isUserInOwners($user, $owners1));
+
+        $owners2 = array($aux . $person1->getId(), $aux . $person2->getId(), $aux . $person3->getId());
+        $this->assertTrue($this->userService->isUserInOwners($user, $owners2));
+    }
+
+    public function testIsUserInGroups()
+    {
+        $user = new User();
+        $user->setUsername('user1');
+        $user->setEmail('user1@mail.com');
+        $group1 = new Group();
+        $group1->setKey('key1');
+        $group1->setName('group1');
+        $group2 = new Group();
+        $group2->setKey('key2');
+        $group2->setName('group2');
+        $this->dm->persist($user);
+        $this->dm->persist($group1);
+        $this->dm->persist($group2);
+        $this->dm->flush();
+
+        $aux = 'first_second_';
+        $groups = array($aux . $group1->getId(), $aux . $group2->getId());
+
+        $this->assertFalse($this->userService->isUserInGroups($user, $groups));
+
+        $user->addGroup($group2);
+        $this->dm->persist($user);
+        $this->dm->flush();
+
+        $this->assertTrue($this->userService->isUserInGroups($user, $groups));
     }
 }
 
