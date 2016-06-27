@@ -2903,7 +2903,7 @@ is_last_user_relation_to_admin_mm = function(resource, person_id, roleId, mmId, 
     $.ajax({
         url: route,
         type: 'POST',
-        data: {'personId': person_id, 'owners': owners, 'addGroups': addGroups},
+        data: {'mmId': mmId, 'personId': person_id, 'owners': owners, 'addGroups': addGroups},
         error: function(jqXHR, textStatus, errorThrown){
             message = errorThrown + ': ' + jqXHR.responseText;
             use_success = false;

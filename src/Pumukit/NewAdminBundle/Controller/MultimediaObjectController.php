@@ -981,6 +981,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         }
         if ($request->isMethod('POST')) {
             try {
+                $mmId = $request->get('mmId', null);
                 $personId = $request->get('personId', null);
                 $owners = $request->get('owners', array());
                 if ('string' === gettype($owners)){
@@ -990,7 +991,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                 if ('string' === gettype($addGroups)){
                     $addGroups = json_decode($addGroups, true);
                 }
-                $response = $userService->isUserLastRelation($loggedInUser, $personId, $owners, $addGroups);
+                $response = $userService->isUserLastRelation($loggedInUser, $mmId, $personId, $owners, $addGroups);
             } catch (\Exception $e) {
                 return new JsonResponse($e->getMessage(), JsonResponse::HTTP_BAD_REQUEST);
             }

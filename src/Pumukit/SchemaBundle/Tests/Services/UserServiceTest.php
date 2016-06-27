@@ -7,6 +7,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\UserService;
@@ -906,29 +907,29 @@ class UserServiceTest extends WebTestCase
         $owners2 = array($aux . $person1->getId(), $aux . $person2->getId(), $aux . $person3->getId());
         $groups = array($aux . $group1->getId(), $aux . $group2->getId());
 
-        $this->assertFalse($this->userService->isUserLastRelation($user, $person1->getId(), $owners1, $groups));
-        $this->assertFalse($this->userService->isUserLastRelation($user, $person2->getId(), $owners1, $groups));
-        $this->assertFalse($this->userService->isUserLastRelation($user, $person3->getId(), $owners1, $groups));
+        $this->assertFalse($this->userService->isUserLastRelation($user, null, $person1->getId(), $owners1, $groups));
+        $this->assertFalse($this->userService->isUserLastRelation($user, null, $person2->getId(), $owners1, $groups));
+        $this->assertFalse($this->userService->isUserLastRelation($user, null, $person3->getId(), $owners1, $groups));
 
         $permissionProfile1->setScope(PermissionProfile::SCOPE_PERSONAL);
         $this->dm->persist($permissionProfile1);
         $this->dm->flush();
 
-        $this->assertFalse($this->userService->isUserLastRelation($user, $person1->getId(), $owners1, $groups));
-        $this->assertTrue($this->userService->isUserLastRelation($user, $person2->getId(), $owners1, $groups));
-        $this->assertFalse($this->userService->isUserLastRelation($user, $person3->getId(), $owners1, $groups));
+        $this->assertFalse($this->userService->isUserLastRelation($user, null, $person1->getId(), $owners1, $groups));
+        $this->assertTrue($this->userService->isUserLastRelation($user, null, $person2->getId(), $owners1, $groups));
+        $this->assertFalse($this->userService->isUserLastRelation($user, null, $person3->getId(), $owners1, $groups));
 
         $user->addGroup($group2);
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertFalse($this->userService->isUserLastRelation($user, $person1->getId(), $owners1, $groups));
-        $this->assertFalse($this->userService->isUserLastRelation($user, $person2->getId(), $owners1, $groups));
-        $this->assertFalse($this->userService->isUserLastRelation($user, $person3->getId(), $owners1, $groups));
+        $this->assertFalse($this->userService->isUserLastRelation($user, null, $person1->getId(), $owners1, $groups));
+        $this->assertFalse($this->userService->isUserLastRelation($user, null, $person2->getId(), $owners1, $groups));
+        $this->assertFalse($this->userService->isUserLastRelation($user, null, $person3->getId(), $owners1, $groups));
 
-        $this->assertTrue($this->userService->isUserLastRelation($user, $person1->getId(), array(), array()));
-        $this->assertTrue($this->userService->isUserLastRelation($user, $person2->getId(), array(), array()));
-        $this->assertTrue($this->userService->isUserLastRelation($user, $person3->getId(), array(), array()));
+        $this->assertTrue($this->userService->isUserLastRelation($user, null, $person1->getId(), array(), array()));
+        $this->assertTrue($this->userService->isUserLastRelation($user, null, $person2->getId(), array(), array()));
+        $this->assertTrue($this->userService->isUserLastRelation($user, null, $person3->getId(), array(), array()));
     }
 
     public function testIsLoggedPersonToRemoveFromOwner()
@@ -1035,13 +1036,37 @@ class UserServiceTest extends WebTestCase
         $aux = 'first_second_';
         $groups = array($aux . $group1->getId(), $aux . $group2->getId());
 
-        $this->assertFalse($this->userService->isUserInGroups($user, $groups));
+        $this->assertFalse($this->userService->isUserInGroups($user, null, null, $groups));
 
         $user->addGroup($group2);
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->assertTrue($this->userService->isUserInGroups($user, $groups));
+        $this->assertTrue($this->userService->isUserInGroups($user, null, null, $groups));
+
+        $person = new Person();
+        $person->setName('person test');
+        $person->setEmail('person@mail.com');
+
+        $mm = new MultimediaObject();
+        $mm->setTitle('test');
+
+        $this->dm->persist($person);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $this->assertFalse($this->userService->isUserInGroups($user, $mm->getId(), $person->getId(), $groups));
+
+        $mm->addGroup($group1);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $this->assertFalse($this->userService->isUserInGroups($user, $mm->getId(), $person->getId(), $groups));
+
+        $mm->addGroup($group2);
+        $this->dm->persist($mm);
+        $this->dm->flush();
+
+        $this->assertTrue($this->userService->isUserInGroups($user, $mm->getId(), $person->getId(), $groups));
     }
 }
-

@@ -14,6 +14,7 @@ class UserService
 {
     private $dm;
     private $repo;
+    private $mmobjRepo;
     private $personRepo;
     private $groupRepo;
     private $permissionService;
@@ -34,6 +35,7 @@ class UserService
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:User');
+        $this->mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->personRepo = $this->dm->getRepository('PumukitSchemaBundle:Person');
         $this->groupRepo = $this->dm->getRepository('PumukitSchemaBundle:Group');
         $this->permissionService = $permissionService;
@@ -540,16 +542,17 @@ class UserService
      * Is User last relation
      *
      * @param  User    $user
+     * @param  string  $mmId
      * @param  string  $personId
      * @param  array   $owners
      * @param  array   $addGroups
      * @return boolean TRUE if the user is no longer related to multimedia object, FALSE otherwise
      */
-    public function isUserLastRelation(User $loggedInUser, $personId = null, $owners = array(), $addGroups = array())
+    public function isUserLastRelation(User $loggedInUser, $mmId = null, $personId = null, $owners = array(), $addGroups = array())
     {
         $personToRemoveIsLogged = $this->isLoggedPersonToRemoveFromOwner($loggedInUser, $personId);
         $userInOwners = $this->isUserInOwners($loggedInUser, $owners);
-        $userInAddGroups = $this->isUserInGroups($loggedInUser, $addGroups);
+        $userInAddGroups = $this->isUserInGroups($loggedInUser, $mmId, $personId, $addGroups);
 
         // Show warning??
         if (($personToRemoveIsLogged && !$userInAddGroups) ||
@@ -614,21 +617,35 @@ class UserService
      * User has group in common with given groups array
      *
      * @param  User    $loggedInUser
+     * @para   string  $mmId
+     * @para   string  $personId
      * @param  array   $groups
      * @return boolean TRUE if user has a group in common with the given groups array, FALSE otherwise
      */
-    public function isUserInGroups(User $loggedInUser, $groups = array())
+    public function isUserInGroups(User $loggedInUser, $mmId = null, $personId = null, $groups = array())
     {
         $userInAddGroups = false;
         $userGroups = $loggedInUser->getGroups()->toArray();
-        foreach ($groups as $groupString){
-            $groupArray = explode('_', $groupString);
-            $groupId = end($groupArray);
-            $group = $this->groupRepo->find($groupId);
-            if ($group) {
-                if (in_array($group, $userGroups)) {
-                    $userInAddGroups = true;
-                    break;
+        if ($personId && $mmId) {
+            $multimediaObject = $this->mmobjRepo->find($mmId);
+            if ($multimediaObject) {
+                foreach ($multimediaObject->getGroups() as $mmGroup) {
+                    if (in_array($mmGroup, $userGroups)) {
+                        $userInAddGroups = true;
+                        break;
+                    }
+                }
+            }
+        } else {
+            foreach ($groups as $groupString){
+                $groupArray = explode('_', $groupString);
+                $groupId = end($groupArray);
+                $group = $this->groupRepo->find($groupId);
+                if ($group) {
+                    if (in_array($group, $userGroups)) {
+                        $userInAddGroups = true;
+                        break;
+                    }
                 }
             }
         }
