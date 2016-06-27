@@ -1,5 +1,5 @@
 {% extends 'PumukitWebTVBundle::layout.html.twig' %}
-{% block body %}
+{% block body_base %}
 <h1 class="widget slidebar" style="text-align: center; padding-top: 40px;">
   {% trans %}Private Video{% endtrans %}
 </h1>
@@ -11,27 +11,20 @@
   <h3 class="text-center">{% trans %}Enter a valid password to watch it{% endtrans %}</h3>
   <br/>
   <div class="text-center">
-    <form name="passwdForm" method="post" action="{{ path('pumukit_webtv_multimediaobject_index', {'id': mm.id})|raw}}">
-      <input id="broadcast_password" name="broadcast_password" type="password" placeholder="{% trans %}Introduce a password{% endtrans %}..." value="" size="17" maxlength="256" style="margin: 5px;"/>
-      {#     <button type="submit" class="btn btn-primary btn-flat"
-                     name="submit" title="{% trans %}Enter Password{% endtrans %}"
-                     onclick="$.ajax({
-                              url: '{{ path('pumukit_webtv_multimediaobject_index', {'id': mm.id})|raw}}',
-                              method: 'GET',
-                              data: {'password': $('#broadcast_password').val()},
-                              error: function() {
-                              console.log('error');
-                              },
-                              success: function(response) {
-                              console.log('success');
-                              console.log(response);
-                              }
-                              });
-                              return false;
-                            //privatevideo_check_password('{{ mm.id }}', $('#broadcast_password').val());">{% trans %}Enter Password{% endtrans %}</button> #}
+    <form name="passwdForm" method="post" action="{{ path('pumukit_videoplayer_index', {'id': mm.id})|raw}}">
+      <div class="col-md-6">
+        <input id="broadcast_password" name="broadcast_password" type="password" placeholder="{% trans %}Introduce a password{% endtrans %}..." value="" size="17" maxlength="256" style="margin-top: 5px;margin-left:5px; margin-right: 5px; margin-bottom: 10px; width: 150px;"/>
+      </div>
       {% set diff = (app.request.getQueryString) ? '&' : '?' %}
-      <button type="submit" class="btn btn-primary btn-flat" name="submit" title="Log In" onclick="location.href='{{ app.request.requestUri }}{{ diff }}broadcast_password=test'">enter pass</button>
+      <div class="col-md-6">
+        <button type="submit" class="btn btn-primary btn-flat" name="submit" title="Log In" onclick="location.href='{{ app.request.requestUri }}{{ diff }}broadcast_password=test'">enter pass</button>
+      </div>
     </form>
+  </div>
+  <div class="text-center">
+    <div class="col-md-6">
+      <span id="player_password_check_fail" style="color: red; margin: 0px 10px;{{ invalid_password ? '':'display: none;' }}">{% trans %}Password is not valid{% endtrans %}.</span>
+    </div>
   </div>
 </div>
 {% endblock %}

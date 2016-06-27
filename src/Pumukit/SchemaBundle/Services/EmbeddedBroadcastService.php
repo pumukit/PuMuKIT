@@ -333,15 +333,18 @@ class EmbeddedBroadcastService
 
     private function isPasswordCorrect(MultimediaObject $multimediaObject, $phpAuthPassword, $password)
     {
-        if ($embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast()) {
+        $invalidPassword = false;
+        if (($password) && ($embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast())) {
             $embeddedPassword = $embeddedBroadcast->getPassword();
-            //            if (($phpAuthPassword == $embeddedPassword) && (null !== $embeddedPassword)) {
-            if (($password == $embeddedPassword) && (null !== $embeddedPassword)) {
+            //if (($phpAuthPassword == $embeddedPassword) && (null !== $embeddedPassword)) {
+            if (($password == $embeddedPassword) && (null != $embeddedPassword)) {
                 return true;
+            } else {
+                $invalidPassword = true;
             }
         }
 
-        return $this->renderErrorPassword($multimediaObject);
+        return $this->renderErrorPassword($multimediaObject, $invalidPassword);
     }
 
     private function renderErrorNotAuthenticated($forceAuth = false, User $user = null)
@@ -355,15 +358,15 @@ class EmbeddedBroadcastService
 
     }
 
-    private function renderErrorPassword(MultimediaObject $multimediaObject)
+    private function renderErrorPassword(MultimediaObject $multimediaObject, $invalidPassword = false)
     {
         $seriesUrl = $this->router->generate('pumukit_webtv_series_index', array('id' => $multimediaObject->getSeries()->getId()), true);
         $redReq = new RedirectResponse($seriesUrl, 302);
 
-        $renderedView = $this->templating->render('PumukitWebTVBundle:Index:401unauthorized.html.twig', array('show_forceauth' => true, 'mm' => $multimediaObject));
+        $renderedView = $this->templating->render('PumukitWebTVBundle:Index:401unauthorized.html.twig', array('show_forceauth' => true, 'mm' => $multimediaObject, 'invalid_password' => $invalidPassword));
 
         return new Response($renderedView, 401);
-        //        return new Response($redReq->getContent(), 401, array('WWW-Authenticate' => 'Basic realm="Resource not public."'));
+        //return new Response($redReq->getContent(), 401, array('WWW-Authenticate' => 'Basic realm="Resource not public."'));
     }
 
     /**

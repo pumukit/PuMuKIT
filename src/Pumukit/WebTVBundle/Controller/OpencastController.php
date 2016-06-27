@@ -39,12 +39,6 @@ class OpencastController extends PlayerController implements WebTVController
     }
 
     public function doAction( MultimediaObject $multimediaObject, Request $request ){
-        $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
-        $password = $request->get('broadcast_password');
-        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $request->headers->get('PHP_AUTH_PW'), $request->query->get('force-auth'), $password);
-        if ($response instanceof Response) {
-            return $response;
-        }
         if(!$opencasturl =  $multimediaObject->getProperty('opencasturl')){
             throw $this->createNotFoundException('The multimedia Object has no Opencast url!');
         }
@@ -67,10 +61,6 @@ class OpencastController extends PlayerController implements WebTVController
         $userAgentParserService = $this->get('pumukit_web_tv.useragent_parser');
         $isMobileDevice = ($mobileDetectorService->isMobile($userAgent) || $mobileDetectorService->isTablet($userAgent));
         $isOldBrowser = $userAgentParserService->isOldBrowser($userAgent);
-
-        if ($response instanceof Response) {
-            return $response;
-        }
 
         $this->updateBreadcrumbs($multimediaObject);
 
