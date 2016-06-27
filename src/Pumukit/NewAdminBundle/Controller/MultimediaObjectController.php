@@ -867,6 +867,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     {
         // TODO. Add security permission to access.
         $multimediaObject = $this->findOr404($request);
+        $series = $multimediaObject->getSeries();
+        $seriesId = $series->getId();
         if ('POST' === $request->getMethod()){
             $addGroups = $request->get('addGroups', array());
             if ('string' === gettype($addGroups)){
@@ -881,9 +883,27 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
+            try {
+                $isUserStillRelated = $this->isUserStillRelated($multimediaObject);
+                if (!$isUserStillRelated) {
+                    $response = array(
+                                      'redirect' => 1,
+                                      'url' => $this->generateUrl('pumukitnewadmin_series_index', array('id' => $seriesId))
+                                      );
+                    return new JsonResponse($response, JsonResponse::HTTP_OK);
+                }
+            } catch (\Exception $e) {
+                throw $e;
+                $response = array(
+                                  'redirect' => 1,
+                                  'url' => $this->generateUrl('pumukitnewadmin_series_index', array('id' => $seriesId))
+                                  );
+                return new JsonResponse($response, JsonResponse::HTTP_OK);
+            }
         }
 
-        return new JsonResponse(array('success'));
+
+        return new JsonResponse(array('success', 'redirect' => 0));
     }
 
     /**
@@ -1005,19 +1025,22 @@ class MultimediaObjectController extends SortableAdminController implements NewA
      */
     private function modifyMultimediaObjectGroups(MultimediaObject $multimediaObject, $addGroups = array(), $deleteGroups = array())
     {
+        $mmId = $multimediaObject->getId();
+        $owners = $multimediaObject->getProperty('owners');
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $groupRepo = $dm->getRepository('PumukitSchemaBundle:Group');
         $multimediaObjectService = $this->get('pumukitschema.multimedia_object');
-        $index = $multimediaObject->isPrototype() ? 4 : 3;
         foreach ($addGroups as $addGroup){
-            $groupId = explode('_', $addGroup)[$index];
+            $groupIdArray = explode('_', $addGroup);
+            $groupId = end($groupIdArray);
             $group = $groupRepo->find($groupId);
             if ($group) {
                 $multimediaObjectService->addGroup($group, $multimediaObject, false);
             }
         }
         foreach ($deleteGroups as $deleteGroup){
-            $groupId = explode('_', $deleteGroup)[$index];
+            $groupIArray = explode('_', $deleteGroup);
+            $groupId = end($groupIArray);
             $group = $groupRepo->find($groupId);
             if ($group) {
                 $multimediaObjectService->deleteGroup($group, $multimediaObject, false);
@@ -1039,16 +1062,17 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         if ($type === EmbeddedBroadcast::TYPE_PASSWORD) {
             $embeddedBroadcastService->updatePassword($password, $multimediaObject, false);
         } elseif ($type === EmbeddedBroadcast::TYPE_GROUPS) {
-            $index = 3;
             foreach ($addGroups as $addGroup){
-                $groupId = explode('_', $addGroup)[$index];
+                $groupIdArray = explode('_', $addGroup);
+                $groupId = end($groupIdArray);
                 $group = $groupRepo->find($groupId);
                 if ($group) {
                     $embeddedBroadcastService->addGroup($group, $multimediaObject, false);
                 }
             }
             foreach ($deleteGroups as $deleteGroup){
-                $groupId = explode('_', $deleteGroup)[$index];
+                $groupIArray = explode('_', $deleteGroup);
+                $groupId = end($groupIArray);
                 $group = $groupRepo->find($groupId);
                 if ($group) {
                     $embeddedBroadcastService->deleteGroup($group, $multimediaObject, false);
@@ -1083,5 +1107,50 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         }
 
         return array('addGroups' => $addGroups, 'deleteGroups' => $deleteGroups);
+    }
+
+    private function isUserStillRelated(MultimediaObject $multimediaObject)
+    {
+        $loggedInUser = $this->getUser();
+        $superAdmin = $loggedInUser->hasRole("ROLE_SUPER_ADMIN");
+        if ($superAdmin) {
+            return true;
+        }
+
+        $userService = $this->get('pumukitschema.user');
+        $globalScope = $userService->hasGlobalScope($loggedInUser);
+        if ($globalScope) {
+            return true;
+        }
+
+        $userInOwners = false;
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $personRepo = $dm->getRepository('PumukitSchemaBundle:Person');
+        foreach ($multimediaObject->getProperty('owners') as $owner) {
+            $person = $personRepo->find($owner);
+            if ($person) {
+                if ($loggedInUser === $person->getUser()) {
+                    $userInOnwers = true;
+                    break;
+                }
+            }
+        }
+        if ($userInOwners) {
+            return true;
+        }
+
+        $userInGroups = false;
+        $userGroups = $loggedInUser->getGroups()->toArray();
+        foreach ($multimediaObject->getGroups() as $mmGroup) {
+            if (in_array($mmGroup, $userGroups)) {
+                $userInGroups = true;
+                break;
+            }
+        }
+        if ($userInGroups) {
+            return true;
+        }
+
+        return false;
     }
 }

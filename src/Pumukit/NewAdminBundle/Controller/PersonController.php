@@ -497,21 +497,27 @@ class PersonController extends AdminController implements NewAdminController
             $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
         }
         $owner = $request->get('owner', false);
-
-        $personService = $this->get('pumukitschema.person');
-        $person = $personService->findPersonById($request->get('id'));
-        $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
         try {
+            $series = $multimediaObject->getSeries();
+            $seriesId = $series->getId();
+            $personService = $this->get('pumukitschema.person');
+            $userService = $this->get('pumukitschema.user');
+            $person = $personService->findPersonById($request->get('id'));
+            $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
+            $userLastRelation = $userService->isUserLastRelation($this->getUser(), $multimediaObject->getId(), $person->getId(), $multimediaObject->getProperty('owners'), array());
             $multimediaObject = $personService->deleteRelation($person, $role, $multimediaObject);
         }catch (\Exception $e){
             return new Response("Can not delete relation of Person '".$person->getName()."' with MultimediaObject '".$multimediaObject->getId()."'. ".$e->getMessage(), 409);
+        }
+
+        if ($userLastRelation) {
+            return new JsonResponse($this->generateUrl('pumukitnewadmin_series_index', array('id' => $seriesId)), JsonResponse::HTTP_OK);
         }
 
         $template = '';
         if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
             $template = '_template';
         }
-
         if ($owner === 'owner') {
             $twigTemplate = 'PumukitNewAdminBundle:MultimediaObject:listownerrelation.html.twig';
         } else {

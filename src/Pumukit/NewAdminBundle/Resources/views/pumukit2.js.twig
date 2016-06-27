@@ -297,18 +297,33 @@ window.submit_delete_person_relation = function(id, roleId, mmId, hName, templat
         url = url.replace('__roleId__', roleId);
         url = url.replace('__mmId__', mmId);
         url = url.replace('__owner__', owner);
+        var error_message = '{% trans %}Error deleting Person{% endtrans %} "'+hName+' from MultimediaObject": ';
+        var success_message = '{% trans %}Person successfully removed from Multimedia Object{% endtrans %}';
         if ($.trim(message) == $.trim(default_message)) {
             $(role_id).load(url, {'_method': 'DELETE'});
             var url = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'})|raw }}";
             $('#preview_mm').load(url.replace('__mmId__', mmId), function(responseText, textStatus, XMLHttpRequest){
                 if(XMLHttpRequest.status >= 400){
-                    no_success('{% trans %}Error deleting Person{% endtrans %} "'+personHName+' from MultimediaObject": ' + responseText);
+                    no_success(error_message + responseText);
                 } else {
-                    success('{% trans %}Person successfully removed from Multimedia Object{% endtrans %}');
+                    success(success_message);
                 }
             });
         } else {
-            //  TODO: Remove and redirect
+            // Remove and redirect to Series
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: {'_method': 'DELETE'},
+                error: function(jqXHR, textStatus, errorThrown){
+                    message = error_message + errorThrown + ': ' + jqXHR.responseText;
+                    no_success(message);
+                },
+                success: function(data){
+                    window.location.href = data;
+                    success(success_message);
+                }
+            });
         }
     }
 }
@@ -2577,6 +2592,9 @@ function pumukitnewadmin_mm_updategroup_submit(mm_id, template) {
             no_success(errorThrown + ': ' + jqXHR.responseText);
         },
         success: function(response){
+            if (response.redirect == 1) {
+                window.location.href = response.url;
+            }
             var message = 'Successfully updated groups in Mm.';
             success(message);
         }
