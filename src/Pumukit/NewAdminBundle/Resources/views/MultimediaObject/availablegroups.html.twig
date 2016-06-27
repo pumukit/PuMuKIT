@@ -1,4 +1,13 @@
+{% if (resource_name == 'mm' or resource_name == 'mm_template') %}
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::MODIFY_OWNER')) %}
+{% set can_modify_groups = true %}
+{% else %}
+{% set can_modify_groups = false %}
+{% endif %}
+{% else %}
+{% set can_modify_groups = true %}
+{% endif %}
+{% if can_modify_groups %}
 {% for group in groups if group not in resource.getGroups() %}
 <a href="#" 
    id="delete_{{ resource_name }}_group_{{ group.id }}"
