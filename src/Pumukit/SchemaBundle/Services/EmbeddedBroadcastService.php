@@ -353,8 +353,7 @@ class EmbeddedBroadcastService
         }
         $renderedView = $this->templating->render('PumukitWebTVBundle:Index:403forbidden.html.twig', array('show_forceauth' => true));
 
-        return new Response($renderedView, 403);
-
+        return new Response($renderedView, Response::HTTP_FORBIDDEN);
     }
 
     private function renderErrorPassword(MultimediaObject $multimediaObject, $invalidPassword = false)

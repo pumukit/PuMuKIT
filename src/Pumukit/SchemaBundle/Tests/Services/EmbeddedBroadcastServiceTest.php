@@ -519,12 +519,12 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
 
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, null, '', false);
         $this->assertTrue($response instanceof Response);
-        $this->assertEquals(403, $response->getStatusCode());
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $this->assertEquals($content, $response->getContent());
 
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false);
         $this->assertTrue($response instanceof Response);
-        $this->assertEquals(403, $response->getStatusCode());
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $this->assertEquals($content, $response->getContent());
 
         $authorizationChecker = $this->getMockBuilder('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface')
@@ -568,7 +568,7 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
 
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false);
         $this->assertTrue($response instanceof Response);
-        $this->assertEquals(403, $response->getStatusCode());
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $this->assertEquals($content, $response->getContent());
 
         $embeddedBroadcast = $mm->getEmbeddedBroadcast();
@@ -578,7 +578,7 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
 
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false);
         $this->assertTrue($response instanceof Response);
-        $this->assertEquals(403, $response->getStatusCode());
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $this->assertEquals($content, $response->getContent());
 
         $user->setPermissionProfile($permissionProfile);
@@ -587,7 +587,7 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
 
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false);
         $this->assertTrue($response instanceof Response);
-        $this->assertEquals(403, $response->getStatusCode());
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $this->assertEquals($content, $response->getContent());
 
         $permissionProfile->setScope(PermissionProfile::SCOPE_PERSONAL);
@@ -596,7 +596,7 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
 
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false);
         $this->assertTrue($response instanceof Response);
-        $this->assertEquals(403, $response->getStatusCode());
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $this->assertEquals($content, $response->getContent());
 
         $permissionProfile->setScope(PermissionProfile::SCOPE_GLOBAL);
@@ -611,7 +611,7 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
 
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false);
         $this->assertTrue($response instanceof Response);
-        $this->assertEquals(403, $response->getStatusCode());
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $this->assertEquals($content, $response->getContent());
 
         $mm->addGroup($group1);
@@ -627,7 +627,7 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
 
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false);
         $this->assertTrue($response instanceof Response);
-        $this->assertEquals(403, $response->getStatusCode());
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $this->assertEquals($content, $response->getContent());
 
         $embeddedBroadcast = $mm->getEmbeddedBroadcast();
@@ -645,7 +645,7 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
 
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, '', false);
         $this->assertTrue($response instanceof Response);
-        $this->assertEquals(403, $response->getStatusCode());
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $this->assertEquals($content, $response->getContent());
 
         $owners = array($user->getId());
@@ -685,19 +685,20 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
         $password = '';
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, $password, false);
         $this->assertTrue($response instanceof Response);
-        $this->assertEquals(401, $response->getStatusCode());
+        $this->assertEquals(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
 
         $embeddedBroadcast = $mm->getEmbeddedBroadcast();
         $embeddedBroadcast->setPassword($password);
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $this->assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, $password, false));
+        $this->assertTrue($response instanceof Response);
+        $this->assertEquals(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
 
         $password = 'password';
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, $password, false);
         $this->assertTrue($response instanceof Response);
-        $this->assertEquals(401, $response->getStatusCode());
+        $this->assertEquals(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
 
         $embeddedBroadcast = $mm->getEmbeddedBroadcast();
         $embeddedBroadcast->setPassword('not matching password');
@@ -706,7 +707,7 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
 
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, $password, false);
         $this->assertTrue($response instanceof Response);
-        $this->assertEquals(401, $response->getStatusCode());
+        $this->assertEquals(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
 
         $embeddedBroadcast = $mm->getEmbeddedBroadcast();
         $embeddedBroadcast->setPassword($password);
