@@ -19,7 +19,7 @@
       {% endif %}
 	</div>
 <script type="text/javascript">
-$('#pumukit_forbidden_login').on('click', function() {
+$('#pumukit_forbidden_login').off().on('click', function(event) {
     var requestUri = location.href;
     try {
         if (window.parent.location.href == location.href) {
