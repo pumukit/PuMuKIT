@@ -227,11 +227,9 @@ class EmbeddedBroadcastService
      */
     public function deleteGroup(Group $group, MultimediaObject $multimediaObject, $executeFlush = true)
     {
+        $this->updateTypeAndName(EmbeddedBroadcast::TYPE_GROUPS, $multimediaObject);
+
         $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
-        if (!$embeddedBroadcast) {
-            $embeddedBroadcast = $this->createPublicEmbeddedBroadcast();
-            $multimediaObject->setEmbeddedBroadcast($embeddedBroadcast);
-        }
         if ($embeddedBroadcast->containsGroup($group)) {
             $embeddedBroadcast->removeGroup($group);
             $this->dm->persist($multimediaObject);
