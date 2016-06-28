@@ -183,11 +183,9 @@ class EmbeddedBroadcastService
      */
     public function updatePassword($password, MultimediaObject $multimediaObject, $executeFlush = true)
     {
+        $this->updateTypeAndName(EmbeddedBroadcast::TYPE_PASSWORD, $multimediaObject);
+
         $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
-        if (!$embeddedBroadcast) {
-            $embeddedBroadcast = $this->createPublicEmbeddedBroadcast();
-            $multimediaObject->setEmbeddedBroadcast($embeddedBroadcast);
-        }
         if ($password !== $embeddedBroadcast->getPassword()) {
             $embeddedBroadcast->setPassword($password);
             $this->dm->persist($multimediaObject);
@@ -207,11 +205,9 @@ class EmbeddedBroadcastService
      */
     public function addGroup(Group $group, MultimediaObject $multimediaObject, $executeFlush = true)
     {
+        $this->updateTypeAndName(EmbeddedBroadcast::TYPE_GROUPS, $multimediaObject);
+
         $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
-        if (!$embeddedBroadcast) {
-            $embeddedBroadcast = $this->createPublicEmbeddedBroadcast();
-            $multimediaObject->setEmbeddedBroadcast($embeddedBroadcast);
-        }
         if (!$embeddedBroadcast->containsGroup($group)) {
             $embeddedBroadcast->addGroup($group);
             $this->dm->persist($multimediaObject);
