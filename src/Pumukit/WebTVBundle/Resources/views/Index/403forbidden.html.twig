@@ -21,29 +21,31 @@
 <script type="text/javascript">
 $('#pumukit_forbidden_login').on('click', function() {
     var requestUri = location.href;
-    var videoplayerString = 'videoplayer/';
-    var videoplayer = requestUri.indexOf(videoplayerString);
-    var question = requestUri.indexOf('?');
-    var mmId = '';
-    if (videoplayer > -1) {
-        if (question > -1) {
-            var mmId = requestUri.substring((videoplayer+videoplayerString.length), question);
+    try {
+        if (window.parent.location.href == location.href) {
+            load_location_on_iframe(requestUri);
         } else {
-            var mmId = requestUri.substring((videoplayer+videoplayerString.length), requestUri.length);
+            load_location_on_fullpage();
         }
-    }
-    if (window.parent.location.href == location.href) {
-        if (window.location.search != "") {
-            var diff = '&';
-        } else {
-            var diff = '?';
-        }
-        location.href=requestUri+diff+'force-auth=true';
-    } else {
-        var url = '{{ path('pumukit_webtv_multimediaobject_index', {'id':'__mmId__'})|raw }}';
-        url = url.replace('__mmId__', mmId);
-        window.parent.location.href='{{ path('pumukit_auth') }}?referer='+url;
+    } catch (e) {
+        load_location_on_iframe(requestUri);
     }
 });
+
+load_location_on_iframe = function(requestUri) {
+    if (window.location.search != "") {
+        var diff = '&';
+    } else {
+        var diff = '?';
+    }
+    location.href=requestUri+diff+'force-auth=true';
+}
+
+load_location_on_fullpage = function() {
+    var mmId = '{{ mm.id }}';
+    var url = '{{ path('pumukit_webtv_multimediaobject_index', {'id':'__mmId__'})|raw }}';
+    url = url.replace('__mmId__', mmId);
+    window.parent.location.href='{{ path('pumukit_auth') }}?referer='+url;
+}
 </script>
 {% endblock %}
