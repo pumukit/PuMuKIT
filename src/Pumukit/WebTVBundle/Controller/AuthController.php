@@ -16,7 +16,8 @@ class AuthController extends Controller implements WebTVController
         $session = $this->get('session');
     
         if (!$session->has('target_path')) {
-            $session->set('target_path', $request->headers->get('referer', '/'));
+            $session->set('target_path',
+                $request->query->get('referer', $request->headers->get('referer', '/')));
         }
 
         if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
