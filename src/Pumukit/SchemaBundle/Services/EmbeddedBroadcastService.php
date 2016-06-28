@@ -245,11 +245,11 @@ class EmbeddedBroadcastService
      *
      * @param  MultimediaObject $multimediaObject
      * @param  User             $user
-     * @param  string           $phpAuthPassword
+     * @param  string           $password
      * @param  boolean          $forceAuth
      * @return
      */
-    public function canUserPlayMultimediaObject(MultimediaObject $multimediaObject, User $user = null, $phpAuthPassword, $forceAuth = false, $password = '')
+    public function canUserPlayMultimediaObject(MultimediaObject $multimediaObject, User $user = null, $password = null, $forceAuth = false)
     {
         $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
         if (!$embeddedBroadcast) {
@@ -265,7 +265,7 @@ class EmbeddedBroadcastService
             return $this->isUserLoggedInAndInGroups($multimediaObject, $user, $forceAuth);
         }
         if (EmbeddedBroadcast::TYPE_PASSWORD === $embeddedBroadcast->getType()) {
-            return $this->isPasswordCorrect($multimediaObject, $phpAuthPassword, $password);
+            return $this->isPasswordCorrect($multimediaObject, $password);
         }
 
         return $this->renderErrorNotAuthenticated($forceAuth, $user);
@@ -331,12 +331,11 @@ class EmbeddedBroadcastService
         return $this->renderErrorNotAuthenticated($forceAuth, $user);
     }
 
-    private function isPasswordCorrect(MultimediaObject $multimediaObject, $phpAuthPassword, $password)
+    private function isPasswordCorrect(MultimediaObject $multimediaObject, $password = null)
     {
         $invalidPassword = false;
         if (($password) && ($embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast())) {
             $embeddedPassword = $embeddedBroadcast->getPassword();
-            //if (($phpAuthPassword == $embeddedPassword) && (null !== $embeddedPassword)) {
             if (($password == $embeddedPassword) && (null != $embeddedPassword)) {
                 return true;
             } else {
@@ -360,13 +359,9 @@ class EmbeddedBroadcastService
 
     private function renderErrorPassword(MultimediaObject $multimediaObject, $invalidPassword = false)
     {
-        $seriesUrl = $this->router->generate('pumukit_webtv_series_index', array('id' => $multimediaObject->getSeries()->getId()), true);
-        $redReq = new RedirectResponse($seriesUrl, 302);
-
         $renderedView = $this->templating->render('PumukitWebTVBundle:Index:401unauthorized.html.twig', array('show_forceauth' => true, 'mm' => $multimediaObject, 'invalid_password' => $invalidPassword));
 
-        return new Response($renderedView, 401);
-        //return new Response($redReq->getContent(), 401, array('WWW-Authenticate' => 'Basic realm="Resource not public."'));
+        return new Response($renderedView, Response::HTTP_UNAUTHORIZED);
     }
 
     /**

@@ -25,7 +25,7 @@ class BasePlayerController extends BasePlayerControllero implements WebTVControl
     {
         $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
         $password = $request->get('broadcast_password');
-        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $request->headers->get('PHP_AUTH_PW'), $request->query->get('force-auth'), $password);
+        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $password, $request->query->get('force-auth'));
         if ($response instanceof Response) {
             return $response;
         }
@@ -67,7 +67,7 @@ class BasePlayerController extends BasePlayerControllero implements WebTVControl
 
         $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
         $password = $request->get('broadcast_password');
-        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $request->headers->get('PHP_AUTH_PW'), $request->query->get('force-auth'), $password);
+        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $password, $request->query->get('force-auth'));
         if ($response instanceof Response) {
             return $response;
         }

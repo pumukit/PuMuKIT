@@ -53,6 +53,6 @@ class BasePlayerController extends Controller
     {
         $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
         $password = $request->get('broadcast_password');
-        return $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $request->headers->get('PHP_AUTH_PW'), $request->query->get('force-auth'), $password);
+        return $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $password, $request->query->get('force-auth'));
     }
 }
