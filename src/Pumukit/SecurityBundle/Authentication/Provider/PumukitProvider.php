@@ -107,10 +107,11 @@ class PumukitProvider implements AuthenticationProviderInterface
                 $group = $this->getGroup($attributes[self::CAS_GROUP_KEY]);
                 //BUG #11087
                 //$userService->addGroup($group, $user);
+                $dm = $this->container->get('doctrine_mongodb.odm.document_manager');
                 if (!$user->containsGroup($group)) {
                     $user->addGroup($group);
-                    $this->dm->persist($user);
-                    $this->dm->flush();
+                    $dm->persist($user);
+                    $dm->flush();
                 }
 
             }
