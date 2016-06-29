@@ -91,3 +91,9 @@ pumukitnewadmin_series_updatebroadcast:
     methods: [GET, POST]
     defaults:
         _controller: pumukitnewadmin.controller.series:updateBroadcastAction
+
+pumukitnewadmin_series_listproperties:
+    pattern: /{id}/listproperties
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.series:listPropertiesAction

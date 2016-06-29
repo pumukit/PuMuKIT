@@ -1021,6 +1021,70 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
+     * List the properties of a series in a modal
+     *
+     * @Template
+     */
+    public function listPropertiesAction(MultimediaObject $multimediaObject) 
+    {
+        return array('multimediaObject' => $multimediaObject);
+    }
+
+    /**
+     * Is User last relation
+     */
+    private function isUserLastRelation(User $loggedInUser, $personId = null, $owners = array(), $addGroups = array())
+    {
+        $personToRemoveIsLogged = false;
+        $userInOwners = false;
+        $userInAddGroups = false;
+
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $personRepo = $dm->getRepository('PumukitSchemaBundle:Person');
+
+        $personToRemove = $personRepo->find($personId);
+        if ($personToRemove) {
+            $userService = $this->get('pumukitschema.user');
+            if (!$userService->hasPersonalScope($personToRemove->getUser())) {
+                return false;
+            }
+            if ($loggedInUser === $personToRemove->getUser()) {
+                $personToRemoveIsLogged = true;
+            }
+        }
+
+        foreach ($owners as $owner) {
+            $personId = end(explode('_', $owner));
+            $person = $personRepo->find($personId);
+            if ($person) {
+                if ($loggedInUser === $person->getUser()) {
+                    $userInOwners = true;
+                    break;
+                }
+            }
+        }
+
+        $userGroups = $loggedInUser->getGroups()->toArray();
+        foreach ($addGroups as $addGroup){
+            $groupId = end(explode('_', $addGroup));
+            $group = $groupRepo->find($groupId);
+            if ($group) {
+                if (in_array($group, $userGroups)) {
+                    $userInAddGroups = true;
+                    break;
+                }
+            }
+        }
+
+        // Show warning??
+        if (($personToRemoveIsLogged && !$userInAddGroups) || (!$userInOwners && !$userInAddGroups)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Modify MultimediaObject Groups
      */
     private function modifyMultimediaObjectGroups(MultimediaObject $multimediaObject, $addGroups = array(), $deleteGroups = array())
