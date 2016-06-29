@@ -299,6 +299,13 @@ class UserController extends AdminController implements NewAdminController
             }
         }
 
+        if ($userToDelete->getOrigin() !== User::ORIGIN_LOCAL) {
+            if ($loggedInUser->isSuperAdmin()) {
+                return true;
+            }
+            return new Response("Can not delete the external user '".$userToDelete->getUsername()."'. ", 409);
+        }
+
         return true;
     }
 
