@@ -92,7 +92,7 @@ class PumukitProvider implements AuthenticationProviderInterface
             }
 
             if (isset($attributes[self::CAS_MAIL_KEY])) {
-                $user->etEmail($attributes[self::CAS_MAIL_KEY]);
+                $user->setEmail($attributes[self::CAS_MAIL_KEY]);
             }
             $defaultPermissionProfile = $permissionProfileService->getDefault();
             if (null == $defaultPermissionProfile) {
