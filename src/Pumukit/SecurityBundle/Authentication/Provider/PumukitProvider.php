@@ -13,9 +13,15 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
 use Pumukit\SchemaBundle\Services\UserService;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\Group;
 
 class PumukitProvider implements AuthenticationProviderInterface
 {
+
+    const CAS_CN_KEY = 'CN';
+    const CAS_MAIL_KEY = 'MAIL';
+    const CAS_GROUP_KEY = 'GROUP';
+
     private $userProvider;
     private $providerKey;
     private $userChecker;
@@ -69,12 +75,25 @@ class PumukitProvider implements AuthenticationProviderInterface
     {
         $userService = $this->container->get('pumukitschema.user');
         $personService = $this->container->get('pumukitschema.person');
+        $casService = $this->container->get('pumukit.casservice');
+
+        $casService->forceAuthentication();
+        $attributes = $casService->getAttributes();
+
         $permissionProfileService = $this->container->get('pumukitschema.permissionprofile');
         if ($userService && $personService) {
             //TODO create createDefaultUser in UserService.
             //$this->userService->createDefaultUser($user);
             $user = new User();
-            $user->setUsername($userName);
+            if (isset($attributes[self::CAS_CN_KEY])) {
+                $user->setUsername($attributes[self::CAS_CN_KEY]);
+            } else {
+                $user->setUsername($userName);
+            }
+
+            if (isset($attributes[self::CAS_MAIL_KEY])) {
+                $user->etEmail($attributes[self::CAS_MAIL_KEY]);
+            }
             $defaultPermissionProfile = $permissionProfileService->getDefault();
             if (null == $defaultPermissionProfile) {
                 throw new \Exception('Unable to assign a Permission Profile to the new User. There is no default Permission Profile');
@@ -84,12 +103,40 @@ class PumukitProvider implements AuthenticationProviderInterface
             $user->setEnabled(true);
 
             $userService->create($user);
+            if (isset($attributes[self::CAS_GROUP_KEY])) {
+                $group = $this->getGroup($attributes[self::CAS_GROUP_KEY]);
+                $userService->addGroup($group, $user);
+            }
             $personService->referencePersonIntoUser($user);
 
             return $user;
         }
 
         throw new AuthenticationServiceException('Not UserService to create a new user');
+    }
+
+
+    private function getGroup($key)
+    {
+        $dm = $this->container->get('doctrine_mongodb.odm.document_manager');
+        $repo = $dm->getRepository('PumukitSchemaBundle:Group')
+        $groupService = $this->container->get('pumukitschema.group');
+
+        $cleanKey = preg_replace('/\W/', '', $key);
+
+        $group = $repo->findOneByKey($cleanKey);
+        if ($group) {
+            return $group;
+        }
+
+        $group = new Group();
+        $group->setKey($cleanKey);
+        $group->setName($key);
+        $group->setOrigin('cas');
+        $groupService->create($group);
+
+        return $group;
+
     }
 
     public function supports(TokenInterface $token)
