@@ -198,21 +198,23 @@ class UserService
         if (!$user->isLocal()) {
             throw new \Exception('The user "'.$user->getUsername().'" is not local and can not be modified.');
         }
-        $permissionProfile = $user->getPermissionProfile();
-        if (null == $permissionProfile) throw new \Exception('The User "'.$user->getUsername().'" has no Permission Profile assigned.');
-        /** NOTE: User roles have:
-           - ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_USER
-           - permission profile roles
-           - permission profile scope
-        */
-        $userScope = $this->getUserScope($user->getRoles());
-        if ($userScope !== $permissionProfile->getScope()) {
-            $user = $this->setUserScope($user, $userScope, $permissionProfile->getScope());
-        }
-        $userPermissions = $this->getUserPermissions($user->getRoles());
-        if ($userPermissions !== $permissionProfile->getPermissions()) {
-            $user = $this->removeRoles($user, $userPermissions, false);
-            $user = $this->addRoles($user, $permissionProfile->getPermissions(), false);
+        if (!$user->isSuperAdmin()) {
+            $permissionProfile = $user->getPermissionProfile();
+            if (null == $permissionProfile) throw new \Exception('The User "'.$user->getUsername().'" has no Permission Profile assigned.');
+            /** NOTE: User roles have:
+                - ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_USER
+                - permission profile roles
+                - permission profile scope
+            */
+            $userScope = $this->getUserScope($user->getRoles());
+            if ($userScope !== $permissionProfile->getScope()) {
+                $user = $this->setUserScope($user, $userScope, $permissionProfile->getScope());
+            }
+            $userPermissions = $this->getUserPermissions($user->getRoles());
+            if ($userPermissions !== $permissionProfile->getPermissions()) {
+                $user = $this->removeRoles($user, $userPermissions, false);
+                $user = $this->addRoles($user, $permissionProfile->getPermissions(), false);
+            }
         }
         $this->dm->persist($user);
         if ($executeFlush) $this->dm->flush();
