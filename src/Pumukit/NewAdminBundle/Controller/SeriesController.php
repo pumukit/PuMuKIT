@@ -611,6 +611,16 @@ class SeriesController extends AdminController implements NewAdminController
     }
 
     /**
+     * List the properties of a series in a modal
+     *
+     * @Template
+     */
+    public function listPropertiesAction(Series $series) 
+    {
+        return array('series' => $series);
+    }
+
+    /**
      * Modify EmbeddedBroadcast Groups
      *
      * @param MultimediaObject $multimediaObject

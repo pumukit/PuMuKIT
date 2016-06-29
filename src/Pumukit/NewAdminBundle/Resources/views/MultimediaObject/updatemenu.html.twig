@@ -17,6 +17,11 @@
       </a>
     </li>
     <li>
+      <a href="{{ path('pumukitnewadmin_mms_listproperties', {'id': mm.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+        <i class="mdi-action-list"></i> {% trans %}Show properties{% endtrans %}
+      </a>
+    </li>
+    <li>
       <a href="#" onclick="return false;">
         <strong>{% trans %}Cancel{% endtrans %}...</strong>
       </a>

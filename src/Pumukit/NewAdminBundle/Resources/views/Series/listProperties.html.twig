@@ -1,0 +1,20 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <h3 class="modal-title pumukitnewadmin-modal-title-margin" id="myModalLabel">{% trans %}Series properties{% endtrans %}</h3>
+</div>
+<div class="modal-body">
+    <fieldset>
+      <div class="form-group">
+        <pre id="series_properties_code"></pre>
+        {% autoescape 'js' %}
+        <script type="text/javascript">
+          var str = JSON.stringify({{ series.getProperties()|json_encode|raw }}, null, 4);
+          document.getElementById('series_properties_code').innerHTML = str;
+        </script>
+        {% endautoescape %}
+      </div>
+    </fieldset>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
+    </div>
+</div>

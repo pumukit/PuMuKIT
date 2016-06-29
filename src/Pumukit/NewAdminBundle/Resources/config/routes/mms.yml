@@ -201,3 +201,9 @@ pumukitnewadmin_mms_user_last_relation:
     methods: [POST]
     defaults:
         _controller: pumukitnewadmin.controller.mms:userLastRelationAction
+
+pumukitnewadmin_mms_listproperties:
+    pattern: /{id}/listproperties
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:listPropertiesAction

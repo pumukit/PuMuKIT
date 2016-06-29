@@ -1021,6 +1021,16 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
+     * List the properties of a series in a modal
+     *
+     * @Template
+     */
+    public function listPropertiesAction(MultimediaObject $multimediaObject) 
+    {
+        return array('multimediaObject' => $multimediaObject);
+    }
+
+    /**
      * Modify MultimediaObject Groups
      */
     private function modifyMultimediaObjectGroups(MultimediaObject $multimediaObject, $addGroups = array(), $deleteGroups = array())
