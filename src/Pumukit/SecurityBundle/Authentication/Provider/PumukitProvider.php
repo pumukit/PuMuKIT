@@ -119,7 +119,7 @@ class PumukitProvider implements AuthenticationProviderInterface
     private function getGroup($key)
     {
         $dm = $this->container->get('doctrine_mongodb.odm.document_manager');
-        $repo = $dm->getRepository('PumukitSchemaBundle:Group')
+        $repo = $dm->getRepository('PumukitSchemaBundle:Group');
         $groupService = $this->container->get('pumukitschema.group');
 
         $cleanKey = preg_replace('/\W/', '', $key);
