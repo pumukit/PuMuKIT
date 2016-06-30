@@ -82,6 +82,7 @@ class PlayerController extends Controller implements WebTVController
     protected function testBroadcast(MultimediaObject $multimediaObject, Request $request)
     {
         $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
-        return $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $request->headers->get('PHP_AUTH_PW'), $request->query->get('force-auth'));
+        $password = $request->get('broadcast_password');
+        return $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $password);
     }
 }

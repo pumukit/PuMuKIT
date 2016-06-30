@@ -1,5 +1,5 @@
 {% extends 'PumukitWebTVBundle::layout.html.twig' %}
-{% block body %}
+{% block body_base %}
     <h1 class="widget slidebar" style="text-align: center; padding-top: 40px;">
       {% trans %}Private Video{% endtrans %}
     </h1>
@@ -9,14 +9,24 @@
 	</div>
 	<div class="grid_5">
       {% if show_forceauth %}
-        {% set diff = (app.request.getQueryString) ? '&' : '?' %}
         <h3 class="text-center">{% trans %}Log in with a valid user is required to watch it{% endtrans %}.</h3>
         <br/>
         {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
         <div class="text-center">
-          <button type="submit" class="btn btn-primary btn-flat" name="submit" title="Log In" onclick="location.href='{{ app.request.requestUri }}{{ diff }}force-auth=true'">Log In</button>
+          <button id="pumukit_forbidden_login" type="submit" class="btn btn-primary btn-flat" name="submit" title="Log In">Log In</button>
         </div>
         {% endif %}
       {% endif %}
 	</div>
+<script type="text/javascript">
+$('#pumukit_forbidden_login').on('click', function(event) {
+    try {
+        if (window.parent.location.origin == location.origin) {
+            window.parent.location.href='{{ path('pumukit_auth') }}?referer=' + escape(window.parent.location.href);
+            return;
+        }
+    } catch (e) {}
+    location.href = '{{ path('pumukit_auth') }}?referer=' + escape(location.href);
+});
+</script>
 {% endblock %}

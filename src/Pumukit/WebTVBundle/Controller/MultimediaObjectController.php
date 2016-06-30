@@ -22,11 +22,6 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
      */
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
-        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $request->headers->get('PHP_AUTH_PW'), $request->query->get('force-auth'));
-        if ($response instanceof Response) {
-            return $response;
-        }
         $response = $this->preExecute($multimediaObject, $request);
         if ($response instanceof Response) {
             return $response;
@@ -80,12 +75,6 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
                  && $multimediaObject->getStatus() != MultimediaObject::STATUS_HIDE
                  ) || !$multimediaObject->containsTagWithCod('PUCHWEBTV')) {
             return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
-        }
-
-        $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
-        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $request->headers->get('PHP_AUTH_PW'), $request->query->get('force-auth'));
-        if ($response instanceof Response) {
-            return $response;
         }
 
         $response = $this->preExecute($multimediaObject, $request, true);
