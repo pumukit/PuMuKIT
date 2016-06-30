@@ -84,6 +84,7 @@ class FactoryService
     public function createCollection($collectionType, User $loggedInUser = null, array $title = null)
     {
         $series = new Series();
+        $series->setLocale($this->locales[0]);
 
         $series->setPublicDate(new \DateTime("now"));
         $series->setCopyright($this->defaultCopyright);
@@ -119,6 +120,8 @@ class FactoryService
     private function createMultimediaObjectPrototype(Series $series, User $loggedInUser = null)
     {
         $mm = new MultimediaObject();
+        $mm->setLocale($this->locales[0]);
+
         $mm->setStatus(MultimediaObject::STATUS_PROTOTYPE);
         $embeddedBroadcast = $this->embeddedBroadcastService->createPublicEmbeddedBroadcast();
         $mm->setEmbeddedBroadcast($embeddedBroadcast);
@@ -153,6 +156,7 @@ class FactoryService
             $mm = $this->createMultimediaObjectFromPrototype($prototype);
         } else {
             $mm = new MultimediaObject();
+            $mm->setLocale($this->locales[0]);
             foreach ($this->locales as $locale) {
                 $title = $this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE, array(), null, $locale);
                 $mm->setTitle($title, $locale);
@@ -328,6 +332,7 @@ class FactoryService
     private function createMultimediaObjectFromPrototype(MultimediaObject $prototype)
     {
         $new = new MultimediaObject();
+        $new->setLocale($this->locales[0]);
 
         $new->setI18nTitle($prototype->getI18nTitle());
         $new->setI18nSubtitle($prototype->getI18nSubtitle());
@@ -372,6 +377,7 @@ class FactoryService
     public function cloneMultimediaObject(MultimediaObject $src)
     {
         $new = new MultimediaObject();
+        $new->setLocale($this->locales[0]);
 
         $i18nTitles = array();
         foreach($src->getI18nTitle() as $key => $val) {
