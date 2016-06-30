@@ -49,9 +49,20 @@ class SeriesService
      */
     public function sameEmbeddedBroadcast(Series $series)
     {
-        $prototype = $this->mmRepo->findPrototype($series);
-        $embeddedBroadcast = $prototype->getEmbeddedBroadcast();
-        if (!$embeddedBroadcast) {
+        if (0 == $this->mmRepo->countInSeriesWithPrototype($series)) {
+            return false;
+        }
+        $firstFound = null;
+        $all = $this->mmRepo->findWithSeriesAndPrototype($series);
+        foreach ($all as $multimediaObject) {
+            $firstFound = $multimediaObject;
+            break;
+        }
+        if ($firstFound == null) {
+            return false;
+        }
+        $embeddedBroadcast = $firstFound->getEmbeddedBroadcast();
+        if (null == $embeddedBroadcast) {
             return false;
         }
         $type = $embeddedBroadcast->getType();
