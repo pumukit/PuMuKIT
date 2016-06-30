@@ -418,6 +418,26 @@
         <source>Log in with a valid user is required to watch it</source>
         <target>Se requiere iniciar sesión con un usuario válido para verlo</target>
       </trans-unit>
+      <trans-unit id="a9217438f67c281903d6925f2da1d3b5" resname="Enter a valid password to watch it">
+        <source>Enter a valid password to watch it</source>
+        <target>Introduzca una contraseña válida para verlo</target>
+      </trans-unit>
+      <trans-unit id="535a02388a6f1638b53d0f5552be8e50" resname="Introduce a password">
+        <source>Introduce a password</source>
+        <target>Introduzca una contraseña</target>
+      </trans-unit>
+      <trans-unit id="f1bc76917b4b9eefae0a2c2f249eae3e" resname="Password is not valid">
+        <source>Password is not valid</source>
+        <target>La contraseña no es válida</target>
+      </trans-unit>
+      <trans-unit id="3bbbad631029e3575da7a151bba4f37c" resname="Log In">
+        <source>Log In</source>
+        <target>Iniciar sesión</target>
+      </trans-unit>
+      <trans-unit id="85eba6875ff4050ab452daf774d472f9" resname="Enter pass">
+        <source>Enter pass</source>
+        <target>Introducir contraseña</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
