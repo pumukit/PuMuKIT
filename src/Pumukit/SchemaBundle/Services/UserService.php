@@ -462,12 +462,15 @@ class UserService
      * @param Group $group
      * @param User $user
      * @param boolean $executeFlush
+     * @param boolean $executeIsAllowed
      */
-    public function addGroup(Group $group, User $user, $executeFlush = true)
+    public function addGroup(Group $group, User $user, $executeFlush = true, $executeIsAllowed = true)
     {
         if (!$user->containsGroup($group)) {
-            if (!$this->isAllowedToModifyUserGroup($user, $group)) {
-                throw new \Exception('Not allowed to add group "'.$group->getKey().'" to user "'.$user->getUsername().'".');
+            if ($executeIsAllowed) {
+                if (!$this->isAllowedToModifyUserGroup($user, $group)) {
+                    throw new \Exception('Not allowed to add group "'.$group->getKey().'" to user "'.$user->getUsername().'".');
+                }
             }
             $user->addGroup($group);
             $this->dm->persist($user);
@@ -484,12 +487,15 @@ class UserService
      * @param Group $group
      * @param User $user
      * @param boolean $executeFlush
+     * @param boolean $executeIsAllowed
      */
-    public function deleteGroup(Group $group, User $user, $executeFlush = true)
+    public function deleteGroup(Group $group, User $user, $executeFlush = true, $executeIsAllowed = true)
     {
         if ($user->containsGroup($group)) {
-            if (!$this->isAllowedToModifyUserGroup($user, $group)) {
-                throw new \Exception('Not allowed to delete group "'.$group->getKey().'" from user "'.$user->getUsername().'".');
+            if ($executeIsAllowed) {
+                if (!$this->isAllowedToModifyUserGroup($user, $group)) {
+                    throw new \Exception('Not allowed to delete group "'.$group->getKey().'" from user "'.$user->getUsername().'".');
+                }
             }
             $user->removeGroup($group);
             $this->dm->persist($user);
