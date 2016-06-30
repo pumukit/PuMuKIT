@@ -1049,8 +1049,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             }
         }
         foreach ($deleteGroups as $deleteGroup){
-            $groupIArray = explode('_', $deleteGroup);
-            $groupId = end($groupIArray);
+            $groupIdArray = explode('_', $deleteGroup);
+            $groupId = end($groupIdArray);
             $group = $groupRepo->find($groupId);
             if ($group) {
                 $multimediaObjectService->deleteGroup($group, $multimediaObject, false);
@@ -1081,8 +1081,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                 }
             }
             foreach ($deleteGroups as $deleteGroup){
-                $groupIArray = explode('_', $deleteGroup);
-                $groupId = end($groupIArray);
+                $groupIdArray = explode('_', $deleteGroup);
+                $groupId = end($groupIdArray);
                 $group = $groupRepo->find($groupId);
                 if ($group) {
                     $embeddedBroadcastService->deleteGroup($group, $multimediaObject, false);
