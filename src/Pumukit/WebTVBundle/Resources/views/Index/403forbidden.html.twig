@@ -19,33 +19,14 @@
       {% endif %}
 	</div>
 <script type="text/javascript">
-$('#pumukit_forbidden_login').off().on('click', function(event) {
-    var requestUri = location.href;
+$('#pumukit_forbidden_login').on('click', function(event) {
     try {
-        if (window.parent.location.href == location.href) {
-            load_location_on_iframe(requestUri);
-        } else {
-            load_location_on_fullpage();
+        if (window.parent.location.origin == location.origin) {
+            window.parent.location.href='{{ path('pumukit_auth') }}?referer=' + escape(window.parent.location.href);
+            return;
         }
-    } catch (e) {
-        load_location_on_iframe(requestUri);
-    }
+    } catch (e) {}
+    location.href = '{{ path('pumukit_auth') }}?referer=' + escape(location.href);
 });
-
-load_location_on_iframe = function(requestUri) {
-    if (window.location.search != "") {
-        var diff = '&';
-    } else {
-        var diff = '?';
-    }
-    location.href=requestUri+diff+'force-auth=true';
-}
-
-load_location_on_fullpage = function() {
-    var mmId = '{{ mm.id }}';
-    var url = '{{ path('pumukit_webtv_multimediaobject_index', {'id':'__mmId__'})|raw }}';
-    url = url.replace('__mmId__', mmId);
-    window.parent.location.href='{{ path('pumukit_auth') }}?referer='+url;
-}
 </script>
 {% endblock %}
