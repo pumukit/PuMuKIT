@@ -246,10 +246,9 @@ class EmbeddedBroadcastService
      * @param  MultimediaObject $multimediaObject
      * @param  User             $user
      * @param  string           $password
-     * @param  boolean          $forceAuth
      * @return
      */
-    public function canUserPlayMultimediaObject(MultimediaObject $multimediaObject, User $user = null, $password = null, $forceAuth = false)
+    public function canUserPlayMultimediaObject(MultimediaObject $multimediaObject, User $user = null, $password = null)
     {
         $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
         if (!$embeddedBroadcast) {
@@ -259,16 +258,16 @@ class EmbeddedBroadcastService
             return true;
         }
         if (EmbeddedBroadcast::TYPE_LOGIN === $embeddedBroadcast->getType()) {
-            return $this->isUserLoggedIn($user, $forceAuth);
+            return $this->isUserLoggedIn($user);
         }
         if (EmbeddedBroadcast::TYPE_GROUPS === $embeddedBroadcast->getType()) {
-            return $this->isUserLoggedInAndInGroups($multimediaObject, $user, $forceAuth);
+            return $this->isUserLoggedInAndInGroups($multimediaObject, $user);
         }
         if (EmbeddedBroadcast::TYPE_PASSWORD === $embeddedBroadcast->getType()) {
             return $this->isPasswordCorrect($multimediaObject, $password);
         }
 
-        return $this->renderErrorNotAuthenticated($forceAuth, $user);
+        return $this->renderErrorNotAuthenticated($user);
     }
 
     /**
@@ -306,16 +305,16 @@ class EmbeddedBroadcastService
         return $this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY');
     }
 
-    private function isUserLoggedIn(User $user = null, $forceAuth = false)
+    private function isUserLoggedIn(User $user = null)
     {
         if ($this->isAuthenticatedFully($user)){
             return true;
         }
 
-        return $this->renderErrorNotAuthenticated($forceAuth, $user);
+        return $this->renderErrorNotAuthenticated($user);
     }
 
-    private function isUserLoggedInAndInGroups(MultimediaObject $multimediaObject, User $user = null, $forceAuth = false)
+    private function isUserLoggedInAndInGroups(MultimediaObject $multimediaObject, User $user = null)
     {
         if ($this->isAuthenticatedFully($user)){
             if ($permissionProfile = $user->getPermissionProfile()) {
@@ -328,7 +327,7 @@ class EmbeddedBroadcastService
             }
         }
 
-        return $this->renderErrorNotAuthenticated($forceAuth, $user);
+        return $this->renderErrorNotAuthenticated($user);
     }
 
     private function isPasswordCorrect(MultimediaObject $multimediaObject, $password = null)
@@ -346,11 +345,8 @@ class EmbeddedBroadcastService
         return $this->renderErrorPassword($invalidPassword);
     }
 
-    private function renderErrorNotAuthenticated($forceAuth = false, User $user = null)
+    private function renderErrorNotAuthenticated(User $user = null)
     {
-        if ($forceAuth && !$this->isAuthenticatedFully($user)) {
-            throw new AccessDeniedException('Unable to access this page!');
-        }
         $renderedView = $this->templating->render('PumukitWebTVBundle:Index:403forbidden.html.twig', array('show_forceauth' => true));
 
         return new Response($renderedView, Response::HTTP_FORBIDDEN);
