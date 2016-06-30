@@ -34,6 +34,23 @@ class SeriesPicService
         $this->forceDeleteOnDisk = $forceDeleteOnDisk;
     }
 
+
+    /**
+     * Returns the target path for a series
+     */
+    public function getTargetPath(Series $series)
+    {
+        return $this->targetPath . "/" . $series->getId();
+    }
+
+    /**
+     * Returns the target url for a series
+     */
+    public function getTargetUrl(Series $series)
+    {
+        return $this->targetUrl . "/" . $series->getId();
+    }
+
   /**
    * Get pics from series or multimedia object
    */
@@ -76,7 +93,7 @@ class SeriesPicService
           throw new FileNotFoundException($picFile->getPathname());
       }
 
-      $path = $picFile->move($this->targetPath."/".$series->getId(), $picFile->getClientOriginalName());
+      $path = $picFile->move($this->getTargetPath($series), $picFile->getClientOriginalName());
 
       $pic = new Pic();
       $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
@@ -160,4 +177,5 @@ class SeriesPicService
 
         return $series;
     }
+
 }

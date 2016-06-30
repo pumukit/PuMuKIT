@@ -31,6 +31,23 @@ class MultimediaObjectPicService
         $this->forceDeleteOnDisk = $forceDeleteOnDisk;
     }
 
+
+    /**
+     * Returns the target path for a series
+     */
+    public function getTargetPath(MultimediaObject $multimediaObject)
+    {
+        return $this->targetPath . "/" . $multimediaObject->getId();
+    }
+
+    /**
+     * Returns the target url for a series
+     */
+    public function getTargetUrl(MultimediaObject $multimediaObject)
+    {
+        return $this->targetUrl . "/" . $multimediaObject->getId();
+    }
+
   /**
    * Get pics from series or multimedia object
    */
@@ -71,7 +88,7 @@ class MultimediaObjectPicService
           throw new FileNotFoundException($picFile->getPathname());
       }
 
-      $path = $picFile->move($this->targetPath."/".$multimediaObject->getId(), $picFile->getClientOriginalName());
+      $path = $picFile->move($this->getTargetPath($multimediaObject), $picFile->getClientOriginalName());
 
       $pic = new Pic();
       $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
