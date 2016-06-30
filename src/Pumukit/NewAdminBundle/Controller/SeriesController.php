@@ -569,8 +569,13 @@ class SeriesController extends AdminController implements NewAdminController
         $seriesService = $this->get('pumukitschema.series');
         $sameBroadcast = $seriesService->sameEmbeddedBroadcast($series);
         if ($sameBroadcast) {
-            $prototype = $mmRepo->findPrototype($series);
-            $embeddedBroadcast = $prototype->getEmbeddedBroadcast();
+            $firstFound = null;
+            $all = $mmRepo->findWithSeriesAndPrototype($series);
+            foreach ($all as $multimediaObject) {
+                $firstFound = $multimediaObject;
+                break;
+            }
+            $embeddedBroadcast = $firstFound->getEmbeddedBroadcast();
         } else {
             $embeddedBroadcast = false;
         }
