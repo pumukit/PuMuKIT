@@ -150,7 +150,7 @@ class EmbeddedBroadcast
     }
 
     /**
-     * Add admin group
+     * Add group
      *
      * @param Group $group
      */
@@ -160,13 +160,25 @@ class EmbeddedBroadcast
     }
 
     /**
-     * Remove admin group
+     * Remove group
      *
      * @param Group $group
      */
     public function removeGroup(Group $group)
     {
-        $this->groups->removeElement($group);
+        $this->removeGroupById($group->getId());
+    }
+
+    /**
+     * Remove group by id
+     *
+     * @param string $groupId
+     */
+    public function removeGroupById($groupId)
+    {
+        $this->groups = $this->groups->filter(function ($group) use ($groupId) {
+                return $group->getId() !== $groupId;
+            });
     }
 
     /**
