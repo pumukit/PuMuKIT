@@ -1374,4 +1374,20 @@ class MultimediaObjectRepository extends DocumentRepository
         ->getQuery()
         ->execute();
     }
+
+    /**
+     * Find all multimedia objects in a Series
+     * (including prototype)
+     *
+     * @param Series $series
+     * @return Collection
+     */
+    public function findWithSeriesAndPrototype($series)
+    {
+        return $this
+            ->createQueryBuilder()
+            ->field('series')->references($series)
+            ->getQuery()
+            ->execute();
+    }
 }

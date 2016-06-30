@@ -3040,6 +3040,49 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(0, $this->repo->countInSeriesWithEmbeddedBroadcastGroups($series2, $typeGroups, $groups5));
     }
 
+    public function testFindWithSeriesAndPrototype()
+    {
+        $series1 = new Series();
+        $series1->setTitle('series 1');
+        $series2 = new Series();
+        $series2->setTitle('series 2');
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->flush();
+
+        $mm11 = new MultimediaObject();
+        $mm11->setTitle('mm 11');
+        $mm11->setSeries($series1);
+        $mm11->setStatus(MultimediaObject::STATUS_PROTOTYPE);
+        $mm12 = new MultimediaObject();
+        $mm12->setTitle('mm 12');
+        $mm12->setSeries($series1);
+        $mm12->setStatus(MultimediaObject::STATUS_BLOQ);
+        $mm13 = new MultimediaObject();
+        $mm13->setTitle('mm 13');
+        $mm13->setSeries($series1);
+        $mm13->setStatus(MultimediaObject::STATUS_PUBLISHED);
+
+        $mm21 = new MultimediaObject();
+        $mm21->setTitle('mm 11');
+        $mm21->setSeries($series2);
+        $mm21->setStatus(MultimediaObject::STATUS_PUBLISHED);
+        $mm22 = new MultimediaObject();
+        $mm22->setTitle('mm 12');
+        $mm22->setSeries($series2);
+        $mm22->setStatus(MultimediaObject::STATUS_BLOQ);
+
+        $this->dm->persist($mm11);
+        $this->dm->persist($mm12);
+        $this->dm->persist($mm13);
+        $this->dm->persist($mm21);
+        $this->dm->persist($mm22);
+        $this->dm->flush();
+
+        $this->assertEquals(3, count($this->repo->findWithSeriesAndPrototype($series1)));
+        $this->assertEquals(2, count($this->repo->findWithSeriesAndPrototype($series2)));
+    }
+
     private function createPerson($name)
     {
         $email = $name.'@mail.es';
