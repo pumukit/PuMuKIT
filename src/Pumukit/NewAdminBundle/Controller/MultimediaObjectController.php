@@ -893,7 +893,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                     return new JsonResponse($response, JsonResponse::HTTP_OK);
                 }
             } catch (\Exception $e) {
-                throw $e;
                 $response = array(
                                   'redirect' => 1,
                                   'url' => $this->generateUrl('pumukitnewadmin_series_index', array('id' => $seriesId))
