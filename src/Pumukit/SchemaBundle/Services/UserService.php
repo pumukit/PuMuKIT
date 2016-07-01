@@ -462,12 +462,12 @@ class UserService
      * @param Group $group
      * @param User $user
      * @param boolean $executeFlush
-     * @param boolean $executeIsAllowed
+     * @param boolean $checkOrigin
      */
-    public function addGroup(Group $group, User $user, $executeFlush = true, $executeIsAllowed = true)
+    public function addGroup(Group $group, User $user, $executeFlush = true, $checkOrigin = true)
     {
         if (!$user->containsGroup($group)) {
-            if ($executeIsAllowed) {
+            if ($checkOrigin) {
                 if (!$this->isAllowedToModifyUserGroup($user, $group)) {
                     throw new \Exception('Not allowed to add group "'.$group->getKey().'" to user "'.$user->getUsername().'".');
                 }
@@ -487,12 +487,12 @@ class UserService
      * @param Group $group
      * @param User $user
      * @param boolean $executeFlush
-     * @param boolean $executeIsAllowed
+     * @param boolean $checkOrigin
      */
-    public function deleteGroup(Group $group, User $user, $executeFlush = true, $executeIsAllowed = true)
+    public function deleteGroup(Group $group, User $user, $executeFlush = true, $checkOrigin = true)
     {
         if ($user->containsGroup($group)) {
-            if ($executeIsAllowed) {
+            if ($checkOrigin) {
                 if (!$this->isAllowedToModifyUserGroup($user, $group)) {
                     throw new \Exception('Not allowed to delete group "'.$group->getKey().'" from user "'.$user->getUsername().'".');
                 }
