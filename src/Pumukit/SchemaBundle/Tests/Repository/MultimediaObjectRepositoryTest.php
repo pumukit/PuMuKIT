@@ -2151,54 +2151,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(2, count($this->groupRepo->findAll()));
     }
 
-    public function testMultimediaObjectGroupsId()
-    {
-        $this->assertEquals(0, count($this->groupRepo->findAll()));
-
-        $key1 = 'Group1';
-        $name1 = 'Group 1';
-        $group1 = $this->createGroup($key1, $name1);
-
-        $this->assertEquals(1, count($this->groupRepo->findAll()));
-
-        $key2 = 'Group2';
-        $name2 = 'Group 2';
-        $group2 = $this->createGroup($key2, $name2);
-
-        $this->assertEquals(2, count($this->groupRepo->findAll()));
-
-        $multimediaObject = new MultimediaObject();
-        $multimediaObject->setTitle('test');
-        $multimediaObject->addGroup($group1);
-
-        $this->dm->persist($multimediaObject);
-        $this->dm->flush();
-
-        $this->assertTrue($multimediaObject->containsGroup($group1));
-        $this->assertFalse($multimediaObject->containsGroup($group2));
-        $this->assertEquals(1, $multimediaObject->getGroups()->count());
-
-        $multimediaObject->addGroup($group2);
-
-        $this->dm->persist($multimediaObject);
-        $this->dm->flush();
-
-        $this->assertTrue($multimediaObject->containsGroup($group1));
-        $this->assertTrue($multimediaObject->containsGroup($group2));
-        $this->assertEquals(2, $multimediaObject->getGroups()->count());
-
-        $multimediaObject->removeGroupById($group1->getId());
-
-        $this->dm->persist($multimediaObject);
-        $this->dm->flush();
-
-        $this->assertFalse($multimediaObject->containsGroup($group1));
-        $this->assertTrue($multimediaObject->containsGroup($group2));
-        $this->assertEquals(1, $multimediaObject->getGroups()->count());
-
-        $this->assertEquals(2, count($this->groupRepo->findAll()));
-    }
-
     public function testFindSeriesFieldByPersonIdAndRoleCodOrGroups()
     {
         $key1 = 'Group1';

@@ -2558,19 +2558,7 @@ class MultimediaObject
      */
     public function removeGroup(Group $group)
     {
-        $this->removeGroupById($group->getId());
-    }
-
-    /**
-     * Remove admin group by id
-     *
-     * @param string $groupId
-     */
-    public function removeGroupById($groupId)
-    {
-        $this->groups = $this->groups->filter(function ($group) use ($groupId) {
-                return $group->getId() !== $groupId;
-            });
+        $this->groups->removeElement($group);
     }
 
     /**
