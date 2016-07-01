@@ -1840,37 +1840,15 @@ $(document).ready(function(){
             }
         });
 
-        $('#broadcast_password_1').on('click', function() {
-            $('#broadcast_password_1').attr('type', 'password');
-            $('#broadcast_password_2').attr('type', 'password');
-            check_pass($('#broadcast_password_1').val(), $('#broadcast_password_2').val());
-        });
-
-        $('#broadcast_password_2').on('click', function() {
-            $('#broadcast_password_1').attr('type', 'password');
-            $('#broadcast_password_2').attr('type', 'password');
-            check_pass($('#broadcast_password_1').val(), $('#broadcast_password_2').val());
-        });
-
         $('#broadcast_password_span').on('keyup', function(e) {
-            // Tab key
-            if (e.keyCode === 9) {
-                e.preventDefault();
-                $('#broadcast_password_1').attr('type', 'password');
-                $('#broadcast_password_2').attr('type', 'password');
-            }
             check_pass($('#broadcast_password_1').val(), $('#broadcast_password_2').val());
         });
 
         $('#broadcast_password_1').on('change', function() {
-            $('#broadcast_password_1').attr('type', 'password');
-            $('#broadcast_password_2').attr('type', 'password');
             check_pass($('#broadcast_password_1').val(), $('#broadcast_password_2').val());
         });
 
         $('#broadcast_password_2').on('change', function() {
-            $('#broadcast_password_1').attr('type', 'password');
-            $('#broadcast_password_2').attr('type', 'password');
             check_pass($('#broadcast_password_1').val(), $('#broadcast_password_2').val());
         });
 
@@ -1933,10 +1911,11 @@ function generate_random_password(pass1_id, pass2_id) {
         }
         password+=String.fromCharCode(randomchar);
     }
-    $('#'+pass1_id).attr('type', 'password');
-    $('#'+pass2_id).attr('type', 'password');
+    $('#broadcast_password_check_fail').hide();
+    $('#broadcast_password_check_empty').hide();
     $('#'+pass1_id).val(password);
     $('#'+pass2_id).val(password);
+    can_enable_broadcast_password_save_button();
 }
 
 $(document).on('submit', '#pumukitnewadmin_event_create_form', function() {
