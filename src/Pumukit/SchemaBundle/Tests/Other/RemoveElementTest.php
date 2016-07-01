@@ -232,15 +232,54 @@ class RemoveElementTest extends WebTestCase
         $this->mmService->addGroup($group1, $mm1, false);
         $this->mmService->deleteGroup($group2, $mm1, false);
         $this->dm->flush();
+
+        $this->dm->clear();
+
+        $group1 = $this->groupRepo->find($group1->getId());
+        $group2 = $this->groupRepo->find($group2->getId());
+        $mm1 = $this->mmRepo->find($mm1->getId());
+        $mm2 = $this->mmRepo->find($mm2->getId());
+        $mm3 = $this->mmRepo->find($mm3->getId());
+        $mm4 = $this->mmRepo->find($mm4->getId());
+
         $this->mmService->addGroup($group1, $mm2, false);
         $this->mmService->addGroup($group2, $mm2, false);
         $this->dm->flush();
+
+        $this->dm->clear();
+
+        $group1 = $this->groupRepo->find($group1->getId());
+        $group2 = $this->groupRepo->find($group2->getId());
+        $mm1 = $this->mmRepo->find($mm1->getId());
+        $mm2 = $this->mmRepo->find($mm2->getId());
+        $mm3 = $this->mmRepo->find($mm3->getId());
+        $mm4 = $this->mmRepo->find($mm4->getId());
+
         $this->mmService->addGroup($group1, $mm3, false);
         $this->mmService->deleteGroup($group2, $mm3, false);
         $this->dm->flush();
+
+        $this->dm->clear();
+
+        $group1 = $this->groupRepo->find($group1->getId());
+        $group2 = $this->groupRepo->find($group2->getId());
+        $mm1 = $this->mmRepo->find($mm1->getId());
+        $mm2 = $this->mmRepo->find($mm2->getId());
+        $mm3 = $this->mmRepo->find($mm3->getId());
+        $mm4 = $this->mmRepo->find($mm4->getId());
+
         $this->mmService->addGroup($group1, $mm4, false);
         $this->mmService->addGroup($group2, $mm4, false);
         $this->dm->flush();
+
+        $this->dm->clear();
+
+        $group1 = $this->groupRepo->find($group1->getId());
+        $group2 = $this->groupRepo->find($group2->getId());
+        $mm1 = $this->mmRepo->find($mm1->getId());
+        $mm2 = $this->mmRepo->find($mm2->getId());
+        $mm3 = $this->mmRepo->find($mm3->getId());
+        $mm4 = $this->mmRepo->find($mm4->getId());
 
         $this->assertTrue($mm1->containsGroup($group1));
         $this->assertFalse($mm1->containsGroup($group2));
@@ -267,15 +306,54 @@ class RemoveElementTest extends WebTestCase
         $this->mmService->deleteGroup($group1, $mm1, false);
         $this->mmService->deleteGroup($group2, $mm1, false);
         $this->dm->flush();
+
+        $this->dm->clear();
+
+        $group1 = $this->groupRepo->find($group1->getId());
+        $group2 = $this->groupRepo->find($group2->getId());
+        $mm1 = $this->mmRepo->find($mm1->getId());
+        $mm2 = $this->mmRepo->find($mm2->getId());
+        $mm3 = $this->mmRepo->find($mm3->getId());
+        $mm4 = $this->mmRepo->find($mm4->getId());
+
         $this->mmService->deleteGroup($group1, $mm2, false);
         $this->mmService->addGroup($group2, $mm2, false);
         $this->dm->flush();
+
+        $this->dm->clear();
+
+        $group1 = $this->groupRepo->find($group1->getId());
+        $group2 = $this->groupRepo->find($group2->getId());
+        $mm1 = $this->mmRepo->find($mm1->getId());
+        $mm2 = $this->mmRepo->find($mm2->getId());
+        $mm3 = $this->mmRepo->find($mm3->getId());
+        $mm4 = $this->mmRepo->find($mm4->getId());
+
         $this->mmService->deleteGroup($group1, $mm3, false);
         $this->mmService->deleteGroup($group2, $mm3, false);
         $this->dm->flush();
+
+        $this->dm->clear();
+
+        $group1 = $this->groupRepo->find($group1->getId());
+        $group2 = $this->groupRepo->find($group2->getId());
+        $mm1 = $this->mmRepo->find($mm1->getId());
+        $mm2 = $this->mmRepo->find($mm2->getId());
+        $mm3 = $this->mmRepo->find($mm3->getId());
+        $mm4 = $this->mmRepo->find($mm4->getId());
+
         $this->mmService->deleteGroup($group1, $mm4, false);
         $this->mmService->addGroup($group2, $mm4, false);
         $this->dm->flush();
+
+        $this->dm->clear();
+
+        $group1 = $this->groupRepo->find($group1->getId());
+        $group2 = $this->groupRepo->find($group2->getId());
+        $mm1 = $this->mmRepo->find($mm1->getId());
+        $mm2 = $this->mmRepo->find($mm2->getId());
+        $mm3 = $this->mmRepo->find($mm3->getId());
+        $mm4 = $this->mmRepo->find($mm4->getId());
 
         $this->assertFalse($mm1->containsGroup($group1));
         $this->assertFalse($mm1->containsGroup($group2));
@@ -300,13 +378,56 @@ class RemoveElementTest extends WebTestCase
         $mm4 = $this->mmRepo->find($mm4->getId());
 
         $this->mmService->addGroup($group1, $mm1, false);
+        $this->mmService->deleteGroup($group2, $mm1, false);
         $this->dm->flush();
+
+        $this->dm->clear();
+
+        $group1 = $this->groupRepo->find($group1->getId());
+        $group2 = $this->groupRepo->find($group2->getId());
+        $mm1 = $this->mmRepo->find($mm1->getId());
+        $mm2 = $this->mmRepo->find($mm2->getId());
+        $mm3 = $this->mmRepo->find($mm3->getId());
+        $mm4 = $this->mmRepo->find($mm4->getId());
+
         $this->mmService->addGroup($group1, $mm2, false);
+        $this->mmService->addGroup($group2, $mm2, false);
         $this->dm->flush();
+
+        $this->dm->clear();
+
+        $group1 = $this->groupRepo->find($group1->getId());
+        $group2 = $this->groupRepo->find($group2->getId());
+        $mm1 = $this->mmRepo->find($mm1->getId());
+        $mm2 = $this->mmRepo->find($mm2->getId());
+        $mm3 = $this->mmRepo->find($mm3->getId());
+        $mm4 = $this->mmRepo->find($mm4->getId());
+
         $this->mmService->addGroup($group1, $mm3, false);
+        $this->mmService->deleteGroup($group2, $mm3, false);
         $this->dm->flush();
+
+        $this->dm->clear();
+
+        $group1 = $this->groupRepo->find($group1->getId());
+        $group2 = $this->groupRepo->find($group2->getId());
+        $mm1 = $this->mmRepo->find($mm1->getId());
+        $mm2 = $this->mmRepo->find($mm2->getId());
+        $mm3 = $this->mmRepo->find($mm3->getId());
+        $mm4 = $this->mmRepo->find($mm4->getId());
+
         $this->mmService->addGroup($group1, $mm4, false);
+        $this->mmService->addGroup($group2, $mm4, false);
         $this->dm->flush();
+
+        $this->dm->clear();
+
+        $group1 = $this->groupRepo->find($group1->getId());
+        $group2 = $this->groupRepo->find($group2->getId());
+        $mm1 = $this->mmRepo->find($mm1->getId());
+        $mm2 = $this->mmRepo->find($mm2->getId());
+        $mm3 = $this->mmRepo->find($mm3->getId());
+        $mm4 = $this->mmRepo->find($mm4->getId());
 
         $this->assertTrue($mm1->containsGroup($group1));
         $this->assertFalse($mm1->containsGroup($group2));
@@ -331,21 +452,68 @@ class RemoveElementTest extends WebTestCase
         $mm4 = $this->mmRepo->find($mm4->getId());
 
         $this->mmService->deleteGroup($group1, $mm1, false);
+        $this->mmService->deleteGroup($group2, $mm1, false);
         $this->dm->flush();
+
+        $this->dm->clear();
+
+        $group1 = $this->groupRepo->find($group1->getId());
+        $group2 = $this->groupRepo->find($group2->getId());
+        $mm1 = $this->mmRepo->find($mm1->getId());
+        $mm2 = $this->mmRepo->find($mm2->getId());
+        $mm3 = $this->mmRepo->find($mm3->getId());
+        $mm4 = $this->mmRepo->find($mm4->getId());
+
         $this->mmService->deleteGroup($group1, $mm2, false);
+        $this->mmService->addGroup($group2, $mm2, false);
         $this->dm->flush();
+
+        $this->dm->clear();
+
+        $group1 = $this->groupRepo->find($group1->getId());
+        $group2 = $this->groupRepo->find($group2->getId());
+        $mm1 = $this->mmRepo->find($mm1->getId());
+        $mm2 = $this->mmRepo->find($mm2->getId());
+        $mm3 = $this->mmRepo->find($mm3->getId());
+        $mm4 = $this->mmRepo->find($mm4->getId());
+
         $this->mmService->deleteGroup($group1, $mm3, false);
+        $this->mmService->deleteGroup($group2, $mm3, false);
         $this->dm->flush();
+
+        $this->dm->clear();
+
+        $group1 = $this->groupRepo->find($group1->getId());
+        $group2 = $this->groupRepo->find($group2->getId());
+        $mm1 = $this->mmRepo->find($mm1->getId());
+        $mm2 = $this->mmRepo->find($mm2->getId());
+        $mm3 = $this->mmRepo->find($mm3->getId());
+        $mm4 = $this->mmRepo->find($mm4->getId());
+
         $this->mmService->deleteGroup($group1, $mm4, false);
+        $this->mmService->addGroup($group2, $mm4, false);
         $this->dm->flush();
+
+        $this->dm->clear();
+
+        $group1 = $this->groupRepo->find($group1->getId());
+        $group2 = $this->groupRepo->find($group2->getId());
+        $mm1 = $this->mmRepo->find($mm1->getId());
+        $mm2 = $this->mmRepo->find($mm2->getId());
+        $mm3 = $this->mmRepo->find($mm3->getId());
+        $mm4 = $this->mmRepo->find($mm4->getId());
 
         $this->assertFalse($mm1->containsGroup($group1));
         $this->assertFalse($mm1->containsGroup($group2));
+        // This test should fail using removeElement from ArrayCollection
         $this->assertFalse($mm2->containsGroup($group1));
+        //This test should fail using removeElement from ArrayCollection
         $this->assertTrue($mm2->containsGroup($group2));
         $this->assertFalse($mm3->containsGroup($group1));
         $this->assertFalse($mm3->containsGroup($group2));
+        // This test should fail using removeElement from ArrayCollection
         $this->assertFalse($mm4->containsGroup($group1));
+        // This test should fail using removeElement from ArrayCollection
         $this->assertTrue($mm4->containsGroup($group2));
         $this->assertEquals(0, $mm1->getGroups()->count());
         $this->assertEquals(1, $mm2->getGroups()->count());
