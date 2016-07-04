@@ -307,9 +307,9 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param string $text or _id
      * @return ArrayCollection
      */
-    public function searchSeriesByIdOrField($text, $limit = 0, $page = 0)
+    public function getIdsWithSeriesTextOrId($text, $limit = 0, $page = 0)
     {
-        $qb = $this->createQueryBuilder();
+        $qb = $this->createStandardQueryBuilder();
         $qb->addOr($qb->expr()->field('$text')->equals(array('$search' => $text)));
         $qb->addOr($qb->expr()->field('_id')->equals($text));
         $qb->distinct('series');
