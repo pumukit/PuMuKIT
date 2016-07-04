@@ -50,7 +50,7 @@ class User extends BaseUser
     /**
      * @var ArrayCollection $groups
      *
-     * @MongoDB\ReferenceMany(targetDocument="Group", simple=true, sort={"key":1})
+     * @MongoDB\ReferenceMany(targetDocument="Group", simple=true, sort={"key":1}, strategy="setArray")
      */
     protected $groups;
 
@@ -185,19 +185,7 @@ class User extends BaseUser
      */
     public function removeGroup(GroupInterface $group)
     {
-        $this->removeGroupById($group->getId());
-    }
-
-    /**
-     * Remove admin group by id
-     *
-     * @param string $groupId
-     */
-    public function removeGroupById($groupId)
-    {
-        $this->groups = $this->groups->filter(function ($group) use ($groupId) {
-                return $group->getId() !== $groupId;
-            });
+        $this->groups->removeElement($group);
     }
 
     /**

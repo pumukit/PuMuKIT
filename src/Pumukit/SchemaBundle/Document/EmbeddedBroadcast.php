@@ -55,7 +55,7 @@ class EmbeddedBroadcast
     /**
      * @var ArrayCollection $groups
      *
-     * @MongoDB\ReferenceMany(targetDocument="Group", simple=true, sort={"key":1})
+     * @MongoDB\ReferenceMany(targetDocument="Group", simple=true, sort={"key":1}, strategy="setArray")
      */
     private $groups;
 
@@ -150,7 +150,7 @@ class EmbeddedBroadcast
     }
 
     /**
-     * Add group
+     * Add admin group
      *
      * @param Group $group
      */
@@ -160,25 +160,13 @@ class EmbeddedBroadcast
     }
 
     /**
-     * Remove group
+     * Remove admin group
      *
      * @param Group $group
      */
     public function removeGroup(Group $group)
     {
-        $this->removeGroupById($group->getId());
-    }
-
-    /**
-     * Remove group by id
-     *
-     * @param string $groupId
-     */
-    public function removeGroupById($groupId)
-    {
-        $this->groups = $this->groups->filter(function ($group) use ($groupId) {
-                return $group->getId() !== $groupId;
-            });
+        $this->groups->removeElement($group);
     }
 
     /**
