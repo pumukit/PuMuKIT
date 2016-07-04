@@ -41,20 +41,29 @@ class PlaylistMultimediaObjectController extends Controller
         if(!$series) throw $this->createNotFoundException();
 
         $session->set('admin/playlist/id', $series->getId());
-
         if($request->query->has('mmid')) {
             $session->set('admin/playlistmms/id', $request->query->get('mmid'));
         }
+
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-        //If the session mms does not exist, we must remove the value or the app will crash.
-        if(!$mmobjRepo->find($session->get('admin/playlistmms/id', null)))
-            $session->remove('admin/playlistmms/id');
         $mms = $this->getPlaylistMmobjs($series, $request);
+
+        // Removes the session mmobj (shown on info and preview) if it does not belong to THIS playlist.
+        $update_session = true;
+        foreach($mms as $mm) {
+            if($mm->getId() == $this->get('session')->get('admin/playlistmms/id')){
+                $update_session = false;
+                break;
+            }
+        }
+        if($update_session)
+            $session->remove('admin/playlistmms/id');
+
         return array(
-                     'playlist' => $series,
-                     'mms' => $mms
-                     );
+            'playlist' => $series,
+            'mms' => $mms
+        );
     }
 
     /**
@@ -85,11 +94,11 @@ class PlaylistMultimediaObjectController extends Controller
         $warningOnUnpublished = $this->container->getParameter('pumukit2.warning_on_unpublished');
 
         return array(
-             'mm' => $mmobj,
-             'is_published' => $mmService->isPublished($mmobj, 'PUCHWEBTV'),
-             'is_hidden' => $mmService->isHidden($mmobj, 'PUCHWEBTV'),
-             'is_playable' => $mmService->hasPlayableResource($mmobj),
-             'warning_on_unpublished' => $warningOnUnpublished,
+            'mm' => $mmobj,
+            'is_published' => $mmService->isPublished($mmobj, 'PUCHWEBTV'),
+            'is_hidden' => $mmService->isHidden($mmobj, 'PUCHWEBTV'),
+            'is_playable' => $mmService->hasPlayableResource($mmobj),
+            'warning_on_unpublished' => $warningOnUnpublished,
         );
     }
 
@@ -111,9 +120,9 @@ class PlaylistMultimediaObjectController extends Controller
 
         $mms = $this->getPlaylistMmobjs($series, $request);
         return array(
-                     'playlist' => $series,
-                     'mms' => $mms
-                     );
+            'playlist' => $series,
+            'mms' => $mms
+        );
     }
 
     //TODO: This? Or getResources(like in PlaylistController?)
@@ -186,10 +195,10 @@ class PlaylistMultimediaObjectController extends Controller
         $id = $request->query->get('mmid', '');
         $mmobj = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:MultimediaObject')->find($id);
         $user = $this->getUser();
-	if($mmobj) {
-	    $canBePlayed = $broadcastService->canUserPlayMultimediaObject($mmobj, $user);
-	    $canUserPlay = $mmobjService->canBeDisplayed($mmobj, 'PUCHWEBTV');
-	}
+        if($mmobj) {
+            $canBePlayed = $broadcastService->canUserPlayMultimediaObject($mmobj, $user);
+            $canUserPlay = $mmobjService->canBeDisplayed($mmobj, 'PUCHWEBTV');
+        }
         if($mmobj && (!$canBePlayed || !$canUserPlay))
             $mmobj = null;
         return array(
@@ -354,15 +363,15 @@ class PlaylistMultimediaObjectController extends Controller
     public function addModalAction(Request $request)
     {
         $repoSeries = $this->getDoctrine()
-            ->getRepository('PumukitSchemaBundle:Series');
+                           ->getRepository('PumukitSchemaBundle:Series');
         $repoMms = $this->getDoctrine()
-            ->getRepository('PumukitSchemaBundle:MultimediaObject');
+                        ->getRepository('PumukitSchemaBundle:MultimediaObject');
 
         $series = $repoSeries->createQueryBuilder()
-          ->field('type')->equals(Series::TYPE_PLAYLIST)
-          ->sort('public_date', -1)
-          ->getQuery()
-          ->execute();
+                             ->field('type')->equals(Series::TYPE_PLAYLIST)
+                             ->sort('public_date', -1)
+                             ->getQuery()
+                             ->execute();
 
         $multimediaObject = $request->get('id') ? $repoMms->find($request->get('id')) : null;
 
