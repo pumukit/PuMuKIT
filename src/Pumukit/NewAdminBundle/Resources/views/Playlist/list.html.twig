@@ -27,16 +27,16 @@
               </div>
             </td>
             <td>
-	      {% include 'PumukitNewAdminBundle:Playlist:updatemenu.html.twig' with {'oneseries': oneseries, 'numV': (oneseries|count_multimedia_objects)} %}
+              {% include 'PumukitNewAdminBundle:Playlist:updatemenu.html.twig' with {'oneseries': oneseries, 'numV': (oneseries|count_multimedia_objects)} %}
             </td>
             <td>
-	      <a href="{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}">{% trans %}videos{% endtrans %}</a>
+              <a href="{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}">{% trans %}videos{% endtrans %}</a>
             </td>
             <td onclick="click_fila_edit_urls('playlist', this, '{{ path('pumukitnewadmin_playlist_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_playlist_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}')">
               <img src="{{ oneseries|first_url_pic }}" height="23" width="23" />
             </td>
             <td onclick="click_fila_edit_urls('playlist', this, '{{ path('pumukitnewadmin_playlist_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_playlist_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}')">
-	      {{ oneseries.getTitle() }}
+              {{ oneseries.getTitle() }}
             </td>
             <td onclick="click_fila_edit_urls('playlist', this, '{{ path('pumukitnewadmin_playlist_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_playlist_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}')">
               {{ oneseries.getPlaylist().getMultimediaObjects()|length }}
@@ -69,11 +69,11 @@
               <div class="col-md-6">
                 {{ series.getNbResults }}
                 {% transchoice series.getNbResults %}
-	        {0} playlist|{1} playlist|]1,Inf] playlists
-	            {% endtranschoice %}
-	            {% if app.session.get('admin/playlist/criteria')|length != 0%}
-                      <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
-	            {% endif %}
+                {0} playlist|{1} playlist|]1,Inf] playlists
+            {% endtranschoice %}
+            {% if app.session.get('admin/playlist/criteria')|length != 0%}
+              <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
+            {% endif %}
               </div>
               <div class="col-md-6 text-right">
                 <div class="pagerfanta">

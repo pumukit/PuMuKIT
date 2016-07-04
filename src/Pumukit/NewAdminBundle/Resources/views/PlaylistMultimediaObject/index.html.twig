@@ -30,7 +30,7 @@
               </select>
             </div>
             <div class="col-md-10 text-right">
-	      <a title="{% trans %}Add multimedia object{% endtrans %}"
+              <a title="{% trans %}Add multimedia object{% endtrans %}"
                  class="btn btn-pumukit btn-raised"
                  href="{{path('pumukitnewadmin_playlistmms_modal', {'id':playlist.id})}}"
                  data-toggle="modal"
@@ -44,18 +44,18 @@
         {# Kept the 'info' template #}
         {# TODO: Edition deactivated for now. #}
         {# <div class="alert alert-warning warning">
-          {% trans %} WARNING: The changes made below will be applied to the original object. {% endtrans %}
+        {% trans %} WARNING: The changes made below will be applied to the original object. {% endtrans %}
         </div>#}
         <div class="well">
           <div id="edit_playlistmm">
-          {% if(app.session.get('admin/playlist/id', false) and app.session.get('admin/playlistmms/id', false)) %}
-                <div id="links_mm_{{ app.session.get('admin/playlistmms/id') }}">
-                  {% render(url('pumukitnewadmin_mms_links', {'id': app.session.get('admin/playlistmms/id')})) %}
-                </div>
-          {% else %}
-                <legend>{% trans %}Info{% endtrans %}</legend>
-                {% trans %}Select any multimedia object.{% endtrans %}
-          {% endif %}
+            {% if(app.session.get('admin/playlist/id', false) and app.session.get('admin/playlistmms/id', false)) %}
+              <div id="links_mm_{{ app.session.get('admin/playlistmms/id') }}">
+                {% render(url('pumukitnewadmin_mms_links', {'id': app.session.get('admin/playlistmms/id')})) %}
+              </div>
+            {% else %}
+              <legend>{% trans %}Info{% endtrans %}</legend>
+              {% trans %}Select any multimedia object.{% endtrans %}
+            {% endif %}
           </div>
         </div>
       </div>
@@ -123,16 +123,16 @@
    }
 
    {# function update_views(){
-       var mmId = $('#id').val();
-       var playlistId = '{{ playlist.id }}';
-       var listRoute = '{{ path('pumukitnewadmin_playlistmms_list', {'id': '__playlistId__'}) }}';
-       listRoute = listRoute.replace('__playlistId__', playlistId);
-       var previewRoute = '{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'}) }}';
-       previewRoute = previewRoute.replace('__mmId__', mmId);
-       var editRoute = '{{ path('pumukitnewadmin_mms_edit', {'id': '__mmId__'}) }}';
-       editRoute = editRoute.replace('__mmId__', mmId);
-       $('#list_playlistmms').load(listRoute,function(){console.log('haha');});
-       $('#preview_playlistmm').load(previewRoute);
+   var mmId = $('#id').val();
+   var playlistId = '{{ playlist.id }}';
+   var listRoute = '{{ path('pumukitnewadmin_playlistmms_list', {'id': '__playlistId__'}) }}';
+   listRoute = listRoute.replace('__playlistId__', playlistId);
+   var previewRoute = '{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'}) }}';
+   previewRoute = previewRoute.replace('__mmId__', mmId);
+   var editRoute = '{{ path('pumukitnewadmin_mms_edit', {'id': '__mmId__'}) }}';
+   editRoute = editRoute.replace('__mmId__', mmId);
+   $('#list_playlistmms').load(listRoute,function(){console.log('haha');});
+   $('#preview_playlistmm').load(previewRoute);
    }
    $('#tv_admin_container form').on('submit', update_views); #}
   </script>

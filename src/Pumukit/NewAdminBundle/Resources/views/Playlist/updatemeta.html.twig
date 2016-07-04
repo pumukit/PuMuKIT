@@ -12,8 +12,8 @@
                   success(message);
                   }
                   });
-		  return false;"
-	action="{{ path('pumukitnewadmin_playlist_update', {'id': series.id}) }}" method="POST">
+                  return false;"
+        action="{{ path('pumukitnewadmin_playlist_update', {'id': series.id}) }}" method="POST">
     {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
     <input type="hidden" name="id" id="id" value="{{ series.id }}">
 
@@ -31,20 +31,20 @@
     <div>
       <fieldset>
         <div class="col-md-7">
-	  {% for child in form %}
+          {% for child in form %}
             {{ form_row(child) }}
-	  {% endfor %}
+          {% endfor %}
 
-	  <div class="form-group">
-	    <dl>
-	      <dt>{% trans %}Thumbnails{% endtrans %}</dt>
-	      <dd>
+          <div class="form-group">
+            <dl>
+              <dt>{% trans %}Thumbnails{% endtrans %}</dt>
+              <dd>
                 <div id="pic_playlist_{{ series.id }}">
-		  {% include 'PumukitNewAdminBundle:Pic:list.html.twig' with {'resource': series, 'resource_name': 'playlist'} %}
+                  {% include 'PumukitNewAdminBundle:Pic:list.html.twig' with {'resource': series, 'resource_name': 'playlist'} %}
                 </div>
-	      </dd>
-	    </dl>
-	  </div>
+              </dd>
+            </dl>
+          </div>
         </div>
       </fieldset>
     </div>
