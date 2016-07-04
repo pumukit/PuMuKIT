@@ -53,7 +53,7 @@ class SeriesService
             return false;
         }
         $firstFound = null;
-        $all = $this->mmRepo->findWithSeriesAndPrototype($series);
+        $all = $this->mmRepo->findBySeries($series);
         foreach ($all as $multimediaObject) {
             $firstFound = $multimediaObject;
             break;

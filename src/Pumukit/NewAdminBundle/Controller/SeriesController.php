@@ -567,17 +567,11 @@ class SeriesController extends AdminController implements NewAdminController
         $groupService = $this->get('pumukitschema.group');
         $allGroups = $groupService->findAll();
         $seriesService = $this->get('pumukitschema.series');
+        $embeddedBroadcast = false;
         $sameBroadcast = $seriesService->sameEmbeddedBroadcast($series);
-        if ($sameBroadcast) {
-            $firstFound = null;
-            $all = $mmRepo->findWithSeriesAndPrototype($series);
-            foreach ($all as $multimediaObject) {
-                $firstFound = $multimediaObject;
-                break;
-            }
+        $firstFound = $this->getFirstMultimediaObject($series);
+        if ($sameBroadcast && $firstFound) {
             $embeddedBroadcast = $firstFound->getEmbeddedBroadcast();
-        } else {
-            $embeddedBroadcast = false;
         }
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
             try {
@@ -591,7 +585,6 @@ class SeriesController extends AdminController implements NewAdminController
                 if ('string' === gettype($deleteGroups)){
                     $deleteGroups = json_decode($deleteGroups, true);
                 }
-
                 $multimediaObjects = $mmRepo->findBySeries($series);
                 foreach ($multimediaObjects as $multimediaObject) {
                     $this->modifyBroadcastGroups($multimediaObject, $type, $password, $addGroups, $deleteGroups, false);
@@ -600,8 +593,10 @@ class SeriesController extends AdminController implements NewAdminController
             } catch (\Exception $e) {
                 return new JsonResponse(array('error' => $e->getMessage()), JsonResponse::HTTP_BAD_REQUEST);
             }
-            $prototype = $mmRepo->findPrototype($series);
-            $embeddedBroadcast = $prototype->getEmbeddedBroadcast();
+            $embeddedBroadcast = '';
+            if ($firstFound) {
+                $embeddedBroadcast = $firstFound->getEmbeddedBroadcast();
+            }
 
             return new JsonResponse(array('description' => (string)$embeddedBroadcast));
         }
@@ -663,5 +658,17 @@ class SeriesController extends AdminController implements NewAdminController
         if ($executeFlush) {
             $dm->flush();
         }
+    }
+
+    private function getFirstMultimediaObject(Series $series)
+    {
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $mmRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $all = $mmRepo->findBySeries($series);
+        foreach ($all as $multimediaObject) {
+            return $multimediaObject;
+        }
+
+        return null;
     }
 }
