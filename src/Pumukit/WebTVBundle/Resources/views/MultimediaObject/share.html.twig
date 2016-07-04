@@ -43,13 +43,17 @@
         <div class="share_url">
           <span>{% trans %} IFRAME: {% endtrans %}</span>
           {% set trackid = (track.id is defined)?track.id:null %}
-          <input type="text" value="{% spaceless %}<iframe src='{{url('pumukit_webtv_multimediaobject_iframe', {'id':multimediaObject.id, 'track_id': trackid})}}'
-                                    id='pumukitiframe'
-                                    frameborder='0'
-                                    border='0'
-                                    width='100%'
-                                    height='500px'
-                                    allowfullscreen></iframe>{% endspaceless %}"
+	  {% set iframe_value %}{% spaceless %}
+	    <iframe src='{{url('pumukit_webtv_multimediaobject_iframe', {'id':multimediaObject.id, 'track_id': trackid})}}'
+		    {{- " id='pumukitiframe'" -}}
+		    {{- " frameborder='0'" -}}
+		    {{- " border='0'" -}}
+		    {{- " width='100%'" -}}
+		    {{- " height='500px'" -}}
+		    {{- " allowfullscreen" -}}
+		    ></iframe>
+	  {% endspaceless %}{% endset %}
+          <input type="text" value="{{ iframe_value }}"
                  onclick="this.select()" style="width: 70%; border: 1px solid #ccc; float:right; padding: 0; margin: 0;" readonly="readonly"/>
 
         </div>
