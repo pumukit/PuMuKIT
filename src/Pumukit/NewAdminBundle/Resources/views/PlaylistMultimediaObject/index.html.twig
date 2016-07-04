@@ -23,9 +23,7 @@
           <div class="row">
             <div class="col-md-2">
               <select id="options_mms" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}"
-                      onchange="playlist_mms_options('playlistmm', $(this), 'playlistmms', '{{playlist.id}}');"
-                      {# This workaround allows selecting the same action over and over #}
-                      onfocus="this.selectedIndex=0;this.blur()">
+                      onchange="playlist_mms_options('playlistmm', $(this), 'playlistmms', '{{playlist.id}}');">
                 <option disabled="" value="default" selected="selected">{% trans %}Select an action{% endtrans %}...</option>
                 <option disabled="">---</option>
                 <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
@@ -115,7 +113,7 @@
                mm_delete_selected(element, pluralName, playlistId);
                break;
        }
-       $(this).blur();
+       selector.val('default');
    }
    function mm_delete_selected(element, pluralName, playlistId) {
        var ids = {};
