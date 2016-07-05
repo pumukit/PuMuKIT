@@ -105,7 +105,7 @@ class PumukitProvider implements AuthenticationProviderInterface
             $userService->create($user);
             if (isset($attributes[self::CAS_GROUP_KEY])) {
                 $group = $this->getGroup($attributes[self::CAS_GROUP_KEY]);
-                $userService->addGroup($group, $user, false);
+                $userService->addGroup($group, $user, true, false);
             }
             $personService->referencePersonIntoUser($user);
 
