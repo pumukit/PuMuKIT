@@ -4,7 +4,7 @@ namespace Pumukit\OpencastBundle\Services;
 
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
 use Pumukit\SchemaBundle\Document\User;
-use Pumukit\SchemaBundle\Services\PermissionService;
+use Pumukit\SchemaBundle\Security\RoleHierarchy;
 
 class ClientService
 {
@@ -20,7 +20,7 @@ class ClientService
     private $manageOpencastUsers;
     private $insecure = false;
     private $logger;
-    private $permissionService;
+    private $roleHierarchy;
 
     /**
      * Constructor.
@@ -36,7 +36,7 @@ class ClientService
      */
     public function __construct($url = '', $user = '', $passwd = '', $player = '/engage/ui/watch.html', $scheduler = '/admin/index.html#/recordings', $dashboard = '/dashboard/index.html',
                                 $deleteArchiveMediaPackage = false, $deletionWorkflowName = 'delete-archive', $manageOpencastUsers = false, $insecure = false, $adminUrl = null, LoggerInterface $logger,
-                                PermissionService $permissionService)
+                                RoleHierarchy $roleHierarchy)
     {
         $this->logger = $logger;
 
@@ -58,7 +58,7 @@ class ClientService
         $this->manageOpencastUsers = $manageOpencastUsers;
         $this->insecure = $insecure;
         $this->adminUrl = $adminUrl;
-        $this->permissionService = $permissionService;
+        $this->roleHierarchy = $roleHierarchy;
     }
 
     /**
@@ -526,16 +526,6 @@ class ClientService
 
     private function getUserRoles(User $user)
     {
-        if ($user->isSuperAdmin()) {
-            $roles = '["ROLE_SUPER_ADMIN"';
-            foreach ($this->permissionService->getAllPermissions() as $role => $description) {
-                $roles .= ',+"'.$role.'"';
-            }
-            $roles .= ']';
-        } else {
-            $roles = '["'.implode('","', $user->getRoles()).'"]';
-        }
-
-        return $roles;
+        return $this->roleHierarchy->getReachableRoles($user->getRoles());
     }
 }
