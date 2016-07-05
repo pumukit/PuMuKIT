@@ -74,6 +74,7 @@ class PumukitAdminExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFunction('php_upload_max_filesize', array($this, 'getPhpUploadMaxFilesize')),
             new \Twig_SimpleFunction('path_exists', array($this, 'existsRoute')),
+            new \Twig_SimpleFunction('is_playlist_playable', array($this, 'isPlaylistPlayable')),
             new \Twig_SimpleFunction('broadcast_description', array($this, 'getBroadcastDescription')),
         );
     }
@@ -555,5 +556,23 @@ class PumukitAdminExtension extends \Twig_Extension
 
         $this->countMmobjsWithTag[$series->getId()][$tagCod] = $count;
         return $count;
+    }
+
+
+    /**
+     * Returns a boolean with whether the mmobj will be played on a playlist.
+     *
+     * @param MultimediaObject $mmobj
+     *
+     * @return boolean
+     */
+    public function isPlaylistPlayable($mmobj)
+    {
+        $broadcast = $mmobj->getEmbeddedBroadcast();
+        if ($broadcast->getType() != EmbeddedBroadcast::TYPE_PUBLIC
+            || $mmobj->getStatus() != MultimediaObject::STATUS_PUBLISHED) {
+            return false;
+        }
+        return true;
     }
 }

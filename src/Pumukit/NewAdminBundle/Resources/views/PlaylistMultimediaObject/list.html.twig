@@ -10,7 +10,7 @@
               </label>
             </div>
           </th>
-          <th colspan="6" width="5%"></th>
+          <th colspan="7" width="5%"></th>
           <th width="1%">{% trans %}Audio/Video{% endtrans %}</th>
           <th width="1%">{% trans %}Img{% endtrans %}</th>
           <th>{% trans %}Title{% endtrans %}</th>
@@ -32,6 +32,11 @@
                   <input id="{{ mm.id }}" data-pos="{{ mm_pos }}" class="playlistmm_checkbox" type="checkbox">
                 </label>
               </div>
+            </td>
+            <td>
+              {% if not is_playlist_playable(mm) %}
+                <i id="table_playable_mm_{{ mm.id }}" style="color:orange;font-size:16px" class="non-playable-warning mdi-action-report-problem" data-toggle="tooltip" data-placement="right" title="This object cannot be played on the playlist()"></i>
+              {% endif %}
             </td>
             <td>
               <i id="table_mms_status_{{ mm.id }}" class="{{ mm.status|status_icon }}" data-toggle="tooltip" data-placement="right" title="{{ mm.status|status_text }}"></i>
@@ -84,7 +89,7 @@
           </tr>
   {% else %}
           <tr>
-            <td colspan="13">
+            <td colspan="14">
               {% trans %}There are no multimedia objects with those values.{% endtrans %}
             </td>
           </tr>
@@ -113,12 +118,13 @@
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
+            <td>&nbsp;</td>
           </tr>
         {% endfor %}
       </tbody>
       <tfoot>
         <tr>
-          <th colspan="13">
+          <th colspan="14">
             <div class="row">
               <div class="col-md-6">
                 {{ mms.getNbResults }} {% trans %}Mm. Obj.{% endtrans %}
