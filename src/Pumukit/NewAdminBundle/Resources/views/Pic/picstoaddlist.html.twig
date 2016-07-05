@@ -1,69 +1,70 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-<fieldset>
-  <div class="form-group">
-	<label for="other">{% trans %}Use Thumbnail{% endtrans %}:</label>
-    <div class="">
-      {% if 0 == pics|length %}
-      {% trans %}There are no thumbnails in the database.{% endtrans %}
-      {% endif %}
-      {% for pic_url in pics %}
-	  <div style="padding: 18px; float:left">
-        <div class="wrap0">
-          <div class="wrap1">
-            <div class="wrap2">
-              <div class="wrap3">
-		        <a href="#" data-dismiss="modal" onclick="$('#pic_{{ resource_name }}_{{ resource.id }}').load('{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id, 'picUrl': pic_url}) }}', function(){success('{% trans %}New Thumbnail added.{% endtrans %}');}); return false;">
-                  <img src="{{ pic_url }}" alt="{{ pic_url|split('/')|last }}" height="82" width="100"/>
-                </a>
+  <fieldset>
+    <div class="form-group">
+      <label for="other">{% trans %}Use Thumbnail{% endtrans %}:</label>
+      <div class="">
+        {% if 0 == pics|length %}
+          {% trans %}There are no thumbnails in the database.{% endtrans %}
+        {% endif %}
+        {% for pic_url in pics %}
+          <div style="padding: 18px; float:left">
+            <div class="wrap0">
+              <div class="wrap1">
+                <div class="wrap2">
+                  <div class="wrap3">
+                    <a href="#" data-dismiss="modal" onclick="$('#pic_{{ resource_name }}_{{ resource.id }}').load('{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id, 'picUrl': pic_url}) }}', function(){success('{% trans %}New Thumbnail added.{% endtrans %}');}); return false;">
+                      <img src="{{ pic_url }}" alt="{{ pic_url|split('/')|last }}" height="82" width="100"/>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        {% endfor %}
+        <div style="clear: left"></div>
       </div>
-      {% endfor %}
-      <div style="clear: left"></div>
     </div>
-  </div>
-</fieldset>
-<div class="col-md-12 text-right">
-  <div class="pagerfanta">
-    <ul class="pagination pagination-sm">
-      {% if (1 < page) %}
-      <li class="prev">
-        <a href="#" onclick="window.change_pics_page('{{ path('pumukitnewadmin_'~resource_name~'pic_picstoaddlist', {'id': resource.id, 'page': (page - 1)}) }}'); return false;">&laquo;</a>
-      </li>
-      {% else %}
-      <li class="prev disabled">
-        <span>&laquo;</span>
-      </li>
-      {% endif %}
+  </fieldset>
+  {% if total > 0 %}
+    <div class="col-md-12 text-right">
+      <div class="pagerfanta">
+        <ul class="pagination pagination-sm">
+          {% if (1 < page) %}
+            <li class="prev">
+              <a href="#" onclick="window.change_pics_page('{{ path('pumukitnewadmin_'~resource_name~'pic_picstoaddlist', {'id': resource.id, 'page': (page - 1)}) }}'); return false;">&laquo;</a>
+            </li>
+          {% else %}
+            <li class="prev disabled">
+              <span>&laquo;</span>
+            </li>
+          {% endif %}
 
-
-      {% set ini = (page - 2 < 1) ? 1 : page - 2 %}
-      {% set final = (page + 2 > total) ? total : page + 2%}
-      {% for i in ini..final %}
-        {% if (i == page) %}
-          <li class="active">
-            <span>{{ i }} <span class="sr-only">(current)</span></span>
-          </li>
-        {% else %}
-          <li>
-            <a href="#" onclick="window.change_pics_page('{{ path('pumukitnewadmin_'~resource_name~'pic_picstoaddlist', {'id': resource.id, 'page': i}) }}'); return false;">{{ i }}</a>
-          </li>
-        {% endif %}
-      {% endfor %}
-      {% if (total > page) %}
-      <li class="next">
-        <a href="#" onclick="window.change_pics_page('{{ path('pumukitnewadmin_'~resource_name~'pic_picstoaddlist', {'id': resource.id, 'page': (page + 1)}) }}'); return false;">&raquo;</a>
-      </li>
-      {% else %}
-      <li class="next disabled">
-        <span>&raquo;</span>
-      </li>
-      {% endif %}
-    </ul>
-  </div>
-</div>
+          {% set ini = (page - 2 < 1) ? 1 : page - 2 %}
+          {% set final = (page + 2 > total) ? total : page + 2%}
+          {% for i in ini..final %}
+            {% if (i == page) %}
+              <li class="active">
+                <span>{{ i }} <span class="sr-only">(current)</span></span>
+              </li>
+            {% else %}
+              <li>
+                <a href="#" onclick="window.change_pics_page('{{ path('pumukitnewadmin_'~resource_name~'pic_picstoaddlist', {'id': resource.id, 'page': i}) }}'); return false;">{{ i }}</a>
+              </li>
+            {% endif %}
+          {% endfor %}
+          {% if (total > page) %}
+            <li class="next">
+              <a href="#" onclick="window.change_pics_page('{{ path('pumukitnewadmin_'~resource_name~'pic_picstoaddlist', {'id': resource.id, 'page': (page + 1)}) }}'); return false;">&raquo;</a>
+            </li>
+          {% else %}
+            <li class="next disabled">
+              <span>&raquo;</span>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  {% endif %}
 {% else %}
   {% trans %}You don't have enough permissions to access this content.{% endtrans %}
 {% endif %}
