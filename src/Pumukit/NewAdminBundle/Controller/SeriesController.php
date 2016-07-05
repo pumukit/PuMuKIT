@@ -361,6 +361,10 @@ class SeriesController extends AdminController implements NewAdminController
       $value = $session->get('admin/series/type', 'desc');
       $key = $session->get('admin/series/sort', 'public_date');
 
+      if($key == 'title') {
+          $key .='.'.$request->getLocale();
+      }
+
       return  array($key => $value);
     }
 
@@ -615,7 +619,7 @@ class SeriesController extends AdminController implements NewAdminController
      *
      * @Template
      */
-    public function listPropertiesAction(Series $series) 
+    public function listPropertiesAction(Series $series)
     {
         return array('series' => $series);
     }
