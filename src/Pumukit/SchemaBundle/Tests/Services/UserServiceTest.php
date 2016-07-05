@@ -1069,4 +1069,52 @@ class UserServiceTest extends WebTestCase
 
         $this->assertTrue($this->userService->isUserInGroups($user, $mm->getId(), $person->getId(), $groups));
     }
+
+    public function testNotExceptionAddGroupCasCas()
+    {
+        $casGroup = new Group();
+        $casGroup->setKey('cas_key');
+        $casGroup->setName('CAS Group');
+        $casGroup->setOrigin('cas');
+
+        $casUser = new User();
+        $casUser->setUsername('cas_user');
+        $casUser->setEmail('cas_user@mail.com');
+        $casUser->setOrigin('cas');
+
+        $this->dm->persist($casGroup);
+        $this->dm->persist($casUser);
+        $this->dm->flush();
+
+        $this->userService->addGroup($casGroup, $casUser, true, false);
+
+        $this->assertTrue($casUser->containsGroup($casGroup));
+    }
+
+    public function testNotExceptionDeleteGroupCasCas()
+    {
+        $casGroup = new Group();
+        $casGroup->setKey('cas_key');
+        $casGroup->setName('Cas Group');
+        $casGroup->setOrigin('cas');
+
+        $casUser = new User();
+        $casUser->setUsername('cas_user');
+        $casUser->setEmail('cas_user@mail.com');
+        $casUser->setOrigin('cas');
+
+        $this->dm->persist($casGroup);
+        $this->dm->persist($casUser);
+        $this->dm->flush();
+
+        $casUser->addGroup($casGroup);
+        $this->dm->persist($casUser);
+        $this->dm->flush();
+
+        $this->assertTrue($casUser->containsGroup($casGroup));
+
+        $this->userService->deleteGroup($casGroup, $casUser, true, false);
+
+        $this->assertFalse($casUser->containsGroup($casGroup));
+    }
 }
