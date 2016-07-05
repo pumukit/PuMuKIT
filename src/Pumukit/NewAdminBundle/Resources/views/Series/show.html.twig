@@ -1,24 +1,16 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-{% if series is not null %}
-<p>
-  <a target="_black" href="{{ url('pumukit_webtv_series_index', {id: series.id}) }}"> {{ series.title}} </a>.
-</p>
-<div class="well" style="padding: 3px;">
-  <div class="well" style="padding: 3px; margin-bottom: 0px;">
-    <div class="well" style="padding: 3px; margin-bottom: 0px;">
-      <div class="embed-responsive embed-responsive-16by9">
-        <img src="{{ series|first_url_pic }}" class="img-responsive" style="width: 100% \9;">
-      </div>
-    </div>
-  </div>
-</div>
+  {% if series is not null %}
+    <p>
+      <a target="_black" href="{{ url('pumukit_webtv_series_index', {id: series.id}) }}"> {{ series.title}} </a>.
+    </p>
+    {% include("PumukitNewAdminBundle:Collection:show.html.twig") with {'collection':series}%}
+  {% else %}
+    <p>
+      {% trans %}Select any series.{% endtrans %}
+    </p>
+  {% endif %}
 {% else %}
-<p>
-  {% trans %}Select any series.{% endtrans %}
-</p>
-{% endif %}
-{% else %}
-<p>
-  {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-</p>
+  <p>
+    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+  </p>
 {% endif %}

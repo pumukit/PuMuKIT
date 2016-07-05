@@ -21,7 +21,7 @@ class SeriesSearchService
             if (('search' === $property) && ('' !== $value)) {
                 if ($searchInObjects) {
                     $mmRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-                    $ids = $mmRepo->searchSeriesByIdOrField($value, 100)->toArray();
+                    $ids = $mmRepo->getIdsWithSeriesTextOrId($value, 100)->toArray();
                     $ids[] = $value;
 
                     $new_criteria['$or'] = array(

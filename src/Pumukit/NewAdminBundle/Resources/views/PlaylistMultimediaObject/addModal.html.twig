@@ -14,54 +14,54 @@
 
   <div class="form-control-wrapper">
 
-      <fieldset style="height: 150px; margin-bottom: 25px; overflow-y: scroll">
-        <form id="add_playlist_form">
-          {% for oneseries in series %}
-            <div class="checkbox" style="padding-top: 10px">
-              <label>
-                <input type="checkbox"
-                       class="add_playlist_form_checkbox"
-                       name="pub_{{oneseries.id}}"
-	                   id="{{ oneseries.id }}" />
-                {{ oneseries.title }}
-              </label>
-            </div>
+    <fieldset style="height: 150px; margin-bottom: 25px; overflow-y: scroll">
+      <form id="add_playlist_form">
+        {% for oneseries in series %}
+          <div class="checkbox" style="padding-top: 10px">
+            <label>
+              <input type="checkbox"
+                     class="add_playlist_form_checkbox"
+                     name="pub_{{oneseries.id}}"
+                     id="{{ oneseries.id }}" />
+              {{ oneseries.title }}
+            </label>
+          </div>
           {% else %}
-              <p id="add_playlist_form_none" class="text-muted" style="margin-left: 15px">{% trans %}There are no playlist, please create one.{% endtrans %}</p>
-          {% endfor %}
-          <input type="hidden" id="add_playlist_form_ids" name="ids" value="{{ids}}"/>
-          <input type="hidden" id="add_playlist_form_id" name="id" value="{{id}}"/>
+          <p id="add_playlist_form_none" class="text-muted" style="margin-left: 15px">{% trans %}There are no playlist, please create one.{% endtrans %}</p>
+        {% endfor %}
+        <input type="hidden" id="add_playlist_form_ids" name="ids" value="{{ids}}"/>
+        <input type="hidden" id="add_playlist_form_id" name="id" value="{{id}}"/>
+      </form>
+    </fieldset>
+
+    <div class="new_playlist">
+      <a href="#" onclick="$('.new_playlist').toggle(); return false">{% trans %}Create new playlist{% endtrans %}</a>
+    </div>
+
+    <div class="row new_playlist" style="display:none" id="new_playlist_panel">
+      <div id="" class="col-md-7">
+        <form id="new_playlist_form">
+          <fieldset>
+            <div class="form-group">
+              <label class="control-label" for="title">Title</label>
+              {# TODO two culture #}
+              {% for locale in locales %}
+                <div class="input-group">
+                  <input type="text" name="playlist_title[{{ locale }}]" class="new_playlist_form_title form-control" placeholder="title {{locale}}"/>
+                  <span class="input-group-addon">{{ locale }}</span>
+                </div>
+              {% endfor %}
+            </div>
+          </fieldset>
         </form>
-      </fieldset>
-
-      <div class="new_playlist">
-        <a href="#" onclick="$('.new_playlist').toggle(); return false">{% trans %}Create new playlist{% endtrans %}</a>
       </div>
+    </div>
 
-      <div class="row new_playlist" style="display:none" id="new_playlist_panel">
-        <div id="" class="col-md-7">
-          <form id="new_playlist_form">
-            <fieldset>
-              <div class="form-group">
-                <label class="control-label" for="title">Title</label>
-                {# TODO two culture #}
-                {% for locale in locales %}
-                  <div class="input-group">
-                    <input type="text" name="playlist_title[{{ locale }}]" class="new_playlist_form_title form-control" placeholder="title {{locale}}"/>
-                    <span class="input-group-addon">{{ locale }}</span>
-                  </div>
-                {% endfor %}
-              </div>
-            </fieldset>
-          </form>
-        </div>
-      </div>
-
-      <div class="modal-footer">
-        <button disabled="disabled" id="new_playlist_btn" style="display:none" type="button" class="new_playlist pull-left btn btn-default btn-primary">{% trans %}Create playlist{% endtrans %}</button>
-        <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-        <button disabled="disabled" id="add_playlist_btn" type="submit" class="btn btn-pumukit">{% trans %}OK{% endtrans %}</button>
-      </div>
+    <div class="modal-footer">
+      <button disabled="disabled" id="new_playlist_btn" style="display:none" type="button" class="new_playlist pull-left btn btn-default btn-primary">{% trans %}Create playlist{% endtrans %}</button>
+      <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+      <button disabled="disabled" id="add_playlist_btn" type="submit" class="btn btn-pumukit">{% trans %}OK{% endtrans %}</button>
+    </div>
 
   </div>
 </div>
@@ -69,79 +69,79 @@
 
 
 <script type="text/javascript">
-(function(){
-  var new_playlist_form = $('#new_playlist_form');
+ (function(){
+     var new_playlist_form = $('#new_playlist_form');
 
-  new_playlist_form.on('submit', function(e){
-    e.preventDefault();
+     new_playlist_form.on('submit', function(e){
+         e.preventDefault();
 
-    $.post('{{ path('pumukitnewadmin_playlist_create') }}', new_playlist_form.serialize())
-    .done(function(data){
-      var div = $('<div class="checkbox" style="padding-top: 10px" />');
-      var label = $('<label />');
-      var input = $('<input checked="checked" type="checkbox" class="add_playlist_form_checkbox" name="pub_' + data.playlistId + '" id="' + data.playlistId + '" />');
-      label.text(' ' + data.title);
-      label.prepend(input);
-      div.append(label);
-      $('#add_playlist_form').prepend(div);
-      $('#add_playlist_btn').attr('disabled', false);
-      new_playlist_form[0].reset();
-      $('.new_playlist').toggle();
-      $('#add_playlist_form_none').hide();
-    })
-    .fail(function(){
-      no_success('{% trans %}Error creating playlist{% endtrans %}')
-    });
-  });
-  $('#new_playlist_btn').on('click', function(e){
-    e.preventDefault();
-    //TODO Only if input has value. (form is valid)
-    new_playlist_form.submit()
-  });
-
-
-  $('#add_playlist_btn').on('click', function(e){
-    e.preventDefault();
-
-    var ids = $('#add_playlist_form_ids').val();
-    if ("" != ids) {
-        ids = JSON.parse(ids);
-    }
-    var id = $('#add_playlist_form_id').val();
-    if(id != "")
-          ids = [id];
-    var data = {'ids': ids, series_ids: []};
-
-    $('.add_playlist_form_checkbox:checked').each(function(){
-        var $this = $(this);
-        data.series_ids.push($this.attr("id"));
-    });
-    //TODO Only if a checkbox is check
-    $.post('{{ path('pumukitnewadmin_playlistmms_batch_add_to_several_playlist') }}', data)
-    .done(function(e){
-      $('#myModal').modal('hide');
-    })
-    .fail(function(){
-      no_success('{% trans %}Error adding object to playlist{% endtrans %}')
-    });
-  });
-
-  var new_playlist_form_title = $('.new_playlist_form_title');
-  new_playlist_form_title.on('input', function(e){
-    var empty = false;
-    new_playlist_form_title.each(function(i, e){
-        if ("" == e.value) {
-            empty = true;
-        }
-    });
-    $('#new_playlist_btn').attr('disabled', empty);
-  })
+         $.post('{{ path('pumukitnewadmin_playlist_create') }}', new_playlist_form.serialize())
+          .done(function(data){
+              var div = $('<div class="checkbox" style="padding-top: 10px" />');
+              var label = $('<label />');
+              var input = $('<input checked="checked" type="checkbox" class="add_playlist_form_checkbox" name="pub_' + data.playlistId + '" id="' + data.playlistId + '" />');
+              label.text(' ' + data.title);
+              label.prepend(input);
+              div.append(label);
+              $('#add_playlist_form').prepend(div);
+              $('#add_playlist_btn').attr('disabled', false);
+              new_playlist_form[0].reset();
+              $('.new_playlist').toggle();
+              $('#add_playlist_form_none').hide();
+          })
+          .fail(function(){
+              no_success('{% trans %}Error creating playlist{% endtrans %}')
+          });
+     });
+     $('#new_playlist_btn').on('click', function(e){
+         e.preventDefault();
+         //TODO Only if input has value. (form is valid)
+         new_playlist_form.submit()
+     });
 
 
-  $('#add_playlist_form').on('change', '.add_playlist_form_checkbox', function(e){
-    var empty = (0 == $('.add_playlist_form_checkbox:checked').length);
-    $('#add_playlist_btn').attr('disabled', empty);
-  });
-})();
+     $('#add_playlist_btn').on('click', function(e){
+         e.preventDefault();
+
+         var ids = $('#add_playlist_form_ids').val();
+         if ("" != ids) {
+             ids = JSON.parse(ids);
+         }
+         var id = $('#add_playlist_form_id').val();
+         if(id != "")
+             ids = [id];
+         var data = {'ids': ids, series_ids: []};
+
+         $('.add_playlist_form_checkbox:checked').each(function(){
+             var $this = $(this);
+             data.series_ids.push($this.attr("id"));
+         });
+         //TODO Only if a checkbox is check
+         $.post('{{ path('pumukitnewadmin_playlistmms_batch_add_to_several_playlist') }}', data)
+          .done(function(e){
+              $('#myModal').modal('hide');
+          })
+          .fail(function(){
+              no_success('{% trans %}Error adding object to playlist{% endtrans %}')
+          });
+     });
+
+     var new_playlist_form_title = $('.new_playlist_form_title');
+     new_playlist_form_title.on('input', function(e){
+         var empty = false;
+         new_playlist_form_title.each(function(i, e){
+             if ("" == e.value) {
+                 empty = true;
+             }
+         });
+         $('#new_playlist_btn').attr('disabled', empty);
+     })
+
+
+         $('#add_playlist_form').on('change', '.add_playlist_form_checkbox', function(e){
+             var empty = (0 == $('.add_playlist_form_checkbox:checked').length);
+             $('#add_playlist_btn').attr('disabled', empty);
+         });
+ })();
 
 </script>

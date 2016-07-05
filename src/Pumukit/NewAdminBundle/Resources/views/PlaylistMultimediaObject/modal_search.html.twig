@@ -15,7 +15,7 @@ $('#modal_search_button').on('click', function(){
 
     var search_text=$('#modal_search').val();
     var url = '{{ path('pumukitnewadmin_playlistmms_modal_search' , {'search':'__search__'})}}';
-    url = url.replace('__search__', search_text);
+    url = url.replace('__search__', encodeURI(search_text));
     $('#modal_search_loader').show();
     $('#modal_search_list').hide();
     $('#modal_search_list').load(url, function(){

@@ -37,7 +37,7 @@
               <i id="table_mms_status_{{ mm.id }}" class="{{ mm.status|status_icon }}" data-toggle="tooltip" data-placement="right" title="{{ mm.status|status_text }}"></i>
             </td>
             <td>
-	      {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-action-spellcheck">':'&nbsp;' }}
+              {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-action-spellcheck">':'&nbsp;' }}
             </td>
             <td>
               <a href="#" onclick="delete_mm('{{ mm.id }}', '{{ mm_pos }}')">
@@ -45,23 +45,23 @@
               </a>
             </td>
             <td>
-	      {% include 'PumukitNewAdminBundle:PlaylistMultimediaObject:updatemenu.html.twig' with {'mm': mm, 'mm_pos':mm_pos} %}
+              {% include 'PumukitNewAdminBundle:PlaylistMultimediaObject:updatemenu.html.twig' with {'mm': mm, 'mm_pos':mm_pos} %}
             </td>
             <td>
-	      {% if mms.getCurrentPage() != 1 or not loop.first %}
-	        {% spaceless %}
-	          <a href="{{ path('pumukitnewadmin_playlistmms_up', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move one position up{% endtrans %}">&#8593;</a>
-	          <a href="{{ path('pumukitnewadmin_playlistmms_top', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}"><i class="mdi-editor-vertical-align-top"></i></a>
-	        {% endspaceless %}
-	      {% endif %}
+              {% if mms.getCurrentPage() != 1 or not loop.first %}
+                {% spaceless %}
+                  <a href="{{ path('pumukitnewadmin_playlistmms_up', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move one position up{% endtrans %}">&#8593;</a>
+                  <a href="{{ path('pumukitnewadmin_playlistmms_top', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}"><i class="mdi-editor-vertical-align-top"></i></a>
+                {% endspaceless %}
+              {% endif %}
             </td>
             <td>
-	      {% if (mms.getCurrentPage() != mms.getNbPages()) or (loop.index + ((mms.getCurrentPage() - 1 ) * mms.getMaxPerPage()) != mms.getNbResults())  %}
-	        {% spaceless %}
- 	          <a href="{{ path('pumukitnewadmin_playlistmms_down', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move one position down{% endtrans %}">&#8595;</a>
-	          <a href="{{ path('pumukitnewadmin_playlistmms_bottom', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move to the end of the list{% endtrans %}"><i class="mdi-editor-vertical-align-bottom"></i></a>
-	        {% endspaceless %}
-	      {% endif %}
+              {% if (mms.getCurrentPage() != mms.getNbPages()) or (loop.index + ((mms.getCurrentPage() - 1 ) * mms.getMaxPerPage()) != mms.getNbResults())  %}
+                {% spaceless %}
+                  <a href="{{ path('pumukitnewadmin_playlistmms_down', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move one position down{% endtrans %}">&#8595;</a>
+                  <a href="{{ path('pumukitnewadmin_playlistmms_bottom', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move to the end of the list{% endtrans %}"><i class="mdi-editor-vertical-align-bottom"></i></a>
+                {% endspaceless %}
+              {% endif %}
             </td>
             <td>
               <span>{{ mm.isOnlyAudio() ? 'Audio':'Video' }}</span>
@@ -100,7 +100,7 @@
 
         {% for i in range %}
           <tr>
-  	    <td>&nbsp;</td>
+            <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -122,9 +122,9 @@
             <div class="row">
               <div class="col-md-6">
                 {{ mms.getNbResults }} {% trans %}Mm. Obj.{% endtrans %}
-	        {% if app.session.get('admin/playlistmms/criteria')|length != 0%}
+                {% if app.session.get('admin/playlistmms/criteria')|length != 0%}
                   <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
-	        {% endif %}
+                {% endif %}
               </div>
               <div class="col-md-6 text-right">
                 <div class="pagerfanta">
