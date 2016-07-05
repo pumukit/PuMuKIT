@@ -159,7 +159,7 @@ class PlaylistMultimediaObjectController extends Controller
     public function modalAction(Series $playlist, Request $request)
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $mmobjs = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findAllAsIterable();
+        $mmobjs = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findAllAsIterable()->limit(20);
 
         return array(
             'my_mmobjs' => $mmobjs,
