@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+    <body>
+      <trans-unit id="1736bcff0ae46a47af05523f4951db16" resname="New from LDAP">
+        <source>New from LDAP</source>
+        <target>New from LDAP</target>
+      </trans-unit>
+      <trans-unit id="19bf4bd502791543cf7c044bb31b0627" resname="new person from LDAP">
+        <source>new person from LDAP</source>
+        <target>new person from LDAP</target>
+      </trans-unit>
+      <trans-unit id="174da022bf53f1392b27b872a0d572d0" resname="Write the email login of the person you would like to add from the LDAP server. A pull-down menu will be shown, where you can select and use the person data.">
+        <source>Write the email login of the person you would like to add from the LDAP server. A pull-down menu will be shown, where you can select and use the person data.</source>
+        <target>Write the email login of the person you would like to add from the LDAP server. A pull-down menu will be shown, where you can select and use the person data.</target>
+      </trans-unit>
+      <trans-unit id="99dea78007133396a7b8ed70578ac6ae" resname="Login">
+        <source>Login</source>
+        <target>Login</target>
+      </trans-unit>
+      <trans-unit id="67ddde9432aa0b76e9f0f7b6d9282634" resname="login to search for">
+        <source>login to search for</source>
+        <target>login to search for</target>
+      </trans-unit>
+      <trans-unit id="c327b49efdca2668f28cd7b4beee54b3" resname="working">
+        <source>working</source>
+        <target>working</target>
+      </trans-unit>
+      <trans-unit id="ea4788705e6873b424c65e91c2846b19" resname="Cancel">
+        <source>Cancel</source>
+        <target>Cancel</target>
+      </trans-unit>
+      <trans-unit id="ad8783089f828b927473fb61d51940ec" resname="Use">
+        <source>Use</source>
+        <target>Use</target>
+      </trans-unit>
+      <trans-unit id="1e90923b480ee935dee9edc36669318b" resname="You don't have enough permissions to access this content.">
+        <source>You don't have enough permissions to access this content.</source>
+        <target>You don't have enough permissions to access this content.</target>
+      </trans-unit>
+      <trans-unit id="714494e16649c3c5dd3d797a39f6a2f5" resname="Person successfully associated to Multimedia Object">
+        <source>Person successfully associated to Multimedia Object</source>
+        <target>Person successfully associated to Multimedia Object</target>
+      </trans-unit>
+      <trans-unit id="b878aa8bbb132d9c66de1424698c44d2" resname="with role">
+        <source>with role</source>
+        <target>with role</target>
+      </trans-unit>
+      <trans-unit id="5c372099c348697eb720e6175b16b700" resname="Select before a person">
+        <source>Select before a person</source>
+        <target>Select before a person</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

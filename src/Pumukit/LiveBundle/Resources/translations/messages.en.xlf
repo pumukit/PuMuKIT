@@ -26,6 +26,38 @@
         <source>TIME</source>
         <target>TIME</target>
       </trans-unit>
+      <trans-unit id="b024381f0498329c791a3991c10660af" resname="No title">
+        <source>No title</source>
+        <target>No title</target>
+      </trans-unit>
+      <trans-unit id="a4ecfc70574394990cf17bd83df499f7" resname="Event">
+        <source>Event</source>
+        <target>Event</target>
+      </trans-unit>
+      <trans-unit id="7b9cf007806ed854cd12ab800c8a982b" resname="Place">
+        <source>Place</source>
+        <target>Place</target>
+      </trans-unit>
+      <trans-unit id="44749712dbec183e983dcd78a7736c41" resname="Date">
+        <source>Date</source>
+        <target>Date</target>
+      </trans-unit>
+      <trans-unit id="a76d4ef5f3f6a672bbfab2865563e530" resname="Time">
+        <source>Time</source>
+        <target>Time</target>
+      </trans-unit>
+      <trans-unit id="bbd3b0ed90fe9d5902acef4f19ce0b08" resname="JWPlayer does not support your browser version">
+        <source>JWPlayer does not support your browser version</source>
+        <target>JWPlayer does not support your browser version</target>
+      </trans-unit>
+      <trans-unit id="bf31624e1480f387a3765209d49699d2" resname="Please use 9.0 or higher version or use another browser.">
+        <source>Please use 9.0 or higher version or use another browser.</source>
+        <target>Please use 9.0 or higher version or use another browser.</target>
+      </trans-unit>
+      <trans-unit id="86e281242526ed976357d768570b4f7e" resname="The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.">
+        <source>The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</source>
+        <target>The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

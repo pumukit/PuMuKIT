@@ -54,6 +54,10 @@
         <source>Output</source>
         <target>Output</target>
       </trans-unit>
+      <trans-unit id="a114134ff06747be968e691ea851239f" resname="Multimedia Object Admin Link">
+        <source>Multimedia Object Admin Link</source>
+        <target>Multimedia Object Admin Link</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
