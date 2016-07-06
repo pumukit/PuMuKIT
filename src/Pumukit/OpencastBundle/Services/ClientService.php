@@ -530,6 +530,6 @@ class ClientService
             $this->roleHierarchy->getReachableRoles($user->getRoles()) :
             $user->getRoles();
 
-        return '["'.implode('","', $roles).'"]'
+        return '["'.implode('","', $roles).'"]';
     }
 }
