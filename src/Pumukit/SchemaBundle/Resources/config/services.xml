@@ -12,6 +12,9 @@
     <services>
         <!-- See #5826 -->
         <service id="doctrine" alias="doctrine_mongodb" />
+        <!-- Needed for inject security.role_hierarchy, it is private -->
+        <service id="security.role_hierarchy_alias" alias="security.role_hierarchy" />
+
 
         <service id="pumukitschema.schema.locale" class="Pumukit\SchemaBundle\EventListener\LocaleListener">
             <argument type="service" id="request_stack" />
@@ -56,16 +59,16 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="pumukitschema.series_dispatcher" />
             <argument>%pumukit2.locales%</argument>
-	        <argument>%pumukit2.uploads_dir%/pic/</argument>
-	        <argument>%pumukit2.uploads_url%/pic</argument>
+            <argument>%pumukit2.uploads_dir%/pic/</argument>
+            <argument>%pumukit2.uploads_url%/pic</argument>
             <argument>%pumukit2.delete_on_disk%</argument>
         </service>
 
         <service id="pumukitschema.mmspic" class="Pumukit\SchemaBundle\Services\MultimediaObjectPicService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="pumukitschema.pic_dispatcher"/>
-	        <argument>%pumukit2.uploads_dir%/pic/</argument>
-	        <argument>%pumukit2.uploads_url%/pic</argument>
+            <argument>%pumukit2.uploads_dir%/pic/</argument>
+            <argument>%pumukit2.uploads_url%/pic</argument>
             <argument>%pumukit2.delete_on_disk%</argument>
         </service>
 
@@ -159,8 +162,8 @@
         <service id="pumukitschema.material" class="Pumukit\SchemaBundle\Services\MaterialService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="pumukitschema.material_dispatcher"/>
-	        <argument>%pumukit2.uploads_dir%/material</argument>
-	        <argument>%pumukit2.uploads_url%/material</argument>
+            <argument>%pumukit2.uploads_dir%/material</argument>
+            <argument>%pumukit2.uploads_url%/material</argument>
             <argument>%pumukit2.delete_on_disk%</argument>
         </service>
 
@@ -197,7 +200,7 @@
 
         <service id="pumukitschema.pic" class="Pumukit\SchemaBundle\Services\PicService">
           <argument type="service" id="router.request_context" on-invalid="ignore" />
-	      <argument>%kernel.root_dir%/web</argument>
+          <argument>%kernel.root_dir%/web</argument>
           <argument>%pumukitschema.default_series_pic%</argument>
           <argument>%pumukitschema.default_playlist_pic%</argument>
           <argument>%pumukitschema.default_video_pic%</argument>
