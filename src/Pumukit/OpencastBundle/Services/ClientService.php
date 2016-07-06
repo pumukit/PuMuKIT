@@ -526,9 +526,13 @@ class ClientService
 
     private function getUserRoles(User $user)
     {
+        /*
         $roles =  $this->roleHierarchy ?
             $this->roleHierarchy->getReachableRoles($user->getRoles()) :
             $user->getRoles();
+        */
+
+        $role = $user->getRoles();
 
         return '["'.implode('","', $roles).'"]';
     }
