@@ -39,6 +39,8 @@
 {% block body_base %}
 {% if not app.request.attributes.get('nakedbackoffice') %}
   {% include 'PumukitNewAdminBundle::menu.html.twig' %}
+{% else %}
+  {% include 'PumukitNewAdminBundle::naked_menu.html.twig' %}
 {% endif %}
 <div class="container-fluid main">
   {% block body %}{% endblock %}
