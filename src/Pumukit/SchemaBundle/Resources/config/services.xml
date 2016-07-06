@@ -12,9 +12,6 @@
     <services>
         <!-- See #5826 -->
         <service id="doctrine" alias="doctrine_mongodb" />
-        <!-- Needed for inject security.role_hierarchy, it is private -->
-        <service id="security.role_hierarchy_alias" alias="security.role_hierarchy" />
-
 
         <service id="pumukitschema.schema.locale" class="Pumukit\SchemaBundle\EventListener\LocaleListener">
             <argument type="service" id="request_stack" />
