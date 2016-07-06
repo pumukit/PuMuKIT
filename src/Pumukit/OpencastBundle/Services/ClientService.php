@@ -3,6 +3,7 @@
 namespace Pumukit\OpencastBundle\Services;
 
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
+use Symfony\Component\Security\Core\Role\Role;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Security\RoleHierarchy;
 
@@ -526,14 +527,15 @@ class ClientService
 
     private function getUserRoles(User $user)
     {
-        /*
-        $roles =  $this->roleHierarchy ?
-            $this->roleHierarchy->getReachableRoles($user->getRoles()) :
-            $user->getRoles();
-        */
+        if ($this->roleHierarchy) {
+            $userRoles = array_map(function($r){return new Role($r);}, $user->getRoles());
+            $allRoles = $this->roleHierarchy->getReachableRoles($userRoles);
+            $roles = array_map(function($r){return $r->getRole();}, $allRoles);
+        } else {
+            $roles = $user->getRoles();
+        }
 
-        $roles = $user->getRoles();
-
+            
         return '["'.implode('","', $roles).'"]';
     }
 }

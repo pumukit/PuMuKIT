@@ -11,6 +11,7 @@ use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\OpencastBundle\Services\ClientService;
+use Pumukit\SchemaBundle\Document\User;
 
 class ClientServiceTest extends WebTestCase
 {
@@ -43,7 +44,23 @@ class ClientServiceTest extends WebTestCase
     }
 
 
+    public function testGetUserRoles()
+    {
+        $user = new User();
+        
+        $user->setRoles(array('ROLE_TEST'));
+        $out = $this->invokeMethod($this->clientService, 'getUserRoles', array($user));
+        $this->assertEquals('["ROLE_TEST","ROLE_USER"]', $out);
+        
+        $user->setRoles(array('ROLE_TEST', 'ROLE_TEST_2'));
+        $out = $this->invokeMethod($this->clientService, 'getUserRoles', array($user));
+        $this->assertEquals('["ROLE_TEST","ROLE_TEST_2","ROLE_USER"]', $out);
 
+        $user->setRoles(array('ROLE_SUPER_ADMIN'));
+        $out = $this->invokeMethod($this->clientService, 'getUserRoles', array($user));
+        $this->assertNotEquals('["ROLE_SUPER_ADMIN","ROLE_USER"]', $out);
+    }
+    
     public function testGetMediaPackages()
     {
         $this->markTestSkipped(
@@ -52,4 +69,14 @@ class ClientServiceTest extends WebTestCase
 
         $media = $this->clientService->getMediaPackages(0,0,0);
     }
+
+    private function invokeMethod(&$object, $methodName, array $parameters = array())
+    {
+        $reflection = new \ReflectionClass(get_class($object));
+        $method = $reflection->getMethod($methodName);
+        $method->setAccessible(true);
+
+        return $method->invokeArgs($object, $parameters);
+    }
+    
 }
