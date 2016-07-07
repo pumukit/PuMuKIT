@@ -12,12 +12,14 @@ class TagService
     private $dm;
     private $repository;
     private $mmobjRepo;
+    private $dispatcher;
 
-    public function __construct(DocumentManager $documentManager)
+    public function __construct(DocumentManager $documentManager, MultimediaObjectEventDispatcherService $dispatcher)
     {
         $this->dm = $documentManager;
         $this->repository = $this->dm->getRepository('PumukitSchemaBundle:Tag');
         $this->mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -37,9 +39,10 @@ class TagService
             throw new \Exception("Tag with id ".$tagId." not found.");
         }
 
-	if( $mmobj->containsTag($tag)) {
-	    return $tagAdded;
-	}
+        if( $mmobj->containsTag($tag)) {
+            return $tagAdded;
+        }
+
         do {
             if (!$mmobj->containsTag($tag)) {
                 $tagAdded[] = $tag;
@@ -56,6 +59,7 @@ class TagService
             $this->dm->flush();
         }
 
+        $this->dispatcher->dispatchUpdate($mmobj);
         return $tagAdded;
     }
 
@@ -95,9 +99,10 @@ class TagService
             $this->dm->flush();
         }
 
+        $this->dispatcher->dispatchUpdate($mmobj);
         return $removeTags;
     }
-  
+
     /**
      * Reset the tags of an array of MultimediaObjects
      *
@@ -110,7 +115,7 @@ class TagService
         $modifyTags = array();
 
         foreach($mmobjs as $mmobj) {
-            if (!$mmobj->isPrototype()) {              
+            if (!$mmobj->isPrototype()) {
                 foreach($mmobj->getTags() as $originalEmbeddedTag) {
                     $originalTag = $this->repository->find($originalEmbeddedTag->getId());
                     $originalTag->decreaseNumberMultimediaObjects();
@@ -119,15 +124,16 @@ class TagService
             }
             $mmobj->setTags($tags);
             $this->dm->persist($mmobj);
-            if (!$mmobj->isPrototype()) {        
+            if (!$mmobj->isPrototype()) {
                 foreach($tags as $embeddedTag) {
                     $tag = $this->repository->find($embeddedTag->getId());
                     $tag->increaseNumberMultimediaObjects();
                     $this->dm->persist($tag);
                 }
-            } 
+            }
         }
-    
+
+        $this->dispatcher->dispatchUpdate($mmobj);
         $this->dm->flush();
     }
 
