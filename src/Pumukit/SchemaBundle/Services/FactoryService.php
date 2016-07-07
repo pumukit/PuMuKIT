@@ -178,6 +178,7 @@ class FactoryService
         }
 
         $this->seriesDispatcher->dispatchUpdate($series);
+        $this->mmsDispatcher->dispatchCreate($mm);
 
         return $mm;
     }
