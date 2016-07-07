@@ -15,10 +15,13 @@
 {% set menu_padding = menu_padding | default("10px 10px 10px 30px") %}
 {% set page_background = page_background | default("#ddd") %}
 
-{# DEFAULT ASPECT RATIO: 12:9#}
-{% set thumbnail_width = thumbnail_width|default(152) %}
-{% set thumbnail_height = thumbnail_height|default(114) %}
+{# DEFAULT ASPECT RATIO: 16:9#}
+{% set thumbnail_width = thumbnail_width|default(160) %}
+{% set thumbnail_height = thumbnail_height|default(90) %}
 {% set thumbnail_border = thumbnail_border|default(2) %}
+{% set minithumbnail_width = minithumbnail_width|default(thumbnail_width*3/4) %}
+{% set minithumbnail_height = minithumbnail_height|default(thumbnail_height*3/4) %}
+{% set minithumbnail_border = minithumbnail_border|default(1) %}
 
 {# DEPENDABLE: If not set they will use other variables as default #}
 {% set breadcrumbs_background = breadcrumbs_background | default(default_contrast_background) %}
@@ -471,9 +474,9 @@ body.opencast-layout .breadcrumb_wrapper {
     position: relative;
 }
 .minithumbnail {
-    padding: 2px;
-    width: 75px;
-    height: 56px;
+    padding: {{minithumbnail_border}}px;
+    width: {{minithumbnail_width + minithumbnail_border*2}}px;
+    height: {{minithumbnail_height + minithumbnail_border*2}}px;
 }
 .thumbnailwrapper {
     padding-left: 0px;
@@ -487,8 +490,8 @@ body.opencast-layout .breadcrumb_wrapper {
     max-height: {{thumbnail_height}}px;
 }
 .minithumbnail img.thumbnailimg{
-    max-width: 67px;
-    max-height: 48px;
+    width: {{minithumbnail_width}}px;
+    height: {{minithumbnail_height}}px;
 }
 .minithumbnail img.thumbnailimg, .thumbnail img.thumbnailimg{
     margin: 0 auto;
@@ -496,17 +499,17 @@ body.opencast-layout .breadcrumb_wrapper {
     vertical-align: middle;
 }
 .thumbnailholder {
+    top: {{thumbnail_border}}px;
     width: {{thumbnail_width}}px;
     height: {{thumbnail_height}}px;
 }
 .minithumbnailholder {
-    top: 2px;
-    width: 71px;
-    height: 52px;
+    top: {{minithumbnail_border}}px;
+    width: {{minithumbnail_width}}px;
+    height: {{minithumbnail_height}}px;
 }
 .minithumbnailholder, .thumbnailholder {
     position: absolute;
-    top: {{thumbnail_border}}px;
     background:#000;
     z-index: -1;
 }
