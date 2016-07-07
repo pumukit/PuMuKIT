@@ -2174,6 +2174,22 @@
         <source>WARNING: You will no longer have access to this Multimedia Object.</source>
         <target>WARNING: You will no longer have access to this Multimedia Object.</target>
       </trans-unit>
+      <trans-unit id="90e394e53e9896a196e22f4b7d2fa1aa" resname="Any Internet user can play this multimedia object">
+        <source>Any Internet user can play this multimedia object</source>
+        <target>Any Internet user can play this multimedia object</target>
+      </trans-unit>
+      <trans-unit id="d62721a20e444a58b4753aa63a995265" resname="Only users with the defined password can play this multimedia object">
+        <source>Only users with the defined password can play this multimedia object</source>
+        <target>Only users with the defined password can play this multimedia object</target>
+      </trans-unit>
+      <trans-unit id="61ee265a4986d33b3abbc8bfa87e82e0" resname="Only logged in users in the system can play this multimedia object">
+        <source>Only logged in users in the system can play this multimedia object</source>
+        <target>Only logged in users in the system can play this multimedia object</target>
+      </trans-unit>
+      <trans-unit id="6ee1d7777bee7c24bc7764aa031ef762" resname="Only users in the selected Groups can play this multimedia object">
+        <source>Only users in the selected Groups can play this multimedia object</source>
+        <target>Only users in the selected Groups can play this multimedia object</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

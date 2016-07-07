@@ -18,13 +18,13 @@
               {{ broadcast_name }}
             </label>
             {% if broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PUBLIC') %}
-            <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Any Internet user can play this multimedia object in the video portal{% endtrans %}"></i>
+            <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Any Internet user can play this multimedia object{% endtrans %}"></i>
             {% elseif broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PASSWORD') %}
-            <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Only users with the defined password can play this multimedia object in the video portal{% endtrans %}"></i>
+            <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Only users with the defined password can play this multimedia object{% endtrans %}"></i>
             {% elseif broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_LOGIN') %}
-            <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Only logged in users in the system can play this multimedia object in the video portal{% endtrans %}"></i>
+            <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Only logged in users in the system can play this multimedia object{% endtrans %}"></i>
             {% elseif broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_GROUPS') %}
-            <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Only users in the selected Groups can play this multimedia object in the video portal{% endtrans %}"></i>
+            <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Only users in the selected Groups can play this multimedia object{% endtrans %}"></i>
             {% endif %}
           </div>
             {% if broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PASSWORD') %}
