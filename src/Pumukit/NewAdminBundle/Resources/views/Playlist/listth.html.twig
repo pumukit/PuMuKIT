@@ -11,7 +11,7 @@
 <th width="2%">{% trans %}Num. Mm.Obj.{% endtrans %}</th>
 
 <script type="text/javascript">
- $(document).on('click', '#pumukitnewadmin_playlist_title_sort_selected', function(){
+ $('#pumukitnewadmin_playlist_title_sort_selected').click(function(){
      var inputROId = $('#inputROId').val();
      var type = $('#pumukitnewadmin_playlist_sort_change_type').val();
      if (inputROId) {
@@ -23,7 +23,7 @@
      $('#list_playlists').load(route.replace('__type__', type), {'_method':'POST'});
      return false;
  });
- $(document).on('click', '#pumukitnewadmin_playlist_title_sort_not_selected', function(){
+ $('#pumukitnewadmin_playlist_title_sort_not_selected').click(function(){
      var inputROId = $('#inputROId').val();
      if (inputROId) {
          var route = "{{ path('pumukitnewadmin_playlist_list', {'selectedPlaylistId': '__inputROId__', 'sorting': {'title': 'asc'}})|raw }}";
