@@ -57,16 +57,16 @@ class InfoController extends Controller
                      'stats' => $stats);
     }
 
- 	private function createPager($objects, $page, $limit = 5)
-  	{
-    	$adapter = new DoctrineODMMongoDBAdapter($objects);
-    	$pagerfanta = new Pagerfanta($adapter);
-    	$pagerfanta->setMaxPerPage($limit)
+    private function createPager($objects, $page, $limit = 5)
+    {
+        $adapter = new DoctrineODMMongoDBAdapter($objects);
+        $pagerfanta = new Pagerfanta($adapter);
+        $pagerfanta->setMaxPerPage($limit)
             ->setNormalizeOutOfRangePages(true)
-            ->setCurrentPage($page);            
+            ->setCurrentPage($page);
 
-    	return $pagerfanta;
-  	}
+        return $pagerfanta;
+    }
 
     /**
      * @Route("/job/{id}", methods="GET", name="pumukit_encoder_job")
@@ -86,25 +86,25 @@ class InfoController extends Controller
 
     /**
      * @Route("/job", methods="POST", name="pumukit_encoder_update_job")
-     */    
+     */
     public function updateJobPriorityAction(Request $request)
     {
         $priority = $request->get('priority');
         $jobId = $request->get('jobId');
         $this->get('pumukitencoder.job')->updateJobPriority($jobId, $priority);
-        
+
         return new JsonResponse(array("jobId" => $jobId, "priority" => $priority));
     }
 
     /**
      * @Route("/job", methods="DELETE", name="pumukit_encoder_delete_job")
-     */        
+     */
     public function deleteJobAction(Request $request)
     {
         $jobId = $request->get('jobId');
         $this->get('pumukitencoder.job')->deleteJob($jobId);
 
-        return new JsonResponse(array("jobId" => $jobId));        
+        return new JsonResponse(array("jobId" => $jobId));
     }
 
     /**
@@ -122,6 +122,6 @@ class InfoController extends Controller
      */
     public function multimediaObjectAction(MultimediaObject $multimediaObject, Request $request)
     {
-        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_index', array('id' => $multimediaObject->getSeries()->getId(), 'mmid' => $multimediaObject->getId())));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_shortener', array('id' => $multimediaObject->getId())));
     }
 }

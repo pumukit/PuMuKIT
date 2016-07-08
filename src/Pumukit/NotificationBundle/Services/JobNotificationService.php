@@ -56,7 +56,7 @@ class JobNotificationService
             $template = 'PumukitNotificationBundle:Email:job.html.twig';
             $parameters = array(
                                 'subject' => $subject,
-                                'job_status' => Job::$statusTexts[$job->getStatus()], 
+                                'job_status' => Job::$statusTexts[$job->getStatus()],
                                 'job' => $job,
                                 'commandLine' => $this->jobService->renderBat($job),
                                 'sender_name' => $this->senderName,
@@ -92,7 +92,7 @@ class JobNotificationService
             $template = 'PumukitNotificationBundle:Email:job.html.twig';
             $parameters = array(
                                 'subject' => $subject,
-                                'job_status' => Job::$statusTexts[$job->getStatus()], 
+                                'job_status' => Job::$statusTexts[$job->getStatus()],
                                 'job' => $job,
                                 'commandLine' => $this->jobService->renderBat($job),
                                 'sender_name' => $this->senderName,
@@ -106,7 +106,7 @@ class JobNotificationService
     private function getMultimediaObjectAdminLink($multimediaObject, $id='')
     {
         if (null != $multimediaObject) {
-            return $this->router->generate('pumukitnewadmin_mms_index', array('id' => $multimediaObject->getSeries()->getId(), 'mmid' => $multimediaObject->getId()), true);
+            return $this->router->generate('pumukitnewadmin_mms_shortener', array('id' => $multimediaObject->getId()), true);
         }
 
         return 'No link found to Multimedia Object with id "'.$id.'".';

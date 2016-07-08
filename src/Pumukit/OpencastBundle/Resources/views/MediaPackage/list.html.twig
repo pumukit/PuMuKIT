@@ -12,7 +12,7 @@
           <th width="7%">{% trans %}Date{% endtrans %}</th>
         </tr>
       </thead>
-  
+
       <tbody>
         {% if mediaPackages is empty %}
         <tr>
@@ -23,17 +23,17 @@
         {% endif %}
 
         {% for mediaPackage in mediaPackages %}
-        <tr> 
+        <tr>
           <td>
             <a title="{% trans %}play in opencast{% endtrans %}" target="black" href="{{player}}?id={{mediaPackage.id}}">{% trans %}Play{% endtrans %}</a>&nbsp;&nbsp;|&nbsp;&nbsp;
             {% set import = 'import' %}
             {% for  multimediaObject in multimediaObjects %}
               {% if (multimediaObject.properties != null) and (multimediaObject.properties['opencast'] == mediaPackage.id) %}
-                <a title="{% trans %}View on Pumukit{% endtrans %}" href="{{ url('pumukitnewadmin_mms_index', {id: multimediaObject.series.id, mmid: multimediaObject.id}) }}">
+                <a title="{% trans %}View on Pumukit{% endtrans %}" href="{{ url('pumukitnewadmin_mms_shortener', {id: multimediaObject.id}) }}">
                   {% trans %}Imported{% endtrans %}
                 </a>
                 {% set import = 'imported' %}
-              {% endif %} 
+              {% endif %}
             {% endfor %}
 
             {% if import != 'imported' %}
@@ -41,7 +41,7 @@
                 <a href="#" id="list_mediaPackage_{{ mediaPackage.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   {% trans %}Import{% endtrans %}
                 </a>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="list_mediaPackage_{{ mediaPackage.id }}">  
+                <ul class="dropdown-menu" role="menu" aria-labelledby="list_mediaPackage_{{ mediaPackage.id }}">
                   <li>
                     <a href="{{ path('pumukitopencast_import', {'id': mediaPackage.id}) }}">
                       <i class="mdi-editor-format-align-left"></i>{% trans %}Import{% endtrans %}
@@ -60,7 +60,7 @@
                 </ul>
               </span>
             {% endif %}
-            
+
           </td>
           <td>
             <img class="mini" src="{{ mediaPackage.attachments.attachment.0.url|default(asset('/bundles/pumukitnewadmin/images/none.jpg')) }}" height="23" width="30">
@@ -100,7 +100,7 @@
               <div class="pagerfanta">
                 {{ pagerfanta(mediaPackages, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitopencast"}) }}
               </div>
-            </div>                
+            </div>
           </th>
         </tr>
       </tfoot>
