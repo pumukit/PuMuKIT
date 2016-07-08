@@ -44,10 +44,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $this->get('session')->set('admin/series/id', $series->getId());
 
-        if($request->query->has('mmid')) {
-            $this->get('session')->set('admin/mms/id', $request->query->get('mmid'));
-        }
-
         $mms = $this->getListMultimediaObjects($series);
 
         $update_session = true;
@@ -65,6 +61,23 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                      'series' => $series,
                      'mms' => $mms
                      );
+    }
+
+    /**
+     * Redirect to the series list of a multimedia object series. Update
+     * the session to set the correct page and selected object.
+     *
+     * Route: /admin/mm/{id}
+     */
+    public function shortenerAction(MultimediaObject $mm, Request $request)
+    {
+        $session = $this->get('session');
+        $paginate = $session->get('admin/mms/paginate', 10);
+
+        $session->set('admin/mms/id', $mm->getId());
+        $session->set('admin/mms/page', ceil($mm->getRank() / $paginate));
+
+        return $this->redirectToRoute('pumukitnewadmin_mms_index', array('id' => $mm->getSeries()->getId()));
     }
 
     /**
@@ -86,9 +99,9 @@ class MultimediaObjectController extends SortableAdminController implements NewA
        $this->get('session')->set('admin/mms/id', $mmobj->getId());
 
        return new JsonResponse(array(
-				     'seriesId' => $series->getId(),
-				     'mmId' => $mmobj->getId()
-				     ));
+                     'seriesId' => $series->getId(),
+                     'mmId' => $mmobj->getId()
+                     ));
     }
 
     /**
@@ -1024,7 +1037,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
      *
      * @Template
      */
-    public function listPropertiesAction(MultimediaObject $multimediaObject) 
+    public function listPropertiesAction(MultimediaObject $multimediaObject)
     {
         return array('multimediaObject' => $multimediaObject);
     }

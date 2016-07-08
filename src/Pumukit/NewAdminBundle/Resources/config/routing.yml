@@ -65,6 +65,12 @@ pumukitnewadmin_mms:
     resource: @PumukitNewAdminBundle/Resources/config/routes/mms.yml
     prefix: /admin/mms
 
+pumukitnewadmin_mms_shortener:
+    pattern: /admin/mm/{id}/
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:shortenerAction
+
 pumukitnewadmin_playlistmms:
     resource: @PumukitNewAdminBundle/Resources/config/routes/playlistmms.yml
     prefix: /admin/playlist/mms
