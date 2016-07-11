@@ -7,7 +7,11 @@
   </a>
   <ul class="breadcrumb" style="margin-bottom: 5px;">
     <li><a href="{{ path('pumukitnewadmin_series_index') }}">Series{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %} ({{ series.getTitle() }}){% endif %}</a></li>
-    <li class="active">Multimedia Objects</li>
+    {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
+      <li class="active">My Multimedia Objects</li>
+    {% else %}
+      <li class="active">Multimedia Objects</li>
+    {% endif %}
   </ul>
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   <input type="hidden" name="series_id" id="mms_series_id" value="{{ series.id }}" />
