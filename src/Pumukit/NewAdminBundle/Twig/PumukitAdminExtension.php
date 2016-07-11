@@ -569,8 +569,8 @@ class PumukitAdminExtension extends \Twig_Extension
     public function isPlayableOnPlaylist($mmobj)
     {
         $broadcast = $mmobj->getEmbeddedBroadcast();
-        if ($broadcast->getType() != EmbeddedBroadcast::TYPE_PUBLIC
-            || $mmobj->getStatus() != MultimediaObject::STATUS_PUBLISHED) {
+        if ((!$broadcast && $broadcast->getType() != EmbeddedBroadcast::TYPE_PUBLIC)
+            || $mmobj->getStatus() != MultimediaObject::STATUS_PUBLISHED)) {
             return false;
         }
         return true;
