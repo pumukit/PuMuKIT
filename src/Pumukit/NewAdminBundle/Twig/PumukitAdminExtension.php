@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
+use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 
 class PumukitAdminExtension extends \Twig_Extension
 {
@@ -23,13 +24,14 @@ class PumukitAdminExtension extends \Twig_Extension
     /**
      * Constructor.
      */
-    public function __construct(ProfileService $profileService, DocumentManager $documentManager, TranslatorInterface $translator, RouterInterface $router)
+    public function __construct(ProfileService $profileService, DocumentManager $documentManager, TranslatorInterface $translator, RouterInterface $router, MultimediaObjectService $mmobjService)
     {
         $this->dm = $documentManager;
         $this->languages = Intl::getLanguageBundle()->getLanguageNames();
         $this->profileService = $profileService;
         $this->translator = $translator;
         $this->router = $router;
+        $this->mmobjService = $mmobjService;
     }
 
     /**
@@ -558,7 +560,6 @@ class PumukitAdminExtension extends \Twig_Extension
         return $count;
     }
 
-
     /**
      * Returns a boolean with whether the mmobj will be played on a playlist.
      *
@@ -568,11 +569,6 @@ class PumukitAdminExtension extends \Twig_Extension
      */
     public function isPlayableOnPlaylist($mmobj)
     {
-        $broadcast = $mmobj->getEmbeddedBroadcast();
-        if ((!$broadcast && $broadcast->getType() != EmbeddedBroadcast::TYPE_PUBLIC)
-            || $mmobj->getStatus() != MultimediaObject::STATUS_PUBLISHED)) {
-            return false;
-        }
-        return true;
+        return $this->mmobjService->isPlayableOnPlaylist($mmobj);
     }
 }

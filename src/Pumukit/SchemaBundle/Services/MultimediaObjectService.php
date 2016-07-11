@@ -197,4 +197,21 @@ class MultimediaObjectService
         }
         $this->dm->flush();
     }
+
+    /**
+     * Returns a boolean with whether the mmobj will be played on a playlist or not.
+     *
+     * @param MultimediaObject $mmobj
+     *
+     * @return boolean
+     */
+    public function isPlayableOnPlaylist($mmobj)
+    {
+        $broadcast = $mmobj->getEmbeddedBroadcast();
+        if ((!$broadcast && $broadcast->getType() != EmbeddedBroadcast::TYPE_PUBLIC)
+            || $mmobj->getStatus() != MultimediaObject::STATUS_PUBLISHED) {
+            return false;
+        }
+        return true;
+    }
 }
