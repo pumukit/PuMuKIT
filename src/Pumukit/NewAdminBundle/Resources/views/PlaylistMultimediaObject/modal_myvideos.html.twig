@@ -18,9 +18,8 @@
          currentPage += 1;
          //#TODO: Show ajax_loader
          var url = ajaxurl.replace('__page__',currentPage);
-         $.get(url, function(data) {
+         $.get(url).done(function(data){
              $('#form_my_mmobjs_list').append(data);
-         }).done(function(){
              //#TODO: Hide ajax_loader
              calledAjax = false;
          });
