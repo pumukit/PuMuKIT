@@ -159,11 +159,42 @@ class PlaylistMultimediaObjectController extends Controller
     public function modalAction(Series $playlist, Request $request)
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $mmobjs = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findAllAsIterable()->limit(20);
+        $page = $request->get('modal_page',1);
+        $limit = $request->get('modal_limit', 20);
+        //Get all multimedia objects. The filter will do the rest.
+        $mmobjs = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder();
+        $total = $mmobjs->count()->getQuery()->execute();
+        return array(
+            'my_mmobjs' => array(),
+            'mmobjs_total' => $total,
+            'mmobjs_limit' => $limit,
+            'playlist' => $playlist,
+        );
+    }
+
+    /**
+     * Returns the user mmobjs.
+     *
+     * It is meant to be used through ajax.
+     * @Template("PumukitNewAdminBundle:PlaylistMultimediaObject:modal_myvideos_list.html.twig")
+     */
+    public function modalMyMmobjsAction(Series $playlist, Request $request)
+    {
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $page = $request->get('modal_page',1);
+        $limit = $request->get('modal_limit', 20);
+        //Get all multimedia objects. The filter will do the rest.
+        $mmobjs = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder();
+        $adapter = new DoctrineODMMongoDBAdapter($mmobjs);
+        $mmobjs = new Pagerfanta($adapter);
+        $mmobjs
+          ->setMaxPerPage($limit)
+          ->setNormalizeOutOfRangePages(true);
+
+        $mmobjs->setCurrentPage($page);
 
         return array(
             'my_mmobjs' => $mmobjs,
-            'playlist' => $playlist
         );
     }
 
