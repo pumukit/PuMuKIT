@@ -96,6 +96,12 @@ pumukitnewadmin_playlistmms_modal:
     defaults:
         _controller: pumukitnewadmin.controller.playlistmms:modalAction
 
+pumukitnewadmin_playlistmms_modal_mymmobjs:
+    pattern: /{id}/modal_mymmobjs
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistmms:modalMyMmobjsAction
+
 pumukitnewadmin_playlistmms_modal_search:
     pattern: /modal_search
     methods: [GET, POST]

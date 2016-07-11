@@ -8,12 +8,17 @@
   </div>
   <div class="media-body">
     <div class="media-heading">
-      {{ mmobj.title }} - {{ mmobj.series.title }}
+      <div style="overflow:hidden;height:1.5em">
+        {{ mmobj.title }}
+      </div>
     </div>
-    <div style="overflow:hidden;height:3em">
+    <!-- <div>
+    {{ mmobj.series.title }}
+    </div> -->
+    <div style="overflow:hidden;height:3em;font-weight:normal;">
       {{ mmobj.description }}
     </div>
-    <div class="date mmobj">
+    <div class="date mmobj" style="font-style:italic">
       {{ mmobj.recordDate|date("d/m/Y") }}
     </div>
   </div>
