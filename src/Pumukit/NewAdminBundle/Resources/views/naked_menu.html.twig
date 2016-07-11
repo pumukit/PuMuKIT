@@ -1,12 +1,62 @@
+{% set series_title %}{% spaceless %}
+  {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
+    {% trans %}My Multimedia Series{% endtrans %}
+  {% else %}
+    {% trans %}Multimedia Series{% endtrans %}
+  {% endif %}
+{% endspaceless %}{% endset %}
+{% set playlist_title %}{% spaceless %}
+  {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
+    {% trans %}My Moodle Playlists{% endtrans %}
+  {% else %}
+    {% trans %}Moodle Playlists{% endtrans %}
+  {% endif %}
+{% endspaceless %}{% endset %}
+
 {% set route_name = app.request.get('_route') %}
-{% if app.user and route_name == 'pumukitnewadmin_series_index' and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
-      <a title="{% trans %}Go to playlists{% endtrans %}" class="btn btn-pumukit btn-raised" href="{{url('pumukitnewadmin_playlist_index')}}">
-        {% trans %}Go to playlists{% endtrans %} >
-        <div class="ripple-wrapper"></div>
-      </a>
-{% elseif app.user and route_name == 'pumukitnewadmin_playlist_index' and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-  <a title="{% trans %}Go to series{% endtrans %}" class="btn btn-pumukit btn-raised" href="{{ url('pumukitnewadmin_series_index')}}">
-    {% trans %}Go to series{% endtrans %} >
+{% set series_active = route_name == 'pumukitnewadmin_series_index' %}
+{% set playlist_active = route_name == 'pumukitnewadmin_playlist_index' %}
+
+{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
+  <a title="{% trans %}Go to series{% endtrans %}" class="btn {{series_active?"btn-pumukit":"btn-default"}} btn-raised" href="{{ url('pumukitnewadmin_series_index')}}">
+    {{ series_title }}
     <div class="ripple-wrapper"></div>
   </a>
 {% endif %}
+{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+  <a title="{% trans %}Go to playlists{% endtrans %}" class="btn {{playlist_active?"btn-pumukit":"btn-default"}} btn-raised" href="{{url('pumukitnewadmin_playlist_index')}}">
+    {{ playlist_title }}
+    <div class="ripple-wrapper"></div>
+  </a>
+{% endif %}
+
+<div class="col-md-10">
+  <ul class="nav nav-tabs title-tabs">
+    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
+      <li {{series_active ? "class=\"active\"":""}}>
+        <a title="{% trans %}Go to series{% endtrans %}" href="{{ url('pumukitnewadmin_series_index')}}">
+          {{ series_title }}
+          <div class="ripple-wrapper"></div>
+        </a>
+      </li>
+    {% endif %}
+    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+      <li {{ playlist_active ?"class=\"active\"":"" }}>
+        <a title="{% trans %}Go to playlists{% endtrans %}" href="{{url('pumukitnewadmin_playlist_index')}}">
+          {{ playlist_title }}
+          <div class="ripple-wrapper"></div>
+        </a>
+      </li>
+    {% endif %}
+  </ul>
+</div>
+{# TO REMOVE TITLES #}
+<style>
+ .main > h3 {
+   display:none;
+ }
+ .nav.nav-tabs.title-tabs {
+   background: #ED6D00;
+ }
+</style>
+{# END TO REMOVE TITLES #}
