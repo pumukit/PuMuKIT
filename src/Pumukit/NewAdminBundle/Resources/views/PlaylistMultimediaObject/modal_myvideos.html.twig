@@ -5,7 +5,7 @@
     <br>
     {% include "PumukitNewAdminBundle:PlaylistMultimediaObject:modal_myvideos_list.html.twig" %}
   </fieldset>
-
+  <img id="my_mmobjs_ajax_loader" src="{{asset('bundles/pumukitnewadmin/images/admin/load/spinner.gif')}}" alt="Loading more resources"/>
 </form>
 <script type="text/javascript">
  var calledAjax = false;
@@ -16,11 +16,11 @@
      if(!calledAjax && (currentPage < maxPage) && this.offsetHeight + this.scrollTop >= this.scrollHeight) {
          calledAjax = true;
          currentPage += 1;
-         //#TODO: Show ajax_loader
+         $('#my_mmobjs_ajax_loader').show();
          var url = ajaxurl.replace('__page__',currentPage);
          $.get(url).done(function(data){
              $('#form_my_mmobjs_list').append(data);
-             //#TODO: Hide ajax_loader
+             $('#my_mmobjs_ajax_loader').hide();
              calledAjax = false;
          });
      }
