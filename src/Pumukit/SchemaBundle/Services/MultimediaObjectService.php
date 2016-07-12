@@ -208,8 +208,9 @@ class MultimediaObjectService
     public function isPlayableOnPlaylist($mmobj)
     {
         $broadcast = $mmobj->getEmbeddedBroadcast();
-        if ((!$broadcast && $broadcast->getType() != EmbeddedBroadcast::TYPE_PUBLIC)
-            || $mmobj->getStatus() != MultimediaObject::STATUS_PUBLISHED) {
+        if (($broadcast && $broadcast->getType() != EmbeddedBroadcast::TYPE_PUBLIC)
+            || $mmobj->getStatus() != MultimediaObject::STATUS_PUBLISHED
+            || !$this->hasPlayableResource($mmobj)) {
             return false;
         }
         return true;
