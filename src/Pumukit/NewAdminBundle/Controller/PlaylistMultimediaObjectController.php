@@ -86,7 +86,7 @@ class PlaylistMultimediaObjectController extends Controller
 
     /**
      * Displays the 'info' tab.
-     * @Template("PumukitNewAdminBundle:MultimediaObject:links.html.twig")
+     * @Template
      */
     public function infoAction(MultimediaObject $mmobj, Request $request)
     {
