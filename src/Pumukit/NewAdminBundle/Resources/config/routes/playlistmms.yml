@@ -137,3 +137,9 @@ pumukitnewadmin_playlistmms_batch_add_to_several_playlist:
     methods: [POST]
     defaults:
         _controller: pumukitnewadmin.controller.playlistmms:addBatchToSeveralPlaylistAction
+
+pumukitnewadmin_playlistmms_info:
+    pattern: /{id}/links
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.playlistmms:infoAction
