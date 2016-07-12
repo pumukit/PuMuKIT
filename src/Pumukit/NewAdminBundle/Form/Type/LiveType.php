@@ -42,7 +42,8 @@ class LiveType extends AbstractType
             ->add('live_type', 'choice',
                   array(
                         'choices' => array(Live::LIVE_TYPE_FMS => 'FMS', Live::LIVE_TYPE_WMS => 'WMS'),
-                        'label' => $this->translator->trans('Tecnology', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('Tecnology', array(), null, $this->locale)));
+        /*
             ->add('resolution', new LiveresolutionType(),
                   array(
                         'label' => $this->translator->trans('Resolution', array(), null, $this->locale),
@@ -55,6 +56,7 @@ class LiveType extends AbstractType
                   array(
                         'required' => false,
                         'label' => $this->translator->trans('IP source', array(), null, $this->locale)));
+        */
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
