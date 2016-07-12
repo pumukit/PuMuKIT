@@ -7,7 +7,11 @@
   </a>
   <ul class="breadcrumb" style="margin-bottom: 5px;">
     <li><a href="{{ path('pumukitnewadmin_series_index') }}">Series{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %} ({{ series.getTitle() }}){% endif %}</a></li>
-    <li class="active">Multimedia Objects</li>
+    {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
+      <li class="active">{% trans %}My Multimedia Objects{% endtrans %}</li>
+    {% else %}
+      <li class="active">{% trans %}Multimedia Objects{% endtrans %}</li>
+    {% endif %}
   </ul>
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   <input type="hidden" name="series_id" id="mms_series_id" value="{{ series.id }}" />
@@ -20,7 +24,7 @@
     <div class="well">
       <div id="list_mms">
         {% include 'PumukitNewAdminBundle:MultimediaObject:list.html.twig' %}
-      </div>      
+      </div>
       <div class="row">
         <div class="col-md-2">
           <select id="options_mms" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('mm', $(this), 'mms', '{{series.id}}');">
@@ -50,12 +54,12 @@
         <div class="col-md-10 text-right">
           {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_WIZARD_UPLOAD')) %}
           <a class="btn btn-primary btn-raised" href="{{ url('pumukitwizard_default_type', {'id': series.id}) }}">{% trans %}Wizard{% endtrans %}</a>
-	      {# TODO mmwizard and path with series id (add title to pumukitwizard default type)
-	      <a class="btn btn-primary btn-raised" href="#" onclick="Modalbox.show('/editar.php/mmwizard/index/mod/mms/serial_id/782',{width: 800, title:'{% trans %}STEP II: MM.OBJ.{% endtrans %}'}); return false;">Wizard</a> #}
+          {# TODO mmwizard and path with series id (add title to pumukitwizard default type)
+          <a class="btn btn-primary btn-raised" href="#" onclick="Modalbox.show('/editar.php/mmwizard/index/mod/mms/serial_id/782',{width: 800, title:'{% trans %}STEP II: MM.OBJ.{% endtrans %}'}); return false;">Wizard</a> #}
           {% endif %}
-	      {# TODO Path create with page number #}
+          {# TODO Path create with page number #}
           {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADVANCED_UPLOAD')) %}
-	      <a title="{% trans %}Create new multimedia object{% endtrans %}" id="pumukitnewadmin_mms_new_button" class="btn btn-pumukit btn-raised" href="#">{% trans %}New{% endtrans %}</a>
+          <a title="{% trans %}Create new multimedia object{% endtrans %}" id="pumukitnewadmin_mms_new_button" class="btn btn-pumukit btn-raised" href="#">{% trans %}New{% endtrans %}</a>
           {% endif %}
         </div>
       </div>
