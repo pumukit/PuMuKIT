@@ -7,9 +7,9 @@
     <ul class="breadcrumb" style="margin-bottom: 5px;">
       <li><a href="{{ path('pumukitnewadmin_playlist_index') }}">Playlist{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %} ({{ playlist.getTitle() }}){% endif %}</a></li>
       {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
-        <li class="active">My Multimedia Objects</li>
+        <li class="active">{% trans %}My Multimedia Objects{% endtrans %}</li>
       {% else %}
-        <li class="active">Multimedia Objects</li>
+        <li class="active">{% trans %}Multimedia Objects{% endtrans %}</li>
       {% endif %}
     </ul>
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
