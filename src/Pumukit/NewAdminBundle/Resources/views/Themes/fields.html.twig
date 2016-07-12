@@ -285,6 +285,7 @@
 {%- endblock liveresolution_widget %}
 
 {% block livequalities_widget -%}
+<div>
   1. <input style="margin-top: 5px;" type="text" size="6" value="{{ value[0]['calidad']|default("") }}" id="{{ id }}_0_calidad" name="{{ full_name }}[0][calidad]"> kbps &nbsp;
      <input style="margin-top: 5px;" type="text" size="6" value="{{ value[0]['res']|default("") }}" id="{{ id }}_0_res" name="{{ full_name }}[0][res]"> píxels &nbsp;&nbsp;
      <br>
@@ -294,6 +295,7 @@
   3. <input style="margin-top: 5px;" type="text" size="6" value="{{ value[2]['calidad']|default("") }}" id="{{ id }}_2_calidad" name="{{ full_name }}[2][calidad]"> kbps &nbsp;
      <input style="margin-top: 5px;" type="text" size="6" value="{{ value[2]['res']|default("") }}" id="{{ id }}_2_res" name="{{ full_name }}[2][res]"> píxels &nbsp;&nbsp;
      <br>
+</div>
 {%- endblock livequalities_widget %}
 
 {# Event Widgets #}
