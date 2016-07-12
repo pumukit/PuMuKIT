@@ -59,21 +59,22 @@ EOT
         $file = $input->getArgument('file');
         if ((0 == strcmp($file, "")) && (!$finder)) {
             $output->writeln("<error>Tags: There's no data to initialize</error>");
-        
+
             return -1;
         }
         $root = $this->tagsRepo->findOneByCod('ROOT');
         if (null == $root) {
             $output->writeln("<error>Tags: There's no ROOT tag. Please exec pumukit:init:repo tag</error>");
-        
+
             return -1;
         }
 
-        foreach ($finder as $tagFile) {
-            $this->createFromFile($tagFile, $root, $output, 'tag');
-        }
         if ($file) {
             $this->createFromFile($file, $root, $output, 'tag');
+        } else {
+            foreach ($finder as $tagFile) {
+                $this->createFromFile($tagFile, $root, $output, 'tag');
+            }
         }
 
         return 0;
