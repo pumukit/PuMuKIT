@@ -116,11 +116,6 @@ class SearchController extends Controller implements WebTVController
         ->createStandardQueryBuilder()
         ->distinct('tracks.language')
         ->getQuery()->execute();
-        // --- Query to get oldest date ---
-        $firstMmobj = $this->get('doctrine_mongodb')
-        ->getRepository('PumukitSchemaBundle:MultimediaObject')
-        ->createStandardQueryBuilder()->sort('record_date','asc')->limit(1)
-        ->getQuery()->getSingleResult();
         // --- Get years array ---
         $searchYears = $this->getMmobjsYears();
 
