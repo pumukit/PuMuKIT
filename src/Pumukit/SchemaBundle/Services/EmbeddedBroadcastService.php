@@ -288,12 +288,10 @@ class EmbeddedBroadcastService
         } else {
             $playGroups = array();
         }
-        $adminGroups = $multimediaObject->getGroups()->toArray();
         $commonPlayGroups = array_intersect($playGroups, $userGroups);
-        $commonAdminGroups = array_intersect($adminGroups, $userGroups);
         $userIsOwner = $this->mmsService->isUserOwner($user, $multimediaObject);
 
-        return $commonPlayGroups || $commonAdminGroups || $userIsOwner;
+        return $commonPlayGroups || $userIsOwner;
     }
 
     private function isAuthenticatedFully(User $user = null)

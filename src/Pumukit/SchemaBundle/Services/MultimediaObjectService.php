@@ -159,11 +159,16 @@ class MultimediaObjectService
      */
     public function isUserOwner(User $user, MultimediaObject $multimediaObject)
     {
+        $userGroups = $user->getGroups()->toArray();
+        $adminGroups = $multimediaObject->getGroups()->toArray();
+        $commonAdminGroups = array_intersect($adminGroups, $userGroups);
+
+        $userIsOwner = false;
         if ($owners = $multimediaObject->getProperty('owners')) {
-            return in_array($user->getId(), $owners);
+            $userIsOwner = in_array($user->getId(), $owners);
         }
 
-        return false;
+        return $commonAdminGroups || $userIsOwner;
     }
 
     /**
