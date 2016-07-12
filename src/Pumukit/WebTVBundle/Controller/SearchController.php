@@ -116,17 +116,6 @@ class SearchController extends Controller implements WebTVController
         ->createStandardQueryBuilder()
         ->distinct('tracks.language')
         ->getQuery()->execute();
-        // --- Query to get oldest date ---
-        $firstMmobj = $this->get('doctrine_mongodb')
-        ->getRepository('PumukitSchemaBundle:MultimediaObject')
-        ->createStandardQueryBuilder()->sort('record_date','asc')->limit(1)
-        ->getQuery()->getSingleResult();
-        //TODO: $minRecordDate Unused. Remove for 2.3 version
-        $minRecordDate = $firstMmobj ?
-          $firstMmobj->getRecordDate()->format('m/d/Y') :
-          date('m/d/Y', time() - (365 * 24 * 60 * 60));
-        //TODO: $maxRecordDate Unused. Remove for 2.3 version
-        $maxRecordDate = date('m/d/Y');
         // --- Get years array ---
         $searchYears = $this->getMmobjsYears();
 
@@ -143,8 +132,6 @@ class SearchController extends Controller implements WebTVController
         'number_cols' => $numberCols,
         'languages' => $searchLanguages,
         'blocked_tag' => $blockedTag,
-        'min_record_date' => $minRecordDate, //TODO: Unused. Remove for 2.3 version
-        'max_record_date' => $maxRecordDate, //TODO: Unused. Remove for 2.3 version
         'search_years' => $searchYears,
         'total_objects' => $totalObjects);
     }
