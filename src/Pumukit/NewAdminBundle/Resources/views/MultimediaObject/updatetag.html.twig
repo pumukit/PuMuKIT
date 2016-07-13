@@ -14,34 +14,34 @@
   <div class="panel panel-default">
     <div class="panel-heading">{{ parent.title }}</div>
     <div class="panel-body" id="tag{{ parent.id }}_mms">
-      
+
 
       <div style="overflow:hidden;height: 270px">
         {# Available tags #}
-	    <div style="width:400px; float: left; height: 260px; border: 1px solid #bbb; overflow-x: hidden; overflow-y: scroll" class="tag list-group pmk-tag-tree" id="all_tag_{{ parent.id }}">
-	      {% if (0 != parent.getChildren()|length) %}
+        <div style="width:40%; max-width:400px; float: left; height: 260px; border: 1px solid #bbb; overflow-x: hidden; overflow-y: scroll" class="tag list-group pmk-tag-tree" id="all_tag_{{ parent.id }}">
+          {% if (0 != parent.getChildren()|length) %}
             {% include 'PumukitNewAdminBundle:MultimediaObject:listtagsajax.html.twig' with {'mmId': mm.id, 'parent': 'root', 'block_tag': parent.id, 'nodes': parent.getChildren()} %}
-	      {% endif %}
-	    </div>
+          {% endif %}
+        </div>
 
-	    <div style="float: left; padding: 150px 5px 0px">
-	      <a href="#" onclick="$('#select_ul_tag_cod_{{ parent.cod }} > a.active').trigger('dblclick'); return false;">&#8592;</a>
-	      <a href="#" onclick="$('#all_tag_{{ parent.id }} > a.active').trigger('dblclick'); return false;">&#8594;</a>
-	    </div>
+        <div style="float: left; padding: 150px 5px 0px">
+          <a href="#" onclick="$('#select_ul_tag_cod_{{ parent.cod }} > a.active').trigger('dblclick'); return false;">&#8592;</a>
+          <a href="#" onclick="$('#all_tag_{{ parent.id }} > a.active').trigger('dblclick'); return false;">&#8594;</a>
+        </div>
 
         {# Added tags#}
-	    <div style="width:400px; height:260px; border: 1px solid #bbb; float: left; overflow-x: hidden; overflow-y: scroll" class="tag" id="select_tag_{{ parent.id }}">
-	      <div class="tag_tree list-group" id="select_ul_tag_cod_{{ parent.cod }}" >
-	        {% for embedded_tag in mm.getTags() if embedded_tag.isDescendantOf(parent) %}
+        <div style="width:40%; max-width:400px; height:260px; border: 1px solid #bbb; float: left; overflow-x: hidden; overflow-y: scroll" class="tag" id="select_tag_{{ parent.id }}">
+          <div class="tag_tree list-group" id="select_ul_tag_cod_{{ parent.cod }}" >
+            {% for embedded_tag in mm.getTags() if embedded_tag.isDescendantOf(parent) %}
               <a href="#" class="list-group-item" id="select_li_{{ embedded_tag.id }}"
                  onclick="javascript:return select_tree_tag(this);"
                  ondblclick="javascript:del_tree_tag('{{ embedded_tag.id }}', '{{ mm.id }}');">
                 {{ embedded_tag.getCod() }} - {{ embedded_tag.getTitle() }}
               </a>
-	        {% endfor %}
-	      </div>
-	    </div>
-	 </div>
+            {% endfor %}
+          </div>
+        </div>
+     </div>
 
 
     </div>
@@ -71,34 +71,34 @@
      <dt>{{ parent.getTitle() }}:</dt>
      <dd>
        <div id="tag{{ parent.id }}_mms">
-	     <div style="overflow:hidden;height: 270px">
-	       <div style="width:400px; float: left; height: 260px" class="tag" id="all_tag_{{ parent.id }}">
-	         {% if (0 != parent.getChildren()|length) %}
-	         <ul class="tag_tree" >
-	           {% include 'PumukitAdminBundle:MultimediaObject:listtagsajax.html.twig' with {'mmId': mm.id, 'parent': 'root', 'block_tag': parent.id, 'nodes': parent.getChildren()} %}
-	         </ul>
-	         {% endif %}
-	       </div>
+         <div style="overflow:hidden;height: 270px">
+           <div style="width:40%; max-width:400px; float: left; height: 260px" class="tag" id="all_tag_{{ parent.id }}">
+             {% if (0 != parent.getChildren()|length) %}
+             <ul class="tag_tree" >
+               {% include 'PumukitAdminBundle:MultimediaObject:listtagsajax.html.twig' with {'mmId': mm.id, 'parent': 'root', 'block_tag': parent.id, 'nodes': parent.getChildren()} %}
+             </ul>
+             {% endif %}
+           </div>
 
-	   <div style="float: left; padding: 150px 5px 0px">
-	     <a href="#" onclick="if ( $$('.clicked_tag_left')[0] != undefined ) { $$('.clicked_tag_left')[0].ondblclick() } return false;">&#8592;</a>
-	     <a href="#" onclick="if ( $$('.clicked_tag_right')[0] != undefined ) { $$('.clicked_tag_right')[0].ondblclick() } return false;">&#8594;</a>
-	   </div>
+       <div style="float: left; padding: 150px 5px 0px">
+         <a href="#" onclick="if ( $$('.clicked_tag_left')[0] != undefined ) { $$('.clicked_tag_left')[0].ondblclick() } return false;">&#8592;</a>
+         <a href="#" onclick="if ( $$('.clicked_tag_right')[0] != undefined ) { $$('.clicked_tag_right')[0].ondblclick() } return false;">&#8594;</a>
+       </div>
 
-	   <div style="width:400px; height:260px; border: 1px solid #bbb; float: left;" class="tag" id="select_tag_{{ parent.id }}">
-	     <ul class="tag_tree" id="select_ul_tag_cod_{{ parent.cod }}" >
-	       {% for embedded_tag in mm.getTags() if embedded_tag.isDescendantOf(parent) %}
-	         <li class="element" id="select_li_{{ embedded_tag.id }}" >
-		   <span class="icon">&nbsp;</span>
-		   <span onclick="$$('.clicked_tag_left').invoke('removeClassName', 'clicked_tag_left'); this.addClassName('clicked_tag_left');" ondblclick="javascript:del_tree_tag('{{ embedded_tag.id }}', '{{ mm.id }}');" >
-		     {{ embedded_tag.getCod() }} - {{ embedded_tag.getTitle() }}
-		   </span>
-	         </li>
-	       {% endfor %}
-	     </ul>
-	   </div>
+       <div style="width:40%; max-width:400px; height:260px; border: 1px solid #bbb; float: left;" class="tag" id="select_tag_{{ parent.id }}">
+         <ul class="tag_tree" id="select_ul_tag_cod_{{ parent.cod }}" >
+           {% for embedded_tag in mm.getTags() if embedded_tag.isDescendantOf(parent) %}
+             <li class="element" id="select_li_{{ embedded_tag.id }}" >
+           <span class="icon">&nbsp;</span>
+           <span onclick="$$('.clicked_tag_left').invoke('removeClassName', 'clicked_tag_left'); this.addClassName('clicked_tag_left');" ondblclick="javascript:del_tree_tag('{{ embedded_tag.id }}', '{{ mm.id }}');" >
+             {{ embedded_tag.getCod() }} - {{ embedded_tag.getTitle() }}
+           </span>
+             </li>
+           {% endfor %}
+         </ul>
+       </div>
 
-	 </div>
+     </div>
        </div>
      </dd>
      </div>
@@ -110,7 +110,7 @@
 </div>
 #}
 
-{# TODO delete see pumuikit.js 
+{# TODO delete see pumuikit.js
 <script type="text/javascript">
 window.toggle_show_all = function()
 {
