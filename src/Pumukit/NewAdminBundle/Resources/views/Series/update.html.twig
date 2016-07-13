@@ -2,22 +2,22 @@
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   <div class="row">
     <div class="col-md-6">
-      <form class="form-horizontal">        
+      <form class="form-horizontal">
         <fieldset>
           <legend>{% trans %}Metadata{% endtrans %}</legend>
           <div class="form-group">
-            <label for="inputROId" class="col-lg-2 control-label">Id:</label>
-            <div class="col-lg-10 input-group">
+            <label for="inputROId" class="col-xs-2 control-label">Id:</label>
+            <div class="col-xs-10 input-group">
               <input type="text" class="form-control" id="inputROId" readonly onclick="select()" value="{{ series.id }}">
             </div>
-            <label for="inputROUrl" class="col-lg-2 control-label">Url:</label>
-            <div class="col-lg-10 input-group">
+            <label for="inputROUrl" class="col-xs-2 control-label">Url:</label>
+            <div class="col-xs-10 input-group">
               <input type="text" class="form-control" id="inputROUrl" readonly onclick="select()" value="{{ url('pumukit_webtv_series_index', {id: series.id}) }}">
               <span class="input-group-addon"><a href="{{ url('pumukit_webtv_series_index', {id: series.id}) }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
             </div>
-            <label for="inputROMagicUrl" class="col-lg-2 control-label" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">Magic Url:</label>
-            <div class="col-lg-10 input-group">
-              <input type="text" class="form-control" id="inputROMagicUrl" readonly onclick="select()" value="{{ url('pumukit_webtv_series_magicindex', {secret: series.secret}) }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}"> 
+            <label for="inputROMagicUrl" class="col-xs-2 control-label" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">Magic Url:</label>
+            <div class="col-xs-10 input-group">
+              <input type="text" class="form-control" id="inputROMagicUrl" readonly onclick="select()" value="{{ url('pumukit_webtv_series_magicindex', {secret: series.secret}) }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">
               <span class="input-group-addon"><a id="alinkROMagicUrl" href="{{ url('pumukit_webtv_series_magicindex', {secret: series.secret}) }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
               <span class="input-group-addon">
                 <a href="#" onclick="window.submit_generate_magic_series('{{ series.id }}','{{series.title}}'); return false;">
@@ -42,7 +42,7 @@
       </li>
       {% endif %}
     </ul>
-    
+
     <div class="tab-content">
       <div id="editSeries" role="tabpanel" class="tab-pane active">
         {% include 'PumukitNewAdminBundle:Series:updatemeta.html.twig' %}
@@ -58,5 +58,3 @@
     {% trans %}You don't have enough permissions to access this content.{% endtrans %}
   {% endif %}
 </div>
-
-

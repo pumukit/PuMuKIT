@@ -9,12 +9,12 @@
       <fieldset>
         <legend>Info</legend>
         <div class="form-group">
-          <label for="inputMMId" class="col-lg-2 control-label">Id:</label>
-          <div class="col-lg-10 input-group">
+          <label for="inputMMId" class="col-xs-2 control-label">Id:</label>
+          <div class="col-xs-10 input-group">
             <input type="text" class="form-control" id="inputMMId" readonly onclick="select()" value="{{ mm.id }}">
           </div>
-          <label for="inputROUrl" class="col-lg-2 control-label">Url:</label>
-          <div class="col-lg-10 input-group">
+          <label for="inputROUrl" class="col-xs-2 control-label">Url:</label>
+          <div class="col-xs-10 input-group">
             <input type="text" class="form-control" id="inputROUrl" readonly onclick="select()" value="{{ video_url }}">
             {% if is_published and is_playable %}
               <span class="input-group-addon"><a href="{{ video_url }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
@@ -22,8 +22,8 @@
               <span class="input-group-addon"><i class="mdi-action-report-problem" title="{% trans %}Warning: This link will give a 404 error until this multimedia object is correctly published.{% endtrans %}"></i></span>
             {% endif %}
           </div>
-          <label for="inputROMagicUrl" class="col-lg-2 control-label" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">Magic Url:</label>
-          <div class="col-lg-10 input-group">
+          <label for="inputROMagicUrl" class="col-xs-2 control-label" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">Magic Url:</label>
+          <div class="col-xs-10 input-group">
             <input type="text" class="form-control" id="inputROMagicUrl" readonly onclick="select()" value="{{ magic_url }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">
             {% if is_hidden %}
               <span class="input-group-addon"><a id="alinkROMagicUrl" href="{{ magic_url }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
@@ -36,11 +36,11 @@
               </a>
             </span>
           </div>
-        </div>            
+        </div>
         {# TODO add info: iframe...
         <div class="form-group">
-          <label for="inputMMId" class="col-lg-2 control-label">IFRAME:</label>
-          <div class="col-lg-10 input-group">
+          <label for="inputMMId" class="col-xs-2 control-label">IFRAME:</label>
+          <div class="col-xs-10 input-group">
             <input type="text" class="form-control" id="inputMMId" readonly onclick="select()" value="TODO">
           </div>
         </div>
@@ -56,8 +56,8 @@
     {% if warning_on_unpublished and (not is_published or not is_playable) %}
       <span class="alert alert-dismissable alert-warning">
         <i class="mdi-action-report-problem"></i>
-        {% trans %}WARNING, this multimedia object is not yet published on WebTV, or does not have a playable resource.{% endtrans %} 
-        <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close">-->          
+        {% trans %}WARNING, this multimedia object is not yet published on WebTV, or does not have a playable resource.{% endtrans %}
+        <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
       </span>&nbsp;</br></br>
     {% endif %}
   </div>

@@ -9,12 +9,12 @@
         <fieldset>
           <legend>Info</legend>
           <div class="form-group">
-            <label for="inputMMId" class="col-lg-2 control-label">Id:</label>
-            <div class="col-lg-10 input-group">
+            <label for="inputMMId" class="col-xs-2 control-label">Id:</label>
+            <div class="col-xs-10 input-group">
               <input type="text" class="form-control" id="inputMMId" readonly onclick="select()" value="{{ mm.id }}">
             </div>
-            <label for="inputROUrl" class="col-lg-2 control-label">Url:</label>
-            <div class="col-lg-10 input-group">
+            <label for="inputROUrl" class="col-xs-2 control-label">Url:</label>
+            <div class="col-xs-10 input-group">
               <input type="text" class="form-control" id="inputROUrl" readonly onclick="select()" value="{{ video_url }}">
               {% if is_published and is_playable %}
                 <span class="input-group-addon"><a href="{{ video_url }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
@@ -25,8 +25,8 @@
           </div>
           {# TODO add info: iframe...
           <div class="form-group">
-          <label for="inputMMId" class="col-lg-2 control-label">IFRAME:</label>
-          <div class="col-lg-10 input-group">
+          <label for="inputMMId" class="col-xs-2 control-label">IFRAME:</label>
+          <div class="col-xs-10 input-group">
           <input type="text" class="form-control" id="inputMMId" readonly onclick="select()" value="TODO">
           </div>
           </div>
